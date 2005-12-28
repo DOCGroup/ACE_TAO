@@ -551,7 +551,11 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    ace_user_enable_reentrant_funcs=yes
   ])
 
-
+  ACE_ENABLE_CDR_SWAP_ON_READ
+  ACE_ENABLE_CDR_SWAP_ON_WRITE
+  ACE_ENABLE_CDR_ALIGNMENT
+  ACE_ENABLE_STRDUP_EMULATION
+  ACE_ENABLE_WCSDUP_EMULATION
 ])
 
 
@@ -857,6 +861,131 @@ dnl    fi
                 [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
  AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
 
+])
+
+# ACE_ENABLE_CDR_SWAP_ON_READ
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_CDR_SWAP_ON_READ],
+[AC_ARG_ENABLE([ace-cdr-swap-on-read],
+               AS_HELP_STRING([--enable-ace-cdr-swap-on-read],
+                              [configure CDR to support swap on read [[yes]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_cdr_swap_on_read=yes
+		  ;;
+		 no)
+		  ace_user_cdr_swap_on_read=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-cdr-swap-on-read)
+		  ;;
+		esac],[
+		  ace_user_cdr_swap_on_read=yes
+		])
+if test X$ace_user_cdr_swap_on_read = Xno; then
+  AC_DEFINE(ACE_DISABLE_SWAP_ON_READ, 1,
+	    [Define to 1 to disable swapping swapping CDR on read])
+fi
+])
+
+# ACE_ENABLE_CDR_SWAP_ON_WRITE
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_CDR_SWAP_ON_WRITE],
+[AC_ARG_ENABLE([ace-cdr-swap-on-write],
+               AS_HELP_STRING([--enable-ace-cdr-swap-on-write],
+                              [configure CDR to support swap on write [[no]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_cdr_swap_on_write=yes
+		  ;;
+		 no)
+		  ace_user_cdr_swap_on_write=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-cdr-swap-on-write)
+		  ;;
+		esac],[
+		  ace_user_cdr_swap_on_write=no
+		])
+if test X$ace_user_cdr_swap_on_write = Xyes; then
+  AC_DEFINE(ACE_ENABLE_SWAP_ON_WRITE, 1,
+	    [Define to 1 to enable swapping swapping CDR on write])
+fi
+])
+
+# ACE_ENABLE_CDR_ALIGNMENT
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_CDR_ALIGNMENT],
+[AC_ARG_ENABLE([ace-cdr-alignment],
+               AS_HELP_STRING([--enable-ace-cdr-alignment],
+                              [configure CDR to require aligned access [[yes]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_cdr_alignment=yes
+		  ;;
+		 no)
+		  ace_user_cdr_alignment=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-cdr-alignment)
+		  ;;
+		esac],[
+		  ace_user_cdr_alignment=yes
+		])
+if test X$ace_user_cdr_alignment = Xno; then
+  AC_DEFINE(ACE_LACKS_CDR_ALIGNMENT, 1,
+	    [Define to 1 to support unaligned CDR])
+fi
+])
+
+# ACE_ENABLE_STRDUP_EMULATION
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_STRDUP_EMULATION],
+[AC_ARG_ENABLE([ace-strdup-emulation],
+               AS_HELP_STRING([--enable-ace-strdup-emulation],
+                              [use ACE's strdup emulation [[no]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_strdup_emulation=yes
+		  ;;
+		 no)
+		  ace_user_strdup_emulation=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-strdup-emulation)
+		  ;;
+		esac],[
+		  ace_user_strdup_emulation=no
+		])
+if test X$ace_user_strdup_emulation = Xyes; then
+  AC_DEFINE(ACE_HAS_STRDUP_EMULATION, 1,
+	    [Define to 1 use ACE's strdup() emulation])
+fi
+])
+
+# ACE_ENABLE_WCSDUP_EMULATION
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_WCSDUP_EMULATION],
+[AC_ARG_ENABLE([ace-wcsdup-emulation],
+               AS_HELP_STRING([--enable-ace-wcsdup-emulation],
+                              [use ACE's wcsdup emulation [[no]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_wcsdup_emulation=yes
+		  ;;
+		 no)
+		  ace_user_wcsdup_emulation=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-wcsdup-emulation)
+		  ;;
+		esac],[
+		  ace_user_wcsdup_emulation=no
+		])
+if test X$ace_user_wcsdup_emulation = Xyes; then
+  AC_DEFINE(ACE_HAS_WCSDUP_EMULATION, 1,
+	    [Define to 1 use ACE's wcsdup() emulation])
+fi
 ])
 
 AC_DEFUN([ACE_ENABLE_QOS],
