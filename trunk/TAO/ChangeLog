@@ -1,3 +1,10 @@
+Wed Dec 28 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+          Applied a workaround for Borland to not give argument not used
+          warnings. This problem has been reported to Borland to get it
+          fixed in the next version.
+
 Wed Dec 28 09:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
