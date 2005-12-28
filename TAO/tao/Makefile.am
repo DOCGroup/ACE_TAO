@@ -2903,6 +2903,9 @@ libTAO_Strategies_la_SOURCES = \
   Strategies/LFU_Connection_Purging_Strategy.cpp \
   Strategies/LF_Strategy_Null.cpp \
   Strategies/NULL_Connection_Purging_Strategy.cpp \
+  Strategies/OC_Endpoint_Selector_Factory.cpp \
+  Strategies/OC_Endpoint_Selector_Loader.cpp \
+  Strategies/Optimized_Connection_Endpoint_Selector.cpp \
   Strategies/SCIOP_Acceptor.cpp \
   Strategies/SCIOP_Connection_Handler.cpp \
   Strategies/SCIOP_Connector.cpp \
@@ -2953,6 +2956,9 @@ nobase_include_HEADERS += \
   Strategies/LF_Strategy_Null.h \
   Strategies/LF_Strategy_Null.inl \
   Strategies/NULL_Connection_Purging_Strategy.h \
+  Strategies/OC_Endpoint_Selector_Factory.h \
+  Strategies/OC_Endpoint_Selector_Loader.h \
+  Strategies/Optimized_Connection_Endpoint_Selector.h \
   Strategies/SCIOP_Acceptor.h \
   Strategies/SCIOP_Acceptor.i \
   Strategies/SCIOP_Connection_Handler.h \
