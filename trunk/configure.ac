@@ -1072,7 +1072,7 @@ AC_CHECK_DECL([getopt],
 
 dnl Check for madvise() prototype
 AC_CHECK_DECL([madvise],
-	      []
+	      [],
 	      [AC_DEFINE([ACE_LACKS_MADVISE_PROTOTYPE], 1,
 			 [Define to 1 if platform lacks the declaration
 			 of madvise().])],
