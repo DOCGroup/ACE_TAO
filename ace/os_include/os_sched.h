@@ -36,6 +36,10 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+#if !defined (ACE_HAS_CPU_SET_T)
+typedef ACE_UINT32 cpu_set_t;
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

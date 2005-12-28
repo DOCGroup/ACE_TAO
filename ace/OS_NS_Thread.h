@@ -29,6 +29,7 @@
 # include "ace/Basic_Types.h"
 # include "ace/Default_Constants.h"
 # include "ace/os_include/os_pthread.h"
+# include "ace/os_include/os_sched.h"
 # include "ace/Base_Thread_Adapter.h"
 # include "ace/os_include/sys/os_sem.h"
 # include "ace/os_include/os_semaphore.h"
@@ -1744,7 +1745,40 @@ namespace ACE_OS {
                 ACE_THR_FUNC_RETURN *status);
 
   /**
-   * @note the "inst" arge is deprecated.  It will be ignored.
+   * Get the thread affinity
+   *
+   * @param thr_id For NPTL-threads, when ACE_HAS_PTHREAD_SETAFFINITY_NP
+   * defined, this is the thread-id. For linux-threads, when
+   * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
+   * linux-threads a thread is seen as a process, it does the job.
+   * @param cpu_set_size The size of the cpu_mask
+   * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
+   * thread to the "CPU 0", etc
+   */
+  extern ACE_Export
+  int thr_get_affinity (ACE_hthread_t id,
+                        size_t cpu_set_size,
+                        cpu_set_t * cpu_mask);
+
+
+  /**
+   * Set the thread affinity
+   *
+   * @param thr_id For NPTL-threads, when ACE_HAS_PTHREAD_SETAFFINITY_NP
+   * defined, this is the thread-id. For linux-threads, when
+   * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
+   * linux-threads a thread is seen as a process, it does the job.
+   * @param cpu_set_size The size of the cpu_mask
+   * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
+   * thread to the "CPU 0", etc
+   */
+  extern ACE_Export
+  int thr_set_affinity (ACE_hthread_t thr_id,
+                        size_t cpu_set_size,
+                        const cpu_set_t * cpu_mask);
+
+  /**
+   * @note the "inst" arg is deprecated.  It will be ignored.
    */
   extern ACE_Export
   int thr_key_detach (ACE_thread_key_t key, void * inst);
