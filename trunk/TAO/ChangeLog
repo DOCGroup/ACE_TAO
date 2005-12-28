@@ -1,3 +1,8 @@
+Wed Dec 28 10:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/Synch_i.cpp:
+          Cast number of seconds explicitly to time_t
+
 Wed Dec 28 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
