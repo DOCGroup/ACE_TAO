@@ -1,3 +1,21 @@
+Tue Dec 27 16:17:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/CosConcurrency.mpc:
+
+	  Tweak so concurrency_export.h is installed.  Thanks to Vladimir
+	  Panov for pointing out this class of problems.
+
+	* tao/Makefile.am:
+
+	  Regenerated due to new Optimized Connection Endpoint Selector
+	  feature.  C.f.:
+
+          Tue Dec 27 08:22:42 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
 Tue Dec 27 15:33:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
