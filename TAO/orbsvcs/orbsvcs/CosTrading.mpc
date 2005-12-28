@@ -114,10 +114,12 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    Trader {
-      Trader
-    }
+  Source_Files {
+    Trader
+  }
+
+  Header_Files {
+    Trading/trading_serv_export.h
   }
 
   Inline_Files {
