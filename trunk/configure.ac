@@ -600,6 +600,8 @@ ACE_CHECK_LACKS_HEADERS(fcntl.h)
 
 ACE_CHECK_HAS_HEADERS(pthread_np.h)
 
+ACE_CHECK_LACKS_HEADERS(sched.h)
+
 ACE_CHECK_LACKS_HEADERS(search.h)
 
 ACE_CHECK_HAS_HEADERS(select.h)
@@ -1152,7 +1154,11 @@ AC_CHECK_TYPE([cpu_set_t],
 	      [AC_DEFINE([ACE_HAS_CPU_SET_T], 1,
 			 [Define to 1 if the system has the type `cpu_set_t'.])],
 	      [],
-	      [#include <sched.h>])
+	      [
+#if !defined(ACE_LACKS_SCHED_H)
+#include <sched.h>
+#endif
+	      ])
 
 AC_CHECK_TYPE([idtype_t],
 	      [AC_DEFINE([ACE_HAS_IDTYPE_T], 1,
@@ -3906,7 +3912,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
            wchar_t *p = wcstok (str, delim, &ptr);
           ]])],
           [
-           AC_DEFINE([ACE_HAS_3_PARAM_WCSTOK],
+           AC_DEFINE([ACE_HAS_3_PARAM_WCSTOK], 1,
 		     [Define to 1 if platform has 3 parameter wcstok()])
            AC_MSG_RESULT([3])
           ],
@@ -4315,7 +4321,9 @@ dnl Check which one we have.
 AC_MSG_CHECKING([for 2- or 3-param sched_getaffinity])
 AC_LINK_IFELSE([AC_LANG_PROGRAM(
           [[
+#if !defined(ACE_LACKS_SCHED_H)
 #include <sched.h>
+#endif
           ]],
           [[
 	   pid_t pid;
@@ -4339,7 +4347,9 @@ dnl Check which one we have.
 AC_MSG_CHECKING([for 2- or 3-param sched_setaffinity])
 AC_LINK_IFELSE([AC_LANG_PROGRAM(
           [[
+#if !defined(ACE_LACKS_SCHED_H)
 #include <sched.h>
+#endif
           ]],
           [[
 	   pid_t pid;
