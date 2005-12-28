@@ -1,3 +1,17 @@
+Tue Dec 27 19:21:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+	  Add ACE_ENABLE_CDR_SWAP_ON_READ, ACE_ENABLE_CDR_SWAP_ON_WRITE,
+	  ACE_ENABLE_CDR_ALIGNMENT, ACE_ENABLE_STRDUP_EMULATION, and
+	  ACE_ENABLE_WCSDUP_EMULATION to support --enable options of
+	  the same name.  Allows users to configure these aspects of
+	  ACE without editing the generated config.h header.
+
+	* configure.ac:
+
+	  Fix typo in ACE_LACKS_MADVISE_PROTOTYPE feature test.
+
 Tue Dec 27 15:14:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* THANKS: Added Vladimir Panov to the Hall of Fame.
