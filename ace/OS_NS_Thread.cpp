@@ -5027,18 +5027,6 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
       return -1;
     }
   return 0;
-#elif defined (ACE_HAS_SCHED_GETAFFINITY)
-  // The process-id is expected as <thr_id>, which can be a thread-id of
-  // linux-thread, thus making binding to cpu of that particular thread only.
-  // If you are using this flag for NPTL-threads, however, please pass as a
-  // thr_id process id obtained by ACE_OS::getpid ()
-  if (::sched_getaffinity(thr_id,
-                          cpu_set_size,
-                          cpu_mask) == -1)
-    {
-      return -1;
-    }
-  return 0;
 #elif defined (ACE_HAS_2_PARAM_SCHED_GETAFFINITY)
   // The process-id is expected as <thr_id>, which can be a thread-id of
   // linux-thread, thus making binding to cpu of that particular thread only.
@@ -5046,6 +5034,18 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
   // thr_id process id obtained by ACE_OS::getpid ()
   ACE_UNUSED_ARG (cpu_set_size);
   if (::sched_getaffinity(thr_id,
+                          cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_SCHED_GETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid ()
+  if (::sched_getaffinity(thr_id,
+                          cpu_set_size,
                           cpu_mask) == -1)
     {
       return -1;
@@ -5072,19 +5072,6 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
       return -1;
     }
   return 0;
-#elif defined (ACE_HAS_SCHED_SETAFFINITY)
-  // The process-id is expected as <thr_id>, which can be a thread-id of
-  // linux-thread, thus making binding to cpu of that particular thread only.
-  // If you are using this flag for NPTL-threads, however, please pass as a
-  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
-  //
-  if (::sched_setaffinity (thr_id,
-                           cpu_set_size,
-                           cpu_mask) == -1)
-    {
-      return -1;
-    }
-  return 0;
 #elif defined (ACE_HAS_2_PARAM_SCHED_SETAFFINITY)
   // The process-id is expected as <thr_id>, which can be a thread-id of
   // linux-thread, thus making binding to cpu of that particular thread only.
@@ -5093,6 +5080,19 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   //
   ACE_UNUSED_ARG (cpu_set_size);
   if (::sched_setaffinity (thr_id,
+                           cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_SCHED_SETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
+  //
+  if (::sched_setaffinity (thr_id,
+                           cpu_set_size,
                            cpu_mask) == -1)
     {
       return -1;
