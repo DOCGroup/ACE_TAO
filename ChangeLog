@@ -1,3 +1,25 @@
+Wed Dec 28 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_unistd.h:
+          Made some workarounds dependent on BCB version
+
+        * ace/os_include/os_sched.h:
+          If ACE_HAS_CPU_SET_T is not defined then typedef cpu_set_t.
+          If your platforms has the type cpu_set_t, then set this define
+          in the config file
+
+        * ace/OS_NS_Thread.{h,cpp}:
+          Added thr_set_affinity and thr_get_affinity to bind a thread
+          to a certain CPU. This is part of the extensions proposed in
+          bugzilla 2342. Thanks to Robert <coroberti at gmail dot com>
+          for these extensions.
+
+          This will probably break some builds, where we have to add
+          ACE_HAS_CPU_SET_T to the config file.
+
+        * ace/README:
+          Documented ACE_HAS_CPU_SET_T
+
 Tue Dec 27 19:21:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
