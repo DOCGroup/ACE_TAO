@@ -1294,6 +1294,10 @@ dump_connections (const ::Deployment::Connections & connections)
 
             ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
             break;
+
+        default:
+          ACE_DEBUG ((LM_DEBUG, "Unknown port kind.\n"));
+          
         }
     }
 }
