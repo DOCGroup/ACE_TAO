@@ -1,3 +1,11 @@
+Wed Dec 28 10:56:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Change ACE_HAS_CPU_SET_T feature test to look in <sched.h>.
+
+	  Add ACE_HAS_2_PARAM_SCHED_{GET,SET}AFFINITY feature tests.
+
 Wed Dec 28 16:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
