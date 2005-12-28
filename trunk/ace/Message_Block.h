@@ -666,7 +666,7 @@ private:
  * @class ACE_Data_Block
  *
  * @brief Stores the data payload that is accessed via one or more
- * <ACE_Message_Block>s.
+ * ACE_Message_Block's.
  *
  * This data structure is reference counted to maximize
  * sharing.  It also contains the <locking_strategy_> (which
@@ -859,9 +859,9 @@ private:
  * @class ACE_Dynamic_Message_Strategy
  *
  * @brief An abstract base class which provides dynamic priority
- * evaluation methods for use by the <ACE_Dynamic_Message_Queue>
+ * evaluation methods for use by the ACE_Dynamic_Message_Queue
  * class or any other class which needs to manage the priorities
- * of a collection of <ACE_Message_Block>s dynamically.
+ * of a collection of ACE_Message_Block's dynamically.
  *
  * Methods for deadline and laxity based priority evaluation are
  * provided.  These methods assume a specific partitioning of
