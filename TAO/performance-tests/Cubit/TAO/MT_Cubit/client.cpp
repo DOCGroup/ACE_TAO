@@ -45,17 +45,18 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
   ACE_UNUSED_ARG (pOldTcb);
 
   // We create the client threads with names starting with "@".
-  if (pNewTcb->name[0] == '@')
-    ctx++;
+  char* name = ::taskName (::taskIdSelf ());
+  if (name[0] == '@')
+    ++ctx;
 
   if (ct < SWITCHES)
     {
       ACE_OS::strncpy (tInfo[ct].name,
-                       pNewTcb->name,
+                       name,
                        TASKNAME_LEN);
       tInfo[ct].tcb = pNewTcb;
       tInfo[ct].pc  = pNewTcb->regs.pc;
-      ct++;
+      ++ct;
     }
 
   return 0;
@@ -119,7 +120,7 @@ Client_i::init (int argc, char *argv[])
   // Preliminary argument processing.
   for (int i=0;
        i< this->argc_;
-       i++)
+       ++i)
     {
       if (ACE_OS::strcmp (this->argv_[i],"-r") == 0)
         this->ts_->thread_per_rate_ = 1;
@@ -166,7 +167,7 @@ Client_i::output_taskinfo (void)
   // This loop visits each client.  thread_count_ is the number of
   // clients.
 
-  for (u_int j = 0; j < SWITCHES; j ++)
+  for (u_int j = 0; j < SWITCHES; ++j)
     ACE_OS::fprintf(file_handle,
                     "\tname= %s\ttcb= %p\tpc= %p\n",
                     tInfo[j].name,
@@ -225,7 +226,7 @@ Client_i::output_latency (void)
   // clients.
   for (u_int j = 0;
        j < this->ts_->thread_count_;
-       j++)
+       ++j)
     {
       ACE_OS::sprintf(buffer,
                       "%s #%d",
@@ -302,7 +303,7 @@ Client_i::calc_util_time (void)
 #else
   for (u_int i = 0;
        i < NUM_UTIL_COMPUTATIONS;
-       i++)
+       ++i)
     this->util_thread_->computation ();
 
   timer.stop ();
