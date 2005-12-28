@@ -4811,9 +4811,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     return -1;
   else
     {
-      if (! thr_id_provided  &&  thr_id)
+      if (! thr_id_provided && thr_id)
         {
-          if (*thr_id  &&  (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
+          if (*thr_id && (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
             // *thr_id was allocated by the Thread_Manager.  ::taskTcb
             // (int tid) returns the address of the WIND_TCB (task
             // control block).  According to the ::taskSpawn()
@@ -5039,6 +5039,18 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
       return -1;
     }
   return 0;
+#elif defined (ACE_HAS_2_PARAM_SCHED_GETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid ()
+  ACE_UNUSED_ARG (cpu_set_size);
+  if (::sched_getaffinity(thr_id,
+                          cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
 #else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (cpu_set_size);
@@ -5068,6 +5080,19 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   //
   if (::sched_setaffinity (thr_id,
                            cpu_set_size,
+                           cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_2_PARAM_SCHED_SETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
+  //
+  ACE_UNUSED_ARG (cpu_set_size);
+  if (::sched_setaffinity (thr_id,
                            cpu_mask) == -1)
     {
       return -1;
