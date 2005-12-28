@@ -24,6 +24,7 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/Log_Msg.h"
 #include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"

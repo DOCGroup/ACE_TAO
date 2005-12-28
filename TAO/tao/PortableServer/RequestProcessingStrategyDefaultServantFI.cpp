@@ -4,9 +4,10 @@
 #include "RequestProcessingStrategy.h"
 #include "RequestProcessingStrategyDefaultServant.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
-           RequestProcessingStrategyDefaultServantFactoryImpl,
+           RequestProcessingStrategyDefaultServantFI,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)

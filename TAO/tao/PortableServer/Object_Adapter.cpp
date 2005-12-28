@@ -15,6 +15,8 @@
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 // -- TAO Include --
 #include "tao/PortableInterceptorC.h"
@@ -36,8 +38,6 @@
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/OS_NS_string.h"
 
 #include "ThreadPolicy.h"
 #include "LifespanPolicy.h"
