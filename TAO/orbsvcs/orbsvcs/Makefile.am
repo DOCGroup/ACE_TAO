@@ -2672,7 +2672,7 @@ nobase_include_HEADERS += \
   Trader/Trader_T.cpp \
   Trader/Trader_Utils.h \
   Trader/Trading_Loader.h \
-  Trading/trading_serv_export.h
+  Trader/trading_serv_export.h
 
 pkgconfig_DATA += \
   TAO_CosTrading_Serv.pc

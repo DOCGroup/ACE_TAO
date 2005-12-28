@@ -119,7 +119,7 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
   }
 
   Header_Files {
-    Trading/trading_serv_export.h
+    Trader/trading_serv_export.h
   }
 
   Inline_Files {
