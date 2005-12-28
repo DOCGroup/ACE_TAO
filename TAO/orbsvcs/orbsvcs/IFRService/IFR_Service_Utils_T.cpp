@@ -357,6 +357,23 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                      ACE_ENV_ARG_PARAMETER);
 }
 
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x581)
+// Borland gives warnings about argument not used on the construct as used
+// for the other compilers. This has been reported to Borland, adding
+// a workaround to suppress these warnings so that the real important ones
+// are not missed.
+template<typename T>
+void
+TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean is_multiple,
+                                    ACE_Configuration * config,
+                                    ACE_Configuration_Section_Key &key)
+{
+  ACE_UNUSED_ARG (is_multiple);
+  ACE_UNUSED_ARG (config);
+  ACE_UNUSED_ARG (key);
+  // Do nothing for everything except UsesDef.
+}
+#else
 template<typename T>
 void
 TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean /* is_multiple */,
@@ -365,6 +382,7 @@ TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean /* is_multiple */,
 {
   // Do nothing for everything except UsesDef.
 }
+#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
