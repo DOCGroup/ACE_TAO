@@ -1,3 +1,9 @@
+Wed Dec 28 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Rearranged some code to make the autoconf checks for set/get
+          affinity easier
+
 Wed Dec 28 10:56:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
