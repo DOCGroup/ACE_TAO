@@ -1,3 +1,9 @@
+Wed Dec 28 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Glicc 2.3 and newer also have sched_getaffinity and
+          sched_setaffinity.
+
 Wed Dec 28 10:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:

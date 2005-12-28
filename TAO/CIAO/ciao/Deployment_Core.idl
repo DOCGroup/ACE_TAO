@@ -11,19 +11,19 @@ module Deployment
   // Typeprefix Components "omg.org";
   // OMG threw these things away, didn't it.
 
-  exception UnknownImplId 
+  exception UnknownImplId
   {
     string name;
     string reason;
   };
 
   exception InvalidLocation {};
-  exception InstallationFailure 
+  exception InstallationFailure
   {
     string name;
     string reason;
   };
-  exception ImplEntryPointNotFound 
+  exception ImplEntryPointNotFound
   {
     string name;
     string reason;
@@ -47,14 +47,14 @@ module Deployment
     string name;
     string reason;
   };
-  
+
   //==============property==================
   struct Property
   {
     string name;
     any value;
   };
-  
+
   typedef sequence < Property > Properties;
 
   //============connection==================
@@ -70,7 +70,7 @@ module Deployment
     EventEmitter,
     EventPublisher,
     EventConsumer,
-	ecEventEmitter,
+    ecEventEmitter,
     ecEventPublisher,
     ecEventConsumer,
     rtecEventEmitter,
@@ -81,7 +81,7 @@ module Deployment
     nsEventConsumer
   };
 
-  // CIAO's specific <Connection> type defition. 
+  // CIAO's specific <Connection> type defition.
   // To avoid the connection info in the plan being passed to the
   // local node and to make the implementation not very cumbersome
   // I changed the connection struct to include some extra informations.
@@ -91,14 +91,14 @@ module Deployment
     string portName;
     CCMComponentPortKind kind;
 
-    string endpointInstanceName; // CIAO specific extension 
+    string endpointInstanceName; // CIAO specific extension
     string endpointPortName;     // CIAO specific extension
 
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.
     Object endpoint;
   };
-  
+
   typedef sequence < Connection > Connections;
 
   //=======================================
@@ -134,7 +134,7 @@ module Deployment
   //==================================
   interface Application
   {
-    void finishLaunch (in Connections providedReference, 
+    void finishLaunch (in Connections providedReference,
                        in boolean start,
                        in boolean is_ReDAC)
       raises (StartError, InvalidConnection);
@@ -180,7 +180,7 @@ module Deployment
     // container has already been created and initialized at this
     // time.  So there's not much container configuration to be done
     // at this stage.
-    //@@ The container_impl_info will contain 
+    //@@ The container_impl_info will contain
     //1 component instance name as the key.
     //2 dll/so name of the exec
     //3 entry point of the exec
@@ -188,7 +188,7 @@ module Deployment
     //5 entry point of the svnt
     //6 Poosible other configuration for container/home/component
 
-    /// Install all homes and components    
+    /// Install all homes and components
     Deployment::ComponentInfos install (in ContainerImplementationInfo container_impl_info)
         raises (UnknownImplId,
                 ImplEntryPointNotFound,

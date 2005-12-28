@@ -1326,7 +1326,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   // The default way -- eight random integers.
   else
     {
-      size_t time_value = ACE_OS::time ();
+      time_t time_value = ACE_OS::time ();
       ACE_OS::srand (static_cast<u_int> (time_value));
 
       this->stem_id_[0] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
