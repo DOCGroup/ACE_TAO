@@ -53,14 +53,15 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Root_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,
-           POA,
-             "$Id$")
+           Root_POA,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

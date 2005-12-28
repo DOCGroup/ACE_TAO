@@ -17,8 +17,11 @@
 
 #include "TypeCodeFactory_Loader.h"
 #include "TypeCodeFactory_i.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(TypeCodeFactory, TypeCodeFactory_Loader, "$Id$")
+ACE_RCSID(TypeCodeFactory,
+          TypeCodeFactory_Loader,
+          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
