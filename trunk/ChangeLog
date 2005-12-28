@@ -1,3 +1,8 @@
+Wed Dec 28 12:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_sched.h:
+          Improved cpu_set_t typedef
+
 Wed Dec 28 11:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Block.h:
@@ -27,8 +32,8 @@ Wed Dec 28 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/OS_NS_Thread.{h,cpp}:
           Added thr_set_affinity and thr_get_affinity to bind a thread
           to a certain CPU. This is part of the extensions proposed in
-          bugzilla 2342. Thanks to Robert <coroberti at gmail dot com>
-          for these extensions.
+          bugzilla 2342. Thanks to Robert Iakobashvili
+          <coroberti at gmail dot com> for these extensions.
 
           This will probably break some builds, where we have to add
           ACE_HAS_CPU_SET_T to the config file.
