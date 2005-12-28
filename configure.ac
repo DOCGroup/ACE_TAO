@@ -1152,7 +1152,7 @@ AC_CHECK_TYPE([cpu_set_t],
 	      [AC_DEFINE([ACE_HAS_CPU_SET_T], 1,
 			 [Define to 1 if the system has the type `cpu_set_t'.])],
 	      [],
-	      [#include <sys/types.h>])
+	      [#include <sched.h>])
 
 AC_CHECK_TYPE([idtype_t],
 	      [AC_DEFINE([ACE_HAS_IDTYPE_T], 1,
@@ -4306,7 +4306,55 @@ dnl Check for Unix98 pthreads extensions
   ACE_CHECK_HAS_FUNCS(pthread_attr_setcreatesuspend_np)
 
   ACE_CHECK_HAS_FUNCS(pthread_getaffinity_np pthread_setaffinity_np)
-  ACE_CHECK_HAS_FUNCS(sched_getaffinity sched_setaffinity)
+
+  ACE_CHECK_HAS_FUNCS(sched_getaffinity)
+if test "$ac_cv_func_sched_getaffinity" = yes; then
+dnl The sched_getaffinity() function varies between linux versions
+dnl Check which one we have.
+AC_MSG_CHECKING([for 2- or 3-param sched_getaffinity])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#include <sched.h>
+          ]],
+          [[
+	   pid_t pid;
+	   cpu_set_t cpuset;
+           sched_getaffinity(pid, sizeof(cpuset), &cpuset);
+          ]])],
+          [
+           AC_MSG_RESULT([3])
+          ],
+          [
+           AC_MSG_RESULT([2])
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_GETAFFINITY], 1, 
+		     [Define to 1 if platform has 2 parameter sched_getaffinity()])
+          ])
+fi dnl test "$ac_cv_func_sched_getaffinity" = yes
+
+  ACE_CHECK_HAS_FUNCS(sched_setaffinity)
+if test "$ac_cv_func_sched_setaffinity" = yes; then
+dnl The sched_setaffinity() function varies between linux versions
+dnl Check which one we have.
+AC_MSG_CHECKING([for 2- or 3-param sched_setaffinity])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#include <sched.h>
+          ]],
+          [[
+	   pid_t pid;
+	   cpu_set_t cpuset;
+           sched_setaffinity(pid, sizeof(cpuset), &cpuset);
+          ]])],
+          [
+           AC_MSG_RESULT([3])
+          ],
+          [
+           AC_MSG_RESULT([2])
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_SETAFFINITY], 1, 
+		     [Define to 1 if platform has 2 parameter sched_setaffinity()])
+          ])
+fi dnl test "$ac_cv_func_sched_setaffinity" = yes
+
 
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
