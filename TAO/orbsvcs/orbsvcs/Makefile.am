@@ -941,6 +941,7 @@ nobase_include_HEADERS += \
   CosEvent/CEC_ConsumerControl.h \
   CosEvent/CEC_Default_Factory.h \
   CosEvent/CEC_Default_Factory.i \
+  CosEvent/CEC_Defaults.h \
   CosEvent/CEC_Dispatching.h \
   CosEvent/CEC_Dispatching_Task.h \
   CosEvent/CEC_Dispatching_Task.i \
@@ -978,7 +979,8 @@ nobase_include_HEADERS += \
   CosEvent/CEC_TypedProxyPushConsumer.h \
   CosEvent/CEC_TypedProxyPushConsumer.i \
   CosEvent/CEC_TypedSupplierAdmin.h \
-  CosEvent/CEC_TypedSupplierAdmin.i
+  CosEvent/CEC_TypedSupplierAdmin.i \
+  CosEvent/event_serv_export.h
 
 pkgconfig_DATA += \
   TAO_CosEvent_Serv.pc
@@ -2251,7 +2253,8 @@ nobase_include_HEADERS += \
   Notify/Topology_Object.h \
   Notify/Topology_Object.inl \
   Notify/Topology_Saver.h \
-  Notify/Worker_Task.h
+  Notify/Worker_Task.h \
+  Notify/notify_serv_export.h
 
 pkgconfig_DATA += \
   TAO_CosNotification_Serv.pc
@@ -2291,7 +2294,8 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
 libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Loader.cpp \
   Notify/XML_Saver.cpp \
-  Notify/XML_Topology_Factory.cpp
+  Notify/XML_Topology_Factory.cpp \
+  Notify/notify_persist_export.h
 
 libTAO_CosNotification_Persist_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2315,7 +2319,8 @@ libTAO_CosNotification_Persist_la_LIBADD = \
 nobase_include_HEADERS += \
   Notify/XML_Loader.h \
   Notify/XML_Saver.h \
-  Notify/XML_Topology_Factory.h
+  Notify/XML_Topology_Factory.h \
+  Notify/notify_persist_export.h
 
 endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
@@ -2329,9 +2334,7 @@ BUILT_SOURCES += \
   TimeServiceC.inl \
   TimeServiceS.cpp \
   TimeServiceS.h \
-  TimeServiceS.inl \
   TimeServiceS_T.cpp \
-  TimeServiceS_T.h \
   TimeServiceS_T.inl
 
 CLEANFILES += \
@@ -2341,12 +2344,10 @@ CLEANFILES += \
   TimeServiceC.inl \
   TimeServiceS.cpp \
   TimeServiceS.h \
-  TimeServiceS.inl \
   TimeServiceS_T.cpp \
-  TimeServiceS_T.h \
   TimeServiceS_T.inl
 
-TimeServiceC.cpp TimeServiceC.h TimeServiceC.inl TimeServiceS.cpp TimeServiceS.h TimeServiceS.inl TimeServiceS_T.cpp TimeServiceS_T.h TimeServiceS_T.inl: TimeService-stamp
+TimeServiceC.cpp TimeServiceC.h TimeServiceC.inl TimeServiceS.cpp TimeServiceS.h TimeServiceS_T.cpp TimeServiceS_T.inl: TimeService-stamp
 
 TimeService-stamp: $(srcdir)/TimeService.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Time_Export -Wb,export_include=orbsvcs/Time/time_export.h $(srcdir)/TimeService.idl
@@ -2388,13 +2389,12 @@ nobase_include_HEADERS += \
   Time/TAO_Time_Service_Server.h \
   Time/TAO_UTO.h \
   Time/Timer_Helper.h \
+  Time/time_export.h \
   TimeService.idl \
   TimeServiceC.h \
   TimeServiceC.inl \
   TimeServiceS.h \
   TimeServiceS_T.cpp \
-  TimeServiceS_T.h \
-  TimeServiceS_T.inl \
   TimeServiceS_T.inl
 
 pkgconfig_DATA += \
