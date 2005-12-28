@@ -1,3 +1,8 @@
+Wed Dec 28 10:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Glibc 2.3 seems to have cpu_set_t
+
 Wed Dec 28 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_unistd.h:
