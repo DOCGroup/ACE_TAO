@@ -1,3 +1,10 @@
+Wed Dec 28 11:47:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/acinclude.m4:
+
+	  Remove some long commented-out macros that reimplemented core
+	  autoconf functionality.
+
 Wed Dec 28 19:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
