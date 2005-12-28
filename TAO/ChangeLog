@@ -1,3 +1,14 @@
+Wed Dec 28 09:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Added missing include
+
 Wed Dec 28 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
