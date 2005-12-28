@@ -128,6 +128,19 @@ namespace CIAO
         case ::Deployment::EventConsumer:
           pspe.kind (CCMComponentPortKind::EventConsumer);
           break;
+
+        case ::Deployment::ecEventEmitter:
+        case ::Deployment::ecEventPublisher:
+        case ::Deployment::ecEventConsumer:
+        case ::Deployment::rtecEventEmitter:
+        case ::Deployment::rtecEventPublisher:
+        case ::Deployment::rtecEventConsumer:
+        case ::Deployment::nsEventEmitter:
+        case ::Deployment::nsEventPublisher:
+        case ::Deployment::nsEventConsumer:
+          ACE_ERROR ((LM_ERROR, "Unsupported PortKind\n"));
+          break;
+
         }
       
 
