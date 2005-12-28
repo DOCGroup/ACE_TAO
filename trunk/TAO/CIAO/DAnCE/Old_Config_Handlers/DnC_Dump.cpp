@@ -209,6 +209,9 @@ namespace Deployment
     case EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
     case EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
     case EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
+    default: ACE_DEBUG ((LM_DEBUG, "Unknown port kind\n"));
+      break;
+      
     }
   }
 
@@ -382,6 +385,9 @@ namespace Deployment
     case EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
     case EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
     case EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
+    default: ACE_DEBUG ((LM_DEBUG, "Unknown port kind\n"));
+      break;
+      
     }
 #if (_MSC_VER > 1200)
     dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspe.instanceRef,
