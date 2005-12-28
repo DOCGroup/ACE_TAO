@@ -2294,8 +2294,7 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
 libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Loader.cpp \
   Notify/XML_Saver.cpp \
-  Notify/XML_Topology_Factory.cpp \
-  Notify/notify_persist_export.h
+  Notify/XML_Topology_Factory.cpp
 
 libTAO_CosNotification_Persist_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2672,7 +2671,8 @@ nobase_include_HEADERS += \
   Trader/Trader_Interfaces.h \
   Trader/Trader_T.cpp \
   Trader/Trader_Utils.h \
-  Trader/Trading_Loader.h
+  Trader/Trading_Loader.h \
+  Trading/trading_serv_export.h
 
 pkgconfig_DATA += \
   TAO_CosTrading_Serv.pc
