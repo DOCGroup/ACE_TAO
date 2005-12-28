@@ -1010,9 +1010,6 @@ AH_TEMPLATE([ACE_LACKS_UNIX_SIGNALS],
 AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
 [Platform lacks struct utsname (e.g., Win32 and VxWorks)])
 
-AH_TEMPLATE([ACE_HAS_3_PARAM_WCSTOK],
-[Platform's wcstok() takes 3 arguments])
-
 AH_TEMPLATE([ACE_LACKS_WILDCARD_BIND],
 [The bind() call will not select the port if it's 0.])
 
