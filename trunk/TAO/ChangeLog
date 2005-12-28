@@ -1,3 +1,9 @@
+Wed Dec 28 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+          Made this test compiling again with VxWorks 6.1, the WIND_TCB
+          struct has been changed and shouldn't be used directly anymore
+
 Wed Dec 28 10:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/Synch_i.cpp:
