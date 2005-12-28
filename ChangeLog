@@ -1,3 +1,9 @@
+Wed Dec 28 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+          Removed some lacks macros which 6.2 should deliver according
+          to the documentation
+
 Wed Dec 28 11:21:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
@@ -10,11 +16,11 @@ Wed Dec 28 11:08:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* m4/config_h.m4:
 
 	  Remove ACE_HAS_3_PARAM_WCSTOK autoconf header template.
-	
+
 	* configure.ac:
 
 	  Added description to AC_DEFINE for ACE_HAS_3_PARAM_WCSTOK.
-	
+
 Wed Dec 28 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
