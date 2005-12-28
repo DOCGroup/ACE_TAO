@@ -1,3 +1,9 @@
+Wed Dec 28 09:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/test_i.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/test_i.h:
+          No need to derive explicitly from ServantBase
+
 Wed Dec 28 09:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
