@@ -5068,7 +5068,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   //
   if (::sched_setaffinity (thr_id,
                            cpu_set_size,
-                           cpu_mask == -1)
+                           cpu_mask) == -1)
     {
       return -1;
     }
