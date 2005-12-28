@@ -3906,7 +3906,8 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
            wchar_t *p = wcstok (str, delim, &ptr);
           ]])],
           [
-           AC_DEFINE([ACE_HAS_3_PARAM_WCSTOK])
+           AC_DEFINE([ACE_HAS_3_PARAM_WCSTOK],
+		     [Define to 1 if platform has 3 parameter wcstok()])
            AC_MSG_RESULT([3])
           ],
           [
