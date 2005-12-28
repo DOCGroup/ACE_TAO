@@ -174,6 +174,8 @@
 # define ACE_HAS_ISASTREAM_PROTO
 # define ACE_HAS_PTHREAD_SIGMASK_PROTO
 # define ACE_HAS_CPU_SET_T
+# define ACE_HAS_SCHED_GETAFFINITY
+# define ACE_HAS_SCHED_SETAFFINITY
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
 // Then the compiler specific parts
