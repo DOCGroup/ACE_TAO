@@ -97,28 +97,34 @@ project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    CosEvent {
-      CosEvent/CEC_ConsumerAdmin.cpp
-      CosEvent/CEC_ConsumerControl.cpp
-      CosEvent/CEC_Default_Factory.cpp
-      CosEvent/CEC_Dispatching.cpp
-      CosEvent/CEC_Dispatching_Task.cpp
-      CosEvent/CEC_EventChannel.cpp
-      CosEvent/CEC_Event_Loader.cpp
-      CosEvent/CEC_Factory.cpp
-      CosEvent/CEC_MT_Dispatching.cpp
-      CosEvent/CEC_ProxyPullConsumer.cpp
-      CosEvent/CEC_ProxyPullSupplier.cpp
-      CosEvent/CEC_ProxyPushConsumer.cpp
-      CosEvent/CEC_ProxyPushSupplier.cpp
-      CosEvent/CEC_Pulling_Strategy.cpp
-      CosEvent/CEC_Reactive_ConsumerControl.cpp
-      CosEvent/CEC_Reactive_Pulling_Strategy.cpp
-      CosEvent/CEC_Reactive_SupplierControl.cpp
-      CosEvent/CEC_SupplierAdmin.cpp
-      CosEvent/CEC_SupplierControl.cpp
-    }
+  Source_Files {
+    CosEvent/CEC_ConsumerAdmin.cpp
+    CosEvent/CEC_ConsumerControl.cpp
+    CosEvent/CEC_Default_Factory.cpp
+    CosEvent/CEC_Dispatching.cpp
+    CosEvent/CEC_Dispatching_Task.cpp
+    CosEvent/CEC_EventChannel.cpp
+    CosEvent/CEC_Event_Loader.cpp
+    CosEvent/CEC_Factory.cpp
+    CosEvent/CEC_MT_Dispatching.cpp
+    CosEvent/CEC_ProxyPullConsumer.cpp
+    CosEvent/CEC_ProxyPullSupplier.cpp
+    CosEvent/CEC_ProxyPushConsumer.cpp
+    CosEvent/CEC_ProxyPushSupplier.cpp
+    CosEvent/CEC_Pulling_Strategy.cpp
+    CosEvent/CEC_Reactive_ConsumerControl.cpp
+    CosEvent/CEC_Reactive_Pulling_Strategy.cpp
+    CosEvent/CEC_Reactive_SupplierControl.cpp
+    CosEvent/CEC_SupplierAdmin.cpp
+    CosEvent/CEC_SupplierControl.cpp
+  }
+
+  Header_Files {
+    CosEvent/CEC_Defaults.h
+    CosEvent/event_serv_export.h
+  }
+
+  Inline_Files {
   }
 
   Template_Files {
