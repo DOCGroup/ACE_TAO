@@ -1,3 +1,24 @@
+Tue Dec 27 17:21:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+
+	  Tweak so notify_serv_export and notify_persist_export.h are
+	  installed.
+
+	* orbsvcs/orbsvcs/CosTime.mpc:
+
+	  Tweak so time_export.h is installed.
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
+
+	  Tweak so that CEC_Defaults.h and event_serv_export.h are
+	  installed.
+
 Tue Dec 27 16:17:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:

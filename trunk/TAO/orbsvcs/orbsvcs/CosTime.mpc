@@ -11,12 +11,17 @@ project(CosTime) : orbsvcslib, svc_utils, core, portableserver, tao_versioning_i
     TimeService.idl
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    Time {
-      TimeServiceC.cpp
-      TimeServiceS.cpp
-      Time
-    }
+  Source_Files {
+    TimeServiceC.cpp
+    TimeServiceS.cpp
+    Time
+  }
+
+  Header_Files {
+    Time/time_export.h
+  }
+
+  Inline_Files {
   }
 
   Template_Files {
