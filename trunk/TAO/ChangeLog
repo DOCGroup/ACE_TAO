@@ -1,3 +1,15 @@
+Thu Dec 29 11:26:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Bug_2316_Regression/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/tests/Bug_2316_Regression/Bug_2316_Regression.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Thu Dec 29 09:43:07 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PI/PI_PolicyFactory.cpp:
