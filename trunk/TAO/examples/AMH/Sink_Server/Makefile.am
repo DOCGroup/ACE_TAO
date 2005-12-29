@@ -16,41 +16,48 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
+
+## Makefile.Sink_Server_IDL.am
+
+if BUILD_CORBA_MESSAGING
+
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GH $(srcdir)/Test.idl
+	@touch $@
+
+
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Sink_Server_Client.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GH $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -64,12 +71,8 @@ client_SOURCES = \
   Client_Task.cpp \
   TestC.cpp \
   client.cpp \
-  Client_Task.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl
+  Base_Server.inl \
+  Client_Task.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -89,35 +92,6 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GH $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS += mt_server
 
@@ -139,11 +113,6 @@ mt_server_SOURCES = \
   Base_Server.h \
   Base_Server.inl \
   MT_AMH_Server.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl \
   Timer_Handler.h
 
 mt_server_LDADD = \
@@ -165,35 +134,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if !BUILD_ACE_FOR_TAO
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GH $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += st_server
 
 st_server_CPPFLAGS = \
@@ -212,11 +152,6 @@ st_server_SOURCES = \
   AMH_Servant.h \
   Base_Server.h \
   Base_Server.inl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl \
   Timer_Handler.h
 
 st_server_LDADD = \
