@@ -1,10 +1,17 @@
+Thu Dec 29 06:47:37 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Strategies/OC_Endpoint_Selector_Factory.cpp:
+
+          Wrapped plain text string in ACE_TEXT () to avoid problems on
+          wide-character builds.
+
 Wed Dec 28 18:20:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Callback_Quoter/Makefile.am:
+        * examples/Callback_Quoter/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
@@ -12,15 +19,15 @@ Wed Dec 28 18:20:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Wed Dec 28 17:07:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/AMH/Sink_Server/Makefile.am:
-	* examples/Buffered_AMI/Makefile.am:
-	* examples/Buffered_Oneways/Makefile.am:
+        * examples/AMH/Sink_Server/Makefile.am:
+        * examples/Buffered_AMI/Makefile.am:
+        * examples/Buffered_Oneways/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* examples/AMH/Sink_Server/Sink_Server.mpc:
-	* examples/Buffered_AMI/Buffered_AMI.mpc:
-	* examples/Buffered_Oneways/Buffered_Oneways.mpc:
+        * examples/AMH/Sink_Server/Sink_Server.mpc:
+        * examples/Buffered_AMI/Buffered_AMI.mpc:
+        * examples/Buffered_Oneways/Buffered_Oneways.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
@@ -82,86 +89,86 @@ Wed Dec 28 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 27 22:50:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
 
-	  Fix typo in last change.
+          Fix typo in last change.
 
 Tue Dec 27 18:17:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
 
-	  Tweak so trading_serv_export.h is installed.
+          Tweak so trading_serv_export.h is installed.
 
 Tue Dec 27 17:21:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
 
-	  Tweak so notify_serv_export and notify_persist_export.h are
-	  installed.
+          Tweak so notify_serv_export and notify_persist_export.h are
+          installed.
 
-	* orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
 
-	  Tweak so time_export.h is installed.
+          Tweak so time_export.h is installed.
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
 
-	  Tweak so that CEC_Defaults.h and event_serv_export.h are
-	  installed.
+          Tweak so that CEC_Defaults.h and event_serv_export.h are
+          installed.
 
 Tue Dec 27 16:17:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
 
-	  Tweak so concurrency_export.h is installed.  Thanks to Vladimir
-	  Panov for pointing out this class of problems.
+          Tweak so concurrency_export.h is installed.  Thanks to Vladimir
+          Panov for pointing out this class of problems.
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated due to new Optimized Connection Endpoint Selector
-	  feature.  C.f.:
+          Regenerated due to new Optimized Connection Endpoint Selector
+          feature.  C.f.:
 
           Tue Dec 27 08:22:42 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Dec 27 15:33:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Remove DISTCLEANFILES definitions.  We no longer ship
-	  tao-config and tao-config.1.
+          Remove DISTCLEANFILES definitions.  We no longer ship
+          tao-config and tao-config.1.
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Build examples and interop-tests subdirectories.
+          Build examples and interop-tests subdirectories.
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  I accidently clobbered this file by checking in the MPC
-	  generated version.   Restore to revision 1.13, the last
-	  known good version.
+          I accidently clobbered this file by checking in the MPC
+          generated version.   Restore to revision 1.13, the last
+          known good version.
 
 Tue Dec 27 15:11:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Release
+        * Release
 
-	  Add aclocal.m4 to RELEASE_FILES.  Thanks to Vladimir Panov
-	  < gbr at voidland dot org >.
+          Add aclocal.m4 to RELEASE_FILES.  Thanks to Vladimir Panov
+          < gbr at voidland dot org >.
 
 Fri Dec 23 20:17:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -191,55 +198,55 @@ Fri Dec 23 20:17:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Dec 27 12:24:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Fixed botched ACLOCAL_AMFLAGS definition.
+          Fixed botched ACLOCAL_AMFLAGS definition.
 
 Tue Dec 27 11:34:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Build examples subdirectory.
+          Build examples subdirectory.
 
-	* examples/Makefile.am:
+        * examples/Makefile.am:
 
-	  Disable building CSD_Strategy and RTScheduling subdirectories.
-	  These *.mpc files need major changes to support separate build
-	  directories.  This is too risky to complete within this beta
-	  cycle.
+          Disable building CSD_Strategy and RTScheduling subdirectories.
+          These *.mpc files need major changes to support separate build
+          directories.  This is too risky to complete within this beta
+          cycle.
 
-	* performance-tests/Makefile.am:
+        * performance-tests/Makefile.am:
 
-	  Disable building CSD_Strategy subdirectory.
-	  These *.mpc files need major changes to support separate build
-	  directories.  This is too risky to complete within this beta
-	  cycle.
+          Disable building CSD_Strategy subdirectory.
+          These *.mpc files need major changes to support separate build
+          directories.  This is too risky to complete within this beta
+          cycle.
 
-	* examples/Load_Balancing/Makefile.am:
-	* examples/Load_Balancing_persistent/Makefile.am:
-	* examples/POA/Adapter_Activator/Makefile.am:
-	* examples/POA/Explicit_Activation/Makefile.am:
-	* examples/POA/On_Demand_Activation/Makefile.am:
-	* examples/POA/Reference_Counted_Servant/Makefile.am:
-	* examples/POA/TIE/Makefile.am:
-	* examples/Persistent_Grid/Makefile.am:
-	* examples/Simulator/Event_Supplier/Makefile.am:
+        * examples/Load_Balancing/Makefile.am:
+        * examples/Load_Balancing_persistent/Makefile.am:
+        * examples/POA/Adapter_Activator/Makefile.am:
+        * examples/POA/Explicit_Activation/Makefile.am:
+        * examples/POA/On_Demand_Activation/Makefile.am:
+        * examples/POA/Reference_Counted_Servant/Makefile.am:
+        * examples/POA/TIE/Makefile.am:
+        * examples/Persistent_Grid/Makefile.am:
+        * examples/Simulator/Event_Supplier/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
-	* examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
-	* examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
-	* examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+        * examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+        * examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+        * examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+        * examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
 
           Change automake specific includes definitions to to have both
-	  build dir and source dir relative paths.
+          build dir and source dir relative paths.
 
-	* examples/Load_Balancing/Load_Balancing.mpc:
-	* examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
-	* examples/POA/TIE/POA_TIE.mpc:
-	* examples/Persistent_Grid/Persistent_Grid.mpc:
-	* examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+        * examples/Load_Balancing/Load_Balancing.mpc:
+        * examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+        * examples/POA/TIE/POA_TIE.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
@@ -284,33 +291,33 @@ Tue Dec 27 09:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 23 16:16:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add orbsvcs/tests/Bug_2316_Regression/Makefile to
-	  AC_CONFIG_FILES.
+          Add orbsvcs/tests/Bug_2316_Regression/Makefile to
+          AC_CONFIG_FILES.
 
-	* orbsvcs/tests/Bug_2316_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2316_Regression/Makefile.am:
 
-	  New file.
+          New file.
 
 Fri Dec 23 13:06:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
 
-	  Don't assign values to dynamically allocated Any's if the
-	  allocation failed.
+          Don't assign values to dynamically allocated Any's if the
+          allocation failed.
 
-	  Remove rec_ member variable.  The constructor extracts all
-	  relevant fields and adds them to property_lookup_ map.
+          Remove rec_ member variable.  The constructor extracts all
+          relevant fields and adds them to property_lookup_ map.
 
-	  Const-qualify constructor argument.
+          Const-qualify constructor argument.
 
 Fri Dec 23 10:47:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
 
-	  Removed unused variable.
+          Removed unused variable.
 
 Fri Dec 23 09:09:14 2005  Chad Elliott  <elliott_c@ociweb.com>
 
