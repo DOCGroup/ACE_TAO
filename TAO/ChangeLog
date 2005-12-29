@@ -1,3 +1,9 @@
+Thu Dec 29 07:29:38 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Added Comment regarding new Endpoint Selector.
+
 Thu Dec 29 06:47:37 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Strategies/OC_Endpoint_Selector_Factory.cpp:
