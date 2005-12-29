@@ -30,7 +30,8 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
   TAO_ORB_Core::set_endpoint_selector_factory ("OC_Endpoint_Selector_Factory");
   for (int count = 0; count < argc; count++)
     {
-      if ((ACE_OS::strcasecmp (argv[count],"-connect_timeout") == 0) &&
+      if ((ACE_OS::strcasecmp (argv[count],
+                               ACE_TEXT ("-connect_timeout")) == 0) &&
           count < argc-1)
         {
           count++;
