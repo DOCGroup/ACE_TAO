@@ -276,6 +276,10 @@
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
+// At least for 11iv2, lacks perfect filtering.
+#if (HPUX_VERS >= 1123) && !defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING)
+# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
+#endif
 
 /* Platform defines MAP_FAILED as a long constant. */
 #define ACE_HAS_LONG_MAP_FAILED 1

@@ -1,3 +1,13 @@
+Thu Dec 29 11:55:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/DLL.h: Further Doxygen-ized and expanded the documentation.
+
+	* ace/config-macros.h: Add __HP_aCC to the compilers that need to have
+	  unreachable statements suppressed to avoid a compile diagnostic.
+
+	* ace/config-hpux-11.00.h: Add ACE_LACKS_PERFECT_MULTICAST_FILTERING
+	  for HP-UX 11iv2 (11.23).
+
 Thu Dec 29 11:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
