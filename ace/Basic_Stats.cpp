@@ -73,5 +73,26 @@ void
 ACE_Basic_Stats::dump_results (const wchar_t *msg,
                                ACE_UINT32 sf) const
 {
-  // TODO
+#ifndef ACE_NLOGGING
+  if (this->samples_count () == 0u)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("%s : no data collected\n"), msg));
+      return;
+    }
+
+  ACE_UINT64 avg = this->sum_ / this->samples_count_;
+
+  ACE_UINT64 l_min = this->min_ / sf;
+  ACE_UINT64 l_max = this->max_ / sf;
+  ACE_UINT64 l_avg = avg / sf;
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("%s latency   : %Q[%d]/%Q/%Q[%d] (min/avg/max)\n"),
+              msg,
+              l_min, this->min_at_,
+              l_avg,
+              l_max, this->max_at_));
+
+#endif /* ACE_NLOGGING */
 }
