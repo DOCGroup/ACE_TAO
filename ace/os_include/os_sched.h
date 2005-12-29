@@ -36,16 +36,13 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if !defined (ACE_HAS_CPU_SET_T)
-#  if !defined (__cpu_set_t_defined)
-#    define __cpu_set_t_defined
-#    define ACE_CPU_SETSIZE 1024
-     typedef struct
-     {
-       ACE_UINT32 bit_array_[ACE_CPU_SETSIZE / (8 * sizeof (ACE_UINT32))];
-     } cpu_set_t;
-#  endif /* !__cpu_set_t_defined */
-#endif /* !ACE_HAS_CPU_SET_T */
+#if !defined (__cpu_set_t_defined) || !defined (ACE_HAS_CPU_SET_T)
+#  define ACE_CPU_SETSIZE 1024
+   typedef struct
+   {
+     ACE_UINT32 bit_array_[ACE_CPU_SETSIZE / (8 * sizeof (ACE_UINT32))];
+   } cpu_set_t;
+#endif /* !ACE_HAS_CPU_SET_T || !__cpu_set_t_defined */
 
 #ifdef __cplusplus
 }
