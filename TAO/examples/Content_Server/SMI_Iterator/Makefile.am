@@ -16,15 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.SMI_Iterator_Server.am
+## Makefile.SMI_Iterator_IDL.am
 
-if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   Web_ServerC.cpp \
   Web_ServerC.h \
   Web_ServerC.inl \
@@ -35,7 +31,7 @@ BUILT_SOURCES += \
   Web_ServerS_T.h \
   Web_ServerS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Web_Server-stamp \
   Web_ServerC.cpp \
   Web_ServerC.h \
@@ -50,8 +46,41 @@ CLEANFILES += \
 Web_ServerC.cpp Web_ServerC.h Web_ServerC.inl Web_ServerS.cpp Web_ServerS.h Web_ServerS.inl Web_ServerS_T.cpp Web_ServerS_T.h Web_ServerS_T.inl: Web_Server-stamp
 
 Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Web_Server.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Web_Server.idl
 	@touch $@
+
+
+## Makefile.SMI_Iterator_Client.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
+
+client_SOURCES = \
+  Web_ServerC.cpp \
+  client.cpp \
+  Content_Iterator_i.h \
+  Iterator_Factory_i.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SMI_Iterator_Server.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -70,73 +99,10 @@ server_SOURCES = \
   Web_ServerS.cpp \
   server.cpp \
   Content_Iterator_i.h \
-  Iterator_Factory_i.h \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.h \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
+  Iterator_Factory_i.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_ACE_FOR_TAO
-
-## Makefile.SMI_Iterator_Client.am
-
-if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
-  Web_ServerC.cpp \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.h \
-  Web_ServerS.inl \
-  Web_ServerS_T.cpp \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
-
-CLEANFILES += \
-  Web_Server-stamp \
-  Web_ServerC.cpp \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.h \
-  Web_ServerS.inl \
-  Web_ServerS_T.cpp \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
-
-Web_ServerC.cpp Web_ServerC.h Web_ServerC.inl Web_ServerS.h Web_ServerS.inl Web_ServerS_T.cpp Web_ServerS_T.h Web_ServerS_T.inl: Web_Server-stamp
-
-Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Web_Server.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
-
-client_SOURCES = \
-  Web_ServerC.cpp \
-  client.cpp \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.h \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
-
-client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
