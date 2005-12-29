@@ -29,7 +29,7 @@ module PortableInterceptor
    const ProcessingMode REMOTE_ONLY      = 1;
    const ProcessingMode LOCAL_ONLY       = 2;
 
-   // TBD - Need to get the proper Policy Type code from OMG
+   /// @todo - Need to get the proper Policy Type code from OMG
    const CORBA::PolicyType PROCESSING_MODE_POLICY_TYPE = 100;
 
    local interface ProcessingModePolicy : CORBA::Policy

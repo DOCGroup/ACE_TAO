@@ -59,14 +59,6 @@ public:
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // TBD - Should these be overridden?
-
-  // Return the cached policy type for this policy.
-  // virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
-
-  // Return the scope at which this policy can be applied. See orbconf.h.
-  // virtual TAO_Policy_Scope _tao_scope (void) const;
-
 private:
   /// The attribute
   PortableInterceptor::ProcessingMode processing_mode_;

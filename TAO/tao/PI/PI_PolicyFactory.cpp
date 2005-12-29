@@ -19,8 +19,6 @@ TAO_PI_PolicyFactory::create_policy (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
-// TBD - Should there be a "#if (TAO_HAS_MINIMUM_POA == 0)" check here?
-
   if (type == PortableInterceptor::PROCESSING_MODE_POLICY_TYPE)
     {
       TAO_ProcessingModePolicy *processing_mode_policy = 0;
