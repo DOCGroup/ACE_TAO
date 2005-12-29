@@ -178,12 +178,12 @@ startLaunch (const Deployment::Properties & configProperty,
 
       if (!node_info)
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) NodeApplicationManager.cpp -"
                       "CIAO::NodeApplicationManager_Impl::startLaunch -"
                       "Failed to create Node Implementation Infos!\n"));
 
-          ACE_TRY_THROW 
+          ACE_TRY_THROW
             (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
                                      "Unable to get node level infos"));
         }
@@ -207,7 +207,7 @@ startLaunch (const Deployment::Properties & configProperty,
           const CORBA::ULong info_len = infos.length ();
           for (CORBA::ULong i = 0; i < info_len; ++i)
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "DAnCE (%P|%t) NodeApplicationManager.cpp -"
                           "CIAO::NodeApplicationManager_Impl::startLaunch -"
                           "The info for installation: "
@@ -236,27 +236,27 @@ startLaunch (const Deployment::Properties & configProperty,
           //Since we know the type ahead of time...narrow is omitted here.
           if (this->component_map_.
               bind (comp_info[len].component_instance_name.in(),
-                    Components::CCMObject::_duplicate 
+                    Components::CCMObject::_duplicate
                        (comp_info[len].component_ref.in())))
             {
               ACE_CString error ("Duplicate component instance name ");
               error += comp_info[len].component_instance_name.in();
 
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("NodeApplicationManager_Impl::startLaunch",
                      error.c_str ()));
             }
         }
 
-      providedReference = 
+      providedReference =
         this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (providedReference == 0)
         {
-          ACE_TRY_THROW 
-            (Deployment::StartError 
+          ACE_TRY_THROW
+            (Deployment::StartError
                ("NodeApplicationManager_Impl::startLaunch",
                 "Error creating connections during startLaunch."));
         }
@@ -303,7 +303,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
 {
   // Prerequisite:
   //    (1) If this is an existiing old NAM, then <nodeapp_> is ready to use.
-  //        We also got a copy of <plan_> as well as all the installed components 
+  //        We also got a copy of <plan_> as well as all the installed components
   //        in the <component_map_>.
   //    (2) Then we should call <install> operation on the NA, but in order to do this,
   //        we must pack all the to-be-added components into some appropriate
@@ -314,7 +314,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
   //        this should be driven by the DAM, so it looks like that we need to
   //        add another operation on the NA interface which is a counterpart of
   //        <finishLaunch>, something like <finishLaunch_remove_only>.
-  //        
+  //
   //
   //
   //    (1) If this is an brand new NAM, then only new installation is needed.
@@ -324,7 +324,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
 
   ACE_UNUSED_ARG (configProperty);
   ACE_UNUSED_ARG (start);
-  
+
   CIAO_TRACE ("CIAO::NodeApplicationManager_Impl_Base::perform_redeployment");
 
   ACE_DEBUG ((LM_DEBUG,
@@ -332,19 +332,19 @@ perform_redeployment (const Deployment::Properties & configProperty,
               "invoked CIAO::NodeApplicationManager_Impl_Base::perform_redeployment \n"));
   ACE_TRY
     {
-      if (! CORBA::is_nil (this->nodeapp_))
+      if (! CORBA::is_nil (this->nodeapp_.in ()))
         {
           // We ignored those components that are already in the <component_map_>, for
           // the rest ones, we pack them into NodeImplementationInfo.
           Deployment::DeploymentPlan tmp_plan = this->plan_;
           tmp_plan.instance.length (0);
 
-          CORBA::ULong length = this->plan_.instance.length ();
+          CORBA::ULong const length = this->plan_.instance.length ();
           for (CORBA::ULong i = 0; i <  length; ++i)
             {
               // add the new components into the tmp_plan
               if (this->component_map_.find (this->plan_.instance[i].name.in ()) != 0)
-                {          
+                {
                   CORBA::ULong cur_len = tmp_plan.instance.length ();
                   tmp_plan.instance.length (cur_len + 1);
                   tmp_plan.instance[cur_len] = this->plan_.instance[i];
@@ -358,12 +358,12 @@ perform_redeployment (const Deployment::Properties & configProperty,
 
           if (!node_info)
             {
-              ACE_ERROR ((LM_ERROR, 
+              ACE_ERROR ((LM_ERROR,
                           "DAnCE (%P|%t) NodeApplicationManager.cpp -"
                           "CIAO::NodeApplicationManager_Impl::perform_redeployment -"
                           "Failed to create Node Implementation Infos!\n"));
 
-              ACE_TRY_THROW 
+              ACE_TRY_THROW
                 (Deployment::PlanError ("NodeApplicationManager_Imp::perform_redeployment",
                                         "Unable to get node level infos"));
             }
@@ -383,14 +383,14 @@ perform_redeployment (const Deployment::Properties & configProperty,
               //Since we know the type ahead of time...narrow is omitted here.
               if (this->component_map_.
                   bind (comp_info[len].component_instance_name.in(),
-                        Components::CCMObject::_duplicate 
+                        Components::CCMObject::_duplicate
                           (comp_info[len].component_ref.in())))
                 {
                   ACE_CString error ("Duplicate component instance name ");
                   error += comp_info[len].component_instance_name.in();
 
-                  ACE_TRY_THROW 
-                    (Deployment::StartError 
+                  ACE_TRY_THROW
+                    (Deployment::StartError
                       ("NodeApplicationManager_Impl::startLaunch",
                         error.c_str ()));
                 }
@@ -398,14 +398,14 @@ perform_redeployment (const Deployment::Properties & configProperty,
 
           // NOTE: We are propogating back "all" the facets/consumers object
           // references to the DAM, including the previous existing ones.
-          providedReference = 
+          providedReference =
             this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (providedReference == 0)
             {
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+              ACE_TRY_THROW
+                (Deployment::StartError
                   ("NodeApplicationManager_Impl::startLaunch",
                     "Error creating connections during startLaunch."));
             }
@@ -416,8 +416,8 @@ perform_redeployment (const Deployment::Properties & configProperty,
       else // This is a new NodeApplication process, then we need to install
            // all the components. We should try to reuse much of the above code.
         {
-            this->startLaunch (configProperty, 
-                               providedReference, 
+            this->startLaunch (configProperty,
+                               providedReference,
                                start
                                ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
@@ -506,18 +506,18 @@ CIAO::NodeApplicationManager_Impl::init (
                       "NULL NodeApplication location. \n"));
           ACE_TRY_THROW (CORBA::BAD_PARAM ());
         }
-      
-      
+
+
       if (delay == 0)
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
                       "CIAO::NodeApplicationManager_Impl::init -"
                       "NodeManager must be started with a -d "
                       "of greter than zero.\n"));
           ACE_TRY_THROW (CORBA::BAD_PARAM ());
         }
-      
+
       this->nodeapp_path_.set (nodeapp_location);
       this->spawn_delay_ = delay;
       this->nodeapp_command_op_ = CORBA::string_dup (nodeapp_op);
@@ -624,12 +624,12 @@ create_node_application (const ACE_CString & options
         {
           if (CIAO::debug_level () > 1)
             {
-              ACE_DEBUG ((LM_ERROR, 
+              ACE_DEBUG ((LM_ERROR,
                           "Fail to spawn a NodeApplication process\n"));
             }
 
-          ACE_TRY_THROW 
-            (Deployment::ResourceNotAvailable 
+          ACE_TRY_THROW
+            (Deployment::ResourceNotAvailable
                ("Failed to spawn process",
                 "NodeApplication",
                 "",
@@ -660,7 +660,7 @@ create_node_application (const ACE_CString & options
         {
           if (CIAO::debug_level () > 1)
             {
-              ACE_ERROR ((LM_ERROR, 
+              ACE_ERROR ((LM_ERROR,
                           "Fail to acquire the NodeApplication object\n"));
             }
 
@@ -669,7 +669,7 @@ create_node_application (const ACE_CString & options
 
       {
         //ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-        this->nodeapp_ = 
+        this->nodeapp_ =
             Deployment::NodeApplication::_duplicate (retval.in ());
       }
     }
@@ -688,7 +688,7 @@ create_node_application (const ACE_CString & options
 
   if (CIAO::debug_level () > 1)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
             "CIAO::NodeApplicationManager_Impl::NodeApplication spawned!\n"));
     }
 
@@ -795,17 +795,17 @@ create_node_application (const ACE_CString & options
     = poa_->activate_object (nodeapp_servant
                             ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
-  
+
   CORBA::Object_var
     obj = poa_->id_to_reference (nodeapp_oid.in ()
                               ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
-  
+
   Deployment::NodeApplication_var nodeapp_obj =
     Deployment::NodeApplication::_narrow (obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
-  
+
   if (CORBA::is_nil (nodeapp_obj.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Unable to activate NodeApplication object\n"));
