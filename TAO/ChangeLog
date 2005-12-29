@@ -1,3 +1,15 @@
+Wed Dec 28 18:20:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Callback_Quoter/Makefile.am:
+
+	  Regenerated.
+
+	* examples/Callback_Quoter/Callback_Quoter.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Wed Dec 28 17:07:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/AMH/Sink_Server/Makefile.am:
