@@ -1,3 +1,19 @@
+Wed Dec 28 17:07:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/AMH/Sink_Server/Makefile.am:
+	* examples/Buffered_AMI/Makefile.am:
+	* examples/Buffered_Oneways/Makefile.am:
+
+	  Regenerated.
+
+	* examples/AMH/Sink_Server/Sink_Server.mpc:
+	* examples/Buffered_AMI/Buffered_AMI.mpc:
+	* examples/Buffered_Oneways/Buffered_Oneways.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Wed Dec 28 13:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Native_Exceptions/Native_Exceptions.mpc:
