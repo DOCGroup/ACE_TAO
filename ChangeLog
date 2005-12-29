@@ -1,3 +1,9 @@
+Thu Dec 29 11:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.1.GNU:
+          Changed the way we set TAO_IDL
+
 Thu Dec 29 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_sched.h:
