@@ -1,3 +1,9 @@
+Thu Dec 29 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_sched.h:
+          Another update to the way we detect if we have to define cpu_set_t,
+          older linux versions do have glibc2.3 but not this type.
+
 Wed Dec 28 11:47:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/acinclude.m4:
