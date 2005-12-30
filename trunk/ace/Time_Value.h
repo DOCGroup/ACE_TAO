@@ -106,19 +106,19 @@ public:
   ACE_Time_Value (void);
 
   /// Constructor.
-  ACE_Time_Value (time_t sec, long usec = 0);
+  explicit ACE_Time_Value (time_t sec, long usec = 0);
 
   // = Methods for converting to/from various time formats.
 
   /// Construct the ACE_Time_Value from a timeval.
-  ACE_Time_Value (const struct timeval &t);
+  explicit ACE_Time_Value (const struct timeval &t);
 
   /// Construct the ACE_Time_Value object from a timespec_t.
-  ACE_Time_Value (const timespec_t &t);
+  explicit ACE_Time_Value (const timespec_t &t);
 
 # if defined (ACE_WIN32)
   /// Construct the ACE_Time_Value object from a Win32 FILETIME
-  ACE_Time_Value (const FILETIME &ft);
+  explicit ACE_Time_Value (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
   /// Initializes the ACE_Time_Value from seconds and useconds.
