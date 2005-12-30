@@ -33,7 +33,7 @@ public:
 
     while (1)
       {
-        ACE_Message_Block* mb;
+        ACE_Message_Block* mb = 0;
         ACE_Time_Value tv (0, 1000);
         tv += ACE_OS::time (0);
 

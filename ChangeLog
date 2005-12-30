@@ -1,5 +1,16 @@
 Fri Dec 30 10:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * ace/Time_Value.{h,inl}:
+          Added += and -= for a time_t
+
+        * examples/APG/ThreadManagement/Priorities.cpp:
+        * examples/APG/ThreadManagement/Signals2.cpp:
+        * examples/APG/ThreadManagement/Signals.cpp:
+        * examples/APG/ThreadManagement/Coop_Cancel.cpp:
+          Initialise pointers with 0
+
+Fri Dec 30 10:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * ace/Time_Value.h:
           Made all single argument constructors explicit to prevent implicit
           conversions.
