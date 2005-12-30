@@ -1,3 +1,9 @@
+Fri Dec 30 10:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+          Made all single argument constructors explicit to prevent implicit
+          conversions.
+
 Fri Dec 30 10:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Profile_Timer.cpp (elapsed_rusage):
