@@ -345,10 +345,16 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
 
 #  if defined (ACE_HAS_GETRUSAGE)
-  usage.ru_utime =
-    this->end_usage_.ru_utime - this->begin_usage_.ru_utime;
-  usage.ru_stime =
-    this->end_usage_.ru_stime - this->begin_usage_.ru_stime;
+  // Use ACE_Time_Value's as intermediate because the type of ru_utime can
+  // be multiple types and using the - operator is not safe when this are
+  // 64bit FILETIMEs on Windows
+  ACE_Time_Value end_ru_utime (this->end_usage_.ru_utime);
+  ACE_Time_Value begin_ru_utime (this->begin_usage_.ru_utime);
+  usage.ru_utime = end_ru_utime - begin_ru_utime;
+
+  ACE_Time_Value end_ru_stime (this->end_usage_.ru_stime);
+  ACE_Time_Value begin_ru_stime (this->begin_usage_.ru_stime);
+  usage.ru_stime = end_ru_stime - begin_ru_stime;
 #  else /* ACE_HAS_GETRUSAGE */
   usage = 0;
 #  endif /* ACE_HAS_GETRUSAGE */
