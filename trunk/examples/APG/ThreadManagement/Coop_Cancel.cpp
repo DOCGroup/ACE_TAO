@@ -24,7 +24,7 @@ public:
         if (mgr->testcancel (mgr->thr_self ()))
           return 0;
 
-        ACE_Message_Block *mb;
+        ACE_Message_Block *mb = 0;
         ACE_Time_Value tv (0, 1000);
         tv += ACE_OS::time (0);
         int result = this->getq (mb, &tv);
