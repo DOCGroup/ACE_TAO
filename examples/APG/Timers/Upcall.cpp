@@ -8,7 +8,7 @@
 // Listing 2 code/ch20
 // The signature of this method changed at ACE 5.4. The 'recurring_timer'
 // parameter was added.
-int 
+int
 UpcallHandler::timeout (PTimerQueue &,
                         PCB *handler,
                         const void *arg,
@@ -160,8 +160,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   tv += 20L;
 
   // Schedule two different timers to go off.
-  PTimer::instance ()->schedule (&cb1, &arg1, tv, 1);
-  PTimer::instance ()->schedule (&cb2, &arg2, tv, 2);
+  PTimer::instance ()->schedule (&cb1, &arg1, tv, ACE_Time_Value (1));
+  PTimer::instance ()->schedule (&cb2, &arg2, tv, ACE_Time_Value (2));
 
   // Run the timer event loop forever.
   PTimer::instance ()->wait_for_event ();
