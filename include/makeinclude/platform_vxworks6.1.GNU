@@ -34,6 +34,8 @@ optimize ?= 1
 rtti ?= 1
 threads ?= 1
 exceptions ?= 1
+rtp ?= 1
+pthread ?= 0
 
 ifeq ($(static_libs),1)
   shared_libs = 0
@@ -186,6 +188,10 @@ ifeq ($(debug),1)
   DCFLAGS += -g
   DCCFLAGS += -g
   CPPFLAGS +=
+endif
+
+ifeq ($(pthread),1)
+  CPPFLAGS += ACE_HAS_PTHREADS
 endif
 
 ifeq ("$(TOOL)","gnu")
