@@ -1,3 +1,9 @@
+Fri Dec 30 11:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Misc/pingpong.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+          Updated because the constructors of ACE_Time_Value are now explicit
+
 Fri Dec 30 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Gateway/Connection_Handler.{h,cpp}:
