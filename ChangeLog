@@ -1,3 +1,10 @@
+Fri Dec 30 15:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.1.GNU:
+          Added rtp and pthread flags, when rtp is set to 1 we are building
+          for real time process model, when pthread is set to 1 we are
+          building with the pthread support
+
 Fri Dec 30 15:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:

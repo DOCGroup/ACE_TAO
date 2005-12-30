@@ -191,7 +191,7 @@ ifeq ($(debug),1)
 endif
 
 ifeq ($(pthread),1)
-  CPPFLAGS += ACE_HAS_PTHREADS
+  CPPFLAGS += -DACE_HAS_PTHREADS
 endif
 
 ifeq ("$(TOOL)","gnu")
