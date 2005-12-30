@@ -1,3 +1,8 @@
+Fri Dec 30 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2345_Regression
+
 Fri Dec 30 11:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Misc/pingpong.cpp:
