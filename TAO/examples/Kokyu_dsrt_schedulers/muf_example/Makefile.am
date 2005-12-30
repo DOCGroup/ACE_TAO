@@ -16,40 +16,43 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.muf_client.am
+## Makefile.muf_example_IDL.am
 
-if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
+  testS.cpp \
   testS.h \
   testS.inl \
   testS_T.cpp \
   testS_T.h \
   testS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
   testC.inl \
+  testS.cpp \
   testS.h \
   testS.inl \
   testS_T.cpp \
   testS_T.h \
   testS_T.inl
 
-testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
+
+
+## Makefile.muf_client.am
+
+if BUILD_RT_CORBA
 
 noinst_PROGRAMS += muf_client
 
@@ -67,11 +70,8 @@ muf_client_CPPFLAGS = \
 muf_client_SOURCES = \
   client.cpp \
   testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
+  test_i.h \
+  test_i.i
 
 muf_client_LDADD = \
   $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
@@ -93,35 +93,6 @@ endif BUILD_RT_CORBA
 
 if BUILD_RT_CORBA
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += muf_server
 
 muf_server_CPPFLAGS = \
@@ -138,11 +109,6 @@ muf_server_SOURCES = \
   testC.cpp \
   testS.cpp \
   test_i.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl \
   test_i.h \
   test_i.i
 
