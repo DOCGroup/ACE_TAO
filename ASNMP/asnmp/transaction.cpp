@@ -106,7 +106,7 @@ int transaction::run(transaction_result * r)
     retry_counter_ = 0;
 
     // register a time handler and a socket with this
-    ACE_Time_Value to = params_.get_timeout();
+    ACE_Time_Value to (params_.get_timeout());
     if (reactor->schedule_timer(this, 0, to, to) < 0)
         return SNMP_CLASS_INTERNAL_ERROR;
 
@@ -201,8 +201,8 @@ int transaction::send()
 
 transaction_result::~transaction_result() {}
 
-ACE_HANDLE 
-transaction::get_handle () const 
+ACE_HANDLE
+transaction::get_handle () const
 {
   return session_.get_handle ();
 }
