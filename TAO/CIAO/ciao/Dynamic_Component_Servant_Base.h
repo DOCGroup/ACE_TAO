@@ -31,7 +31,10 @@ namespace CIAO
   class CIAO_SERVER_Export Dynamic_Component_Servant_Base
   {
   public:
-    Dynamic_Component_Servant_Base (Session_Container *c);
+    /// @todo Not to be used, no idea why this should be public, have to check this
+    Dynamic_Component_Servant_Base (void);
+
+    explicit Dynamic_Component_Servant_Base (Session_Container *c);
 
     virtual ~Dynamic_Component_Servant_Base (void);
 
@@ -45,9 +48,6 @@ namespace CIAO
 
   protected:
     Session_Container *container_;
-  private:
-    // Not to be used
-    Dynamic_Component_Servant_Base (void);
   };
 
 }
