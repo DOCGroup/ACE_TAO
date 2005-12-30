@@ -227,14 +227,20 @@ public:
   /// Add @a tv to this.
   ACE_Time_Value &operator += (const ACE_Time_Value &tv);
 
+  /// Add @a tv to this.
+  ACE_Time_Value &operator += (time_t tv);
+
   /// Assign @ tv to this
   ACE_Time_Value &operator = (const ACE_Time_Value &tv);
 
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
 
-    /** \brief Multiply the time value by the @a d factor.
+  /// Substract @a tv to this.
+  ACE_Time_Value &operator -= (time_t tv);
 
+  /**
+    \brief Multiply the time value by the @a d factor.
     \note The result of the operator is valid for results from range
     < (ACE_INT32_MIN, -999999), (ACE_INT32_MAX, 999999) >. Result
     outside this range are saturated to a limit.
