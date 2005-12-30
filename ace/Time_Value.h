@@ -233,6 +233,9 @@ public:
   /// Assign @ tv to this
   ACE_Time_Value &operator = (const ACE_Time_Value &tv);
 
+  /// Assign @ tv to this
+  ACE_Time_Value &operator = (time_t tv);
+
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
 
