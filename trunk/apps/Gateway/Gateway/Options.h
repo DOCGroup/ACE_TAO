@@ -75,7 +75,7 @@ public:
   // Set the locking strategy used for serializing access to the
   // reference count in <ACE_Message_Block>.
 
-  int performance_window (void) const;
+  long performance_window (void) const;
   // Number of seconds after connection establishment to report
   // throughput.
 
@@ -143,7 +143,7 @@ private:
   // no locking strategy and we're using a REACTIVE concurrency
   // strategy.
 
-  int performance_window_;
+  long performance_window_;
   // Number of seconds after connection establishment to report
   // throughput.
 

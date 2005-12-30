@@ -79,12 +79,12 @@ public:
   CONNECTION_ID connection_id (void) const;
 
   // = Set/get the current retry timeout delay.
-  void timeout (int);
-  int timeout (void);
+  void timeout (long);
+  long timeout (void);
 
   // = Set/get the maximum retry timeout delay.
-  void max_timeout (int);
-  int max_timeout (void) const;
+  void max_timeout (long);
+  long max_timeout (void) const;
 
   // = Set/get proxy role (i.e., 'S' for Supplier and 'C' for Consumer
   // (necessary for error checking).
@@ -124,10 +124,10 @@ protected:
   State state_;
   // The current state of the proxy.
 
-  int timeout_;
+  long timeout_;
   // Amount of time to wait between reconnection attempts.
 
-  int max_timeout_;
+  long max_timeout_;
   // Maximum amount of time to wait between reconnection attempts.
 
   char connection_role_;
