@@ -1,7 +1,26 @@
+Fri Dec 30 15:36:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Event_Comm/Makefile.am:
+	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
+	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
+	* examples/Logging/Makefile.am:
+
+	  Regenerated.
+
+	* examples/Event_Comm/Event_Comm.mpc:
+	* examples/Kokyu_dsrt_schedulers/fp_example/fp_example.mpc:
+	* examples/Kokyu_dsrt_schedulers/mif_example/mif_example.mpc:
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_example.mpc:
+	* examples/Logging/Logging.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Fri Dec 30 16:15:24 2005  Wallace Zhang  <zhangw@ociweb.com>
 
-        * NEWS:
-				  Updated information for the wchar refactoring work.
+        * NEWS: Updated information for the wchar refactoring work.
 
 Wed Dec 30 14:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
