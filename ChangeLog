@@ -1,3 +1,11 @@
+Fri Dec 30 10:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Profile_Timer.cpp (elapsed_rusage):
+          Use ACE_Time_Value to calculate the time difference. The type
+          of time could be FILETIME on Windows and it is not safe to just
+          use the - operator on that. This did compile because the
+          ACE_Time_Value seems to be used because of implicit conversions
+
 Fri Dec 30 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reference_Counted_Event_Handler_Test.cpp:
