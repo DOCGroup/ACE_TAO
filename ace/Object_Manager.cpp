@@ -17,6 +17,7 @@
 #include "ace/Framework_Component.h"
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Cleanup.h"
 
 #if defined (ACE_HAS_TRACE)
 #include "ace/Trace.h"
