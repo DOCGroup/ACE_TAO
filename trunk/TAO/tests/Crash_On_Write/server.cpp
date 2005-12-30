@@ -91,7 +91,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Create a separate thread to crash the server.
-      Crash_Task crash_task (ACE_Thread_Manager::instance (), 20);
+      Crash_Task crash_task (ACE_Thread_Manager::instance (), ACE_Time_Value(20));
 
       if (crash_task.activate () == -1)
         {
