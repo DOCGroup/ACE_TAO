@@ -21,7 +21,11 @@
 #if defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
 #  include "ace/os_include/os_unistd.h"
 #  if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x610)
-#    include "ace/os_include/os_string.h"
+#    if defined (__RTP__)
+#      include "ace/os_include/os_strings.h"
+#    else
+#      include "ace/os_include/os_string.h"
+#    endif
 #  endif
 #endif /* VXWORKS || ACE_HAS_WINCE */
 
@@ -32,7 +36,7 @@ ACE_OS::access (const char *path, int amode)
 {
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
-#  if defined (ACE_HAS_WINCE) || defined (VXWORKS)
+#  if defined (ACE_HAS_WINCE) || defined (ACE_VXWORKS)
   // @@ WINCE: There should be a Win32 API that can do this.
   // Hard coded read access here.
   ACE_UNUSED_ARG (amode);
