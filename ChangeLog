@@ -1,3 +1,8 @@
+Fri Dec 30 12:17:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+          Fixed compile error due to expected implicit conversion
+
 Fri Dec 30 15:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.1.GNU:
