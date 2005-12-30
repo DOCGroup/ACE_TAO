@@ -1,3 +1,11 @@
+Wed Dec 30 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2345_Regression/*:
+          Added regression for bug 2345, this is not fixed yet, just
+          adding the regression first. Thanks to
+          <yariv_tal2003 at hotmail dot com> for reporting this
+          problem and delivering this simple regression
+
 Thu Dec 29 11:43:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Content_Server/AMI_Iterator/Makefile.am
