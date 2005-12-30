@@ -1,3 +1,9 @@
+Fri Dec 30 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Proactor.cpp:
+          When setting a ACE_Time_Value to zero use ACE_Time_Value::zero
+          instead of 0
+
 Thu Dec 29 11:55:39 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/DLL.h: Further Doxygen-ized and expanded the documentation.

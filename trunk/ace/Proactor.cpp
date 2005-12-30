@@ -138,7 +138,7 @@ ACE_Proactor_Timer_Handler::svc (void)
           if (absolute_time > cur_time)
             relative_time = absolute_time - cur_time;
           else
-            relative_time = 0;
+            relative_time = ACE_Time_Value::zero;
 
           // Block for relative time.
           result = this->timer_event_.wait (&relative_time, 0);
