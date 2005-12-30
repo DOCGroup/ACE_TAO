@@ -1,9 +1,3 @@
-Fri Dec 30 12:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ace/Object_Manager.cpp:
-          Added include of Cleanup.h, in one of my test builds this was
-          required
-
 Fri Dec 30 12:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_time.inl:
