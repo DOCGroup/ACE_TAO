@@ -1,3 +1,10 @@
+Wed Dec 30 14:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * tests/MT_Timeout/server.cpp:
+        * tests/Crash_On_Write/server.cpp:
+          Fixed compile error
+
 Wed Dec 30 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2345_Regression/*:
