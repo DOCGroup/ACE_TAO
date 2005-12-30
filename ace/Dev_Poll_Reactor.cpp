@@ -1108,14 +1108,11 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
                                   this->size_,
                                   static_cast<int> (timeout));
 
-   // all detected events are put in this->events_:
-   this->start_pevents_ = this->events_;
-
-   // If nfds == 0 then end_pevents_ == start_pevents_ meaning that there is
-   // no work pending.  If nfds > 0 then there is work pending.
-   // Otherwise an error occurred.
-  if (nfds > -1)
-     this->end_pevents_ = this->start_pevents_ + nfds;
+  if (nfds > 0)
+    {
+      this->start_pevents_ = this->events_;
+      this->end_pevents_ = this->start_pevents_ + nfds;
+    }
 
 #else
 
@@ -1187,6 +1184,8 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
   do
     {
       result = this->work_pending_i (max_wait_time);
+      if (result == -1)
+	ACE_ERROR((LM_ERROR, "%t: %p\n", "work_pending_i"));
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 
@@ -2598,6 +2597,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)
   // Check for timeouts and errors.
   if (result == -1)
     {
+      ACE_ERROR ((LM_ERROR, "%t: %p\n", "token acquire_read"));
       if (errno == ETIME)
         return 0;
       else

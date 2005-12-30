@@ -1,3 +1,10 @@
+Fri Dec 30 17:52:41 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Dev_Poll_Reactor.cpp (work_pending_i): Upon return from
+	  epoll_wait(), don't blindly set start_pevents_ to events_. If
+	  epoll_wait() returns -1, this erroneously sets start_pevents_ to
+	  a value that may not make sense.
+
 Fri Dec 30 12:17:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
