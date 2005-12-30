@@ -42,10 +42,11 @@ MIF_DT_Creator::yield (int suspend_time,
 {
   ACE_TRY_NEW_ENV
     {
+      ACE_Time_Value const sus_time_value (suspend_time);
       ACE_Time_Value now (ACE_OS::gettimeofday ());
-      while (((now - *base_time_) < suspend_time) || (suspend_time == 1))
+      while (((now - *base_time_) < sus_time_value) || (suspend_time == 1))
         {
-          
+
           ACE_OS::sleep (1);
           CORBA::Policy_var sched_param;
           sched_param = CORBA::Policy::_duplicate (this->sched_param (100));

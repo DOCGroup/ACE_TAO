@@ -91,7 +91,7 @@ main (int argc, char *argv[])
 
       Server_Task server_task (ACE_Thread_Manager::instance (),
                                orb.in (),
-                               240);
+                               ACE_Time_Value(240));
 
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 8, 1) == -1)
         {
