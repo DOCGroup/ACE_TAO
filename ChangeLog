@@ -1,3 +1,8 @@
+Fri Dec 30 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+          Explicit create ACE_Time_Value's when scheduling timers
+
 Fri Dec 30 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Proactor.cpp:
