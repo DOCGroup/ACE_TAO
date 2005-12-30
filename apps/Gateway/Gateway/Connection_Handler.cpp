@@ -86,7 +86,7 @@ Connection_Handler::connection_role (void) const
 // Sets the timeout delay.
 
 void
-Connection_Handler::timeout (int to)
+Connection_Handler::timeout (long to)
 {
   if (to > this->max_timeout_)
     to = this->max_timeout_;
@@ -98,10 +98,10 @@ Connection_Handler::timeout (int to)
 // backoff.  Returns the original timeout (i.e., before the
 // re-calculation).
 
-int
+long
 Connection_Handler::timeout (void)
 {
-  int old_timeout = this->timeout_;
+  long old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
@@ -113,14 +113,14 @@ Connection_Handler::timeout (void)
 // Sets the max timeout delay.
 
 void
-Connection_Handler::max_timeout (int mto)
+Connection_Handler::max_timeout (long mto)
 {
   this->max_timeout_ = mto;
 }
 
 // Gets the max timeout delay.
 
-int
+long
 Connection_Handler::max_timeout (void) const
 {
   return this->max_timeout_;
@@ -151,7 +151,7 @@ Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) shutting down %s Connection_Handler %d on handle %d\n",
 	      this->connection_role () == 'C' ? "Consumer" : "Supplier",
-	      this->connection_id (), 
+	      this->connection_id (),
               this->get_handle ()));
 
   // Restart the connection, if possible.
