@@ -1,3 +1,8 @@
+Fri Dec 30 16:15:24 2005  Wallace Zhang  <zhangw@ociweb.com>
+
+        * NEWS:
+				  Updated information for the wchar refactoring work.
+
 Wed Dec 30 14:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
@@ -15,15 +20,15 @@ Wed Dec 30 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec 29 11:43:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Content_Server/AMI_Iterator/Makefile.am
-	* examples/Content_Server/AMI_Observer/Makefile.am
-	* examples/Content_Server/SMI_Iterator/Makefile.am
+        * examples/Content_Server/AMI_Iterator/Makefile.am
+        * examples/Content_Server/AMI_Observer/Makefile.am
+        * examples/Content_Server/SMI_Iterator/Makefile.am
 
-	  Regenerated.
+          Regenerated.
 
-	* examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
-	* examples/Content_Server/AMI_Observer/AMI_Observer.mpc:
-	* examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+        * examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
+        * examples/Content_Server/AMI_Observer/AMI_Observer.mpc:
+        * examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
@@ -31,11 +36,11 @@ Thu Dec 29 11:43:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Thu Dec 29 11:26:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Bug_2316_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2316_Regression/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/tests/Bug_2316_Regression/Bug_2316_Regression.mpc:
+        * orbsvcs/tests/Bug_2316_Regression/Bug_2316_Regression.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's

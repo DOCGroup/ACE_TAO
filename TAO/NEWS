@@ -26,10 +26,10 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 . (Remedy) Add possibility to set customer allocators to be used by the ORB for
   marshaling and demarshaling
 
+. (OCI) Made TAO compilable when ACE_USES_WCHAR is set
+
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.9
 ====================================================
-
-. (OCI) Made TAO compilable when ACE_USES_WCHAR is set
 
 . (OCI) Added new endpoint selector implementation - Optimized
   Connection Endpoint Selector. A member of the tao/Strategies library,
