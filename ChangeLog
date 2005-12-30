@@ -5,6 +5,8 @@ Fri Dec 30 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * apps/Gateway/Gateway/Gateway.cpp:
         * apps/Gateway/Gateway/Options.{h,cpp}:
         * netsvcs/lib/TS_Clerk_Handler.{h,cpp}:
+        * examples/APG/Timers/Timers.cpp:
+        * examples/APG/Timers/Upcall.cpp:
           Updated timeouts to be a long and updated some code because
           the constructors of ACE_Time_Value are now explicit
 
