@@ -1,3 +1,8 @@
+Fri Dec 30 14:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+          Fixed compile error due to expected implicit conversion
+
 Fri Dec 30 14:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,inl}:
