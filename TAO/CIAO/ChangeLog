@@ -1,3 +1,9 @@
+Fri Dec 30 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Dynamic_Component_Servant_Base.{h,cpp}:
+          Moved the default constructor to public again, vc8 needs it, no
+          idea why, have to recheck later
+
 Thu Dec 29 08:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
