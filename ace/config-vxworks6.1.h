@@ -164,8 +164,6 @@
 #define ACE_LACKS_UMASK
 #define ACE_LACKS_UTSNAME_T
 #define ACE_LACKS_NATIVE_STRPTIME
-#define ACE_LACKS_WAIT
-#define ACE_LACKS_WAITPID
 #define ACE_PAGE_SIZE 4096
 #define ACE_THR_PRI_FIFO_DEF 101
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
@@ -179,7 +177,6 @@
 #define ACE_LACKS_INTTYPES_H
 #define ACE_LACKS_SYS_SELECT_H
 #define ACE_LACKS_SYS_TIME_H
-#define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_SYS_UIO_H
 #define ACE_LACKS_SYS_IPC_H
 #define ACE_LACKS_SYS_SEM_H
@@ -189,7 +186,6 @@
 #define ACE_LACKS_PWD_H
 #define ACE_LACKS_SEARCH_H
 #define ACE_LACKS_SYS_SHM_H
-#define ACE_LACKS_STRINGS_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_WCTYPE_H
@@ -225,10 +221,16 @@
 #define ACE_LACKS_FPUTWS
 
 #if defined __RTP__
-// We are building for RTP mode
+  // We are building for RTP mode
+  #define ACE_LACKS_SYS_WAIT_H
+  #define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #else
-// We are building for kernel mode
-#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
+  // We are building for kernel mode
+  #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
+  #define ACE_LACKS_DLFCN_H
+  #define ACE_LACKS_WAIT
+  #define ACE_LACKS_WAITPID
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
