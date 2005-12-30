@@ -364,8 +364,8 @@ TAO_IIOP_Transport::get_listen_point (
 
   // Get the hostname for the local address
   if (iiop_acceptor->hostname (this->orb_core_,
-                                      local_addr,
-                                      local_interface.out ()) == -1)
+                               local_addr,
+                               local_interface.out ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")

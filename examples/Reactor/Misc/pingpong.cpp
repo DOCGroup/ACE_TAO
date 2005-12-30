@@ -197,7 +197,7 @@ Ping_Pong::handle_timeout (const ACE_Time_Value &,
 static ACE_TCHAR *string_name;
 
 // Wait for 10 seconds and then shut down.
-static const int SHUTDOWN_TIME = 10;
+static const ACE_Time_Value SHUTDOWN_TIME (10);
 
 static void
 run_svc (ACE_HANDLE handle)
