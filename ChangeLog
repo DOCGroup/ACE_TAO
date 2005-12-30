@@ -1,3 +1,12 @@
+Fri Dec 30 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Connection_Handler.{h,cpp}:
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * apps/Gateway/Gateway/Options.{h,cpp}:
+          Updated timeouts to be a long and updated some code because
+          the constructors of ACE_Time_Value are now explicit
+
 Fri Dec 30 10:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,inl}:

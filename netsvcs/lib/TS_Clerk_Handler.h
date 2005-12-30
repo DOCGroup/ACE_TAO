@@ -86,12 +86,12 @@ public:
   void state (State);
 
   // = Set/get the current retry timeout delay.
-  int timeout (void);
-  void timeout (int);
+  long timeout (void);
+  void timeout (long);
 
   // = Set/get the maximum retry timeout delay.
-  int max_timeout (void);
-  void max_timeout (int);
+  long max_timeout (void);
+  void max_timeout (long);
 
   /// Activate this instance of the <ACE_TS_Clerk_Handler>
   /// (called by the <ACE_TS_Clerk_Processor>).
@@ -145,10 +145,10 @@ private:
   State state_;
 
   /// Amount of time to wait between reconnection attempts
-  int timeout_;
+  long timeout_;
 
   /// Maximum amount of time to wait between reconnection attempts
-  int max_timeout_;
+  long max_timeout_;
 
   /// Remote Addr used for connecting to the server
   ACE_INET_Addr remote_addr_;
@@ -241,7 +241,7 @@ private:
   long timer_id_;
 
   /// Time period for updating system time
-  int timeout_;
+  long timeout_;
 
   /// Pool name for backing store
   ACE_TCHAR poolname_[MAXNAMLEN + 1];

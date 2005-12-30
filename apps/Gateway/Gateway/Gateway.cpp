@@ -110,9 +110,10 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
 
   if (Options::instance ()->performance_window () > 0)
     {
+      ACE_Time_Value const performance_time (Options::instance ()->performance_window ());
       if (ACE_Reactor::instance ()->schedule_timer
           (&this->event_channel_, 0,
-           Options::instance ()->performance_window ()) == -1)
+           performance_time) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("schedule_timer")));
