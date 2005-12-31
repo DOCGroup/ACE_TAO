@@ -149,13 +149,25 @@ namespace ACE_OS {
 #endif /* ACE_HAS_WCHAR */
 
   /// Returns a malloced duplicated string (char version).
-  extern ACE_Export
+  ACE_NAMESPACE_INLINE_FUNCTION
   char *strdup (const char *s);
+
+#if (defined (ACE_LACKS_STRDUP) && !defined(ACE_STRDUP_EQUIVALENT)) \
+  || defined (ACE_HAS_STRDUP_EMULATION)
+  extern ACE_Export
+  char *strdup_emulation (const char *s);
+#endif
 
 #if defined (ACE_HAS_WCHAR)
   /// Returns a malloced duplicated string (wchar_t version).
-  extern ACE_Export
+  ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strdup (const wchar_t *s);
+  
+#if (defined (ACE_LACKS_WCSDUP) && !defined(ACE_WCSDUP_EQUIVALENT)) \
+  || defined (ACE_HAS_WCSDUP_EMULATION)
+  extern ACE_Export
+  wchar_t *strdup_emulation (const wchar_t *s);
+#endif
 #endif /* ACE_HAS_WCHAR */
 
   /// Copies a string, but returns a pointer to the end of the
