@@ -3299,6 +3299,13 @@ AC_CACHE_SAVE
 
 dnl SECTION 10: checks for library functions
 
+ACE_FUNC_STRCASECMP
+ACE_FUNC_STRNCASECMP
+ACE_FUNC_STRDUP
+ACE_FUNC_WCSCASECMP
+ACE_FUNC_WCSNCASECMP
+ACE_FUNC_WCSDUP
+
 if test "$ace_user_enable_alloca" = yes; then
   AC_FUNC_ALLOCA
   if test "$ac_cv_header_alloca_h" = yes; then
@@ -3441,9 +3448,13 @@ ACE_CHECK_LACKS_FUNCS(qsort)
 
 ACE_CHECK_HAS_FUNCS(strnlen)
 
+ACE_CHECK_LACKS_FUNCS(strchr)
+
 ACE_CHECK_LACKS_FUNCS(strerror)
 
 ACE_CHECK_LACKS_FUNCS(strpbrk)
+
+ACE_CHECK_LACKS_FUNCS(strrchr)
 
 ACE_CHECK_LACKS_FUNCS(strspn)
 
@@ -3454,9 +3465,9 @@ ACE_CHECK_LACKS_FUNCS(strtol)
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
 # swab() comes in a number of forms:
-#   swab (const void*, void*, ssize_t) is POSIX, XPG4, SUS, SUSv2 standard.
-#   swab (const char*, char*, ssize_t) is SVID third edition.
-#   swab (char*, char*, ssize_t) is on some odd platforms like Windows.
+#   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
+#   swab (const char*, char*, size_t) is SVID third edition.
+#   swab (char*, char*, size_t) is on some odd platforms like Windows.
 # So, if swab() is available, figure out which of the three variants it is.
 # The second and third have ACE config settings.
 ACE_CHECK_LACKS_FUNCS([swab],
@@ -3703,13 +3714,7 @@ ACE_CHECK_HAS_FUNCS(set_t_errno)
 
 ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 
-ACE_CHECK_LACKS_FUNCS(socketpair strcasecmp)
-
-ACE_CHECK_LACKS_FUNCS(strchr)
-
-ACE_CHECK_LACKS_FUNCS(strdup)
-
-ACE_CHECK_LACKS_FUNCS(strrchr)
+ACE_CHECK_LACKS_FUNCS(socketpair)
 
 AC_CHECK_FUNC([strptime],
   [
@@ -3894,7 +3899,7 @@ ACE_CHECK_LACKS_FUNCS(sbrk)
 
 ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
 
-ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
+ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
 ACE_CHECK_LACKS_FUNCS(umask)
 

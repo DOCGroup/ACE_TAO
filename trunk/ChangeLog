@@ -1,3 +1,38 @@
+Fri Dec 30 16:39:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_string.cpp:
+	* ace/OS_NS_string.h:
+	* ace/OS_NS_string.inl:
+
+	  Make ACE_OS::strdup(const char *) and ACE_OS::strdup(const
+	  wchar_t *) inline.  Provide ACE_OS::strdup_emulation(const 
+	  char *) and ACE_OS::strdup_emulation(const wchar_t *) for
+	  systems that don't have a native (or type-safe equivalent)
+	  strdup() and wcsdup() functions.
+
+	* configure.ac:
+
+	  Replace scattered feature tests with calls to new
+	  ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP, ACE_FUNC_STRDUP,
+	  ACE_FUNC_WCSCASECMP, ACE_FUNC_WCSNCASECMP, ACE_FUNC_WCSDUP
+	  autoconf macros.
+
+	* m4/ace_func.m4:
+
+	  New file.
+
+	  Feature tests for related features (e.g does function exist, 
+	  does it have a prototype, does it have const/non-const args,
+	  etc.) are scattered all over configure.ac.  This file is for
+	  ACE_FUNC_FOO macros (similar to autoconf's own AC_FUNC_FOO),
+	  which bring all these feature tests together in once place.
+	  This clean-up makes the configure.ac easier to maintain at
+	  the same time.
+
+	  Provide ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP, 
+	  ACE_FUNC_STRDUP, ACE_FUNC_WCSCASECMP, ACE_FUNC_WCSNCASECMP,
+	  ACE_FUNC_WCSDUP macros to start things off.
+
 Fri Dec 30 17:52:41 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Dev_Poll_Reactor.cpp (work_pending_i): Upon return from

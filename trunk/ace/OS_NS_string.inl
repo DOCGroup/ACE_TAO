@@ -163,6 +163,38 @@ ACE_OS::strcspn (const wchar_t *s, const wchar_t *reject)
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_INLINE char *
+ACE_OS::strdup (const char *s)
+{
+#  if (defined (ACE_LACKS_STRDUP) && !defined(ACE_STRDUP_EQUIVALENT)) \
+  || defined (ACE_HAS_STRDUP_EMULATION)
+  return ACE_OS::strdup_emulation (s);
+#  elif defined (ACE_STRDUP_EQUIVALENT)
+  return ACE_STRDUP_EQUIVALENT (s);
+#  elif defined (ACE_HAS_NONCONST_STRDUP)
+  return ::strdup (const_cast<char *> (s));
+#else
+  return ::strdup (s);
+#  endif /* (ACE_LACKS_STRDUP && !ACE_STRDUP_EQUIVALENT) || ... */
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strdup (const wchar_t *s)
+{
+#  if (defined (ACE_LACKS_WCSDUP) && !defined (ACE_WCSDUP_EQUIVALENT)) \
+  || defined (ACE_HAS_WCSDUMP_EMULATION)
+  return ACE_OS::strdup_emulation (s);
+#  elif defined (ACE_WCSDUP_EQUIVALENT)
+  return ACE_WCSDUP_EQUIVALENT (s);
+#  elif defined (ACE_HAS_NONCONST_WCSDUP)
+  return ::wcsdup (const_cast<wchar_t*> (s));
+#  else
+  return ::wcsdup (s);
+#  endif /* (ACE_LACKS_WCSDUP && !ACE_WCSDUP_EQUIVALENT) || ... */
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE size_t
 ACE_OS::strlen (const char *s)
 {
