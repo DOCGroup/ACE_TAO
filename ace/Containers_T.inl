@@ -350,7 +350,7 @@ ACE_DLList<T>::remove (ACE_DLList_Node *n)
 }
 
 template <class T> ACE_INLINE
-ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc )
+ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc)
   : ACE_DLList_Base (alloc)
 {
 }
