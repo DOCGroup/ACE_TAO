@@ -1063,7 +1063,6 @@ public:
   /// Delegates to ACE_Double_Linked_List.
   int remove (ACE_DLList_Node *n);
 
-
   // = Initialization and termination methods.
 
   /// Delegates to ACE_Double_Linked_List.
