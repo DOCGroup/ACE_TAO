@@ -1,3 +1,9 @@
+Sun Jan  1 10:50:39 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (is_alive): 
+	  Fixed a couple of bugs reported by Yariv Tal
+ 	  <yariv_tal2003@hotmail.com>.  This fixes bugid 2347.
+
 Fri Dec 30 15:36:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Event_Comm/Makefile.am:
