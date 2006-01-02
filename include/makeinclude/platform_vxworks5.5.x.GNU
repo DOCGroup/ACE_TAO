@@ -85,7 +85,7 @@ ifeq ("$(TOOL)","gnu")
 endif
 
 PRJ_TYPE = vxApp
-TGT_DIR = $(WIND_BASE)/target
+TGT_DIR = $(WIND_BASE)/target/h
 
 ifeq ($(CPU),)
   # default CPU
@@ -139,11 +139,11 @@ ifneq ($(VX_LIB_BUILD),1)
   endif
 endif
 
-include $(TGT_DIR)/h/make/defs.default
-##include $(TGT_DIR)/h/make/defs.link
-include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
-include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
-include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+include $(TGT_DIR)/make/defs.default
+##include $(TGT_DIR)/make/defs.link
+include $(TGT_DIR)/make/defs.$(WIND_HOST_TYPE)
+include $(TGT_DIR)/make/defs.$(PRJ_TYPE)
+include $(TGT_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 
 ## make sure we don't use that stupid, crippled vxrm.bat script.
 override RM=rm -f
