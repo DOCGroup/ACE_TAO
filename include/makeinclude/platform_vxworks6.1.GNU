@@ -93,7 +93,7 @@ ifeq ($(rtp),1)
 else
   TARGET_DIR = $(WIND_BASE)/target/h
 endif
-TGT_DIR = $(WIND_BASE)/target/h
+TGT_DIR = $(WIND_BASE)/target
 
 ifeq ($(CPU),)
   # default CPU
