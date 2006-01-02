@@ -29,7 +29,7 @@
 #   include /**/ <ifaddrs.h>
 # endif /* ACE_HAS_GETIFADDRS */
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x610)
 #include /**/ <inetLib.h>
 #include /**/ <netinet/in_var.h>
 extern "C" {
