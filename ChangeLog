@@ -1,3 +1,11 @@
+Mon Jan  2 13:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Only use the spa methods in non rtp model
+
+        * ace/os_include/sys/os_wait.h:
+          VxWorks 6.1 defines wait and waitpid in wait.h
+
 Mon Jan  2 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_stdio.h:
