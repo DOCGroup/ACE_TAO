@@ -93,7 +93,6 @@ ifeq ($(rtp),1)
 else
   TARGET_DIR = $(WIND_BASE)/target/h
 endif
-TGT_DIR = $(WIND_BASE)/target/h
 
 ifeq ($(CPU),)
   # default CPU
@@ -149,7 +148,7 @@ endif
 
 include $(TARGET_DIR)/make/defs.default
 include $(TARGET_DIR)/make/defs.$(WIND_HOST_TYPE)
-include $(TGT_DIR)/make/defs.$(PRJ_TYPE)
+include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
 include $(TARGET_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 
 ## make sure we don't use that stupid, crippled vxrm.bat script.
