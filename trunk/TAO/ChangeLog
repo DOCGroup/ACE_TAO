@@ -3,8 +3,8 @@ Mon Jan  2 15:21:27 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
         
-          Fixed a bug in the describe() API operation that occurs when an
-          interface has one or more parents. Thanks to Scott Harris
+          Fixed a bug in the describe_interface() API operation that occurs
+          when an interface has one or more parents. Thanks to Scott Harris
           <harris_s@ociweb.com> for reporting the problem.
 
 Mon Jan  2 14:12:15 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
