@@ -308,7 +308,7 @@ namespace ACE_RMCast
     Profile const*
     find (u16 id) const
     {
-      Profiles::ENTRY* e;
+      Profiles::ENTRY* e = 0;
 
       if (profiles_.find (id, e) == -1) return 0;
 
