@@ -1,8 +1,13 @@
+Mon Jan  2 18:45:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2345_Regression/server.cpp:
+          Fixed implicit conversion warning
+
 Mon Jan  2 15:21:27 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
-        
+
           Fixed a bug in the describe_interface() API operation that occurs
           when an interface has one or more parents. Thanks to Scott Harris
           <harris_s@ociweb.com> for reporting the problem.
@@ -15,15 +20,15 @@ Mon Jan  2 14:12:15 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/drv_extern.h:
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           - Frontend changes necessary to support a backend option
             for the CoSMIC IDL importer that passes a directory
             name instead of a list of IDL files. This option is
             not available for any other backends and should not
             affect their behavior.
-            
+
           - Added a patch submitted by Ken Sedgwick <ken+5a4@bonsai,com>
-            that fixes a bug in the functioning of TAO_IDL_INCLUDE_DIR. 
+            that fixes a bug in the functioning of TAO_IDL_INCLUDE_DIR.
 
 Sun Jan  1 10:50:39 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
