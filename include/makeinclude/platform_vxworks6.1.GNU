@@ -89,9 +89,9 @@ endif
 PRJ_TYPE = vxApp
 
 ifeq ($(rtp),1)
-  TGT_DIR = $(WIND_BASE)/target/usr
+  TARGET_DIR = $(WIND_BASE)/target/usr
 else
-  TGT_DIR = $(WIND_BASE)/target/h
+  TARGET_DIR = $(WIND_BASE)/target/h
 endif
 
 ifeq ($(CPU),)
@@ -146,10 +146,10 @@ ifneq ($(VX_LIB_BUILD),1)
   endif
 endif
 
-include $(TGT_DIR)/make/defs.default
-include $(TGT_DIR)/make/defs.$(WIND_HOST_TYPE)
-include $(TGT_DIR)/make/defs.$(PRJ_TYPE)
-include $(TGT_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+include $(TARGET_DIR)/make/defs.default
+include $(TARGET_DIR)/make/defs.$(WIND_HOST_TYPE)
+include $(TARGET_DIR)/make/defs.$(PRJ_TYPE)
+include $(TARGET_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 
 ## make sure we don't use that stupid, crippled vxrm.bat script.
 override RM=rm -f
