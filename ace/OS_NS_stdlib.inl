@@ -15,6 +15,10 @@
 # define ACE_WCHAR_STD_NAMESPACE ACE_STD_NAMESPACE
 #endif /* ACE_WCHAR_IN_STD_NAMESPACE */
 
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
+# include /**/ <envLib.h>
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Doesn't need a macro since it *never* returns!
