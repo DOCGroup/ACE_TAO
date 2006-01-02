@@ -84,10 +84,15 @@ extern long DRV_nfiles;
 extern const char *DRV_files[];
 
 // Push a file into the list of files to be processed
-static void
+void
 DRV_push_file (const char *s)
 {
-  DRV_files[DRV_nfiles++] = s;
+  // If filenames come from the command line, there is no
+  // need to duplicate the string, but some backends have
+  // an option to recurse over a directory and add all
+  // IDL files found. In this latter case we have to
+  // duplicate the file name string.
+  DRV_files[DRV_nfiles++] = ACE::strnew (s);
 }
 
 // Prepare a CPP argument

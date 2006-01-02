@@ -130,7 +130,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     pass_orb_idl_ (I_FALSE),
     using_ifr_backend_ (false),
     ignore_idl3_ (false),
-    recursion_start_ (0)
+    recursion_start_ (0)  // Not used by all backends.
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
