@@ -39,7 +39,8 @@ ACE_OS::memchr_emulation (const void *s, int c, size_t len)
 }
 #endif /*ACE_HAS_MEMCHR*/
 
-#if defined (ACE_LACKS_STRDUP) || defined (ACE_HAS_STRDUP_EMULATION)
+#if (defined (ACE_LACKS_STRDUP) && !defined (ACE_STRDUP_EQUIVALENT)) \
+  || defined (ACE_HAS_STRDUP_EMULATION)
 char *
 ACE_OS::strdup_emulation (const char *s)
 {
@@ -49,14 +50,14 @@ ACE_OS::strdup_emulation (const char *s)
 
   return ACE_OS::strcpy (t, s);
 }
-#endif /* ACE_LACKS_STRDUP || ACE_HAS_STRDUP_EMULATION */
+#endif /* (ACE_LACKS_STRDUP && !ACE_STRDUP_EQUIVALENT) || ... */
 
-#if (defined (ACE_LACKS_WCSDUP) && !defined(ACE_WCSDUP_EQUIVALENT)) \
+#if defined (ACE_HAS_WCHAR)
+#if (defined (ACE_LACKS_WCSDUP) && !defined (ACE_WCSDUP_EQUIVALENT)) \
   || defined (ACE_HAS_WCSDUP_EMULATION)
 wchar_t *
 ACE_OS::strdup_emulation (const wchar_t *s)
 {
-#   if defined (ACE_LACKS_WCSDUP) || defined (ACE_HAS_WCSDUP_EMULATION)
   wchar_t *buffer =
     (wchar_t *) ACE_OS::malloc ((ACE_OS::strlen (s) + 1)
                                 * sizeof (wchar_t));
@@ -64,16 +65,8 @@ ACE_OS::strdup_emulation (const wchar_t *s)
     return 0;
 
   return ACE_OS::strcpy (buffer, s);
-#   elif defined (ACE_WCSDUP_EQUIVALENT)
-  return ACE_WCSDUP_EQUIVALENT (s);
-#   else /* ACE_LACKS_WCSDUP */
-#     if defined (__MINGW32__)
-  return ::wcsdup (const_cast<wchar_t*> (s));
-#     else /* __MINGW32__ */
-  return ::wcsdup (s);
-#     endif /* __MINGW32__ */
-#   endif /* ACE_LACKS_WCSDUP || ACE_HAS_WCSDUP_EMULATION */
 }
+#endif /* (ACE_LACKS_WCSDUP && !ACE_WCSDUP_EQUIVALENT) || ... */
 #endif /* ACE_HAS_WCHAR */
 
 char *
