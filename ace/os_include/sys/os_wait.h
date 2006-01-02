@@ -31,6 +31,10 @@
 #  include /**/ <sys/wait.h>
 #endif /* !ACE_LACKS_SYS_WAIT_H */
 
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x610)
+#  include /**/ <wait.h>
+#endif
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
