@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     //
     orb = CORBA::ORB_init(argc, argv);
     CORBA::Object_var poa_obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow(poa_obj);
+    PortableServer::POA_var root_poa = PortableServer::POA::_narrow(poa_obj.in ());
 
     // Create a PERSISTENT POA
     //
