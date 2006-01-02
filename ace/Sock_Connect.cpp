@@ -29,14 +29,14 @@
 #   include /**/ <ifaddrs.h>
 # endif /* ACE_HAS_GETIFADDRS */
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 #include /**/ <inetLib.h>
 #include /**/ <netinet/in_var.h>
 extern "C" {
   extern struct in_ifaddr* in_ifaddr;
 }
 #include "ace/OS_NS_stdio.h"
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 #if defined (ACE_HAS_WINCE)
 #include /**/ <Iphlpapi.h>
@@ -1101,7 +1101,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   return 0;
 
-#elif defined (VXWORKS) || defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs, num_ifs_found;
@@ -1278,6 +1278,53 @@ ACE::get_ip_interfaces (size_t &count,
     }
 # endif /* ACE_HAS_IPV6 */
 
+  return 0;
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x610)
+  count = 0;
+  // Loop through each address structure
+  for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
+    {
+      ++count;
+    }
+
+  // Now create and initialize output array.
+  ACE_NEW_RETURN (addrs,
+                  ACE_INET_Addr[count],
+                  -1); // caller must free
+  count = 0;
+  for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
+    {
+      struct ifnet* ifp = ia->ia_ifa.ifa_ifp;
+      if (ifp != 0)
+        {
+          // Get the current interface name
+          char interface[64];
+          ACE_OS::sprintf(interface, "%s%d", ifp->if_name, ifp->if_unit);
+
+          // Get the address for the current interface
+          char address [INET_ADDR_LEN];
+          STATUS status = ifAddrGet(interface, address);
+
+          if (status == OK)
+            {
+              // Concatenate a ':' at the end. This is because in
+              // ACE_INET_Addr::string_to_addr, the ip_address is
+              // obtained using ':' as the delimiter. Since, using
+              // ifAddrGet(), we just get the IP address, I am adding
+              // a ":" to get with the general case.
+              ACE_OS::strcat (address, ":");
+              addrs[count].set (address);
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_LIB_TEXT ("ACE::get_ip_interface failed\n")
+                                 ACE_LIB_TEXT ("Couldnt get the IP Address\n")),
+                                 -1);
+            }
+          ++count;
+        }
+    }
   return 0;
 #else
   ACE_UNUSED_ARG (count);
