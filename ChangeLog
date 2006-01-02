@@ -1,3 +1,10 @@
+Mon Jan  2 10:56:57 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_string.cpp:
+
+	  Fix conditionals around ACE_OS::strdup_emulation(const wchar*).
+	  Remove code that was moved to ACE_OS::strdup(const wchar*).
+
 Mon Jan  2 18:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/ace/RMCast/Protocol.h:
