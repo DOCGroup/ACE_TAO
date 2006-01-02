@@ -44,7 +44,7 @@ ACE_INLINE
 void **&
 ACE_TSS_Emulation::tss_base ()
 {
-#    if defined (VXWORKS)
+#    if defined (ACE_VXWORKS)
   return (void **&) taskIdCurrent->ACE_VXWORKS_SPARE;
 #    elif defined (ACE_PSOS)
   // not supported
@@ -53,7 +53,7 @@ ACE_TSS_Emulation::tss_base ()
 #    else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);
-#    endif /* VXWORKS */
+#    endif /* ACE_VXWORKS */
 }
 #  endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
