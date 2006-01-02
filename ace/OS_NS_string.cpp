@@ -51,7 +51,8 @@ ACE_OS::strdup_emulation (const char *s)
 }
 #endif /* ACE_LACKS_STRDUP || ACE_HAS_STRDUP_EMULATION */
 
-#if defined (ACE_HAS_WCHAR)
+#if (defined (ACE_LACKS_WCSDUP) && !defined(ACE_WCSDUP_EQUIVALENT)) \
+  || defined (ACE_HAS_WCSDUP_EMULATION)
 wchar_t *
 ACE_OS::strdup_emulation (const wchar_t *s)
 {
