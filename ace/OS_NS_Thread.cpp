@@ -5507,7 +5507,7 @@ ACE_OS::unique_name (const void *object,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # include /**/ <usrLib.h>   /* for ::sp() */
 # include /**/ <sysLib.h>   /* for ::sysClkRateGet() */
 
@@ -5790,7 +5790,7 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   // successful
   return ret > 0 ? _vx_call_rc : 255;
 }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 #if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
 extern "C" int __d6_sigwait (sigset_t *set);
