@@ -690,6 +690,7 @@ private:
   
   char *recursion_start_;
   // Path to directory subtree we are iterating/recursing over.
+  // Not used by all backends.
 };
 
 

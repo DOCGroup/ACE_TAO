@@ -305,8 +305,9 @@ main (int argc, char *argv[])
       ACE_OS::exit (0);
     }
 
-  // If there are no input files, no sense going any further.
-  if (DRV_nfiles == 0)
+  // If there are no input files, and we are not using the 
+  // directory recursion option, there's no sense going any further.
+  if (DRV_nfiles == 0 && idl_global->recursion_start () == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("IDL: No input files\n")));
@@ -352,6 +353,13 @@ main (int argc, char *argv[])
   delete idl_global;
   idl_global = 0;
 
+  for (DRV_file_index = 0;
+       DRV_file_index < DRV_nfiles;
+       ++DRV_file_index)
+    {
+      ACE::strdelete (const_cast<char *> (DRV_files[DRV_file_index]));
+    }
+    
   ACE_OS::exit (0);
 
   // NOT REACHED
