@@ -1,3 +1,23 @@
+Mon Jan  2 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_stdio.h:
+          Added workaround for vxworks6.1 and rtp for cuserid
+
+        * ace/os_include/os_time.h:
+          VxWorks 6.1 defines in kernel mode timeval in sys/times.h
+
+        * ace/OS_NS_string.cpp:
+          Fixed compile error with Borland
+
+        * ace/os_include/os_signal.h:
+          Don't include sigLib.h when building for rtp model
+
+        * ace/OS_NS_Thread.{h,inl}:
+          Don't include special VxWorks header files when building for rtp
+
+        * ace/Sock_Connect.cpp:
+          Made workaround for VxWorks dependent on version umber
+
 Mon Jan  2 12:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
