@@ -150,7 +150,7 @@ endif
 include $(TARGET_DIR)/make/defs.default
 include $(TARGET_DIR)/make/defs.$(WIND_HOST_TYPE)
 include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
-include $(TARGET_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+include $(TGT_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 
 ## make sure we don't use that stupid, crippled vxrm.bat script.
 override RM=rm -f
