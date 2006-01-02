@@ -459,8 +459,15 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULong j = 0;
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
+  // Store our section key for later restoration after we have
+  // traversed entries for inherited interfaces.
+  ACE_Configuration_Section_Key key_holder = this->section_key_;
+
   // Operations
   this->inherited_operations (key_queue);
+
+  // Restore our original section key.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key ops_key, op_key;
   int status =
@@ -511,6 +518,9 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Attributes
   this->inherited_attributes (key_queue);
+
+  // Restore our original section key.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key attrs_key;
   status =
