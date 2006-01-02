@@ -114,7 +114,6 @@
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SNPRINTF
-#define ACE_HAS_STRDUP_EMULATION
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_STRPTIME
@@ -148,7 +147,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_SOCKETPAIR
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYSV_SHMEM
@@ -225,6 +223,7 @@
   #define ACE_LACKS_DLFCN_H
   #define ACE_LACKS_WAIT
   #define ACE_LACKS_WAITPID
+  #define ACE_LACKS_STRCASECMP
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
@@ -241,12 +240,11 @@
 #include "types/vxTypesOld.h"
 #else
 # define ACE_LACKS_PTHREAD_H
-# define ACE_LACKS_COND_T
+#define ACE_HAS_TSS_EMULATION
 // VxWorks has no recursive mutexes. This was set in the past but it doesn't
 // work with the pthread support, so only set it for the time being when pthread
 // is disabled
 # define ACE_HAS_RECURSIVE_MUTEXES
-#define ACE_HAS_TSS_EMULATION
 #endif
 
 #if !defined (ACE_MT_SAFE)
