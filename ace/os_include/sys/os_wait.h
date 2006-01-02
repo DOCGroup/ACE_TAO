@@ -32,6 +32,7 @@
 #endif /* !ACE_LACKS_SYS_WAIT_H */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x610)
+#  include /**/ <types/vxWind.h>
 #  include /**/ <wait.h>
 #endif
 
