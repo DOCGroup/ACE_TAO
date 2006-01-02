@@ -1,3 +1,24 @@
+Mon Jan  2 12:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.1.GNU:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Made it possible to build for rtp and kernel mode
+
+        * ace/config-vxworks6.1.h:
+        * ace/config-vxworks6.2.h:
+          Improved mapping
+
+        * ace/Sock_Connect.cpp:
+          Reverted removal of VxWorks specific code, this is needed
+          for VxWorks 5.5, for 6 we have to develop a new section
+
+        * ace/os_include/os_stdlib.h:
+          Only include envLib.h when not building for rtp
+
+        * ace/os_include/os_dlfcn.h:
+          Only include specific VxWorks files when not building for rtp
+
 Sun Jan  1 00:00:00 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* Happy New Year!!!
@@ -9,7 +30,7 @@ Fri Dec 30 16:39:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* ace/OS_NS_string.inl:
 
 	  Make ACE_OS::strdup(const char *) and ACE_OS::strdup(const
-	  wchar_t *) inline.  Provide ACE_OS::strdup_emulation(const 
+	  wchar_t *) inline.  Provide ACE_OS::strdup_emulation(const
 	  char *) and ACE_OS::strdup_emulation(const wchar_t *) for
 	  systems that don't have a native (or type-safe equivalent)
 	  strdup() and wcsdup() functions.
@@ -25,7 +46,7 @@ Fri Dec 30 16:39:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	  New file.
 
-	  Feature tests for related features (e.g does function exist, 
+	  Feature tests for related features (e.g does function exist,
 	  does it have a prototype, does it have const/non-const args,
 	  etc.) are scattered all over configure.ac.  This file is for
 	  ACE_FUNC_FOO macros (similar to autoconf's own AC_FUNC_FOO),
@@ -33,7 +54,7 @@ Fri Dec 30 16:39:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	  This clean-up makes the configure.ac easier to maintain at
 	  the same time.
 
-	  Provide ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP, 
+	  Provide ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP,
 	  ACE_FUNC_STRDUP, ACE_FUNC_WCSCASECMP, ACE_FUNC_WCSNCASECMP,
 	  ACE_FUNC_WCSDUP macros to start things off.
 
