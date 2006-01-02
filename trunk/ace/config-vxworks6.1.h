@@ -115,7 +115,6 @@
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SNPRINTF
-#define ACE_HAS_STRDUP_EMULATION
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_STRPTIME
@@ -152,7 +151,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_SOCKETPAIR
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYSV_SHMEM
@@ -225,12 +223,15 @@
   #define ACE_LACKS_SYS_WAIT_H
   #define ACE_HAS_SVR4_DYNAMIC_LINKING
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+  #define ACE_LACKS_REGEX_H
 #else
   // We are building for kernel mode
   #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
   #define ACE_LACKS_DLFCN_H
   #define ACE_LACKS_WAIT
   #define ACE_LACKS_WAITPID
+  #define ACE_LACKS_STRINGS_H
+  #define ACE_LACKS_STRCASECMP
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
@@ -244,15 +245,14 @@
 // Include this file, the sys/stat.h file shipped with VxWorks has old types
 // and without this include we get a lot of compile errors. A TSR has been filed
 // so that hopefully in the future we can zap this include
-#include "types/vxTypesOld.h"
+# include "types/vxTypesOld.h"
 #else
 # define ACE_LACKS_PTHREAD_H
-# define ACE_LACKS_COND_T
+# define ACE_HAS_TSS_EMULATION
 // VxWorks has no recursive mutexes. This was set in the past but it doesn't
 // work with the pthread support, so only set it for the time being when pthread
 // is disabled
 # define ACE_HAS_RECURSIVE_MUTEXES
-#define ACE_HAS_TSS_EMULATION
 #endif
 
 #if !defined (ACE_MT_SAFE)
