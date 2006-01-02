@@ -282,10 +282,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 /* #define T_NOFPU         0x00000000   Not using FPU */
 /* #define T_FPU           0x00000002   Using FPU bit */
 
-#   elif defined (VXWORKS)
-#     include /**/ <sysLib.h> // for sysClkRateGet()
-#     include /**/ <taskLib.h>
-#     include /**/ <taskHookLib.h>
+#   elif defined (ACE_VXWORKS)
+#     if !defined (__RTP__)
+#       include /**/ <sysLib.h> // for sysClkRateGet()
+#       include /**/ <taskLib.h>
+#       include /**/ <taskHookLib.h>
+#     endif
 
 // make sure these are included for VXWORKS.
 // @todo move these to a common place, perhaps the top of the file.
@@ -851,6 +853,7 @@ typedef int ACE_Sched_Priority;
 
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)
 #   if defined (VXWORKS)
+#     include /**/ <semLibCommon.h>
       // Types include these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
       // SEM_DELETE_SAFE, and SEM_INVERSION_SAFE.  SEM_Q_FIFO is
       // used as the default because that is VxWorks' default.
