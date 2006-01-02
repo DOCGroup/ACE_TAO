@@ -852,15 +852,17 @@ private:
 typedef int ACE_Sched_Priority;
 
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)
-#   if defined (VXWORKS)
-#     include /**/ <semLibCommon.h>
+#   if defined (ACE_VXWORKS)
+#     if (ACE_VXWORKS == 0x610)
+#       include /**/ <semLibCommon.h>
+#     endif
       // Types include these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
       // SEM_DELETE_SAFE, and SEM_INVERSION_SAFE.  SEM_Q_FIFO is
       // used as the default because that is VxWorks' default.
 #     define ACE_DEFAULT_SYNCH_TYPE SEM_Q_FIFO
 #   else
 #     define ACE_DEFAULT_SYNCH_TYPE USYNC_THREAD
-#   endif /* VXWORKS */
+#   endif /* ACE_VXWORKS */
 #endif /* ! ACE_DEFAULT_SYNCH_TYPE */
 
 // forward declaration
