@@ -16,16 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.POA_DSI_Server.am
+## Makefile.POA_DSI_IDL.am
 
-if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   DatabaseC.cpp \
   DatabaseC.h \
   DatabaseC.inl \
@@ -36,7 +31,7 @@ BUILT_SOURCES += \
   DatabaseS_T.h \
   DatabaseS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Database-stamp \
   DatabaseC.cpp \
   DatabaseC.h \
@@ -51,8 +46,45 @@ CLEANFILES += \
 DatabaseC.cpp DatabaseC.h DatabaseC.inl DatabaseS.cpp DatabaseS.h DatabaseS.inl DatabaseS_T.cpp DatabaseS_T.h DatabaseS_T.inl: Database-stamp
 
 Database-stamp: $(srcdir)/Database.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Database.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Database.idl
 	@touch $@
+
+
+## Makefile.POA_DSI_Client.am
+
+if BUILD_CORBA_MESSAGING
+if !BUILD_MINIMUM_CORBA
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  DatabaseC.cpp \
+  client.cpp \
+  Database_i.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.POA_DSI_Server.am
+
+if BUILD_CORBA_MESSAGING
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
 
@@ -67,11 +99,6 @@ server_SOURCES = \
   DatabaseS.cpp \
   Database_i.cpp \
   server.cpp \
-  DatabaseC.h \
-  DatabaseC.inl \
-  DatabaseS.h \
-  DatabaseS_T.h \
-  DatabaseS_T.inl \
   Database_i.h
 
 server_LDADD = \
@@ -81,68 +108,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_MINIMUM_CORBA
-endif BUILD_CORBA_MESSAGING
-
-## Makefile.POA_DSI_Client.am
-
-if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  DatabaseC.cpp \
-  DatabaseC.h \
-  DatabaseC.inl \
-  DatabaseS.h \
-  DatabaseS.inl \
-  DatabaseS_T.cpp \
-  DatabaseS_T.h \
-  DatabaseS_T.inl
-
-CLEANFILES += \
-  Database-stamp \
-  DatabaseC.cpp \
-  DatabaseC.h \
-  DatabaseC.inl \
-  DatabaseS.h \
-  DatabaseS.inl \
-  DatabaseS_T.cpp \
-  DatabaseS_T.h \
-  DatabaseS_T.inl
-
-DatabaseC.cpp DatabaseC.h DatabaseC.inl DatabaseS.h DatabaseS.inl DatabaseS_T.cpp DatabaseS_T.h DatabaseS_T.inl: Database-stamp
-
-Database-stamp: $(srcdir)/Database.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Database.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  DatabaseC.cpp \
-  client.cpp \
-  DatabaseC.h \
-  DatabaseC.inl \
-  DatabaseS.h \
-  DatabaseS_T.h \
-  DatabaseS_T.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
