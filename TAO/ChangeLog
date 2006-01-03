@@ -1,3 +1,29 @@
+Tue Jan  3 11:27:56 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/OBV/Typed_Events/Makefile.am:
+	* examples/POA/DSI/Makefile.am:
+	* examples/POA/Default_Servant/Makefile.am:
+	* examples/POA/Forwarding/Makefile.am:
+	* examples/PluggableUDP/tests/Basic/Makefile.am:
+	* examples/PluggableUDP/tests/Performance/Makefile.am:
+	* examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
+	* examples/Quoter/Makefile.am:
+
+	  Regenerated.
+
+	* examples/OBV/Typed_Events/Typed_Events.mpc:
+	* examples/POA/DSI/POA_DSI.mpc:
+	* examples/POA/Default_Servant/POA_Default_Servant.mpc:
+	* examples/POA/Forwarding/POA_Forwarding.mpc:
+	* examples/PluggableUDP/tests/Basic/Basic.mpc:
+	* examples/PluggableUDP/tests/Performance/Performance.mpc:
+	* examples/PluggableUDP/tests/SimplePerformance/SimplePerformance.mpc:
+	* examples/Quoter/Quoter.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Tue Jan  3 10:39:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2345_Regression/server.cpp:

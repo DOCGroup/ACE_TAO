@@ -16,15 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.Typed_Events_Server.am
+## Makefile.Typed_Events_IDL.am
 
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   Event_TypesC.cpp \
   Event_TypesC.h \
   Event_TypesC.inl \
@@ -35,7 +31,7 @@ BUILT_SOURCES += \
   Event_TypesS_T.h \
   Event_TypesS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Event_Types-stamp \
   Event_TypesC.cpp \
   Event_TypesC.h \
@@ -50,77 +46,13 @@ CLEANFILES += \
 Event_TypesC.cpp Event_TypesC.h Event_TypesC.inl Event_TypesS.cpp Event_TypesS.h Event_TypesS.inl Event_TypesS_T.cpp Event_TypesS_T.h Event_TypesS_T.inl: Event_Types-stamp
 
 Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Event_Types.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Event_Types.idl
 	@touch $@
 
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  ../Simple_util.cpp \
-  Event_TypesC.cpp \
-  Event_TypesS.cpp \
-  Event_Types_impl.cpp \
-  Server_i.cpp \
-  server.cpp \
-  ../Simple_util.h \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.h \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl \
-  Event_Types_impl.h \
-  Server_i.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.Typed_Events_Client.am
 
 if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  Event_TypesC.cpp \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.cpp \
-  Event_TypesS.h \
-  Event_TypesS.inl \
-  Event_TypesS_T.cpp \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl
-
-CLEANFILES += \
-  Event_Types-stamp \
-  Event_TypesC.cpp \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.cpp \
-  Event_TypesS.h \
-  Event_TypesS.inl \
-  Event_TypesS_T.cpp \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl
-
-Event_TypesC.cpp Event_TypesC.h Event_TypesC.inl Event_TypesS.cpp Event_TypesS.h Event_TypesS.inl Event_TypesS_T.cpp Event_TypesS_T.h Event_TypesS_T.inl: Event_Types-stamp
-
-Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Event_Types.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -139,14 +71,44 @@ client_SOURCES = \
   client.cpp \
   ../Simple_util.h \
   Client_i.h \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.h \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl \
   Event_Types_impl.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_MINIMUM_CORBA
+
+## Makefile.Typed_Events_Server.am
+
+if !BUILD_MINIMUM_CORBA
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  ../Simple_util.cpp \
+  Event_TypesC.cpp \
+  Event_TypesS.cpp \
+  Event_Types_impl.cpp \
+  Server_i.cpp \
+  server.cpp \
+  ../Simple_util.h \
+  Event_Types_impl.h \
+  Server_i.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \

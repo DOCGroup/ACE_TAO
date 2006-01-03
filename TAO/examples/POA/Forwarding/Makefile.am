@@ -16,9 +16,94 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
+
+## Makefile.POA_Forwarding_IDL.am
+
+BUILT_SOURCES = \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+CLEANFILES = \
+  test-stamp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+
+test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	@touch $@
+
+
+## Makefile.POA_Forwarding_Client.am
+
+if !BUILD_MINIMUM_CORBA
+
+BUILT_SOURCES += \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+CLEANFILES += \
+  test-stamp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+
+test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	@touch $@
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  client.cpp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS_T.h \
+  testS_T.inl
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.POA_Forwarding_Server.am
 
@@ -77,61 +162,6 @@ server_SOURCES = \
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_MINIMUM_CORBA
-
-## Makefile.POA_Forwarding_Client.am
-
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  client.cpp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
-
-client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
