@@ -1,8 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
+project(*IDL) : taoidldefaults, anytypecode {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
 project(*Client) : taoclient, anytypecode, minimum_corba {
-  after += *Server
+  after += *IDL
   source_files {
     client.cpp
     testC.cpp
@@ -10,9 +17,12 @@ project(*Client) : taoclient, anytypecode, minimum_corba {
 }
 
 project(*Server) : taoserver, minimum_corba {
+  after += *IDL
   source_files {
     test_i.cpp
     server.cpp
     Servant_Activator.cpp
+    testS.cpp
+    testC.cpp
   }
 }
