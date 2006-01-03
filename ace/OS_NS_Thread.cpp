@@ -5652,8 +5652,8 @@ int
 spae (FUNCPTR entry, ...)
 {
   static const int WINDSH_ARGS = 10;
-  static const int MAX_ARGS    = 128;
-  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  static const int ACE_MAX_ARGS    = 128;
+  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5667,12 +5667,12 @@ spae (FUNCPTR entry, ...)
   for (char* str = va_arg (pvar, char*);
        str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
     {
-      add_to_argv(argc, argv, MAX_ARGS, str);
+      add_to_argv(argc, argv, ACE_MAX_ARGS, str);
     }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (i = argc; i < MAX_ARGS; ++i)
+  for (i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
@@ -5706,8 +5706,8 @@ int
 spaef (FUNCPTR entry, ...)
 {
   static const int WINDSH_ARGS = 10;
-  static const int MAX_ARGS    = 128;
-  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  static const int ACE_MAX_ARGS    = 128;
+  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5721,12 +5721,12 @@ spaef (FUNCPTR entry, ...)
   for (char* str = va_arg (pvar, char*);
        str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
     {
-      add_to_argv(argc, argv, MAX_ARGS, str);
+      add_to_argv(argc, argv, ACE_MAX_ARGS, str);
     }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (i = argc; i < MAX_ARGS; ++i)
+  for (i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   int ret = entry (argc, argv);
@@ -5757,18 +5757,18 @@ _vx_call_entry(FUNCPTR entry, int argc, char* argv[])
 int
 vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 {
-  static const int MAX_ARGS    = 128;
-  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  static const int ACE_MAX_ARGS    = 128;
+  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
 
   if (arg)
-    add_to_argv(argc, argv, MAX_ARGS, arg);
+    add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (int i = argc; i < MAX_ARGS; ++i)
+  for (int i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
