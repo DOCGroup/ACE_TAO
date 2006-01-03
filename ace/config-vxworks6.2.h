@@ -227,6 +227,9 @@
   #define ACE_LACKS_WAIT
   #define ACE_LACKS_WAITPID
   #define ACE_LACKS_SYS_TIME_H
+  #define ACE_LACKS_SYS_SELECT_H
+  #define ACE_LACKS_STRINGS_H
+  #define ACE_MKDIR_LACKS_MODE
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
