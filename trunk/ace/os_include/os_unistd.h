@@ -44,13 +44,15 @@
 #  include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
-// for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(),
-// getwd(), and isatty()
-#  include /**/ <ioLib.h>
+#if defined (ACE_VXWORKS)
+#  if !defined (__RTP__)
+    // for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(),
+   // getwd(), and isatty()
+   #  include /**/ <ioLib.h>
+#  endif
 // for gethostname()
 #  include /**/ <hostLib.h>
-#endif /* ACE_VXWORKS && !__RTP__ */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

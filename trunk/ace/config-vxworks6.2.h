@@ -148,7 +148,6 @@
 #define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_SOCKETPAIR
 #define ACE_LACKS_STRRECVFD
-#define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_TEMPNAM
@@ -216,7 +215,6 @@
 
 #if defined __RTP__
   // We are building for RTP mode
-  #define ACE_LACKS_SYS_WAIT_H
   #define ACE_HAS_SVR4_DYNAMIC_LINKING
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
@@ -251,6 +249,7 @@
 // work with the pthread support, so only set it for the time being when pthread
 // is disabled
 # define ACE_HAS_RECURSIVE_MUTEXES
+# define ACE_LACKS_COND_T
 #endif
 
 #if !defined (ACE_MT_SAFE)
