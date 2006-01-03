@@ -1,3 +1,8 @@
+Tue Jan  3 10:39:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2345_Regression/server.cpp:
+          Fixed unused variable warning
+
 Mon Jan  2 18:45:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2345_Regression/server.cpp:
