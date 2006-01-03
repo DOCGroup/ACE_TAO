@@ -1,3 +1,20 @@
+Tue Jan  3 13:03:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Renamed MAX_ARGS to ACE_MAX_ARGS because VxWorks 6.2 has also a
+          define MAX_ARGS
+
+        * ace/config-vxworks6.2.h:
+          Updated based on first testing
+
+        * ace/os_include/sys/os_select.h:
+        * ace/os_include/os_netdb.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_unistd.h:
+        * ace/os_include/os_unistd.h:
+        * ace/OS_NS_unistd.inl:
+          Minor updated for vxworks 6.1
+
 Mon Jan  2 10:56:57 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_string.cpp:
