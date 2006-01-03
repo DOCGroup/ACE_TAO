@@ -206,6 +206,8 @@
 #define ACE_LACKS_WCSTOL
 #define ACE_LACKS_WCSTOUL
 #define ACE_LACKS_WCSDUP
+#define ACE_LACKS_STRCASECMP
+#define ACE_HAS_CHARPTR_SOCKOPT
 
 #define ACE_LACKS_SYMLINKS
 #define ACE_LACKS_FGETWC
@@ -217,13 +219,13 @@
   #define ACE_LACKS_SYS_WAIT_H
   #define ACE_HAS_SVR4_DYNAMIC_LINKING
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+  #define ACE_LACKS_REGEX_H
 #else
   // We are building for kernel mode
   #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
   #define ACE_LACKS_DLFCN_H
   #define ACE_LACKS_WAIT
   #define ACE_LACKS_WAITPID
-  #define ACE_LACKS_STRCASECMP
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
@@ -232,6 +234,8 @@
 # define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # define ACE_HAS_POSIX_SEM
+# define ACE_LACKS_MUTEXATTR_PSHARED
+# define ACE_LACKS_CONDATTR_PSHARED
 // Include this file, the sys/stat.h file shipped with VxWorks has old types
 // and without this include we get a lot of compile errors. A TSR has been filed
 // so that hopefully in the future we can zap this include
