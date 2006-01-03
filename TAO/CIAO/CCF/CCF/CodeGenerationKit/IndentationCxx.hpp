@@ -110,9 +110,6 @@ namespace Indentation
 
             hold_.push_back (c);
 
-            // result = write (c);
-
-            //ensure_new_line ();
 
             // Add double newline after '}'.
             //

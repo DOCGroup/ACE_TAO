@@ -187,7 +187,37 @@ main (int argc, char* argv[])
       : static_cast<std::istream&> (std::cin);
 
     InputStreamAdapter isa (is);
-    CPP::Preprocessor pp (isa);
+
+
+    // Extract preprocessor symbol definitions (-D). We are not
+    // interested in the values, just symbols.
+    //
+    CPP::Symbols symbols;
+
+    for (CommandLine::OptionsIterator
+           i (cl.options_begin ()), e (cl.options_end ()); i != e; ++i)
+    {
+      if (i->name () == "D")
+      {
+        std::string def (i->value ());
+
+        // Get rid of '=value' in 'symbol=value' definitions.
+        //
+        std::size_t p (def.find ('='));
+        if (p != std::string::npos)
+          symbols.insert (std::string (def, 0, p));
+        else
+          symbols.insert (def);
+      }
+      else if (i->name ()[0] == 'D')
+      {
+        std::string opt (i->name ());
+        std::string def (opt.begin () + 1, opt.end ());
+        symbols.insert (def);
+      }
+    }
+
+    CPP::Preprocessor pp (isa, symbols);
 
     if (cl.get_value ("preprocess-only", false))
     {
@@ -232,6 +262,7 @@ main (int argc, char* argv[])
     context.set ("file-path", file_path);
     context.set ("trace-semantic-action",
                  cl.get_value ("trace-semantic-actions", false));
+    context.set ("cpp-symbols", symbols);
 
 
     // Extract include search paths.
@@ -242,15 +273,28 @@ main (int argc, char* argv[])
     for (CommandLine::OptionsIterator
            i (cl.options_begin ()), e (cl.options_end ()); i != e; ++i)
     {
+      std::string path;
+
       if (i->name () == "I")
       {
-        include_paths.push_back (fs::path (i->value (), fs::native));
+        path = i->value ();
       }
       else if (i->name ()[0] == 'I')
       {
         std::string opt (i->name ());
-        std::string path (opt.begin () + 1, opt.end ());
+        path = std::string (opt.begin () + 1, opt.end ());
+      }
+
+      try
+      {
         include_paths.push_back (fs::path (path, fs::native));
+      }
+      catch (fs::filesystem_error const&)
+      {
+        cerr << "error: invalid filesystem path '" << path << "' "
+             << "provided with the -I option" << endl;
+
+        return 1;
       }
     }
 

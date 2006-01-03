@@ -136,6 +136,28 @@ namespace CCF
 
       TypeInfo const& Union::
       static_type_info () { return union_; }
+
+      bool Union::
+      complete () const
+      {
+        if (defined ())
+        {
+          for (Scope::NamesIterator i (names_begin ());
+               i != names_end ();
+               ++i)
+          {
+            Member const& m (dynamic_cast<Member&> ((*i)->named ()));
+            Type const& t (m.belongs ().type ());
+
+            if (!t.complete ())
+              return false;
+          }
+
+          return true;
+        }
+
+        return false;
+      }
     }
   }
 }
