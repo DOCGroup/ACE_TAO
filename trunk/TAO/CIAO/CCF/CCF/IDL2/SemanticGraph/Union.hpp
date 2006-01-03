@@ -126,10 +126,7 @@ namespace CCF
       {
       public:
         virtual bool
-        complete () const
-        {
-          return defined ();
-        }
+        complete () const;
 
         static Introspection::TypeInfo const&
         static_type_info ();
