@@ -1,3 +1,8 @@
+Tue Jan  3 14:26:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+          Don't use maxFiles with VxWorks 6.2
+
 Tue Jan  3 13:03:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
