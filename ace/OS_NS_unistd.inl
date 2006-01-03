@@ -20,7 +20,7 @@
 
 #if defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
 #  include "ace/os_include/os_unistd.h"
-#  if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x610)
+#  if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x610 || ACE_VXWORKS == 0x620)
 #    if defined (__RTP__)
 #      include "ace/os_include/os_strings.h"
 #    else
