@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
     return 0;
   }
-  catch (CORBA::Exception& e)
+  catch (CORBA::Exception&)
   {
     // ... normally print an error here
   }
