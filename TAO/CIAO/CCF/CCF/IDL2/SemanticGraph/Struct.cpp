@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "CCF/IDL2/SemanticGraph/Struct.hpp"
+#include "CCF/IDL2/SemanticGraph/Member.hpp"
 
 namespace CCF
 {
@@ -30,6 +31,27 @@ namespace CCF
       TypeInfo const& Struct::
       static_type_info () { return struct_; }
 
+      bool Struct::
+      complete () const
+      {
+        if (defined ())
+        {
+          for (Scope::NamesIterator i (names_begin ());
+               i != names_end ();
+               ++i)
+          {
+            Member const& m (dynamic_cast<Member&> ((*i)->named ()));
+            Type const& t (m.belongs ().type ());
+
+            if (!t.complete ())
+              return false;
+          }
+
+          return true;
+        }
+
+        return false;
+      }
     }
   }
 }

@@ -1,3 +1,29 @@
+Tue Jan  3 19:55:43 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/CompilerElements/Preprocessor.cpp:
+	* CCF/CCF/CompilerElements/Preprocessor.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
+	* CIDLC/cidlc.cpp:
+
+	Implemented support for basic preprocessor directives:
+	#ifdef, #ifndef, #else, and #endif as well as the -D
+	command-line option. Also added exception handlers for
+	filesystem exceptions.
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Struct.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Struct.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Union.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Union.hpp:
+
+	Implemented incomplete struct and union semantics which
+	will appear in CORBA 3.1.
+
+	* CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
+
+	Code clean-ups.
+
 Fri Dec 30 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Dynamic_Component_Servant_Base.{h,cpp}:
