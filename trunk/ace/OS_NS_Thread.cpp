@@ -3989,7 +3989,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
 
-  ACE_Base_Thread_Adapter *thread_args;
+  ACE_Base_Thread_Adapter *thread_args = 0;
   if (thread_adapter == 0)
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
@@ -5520,8 +5520,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 int
 spa (FUNCPTR entry, ...)
 {
-  static const unsigned int MAX_ARGS = 10;
-  static char *argv[MAX_ARGS];
+  static const unsigned int ACE_MAX_ARGS = 10;
+  static char *argv[ACE_MAX_ARGS];
   va_list pvar;
   unsigned int argc;
 
@@ -5537,7 +5537,7 @@ spa (FUNCPTR entry, ...)
   // number of arguments would have to be passed.
   va_start (pvar, entry);
 
-  for (argc = 1; argc <= MAX_ARGS; ++argc)
+  for (argc = 1; argc <= ACE_MAX_ARGS; ++argc)
     {
       argv[argc] = va_arg (pvar, char *);
 
@@ -5545,18 +5545,18 @@ spa (FUNCPTR entry, ...)
         break;
     }
 
-  if (argc > MAX_ARGS  &&  argv[argc-1] != 0)
+  if (argc > ACE_MAX_ARGS  &&  argv[argc-1] != 0)
     {
       // try to read another arg, and warn user if the limit was exceeded
       if (va_arg (pvar, char *) != 0)
         ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %d\n",
-                         MAX_ARGS);
+                         ACE_MAX_ARGS);
     }
   else
     {
       // fill unused argv slots with 0 to get rid of leftovers
       // from previous invocations
-      for (unsigned int i = argc; i <= MAX_ARGS; ++i)
+      for (unsigned int i = argc; i <= ACE_MAX_ARGS; ++i)
         argv[i] = 0;
     }
 
