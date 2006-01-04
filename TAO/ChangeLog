@@ -1,3 +1,36 @@
+Wed Jan  4 09:54:01 2006  David Giovannini  <giovannd@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.h:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Iterator.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Loader.h:
+        * orbsvcs/ImplRepo_Service/Locator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Corrected white-space to match ACE/TAO guidelines.
+          Adding a const to an int in Imr_Locator_i.cpp.
+          Changing a command line behavior for defualt activator 
+          in tao_imr_i.cpp.
+
 Tue Jan  3 21:34:30 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:

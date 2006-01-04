@@ -44,7 +44,7 @@ public:
 
   struct Callback {
     virtual ~Callback() {}
- 
+
     virtual void next_server (const ACE_CString& server_name,
       const ACE_CString& aname, const ACE_CString& startup_cmd,
       const EnvList& env_vars, const ACE_CString& working_dir,
