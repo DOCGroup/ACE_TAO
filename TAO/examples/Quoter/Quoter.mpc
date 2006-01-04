@@ -16,6 +16,8 @@ project(*server): namingexe, lifecycle, minimum_corba, utils {
     QuoterS.cpp
     QuoterC.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(*client): namingexe, lifecycle, minimum_corba {
@@ -23,6 +25,8 @@ project(*client): namingexe, lifecycle, minimum_corba {
   Source_Files {
     client.cpp
     QuoterC.cpp
+  }
+  IDL_Files {
   }
 }
 
@@ -34,6 +38,8 @@ project(*Factory Finder): namingexe, lifecycle, minimum_corba, utils {
     QuoterS.cpp
     QuoterC.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(*Generic Factory): namingexe, lifecycle, minimum_corba, utils {
@@ -43,5 +49,7 @@ project(*Generic Factory): namingexe, lifecycle, minimum_corba, utils {
     Generic_Factory_i.cpp
     QuoterS.cpp
     QuoterC.cpp
+  }
+  IDL_Files {
   }
 }
