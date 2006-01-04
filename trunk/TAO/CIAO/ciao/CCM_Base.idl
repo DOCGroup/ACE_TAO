@@ -14,7 +14,7 @@
 
 //#define CIAO_HAS_IMPORT_KEYWORD
 
-#if defined (CIAO_HAS_IMPORT_KEYWORD)
+#ifdef CIAO_HAS_IMPORT_KEYWORD
 // import ::CORBA;
 #else
 #include <orb.idl>
