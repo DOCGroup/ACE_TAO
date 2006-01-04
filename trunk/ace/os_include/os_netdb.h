@@ -39,7 +39,7 @@
 #  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #endif /* !ACE_LACKS_NETDB_H */
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include /**/ <hostLib.h>
 #endif /* ACE_VXWORKS */
 

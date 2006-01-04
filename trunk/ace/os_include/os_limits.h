@@ -37,9 +37,9 @@
 
 // On VxWorks _POSIX_TIMER_MAX is defined in time.h, report this to WindRiver
 // support.
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include /**/ <time.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
