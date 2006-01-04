@@ -331,7 +331,8 @@ namespace CCF
 
           if (std::isalpha<char> (t, loc_))
           {
-            for (;std::isalpha<char> (t, loc_); t = ls_get ()) lexeme += t;
+            for (;std::isalpha<char> (t, loc_); t = ls_get ())
+              lexeme += t;
 
             ls_ret (t);
           }
@@ -354,9 +355,10 @@ namespace CCF
             string symbol;
             Token t (ls_get_ns ());
 
-            if (std::isalpha<char> (t, loc_))
+
+            if (is_first_id_char (t))
             {
-              for (;std::isalpha<char> (t, loc_); t = ls_get ())
+              for (;is_id_char (t); t = ls_get ())
                 symbol += t;
               ls_ret (t);
             }
@@ -410,9 +412,9 @@ namespace CCF
               string msg;
               Token t (ls_get_ns ());
 
-              if (std::isalpha<char> (t, loc_))
+              if (t != '\n')
               {
-                for (;std::isalpha<char> (t, loc_); t = ls_get ())
+                for (;t != '\n'; t = ls_get ())
                   msg += t;
                 ls_ret (t);
               }
@@ -880,6 +882,18 @@ namespace CCF
         ls_is_space (Token const& t)
         {
           return t == ' ' || t == '\t';
+        }
+
+        bool
+        is_first_id_char (Token const& t)
+        {
+          return std::isalpha<char> (t, loc_) || t == '_';
+        }
+
+        bool
+        is_id_char (Token const& t)
+        {
+          return std::isalnum<char> (t, loc_) || t == '_';
         }
 
       private:
