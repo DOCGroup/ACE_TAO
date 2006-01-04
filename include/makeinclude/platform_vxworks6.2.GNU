@@ -86,7 +86,7 @@ ifeq ("$(TOOL)","gnu")
   templates ?= automatic
 endif
 
-PRJ_TYPE = vxApp
+PRJ_TYPE ?= vxApp
 
 ifeq ($(rtp),1)
   TARGET_DIR = $(WIND_BASE)/target/usr
@@ -220,10 +220,12 @@ ifeq ("$(VXWORKSLINK)","true")
 	endif
   endif
 else
-  ace_lib_prelink := 1
-  LINK.cc          = override
-  LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L$(INSLIB) -L./ $(LDLIBPATH) $(LD_LINK_PATH)
-  LDFLAGS          = $(ACE_SHLIBS)
+  ifeq ($(rtp),0)
+    ace_lib_prelink := 1
+    LINK.cc          = override
+    LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L$(INSLIB) -L./ $(LDLIBPATH) $(LD_LINK_PATH)
+    LDFLAGS          = $(ACE_SHLIBS)
+  endif
 endif
 else
   C++FLAGS += -fmerge-templates
