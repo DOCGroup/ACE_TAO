@@ -1,3 +1,11 @@
+Tue Jan  3 21:31:29 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Add "indent-tabs: nil" to Local Variables at end of file.
+          Untabify.
+          Delete-trailing-whitespace.
+
 Tue Jan  3 14:26:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
 
         * ace/ACE.cpp:
@@ -22,10 +30,10 @@ Tue Jan  3 13:03:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
 
 Mon Jan  2 10:56:57 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_string.cpp:
+        * ace/OS_NS_string.cpp:
 
-	  Fix conditionals around ACE_OS::strdup_emulation(const wchar*).
-	  Remove code that was moved to ACE_OS::strdup(const wchar*).
+          Fix conditionals around ACE_OS::strdup_emulation(const wchar*).
+          Remove code that was moved to ACE_OS::strdup(const wchar*).
 
 Mon Jan  2 18:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -83,49 +91,49 @@ Mon Jan  2 12:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan  1 00:00:00 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Happy New Year!!!
+        * Happy New Year!!!
 
 Fri Dec 30 16:39:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_string.cpp:
-	* ace/OS_NS_string.h:
-	* ace/OS_NS_string.inl:
+        * ace/OS_NS_string.cpp:
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_string.inl:
 
-	  Make ACE_OS::strdup(const char *) and ACE_OS::strdup(const
-	  wchar_t *) inline.  Provide ACE_OS::strdup_emulation(const
-	  char *) and ACE_OS::strdup_emulation(const wchar_t *) for
-	  systems that don't have a native (or type-safe equivalent)
-	  strdup() and wcsdup() functions.
+          Make ACE_OS::strdup(const char *) and ACE_OS::strdup(const
+          wchar_t *) inline.  Provide ACE_OS::strdup_emulation(const
+          char *) and ACE_OS::strdup_emulation(const wchar_t *) for
+          systems that don't have a native (or type-safe equivalent)
+          strdup() and wcsdup() functions.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Replace scattered feature tests with calls to new
-	  ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP, ACE_FUNC_STRDUP,
-	  ACE_FUNC_WCSCASECMP, ACE_FUNC_WCSNCASECMP, ACE_FUNC_WCSDUP
-	  autoconf macros.
+          Replace scattered feature tests with calls to new
+          ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP, ACE_FUNC_STRDUP,
+          ACE_FUNC_WCSCASECMP, ACE_FUNC_WCSNCASECMP, ACE_FUNC_WCSDUP
+          autoconf macros.
 
-	* m4/ace_func.m4:
+        * m4/ace_func.m4:
 
-	  New file.
+          New file.
 
-	  Feature tests for related features (e.g does function exist,
-	  does it have a prototype, does it have const/non-const args,
-	  etc.) are scattered all over configure.ac.  This file is for
-	  ACE_FUNC_FOO macros (similar to autoconf's own AC_FUNC_FOO),
-	  which bring all these feature tests together in once place.
-	  This clean-up makes the configure.ac easier to maintain at
-	  the same time.
+          Feature tests for related features (e.g does function exist,
+          does it have a prototype, does it have const/non-const args,
+          etc.) are scattered all over configure.ac.  This file is for
+          ACE_FUNC_FOO macros (similar to autoconf's own AC_FUNC_FOO),
+          which bring all these feature tests together in once place.
+          This clean-up makes the configure.ac easier to maintain at
+          the same time.
 
-	  Provide ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP,
-	  ACE_FUNC_STRDUP, ACE_FUNC_WCSCASECMP, ACE_FUNC_WCSNCASECMP,
-	  ACE_FUNC_WCSDUP macros to start things off.
+          Provide ACE_FUNC_STRCASECMP, ACE_FUNC_STRNCASECMP,
+          ACE_FUNC_STRDUP, ACE_FUNC_WCSCASECMP, ACE_FUNC_WCSNCASECMP,
+          ACE_FUNC_WCSDUP macros to start things off.
 
 Fri Dec 30 17:52:41 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dev_Poll_Reactor.cpp (work_pending_i): Upon return from
-	  epoll_wait(), don't blindly set start_pevents_ to events_. If
-	  epoll_wait() returns -1, this erroneously sets start_pevents_ to
-	  a value that may not make sense.
+        * ace/Dev_Poll_Reactor.cpp (work_pending_i): Upon return from
+          epoll_wait(), don't blindly set start_pevents_ to events_. If
+          epoll_wait() returns -1, this erroneously sets start_pevents_ to
+          a value that may not make sense.
 
 Fri Dec 30 12:17:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -226,13 +234,13 @@ Fri Dec 30 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec 29 11:55:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/DLL.h: Further Doxygen-ized and expanded the documentation.
+        * ace/DLL.h: Further Doxygen-ized and expanded the documentation.
 
-	* ace/config-macros.h: Add __HP_aCC to the compilers that need to have
-	  unreachable statements suppressed to avoid a compile diagnostic.
+        * ace/config-macros.h: Add __HP_aCC to the compilers that need to have
+          unreachable statements suppressed to avoid a compile diagnostic.
 
-	* ace/config-hpux-11.00.h: Add ACE_LACKS_PERFECT_MULTICAST_FILTERING
-	  for HP-UX 11iv2 (11.23).
+        * ace/config-hpux-11.00.h: Add ACE_LACKS_PERFECT_MULTICAST_FILTERING
+          for HP-UX 11iv2 (11.23).
 
 Thu Dec 29 11:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -248,10 +256,10 @@ Thu Dec 29 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 28 11:47:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/acinclude.m4:
+        * m4/acinclude.m4:
 
-	  Remove some long commented-out macros that reimplemented core
-	  autoconf functionality.
+          Remove some long commented-out macros that reimplemented core
+          autoconf functionality.
 
 Wed Dec 28 19:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -266,20 +274,20 @@ Wed Dec 28 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 28 11:21:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add ACE_LACKS_SCHED_H feature test.  Use it in other tests
-	  that #include <sched.h>.
+          Add ACE_LACKS_SCHED_H feature test.  Use it in other tests
+          that #include <sched.h>.
 
 Wed Dec 28 11:08:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/config_h.m4:
+        * m4/config_h.m4:
 
-	  Remove ACE_HAS_3_PARAM_WCSTOK autoconf header template.
+          Remove ACE_HAS_3_PARAM_WCSTOK autoconf header template.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added description to AC_DEFINE for ACE_HAS_3_PARAM_WCSTOK.
+          Added description to AC_DEFINE for ACE_HAS_3_PARAM_WCSTOK.
 
 Wed Dec 28 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -289,11 +297,11 @@ Wed Dec 28 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 28 10:56:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Change ACE_HAS_CPU_SET_T feature test to look in <sched.h>.
+          Change ACE_HAS_CPU_SET_T feature test to look in <sched.h>.
 
-	  Add ACE_HAS_2_PARAM_SCHED_{GET,SET}AFFINITY feature tests.
+          Add ACE_HAS_2_PARAM_SCHED_{GET,SET}AFFINITY feature tests.
 
 Wed Dec 28 16:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -352,131 +360,131 @@ Wed Dec 28 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 27 19:21:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Add ACE_ENABLE_CDR_SWAP_ON_READ, ACE_ENABLE_CDR_SWAP_ON_WRITE,
-	  ACE_ENABLE_CDR_ALIGNMENT, ACE_ENABLE_STRDUP_EMULATION, and
-	  ACE_ENABLE_WCSDUP_EMULATION to support --enable options of
-	  the same name.  Allows users to configure these aspects of
-	  ACE without editing the generated config.h header.
+          Add ACE_ENABLE_CDR_SWAP_ON_READ, ACE_ENABLE_CDR_SWAP_ON_WRITE,
+          ACE_ENABLE_CDR_ALIGNMENT, ACE_ENABLE_STRDUP_EMULATION, and
+          ACE_ENABLE_WCSDUP_EMULATION to support --enable options of
+          the same name.  Allows users to configure these aspects of
+          ACE without editing the generated config.h header.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Fix typo in ACE_LACKS_MADVISE_PROTOTYPE feature test.
+          Fix typo in ACE_LACKS_MADVISE_PROTOTYPE feature test.
 
 Tue Dec 27 15:14:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* THANKS: Added Vladimir Panov to the Hall of Fame.
+        * THANKS: Added Vladimir Panov to the Hall of Fame.
 
 Tue Dec 27 14:49:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/config_h.m4:
+        * m4/config_h.m4:
 
-	  Remove ACE_HAS_STRDUP_EMULATION autoconf header template.
+          Remove ACE_HAS_STRDUP_EMULATION autoconf header template.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Changed strdup feature test to set ACE_LACKS_STRDUP instead
-	  of ACE_HAS_STRDUP_EMULATION.
+          Changed strdup feature test to set ACE_LACKS_STRDUP instead
+          of ACE_HAS_STRDUP_EMULATION.
 
-	  Added (missing) ACE_LACKS_STRCHR feature test.
+          Added (missing) ACE_LACKS_STRCHR feature test.
 
-	* ace/README:
+        * ace/README:
 
-	  Update ACE_HAS_STRDUP_EMULATION description.  Added
-	  ACE_HAS_WCSDUP_EMULATION, ACE_LACKS_STRCHR, ACE_LACKS_WCSCHR,
-	  ACE_LACKS_STRDUP, and ACE_LACKS_WCSDUP descriptions.
+          Update ACE_HAS_STRDUP_EMULATION description.  Added
+          ACE_HAS_WCSDUP_EMULATION, ACE_LACKS_STRCHR, ACE_LACKS_WCSCHR,
+          ACE_LACKS_STRDUP, and ACE_LACKS_WCSDUP descriptions.
 
-	* ace/OS_Memory.h:
+        * ace/OS_Memory.h:
 
-	  Updated comment explaining that users may want to set
-	  ACE_HAS_STRDUP_EMULATION if they need to control what memory
-	  allocator is used to include ACE_HAS_WCSDUP_EMULATION.
+          Updated comment explaining that users may want to set
+          ACE_HAS_STRDUP_EMULATION if they need to control what memory
+          allocator is used to include ACE_HAS_WCSDUP_EMULATION.
 
-	* ace/OS_NS_string.cpp:
+        * ace/OS_NS_string.cpp:
 
-	  The ACE_HAS_STRDUP_EMULATION feature test macro was being used
-	  for two purposes.  One is for systems which don't have a native
-	  strdup().  The other is for when the user needs to control/
-	  override what memory allocator is used.
+          The ACE_HAS_STRDUP_EMULATION feature test macro was being used
+          for two purposes.  One is for systems which don't have a native
+          strdup().  The other is for when the user needs to control/
+          override what memory allocator is used.
 
-	  I've separated these options by adding a new ACE_LACKS_STRDUP
-	  feature test macro. ACE's emulated strdup() implementation is
-	  used if either ACE_LACK_STRDUP or ACE_HAS_STRDUP_EMULATION is
-	  set.
+          I've separated these options by adding a new ACE_LACKS_STRDUP
+          feature test macro. ACE's emulated strdup() implementation is
+          used if either ACE_LACK_STRDUP or ACE_HAS_STRDUP_EMULATION is
+          set.
 
-	  Added ACE_HAS_WCSDUP_EMULATION, similar to the above, for
-	  symmetry with the wide character version.
+          Added ACE_HAS_WCSDUP_EMULATION, similar to the above, for
+          symmetry with the wide character version.
 
 Tue Dec 27 14:17:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/config_h.m4:
+        * m4/config_h.m4:
 
-	  Remove ACE_HAS_SET_T_ERRNO autoconf header template.
+          Remove ACE_HAS_SET_T_ERRNO autoconf header template.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Change ACE_HAS_SET_T_ERRNO feature test to use "standard"
-	  ACE_CHECK_HAS_FUNC() macro.
+          Change ACE_HAS_SET_T_ERRNO feature test to use "standard"
+          ACE_CHECK_HAS_FUNC() macro.
 
 Tue Dec 27 13:36:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/os_include/sys/os_mman.h:
+        * ace/os_include/sys/os_mman.h:
 
-	  Provide madvise prototype if ACE_LACKS_MADVISE_PROTOTYPE.
+          Provide madvise prototype if ACE_LACKS_MADVISE_PROTOTYPE.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added ACE_LACKS_MADVISE_PROTOTYPE feature test.
+          Added ACE_LACKS_MADVISE_PROTOTYPE feature test.
 
-	  This should fix bugzilla bug 2274.  Thanks to Steve Williams
-	  < steve at telxio dot com > for reporting this and providing
-	  an initial patch.
+          This should fix bugzilla bug 2274.  Thanks to Steve Williams
+          < steve at telxio dot com > for reporting this and providing
+          an initial patch.
 
 Tue Dec 27 13:29:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* apps/gperf/Makefile.am:
+        * apps/gperf/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* apps/gperf/gperf.mpc:
+        * apps/gperf/gperf.mpc:
 
-	  New file.  Adds rule for building/installing gperf.1 manpage.
-	  Partially addresses bugzilla bug 2280.
+          New file.  Adds rule for building/installing gperf.1 manpage.
+          Partially addresses bugzilla bug 2280.
 
 Tue Dec 27 12:45:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Fix typo in last change.
+          Fix typo in last change.
 
 Tue Dec 27 12:41:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add ACE_HAS_CPU_SET_T, ACE_HAS_PTHREAD_GETAFINITY_NP,
-	  ACE_HAS_PTHREAD_SETAFFINITY_NP, ACE_HAS_SCHED_GETAFFINITY,
-	  and ACE_HAS_SCHED_SETAFFINITY feature tests for a patch
-	  Johnny is preparing.
+          Add ACE_HAS_CPU_SET_T, ACE_HAS_PTHREAD_GETAFINITY_NP,
+          ACE_HAS_PTHREAD_SETAFFINITY_NP, ACE_HAS_SCHED_GETAFFINITY,
+          and ACE_HAS_SCHED_SETAFFINITY feature tests for a patch
+          Johnny is preparing.
 
 Tue Dec 27 11:11:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/config_h.m4:
+        * m4/config_h.m4:
 
-	  Remove ACE_LACKS_SYSTEM_H autoconf header template.
+          Remove ACE_LACKS_SYSTEM_H autoconf header template.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Remove ACE_LACKS_SYSTIME_H feature test, and the use of
-	  ACE_LACKS_SYSTIME_H in other feature test macros.  C.f.
+          Remove ACE_LACKS_SYSTIME_H feature test, and the use of
+          ACE_LACKS_SYSTIME_H in other feature test macros.  C.f.
 
-	  Tue Dec 27 14:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+          Tue Dec 27 14:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 27 11:06:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add ACE_LACKS_ALARM feature test.
+          Add ACE_LACKS_ALARM feature test.
 
 Tue Dec 27 15:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -565,7 +573,7 @@ Tue Dec 27 09:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 25 09:04:50 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Merry Christmas, 2005!!!!
+        * Merry Christmas, 2005!!!!
 
 Fri Dec 23 13:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -599,20 +607,20 @@ Fri Dec 23 07:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec 22 18:33:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_aix_ibm.GNU: Change Visual Age 6 to use
-	  -qtemplateregistry also. It's faster and doesn't require the same
-	  strict source organization of templates that -qtempinc does.
-	  Also stop using the aixshr hack to strip warnings out of the
-	  linker output - it's not needed with -qtemplateregistry.
-	  Try removing -qstaticinline - this was an attempt to stop some of
-	  the duplicate symbol warnings that -qtempinc triggered; hopefully,
-	  removing this will let the linker/compiler unify singleton instances.
+        * include/makeinclude/platform_aix_ibm.GNU: Change Visual Age 6 to use
+          -qtemplateregistry also. It's faster and doesn't require the same
+          strict source organization of templates that -qtempinc does.
+          Also stop using the aixshr hack to strip warnings out of the
+          linker output - it's not needed with -qtemplateregistry.
+          Try removing -qstaticinline - this was an attempt to stop some of
+          the duplicate symbol warnings that -qtempinc triggered; hopefully,
+          removing this will let the linker/compiler unify singleton instances.
 
 Thu Dec 22 14:35:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/rtcorbacommon.mpb:
+        * bin/MakeProjectCreator/config/rtcorbacommon.mpb:
 
-	  Add $(srcdir) relative include path.
+          Add $(srcdir) relative include path.
 
 Thu Dec 22 14:06:07 2005  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -6798,4 +6806,5 @@ Fri Aug 05 07:37:20 2005  Simon Massey  <sma@prismtech.com>
 
 Local Variables:
 add-log-time-format: current-time-string
+indent-tabs-mode: nil
 End:
