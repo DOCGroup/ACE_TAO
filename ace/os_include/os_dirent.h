@@ -27,7 +27,7 @@
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_limits.h"
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include "ace/os_include/os_unistd.h"  // VxWorks needs this to compile
 #endif /* VXWORKS */
 
@@ -111,7 +111,7 @@ int scandir (const char *,
              int (*) (const struct dirent *),
              int (*) (const void *, const void *));
 #endif /* ACE_LACKS_SCANDIR_PROTOTYPE */
-    
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

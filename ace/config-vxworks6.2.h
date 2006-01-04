@@ -66,10 +66,6 @@
 #   define ACE_LACKS_PRAGMA_ONCE
 # endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
-  // Diab doesn't support VxWorks' iostream libraries.
-# define ACE_LACKS_IOSTREAM_TOTALLY
-# define ACE_LACKS_ACE_IOSTREAM
-
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_HAS_USING_KEYWORD

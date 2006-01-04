@@ -15,6 +15,7 @@ ACE_RCSID (ace,
            TTY_IO,
            "$Id$")
 
+#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO)
 namespace
 {
   const char ACE_TTY_IO_ODD[]   = "odd";
@@ -24,6 +25,7 @@ namespace
   const char ACE_TTY_IO_SPACE[] = "space";
 #endif /* ACE_WIN32 */
 }
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

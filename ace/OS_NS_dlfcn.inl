@@ -94,7 +94,7 @@ ACE_OS::dlerror (void)
 #   else
   return const_cast <char *> (err);
 #   endif /* ACE_USES_WCHAR */
-# elif defined (__hpux) || defined (VXWORKS)
+# elif defined (__hpux) || defined (ACE_VXWORKS)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
