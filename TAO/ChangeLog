@@ -1,24 +1,32 @@
+Tue Jan  3 21:34:30 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Add "indent-tabs-mode: nil" to Local Variables at end of file.
+          Untabify.
+          Delete-trailing-whitespace.
+
 Tue Jan  3 11:27:56 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/OBV/Typed_Events/Makefile.am:
-	* examples/POA/DSI/Makefile.am:
-	* examples/POA/Default_Servant/Makefile.am:
-	* examples/POA/Forwarding/Makefile.am:
-	* examples/PluggableUDP/tests/Basic/Makefile.am:
-	* examples/PluggableUDP/tests/Performance/Makefile.am:
-	* examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
-	* examples/Quoter/Makefile.am:
+        * examples/OBV/Typed_Events/Makefile.am:
+        * examples/POA/DSI/Makefile.am:
+        * examples/POA/Default_Servant/Makefile.am:
+        * examples/POA/Forwarding/Makefile.am:
+        * examples/PluggableUDP/tests/Basic/Makefile.am:
+        * examples/PluggableUDP/tests/Performance/Makefile.am:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
+        * examples/Quoter/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* examples/OBV/Typed_Events/Typed_Events.mpc:
-	* examples/POA/DSI/POA_DSI.mpc:
-	* examples/POA/Default_Servant/POA_Default_Servant.mpc:
-	* examples/POA/Forwarding/POA_Forwarding.mpc:
-	* examples/PluggableUDP/tests/Basic/Basic.mpc:
-	* examples/PluggableUDP/tests/Performance/Performance.mpc:
-	* examples/PluggableUDP/tests/SimplePerformance/SimplePerformance.mpc:
-	* examples/Quoter/Quoter.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+        * examples/POA/DSI/POA_DSI.mpc:
+        * examples/POA/Default_Servant/POA_Default_Servant.mpc:
+        * examples/POA/Forwarding/POA_Forwarding.mpc:
+        * examples/PluggableUDP/tests/Basic/Basic.mpc:
+        * examples/PluggableUDP/tests/Performance/Performance.mpc:
+        * examples/PluggableUDP/tests/SimplePerformance/SimplePerformance.mpc:
+        * examples/Quoter/Quoter.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
@@ -63,25 +71,25 @@ Mon Jan  2 14:12:15 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Jan  1 10:50:39 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (is_alive):
-	  Fixed a couple of bugs reported by Yariv Tal
- 	  <yariv_tal2003@hotmail.com>.  This fixes bugid 2347.
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (is_alive):
+          Fixed a couple of bugs reported by Yariv Tal
+          <yariv_tal2003@hotmail.com>.  This fixes bugid 2347.
 
 Fri Dec 30 15:36:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Event_Comm/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
-	* examples/Logging/Makefile.am:
+        * examples/Event_Comm/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
+        * examples/Logging/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* examples/Event_Comm/Event_Comm.mpc:
-	* examples/Kokyu_dsrt_schedulers/fp_example/fp_example.mpc:
-	* examples/Kokyu_dsrt_schedulers/mif_example/mif_example.mpc:
-	* examples/Kokyu_dsrt_schedulers/muf_example/muf_example.mpc:
-	* examples/Logging/Logging.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Kokyu_dsrt_schedulers/fp_example/fp_example.mpc:
+        * examples/Kokyu_dsrt_schedulers/mif_example/mif_example.mpc:
+        * examples/Kokyu_dsrt_schedulers/muf_example/muf_example.mpc:
+        * examples/Logging/Logging.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
@@ -16435,4 +16443,5 @@ Fri Aug 05 07:49:26 2005  Simon Massey  <sma@prismtech.com>
 
 Local Variables:
 add-log-time-format: current-time-string
+indent-tabs-mode: nil
 End:
