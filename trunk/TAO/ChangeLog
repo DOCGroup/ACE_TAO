@@ -1,3 +1,11 @@
+Wed Jan  4 21:27:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+        
+          Changed "add-log-time-format" to a really ugly lambda expression
+          that formats changelog timestamps in UTC and works with both GNU
+          Emacs and XEmacs.
+
 Wed Jan  4 11:08:58 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/ast/ast_expression.cpp:
@@ -16483,6 +16491,7 @@ Fri Aug 05 07:49:26 2005  Simon Massey  <sma@prismtech.com>
         * TAO version 1.4.7 released.
 
 Local Variables:
-add-log-time-format: current-time-string
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
 indent-tabs-mode: nil
 End:
