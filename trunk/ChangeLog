@@ -2,7 +2,7 @@ Tue Jan  3 21:31:29 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:
 
-          Add "indent-tabs: nil" to Local Variables at end of file.
+          Add "indent-tabs-mode: nil" to Local Variables at end of file.
           Untabify.
           Delete-trailing-whitespace.
 
