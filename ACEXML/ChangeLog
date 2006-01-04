@@ -1,3 +1,14 @@
+Wed Jan  4 22:44:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Untabify.
+          Delete-trailing-whitespace.
+
+          Changed "add-log-time-format" to a really ugly lambda expression
+          that formats changelog timestamps in UTC and works with both GNU
+          Emacs and XEmacs.
+
 Thu May 26 07:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * common/XML_Util.h:
@@ -5,13 +16,13 @@ Thu May 26 07:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 24 18:39:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* common/Makefile.am:
+        * common/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* common/common.mpc:
+        * common/common.mpc:
 
-	  Added XML_Util.h to Header_Files section.
+          Added XML_Util.h to Header_Files section.
 
 Tue May 24 09:18:34 2005  Justin Michel  <michel_j@ociweb.com>
 
@@ -42,47 +53,47 @@ Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
 
 Fri Apr 22 21:34:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* parser/parser/Parser.cpp (parse_entity_decl):
+        * parser/parser/Parser.cpp (parse_entity_decl):
 
-	  Fixed "variable may be used uninitialized" warning.
+          Fixed "variable may be used uninitialized" warning.
 
 Fri Apr 22 11:09:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* parser/parser/Makefile.am:
-	* common/Makefile.am:
+        * parser/parser/Makefile.am:
+        * common/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* parser/parser/parser.mpc:
-	* common/common.mpc:
+        * parser/parser/parser.mpc:
+        * common/common.mpc:
 
-	  Add Pkgconfig_Files section.
+          Add Pkgconfig_Files section.
 
 Wed Apr 20 12:20:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* common/Attributes.h:
-	* common/ContentHandler.h:
-	* common/DTDHandler.h:
-	* common/EntityResolver.h:
-	* common/ErrorHandler.h:
-	* common/Locator.h:
-	* common/XMLReader.h:
+        * common/Attributes.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Locator.h:
+        * common/XMLReader.h:
 
-	  Added virtual destructors to address g++ 4.0 warnings.
+          Added virtual destructors to address g++ 4.0 warnings.
 
-	* common/Attributes.cpp:
-	* common/ContentHandler.cpp:
-	* common/DTDHandler.cpp:
-	* common/EntityResolver.cpp:
-	* common/ErrorHandler.cpp:
-	* common/Locator.cpp:
-	* common/XMLReader.cpp:
+        * common/Attributes.cpp:
+        * common/ContentHandler.cpp:
+        * common/DTDHandler.cpp:
+        * common/EntityResolver.cpp:
+        * common/ErrorHandler.cpp:
+        * common/Locator.cpp:
+        * common/XMLReader.cpp:
 
-	  New files containing destructors.
+          New files containing destructors.
 
-	* common/NamespaceSupport.cpp (getURI):
+        * common/NamespaceSupport.cpp (getURI):
 
-	  Fixed "variable may be used uninitialized" warning.
+          Fixed "variable may be used uninitialized" warning.
 
 Mon Apr 18 14:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -94,10 +105,10 @@ Mon Apr 18 14:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Feb 13 23:54:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Lothar Werzinger <lothar at xcerla dot com>
-	* apps/svcconf/Svcconf_Handler.cpp:
+        From Lothar Werzinger <lothar at xcerla dot com>
+        * apps/svcconf/Svcconf_Handler.cpp:
 
-	  Enhanced error messages.
+          Enhanced error messages.
 
 Wed Jan  5 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -112,12 +123,12 @@ Wed Jan  5 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 17 19:07:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* common/NamespaceSupport.cpp:
+        * common/NamespaceSupport.cpp:
 
-	  Changed ACE_NEW_RETURN to use "NS_Node_T" instead of "struct
-	  NS_Node_T" --- the latter triggers a gcc 3.3 parser bug when
-	  used with the "new (std::nothrow)" version of ACE_NEW_RETURN.
-	  Fortunately, the "struct" is unnecessary.
+          Changed ACE_NEW_RETURN to use "NS_Node_T" instead of "struct
+          NS_Node_T" --- the latter triggers a gcc 3.3 parser bug when
+          used with the "new (std::nothrow)" version of ACE_NEW_RETURN.
+          Fortunately, the "struct" is unnecessary.
 
 Sat Feb 21 23:51:25 2004  .  <.@isis.vanderbilt.edu>
 
@@ -897,5 +908,7 @@ Wed Oct 23 17:27:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
           references().
 
 Local Variables:
-add-log-time-format: current-time-string
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
 End:
