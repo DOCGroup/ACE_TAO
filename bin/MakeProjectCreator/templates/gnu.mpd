@@ -21,6 +21,7 @@ BIN_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%><%exename%>
 ## LIB may be set to empty later on in this file
 LIB_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%libname_prefix%><%staticname%>.a
 LIB              = $(LIB_UNCHECKED)
+LIB_NAME         = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%libname_prefix%><%staticname%>
 <%if(!sharedname)%>
 static_libs_only = 1
 <%endif%>
@@ -92,6 +93,14 @@ CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
 <%if(cidlc_flags)%>
 CIDLC_FLAGS = <%cidlc_flags%>
 <%endif%>
+
+ifeq ($(rtp),1)
+<%if(exename)%>
+  PRJ_TYPE = rtp
+<%else%>
+  PRJ_TYPE = library
+<%endif%>
+endif
 
 <%if(exename)%>
 <%if(install)%>

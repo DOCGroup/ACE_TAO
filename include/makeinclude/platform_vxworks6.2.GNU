@@ -148,10 +148,7 @@ ifneq ($(VX_LIB_BUILD),1)
 endif
 
 ifeq ($(rtp),1)
-include $(TARGET_DIR)/make/defs.default
-include $(TARGET_DIR)/make/defs.$(WIND_HOST_TYPE)
-include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
-include $(TARGET_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+include $(WIND_USR)/make/rules.$(PRJ_TYPE)
 else
 include $(TGT_DIR)/h/make/defs.default
 include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
