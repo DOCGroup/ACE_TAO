@@ -63,10 +63,10 @@ Activator_NT_Service::svc (void)
   Activator_Options opts;
 
   if (opts.init_from_registry() != 0)
-  {
-    report_status (SERVICE_STOPPED);
-    return -1;
-  }
+    {
+      report_status (SERVICE_STOPPED);
+      return -1;
+    }
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

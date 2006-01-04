@@ -127,7 +127,7 @@ private:
 
   /// The amount of time between successive "are you started yet?" pings.
   ACE_Time_Value ping_interval_;
- 
+
   /// The amount of time to wait for a server to response after starting it.
   ACE_Time_Value startup_timeout_;
 

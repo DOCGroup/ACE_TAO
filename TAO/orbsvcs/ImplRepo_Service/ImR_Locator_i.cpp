@@ -1339,7 +1339,8 @@ ImR_Locator_i::connect_server (Server_Info& info)
 bool
 ImR_Locator_i::is_alive (Server_Info& info)
 {
-  size_t table_size = sizeof (PING_RETRY_SCHEDULE) / sizeof (*PING_RETRY_SCHEDULE);
+  const size_t table_size = sizeof (PING_RETRY_SCHEDULE) /
+                            sizeof (*PING_RETRY_SCHEDULE);
 
   for (size_t i = 0; i < table_size; ++i)
     {

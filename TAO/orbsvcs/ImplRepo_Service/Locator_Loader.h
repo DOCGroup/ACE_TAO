@@ -32,7 +32,7 @@ public:
                                            ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
- // Unlike other service objects, we have our own orb. 
+ // Unlike other service objects, we have our own orb.
  int run(void);
 
 private:

@@ -45,7 +45,7 @@ class Locator_Export AsyncStartupWaiter_i : public virtual POA_ImplementationRep
     ACE_Null_Mutex> WaitingMap;
 
 public:
- 
+
   void wait_for_startup (
    ImplementationRepository::AMH_AsyncStartupWaiterResponseHandler_ptr rh,
    const char* name ACE_ENV_ARG_DECL)
