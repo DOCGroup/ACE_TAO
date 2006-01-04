@@ -228,9 +228,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
           int remainder = length - retrieved;
 
-          int secondtry = ACE_OS::recv (handle,
-                                        ((char *) &log_record) + retrieved,
-                                        remainder);
+          ssize_t secondtry = ACE_OS::recv (handle,
+                                            ((char *) &log_record) + retrieved,
+                                            remainder);
           if (secondtry != remainder)
             {
               ACE_ERROR ((LM_ERROR,
