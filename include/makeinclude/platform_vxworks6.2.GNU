@@ -86,7 +86,9 @@ ifeq ("$(TOOL)","gnu")
   templates ?= automatic
 endif
 
-PRJ_TYPE ?= vxApp
+ifeq ($(rtp),0)
+  PRJ_TYPE = vxApp
+endif
 
 ifeq ($(rtp),1)
   TARGET_DIR = $(WIND_BASE)/target/usr
