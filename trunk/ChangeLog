@@ -1,3 +1,8 @@
+Wed Jan  4 11:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Generate LIBNAME and PRJ_TYPE, needed for VxWorks rtp support
+
 Wed Jan  4 10:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
