@@ -283,8 +283,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 /* #define T_FPU           0x00000002   Using FPU bit */
 
 #   elif defined (ACE_VXWORKS)
+#     include /**/ <sysLib.h> // for sysClkRateGet()
 #     if !defined (__RTP__)
-#       include /**/ <sysLib.h> // for sysClkRateGet()
 #       include /**/ <taskLib.h>
 #       include /**/ <taskHookLib.h>
 #     endif

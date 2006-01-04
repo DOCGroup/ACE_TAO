@@ -5237,8 +5237,12 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     else
       return -1;
       /* NOTREACHED */
-#   else /* ACE_HAS_TSS_EMULATION */
+#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
     return  ACE_OS::thr_keycreate_native (key, dest);
+#   else
+    ACE_UNUSED_ARG (key);
+    ACE_UNUSED_ARG (dest);
+    ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5301,8 +5305,11 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
         return cleanup->free_key (key);
       }
     return -1;
-#   else /* ACE_HAS_TSS_EMULATION */
+#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
     return ACE_OS::thr_keyfree_native (key);
+#   else
+    ACE_UNUSED_ARG (key);
+    ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5453,8 +5460,12 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
         return -1;
       }
     return -1;
+#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+      return ACE_OS::thr_setspecific_native (key, data);
 #   else /* ACE_HAS_TSS_EMULATION */
-  return ACE_OS::thr_setspecific_native (key, data);
+      ACE_UNUSED_ARG (key);
+      ACE_UNUSED_ARG (data);
+      ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);

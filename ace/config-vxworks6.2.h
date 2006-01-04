@@ -238,7 +238,11 @@
 #include "types/vxTypesOld.h"
 #else
 # define ACE_LACKS_PTHREAD_H
-#define ACE_HAS_TSS_EMULATION
+# if !defined __RTP__
+// Only when building for kernel mode we can use TSS emulation, in rtp mode
+// we can't use the WIND_TCB struct anymore
+#  define ACE_HAS_TSS_EMULATION
+# endif
 // VxWorks has no recursive mutexes. This was set in the past but it doesn't
 // work with the pthread support, so only set it for the time being when pthread
 // is disabled
