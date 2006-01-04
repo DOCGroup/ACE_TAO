@@ -2,5 +2,5 @@
 // $Id$
 
 workspace {
-  avoids += uses_wchar
+  cmdline += -base no_wchar  
 }
