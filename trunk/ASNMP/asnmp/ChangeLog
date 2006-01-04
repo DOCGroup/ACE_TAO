@@ -1,52 +1,63 @@
+Wed Jan  4 22:50:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Untabify.
+          Delete-trailing-whitespace.
+
+          Added "Local Variables" section defining "add-log-time-format"
+          to a really ugly lambda expression that formats changelog
+          timestamps in UTC and works with both GNU Emacs and XEmacs.
+
 Fri May  7 11:40:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* pdu.cpp (agent_error_reason):
+        * pdu.cpp (agent_error_reason):
 
-	  Really fixed mismatched sprintf() format specifiers this time
-	  around.
+          Really fixed mismatched sprintf() format specifiers this time
+          around.
 
 Thu May  6 11:13:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* oid.cpp (operator+=, OidToStr):
-	* pdu.cpp (agent_error_reason):
+        * oid.cpp (operator+=, OidToStr):
+        * pdu.cpp (agent_error_reason):
 
-	  Fixed warnings regarding mismatch format specifiers and
-	  arguments to sprintf().
+          Fixed warnings regarding mismatch format specifiers and
+          arguments to sprintf().
 
 Thu May  6 11:05:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* gauge.h:
+        * gauge.h:
 
-	  Nuked trailing white space.
+          Nuked trailing white space.
 
 Fri Apr 23 11:23:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* oid.cpp:
+        * oid.cpp:
 
-	  Missed some bool return types for equality operators.
+          Missed some bool return types for equality operators.
 
 Thu Apr 22 23:03:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* address.cpp:
-	* address.h:
-	* octet.cpp:
-	* octet.h:
-	* oid.cpp:
-	* oid.h:
-	* target.cpp:
-	* target.h:
-	* vb.cpp:
-	* vb.h:
+        * address.cpp:
+        * address.h:
+        * octet.cpp:
+        * octet.h:
+        * oid.cpp:
+        * oid.h:
+        * target.cpp:
+        * target.h:
+        * vb.cpp:
+        * vb.h:
 
-	  Changed all return types for equality, relational and logical
-	  operators to "bool", as is the norm for modern C++.
+          Changed all return types for equality, relational and logical
+          operators to "bool", as is the norm for modern C++.
 
 Fri Aug 29 07:57:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* octet.cpp (to_string_hex):
+        * octet.cpp (to_string_hex):
 
-	  Fixed "string literal converted to char *" warning.  String
-	  literals are now considered "const" by standard C++.
+          Fixed "string literal converted to char *" warning.  String
+          literals are now considered "const" by standard C++.
 
 Tue Mar 16 16:28:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -208,3 +219,9 @@ Fri Aug  1 19:23:52 1997  Mike MacFaden  (mrm@mrm-ss20)
         * transaction class:
           - implement get/getnext timeout and retry logic using ACE
           Reactor class, ACE_Time_Value
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
