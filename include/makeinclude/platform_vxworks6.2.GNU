@@ -134,7 +134,9 @@ else
 endif
 
 ifneq ($(VX_LIB_BUILD),1)
-  VXWORKSLINK = true
+  ifeq ($(rtp),0)
+    VXWORKSLINK = true
+  endif
   ifeq ($(VX_APP_BUILD),1)
     ## set variables for VxWorks linktarget identification
     PRJ_FILE = $(basename $(notdir $(BIN_UNCHECKED))).vxworks
@@ -142,7 +144,8 @@ ifneq ($(VX_LIB_BUILD),1)
       EXEEXT = .out
     else
       EXEEXT = .vxe
-      VXE_DIR = OUTPUT_DIRECTORY
+      VXE_DIR := $(OUTPUT_DIRECTORY)
+      EXE = $(BIN_UNCHECKED)
     endif
     PRJ_DIR = .
     CLEANUP_OBJS := ctdt.c $(PRJ_DIR)/$(PRJ_FILE) $(CLEANUP_OBJS)
