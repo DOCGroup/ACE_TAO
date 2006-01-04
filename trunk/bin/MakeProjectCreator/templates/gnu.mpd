@@ -94,14 +94,6 @@ CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
 CIDLC_FLAGS = <%cidlc_flags%>
 <%endif%>
 
-ifeq ($(rtp),1)
-<%if(exename)%>
-  PRJ_TYPE = rtp
-<%else%>
-  PRJ_TYPE = library
-<%endif%>
-endif
-
 <%if(exename)%>
 <%if(install)%>
 INSBIN ?= <%install%>
@@ -172,6 +164,14 @@ RCFLAGS = \
 endif
 
 <%endif%>
+ifeq ($(rtp),1)
+<%if(exename)%>
+  PRJ_TYPE = rtp
+<%else%>
+  PRJ_TYPE = library
+<%endif%>
+endif
+
 # To build multiple targets in the same directory on AIX, it works
 # best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
