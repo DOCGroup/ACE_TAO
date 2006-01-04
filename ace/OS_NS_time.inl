@@ -479,13 +479,8 @@ ACE_OS::nanosleep (const struct timespec *requested,
   ACE_UNUSED_ARG (remaining);
 
   // Convert into seconds and microseconds.
-# if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
-  ACE_Time_Value tv (static_cast<long>(requested->tv_sec),
+  ACE_Time_Value tv (requested->tv_sec,
                      requested->tv_nsec / 1000);
-# else
-  ACE_Time_Value tv (requested->ts_sec,
-                     requested->ts_nsec / 1000);
-# endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return ACE_OS::sleep (tv);
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }

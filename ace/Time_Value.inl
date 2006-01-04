@@ -81,15 +81,9 @@ ACE_INLINE void
 ACE_Time_Value::set (const timespec_t &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
-  this->tv_.tv_sec = static_cast<long> (tv.tv_sec);
+  this->tv_.tv_sec = tv.tv_sec;
   // Convert nanoseconds into microseconds.
   this->tv_.tv_usec = tv.tv_nsec / 1000;
-#else
-  this->tv_.tv_sec = tv.ts_sec;
-  // Convert nanoseconds into microseconds.
-  this->tv_.tv_usec = tv.ts_nsec / 1000;
-#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
 
   this->normalize ();
 }
@@ -239,15 +233,9 @@ ACE_Time_Value::operator timespec_t () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator timespec_t");
   timespec_t tv;
-#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   tv.tv_sec = this->sec ();
   // Convert microseconds into nanoseconds.
   tv.tv_nsec = this->tv_.tv_usec * 1000;
-#else
-  tv.ts_sec = this->sec ();
-  // Convert microseconds into nanoseconds.
-  tv.ts_nsec = this->tv_.tv_usec * 1000;
-#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return tv;
 }
 
