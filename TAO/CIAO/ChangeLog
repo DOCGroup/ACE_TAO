@@ -116,8 +116,21 @@ Fri Dec 23 11:49:04 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	* examples/Hello/descriptors/flattened_deploymentplan_without_ns_add.cdp
 	* examples/Hello/descriptors/flattened_deploymentplan_without_ns_remove.cdp
 
-	 Merged from CVS Branch CIAO_ReDAC_01.
-
+	 Merged from CVS Branch CIAO_ReDAC_01. This merge enables DAnCE to
+	 handle dynamic updating component assemblies as well as its
+	 configurations on the fly. Major IDL changes include the following: 
+	 
+	 1) Modified the finishLaunch() operation on the DomainApplicationManager
+	    interface by adding an additional boolean parameter to differentiate
+	    whether this is for inital deployment or for redeployment.
+	    
+	 2) Modified the finishLaunch() operation on the NodeApplicationManager
+	    interface by adding an additional boolean parameter to differentiate
+	    whether this is for inital deployment or for redeployment.
+	    
+	 3) Added new operations perform_redeployment() to the ExecutionManager
+	    interface and NodeApplicationManager interface.
+	    
 Fri Dec 23 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ComponentPackager/*
