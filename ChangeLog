@@ -1,3 +1,28 @@
+Wed Jan  4 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+          Improved support for the diab compiler
+
+        * ace/TTY_IO.cpp:
+          Only define the const char arrays when they are going to be
+          used. Fixes unused variable warnings with vxworks
+
+        * ace/OS_NS_dlfcn.inl:
+        * ace/OS_NS_stropts.inl:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_Thread.h:
+        * ace/os_include/os_dirent.h:
+        * ace/os_include/os_fcntl.h:
+        * ace/os_include/os_limits.h:
+        * ace/os_include/os_netdb.h:
+        * ace/os_include/os_stropts.h:
+        * ace/os_include/sys/os_socket.h:
+        * ace/os_include/sys/os_un.h:
+          Made VxWorks specific includes dependent on the VxWorks version.
+          VxWorks is getting more and more posix compliance which means we
+          don't have to include special VxWorks header files. Also use
+          ACE_VXWORKS to check for this
+
 Tue Jan  3 21:31:29 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:
