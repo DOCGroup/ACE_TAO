@@ -1,3 +1,9 @@
+Wed Jan  4 11:39:59 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/CCM_Core.mpc
+        
+        Removed $CIAO_ROOT/DAnCE include, added CIAO_ROOT/ciao.
+
 Tue Jan  3 19:55:43 2006  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/CompilerElements/Preprocessor.cpp:
