@@ -1,3 +1,14 @@
+Wed Jan  4 22:55:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+         * ChangeLog:
+
+          Untabify.
+          Delete-trailing-whitespace.
+
+          Added "Local Variables" section defining "add-log-time-format"
+          to a really ugly lambda expression that formats changelog
+          timestamps in UTC and works with both GNU Emacs and XEmacs.
+
 Mon Oct  3 13:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * src/Key_List.cpp:
@@ -2073,3 +2084,9 @@ Thu Jan  5 22:46:34 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
         * Added a check in Key_List::Output for the special case where
           the keys used are 1,$.  It is possible to generate more
           efficient C code in this case.
+	
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
