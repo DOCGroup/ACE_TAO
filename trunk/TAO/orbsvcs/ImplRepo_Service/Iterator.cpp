@@ -30,49 +30,49 @@ ImR_Iterator::next_n (CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList(0), CORBA::NO_MEMORY());
 
   Locator_Repository::SIMap::ENTRY* entry = 0;
-  Locator_Repository::SIMap::ITERATOR it(this->repo_.servers());
+  Locator_Repository::SIMap::ITERATOR it (this->repo_.servers ());
 
   // Number of servers that will go into the server_list.
   CORBA::ULong n = this->repo_.servers().current_size();
   if (n <= this->count_)
-  {
-    return 0; // We already finished.
-  }
+    {
+      return 0; // We already finished.
+    }
   else
-  {
-    n -= this->count_;
-  }
+    {
+      n -= this->count_;
+    }
 
   if (how_many > 0 && n > how_many)
-  {
-    n = how_many;
+    {
+      n = how_many;
   }
 
-  server_list->length(n);
+  server_list->length (n);
 
   CORBA::ULong i = 0;
   for (; i < this->count_; ++i)
-  {
-    it.advance();
-  }
+    {
+      it.advance ();
+    }
 
   for (i = 0; i < n; ++i)
-  {
-    it.next(entry);
-    it.advance();
-    ACE_ASSERT(entry != 0);
+    {
+      it.next (entry);
+      it.advance ();
+      ACE_ASSERT(entry != 0);
 
-    Server_Info_Ptr info = entry->int_id_;
+      Server_Info_Ptr info = entry->int_id_;
 
-    server_list[i].server = info->name.c_str();
-    server_list[i].startup.command_line = info->cmdline.c_str();
-    server_list[i].startup.environment = info->env_vars;
-    server_list[i].startup.working_directory = info->dir.c_str();
-    server_list[i].startup.activation = info->activation_mode;
-    server_list[i].startup.activator = info->activator.c_str();
-    server_list[i].startup.start_limit = info->start_limit;
-    server_list[i].partial_ior = info->partial_ior.c_str();
-  }
+      server_list[i].server = info->name.c_str ();
+      server_list[i].startup.command_line = info->cmdline.c_str ();
+      server_list[i].startup.environment = info->env_vars;
+      server_list[i].startup.working_directory = info->dir.c_str ();
+      server_list[i].startup.activation = info->activation_mode;
+      server_list[i].startup.activator = info->activator.c_str ();
+      server_list[i].startup.start_limit = info->start_limit;
+      server_list[i].partial_ior = info->partial_ior.c_str ();
+    }
 
   this->count_ += n;
 
@@ -84,7 +84,7 @@ void
 ImR_Iterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId_var oid = poa_->servant_to_id(this ACE_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId_var oid = poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   poa_->deactivate_object (oid.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

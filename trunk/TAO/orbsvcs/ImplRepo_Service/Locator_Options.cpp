@@ -62,20 +62,20 @@ Options::parse_args (int &argc, char *argv[])
 
           if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("install")) == 0)
-          {
-            this->service_command_ = SC_INSTALL;
-          }
+            {
+              this->service_command_ = SC_INSTALL;
+            }
           else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("remove")) == 0)
-          {
-            this->service_command_ = SC_REMOVE;
-          }
+            {
+              this->service_command_ = SC_REMOVE;
+            }
           else
-          {
-            ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
-            this->print_usage ();
-            return -1;
-          }
+            {
+              ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
+              this->print_usage ();
+              return -1;
+            }
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-d")) == 0)
@@ -215,21 +215,21 @@ Options::init (int argc, char *argv[])
   // This may also run the commands to install or remove the nt service.
   int result = this->parse_args (argc, argv);
   if (result != 0)
-  {
-    return result;
-  }
+    {
+      return result;
+    }
 
   for (int i = 0; i < argc; ++i)
-  {
-    this->cmdline_ += ACE_CString(argv[i]) + ACE_CString(" ");
-  }
+    {
+      this->cmdline_ += ACE_CString (argv[i]) + ACE_CString (" ");
+    }
   return 0;
 }
 
 int
 Options::init_from_registry (void)
 {
-  this->load_registry_options();
+  this->load_registry_options ();
   return 0;
 }
 
@@ -256,7 +256,7 @@ Options::print_usage (void) const
 }
 
 int
-Options::save_registry_options()
+Options::save_registry_options ()
 {
 #if defined (ACE_WIN32)
   HKEY key = 0;
@@ -271,52 +271,53 @@ Options::save_registry_options()
                              &key,
                              NULL
                              );
-  if (err != ERROR_SUCCESS) {
-    return -1;
-  }
-  err = ACE_TEXT_RegSetValueEx(key, "ORBInitOptions", 0, REG_SZ,
-    (LPBYTE) this->cmdline_.c_str(), this->cmdline_.length() + 1);
+  if (err != ERROR_SUCCESS)
+    {
+      return -1;
+    }
+  err = ACE_TEXT_RegSetValueEx (key, "ORBInitOptions", 0, REG_SZ,
+    (LPBYTE) this->cmdline_.c_str (), this->cmdline_.length () + 1);
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  err = ACE_TEXT_RegSetValueEx (key, "IORFile", 0, REG_SZ,
+    (LPBYTE) ior_output_file_.c_str (), ior_output_file_.length () + 1);
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  err = ACE_TEXT_RegSetValueEx (key, "DebugLevel", 0, REG_DWORD,
+    (LPBYTE) &debug_ , sizeof (debug_));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx(key, "IORFile", 0, REG_SZ,
-    (LPBYTE) ior_output_file_.c_str(), ior_output_file_.length() + 1);
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ACE_TEXT_RegSetValueEx (key, "PersistFile", 0, REG_SZ,
+    (LPBYTE) this->persist_file_name_.c_str (), this->persist_file_name_.length () + 1);
+  ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx(key, "DebugLevel", 0, REG_DWORD,
-    (LPBYTE) &debug_ , sizeof(debug_));
-  ACE_ASSERT(err == ERROR_SUCCESS);
-
-  err = ACE_TEXT_RegSetValueEx(key, "PersistFile", 0, REG_SZ,
-    (LPBYTE) this->persist_file_name_.c_str(), this->persist_file_name_.length() + 1);
-  ACE_ASSERT(err == ERROR_SUCCESS);
-
-  DWORD tmp = this->ping_interval_.msec();
-  err = ACE_TEXT_RegSetValueEx(key, "PingInterval", 0, REG_DWORD,
-    (LPBYTE) &tmp, sizeof(DWORD));
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  DWORD tmp = this->ping_interval_.msec ();
+  err = ACE_TEXT_RegSetValueEx (key, "PingInterval", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->readonly_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx(key, "Lock", 0, REG_DWORD,
-    (LPBYTE) &tmp, sizeof(DWORD));
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ACE_TEXT_RegSetValueEx (key, "Lock", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->repo_mode_;
-  err = ACE_TEXT_RegSetValueEx(key, "PersistType", 0, REG_DWORD,
-    (LPBYTE) &tmp, sizeof(DWORD));
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ACE_TEXT_RegSetValueEx (key, "PersistType", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->startup_timeout_.sec();
-  err = ACE_TEXT_RegSetValueEx(key, "Timeout", 0, REG_DWORD,
-    (LPBYTE) &tmp, sizeof(DWORD));
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ACE_TEXT_RegSetValueEx (key, "Timeout", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = multicast_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx(key, "Multicast", 0, REG_DWORD,
-    (LPBYTE) &tmp, sizeof(DWORD));
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ACE_TEXT_RegSetValueEx (key, "Multicast", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ::RegCloseKey(key);
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ::RegCloseKey (key);
+  ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
   return 0;
 }
@@ -333,91 +334,101 @@ Options::load_registry_options ()
                              KEY_READ,
                              &key
                              );
-  if (err != ERROR_SUCCESS) {
-    // If there aren't any saved parameters, then that's ok.
-    return 0;
-  }
+  if (err != ERROR_SUCCESS)
+    {
+      // If there aren't any saved parameters, then that's ok.
+      return 0;
+    }
   ACE_TCHAR tmpstr[4096];
-  DWORD sz = sizeof(tmpstr);
+  DWORD sz = sizeof (tmpstr);
   DWORD type = 0;
-  err = ACE_TEXT_RegQueryValueEx(key, "ORBInitOptions", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "ORBInitOptions", 0, &type,
     (LPBYTE) tmpstr, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_SZ);
-    tmpstr[sz - 1] = '\0';
-    this->cmdline_ = tmpstr;
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_SZ);
+      tmpstr[sz - 1] = '\0';
+      this->cmdline_ = tmpstr;
+    }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx(key, "IORFile", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "IORFile", 0, &type,
     (LPBYTE) tmpstr, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_SZ);
-    tmpstr[sz - 1] = '\0';
-    this->ior_output_file_ = tmpstr;
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_SZ);
+      tmpstr[sz - 1] = '\0';
+      this->ior_output_file_ = tmpstr;
+    }
 
   sz = sizeof(debug_);
-  err = ACE_TEXT_RegQueryValueEx(key, "DebugLevel", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "DebugLevel", 0, &type,
     (LPBYTE) &this->debug_ , &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+    }
 
   DWORD tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx(key, "PingInterval", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "PingInterval", 0, &type,
     (LPBYTE) &tmp, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-    ping_interval_.msec(tmp);
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      ping_interval_.msec (tmp);
+    }
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx(key, "Lock", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "Lock", 0, &type,
     (LPBYTE) &tmp, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-    readonly_ = tmp != 0;
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      readonly_ = tmp != 0;
+    }
 
   sz = sizeof(this->repo_mode_);
-  err = ACE_TEXT_RegQueryValueEx(key, "PersistType", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "PersistType", 0, &type,
     (LPBYTE) &this->repo_mode_, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+    }
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx(key, "Timeout", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "Timeout", 0, &type,
     (LPBYTE) &tmp, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-    this->startup_timeout_.sec(tmp);
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      this->startup_timeout_.sec (tmp);
+    }
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx(key, "Multicast", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "Multicast", 0, &type,
     (LPBYTE) &tmp, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-    this->multicast_ = tmp != 0;
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      this->multicast_ = tmp != 0;
+    }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx(key, "PersistFile", 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, "PersistFile", 0, &type,
     (LPBYTE) tmpstr, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_SZ);
-    tmpstr[sz - 1] = '\0';
-    this->persist_file_name_ = tmpstr;
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_SZ);
+      tmpstr[sz - 1] = '\0';
+      this->persist_file_name_ = tmpstr;
+    }
 
-  err = ::RegCloseKey(key);
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ::RegCloseKey (key);
+  ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
   return 0;
 }
