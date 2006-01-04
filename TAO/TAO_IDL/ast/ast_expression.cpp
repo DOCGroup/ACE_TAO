@@ -1789,7 +1789,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 	    this->pd_v1->ev ()->u.ullval * this->pd_v2->ev ()->u.ullval;
 	  break;
 	case EC_div:
-	  if (this->pd_v2->ev ()->u.ullval == 0.0)
+	  if (this->pd_v2->ev ()->u.ullval == 0)
 	    {
 	      return 0;
 	    }
@@ -1822,7 +1822,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 	    this->pd_v1->ev ()->u.llval * this->pd_v2->ev ()->u.llval;
 	  break;
 	case EC_div:
-	  if (this->pd_v2->ev ()->u.llval == 0.0)
+	  if (this->pd_v2->ev ()->u.llval == 0)
 	    {
 	      return 0;
 	    }
