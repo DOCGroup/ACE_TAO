@@ -78,7 +78,7 @@ ACE_OS::accept (ACE_HANDLE handle,
        addr = (sockaddr *) &fake_addr;
        *addrlen = sizeof fake_addr;
      }
-#    endif /* VXWORKS */
+#    endif /* ACE_HAS_BROKEN_ACCEPT_ADDR */
   ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
                                     addr,
                                     (ACE_SOCKET_LEN *) addrlen);
@@ -637,7 +637,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                 int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  const_cast <char *> (buf),
                                  len,
@@ -673,7 +673,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  addrlen),
                        ssize_t, -1);
 #  endif /* ACE_WIN32 */
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 }
 
 ACE_INLINE ssize_t
