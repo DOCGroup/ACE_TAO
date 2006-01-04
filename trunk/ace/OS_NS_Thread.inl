@@ -2336,7 +2336,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     ACE_OSCALL_RETURN (::sm_p (s->sema_, SM_NOWAIT, 0), int, -1); //no timeout
   else
     ACE_OSCALL_RETURN (::sm_p (s->sema_, SM_WAIT, ticks), int, -1);
-#   elif defined (VXWORKS)
+#   elif defined (ACE_VXWORKS)
   // Note that we must convert between absolute time (which is
   // passed as a parameter) and relative time (which is what
   // the system call expects).
@@ -2800,8 +2800,12 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
         *data = ACE_TSS_Emulation::ts_object (key);
         return 0;
       }
-# else /* ACE_HAS_TSS_EMULATION */
+# elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   return ACE_OS::thr_getspecific_native (key, data);
+#else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (data);
+  ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_TSS_EMULATION */
 #else
   ACE_UNUSED_ARG (key);
