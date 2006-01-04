@@ -1,3 +1,11 @@
+Wed Jan  4 11:08:58 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        
+          Fix cut-n-pasto where unsigned long longs / long longs were
+          compared with a floating point zero literal. This should be
+          benign, but triggers a VC6 bug.
+
 Wed Jan  4 09:54:01 2006  David Giovannini  <giovannd@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Activator_Loader.cpp:
