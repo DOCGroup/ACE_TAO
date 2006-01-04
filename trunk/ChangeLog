@@ -1,3 +1,15 @@
+Wed Jan  4 09:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_time.h:
+          Added workaround for VxWorks 6.2 that defines timeval in time.h
+
+        * ace/High_Res_Timer.cpp:
+        * ace/OS_NS_time.inl:
+        * ace/README:
+        * ace/Time_Value.inl:
+          Removed checks for !ACE_HAS_BROKEN_TIMESPEC_MEMBERS, this define
+          is not set in any config file, so zapped it
+
 Wed Jan  4 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
