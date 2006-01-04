@@ -15,7 +15,7 @@ ACE_RCSID (ace,
            TTY_IO,
            "$Id$")
 
-#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO)
+#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
 namespace
 {
   const char ACE_TTY_IO_ODD[]   = "odd";
