@@ -88,7 +88,7 @@ sub create {
      $remov,
      $confl,
      $unknown) = $fl->locate(@dirs);
-  my($entry) = scalar(localtime());
+  my($entry) = scalar(gmtime());
 
   if (defined $$confl[0]) {
     $entry = "ERROR: The following files have conflicts:\n";
@@ -99,8 +99,9 @@ sub create {
   else {
     my($prefix) = '        * ';
 
-    ## Remove the timezone
-    $entry =~ s/(:\d\d\s+)(.*)(\d\d\d\d)$/$1$3/;
+    ## Correct the timezone (if there is any)
+    my($tz) = 'UTC';
+    $entry =~ s/(:\d\d\s+)(.*)(\d\d\d\d)$/$1$tz $3/;
 
     ## Add the name and email address
     $entry .= "  $self->{'name'}  <$self->{'email'}>\n\n";
