@@ -31,8 +31,8 @@ BE_save_orb_args (int &argc, char *argv[])
 
           // If the arg ends with either .idl or .pidl, we're done.
 
-          int len = static_cast<int> (tmp.length ());
-          int pos = tmp.find (".idl");
+          size_t len = tmp.length ();
+          ssize_t pos = tmp.find (".idl");
 
           if (len - pos == 4)
             {
@@ -56,7 +56,7 @@ BE_save_orb_args (int &argc, char *argv[])
           ++i;
         }
     }
-    
+
   be_global->orb_args (holder);
 
   return 0;
@@ -103,14 +103,14 @@ TAO_IFR_BE_Export int
 BE_init (int &argc, char *argv[])
 {
   int status = BE_save_orb_args (argc, argv);
-  
+
   if (status != 0)
     {
       return status;
     }
-    
+
   idl_global->using_ifr_backend (true);
-    
+
   return BE_ifr_orb_init (argc, argv);
 }
 
