@@ -1,3 +1,11 @@
+Thu Jan  5 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/simple_client.cpp:
+          Small layout fixes
+
+        * tests/AMI/client.cpp:
+          Use prefix decrement
+
 Thu Jan  5 09:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/be_init.cpp:
