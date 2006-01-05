@@ -1,3 +1,9 @@
+Thu Jan  5 15:37:32 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_LACKS_UNAME feature test.
+
 Thu Jan  5 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/README:
