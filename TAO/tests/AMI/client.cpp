@@ -110,7 +110,7 @@ public:
                       out_l));
         }
 
-      number_of_replies--;
+      --number_of_replies;
     };
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder
