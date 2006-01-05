@@ -94,7 +94,7 @@ public:
 
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"
-                                  "Testing proper exception handling ...\n"));
+                  "Testing proper exception handling ...\n"));
       ACE_TRY
         {
           excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -224,7 +224,6 @@ main (int argc, char *argv[])
                                ""
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
 
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
