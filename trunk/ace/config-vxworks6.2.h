@@ -149,7 +149,6 @@
 #define ACE_LACKS_TRUNCATE
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UMASK
-#define ACE_LACKS_UTSNAME_T
 #define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_PAGE_SIZE 4096
 #define ACE_THR_PRI_FIFO_DEF 101
@@ -214,6 +213,8 @@
   #define ACE_LACKS_REGEX_H
 #else
   // We are building for kernel mode
+  #define ACE_LACKS_UNAME
+  #define ACE_LACKS_UTSNAME_T
   #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
   #define ACE_LACKS_DLFCN_H
   #define ACE_LACKS_WAIT

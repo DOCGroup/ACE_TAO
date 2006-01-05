@@ -744,7 +744,6 @@ nobase_include_HEADERS = \
   OS_NS_sys_uio.h \
   OS_NS_sys_uio.inl \
   OS_NS_sys_utsname.h \
-  OS_NS_sys_utsname.inl \
   OS_NS_sys_wait.h \
   OS_NS_sys_wait.inl \
   OS_NS_time.h \
