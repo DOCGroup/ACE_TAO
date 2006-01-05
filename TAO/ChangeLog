@@ -1,7 +1,12 @@
+Thu Jan  5 09:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/be_init.cpp:
+          Fixed 64bit conversion warnings
+
 Wed Jan  4 21:27:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:
-        
+
           Changed "add-log-time-format" to a really ugly lambda expression
           that formats changelog timestamps in UTC and works with both GNU
           Emacs and XEmacs.
@@ -9,7 +14,7 @@ Wed Jan  4 21:27:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 Wed Jan  4 11:08:58 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/ast/ast_expression.cpp:
-        
+
           Fix cut-n-pasto where unsigned long longs / long longs were
           compared with a floating point zero literal. This should be
           benign, but triggers a VC6 bug.
@@ -44,7 +49,7 @@ Wed Jan  4 09:54:01 2006  David Giovannini  <giovannd@ociweb.com>
 
           Corrected white-space to match ACE/TAO guidelines.
           Adding a const to an int in Imr_Locator_i.cpp.
-          Changing a command line behavior for defualt activator 
+          Changing a command line behavior for defualt activator
           in tao_imr_i.cpp.
 
 Tue Jan  3 21:34:30 2006  J.T. Conklin  <jtc@acorntoolworks.com>
