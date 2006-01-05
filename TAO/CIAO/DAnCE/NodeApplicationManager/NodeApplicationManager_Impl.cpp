@@ -390,7 +390,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
                   error += comp_info[len].component_instance_name.in();
 
                   ACE_TRY_THROW
-                    (Deployment::StartError
+                    (Deployment::PlanError
                       ("NodeApplicationManager_Impl::startLaunch",
                         error.c_str ()));
                 }
@@ -405,7 +405,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
           if (providedReference == 0)
             {
               ACE_TRY_THROW
-                (Deployment::StartError
+                (Deployment::InstallationFailure  
                   ("NodeApplicationManager_Impl::startLaunch",
                     "Error creating connections during startLaunch."));
             }
@@ -425,19 +425,19 @@ perform_redeployment (const Deployment::Properties & configProperty,
     }
   ACE_CATCH (Deployment::UnknownImplId, e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
+      ACE_THROW_RETURN (Deployment::UnknownImplId (e.name.in (),
 						e.reason.in ()),
 			Deployment::Application::_nil());
     }
   ACE_CATCH (Deployment::ImplEntryPointNotFound, e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
+      ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (e.name.in (),
 						e.reason.in ()),
 			Deployment::Application::_nil());
     }
   ACE_CATCH (Deployment::InstallationFailure,e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
+      ACE_THROW_RETURN (Deployment::InstallationFailure (e.name.in (),
 						e.reason.in ()),
 			Deployment::Application::_nil());
     }
