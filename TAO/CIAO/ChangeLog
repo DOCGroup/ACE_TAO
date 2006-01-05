@@ -1,3 +1,9 @@
+Thu Jan  5 21:28:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        
+          Fixed some warning in Boarland C++ builds.
+
 Thu Jan  5 00:53:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:
