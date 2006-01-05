@@ -1,3 +1,14 @@
+Wed Jan  4 22:57:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Untabify.
+          Delete-trailing-whitespace.
+
+          Added "Local Variables" section defining "add-log-time-format"
+          to a really ugly lambda expression that formats changelog
+          timestamps in UTC and works with both GNU Emacs and XEmacs.
+
 Fri Apr 22 21:42:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* server/HTTP_Helpers.cpp (HTTP_mktime):
@@ -950,3 +961,9 @@ Tue May 20 22:49:24 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
         * test_JAWS_File.cpp: A test program written to see if the new
           virtual filesystem works the way I expect it to.
+	
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
