@@ -1,3 +1,9 @@
+Thu Jan  5 15:44:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Release:
+
+          Add TAO/m4 subdirectory to CONTROLLED_FILES.
+
 Thu Jan  5 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/simple_client.cpp:
