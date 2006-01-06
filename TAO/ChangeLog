@@ -1,3 +1,15 @@
+Fri Jan  6 02:34:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+
+          Moved static const definitions out of class declaration as VC6
+          doesn't support this.  Thanks to Wallace Zhang for the initial
+          patch for Notify Service, which I've adapted for the Logging
+          Service.
+
 Fri Jan  6 01:57:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/ior_corbaloc/Makefile.am:

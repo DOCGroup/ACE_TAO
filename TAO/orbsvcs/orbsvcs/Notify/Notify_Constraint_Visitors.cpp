@@ -1470,4 +1470,8 @@ TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
   return 1;
 }
 
+const size_t TAO_Notify_Constraint_Visitor::implicit_ids_size_ = 27;
+const size_t TAO_Notify_Constraint_Visitor::filterable_data_size_ = 31;
+const size_t TAO_Notify_Constraint_Visitor::variable_header_size_ = 31;
+
 TAO_END_VERSIONED_NAMESPACE_DECL
