@@ -1,3 +1,27 @@
+Fri Jan  6 01:57:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/ior_corbaloc/Makefile.am:
+
+          Regenerated.
+
+        * examples/ior_corbaloc/ior_corbaloc.mpc:
+
+          Changed client and corbaname client projects not to inherit
+          from portableserver.  These are pure clients.
+
+          Changed corbaname client project to not add status_i.cpp to
+          Source Files section.  It's not part of the client.
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
+        * examples/ior_corbaloc/corbaname_client.cpp
+
+          Changed to #include "corbanameC.h" instead of
+          "ior_corbaloc_client_i.h", which is actually part of the
+          client project.
+
 Thu Jan  5 15:50:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/Simple/bank/Makefile.am:
