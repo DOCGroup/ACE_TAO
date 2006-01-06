@@ -419,14 +419,15 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 // Create a new process.
 
 pid_t
-ACE_Process_Manager::spawn (ACE_Process_Options &options)
+ACE_Process_Manager::spawn (ACE_Process_Options &options,
+			    ACE_Event_Handler *event_handler)
 {
   ACE_Process *process;
   ACE_NEW_RETURN (process,
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
 
-  pid_t pid = spawn (process, options);
+  pid_t pid = spawn (process, options, event_handler);
   if (pid == ACE_INVALID_PID || pid == 0)
     delete process;
 
@@ -437,7 +438,8 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options)
 
 pid_t
 ACE_Process_Manager::spawn (ACE_Process *process,
-                            ACE_Process_Options &options)
+                            ACE_Process_Options &options,
+			    ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn");
 
@@ -450,7 +452,7 @@ ACE_Process_Manager::spawn (ACE_Process *process,
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                             ace_mon, this->lock_, -1));
 
-  if (this->append_proc (process) == -1)
+  if (this->append_proc (process, event_handler) == -1)
     // bad news: spawned, but not registered in table.
     return ACE_INVALID_PID;
 
@@ -462,7 +464,8 @@ ACE_Process_Manager::spawn (ACE_Process *process,
 int
 ACE_Process_Manager::spawn_n (size_t n,
                               ACE_Process_Options &options,
-                              pid_t *child_pids)
+                              pid_t *child_pids,
+			      ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
 
@@ -476,7 +479,7 @@ ACE_Process_Manager::spawn_n (size_t n,
        i < n;
        i++)
     {
-      pid_t pid = this->spawn (options);
+      pid_t pid = this->spawn (options, event_handler);
       if (pid == ACE_INVALID_PID || pid == 0)
         // We're in the child or something's gone wrong.
         return pid;
@@ -491,7 +494,8 @@ ACE_Process_Manager::spawn_n (size_t n,
 // Must be called with locks held.
 
 int
-ACE_Process_Manager::append_proc (ACE_Process *proc)
+ACE_Process_Manager::append_proc (ACE_Process *proc,
+				  ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::append_proc");
 
@@ -510,7 +514,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
     this->process_table_[this->current_count_];
 
   proc_desc.process_ = proc;
-  proc_desc.exit_notify_ = 0;
+  proc_desc.exit_notify_ = event_handler;
 
 #if defined (ACE_WIN32)
   // If we have a Reactor, then we're supposed to reap Processes
@@ -530,7 +534,8 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
 // allow them to be inserted twice).
 
 int
-ACE_Process_Manager::insert_proc (ACE_Process *proc)
+ACE_Process_Manager::insert_proc (ACE_Process *proc,
+				  ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::insert_proc");
 
@@ -539,7 +544,7 @@ ACE_Process_Manager::insert_proc (ACE_Process *proc)
   if (this->find_proc (proc->getpid ()) != -1)
     return -1;
 
-  return this->append_proc (proc);
+  return this->append_proc (proc, event_handler);
 }
 
 // Remove a process from the pool.

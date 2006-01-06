@@ -1,3 +1,13 @@
+Fri Jan  6 21:20:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Process_Manager.cpp:
+        * ace/Process_Manager.h:
+
+          There can be a race condition if a process exits between the
+          time it is spawned and the time its handler is registered.
+          Changed the spawn() methods to take an optional handler so
+          it can be registered atomically.
+
 Thu Jan  5 15:37:32 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
