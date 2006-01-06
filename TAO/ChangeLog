@@ -1,3 +1,14 @@
+Fri Jan  6 18:25:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Notify/Blocking/Makefile.am:
+        * orbsvcs/tests/Notify/Discarding/Makefile.am:
+        * orbsvcs/tests/Notify/Ordering/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+
+          Regenerated.
+
 Fri Jan  6 16:14:56 UTC 2006  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/tests/Notify/lib/Makefile.am:

@@ -73,7 +73,6 @@ Sequence_Consumer_SOURCES = \
   goC.cpp \
   Notify_Sequence_Push_Consumer.h
 
-
 Sequence_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
@@ -124,7 +123,6 @@ Sequence_Supplier_SOURCES = \
   Notify_Sequence_Push_Consumer.h \
   Notify_Structured_Push_Consumer.h
 
-
 Sequence_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
@@ -171,10 +169,8 @@ Structured_Consumer_CPPFLAGS = \
 Structured_Consumer_SOURCES = \
   Notify_Structured_Push_Consumer.cpp \
   Structured_Consumer.cpp \
-  common.cpp \
   goC.cpp \
-  Notify_Structured_Push_Consumer.h \
-  common.h
+  Notify_Structured_Push_Consumer.h
 
 Structured_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
@@ -224,8 +220,7 @@ Structured_Supplier_SOURCES = \
   goC.cpp \
   goS.cpp \
   Notify_Sequence_Push_Consumer.h \
-  Notify_Structured_Push_Consumer.h \
-  common.h
+  Notify_Structured_Push_Consumer.h
 
 Structured_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
