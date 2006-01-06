@@ -48,14 +48,23 @@ $CL = new PerlACE::Process ("simple_client",
                             "-ORBsvcconf $client_conf "
                             . "-ORBdebuglevel $debug_level"
                             . " -k file://$iorfile "
-                            . " -i $iterations -x -d");
+                            . " -i $iterations -d");
 
 $client = $CL->SpawnWaitKill (60);
+
+$CL2 = new PerlACE::Process ("simple_client",
+                             "-ORBsvcconf $client_conf"
+                             . " -ORBCollocation no"
+                             . " -ORBdebuglevel $debug_level"
+                             . " -k file://$iorfile "
+                             . " -i $iterations -x -d");
+$client2 = $CL2->SpawnWaitKill (60);
+
 $server = $SV->WaitKill (10);
 
 unlink $iorfile;
 
-if ($server != 0 || $client != 0) {
+if ($server != 0 || $client != 0 || $client2 != 0) {
     exit 1;
 }
  

@@ -194,14 +194,14 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
 
       if (new_object == 0)
         {
-          return 0;  // %! except.?
+          return false;  // %! except.?
         }
 
       retval = new_object->_tao_unmarshal_v (strm);
 
       if (retval == 0)
         {
-          return 0;
+          return false;
         }
     }
 
@@ -241,7 +241,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   if (TAO_OBV_GIOP_Flags::is_null_ref (value_tag))
     {
       valuetype = 0;
-      return 1;
+      return true;
       // ok, null reference unmarshaled
     }
   // 2. Now at this point it must be a <value-tag> (error else).
@@ -286,11 +286,11 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     {
       CORBA::String_var repo_id_stream;
 
-      CORBA::ULong length;
+      CORBA::ULong length = 0;
 
       if (!strm.read_ulong (length))
         {
-          return 0;
+          return false;
         }
 
       // 'length' may not be the repo id length - it could be the
@@ -302,7 +302,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
           // Read the negative byte offset
           if (!strm.read_long (offset) || offset >= 0)
             {
-              return 0;
+              return false;
             }
 
           // Cribbed from tc_demarshal_indirection in Typecode_CDR_Extraction.cpp
@@ -312,7 +312,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
           if (!indir_stream.good_bit ())
             {
-              return 0;
+              return false;
             }
 
           indir_stream.read_string(repo_id_stream.inout ());
@@ -326,7 +326,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                               0);
               if (!strm.read_char_array (repo_id_stream.inout (), length))
                 {
-                  return 0;
+                  return false;
                 }
             }
           else if (length == 0)
@@ -338,7 +338,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
             }
           else
             {
-              return 0;
+              return false;
             }
         }
 
