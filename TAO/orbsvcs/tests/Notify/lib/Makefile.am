@@ -98,7 +98,8 @@ libTAO_NotifyTests_la_SOURCES = \
   StructuredPushSupplier.cpp \
   SupplierAdmin_Command.cpp \
   Task_Callback.cpp \
-  Task_Stats.cpp
+  Task_Stats.cpp \
+  common.cpp
 
 noinst_HEADERS = \
   Activation_Manager.h \
@@ -166,6 +167,7 @@ noinst_HEADERS = \
   Task_Callback.h \
   Task_Stats.h \
   Task_Stats.inl \
+  common.h \
   notify_test_export.h
 
 endif !BUILD_MINIMUM_CORBA
