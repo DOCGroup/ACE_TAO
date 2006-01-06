@@ -348,8 +348,9 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
   if (factory == 0) // %! except.!
     {
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%N:%l) OBV factory is null for <%s>!\n"),
+                  repo_id));
       return false;
     }
 
