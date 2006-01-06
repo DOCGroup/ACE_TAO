@@ -1131,7 +1131,9 @@ namespace
 
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::Components::HomeExecutorBase_ptr" << endl
-         << "create" << t.name () << "_Impl (void);" << endl;
+         << "create"
+         << regex::perl_s (t.scoped_name ().str (), "/::/_/")
+         << "_Impl (void);" << endl;
     }
 
   private:
