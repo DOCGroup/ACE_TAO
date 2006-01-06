@@ -120,8 +120,7 @@ Structured_Supplier_SOURCES = \
   Structured_Supplier.cpp \
   goC.cpp \
   goS.cpp \
-  Notify_Structured_Push_Consumer.h 
-
+  Notify_Structured_Push_Consumer.h
 
 Structured_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \

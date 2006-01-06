@@ -122,7 +122,6 @@ Sequence_Supplier_SOURCES = \
   goS.cpp \
   Notify_Sequence_Push_Consumer.h
 
-
 Sequence_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
