@@ -117,7 +117,8 @@ protected:
   /// @note A fixed set of 9 keys are stored in this map.  In the absence
   /// of a minimal perfect hash, ACE's default hash_pjw() and a hash size
   /// of 27 ensures each element is hashed to a unique bucket.
-  static const size_t implicit_ids_size_ = 27;
+  /// TODO: define inline once VC6 support is deprecated.
+  static const size_t implicit_ids_size_;
 
   /// Lookup table for the implicit ids, to avoid string comparisons in
   /// derived visitors.
@@ -125,14 +126,16 @@ protected:
     implicit_ids_;
 
   /// Size of filterable_data_ hash map.
-  static const size_t filterable_data_size_ = 31;
+  /// TODO: define inline once VC6 support is deprecated.
+  static const size_t filterable_data_size_;
 
   /// Used to lookup names and values in the event's 'filterable_data' field.
   ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>
     filterable_data_;
 
   /// Size of variable_header_ hash map.
-  static const size_t variable_header_size_ = 31;
+  /// TODO: define inline once VC6 support is deprecated.
+  static const size_t variable_header_size_;
 
   /// Used to lookup names and values in the event's 'variable_header' field.
   ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>

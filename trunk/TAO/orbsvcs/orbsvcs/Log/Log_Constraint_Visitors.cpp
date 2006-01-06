@@ -1378,4 +1378,6 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
   }
 }
 
+const size_t TAO_Log_Constraint_Visitor::property_lookup_size_ = 31;
+
 TAO_END_VERSIONED_NAMESPACE_DECL
