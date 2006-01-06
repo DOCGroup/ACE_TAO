@@ -1,3 +1,48 @@
+Fri Jan  6 16:14:56 UTC 2006  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/tests/Notify/lib/Makefile.am:
+        * orbsvcs/tests/Notify/lib/common.h:
+        * orbsvcs/tests/Notify/lib/common.cpp:
+
+          Newly created to give permanent home to previously scattered and
+          duplicated functionality. Updated to use the
+          ACE_[U]INT[16|32|64]_FORMAT_SPECIFIER macros. Thanks to Johnny
+          Willemsen <jwillemsen@remedy.nl> for suggesting it.
+
+        * orbsvcs/tests/Notify/Blocking/common.h:
+        * orbsvcs/tests/Notify/Blocking/common.cpp:
+        * orbsvcs/tests/Notify/Discarding/common.h:
+        * orbsvcs/tests/Notify/Discarding/common.cpp:
+        * orbsvcs/tests/Notify/Ordering/common.h:
+        * orbsvcs/tests/Notify/Ordering/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
+
+          Removed these files to eliminate duplication. Moved the code to
+          the lib/common.{cpp|h}
+
+        * orbsvcs/tests/Notify/Blocking/Blocking.mpc:
+        * orbsvcs/tests/Notify/Discarding/Discarding.mpc:
+        * orbsvcs/tests/Notify/Ordering/Ordering.mpc:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Seq_Multi_ETCL_Filter.mpc:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Seq_Multi_Filter.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Filter.mpc:
+
+          Updated to remove references to common.{cpp|h}
+
+        * orbsvcs/tests/Notify/Blocking/Makefile.am:
+        * orbsvcs/tests/Notify/Discarding/Makefile.am:
+        * orbsvcs/tests/Notify/Ordering/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+
+          Updated to remove references to common.{cpp|h}
+
 Fri Jan  6 12:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueBase.cpp:
@@ -6,7 +51,7 @@ Fri Jan  6 12:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan  5 19:56:43 2006  Michi Henning <michi@triodia.com>
 
-	* End of bloatware predicted.
+        * End of bloatware predicted.
 
 Fri Jan  6 03:16:41 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
