@@ -179,30 +179,38 @@ public:
   // = Process creation methods.
 
   /**
-   * Create a new process by passing <options> to <proc.spawn>.  On
-   * success, returns the process id of the child that was created.
+   * Create a new process by passing <options> to <proc.spawn>.  
+   * Register <event_handler> to be called back when the process exits.  
+   *
+   * On success, returns the process id of the child that was created.
    * On failure, returns ACE_INVALID_PID.
    */
   pid_t spawn (ACE_Process *proc,
-               ACE_Process_Options &options);
+               ACE_Process_Options &options,
+	       ACE_Event_Handler *event_handler = 0);
 
   /**
-   * Create a new process by passing <options> to
-   * <ACE_Process::spawn>.  On success, returns the process id of the
-   * child that was created.  On failure, returns ACE_INVALID_PID.
+   * Create a new process by passing <options> to <ACE_Process::spawn>.  
+   * Register <event_handler> to be called back when the process exits.  
+   *
+   * On success, returns the process id of the child that was created.
+   * On failure, returns ACE_INVALID_PID.
    */
-  pid_t spawn (ACE_Process_Options &options);
+  pid_t spawn (ACE_Process_Options &options,
+	       ACE_Event_Handler *event_handler = 0);
 
   /**
    * Create <n> new processes by passing <options> to
    * <ACE_Process::spawn>, which is called <n> times.  If <child_pids>
    * is non-0 it is expected to be an array of <n> <pid_t>'s, which
    * are filled in with the process ids of each newly created process.
+   * Register <event_handler> to be called back when each process exits.  
    * Returns 0 on success and -1 on failure.
    */
   int spawn_n (size_t n,
                ACE_Process_Options &options,
-               pid_t *child_pids = 0);
+               pid_t *child_pids = 0,
+	       ACE_Event_Handler *event_Handler = 0);
 
   // = Process synchronization operations.
 
@@ -259,6 +267,11 @@ public:
    * Register an Event_Handler to be called back when the specified
    * process exits.  If pid == ACE_INVALID_PID this handler is called
    * when any process with no specific handler exits.
+   *
+   * @note In multi-threaded applications, there is a race condition
+   * if a process exits between the time it is spawned and when its
+   * handler is registered.  To avoid this, register the handler at
+   * the time the process is spawned.
    */
   int register_handler (ACE_Event_Handler *event_handler,
                         pid_t pid = ACE_INVALID_PID);
@@ -353,14 +366,18 @@ private:
 
   /// Insert a process in the table (checks for duplicates).  Omitting
   /// the process handle won't work on Win32...
-  int insert_proc (ACE_Process *process);
+  /// Register <event_handler> to be called back when the process exits.  
+  int insert_proc (ACE_Process *process,
+		   ACE_Event_Handler *event_handler = 0);
 
   /**
    * Append information about a process, i.e., its <process_id> in the
    * <process_table_>.  Each entry is added at the end, growing the
    * table if necessary.
+   * Register <event_handler> to be called back when the process exits.  
    */
-  int append_proc (ACE_Process *process);
+  int append_proc (ACE_Process *process,
+		   ACE_Event_Handler *event_handler = 0);
 
   /// Actually removes the process at index <n> from the table.  This method
   /// must be called with locks held.
