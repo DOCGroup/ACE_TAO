@@ -9,7 +9,7 @@
 
 
 const char*
-Any_String (const CORBA::Any& any)
+TAO_NOTIFY_TEST_Export Any_String (const CORBA::Any& any)
 {
   static char out[256] = "";
   CORBA::Short s;
@@ -21,19 +21,19 @@ Any_String (const CORBA::Any& any)
 
   if (any >>= s)
     {
-      ACE_OS::sprintf (out, "%d", s);
+      ACE_OS::sprintf (out, ACE_INT16_FORMAT_SPECIFIER, s);
     }
   else if (any >>= us)
     {
-      ACE_OS::sprintf (out, "%u", us);
+      ACE_OS::sprintf (out, ACE_UINT16_FORMAT_SPECIFIER, us);
     }
   else if (any >>= l)
     {
-      ACE_OS::sprintf (out, "%d", l);
+      ACE_OS::sprintf (out, ACE_INT32_FORMAT_SPECIFIER, l);
     }
   else if (any >>= ul)
     {
-      ACE_OS::sprintf (out, "%u", ul);
+      ACE_OS::sprintf (out, ACE_UINT32_FORMAT_SPECIFIER, ul);
     }
   else if (any >>= str)
     {
@@ -44,14 +44,7 @@ Any_String (const CORBA::Any& any)
 #if defined (ACE_LACKS_LONGLONG_T)
       ACE_OS::strcpy (out, ull.as_string (out));
 #else
-      double temp =
-# if defined (ACE_CONFIG_WIN32_H)
-      static_cast<double>(static_cast<CORBA::LongLong>(ull));
-# else
-              ull;
-# endif /* ACE_CONFIG_WIN32_H */
-
-      ACE_OS::sprintf (out, "%.0f", temp);
+      ACE_OS::sprintf (out, ACE_UINT64_FORMAT_SPECIFIER, ull);
 #endif /* ACE_LACKS_LONGLONG_T */
     }
   else

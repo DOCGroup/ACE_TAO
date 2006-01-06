@@ -70,10 +70,8 @@ Sequence_Consumer_CPPFLAGS = \
 Sequence_Consumer_SOURCES = \
   Notify_Sequence_Push_Consumer.cpp \
   Sequence_Consumer.cpp \
-  common.cpp \
   goC.cpp \
-  Notify_Sequence_Push_Consumer.h \
-  common.h
+  Notify_Sequence_Push_Consumer.h
 
 Sequence_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
@@ -122,8 +120,8 @@ Sequence_Supplier_SOURCES = \
   Sequence_Supplier.cpp \
   goC.cpp \
   goS.cpp \
-  Notify_Sequence_Push_Consumer.h \
-  common.h
+  Notify_Sequence_Push_Consumer.h
+
 
 Sequence_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \

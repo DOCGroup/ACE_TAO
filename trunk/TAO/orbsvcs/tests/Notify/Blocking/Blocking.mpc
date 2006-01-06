@@ -27,7 +27,6 @@ project(*Ntf Struct Cons): notifytest {
   after += *idl
   Source_Files {
     goC.cpp
-    common.cpp
     Notify_Structured_Push_Consumer.cpp
     Structured_Consumer.cpp
   }
