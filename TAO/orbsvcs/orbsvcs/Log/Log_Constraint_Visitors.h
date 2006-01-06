@@ -103,7 +103,9 @@ private:
                                     CORBA::TCKind tc_kind);
 
 private:
-  static const size_t property_lookup_size_ = 31;
+  /// Size of property_lookup_ hash map.
+  /// TODO: define inline once VC6 support is deprecated.
+  static const size_t property_lookup_size_;
 
   typedef ACE_Hash_Map_Manager <ACE_CString,
                                 CORBA::Any_var,
