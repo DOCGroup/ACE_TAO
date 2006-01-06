@@ -4276,7 +4276,9 @@ namespace
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant"
          << endl
-         << "create" << t.name () << "_Servant (" << endl
+         << "create"
+         << regex::perl_s (t.scoped_name ().str (), "/::/_/")
+         << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "CIAO::Session_Container *c," << endl
          << "const char *ins_name" << endl
