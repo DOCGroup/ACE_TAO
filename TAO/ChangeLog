@@ -1,3 +1,13 @@
+Fri Jan  6 19:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/run_test.pl:
+          Extended this test to also run the client with -ORBCollocation
+          no. This will fail at this moment, this bug seems to be there
+          already for a long time, not it is visible for everyone
+
+        * tao/Valuetype/ValueBase.cpp:
+          Use true/false instead of 0/1
+
 Fri Jan  6 18:25:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Notify/Blocking/Makefile.am:
