@@ -12,7 +12,7 @@
  */
 //=============================================================================
 
-#include "ior_corbaloc_client_i.h"
+#include "corbalocC.h"
 #include "ace/Log_Msg.h"
 
 int main (int argc, char *argv [])
