@@ -5,6 +5,7 @@
 module Stock
 {
   exception Invalid_Stock {};
+  typedef sequence<octet> ImageBlob;
 
   /**
    * @struct StockInfo

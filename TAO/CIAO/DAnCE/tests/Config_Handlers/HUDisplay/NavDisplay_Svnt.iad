@@ -22,7 +22,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>createBMDisplayHome_Servant</string>
+        <string>create_BasicSP_BMDisplayHome_Servant</string>
       </value>
     </value>
   </execParameter>
