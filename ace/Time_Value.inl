@@ -105,7 +105,7 @@ ACE_Time_Value::ACE_Time_Value (time_t sec, long usec)
 
 // Returns number of seconds.
 
-ACE_INLINE long
+ACE_INLINE time_t
 ACE_Time_Value::sec (void) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
@@ -115,7 +115,7 @@ ACE_Time_Value::sec (void) const
 // Sets the number of seconds.
 
 ACE_INLINE void
-ACE_Time_Value::sec (long sec)
+ACE_Time_Value::sec (time_t sec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
   this->tv_.tv_sec = sec;
