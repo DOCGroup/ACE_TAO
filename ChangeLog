@@ -1,3 +1,10 @@
+Sat Jan  7 13:29:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-8.h:
+          Added ACE_HAS_NEW_NOTHROW. Msvc8 throws std::bad_alloc by default,
+          for the ACE_NEW macros we disable this, we just get a zero back on
+          out of memory. This fixes bugzilla bug 2333
+
 Sat Jan  7 13:17:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
@@ -12,6 +19,7 @@ Fri Jan  6 21:20:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           time it is spawned and the time its handler is registered.
           Changed the spawn() methods to take an optional handler so
           it can be registered atomically.
+
 
 Thu Jan  5 15:37:32 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
