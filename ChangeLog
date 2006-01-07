@@ -1,3 +1,8 @@
+Sat Jan  7 13:17:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added ACE_HAS_NONCONST_WCSDUP
+
 Fri Jan  6 21:20:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Process_Manager.cpp:
