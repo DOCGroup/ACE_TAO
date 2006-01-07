@@ -50,10 +50,9 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
-//#if defined (_WIN32_WCE) && (_WIN32_WCE < 0x500)
-//#  define ACE_LACKS_RTTI
-//#else
-#  define ACE_HAS_EXCEPTIONS
+#define ACE_HAS_EXCEPTIONS
+#define ACE_HAS_NEW_NOTHROW
+
 // Windows Mobile 5 doesn't do sig_atomic_t, but maybe future versions will.
 #  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x501)
 #    define ACE_HAS_SIG_ATOMIC_T
