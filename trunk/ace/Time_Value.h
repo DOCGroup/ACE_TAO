@@ -196,10 +196,10 @@ public:
    * @note The semantics of this method differs from the msec()
    *       method.
    */
-  long sec (void) const;
+  time_t sec (void) const;
 
   /// Set seconds.
-  void sec (long sec);
+  void sec (time_t sec);
 
   /// Get microseconds.
   /**
