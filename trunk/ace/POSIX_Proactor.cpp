@@ -1319,11 +1319,11 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   // Save operation code in the aiocb
   switch (op)
     {
-    case ACE_POSIX_Proactor::READ:
+    case ACE_POSIX_Proactor::ACE_OPCODE_READ:
       result->aio_lio_opcode = LIO_READ;
       break;
 
-    case ACE_POSIX_Proactor::WRITE:
+    case ACE_POSIX_Proactor::ACE_OPCODE_WRITE:
       result->aio_lio_opcode = LIO_WRITE;
       break;
 

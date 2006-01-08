@@ -317,7 +317,7 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                                        signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::READ);
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_READ);
   if (return_val == -1)
     delete result;
 
@@ -435,7 +435,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                                         signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::WRITE);
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
   if (return_val == -1)
     delete result;
 
@@ -548,7 +548,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::READ);
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_READ);
   if (return_val == -1)
     delete result;
 
@@ -675,7 +675,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                       signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::WRITE);
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
   if (return_val == -1)
     delete result;
 
@@ -2349,7 +2349,7 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                                       signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::READ);
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_READ);
   if (return_val == -1)
     delete result;
 
@@ -2398,7 +2398,7 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                                        signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::WRITE);
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
   if (return_val == -1)
     delete result;
 

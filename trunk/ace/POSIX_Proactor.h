@@ -94,8 +94,8 @@ public:
   };
 
   enum Opcode {
-    READ = 1,
-    WRITE = 2
+    ACE_OPCODE_READ = 1,
+    ACE_OPCODE_WRITE = 2
   };
 
   virtual Proactor_Type  get_impl_type (void);
