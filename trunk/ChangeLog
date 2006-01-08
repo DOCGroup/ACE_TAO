@@ -1,3 +1,20 @@
+Sun Jan  8 19:34:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+          Updated some more to reflect the OS correctly.
+
+        * ace/Sock_Connect.cpp:
+          Updated for vxworks 6.2
+
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_CB_Proactor.h:
+        * ace/POSIX_Proactor.{h,cpp}:
+          Added ACE_OPCODE_ for the OpCode enums READ and WRITE, READ is also
+          a define under VxWorks making this problematic to enable
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+          Improved rtp building rules
+
 Sat Jan  7 13:34:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,inl}:
