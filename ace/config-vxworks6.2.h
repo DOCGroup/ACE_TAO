@@ -79,7 +79,6 @@
 
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_NONCONST_READV
@@ -159,8 +158,6 @@
 # define ACE_VXWORKS_SPARE spare4
 #endif /* ! ACE_VXWORKS_SPARE */
 
-#define ACE_LACKS_STDINT_H
-#define ACE_LACKS_INTTYPES_H
 #define ACE_LACKS_SYS_UIO_H
 #define ACE_LACKS_SYS_IPC_H
 #define ACE_LACKS_SYS_SEM_H
@@ -168,7 +165,6 @@
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_WCHAR_H
 #define ACE_LACKS_PWD_H
-#define ACE_LACKS_SEARCH_H
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
@@ -213,6 +209,8 @@
   #define ACE_LACKS_REGEX_H
 #else
   // We are building for kernel mode
+  #define ACE_LACKS_INTTYPES_H
+  #define ACE_LACKS_STDINT_H
   #define ACE_LACKS_UNAME
   #define ACE_LACKS_UTSNAME_T
   #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
@@ -223,6 +221,8 @@
   #define ACE_LACKS_SYS_SELECT_H
   #define ACE_LACKS_STRINGS_H
   #define ACE_MKDIR_LACKS_MODE
+  #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
+  #define ACE_LACKS_SEARCH_H
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
@@ -249,6 +249,7 @@
 // is disabled
 # define ACE_HAS_RECURSIVE_MUTEXES
 # define ACE_LACKS_COND_T
+# define ACE_HAS_MUTEX_TIMEOUTS
 #endif
 
 #if !defined (ACE_MT_SAFE)
