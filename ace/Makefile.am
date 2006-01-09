@@ -22,6 +22,7 @@ SUBDIRS = \
 
 CLEANFILES =
 lib_LTLIBRARIES =
+nobase_include_HEADERS =
 pkgconfig_DATA =
 
 ## Makefile.ACE.am
@@ -339,7 +340,7 @@ libACE_la_SOURCES = \
 libACE_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
-nobase_include_HEADERS = \
+nobase_include_HEADERS += \
   ACE.h \
   ACE.inl \
   ACE_export.h \
