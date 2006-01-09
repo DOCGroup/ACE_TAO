@@ -1,4 +1,4 @@
-Mon Jan  9 13:20:05 MST 2006  Scott Harris  <harris_s@ociweb.com>
+Mon Jan  9 13:51:05 MST 2006  Scott Harris  <harris_s@ociweb.com>
 
         * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
@@ -13,6 +13,7 @@ Mon Jan  9 13:20:05 MST 2006  Scott Harris  <harris_s@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/README:
         * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
         * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/IFR_Inheritance_Test.idl:
 
           An automated test of the bug.
 
