@@ -228,7 +228,7 @@ namespace ACE_OS {
 
   /// Finds the first occurance of a character in an array (ACE_WCHAR_T version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_WCHAR_T *strnchr (ACE_WCHAR_T *s, ACE_WINT_T c, size_t len);
+  ACE_WCHAR_T *strnchr (ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len);
 
   /// Compares two arrays (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
