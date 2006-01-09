@@ -166,6 +166,7 @@ ifeq ($(rtp),1)
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
   LD := $(CPLUS)
   LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
+  LDLIBS += -ldl
 else
   include $(TGT_DIR)/h/make/defs.default
   include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
