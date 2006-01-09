@@ -29,8 +29,8 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
 
-const char*
-TAO_NOTIFY_TEST_Export Any_String (const CORBA::Any& any);
+TAO_NOTIFY_TEST_Export
+const char* Any_String (const CORBA::Any& any);
 
 #include /**/ "ace/post.h"
 #endif /* TAO_COMMON_H */
