@@ -1,5 +1,5 @@
 // $Id$
-#ifndef __IFR_INHERITANCE_TEST_DEFINED 
+#ifndef __IFR_INHERITANCE_TEST_DEFINED
 #define __IFR_INHERITANCE_TEST_DEFINED
 
 module IFR_Test
@@ -18,7 +18,7 @@ module IFR_Test
     NameList get_all_roots();
   };
 
-  interface SubInterface : InterfaceRoot 
+  interface SubInterface : InterfaceRoot
   {
     attribute long sub_attr1;
 
