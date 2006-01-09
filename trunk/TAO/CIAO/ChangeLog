@@ -1,3 +1,23 @@
+Mon Jan  9 14:17:39 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * examples/Hello/descriptors/Receiver_Svnt.iad:
+        * examples/Hello/descriptors/Sender_Svnt.iad:
+        * examples/Hello/descriptors/flattened_deploymentplan.cdp:
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp:
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns_add.cdp:
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns_remove.cdp:
+        * examples/Hello/descriptors/rt-config-example.cdp:
+        * examples/Hello/descriptors/rt-example.cdp:
+        
+          Updated occurrences of the string name of the servant executor 
+          DLL extry point to correspond with the changes in
+          
+          Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplHeaderGenerator.cpp:
