@@ -115,19 +115,19 @@ namespace ACE_OS
   // This function returns the number of bytes in the file referenced by
   // FD.
 
-  ACE_INLINE long
+  ACE_INLINE off_t
   filesize (ACE_HANDLE handle)
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
 #if defined (ACE_WIN32)
-    ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), long, -1);
+    ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), off_t, -1);
 #else /* !ACE_WIN32 */
     ACE_stat sb;
-    return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
+    return ACE_OS::fstat (handle, &sb) == -1 ? -1 : sb.st_size;
 #endif /* ACE_WIN32 */
   }
 
-  ACE_INLINE long
+  ACE_INLINE off_t
   filesize (const ACE_TCHAR *filename)
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
@@ -135,7 +135,7 @@ namespace ACE_OS
     ACE_HANDLE h = ACE_OS::open (filename, O_RDONLY);
     if (h != ACE_INVALID_HANDLE)
       {
-        long size = ACE_OS::filesize (h);
+        off_t size = ACE_OS::filesize (h);
         ACE_OS::close (h);
         return size;
       }
