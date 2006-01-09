@@ -1,3 +1,9 @@
+Mon Jan  9 09:36:29 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Fix typo in ACE_LACKS_NAMED_POSIX_SEM feature test.
+
 Mon Jan  9 09:30:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/PI_Malloc.h:
@@ -59,7 +65,6 @@ Fri Jan  6 21:20:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           time it is spawned and the time its handler is registered.
           Changed the spawn() methods to take an optional handler so
           it can be registered atomically.
-
 
 Thu Jan  5 15:37:32 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
