@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "valuetype_export.h"
-
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/RW_Thread_Mutex.h"
 
@@ -35,7 +33,7 @@ namespace CORBA
   typedef ValueFactoryBase *ValueFactory;
 }
 
-class TAO_Valuetype_Export TAO_ValueFactory_Map
+class TAO_ValueFactory_Map
 {
 public:
 
