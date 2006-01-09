@@ -4057,9 +4057,9 @@ WE_HAVE_SHARED_POSIX_SEMAPHORES
      AC_CHECK_FUNC([sem_open])
      AC_CHECK_FUNC([sem_close])
      AC_CHECK_FUNC([sem_unlink])
-     if test "$ace_cv_func_sem_open" = no ||
-        test "$ace_cv_func_sem_close" = no ||
-        test "$ace_cv_func_sem_unlink" = no; then
+     if test "$ac_cv_func_sem_open" = no ||
+        test "$ac_cv_func_sem_close" = no ||
+        test "$ac_cv_func_sem_unlink" = no; then
 
         AC_DEFINE([ACE_LACKS_NAMED_POSIX_SEM])
      else
