@@ -19,7 +19,7 @@
 
 ACE_RCSID(MT_Cubit, client, "$Id$")
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
 u_int ctx = 0;
 u_int ct = 0;
 
@@ -61,7 +61,7 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 
   return 0;
 }
-#endif /* ACE_VXWORKS && !__RTP__ */
+#endif /* ACE_VXWORKS && !__RTP__ && !ACE_HAS_PTHREADS */
 
 // Constructor.
 
@@ -150,7 +150,7 @@ Client_i::run (void)
     this->do_thread_per_rate_test ();
 }
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
 void
 Client_i::output_taskinfo (void)
 {
@@ -176,7 +176,7 @@ Client_i::output_taskinfo (void)
 
   ACE_OS::fclose (file_handle);
 }
-#endif /* ACE_VXWORKS && !__RTP__ */
+#endif /* ACE_VXWORKS && !__RTP__ && !ACE_HAS_PTHREADS */
 
 void
 Client_i::get_context_switches (void)
@@ -195,7 +195,7 @@ Client_i::get_context_switches (void)
     }
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
   if (this->ts_->context_switch_test_ == 1)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -500,7 +500,7 @@ Client_i:: print_context_stats (void)
                   "Voluntary context switches=%d, Involuntary context switches=%d\n",
                   this->usage.ru_nvcsw,
                   this->usage.ru_nivcsw));
-#elif defined (ACE_VXWORKS) && !defined (__RTP__) /* ACE_HAS_GETRUSAGE */
+#elif defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
       taskSwitchHookDelete ((FUNCPTR) &switchHook);
       ACE_DEBUG ((LM_DEBUG,
                   "Context switches=%d\n",
