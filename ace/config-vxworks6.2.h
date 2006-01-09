@@ -169,36 +169,14 @@
 #define ACE_LACKS_POLL_H
 
 // Some string things
-#define ACE_LACKS_WCSCAT
-#define ACE_LACKS_WCSCHR
-#define ACE_LACKS_WCSCMP
-#define ACE_LACKS_WCSCPY
-#define ACE_LACKS_WCSCSPN
-#define ACE_LACKS_WCSLEN
-#define ACE_LACKS_WCSNCAT
-#define ACE_LACKS_WCSNCMP
-#define ACE_LACKS_WCSNCPY
-#define ACE_LACKS_WCSPBRK
-#define ACE_LACKS_WCSRCHR
-#define ACE_LACKS_WCSSPN
-#define ACE_LACKS_WCSSTR
-#define ACE_LACKS_WCSTOK
-#define ACE_LACKS_TOWLOWER
-#define ACE_LACKS_TOWUPPER
+#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_ITOW
+#define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
-#define ACE_LACKS_WCSTOD
-#define ACE_LACKS_WCSTOL
-#define ACE_LACKS_WCSTOUL
-#define ACE_LACKS_WCSDUP
-#define ACE_LACKS_STRCASECMP
-#define ACE_HAS_CHARPTR_SOCKOPT
 
+#define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_LACKS_SYMLINKS
-#define ACE_LACKS_FGETWC
-#define ACE_LACKS_FGETWS
-#define ACE_LACKS_FPUTWS
 
 #if defined __RTP__
   // We are building for RTP mode
@@ -206,6 +184,7 @@
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
   #define ACE_LACKS_PUTENV
+  #define ACE_HAS_3_PARAM_WCSTOK
 #else
   // We are building for kernel mode
   #define ACE_LACKS_INTTYPES_H
@@ -227,6 +206,28 @@
   #define ACE_LACKS_GETPPID
   #define ACE_LACKS_WCHAR_H
   #define ACE_LACKS_WCTYPE_H
+  #define ACE_LACKS_WCSCAT
+  #define ACE_LACKS_WCSCHR
+  #define ACE_LACKS_WCSCMP
+  #define ACE_LACKS_WCSCPY
+  #define ACE_LACKS_WCSCSPN
+  #define ACE_LACKS_WCSLEN
+  #define ACE_LACKS_WCSNCAT
+  #define ACE_LACKS_WCSNCMP
+  #define ACE_LACKS_WCSNCPY
+  #define ACE_LACKS_WCSPBRK
+  #define ACE_LACKS_WCSRCHR
+  #define ACE_LACKS_WCSSPN
+  #define ACE_LACKS_WCSSTR
+  #define ACE_LACKS_WCSTOK
+  #define ACE_LACKS_TOWLOWER
+  #define ACE_LACKS_TOWUPPER
+  #define ACE_LACKS_WCSTOD
+  #define ACE_LACKS_WCSTOL
+  #define ACE_LACKS_WCSTOUL
+  #define ACE_LACKS_FGETWC
+  #define ACE_LACKS_FGETWS
+  #define ACE_LACKS_FPUTWS
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
