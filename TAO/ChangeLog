@@ -1,3 +1,11 @@
+Mon Jan  9 13:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2349_Regression/*:
+          Added regression for this test. Not fixed yet, just to make
+          clear that we have this bug, thanks to Chad Elliot
+          <elliott_c at ociweb dot com> for creating this regression
+          test.
+
 Mon Jan  9 13:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Security/SSLIOP-INSTALL.html:
