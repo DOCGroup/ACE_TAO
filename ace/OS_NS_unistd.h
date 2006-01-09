@@ -153,6 +153,9 @@ namespace ACE_OS
   gid_t getgid (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  gid_t getegid (void);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int getopt (int argc,
               char *const *argv,
               const char *optstring);
@@ -171,6 +174,9 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   uid_t getuid (void);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  uid_t geteuid (void);
 
   // should call gethostname()
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -261,6 +267,9 @@ namespace ACE_OS
   int setgid (gid_t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  int setegid (gid_t);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int setpgid (pid_t pid, pid_t pgid);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -274,6 +283,9 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setuid (uid_t);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int seteuid (uid_t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sleep (u_int seconds);

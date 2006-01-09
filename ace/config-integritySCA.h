@@ -131,6 +131,8 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_WRITEV
 #define ACE_LACKS_READV
+#define ACE_LACKS_SYSCONF
+#define ACE_LACKS_GETOPT
 /* below refers to fcntl style locking */
 #define ACE_LACKS_FILELOCKS
 

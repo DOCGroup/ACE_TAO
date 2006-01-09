@@ -224,6 +224,8 @@
   #define ACE_MKDIR_LACKS_MODE
   #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_SEARCH_H
+  #define ACE_LACKS_SYSCONF
+  #define ACE_LACKS_GETPID
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
