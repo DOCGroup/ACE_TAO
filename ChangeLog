@@ -1,3 +1,20 @@
+Mon Jan  9 19:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_wchar.h:
+          VxWorks rtp has int_t
+
+        * ace/config-vxworks6.2.h:
+          Rtp has wchar.h and wctype.h
+
+        * ace/OS_NS_String.{h,inl,cpp}:
+          Updated the wchar_t methods that has a int_t argument to use wchar_t
+          instead. That matches the opengroup definition and resolved the
+          compile errors with VxWorks. Also replaced some c-style and static
+          casts with const_casts.
+
+        * ace/config-vxworks6.2.h:
+          VxWorks 6.2 in rtp mode has a lot of wchar_t functionality, use it!
+
 Mon Jan  9 18:32:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
