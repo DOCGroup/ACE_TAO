@@ -1,3 +1,14 @@
+Mon Jan  9 20:20:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+        
+          Explicitly automake conditional BUILD_ACE_FOR_TAO to false
+          (at least for now).
+
+        * ace/Makefile.am:
+        
+          Small tweaks to fix errors introduced by MPC generation.
+
 Mon Jan  9 20:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/makeicc.pl:

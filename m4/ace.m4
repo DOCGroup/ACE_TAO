@@ -24,6 +24,8 @@ dnl Macros that add ACE configuration options to a `configure' script.
 dnl ACE_CONFIGURATION_OPTIONS
 AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 [
+ AM_CONDITIONAL([BUILD_ACE_FOR_TAO], false)
+
  AC_ARG_ENABLE([ace-codecs],
   AS_HELP_STRING(--enable-ace-codecs,build ACE with codecs support [[[yes]]]),
   [
