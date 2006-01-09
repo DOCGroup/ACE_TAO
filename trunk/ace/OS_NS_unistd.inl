@@ -265,7 +265,7 @@ ACE_OS::dup (ACE_HANDLE handle)
   else
     ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
   /* NOTREACHED */
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (ACE_VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WINCE)
@@ -551,13 +551,27 @@ ACE_INLINE gid_t
 ACE_OS::getgid (void)
 {
   ACE_OS_TRACE ("ACE_OS::getgid");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // getgid() is not supported:  just one user anyways
   return 0;
 # elif defined (ACE_WIN32) || defined (CHORUS)
   ACE_NOTSUP_RETURN (static_cast<gid_t> (-1));
 # else
-  ACE_OSCALL_RETURN (::getgid (), gid_t, (gid_t) -1);
+  ACE_OSCALL_RETURN (::getgid (), gid_t, static_cast<gid_t> (-1));
+# endif /* VXWORKS || ACE_PSOS */
+}
+
+ACE_INLINE gid_t
+ACE_OS::getegid (void)
+{
+  ACE_OS_TRACE ("ACE_OS::getegid");
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+  // getegid() is not supported:  just one user anyways
+  return 0;
+# elif defined (ACE_WIN32) || defined (CHORUS)
+  ACE_NOTSUP_RETURN (static_cast<gid_t> (-1));
+# else
+  ACE_OSCALL_RETURN (::getegid (), gid_t, static_cast<gid_t> (-1));
 # endif /* VXWORKS || ACE_PSOS */
 }
 
@@ -565,7 +579,7 @@ ACE_INLINE int
 ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 {
   ACE_OS_TRACE ("ACE_OS::getopt");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY) || defined (ACE_WIN32)
+#if defined (ACE_LACKS_GETOPT)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
@@ -582,7 +596,7 @@ ACE_OS::getpgid (pid_t pid)
 #if defined (ACE_LACKS_GETPGID)
   ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (ACE_VXWORKS) || defined (ACE_PSOS)
   // getpgid() is not supported, only one process anyway.
   ACE_UNUSED_ARG (pid);
   return 0;
@@ -603,9 +617,8 @@ ACE_OS::getpid (void)
   // ACE_OS_TRACE ("ACE_OS::getpid");
 #if defined (ACE_WIN32)
   return ::GetCurrentProcessId ();
-#elif defined (VXWORKS) || defined (ACE_PSOS)
-  // getpid() is not supported:  just one process anyways
-  return 0;
+#elif defined (ACE_LACKS_GETPID)
+  ACE_NOTSUP_RETURN (-1);
 #elif defined (CHORUS)
   return (pid_t) (::agetId ());
 #else
@@ -619,9 +632,6 @@ ACE_OS::getppid (void)
   ACE_OS_TRACE ("ACE_OS::getppid");
 #if defined (ACE_LACKS_GETPPID)
   ACE_NOTSUP_RETURN (-1);
-#elif defined (VXWORKS) || defined (ACE_PSOS)
-  // getppid() is not supported, only one process anyway.
-  return 0;
 #else
   ACE_OSCALL_RETURN (::getppid (), pid_t, -1);
 #endif /* ACE_LACKS_GETPPID */
@@ -631,13 +641,27 @@ ACE_INLINE uid_t
 ACE_OS::getuid (void)
 {
   ACE_OS_TRACE ("ACE_OS::getuid");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // getuid() is not supported:  just one user anyways
   return 0;
 # elif defined (ACE_WIN32) || defined (CHORUS)
   ACE_NOTSUP_RETURN (static_cast<uid_t> (-1));
 # else
-  ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
+  ACE_OSCALL_RETURN (::getuid (), uid_t, static_cast<uid_t> (-1));
+# endif /* VXWORKS || ACE_PSOS */
+}
+
+ACE_INLINE uid_t
+ACE_OS::geteuid (void)
+{
+  ACE_OS_TRACE ("ACE_OS::geteuid");
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+  // geteuid() is not supported:  just one user anyways
+  return 0;
+# elif defined (ACE_WIN32) || defined (CHORUS)
+  ACE_NOTSUP_RETURN (static_cast<uid_t> (-1));
+# else
+  ACE_OSCALL_RETURN (::geteuid (), uid_t, (uid_t) -1);
 # endif /* VXWORKS || ACE_PSOS */
 }
 
@@ -657,7 +681,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   ACE_UNUSED_ARG (maxnamelen);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_PHARLAP_RT */
-#elif defined (VXWORKS) || defined (ACE_HAS_WINCE)
+#elif defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (ACE_WIN32)
   if (::gethostname (name, maxnamelen) == 0)
@@ -939,7 +963,7 @@ ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
   ACE_OS_TRACE ("ACE_OS::pipe");
-# if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+# if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_UNUSED_ARG (fds);
   ACE_NOTSUP_RETURN (-1);
 # else
@@ -979,7 +1003,7 @@ ACE_INLINE int
 ACE_OS::setgid (gid_t gid)
 {
   ACE_OS_TRACE ("ACE_OS::setgid");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // setgid() is not supported:  just one user anyways
   ACE_UNUSED_ARG (gid);
   return 0;
@@ -992,6 +1016,22 @@ ACE_OS::setgid (gid_t gid)
 }
 
 ACE_INLINE int
+ACE_OS::setegid (gid_t gid)
+{
+  ACE_OS_TRACE ("ACE_OS::setegid");
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+  // setegid() is not supported:  just one user anyways
+  ACE_UNUSED_ARG (gid);
+  return 0;
+# elif defined (ACE_WIN32) || defined (CHORUS)
+  ACE_UNUSED_ARG (gid);
+  ACE_NOTSUP_RETURN (-1);
+# else
+  ACE_OSCALL_RETURN (::setegid (gid), int,  -1);
+# endif /* VXWORKS || ACE_PSOS */
+}
+
+ACE_INLINE int
 ACE_OS::setpgid (pid_t pid, pid_t pgid)
 {
   ACE_OS_TRACE ("ACE_OS::setpgid");
@@ -999,7 +1039,7 @@ ACE_OS::setpgid (pid_t pid, pid_t pgid)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (pgid);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (ACE_VXWORKS) || defined (ACE_PSOS)
   // <setpgid> is not supported, only one process anyway.
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (pgid);
@@ -1017,7 +1057,7 @@ ACE_OS::setregid (gid_t rgid, gid_t egid)
   ACE_UNUSED_ARG (rgid);
   ACE_UNUSED_ARG (egid);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (ACE_VXWORKS) || defined (ACE_PSOS)
   // <setregid> is not supported, only one process anyway.
   ACE_UNUSED_ARG (rgid);
   ACE_UNUSED_ARG (egid);
@@ -1035,7 +1075,7 @@ ACE_OS::setreuid (uid_t ruid, uid_t euid)
   ACE_UNUSED_ARG (ruid);
   ACE_UNUSED_ARG (euid);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (ACE_VXWORKS) || defined (ACE_PSOS)
   // <setpgid> is not supported, only one process anyway.
   ACE_UNUSED_ARG (ruid);
   ACE_UNUSED_ARG (euid);
@@ -1051,7 +1091,7 @@ ACE_OS::setsid (void)
   ACE_OS_TRACE ("ACE_OS::setsid");
 #if defined (ACE_LACKS_SETSID)
   ACE_NOTSUP_RETURN (-1);
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (ACE_VXWORKS) || defined (ACE_PSOS)
   // <setsid> is not supported, only one process anyway.
   return 0;
 #else
@@ -1063,7 +1103,7 @@ ACE_INLINE int
 ACE_OS::setuid (uid_t uid)
 {
   ACE_OS_TRACE ("ACE_OS::setuid");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // setuid() is not supported:  just one user anyways
   ACE_UNUSED_ARG (uid);
   return 0;
@@ -1072,6 +1112,22 @@ ACE_OS::setuid (uid_t uid)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::setuid (uid), int,  -1);
+# endif /* VXWORKS || ACE_PSOS */
+}
+
+ACE_INLINE int
+ACE_OS::seteuid (uid_t uid)
+{
+  ACE_OS_TRACE ("ACE_OS::seteuid");
+#if defined (ACE_VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+  // seteuid() is not supported:  just one user anyways
+  ACE_UNUSED_ARG (uid);
+  return 0;
+# elif defined (ACE_WIN32) || defined(CHORUS)
+  ACE_UNUSED_ARG (uid);
+  ACE_NOTSUP_RETURN (-1);
+# else
+  ACE_OSCALL_RETURN (::seteuid (uid), int,  -1);
 # endif /* VXWORKS || ACE_PSOS */
 }
 
@@ -1162,12 +1218,12 @@ ACE_INLINE long
 ACE_OS::sysconf (int name)
 {
   ACE_OS_TRACE ("ACE_OS::sysconf");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_LACKS_SYSCONF)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::sysconf (name), long, -1);
-#endif /* ACE_WIN32 || VXWORKS || ACE_PSOS */
+#endif /* ACE_LACKS_SYSCONF */
 }
 
 ACE_INLINE long

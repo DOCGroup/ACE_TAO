@@ -38,6 +38,7 @@
 #endif /* __GNUG__ */
 
 #define ACE_PSOS_LACKS_PREPC
+#define ACE_LACKS_SYSCONF
 
 #define ACE_PSOS_HAS_TIME
 
@@ -160,6 +161,7 @@
 
 #define ACE_LACKS_LONGLONG_T
 
+#define ACE_LACKS_GETOPT
 #define ACE_LACKS_LSTAT
 
 #define ACE_LACKS_MADVISE
