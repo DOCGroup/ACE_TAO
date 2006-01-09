@@ -1,3 +1,24 @@
+Mon Jan  9 14:38:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unisth.{h,cpp}:
+          Integrated patches of bugzilla bug 2357, thanks to Volker Lukas
+          <vlukas at gmx dot de> for delivering this. This adds setuid(uid_t),
+          setgid(gid_t), getuid() and getgid().
+          Also introduced ACE_LACKS_SYSCONF and ACE_LACKS_GETOPT to make
+          the VxWorks 6.2 port cleaner
+
+        * ace/config-integritySCA.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.1.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_SYSCONF and ACE_LACKS_GETOPT to the appropriate
+          config files
+
 Mon Jan  9 14:14:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_main.cpp.{h,cpp}:
