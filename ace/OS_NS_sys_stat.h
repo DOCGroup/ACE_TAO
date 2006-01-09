@@ -53,11 +53,10 @@ namespace ACE_OS
 
   // non-standard
   ACE_NAMESPACE_INLINE_FUNCTION
-  long filesize (ACE_HANDLE handle);
+  off_t filesize (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  long filesize (const ACE_TCHAR *handle);
-
+  off_t filesize (const ACE_TCHAR *handle);
 
   //@}
 
