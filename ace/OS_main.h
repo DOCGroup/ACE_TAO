@@ -77,7 +77,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 int \
 ace_main_i
 
-#   elif defined (ACE_VXWORKS)
+#   elif defined (ACE_VXWORKS) && !defined (__RTP__)
 
 typedef int (*ace_main_proc_ptr)(int, char *[]);
 
