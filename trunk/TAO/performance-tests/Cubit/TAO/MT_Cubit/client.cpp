@@ -1,10 +1,10 @@
 // $Id$
 
 #include "ace/config-all.h"
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 # undef ACE_MAIN
 # define ACE_MAIN client
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 #include "ace/Sched_Params.h"
 #include "tao/Strategies/advanced_resource.h"
@@ -19,7 +19,7 @@
 
 ACE_RCSID(MT_Cubit, client, "$Id$")
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 u_int ctx = 0;
 u_int ct = 0;
 
@@ -61,7 +61,7 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 
   return 0;
 }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 // Constructor.
 
@@ -150,7 +150,7 @@ Client_i::run (void)
     this->do_thread_per_rate_test ();
 }
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 void
 Client_i::output_taskinfo (void)
 {
@@ -176,7 +176,7 @@ Client_i::output_taskinfo (void)
 
   ACE_OS::fclose (file_handle);
 }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 void
 Client_i::get_context_switches (void)
@@ -195,14 +195,14 @@ Client_i::get_context_switches (void)
     }
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
   if (this->ts_->context_switch_test_ == 1)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Adding the context switch hook!\n"));
       taskSwitchHookAdd ((FUNCPTR) &switchHook);
     }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 }
 
 void
@@ -322,12 +322,12 @@ Client_i::activate_high_client (void)
                           0),
                   -1);
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   // Set a task_id string starting with "@", so we are able to
   // accurately count the number of context switches.
   ACE_OS::strcpy (this->task_id_,
                   "@High");
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   this->high_priority_ =
     this->priority_.get_high_priority ();
@@ -387,7 +387,7 @@ Client_i::activate_low_client (void)
                               this->argv_,
                               i),
                       -1);
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
       // Pace the connection establishment on VxWorks.
       const ACE_Time_Value delay (0L, 500000L);
       ACE_OS::sleep (delay);
@@ -397,7 +397,7 @@ Client_i::activate_low_client (void)
       sprintf (this->task_id_,
                "@Low%u",
                i);
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
       ACE_DEBUG ((LM_DEBUG,
                   "Creating client with thread ID %d and priority %d\n",
                   i,
@@ -500,7 +500,7 @@ Client_i:: print_context_stats (void)
                   "Voluntary context switches=%d, Involuntary context switches=%d\n",
                   this->usage.ru_nvcsw,
                   this->usage.ru_nivcsw));
-#elif defined (VXWORKS) /* ACE_HAS_GETRUSAGE */
+#elif defined (ACE_VXWORKS) && !defined (__RTP__) /* ACE_HAS_GETRUSAGE */
       taskSwitchHookDelete ((FUNCPTR) &switchHook);
       ACE_DEBUG ((LM_DEBUG,
                   "Context switches=%d\n",
@@ -515,7 +515,7 @@ Client_i::print_latency_stats (void)
   // If running the utilization test, don't report latency nor jitter.
   if (this->ts_->use_utilization_test_ == 0)
     {
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
       ACE_DEBUG ((LM_DEBUG,
                   "Test done.\n"
                   "High priority client latency : %f usec, jitter: %f usec\n"
@@ -548,7 +548,7 @@ Client_i::print_latency_stats (void)
                   this->low_priority_client_[0]->get_low_priority_latency (),
                   this->low_priority_client_[0]->get_low_priority_jitter ()));
       // output_latency ();
-#endif /* !VXWORKS && !CHORUS_MVME */
+#endif /* !ACE_VXWORKS && !CHORUS_MVME */
     }
 }
 
@@ -635,12 +635,12 @@ int
 Client_i::do_priority_inversion_test (void)
 {
   this->timer_.start ();
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   ctx = 0;
   ACE_NEW_RETURN (this->task_id_,
                   char[TASK_ID_LEN],
                   -1);
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) <<<<<<< starting test on %D\n"));
   GLOBALS::instance ()->num_of_objs = 1;
