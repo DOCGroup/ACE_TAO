@@ -1,3 +1,8 @@
+Mon Jan  9 13:44:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/Bug_2349_Regression/run_test.pl
+
 Mon Jan  9 11:27:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
