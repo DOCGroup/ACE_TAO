@@ -1,3 +1,8 @@
+Mon Jan  9 08:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+          Made this test compiling with VxWorks and pthread support
+
 Fri Jan  6 19:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/run_test.pl:
