@@ -495,7 +495,7 @@ ACE_INLINE char *
 ACE_OS::cuserid (char *user, size_t maxlen)
 {
   ACE_OS_TRACE ("ACE_OS::cuserid");
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (maxlen);
   if (user == 0)
     {

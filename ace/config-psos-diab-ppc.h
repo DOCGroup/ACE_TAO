@@ -41,6 +41,8 @@
 # define ACE_HAS_EXCEPTIONS
 #endif /* __GNUG__ */
 
+#define ACE_LACKS_GETOPT
+#define ACE_LACKS_SYSCONF
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_WAITPID
 #define ACE_PSOS_LACKS_PREPC
