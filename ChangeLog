@@ -1,7 +1,18 @@
+Mon Jan  9 18:32:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Regenerated for Service Configurator parser changes:
+          Mon Jan  9 15:18:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Added Hash_Map_Manager.h to Header_Files section.
+
 Mon Jan  9 18:03:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
+
           Added ACE_LACKS_GETOPT and ACE_LACKS_SYSCONF feature tests.
 
 Mon Jan  9 15:18:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
@@ -25,7 +36,7 @@ Mon Jan  9 15:18:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
           Added Unicode support to the Service Configurator by hand-coding
           the lexer portion to properly take into account non-US UTF8,
           UTF16 and UTF32 encodings.  Some of the UFT16 and UTF32 conversion
-          code came directly from Unicode, Inc.                             
+          code came directly from Unicode, Inc.
 
           This is a drop-in replacement for the flex generated lexer and
           heap allocates the encoding converters.  However, this version
