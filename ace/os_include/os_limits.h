@@ -105,7 +105,7 @@ extern "C"
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x620)
 #  if defined (PIPE_BUF) && (PIPE_BUF == -1)
-#    undef PIPE_BUG
+#    undef PIPE_BUF
 #  endif
 #endif /* ACE_VXWORKS == 0x620 */
 
