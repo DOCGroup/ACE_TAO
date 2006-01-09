@@ -3442,6 +3442,8 @@ ACE_CHECK_LACKS_FUNCS(getipnodebyname)
 
 ACE_CHECK_HAS_FUNCS(getifaddrs)
 
+ACE_CHECK_LACKS_FUNCS(getopt)
+
 ACE_CHECK_HAS_FUNCS(itoa)
 
 ACE_CHECK_LACKS_FUNCS(qsort)
@@ -3512,6 +3514,8 @@ swab (src, dst, 2);
       ])
     ],
 )
+
+ACE_CHECK_LACKS_FUNCS(sysconf)
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
