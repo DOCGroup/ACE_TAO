@@ -241,11 +241,11 @@ ACE_OS::strnchr (char *s, int c, size_t len)
 }
 
 ACE_INLINE ACE_WCHAR_T *
-ACE_OS::strnchr (ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
+ACE_OS::strnchr (ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len)
 {
   return
     const_cast<ACE_WCHAR_T *> (ACE_OS::strnchr (
-                                 static_cast<const ACE_WCHAR_T *> (s),
+                                 const_cast<const ACE_WCHAR_T *> (s),
                                  c,
                                  len));
 }

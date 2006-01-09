@@ -220,7 +220,7 @@ namespace ACE_OS {
   /// Finds the first occurance of a character in an array (const ACE_WCHAR_T
   /// version).
   extern ACE_Export
-  const ACE_WCHAR_T *strnchr (const ACE_WCHAR_T *s, ACE_WINT_T c, size_t len);
+  const ACE_WCHAR_T *strnchr (const ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len);
 
   /// Finds the first occurance of a character in an array (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
