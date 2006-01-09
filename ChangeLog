@@ -1,3 +1,10 @@
+Mon Jan  9 14:14:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.cpp.{h,cpp}:
+          The VxWorks specific way of handling main shouldn't be used
+          when building for the rtp model, then the normal main should
+          be used
+
 Mon Jan  9 13:44:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
