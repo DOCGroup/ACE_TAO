@@ -1,3 +1,46 @@
+Mon Jan  9 15:18:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Encoding_Converter.h:
+        * ace/Encoding_Converter.cpp:
+        * ace/Encoding_Converter_Factory.h:
+        * ace/Encoding_Converter_Factory.cpp:
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf_Lexer.h:
+        * ace/Svc_Conf_Lexer.cpp:
+        * ace/UTF16_Encoding_Converter.h:
+        * ace/UTF16_Encoding_Converter.inl:
+        * ace/UTF16_Encoding_Converter.cpp:
+        * ace/UTF32_Encoding_Converter.h:
+        * ace/UTF32_Encoding_Converter.cpp:
+        * ace/UTF8_Encoding_Converter.h:
+        * ace/UTF8_Encoding_Converter.cpp:
+        * ace/svcconf.mpb:
+
+          Added Unicode support to the Service Configurator by hand-coding
+          the lexer portion to properly take into account non-US UTF8,
+          UTF16 and UTF32 encodings.  Some of the UFT16 and UTF32 conversion
+          code came directly from Unicode, Inc.                             
+
+          This is a drop-in replacement for the flex generated lexer and
+          heap allocates the encoding converters.  However, this version
+          performs less heap allocations and has a smaller footprint than
+          the flex generated lexer.
+
+        * tests/Service_Config_Test.UTF-16.conf:
+        * tests/Service_Config_Test.WCHAR_T.conf:
+
+          Added byte order marks to ensure that they are interpreted
+          properly on all machines.
+
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf_Lexer_Guard.h:
+        * ace/Svc_Conf_Lexer_Guard.cpp:
+        * ace/Svc_Conf_l.cpp:
+
+        * etc/Svc_Conf_l.cpp.diff:
+
+          Removed these files.
+
 Mon Jan  9 14:38:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unisth.{h,cpp}:
