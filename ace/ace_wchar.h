@@ -63,6 +63,9 @@
 #   include /**/ <string.h>         /* For strlen */
 #   if !defined (__RTP__)
 #     define wint_t unsigned int    /* VxWorks has wchar_t but not wint_t */
+#   else
+#     include /**/ <wchar.h>
+#     include /**/ <wctype.h>
 #   endif
 # elif defined (ACE_OPENVMS)
 #   include /**/ <wchar.h>
