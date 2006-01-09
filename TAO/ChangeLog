@@ -1,3 +1,21 @@
+Mon Jan  9 13:20:05 MST 2006  Scott Harris  <harris_s@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+
+          Fixed an Interface Repository inheritance bug.
+          Thanks to Bryan Cassell <BryanCassell@iti-team.com> for identifying
+          the problem.
+          Thanks to Jeff Parsons <j.parsons@vanderbilt.edu> for reviewing
+          the changes.
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/IFR_Inheritance_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/README:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:
+
+          An automated test of the bug.
+
 Mon Jan  9 16:20:05 UTC 2006  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/tests/Notify/lib/common.cpp:
