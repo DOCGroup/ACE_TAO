@@ -1,3 +1,10 @@
+Mon Jan  9 13:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Security/SSLIOP-INSTALL.html:
+          Updated this file, update references to local files instead
+          of webbased and refer to ACE-INSTALL.html for how to build
+          ACE_SSL
+
 Mon Jan  9 09:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueFactory_Map.h:
