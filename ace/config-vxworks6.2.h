@@ -163,12 +163,10 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_WCHAR_H
 #define ACE_LACKS_PWD_H
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
-#define ACE_LACKS_WCTYPE_H
 
 // Some string things
 #define ACE_LACKS_WCSCAT
@@ -227,6 +225,8 @@
   #define ACE_LACKS_SYSCONF
   #define ACE_LACKS_GETPID
   #define ACE_LACKS_GETPPID
+  #define ACE_LACKS_WCHAR_H
+  #define ACE_LACKS_WCTYPE_H
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides

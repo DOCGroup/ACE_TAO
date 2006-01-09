@@ -57,11 +57,13 @@
 #endif /* ACE_HAS_XPG4_MULTIBYPTE_CHAR */
 
 #if defined (ACE_HAS_WCHAR)
-# if defined (VXWORKS)
+# if defined (ACE_VXWORKS)
 #   include /**/ <types/vxTypes.h>  /* For wchar_t */
 #   include /**/ <stdlib.h>         /* For mbstowcs, etc. */
 #   include /**/ <string.h>         /* For strlen */
-#   define wint_t unsigned int      /* VxWorks has wchar_t but not wint_t */
+#   if !defined (__RTP__)
+#     define wint_t unsigned int    /* VxWorks has wchar_t but not wint_t */
+#   endif
 # elif defined (ACE_OPENVMS)
 #   include /**/ <wchar.h>
 #   include /**/ <wctype.h>
