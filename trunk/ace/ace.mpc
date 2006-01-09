@@ -387,6 +387,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Exception_Macros.h
     Global_Macros.h
     Guard_T.h
+    Hash_Map_Manager.h
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
