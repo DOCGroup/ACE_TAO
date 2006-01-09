@@ -80,7 +80,9 @@ main (int argc, char *argv[])
       info.servant_dll =
         CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
       info.servant_entrypt =
-      CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
+      CORBA::string_dup (
+          "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
+        );
 
       // Create a ContainerImplementationInfo sequence
       Deployment::ContainerImplementationInfo container_info;
