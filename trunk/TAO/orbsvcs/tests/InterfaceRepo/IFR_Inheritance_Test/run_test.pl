@@ -72,7 +72,7 @@ else
 my $TAO_IFR    = new PerlACE::Process("$tao_ifr",
                             "IFR_Inheritance_Test.idl"
                           . " -ORBInitRef InterfaceRepository=file://$iorfile");
-                          
+ 
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
