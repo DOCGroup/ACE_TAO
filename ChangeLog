@@ -1,3 +1,9 @@
+Mon Jan  9 18:03:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Added ACE_LACKS_GETOPT and ACE_LACKS_SYSCONF feature tests.
+
 Mon Jan  9 15:18:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Encoding_Converter.h:
