@@ -207,6 +207,7 @@
   #define ACE_HAS_SVR4_DYNAMIC_LINKING
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
+  #define ACE_LACKS_PUTENV
 #else
   // We are building for kernel mode
   #define ACE_LACKS_INTTYPES_H

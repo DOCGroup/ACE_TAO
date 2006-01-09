@@ -252,7 +252,7 @@ ACE_OS::putenv (const char *string)
   // WinCE and pSOS don't have the concept of environment variables.
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_ENV)
+#elif defined (ACE_LACKS_ENV) || defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
