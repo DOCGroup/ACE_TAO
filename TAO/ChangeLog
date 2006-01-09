@@ -1,3 +1,10 @@
+Mon Jan  9 08:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Factory/client.cpp:
+          Extended this test to check if we get a marshal exception with
+          minor code 1 when using OBV without a valuefactory registered.
+          This is added for bugzilla bug 2354
+
 Mon Jan  9 08:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
