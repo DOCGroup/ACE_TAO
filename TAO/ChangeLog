@@ -1,3 +1,10 @@
+Mon Jan  9 16:20:05 UTC 2006  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/tests/Notify/lib/common.cpp:
+
+          Correcting a build problem due to an unnecessary export in the
+          function's definition.
+
 Mon Jan  9 13:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2349_Regression/*:

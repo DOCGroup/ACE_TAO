@@ -9,7 +9,7 @@
 
 
 const char*
-TAO_NOTIFY_TEST_Export Any_String (const CORBA::Any& any)
+Any_String (const CORBA::Any& any)
 {
   static char out[256] = "";
   CORBA::Short s;
