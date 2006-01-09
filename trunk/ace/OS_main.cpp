@@ -25,7 +25,7 @@ ACE_RCSID(ace, OS_main, "$Id$")
 
 #  if !defined (ACE_WIN32)
 
-#    if !defined (ACE_VXWORKS)
+#    if !(defined (ACE_VXWORKS) && !defined (__RTP__))
 /* forward declaration */
 extern int ace_main_i (int, char *[]);
 #    endif
@@ -71,7 +71,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#    if defined (ACE_VXWORKS)
+#    if defined (ACE_VXWORKS) && !defined (__RTP__)
 ace_main_proc_ptr vx_ace_main_i_ptr = 0;
 
 int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
@@ -79,7 +79,7 @@ int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
   ACE_MAIN_OBJECT_MANAGER
   return vx_ace_main_i_ptr ? (*vx_ace_main_i_ptr) (argc, argv) : (-1);   /* what the user calls "main" */
 }
-#    else /* !ACE_VXWORKS */
+#    else /* !ACE_VXWORKS && !__RTP__ */
 int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
 {
   ACE_MAIN_OBJECT_MANAGER
