@@ -1,3 +1,9 @@
+Mon Jan  9 07:59:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_limits.h:
+          VxWorks 6.2 defines PIPE_BUF as -1, this is not correct, undef it
+          when it is defined as -1.
+
 Sun Jan  8 19:34:12 UTC UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
