@@ -226,6 +226,7 @@
   #define ACE_LACKS_SEARCH_H
   #define ACE_LACKS_SYSCONF
   #define ACE_LACKS_GETPID
+  #define ACE_LACKS_GETPPID
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
