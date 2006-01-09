@@ -1,3 +1,8 @@
+Mon Jan  9 09:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/ValueFactory_Map.h:
+          No need to export this class from the Valuetype library
+
 Mon Jan  9 08:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Factory/client.cpp:

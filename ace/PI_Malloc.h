@@ -33,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_PI_Control_Block
  *
- * @brief This information is stored in memory allocated by the <Memory_Pool>.
+ * @brief This information is stored in memory allocated by the Memory_Pool.
  *
  * This class implements the control block structure that can be
  * used in a "position indepent" fashion, i.e., you don't need to
@@ -54,7 +54,7 @@ public:
   /**
    * @class ACE_Malloc_Header
    *
-   * @brief This is the control block header.  It's used by <ACE_Malloc>
+   * @brief This is the control block header.  It's used by ACE_Malloc
    * to keep track of each chunk of data when it's in the free
    * list or in use.
    */
@@ -92,10 +92,10 @@ public:
   /**
    * @class ACE_Name_Node
    *
-   * @brief This class supports "named memory regions" within <ACE_Malloc>.
+   * @brief This class supports "named memory regions" within ACE_Malloc.
    *
    * Internally, the named memory regions are stored as a
-   * doubly-linked list within the <Memory_Pool>.  This makes
+   * doubly-linked list within the Memory_Pool.  This makes
    * it easy to iterate over the items in the list in both FIFO
    * and LIFO order.
    */
