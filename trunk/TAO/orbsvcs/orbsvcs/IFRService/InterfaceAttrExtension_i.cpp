@@ -94,6 +94,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
   iface.inherited_operations (key_queue);
 
   // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
   this->section_key (key_holder);
 
   ACE_Configuration_Section_Key ops_key, op_key;
@@ -143,10 +144,16 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       ACE_CHECK_RETURN (0);
     }
 
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   make_description() call.
+  this->section_key (key_holder);
+
   // Attributes.
   iface.inherited_attributes (key_queue);
 
   // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
   this->section_key (key_holder);
 
   ACE_Configuration_Section_Key attrs_key;
@@ -196,6 +203,11 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
+
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   fill_description() call.
+  this->section_key (key_holder);
 
   CORBA::InterfaceDefSeq_var bases =
     iface.base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
