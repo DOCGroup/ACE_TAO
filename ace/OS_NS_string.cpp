@@ -152,10 +152,10 @@ ACE_OS::strnchr (const char *s, int c, size_t len)
 }
 
 const ACE_WCHAR_T *
-ACE_OS::strnchr (const ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
+ACE_OS::strnchr (const ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len)
 {
   for (size_t i = 0; i < len; ++i)
-    if (s[i] == static_cast<ACE_WCHAR_T> (c))
+    if (s[i] == c)
       return s + i;
 
   return 0;
