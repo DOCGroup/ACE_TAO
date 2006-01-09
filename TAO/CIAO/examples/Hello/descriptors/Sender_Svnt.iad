@@ -22,7 +22,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createSenderHome_Servant</string>
+          <string>create_Hello_SenderHome_Servant</string>
         </value>
       </value>
     </execParameter>
