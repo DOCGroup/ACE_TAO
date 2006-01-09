@@ -70,10 +70,10 @@ parse_args (int argc, char* argv[])
 
 
 int
-ACE_TMAIN (int argc,
-      char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Argv_Type_Converter convert (argc, argv);
+// This test cannot be run on a wide character build
+// ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -82,12 +82,12 @@ ACE_TMAIN (int argc,
   ACE_TRY
     {
       // Initilaize the ORB, POA etc.
-      manager.init (convert.get_argc(), convert.get_ASCII_argv()
+      manager.init (argc, argv
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // the command line arguments
-      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
+      if (parse_args (argc, argv) == -1)
         return -1;
 
       // Merge the different IORS

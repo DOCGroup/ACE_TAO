@@ -164,7 +164,7 @@ StructuredPushConsumer_i::push_structured_event (
   }
   if (notification.filterable_data.length () > 0)
   {
-    if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
+    if (0 == ACE_OS::strcmp (notification.filterable_data[0].name.in(), "serial_number"))
     {
       const CORBA::Any & data = notification.filterable_data[0].value;
 
@@ -190,8 +190,8 @@ StructuredPushConsumer_i::push_structured_event (
         ));
     }
   }
-  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY")
-    && 0 == strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name.in(), "%ANY")
+    && 0 == strcmp (notification.header.fixed_header.event_type.domain_name.in(), ""))
   {
     const CORBA::Any * any;
     if (notification.remainder_of_body >>= any)
@@ -399,7 +399,7 @@ SequencePushConsumer_i::push_structured_events (
     const CosNotification::StructuredEvent & notification = notifications[nevent];
     if (notification.filterable_data.length () > 0)
     {
-      if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
+      if (0 == ACE_OS::strcmp (notification.filterable_data[0].name.in(), "serial_number"))
       {
         const CORBA::Any & data = notification.filterable_data[0].value;
 
@@ -425,8 +425,8 @@ SequencePushConsumer_i::push_structured_events (
           ));
       }
     }
-    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY")
-        && 0 == strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name.in(), "%ANY")
+        && 0 == strcmp (notification.header.fixed_header.event_type.domain_name.in(), ""))
     {
       CORBA::ULong seq = 0;
       if (notification.remainder_of_body >>= seq)
@@ -620,7 +620,7 @@ AnyPushConsumer_i::push (
     {
       if (notification->filterable_data.length () > 0)
       {
-        if (0 == ACE_OS::strcmp (notification->filterable_data[0].name, "serial_number"))
+        if (0 == ACE_OS::strcmp (notification->filterable_data[0].name.in(), "serial_number"))
         {
           const CORBA::Any & data = notification->filterable_data[0].value;
 
