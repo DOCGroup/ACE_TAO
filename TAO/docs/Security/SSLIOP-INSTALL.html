@@ -17,7 +17,10 @@
 <p>The first step for all platforms is to build and install the <A HREF="http://www.openssl.org/">OpenSSL</A>
   distribution. Then the TAO SSLIOP pluggable protocol library must be built according
   to the instructions below. Refer to the <a href="SSLIOP.html">TAO SSLIOP usage
-  instructions</a> for details about how to use the SSLIOP pluggable protocol.</p>
+  instructions</a> for details about how to use the SSLIOP pluggable protocol. 
+  See the <a href="../../../ACE-INSTALL.html#sslinstall">ACE 
+  installation notes</A> for how to build ACE_SSL after you have build OpenSSL.
+</p>
 <h3>UNIX</h3>
 <OL>
   <LI>Make sure the OpenSSL header file directory is in your compiler's include
@@ -43,8 +46,8 @@
     </table>
     <br>
 
-  <LI>Build ACE and TAO as described in the <A HREF="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*//ACE-INSTALL.html?rev=HEAD&content-type=text/html">ACE
-    installation</A> instructions and the <A HREF="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/TAO-INSTALL.html?rev=HEAD&content-type=text/html">TAO
+  <LI>Build ACE and TAO as described in the <A HREF="../../../ACE-INSTALL.html">ACE
+    installation</A> instructions and the <A HREF="../../../TAO/TAO-INSTALL.html">TAO
     installation</A> instructions, respectively. When building ACE and TAO, add
     &quot;<font face="Courier New, Courier, mono">ssl=1</font>&quot; to your <font face="Courier New, Courier, mono">make</font>
     command line invocation, or add it to your <font face="Courier New, Courier, mono">platform_macros.GNU</font>
@@ -62,8 +65,8 @@
   <li>Set the OpenSSL library directory path under the <b><i>Directories</i></b>
     tab - <i><b>Library Files</b></i> setting in the <i><b>Tools-&gt;Options</b></i>
     dialog. A typical value would be something like: <code>openssl-0.9.6\out32dll</code></li>
-  <li>Open the <code>TAOACE.dsw</code> workspace, and refer to the <a href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*//ACE-INSTALL.html?rev=HEAD&content-type=text/html">ACE
-    installation</a> and the <a href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/TAO-INSTALL.html?rev=HEAD&content-type=text/html">TAO
+  <li>Open the <code>TAOACE.dsw</code> workspace, and refer to the <a href="../../../ACE-INSTALL.html">ACE
+    installation</a> and the <a href="../../../TAO/TAO-INSTALL.html">TAO
     installation</a> instructions for details on creating a <code>config.h</code>
     configuration header for this platform. Once the config.h file has been created,
     build <code>SSLIOP</code> project. All project dependencies are already set,
@@ -91,7 +94,6 @@
           <code>SSL_ROOT</code> environment variable to point to the
           location of OpenSSL. For example:
         <p><code>set SSL_ROOT=c:\openssl-0.9.6h</code>
-        <p>Now build ACE+TAO as normal.
     </ol>
 
 <p>&nbsp;</p>
