@@ -1,3 +1,9 @@
+Tue Jan 10 10:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-10.x.h:
+        * ace/config-hpux-11.00.h:
+          Added ACE_LACKS_SETEGUID and ACE_LACKS_SETEUID
+
 Tue Jan 10 10:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:
