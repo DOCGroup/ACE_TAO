@@ -270,7 +270,8 @@ my($status, $error, $unknown) = $editor->edit($file, @dirs);
 if (defined $unknown) {
   my(@uarray) = @$unknown;
   if ($#uarray >= 0) {
-    print "WARNING: The following files are unknown to CVS:\n";
+    print "WARNING: The following files are unknown to the ",
+          "revsion control system:\n";
     foreach my $unk (@uarray) {
       print "$unk\n";
     }
