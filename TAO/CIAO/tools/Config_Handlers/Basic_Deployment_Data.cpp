@@ -1130,19 +1130,13 @@ namespace CIAO
     // 
 
     Resource::
-    Resource (::XMLSchema::string< ACE_TCHAR > const& name__,
-              ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-              ::CIAO::Config_Handlers::SatisfierProperty const& property__)
+    Resource (::XMLSchema::string< ACE_TCHAR > const& name__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (resourceType__)),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
-      resourceType_->container (this);
-      property_->container (this);
     }
 
     Resource::
@@ -1150,13 +1144,16 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (*s.resourceType_)),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (*s.property_)),
     regulator__ ()
     {
       name_->container (this);
-      resourceType_->container (this);
-      property_->container (this);
+      {
+        for (resourceType_const_iterator i (s.resourceType_.begin ());i != s.resourceType_.end ();++i) add_resourceType (*i);
+      }
+
+      {
+        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
+      }
     }
 
     ::CIAO::Config_Handlers::Resource& Resource::
@@ -1164,9 +1161,15 @@ namespace CIAO
     {
       name (s.name ());
 
-      resourceType (s.resourceType ());
+      resourceType_.clear ();
+      {
+        for (resourceType_const_iterator i (s.resourceType_.begin ());i != s.resourceType_.end ();++i) add_resourceType (*i);
+      }
 
-      property (s.property ());
+      property_.clear ();
+      {
+        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
+      }
 
       return *this;
     }
@@ -1188,30 +1191,78 @@ namespace CIAO
 
     // Resource
     // 
-    ::XMLSchema::string< ACE_TCHAR > const& Resource::
-    resourceType () const
+    Resource::resourceType_iterator Resource::
+    begin_resourceType ()
     {
-      return *resourceType_;
+      return resourceType_.begin ();
+    }
+
+    Resource::resourceType_iterator Resource::
+    end_resourceType ()
+    {
+      return resourceType_.end ();
+    }
+
+    Resource::resourceType_const_iterator Resource::
+    begin_resourceType () const
+    {
+      return resourceType_.begin ();
+    }
+
+    Resource::resourceType_const_iterator Resource::
+    end_resourceType () const
+    {
+      return resourceType_.end ();
     }
 
     void Resource::
-    resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      *resourceType_ = e;
+      resourceType_.push_back (e);
+    }
+
+    size_t Resource::
+    count_resourceType(void) const
+    {
+      return resourceType_.size ();
     }
 
     // Resource
     // 
-    ::CIAO::Config_Handlers::SatisfierProperty const& Resource::
-    property () const
+    Resource::property_iterator Resource::
+    begin_property ()
     {
-      return *property_;
+      return property_.begin ();
+    }
+
+    Resource::property_iterator Resource::
+    end_property ()
+    {
+      return property_.end ();
+    }
+
+    Resource::property_const_iterator Resource::
+    begin_property () const
+    {
+      return property_.begin ();
+    }
+
+    Resource::property_const_iterator Resource::
+    end_property () const
+    {
+      return property_.end ();
     }
 
     void Resource::
-    property (::CIAO::Config_Handlers::SatisfierProperty const& e)
+    add_property (::CIAO::Config_Handlers::SatisfierProperty const& e)
     {
-      *property_ = e;
+      property_.push_back (e);
+    }
+
+    size_t Resource::
+    count_property(void) const
+    {
+      return property_.size ();
     }
 
 
@@ -4495,14 +4546,14 @@ namespace CIAO
 
         else if (n == "resourceType")
         {
-          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          resourceType_->container (this);
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          add_resourceType (t);
         }
 
         else if (n == "property")
         {
-          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
-          property_->container (this);
+          ::CIAO::Config_Handlers::SatisfierProperty t (e);
+          add_property (t);
         }
 
         else 
@@ -7581,25 +7632,155 @@ namespace CIAO
       void Resource::
       resourceType (Type& o)
       {
-        dispatch (o.resourceType ());
+        // VC6 anathema strikes again
+        //
+        Resource::Type::resourceType_iterator b (o.begin_resourceType()), e (o.end_resourceType());
+
+        if (b != e)
+        {
+          resourceType_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) resourceType_next (o);
+          }
+
+          resourceType_post (o);
+        }
       }
 
       void Resource::
       resourceType (Type const& o)
       {
-        dispatch (o.resourceType ());
+        // VC6 anathema strikes again
+        //
+        Resource::Type::resourceType_const_iterator b (o.begin_resourceType()), e (o.end_resourceType());
+
+        if (b != e)
+        {
+          resourceType_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) resourceType_next (o);
+          }
+
+          resourceType_post (o);
+        }
+      }
+
+      void Resource::
+      resourceType_pre (Type&)
+      {
+      }
+
+      void Resource::
+      resourceType_pre (Type const&)
+      {
+      }
+
+      void Resource::
+      resourceType_next (Type&)
+      {
+      }
+
+      void Resource::
+      resourceType_next (Type const&)
+      {
+      }
+
+      void Resource::
+      resourceType_post (Type&)
+      {
+      }
+
+      void Resource::
+      resourceType_post (Type const&)
+      {
       }
 
       void Resource::
       property (Type& o)
       {
-        dispatch (o.property ());
+        // VC6 anathema strikes again
+        //
+        Resource::Type::property_iterator b (o.begin_property()), e (o.end_property());
+
+        if (b != e)
+        {
+          property_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) property_next (o);
+          }
+
+          property_post (o);
+        }
+
+        else property_none (o);
       }
 
       void Resource::
       property (Type const& o)
       {
-        dispatch (o.property ());
+        // VC6 anathema strikes again
+        //
+        Resource::Type::property_const_iterator b (o.begin_property()), e (o.end_property());
+
+        if (b != e)
+        {
+          property_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) property_next (o);
+          }
+
+          property_post (o);
+        }
+
+        else property_none (o);
+      }
+
+      void Resource::
+      property_pre (Type&)
+      {
+      }
+
+      void Resource::
+      property_pre (Type const&)
+      {
+      }
+
+      void Resource::
+      property_next (Type&)
+      {
+      }
+
+      void Resource::
+      property_next (Type const&)
+      {
+      }
+
+      void Resource::
+      property_post (Type&)
+      {
+      }
+
+      void Resource::
+      property_post (Type const&)
+      {
+      }
+
+      void Resource::
+      property_none (Type&)
+      {
+      }
+
+      void Resource::
+      property_none (Type const&)
+      {
       }
 
       void Resource::
@@ -11408,18 +11589,40 @@ namespace CIAO
       }
 
       void Resource::
-      resourceType (Type const& o)
+      resourceType_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resourceType", top_ ()));
-        Traversal::Resource::resourceType (o);
+      }
+
+      void Resource::
+      resourceType_next (Type const& o)
+      {
+        resourceType_post (o);
+        resourceType_pre (o);
+      }
+
+      void Resource::
+      resourceType_post (Type const&)
+      {
         pop_ ();
       }
 
       void Resource::
-      property (Type const& o)
+      property_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("property", top_ ()));
-        Traversal::Resource::property (o);
+      }
+
+      void Resource::
+      property_next (Type const& o)
+      {
+        property_post (o);
+        property_pre (o);
+      }
+
+      void Resource::
+      property_post (Type const&)
+      {
         pop_ ();
       }
 
