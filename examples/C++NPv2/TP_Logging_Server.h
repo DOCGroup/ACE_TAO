@@ -13,7 +13,7 @@
 #include "ace/Task.h"
 #include "Logging_Acceptor.h"
 #include "Logging_Event_Handler.h"
-#include "Reactor_Logging_Server.h"
+#include "Reactor_Logging_Server_T.h"
 #include "TPLS_export.h"
 
 class TP_Logging_Task : public ACE_Task<ACE_SYNCH> {

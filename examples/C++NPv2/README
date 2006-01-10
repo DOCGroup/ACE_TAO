@@ -31,7 +31,7 @@ Chapter 3       Logging_Acceptor.cpp
                 Logging_Handler.cpp
                 Logging_Handler.h
                 Reactor_Logging_Server.cpp
-                Reactor_Logging_Server.h
+                Reactor_Logging_Server_T.h
                 Reactor_Logging_Server_T.cpp
 
 Chapter 4       Select_Reactor_Logging_Server.cpp

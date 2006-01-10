@@ -4,7 +4,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "Reactor_Logging_Server.h"
+#include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 #include "ace/Log_Msg.h"
 
