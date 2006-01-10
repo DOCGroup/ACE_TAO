@@ -37,6 +37,21 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETPGID
+#define ACE_LACKS_SETREGID
+#define ACE_LACKS_SETREUID
+#define ACE_LACKS_SETSID
+#define ACE_LACKS_SETUID
+#define ACE_LACKS_SETEUID
+#define ACE_LACKS_SETGID
+#define ACE_LACKS_PIPE
+#define ACE_LACKS_GETEUID
+#define ACE_LACKS_GETUID
+#define ACE_LACKS_GETPGID
+#define ACE_LACKS_GETEGID
+#define ACE_LACKS_GETGID
+
 #define ACE_PSOS_LACKS_PREPC
 #define ACE_LACKS_SYSCONF
 
