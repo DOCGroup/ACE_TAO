@@ -185,6 +185,7 @@
   #define ACE_LACKS_REGEX_H
   #define ACE_LACKS_PUTENV
   #define ACE_HAS_3_PARAM_WCSTOK
+  #define ACE_HAS_WCHAR
 #else
   // We are building for kernel mode
   #define ACE_LACKS_INTTYPES_H
