@@ -1,3 +1,25 @@
+Tue Jan 10 10:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+          Simplified a lot of methods in this file by adding new ACE_LACKS
+          macros. For VxWorks and psos we now also return -1 with notsup
+          for the uid methods, these methods just don't work on these
+          platforms because they are not there and we don't have multiple
+          users. This will make this file much easier to maintain
+
+        * ace/config-chorus.h:
+        * ace/config-integritySCA.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.1.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-win32-common.h:
+          Added the new ACE_LACKS macros from OS_NS_unistd.inl
+
 Tue Jan 10 07:21:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/C++NPv2/Makefile.am:
