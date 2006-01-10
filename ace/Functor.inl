@@ -110,6 +110,15 @@ ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 #endif /* ACE_SIZEOF_LONG */
 }
 
+ACE_INLINE unsigned long
+ACE_Hash<unsigned long>::operator () (unsigned long t) const
+{
+#if (ACE_SIZEOF_LONG == 4)
+  return ACE_U64_TO_U32 (t);
+#else
+  return t;
+#endif /* ACE_SIZEOF_LONG */
+}
 
 ACE_INLINE unsigned long
 ACE_Hash<const char *>::operator () (const char *t) const
