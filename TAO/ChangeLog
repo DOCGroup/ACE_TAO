@@ -1,3 +1,14 @@
+Tue Jan 10 19:26:58 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.cpp:
+
+				  On behalf of Tim Bradley (bradley_t@ociweb.com), applying these 
+					changes to resolve the failure of the two tests.
+
 Tue Jan 10 10:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2349_Regression/server.cpp:
