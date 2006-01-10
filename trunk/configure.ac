@@ -3432,6 +3432,8 @@ ACE_CHECK_HAS_FUNCS(clock_gettime clock_settime nanosleep)
 
 ACE_CHECK_LACKS_FUNCS(difftime)
 
+ACE_CHECK_LACKS_FUNCS(dup)
+
 ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
@@ -3444,9 +3446,15 @@ ACE_CHECK_HAS_FUNCS(getifaddrs)
 
 ACE_CHECK_LACKS_FUNCS(getopt)
 
+ACE_CHECK_LACKS_FUNCS(getegid geteuid getgid getuid)
+
 ACE_CHECK_HAS_FUNCS(itoa)
 
+ACE_CHECK_LACKS_FUNCS(pipe)
+
 ACE_CHECK_LACKS_FUNCS(qsort)
+
+ACE_CHECK_LACKS_FUNCS(setegid seteuid setgid setsid setuid)
 
 ACE_CHECK_HAS_FUNCS(strnlen)
 

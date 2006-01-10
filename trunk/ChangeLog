@@ -1,3 +1,12 @@
+Tue Jan 10 11:36:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added feature tests for ACE_LACKS_DUP, ACE_LACKS_GETEGID,
+          ACE_LACKS_GETEUID, ACE_LACKS_GETGID, ACE_LACKS_GETUID,
+          ACE_LACKS_PIPE, ACE_LACKS_SETEGID, ACE_LACKS_SETEUID,
+          ACE_LACKS_SETSID, ACE_LACKS_SETGID, and ACE_LACKS_SETUID.
+
 Tue Jan 10 10:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-10.x.h:
