@@ -22,11 +22,7 @@ namespace ACE_OS
     ACE_OSCALL_RETURN(::create_f((char *)filename, 1024,
                                  S_IRUSR | S_IWUSR | S_IXUSR),
                       ACE_HANDLE, ACE_INVALID_HANDLE);
-#elif defined(ACE_PSOS_TM)
-    ACE_UNUSED_ARG (filename);
-    ACE_UNUSED_ARG (mode);
-    ACE_NOTSUP_RETURN (-1);
-#elif defined(ACE_PSOS)
+#elif defined(ACE_PSOS_TM) || defined (ACE_PSOS)
     ACE_UNUSED_ARG (filename);
     ACE_UNUSED_ARG (mode);
     ACE_NOTSUP_RETURN (-1);
