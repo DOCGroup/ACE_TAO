@@ -3428,13 +3428,17 @@ ACE_CHECK_LACKS_FUNCS(alarm)
 
 ACE_CHECK_LACKS_FUNCS(bsearch)
 
+ACE_CHECK_LACKS_FUNCS(chdir)
+
 ACE_CHECK_HAS_FUNCS(clock_gettime clock_settime nanosleep)
 
 ACE_CHECK_LACKS_FUNCS(difftime)
 
 ACE_CHECK_LACKS_FUNCS(dup)
 
-ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
+ACE_CHECK_LACKS_FUNCS(dup2)
+
+ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fork fsync)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
 
@@ -3444,9 +3448,41 @@ ACE_CHECK_LACKS_FUNCS(getipnodebyname)
 
 ACE_CHECK_HAS_FUNCS(getifaddrs)
 
+ACE_CHECK_LACKS_FUNCS(getegid geteuid getgid)
+
 ACE_CHECK_LACKS_FUNCS(getopt)
 
-ACE_CHECK_LACKS_FUNCS(getegid geteuid getgid getuid)
+ACE_CHECK_LACKS_FUNCS(getpid)
+
+ACE_CHECK_LACKS_FUNCS([getpgid])
+if test "$ac_cv_func_getpgid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the getpgid() prototype visible.
+  ACE_CACHE_CHECK([for getpgid prototype],
+    [ace_cv_lib_has_getpgid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+getpgid], [unistd.h],
+       [
+        ace_cv_lib_has_getpgid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_getpgid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_GETPGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_GETPGID_PROTOTYPE],
+  [Define to 1 if platform lacks getpgid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS(getppid)
+
+ACE_CHECK_LACKS_FUNCS(getuid)
+
+ACE_CHECK_LACKS_FUNCS(isatty)
 
 ACE_CHECK_HAS_FUNCS(itoa)
 
@@ -3454,12 +3490,89 @@ ACE_CHECK_LACKS_FUNCS(pipe)
 
 ACE_CHECK_LACKS_FUNCS(qsort)
 
-ACE_CHECK_LACKS_FUNCS(setegid seteuid setgid setsid setuid)
+ACE_CHECK_LACKS_FUNCS(setegid seteuid setgid)
+
+ACE_CHECK_LACKS_FUNCS([setpgid])
+if test "$ac_cv_func_setpgid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setpgid() prototype visible.
+  ACE_CACHE_CHECK([for setpgid prototype],
+    [ace_cv_lib_has_setpgid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setpgid], [unistd.h],
+       [
+        ace_cv_lib_has_setpgid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setpgid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETPGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETPGID_PROTOTYPE],
+  [Define to 1 if platform lacks setpgid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS([setregid])
+if test "$ac_cv_func_setregid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setregid() prototype visible.
+  ACE_CACHE_CHECK([for setregid prototype],
+    [ace_cv_lib_has_setregid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setregid], [unistd.h],
+       [
+        ace_cv_lib_has_setregid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setregid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETREGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETREGID_PROTOTYPE],
+  [Define to 1 if platform lacks setregid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS([setreuid])
+if test "$ac_cv_func_setreuid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setreuid() prototype visible.
+  ACE_CACHE_CHECK([for setreuid prototype],
+    [ace_cv_lib_has_setreuid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setreuid], [unistd.h],
+       [
+        ace_cv_lib_has_setreuid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setreuid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETREUID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETREUID_PROTOTYPE],
+  [Define to 1 if platform lacks setreuid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS(setsid setuid)
 
 ACE_CHECK_HAS_FUNCS(strnlen)
 
 ACE_CHECK_LACKS_FUNCS(strchr)
 
+# believe it or not, both ACE_LACKS_STRERROR and ACE_HAS_STRERROR 
+# feature test macros are currently used.
+ACE_CHECK_HAS_FUNCS(strerror)
 ACE_CHECK_LACKS_FUNCS(strerror)
 
 ACE_CHECK_LACKS_FUNCS(strpbrk)
@@ -3765,6 +3878,8 @@ ACE_CHECK_LACKS_FUNCS(syscall)
 
 ACE_CHECK_HAS_FUNCS(ualarm)
 
+ACE_CHECK_LACKS_FUNCS(unlink)
+
 AC_CHECK_FUNC([alarm],,)
 AC_CHECK_FUNC([signal],,)
 
@@ -3772,8 +3887,6 @@ if test "$ac_cv_func_alarm" != yes &&
    test "$ac_cv_func_signal" != yes; then
   AC_DEFINE([ACE_LACKS_UNIX_SIGNALS])
 fi
-
-ACE_CHECK_LACKS_FUNCS(fork)
 
 AC_CHECK_FUNC([getrlimit])
 AC_CHECK_FUNC([setrlimit])
@@ -3789,85 +3902,10 @@ AC_CHECK_FUNC([sysinfo],
    fi
   ],)
 
-ACE_CHECK_HAS_FUNCS(strerror)
-
 ACE_CHECK_LACKS_FUNCS(lstat readlink rename recvmsg sendmsg)
 
 ACE_CHECK_HAS_FUNCS(getrusage)
 
-ACE_CHECK_LACKS_FUNCS([getpgid])
-if test "$ac_cv_func_getpgid" = yes; then
-  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-  dnl needed to make the getpgid() prototype visible.
-  ACE_CACHE_CHECK([for getpgid prototype],
-    [ace_cv_lib_has_getpgid_prototype],
-    [
-     ace_save_CPPFLAGS="$CPPFLAGS"
-     ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-     AC_EGREP_HEADER([[^_]+getpgid], [unistd.h],
-       [
-        ace_cv_lib_has_getpgid_prototype=yes
-       ],
-       [
-        ace_cv_lib_has_getpgid_prototype=no
-       ])
-     dnl Reset the compiler flags
-     CPPFLAGS="$ace_save_CPPFLAGS"
-    ],, [AC_DEFINE([ACE_LACKS_GETPGID_PROTOTYPE])])
-  AH_TEMPLATE([ACE_LACKS_GETPGID_PROTOTYPE],
-  [Define to 1 if platform lacks getpgid() declaration in <unistd.h>.])
-fi
-
-ACE_CHECK_LACKS_FUNCS(getppid)
-
-ACE_CHECK_LACKS_FUNCS([setregid])
-if test "$ac_cv_func_setregid" = yes; then
-  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-  dnl needed to make the setregid() prototype visible.
-  ACE_CACHE_CHECK([for setregid prototype],
-    [ace_cv_lib_has_setregid_prototype],
-    [
-     ace_save_CPPFLAGS="$CPPFLAGS"
-     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-     AC_EGREP_HEADER([[^_]+setregid], [unistd.h],
-       [
-        ace_cv_lib_has_setregid_prototype=yes
-       ],
-       [
-        ace_cv_lib_has_setregid_prototype=no
-       ])
-     dnl Reset the compiler flags
-     CPPFLAGS="$ace_save_CPPFLAGS"
-    ],, [AC_DEFINE([ACE_LACKS_SETREGID_PROTOTYPE])])
-  AH_TEMPLATE([ACE_LACKS_SETREGID_PROTOTYPE],
-  [Define to 1 if platform lacks setregid() declaration in <unistd.h>.])
-fi
-
-ACE_CHECK_LACKS_FUNCS([setreuid])
-if test "$ac_cv_func_setreuid" = yes; then
-  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-  dnl needed to make the setreuid() prototype visible.
-  ACE_CACHE_CHECK([for setreuid prototype],
-    [ace_cv_lib_has_setreuid_prototype],
-    [
-     ace_save_CPPFLAGS="$CPPFLAGS"
-     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-     AC_EGREP_HEADER([[^_]+setreuid], [unistd.h],
-       [
-        ace_cv_lib_has_setreuid_prototype=yes
-       ],
-       [
-        ace_cv_lib_has_setreuid_prototype=no
-       ])
-     dnl Reset the compiler flags
-     CPPFLAGS="$ace_save_CPPFLAGS"
-    ],, [AC_DEFINE([ACE_LACKS_SETREUID_PROTOTYPE])])
-  AH_TEMPLATE([ACE_LACKS_SETREUID_PROTOTYPE],
-  [Define to 1 if platform lacks setreuid() declaration in <unistd.h>.])
-fi
 
 AC_CHECK_FUNC([getpagesize],
   [AC_DEFINE([ACE_HAS_GETPAGESIZE])],
