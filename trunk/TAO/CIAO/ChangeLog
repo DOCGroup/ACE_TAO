@@ -1,3 +1,9 @@
+Tue Jan 10 11:10:01 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * NEWS:
+
+          Updated with recent developments.
+
 Mon Jan  9 14:17:39 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
@@ -12,10 +18,10 @@ Mon Jan  9 14:17:39 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/Hello/descriptors/flattened_deploymentplan_without_ns_remove.cdp:
         * examples/Hello/descriptors/rt-config-example.cdp:
         * examples/Hello/descriptors/rt-example.cdp:
-        
-          Updated occurrences of the string name of the servant executor 
+
+          Updated occurrences of the string name of the servant executor
           DLL extry point to correspond with the changes in
-          
+
           Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -24,7 +30,7 @@ Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ExecImplSourceGenerator.cpp:
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Changed the names of the generated extern C functions that
           create the home and servant executors to incorportate the
           entire scoped name of the class, to avoid name clashes
@@ -34,7 +40,7 @@ Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           to James Hill <james.h.hill@vanderbilt.edu> and Boris
           Kolpackov <boris@dre.vanderbilt.edu> for their help
           with the problem.
-        
+
         * DAnCE/tests/Config_Handlers/HUDisplay/Airframe_Svnt.iad:
         * DAnCE/tests/Config_Handlers/HUDisplay/GPS_Svnt.iad:
         * DAnCE/tests/Config_Handlers/HUDisplay/NavDisplay_Svnt.iad:
@@ -48,20 +54,20 @@ Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/BasicSP/descriptors/NavDisplay_Svnt.iad:
         * examples/BasicSP/descriptors/Timer_Svnt.iad:
         * examples/BasicSP/descriptors/flattened_deploymentplan.cdp:
-        
+
           Updated the hand-crafted descriptor files in CIAO tests and
           examples to reflect the changes above.
 
 Thu Jan  5 21:28:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-        
+
           Fixed some warning in Boarland C++ builds.
 
 Thu Jan  5 00:53:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:
-        
+
           Untabify.
           Delete-trailing-spaces.
 

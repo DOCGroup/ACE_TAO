@@ -69,8 +69,8 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
   running appliation.  This will allow the application developers to
   evolve their applications on the fly without incuring service down
   time. The service is called ReDaC (Redeployment and Reconfiguration)
-  
-  Basically ReDAC provides a whole range of redeployment and 
+
+  Basically ReDAC provides a whole range of redeployment and
   reconfiguration granularity level, including:
 
   1) Install/remove component instances of the existing component types.
@@ -79,8 +79,8 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
   4) Install new component instances into a dynamically created brand new container.
      Move around existing components from one existing container to another existing/new container.
   5) Install new component instances into another component server in the same physical node.
-  6) Install new component instances into another component server into a remote host. 
-  
+  6) Install new component instances into another component server into a remote host.
+
 . Adding support to manage multiple interconnected assemblies, which will
   involve the work through ExternalReferenceEndPoint idea.
 
@@ -95,12 +95,21 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Move new_RepositoryManager to RepositoryManager
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
+======================================================
+. The CIDLC compiler now supports basic preprocessor directives:
+  #ifdef, #ifndef, #else, and #endif as well as the -D command-
+  line option.
+
+. The CIDLC compiler now supports incomplete struct and union
+  semantics which will appear in CORBA 3.1.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
 . The deprecated RepositoryManager implementation, under
   DAnCE/RepositoryManager, has been removed from this release. Please
   use the Plan_Launcher and flattened deployment plans to deploy
-  component assemblies.  
+  component assemblies.
 
 . The CIDL compiler frontend now supports constants, const expressions,
   bounded strings, bounded sequences, and arrays.
