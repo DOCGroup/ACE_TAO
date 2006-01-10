@@ -1,3 +1,9 @@
+Tue Jan 10 19:38:49 UTC 2006  Scott Harris  <harris_s@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+        
+          Fix VC++ v6.0 compile error and conform to ACE coding standards.
+
 Tue Jan 10 19:26:58 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
