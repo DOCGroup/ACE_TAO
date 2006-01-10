@@ -1,3 +1,12 @@
+Tue Jan 10 20:05:54 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+           Ensure that the correct object files get cleaned up when doing a
+           make clean.  Logic was duplicated in this file (but did not
+           correspond to the correct logic found in the gnu.mpd or
+           rules.lib.GNU).
+
 Tue Jan 10 17:45:10 UTC 2006  Scott Harris  <harris_s@ociweb.com>
 
         * bin/tao_other_tests.lst:

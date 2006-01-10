@@ -339,15 +339,15 @@ endif # shared_libs
 
 CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
 
-ifdef SRC
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(SRC))))
-endif # SRC
+ifdef OBJS
+  CLEANUP_OBJS += $(addprefix $(VDIR), $(OBJS))
+endif # OBJS
 ifneq ($(CLEANUP_BIN),)
   CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN))))
 endif # CLEANUP_BIN
-ifdef LSRC
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
-endif # LSRC
+ifdef VSHOBJS
+  CLEANUP_OBJS += $(VSHOBJS)
+endif # VSHOBJS
 
 clean.local: makefile_name.local
 ifdef DO_CLEANUP
