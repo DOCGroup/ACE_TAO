@@ -145,6 +145,10 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 #define ACE_DLL_SUFFIX      ".sl"
 #define ACE_LD_SEARCH_PATH  "SHLIB_PATH"
 
+// lacks setegid and seteuid
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETEUID
+
 //////////////////////////////////////////////////////////////////////////
 //
 // STREAMS information
