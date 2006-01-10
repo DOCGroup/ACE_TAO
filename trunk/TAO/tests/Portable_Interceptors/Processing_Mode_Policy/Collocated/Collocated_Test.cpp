@@ -181,6 +181,9 @@ main (int argc, char *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
+      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       bool failed_check = false;
 
       CORBA::ULong number_called =
