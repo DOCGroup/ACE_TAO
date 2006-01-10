@@ -1,3 +1,11 @@
+Tue Jan 10 16:35:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/ChangeLogEditor/ChangeLogEdit.pm:
+        * bin/cle.pl:
+
+          Removed references to the name "CVS".  At this layer, the revision
+          control system is unknown.
+
 Tue Jan 10 13:36:55 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Svc_Conf_Lexer.cpp:
