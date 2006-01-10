@@ -32,7 +32,7 @@ Client_Options::Client_Options (int &argc, char *argv[])
   , funky_supplier_publication (0)
   , high_priority_is_last (0)
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
@@ -72,7 +72,7 @@ Client_Options::Client_Options (int &argc, char *argv[])
 }
 
 int
-Client_Options::option (ACE_Arg_Shifter &arg_shifter,
+Client_Options::option (ACE_TArg_Shifter<char>  &arg_shifter,
                  const char *option_name,
                  int &option_value)
 {
@@ -93,7 +93,7 @@ Client_Options::option (ACE_Arg_Shifter &arg_shifter,
 }
 
 int
-Client_Options::boolean_option (ACE_Arg_Shifter &arg_shifter,
+Client_Options::boolean_option (ACE_TArg_Shifter<char>  &arg_shifter,
                          const char *option_name,
                          int &option_value)
 {
