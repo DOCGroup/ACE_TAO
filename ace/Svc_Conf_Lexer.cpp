@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (__GNUG__)
 # define ACE_TEMPORARY_STRING(X,SIZE) \
-   char X[SIZE]
+   __extension__ char X[SIZE]
 #else
 # define ACE_TEMPORARY_STRING(X,SIZE) \
    char* X = 0; \
