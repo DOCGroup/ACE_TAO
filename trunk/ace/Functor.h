@@ -197,6 +197,19 @@ public:
 // @@ DONE ADDING HASHES FOR ACE TYPES
 
 /**
+ * @class ACE_Hash<unsigned long>
+ *
+ * @brief Function object for hashing an unsigned long number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned long t) const;
+};
+
+/**
  * @class ACE_Hash<const char *>
  *
  * @brief Function object for hashing a const string
