@@ -1,3 +1,9 @@
+Tue Jan 10 13:36:55 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Svc_Conf_Lexer.cpp:
+
+          Modified GNU specific code to compile with the -pedantic option.
+
 Tue Jan 10 13:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
