@@ -1,3 +1,13 @@
+Tue Jan 10 17:09:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add feature tests for ACE_LACKS_CHDIR, ACE_LACKS_DUP2,
+          ACE_LACKS_GETPID, ACE_LACKS_ISATTY, ACE_LACKS_SETPGID, and
+          ACE_LACKS_UNLINK.  Re-arrange some things so the tests are
+          closer to alphabetical order -- this makes the file easier
+          to maintain.
+
 Tue Jan 10 16:35:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/ChangeLogEditor/ChangeLogEdit.pm:
