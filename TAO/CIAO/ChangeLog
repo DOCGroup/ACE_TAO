@@ -1,3 +1,18 @@
+Tue Jan 10 22:34:22 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/cdd.cpp
+        * tools/Config_Handlers/cdd.hpp
+        
+        Regenerated to reflect updates to schema in
+        Tue Jan 10 19:01:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+        
+        * tools/Config_Handlers/Modified_Deployment.xsd
+        
+        Removed, as this file is obsolete, and schema should only exist in
+        CIAO_ROOT/docs/schema
+        
 Tue Jan 10 22:05:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/ReDaC-Usage.html

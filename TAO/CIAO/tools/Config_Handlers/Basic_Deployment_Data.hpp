@@ -625,25 +625,35 @@ namespace CIAO
       // resourceType
       // 
       public:
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
+      resourceType_iterator begin_resourceType ();
+      resourceType_iterator end_resourceType ();
+      resourceType_const_iterator begin_resourceType () const;
+      resourceType_const_iterator end_resourceType () const;
+      void add_resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+      size_t count_resourceType (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // property
       // 
       public:
-      ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
-      void property (::CIAO::Config_Handlers::SatisfierProperty const& );
+      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
+      property_iterator begin_property ();
+      property_iterator end_property ();
+      property_const_iterator begin_property () const;
+      property_const_iterator end_property () const;
+      void add_property (::CIAO::Config_Handlers::SatisfierProperty const& );
+      size_t count_property (void) const;
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > property_;
+      ::std::list< ::CIAO::Config_Handlers::SatisfierProperty > property_;
 
       public:
-      Resource (::XMLSchema::string< ACE_TCHAR > const& name__,
-                ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-                ::CIAO::Config_Handlers::SatisfierProperty const& property__);
+      Resource (::XMLSchema::string< ACE_TCHAR > const& name__);
 
       Resource (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Resource (Resource const& s);
@@ -2621,10 +2631,52 @@ namespace CIAO
         resourceType (Type const&);
 
         virtual void
+        resourceType_pre (Type&);
+
+        virtual void
+        resourceType_pre (Type const&);
+
+        virtual void
+        resourceType_next (Type&);
+
+        virtual void
+        resourceType_next (Type const&);
+
+        virtual void
+        resourceType_post (Type&);
+
+        virtual void
+        resourceType_post (Type const&);
+
+        virtual void
         property (Type&);
 
         virtual void
         property (Type const&);
+
+        virtual void
+        property_pre (Type&);
+
+        virtual void
+        property_pre (Type const&);
+
+        virtual void
+        property_next (Type&);
+
+        virtual void
+        property_next (Type const&);
+
+        virtual void
+        property_post (Type&);
+
+        virtual void
+        property_post (Type const&);
+
+        virtual void
+        property_none (Type&);
+
+        virtual void
+        property_none (Type const&);
 
         virtual void
         post (Type&);
@@ -3986,7 +4038,7 @@ namespace CIAO
       {
         TCKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void TCKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -4659,7 +4711,7 @@ namespace CIAO
       {
         SatisfierPropertyKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void SatisfierPropertyKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -4755,26 +4807,70 @@ namespace CIAO
         name (Type const&);
 
         virtual void 
-        resourceType (Type &o)
+        resourceType_pre (Type &o)
         {
 
-          this->resourceType (const_cast <Type const &> (o));
+          this->resourceType_pre (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        resourceType (Type const&);
+        resourceType_pre (Type const&);
 
         virtual void 
-        property (Type &o)
+        resourceType_next (Type &o)
         {
 
-          this->property (const_cast <Type const &> (o));
+          this->resourceType_next (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        property (Type const&);
+        resourceType_next (Type const&);
+
+        virtual void 
+        resourceType_post (Type &o)
+        {
+
+          this->resourceType_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        resourceType_post (Type const&);
+
+        virtual void 
+        property_pre (Type &o)
+        {
+
+          this->property_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        property_pre (Type const&);
+
+        virtual void 
+        property_next (Type &o)
+        {
+
+          this->property_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        property_next (Type const&);
+
+        virtual void 
+        property_post (Type &o)
+        {
+
+          this->property_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        property_post (Type const&);
 
         protected:
         Resource ();
@@ -5287,7 +5383,7 @@ namespace CIAO
       {
         ResourceUsageKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void ResourceUsageKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -5501,7 +5597,7 @@ namespace CIAO
       {
         CCMComponentPortKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void CCMComponentPortKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
