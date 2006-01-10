@@ -184,7 +184,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
       char *endp = 0;
       u_short port =
         static_cast<u_short> (ACE_OS::strtol (ip_addr, &endp, 10));
-      if (port > 0 && *endp == '\0')
+      if (port >= 0 && *endp == '\0')
         result = this->set (port, ACE_UINT32 (INADDR_ANY));
       else // port name
         result = this->set (ip_addr, ACE_UINT32 (INADDR_ANY));
@@ -195,7 +195,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
 
       char *endp = 0;
       u_short port = static_cast<u_short> (ACE_OS::strtol (port_p, &endp, 10));
-      if (port > 0 && *endp == '\0')
+      if (port >= 0 && *endp == '\0')
         result = this->set (port, ip_addr);
       else
         result = this->set (port_p, ip_addr);

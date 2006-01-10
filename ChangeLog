@@ -1,3 +1,11 @@
+Tue Jan 10 22:30:21 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (string_to_addr): Correctly identify a specified
+          port number of "0". Thanks to Guy Peleg <guy dot peleg at amdocs
+          dot com> for this fix.
+
+        * THANKS: Added Guy Peleg to the Hall of Fame.
+
 Tue Jan 10 20:05:54 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
