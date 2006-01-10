@@ -402,6 +402,10 @@
 // dlopen() takes a char* instead of const char*
 #define ACE_HAS_CHARPTR_DL
 
+// lacks setegid and seteuid
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETEUID
+
 // Shared library name/path components
 #define ACE_DLL_SUFFIX  ".sl"
 #if defined (__LP64__)
@@ -494,7 +498,7 @@
 #define ACE_HAS_POSIX_SEM
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
