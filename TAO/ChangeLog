@@ -1,26 +1,36 @@
+Tue Jan 10 16:03:17 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/performance-tests/perf.mwc:
+				  
+					avoided wchar for this whole test.
+
+Tue Jan 10 09:57:39 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/performance-tests/perf.mwc:
+
 Tue Oct 18 13:23:21 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* docs/ec_options.html: Finally updated documentation to
-	  include information about the "new" queue-full options.
-	  See entry from "Thu Aug 25 11:00:47 2005  Chris Cleeland" for
-	  more info.
+        * docs/ec_options.html: Finally updated documentation to
+          include information about the "new" queue-full options.
+          See entry from "Thu Aug 25 11:00:47 2005  Chris Cleeland" for
+          more info.
 
 Tue Oct 18 10:31:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
 
-	  Updated TAO multicast service ID enumerator names to match
-	  new names in tao/objectid.h.
+          Updated TAO multicast service ID enumerator names to match
+          new names in tao/objectid.h.
 
 Tue Oct 18 09:34:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (setup_multicast):
-	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp (init_new_naming):
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp
-	  (init_multicast_server):
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (setup_multicast):
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp (init_new_naming):
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp
+          (init_multicast_server):
 
-	  Updated TAO multicast service ID enumerator names to match
-	  new names in tao/objectid.h.
+          Updated TAO multicast service ID enumerator names to match
+          new names in tao/objectid.h.
 
 Tue Oct 18 09:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -35,60 +45,60 @@ Tue Oct 18 08:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Oct 18 00:19:41 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Corrected minor typo in previous commit.
+          Corrected minor typo in previous commit.
 
 Tue Oct 18 00:08:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/SystemException.cpp:
-	* tao/SystemException.inl:
+        * tao/SystemException.cpp:
+        * tao/SystemException.inl:
 
-	  Moved concrete SystemException constructors out of line again.
-	  The intended footprint decreases were unfortunately not seen
-	  across all platforms.
+          Moved concrete SystemException constructors out of line again.
+          The intended footprint decreases were unfortunately not seen
+          across all platforms.
 
-	* tao/ORB.h (resolve_service):
+        * tao/ORB.h (resolve_service):
 
-	  Removed unnecessary return type and emulated exception
-	  parameter.
+          Removed unnecessary return type and emulated exception
+          parameter.
 
-	* tao/ORB.cpp (resolve_service):
+        * tao/ORB.cpp (resolve_service):
 
-	  Use snprintf() to simplify integer to-tring conversion and
-	  string concatenation.  Thanks to Jiang Wei <jw dot tao at sduept
-	  dot com> for providing a patch.
+          Use snprintf() to simplify integer to-tring conversion and
+          string concatenation.  Thanks to Jiang Wei <jw dot tao at sduept
+          dot com> for providing a patch.
 
-	  Optimized to only determine multicast port if multicast default
-	  initial reference is enabled.
+          Optimized to only determine multicast port if multicast default
+          initial reference is enabled.
 
-	  Removed unused "return_value" variable.
+          Removed unused "return_value" variable.
 
-	  (resolve_initial_references):
+          (resolve_initial_references):
 
-	  Updated to calls to resolve_service() to reflect new signature
-	  and void return type.
+          Updated to calls to resolve_service() to reflect new signature
+          and void return type.
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Simplified code that sets Name Service default initial
-	  reference.
+          Simplified code that sets Name Service default initial
+          reference.
 
-	  Updated names of multicast-capable service IDs to match the new
-	  names in tao/objectid.h.
+          Updated names of multicast-capable service IDs to match the new
+          names in tao/objectid.h.
 
-	* tao/objectid.h (TAO_MCAST_SERVICEID):
+        * tao/objectid.h (TAO_MCAST_SERVICEID):
 
-	  Addressed global namespace pollution by placing this enumeration
-	  within the TAO namespace.  Also prepended each service ID
-	  enumerator with "MCAST_" to further reduce potential internal
-	  TAO namespace pollution.
+          Addressed global namespace pollution by placing this enumeration
+          within the TAO namespace.  Also prepended each service ID
+          enumerator with "MCAST_" to further reduce potential internal
+          TAO namespace pollution.
 
-	* tao/params.h:
-	* tao/params.i:
+        * tao/params.h:
+        * tao/params.i:
 
-  	  TAO_MCAST_SERVICEID is now TAO::MCAST_SERVICEID, as changed in
-	  tao/objectid.h.
+          TAO_MCAST_SERVICEID is now TAO::MCAST_SERVICEID, as changed in
+          tao/objectid.h.
 
 Tue Oct 18 06:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -97,57 +107,57 @@ Tue Oct 18 06:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 17 14:43:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated due to tao/Messaging/* refactor.
+          Regenerated due to tao/Messaging/* refactor.
 
 Mon Oct 17 14:42:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/examples/Notify/Lanes/Makefile.am:
-	* orbsvcs/tests/Notify/Basic/Makefile.am:
-	* orbsvcs/tests/Notify/Blocking/Makefile.am:
-	* orbsvcs/tests/Notify/Destroy/Makefile.am:
-	* orbsvcs/tests/Notify/Discarding/Makefile.am:
-	* orbsvcs/tests/Notify/Driver/Makefile.am:
-	* orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
-	* orbsvcs/tests/Notify/Ordering/Makefile.am:
-	* orbsvcs/tests/Notify/Reconnecting/Makefile.am:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+        * orbsvcs/examples/Notify/Lanes/Makefile.am:
+        * orbsvcs/tests/Notify/Basic/Makefile.am:
+        * orbsvcs/tests/Notify/Blocking/Makefile.am:
+        * orbsvcs/tests/Notify/Destroy/Makefile.am:
+        * orbsvcs/tests/Notify/Discarding/Makefile.am:
+        * orbsvcs/tests/Notify/Driver/Makefile.am:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
+        * orbsvcs/tests/Notify/Ordering/Makefile.am:
+        * orbsvcs/tests/Notify/Reconnecting/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
 
-	  Regenerated due to notification_serv being added to notifytest
-	  base project.
+          Regenerated due to notification_serv being added to notifytest
+          base project.
 
 Mon Oct 17 12:45:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* performance-tests/POA/Demux/Makefile.am:
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile.am:
-	* performance-tests/RTCorba/Thread_Pool/Makefile.am:
+        * performance-tests/POA/Demux/Makefile.am:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile.am:
+        * performance-tests/RTCorba/Thread_Pool/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* performance-tests/POA/Demux/Demux.mpc:
-	* performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
-	* performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/POA/Demux/Demux.mpc:
+        * performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
 
           Add/tweak *_IDL projects for compiling *.idl files.
 
 Mon Oct 17 12:33:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/ec_typed_events_idl.mpb:
+        * orbsvcs/orbsvcs/ec_typed_events_idl.mpb:
 
-	  Set idlflags to be used when compiling Cos TypedEvent IDL files.
-	  Reset idlflags so they won't be duplicated when compiling plain
-	  CosEvent IDL files.
+          Set idlflags to be used when compiling Cos TypedEvent IDL files.
+          Reset idlflags so they won't be duplicated when compiling plain
+          CosEvent IDL files.
 
 Mon Oct 17 18:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -156,87 +166,87 @@ Mon Oct 17 18:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 17 09:52:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
           Enabled building "performance-tests" subdirectory.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Configure all Makefile.am's in performance-tests subdirectories.
+          Configure all Makefile.am's in performance-tests subdirectories.
 
-	* performance-tests/Makefile.am:
-	* performance-tests/Anyop/Makefile.am:
-	* performance-tests/Callback/Makefile.am:
-	* performance-tests/Cubit/Makefile.am:
-	* performance-tests/Cubit/TAO/Makefile.am:
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
-	* performance-tests/Latency/Makefile.am:
-	* performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
-	* performance-tests/Latency/AMI/Makefile.am:
-	* performance-tests/Latency/Collocation/Makefile.am:
-	* performance-tests/Latency/DII/Makefile.am:
-	* performance-tests/Latency/DSI/Makefile.am:
-	* performance-tests/Latency/Deferred/Makefile.am:
-	* performance-tests/Latency/Single_Threaded/Makefile.am:
-	* performance-tests/Latency/Thread_Per_Connection/Makefile.am:
-	* performance-tests/Latency/Thread_Pool/Makefile.am:
-	* performance-tests/Memory/Makefile.am:
-	* performance-tests/Memory/IORsize/Makefile.am:
-	* performance-tests/Memory/Single_Threaded/Makefile.am:
-	* performance-tests/POA/Makefile.am:
-	* performance-tests/POA/Create_Reference/Makefile.am:
-	* performance-tests/POA/Demux/Makefile.am:
-	* performance-tests/POA/Implicit_Activation/Makefile.am:
-	* performance-tests/POA/Object_Creation_And_Registration/Makefile.am:
-	* performance-tests/Pluggable/Makefile.am:
-	* performance-tests/Protocols/Makefile.am:
-	* performance-tests/RTCorba/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
-	* performance-tests/RTCorba/Oneways/Makefile.am:
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile.am:
-	* performance-tests/RTCorba/Thread_Pool/Makefile.am:
-	* performance-tests/Sequence_Latency/Makefile.am:
-	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
-	* performance-tests/Sequence_Latency/AMI/Makefile.am:
-	* performance-tests/Sequence_Latency/DII/Makefile.am:
-	* performance-tests/Sequence_Latency/DSI/Makefile.am:
-	* performance-tests/Sequence_Latency/Deferred/Makefile.am:
-	* performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
-	* performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
-	* performance-tests/Throughput/Makefile.am:
+        * performance-tests/Makefile.am:
+        * performance-tests/Anyop/Makefile.am:
+        * performance-tests/Callback/Makefile.am:
+        * performance-tests/Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/Makefile.am:
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
+        * performance-tests/Latency/Makefile.am:
+        * performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
+        * performance-tests/Latency/AMI/Makefile.am:
+        * performance-tests/Latency/Collocation/Makefile.am:
+        * performance-tests/Latency/DII/Makefile.am:
+        * performance-tests/Latency/DSI/Makefile.am:
+        * performance-tests/Latency/Deferred/Makefile.am:
+        * performance-tests/Latency/Single_Threaded/Makefile.am:
+        * performance-tests/Latency/Thread_Per_Connection/Makefile.am:
+        * performance-tests/Latency/Thread_Pool/Makefile.am:
+        * performance-tests/Memory/Makefile.am:
+        * performance-tests/Memory/IORsize/Makefile.am:
+        * performance-tests/Memory/Single_Threaded/Makefile.am:
+        * performance-tests/POA/Makefile.am:
+        * performance-tests/POA/Create_Reference/Makefile.am:
+        * performance-tests/POA/Demux/Makefile.am:
+        * performance-tests/POA/Implicit_Activation/Makefile.am:
+        * performance-tests/POA/Object_Creation_And_Registration/Makefile.am:
+        * performance-tests/Pluggable/Makefile.am:
+        * performance-tests/Protocols/Makefile.am:
+        * performance-tests/RTCorba/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+        * performance-tests/RTCorba/Oneways/Makefile.am:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile.am:
+        * performance-tests/RTCorba/Thread_Pool/Makefile.am:
+        * performance-tests/Sequence_Latency/Makefile.am:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
+        * performance-tests/Sequence_Latency/AMI/Makefile.am:
+        * performance-tests/Sequence_Latency/DII/Makefile.am:
+        * performance-tests/Sequence_Latency/DSI/Makefile.am:
+        * performance-tests/Sequence_Latency/Deferred/Makefile.am:
+        * performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
+        * performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
+        * performance-tests/Throughput/Makefile.am:
 
-	  New files.
+          New files.
 
-	* performance-tests/Callback/Callback.mpc:
-	* performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
-	* performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
-	* performance-tests/Latency/AMH_Single_Threaded/Single_Threaded.mpc:
-	* performance-tests/Latency/AMI/AMI.mpc:
-	* performance-tests/Latency/DII/DII.mpc:
-	* performance-tests/Latency/Deferred/Deferred.mpc:
-	* performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
-	* performance-tests/Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
-	* performance-tests/Latency/Thread_Pool/Thread_Pool.mpc:
-	* performance-tests/Memory/IORsize/Memory_IORsize.mpc:
-	* performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
-	* performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
-	* performance-tests/Pluggable/Pluggable.mpc:
-	* performance-tests/Protocols/Protocols.mpc:
-	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
-	* performance-tests/Sequence_Latency/AMI/ami.mpc:
-	* performance-tests/Sequence_Latency/DII/DII.mpc:
-	* performance-tests/Sequence_Latency/DSI/DSI.mpc:
-	* performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
-	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Conn.mpc:
-	* performance-tests/Sequence_Latency/Thread_Pool/Thread_Pool.mpc:
-	* performance-tests/Throughput/Throughput.mpc:
+        * performance-tests/Callback/Callback.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/AMI/AMI.mpc:
+        * performance-tests/Latency/DII/DII.mpc:
+        * performance-tests/Latency/Deferred/Deferred.mpc:
+        * performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
+        * performance-tests/Latency/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Memory/IORsize/Memory_IORsize.mpc:
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/Protocols/Protocols.mpc:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/AMI/ami.mpc:
+        * performance-tests/Sequence_Latency/DII/DII.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Conn.mpc:
+        * performance-tests/Sequence_Latency/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Throughput/Throughput.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
