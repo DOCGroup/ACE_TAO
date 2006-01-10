@@ -12,12 +12,11 @@
 #include /**/ "ace/pre.h"
 
 #include "rtec_perf_export.h"
+#include "ace/Arg_Shifter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-class ACE_Arg_Shifter;
 
 /// Parse the command-line client_options for the tests.
 /**
@@ -47,11 +46,11 @@ public:
   int high_priority_is_last;
 
 private:
-  int option (ACE_Arg_Shifter &arg_shifter,
+  int option (ACE_TArg_Shifter<char> &arg_shifter,
               const char *option_name,
               int &option_value);
 
-  int boolean_option (ACE_Arg_Shifter &arg_shifter,
+  int boolean_option (ACE_TArg_Shifter<char>  &arg_shifter,
                       const char *option_name,
                       int &option_value);
 };
