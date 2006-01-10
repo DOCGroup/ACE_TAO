@@ -26,11 +26,6 @@
 # include "ace/config-g++-common.h"
 
 # define ACE_LACKS_IOSTREAM_FX
-
-# if !defined (ACE_MAIN)
-#   define ACE_MAIN ace_main
-# endif /* ! ACE_MAIN */
-
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 # if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
@@ -252,6 +247,9 @@
   #define ACE_LACKS_WAITPID
   #define ACE_LACKS_STRINGS_H
   #define ACE_LACKS_STRCASECMP
+  # if !defined (ACE_MAIN)
+  #   define ACE_MAIN ace_main
+  # endif /* ! ACE_MAIN */
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
