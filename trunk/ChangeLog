@@ -1,3 +1,9 @@
+Tue Jan 10 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.1.h:
+        * ace/config-vxworks6.2.h:
+          Only define ACE_MAIN in kernel mode
+
 Tue Jan 10 11:36:43 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
