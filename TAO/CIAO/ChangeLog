@@ -1,3 +1,10 @@
+Tue Jan 10 22:05:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * examples/Hello/ReDaC-Usage.html
+        
+          Added a tutorial-like web page to showcase ReDaC service
+          of DAnCE.
+
 Tue Jan 10 19:01:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd
@@ -65,6 +72,7 @@ Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           Updated the hand-crafted descriptor files in CIAO tests and
           examples to reflect the changes above.
 
+>>>>>>> 1.1632
 Thu Jan  5 21:28:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
