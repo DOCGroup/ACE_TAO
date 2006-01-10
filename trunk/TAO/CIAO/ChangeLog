@@ -5,6 +5,10 @@ Tue Jan 10 22:05:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
           Added a tutorial-like web page to showcase ReDaC service
           of DAnCE.
 
+	* NEWS
+
+	  Updated with DAnCE's recent enhancements.
+
 Tue Jan 10 19:01:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd

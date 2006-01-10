@@ -25,12 +25,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Enhance DAnCE to support OpenCCM components.
 
-. Static Configuration for DAnCE.
-
 . Target Manager implementation.
-
-. Support threading models in NodeApplication, such as thread pools
-  and the like.
 
 . Implement Resource Allocation and Control Engine (RACE), which is a
   component middleware framework built atop of CIAO/DAnCE that integrates
@@ -64,23 +59,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 ==========================================
 
-. Enhance DAnCE to support dynamically adding/removing components
-  to/from the existing running assembly without shutting down the
-  running appliation.  This will allow the application developers to
-  evolve their applications on the fly without incuring service down
-  time. The service is called ReDaC (Redeployment and Reconfiguration)
-
-  Basically ReDAC provides a whole range of redeployment and
-  reconfiguration granularity level, including:
-
-  1) Install/remove component instances of the existing component types.
-  2) Install/remove component instances of a different type, i.e., a totally new type of component.
-  3) Install/remove component instances from an existing container.
-  4) Install new component instances into a dynamically created brand new container.
-     Move around existing components from one existing container to another existing/new container.
-  5) Install new component instances into another component server in the same physical node.
-  6) Install new component instances into another component server into a remote host.
-
 . Adding support to manage multiple interconnected assemblies, which will
   involve the work through ExternalReferenceEndPoint idea.
 
@@ -103,6 +81,26 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 
 . The CIDLC compiler now supports incomplete struct and union
   semantics which will appear in CORBA 3.1.
+  
+. DAnCE now supports dynamically adding/removing components
+  to/from the existing running assembly without shutting down the
+  running appliation.  This will allow the application developers to
+  evolve their applications on the fly without incuring service down
+  time. The service is called ReDaC (Redeployment and Reconfiguration)
+
+  Basically ReDAC provides a whole range of redeployment and
+  reconfiguration granularity level, including:
+
+  1) Install/remove component instances of the existing component types.
+  2) Install/remove component instances of a different type, i.e., a totally new type of component.
+  3) Install/remove component instances from an existing container.
+  4) Install new component instances into a dynamically created brand new container.
+     Move around existing components from one existing container to another existing/new container.
+  5) Install new component instances into another component server in the same physical node.
+  6) Install new component instances into another component server into a remote host.
+  
+  To see how to use this feature, please see the ReDaC-Usage.html 
+  under the $CIAO_ROOT/examples/Hello/ directory.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
