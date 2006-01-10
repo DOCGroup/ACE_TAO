@@ -19,7 +19,7 @@
 #  include <string>
 #endif
 
-#include "Reactor_Logging_Server.h"
+#include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 
 typedef Reactor_Logging_Server<Logging_Acceptor_Ex>

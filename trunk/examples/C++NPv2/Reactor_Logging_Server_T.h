@@ -4,8 +4,8 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#ifndef _REACTOR_LOGGING_SERVER_H
-#define _REACTOR_LOGGING_SERVER_H
+#ifndef _REACTOR_LOGGING_SERVER_T_H
+#define _REACTOR_LOGGING_SERVER_T_H
 
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -26,4 +26,4 @@ public:
 #pragma implementation ("Reactor_Logging_Server_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#endif /* _REACTOR_LOGGING_SERVER_H */
+#endif /* _REACTOR_LOGGING_SERVER_T_H */
