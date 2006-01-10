@@ -8,7 +8,7 @@
 #define _REACTOR_LOGGING_SERVER_ADAPTER_H
 
 #include "ace/Service_Object.h"
-#include "Reactor_Logging_Server.h"
+#include "Reactor_Logging_Server_T.h"
 
 template <class ACCEPTOR>
 class Reactor_Logging_Server_Adapter : public ACE_Service_Object {

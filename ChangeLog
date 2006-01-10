@@ -1,12 +1,35 @@
+Tue Jan 10 07:21:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/C++NPv2/Makefile.am:
+        * examples/C++NPv2/README:
+        * examples/C++NPv2/Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.h:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Logging_Server.h:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+
+          Update for change below.
+
+        * examples/C++NPv2/Reactor_Logging_Server.h:
+        * examples/C++NPv2/Reactor_Logging_Server_T.h:
+
+          Renamed Reactor_Logging_Server.h to Reactor_Logging_Server_T.h.
+          When ACE_TEMPLATES_REQUIRES_SOURCE is not defined (as is so in
+          the automake build), the Sun Studio 11 C++ compiler associates
+          Reactor_Logging_Server.h with Reactor_Logging_Server.cpp instead
+          of Reactor_Logging_Server_T.cpp when instantiating templates.
+          This results in interesting (and difficult to track down) errors.
+
 Mon Jan  9 20:20:14 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:
-        
+
           Explicitly automake conditional BUILD_ACE_FOR_TAO to false
           (at least for now).
 
         * ace/Makefile.am:
-        
+
           Small tweaks to fix errors introduced by MPC generation.
 
 Mon Jan  9 20:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>

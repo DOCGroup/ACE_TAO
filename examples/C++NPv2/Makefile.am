@@ -138,7 +138,7 @@ display_logfile_SOURCES = \
   Logging_Event_Handler.h \
   Logging_Event_Handler_Ex.h \
   Logging_Handler.h \
-  Reactor_Logging_Server.h \
+  Reactor_Logging_Server_T.h \
   Reactor_Logging_Server_Adapter.h \
   SLDEX_export.h \
   SLD_export.h \
@@ -170,7 +170,7 @@ reactor_logging_server_SOURCES = \
   Logging_Event_Handler.h \
   Logging_Event_Handler_Ex.h \
   Logging_Handler.h \
-  Reactor_Logging_Server.h
+  Reactor_Logging_Server_T.h
 
 reactor_logging_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -251,7 +251,7 @@ sr_configurable_logging_server_SOURCES = \
   Logging_Event_Handler.h \
   Logging_Event_Handler_Ex.h \
   Logging_Handler.h \
-  Reactor_Logging_Server.h \
+  Reactor_Logging_Server_T.h \
   Reactor_Logging_Server_Adapter.h \
   SLDEX_export.h \
   SLD_export.h \
