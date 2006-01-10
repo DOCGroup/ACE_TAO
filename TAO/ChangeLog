@@ -1,3 +1,8 @@
+Tue Jan 10 10:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2349_Regression/server.cpp:
+          Added missign return
+
 Mon Jan  9 23:33:10 UTC 2006  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/tests/Notify/lib/common.h:
