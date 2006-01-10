@@ -1,3 +1,10 @@
+Tue Jan 10 19:01:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd
+        * docs/schema/cdd.xsd
+        
+        Corrected incorrect cardinality on several target domain elements.
+
 Tue Jan 10 11:10:01 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * NEWS:

@@ -146,8 +146,8 @@
   <xsd:complexType name="Resource">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="resourceType" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
+      <xsd:element name="resourceType" type="xsd:string" maxOccurs="unbounded" />
+      <xsd:element name="property" type="Deployment:SatisfierProperty" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
 
