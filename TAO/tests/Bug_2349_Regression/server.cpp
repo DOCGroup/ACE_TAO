@@ -53,7 +53,7 @@ main (int argc, char** argv)
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      foo_i* server_impl;
+      foo_i* server_impl = 0;
       ACE_NEW_RETURN (server_impl,
                       foo_i (orb.in ()),
                       1);
@@ -85,4 +85,6 @@ main (int argc, char** argv)
     {
       ex._tao_print_exception ("CORBA::Exception");
     }
+
+  return 0;
 }
