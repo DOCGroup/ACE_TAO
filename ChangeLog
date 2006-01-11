@@ -1,8 +1,16 @@
+Wed Jan 11 13:14:52 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Corrected a problem in determining if depgen.pl is the dependency
+          generator.  The logic can now handle the instance where the script
+          is preceded by /usr/bin/perl (or something similar).
+
 Wed Jan 11 06:47:04 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_Thread.cpp (~TSS_Cleanup_Instance): Delete the mutex and condition
-	  variable to prevent memory leaks.  Thanks to Domingos Monteiro
- 	  <d dot monteiro at netia dot net> for this fix.
+        * ace/OS_NS_Thread.cpp (~TSS_Cleanup_Instance): Delete the mutex and condition
+          variable to prevent memory leaks.  Thanks to Domingos Monteiro
+          <d dot monteiro at netia dot net> for this fix.
 
 Tue Jan 10 23:04:06 UTC 2006  Steve Huston  <shuston@riverace.com>
 
