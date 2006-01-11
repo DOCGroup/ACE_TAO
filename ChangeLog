@@ -1,3 +1,31 @@
+Wed Jan 11 14:24:20 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+
+          Updated.
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+
+          Added Assert.cpp to Source_Files section.
+
+        * ace/Global_Macros.h:
+
+          Changed to #include "ace/Assert.h", as the ACE_FACTORY_DEFINE
+          macro uses ACE_ASSERT.
+
+        * ace/Log_Msg.h:
+
+          Changed to #include "ace/Assert.h" for backwards compatibilty
+          with earlier ACE releases.
+
+        * ace/Assert.cpp:
+        * ace/Assert.h:
+
+          Factor ACE_ASSERT() macro out of Log_Msg.h into new files
+          Assert.h, with a helper-function in Assert.cpp.  This reduces
+          the footprint of an ACE_ASSERT() invocation to a single call.
+
 Wed Jan 11 13:14:52 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
