@@ -11,6 +11,10 @@ Wed Jan 11 11:43:42 2006  Ossama Othman <ossama@dre.vanderbilt.edu>
           Delete the object released from the auto_ptr<>.  Previously it
           was ignored, resulting in a memory leak.  Fixes a memory leak.
 
+        * THANKS:
+
+          Added Richard to the Hall of Fame.
+
 Wed Jan 11 18:58:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Assert.cpp:
