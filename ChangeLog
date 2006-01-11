@@ -1,3 +1,10 @@
+Wed Jan 11 17:36:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Assert.h:
+
+          Use ACE_VERSIONED_NAMESPACE_NAME prefix for __ace_assert()
+          invocation.
+
 Wed Jan 11 14:24:20 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * Makefile.am:
