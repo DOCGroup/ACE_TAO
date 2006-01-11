@@ -781,26 +781,38 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
   }
 }
 
-TSS_Cleanup_Instance::~TSS_Cleanup_Instance()
+TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
 {
-  ACE_Guard<ACE_Thread_Mutex> guard(*mutex_);
-  if (ptr_ != 0)
+  // Variable to hold the mutex_ to delete outside the scope of the
+  // guard.
+  ACE_Thread_Mutex *del_mutex = 0;
+
+  // scope the guard
+  {
+    ACE_Guard<ACE_Thread_Mutex> guard (*mutex_);
+    if (ptr_ != 0)
+      {
+        if (ACE_BIT_ENABLED (flags_, FLAG_DELETING))
+          {
+            ACE_ASSERT(instance_ == 0);
+            ACE_ASSERT(reference_count_ == 0);
+            delete ptr_;
+            del_mutex = mutex_ ;
+          }
+        else
+          {
+            ACE_ASSERT (reference_count_ > 0);
+            --reference_count_;
+            if (reference_count_ == 0 && instance_ == NULL)
+              condition_->signal ();
+          }
+      }
+  }// end of guard scope
+
+  if (del_mutex != 0)
     {
-      if (ACE_BIT_ENABLED (flags_,FLAG_DELETING))
-        {
-          ACE_ASSERT(instance_ == 0);
-          ACE_ASSERT(reference_count_ == 0);
-          delete ptr_;
-        }
-      else
-        {
-          ACE_ASSERT (reference_count_ > 0);
-          --reference_count_;
-          if (reference_count_ == 0 && instance_ == NULL)
-            {
-              condition_->signal();
-            }
-        }
+      delete condition_ ;
+      delete del_mutex ;
     }
 }
 
