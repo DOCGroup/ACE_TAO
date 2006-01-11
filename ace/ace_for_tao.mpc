@@ -15,6 +15,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Arg_Shifter.cpp
     ARGV.cpp
     Argv_Type_Converter.cpp
+    Assert.cpp
     Atomic_Op.cpp
     Auto_Event.cpp
     Barrier.cpp             // Required by orbsvcs/tests/Notify/lib

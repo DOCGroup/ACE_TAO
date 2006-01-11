@@ -26,6 +26,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Arg_Shifter.cpp
     ARGV.cpp
     Argv_Type_Converter.cpp
+    Assert.cpp
     Asynch_IO.cpp
     Asynch_IO_Impl.cpp
     Asynch_Pseudo_Task.cpp

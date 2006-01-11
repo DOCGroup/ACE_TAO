@@ -54,6 +54,7 @@ libACE_la_SOURCES = \
   Addr.cpp \
   Arg_Shifter.cpp \
   Argv_Type_Converter.cpp \
+  Assert.cpp \
   Asynch_IO.cpp \
   Asynch_IO_Impl.cpp \
   Asynch_Pseudo_Task.cpp \
@@ -379,6 +380,7 @@ nobase_include_HEADERS += \
   Array_Map.cpp \
   Array_Map.h \
   Array_Map.inl \
+  Assert.h \
   Asynch_Acceptor.cpp \
   Asynch_Acceptor.h \
   Asynch_Connector.cpp \
