@@ -25,20 +25,9 @@
 #include "ace/Log_Priority.h"
 #include "ace/os_include/os_limits.h"
 
-// The following ASSERT macro is courtesy of Alexandre Karev
-// <akg@na47sun05.cern.ch>.
-#if defined (ACE_NDEBUG)
-#define ACE_ASSERT(x)
-#elif !defined (ACE_ASSERT)
-#define ACE_ASSERT(X) \
-  do { if(!(X)) { \
-  int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-  ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-  ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), \
-               ace___->msg_ostream (), ace___->msg_callback ()); \
-  ace___->log (LM_ERROR, ACE_LIB_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), ACE_TEXT_CHAR_TO_TCHAR (#X), -1); \
-  } } while (0)
-#endif  /* ACE_NDEBUG */
+// The ACE_ASSERT macro used to be defined here, include ace/Assert.h
+// for backwards compatibility.
+#include "ace/Assert.h"
 
 #if defined (ACE_NLOGGING)
 #define ACE_HEX_DUMP(X) do {} while (0)
