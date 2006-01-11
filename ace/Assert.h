@@ -18,7 +18,7 @@
 #include "ace/config-all.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-void __ace_assert(const char *file, int line, ACE_TCHAR *expression);
+void __ace_assert(const char *file, int line, const ACE_TCHAR *expression);
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_NDEBUG)
