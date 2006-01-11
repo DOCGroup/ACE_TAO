@@ -1,3 +1,16 @@
+Wed Jan 11 11:43:42 2006  Ossama Othman <ossama@dre.vanderbilt.edu>
+
+        From Richard Ward <richard_ward at symantec dot com>
+        * ace/Auto_Ptr.h (ACE_AUTO_PTR_RESET):
+
+          Assign "NEWPTR" macro argument to a temporary "TYPE" pointer,
+          and use that pointer in place of "NEWPTR" to force "NEWPTR" to
+          be expanded only once.  Prevents a memory leak from occuring
+          when "NEWPTR" is an expression such as "new foo".
+
+          Delete the object released from the auto_ptr<>.  Previously it
+          was ignored, resulting in a memory leak.  Fixes a memory leak.
+
 Wed Jan 11 18:58:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Assert.cpp:
