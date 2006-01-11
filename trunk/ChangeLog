@@ -1,3 +1,8 @@
+Wed Jan 11 22:17:39 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * protocols/ace/RMCast/Template_Instantiations.cpp: Added missing
+          explicit instantiations.
+
 Wed Jan 11 21:19:21 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Functor.{h inl}: Remove the ACE_* type specializations and
