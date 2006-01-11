@@ -127,6 +127,7 @@ public:
   unsigned long operator () (unsigned char t) const;
 };
 
+#if 0
 // @@ ADD HASHES FOR ACE TYPES
 
 /**
@@ -195,6 +196,72 @@ public:
 };
 
 // @@ DONE ADDING HASHES FOR ACE TYPES
+#endif
+
+/**
+ * @class ACE_Hash<short>
+ *
+ * @brief Function object for hashing a short number
+ */
+template<>
+class ACE_Export ACE_Hash<short>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (short t) const;
+};
+
+/**
+ * @class ACE_Hash<unsigned short>
+ *
+ * @brief Function object for hashing an unsigned short number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned short>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned short t) const;
+};
+
+/**
+ * @class ACE_Hash<int>
+ *
+ * @brief Function object for hashing an int number
+ */
+template<>
+class ACE_Export ACE_Hash<int>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (int t) const;
+};
+
+/**
+ * @class ACE_Hash<unsigned int>
+ *
+ * @brief Function object for hashing an unsigned int number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned int>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned int t) const;
+};
+
+/**
+ * @class ACE_Hash<long>
+ *
+ * @brief Function object for hashing a long number
+ */
+template<>
+class ACE_Export ACE_Hash<long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (long t) const;
+};
 
 /**
  * @class ACE_Hash<unsigned long>
@@ -208,6 +275,36 @@ public:
   /// Simply returns t
   unsigned long operator () (unsigned long t) const;
 };
+
+#if !defined (ACE_LACKS_LONGLONG_T)
+/**
+ * @class ACE_Hash<long long>
+ *
+ * @brief Function object for hashing a long long number
+ */
+template<>
+class ACE_Export ACE_Hash<long long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (long long t) const;
+};
+#endif /* !ACE_LACKS_LONGLONG_T */
+
+#if !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+/**
+ * @class ACE_Hash<unsigned long long>
+ *
+ * @brief Function object for hashing an unsigned long long number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned long long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned long long t) const;
+};
+#endif /* !ACE_LACKS_UNSIGNEDLONGLONG_T */
 
 /**
  * @class ACE_Hash<const char *>
