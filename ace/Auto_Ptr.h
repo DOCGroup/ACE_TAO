@@ -175,13 +175,18 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // support, which lacks reset, and cannot be disabled
 // easily.  Portability to these platforms requires
 // use of the following ACE_AUTO_PTR_RESET macro.
+//
+// Note that this macro correctly handles the case where NEWPTR may be
+// a call to operator new(), e.g. "new foo", by making sure it is only
+// evaluated once.
 # if defined (ACE_AUTO_PTR_LACKS_RESET)
 #   define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
       do { \
-        if (NEWPTR != AUTOPTR.get ()) \
+        TYPE * tmp_ptr = NEWPTR; \
+        if (tmp_ptr != AUTOPTR.get ()) \
           { \
-            AUTOPTR.release (); \
-            AUTOPTR = auto_ptr<TYPE> (NEWPTR); \
+            delete AUTOPTR.release (); \
+            AUTOPTR = auto_ptr<TYPE> (tmp_ptr); \
           } \
       } while (0)
 # else /* ! ACE_AUTO_PTR_LACKS_RESET */
