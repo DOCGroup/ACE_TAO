@@ -1,3 +1,10 @@
+Wed Jan 11 18:58:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Assert.cpp:
+        * ace/Assert.h:
+
+          Added const qualifier to __ace_assert() "expression" parameter.
+
 Wed Jan 11 17:36:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Assert.h:

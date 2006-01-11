@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
 void
-__ace_assert(const char *file, int line, ACE_TCHAR *expression)
+__ace_assert(const char *file, int line, const ACE_TCHAR *expression)
 {
   int error = ACE_Log_Msg::last_error_adapter ();
   ACE_Log_Msg *log = ACE_Log_Msg::instance ();
