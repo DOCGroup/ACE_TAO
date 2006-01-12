@@ -1,3 +1,17 @@
+Thu Jan 12 16:44:40 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Functor.{h inl}: Using ACE_LACKS_LONGLONG_T wasn't good enough
+          for deciding when to do an ACE_Hash<[unsigned] long long>. MSVC6
+          can't hack it. So, do the specialization for the 64-bit types if
+          ACE_SIZEOF_LONG < 8, avoiding a duplication of ACE_Hash<long>.
+          Also, since the way "unsigned long long" is declared varies across
+          compilers, use ACE_[U]INT64 rather than the native C++ type.
+
+        * ace/INET_Addr.cpp (string_to_addr): u_short always compares >= 0,
+          so rely on the indicated end of successful scan from ACE_OS::strtol()
+          to say whether it scanned all digits or stopped short of the end of
+          the string.
+
 Thu Jan 12 12:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:

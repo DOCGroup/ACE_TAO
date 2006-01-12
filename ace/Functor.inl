@@ -148,19 +148,24 @@ ACE_Hash<unsigned long>::operator () (unsigned long t) const
   return t;
 }
 
-#if !defined (ACE_LACKS_LONGLONG_T)
+// This #if needs to match the one in Functor.h
+#if !defined (ACE_LACKS_LONGLONG_T) && (ACE_SIZEOF_LONG < 8)
 ACE_INLINE unsigned long
-ACE_Hash<long long>::operator () (long long t) const
+ACE_Hash<ACE_INT64>::operator () (ACE_INT64 t) const
 {
   return static_cast<unsigned long> (t);
 }
-#endif /* !ACE_LACKS_LONGLONG_T */
+#endif /* !ACE_LACKS_LONGLONG_T && ACE_SIZEOF_LONG < 8 */
 
-#if !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+#if (ACE_SIZEOF_LONG < 8)
 ACE_INLINE unsigned long
-ACE_Hash<unsigned long long>::operator () (unsigned long long t) const
+ACE_Hash<ACE_UINT64>::operator () (const ACE_UINT64 &t) const
 {
+#if (ACE_SIZEOF_LONG == 4)
+  return ACE_U64_TO_U32 (t);
+#else
   return static_cast<unsigned long> (t);
+#endif /* ACE_SIZEOF_LONG */
 }
 #endif /* !ACE_LACKS_UNSIGNEDLONGLONG_T */
 
