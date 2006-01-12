@@ -1,3 +1,13 @@
+Thu Jan 12 20:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.inl:
+        * ace/README:
+          Added ACE_HAS_CLOCK_GETTIME_MONOTONIC, this is the patch from
+          bugzilla bug 2358. Not closing that one yet, have to see how
+          to autoconf this and where this new macro should be set. Thanks
+          to Robert Iakobashvili <coroberti at gmail dot com> for these
+          patches
+
 Thu Jan 12 19:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Assert.h:
