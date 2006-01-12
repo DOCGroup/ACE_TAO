@@ -139,10 +139,11 @@ ifneq ($(VX_LIB_BUILD),1)
   endif
   ifeq ($(VX_APP_BUILD),1)
     ## set variables for VxWorks linktarget identification
-    PRJ_FILE = $(basename $(notdir $(BIN_UNCHECKED))).vxworks
     ifeq ($(rtp),0)
       EXEEXT = .out
+      PRJ_FILE = $(basename $(notdir $(BIN_UNCHECKED))).vxworks
     else
+      PRJ_FILE = $(basename $(notdir $(BIN_UNCHECKED))).vxe
       EXEEXT = .vxe
       VXE_DIR := $(OUTPUT_DIRECTORY)
       EXE = $(BIN_UNCHECKED)
