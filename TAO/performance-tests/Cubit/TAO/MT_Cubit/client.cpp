@@ -1,10 +1,11 @@
 // $Id$
 
 #include "ace/config-all.h"
-#if defined (ACE_VXWORKS)
+
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN client
-#endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 #include "ace/Sched_Params.h"
 #include "tao/Strategies/advanced_resource.h"
