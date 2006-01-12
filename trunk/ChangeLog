@@ -1,3 +1,9 @@
+Thu Jan 12 19:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Assert.h:
+          Export the __ace_assert function to resolve link errors on
+          Windows
+
 Thu Jan 12 16:44:40 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Functor.{h inl}: Using ACE_LACKS_LONGLONG_T wasn't good enough
