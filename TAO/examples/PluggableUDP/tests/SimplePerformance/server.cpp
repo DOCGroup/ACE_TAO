@@ -25,11 +25,6 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
-#if defined (VXWORKS)
-# undef ACE_MAIN
-# define ACE_MAIN testServer
-#endif
-
 const char *ior_output_file = "test.ior";
 
 int main (int argc, char *argv[])
