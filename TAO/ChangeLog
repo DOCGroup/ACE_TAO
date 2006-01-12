@@ -1,11 +1,17 @@
+Thu Jan 12 09:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/DII/client.cpp:
+        * performance-tests/Sequence_Latency/DII/client.cpp:
+          Added include of AnyTypeCode/Any.h to get all operator <<
+
 Thu Jan 12 00:49:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/TAO_CosNotification.pc.in:
-        
+
           Add TAO_CosEvent to Requires.
-        
+
         * orbsvcs/orbsvcs/TAO_CosNotification_Skel.pc.in:
-        
+
           Add TAO_CosEvent_Skel to Requires.
 
 Thu Jan 12 00:31:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
@@ -54,20 +60,20 @@ Thu Jan 12 00:31:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 	* tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl:
 	* tao/Codeset/UTF16_BOM_Factory.cpp:
 	* tao/Codeset/UTF8_Latin1_Factory.cpp:
-        
+
           On systems where ACE_TEMPLATES_REQUIRE_SOURCE is not defined,
           template implementation files (*_T.cpp) are not #included by the
           corresponding template header file (*_T.h).  So headers that had
           been implicitly #included via the template implementation file,
           may now need to be #included explicitly.
-        
+
           This change explicitly #includes those headers (most commonly
           ace/Log_Msg.h and ace/Auto_Ptr.h).  Now TAO can be built with
           autoconf on Solaris using the Sun Studio C++ compiler.
-        
+
           Thanks to Vladimir Panov for reporting this problem and
           providing the initial patch.
-        
+
 Tue Jan 10 19:38:49 UTC 2006  Scott Harris  <harris_s@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
