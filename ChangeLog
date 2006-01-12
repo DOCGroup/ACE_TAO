@@ -1,3 +1,9 @@
+Thu Jan 12 11:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+          For rtp model we don't need to make sure the shared object
+          directory is the same as static
+
 Thu Jan 12 11:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:
