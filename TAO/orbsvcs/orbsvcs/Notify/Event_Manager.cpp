@@ -11,6 +11,7 @@ ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 #include "Event_Map_T.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #include "tao/debug.h"
 

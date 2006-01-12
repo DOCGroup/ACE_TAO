@@ -1,5 +1,7 @@
 // $Id$
+#include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 #include "UTF8_Latin1_Factory.h"
 
 ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,

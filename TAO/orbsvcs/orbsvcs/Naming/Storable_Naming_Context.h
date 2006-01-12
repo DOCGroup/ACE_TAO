@@ -16,6 +16,7 @@
 
 #include "Hash_Naming_Context.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Auto_Ptr.h"
 
 #include "Storable.h"
 

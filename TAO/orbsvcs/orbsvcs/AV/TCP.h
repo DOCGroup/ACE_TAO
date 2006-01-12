@@ -19,6 +19,7 @@
 #include "FlowSpec_Entry.h"
 
 #include "ace/Service_Config.h"
+#include "ace/Svc_Handler.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

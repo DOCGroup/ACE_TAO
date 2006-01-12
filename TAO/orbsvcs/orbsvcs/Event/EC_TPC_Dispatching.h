@@ -14,6 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/Null_Mutex.h"
 
 #include "EC_Dispatching.h"
 

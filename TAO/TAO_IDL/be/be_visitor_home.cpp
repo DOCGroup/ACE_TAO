@@ -26,6 +26,7 @@
 #include "be_visitor_context.h"
 #include "be_helper.h"
 #include "be_extern.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_home/home_ch.cpp"
 #include "be_visitor_home/home_cs.cpp"

@@ -8,6 +8,7 @@
 #include "ExceptionDef_i.h"
 #include "AttributeDef_i.h"
 #include "IFR_Service_Utils_T.h"
+#include "IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 

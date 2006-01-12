@@ -16,6 +16,7 @@
 #include "Reconnect_Worker_T.h"
 #include "Proxy.h"
 #include "Event_Manager.h"
+#include "POA_Helper.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9

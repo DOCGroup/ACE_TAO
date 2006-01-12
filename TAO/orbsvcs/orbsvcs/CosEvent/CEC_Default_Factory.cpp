@@ -23,6 +23,9 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Null_Condition.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedConsumerAdmin.h"

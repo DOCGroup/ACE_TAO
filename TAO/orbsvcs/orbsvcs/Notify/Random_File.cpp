@@ -3,6 +3,7 @@
 #include "Random_File.h"
 
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL

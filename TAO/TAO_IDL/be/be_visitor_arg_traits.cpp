@@ -41,6 +41,7 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
+#include "ace/Log_Msg.h"
 
 #include <string>
 

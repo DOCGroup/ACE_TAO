@@ -35,6 +35,7 @@
 #include "ace/OS_NS_string.h"
 #include "tao/AnyTypeCode_Adapter.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

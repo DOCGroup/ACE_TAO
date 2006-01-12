@@ -1,5 +1,7 @@
 //$Id$
 
+#include "ace/Log_Msg.h"
+
 ACE_INLINE int
 Task_Stats::sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time)
 {
