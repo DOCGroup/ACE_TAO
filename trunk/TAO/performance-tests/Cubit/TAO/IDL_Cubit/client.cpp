@@ -1,10 +1,11 @@
 // $Id$
 
 #include "ace/config-all.h"
-#if defined (VXWORKS)
+
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN client
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 #include "Cubit_Client.h"
 #include "tao/Timeprobe.h"
