@@ -1,3 +1,11 @@
+Thu Jan 12 11:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+          Fixed some comments after endif
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_SETUID and ACE_LACKS_SETEUID
+
 Thu Jan 12 10:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
