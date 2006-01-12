@@ -1,3 +1,8 @@
+Thu Jan 12 12:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+          When building for rtp also set DLD
+
 Thu Jan 12 11:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
