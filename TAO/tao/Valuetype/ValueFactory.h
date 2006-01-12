@@ -51,7 +51,6 @@ namespace CORBA
 
   typedef ValueFactoryBase_var ValueFactory_var;
 
-
   class TAO_Valuetype_Export ValueFactoryBase
   {
   public:
