@@ -1,3 +1,8 @@
+Thu Jan 12 11:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Small updates
+
 Thu Jan 12 10:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
