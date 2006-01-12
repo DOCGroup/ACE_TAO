@@ -253,19 +253,19 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "if (retval == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "if (factory.in () != 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "base = factory->create_for_unmarshal ();" << be_nl << be_nl
       << "if (base == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0;  // %! except.?" << be_uidt_nl
+      << "return false;  // %! except.?" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "retval = base->_tao_unmarshal_v (strm);" << be_nl << be_nl
       << "if (retval == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "// Now base must be null or point to the unmarshaled object." << be_nl
