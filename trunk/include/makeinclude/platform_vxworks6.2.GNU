@@ -111,11 +111,13 @@ ifeq ($(shared_libs_only),1)
   SHARED_LIBS = 1
 endif
 
-ifeq ($(SHARED_LIBS),1)
-  ACELIB = -L./
-  #### There's no difference between non-shared and shared object code.
-  VSHDIR = $(VDIR)
-endif # shared_libs
+ifeq ($(rtp),0)
+  ifeq ($(SHARED_LIBS),1)
+    ACELIB = -L./
+    #### There's no difference between non-shared and shared object code.
+    VSHDIR = $(VDIR)
+  endif # shared_libs
+endif
 
 BIN_UNCHECKED ?=
 SHLIB_UNCHECKED ?=
