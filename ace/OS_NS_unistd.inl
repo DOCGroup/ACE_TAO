@@ -555,7 +555,7 @@ ACE_OS::getgid (void)
   ACE_NOTSUP_RETURN (static_cast<gid_t> (-1));
 # else
   ACE_OSCALL_RETURN (::getgid (), gid_t, static_cast<gid_t> (-1));
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_GETGID */
 }
 
 ACE_INLINE gid_t
@@ -566,7 +566,7 @@ ACE_OS::getegid (void)
   ACE_NOTSUP_RETURN (static_cast<gid_t> (-1));
 # else
   ACE_OSCALL_RETURN (::getegid (), gid_t, static_cast<gid_t> (-1));
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_GETEGID */
 }
 
 ACE_INLINE int
@@ -580,7 +580,7 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
-# endif /* VXWORKS */
+# endif /* ACE_LACKS_GETOPT */
 }
 
 ACE_INLINE pid_t
@@ -598,7 +598,7 @@ ACE_OS::getpgid (pid_t pid)
   ACE_OSCALL_RETURN (::__getpgid (pid), pid_t, -1);
 #else
   ACE_OSCALL_RETURN (::getpgid (pid), pid_t, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_GETPGID */
 }
 
 ACE_INLINE pid_t
@@ -635,7 +635,7 @@ ACE_OS::getuid (void)
   ACE_NOTSUP_RETURN (static_cast<uid_t> (-1));
 # else
   ACE_OSCALL_RETURN (::getuid (), uid_t, static_cast<uid_t> (-1));
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_GETUID*/
 }
 
 ACE_INLINE uid_t
@@ -646,7 +646,7 @@ ACE_OS::geteuid (void)
   ACE_NOTSUP_RETURN (static_cast<uid_t> (-1));
 # else
   ACE_OSCALL_RETURN (::geteuid (), uid_t, (uid_t) -1);
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_GETEUID */
 }
 
 ACE_INLINE int
@@ -741,7 +741,7 @@ ACE_OS::isatty (int handle)
 # else
   ACE_OS_TRACE ("ACE_OS::isatty");
   ACE_OSCALL_RETURN (::isatty (handle), int, -1);
-# endif /* defined (ACE_LACKS_ISATTY) */
+# endif /* ACE_LACKS_ISATTY */
 }
 
 #if defined (ACE_WIN32)
@@ -952,7 +952,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::pipe (fds), int, -1);
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_PIPE */
 }
 
 #else /* ACE_WIN32 */
@@ -992,7 +992,7 @@ ACE_OS::setgid (gid_t gid)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::setgid (gid), int,  -1);
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_SETGID */
 }
 
 ACE_INLINE int
@@ -1004,7 +1004,7 @@ ACE_OS::setegid (gid_t gid)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::setegid (gid), int,  -1);
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_SETEGID */
 }
 
 ACE_INLINE int
@@ -1030,7 +1030,7 @@ ACE_OS::setregid (gid_t rgid, gid_t egid)
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::setregid (rgid, egid), int, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_SETREGID */
 }
 
 ACE_INLINE int
@@ -1066,7 +1066,7 @@ ACE_OS::setuid (uid_t uid)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::setuid (uid), int,  -1);
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_SETUID */
 }
 
 ACE_INLINE int
@@ -1078,7 +1078,7 @@ ACE_OS::seteuid (uid_t uid)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::seteuid (uid), int,  -1);
-# endif /* VXWORKS || ACE_PSOS */
+# endif /* ACE_LACKS_SETEUID */
 }
 
 ACE_INLINE int
