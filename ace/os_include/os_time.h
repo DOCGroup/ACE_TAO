@@ -40,10 +40,6 @@
 #  include /**/ <time.h>
 #endif /* !ACE_LACKS_TIME_H */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x610) && !defined (__RTP__)
-#  include /**/ <sys/times.h>
-#endif
-
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::tm;
