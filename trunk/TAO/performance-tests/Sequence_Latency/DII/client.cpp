@@ -3,6 +3,7 @@
 #include "tao/DynamicInterface/Request.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "TestC.h"
 
