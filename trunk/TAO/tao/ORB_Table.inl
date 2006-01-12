@@ -4,6 +4,8 @@
 
 #include "tao/ORB_Core.h"
 
+#include <algorithm>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_ORB_Core *

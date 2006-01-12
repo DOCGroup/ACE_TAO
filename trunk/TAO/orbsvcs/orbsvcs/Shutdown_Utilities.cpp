@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Shutdown_Utilities.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(orbsvcs,
           Shutdown_Utilities,

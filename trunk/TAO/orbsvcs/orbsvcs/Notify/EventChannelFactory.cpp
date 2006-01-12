@@ -17,6 +17,7 @@ ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 #include "Container_T.h"
 #include "Find_Worker_T.h"
 #include "Seq_Worker_T.h"
+#include "POA_Helper.h"
 
 #include "ace/Dynamic_Service.h"
 

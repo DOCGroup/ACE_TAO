@@ -14,6 +14,7 @@
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Auto_Ptr.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 

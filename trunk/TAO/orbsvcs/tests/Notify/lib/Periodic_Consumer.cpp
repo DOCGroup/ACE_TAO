@@ -4,6 +4,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Task.h"
 #include "tao/debug.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "StructuredEvent.h"

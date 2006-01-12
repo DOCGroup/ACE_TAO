@@ -22,6 +22,7 @@
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
+#include "ace/Null_Condition.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

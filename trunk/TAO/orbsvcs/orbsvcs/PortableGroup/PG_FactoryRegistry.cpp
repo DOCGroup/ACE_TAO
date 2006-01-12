@@ -7,6 +7,7 @@
 #include "ace/Vector_T.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/POAManagerC.h"

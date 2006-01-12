@@ -4,6 +4,7 @@
 #include "EventPortDef_i.h"
 #include "EventDef_i.h"
 #include "IFR_Service_Utils_T.h"
+#include "IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
