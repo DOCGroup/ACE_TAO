@@ -7,5 +7,5 @@ Name: ACE_SSL
 Description: ACE SSL Library
 Requires: ACE
 Version: @VERSION@
-Libs: -L${libdir} -lACE_SSL
-Cflags: -I${includedir}
+Libs: -L${libdir} @ACE_TLS_LDFLAGS@ -lACE_SSL @ACE_TLS_LIBS@
+Cflags: -I${includedir} @ACE_TLS_CPPFLAGS@
