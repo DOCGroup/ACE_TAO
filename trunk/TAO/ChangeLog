@@ -1,3 +1,8 @@
+Thu Jan 12 11:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+          Replaced some return 0, with return false
+
 Thu Jan 12 11:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
