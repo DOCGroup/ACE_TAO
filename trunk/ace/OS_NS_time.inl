@@ -360,7 +360,12 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   struct timespec ts;
 
-  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
+  ACE_OS::clock_gettime (
+#if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+         CLOCK_MONOTONIC,
+#endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
+         CLOCK_REALTIME,
+         &ts);
 
   // Carefully create the return value to avoid arithmetic overflow
   // if ACE_hrtime_t is ACE_U_LongLong.
