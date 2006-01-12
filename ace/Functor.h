@@ -276,35 +276,37 @@ public:
   unsigned long operator () (unsigned long t) const;
 };
 
-#if !defined (ACE_LACKS_LONGLONG_T)
+#if !defined (ACE_LACKS_LONGLONG_T) && (ACE_SIZEOF_LONG < 8)
 /**
- * @class ACE_Hash<long long>
+ * @class ACE_Hash<ACE_INT64>
  *
- * @brief Function object for hashing a long long number
+ * @brief Function object for hashing a signed 64-bit number
  */
 template<>
-class ACE_Export ACE_Hash<long long>
+class ACE_Export ACE_Hash<ACE_INT64>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (long long t) const;
+  unsigned long operator () (ACE_INT64 t) const;
 };
-#endif /* !ACE_LACKS_LONGLONG_T */
+#endif /* !ACE_LACKS_LONGLONG_T && ACE_SIZEOF_LONG < 8 */
 
-#if !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+// We can do this even if ACE_LACKS_UNSIGNEDLONGLONG_T because there's an
+// emulation for it in ACE_U_LongLong.
+#if (ACE_SIZEOF_LONG < 8)
 /**
- * @class ACE_Hash<unsigned long long>
+ * @class ACE_Hash<ACE_UINT64>
  *
- * @brief Function object for hashing an unsigned long long number
+ * @brief Function object for hashing an unsigned 64-bit number
  */
 template<>
-class ACE_Export ACE_Hash<unsigned long long>
+class ACE_Export ACE_Hash<ACE_UINT64>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (unsigned long long t) const;
+  unsigned long operator () (const ACE_UINT64 &t) const;
 };
-#endif /* !ACE_LACKS_UNSIGNEDLONGLONG_T */
+#endif /* ACE_SIZEOF_LONG < 8 */
 
 /**
  * @class ACE_Hash<const char *>
