@@ -1,3 +1,9 @@
+Thu Jan 12 21:40:47 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * examples/Hello/ReDaC-Usage.html
+        
+          Fixed some typos and an error.
+
 Tue Jan 10 22:34:22 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Basic_Deployment_Data.cpp
