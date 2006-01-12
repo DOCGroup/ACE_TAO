@@ -1,3 +1,90 @@
+Thu Jan 12 19:27:12 UTC 2006  Tim Bradley  <bradley_t@ociweb.com>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.cpp 
+
+          The files listed above were modified to fix a problem that was
+          observed in two similar tests.  The original problem was observed
+          to occur when the test application was shutting down, and is not
+          100% repeatable.  It is theorized that a race condition in the
+          existing test code, causing the tests to sometimes succeed.
+
+          When the test applications did fail, some platforms caused the
+          message "pure virtual method called" to be printed to standard
+          error.  A core file, created using Linux (FC3), showed a somewhat
+          corrupt stack trace pointing to the implementation of the
+          shutdown() operation in the Visual_i (servant) class (test_i.cpp).
+
+          Both tests are very similar, and the following description applies
+          to both.  Note that there are details not being described (such
+          as the Portable Interceptor usage), but are not important to the
+          problem that was fixed (hopefully).
+
+          The test is a "collocation" (thru_poa) test, consisting of one
+          application/executable.  A single IDL interface (Visual)
+          is declared, and a servant class (Visual_i) is defined that
+          implements the interface.
+
+          The test application creates two active objects (ClientTask and
+          ServerTask), and two ORBs.  Each active object is given its own
+          ORB to use, and then each is activated in a separate thread.
+          The "mainline" thread waits until both of the task threads complete,
+          performs the expected vs. actual results comparison, and then exits.
+
+          The ServerTask::svc() does the following:
+
+            - Obtain the RootPOA
+            - Create/activate the Visual_i servant object
+            - Save the IOR to a file
+            - Run the (server) ORB event loop.
+            - Destroy the RootPOA
+            - Destroy the (server) ORB.
+
+          The ClientTask::svc() does the following:
+
+            - Read/convert/narrow the server-side's IOR file into a
+              "Visual" object reference (using the ClientTask's ORB).
+            - Invoke each of the operations on the (Visual) object reference.
+            - Invoke the "shutdown" operation on the (Visual) object reference.
+
+          The problem lies with the servant's (Visual_i) implementation of
+          the "shutdown" operation.  The IDL interface, Visual, declares the
+          "shutdown" operation to be a "oneway" operation.  The
+          Visual_i::shutdown() method is implemented to invoke
+          "shutdown(false)" on the (server) ORB.  This is a rather common
+          approach taken by many other TAO tests, but the approach doesn't
+          work here because the servant object is collocated (thru_poa).
+
+          The "oneway" operations do not work the same way under collocated
+          versus remote request contexts.  A collocated oneway request gets
+          treated as if it were a synchronous request, for it is the client's
+          "requesting thread" that carries out the entire dispatching and
+          invocation of the appropriate method on the collocated servant
+          object.  Control is not returned to the client's requesting thread
+          until the request is completely finished.
+
+          So, the steps that lead up to the problem in the tests is that
+          the ClientTask's thread is the thread that ends up invoking
+          shutdown() on the (server) ORB.  At some point soon afterwards,
+          and before the ClientTask's thread has been given back control,
+          the (server) ORB event loop being run in the ServerTask completes.
+          This causes the ServerTask thread to continue on in its logic,
+          which is to destroy the (server) RootPOA, destroy the (server) ORB,
+          and then go away (the ServerTask thread, that is).  Meanwhile,
+          the ClientTask's thread left executing a method in an object that
+          has been destroyed.  When the stack is unwound, bad things happen,
+          and a segmentation fault, with a somewhat corrupt stack trace
+          is produced.
+
+          The fix to the tests was to stop destroying the (server) ORB
+          in the ServerTask thread.  Instead, the application mainline code
+          was modified (Collocated_Test.cpp) to destroy the (server) ORB
+          after both the ServerTask and the ClientTask threads have
+          completed.
+
+
 Thu Jan 12 11:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
