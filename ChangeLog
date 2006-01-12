@@ -1,13 +1,18 @@
+Thu Jan 12 09:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_GETPGID
+
 Thu Jan 12 01:08:32 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ACE.pc.in:
-        
+
           Added @LIBS@ to Libs.
-        
+
         * ace/SSL/ACE_SSL.pc.in:
-        
+
           Added @ACE_TLS_LDFLAGS@ and @ACE_TLS_LIBS@ to Libs.
-        
+
           Added @ACE_TLS_CPPFLAGS@ to Cflags.
 
 Wed Jan 11 22:17:39 UTC 2006  Steve Huston  <shuston@riverace.com>
