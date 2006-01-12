@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 
 #include "ace/SOCK_Connector.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (orbsvcs,
            IOR_Multicast,

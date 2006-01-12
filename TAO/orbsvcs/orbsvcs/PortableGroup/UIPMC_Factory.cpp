@@ -4,6 +4,7 @@
 #include "UIPMC_Acceptor.h"
 #include "UIPMC_Connector.h"
 #include "ace/OS_NS_strings.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (PortableGroup, 
            UIPMC_Factory, 

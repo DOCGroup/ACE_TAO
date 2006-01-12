@@ -4,6 +4,7 @@
 #include "HTIOP_Profile.h"
 
 #include "ace/os_include/os_netdb.h"
+#include "ace/Log_Msg.h"
 
 #include "tao/IOPC.h"
 #include "tao/debug.h"

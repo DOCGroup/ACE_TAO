@@ -23,6 +23,7 @@
 #define OPTIONS_H
 
 #include "ace/Singleton.h"
+#include "ace/Null_Mutex.h"
 #include "ifr_service_export.h"
 #include "tao/Versioned_Namespace.h"
 

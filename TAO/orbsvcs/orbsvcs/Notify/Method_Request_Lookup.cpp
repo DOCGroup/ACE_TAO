@@ -14,8 +14,12 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 #include "Delivery_Request.h"
 #include "EventChannelFactory.h"
 #include "Event_Manager.h"
+#include "Factory.h"
+
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #include "tao/debug.h"
+#include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

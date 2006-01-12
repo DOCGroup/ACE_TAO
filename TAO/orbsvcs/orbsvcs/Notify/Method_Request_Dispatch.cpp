@@ -11,6 +11,7 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 #include "EventChannelFactory.h"
 
 #include "tao/debug.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_stdio.h"
 

@@ -14,6 +14,7 @@
 #include "Struct_TypeCode.h"
 #include "Union_TypeCode.h"
 #include "Value_TypeCode.h"
+#include "Any.h"
 
 #include "Recursive_Type_TypeCode.h"
 
@@ -24,6 +25,7 @@
 #include "tao/CDR.h"
 
 #include "ace/Array_Base.h"
+#include "ace/Value_Ptr.h"
 
 
 ACE_RCSID (tao,
