@@ -302,7 +302,17 @@ endif
 
 CCFLAGS         += $(C++FLAGS)
 
+ifeq (0,$(rtp))
 PIC              =
+else
+  ifeq ("$(TOOL)","diab")
+    PIC = -Xpic
+  else
+  ifeq ("$(TOOL)","gnu")
+    PIC = -fpic
+  endif
+endif
+endif
 
 ifeq ("$(VXWORKSLINK)","true")
 
