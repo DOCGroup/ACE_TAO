@@ -1,3 +1,21 @@
+Thu Jan 12 10:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Removed all support for VxWorks 6.1, this version wa just an
+          intermediate step from 5.5 to 6.2. The port never completed and
+          we are aimin at 6.2 at this moment, so to not give false
+          impressions removed all the support for 6.1.
+
+        * include/makeinclude/platform_vxworks6.1.GNU:
+        * ace/config-vxworks6.1.h:
+          Removed these files
+
+        * ace/Sock_Connect.cpp:
+        * ace/OS_NS_unistd.inl:
+        * ace/os_include/os_time.h:
+        * ace/os_include/os_stdio.h:
+        * ace/os_include/sys/os_wait.h:
+          Removed references to VxWorks 6.1
+
 Thu Jan 12 09:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
