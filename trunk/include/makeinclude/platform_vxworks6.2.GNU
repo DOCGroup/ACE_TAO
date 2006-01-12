@@ -168,6 +168,7 @@ ifeq ($(rtp),1)
   CPPFLAGS += -mrtp
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
   LD := $(CPLUS)
+  DLD := $(CPLUS)
   LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
   LDLIBS += -ldl
 else
