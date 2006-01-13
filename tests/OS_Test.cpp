@@ -13,6 +13,7 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
@@ -22,7 +23,6 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
-#include "test_config.h"
 
 ACE_RCSID(tests, OS_Test, "$Id$")
 
