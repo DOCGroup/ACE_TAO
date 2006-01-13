@@ -175,7 +175,6 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
   //  new_object->_tao_unmarshal_v ()
   //  new_object->_tao_unmarshal_post ()
 
-//  CORBA::ValueBase *base = 0;
   CORBA::ValueFactory_var factory;
   CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (strm,
@@ -346,12 +345,17 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
         orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
     }
 
-  if (factory == 0) // %! except.!
+  if (factory == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ERROR: OBV factory is null for <%s>!\n"),
-                  repo_id));
-      return false;
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ERROR: OBV factory is null for <%s>!\n"),
+                      repo_id));
+        }
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 1,
+                                        CORBA::COMPLETED_MAYBE),
+                                        false);
     }
 
   return retval;
