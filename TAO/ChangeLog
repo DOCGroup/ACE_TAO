@@ -1,3 +1,9 @@
+Fri Jan 13 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1869_Regression/*:
+          Added this regression to cvs, no fix yet and regression could
+          be improved more to give more output to the user
+
 Fri Jan 13 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/ExceptionHolder_i.{h,cpp}:
