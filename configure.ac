@@ -208,6 +208,18 @@ dnl Determine which subsets to build
 dnl This is done using the autoconf "--enable-foobar" mechanism.
 ACE_CHECK_SUBSETS
 
+dnl Some of the third party libraries (X11, openssl, etc.) depend on 
+dnl other libraries.  Check for those before the processing --enable
+dnl options.
+
+dnl Check if the socket library is available
+AC_SEARCH_LIBS([socket],[socket],,,[-lnsl])
+
+dnl Check for gethostbyname in -lnsl since some platforms (e.g. Solaris)
+dnl put it there.
+AC_SEARCH_LIBS([gethostbyname],[nsl],,)
+
+
 dnl Add --{enable,disable,with,without}-feature options.
 ACE_CONFIGURATION_OPTIONS
 ACE_COMPILATION_OPTIONS
@@ -311,13 +323,6 @@ AC_SEARCH_LIBS([dlopen],[dl svld],[ace_has_svr4_dynamic_linking=yes],
    ace_has_svr4_dynamic_linking=no
    AC_CHECK_LIB([dld],[shl_get],,)
   ])
-
-dnl Check if the socket library is available
-AC_SEARCH_LIBS([socket],[socket],,,[-lnsl])
-
-dnl Check for gethostbyname in -lnsl since some platforms (e.g. Solaris)
-dnl put it there.
-AC_SEARCH_LIBS([gethostbyname],[nsl],,)
 
 dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
 dnl may put it there.
