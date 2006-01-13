@@ -798,6 +798,7 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
             ACE_ASSERT(reference_count_ == 0);
             delete ptr_;
             del_mutex = mutex_ ;
+            mutex_ = 0;
           }
         else
           {
@@ -811,8 +812,9 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
 
   if (del_mutex != 0)
     {
-      delete condition_ ;
-      delete del_mutex ;
+      delete condition_;
+      condition_ = 0;
+      delete del_mutex;
     }
 }
 
