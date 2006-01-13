@@ -1,3 +1,8 @@
+Fri Jan 13 12:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/simple_client.cpp:
+          Print out the exception when we get a not expected exception
+
 Fri Jan 13 11:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueBase.cpp:
