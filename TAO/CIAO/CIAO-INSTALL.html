@@ -163,9 +163,8 @@
     <p>The Xerces-C XML parsing library is a necessary component to build parts of 
       DAnCE that need to process XML based descriptor files, which include the <b>Plan 
         Launcher</b> and the <b>Repository Manager</b>. Currently, the only Xerces-C 
-      version supported by the DOC group is version 2.6 compiled with RTTI support. 
-      Earlier versions of the Xerces-C library may work, but only if they were built 
-      with RTTI support.
+      version supported by the DOC group is version 2.6 or later.
+      Earlier versions of the Xerces-C library may work.
     </p>
     <h4>Building Xerces-C
     </h4>
@@ -182,12 +181,6 @@
       inconsistant library decorators onto the end of the Xerces-C libraries. The MPC 
       build tool will expect these libraries to be named xerces-c for non debug 
       versions, and xerces-cd for debug versions.
-      <li>
-        <strong>NOTE</strong>: RTTI is not enabled on most Win32 targets by default. If 
-        you are building your own libraries, please make sure that you enable RTTI 
-        support.<br>
-        <br>
-      </li>
     </ul>
     <h4>Xerces-C Environment Settings
     </h4>

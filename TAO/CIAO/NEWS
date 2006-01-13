@@ -75,6 +75,9 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================
+. RTTI enabled versions of the Xerces library are no longer needed on
+  Windows platforms.  
+
 . The CIDLC compiler now supports basic preprocessor directives:
   #ifdef, #ifndef, #else, and #endif as well as the -D command-
   line option.
@@ -92,12 +95,17 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
   reconfiguration granularity level, including:
 
   1) Install/remove component instances of the existing component types.
-  2) Install/remove component instances of a different type, i.e., a totally new type of component.
+  2) Install/remove component instances of a different type, i.e., a
+     totally new type of component.
   3) Install/remove component instances from an existing container.
-  4) Install new component instances into a dynamically created brand new container.
-     Move around existing components from one existing container to another existing/new container.
-  5) Install new component instances into another component server in the same physical node.
-  6) Install new component instances into another component server into a remote host.
+  4) Install new component instances into a dynamically created brand
+     new container.
+     Move around existing components from one existing container to
+     another existing/new container.
+  5) Install new component instances into another component server in
+     the same physical node.
+  6) Install new component instances into another component server
+     into a remote host.
   
   To see how to use this feature, please see the ReDaC-Usage.html 
   under the $CIAO_ROOT/examples/Hello/ directory.
