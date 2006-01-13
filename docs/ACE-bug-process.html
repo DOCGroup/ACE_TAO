@@ -63,11 +63,11 @@ permits. <P>
 </OL>
 
 <LI> You should also consider entering your bug report into our <A
-HREF="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bug tracking database</A>
-so that it's archived for future processing.  We try to address these
-bugs as time permits, but may not get to them for a while unless it
-affects our work or the work of our sponsors.  If you'd like an
-immediate response, please contact <A
+HREF="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bug tracking
+database</A> so that it's archived for future processing.  We try to
+address these bugs as time permits, but may not get to them for a
+while unless it affects our work or the work of our sponsors.  If
+you'd like an immediate response, please contact <A
 HREF="mailto:schmidt@cs.wustl.edu">me</A> about becoming a sponsor or
 contact one of the companies that provides <A
 HREF="http://www.cs.wustl.edu/~schmidt/commercial-support.html">
@@ -127,9 +127,29 @@ HREF="http://www.cs.wustl.edu/~schmidt/commercial-support.html">commercial suppo
 
 Naturally, we encourage other ACE+TAO users to continue to help
 provide fixes and advice in response to postings on the ACE and TAO
-mailing list.  But please be sensitive to the fact that the core team
-is <EM>very</EM> busy so we simply don't have time to address problems
-reported by non-sponsors. <P>
+mailing list.  If you have a patch that fixes a problem you've found
+with our software here's the process for submitting it:
+
+<OL>
+<LI> Use the latest version of the ACE, i.e., what's available from <P>
+
+  <A HREF="http://cvs.doc.wustl.edu/">http://cvs.doc.wustl.edu/</A> <P>
+  
+<LI> Create a ``unified diff'' and put this into Bugzilla at <P>
+
+  <A HREF="http://deuce.doc.wustl.edu/bugzilla/index.cgi">http://deuce.doc.wustl.edu/bugzilla/index.cgi</A> <P>
+
+  and send an email to the ACE mailing list or comp.soft-sys.ace newsgroup
+  summarizing what the problem was and you've done to fix the problem,
+  i.e., use the ChangeLog format. <P>
+  
+<LI> Ideally, you could also create (or augment) a test program that
+  validates your patch and integrate it into the ACE_ROOT/tests directory. <P>
+</OL>
+
+Please be sensitive to the fact that the core team is <EM>very</EM>
+busy so we simply don't have time to address problems reported by
+non-sponsors. <P>
 
 <HR><P>
 Back to the <A
