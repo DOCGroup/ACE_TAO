@@ -1,3 +1,9 @@
+Fri Jan 13 09:38:21 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* docs/ACE-bug-process.html (HREF): Updated this document to
+	  explain the process for submitting a patch.  Thanks to Rick
+ 	  Taylor <rick@tropicalstormsoftware.com> for motivating this.
+
 Fri Jan 13 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp (~TSS_Cleanup_Instance):
