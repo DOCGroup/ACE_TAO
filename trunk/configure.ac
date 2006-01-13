@@ -328,8 +328,6 @@ dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
 dnl may put it there.
 AC_SEARCH_LIBS([getservbyname],[socket xnet],,[AC_DEFINE([ACE_LACKS_GETSERVBYNAME])],[-lnsl])
 
-ACE_CHECK_LACKS_FUNCS(inet_aton)
-
 dnl Check for compile() regex function in -lgen.  Solaris, for example,
 dnl may put it there.
 AC_SEARCH_LIBS([compile],[gen],,)
@@ -1066,25 +1064,6 @@ ACE_CACHE_CHECK([for old malloc() prototype],
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 
-dnl Check for getopt() prototype
-AC_CHECK_DECL([getopt],
-              [],
-              [AC_DEFINE([ACE_LACKS_GETOPT_PROTOTYPE], 1,
-                         [Define to 1 if platform lacks the declaration
-                         of getopt().])],
-              [#include <stdlib.h>
-              #ifndef ACE_LACKS_UNISTD_H
-              # include <unistd.h>
-              #endif])
-
-dnl Check for madvise() prototype
-AC_CHECK_DECL([madvise],
-	      [],
-	      [AC_DEFINE([ACE_LACKS_MADVISE_PROTOTYPE], 1,
-			 [Define to 1 if platform lacks the declaration
-			 of madvise().])],
-	      [#include <sys/mman.h>])
-
 dnl Check for *_timedwait() prototypes
 dnl TODO: We only check for one of the *_timedwait() prototypes.
 dnl       Is this enough?
@@ -1095,22 +1074,6 @@ AC_CHECK_DECL([recv_timedwait],
                          of recv_timedwait, send_timedwait, etc.])],
               [#include <pthread.h>
 	       #include <fcntl.h>])
-
-dnl Check for ualarm prototype
-AC_CHECK_DECL([ualarm],
-              [],
-	      [AC_DEFINE([ACE_LACKS_UALARM_PROTOTYPE], 1,
-	                 [Define to 1 if platform lacks the declaration
-			 of ualarm().])],
-              [#include <unistd.h>])
-
-dnl Check for getrusage prototype in sys/resource.h
-AC_CHECK_DECL([getrusage],
-	      [AC_DEFINE([ACE_HAS_GETRUSAGE_PROTOTYPE], 1,
-			 [Define to 1 if platform has the declaration
-			 of getrusage().])],
-	      [],
-	      [#include <sys/resource.h>])
 
 dnl Check for {get,set}rlimit prototypes
 AC_CHECK_DECL([getrlimit],[],[],[#include <sys/resource.h>])
@@ -3443,6 +3406,17 @@ ACE_CHECK_LACKS_FUNCS(dup)
 
 ACE_CHECK_LACKS_FUNCS(dup2)
 
+dnl ACE uses execv, execvp and execve, so we don't bother to check
+dnl for the others (e.g. execl, execlp, execle)
+AC_CHECK_FUNC(execv)
+AC_CHECK_FUNC(execvp)
+AC_CHECK_FUNC(execve)
+if test "$ac_cv_func_execv" != yes &&
+   test "$ac_cv_func_execvp" != yes &&
+   test "$ac_cv_func_execve" != yes; then
+  AC_DEFINE([ACE_LACKS_EXEC])
+fi
+
 ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fork fsync)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
@@ -3456,6 +3430,21 @@ ACE_CHECK_HAS_FUNCS(getifaddrs)
 ACE_CHECK_LACKS_FUNCS(getegid geteuid getgid)
 
 ACE_CHECK_LACKS_FUNCS(getopt)
+if test $ac_cv_func_getopt = yes; then
+    AC_CHECK_DECL([getopt],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_GETOPT_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks the declaration
+			     of getopt().])],
+		  [#include <stdlib.h>
+		  #ifndef ACE_LACKS_UNISTD_H
+		  # include <unistd.h>
+		  #endif])
+fi
+
+AC_CHECK_FUNC([getpagesize],
+  [AC_DEFINE([ACE_HAS_GETPAGESIZE])],
+  [AC_DEFINE([ACE_PAGE_SIZE], [4096])])
 
 ACE_CHECK_LACKS_FUNCS(getpid)
 
@@ -3485,11 +3474,51 @@ fi
 
 ACE_CHECK_LACKS_FUNCS(getppid)
 
+ACE_CHECK_HAS_FUNCS(getrusage)
+if test $ac_cv_func_getrusage = yes; then
+    AC_CHECK_DECL([getrusage],
+		  [AC_DEFINE([ACE_HAS_GETRUSAGE_PROTOTYPE], 1,
+			     [Define to 1 if platform has the declaration
+			     of getrusage().])],
+		  [],
+		  [#include <sys/resource.h>])
+fi
+
 ACE_CHECK_LACKS_FUNCS(getuid)
+
+ACE_CHECK_LACKS_FUNCS(inet_aton)
 
 ACE_CHECK_LACKS_FUNCS(isatty)
 
 ACE_CHECK_HAS_FUNCS(itoa)
+
+dnl Check for 64 bit llseek() or lseek64()
+case "$host" in
+  *UnixWare7*)
+    dnl Skip the check
+    ;;
+  *)
+    ACE_CHECK_LSEEK64
+    ;;
+esac
+
+ACE_CHECK_LACKS_FUNCS(lstat)
+
+ACE_CHECK_LACKS_FUNCS(madvise)
+if test $ac_cv_func_madvise = yes; then
+    AC_CHECK_DECL([madvise],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_MADVISE_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks the declaration
+			     of madvise().])],
+		  [#include <sys/mman.h>])
+fi
+
+ACE_CHECK_HAS_FUNCS(memchr)
+
+ACE_CHECK_LACKS_FUNCS(mkfifo mkstemp mktemp)
+
+ACE_CHECK_LACKS_FUNCS(msync mprotect)
 
 ACE_CHECK_LACKS_FUNCS(pipe)
 
@@ -3643,18 +3672,14 @@ swab (src, dst, 2);
 
 ACE_CHECK_LACKS_FUNCS(sysconf)
 
-ACE_CHECK_LACKS_FUNCS(system)
+AC_CHECK_FUNC([sysinfo],
+  [
+   if test "$ac_cv_header_sys_systeminfo_h" = yes; then
+     AC_DEFINE([ACE_HAS_SYSINFO])
+   fi
+  ],)
 
-dnl ACE uses execv, execvp and execve, so we don't bother to check
-dnl for the others (e.g. execl, execlp, execle)
-AC_CHECK_FUNC(execv)
-AC_CHECK_FUNC(execvp)
-AC_CHECK_FUNC(execve)
-if test "$ac_cv_func_execv" != yes &&
-   test "$ac_cv_func_execvp" != yes &&
-   test "$ac_cv_func_execve" != yes; then
-  AC_DEFINE([ACE_LACKS_EXEC])
-fi
+ACE_CHECK_LACKS_FUNCS(system)
 
 AC_CHECK_FUNC([getmsg],
   [
@@ -3703,16 +3728,6 @@ main ()
   ],)
 
 AC_CHECK_FUNC([gethostbyaddr],,)
-
-dnl Check for 64 bit llseek() or lseek64()
-case "$host" in
-  *UnixWare7*)
-    dnl Skip the check
-    ;;
-  *)
-    ACE_CHECK_LSEEK64
-    ;;
-esac
 
 AC_CHECK_FUNC([bind],
   [
@@ -3874,18 +3889,12 @@ AC_CHECK_FUNC([strptime],
    AC_DEFINE([ACE_LACKS_NATIVE_STRPTIME])
   ])
 
-ACE_CHECK_HAS_FUNCS(memchr)
-
 if test "$ac_cv_type_wchar_t" = yes; then
   AC_CHECK_FUNC([wcslen],
     [AC_DEFINE([ACE_HAS_XPG4_MULTIBYTE_CHAR])],)
 fi
 
 ACE_CHECK_LACKS_FUNCS(syscall)
-
-ACE_CHECK_HAS_FUNCS(ualarm)
-
-ACE_CHECK_LACKS_FUNCS(unlink)
 
 AC_CHECK_FUNC([alarm],,)
 AC_CHECK_FUNC([signal],,)
@@ -3902,27 +3911,7 @@ if test "$ac_cv_func_getrlimit" != yes ||
   AC_DEFINE([ACE_LACKS_RLIMIT])
 fi
 
-AC_CHECK_FUNC([sysinfo],
-  [
-   if test "$ac_cv_header_sys_systeminfo_h" = yes; then
-     AC_DEFINE([ACE_HAS_SYSINFO])
-   fi
-  ],)
-
-ACE_CHECK_LACKS_FUNCS(lstat readlink rename recvmsg sendmsg)
-
-ACE_CHECK_HAS_FUNCS(getrusage)
-
-
-AC_CHECK_FUNC([getpagesize],
-  [AC_DEFINE([ACE_HAS_GETPAGESIZE])],
-  [AC_DEFINE([ACE_PAGE_SIZE], [4096])])
-
-ACE_CHECK_LACKS_FUNCS(msync mprotect mkfifo)
-
-ACE_CHECK_LACKS_FUNCS(mkstemp mktemp)
-
-ACE_CHECK_LACKS_FUNCS(madvise)
+ACE_CHECK_LACKS_FUNCS(readlink rename recvmsg sendmsg)
 
 if test "$ac_cv_header_sys_priocntl_h" = yes; then
   AC_CHECK_FUNC([priocntl],
@@ -3954,9 +3943,21 @@ fi dnl test "$ac_cv_header_sys_priocntl_h" = yes
 dnl FIXME:  How do we check for a working sbrk()?  Do we need to?
 ACE_CHECK_LACKS_FUNCS(sbrk)
 
+ACE_CHECK_HAS_FUNCS(ualarm)
+if test $ac_cv_func_ualarm = yes; then
+    AC_CHECK_DECL([ualarm],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_UALARM_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks the declaration
+			     of ualarm().])],
+		  [#include <unistd.h>])
+fi
+
 ACE_CHECK_LACKS_FUNCS(umask)
 
 ACE_CHECK_LACKS_FUNCS(uname)
+
+ACE_CHECK_LACKS_FUNCS(unlink)
 
 ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
 

@@ -1,3 +1,10 @@
+Fri Jan 13 19:06:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Reorder some function feature tests so they're closer to
+          alphabetical order.  This makes it easier to maintain.
+
 Fri Jan 13 17:56:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
