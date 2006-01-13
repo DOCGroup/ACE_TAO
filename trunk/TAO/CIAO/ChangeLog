@@ -1,3 +1,19 @@
+Fri Jan 13 20:39:21 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XSCRT/Parser.hpp
+        * tools/Config_Handlers/XSCRT/XML.hpp
+          
+          Added a templated casting operator for Xerces types instead
+          of using standard dynamic_cast.  Thanks to Ossama Othman
+          ossama at dre dot vanderbilt dot edu for suggesting this
+          fix.
+        
+        * CIAO-INSTALL.html
+        * NEWS
+        
+          The above changes removed the requirement for an RTTI enabled
+          version of Xerces.  Updated these documents to reflect this. 
+        
 Thu Jan 12 21:40:47 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/ReDaC-Usage.html
