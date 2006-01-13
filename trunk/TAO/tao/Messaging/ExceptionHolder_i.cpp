@@ -15,6 +15,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  ExceptionHolder::ExceptionHolder (void) :
+    data_ (0),
+    count_ (0)
+  {
+  }
+
   ExceptionHolder::ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
       ::CORBA::Boolean byte_order,
@@ -57,6 +63,20 @@ namespace TAO
       // todo convert exceptionlist to something we can really use.
       this->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
+
+  CORBA::ValueBase *
+  ExceptionHolderFactory::create_for_unmarshal (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  {
+    TAO::ExceptionHolder* ret_val = 0;
+    ACE_NEW_THROW_EX (ret_val,
+                      ExceptionHolder,
+                      CORBA::NO_MEMORY ());
+    ACE_CHECK_RETURN (0);
+
+    return ret_val;
+  }
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -66,6 +66,10 @@ private:
     PortableInterceptor::ORBInitInfo_ptr info
     ACE_ENV_ARG_DECL);
 
+  /// Register ExceptionHolder value factory
+  void register_value_factory (
+    PortableInterceptor::ORBInitInfo_ptr info
+    ACE_ENV_ARG_DECL);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

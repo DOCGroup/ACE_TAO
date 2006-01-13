@@ -26,6 +26,7 @@
 
 #include "tao/Messaging/ExceptionHolderA.h"
 #include "tao/Messaging/ExceptionHolderC.h"
+#include "tao/ValueType/ValueFactory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,6 +49,8 @@ namespace TAO
       public virtual ::CORBA::DefaultValueRefCountBase
   {
   public:
+    ExceptionHolder (void);
+
     ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
       ::CORBA::Boolean byte_order,
@@ -72,6 +75,22 @@ namespace TAO
     CORBA::ULong const count_;
 
   };
+
+  /**
+   * @class ExceptionHolderFactory
+   *
+   * @brief OBV factory implementation.
+   *
+   * Factory for ExceptionHolder
+   */
+  class TAO_Messaging_Export ExceptionHolderFactory :
+    public virtual CORBA::ValueFactoryBase
+  {
+  public:
+    virtual CORBA::ValueBase * create_for_unmarshal (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  };
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
