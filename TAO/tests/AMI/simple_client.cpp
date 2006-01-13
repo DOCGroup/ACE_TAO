@@ -104,10 +104,11 @@ public:
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
-                    }
+        }
       ACE_CATCHANY
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR");
+          ACE_ERROR ((LM_ERROR,
                       "... caught the wrong exception -> ERROR\n"));
         }
       ACE_ENDTRY;
