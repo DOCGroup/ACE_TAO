@@ -1,3 +1,12 @@
+Fri Jan 13 04:49:41 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Changed to use AC_SEARCH_LIBS for the -lsocket and -lnsl
+          libraries before calling ACE_CONFIGURATION_OPTIONS.  Third party
+          libraries may those libraries, and if they haven't been added to
+          $LIBS, the feature tests will fail.
+
 Thu Jan 12 20:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_time.inl:
