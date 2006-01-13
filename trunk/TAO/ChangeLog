@@ -1,12 +1,19 @@
+Fri Jan 13 11:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/ValueBase.cpp:
+          When no OBV Factory is found, throw a MARSHAL exception with
+          minor code 1 and completed MAYBE. This fixes bugzilla bug
+          2354
+
 Fri Jan 13 04:57:20 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-        
+
           Changed to #include "Thread_Lane_Resources.h".  This was missed
           in this change:
 
           Thu Jan 12 00:31:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
-        
+
           because I didn't have SSL enabled at the time.
 
 Thu Jan 12 19:27:12 UTC 2006  Tim Bradley  <bradley_t@ociweb.com>
@@ -14,7 +21,7 @@ Thu Jan 12 19:27:12 UTC 2006  Tim Bradley  <bradley_t@ociweb.com>
         * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp
         * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp
         * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp
-        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.cpp 
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.cpp
 
           The files listed above were modified to fix a problem that was
           observed in two similar tests.  The original problem was observed
