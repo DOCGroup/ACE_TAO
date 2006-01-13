@@ -1,3 +1,18 @@
+Fri Jan 13 08:34:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * test/test_config.h:
+
+          Changed so the very first thing we do is #undef ACE_NDEBUG.
+
+        * test/OS_Test.cpp:
+
+          Changed to make "test_config.h" the first header to be
+          #included, as it #undef's ACE_NDEBUG.  This ensures ACE_ASSERT()
+          will be defined so it validates its expression even for debug=0
+          builds.  Without this, all the checks in this file are compiled
+          out.  Fortunately unreferenced symbol warnings made us aware of
+          this problem.
+
 Fri Jan 13 07:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lynxos.h:
