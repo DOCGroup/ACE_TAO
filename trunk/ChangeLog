@@ -1,3 +1,17 @@
+Fri Jan 13 11:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.inl:
+          Changed ACE_OS::system to use ACE_LACKS_SYSTEM
+
+        * ace/config-chorus.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_SYSTEM
+
 Fri Jan 13 08:34:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * test/test_config.h:
