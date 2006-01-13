@@ -3643,6 +3643,8 @@ swab (src, dst, 2);
 
 ACE_CHECK_LACKS_FUNCS(sysconf)
 
+ACE_CHECK_LACKS_FUNCS(system)
+
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
 AC_CHECK_FUNC(execv)
