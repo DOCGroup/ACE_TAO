@@ -488,7 +488,7 @@ ACE_INLINE int
 ACE_OS::system (const ACE_TCHAR *s)
 {
   // ACE_OS_TRACE ("ACE_OS::system");
-#if defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS)
+#if defined (ACE_LACKS_SYSTEM)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
@@ -497,7 +497,7 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_OSCALL_RETURN (::spt_system (s), int, -1);
 #else
   ACE_OSCALL_RETURN (::system (ACE_TEXT_ALWAYS_CHAR (s)), int, -1);
-#endif /* !CHORUS */
+#endif /* ACE_LACKS_SYSTEM */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -22,6 +22,7 @@
 #define ACE_LACKS_WAITPID
 #define ACE_LACKS_DIFFTIME
 #define ACE_LACKS_DUP2
+#define ACE_LACKS_SYSTEM
 
 #define ACE_LACKS_FCNTL
 
