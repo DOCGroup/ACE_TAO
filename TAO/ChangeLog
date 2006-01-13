@@ -1,3 +1,20 @@
+Fri Jan 13 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/ExceptionHolder_i.{h,cpp}:
+        * tao/Messaging/Messaging_ORBInitializer.{h,cpp}:
+          Added a OBV Factory for the ExceptionHolder. At the moment we use
+          AMI with collocation disabled the ExceptionHolder is marshaled
+          and then tried to be demarshaled and then we need an OBV factory.
+          For system exceptions things work fine now, for user exceptions
+          always an UNKNOWN exception occurs in the _excep method, the
+          meta data which user exceptions we could throw is not available
+          in the current callstack so we just can't recreate the correct
+          user exception, have to see how we could fix that but
+          this is at least a good step in the direction. This only works
+          for the new AMI mapping. This is part of the fix for bugzilla
+          bug 2350. Thanks to Alan Stokes <alan at alanstokes dot org dot uk>
+          for reporting this.
+
 Fri Jan 13 12:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/simple_client.cpp:
