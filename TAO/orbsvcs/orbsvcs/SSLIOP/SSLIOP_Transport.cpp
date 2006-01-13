@@ -14,6 +14,7 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Transport,
