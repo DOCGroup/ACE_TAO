@@ -46,9 +46,14 @@ ACE_Pipe::open (int buffer_size)
   ACE_SOCK_Stream reader;
   ACE_SOCK_Stream writer;
   int result = 0;
+# if defined (ACE_WIN32)
+  ACE_INET_Addr local_any ("localhost:0");
+# else
+  ACE_Addr local_any = ACE_Addr::sap_any;
+# endif /* ACE_WIN32 */
 
   // Bind listener to any port and then find out what the port was.
-  if (acceptor.open (ACE_Addr::sap_any) == -1
+  if (acceptor.open (local_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
     result = -1;
   else

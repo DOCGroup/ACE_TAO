@@ -1,3 +1,14 @@
+Sat Jan 14 12:59:39 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Pipe.cpp (open): Added a workaround so that "localhost:0"
+	  is used rather than sap_any to avoid triggering firewall rules
+ 	  on Windows.  Thanks to Paul Felix <pef@fluent.com> for this fix.
+	
+	* ace/ACE.h (ACE): Updated the documentation for ACE::fork() to
+	  indicate that -1 or 1 are returned if avoid_zombies != 0.  This
+ 	  is a bug that needs to be fixed at some point.  Thanks to Tobias
+ 	  Herzke <tobias.herzke@uni-oldenburg.de> for reporting this.
+
 Fri Jan 13 19:06:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
