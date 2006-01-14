@@ -1,3 +1,13 @@
+Sat Jan 14 16:29:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/TAO_CosEvent.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosNaming.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosTrading.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsLogAdmin.pc.in:
+        * orbsvcs/orbsvcs/TAO_ETCL.pc.in:
+
+          Changed to Require TAO_AnyTypeCode.
+
 Sat Jan 14 09:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/ExceptionHolder_i.h:
