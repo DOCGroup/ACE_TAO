@@ -26,7 +26,7 @@
 
 #include "tao/Messaging/ExceptionHolderA.h"
 #include "tao/Messaging/ExceptionHolderC.h"
-#include "tao/ValueType/ValueFactory.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
