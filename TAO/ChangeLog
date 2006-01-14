@@ -1,3 +1,8 @@
+Sat Jan 14 09:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/ExceptionHolder_i.h:
+          Fixed casing of include
+
 Fri Jan 13 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1869_Regression/*:
