@@ -497,7 +497,10 @@ namespace ACE
    * if @a avoid_zombies == 0 call @c ACE_OS::fork directly, else
    * create an orphan process that's inherited by the init process;
    * init cleans up when the orphan process terminates so we don't
-   * create zombies.
+   * create zombies.  Returns -1 on failure and either the child PID
+   * on success if @a avoid_zombies == 0 or 1 on success if @a
+   * avoid_zombies != 0 (this latter behavior is a known bug that
+   * needs to be fixed).
    */
   extern ACE_Export pid_t fork (
     const ACE_TCHAR *program_name = ACE_LIB_TEXT ("<unknown>"),
