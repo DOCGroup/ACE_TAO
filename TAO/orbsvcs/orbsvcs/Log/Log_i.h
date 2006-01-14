@@ -400,6 +400,14 @@ protected:
   static const ACE_Time_Value	log_flush_interval_;
 };
 
+bool TAO_Log_Serv_Export 
+operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
