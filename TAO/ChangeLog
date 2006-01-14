@@ -1,3 +1,15 @@
+Sat Jan 14 23:44:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+
+          Changed TAO_Log_i::set_capacity_alarm_thresholds() to compare
+          the new threshold list against the old.  If they're the same,
+          we don't send a change notification.
+
+          Added operator== and operator!= for DsLogAdmin::
+          CapacityAlarmThresholdList.
+
 Sat Jan 14 16:29:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/TAO_CosEvent.pc.in:

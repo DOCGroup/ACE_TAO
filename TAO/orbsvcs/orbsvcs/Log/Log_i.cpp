@@ -545,6 +545,9 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
   DsLogAdmin::CapacityAlarmThresholdList old_threshs;
   old_threshs = thresholds_;
 
+  if (threshs == old_threshs)
+      return;
+
   this->thresholds_ = threshs;
 
   if (notifier_)
@@ -1284,6 +1287,35 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
         return false;
 
   return true;
+}
+
+bool
+operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length())
+    {
+      return false;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i) 
+    {
+      if (rhs[i] != lhs[i]) 
+	{
+	  return false;
+	}
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs)
+{
+  return !(lhs == rhs);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
