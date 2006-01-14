@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_DsLogAdmin
 Description: TAO Basic Logging Service Stub Library
-Requires: TAO
+Requires: TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_DsLogAdmin
 Cflags: -I${includedir}
