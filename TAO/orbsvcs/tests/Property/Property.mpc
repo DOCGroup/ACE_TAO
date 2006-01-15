@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe, property, utils {
+project(*server): namingexe, property_serv, utils {
   Source_Files {
     server.cpp
   }

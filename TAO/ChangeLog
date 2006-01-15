@@ -1,3 +1,78 @@
+Sun Jan 15 05:44:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Concurrency_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+	* orbsvcs/tests/Concurrency/Makefile.am:
+	* orbsvcs/tests/Property/Makefile.am:
+
+          Regenerated.
+
+	* orbsvcs/tests/Property/Property.mpc:
+
+          Update project to inherit from property_serv.mpb, as this
+          test uses a collocated concurrency service --- concurrency.mpb
+          now only brings in the client stubs.
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+
+          Update project to inherit from concurrency_serv.mpb, as this
+          test uses a collocated concurrency service --- concurrency.mpb
+          now only brings in the client stubs.
+
+	* orbsvcs/orbsvcs/TAO_CosConcurrency.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosConcurrency_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosConcurrency_Skel.pc.in:
+
+          Split TAO_CosConcurrency.pc.in pkg-config template into one for
+          each library.
+
+	* orbsvcs/orbsvcs/Concurrency/concurrency_serv_export.h:
+	* orbsvcs/orbsvcs/Concurrency/concurrency_skel_export.h:
+
+          New export headers for CosConcurrency servant skeleton and
+          service implementation libraries.
+
+	* orbsvcs/orbsvcs/CosConcurrency.mpc:
+
+          Split CosConcurrency Service into three libraries:
+          CosConcurrency, CosConcurrency_Skel, and CosConcurrency_Serv for
+          client stubs, servant skeletons, and service implementation
+          respectively.
+
+	* orbsvcs/orbsvcs/TAO_CosProperty.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosProperty_Serv.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosProperty_Skel.pc.in:
+
+          Split TAO_CosProperty.pc.in pkg-config template into one for
+          each library.
+
+	* orbsvcs/orbsvcs/Property/property_serv_export.h:
+	* orbsvcs/orbsvcs/Property/property_skel_export.h:
+
+          New export headers for CosProperty servant skeleton and service
+          implementation libraries.
+
+	* orbsvcs/orbsvcs/CosProperty.mpc:
+
+          Split CosProperty Service into three libraries:
+          CosProperty, CosProperty_Skel, and CosProperty_Serv for client
+          stubs, servant skeletons, and service implementation
+          respectively.
+
 Sun Jan 15 05:35:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

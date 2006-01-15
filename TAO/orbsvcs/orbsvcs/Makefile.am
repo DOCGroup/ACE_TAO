@@ -8,7 +8,7 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
-includedir = @includedir@/orbsvcs
+includedir = @includedir@/orbsvcs/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
@@ -97,7 +97,7 @@ EXTRA_DIST = \
   TAO_CosNaming.pc.in
 
 
-## Makefile.CosProperty.am
+## Makefile.CosProperty_IDL.am
 
 BUILT_SOURCES += \
   CosPropertyC.cpp \
@@ -125,7 +125,7 @@ CLEANFILES += \
 CosPropertyC.cpp CosPropertyC.h CosPropertyC.inl CosPropertyS.cpp CosPropertyS.h CosPropertyS.inl CosPropertyS_T.cpp CosPropertyS_T.h CosPropertyS_T.inl: CosProperty-stamp
 
 CosProperty-stamp: $(srcdir)/CosProperty.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Property_Export -Wb,export_include=orbsvcs/Property/property_export.h $(srcdir)/CosProperty.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosProperty.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -154,8 +154,11 @@ CLEANFILES += \
 CosPropertyServiceC.cpp CosPropertyServiceC.h CosPropertyServiceC.inl CosPropertyServiceS.cpp CosPropertyServiceS.h CosPropertyServiceS.inl CosPropertyServiceS_T.cpp CosPropertyServiceS_T.h CosPropertyServiceS_T.inl: CosPropertyService-stamp
 
 CosPropertyService-stamp: $(srcdir)/CosPropertyService.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Property_Export -Wb,export_include=orbsvcs/Property/property_export.h $(srcdir)/CosPropertyService.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosPropertyService.idl
 	@touch $@
+
+
+## Makefile.CosProperty.am
 
 lib_LTLIBRARIES += libTAO_CosProperty.la
 
@@ -170,38 +173,21 @@ libTAO_CosProperty_la_CPPFLAGS = \
 
 libTAO_CosProperty_la_SOURCES = \
   CosPropertyC.cpp \
-  CosPropertyS.cpp \
-  CosPropertyServiceC.cpp \
-  CosPropertyServiceS.cpp \
-  Property/CosPropertyService_i.cpp
+  CosPropertyServiceC.cpp
 
 libTAO_CosProperty_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosProperty_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  CosProperty.idl \
   CosPropertyC.h \
   CosPropertyC.inl \
-  CosPropertyS.h \
-  CosPropertyS.inl \
-  CosPropertyS_T.cpp \
-  CosPropertyS_T.h \
-  CosPropertyS_T.inl \
-  CosPropertyService.idl \
   CosPropertyServiceC.h \
   CosPropertyServiceC.inl \
-  CosPropertyServiceS.h \
-  CosPropertyServiceS.inl \
-  CosPropertyServiceS_T.cpp \
-  CosPropertyServiceS_T.h \
-  CosPropertyServiceS_T.inl \
-  Property/CosPropertyService_i.h \
   Property/property_export.h
 
 pkgconfig_DATA += \
@@ -214,7 +200,6 @@ TAO_CosProperty.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty.pc.i
 	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty.pc.in
 
 EXTRA_DIST += \
-  CosProperty.rc \
   TAO_CosProperty.pc.in
 
 
@@ -349,7 +334,6 @@ libTAO_AV_la_LDFLAGS = \
 libTAO_AV_la_LIBADD = \
   libTAO_CosNaming.la \
   libTAO_CosProperty.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -419,7 +403,7 @@ EXTRA_DIST += \
   AV.rc
 
 
-## Makefile.CosConcurrency.am
+## Makefile.CosConcurrency_IDL.am
 
 BUILT_SOURCES += \
   CosConcurrencyControlC.cpp \
@@ -427,7 +411,9 @@ BUILT_SOURCES += \
   CosConcurrencyControlC.inl \
   CosConcurrencyControlS.cpp \
   CosConcurrencyControlS.h \
+  CosConcurrencyControlS.inl \
   CosConcurrencyControlS_T.cpp \
+  CosConcurrencyControlS_T.h \
   CosConcurrencyControlS_T.inl
 
 CLEANFILES += \
@@ -437,14 +423,19 @@ CLEANFILES += \
   CosConcurrencyControlC.inl \
   CosConcurrencyControlS.cpp \
   CosConcurrencyControlS.h \
+  CosConcurrencyControlS.inl \
   CosConcurrencyControlS_T.cpp \
+  CosConcurrencyControlS_T.h \
   CosConcurrencyControlS_T.inl
 
-CosConcurrencyControlC.cpp CosConcurrencyControlC.h CosConcurrencyControlC.inl CosConcurrencyControlS.cpp CosConcurrencyControlS.h CosConcurrencyControlS_T.cpp CosConcurrencyControlS_T.inl: CosConcurrencyControl-stamp
+CosConcurrencyControlC.cpp CosConcurrencyControlC.h CosConcurrencyControlC.inl CosConcurrencyControlS.cpp CosConcurrencyControlS.h CosConcurrencyControlS.inl CosConcurrencyControlS_T.cpp CosConcurrencyControlS_T.h CosConcurrencyControlS_T.inl: CosConcurrencyControl-stamp
 
 CosConcurrencyControl-stamp: $(srcdir)/CosConcurrencyControl.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Concurrency_Export -Wb,export_include=orbsvcs/Concurrency/concurrency_export.h $(srcdir)/CosConcurrencyControl.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Concurrency_Export -Wb,stub_export_include=orbsvcs/Concurrency/concurrency_export.h -Wb,skel_export_macro=TAO_Concurrency_Skel_Export -Wb,skel_export_include=orbsvcs/Concurrency/concurrency_skel_export.h $(srcdir)/CosConcurrencyControl.idl
 	@touch $@
+
+
+## Makefile.CosConcurrency.am
 
 lib_LTLIBRARIES += libTAO_CosConcurrency.la
 
@@ -458,36 +449,20 @@ libTAO_CosConcurrency_la_CPPFLAGS = \
   -DTAO_CONCURRENCY_BUILD_DLL
 
 libTAO_CosConcurrency_la_SOURCES = \
-  Concurrency/CC_Lock.cpp \
-  Concurrency/CC_LockSet.cpp \
-  Concurrency/CC_LockSetFactory.cpp \
-  Concurrency/Concurrency_Loader.cpp \
-  Concurrency/Concurrency_Utils.cpp \
-  CosConcurrencyControlC.cpp \
-  CosConcurrencyControlS.cpp
+  CosConcurrencyControlC.cpp
 
 libTAO_CosConcurrency_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosConcurrency_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  Concurrency/CC_Lock.h \
-  Concurrency/CC_LockSet.h \
-  Concurrency/CC_LockSetFactory.h \
-  Concurrency/Concurrency_Loader.h \
-  Concurrency/Concurrency_Utils.h \
   Concurrency/concurrency_export.h \
-  CosConcurrencyControl.idl \
   CosConcurrencyControlC.h \
-  CosConcurrencyControlC.inl \
-  CosConcurrencyControlS.h \
-  CosConcurrencyControlS_T.cpp \
-  CosConcurrencyControlS_T.inl
+  CosConcurrencyControlC.inl
 
 pkgconfig_DATA += \
   TAO_CosConcurrency.pc
@@ -499,8 +474,103 @@ TAO_CosConcurrency.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrenc
 	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency.pc.in
 
 EXTRA_DIST += \
-  CosConcurrency.rc \
   TAO_CosConcurrency.pc.in
+
+
+## Makefile.CosConcurrency_Skel.am
+
+lib_LTLIBRARIES += libTAO_CosConcurrency_Skel.la
+
+libTAO_CosConcurrency_Skel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_CONCURRENCY_SKEL_BUILD_DLL
+
+libTAO_CosConcurrency_Skel_la_SOURCES = \
+  CosConcurrencyControlS.cpp
+
+libTAO_CosConcurrency_Skel_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CosConcurrency_Skel_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_CosConcurrency.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Concurrency/concurrency_skel_export.h \
+  CosConcurrencyControlS.h \
+  CosConcurrencyControlS.inl
+
+pkgconfig_DATA += \
+  TAO_CosConcurrency_Skel.pc
+
+CLEANFILES += \
+  TAO_CosConcurrency_Skel.pc
+
+TAO_CosConcurrency_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency_Skel.pc.in
+
+EXTRA_DIST += \
+  TAO_CosConcurrency_Skel.pc.in
+
+
+## Makefile.CosConcurrency_Serv.am
+
+lib_LTLIBRARIES += libTAO_CosConcurrency_Serv.la
+
+libTAO_CosConcurrency_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_CONCURRENCY_SERV_BUILD_DLL
+
+libTAO_CosConcurrency_Serv_la_SOURCES = \
+  Concurrency/CC_Lock.cpp \
+  Concurrency/CC_LockSet.cpp \
+  Concurrency/CC_LockSetFactory.cpp \
+  Concurrency/Concurrency_Loader.cpp \
+  Concurrency/Concurrency_Utils.cpp
+
+libTAO_CosConcurrency_Serv_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CosConcurrency_Serv_la_LIBADD = \
+  libTAO_CosConcurrency_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_CosConcurrency.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Concurrency/CC_Lock.h \
+  Concurrency/CC_LockSet.h \
+  Concurrency/CC_LockSetFactory.h \
+  Concurrency/Concurrency_Loader.h \
+  Concurrency/Concurrency_Utils.h \
+  Concurrency/concurrency_serv_export.h
+
+pkgconfig_DATA += \
+  TAO_CosConcurrency_Serv.pc
+
+CLEANFILES += \
+  TAO_CosConcurrency_Serv.pc
+
+TAO_CosConcurrency_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency_Serv.pc.in
+
+EXTRA_DIST += \
+  TAO_CosConcurrency_Serv.pc.in
 
 
 ## Makefile.CosEvent_IDL.am
@@ -2324,6 +2394,103 @@ nobase_include_HEADERS += \
 endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
+
+## Makefile.CosProperty_Skel.am
+
+lib_LTLIBRARIES += libTAO_CosProperty_Skel.la
+
+libTAO_CosProperty_Skel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_PROPERTY_SKEL_BUILD_DLL
+
+libTAO_CosProperty_Skel_la_SOURCES = \
+  CosPropertyS.cpp \
+  CosPropertyServiceS.cpp
+
+libTAO_CosProperty_Skel_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CosProperty_Skel_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_CosProperty.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CosPropertyS.h \
+  CosPropertyS.inl \
+  CosPropertyS_T.cpp \
+  CosPropertyS_T.h \
+  CosPropertyS_T.inl \
+  CosPropertyServiceS.h \
+  CosPropertyServiceS.inl \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.inl \
+  Property/property_skel_export.h
+
+pkgconfig_DATA += \
+  TAO_CosProperty_Skel.pc
+
+CLEANFILES += \
+  TAO_CosProperty_Skel.pc
+
+TAO_CosProperty_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Skel.pc.in
+
+EXTRA_DIST += \
+  TAO_CosProperty_Skel.pc.in
+
+
+## Makefile.CosProperty_Serv.am
+
+lib_LTLIBRARIES += libTAO_CosProperty_Serv.la
+
+libTAO_CosProperty_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_PROPERTY_SERV_BUILD_DLL
+
+libTAO_CosProperty_Serv_la_SOURCES = \
+  Property/CosPropertyService_i.cpp
+
+libTAO_CosProperty_Serv_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CosProperty_Serv_la_LIBADD = \
+  libTAO_CosProperty_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_CosProperty.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Property/CosPropertyService_i.h \
+  Property/property_serv_export.h
+
+pkgconfig_DATA += \
+  TAO_CosProperty_Serv.pc
+
+CLEANFILES += \
+  TAO_CosProperty_Serv.pc
+
+TAO_CosProperty_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Serv.pc.in
+
+EXTRA_DIST += \
+  TAO_CosProperty_Serv.pc.in
+
 
 ## Makefile.CosTime.am
 
