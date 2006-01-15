@@ -1,9 +1,35 @@
+Sun Jan 15 06:06:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/avstreams.mpb:
+
+          Update to inherit from property_serv. as this project uses a
+          collocated property service --- property.mpb now only brings
+          in the client stubs.
+
+        * bin/MakeProjectCreator/config/concurrency.mpb:
+        * bin/MakeProjectCreator/config/concurrency_serv.mpb:
+        * bin/MakeProjectCreator/config/concurrency_skel.mpb:
+
+          Split CosConcurrency Service into three libraries:
+          CosConcurrency, CosConcurrency_Skel, and CosConcurrency_Serv for
+          client stubs, servant skeletons, and service implementation
+          respectively.
+
+        * bin/MakeProjectCreator/config/property.mpb:
+        * bin/MakeProjectCreator/config/property_serv.mpb:
+        * bin/MakeProjectCreator/config/property_skel.mpb:
+
+          Split CosProperty Service into three libraries:
+          CosProperty, CosProperty_Skel, and CosProperty_Serv for client
+          stubs, servant skeletons, and service implementation
+          respectively.
+
 Sat Jan 14 12:59:39 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Pipe.cpp (open): Added a workaround so that "localhost:0"
 	  is used rather than sap_any to avoid triggering firewall rules
  	  on Windows.  Thanks to Paul Felix <pef@fluent.com> for this fix.
-	
+
 	* ace/ACE.h (ACE): Updated the documentation for ACE::fork() to
 	  indicate that -1 or 1 are returned if avoid_zombies != 0.  This
  	  is a bug that needs to be fixed at some point.  Thanks to Tobias
@@ -12,14 +38,14 @@ Sat Jan 14 12:59:39 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Fri Jan 13 19:06:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
+
           Reorder some function feature tests so they're closer to
           alphabetical order.  This makes it easier to maintain.
 
 Fri Jan 13 17:56:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
+
           Added ACE_LACKS_SYSTEM feature test.
 
 Fri Jan 13 09:38:21 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
