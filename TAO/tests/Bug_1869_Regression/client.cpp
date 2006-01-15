@@ -25,7 +25,7 @@ class AdderCallback
       }
 
     virtual void add_excep (
-        ::Messaging::ExceptionHolder * excep_holder
+        ::Messaging::ExceptionHolder *
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

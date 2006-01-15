@@ -49,7 +49,8 @@ class ACE_DLL;
   ACE_LIB_TEXT (":") \
   ACE_LIB_TEXT (objectclass) \
   ACE_LIB_TEXT ("() \"") \
-  ACE_LIB_TEXT (parameters "\"")
+  ACE_LIB_TEXT (parameters) \
+  ACE_LIB_TEXT ("\"")
 #define ACE_REMOVE_SERVICE_DIRECTIVE(ident) \
   ACE_LIB_TEXT ("remove ") \
   ACE_LIB_TEXT (ident)
