@@ -65,7 +65,7 @@ ACE_SOCK_IO::recv (iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return this->recvv (iov,
-                      static_cast<int> (n),
+                      n,
                       timeout);
 }
 
@@ -146,7 +146,7 @@ ACE_SOCK_IO::send (const void *buf,
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return ACE_OS::write (this->get_handle (),
-                        (const char *) buf,
+                        buf,
                         n,
                         overlapped);
 }

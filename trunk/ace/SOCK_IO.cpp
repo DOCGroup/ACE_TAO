@@ -72,7 +72,7 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-                     (u_long *) &inlen) == -1)
+                     &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
@@ -103,8 +103,8 @@ ACE_SOCK_IO::send (size_t n, ...) const
   ACE_TRACE ("ACE_SOCK_IO::send");
 
   va_list argp;
-  int total_tuples = static_cast<int> (n) / 2;
-  iovec *iovp;
+  size_t total_tuples = n / 2;
+  iovec *iovp = 0;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -115,7 +115,7 @@ ACE_SOCK_IO::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len = va_arg (argp, int);
@@ -143,7 +143,7 @@ ACE_SOCK_IO::recv (size_t n, ...) const
   ACE_TRACE ("ACE_SOCK_IO::recv");
 
   va_list argp;
-  int total_tuples = static_cast<int> (n / 2);
+  size_t total_tuples = n / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -155,7 +155,7 @@ ACE_SOCK_IO::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len = va_arg (argp, int);
