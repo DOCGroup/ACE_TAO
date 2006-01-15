@@ -1,3 +1,8 @@
+Sun Jan 15 18:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1869_Regression/client.cpp:
+          Fixed unused argument warning
+
 Sun Jan 15 05:44:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Concurrency_Service/Makefile.am:
