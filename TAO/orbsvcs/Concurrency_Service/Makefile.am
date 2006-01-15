@@ -34,8 +34,10 @@ Concurrency_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosConcurrency.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosConcurrency_Serv.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosConcurrency_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosConcurrency.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
