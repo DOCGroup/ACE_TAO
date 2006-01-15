@@ -1,3 +1,10 @@
+Sun Jan 15 18:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Fixed ACE_DYNAMIC_SERVICE_DIRECTIVE macro when unicode is
+          enabled. Thanks to Jan Ohlenburg <jan dot ohlenburg at
+          fit dot fraunhofer dot de>.
+
 Sun Jan 15 06:06:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/avstreams.mpb:
