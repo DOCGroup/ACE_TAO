@@ -411,6 +411,7 @@ AC_CONFIG_FILES([
   orbsvcs/tests/ImplRepo/scale/Makefile
   orbsvcs/tests/InterfaceRepo/Application_Test/Makefile
   orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile
+  orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/Makefile
   orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile
   orbsvcs/tests/InterfaceRepo/Latency_Test/Makefile
   orbsvcs/tests/InterfaceRepo/Makefile
