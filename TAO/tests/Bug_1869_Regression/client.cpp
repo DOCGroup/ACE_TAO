@@ -66,7 +66,7 @@ int main (int argc, char* argv[]) {
     obj = orb->string_to_object("corbaloc:iiop:127.0.0.1:4711/Adder");
     AMI_test::adder_var adder = AMI_test::adder::_narrow(obj.in ());
 
-    AdderCallback cb_servant(orb);
+    AdderCallback cb_servant(orb.in ());
 
     while(true) {
       try
