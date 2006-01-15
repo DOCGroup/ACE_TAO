@@ -4,8 +4,8 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: TAO_CosProperty
-Description: TAO CosProperty Library
-Requires: TAO_PortableServer, TAO
+Description: TAO CosProperty Stub Library
+Requires: TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_CosProperty
 Cflags: -I${includedir}
