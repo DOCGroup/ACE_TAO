@@ -24,7 +24,7 @@ Sun Jan 15 05:44:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 	* orbsvcs/tests/Property/Property.mpc:
 
           Update project to inherit from property_serv.mpb, as this
-          test uses a collocated concurrency service --- concurrency.mpb
+          test uses a collocated concurrency service --- property.mpb
           now only brings in the client stubs.
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
