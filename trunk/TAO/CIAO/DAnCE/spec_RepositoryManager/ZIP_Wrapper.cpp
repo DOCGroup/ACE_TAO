@@ -5,7 +5,7 @@
 // Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
 //
 // Purpose: to provide a wrapper around ZZIPlib for easy handling of
-//			ZIP archives. This wrapper can me used as an auxiliary 
+//			ZIP archives. This wrapper can me used as an auxiliary
 //			class that allows a program to become ZIP-aware
 
 
@@ -31,8 +31,8 @@
 
 
 //ZIP_File_Info constructor
-ZIP_File_Info::ZIP_File_Info (char* name, size_t size) 
-	: name_ (name), 
+ZIP_File_Info::ZIP_File_Info (char* name, size_t size)
+	: name_ (name),
 	  size_ (size),
 	  next_ (0),
 	  prev_ (0)
@@ -40,8 +40,8 @@ ZIP_File_Info::ZIP_File_Info (char* name, size_t size)
 }
 
 //ZIP_File_Info default constructor
-ZIP_File_Info::ZIP_File_Info () 
-	: name_ (""), 
+ZIP_File_Info::ZIP_File_Info ()
+	: name_ (""),
 	  size_ (0),
 	  next_ (0),
 	  prev_ (0)
@@ -53,17 +53,17 @@ ZIP_File_Info::ZIP_File_Info ()
 size_t ZIP_Wrapper::file_list_info (char* zip_name, ACE_Double_Linked_List<ZIP_File_Info> &list)
 {
 	size_t num = 0;					//number of files in archive
-	ZZIP_DIR * dir;					//pointer to a zip archive
-    ZZIP_DIRENT * dir_entry;		//pointer to a file within the archive
+  ZZIP_DIR * dir = 0;          //pointer to a zip archive
+  ZZIP_DIRENT * dir_entry = 0;   //pointer to a file within the archive
 
 	//open the zip archive
-    dir = zzip_opendir(zip_name);
-    
+  dir = zzip_opendir(zip_name);
+
 	if (!dir)
 	  return 0;
 
 	//read each dir entry and show one line of info per file
-    while ((dir_entry = zzip_readdir (dir)))
+  while ((dir_entry = zzip_readdir (dir)))
 	{
 		//retrieve the name of the file
 		char* name = dir_entry->d_name;
@@ -80,33 +80,33 @@ size_t ZIP_Wrapper::file_list_info (char* zip_name, ACE_Double_Linked_List<ZIP_F
 	return num;
 }
 
-//get file and store it into an ACE_Message_Block
+// Get file and store it into an ACE_Message_Block
 bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
 {
 	bool return_code = true;
 
 	ZZIP_FILE* zip_file = zzip_open (accessor, O_RDONLY| O_BINARY);
 
-    if (! zip_file)
+  if (!zip_file)
 		return false;
-	
-	int num_read;
+
+  int num_read = 0;
 	file.size(BUFSIZ);
 	ACE_Message_Block* head = &file;
 
 	// read chunks of 16 bytes into buf and print them to stdout
-    while (0 < (num_read = zzip_read(zip_file, head->wr_ptr(), head->size())))
+  while (0 < (num_read = zzip_read(zip_file, head->wr_ptr(), head->size())))
     {
-		head->wr_ptr (num_read);
-		head->cont (new ACE_Message_Block (BUFSIZ));
-		head = head->cont ();
-	}
+      head->wr_ptr (num_read);
+      head->cont (new ACE_Message_Block (BUFSIZ));
+      head = head->cont ();
+    }
 
-	if (num_read < 0) 
+	if (num_read < 0)
 		return_code = false;
 
 	zzip_file_close (zip_file);
-	
+
 	return return_code;
 }
 
@@ -125,34 +125,34 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
 	//get the handle to the file
 	ZZIP_FILE* zip_file = zzip_file_open (dir, filename, O_RDONLY | O_BINARY);
 
-    if (!zip_file)
+  if (!zip_file)
 		return false;
-	
+
 	int num_read = 0;
 	ACE_Message_Block* head = &file;
 
 	//read the file into the ACE_Message_Block
-    do
+  do
     {
 		if (head->space () == 0)
 	  {
 		  head->cont (new ACE_Message_Block (BUFSIZ));
 		  head = head->cont ();
 	  }
-		
+
 		num_read = zzip_read(zip_file, head->wr_ptr(), head->space());
-		
+
 		if (num_read > 0)
 			head->wr_ptr (num_read);
 
-	}while (num_read > 0);
+  } while (num_read > 0);
 
-	if (num_read < 0) 
+	if (num_read < 0)
 		return_code = false;
 
 	zzip_file_close (zip_file);
 	zzip_closedir(dir);
-	
+
 	return return_code;
 }
 
@@ -164,13 +164,13 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
 //directory structure of archive is recreated
 bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
 {
-	ZZIP_DIR * dir;					//pointer to a zip archive
-    ZZIP_DIRENT * dir_entry;		//pointer to a file within the archive
-    ZZIP_FILE* file;				//pointer to a zip file within an archive
+  ZZIP_DIR * dir = 0;          //pointer to a zip archive
+  ZZIP_DIRENT * dir_entry = 0;   //pointer to a file within the archive
+  ZZIP_FILE* file = 0;       //pointer to a zip file within an archive
 
 	//open the zip archive
     dir = zzip_opendir(zip_archive);
-    
+
 	if (!dir)
 	  return false;
 
@@ -200,7 +200,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
 	ACE_OS::mkdir(arch_dir.c_str());				//if dir exists -1 is returned and ignored
 
 	//read each dir entry and show one line of info per file
-    while ((dir_entry = zzip_readdir (dir)))
+  while ((dir_entry = zzip_readdir (dir)))
 	{
 		//retrieve the name of the file
 		char* name = dir_entry->d_name;
@@ -238,7 +238,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
 		//ACE_Auto_Ptr does not support this functionality
 		std::auto_ptr<char> buffer;
 		buffer.reset ( new char [dir_entry->st_size + 1]);
-		
+
 		//read in the data
 		zzip_read(file, &(*buffer), dir_entry->st_size);
 

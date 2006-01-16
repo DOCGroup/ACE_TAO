@@ -4,19 +4,18 @@
 #include "PC_Updater.h"
 #include "PC_Updater_T.h"
 
-  namespace PC_Updater_T
+namespace PC_Updater_T
+{
+  /// Dumps a sequence
+  template <typename SEQUENCE>
+  void update_sequence (const SEQUENCE &seq, PC_Updater* updater)
   {
-    // Dumps a sequence
-    template <typename SEQUENCE>
-    void update_sequence (const SEQUENCE &seq, PC_Updater* updater)
-    {
-      CORBA::ULong size = seq.length ();
+    const CORBA::ULong size = seq.length ();
 
-      if (size != 0)
-		  for (CORBA::ULong i = 0; i < size; ++i)
-              updater->update (seq[i]);
-	}
-
+    for (CORBA::ULong i = 0; i < size; ++i)
+      updater->update (seq[i]);
   }
+
+}
 
 #endif /* PC_Updater_C */

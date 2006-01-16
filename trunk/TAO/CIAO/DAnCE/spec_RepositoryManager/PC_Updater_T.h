@@ -18,12 +18,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-  namespace PC_Updater_T
-  {
-    template <typename SEQUENCE>
-    static void update_sequence (const SEQUENCE &seq);
-  }
-
+namespace PC_Updater_T
+{
+  template <typename SEQUENCE>
+  static void update_sequence (const SEQUENCE &seq);
+}
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "PC_Updater_T.cpp"

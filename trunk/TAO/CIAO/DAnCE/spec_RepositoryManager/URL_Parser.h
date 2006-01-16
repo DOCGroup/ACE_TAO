@@ -1,56 +1,50 @@
-// $Id$
 
 /* -*- C++ -*- */
-// URL_Parser.h, Stoyan
 
-//============================================================================
-//
-// = FILENAME
-//    URL_Parser.h
-//
-// = DESCRIPTION
-//     parses a URL
-//
-// = AUTHOR
-//    Stoyan Paunov
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    URL_Parser.h
+ *
+ *  $Id$
+ *
+ *  Parses a URL
+ *
+ *
+ *  @author Stoyan Paunov
+ */
+//=============================================================================
+
 
 #ifndef URL_PARSER_H
 #define URL_PARSER_H
 
 #include "ace/Get_Opt.h"
-
-//#if !defined (ACE_LACKS_PRAGMA_ONCE)
-//# pragma once
-//#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/ARGV.h"
 
 class URL_Parser
 {
 public:
+  /// Returns the singleton instance
   static URL_Parser *instance (void);
-  // Returns the singleton instance
 
+  /// parses commandline arguments
   bool parse_args (int argc, ACE_TCHAR *argv[]);
-  // parses commandline arguments
 
   bool parseURL (char* url);
 
   void exitOnError (void);
 
+  /// Hostname to connect to
   ACE_TCHAR *hostname_;
-  // Hostname to connect to
 
+  /// Port number to use
   u_short port_;
-  // Port number to use
 
+  /// Filename to upload/download
   ACE_TCHAR *filename_;
-  // Filename to upload/download
 
+  /// turns on verbosity
   int debug_;
-  // turns on verbosity
 
   //destructor
   ~URL_Parser (void);
@@ -58,8 +52,8 @@ protected:
   URL_Parser (void);
   // protected constructor, singleton
 
+  /// the singleton
   static URL_Parser *instance_;
-  // the singleton
 };
 
 #endif /* URL_PARSER_H */
