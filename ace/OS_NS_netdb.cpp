@@ -19,7 +19,7 @@ ACE_RCSID(ace, OS_NS_netdb, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 
 struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
@@ -185,7 +185,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   return result;
 }
 
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

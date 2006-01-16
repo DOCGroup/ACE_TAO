@@ -115,32 +115,23 @@ ACE_OS::dlerror (void)
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
-# if defined (ACE_HAS_CHARPTR_DL)
-typedef ACE_TCHAR * ACE_DL_TYPE;
-# else
-typedef const ACE_TCHAR * ACE_DL_TYPE;
-# endif /* ACE_HAS_CHARPTR_DL */
-
 ACE_INLINE ACE_SHLIB_HANDLE
 ACE_OS::dlopen (const ACE_TCHAR *fname,
                 int mode)
 {
   ACE_OS_TRACE ("ACE_OS::dlopen");
 
-  // Get the correct OS type.
-  ACE_DL_TYPE filename = const_cast<ACE_DL_TYPE> (fname);
-
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
 #   if defined (ACE_HAS_SGIDLADD)
   ACE_OSCALL
-    (::sgidladd (ACE_TEXT_ALWAYS_CHAR (filename), mode), void *, 0, handle);
+    (::sgidladd (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
 #   elif defined (_M_UNIX)
   ACE_OSCALL
-    (::_dlopen (ACE_TEXT_ALWAYS_CHAR (filename), mode), void *, 0, handle);
+    (::_dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
 #   else
   ACE_OSCALL
-    (::dlopen (ACE_TEXT_ALWAYS_CHAR (filename), mode), void *, 0, handle);
+    (::dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
 #   endif /* ACE_HAS_SGIDLADD */
 #   if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   if (handle != 0)
@@ -163,18 +154,18 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 
-  ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (filename), ACE_SHLIB_HANDLE, 0);
+  ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
 # elif defined (__hpux)
 
 #   if defined(__GNUC__) || __cplusplus >= 199707L
-  ACE_OSCALL_RETURN (::shl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
+  ACE_OSCALL_RETURN (::shl_load(fname, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   else
-  ACE_OSCALL_RETURN (::cxxshl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
+  ACE_OSCALL_RETURN (::cxxshl_load(fname, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   endif  /* aC++ vs. Hp C++ */
 # elif defined (VXWORKS)
-  MODULE* handle;
+  MODULE* handle = 0;
   // Open readonly
-  ACE_HANDLE filehandle = ACE_OS::open (filename,
+  ACE_HANDLE filehandle = ACE_OS::open (fname,
                                         O_RDONLY,
                                         ACE_DEFAULT_FILE_PERMS);
 
@@ -188,8 +179,8 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       if ( (loaderror != 0) && (handle != 0) )
         {
           // ouch something went wrong most likely unresolved externals
-                  if (handle)
-                ::unldByModuleId ( handle, 0 );
+          if (handle)
+            ::unldByModuleId ( handle, 0 );
           handle = 0;
         }
     }
@@ -233,8 +224,6 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // WinCE is WCHAR always; other platforms need a char * symbol name
   ACE_Wide_To_Ascii w_sname (sname);
   char *symbolname = w_sname.char_rep ();
-#elif defined (ACE_HAS_CHARPTR_DL)
-  char *symbolname = const_cast<char *> (sname);
 #else
   const char *symbolname = sname;
 #endif /* ACE_HAS_WINCE */

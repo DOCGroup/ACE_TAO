@@ -129,7 +129,7 @@ ACE_Sched_Params::priority_min (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   return THREAD_PRIORITY_IDLE;
-#elif defined (VXWORKS)
+#elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   return 255;

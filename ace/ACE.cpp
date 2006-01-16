@@ -25,7 +25,7 @@
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 extern "C" int maxFiles;
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ACE.inl"
@@ -2659,7 +2659,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       need_to_check = 1;
       known_failure = 1;
     }
-#elif defined (VXWORKS)
+#elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (is_tli);
 
   // Force the check on VxWorks.  The read handle for "h" is not set,

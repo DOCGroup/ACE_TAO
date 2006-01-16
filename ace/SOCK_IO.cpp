@@ -68,7 +68,7 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
       break;
     }
 
-  u_long inlen;
+  int inlen = 0;
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
