@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "NAM_Map.h"
+#include "ace/Vector_T.h"
 
 namespace CIAO
 {
@@ -136,10 +137,24 @@ namespace CIAO
     /// Spawn delay for the NodeAppMgr
     int spawn_delay_;
 
-    // Cache reference of last NodeAppManager
-    // Deployment::NodeApplicationManager_var manager_;
-
+    /// Cache reference of last NodeAppManager
+    /// Deployment::NodeApplicationManager_var manager_;
     NAM_Map map_;
+
+    /// A reference count map for the components installed on this node
+    typedef
+    ACE_Hash_Map_Manager_Ex <ACE_CString,
+                             int,
+                             ACE_Hash<ACE_CString>,
+                             ACE_Equal_To<ACE_CString>,
+                             ACE_Null_Mutex> Reference_Count_Map;
+
+    typedef Reference_Count_Map::iterator Ref_Count_Iterator;
+
+    Reference_Count_Map ref_count_map_;
+
+    /// A list to track the names of shared component instances
+    CORBA::StringSeq shared_components_;
   };
 
 

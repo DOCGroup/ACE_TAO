@@ -1,6 +1,7 @@
 // $Id$
 #include "Packaging_Data.idl"
 #include "ServerResources.idl"
+#include <tao/StringSeq.pidl>
 
 module Deployment {
 
@@ -56,7 +57,6 @@ module Deployment {
   interface DomainApplicationManager
   {
     DeploymentPlan getPlan ();
-
 
     /// CIAO specific version of startLaunch implementation, this one
     /// differs with spec-defined operation in the sense that it doesn't
@@ -150,7 +150,12 @@ module Deployment {
               InvalidProperty,
               ::Components::RemoveFailure);
 
-      void reset_plan (in DeploymentPlan plan);
+    /// CIAO specific operation to reset deployment plan
+    void reset_plan (in DeploymentPlan plan);
+    
+    /// CIAO speicfic operation to set the information of
+    /// "shared components" (through NodeManager)
+    void set_shared_components (in CORBA::StringSeq components);
   };
 
   interface NodeManager {
@@ -187,60 +192,60 @@ module Deployment {
 //***************************************new_RepositoryManager ONWARDS*****************************************
 
 
-	typedef sequence<octet> Artifact;
-	typedef sequence<octet> Package;
+        typedef sequence<octet> Artifact;
+        typedef sequence<octet> Package;
 
-	exception NoPlan {
-	};
+        exception NoPlan {
+        };
 
-	enum Platform {
-		Win32,
-		Unix,
-		Linux,
-		Solaris,
-		Vxworks,
-		UNDEF
-	};
+        enum Platform {
+                Win32,
+                Unix,
+                Linux,
+                Solaris,
+                Vxworks,
+                UNDEF
+        };
 
-	struct Implementation
-	{
-		Platform the_platform;
-		string name;
-		Artifact the_implementation;
-	};
+        struct Implementation
+        {
+                Platform the_platform;
+                string name;
+                Artifact the_implementation;
+        };
 
-	typedef sequence<Implementation> Implementations;
+        typedef sequence<Implementation> Implementations;
 
-	interface new_RepositoryManager 
-	{
-		void installPackage (in string installationName,
+        interface new_RepositoryManager 
+        {
+                void installPackage (in string installationName,
                          in Package the_package,
                          in boolean replace)
-	      raises (NameExists, PackageError);
+              raises (NameExists, PackageError);
 
-		DeploymentPlan	retrievePlan (in string packageName)
-			raises (NoPlan);
+                DeploymentPlan  retrievePlan (in string packageName)
+                        raises (NoPlan);
 
-	    Package findPackageByName (in string name)
-	      raises (NoSuchName);
-	
-		Implementation findImplementationByName (in string implementation_name,
+            Package findPackageByName (in string name)
+              raises (NoSuchName);
+        
+                Implementation findImplementationByName (in string implementation_name,
                                              in string package_name)
-	      raises (NoSuchName);
+              raises (NoSuchName);
 
-	    Package findPackageByUUID (in string UUID)
-	      raises (NoSuchName);
-	
-	    Implementation findImplementationByUUID (in string UUID)
-	      raises (NoSuchName);
-	
+            Package findPackageByUUID (in string UUID)
+              raises (NoSuchName);
+        
+            Implementation findImplementationByUUID (in string UUID)
+              raises (NoSuchName);
+        
 
-	    //::CORBA::StringSeq findNamesByType (in string type);
-	    //::CORBA::StringSeq getAllTypes ();
+            //::CORBA::StringSeq findNamesByType (in string type);
+            //::CORBA::StringSeq getAllTypes ();
 
-		::CORBA::StringSeq getAllPackageNames ();
-	    
-		void deletePackage (in string installationName)
-	      raises (NoSuchName);
-	};
+                ::CORBA::StringSeq getAllPackageNames ();
+            
+                void deletePackage (in string installationName)
+              raises (NoSuchName);
+        };
 };
