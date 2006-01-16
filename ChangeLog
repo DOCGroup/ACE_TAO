@@ -1,9 +1,29 @@
+Mon Jan 16 17:00:26 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * apps/JAWS/server/HTTP_Handler.h:
+        * apps/JAWS/server/HTTP_Handler.cpp:
+        * apps/JAWS/server/HTTP_Server.h:
+        * apps/JAWS/server/HTTP_Server.cpp:
+        * apps/JAWS/server/IO.h:
+        * apps/JAWS/server/IO.cpp:
+        * apps/JAWS/server/README:
+        * apps/JAWS/server/svc.conf:
+
+        Checking the some changes to JAWS. This is the code that adds the ability
+        to start the server without file caching. This functionality is necessary
+        for the proper coordination of file creations and deletions between JAWS
+        and the RepositoryManager in CIAO. The changes are explained in the README.
+        I have added a line in the svc.conf file which shows how to enable this new
+        functionality. 
+
+
 Mon Jan 16 16:53:38 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
           Removed ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO, it is
           no longer used.
         
+
 Mon Jan 16 14:35:10 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
