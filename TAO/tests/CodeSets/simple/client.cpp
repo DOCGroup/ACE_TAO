@@ -89,7 +89,7 @@ int main (int argc, char *argv[])
 
       const char *any_string = "Any World";
       CORBA::Any inarg;
-      inarg <<= CORBA::string_dup (any_string);
+      inarg <<= any_string;
       CORBA::Any_var outarg;
 
       // Invoke the call.
@@ -123,6 +123,9 @@ int main (int argc, char *argv[])
       wchar_t *wide_reply = server->op2 (wide_string);
       ACE_DEBUG ((LM_DEBUG,
                   "sent %W, got %W\n", wide_string, wide_reply));
+
+      ACE_OS::free (wide_string);
+      CORBA::wstring_free (wide_reply);
 #endif /* ACE_HAS_WCHAR */
     }
   ACE_CATCHANY

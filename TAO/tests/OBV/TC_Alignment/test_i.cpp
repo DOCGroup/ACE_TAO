@@ -74,5 +74,5 @@ void
 test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->destroy ();
+  this->orb_->shutdown ();
 }

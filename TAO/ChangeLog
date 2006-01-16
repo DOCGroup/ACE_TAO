@@ -1,9 +1,67 @@
+Mon Jan 16 14:17:47 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+
+          Delete the stored memory in _tao_decode() before calling
+          demarshal_value() to avoid leaking memory.
+
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Distributable_Thread.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/Request_Interceptor.h:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+
+          Corrected various misuses of memory management.
+
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+
+          Added memory cleanup code so these tests do not contribute to
+          the memory leak list.
+
+        * tests/OBV/TC_Alignment/test_i.cpp:
+
+          Call shutdown() on the ORB from within test_i::shutdown() instead
+          of destroy().  Calling destroy() within this context is not
+          allowed by CORBA 2.3.
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
+
+          Call shtdown() on the ORB with a wait_for_completion of zero
+          instead of 1.  The later is not allowed by CORBA 2.3.
+
+        * tests/Portable_Interceptors/IORInterceptor/server.cpp:
+
+          This test registers a portable interceptor with the ORB.  If
+          destroy() is not called on the ORB the interceptor initializer
+          will be leaked.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+
+          The TAO_Asynch_Queued_Message needs to know if it is allocated on
+          the heap in order to clean itself properly.
+
+        * tests/RTScheduling/Current/Thread_Task.h:
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/Current/test.cpp:
+        * tests/RTScheduling/DT_Spawn/Thread_Action.h:
+        * tests/RTScheduling/DT_Spawn/test.cpp:
+        * tests/RTScheduling/Scheduler.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+        * tests/RTScheduling/Thread_Cancel/test.cpp:
+        * tests/RTScheduling/VoidData/test_client.cpp:
+
+          Corrected various misuses of memory management.
+
 Mon Jan 16 05:51:14 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/examples/ImR/Combined_Service/test.cpp (assertTrue): 
-	  Make sure to #include <string> so that "std::" makes sense.
-  	  Thanks to Ian Zagorskih <ianzag at megasignal dot com> for this
- 	  fix.  This fixes bugid 2362.
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp (assertTrue):
+          Make sure to #include <string> so that "std::" makes sense.
+          Thanks to Ian Zagorskih <ianzag at megasignal dot com> for this
+          fix.  This fixes bugid 2362.
 
 Sun Jan 15 19:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -17,28 +75,28 @@ Sun Jan 15 18:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan 15 05:44:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Concurrency_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
-	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
-	* orbsvcs/tests/Concurrency/Makefile.am:
-	* orbsvcs/tests/Property/Makefile.am:
+        * orbsvcs/Concurrency_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Latency/Makefile.am:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+        * orbsvcs/tests/Concurrency/Makefile.am:
+        * orbsvcs/tests/Property/Makefile.am:
 
           Regenerated.
 
-	* orbsvcs/tests/Property/Property.mpc:
+        * orbsvcs/tests/Property/Property.mpc:
 
           Update project to inherit from property_serv.mpb, as this
           test uses a collocated concurrency service --- property.mpb
@@ -50,40 +108,40 @@ Sun Jan 15 05:44:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           test uses a collocated concurrency service --- concurrency.mpb
           now only brings in the client stubs.
 
-	* orbsvcs/orbsvcs/TAO_CosConcurrency.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosConcurrency_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosConcurrency_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosConcurrency.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosConcurrency_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosConcurrency_Skel.pc.in:
 
           Split TAO_CosConcurrency.pc.in pkg-config template into one for
           each library.
 
-	* orbsvcs/orbsvcs/Concurrency/concurrency_serv_export.h:
-	* orbsvcs/orbsvcs/Concurrency/concurrency_skel_export.h:
+        * orbsvcs/orbsvcs/Concurrency/concurrency_serv_export.h:
+        * orbsvcs/orbsvcs/Concurrency/concurrency_skel_export.h:
 
           New export headers for CosConcurrency servant skeleton and
           service implementation libraries.
 
-	* orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
 
           Split CosConcurrency Service into three libraries:
           CosConcurrency, CosConcurrency_Skel, and CosConcurrency_Serv for
           client stubs, servant skeletons, and service implementation
           respectively.
 
-	* orbsvcs/orbsvcs/TAO_CosProperty.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosProperty_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosProperty_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosProperty.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosProperty_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosProperty_Skel.pc.in:
 
           Split TAO_CosProperty.pc.in pkg-config template into one for
           each library.
 
-	* orbsvcs/orbsvcs/Property/property_serv_export.h:
-	* orbsvcs/orbsvcs/Property/property_skel_export.h:
+        * orbsvcs/orbsvcs/Property/property_serv_export.h:
+        * orbsvcs/orbsvcs/Property/property_skel_export.h:
 
           New export headers for CosProperty servant skeleton and service
           implementation libraries.
 
-	* orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
 
           Split CosProperty Service into three libraries:
           CosProperty, CosProperty_Skel, and CosProperty_Serv for client
@@ -297,49 +355,49 @@ Thu Jan 12 00:49:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 Thu Jan 12 00:31:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
-	* TAO_IDL/be/be_visitor_home.cpp:
-	* TAO_IDL/be/be_visitor_interface.cpp:
-	* TAO_IDL/be/be_visitor_valuebox.cpp:
-	* examples/Kokyu_dsrt_schedulers/Task_Stats.inl:
-	* examples/RTCORBA/Activity/Task_Stats.inl:
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	* orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
-	* orbsvcs/orbsvcs/AV/TCP.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Options.h:
-	* orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
-	* orbsvcs/orbsvcs/Notify/EventChannel.cpp:
-	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
-	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
-	* orbsvcs/orbsvcs/Notify/Random_File.cpp:
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
-	* orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.cpp:
-	* orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor2.cpp:
-	* orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:
-	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
-	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
-	* orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
-	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
-	* tao/Any_Insert_Policy_T.h:
-	* tao/ORB_Table.inl:
-	* tao/WrongTransactionC.cpp:
-	* tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
-	* tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl:
-	* tao/Codeset/UTF16_BOM_Factory.cpp:
-	* tao/Codeset/UTF8_Latin1_Factory.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_valuebox.cpp:
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.inl:
+        * examples/RTCORBA/Activity/Task_Stats.inl:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Options.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.inl:
+        * tao/Any_Insert_Policy_T.h:
+        * tao/ORB_Table.inl:
+        * tao/WrongTransactionC.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl:
+        * tao/Codeset/UTF16_BOM_Factory.cpp:
+        * tao/Codeset/UTF8_Latin1_Factory.cpp:
 
           On systems where ACE_TEMPLATES_REQUIRE_SOURCE is not defined,
           template implementation files (*_T.cpp) are not #included by the

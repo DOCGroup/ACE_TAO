@@ -26,7 +26,10 @@ TAO_DTId_Hash::operator () (const IdType &id) const
 
 TAO_RTScheduler_Current::TAO_RTScheduler_Current (void)
 {
+}
 
+TAO_RTScheduler_Current::~TAO_RTScheduler_Current (void)
+{
 }
 
 void
@@ -325,13 +328,17 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
     previous_current_ (prev_current),
     dt_hash_ (dt_hash)
 {
-  CORBA::Object_ptr scheduler_obj =
+  CORBA::Object_var scheduler_obj =
     orb->object_ref_table ().resolve_initial_reference (
       "RTScheduler");
 
-  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
+  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ()
                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+}
+
+TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i (void)
+{
 }
 
 void
@@ -636,6 +643,11 @@ DTTask::DTTask (//ACE_Thread_Manager *manager,
 {
 }
 
+DTTask::~DTTask (void)
+{
+  delete this->current_;
+}
+
 int
 DTTask::svc (void)
 {
@@ -672,7 +684,6 @@ DTTask::svc (void)
 
   return 0;
 }
-
 
 RTScheduling::Current::IdType *
 TAO_RTScheduler_Current_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -712,14 +723,20 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_
   for (int index = 0; current != 0; index++)
     {
       name_list->length (index+1);
-      (*name_list) [index] = current->name ();
+      // If we use current->name() to assign to (*name_list) [index],
+      // a copy of the string will be leaked since the operator[] returns
+      // a TAO_SeqElem_String_Manager which has an operator= that takes
+      // a const char* and copies it.  Using this->name_.in () allows
+      // the TAO_SeqElem_String_Manager to make the copy and no memory
+      // is leaked.
+      (*name_list) [index] = this->name_.in ();
       current = current->previous_current_;
     }
 
   return name_list;
 }
 
-const char*
+char*
 TAO_RTScheduler_Current_i::name (void)
 {
   return CORBA::string_dup (this->name_.in ());
@@ -801,7 +818,7 @@ TAO_RTScheduler_Current_i::id (RTScheduling::Current::IdType guid)
 }
 
 void
-TAO_RTScheduler_Current_i::name (char * name)
+TAO_RTScheduler_Current_i::name (const char * name)
 {
   this->name_ = CORBA::string_dup (name);
 }

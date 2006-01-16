@@ -51,6 +51,6 @@ Visual_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_->shutdown (1 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
