@@ -1,3 +1,16 @@
+Mon Jan 16 15:17:22 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Pipe.cpp (open): Changed 
+	
+	  ACE_INET_Addr local_any ("localhost:0");
+	  
+	  to 
+	  
+	  ACE_INET_Addr local_any  (0, ACE_LOCALHOST);
+	  
+	  so that it will work more portably.  Thanks to Steve Huston for
+ 	  suggesting this fix.
+
 Mon Jan 16 20:43:26 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/README:
