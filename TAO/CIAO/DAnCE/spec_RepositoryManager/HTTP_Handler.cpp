@@ -14,7 +14,7 @@ HTTP_Handler::HTTP_Handler (void)
 
 // Always use this constructor
 HTTP_Handler::HTTP_Handler (ACE_Message_Block * mb,
-                                    ACE_TCHAR *filename) :
+                            ACE_TCHAR *filename) :
   mb_ (mb),
   filename_ (ACE_OS::strdup (filename)),
   bytecount_ (0)
@@ -45,12 +45,10 @@ HTTP_Handler::open (void *)
 
 // No-op
 int
-HTTP_Handler::close (u_long flags)
+HTTP_Handler::close (u_long)
 {
-  ACE_UNUSED_ARG (flags);
   return 0;
 }
-
 
 // Always overridden by the derived classes
 int
@@ -77,9 +75,9 @@ HTTP_Handler::byte_count (void)
 // Reader **************************************************
 
 HTTP_Reader::HTTP_Reader (ACE_Message_Block * mb,
-                                  ACE_TCHAR *filename,
-                                  const char *request_prefix,
-                                  const char *request_suffix) :
+                          ACE_TCHAR *filename,
+                          const char *request_prefix,
+                          const char *request_suffix) :
   HTTP_Handler (mb, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
@@ -94,7 +92,7 @@ HTTP_Reader::send_request (void)
 
   // Check to see if the request is too big
   if (MAX_HEADER_SIZE < (ACE_OS::strlen (request_prefix_)
-                         + ACE_OS::strlen (filename_) 
+                         + ACE_OS::strlen (filename_)
                          + ACE_OS::strlen (request_suffix_) + 4))
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
@@ -123,11 +121,10 @@ HTTP_Reader::receive_reply (void)
 
   if (peer ().recv_n (buf, MTU, 0, &num_recvd) >= 0)
     {
-
-	  //Make sure that response type is 200 OK
-	  if (ACE_OS::strstr (buf,"200 OK") == 0)
-			ACE_ERROR_RETURN ((LM_ERROR,
-                          "HTTP_Reader::receiveReply(): Response is not 200 OK" ), -1);
+      //Make sure that response type is 200 OK
+      if (ACE_OS::strstr (buf,"200 OK") == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "HTTP_Reader::receiveReply(): Response is not 200 OK" ), -1);
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
@@ -158,12 +155,10 @@ HTTP_Reader::receive_reply (void)
   curr->cont (new ACE_Message_Block (bytes_read));
   curr = curr->cont ();
 
-
   // Copy over all the data bytes into our message buffer.
   if (curr->copy (buf_ptr, bytes_read) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                           "HTTP_Reader::receiveReply():Error copying data into Message_Block" ), -1);
-
 
   //read the rest of the data into a number of ACE_Message_Blocks and
   //chain them together in a link list fashion
@@ -181,7 +176,7 @@ HTTP_Reader::receive_reply (void)
 	if (peer ().recv_n (curr->wr_ptr (), curr->space (), 0, &num_recvd) >= 0)
 	  {
 		  //move the write pointer
-		  curr->wr_ptr (num_recvd); 
+		  curr->wr_ptr (num_recvd);
 
 		  //increment bytes_read
 		  bytes_read += num_recvd;
@@ -189,14 +184,12 @@ HTTP_Reader::receive_reply (void)
 	  }
 	else
 		ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Reader::receiveReply():Error while reading header"), -1);
-  
-  }while (num_recvd != 0);
 
+  }while (num_recvd != 0);
 
   // Set the byte count to number of bytes received
   this->bytecount_ = bytes_read;
 
   return 0;
-
 }
 
