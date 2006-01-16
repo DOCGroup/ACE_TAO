@@ -78,13 +78,35 @@ CIAO::NodeManager_Impl_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & ,
-                                   Deployment::TargetManager_ptr ,
+CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
+                                   Deployment::TargetManager_ptr target,
                                    Deployment::Logger_ptr
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+//  ACE_THROW (CORBA::NO_IMPLEMENT ());
+// Here start the Monitor
+   CIAO_TRACE("CIAO::NodeManager_Impl_Base::joinDomain");
+
+   ::Deployment::Domain this_domain = domain;
+//  MonitorController* monitor_controller
+   monitor_controller_.reset (
+      new MonitorController (orb_.in (),
+                             this_domain,
+                             target));
+
+   if (CIAO::debug_level () > 9)
+   {
+      ACE_DEBUG ((LM_DEBUG , "Before Activate"));
+   }
+  /// Activate the Monitor Controller to
+  //start the monitoring
+   monitor_controller_->activate ();
+
+   if (CIAO::debug_level () > 9)
+   {
+      ACE_DEBUG ((LM_DEBUG , "After Activate"));
+   }
 }
 
 void
@@ -149,14 +171,6 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
           ACE_TRY_CHECK;
 
           this->map_.insert_nam (plan.UUID.in (), oid.in ());
-
-          CORBA::Object_var obj =
-            this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
-          ACE_TRY_CHECK;
-
-          // narrow should return a nil reference if it fails.
-          return
-            Deployment::NodeApplicationManager::_narrow (obj.in ());
         }
       else
         {
@@ -166,22 +180,16 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                           "with UUID: %s\n",
                           plan.UUID.in ()));
             }
-
-          CORBA::Object_var obj =
-            this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
-          ACE_TRY_CHECK;
-
-          Deployment::NodeApplicationManager_var nam =
-            Deployment::NodeApplicationManager::_narrow (obj.in ());
-          ACE_TRY_CHECK;
-
-          nam->reset_plan (plan);
-          ACE_TRY_CHECK;
-
-          // Potentially we could reset many other configuration settings
-          // such as command line options, service configuration file, etc.
-          return nam._retn ();
         }
+
+
+      CORBA::Object_var obj =
+        this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+      ACE_TRY_CHECK;
+
+      // narrow should return a nil reference if it fails.
+      return
+        Deployment::NodeApplicationManager::_narrow (obj.in ());
     }
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {
@@ -211,6 +219,7 @@ CIAO::NodeManager_Impl_Base::destroyManager
   CIAO_TRACE("CIAO::NodeManager_Impl::destroyManager");
   ACE_TRY
     {
+      printf("Entering NM_Impl::destroyManager\n");
       // Deactivate this object
       PortableServer::ObjectId_var id =
         this->poa_->reference_to_id (manager
@@ -227,6 +236,7 @@ CIAO::NodeManager_Impl_Base::destroyManager
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      printf("Exiting NM_Impl::destroyManager\n");
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
@@ -276,7 +286,7 @@ CIAO::NodeManager_Impl_Base::validate_plan (const Deployment::DeploymentPlan &pl
 
   for (i = 0; i < plan.instance.length (); ++i)
     {
-      const char * my_resource_id = 0;
+      const char * my_resource_id;
       if (plan.instance[i].deployedResource.length () == 0)
         {
           continue;
@@ -311,13 +321,13 @@ NodeManager_Impl (const char *name,
 
 
 ::CIAO::NodeApplicationManager_Impl_Base *
-CIAO::NodeManager_Impl::
+::CIAO::NodeManager_Impl::
 create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
   ACE_NEW_THROW_EX (app_mgr,
                     CIAO::NodeApplicationManager_Impl (orb,
                                                        poa),
@@ -342,14 +352,14 @@ Static_NodeManager_Impl (const char *name,
 {}
 
 ::CIAO::NodeApplicationManager_Impl_Base *
-CIAO::Static_NodeManager_Impl::
+::CIAO::Static_NodeManager_Impl::
 create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "creating static_node_app_manager\n"));
-  CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
   ACE_NEW_THROW_EX (app_mgr,
     CIAO::Static_NodeApplicationManager_Impl (orb,
       poa,
@@ -370,9 +380,9 @@ CIAO::Static_NodeManager_Impl::destroyManager
   ACE_TRY
     {
       CIAO::NodeManager_Impl_Base::destroyManager (manager ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
