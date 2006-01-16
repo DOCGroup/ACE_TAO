@@ -1,8 +1,13 @@
+Mon Jan 16 17:23:42 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Added ACE_HAS_POSIX_REALTIME_SIGNALS.
+        
 Mon Jan 16 17:20:50 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
           Do not use mmap() emulation on LynxOS 4.0.
-        
+
 Mon Jan 16 17:00:26 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * apps/JAWS/server/HTTP_Handler.h:
