@@ -1,9 +1,15 @@
+Mon Jan 16 16:53:38 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Removed ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO, it is
+          no longer used.
+        
 Mon Jan 16 14:35:10 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
         * include/makeinclude/platform_lynxos.GNU:
           Improved shared library support for LynxOS 4.0.
-        
+
 Mon Jan 16 05:54:44 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ace/Timer_Queue_Adapters.cpp (svc): Added a fix so that
