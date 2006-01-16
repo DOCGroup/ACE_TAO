@@ -2,49 +2,51 @@
 
 ///====================================================================
 // filename: RepositoryManager_Impl.cpp
-// Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
+// Author: Stoyan Paunov  spaunov@isis.vanderbilt.edu
 //
 
 #include "RepositoryManager_Impl.h"
 
-#include "ace/OS_NS_fcntl.h"			//for open
-#include "ace/OS_NS_unistd.h"			//for close
-#include "ace/OS_NS_sys_stat.h"			//for filesize and fstat and mkdir
-#include "ace/OS_NS_string.h"			//for ACE_CString
+#include "ace/OS_NS_fcntl.h"      //for open
+#include "ace/OS_NS_unistd.h"      //for close
+#include "ace/OS_NS_sys_stat.h"      //for filesize and fstat and mkdir
+#include "ace/OS_NS_string.h"      //for ACE_CString
 
 
 //to remove a file or dir from the local filesystem need remove () from stdio.h
 // ---> need to include ace/OS_NS_stdio.h which would include the correct file for any OS!
 #include "ace/OS_NS_stdio.h"
 
-#include "ZIP_Wrapper.h"					//Wrapper around zzip
-#include "ace/Containers_T.h"				//for ACE_Double_Linked_List
-#include "ace/Malloc_Allocator.h"			//for ACE_New_Allocator needed by the doubly link list
+#include "ZIP_Wrapper.h"          //Wrapper around zzip
+#include "ace/Containers_T.h"        //for ACE_Double_Linked_List
+#include "ace/Malloc_Allocator.h"      //for ACE_New_Allocator needed by the doubly link list
 
 //for the PackageConfiguration parsing
 #include "Config_Handlers/STD_PC_Intf.h"
-//#include "Config_Handlers/Deployment.hpp"
 #include "ciao/Deployment_DataC.h"
 #include "ciao/Packaging_DataC.h"
 #include "Config_Handlers/Utils/XML_Helper.h"
 #include "xercesc/dom/DOM.hpp"
 
-#include "RM_Helper.h"					//to be able to externalize/internalize a PackageConfiguration
-#include "ace/Message_Block.h"			//for ACE_Message_Block
+#include "RM_Helper.h"          //to be able to externalize/internalize a PackageConfiguration
+#include "ace/Message_Block.h"      //for ACE_Message_Block
 
-#include "ace/Thread.h"					//for obtaining the ID of the current thread
-#include "ace/OS_NS_stdlib.h"			//for itoa ()
+#include "ace/Thread.h"          //for obtaining the ID of the current thread
+#include "ace/OS_NS_stdlib.h"      //for itoa ()
 
-#include "URL_Parser.h"					//for parsing the URL
-#include "HTTP_Client.h"				//the HTTP client class to downloading packages
+#include "URL_Parser.h"          //for parsing the URL
+#include "HTTP_Client.h"        //the HTTP client class to downloading packages
 
-#include "PC_Updater.h"					//A visitor class to walk through the elements of the PC
+#include "PC_Updater.h"          //A visitor class to walk through the elements of the PC
 
 #include <iostream>
 using namespace std;
 
+//-----------------------------------------------------------------
+//Constructor
+//
+//-----------------------------------------------------------------
 
-// Implementation skeleton constructor
 CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb, const char* server)
   : the_orb_ (CORBA::ORB::_duplicate (the_orb)),
     install_root_ (""),
@@ -52,7 +54,7 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr t
 {
   //create directory in which the packages will be stored
 
-  ACE_OS::mkdir(INSTALL_PATH);	
+  ACE_OS::mkdir(INSTALL_PATH);
   //if dir already exists a -1 is returned
   //we ignore this, just need to make sure the directory exists
 
@@ -63,27 +65,41 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr t
   this->install_root_ += INSTALL_PATH;
 }
 
-// Implementation skeleton destructor
+//-----------------------------------------------------------------
+//Destructor
+//
+//-----------------------------------------------------------------
+
 CIAO_RepositoryManagerDaemon_i::~CIAO_RepositoryManagerDaemon_i (void)
 {
   this->names_.unbind_all ();
   this->uuids_.unbind_all ();
 }
 
+//-----------------------------------------------------------------
+//shutdown
+//
+//-----------------------------------------------------------------
+
 void CIAO_RepositoryManagerDaemon_i::shutdown (
-    
+
   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  // Add your implementation here
+
   this->names_.unbind_all ();
   this->uuids_.unbind_all ();
 
   this->the_orb_->shutdown (0);
 }
 
+
+//-----------------------------------------------------------------
+//installPackage
+//
+//-----------------------------------------------------------------
 
 void CIAO_RepositoryManagerDaemon_i::installPackage (
                                                      const char * installationName,
@@ -95,15 +111,14 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
                    ::Deployment::PackageError
                    ))
 {
-  // Add your implementation here
-	
-  ACE_Hash_Map_Entry <ACE_CString, ACE_CString> *entry;
+
+  PCEntry *entry = 0;
 
   if (this->names_.find (ACE_CString (installationName), entry) == 0)
     ACE_THROW (Deployment::NameExists ());
 
   //Now lets form the path for the local file
-  //NOTE: I need the absolute path because I will change to a subdirectory 
+  //NOTE: I need the absolute path because I will change to a subdirectory
   //when I am parsing the descriptors
 
   ACE_CString path (this->install_root_);
@@ -111,10 +126,10 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   path += installationName;
 
   ACE_CString package_path (path);
-  package_path += ".cpk";				//package extension
+  package_path += ".cpk";        //package extension
 
   ACE_CString pc_path (path);
-  pc_path += PC_EXTENSION;			//external PackageConfiguration extension
+  pc_path += PC_EXTENSION;      //external PackageConfiguration extension
 
 
   ACE_CString descriptor_dir (path);
@@ -124,35 +139,18 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //check if URL or local file
   //download or load into memory
 
-  size_t length = 0;	 
+  size_t length = 0;
 
   if (ACE_OS::strstr (location, "http://"))
     {
-      URL_Parser *parser = URL_Parser::instance ();
-      if (!parser->parseURL (const_cast <char*> (location)))
-        ACE_THROW (CORBA::INTERNAL ());
 
-      // Create a client
-      HTTP_Client client;
-
-      //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
+    //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
       ACE_Message_Block* mb = new ACE_Message_Block (0,0);
 
-      // Open the client
-      if (client.open (parser->filename_,
-                       parser->hostname_,
-                       parser->port_) == -1)
+    //get the remote file
+    if (!HTTP_Get (location, *mb))
         {
           mb->release ();
-          client.close ();
-          ACE_THROW (CORBA::INTERNAL ());
-        }
-
-      // Read from it
-      if (client.read (mb) <= 0)
-        {
-          mb->release ();
-          client.close ();
           ACE_THROW (CORBA::INTERNAL ());
         }
 
@@ -160,12 +158,8 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
       if (!RM_Helper::write_to_disk (package_path.c_str (), *mb))
         {
           mb->release ();
-          client.close ();
           ACE_THROW (CORBA::INTERNAL ());
         }
-
-      mb->release ();
-      client.close ();
     }
   else
     {
@@ -181,14 +175,17 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
       //Store the package in the local RM dir for future retrieval
       if (!RM_Helper::write_to_disk (package_path.c_str (), file, length))
-        ACE_THROW (CORBA::INTERNAL ());
+    {
+      delete file;
+          ACE_THROW (CORBA::INTERNAL ());
+    }
 
       //NOTE: MEMORY LEAK UNLESS delete file; change to Auto_Ptr
       delete file;
     }
 
 
-  ZIP_Wrapper::uncompress (const_cast<char*> (package_path.c_str ()), 
+  ZIP_Wrapper::uncompress (const_cast<char*> (package_path.c_str ()),
                            const_cast<char*> (this->install_root_.c_str ()),
                            false //not verbose
                            );
@@ -207,7 +204,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //TODO: move exception throwing out of this func. User boolean error handling!!!
   //TODO: check for errors!
   Deployment::PackageConfiguration_var pc;
-  pc = this->retrieve_PC_from_descriptors (const_cast<char*> (pc_name.c_str ()), 
+  pc = this->retrieve_PC_from_descriptors (const_cast<char*> (pc_name.c_str ()),
                                            descriptor_dir.c_str ());
 
 
@@ -216,11 +213,15 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   server_path += installationName;
   server_path += "/implementations/";
 
+  //NOTE: ComponentPackageReferences are currently NOT supported
+  if (!(pc->basePackage.length () > 0))
+    ACE_THROW (CORBA::NO_IMPLEMENT ());
+
   PC_Updater updater (server_path, package_path);
-	
+
   if (!updater.update (pc))
     {
-      cout << "[RM] problem updating the PackageConfiguration!\n";
+      ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
       remove_extracted_package (package_path.c_str (), path.c_str ());
       remove (package_path.c_str ());
       ACE_THROW (Deployment::PackageError ());
@@ -238,8 +239,24 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //ALSO NEED THE UUID here
   this->uuids_.bind (ACE_CString (pc->UUID), path);
 
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+  //now add the type interface
+  //TODO: CHECK if successful
+  if(!this->add_type (pc, installationName))
+    ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
+#endif
+
+  this->dump ();
+
+
   ACE_TRACE (("Installed PackageConfiguration with: \nlabel %s \nuuid %s\n", pc->label, pc->UUID));
 }
+
+
+//-----------------------------------------------------------------
+//createPackage
+//
+//-----------------------------------------------------------------
 
 void CIAO_RepositoryManagerDaemon_i::createPackage (
                                                     const char * installationName,
@@ -253,9 +270,14 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                    ::Deployment::PackageError
                    ))
 {
-  // Add your implementation here
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+
+//-----------------------------------------------------------------
+//findPackageByName
+//
+//-----------------------------------------------------------------
 
 ::Deployment::PackageConfiguration * CIAO_RepositoryManagerDaemon_i::findPackageByName (
                                                                                         const char * name
@@ -268,25 +290,28 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   // Find out if the PackageConfiguration was installed in the repository,
   // return it if found or throw and exception otherwise
 
-  ACE_Hash_Map_Entry <ACE_CString, ACE_CString> *entry = 0;
+  PCEntry *entry = 0;
 
   if (this->names_.find (ACE_CString (name), entry) != 0)
-    ACE_THROW (Deployment::NoSuchName ());							
+    ACE_THROW (Deployment::NoSuchName ());
   //PackageConfiguration was not found
 
   ACE_CString pc_path (entry->int_id_.c_str ());
   pc_path += PC_EXTENSION;
 
-  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration (); 
-	
+  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
+
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  //maybe I will still retrieve it in the case of failure: TODO
-  //Deployment::PackageConfiguration_var pc = retrieve_PC(const_cast<char*> ());
-
   return pc._retn ();
 }
+
+
+//-----------------------------------------------------------------
+//findPackageByUUID
+//
+//-----------------------------------------------------------------
 
 ::Deployment::PackageConfiguration * CIAO_RepositoryManagerDaemon_i::findPackageByUUID (
                                                                                         const char * UUID
@@ -296,37 +321,30 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                    ::Deployment::NoSuchName
                    ))
 {
-  // Add your implementation here
- 
-  //NOTE: The following code actually works but I have not gotten 
-  //the DELETE to remove the UUIDs and I am not allowing this code 
-  //to be used for right now because the RM stays in an inconsistent 
-  //state. A package can be deleted but it is still retrievable by is UUID.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-
-
   // Find out if the PackageConfiguration was installed in the repository,
   // return it if found or throw and exception otherwise
 
-  ACE_Hash_Map_Entry <ACE_CString, ACE_CString> *entry = 0;
+  PCEntry *entry = 0;
 
   if (this->uuids_.find (ACE_CString (UUID), entry) != 0)
-    ACE_THROW (Deployment::NoSuchName ());							
+    ACE_THROW (Deployment::NoSuchName ());
   //PackageConfiguration was not found
 
   ACE_CString pc_path (entry->int_id_.c_str ());
   pc_path += PC_EXTENSION;
 
-  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration (); 
-	
+  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
+
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  //maybe I will still retrieve it in the case of failure: TODO
-  //Deployment::PackageConfiguration_var pc = retrieve_PC(const_cast<char*> ());
-
   return pc._retn ();
 }
+
+//-----------------------------------------------------------------
+//findPackageByType
+//
+//-----------------------------------------------------------------
 
 ::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::findNamesByType (
                                                                       const char * type
@@ -335,43 +353,167 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                    CORBA::SystemException
                    ))
 {
-  // Add your implementation here
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
+#if !defined ASSEMBLY_INTERFACE_SUPPORT
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif
+
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+
+  CIEntry *entry = 0;
+
+    //find the type in the interface map
+  if (!this->types_.find (ACE_CString (type), entry))
+  {
+    //return an empty sequence
+    CORBA::StringSeq_var seq = new CORBA::StringSeq (0);
+    return seq._retn ();
+  }
+  else
+  {
+    //The CORBA::StringSeq is implemented as an array and growing
+    //one at a time on demand is very inefficient due to the
+    //deallocations and reallocations. This is why we figure out the
+    //number of elements in advance and then create a CORBA::StringSeq
+    //of the right length
+
+    CIBucket_Iterator counter (this->types_, type);
+
+    CIBucket_Iterator end (this->types_,
+                 type,
+                 1 /*tail = true*/);
+
+    //count the number of components implementing this type
+    CORBA::ULong num_entries = 0;
+    for (;
+       counter != end;
+       ++counter)
+       ++num_entries;
+
+    //allocate a sequence of the right length
+    CORBA::StringSeq_var seq = new CORBA::StringSeq (num_entries);
+
+    //store the elements in the string sequence
+    CIBucket_Iterator iter (this->types_, type);
+    CORBA::ULong index = 0;
+    for (;
+       iter != end && index < num_entries;
+       ++iter, ++index)
+    {
+      CIEntry& element = *iter;
+      seq[index] = CORBA::string_dup (element.int_id_.c_str ());
+    }
+
+    return seq._retn ();
+  }
+
+#endif
 }
 
+
+//-----------------------------------------------------------------
+//getAllNames
+//
+//-----------------------------------------------------------------
+
 ::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::getAllNames (
-    
+
   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  // Add your implementation here
+  //Map.current_size () gives you the current number with the duplicates
+  //Map.total_size () gives you the allocated space + the empty slots
+  //Apparently the only way to figure out the number of keys is to
+  //count them with an iterator.
 
-  CORBA::ULong num_entries = this->names_.current_size (); 
+  CORBA::ULong num_entries = 0;
+
+  for (PCMap_Iterator i = this->names_.begin ();
+         i != this->names_.end ();
+         ++i)
+     ++num_entries;
+
+  ACE_DEBUG ((LM_DEBUG, "# names: %d\n", num_entries));
+
   CORBA::StringSeq_var seq = new CORBA::StringSeq (num_entries);
+
+  seq->length (num_entries);
+  ACE_DEBUG ((LM_DEBUG, "SEQ LEN: %d\n", seq->length ()));
 
   CORBA::ULong index = 0;
   for (PCMap_Iterator iter = this->names_.begin ();
-       iter != this->names_.end () && index < num_entries;
-       iter++)
+    iter != this->names_.end () && index < num_entries;
+    ++iter, ++index)
 
-    seq[index] = const_cast<char*> (((*iter).int_id_).c_str ());	//this looks hideous, but as long as it works!
+  {
+    CIEntry& element = *iter;
+    seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
+    ACE_DEBUG ((LM_DEBUG, "Enumerating: %s\n", element.ext_id_.c_str ()));
+  }
 
-
-  return seq._retn ();		//release the underlying CORBA::StringSeq
+  return seq._retn ();    //release the underlying CORBA::StringSeq
 }
 
+
+//-----------------------------------------------------------------
+//getAllTypes
+//
+//-----------------------------------------------------------------
+
 ::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::getAllTypes (
-    
+
   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  // Add your implementation here
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
+#if !defined ASSEMBLY_INTERFACE_SUPPORT
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#endif
+
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+
+  //Map.current_size () gives you the current number with the duplicates
+  //Map.total_size () gives you the allocated space + the empty slots
+  //Apparently the only way to figure out the number of keys is to
+  //count them with an iterator.
+
+  CORBA::ULong num_entries = 0;
+
+  for (PCMap_Iterator i = this->names_.begin ();
+         i != this->names_.end ();
+         ++i)
+     ++num_entries;
+
+  ACE_DEBUG ((LM_DEBUG, "# names: %d\n", num_entries));
+
+
+  CORBA::StringSeq_var seq = new CORBA::StringSeq (num_entries);
+  seq->length (num_entries);
+
+  CORBA::ULong index = 0;
+  for (CIMap_Iterator iter = this->types_.begin ();
+    iter != this->types_.end () && index < num_entries;
+    ++iter, ++index)
+
+  {
+    CIEntry& element = *iter;
+    seq[index] = CORBA::string_dup (element.int_id_.c_str ());
+  }
+
+  return seq._retn ();    //release the underlying CORBA::StringSeq
+
+#endif
 }
+
+
+//-----------------------------------------------------------------
+//DeletePackage
+//
+//-----------------------------------------------------------------
 
 void CIAO_RepositoryManagerDaemon_i::deletePackage (
                                                     const char * installationName
@@ -381,53 +523,84 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
                    ::Deployment::NoSuchName
                    ))
 {
-  // Add your implementation here
+  bool internal_err = false;
 
-  ACE_Hash_Map_Entry <ACE_CString, ACE_CString> *entry;
+  PCEntry *entry = 0;
 
   if (this->names_.find (ACE_CString (installationName), entry) != 0)
     ACE_THROW (Deployment::NoSuchName ());
+
+  //cache the package path
+  ACE_CString path (entry->int_id_.c_str ());
+
+  //remove the name association
+  this->names_.unbind (installationName);
+
+  //the package location
+  ACE_CString package_path (path);
+  package_path += ".cpk";        //package extension
+
+  //the PackageConfiguration externalization location
+  ACE_CString pc_path (path);
+  pc_path += PC_EXTENSION;        //external PackageConfiguration extension
+
+  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
+
+  if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
+  {
+    ACE_DEBUG ((LM_ERROR, "Could not reincarnate PC\n"));
+      internal_err = true;
+  }
+
+  if (this->uuids_.find (ACE_CString (pc->UUID), entry) != 0)
+  {
+    ACE_DEBUG ((LM_ERROR, "Could not remove UUID\n"));
+    internal_err = true;
+  }
   else
-    this->names_.unbind (installationName);
+    //remove the UUID association
+    this->uuids_.unbind (entry->int_id_.c_str ());
 
-  //do the same for the UUID!!!!
-  //TODO: NEED TO DO THIS LATER
 
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+  //remove the type from the interface map
+  if (!this->remove_type (pc, installationName))
+  {
+    ACE_DEBUG ((LM_ERROR, "Could not remove type\n"));
+    internal_err = true;
+  }
+#endif
 
   //actually delete the package here!
-  //TODO: Check if files are ref-counted by the OS, so if I delete it here while
-  //some other process is still using it from a previous request, would that cause an error,
-  //or would it decrement the recount and delete the file when the other process is done.
-  //
-  //on that note is a file handle is not closed the file does not get deleted! , so see how
-  //temp files work!
-		
-  ACE_CString path (this->install_root_.c_str ());
-  path += "/";
-  path += installationName;
 
-  ACE_CString package_path (path);
-  package_path += ".cpk";				//package extension
-
-  ACE_CString pc_path (path);
-  pc_path += PC_EXTENSION;			//external PackageConfiguration extension
-
+  //clean the extracted files
   remove_extracted_package (package_path.c_str (), path.c_str ());
-
+  //remove the package
   remove (package_path.c_str ());
+  //remove the PackageConfiguration externalization
   remove (pc_path.c_str ());
+
+  this->dump ();
+
+  if (internal_err)
+    ACE_THROW (CORBA::INTERNAL ());
+
 }
+
+
+
+
 
 //==========================================HELPER METHODS==================================================
 
-Deployment::PackageConfiguration* 
+Deployment::PackageConfiguration*
 CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_package (char* package)
 {
   char temp[128];
   //  ACE_thread_t thread_id = ACE_Thread::self ();
   char* PID = ACE_OS::itoa (ACE_OS::getpid (), temp, 10);
-  
-  ACE_OS::mkdir(PID);	
+
+  ACE_OS::mkdir(PID);
   //if dir already exists a -1 is returned
   //we ignore this, just need to make sure the directory exists
 
@@ -450,7 +623,7 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_package (char* package)
   ACE_TRY
     {
       CIAO::Config_Handlers::STD_PC_Intf intf (pcd_name.c_str ());
-    
+
       pc = intf.get_PC ();
     }
   ACE_CATCHALL
@@ -480,10 +653,45 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_package (char* package)
 }
 
 
+//function to retvieve a file via HTTP
+//stores the file in the passed preallocated ACE_Message_Block
+//returns 1 on success
+//      0 on error
+
+int CIAO_RepositoryManagerDaemon_i::HTTP_Get (const char* URL, ACE_Message_Block &mb)
+{
+    URL_Parser *parser = URL_Parser::instance ();
+    if (!parser->parseURL (const_cast<char*> (URL)))
+    return 0;
+
+    // Create a client
+    HTTP_Client client;
+
+    // Open the client
+    if (client.open (parser->filename_,
+                     parser->hostname_,
+                     parser->port_) == -1)
+    {
+        client.close ();
+        return 0;
+    }
+
+    // Read from it
+    if (client.read (&mb) <= 0)
+    {
+        client.close ();
+        return 0;
+    }
+
+  return 1;
+}
+
+
+
 //function to parse and return the PackageConfiguration from the already
 //extracted descriptor files
-Deployment::PackageConfiguration* 
-CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_name, 
+Deployment::PackageConfiguration*
+CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_name,
                                                               const char* descriptor_dir)
 {
   //change the working dir
@@ -494,14 +702,14 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
   ACE_TRY
     {
       CIAO::Config_Handlers::STD_PC_Intf intf (pc_name);
-    
+
       pc = intf.get_PC ();
     }
   ACE_CATCHALL
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
-		
+
       //change back the the old working dir
       ACE_OS::chdir (this->cwd_);
       ACE_THROW (Deployment::PackageError ());
@@ -519,7 +727,7 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
 //find out what the name of the PackageConfiguration file is
 void CIAO_RepositoryManagerDaemon_i::find_PC_name (char* package, ACE_CString& pcd_name)
 {
-  pcd_name = "";	//empty the contents of the ACE_CString
+  pcd_name = "";  //empty the contents of the ACE_CString
 
   //create a doubly link list
   ACE_New_Allocator allocator;
@@ -548,10 +756,10 @@ void CIAO_RepositoryManagerDaemon_i::find_PC_name (char* package, ACE_CString& p
 //We are using Xercesc in the Config_Handlers and unfortunately its API only
 //takes a file in the local file system as an argument, thus need to
 //write out the contents of the deployent plan to a file
-//in the current directory. I use the thread id to guarrantee 
+//in the current directory. I use the thread id to guarrantee
 //lack of race conditions if multithreading is enabled
 
-int CIAO_RepositoryManagerDaemon_i::extract_descriptor_files (char* package, ACE_CString& pcd_name) 
+int CIAO_RepositoryManagerDaemon_i::extract_descriptor_files (char* package, ACE_CString& pcd_name)
 {
   //create a doubly link list
   ACE_New_Allocator allocator;
@@ -574,11 +782,11 @@ int CIAO_RepositoryManagerDaemon_i::extract_descriptor_files (char* package, ACE
 
           //extract the descriptor from the package
           file = new ACE_Message_Block (0,0);
-          if (!ZIP_Wrapper::get_file(const_cast<char*> (package), 
-                                     const_cast<char*> (inf->name_.c_str ()), 
+          if (!ZIP_Wrapper::get_file(const_cast<char*> (package),
+                                     const_cast<char*> (inf->name_.c_str ()),
                                      *file))
             {
-              ACE_ERROR ((LM_ERROR, 
+              ACE_ERROR ((LM_ERROR,
                           "[RM::extract_descriptor_files] Unable to retrieve file!\n"));
               //release the message block chain
               file->release ();
@@ -589,7 +797,7 @@ int CIAO_RepositoryManagerDaemon_i::extract_descriptor_files (char* package, ACE
           //write the file to disk
           if(!RM_Helper::write_to_disk (inf->name_.c_str () + skip_len, *file))
             {
-              ACE_ERROR ((LM_ERROR, 
+              ACE_ERROR ((LM_ERROR,
                           "[RM::extract_descriptor_files] Unable to write out descriptor to disk!\n"));
               //release the message block chain
               file->release ();
@@ -642,14 +850,14 @@ int CIAO_RepositoryManagerDaemon_i::remove_descriptor_files (char* package)
 }
 
 //function to remove the files extracted from the package upon istallation
-//It reads the names of the files from the package. They correspond to the 
+//It reads the names of the files from the package. They correspond to the
 //names on disk. It deletes each file, then it deletes the directories that
 //contain them.
 //return 1 on success
 //       0 on error
 
-int CIAO_RepositoryManagerDaemon_i::remove_extracted_package 
-(const char* package_path, 
+int CIAO_RepositoryManagerDaemon_i::remove_extracted_package
+(const char* package_path,
  const char* extraction_location)
 {
   //change the working dir
@@ -675,7 +883,7 @@ int CIAO_RepositoryManagerDaemon_i::remove_extracted_package
   while (!list.is_empty ())
     {
       ZIP_File_Info* inf = list.delete_head ();
-	
+
       //delete file from disk
       if(remove (inf->name_.c_str ()))
         {
@@ -683,7 +891,7 @@ int CIAO_RepositoryManagerDaemon_i::remove_extracted_package
                       "[RM::remove_extracted files] Unable to delete %s!\n", inf->name_.c_str ()));
           return_code = 0;
         }
-		
+
       //deallocate the head of the filename list
       delete inf;
     }
@@ -702,4 +910,131 @@ int CIAO_RepositoryManagerDaemon_i::remove_extracted_package
   return return_code;
 }
 
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+
+//function to extract the type of the component from
+//the PackageConfiguration and update the interface map
+//returns 1 on success
+//        0 on error
+
+int CIAO_RepositoryManagerDaemon_i::add_type (Deployment::PackageConfiguration& pc,
+                        const char* name)
+{
+  const char* ifaceUUID = 0;
+  //
+  if (pc.basePackage.length () > 0)
+  {
+    ifaceUUID = pc.basePackage[0]
+            .implementation[0]
+            .referencedImplementation
+            .implements
+            .specificType.in ();
+            //.UUID.in ();
+
+            ACE_DEBUG ((LM_DEBUG,  "storing under: %s\n", ifaceUUID));
+
+       CIEntry *entry = 0;
+
+         //create an entry for this interface type
+       if (this->types_.bind (ACE_CString (ifaceUUID),
+                ACE_CString (name)/*pc.label.in ()*/ ) != 0)
+       return 0;
+
+  }
+  else //ComponentPackageReference
+  {
+    //not implemented yet
+    return 0;
+  }
+
+  return 1;
+}
+
+
+
+//function to remove the interface type of the component
+//being removed from the interface map
+//returns 1 on success
+//        0 on error
+
+int CIAO_RepositoryManagerDaemon_i::remove_type (Deployment::PackageConfiguration& pc,
+                         const char* name)
+{
+  const char* ifaceUUID = 0;
+  //
+  if (pc.basePackage.length () > 0)
+  {
+    ifaceUUID = pc.basePackage[0]
+            .implementation[0]
+            .referencedImplementation
+            .implements
+            .specificType.in ();
+            //.UUID.in ();
+
+            ACE_DEBUG ((LM_DEBUG, "removing by: %s\n", ifaceUUID));
+
+       CIEntry *entry = 0;
+
+         //find the type in the interface map
+       if (this->types_.find (ACE_CString (ifaceUUID), entry) == 0)
+     {
+       ACE_DEBUG ((LM_DEBUG,  "Type to be removed: ",
+             "KEY: %s", entry->ext_id_.c_str (),
+             " VAL: %s\n", entry->int_id_.c_str ()));
+     }
+     else
+       ACE_DEBUG ((LM_DEBUG, "Could not find type!\n"));
+
+    ACE_DEBUG ((LM_DEBUG,  "Attempting to remove: %s\n", ifaceUUID));
+    CIBucket_Iterator iter (this->types_, ACE_CString (ifaceUUID));
+
+    CIBucket_Iterator end (this->types_,
+              ACE_CString (ifaceUUID),
+              1 /*tail = true*/);
+    for (;
+      iter != end;
+      ++iter)
+    {
+      CIEntry& element = *iter;
+
+      if(!(strcmp (element.int_id_.c_str (), name /*pc.label.in ()*/)))
+      {
+        //clashes are not allowed so this must be the ONLY
+        //element that we are interested in
+
+        //lets remove this element
+        this->types_.unbind (&element);
+        return 1;
+      }
+    }
+
+  }
+  else //ComponentPackageReference
+  {
+    //not implemented yet
+    return 0;
+  }
+
+  return 1;
+}
+
+#endif //for has ASSEMBLY_INTERFACE_SUPPORT
+
+//function to dump the state of the RepositoryManager
+void CIAO_RepositoryManagerDaemon_i::dump (void)
+{
+#if defined (ACE_HAS_DUMP)
+
+  ACE_DEBUG(LM_DEBUG, "NAMES:\n");
+    this->names_.dump ();
+  ACE_DEBUG(LM_DEBUG, "UUIDs:\n");
+  this->uuids_.dump ();
+
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+  ACE_DEBUG (LM_DEBUG, "Component Interface Types:\n");
+  this->types_.dump ();
+#endif
+
+#endif /* ACE_HAS_DUMP */
+}
 
