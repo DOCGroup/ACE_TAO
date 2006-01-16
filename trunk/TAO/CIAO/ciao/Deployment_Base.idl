@@ -1,4 +1,7 @@
 //$Id$
+#ifndef DEPLOYMENT_BASE_IDL
+#define DEPLOYMENT_BASE_IDL
+
 #include <orb.idl>
 #include "tao/ULongSeq.pidl"
 #include "Deployment_Core.idl"
@@ -79,3 +82,5 @@ module Deployment {
   };
 
 };
+
+#endif /* DEPLOYMENT_BASE_IDL */

@@ -17,7 +17,8 @@ project (NodeManager_stub): ciao_component_dnc {
 
 project(NodeManager): ciao_component_dnc, iortable, ifr_client {
   after += NodeApplicationManager NodeManager_stub
-  libs += NodeManager_stub NodeApplicationManager 
+  libs += NodeManager_stub NodeApplicationManager TargetManager_stub
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
   exename = NodeManager
 
   IDL_Files {
@@ -28,6 +29,8 @@ project(NodeManager): ciao_component_dnc, iortable, ifr_client {
     NodeManager_Impl.cpp
     Node_Manager.cpp
     NAM_Map.cpp
+    MonitorController.cpp
+    MonitorCB.cpp
   }
 }
 
@@ -35,7 +38,8 @@ project(NodeManager): ciao_component_dnc, iortable, ifr_client {
 project(libNodeManager): ciao_component_dnc, iortable, ifr_client {
   sharedname = NodeManager
   after += NodeApplicationManager NodeManager_stub
-  libs += NodeManager_stub NodeApplicationManager
+  libs += NodeManager_stub NodeApplicationManager TargetManager_stub
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
  
   IDL_Files {
   }
@@ -45,5 +49,7 @@ project(libNodeManager): ciao_component_dnc, iortable, ifr_client {
     NodeManager_Impl.cpp
     Node_Manager.cpp
     NAM_Map.cpp
+    MonitorController.cpp
+    MonitorCB.cpp
   }
 }

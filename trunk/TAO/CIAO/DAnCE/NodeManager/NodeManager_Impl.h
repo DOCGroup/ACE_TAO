@@ -7,7 +7,7 @@
  *
  *  This file contains servant implementation for Deployment:NodeManager
  *  interface. In the current design of the NodeManager, as with the
- *  legacy implementation of CIAO, Each NodeManager corresponds to
+ *  legacy  implementation of CIAO, Each NodeManager corresponds to
  *  ONE NodeApplication Manager. Though, the name intuitively suggests
  *  that there be one NodeManager  for every node, our design, allows
  *  the end-user to have multiple components run on the same node.
@@ -27,7 +27,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (_MSC_VER)
+# pragma warning(push)
+# pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 #include "NAM_Map.h"
+#include "MonitorController.h"
 
 namespace CIAO
 {
@@ -140,6 +146,9 @@ namespace CIAO
     // Deployment::NodeApplicationManager_var manager_;
 
     NAM_Map map_;
+
+    /// The MonitorController pointer
+    auto_ptr <MonitorController> monitor_controller_;
   };
 
 
@@ -222,6 +231,10 @@ namespace CIAO
   };
 
 }
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_NODEMANAGER_IMPL_H */

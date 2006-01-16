@@ -48,11 +48,11 @@ parse_args (int argc, char *argv[])
         nodeapp_location_ = get_opts.opt_arg ();
         nodeapp_loc_ = 1;
       break;
-      
+
       case 'a': // Nodeapplication arguments
         nodeapp_options_ = get_opts.opt_arg ();
         break;
-        
+
       case 'd': //get the spawn delay argument
         spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
       break;
@@ -69,7 +69,7 @@ parse_args (int argc, char *argv[])
                            "-c <svc.conf file>\n"
                            "-n <use naming service>\n"
                            "-s <NodeApplication executable path>\n"
-                           "-a <arguments to NodeApplication>\n" 
+                           "-a <arguments to NodeApplication>\n"
                            "-d <spawn delay for nodeapplication>\n"
                            "\n",
                            argv [0]),
@@ -184,9 +184,9 @@ main (int argc, char *argv[])
                                              spawn_delay),
                       -1);
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
-      
+
       daemon_servant->init ();
-      
+
       // Implicit activation
       CIAO::NodeManager_var daemon =
         daemon_servant->_this ();
@@ -231,6 +231,15 @@ main (int argc, char *argv[])
       mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Here start the Monitor
+/*
+      MonitorController* monitor_controller
+              = new MonitorController (orb);
+
+      ACE_DEBUG ((LM_DEBUG , "Before Activate"));
+       monitor_controller->activate ();
+      ACE_DEBUG ((LM_DEBUG , "After Activate"));
+*/
       // End Deployment part
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO_NodeManager is running...\n"));

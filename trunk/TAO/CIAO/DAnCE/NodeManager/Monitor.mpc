@@ -1,0 +1,13 @@
+
+// MPC file for the Monitor 
+
+project(*monitorlib): ciao_client_dnc{
+  includes += $(CIAO_ROOT)/DAnCE/TargetManager
+  sharedname = ciaomonlib 
+
+  libs += TargetManager_stub CIAO_Deployment_stub
+
+  Source_Files {
+    CIAO_Monitor.cpp
+  }
+}

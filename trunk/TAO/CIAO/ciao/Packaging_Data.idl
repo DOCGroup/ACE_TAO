@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef PACKAGING_DATA_IDL
+#define PACKAGING_DATA_IDL
+
 #include "Deployment_Data.idl"
 
 module Deployment
@@ -31,7 +34,7 @@ module Deployment
   };
 
   typedef sequence < MonolithicImplementationDescription > MonolithicImplementationDescriptions;
-  
+
   struct PackageConfiguration;
 
   typedef sequence < PackageConfiguration > PackageConfigurations;
@@ -100,5 +103,7 @@ module Deployment
     Properties configProperty;
   };
 
-  
+
 };
+
+#endif /* PACKAGING_DATA_IDL */
