@@ -9,6 +9,14 @@ Mon Jan 16 16:48:11 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
         * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h:
         * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp:
 
+          Added the newest changes to the RepoMan. This change add the 
+          functionality that pertains to interface types. It is currently
+          disabled due to lack of support in the modeling tools for interfaces
+          for assemby-based interfaces.
+
+          I still need to clean up some of the output and some of the code before 
+          the release of the beta.
+
 Mon Jan 16 16:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/BaseMonitor.h:
