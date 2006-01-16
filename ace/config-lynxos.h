@@ -53,7 +53,6 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_ICMP_SUPPORT 1
 #define ACE_HAS_IP_MULTICAST
-#define ACE_HAS_LYNXOS_BROKEN_MMAP
 #define ACE_HAS_LYNXOS_SIGNALS
 #define ACE_HAS_MEMCHR
 #define ACE_HAS_MSG
@@ -110,14 +109,8 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_WCHAR_H
 #define ACE_MALLOC_ALIGN 8
-#define ACE_SCANDIR_CMP_USES_VOIDPTR
-
-// Don't use MAP_FIXED, at least for now.
-#define ACE_MAP_FIXED 0
-// LynxOS, through 3.0.0, does not support MAP_PRIVATE, so map it to
-// MAP_SHARED.
-#define ACE_MAP_PRIVATE ACE_MAP_SHARED
 #define ACE_PAGE_SIZE 4096
+#define ACE_SCANDIR_CMP_USES_VOIDPTR
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
@@ -188,6 +181,13 @@
 # define ALIGNBYTES (sizeof(int) - 1)
 # define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 #else /* LynxOS 3.x */
+  // Don't use MAP_FIXED, at least for now.
+# define ACE_MAP_FIXED 0
+  // LynxOS, through 3.0.0, does not support MAP_PRIVATE,
+  // so map it to MAP_SHARED.
+# define ACE_MAP_PRIVATE ACE_MAP_SHARED
+
+# define ACE_HAS_LYNXOS_BROKEN_MMAP
 # define ACE_HAS_POLL
 # define ACE_LACKS_AUTO_PTR
 # define ACE_LACKS_DLFCN_H
