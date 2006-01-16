@@ -1,4 +1,15 @@
-Mon Jan 16 17:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+Mon Jan 16 16:48:11 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/spec_RepositoryManager/Options.h:
+        * DAnCE/spec_RepositoryManager/Options.cpp:
+        * DAnCE/spec_RepositoryManager/PC_Updater.cpp:
+        * DAnCE/spec_RepositoryManager/README.txt:
+        * DAnCE/spec_RepositoryManager/RMadmin.cpp:
+        * DAnCE/spec_RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp:
+
+Mon Jan 16 16:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/BaseMonitor.h:
         * DAnCE/NodeManager/CIAO_Monitor.h:
@@ -14,7 +25,7 @@ Mon Jan 16 17:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
         * DAnCE/NodeManager/Node_Manager.cpp:
           These files implement the Monitor within the
-          NodeManager implementation.    
+          NodeManager implementation.
 
         * DAnCE/TargetManager/CmpClient.cpp:
         * DAnCE/TargetManager/Deployment_Configuration.h:
@@ -45,11 +56,11 @@ Mon Jan 16 17:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
         * ciao/Deployment_Data.idl:
         * ciao/Packaging_Data.idl:
         * ciao/ServerResources.idl:
-          Needs to be changed to resolve conflicts when compiling the 
+          Needs to be changed to resolve conflicts when compiling the
           Target Manager cidl file
 
         * ciao/Target_Data.idl:
-          This is the file which contains declarations which has been 
+          This is the file which contains declarations which has been
           separated for the Target manager
 
         * tools/Config_Handlers/Config_Handlers.mpc:
@@ -57,7 +68,7 @@ Mon Jan 16 17:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
         * tools/Config_Handlers/DD_Handler.cpp:
           These implement the extension to the config handlers for
           the parsing of the Target data domain.
-        
+
 Fri Jan 13 20:39:21 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XSCRT/Parser.hpp

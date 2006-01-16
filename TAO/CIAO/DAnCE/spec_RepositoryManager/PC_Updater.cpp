@@ -4,7 +4,7 @@
 #include "ciao/Deployment_DataC.h"
 #include "PC_Updater.h"
 #include "PC_Updater_T.h"
-#include "ace/Containers_T.h"				//for ACE_Double_Linked_List
+#include "ace/Containers_T.h"        //for ACE_Double_Linked_List
 
 
 #include <iostream>
@@ -12,30 +12,30 @@ using namespace std;
 
 namespace
 {
-	const size_t TEMP_LEN = 1024;
+  const size_t TEMP_LEN = 1024;
 }
 
 using namespace PC_Updater_T;
 
 
-	//PATH of glory/gory to update the locations of the IADs
-	//
-	//PackageConfiguration something;
-	//ComponentPackageDescriptions basePackage;
-	//PackagedComponentImplementations implementation;
-	//ComponentImplementationDescription referencedImplementation;
-	//
-	//MONOLITHIC Component:
-	//MonolithicImplementationDescriptions monolithicImpl;
-	//NamedImplementationArtifacts primaryArtifact;
-	//ImplementationArtifactDescription referencedArtifact;
-	//::CORBA::StringSeq location;
-	//
-	//ASSEMBLY-BASED Component
-	//ComponentAssemblyDescriptions assemblyImpl;
-	//SubcomponentInstantiationDescriptions instance;
-	//ComponentPackageDescriptions package;
-	//...
+  //PATH of glory/gory to update the locations of the IADs
+  //
+  //PackageConfiguration something;
+  //ComponentPackageDescriptions basePackage;
+  //PackagedComponentImplementations implementation;
+  //ComponentImplementationDescription referencedImplementation;
+  //
+  //MONOLITHIC Component:
+  //MonolithicImplementationDescriptions monolithicImpl;
+  //NamedImplementationArtifacts primaryArtifact;
+  //ImplementationArtifactDescription referencedArtifact;
+  //::CORBA::StringSeq location;
+  //
+  //ASSEMBLY-BASED Component
+  //ComponentAssemblyDescriptions assemblyImpl;
+  //SubcomponentInstantiationDescriptions instance;
+  //ComponentPackageDescriptions package;
+  //...
 
 
   /*
@@ -65,19 +65,19 @@ PC_Updater::PC_Updater (ACE_CString& server_path, ACE_CString& package)
 
 PC_Updater::~PC_Updater ()
 {
-	this->clear_list ();
+  this->clear_list ();
 }
 
 
 void PC_Updater::clear_list ()
 {
-	while (!this->file_list_.is_empty ())
-	{
-		ZIP_File_Info* inf = this->file_list_.delete_head ();
+  while (!this->file_list_.is_empty ())
+  {
+    ZIP_File_Info* inf = this->file_list_.delete_head ();
 
-		//deallocate the head of the filename list
-		delete inf;
-	}
+    //deallocate the head of the filename list
+    delete inf;
+  }
 }
 
 
@@ -90,13 +90,13 @@ void PC_Updater::clear_list ()
 
   bool PC_Updater::update (const ::Deployment::PackageConfiguration &pc)
   {
-	  //get the list of files in the package and figure out the names of all necessary files
-	  if (!ZIP_Wrapper::file_list_info (const_cast <char*> (this->package_.c_str ()), this->file_list_))
-		  return false;
+    //get the list of files in the package and figure out the names of all necessary files
+    if (!ZIP_Wrapper::file_list_info (const_cast <char*> (this->package_.c_str ()), this->file_list_))
+      return false;
 
-	  update_sequence (pc.basePackage, this);
+    update_sequence (pc.basePackage, this);
 
-	  return this->success_;
+    return this->success_;
   }
 
 
@@ -152,7 +152,7 @@ void PC_Updater::clear_list ()
   {
   }
 
- 
+
   // AssemblyPropertyMapping
 
   void
@@ -171,44 +171,44 @@ void PC_Updater::clear_list ()
 
   void PC_Updater::update (const ::Deployment::ImplementationArtifactDescription &iad)
   {
-	  bool found = false;
+    bool found = false;
 
-	  cout << "label: " << iad.label << endl;
-	  cout << "location: " << CORBA::string_dup (iad.location[0].in ()) << endl;
+    //cout << "label: " << iad.label << endl;
+    //cout << "location: " << CORBA::string_dup (iad.location[0].in ()) << endl;
 
-	  ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
-	  char str [TEMP_LEN];
+    ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
+    char str [TEMP_LEN];
 
-	  while (!iter.done ())
-	  {
-		  ACE_OS::strncpy ( str, iter.next ()->name_.c_str (), TEMP_LEN);
-		  //weird. Need to call next to get current ?!?!
+    while (!iter.done ())
+    {
+      ACE_OS::strncpy ( str, iter.next ()->name_.c_str (), TEMP_LEN);
+      //weird. Need to call next to get current ?!?!
 
-		  const char* name;
-		  const char* ext;
+      const char* name;
+      const char* ext;
 
-		  name = ACE_OS::strstr (str, iad.location[0].in ());
+      name = ACE_OS::strstr (str, iad.location[0].in ());
 
-		  if (name)
-		  {
-			  ext = ACE_OS::strstr (name, ".");
+      if (name)
+      {
+        ext = ACE_OS::strstr (name, ".");
 
-			  ACE_CString loc (this->server_path_);
-			  loc += iad.location[0].in ();
-			  loc += ext;
+        ACE_CString loc (this->server_path_);
+        loc += iad.location[0].in ();
+        loc += ext;
 
-			  iad.location[0] = CORBA::string_dup (loc.c_str ());
+        iad.location[0] = CORBA::string_dup (loc.c_str ());
 
-			  cout << "new location: " << iad.location[0].in () << endl << endl;
+        //cout << "new location: " << iad.location[0].in () << endl << endl;
 
-			  found = true;
-			  break;
-		  }
-		  iter++;
-	  }
+        found = true;
+        break;
+      }
+      iter++;
+    }
 
-	  if (!found)
-		  this->success_ = false;
+    if (!found)
+      this->success_ = false;
   }
 
   // NamedImplementationArtifact

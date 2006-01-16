@@ -1,13 +1,13 @@
 This is the README file for the Repository Manager (RM).
 
-In order to be able to compile the RM you need to have ZZIP lib because the RM 
-uses it to read the contents of CCM packages. ZZIP itself is a C++ wrapper
+In order to be able to compile the RM you need to have ZZIP lib because the Repository 
+Manager (RM) uses it to read the contents of CCM packages. ZZIP itself is a C++ wrapper
 around ZLIB, thus you will also need ZLIB. In order to compile the RM successfully
 you will need to do the following:
  
 1. Download ZLIB and ZZIP-LIB
 2. Compile the multi-threaded versions of these libraries
-3. create a separate directory for each library and create an include and a lib 
+3. [on Windows] create a separate directory for each library; create an include and a lib 
 subdirectory within them. Then copy the libraries files in the library subdirectory.
 Copy zlib.h in the zlib_path/include and copy zziplib.h, zzip-conf.h and zzip-msvc.h 
 (for Windows platforms; Linux might have its own file!!!). This step might be easier if
