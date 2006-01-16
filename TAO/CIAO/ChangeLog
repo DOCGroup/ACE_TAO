@@ -1,3 +1,10 @@
+Mon Jan 16 18:36:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        
+          Addressed some warnings from the RHEL_Static_GCC-3.4.2
+          build. 
+
 Mon Jan 16 16:48:11 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/spec_RepositoryManager/Options.h:

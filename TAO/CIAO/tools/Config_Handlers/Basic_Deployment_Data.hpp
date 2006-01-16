@@ -4038,7 +4038,7 @@ namespace CIAO
       {
         TCKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void TCKind::
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -4711,7 +4711,7 @@ namespace CIAO
       {
         SatisfierPropertyKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void SatisfierPropertyKind::
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -5383,7 +5383,7 @@ namespace CIAO
       {
         ResourceUsageKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void ResourceUsageKind::
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -5597,7 +5597,7 @@ namespace CIAO
       {
         CCMComponentPortKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void CCMComponentPortKind::
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
