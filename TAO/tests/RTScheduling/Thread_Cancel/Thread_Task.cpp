@@ -58,9 +58,9 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
   return 0;
 }
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 int
 Thread_Task::svc (void)
