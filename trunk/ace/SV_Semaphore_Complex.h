@@ -131,8 +131,8 @@ public:
   int control (int cmd, int value = 0, u_short n = 0) const;
 
   // = Upgrade access control...
-  ACE_USING ACE_SV_Semaphore_Simple::get_id;
-  ACE_USING ACE_SV_Semaphore_Simple::remove;
+  using ACE_SV_Semaphore_Simple::get_id;
+  using ACE_SV_Semaphore_Simple::remove;
 
   /// Dump the state of an object.
   void dump (void) const;

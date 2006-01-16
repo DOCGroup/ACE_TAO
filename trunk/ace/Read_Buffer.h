@@ -82,7 +82,7 @@ public:
   size_t replaced (void) const;
 
   /// Returns the size of the allocated buffer obtained during a
-  /// <read>, not including the null terminator.
+  /// @c read, not including the null terminator.
   size_t size (void) const;
 
   /// Returns a pointer to its allocator.

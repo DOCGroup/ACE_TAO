@@ -322,7 +322,7 @@ ACE_INET_Addr::set (u_short port_number,
                       encode);
   else
     {
-#  if defined (VXWORKS) || defined (CHORUS)
+#  if defined (ACE_VXWORKS) || defined (CHORUS)
       hostent *hp = ACE_OS::gethostbyname (host_name);
 #  else
       hostent hentry;
