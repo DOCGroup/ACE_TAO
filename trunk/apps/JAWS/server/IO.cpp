@@ -10,6 +10,10 @@
 #include "IO.h"
 #include "HTTP_Helpers.h"
 
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_stat.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (server,
            IO,
@@ -417,6 +421,173 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
 }
 
 #endif /* ACE_WIN32 */
+
+//-------------------Adding SYNCH IO no Caching
+
+JAWS_Synch_IO_No_Cache::JAWS_Synch_IO_No_Cache (void)
+  : handle_ (ACE_INVALID_HANDLE)
+{
+}
+
+JAWS_Synch_IO_No_Cache::~JAWS_Synch_IO_No_Cache (void)
+{
+  ACE_OS::closesocket (this->handle_);
+}
+
+ACE_HANDLE
+JAWS_Synch_IO_No_Cache::handle (void) const
+{
+  return this->handle_;
+}
+
+void
+JAWS_Synch_IO_No_Cache::handle (ACE_HANDLE handle)
+{
+  this->handle_ = handle;
+}
+
+void
+JAWS_Synch_IO_No_Cache::read (ACE_Message_Block &mb,
+                     int size)
+{
+  ACE_SOCK_Stream stream;
+  stream.set_handle (this->handle_);
+  int result = stream.recv (mb.wr_ptr (), size);
+
+  if (result <= 0)
+    this->handler_->read_error ();
+  else
+    {
+      mb.wr_ptr (result);
+      this->handler_->read_complete (mb);
+    }
+}
+
+void
+JAWS_Synch_IO_No_Cache::receive_file (const char *filename,
+									  void *initial_data,
+									  int initial_data_length,
+									  int entire_length)
+{
+	//ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
+	this->handler_->receive_file_error (5);
+
+  //ACE_Filecache_Handle handle (filename, entire_length);
+
+  //int result = handle.error ();
+
+  //if (result == ACE_Filecache_Handle::ACE_SUCCESS)
+  //  {
+  //    ACE_SOCK_Stream stream;
+  //    stream.set_handle (this->handle_);
+
+  //    int bytes_to_memcpy = ACE_MIN (entire_length, initial_data_length);
+  //    ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
+
+  //    int bytes_to_read = entire_length - bytes_to_memcpy;
+
+  //    int bytes = stream.recv_n ((char *) handle.address () + initial_data_length,
+  //                               bytes_to_read);
+  //    if (bytes == bytes_to_read)
+  //      this->handler_->receive_file_complete ();
+  //    else
+  //      result = -1;
+  //  }
+
+  //if (result != ACE_Filecache_Handle::ACE_SUCCESS)
+  //  this->handler_->receive_file_error (result);
+
+}
+
+void
+JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
+									   const char *header,
+									   int header_size,
+									   const char *trailer,
+									   int trailer_size)
+{
+	int result = 0;
+
+	// Can we access the file?
+	if (ACE_OS::access (filename, R_OK) == -1)
+	{
+		//ugly hack to send in HTTP_Status_Code::STATUS_NOT_FOUND
+		result = ACE_Filecache_Handle::ACE_ACCESS_FAILED;
+		this->handler_->transmit_file_error (result);
+		return;
+	}
+
+	ACE_stat stat;
+
+	// Can we stat the file?
+	if (ACE_OS::stat (filename, &stat) == -1)
+	{
+		//ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
+		result = ACE_Filecache_Handle::ACE_STAT_FAILED;
+	    this->handler_->transmit_file_error (result);
+		return;
+	}
+
+	size_t size = stat.st_size;
+
+	// Can we open the file?
+	ACE_HANDLE handle = ACE_OS::open (filename, O_RDONLY);
+	if (handle == ACE_INVALID_HANDLE)
+	{
+		//ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
+		result = ACE_Filecache_Handle::ACE_OPEN_FAILED;
+	    this->handler_->transmit_file_error (result);
+		return;
+	}
+
+	char* f = new char[size];
+	auto_ptr<char> file (f);	
+
+	ACE_OS::read_n (handle, f, size);
+
+	ACE_SOCK_Stream stream;
+	stream.set_handle (this->handle_);
+
+	if ((stream.send_n (header, header_size) == header_size)
+			&& (stream.send_n (f, size) == size)
+			&& (stream.send_n (trailer, trailer_size) == trailer_size))
+			this->handler_->transmit_file_complete ();
+	else
+	{
+		//ugly hack to default to HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR
+		result = -1;
+		this->handler_->transmit_file_error (result);
+		return;
+	}
+}
+
+void
+JAWS_Synch_IO_No_Cache::send_confirmation_message (const char *buffer,
+												   int length)
+{
+  this->send_message (buffer, length);
+  this->handler_->confirmation_message_complete ();
+}
+
+void
+JAWS_Synch_IO_No_Cache::send_error_message (const char *buffer,
+										    int length)
+{
+  this->send_message (buffer, length);
+  this->handler_->error_message_complete ();
+}
+
+void
+JAWS_Synch_IO_No_Cache::send_message (const char *buffer,
+									  int length)
+{
+  ACE_SOCK_Stream stream;
+  stream.set_handle (this->handle_);
+  stream.send_n (buffer, length);
+}
+
+//-------------------
+
 
 // #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // template class ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>;
