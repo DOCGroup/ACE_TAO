@@ -1,5 +1,11 @@
 Mon Jan 16 05:54:44 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* ace/Timer_Queue_Adapters.cpp (svc): Added a fix so that
+	  this code will work for both regular timers and high-resolution
+ 	  timers.  Thanks to Eric Tiangang <tgliu@utstar.com> and Robert
+ 	  Iakobashvili <coroberti at gmail dot com> for this fix.  This
+ 	  fixes bugid 2348.
+
 	* include/makeinclude/platform_linux.GNU (LD): 
 	  Pass -O3 to GNU-linker to reduce footprint due to ld
  	  optimizations.  Thanks to Robert Iakobashvili <coroberti at
