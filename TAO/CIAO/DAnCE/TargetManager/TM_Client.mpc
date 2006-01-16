@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// Client.mpc,v 1.6 2005/02/18 09:07:06 jwillemsen Exp
+
+
+project(TMClient): ciao_deployment_stub, ciao_config_handlers {
+//  idlflags += -I $(TAO_ROOT)/orbsvcs/orbsvcs
+  includes += $(CIAO_ROOT)/DAnCE $(TAO_ROOT)/orbsvcs 
+  includes += $(CIAO_ROOT)/DAnCE/TargetManager
+  libs += TargetManager_stub TargetManager_svnt 
+  Source_Files {
+   CmpClient.cpp 
+  }
+}

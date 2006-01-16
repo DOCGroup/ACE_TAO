@@ -1,23 +1,83 @@
+Mon Jan 16 17:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/BaseMonitor.h:
+        * DAnCE/NodeManager/CIAO_Monitor.h:
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+        * DAnCE/NodeManager/Monitor.mpc:
+        * DAnCE/NodeManager/MonitorCB.h:
+        * DAnCE/NodeManager/MonitorCB.cpp:
+        * DAnCE/NodeManager/MonitorController.h:
+        * DAnCE/NodeManager/MonitorController.inl:
+        * DAnCE/NodeManager/MonitorController.cpp:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager.cpp:
+          These files implement the Monitor within the
+          NodeManager implementation.    
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/TargetManager/Deployment_Configuration.h:
+        * DAnCE/TargetManager/Deployment_Configuration.cpp:
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/TM_Client.mpc:
+        * DAnCE/TargetManager/TargetManager.cidl:
+        * DAnCE/TargetManager/TargetManager.idl:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+        * DAnCE/TargetManager/TargetManager_exec_export.h:
+        * DAnCE/TargetManager/TargetManager_stub_export.h:
+        * DAnCE/TargetManager/TargetManager_svnt_export.h:
+          These files implement the Target Manager Implementation
+
+        * DAnCE/TargetManager/descriptors/Domain.cdd:
+        * DAnCE/TargetManager/descriptors/NodeDetails.dat:
+        * DAnCE/TargetManager/descriptors/NodeManagerMap.dat:
+        * DAnCE/TargetManager/descriptors/flattened_deploymentplan.cdp:
+        * DAnCE/TargetManager/descriptors/run_test_TargetManager.pl:
+          These are needed for the running of the TargetManager
+
+        * ciao/CCM_Core.mpc:
+        * ciao/Deployment.idl:
+        * ciao/Deployment_Base.idl:
+        * ciao/Deployment_Data.idl:
+        * ciao/Packaging_Data.idl:
+        * ciao/ServerResources.idl:
+          Needs to be changed to resolve conflicts when compiling the 
+          Target Manager cidl file
+
+        * ciao/Target_Data.idl:
+          This is the file which contains declarations which has been 
+          separated for the Target manager
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/DD_Handler.h:
+        * tools/Config_Handlers/DD_Handler.cpp:
+          These implement the extension to the config handlers for
+          the parsing of the Target data domain.
+        
 Fri Jan 13 20:39:21 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XSCRT/Parser.hpp
         * tools/Config_Handlers/XSCRT/XML.hpp
-          
+
           Added a templated casting operator for Xerces types instead
           of using standard dynamic_cast.  Thanks to Ossama Othman
           ossama at dre dot vanderbilt dot edu for suggesting this
           fix.
-        
+
         * CIAO-INSTALL.html
         * NEWS
-        
+
           The above changes removed the requirement for an RTTI enabled
-          version of Xerces.  Updated these documents to reflect this. 
-        
+          version of Xerces.  Updated these documents to reflect this.
+
 Thu Jan 12 21:40:47 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/ReDaC-Usage.html
-        
+
           Fixed some typos and an error.
 
 Tue Jan 10 22:34:22 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
@@ -26,31 +86,31 @@ Tue Jan 10 22:34:22 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Basic_Deployment_Data.hpp
         * tools/Config_Handlers/cdd.cpp
         * tools/Config_Handlers/cdd.hpp
-        
+
         Regenerated to reflect updates to schema in
         Tue Jan 10 19:01:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
-        
+
         * tools/Config_Handlers/Modified_Deployment.xsd
-        
+
         Removed, as this file is obsolete, and schema should only exist in
         CIAO_ROOT/docs/schema
-        
+
 Tue Jan 10 22:05:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/ReDaC-Usage.html
-        
+
           Added a tutorial-like web page to showcase ReDaC service
           of DAnCE.
 
-	* NEWS
+        * NEWS
 
-	  Updated with DAnCE's recent enhancements.
+          Updated with DAnCE's recent enhancements.
 
 Tue Jan 10 19:01:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd
         * docs/schema/cdd.xsd
-        
+
         Corrected incorrect cardinality on several target domain elements.
 
 Tue Jan 10 11:10:01 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>

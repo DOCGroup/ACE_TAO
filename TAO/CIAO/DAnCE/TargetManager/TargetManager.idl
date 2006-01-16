@@ -1,0 +1,37 @@
+// $Id$
+
+/**
+ * @file TargetManager.idl
+ * @brief TargetManager interface defintion
+ *
+ * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
+ */
+#ifndef TARGETMGR_IDL
+#define TARGETMGR_IDL
+
+
+
+#include "ciao/Components.idl"
+
+#include "ciao/Target_Data.idl"
+
+/**
+ * @module CIAO
+ *
+ * @brief TargetManager interface defintion
+ *
+ * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
+ */
+module CIAO
+{
+  component TargetManagerImpl
+  {
+    provides ::Deployment::TargetManager targetMgr;
+  };
+
+  home TargetManagerHome manages TargetManagerImpl
+  {
+  };
+};
+
+#endif

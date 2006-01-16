@@ -1,21 +1,13 @@
 // $Id$
+#ifndef DEPLOYMENT_IDL
+#define DEPLOYMENT_IDL
+
+#include "Deployment_Data.idl"
 #include "Packaging_Data.idl"
+#include "Target_Data.idl"
 #include "ServerResources.idl"
 
 module Deployment {
-
-  exception ResourceNotAvailable {
-    string name;
-    string resourceType;
-    string propertyName;
-    string elementName;
-    string resourceName;
-  };
-
-  exception PlanError {
-    string name;
-    string reason;
-  };
 
   exception InvalidProperty {
     string name;
@@ -65,7 +57,7 @@ module Deployment {
     void startLaunch (in Properties configProperty, in boolean start)
       raises (ResourceNotAvailable, StartError, InvalidProperty);
 
-    void finishLaunch (in boolean start, 
+    void finishLaunch (in boolean start,
                        in boolean is_ReDAC)
       raises (StartError, InvalidConnection);
 
@@ -92,7 +84,7 @@ module Deployment {
   typedef sequence < DomainApplicationManager > DomainApplicationManagers;
 
   interface ExecutionManager {
-    DomainApplicationManager preparePlan (in DeploymentPlan plan, 
+    DomainApplicationManager preparePlan (in DeploymentPlan plan,
                                           in boolean commitResources)
       raises (ResourceNotAvailable, PlanError, StartError);
     DomainApplicationManagers getManagers ();
@@ -102,7 +94,7 @@ module Deployment {
     /// CIAO specific operation to handle dynamic system redeployment
     /// and reconfiguration
     /// This operation could handle dynamic redeployment, and this
-    /// is the operation exposed to clients directly. Other 
+    /// is the operation exposed to clients directly. Other
     /// "perform_redeployment" operation defined on DAM and NA
     /// are implementaion details within DAnCE.
     void perform_redeployment (in DeploymentPlan new_plan)
@@ -118,28 +110,17 @@ module Deployment {
     DeploymentPlan getPlan (in string plan_uuid);
   };
 
-  interface TargetManager {
-    Domain getAllResources ();
-    Domain getAvailableResources ();
-    void commitResources (in DeploymentPlan plan)
-      raises (ResourceNotAvailable, PlanError);
-    void releaseResources (in DeploymentPlan argname);
-    void updateDomain (in ::CORBA::StringSeq elements,
-                       in Domain domainSubset, 
-                       in DomainUpdateKind updateKind);
-  };
-
   interface Logger {
   };
 
   interface NodeApplicationManager :
-      ApplicationManager
+    ApplicationManager
   {
     /// CIAO specific operation to handle dynamic system redeployment
     /// and reconfiguration
     /// This operation could handle dynamic redeployment for
     /// a node-level deployment plan within a node
-    Application perform_redeployment (in Properties configProperty, 
+    Application perform_redeployment (in Properties configProperty,
                                       out Connections providedReference,
                                       in boolean start)
       raises (PlanError,
@@ -154,7 +135,7 @@ module Deployment {
   };
 
   interface NodeManager {
-    void joinDomain (in Domain ciao_domain, 
+    void joinDomain (in Domain ciao_domain,
                      in TargetManager manager,
                      in Logger log);
     void leaveDomain ();
@@ -167,7 +148,7 @@ module Deployment {
   interface RepositoryManager {
     void installPackage (in string installationName, in string location)
       raises (NameExists, PackageError);
-    void createPackage (in string installationName, 
+    void createPackage (in string installationName,
                         in PackageConfiguration package,
                         in string baseLocation,
                         in boolean replace)
@@ -187,60 +168,61 @@ module Deployment {
 //***************************************new_RepositoryManager ONWARDS*****************************************
 
 
-	typedef sequence<octet> Artifact;
-	typedef sequence<octet> Package;
+  typedef sequence<octet> Artifact;
+  typedef sequence<octet> Package;
 
-	exception NoPlan {
-	};
+  exception NoPlan {
+  };
 
-	enum Platform {
-		Win32,
-		Unix,
-		Linux,
-		Solaris,
-		Vxworks,
-		UNDEF
-	};
+  enum Platform {
+    Win32,
+    Unix,
+    Linux,
+    Solaris,
+    Vxworks,
+    UNDEF
+  };
 
-	struct Implementation
-	{
-		Platform the_platform;
-		string name;
-		Artifact the_implementation;
-	};
+  struct Implementation
+  {
+    Platform the_platform;
+    string name;
+    Artifact the_implementation;
+  };
 
-	typedef sequence<Implementation> Implementations;
+  typedef sequence<Implementation> Implementations;
 
-	interface new_RepositoryManager 
-	{
-		void installPackage (in string installationName,
+  interface new_RepositoryManager
+  {
+    void installPackage (in string installationName,
                          in Package the_package,
                          in boolean replace)
-	      raises (NameExists, PackageError);
+      raises (NameExists, PackageError);
 
-		DeploymentPlan	retrievePlan (in string packageName)
-			raises (NoPlan);
+    DeploymentPlan  retrievePlan (in string packageName)
+      raises (NoPlan);
 
-	    Package findPackageByName (in string name)
-	      raises (NoSuchName);
-	
-		Implementation findImplementationByName (in string implementation_name,
+    Package findPackageByName (in string name)
+      raises (NoSuchName);
+
+    Implementation findImplementationByName (in string implementation_name,
                                              in string package_name)
-	      raises (NoSuchName);
+      raises (NoSuchName);
 
-	    Package findPackageByUUID (in string UUID)
-	      raises (NoSuchName);
-	
-	    Implementation findImplementationByUUID (in string UUID)
-	      raises (NoSuchName);
-	
+    Package findPackageByUUID (in string UUID)
+      raises (NoSuchName);
 
-	    //::CORBA::StringSeq findNamesByType (in string type);
-	    //::CORBA::StringSeq getAllTypes ();
+    Implementation findImplementationByUUID (in string UUID)
+      raises (NoSuchName);
 
-		::CORBA::StringSeq getAllPackageNames ();
-	    
-		void deletePackage (in string installationName)
-	      raises (NoSuchName);
-	};
+    //::CORBA::StringSeq findNamesByType (in string type);
+    //::CORBA::StringSeq getAllTypes ();
+
+    ::CORBA::StringSeq getAllPackageNames ();
+
+    void deletePackage (in string installationName)
+      raises (NoSuchName);
+  };
 };
+
+#endif /* DEPLOYMENT_IDL */

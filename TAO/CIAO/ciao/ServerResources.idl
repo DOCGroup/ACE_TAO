@@ -76,6 +76,8 @@ module CIAO
       unsigned long max_request_buffer_size;
     };
 
+    typedef sequence<ORS_Threadpool> ORS_ThreadpoolSeq;
+
     /**
      * @brief Defines the configuration of a threadpool lane.  We need
      * to redefine it here to avoid dependency to RTCORBA library.
@@ -108,6 +110,8 @@ module CIAO
       unsigned long max_request_buffer_size;
     };
 
+    typedef sequence<ORS_ThreadpoolWithLanes> ORS_ThreadpoolWithLanesSeq;
+
     /**
      * @brief Define a priority band for BandedConnection policies.
      */
@@ -133,21 +137,23 @@ module CIAO
       ORS_PriorityBands bands;
     };
 
+    typedef sequence<ORS_ConnectionBands> ORS_ConnectionBandsSeq;
+
     /**
      * @brief Collection of resources managed by the NodeApplication
      * ORB.
      */
     struct ORBResource
     {
-      sequence<ORS_Threadpool> threadpool_list;
+      ORS_ThreadpoolSeq threadpool_list;
 
-      sequence<ORS_ThreadpoolWithLanes> threadpool_with_lanes_list;
+      ORS_ThreadpoolWithLanesSeq threadpool_with_lanes_list;
 
-      sequence<ORS_ConnectionBands> connection_bands_list;
+      ORS_ConnectionBandsSeq connection_bands_list;
     };
 
     typedef sequence<ORBResource, 1> ORBResources;
-    
+
     // =================================================================
 
     /**
@@ -218,13 +224,13 @@ module CIAO
      * @brief A list of all policy sets.
      */
     typedef sequence<PolicySet> PolicySets;
-    
+
     struct ORBConfigs
     {
       ORBResources orb_resources;
       PolicySets policy_set;
     };
-    
+
     struct ServerResource
     {
       string Id;
@@ -232,7 +238,7 @@ module CIAO
       CommandlineArgs args;
       SvcconfURI svcconf;
       ORBConfigs orb_config;
-    };      
+    };
   };
 };
 

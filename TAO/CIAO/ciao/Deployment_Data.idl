@@ -1,6 +1,8 @@
 // $Id$
-
+#ifndef DEPLOYMENT_DATA_IDL
+#define DEPLOYMENT_DATA_IDL
 #include "Deployment_Base.idl"
+
 
 module Deployment {
 
@@ -254,3 +256,5 @@ module Deployment {
     SatisfierProperties property;
   };
 };
+
+#endif /* DEPLOYMENT_DATA_IDL */
