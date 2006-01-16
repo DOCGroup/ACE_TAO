@@ -1,7 +1,7 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. (Remedy) VxWorks 6.x support
+. (Remedy) VxWorks 6.2 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 ====================================================
@@ -24,7 +24,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
   as the Windows CE platforms Pocket PC 2003 and Windows Mobile 5.
   Solution/project files are generated with an appended "_vc8" for
   Win32 and "_WinCE" for the CE platforms. See
-  ACE_wrappers/docs/CE-status.txt for more information. 
+  ACE_wrappers/docs/CE-status.txt for more information.
 
 . Completed implementation of ACE_Dev_Poll_Reactor using the Linux epoll
   facility; tested on Red Hat Enterprise Linux 4.
