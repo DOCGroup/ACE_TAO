@@ -213,9 +213,9 @@ public:
   virtual void reset_reactor_event_loop (void);
 
   /**
-   * Create the Reactor using <implementation>.  The flag
-   * <delete_implementation> tells the Reactor whether or not to
-   * delete the <implementation> on destruction.
+   * Create the Reactor using @a implementation.  The flag
+   * @a delete_implementation tells the Reactor whether or not to
+   * delete the @a implementation on destruction.
    */
   ACE_Reactor (ACE_Reactor_Impl *implementation = 0,
                int delete_implementation = 0);
