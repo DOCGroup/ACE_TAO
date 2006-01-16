@@ -49,7 +49,7 @@ Dynamic_Priority_Test
 Enum_Interfaces_Test: !LynxOS
 Env_Value_Test: !chorus !WinCE
 FIFO_Test
-Framework_Component_Test: !STATIC !LynxOS !nsk
+Framework_Component_Test: !STATIC !nsk
 Future_Set_Test: !nsk
 Future_Test: !nsk
 Get_Opt_Test
@@ -63,13 +63,13 @@ Lazy_Map_Manager_Test
 Log_Msg_Test: !LynxOS
 Logging_Strategy_Test: !STATIC !ST
 Manual_Event_Test
-MEM_Stream_Test: !VxWorks !LynxOS !nsk
+MEM_Stream_Test: !VxWorks !nsk
 MM_Shared_Memory_Test: !chorus !Unicos !VxWorks !nsk
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk
 MT_Reference_Counted_Event_Handler_Test
 MT_Reference_Counted_Notify_Test
-MT_SOCK_Test: !chorus !LynxOS
+MT_SOCK_Test: !chorus
 Malloc_Test: !VxWorks !LynxOS
 Map_Manager_Test
 Map_Test
@@ -100,8 +100,8 @@ Proactor_Test: !chorus !VxWorks !LynxOS !nsk
 Proactor_Timer_Test: !chorus !VxWorks !LynxOS !nsk
 Process_Manager_Test: !chorus !VxWorks
 Process_Manual_Event_Test: !HPUX !chorus !VxWorks !LynxOS
-Process_Mutex_Test: !chorus !VxWorks !LynxOS
-Process_Semaphore_Test: !chorus !VxWorks !LynxOS
+Process_Mutex_Test: !chorus !VxWorks
+Process_Semaphore_Test: !chorus !VxWorks
 RB_Tree_Test
 Reactor_Dispatch_Order_Test
 Reactor_Exceptions_Test
@@ -118,7 +118,7 @@ Refcounted_Auto_Ptr_Test
 Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
 SOCK_Connector_Test
-SOCK_Send_Recv_Test: !LynxOS
+SOCK_Send_Recv_Test
 SOCK_Test: !chorus
 SPIPE_Test: !VxWorks !nsk
 SString_Test
