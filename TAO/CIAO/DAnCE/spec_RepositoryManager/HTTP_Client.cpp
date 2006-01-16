@@ -16,9 +16,10 @@ HTTP_Client::~HTTP_Client (void)
 }
 
 // initialize address and filename. No network i/o in open
-
 int
-HTTP_Client::open (const ACE_TCHAR *filename, const ACE_TCHAR *hostname , u_short port)
+HTTP_Client::open (const ACE_TCHAR *filename,
+                   const ACE_TCHAR *hostname,
+                   u_short port)
 {
   filename_ = ACE_OS::strdup (filename);
   inet_addr_.set (port, hostname);
@@ -26,7 +27,6 @@ HTTP_Client::open (const ACE_TCHAR *filename, const ACE_TCHAR *hostname , u_shor
 }
 
 // read from connection length bytes from offset, into Message block
-
 int
 HTTP_Client::read (ACE_Message_Block *mb)
 {
@@ -43,9 +43,7 @@ HTTP_Client::read (ACE_Message_Block *mb)
 
 }
 
-
 // close down the HTTP_Client
-
 int
 HTTP_Client::close (void)
 {
