@@ -31,9 +31,9 @@ parse_args (int argc,
   return 0;
 }
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 int
 main (int argc, char* argv [])
