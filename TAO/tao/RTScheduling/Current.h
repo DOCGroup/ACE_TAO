@@ -83,6 +83,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   static ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
   TAO_RTScheduler_Current (void);
+  virtual ~TAO_RTScheduler_Current (void);
 
   void init (TAO_ORB_Core* orb
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -257,9 +258,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
                              TAO_RTScheduler_Current_i* prev_current
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  virtual ~TAO_RTScheduler_Current_i (void)
-    {
-    };
+  virtual ~TAO_RTScheduler_Current_i (void);
 
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
@@ -326,8 +325,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 
   void delete_all_currents (void);
 
-  const char* name (void);
-  void name (char *);
+  char* name (void);
+  void name (const char *);
 
   TAO_ORB_Core* orb (void);
 
@@ -363,6 +362,8 @@ public:
           const char* name,
           CORBA::Policy_ptr sched_param,
           CORBA::Policy_ptr implicit_sched_param);
+
+  virtual ~DTTask (void);
 
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size

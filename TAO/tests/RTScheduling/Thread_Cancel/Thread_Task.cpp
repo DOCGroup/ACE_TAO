@@ -29,11 +29,11 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
-      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
+      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
                                                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->current_ = RTScheduling::Current::_narrow (current_obj
+      this->current_ = RTScheduling::Current::_narrow (current_obj.in ()
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -79,9 +79,10 @@ Thread_Task::svc (void)
       ACE_TRY_CHECK;
 
       size_t count = 0;
+      RTScheduling::Current::IdType_var current_id = current_->id ();
       ACE_OS::memcpy (&count,
-                      current_->id ()->get_buffer (),
-                      current_->id ()->length ());
+                      current_id->get_buffer (),
+                      current_id->length ());
 
 
       this->current_->begin_scheduling_segment ("Potter",
@@ -90,7 +91,7 @@ Thread_Task::svc (void)
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->guid_[guid_index++] = *(this->current_->id ());
+      this->guid_[guid_index++] = (current_id.in ())[0];
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",
@@ -102,7 +103,7 @@ Thread_Task::svc (void)
 
       {
         ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
-        RTScheduling::Current::NameList* name_list = this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
+        RTScheduling::Current::NameList_var name_list = this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         ACE_DEBUG ((LM_DEBUG,

@@ -197,6 +197,12 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (
     ACE_ENV_ARG_DECL
   )
 {
+  if (this->value_destructor_ != 0)
+    {
+      (*this->value_destructor_) (this->value_);
+      this->value_ = 0;
+    }
+
   if (! this->demarshal_value (cdr))
     {
       ACE_THROW (CORBA::MARSHAL ());

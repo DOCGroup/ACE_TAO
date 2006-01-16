@@ -9,6 +9,7 @@
 #include "RTScheduler.h"
 #include "ace/Atomic_Op.h"
 #include "Current.h"
+#include "tao/LocalObject.h"
 
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
@@ -17,8 +18,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
-class TAO_RTScheduler_Export Client_Interceptor
-  : public PortableInterceptor::ClientRequestInterceptor
+class TAO_RTScheduler_Export Client_Interceptor:
+  public PortableInterceptor::ClientRequestInterceptor,
+  public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -57,7 +59,8 @@ public:
 };
 
 class TAO_RTScheduler_Export Server_Interceptor :
-  public PortableInterceptor::ServerRequestInterceptor
+  public PortableInterceptor::ServerRequestInterceptor,
+  public TAO_Local_RefCounted_Object
 {
 
 public:
