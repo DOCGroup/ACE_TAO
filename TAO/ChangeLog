@@ -1,3 +1,10 @@
+Mon Jan 16 05:51:14 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/examples/ImR/Combined_Service/test.cpp (assertTrue): 
+	  Make sure to #include <string> so that "std::" makes sense.
+  	  Thanks to Ian Zagorskih <ianzag at megasignal dot com> for this
+ 	  fix.  This fixes bugid 2362.
+
 Sun Jan 15 19:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1869_Regression/client.cpp:
