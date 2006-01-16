@@ -1,8 +1,38 @@
+Mon Jan 16 19:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_IO.cpp:
+          When using FIONREAD the 3rd argument should be of type int. This
+          fixes bugzilla bug 2360. Thanks to Michael Klein
+          <michael dot klein at fazi dot de> for reporting this.
+
+        * ace/SV_Semaphore_Complex.h:
+          Instead of ACE_USING just use "using"
+
+        * ace/Sched_Params.cpp:
+        * ace/ACE.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/OS_NS_netdb.cpp:
+          Replaced VXWORKS with ACE_VXWORKS
+
+        * ace/Read_Buffer.h:
+        * ace/Reactor.h:
+          Doxygen improvement
+
+        * ace/Flag_Manip.inl:
+          Removed remark about VxWorks, not valid anymore with
+          newer versions
+
+        * ace/OS_NS_dlfcn.inl:
+          Removed ACE_HAS_CHARPTR_DL, is not defined in any config file
+
+        * ace/config-all.h:
+          Removed old vxworks specific part
+
 Mon Jan 16 17:23:42 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
           Added ACE_HAS_POSIX_REALTIME_SIGNALS.
-        
+
 Mon Jan 16 17:20:50 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
