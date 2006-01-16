@@ -6,11 +6,13 @@
 #define DISTRIBUTABLE_THREAD_H
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_RTScheduler_Export TAO_DistributableThread
-: public RTScheduling::DistributableThread
+class TAO_RTScheduler_Export TAO_DistributableThread:
+  public RTScheduling::DistributableThread,
+  public TAO_Local_RefCounted_Object
 {
  public:
   
