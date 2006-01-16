@@ -48,9 +48,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 // This is already done in orbconf.h. But this file is totally
 // decoupled from its contents that we have to do this here. Including

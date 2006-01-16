@@ -1,3 +1,15 @@
+Mon Jan 16 16:49:27 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tao/AnyTypeCode/SystemExceptionA.cpp:
+        * tao/Exception.h:
+        * tao/RTScheduling/Current.cpp:
+        * tao/SystemException.h:
+        * tao/SystemException.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+          Get rid of ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO.
+          If macro THREAD_CANCELLED is defined we now simply undef it.
+
 Mon Jan 16 14:17:47 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/AnyTypeCode/Any_Special_Impl_T.cpp:

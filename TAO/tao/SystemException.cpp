@@ -818,9 +818,9 @@ CORBA::SystemException::_tao_get_omg_exception_description (
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 // List of standard/system exceptions ... used to create static
 // storage for their typecodes, then later to initialize that storage
