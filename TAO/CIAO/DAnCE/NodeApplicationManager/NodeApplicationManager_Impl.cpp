@@ -447,6 +447,16 @@ perform_redeployment (const Deployment::Properties & configProperty,
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }
 
+
+void
+CIAO::NodeApplicationManager_Impl_Base::
+set_shared_components (const ::CORBA::StringSeq & components
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((::CORBA::SystemException))
+{
+  this->shared_components_ = components;
+}
+
 void
 CIAO::NodeApplicationManager_Impl_Base::
 destroyApplication (Deployment::Application_ptr app

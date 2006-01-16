@@ -23,7 +23,6 @@ CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
 
 CIAO::NodeManager_Impl_Base::~NodeManager_Impl_Base ()
 {
-
 }
 
 void
@@ -43,7 +42,6 @@ CIAO::NodeManager_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
                                 0
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {
@@ -79,9 +77,9 @@ CIAO::NodeManager_Impl_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & ,
-                                   Deployment::TargetManager_ptr ,
-                                   Deployment::Logger_ptr
-                                   ACE_ENV_ARG_DECL)
+                                         Deployment::TargetManager_ptr ,
+                                         Deployment::Logger_ptr
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
@@ -98,7 +96,7 @@ CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
 
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
-                                     ACE_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::PlanError))
@@ -117,6 +115,25 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                         Deployment::NodeApplicationManager::_nil ());
     }
 
+  // Update the reference count map based on the deployment plan input
+  for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
+    {
+      Reference_Count_Map::ENTRY *entry = 0;
+      if (this->ref_count_map_.find (plan.instance[i].name.in (), entry) != 0)
+        {
+          // Initial ref count is set to "1"
+          this->ref_count_map_.bind (plan.instance[i].name.in (), 1);
+        }
+      else
+        {
+          CORBA::ULong len = this->shared_components_.length ();
+          shared_components_.length (len + 1);
+          this->shared_components_[len] = plan.instance[i].name.in ();
+          ++entry->int_id_; // increase ref count by 1
+        }
+    }
+
+  // Create/find NodeApplicationManager and set/reset plan on it
   ACE_TRY
     {
       if (!this->map_.is_available (plan.UUID.in ()))
@@ -130,8 +147,9 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
 
           //Implementation undefined.
           CIAO::NodeApplicationManager_Impl_Base *app_mgr;
-          app_mgr = this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+          app_mgr = 
+            this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
+                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           PortableServer::ServantBase_var safe (app_mgr);
@@ -154,9 +172,17 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
             this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
           ACE_TRY_CHECK;
 
-          // narrow should return a nil reference if it fails.
-          return
+          // We should inform NAM about "shared" components, so they
+          // won't be instantiated again
+          Deployment::NodeApplicationManager_var nam =
             Deployment::NodeApplicationManager::_narrow (obj.in ());
+          ACE_TRY_CHECK;
+
+          nam->set_shared_components (this->shared_components_);
+          ACE_TRY_CHECK;
+
+          // narrow should return a nil reference if it fails.
+          return Deployment::NodeApplicationManager::_narrow (nam.in ());
         }
       else
         {
@@ -176,6 +202,11 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
           ACE_TRY_CHECK;
 
           nam->reset_plan (plan);
+          ACE_TRY_CHECK;
+
+          // Similarly, we should inform NAM about "shared" components, so 
+          // they won't be instantiated again
+          nam->set_shared_components (this->shared_components_);
           ACE_TRY_CHECK;
 
           // Potentially we could reset many other configuration settings

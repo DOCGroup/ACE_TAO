@@ -87,6 +87,11 @@ namespace CIAO
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
+    virtual void 
+    set_shared_components (const ::CORBA::StringSeq & components
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
     /**
      * A factory operation to create NodeApplicationManager interface, and return
      * the object reference.
@@ -189,6 +194,9 @@ namespace CIAO
 
     /// Extracted commandline options to pass to the NodeApplication.
     CORBA::String_var nodeapp_command_op_;
+
+    /// A list of components shared across deployment plans
+    CORBA::StringSeq shared_components_;
 
     /// A map of the component created on this node.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
