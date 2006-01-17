@@ -3,6 +3,8 @@
 /***
  * file RMClient.cpp
  *
+ * A sample client to the RepositoryManager showcasing how to use it
+ *
  * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  **/
 
@@ -74,8 +76,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
 
-    Options* options = Options::instance ();
-    options->parse_args (argc, argv);
+    Options* options = TheOptions::instance ();
+    if (!options->parse_args (argc, argv))
+       return -1;
 
     if (options->shutdown_)
     {
@@ -188,9 +191,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
     }
 
-      //orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    orb->shutdown (1);
-    Options::destroy ();
+      orb->shutdown (1);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
