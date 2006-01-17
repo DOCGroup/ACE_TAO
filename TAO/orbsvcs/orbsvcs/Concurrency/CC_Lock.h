@@ -47,7 +47,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * which is essentially a write lock since it is not allowed to
  * have more than one lock pr. servant in this implementation.
  */
-class TAO_Concurrency_Export CC_Lock
+class TAO_Concurrency_Serv_Export CC_Lock
 {
 public:
   /// Creates the lock with mode = intention_read (weakest)
@@ -116,7 +116,7 @@ private:
  * weakest (intention read) to the strongest (write).
  * Ordering: IR -> R -> U -> IW -> W
  */
-class TAO_Concurrency_Export CC_LockModeIterator
+class TAO_Concurrency_Serv_Export CC_LockModeIterator
 {
 public:
   /// Default constructor

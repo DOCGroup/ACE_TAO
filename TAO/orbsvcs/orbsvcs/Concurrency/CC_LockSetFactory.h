@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * file for detailed descriptions apart from the comments in
  * this file.
  */
-class TAO_Concurrency_Export CC_LockSetFactory 
+class TAO_Concurrency_Serv_Export CC_LockSetFactory 
   : public POA_CosConcurrencyControl::LockSetFactory
 {
 public:
