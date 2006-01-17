@@ -5132,6 +5132,96 @@ endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
 
+## Makefile.RTEventLogAdmin_IDL.am
+
+if BUILD_CORBA_MESSAGING
+
+BUILT_SOURCES += \
+  RTEventLogAdminC.cpp \
+  RTEventLogAdminC.h \
+  RTEventLogAdminC.inl \
+  RTEventLogAdminS.cpp \
+  RTEventLogAdminS.h \
+  RTEventLogAdminS.inl \
+  RTEventLogAdminS_T.cpp \
+  RTEventLogAdminS_T.h \
+  RTEventLogAdminS_T.inl
+
+CLEANFILES += \
+  RTEventLogAdmin-stamp \
+  RTEventLogAdminC.cpp \
+  RTEventLogAdminC.h \
+  RTEventLogAdminC.inl \
+  RTEventLogAdminS.cpp \
+  RTEventLogAdminS.h \
+  RTEventLogAdminS.inl \
+  RTEventLogAdminS_T.cpp \
+  RTEventLogAdminS_T.h \
+  RTEventLogAdminS_T.inl
+
+RTEventLogAdminC.cpp RTEventLogAdminC.h RTEventLogAdminC.inl RTEventLogAdminS.cpp RTEventLogAdminS.h RTEventLogAdminS.inl RTEventLogAdminS_T.cpp RTEventLogAdminS_T.h RTEventLogAdminS_T.inl: RTEventLogAdmin-stamp
+
+RTEventLogAdmin-stamp: $(srcdir)/RTEventLogAdmin.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_RTEventLog_Export -Wb,stub_export_include=orbsvcs/Log/rteventlog_export.h -Wb,skel_export_macro=TAO_RTEventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/rteventlog_skel_export.h $(srcdir)/RTEventLogAdmin.idl
+	@touch $@
+
+
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.RTEventLogAdmin.am
+
+if BUILD_CORBA_MESSAGING
+
+lib_LTLIBRARIES += libTAO_RTEventLogAdmin.la
+
+libTAO_RTEventLogAdmin_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_RTEVENTLOG_BUILD_DLL
+
+libTAO_RTEventLogAdmin_la_SOURCES = \
+  RTEventLogAdminC.cpp
+
+libTAO_RTEventLogAdmin_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_RTEventLogAdmin_la_LIBADD = \
+  libTAO_RTEvent.la \
+  libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Log/rteventlog_export.h \
+  RTEventLogAdminC.h \
+  RTEventLogAdminC.inl
+
+pkgconfig_DATA += \
+  TAO_RTEventLogAdmin.pc
+
+CLEANFILES += \
+  TAO_RTEventLogAdmin.pc
+
+TAO_RTEventLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin.pc.in
+
+endif BUILD_CORBA_MESSAGING
+
+EXTRA_DIST += \
+  TAO_RTEventLogAdmin.pc.in
+
+
 ## Makefile.RTSched.am
 
 BUILT_SOURCES += \
@@ -5228,72 +5318,31 @@ EXTRA_DIST += \
   RTSched.rc
 
 
-## Makefile.RTEventLogAdmin.am
+## Makefile.RTEventLogAdmin_Skel.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
-BUILT_SOURCES += \
-  RTEventLogAdminC.cpp \
-  RTEventLogAdminC.h \
-  RTEventLogAdminC.inl \
-  RTEventLogAdminS.cpp \
-  RTEventLogAdminS.h \
-  RTEventLogAdminS.inl \
-  RTEventLogAdminS_T.cpp \
-  RTEventLogAdminS_T.h \
-  RTEventLogAdminS_T.inl
+lib_LTLIBRARIES += libTAO_RTEventLogAdmin_Skel.la
 
-CLEANFILES += \
-  RTEventLogAdmin-stamp \
-  RTEventLogAdminC.cpp \
-  RTEventLogAdminC.h \
-  RTEventLogAdminC.inl \
-  RTEventLogAdminS.cpp \
-  RTEventLogAdminS.h \
-  RTEventLogAdminS.inl \
-  RTEventLogAdminS_T.cpp \
-  RTEventLogAdminS_T.h \
-  RTEventLogAdminS_T.inl
-
-RTEventLogAdminC.cpp RTEventLogAdminC.h RTEventLogAdminC.inl RTEventLogAdminS.cpp RTEventLogAdminS.h RTEventLogAdminS.inl RTEventLogAdminS_T.cpp RTEventLogAdminS_T.h RTEventLogAdminS_T.inl: RTEventLogAdmin-stamp
-
-RTEventLogAdmin-stamp: $(srcdir)/RTEventLogAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=orbsvcs/Log/rteventlog_export.h $(srcdir)/RTEventLogAdmin.idl
-	@touch $@
-
-lib_LTLIBRARIES += libTAO_RTEventLogAdmin.la
-
-libTAO_RTEventLogAdmin_la_CPPFLAGS = \
+libTAO_RTEventLogAdmin_Skel_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_RTEVENTLOG_BUILD_DLL
+  -DTAO_RTEVENTLOG_SKEL_BUILD_DLL
 
-libTAO_RTEventLogAdmin_la_SOURCES = \
-  Log/RTEventLogConsumer.cpp \
-  Log/RTEventLogFactory_i.cpp \
-  Log/RTEventLogNotification.cpp \
-  Log/RTEventLog_i.cpp \
-  RTEventLogAdminC.cpp \
+libTAO_RTEventLogAdmin_Skel_la_SOURCES = \
   RTEventLogAdminS.cpp
 
-libTAO_RTEventLogAdmin_la_LDFLAGS = \
+libTAO_RTEventLogAdmin_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
-libTAO_RTEventLogAdmin_la_LIBADD = \
-  libTAO_DsLogAdmin_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  libTAO_DsLogAdmin_Skel.la \
-  libTAO_DsLogAdmin.la \
-  libTAO_RTSched.la \
-  libTAO_RTEvent_Serv.la \
+libTAO_RTEventLogAdmin_Skel_la_LIBADD = \
   libTAO_RTEvent_Skel.la \
+  libTAO_DsLogAdmin_Skel.la \
+  libTAO_RTEventLogAdmin.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -5301,7 +5350,79 @@ libTAO_RTEventLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Log/eventlog_skel_export.h \
+  RTEventLogAdminS.h \
+  RTEventLogAdminS.inl \
+  RTEventLogAdminS_T.cpp \
+  RTEventLogAdminS_T.h \
+  RTEventLogAdminS_T.inl
+
+pkgconfig_DATA += \
+  TAO_RTEventLogAdmin_Skel.pc
+
+CLEANFILES += \
+  TAO_RTEventLogAdmin_Skel.pc
+
+TAO_RTEventLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
+
+endif BUILD_CORBA_MESSAGING
+
+EXTRA_DIST += \
+  TAO_RTEventLogAdmin_Skel.pc.in
+
+
+## Makefile.RTEventLogAdmin_Serv.am
+
+if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
+
+lib_LTLIBRARIES += libTAO_RTEventLogAdmin_Serv.la
+
+libTAO_RTEventLogAdmin_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_RTEVENTLOG_SERV_BUILD_DLL
+
+libTAO_RTEventLogAdmin_Serv_la_SOURCES = \
+  Log/RTEventLogConsumer.cpp \
+  Log/RTEventLogFactory_i.cpp \
+  Log/RTEventLogNotification.cpp \
+  Log/RTEventLog_i.cpp
+
+libTAO_RTEventLogAdmin_Serv_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_RTEventLogAdmin_Serv_la_LIBADD = \
+  libTAO_RTSched.la \
   libTAO_CosNaming.la \
+  libTAO_RTEvent_Serv.la \
+  libTAO_DsLogAdmin_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  libTAO_RTEventLogAdmin_Skel.la \
+  libTAO_RTEvent_Skel.la \
+  libTAO_DsLogAdmin_Skel.la \
+  libTAO_RTEventLogAdmin.la \
+  libTAO_RTEvent.la \
+  libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  libTAO_DsLogAdmin.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -5311,17 +5432,23 @@ nobase_include_HEADERS += \
   Log/RTEventLogFactory_i.h \
   Log/RTEventLogNotification.h \
   Log/RTEventLog_i.h \
-  RTEventLogAdmin.idl \
-  RTEventLogAdminC.h \
-  RTEventLogAdminC.inl \
-  RTEventLogAdminS.h \
-  RTEventLogAdminS_T.cpp \
-  RTEventLogAdminS_T.h \
-  RTEventLogAdminS_T.inl \
-  RTEventLogAdminS_T.inl
+  Log/reventlog_serv_export.h
+
+pkgconfig_DATA += \
+  TAO_RTEventLogAdmin_Serv.pc
+
+CLEANFILES += \
+  TAO_RTEventLogAdmin_Serv.pc
+
+TAO_RTEventLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
+
+EXTRA_DIST += \
+  TAO_RTEventLogAdmin_Serv.pc.in
+
 
 ## Makefile.RTKokyuEvent.am
 

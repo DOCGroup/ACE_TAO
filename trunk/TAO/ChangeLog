@@ -1,3 +1,10 @@
+Tue Jan 17 23:03:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
 Tue Jan 17 22:26:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Concurrency/CC_Lock.h:
@@ -10,7 +17,7 @@ Tue Jan 17 22:26:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
         * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-        
+
           Use _Serv_ version of the symbol export macros.
 
 Tue Jan 17 20:36:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
