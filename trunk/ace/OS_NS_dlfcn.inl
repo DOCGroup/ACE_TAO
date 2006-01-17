@@ -224,6 +224,8 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // WinCE is WCHAR always; other platforms need a char * symbol name
   ACE_Wide_To_Ascii w_sname (sname);
   char *symbolname = w_sname.char_rep ();
+#elif defined (ACE_VXWORKS)
+  char *symbolname = const_cast<char *> (sname);
 #else
   const char *symbolname = sname;
 #endif /* ACE_HAS_WINCE */
@@ -258,7 +260,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
   return status == 0 ? value : 0;
 
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
 
   // For now we use the VxWorks global symbol table
   // which resolves the most recently loaded symbols .. which resolve mostly what we want..
