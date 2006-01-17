@@ -1,3 +1,8 @@
+Tue Jan 17 20:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Module.h:
+          Doxygen improvement
+
 Tue Jan 17 19:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
