@@ -22,62 +22,33 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRecord &rec)
   : property_lookup_ (property_lookup_size_)
 {
-  CORBA::Any* value;
-  ACE_NEW (value, CORBA::Any);
-
-  if (value != 0)
-    {
+  CORBA::Any val_id;
 #if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-      *value <<= ACE_U64_TO_U32 (rec.id);
+  val_id <<= ACE_U64_TO_U32 (rec.id);
 #else
-      *value <<= static_cast<ACE_UINT32> (rec.id);
+  val_id <<= static_cast<ACE_UINT32> (rec.id);
 #endif
+  this->property_lookup_.bind (ACE_CString("id", 0, 0), val_id);
 
-      this->property_lookup_.bind (ACE_CString("id", 0, 0),
-				   value);
-    }
 
-  CORBA::Any* value2;
-  ACE_NEW (value2, CORBA::Any);
-
-  if (value2 != 0)
-    {
+  CORBA::Any val_time;
 #if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-      *value2 <<= ACE_U64_TO_U32 (rec.time);
+  val_time <<= ACE_U64_TO_U32 (rec.time);
 #else
-      *value2 <<= static_cast<ACE_UINT32> (rec.time);
+  val_time <<= static_cast<ACE_UINT32> (rec.time);
 #endif
+  this->property_lookup_.bind (ACE_CString("time", 0, 0), val_time);
 
-      this->property_lookup_.bind (ACE_CString("time", 0, 0),
-				   value2);
-    }
-
-  CORBA::Any* value3;
-  ACE_NEW (value3, CORBA::Any);
-
-  if (value3 != 0)
-    {
-      *value3 = rec.info;
-
-      this->property_lookup_.bind (ACE_CString("info", 0, 0),
-				   value3);
-    }
+  this->property_lookup_.bind (ACE_CString("info", 0, 0), rec.info);
 
   // Bind an entry for each item in the record's attribute list.
   CORBA::Long len = rec.attr_list.length();
   for (CORBA::Long i = 0; i < len; ++i)
     {
-      CORBA::Any* value;
-      ACE_NEW(value, CORBA::Any);
-
-      if (value != 0)
-	{
-	  *value = rec.attr_list[i].value;
-	  this->property_lookup_.bind (ACE_CString(rec.attr_list[i].name,
-						   0,
-						   0),
-				       value);
-	}
+      this->property_lookup_.bind (ACE_CString(rec.attr_list[i].name,
+					       0,
+					       0),
+				   rec.attr_list[i].value);
     }
 }
 
@@ -119,12 +90,15 @@ TAO_Log_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
   const char *name = ident->value ();
   ACE_CString key (name, 0, 0);
 
-  CORBA::Any_var any;
+  CORBA::Any any;
 
   if (this->property_lookup_.find (key, any) == 0)
     {
-      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (any.ptr ()));
-      return_value = 0;
+      if (any.impl() != 0)
+        {
+	  this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (&any));
+	  return_value = 0;
+        }
     }
 
   return return_value;
@@ -428,27 +402,29 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
   // basis, while keeping in mind that a clearer interpretation of
   // the spec may come along someday.
 
-  const char *name = assoc->identifier ()->value ();
-  ACE_CString key (name, 0, 0);
-  CORBA::Any_var any;
+  CORBA::Any any;
+  ACE_CString key (assoc->identifier ()->value (), 
+		   0, 
+		   0);
 
-  if (this->property_lookup_.find (key, any) != 0)
+  if (this->property_lookup_.find (key, any) != 0
+      || any.impl () == 0)
     {
       return -1;
     }
 
   TAO_ETCL_Constraint *comp = assoc->component ();
+  CORBA::Any *any_ptr = 0;
 
   if (comp == 0)
     {
-      TAO_ETCL_Literal_Constraint result (any.ptr ());
+      TAO_ETCL_Literal_Constraint result (&any);
       this->queue_.enqueue_head (result);
       return 0;
     }
 
-  CORBA::Any *any_ptr = 0;
   ACE_NEW_RETURN (any_ptr,
-                  CORBA::Any (any.in ()),
+                  CORBA::Any (any),
                   -1);
   this->current_member_ = any_ptr;
   return comp->accept (this);

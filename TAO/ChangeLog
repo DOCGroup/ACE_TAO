@@ -1,7 +1,19 @@
+Tue Jan 17 01:50:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+
+          Change type of property_lookup_ map from Any_var to Any, similar
+          to what was done for the Notify_Constraint_Visitor some time
+          ago.  This allows us to avoid dynamically allocating Anys in
+          the constructor for increased performance and reliability.
+
+          I've measured a ~10% performance boost from this change.
+
 Mon Jan 16 17:57:53 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV.mpc
-        
+
           Fixed a linking error on OS X.
 
 Mon Jan 16 16:49:27 UTC 2006  Olli Savia  <ops@iki.fi>
