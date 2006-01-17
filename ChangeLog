@@ -1,3 +1,8 @@
+Tue Jan 17 16:27:47 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dlfcn.inl:
+          Fixed compile error on LynxOS 3.x.
+        
 Tue Jan 17 15:37:29 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/taodefaults.mpb:

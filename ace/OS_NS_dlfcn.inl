@@ -191,7 +191,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
     }
   return handle;
 # else
-  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (fname);
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
