@@ -6,26 +6,8 @@
 #include "ace/ARGV.h"
 #include "Options.h"
 
-Options *Options::instance_ = 0;
 
-/// @todo Use ACE_Singleton for this using double scoped locking
-Options *
-Options::instance (void)
-{
-  if (Options::instance_ == 0)
-    Options::instance_ = new Options;
-
-  return Options::instance_;
-}
-
-/// @todo Handled by Singleton class
-void Options::destroy (void)
-{
-  delete instance_;
-  instance_ = 0;
-}
-
-void
+bool
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:l:u:ifdsTNa"));
@@ -68,6 +50,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Usage fallthrough.
       default:
         this->usage ();
+        return false;
       }
 
   if ((this->name_ == "")
@@ -75,29 +58,42 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     && (this->uuid_ == "")
     && (this->all_names_ == false)
     && (this->all_types_ == false))
+  {
     this->usage ();
+    return false;
+  }
   else if (this->name_ != "")
   {
-  if (!(this->install_ || this->find_ || this->delete_))
+    if (!(this->install_ || this->find_ || this->delete_))
+  {
     this->usage ();
+    return false;
+  }
     else if (this->install_ && this->path_ == "")
+  {
     this->usage ();
+    return false;
+  }
   }
   else if (this->uuid_ != "")
   {
     if (!this->find_ && !this->names_by_type_)
-      this->usage ();
+  {
+    this->usage ();
+    return false;
   }
+  }
+
+  return true;
 }
 
 /// @todo Exit is not nice, return -1 so that the caller can do something and
 /// we don't exit abruptly
 void Options::usage (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "OPTIONS: -s <shutdown> -n <:name> [-i <install> -l <:path>] \
+  ACE_DEBUG ((LM_INFO, "OPTIONS: -s <shutdown> -n <:name> [-i <install> -l <:path>] \
               [-d <delete>] [-f <find>] [-u <:uuid> [-a <names by type>] ] \
               [-N <all names>] [-T <all types>]\n"));
-    ACE_OS::exit (1);
 }
 
 Options::Options (void)

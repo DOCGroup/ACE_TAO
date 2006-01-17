@@ -1,3 +1,12 @@
+Tue Jan 17 23:52:11 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/spec_RepositoryManager/Options.h:
+        * DAnCE/spec_RepositoryManager/Options.cpp:
+        * DAnCE/spec_RepositoryManager/RMadmin.cpp:
+
+        Took care of the todo's that Johnny suggested. Now using ACE_Singleton
+        parametrized with ACE_Null_Mutex.
+
 Tue Jan 17 21:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/spec_RepositoryManager/HTTP_Client.h:
