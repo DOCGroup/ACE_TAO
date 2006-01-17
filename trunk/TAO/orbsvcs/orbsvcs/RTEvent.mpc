@@ -48,4 +48,8 @@ project(RTEvent) : orbsvcslib, core, svc_utils, tao_versioning_idl_defaults {
 
   Template_Files {
   }
+
+  Pkgconfig_Files {
+    TAO_RTEvent.pc.in
+  }
 }

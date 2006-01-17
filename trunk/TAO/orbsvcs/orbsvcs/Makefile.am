@@ -8,7 +8,7 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
-includedir = @includedir@/orbsvcs/orbsvcs
+includedir = @includedir@/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
@@ -203,6 +203,103 @@ EXTRA_DIST += \
   TAO_CosProperty.pc.in
 
 
+## Makefile.CosProperty_Skel.am
+
+lib_LTLIBRARIES += libTAO_CosProperty_Skel.la
+
+libTAO_CosProperty_Skel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_PROPERTY_SKEL_BUILD_DLL
+
+libTAO_CosProperty_Skel_la_SOURCES = \
+  CosPropertyS.cpp \
+  CosPropertyServiceS.cpp
+
+libTAO_CosProperty_Skel_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CosProperty_Skel_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_CosProperty.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CosPropertyS.h \
+  CosPropertyS.inl \
+  CosPropertyS_T.cpp \
+  CosPropertyS_T.h \
+  CosPropertyS_T.inl \
+  CosPropertyServiceS.h \
+  CosPropertyServiceS.inl \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.inl \
+  Property/property_skel_export.h
+
+pkgconfig_DATA += \
+  TAO_CosProperty_Skel.pc
+
+CLEANFILES += \
+  TAO_CosProperty_Skel.pc
+
+TAO_CosProperty_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Skel.pc.in
+
+EXTRA_DIST += \
+  TAO_CosProperty_Skel.pc.in
+
+
+## Makefile.CosProperty_Serv.am
+
+lib_LTLIBRARIES += libTAO_CosProperty_Serv.la
+
+libTAO_CosProperty_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_PROPERTY_SERV_BUILD_DLL
+
+libTAO_CosProperty_Serv_la_SOURCES = \
+  Property/CosPropertyService_i.cpp
+
+libTAO_CosProperty_Serv_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CosProperty_Serv_la_LIBADD = \
+  libTAO_CosProperty_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_CosProperty.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Property/CosPropertyService_i.h \
+  Property/property_serv_export.h
+
+pkgconfig_DATA += \
+  TAO_CosProperty_Serv.pc
+
+CLEANFILES += \
+  TAO_CosProperty_Serv.pc
+
+TAO_CosProperty_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Serv.pc.in
+
+EXTRA_DIST += \
+  TAO_CosProperty_Serv.pc.in
+
+
 ## Makefile.AV.am
 
 if !BUILD_ACE_FOR_TAO
@@ -333,6 +430,9 @@ libTAO_AV_la_LDFLAGS = \
 
 libTAO_AV_la_LIBADD = \
   libTAO_CosNaming.la \
+  libTAO_CosProperty_Serv.la \
+  libTAO_CosProperty_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosProperty.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -2395,103 +2495,6 @@ endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
 
-## Makefile.CosProperty_Skel.am
-
-lib_LTLIBRARIES += libTAO_CosProperty_Skel.la
-
-libTAO_CosProperty_Skel_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_PROPERTY_SKEL_BUILD_DLL
-
-libTAO_CosProperty_Skel_la_SOURCES = \
-  CosPropertyS.cpp \
-  CosPropertyServiceS.cpp
-
-libTAO_CosProperty_Skel_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_CosProperty_Skel_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  libTAO_CosProperty.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  CosPropertyS.h \
-  CosPropertyS.inl \
-  CosPropertyS_T.cpp \
-  CosPropertyS_T.h \
-  CosPropertyS_T.inl \
-  CosPropertyServiceS.h \
-  CosPropertyServiceS.inl \
-  CosPropertyServiceS_T.cpp \
-  CosPropertyServiceS_T.h \
-  CosPropertyServiceS_T.inl \
-  Property/property_skel_export.h
-
-pkgconfig_DATA += \
-  TAO_CosProperty_Skel.pc
-
-CLEANFILES += \
-  TAO_CosProperty_Skel.pc
-
-TAO_CosProperty_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Skel.pc.in
-
-EXTRA_DIST += \
-  TAO_CosProperty_Skel.pc.in
-
-
-## Makefile.CosProperty_Serv.am
-
-lib_LTLIBRARIES += libTAO_CosProperty_Serv.la
-
-libTAO_CosProperty_Serv_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_PROPERTY_SERV_BUILD_DLL
-
-libTAO_CosProperty_Serv_la_SOURCES = \
-  Property/CosPropertyService_i.cpp
-
-libTAO_CosProperty_Serv_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_CosProperty_Serv_la_LIBADD = \
-  libTAO_CosProperty_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  libTAO_CosProperty.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  Property/CosPropertyService_i.h \
-  Property/property_serv_export.h
-
-pkgconfig_DATA += \
-  TAO_CosProperty_Serv.pc
-
-CLEANFILES += \
-  TAO_CosProperty_Serv.pc
-
-TAO_CosProperty_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Serv.pc.in
-
-EXTRA_DIST += \
-  TAO_CosProperty_Serv.pc.in
-
-
 ## Makefile.CosTime.am
 
 BUILT_SOURCES += \
@@ -3790,8 +3793,18 @@ nobase_include_HEADERS += \
   RtecUDPAdminC.h \
   RtecUDPAdminC.inl
 
+pkgconfig_DATA += \
+  TAO_RTEvent.pc
+
+CLEANFILES += \
+  TAO_RTEvent.pc
+
+TAO_RTEvent.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent.pc.in
+
 EXTRA_DIST += \
-  RTEvent.rc
+  RTEvent.rc \
+  TAO_RTEvent.pc.in
 
 
 ## Makefile.RTEvent_Skel.am
@@ -3841,10 +3854,20 @@ nobase_include_HEADERS += \
   RtecUDPAdminS.h \
   RtecUDPAdminS.inl
 
+pkgconfig_DATA += \
+  TAO_RTEvent_Skel.pc
+
+CLEANFILES += \
+  TAO_RTEvent_Skel.pc
+
+TAO_RTEvent_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent_Skel.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent_Skel.pc.in
+
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
-  RTEvent_Skel.rc
+  RTEvent_Skel.rc \
+  TAO_RTEvent_Skel.pc.in
 
 
 ## Makefile.RTEvent_Serv.am
@@ -4064,11 +4087,21 @@ nobase_include_HEADERS += \
   Event/EC_Type_Filter.h \
   Event/EC_UDP_Admin.h
 
+pkgconfig_DATA += \
+  TAO_RTEvent_Serv.pc
+
+CLEANFILES += \
+  TAO_RTEvent_Serv.pc
+
+TAO_RTEvent_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent_Serv.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent_Serv.pc.in
+
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
-  RTEvent_Serv.rc
+  RTEvent_Serv.rc \
+  TAO_RTEvent_Serv.pc.in
 
 
 ## Makefile.FtRtEvent.am
