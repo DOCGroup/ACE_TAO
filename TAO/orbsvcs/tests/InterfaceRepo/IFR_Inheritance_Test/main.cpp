@@ -3,7 +3,7 @@
 
 // The run_test.pl perl script will check for the expected output.
 
-#include <tao/IFR_Client/IFR_BasicC.h>
+#include "tao/IFR_Client/IFR_BasicC.h"
 
 ACE_RCSID (IFR_Inheritance_Test,
            main,

@@ -1,3 +1,9 @@
+Tue Jan 17 13:31:40 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+
+          Changed #include to use "" instead of <>.
+
 Tue Jan 17 02:32:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
