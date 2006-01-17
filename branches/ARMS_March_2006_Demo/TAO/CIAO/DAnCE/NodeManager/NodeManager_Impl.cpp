@@ -93,6 +93,41 @@ CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
+const ::Components::FacetDescriptions &
+CIAO::NodeManager_Impl_Base::
+get_all_facets (ACE_CString & name)
+{
+  Component_Facets_Map::ENTRY *entry;
+  this->comp_facets_map_.find (name.c_str (), entry);
+
+  return entry->int_id_.in ();
+}
+
+const ::Components::ConsumerDescriptions &
+CIAO::NodeManager_Impl_Base::
+get_all_consumers (ACE_CString & name)
+{
+  Component_Consumers_Map::ENTRY *entry;
+  this->comp_consumers_map_.find (name.c_str (), entry);
+
+  return entry->int_id_.in ();
+}
+
+void
+CIAO::NodeManager_Impl_Base::
+set_all_facets (ACE_CString &name, 
+                const ::Components::FacetDescriptions_var & facets)
+{
+  this->comp_facets_map_.bind (name, facets);
+}
+
+void
+CIAO::NodeManager_Impl_Base::
+set_all_consumers (ACE_CString &name, 
+                   const ::Components::ConsumerDescriptions_var & consumers)
+{
+  this->comp_consumers_map_.bind (name, consumers);
+}
 
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
@@ -146,24 +181,25 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
             }
 
           //Implementation undefined.
-          CIAO::NodeApplicationManager_Impl_Base *app_mgr;
-          app_mgr = 
+          CIAO::NodeApplicationManager_Impl_Base *node_app_mgr;
+          node_app_mgr = 
             this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          PortableServer::ServantBase_var safe (app_mgr);
+          PortableServer::ServantBase_var safe (node_app_mgr);
 
           //@@ Note: after the init call the servant ref count would
           //   become 2. so we can leave the safeservant along and be
           //   dead. Also note that I added
           PortableServer::ObjectId_var oid  =
-            app_mgr->init (this->nodeapp_location_.in (),
-                           this->nodeapp_options_.in (),
-                           this->spawn_delay_,
-                           plan,
-                           this->callback_poa_.in ()
-                           ACE_ENV_ARG_PARAMETER);
+            node_app_mgr->init (this->nodeapp_location_.in (),
+                                this->nodeapp_options_.in (),
+                                this->spawn_delay_,
+                                plan,
+                                this->callback_poa_.in (),
+                                this // pass in a copy of ourself (servant object)
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->map_.insert_nam (plan.UUID.in (), oid.in ());
