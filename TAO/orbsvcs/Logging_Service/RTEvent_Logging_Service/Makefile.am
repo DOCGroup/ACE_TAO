@@ -34,16 +34,17 @@ RTEvent_Logging_Service_SOURCES = \
   RTEvent_Logging_Service.h
 
 RTEvent_Logging_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -51,6 +52,7 @@ RTEvent_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
