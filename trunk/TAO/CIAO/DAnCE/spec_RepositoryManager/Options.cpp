@@ -8,16 +8,17 @@
 
 Options *Options::instance_ = 0;
 
+/// @todo Use ACE_Singleton for this using double scoped locking
 Options *
 Options::instance (void)
 {
-
   if (Options::instance_ == 0)
     Options::instance_ = new Options;
 
   return Options::instance_;
 }
 
+/// @todo Handled by Singleton class
 void Options::destroy (void)
 {
   delete instance_;
@@ -43,7 +44,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'f':
         this->find_ = true;
         break;
-    case 's':
+      case 's':
         this->shutdown_ = true;
         break;
       case 'n':
@@ -55,18 +56,18 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'u':
         this->uuid_ = get_opt.opt_arg ();
         break;
-    case 'N':
-    this->all_names_ = true;
-    break;
-    case 'T':
-      this->all_types_ = true;
-    break;
-    case 'a':
-      this->names_by_type_ = true;
-    break;
+      case 'N':
+        this->all_names_ = true;
+        break;
+      case 'T':
+        this->all_types_ = true;
+        break;
+      case 'a':
+        this->names_by_type_ = true;
+        break;
         // Usage fallthrough.
       default:
-      this->usage ();
+        this->usage ();
       }
 
   if ((this->name_ == "")
@@ -89,6 +90,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   }
 }
 
+/// @todo Exit is not nice, return -1 so that the caller can do something and
+/// we don't exit abruptly
 void Options::usage (void)
 {
   ACE_DEBUG ((LM_DEBUG, "OPTIONS: -s <shutdown> -n <:name> [-i <install> -l <:path>] \
@@ -97,17 +100,16 @@ void Options::usage (void)
     ACE_OS::exit (1);
 }
 
-
 Options::Options (void)
   : name_ (""),
     uuid_ (""),
-  path_ (""),
-  delete_ (false),
-  install_ (false),
-  find_ (false),
-  all_names_ (false),
-  all_types_ (false),
-  names_by_type_ (false),
-  shutdown_ (false)
+    path_ (""),
+    delete_ (false),
+    install_ (false),
+    find_ (false),
+    all_names_ (false),
+    all_types_ (false),
+    names_by_type_ (false),
+    shutdown_ (false)
 {
 }
