@@ -1,3 +1,17 @@
+Tue Jan 17 17:38:46 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/display_logfile.cpp: In the Logrec_Module
+          constructor, don't use base-class initialization to pass &task_
+          to ACE_Module. Doing so passes &task_ before task_ has been
+          constructed. Thus, when ACE_Module sets the task's module
+          pointer, it gets overwritten when task_ is constructed after
+          return from ACE_Module's constructor. Calling task_'s module()
+          method in this case will yield a 0 pointer, which is not correct.
+          To remedy this, call ACE_Module::open() directly from within
+          the Logrec_Module constructor.
+          Also see Stroustrup pg 307.
+          Thanks to David Hawkins for pointing this out.
+
 Tue Jan 17 16:27:47 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dlfcn.inl:
