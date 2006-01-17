@@ -6,10 +6,12 @@
 #include "ace/SString.h"
 
 CIAO::NodeImplementationInfoHandler::
-NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan) : 
+NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan,
+                               CORBA::StringSeq shared_components) : 
   plan_ (plan),
   node_info_ (0),
-  containers_info_map_ (plan)
+  containers_info_map_ (plan, shared_components),
+  shared_components_ (shared_components)
 {
   ACE_NEW (node_info_, ::Deployment::NodeImplementationInfo);
   this->populate_server_resource_def ();

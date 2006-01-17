@@ -95,6 +95,23 @@ namespace CIAO
                        Deployment::StopError,
                        Deployment::InvalidReference));
 
+    // ********* CIAO Specific Helper functions ************
+
+    virtual const ::Components::FacetDescriptions &
+    get_all_facets (ACE_CString & name);
+
+    virtual const ::Components::ConsumerDescriptions &
+    get_all_consumers (ACE_CString & name);
+
+    virtual void
+    set_all_facets (ACE_CString &name, 
+                   const ::Components::FacetDescriptions_var & facets);
+
+    virtual void
+    set_all_consumers (ACE_CString &name,
+                       const ::Components::ConsumerDescriptions_var & consumers);
+
+
   private:
     /// Validate the child deployment plan. In particular, we are
     /// trying to verify that all the component instances within this
@@ -148,13 +165,33 @@ namespace CIAO
                              ACE_Hash<ACE_CString>,
                              ACE_Equal_To<ACE_CString>,
                              ACE_Null_Mutex> Reference_Count_Map;
-
     typedef Reference_Count_Map::iterator Ref_Count_Iterator;
 
     Reference_Count_Map ref_count_map_;
 
     /// A list to track the names of shared component instances
     CORBA::StringSeq shared_components_;
+
+    /// Cached object references of ports (facets/consumers) of
+    /// all components. This is useful for getting the port object
+    /// references of "shared components".
+    typedef
+    ACE_Hash_Map_Manager_Ex <ACE_CString,
+                             Components::FacetDescriptions_var,
+                             ACE_Hash<ACE_CString>,
+                             ACE_Equal_To<ACE_CString>,
+                             ACE_Null_Mutex> Component_Facets_Map;
+
+    Component_Facets_Map comp_facets_map_;
+
+    typedef
+    ACE_Hash_Map_Manager_Ex <ACE_CString,
+                             Components::ConsumerDescriptions_var,
+                             ACE_Hash<ACE_CString>,
+                             ACE_Equal_To<ACE_CString>,
+                             ACE_Null_Mutex> Component_Consumers_Map;
+
+    Component_Consumers_Map comp_consumers_map_;
   };
 
 
