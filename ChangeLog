@@ -11,6 +11,14 @@ Tue Jan 17 15:37:29 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
           TAO_HAS_CORBA_MESSAGING=0 macro to ensure that TAO is built
           properly.
 
+Tue Jan 17 14:03:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Module.h: Change ~ACE_Module to be virtual so that derived
+          classes can be cleaned up properly. Thanks to David Hawkins
+          <dwh at ovro dot caltech dot edu> for this fix.
+
+        * THANKS: Added David Hawkins to the Hall of Fame.
+
 Tue Jan 17 01:12:35 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ace/Pipe.cpp (open): Added a cast to u_short for the first
