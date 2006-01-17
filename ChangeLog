@@ -1,3 +1,9 @@
+Tue Jan 17 19:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_HAS_P_READ_WRITE and removed ACE_LACKS_READDIR_R, this
+          is for Cywin 1.5.19
+
 Tue Jan 17 18:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.{h,cpp}:
