@@ -53,7 +53,7 @@ class TAO_RTEventLogFactory_i;
  * Log when events are 'pushed' to the RTEventLog which is an
  * EventChannel.
  */
-class TAO_RTEventLog_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
+class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
 {
 public:
   // = Initialization and Termination methods.

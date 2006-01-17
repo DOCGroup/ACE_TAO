@@ -75,7 +75,7 @@ typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
  * detailed descriptions apart from the comments in this file At
  * present the lock set is not really a set, but only one lock.
  */
-class TAO_Concurrency_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
+class TAO_Concurrency_Serv_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
 {
 public:
 

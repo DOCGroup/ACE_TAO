@@ -46,7 +46,7 @@ class TAO_RTEventLogNotification;
  *
  * @brief The TAO_RTEventLogFactory is a factory that is used to create RTEventLogs which are event-aware.
  */
-class TAO_RTEventLog_Export TAO_RTEventLogFactory_i :
+class TAO_RTEventLog_Serv_Export TAO_RTEventLogFactory_i :
   public POA_RTEventLogAdmin::EventLogFactory,
   public TAO_LogMgr_i
 {
