@@ -11,3 +11,9 @@ project {
     includes += $(TAO_BUILDDIR)
   }
 }
+
+// If the corba_messaging feature is disabled, then we need
+// to add the TAO_HAS_CORBA_MESSAGING=0 macro onto the command line.
+feature(!corba_messaging) {
+  macros += TAO_HAS_CORBA_MESSAGING=0
+}
