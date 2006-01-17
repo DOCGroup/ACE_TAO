@@ -1,3 +1,14 @@
+Tue Jan 17 20:37:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
+        * bin/MakeProjectCreator/config/rteventlogadmin_serv.mpb:
+        * bin/MakeProjectCreator/config/rteventlogadmin_skel.mpb:
+
+          Split RTEventLogAdmin Service into three libraries:
+          RTEventLogAdmin, RTEventLogAdmin_Skel, and RTEventLogAdmin_Serv
+          for client stubs, servant skeletons, and service implementation
+          respectively.
+
 Tue Jan 17 20:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Module.h:
