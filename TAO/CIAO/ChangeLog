@@ -1,7 +1,15 @@
+Tue Jan 17 21:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/spec_RepositoryManager/Options.h:
+          Doxygen improvements
+
+        * DAnCE/spec_RepositoryManager/Options.cpp:
+          Layout changes and add some todo's
+
 Tue Jan 17 19:31:56 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc
-        
+
           Added a project inherit improperly removed by
           Mon Jan 16 16:22:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 

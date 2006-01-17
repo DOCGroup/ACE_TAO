@@ -66,7 +66,7 @@ HTTP_Handler::receive_reply (void)
 
 // used to retrieve the number of bytes read/written by the
 // last operation on the Blob
-int
+size_t
 HTTP_Handler::byte_count (void)
 {
   return bytecount_;
@@ -113,8 +113,8 @@ HTTP_Reader::receive_reply (void)
 {
   size_t num_recvd = 0;
   char buf [MTU+1];
-  char *buf_ptr;
-  int bytes_read = 0;
+  char *buf_ptr = 0;
+  size_t bytes_read = 0;
 
   // Receive the first MTU bytes and strip the header off.
   // Note that we assume that the header will fit into MTU bytes.

@@ -50,7 +50,8 @@ public:
             const ACE_TCHAR *hostname = ACE_DEFAULT_SERVER_HOST,
             u_short port = 80);
 
-  /// Starts a connection, and reads a file from the server into Message_Block mb
+  /// Starts a connection, and reads a file from the server into
+  /// Message_Block mb
   int read (ACE_Message_Block *mb);
 
   /// Frees memory allocated for filename.
