@@ -24,12 +24,13 @@ class Logrec_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
   Logrec_Module (const ACE_TCHAR *name)
-    : ACE_Module<ACE_SYNCH>
-                    (name,
-                     &task_, // Initialize writer-side task.
-                     0,      // Ignore reader-side task.
-                     0,
-                     ACE_Module<ACE_SYNCH>::M_DELETE_READER) {}
+  {
+    this->open (name,
+		&task_, // Initialize writer-side task.
+		0,      // Ignore reader-side task.
+		0,
+		ACE_Module<ACE_SYNCH>::M_DELETE_READER);
+  }
 private:
   TASK task_;
 };
