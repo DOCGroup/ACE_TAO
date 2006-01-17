@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
-class TAO_Property_Export CosProperty_Hash_Key
+class TAO_Property_Serv_Export CosProperty_Hash_Key
 {
   // = TITLE
   //     Key for the Hash Table. The EXT_ID of the
@@ -72,7 +72,7 @@ public:
   // Storage pointer.
 };
 
-class TAO_Property_Export CosProperty_Hash_Value
+class TAO_Property_Serv_Export CosProperty_Hash_Value
 {
   // = TITLE
   //     This will be the value part in the Hash_Table. The INT_ID of

@@ -1,3 +1,18 @@
+Tue Jan 17 22:26:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h:
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.h:
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogConsumer.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        
+          Use _Serv_ version of the symbol export macros.
+
 Tue Jan 17 20:36:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:

@@ -38,7 +38,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class takes an orb and Poa reference and activates the
  * concurrency service lock set factory object under them.
  */
-class TAO_Concurrency_Export TAO_Concurrency_Server
+class TAO_Concurrency_Serv_Export TAO_Concurrency_Server
 {
 public:
   // = Initialization and termination methods.

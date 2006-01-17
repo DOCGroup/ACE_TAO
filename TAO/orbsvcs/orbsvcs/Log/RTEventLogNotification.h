@@ -44,7 +44,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_RTEventLog_Export TAO_RTEventLogNotification :
+class TAO_RTEventLog_Serv_Export TAO_RTEventLogNotification :
   public TAO_LogNotification,
   public POA_RtecEventComm::PushSupplier
 {

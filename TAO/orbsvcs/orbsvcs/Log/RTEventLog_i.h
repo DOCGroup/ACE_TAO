@@ -52,7 +52,7 @@ class TAO_RTEventLogFactory_i;
  * It is used to log events that pass through the EventChannel.
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_RTEventLog_Export TAO_RTEventLog_i :
+class TAO_RTEventLog_Serv_Export TAO_RTEventLog_i :
   public TAO_Log_i,
   public POA_RTEventLogAdmin::EventLog
 {
