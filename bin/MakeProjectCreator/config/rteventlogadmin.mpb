@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dslogadmin_serv, rtevent_serv, rtsched {
+project : orbsvcslib, dslogadmin, rtevent {
   after      += RTEventLogAdmin
   libs       += TAO_RTEventLogAdmin
 }
