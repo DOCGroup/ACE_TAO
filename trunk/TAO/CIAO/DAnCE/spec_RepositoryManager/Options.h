@@ -1,23 +1,20 @@
 // $Id$
 
 /* -*- C++ -*- */
-// Options.h, Stoyan
 
-//============================================================================
-//
-// = LIBRARY
-//    JAWS
-//
-// = FILENAME
-//    Options.h
-//
-// = DESCRIPTION
-//     Options is an Singleton for blobby
-//
-// = AUTHOR
-//    Stoyan Paunov
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    Options.h
+ *
+ *  $Id$
+ *
+ *   Options is an Singleton for blobby
+ *
+ *
+ *  @author Stoyan Paunov
+ */
+//=============================================================================
+
 
 #ifndef RM_OPTIONS_H
 #define RM_OPTIONS_H
@@ -36,31 +33,31 @@ public:
   /// parses commandline arguments
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
+  /// Name of package
   ACE_CString name_;
-  //Name of package
 
+  /// Name of package
   ACE_CString uuid_;
-  //Name of package
 
+  /// specifies the local path for install
   ACE_CString path_;
-  //specifies the local path for install
 
-  //delete the name_
+  /// delete the name_
   bool delete_;
 
-  //installs the name_
+  /// installs the name_
   bool install_;
 
-  //finds the name_
+  /// finds the name_
   bool find_;
 
-  //get all Names
+  /// get all Names
   bool all_names_;
 
-  //get all types
+  /// get all types
   bool all_types_;
 
-  //find all names by type
+  /// find all names by type
   bool names_by_type_;
 
   /// shutdown the RepositoryManagerDemon
@@ -73,7 +70,6 @@ protected:
 
   /// the singleton
   static Options *instance_;
-
 
   void usage (void);
 };
