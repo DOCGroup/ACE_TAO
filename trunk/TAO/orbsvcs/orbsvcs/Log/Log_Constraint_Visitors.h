@@ -108,7 +108,7 @@ private:
   static const size_t property_lookup_size_;
 
   typedef ACE_Hash_Map_Manager <ACE_CString,
-                                CORBA::Any_var,
+                                CORBA::Any,
                                 ACE_Null_Mutex> HASH_MAP;
 
   typedef HASH_MAP::ENTRY HASH_ENTRY;
