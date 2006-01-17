@@ -1,8 +1,16 @@
+Tue Jan 17 15:37:29 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
+
+          If the corba_messaging feature is disabled, then add the
+          TAO_HAS_CORBA_MESSAGING=0 macro to ensure that TAO is built
+          properly.
+
 Tue Jan 17 01:12:35 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Pipe.cpp (open): Added a cast to u_short for the first
-	  parameter to ACE_INET_Addr to avoid complaints on certain
- 	  compilers.  Thanks to Wallace Zhang for reporting this.
+        * ace/Pipe.cpp (open): Added a cast to u_short for the first
+          parameter to ACE_INET_Addr to avoid complaints on certain
+          compilers.  Thanks to Wallace Zhang for reporting this.
 
 Mon Jan 16 06:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -11,16 +19,16 @@ Mon Jan 16 06:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan 16 15:17:22 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Pipe.cpp (open): Changed
+        * ace/Pipe.cpp (open): Changed
 
-	  ACE_INET_Addr local_any ("localhost:0");
+          ACE_INET_Addr local_any ("localhost:0");
 
-	  to
+          to
 
-	  ACE_INET_Addr local_any  (0, ACE_LOCALHOST);
+          ACE_INET_Addr local_any  (0, ACE_LOCALHOST);
 
-	  so that it will work more portably.  Thanks to Steve Huston for
- 	  suggesting this fix.
+          so that it will work more portably.  Thanks to Steve Huston for
+          suggesting this fix.
 
 Mon Jan 16 20:43:26 UTC 2006  Olli Savia  <ops@iki.fi>
 
