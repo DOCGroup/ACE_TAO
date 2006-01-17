@@ -117,7 +117,7 @@ public:
   ACE_Task<ACE_SYNCH_USE> *writer (void);
 
   /**
-   * Set the writer task. <flags> can be used to indicate that the
+   * Set the writer task. @a flags can be used to indicate that the
    * module should delete the writer during a call to close or to the
    * destructor. If a previous writer exists, it is closed.  It may
    * also be deleted, depending on the old flags_ value.  Should not
@@ -129,7 +129,7 @@ public:
   ACE_Task<ACE_SYNCH_USE> *reader (void);
 
   /**
-   * Set the reader task. <flags> can be used to indicate that the
+   * Set the reader task. @a flags can be used to indicate that the
    * module should delete the reader during a call to close or to the
    * destructor. If a previous reader exists, it is closed.  It may
    * also be deleted, depending on the old flags_ value.  Should not
