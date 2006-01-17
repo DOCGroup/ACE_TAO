@@ -1,3 +1,10 @@
+Tue Jan 17 18:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.{h,cpp}:
+          Improved doxygen, changed VXWORKS to ACE_VXWORKS and make one
+          of the constructors that has two arguments, one has to be passed
+          the other has a default value explicit
+
 Tue Jan 17 17:38:46 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/display_logfile.cpp: In the Logrec_Module
@@ -16,7 +23,7 @@ Tue Jan 17 16:27:47 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dlfcn.inl:
           Fixed compile error on LynxOS 3.x.
-        
+
 Tue Jan 17 15:37:29 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/taodefaults.mpb:
