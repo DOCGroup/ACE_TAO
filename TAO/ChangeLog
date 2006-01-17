@@ -1,3 +1,30 @@
+Tue Jan 17 20:36:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+          Update project to inherit from rteventlogadmin_serv.mpb ---
+          rteventlogadmin.mpb now only brings in the client stubs.
+
+        * orbsvcs/orbsvcs/TAO_RTEventLogAdmin.pc.in:
+        * orbsvcs/orbsvcs/TAO_RTEventLogAdmin_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_RTEventLogAdmin_Skel.pc.in:
+
+          New files, pkg-template files for RTEventLogAdmin client stub,
+          servant skeleton, and service implementation libraries.
+
+        * orbsvcs/orbsvcs/Log/rteventlog_serv_export.h:
+        * orbsvcs/orbsvcs/Log/rteventlog_skel_export.h:
+
+          New export headers for RTEventLogAdmin servant skeleton and
+          service implementation libraries.
+
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+
+          Split the RTEventLogAdmin Service (A varient of the OMG Telecom
+          Logging Service that uses TAO's Real-Time Event channels) into
+          three libraries: RTEventLogAdmin, RTEventLogAdmin_Skel, and
+          RTEventLogAdmin_Serv for client stubs, servant skeletons, and
+          service implementation respectively.
+
 Tue Jan 17 13:31:40 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
