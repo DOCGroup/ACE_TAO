@@ -1,3 +1,10 @@
+Tue Jan 17 02:21:56 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/TAO_CosEvent_Serv.pc.in:
+
+          Somehow this pkg-config template was describing the
+          CosNaming_Serv library.
+
 Tue Jan 17 01:50:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
