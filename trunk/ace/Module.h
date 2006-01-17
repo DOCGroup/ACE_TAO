@@ -80,7 +80,7 @@ public:
   ACE_Module (void);
 
   /// Shutdown the Module.
-  ~ACE_Module (void);
+  virtual ~ACE_Module (void);
 
   /// Create an initialized module with @a module_name as its identity
   /// and @a reader and @a writer as its tasks.
