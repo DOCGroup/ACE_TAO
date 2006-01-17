@@ -8,7 +8,8 @@
  *
  *  $Id$
  *
- *   Options is an Singleton for blobby
+ *   TheOptions is an Options class wrapped into an ACE_Singleton
+ *   with Null_Mutex because the client is single-threaded.
  *
  *
  *  @author Stoyan Paunov
@@ -21,17 +22,23 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"    //for ACE_CString
+#include "ace/Singleton.h"  //for ACE_Singleton
+#include "ace/Null_Mutex.h" //for ACE_Null_Mutex
+
+//forward declaration
+class Options;
+
+typedef ACE_Singleton <Options, ACE_Null_Mutex> TheOptions;
 
 class Options
 {
 public:
-  /// Returns the singleton instance
-  static Options *instance (void);
 
-  static void destroy (void);
+  ///constructor
+  Options (void);
 
   /// parses commandline arguments
-  void parse_args (int argc, ACE_TCHAR *argv[]);
+  bool parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Name of package
   ACE_CString name_;
@@ -63,14 +70,8 @@ public:
   /// shutdown the RepositoryManagerDemon
   bool shutdown_;
 
-
 protected:
-  /// protected constructor, singleton
-  Options (void);
-
-  /// the singleton
-  static Options *instance_;
-
+  //usage function
   void usage (void);
 };
 
