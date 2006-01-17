@@ -92,5 +92,8 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
   Resource_Files{
     RTEvent_Serv.rc
   }
-}
 
+  Pkgconfig_Files {
+    TAO_RTEvent_Serv.pc.in
+  }
+}
