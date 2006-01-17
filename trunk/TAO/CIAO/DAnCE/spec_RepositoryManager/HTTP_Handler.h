@@ -36,10 +36,10 @@ public:
 
   /// Always use this constructor to make HTTP_Handlers
   HTTP_Handler (ACE_Message_Block *mb,
-                    ACE_TCHAR *filename);
+                ACE_TCHAR *filename);
 
   /// returns the number of bytes read/written in the last operation.
-  int byte_count (void);
+  size_t byte_count (void);
 
   /// Activate this instance of the <HTTP_Handler>
   virtual int open (void * = 0);
@@ -55,7 +55,7 @@ protected:
 
   ACE_Message_Block *mb_;
   ACE_TCHAR *filename_;
-  int bytecount_;
+  size_t bytecount_;
   enum
   {
     /// The handler assumes that the first 2048 bytes of a server response
