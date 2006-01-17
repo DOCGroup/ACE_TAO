@@ -1,3 +1,9 @@
+Tue Jan 17 01:12:35 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Pipe.cpp (open): Added a cast to u_short for the first
+	  parameter to ACE_INET_Addr to avoid complaints on certain
+ 	  compilers.  Thanks to Wallace Zhang for reporting this.
+
 Mon Jan 16 06:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dlfcn.inl:
