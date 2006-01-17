@@ -1,3 +1,10 @@
+Tue Jan 17 21:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/spec_RepositoryManager/HTTP_Client.h:
+          Layout change
+        * DAnCE/spec_RepositoryManager/HTTP_Handler.{h,cpp}:
+          Changed bytecount_ to size_t
+
 Tue Jan 17 21:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/spec_RepositoryManager/Options.h:
