@@ -1,3 +1,22 @@
+Tue Jan 17 02:32:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/TAO_RTEvent.pc.in:
+        * orbsvcs/orbsvcs/TAO_RTEvent_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_RTEvent_Skel.pc.in:
+
+          New files, pkg-template files for RTEvent client stub,
+          servant skeleton, and service implementation libraries.
+
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+
+          Added Pkgconfig_Files section for pkg-config templates.
+
 Tue Jan 17 02:21:56 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/TAO_CosEvent_Serv.pc.in:
