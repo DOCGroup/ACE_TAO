@@ -1,3 +1,9 @@
+Wed Jan 18 01:42:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * NEWS: 
+        
+          Update for splitting ORB service libraries.
+
 Tue Jan 17 23:03:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
