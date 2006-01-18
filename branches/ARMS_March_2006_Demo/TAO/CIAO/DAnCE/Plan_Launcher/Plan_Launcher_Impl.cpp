@@ -228,13 +228,18 @@ namespace CIAO
     bool
     Plan_Launcher_i::teardown_plan (const char *uuid)
     {
+      size_t map_size = this->map_.size ();
+
       if (!this->map_.is_plan_available (uuid))
         return false;
       
       ::Deployment::DomainApplicationManager_var dapp_mgr 
           (this->map_.fetch_dam_reference (uuid));
       
-      
+      dapp_mgr->destroyApplication ();
+      if (CIAO::debug_level ())
+        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+
       this->map_.unbind_dam (uuid);
       
       return true;
@@ -242,11 +247,12 @@ namespace CIAO
     
     bool 
     Plan_Launcher_i::teardown_plan (::Deployment::DomainApplicationManager_ptr dam
-                                  ACE_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
                     "CIAO_PlanLauncher: destroy the application.....\n"));
+
       dam->destroyApplication ();
       
       if (CIAO::debug_level ())
@@ -259,7 +265,7 @@ namespace CIAO
     
     void 
     Plan_Launcher_i::destroy_dam (::Deployment::DomainApplicationManager_ptr dam
-                                ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
