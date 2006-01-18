@@ -370,7 +370,7 @@ Event_Channel::initiate_acceptors (void)
     {
 
       if (this->consumer_acceptor_.open
-          (Options::instance ()->consumer_acceptor_port (),
+          (ACE_INET_Addr (Options::instance ()->consumer_acceptor_port ()),
            ACE_Reactor::instance (),
            Options::instance ()->blocking_semantics ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -385,7 +385,7 @@ Event_Channel::initiate_acceptors (void)
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR))
     {
     if(this->supplier_acceptor_.open
-          (Options::instance ()->supplier_acceptor_port (),
+          (ACE_INET_Addr (Options::instance ()->supplier_acceptor_port ()),
            ACE_Reactor::instance (),
            Options::instance ()->blocking_semantics ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
