@@ -24,7 +24,7 @@
 
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "CC_LockSetFactory.h"
-#include "concurrency_export.h"
+#include "concurrency_serv_export.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
