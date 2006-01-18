@@ -1,3 +1,8 @@
+Wed Jan 18 06:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+
 Tue Jan 17 20:37:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
