@@ -1,3 +1,17 @@
+Wed Jan 18 16:42:41 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/BaseMonitor.h:Added documentation, changed
+          function signature
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:Removed system headers
+        * DAnCE/NodeManager/Monitor.mpc:Added cvs tag
+        * DAnCE/NodeManager/MonitorController.cpp:Removed sleep call
+        * DAnCE/NodeManager/NodeManager.mpc:Added after clause to compile
+          TargetManager_stub before
+
+        * DAnCE/TargetManager/TM_Client.mpc:Added cvs tag
+        * DAnCE/TargetManager/TargetManager.mpc: Added cvs tag ,
+          Removed Deployment_Configuration.cpp from TargetManager_exec
+
 Tue Jan 17 23:52:11 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/spec_RepositoryManager/Options.h:

@@ -96,7 +96,7 @@ int MonitorController::init()
       // data will be updated in intervals of 10 secs.
       // in the latest version of spec , this value will
       // come from Execution Manager
-      sleep (interval);
+      ACE_OS::sleep (interval);
 //      ACE_DEBUG ((LM_DEBUG , "=The Terminate is %d\n", terminate_flag_));
       ::Deployment::Domain* domain =
                       monitor_->get_current_data ();
