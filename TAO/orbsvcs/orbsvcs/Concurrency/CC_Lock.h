@@ -26,7 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosConcurrencyControlC.h"
-#include "concurrency_export.h"
+#include "concurrency_serv_export.h"
 
 /// This constant defines the number of lock modes. There is really no
 /// way to set this constant dynamically because the nuber of lock

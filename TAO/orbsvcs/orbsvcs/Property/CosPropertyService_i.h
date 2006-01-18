@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Property/property_export.h"
+#include "orbsvcs/Property/property_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

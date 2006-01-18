@@ -45,7 +45,7 @@
 #include "ace/Unbounded_Queue.h"
 
 #include "orbsvcs/CosConcurrencyControlS.h"
-#include "concurrency_export.h"
+#include "concurrency_serv_export.h"
 
 #if defined (lock_held)
 #undef lock_held
