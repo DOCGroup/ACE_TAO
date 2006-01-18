@@ -125,7 +125,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   if (result == -1)
     return -1;
 #else
-  long result = ACE_OS::filesize (this->handle_);
+  off_t result = ACE_OS::filesize (this->handle_);
 #endif /* CHORUS */
 
   // At this point we know <result> is not negative...
