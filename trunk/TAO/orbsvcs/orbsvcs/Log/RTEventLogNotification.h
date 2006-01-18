@@ -30,7 +30,7 @@
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h"
 
-#include "rteventlog_export.h"
+#include "rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
