@@ -5356,7 +5356,7 @@ libTAO_RTEventLogAdmin_Skel_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  Log/eventlog_skel_export.h \
+  Log/rteventlog_skel_export.h \
   RTEventLogAdminS.h \
   RTEventLogAdminS.inl \
   RTEventLogAdminS_T.cpp \
@@ -5432,7 +5432,7 @@ nobase_include_HEADERS += \
   Log/RTEventLogFactory_i.h \
   Log/RTEventLogNotification.h \
   Log/RTEventLog_i.h \
-  Log/reventlog_serv_export.h
+  Log/rteventlog_serv_export.h
 
 pkgconfig_DATA += \
   TAO_RTEventLogAdmin_Serv.pc
