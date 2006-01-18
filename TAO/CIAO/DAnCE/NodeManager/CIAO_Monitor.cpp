@@ -12,7 +12,7 @@
 
 #include "CIAO_Monitor.h"
 #include <stdlib.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -20,7 +20,7 @@
 
 //extern CORBA::ORB_var orb_global;
 
-extern "C" export /*ACE_Proper_Export_Flag*/ MonitorBase * createMonitor ()
+extern "C" ACE_Proper_Export_Flag MonitorBase * createMonitor ()
 {
     return new CIAO_Monitor ();
 }
