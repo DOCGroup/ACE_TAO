@@ -325,7 +325,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 
   void delete_all_currents (void);
 
-  char* name (void);
+  const char* name (void);
   void name (const char *);
 
   TAO_ORB_Core* orb (void);
