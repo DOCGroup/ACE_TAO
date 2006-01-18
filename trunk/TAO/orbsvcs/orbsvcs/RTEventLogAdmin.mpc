@@ -60,7 +60,7 @@ project(RTEventLogAdmin_Skel) : orbsvcslib, core, rteventlogadmin, dslogadmin_sk
   Header_Files {
     RTEventLogAdminS.h
     RTEventLogAdminS_T.h
-    Log/eventlog_skel_export.h
+    Log/rteventlog_skel_export.h
   }
 
   Inline_Files {
@@ -93,7 +93,7 @@ project(RTEventLogAdmin_Serv) : orbsvcslib, core, rteventlogadmin_skel, dslogadm
   }
 
   Header_Files {
-    Log/reventlog_serv_export.h
+    Log/rteventlog_serv_export.h
   }
 
   Inline_Files {
