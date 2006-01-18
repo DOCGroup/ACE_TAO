@@ -44,10 +44,9 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
 	      tmp->data.c_str ()));
 
   size_t count = 0;
-  RTScheduling::Current::IdType_var current_id = tmp->current->id ();
   ACE_OS::memcpy (&count,
-		  current_id->get_buffer (),
-		  current_id->length ());
+		  tmp->current->id ()->get_buffer (),
+		  tmp->current->id ()->length ());
   
   ACE_DEBUG ((LM_DEBUG,
 	      "The spawned DT Guid is %d\n",

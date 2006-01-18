@@ -1,7 +1,24 @@
+Wed Jan 18 13:44:07 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Current.cpp:
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/DT_Spawn/Thread_Action.h:
+        * tests/RTScheduling/DT_Spawn/test.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+
+          Reverted a portion of my memory leak changes.  I was mistaken as
+          to the reference counting.
+
+        * tests/RTScheduling/VoidData/test.h:
+
+          Dereference the "something" pointer as was most likely the
+          original intention.
+
 Wed Jan 18 01:42:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * NEWS: 
-        
+        * NEWS:
+
           Update for splitting ORB service libraries.
 
 Tue Jan 17 23:03:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>

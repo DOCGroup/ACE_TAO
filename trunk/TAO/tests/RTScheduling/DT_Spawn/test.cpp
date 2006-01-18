@@ -89,10 +89,9 @@ main (int argc, char* argv [])
       ACE_TRY_CHECK;
       
       size_t count = 0;
-      RTScheduling::Current::IdType_var current_id = current->id ();
       ACE_OS::memcpy (&count,
-		      current_id->get_buffer (),
-		      current_id->length ());
+		      current->id ()->get_buffer (),
+		      current->id ()->length ());
       
       ACE_DEBUG ((LM_DEBUG,
 		  "The Current DT Guid is %d\n",
