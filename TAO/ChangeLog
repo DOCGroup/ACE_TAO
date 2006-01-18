@@ -1,3 +1,13 @@
+Wed Jan 18 19:43:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/RTEventLogConsumer.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+        
+          Now that we use the *_Serv_Export versions of the symbol export
+          macros, we need to #include "*_serv_export.h"
+
 Wed Jan 18 19:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Slot/*:
