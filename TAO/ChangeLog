@@ -1,3 +1,13 @@
+Wed Jan 18 23:35:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        
+          Regenerate.
+        
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        
+          Fix typos in symbol export header file names.
+
 Wed Jan 18 19:43:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/RTEventLogConsumer.h:
