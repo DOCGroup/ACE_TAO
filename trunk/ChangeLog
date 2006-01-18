@@ -1,3 +1,9 @@
+Wed Jan 18 18:22:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+        
+          Updated because constructors of ACE_INET_Addr are now explicit.
+
 Wed Jan 18 06:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
