@@ -1,13 +1,28 @@
-// -*- MPC -*-
+// $Id$
+
 // Client.mpc,v 1.6 2005/02/18 09:07:06 jwillemsen Exp
 
 
-project(TMClient): ciao_deployment_stub, ciao_config_handlers {
-//  idlflags += -I $(TAO_ROOT)/orbsvcs/orbsvcs
+project(TMClient): ciao_client_dnc,ciao_deployment_stub, ciao_config_handlers {
+  after += CIAO_TargetManager_stub
   includes += $(CIAO_ROOT)/DAnCE $(TAO_ROOT)/orbsvcs 
   includes += $(CIAO_ROOT)/DAnCE/TargetManager
-  libs += TargetManager_stub TargetManager_svnt 
+  libs += TargetManager_stub
+
+
+  IDL_Files {
+  }
+
   Source_Files {
-   CmpClient.cpp 
+    CmpClient.cpp 
+  }
+  
+  Header_Files {
+  }
+  
+  Inline_Files {
+  }
+
+  Template_Files {
   }
 }
