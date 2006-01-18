@@ -79,10 +79,9 @@ Thread_Task::svc (void)
       ACE_TRY_CHECK;
 
       size_t count = 0;
-      RTScheduling::Current::IdType_var current_id = current_->id ();
       ACE_OS::memcpy (&count,
-                      current_id->get_buffer (),
-                      current_id->length ());
+                      current_->id ()->get_buffer (),
+                      current_->id ()->length ());
 
 
       this->current_->begin_scheduling_segment ("Potter",
@@ -91,7 +90,7 @@ Thread_Task::svc (void)
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->guid_[guid_index++] = (current_id.in ())[0];
+      this->guid_[guid_index++] = *(this->current_->id ());
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",

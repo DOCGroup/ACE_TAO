@@ -723,20 +723,14 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_
   for (int index = 0; current != 0; index++)
     {
       name_list->length (index+1);
-      // If we use current->name() to assign to (*name_list) [index],
-      // a copy of the string will be leaked since the operator[] returns
-      // a TAO_SeqElem_String_Manager which has an operator= that takes
-      // a const char* and copies it.  Using this->name_.in () allows
-      // the TAO_SeqElem_String_Manager to make the copy and no memory
-      // is leaked.
-      (*name_list) [index] = this->name_.in ();
+      (*name_list) [index] = current->name ();
       current = current->previous_current_;
     }
 
   return name_list;
 }
 
-char*
+const char*
 TAO_RTScheduler_Current_i::name (void)
 {
   return CORBA::string_dup (this->name_.in ());
