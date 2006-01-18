@@ -1,3 +1,14 @@
+Wed Jan 18 18:41:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h:
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.h:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        
+          Now that we use the *_Serv_Export versions of the symbol export
+          macros, we need to #include "*_serv_export.h"
+        
 Wed Jan 18 13:44:07 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/RTScheduling/Current.h:

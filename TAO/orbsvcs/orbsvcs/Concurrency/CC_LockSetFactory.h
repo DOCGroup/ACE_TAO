@@ -21,7 +21,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosConcurrencyControlS.h"
-#include "concurrency_export.h"
+#include "concurrency_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
