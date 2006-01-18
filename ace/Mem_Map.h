@@ -45,7 +45,7 @@ public:
   /// Default constructor.
   ACE_Mem_Map (void);
 
-  /// Map a file from an open file descriptor <handle>.  This function
+  /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.
   ACE_Mem_Map (ACE_HANDLE handle,
                int length = -1,
@@ -55,7 +55,7 @@ public:
                off_t offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Map a file specified by <file_name>.
+  /// Map a file specified by @a file_name.
   ACE_Mem_Map (const ACE_TCHAR *filename,
                int len = -1,
                int flags = O_RDWR | O_CREAT,
@@ -66,7 +66,7 @@ public:
                off_t offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Map a file from an open file descriptor <handle>.  This function
+  /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.
   int map (ACE_HANDLE handle,
            int length = -1,

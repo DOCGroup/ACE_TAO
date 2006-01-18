@@ -2393,7 +2393,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
       else
         {
           ACE_Notification_Buffer *buffer =
-            (ACE_Notification_Buffer *) mb->base ();
+            reinterpret_cast <ACE_Notification_Buffer *> (mb->base ());
 
           // If eh == 0 then we've got major problems!  Otherwise, we
           // need to dispatch the appropriate handle_* method on the
@@ -2557,7 +2557,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 
   for (index = 0; index < queue_size; ++index)
     {
-      ACE_Message_Block  *mb;
+      ACE_Message_Block *mb = 0;
       if (-1 == this->message_queue_.dequeue_head (mb))
         return -1;        // This shouldn't happen...
 
