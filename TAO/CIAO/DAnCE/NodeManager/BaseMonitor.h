@@ -2,8 +2,8 @@
 //----------------------------------------------------------------------------------
 /// Monitor Interface
 /*
- * @file Base_Monitor.h
- * @brief The Base_Monitor.h file.
+ * @file BaseMonitor.h
+ * @brief The BaseMonitor.h file.
  * This is an abstract class containing the interface to the Monitor plug-in
  * 
  * @author Nilabja R <nilabjar@dre.vanderbilt.edu>

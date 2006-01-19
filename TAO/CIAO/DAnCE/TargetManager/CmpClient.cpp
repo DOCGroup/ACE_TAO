@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file CmpCLient.cpp
+ * @file CmpClient.cpp
  *
  * @brief This file contains a client of TargetManager.
  *
