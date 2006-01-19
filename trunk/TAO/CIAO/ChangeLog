@@ -1,3 +1,9 @@
+Wed Jan 18 23:56:51 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/BaseMonitor.h: Corrected the file name in @file
+
+        * DAnCE/TargetManager/CmpClient.cpp: Corrected the file name in @file
+
 Wed Jan 18 16:42:41 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/BaseMonitor.h:Added documentation, changed
