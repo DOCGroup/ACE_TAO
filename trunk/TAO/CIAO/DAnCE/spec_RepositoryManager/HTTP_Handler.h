@@ -76,6 +76,7 @@ public:
                    const char *request_suffix = "HTTP/1.0\r\n\r\n");
 
 private:
+  //NOTE: these functions return -1 on error
   int send_request (void);
   int receive_reply (void);
   const char *request_prefix_;

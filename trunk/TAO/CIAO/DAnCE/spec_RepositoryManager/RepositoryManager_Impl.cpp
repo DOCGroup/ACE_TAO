@@ -7,10 +7,11 @@
 
 #include "RepositoryManager_Impl.h"
 
-#include "ace/OS_NS_fcntl.h"      //for open
+#include "ace/OS_NS_fcntl.h"       //for open
 #include "ace/OS_NS_unistd.h"      //for close
-#include "ace/OS_NS_sys_stat.h"      //for filesize and fstat and mkdir
+#include "ace/OS_NS_sys_stat.h"    //for filesize and fstat and mkdir
 #include "ace/OS_NS_string.h"      //for ACE_CString
+#include "ace/OS_Memory.h"         //for ACE_NEW* macros
 
 
 //to remove a file or dir from the local filesystem need remove () from stdio.h
@@ -144,11 +145,13 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   if (ACE_OS::strstr (location, "http://"))
     {
 
-    //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
-      ACE_Message_Block* mb = new ACE_Message_Block (0,0);
+      //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
+      ACE_Message_Block* mb;
+      ACE_NEW_THROW_EX (mb, ACE_Message_Block (0,0), CORBA::INTERNAL ());
+      ACE_CHECK_RETURN (0);
 
-    //get the remote file
-    if (!HTTP_Get (location, *mb))
+      //get the remote file
+      if (!HTTP_Get (location, *mb))
         {
           mb->release ();
           ACE_THROW (CORBA::INTERNAL ());
@@ -299,7 +302,12 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   ACE_CString pc_path (entry->int_id_.c_str ());
   pc_path += PC_EXTENSION;
 
-  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
+  Deployment::PackageConfiguration_var pc;
+  ACE_NEW_THROW_EX (pc,
+                    Deployment::PackageConfiguration (),
+                    CORBA::INTERNAL ());
+
+  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -333,7 +341,12 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   ACE_CString pc_path (entry->int_id_.c_str ());
   pc_path += PC_EXTENSION;
 
-  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
+  Deployment::PackageConfiguration_var pc;
+  ACE_NEW_THROW_EX (pc,
+                    Deployment::PackageConfiguration (),
+                    CORBA::INTERNAL ());
+
+  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -366,8 +379,10 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   if (!this->types_.find (ACE_CString (type), entry))
   {
     //return an empty sequence
-    CORBA::StringSeq_var seq = new CORBA::StringSeq (0);
-    return seq._retn ();
+    CORBA::StringSeq_var seq;
+    ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::INTERNAL ());
+    ACE_CHECK_RETURN (0);
+  return seq._retn ();
   }
   else
   {
@@ -391,7 +406,12 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
        ++num_entries;
 
     //allocate a sequence of the right length
-    CORBA::StringSeq_var seq = new CORBA::StringSeq (num_entries);
+    CORBA::StringSeq_var seq;
+    ACE_NEW_THROW_EX (seq,
+                      CORBA::StringSeq (num_entries),
+                      CORBA::INTERNAL ());
+
+    ACE_CHECK_RETURN (0);
 
     //store the elements in the string sequence
     CIBucket_Iterator iter (this->types_, type);
@@ -437,7 +457,10 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 
   ACE_DEBUG ((LM_DEBUG, "# names: %d\n", num_entries));
 
-  CORBA::StringSeq_var seq = new CORBA::StringSeq (num_entries);
+  CORBA::StringSeq_var seq;
+  ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::INTERNAL ());
+
+  ACE_CHECK_RETURN (0);
 
   seq->length (num_entries);
   ACE_DEBUG ((LM_DEBUG, "SEQ LEN: %d\n", seq->length ()));
@@ -491,7 +514,13 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   ACE_DEBUG ((LM_DEBUG, "# names: %d\n", num_entries));
 
 
-  CORBA::StringSeq_var seq = new CORBA::StringSeq (num_entries);
+  CORBA::StringSeq_var seq;
+  ACE_NEW_THROW_EX (seq,
+                    CORBA::StringSeq (num_entries),
+                    CORBA::INTERNAL ());
+
+  ACE_CHECK_RETURN (0);
+
   seq->length (num_entries);
 
   CORBA::ULong index = 0;
@@ -544,7 +573,12 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   ACE_CString pc_path (path);
   pc_path += PC_EXTENSION;        //external PackageConfiguration extension
 
-  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
+  Deployment::PackageConfiguration_var pc;
+  ACE_NEW_THROW_EX (pc,
+                    Deployment::PackageConfiguration (),
+                    CORBA::INTERNAL ());
+
+  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
   {
@@ -660,7 +694,7 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_package (char* package)
 
 int CIAO_RepositoryManagerDaemon_i::HTTP_Get (const char* URL, ACE_Message_Block &mb)
 {
-    URL_Parser *parser = URL_Parser::instance ();
+    URL_Parser *parser = TheURL_Parser::instance ();
     if (!parser->parseURL (const_cast<char*> (URL)))
     return 0;
 
@@ -781,7 +815,7 @@ int CIAO_RepositoryManagerDaemon_i::extract_descriptor_files (char* package, ACE
             pcd_name = inf->name_.c_str () + skip_len;
 
           //extract the descriptor from the package
-          file = new ACE_Message_Block (0,0);
+          ACE_NEW_RETURN (file, ACE_Message_Block (0,0), 0);
           if (!ZIP_Wrapper::get_file(const_cast<char*> (package),
                                      const_cast<char*> (inf->name_.c_str ()),
                                      *file))

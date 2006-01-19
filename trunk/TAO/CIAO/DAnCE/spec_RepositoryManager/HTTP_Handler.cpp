@@ -151,8 +151,15 @@ HTTP_Reader::receive_reply (void)
   //NOTE: this function reallocates if necessary
   //this->mb_->size (bytes_read);
 
+  ACE_Message_Block* temp;   //pointer used temporarily
+                             //for memory allocations before
+                             //chaining to Message_Block
+
   ACE_Message_Block* curr = this->mb_;
-  curr->cont (new ACE_Message_Block (bytes_read));
+
+  ACE_NEW_RETURN (temp, ACE_Message_Block (bytes_read), -1);
+  curr->cont (temp);
+
   curr = curr->cont ();
 
   // Copy over all the data bytes into our message buffer.
@@ -167,23 +174,24 @@ HTTP_Reader::receive_reply (void)
 
   do
   {
-	  if (curr->space () == 0)
-	  {
-		  curr->cont (new ACE_Message_Block (MTU));
-		  curr = curr->cont ();
-	  }
+    if (curr->space () == 0)
+    {
+      ACE_NEW_RETURN (temp, ACE_Message_Block (MTU), -1);
+      curr->cont (temp);
+      curr = curr->cont ();
+    }
 
-	if (peer ().recv_n (curr->wr_ptr (), curr->space (), 0, &num_recvd) >= 0)
-	  {
-		  //move the write pointer
-		  curr->wr_ptr (num_recvd);
+  if (peer ().recv_n (curr->wr_ptr (), curr->space (), 0, &num_recvd) >= 0)
+    {
+      //move the write pointer
+      curr->wr_ptr (num_recvd);
 
-		  //increment bytes_read
-		  bytes_read += num_recvd;
+      //increment bytes_read
+      bytes_read += num_recvd;
 
-	  }
-	else
-		ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Reader::receiveReply():Error while reading header"), -1);
+    }
+  else
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Reader::receiveReply():Error while reading header"), -1);
 
   }while (num_recvd != 0);
 
