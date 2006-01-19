@@ -1,3 +1,21 @@
+Thu Jan 19 02:45:48 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log_i.cpp:
+        
+          Call reset_capacity_alarm_threshold () in set_max_size () and
+          set_capacity_alarm_thresholds () if the value is changed.  If
+          either the max size or the threshold list is changed, the old
+          capacity index no longer makes sense.
+        
+          Reseting the index means that a ThresholdAlarm event will be
+          sent after the next threshold is crossed.  It is unclear whether
+          this is the correct behavior.  An argument could be made that an
+          event should be sent for each threshold that has already been
+          crossed given the new max size or capacity alarm threshold list.
+        
+          Unfortunately the current version of the specification does not
+          describe what is the correct behavior.
+
 Wed Jan 18 23:35:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
