@@ -1,3 +1,22 @@
+Thu Jan 19 01:29:58 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/spec_RepositoryManager/HTTP_Handler.h:
+        * DAnCE/spec_RepositoryManager/HTTP_Handler.cpp:
+        * DAnCE/spec_RepositoryManager/PC_Updater.h:
+        * DAnCE/spec_RepositoryManager/PC_Updater_T.h:
+        * DAnCE/spec_RepositoryManager/RM_Helper.h:
+        * DAnCE/spec_RepositoryManager/RM_Helper.cpp:
+        * DAnCE/spec_RepositoryManager/RMadmin.cpp:
+        * DAnCE/spec_RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/spec_RepositoryManager/URL_Parser.h:
+        * DAnCE/spec_RepositoryManager/URL_Parser.cpp:
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.h:
+
+        Changed all occurenced of new to ACE_NEW. Turned some documentation to
+        Doxygen style. Modified the URL_Parser singleton to use the ACE_Singleton
+        class. More changes on the way.
+
 Wed Jan 18 23:56:51 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/BaseMonitor.h: Corrected the file name in @file

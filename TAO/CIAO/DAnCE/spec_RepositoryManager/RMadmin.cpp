@@ -225,10 +225,8 @@ CORBA::Octet* read_from_disk (
 
   ACE_OS::fstat (handle, &file_info);
 
-  CORBA::Octet* buffer = new CORBA::Octet[file_info.st_size];
-
-  if (buffer == 0)
-    return 0;
+  CORBA::Octet* buffer;
+  ACE_NEW_RETURN (buffer, CORBA::Octet[file_info.st_size], 0);
 
   //read the contents of the file into the buffer
   if (ACE_OS::read_n (handle, buffer, file_info.st_size) == -1)
