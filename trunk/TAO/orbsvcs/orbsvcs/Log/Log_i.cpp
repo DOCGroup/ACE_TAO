@@ -255,35 +255,58 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
-  // size == 0 => infinite size.
-  CORBA::ULongLong old_size;
-  old_size = this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULongLong old_size = 
+    this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if ((size != 0) && (size <
-      this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER)))
+  if (size == old_size)
+    return;
+
+  // size == 0 => infinite size.
+  if (size != 0)
     {
-      ACE_THROW (DsLogAdmin::InvalidParam ());
+      CORBA::ULongLong current_size =
+	this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      
+      if (size < current_size)
+	ACE_THROW (DsLogAdmin::InvalidParam ());
     }
-  else
+  
+  this->recordstore_->set_max_size (size ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (notifier_)
     {
-      this->recordstore_->set_max_size (size ACE_ENV_ARG_PARAMETER);
+      DsLogAdmin::Log_var log =
+	this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (notifier_ && old_size != size)
-        {
-          DsLogAdmin::Log_var log =
-            this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
-
-          notifier_->max_log_size_value_change (log.in (),
-                                                logid_,
-                                                old_size,
-                                                size
-                                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
+      notifier_->max_log_size_value_change (log.in (),
+					    logid_,
+					    old_size,
+					    size
+					    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
+
+  // @@ The current revision of the specification (formal/03-07-01)
+  // doesn't specify the interaction betwen set_max_size() and the
+  // capacity alarm thresholds list.  Publicly available documentation
+  // I've read for other log service implementations doesn't offer any
+  // guidance either.  I will be submitting a defect report to the OMG
+  // for clarification.
+  //
+  // In the mean time, we will call reset_capacity_alarm_threshold()
+  // to reset the "current_threshold_" index.  This will result in
+  // ThresholdAlarm being sent when the next threshold is crossed.  An
+  // argument could be made that an event should be be sent for each
+  // threshold that has already been crossed.  Hopefully, this will be
+  // clarified when/if the OMG charters a RTF for the log service.
+  //    --jtc
+  //
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 CORBA::ULongLong
@@ -563,7 +586,25 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-}
+  
+  // @@ The current revision of the specification (formal/03-07-01)
+  // doesn't completly describe the behavior of changing the capacity
+  // alarm threshold list.  Publicly available documentation I've read
+  // for other log service implementations doesn't offer much guidance
+  // either.  I will be submitting a defect report to the OMG for
+  // clarification.
+  //
+  // In the mean time, we will call reset_capacity_alarm_threshold()
+  // to reset the "current_threshold_" index.  This will result in
+  // ThresholdAlarm being sent when the next threshold is crossed.  An
+  // argument could be made that an event should be be sent for each
+  // threshold that has already been crossed.  Hopefully, this will be
+  // clarified when/if the OMG charters a RTF for the log service.
+  //    --jtc
+  //
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+} 
 
 DsLogAdmin::WeekMask*
 TAO_Log_i::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
