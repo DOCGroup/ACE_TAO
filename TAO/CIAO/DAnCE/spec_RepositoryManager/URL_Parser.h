@@ -20,19 +20,26 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "ace/Singleton.h"  //for ACE_Singleton
+#include "ace/Null_Mutex.h" //for ACE_Null_Mutex
+
+//forward declaration
+class URL_Parser;
+
+typedef ACE_Singleton <URL_Parser, ACE_Null_Mutex> TheURL_Parser;
+
 
 class URL_Parser
 {
 public:
-  /// Returns the singleton instance
-  static URL_Parser *instance (void);
 
   /// parses commandline arguments
   bool parse_args (int argc, ACE_TCHAR *argv[]);
 
+  //return false on failure
   bool parseURL (char* url);
 
-  void exitOnError (void);
+  void Error (void);
 
   /// Hostname to connect to
   ACE_TCHAR *hostname_;
@@ -46,14 +53,13 @@ public:
   /// turns on verbosity
   int debug_;
 
-  //destructor
-  ~URL_Parser (void);
-protected:
   URL_Parser (void);
   // protected constructor, singleton
 
-  /// the singleton
-  static URL_Parser *instance_;
+  //destructor
+  ~URL_Parser (void);
 };
+
+
 
 #endif /* URL_PARSER_H */

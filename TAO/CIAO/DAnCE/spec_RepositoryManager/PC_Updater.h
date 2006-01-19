@@ -1,3 +1,6 @@
+
+/* -*- C++ -*- */
+
 //==================================================================
 /**
  *  file  PC_Updater.h
@@ -13,11 +16,11 @@
 #include /**/ "ace/pre.h"
 
 #include "ciao/DeploymentC.h"
-#include "ace/SString.h"					//for the ACE_CString
+#include "ace/SString.h"             //for the ACE_CString
 
-#include "ZIP_Wrapper.h"					//Wrapper around zzip
-#include "ace/Containers_T.h"				//for ACE_Double_Linked_List
-#include "ace/Malloc_Allocator.h"			//for ACE_New_Allocator needed by the doubly link list
+#include "ZIP_Wrapper.h"             //Wrapper around zzip
+#include "ace/Containers_T.h"        //for ACE_Double_Linked_List
+#include "ace/Malloc_Allocator.h"    //for ACE_New_Allocator needed by the doubly link list
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -39,15 +42,15 @@ public:
 
   /// Constructors
 
-	PC_Updater (const char* server_path, const char* package);
-	PC_Updater (ACE_CString& server_path, ACE_CString& package);
+  PC_Updater (const char* server_path, const char* package);
+  PC_Updater (ACE_CString& server_path, ACE_CString& package);
 
-	~PC_Updater ();
+  ~PC_Updater ();
 
   /// A whole slew of overloaded routines for different IDL
   /// data types part of the PackageConfiguration.
 
-	bool update (const ::Deployment::PackageConfiguration &pc);
+  bool update (const ::Deployment::PackageConfiguration &pc);
 
   void update (const ::Deployment::Property &property);
 
@@ -89,18 +92,18 @@ public:
 
 protected:
 
-	void clear_list ();
+  void clear_list ();
 
 private:
 
-	ACE_CString server_path_;
+  ACE_CString server_path_;
 
   /// create a doubly link list
-	ACE_New_Allocator allocator_;
-	ACE_Double_Linked_List<ZIP_File_Info> file_list_;
+  ACE_New_Allocator allocator_;
+  ACE_Double_Linked_List<ZIP_File_Info> file_list_;
 
-	ACE_CString package_;
-	bool success_;
+  ACE_CString package_;
+  bool success_;
 };
 
 #include /**/ "ace/post.h"

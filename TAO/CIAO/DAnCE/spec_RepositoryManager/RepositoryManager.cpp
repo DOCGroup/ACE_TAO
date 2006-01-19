@@ -69,7 +69,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     mgr->activate ();
 
     //create a servant
-    CIAO_RepositoryManagerDaemon_i* repo = new CIAO_RepositoryManagerDaemon_i (orb.in ());
+    CIAO_RepositoryManagerDaemon_i* repo;
+    ACE_NEW_RETURN (repo, CIAO_RepositoryManagerDaemon_i (orb.in ()), 1);
 
     //trasfer ownership to the POA
     PortableServer::ServantBase_var distributor_owner_transfer(repo);
