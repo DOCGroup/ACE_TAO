@@ -983,6 +983,8 @@ private:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+  bool use_local_memory_pool_;
+
 protected:
 
   /// Synchronize internal state...

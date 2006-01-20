@@ -419,6 +419,24 @@ preferences over normal I/O, thereby causing priority inversion.</p>
        decisions for better performance. The default value is
        <code>0</code> (false). </td>
        </tr>
+      <tr>
+        <td><code>-ORBUseLocalMemoryPool</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseLocalMemoryPool"></a>TAO can use a local memory pool
+         to satisfy some of its needs for heap storage, as it is often more
+         efficient than using the platform's default memory allocator. The local
+         pool will always grow as large as necessary to satisfy memory allocations,
+         but it will never shrink. This means that sometimes a process can retain
+         memory that it no longer needs. If the default allocator is used then
+         TAO gives memory back as soon as it is not needed which allows for better
+         resource sharing at the expense of memory deallocation time.
+         <p>If this option is disabled (<code>0</code>), the ORB will use the
+        default allocator for the platform.</p>
+         <p>If this option is enabled (<code>1</code>), the orb will use the
+         local memory pool.</p>
+        <p> This option defaults to the compile-time option specified by
+        <code>TAO_USES_LOCAL_MEMORY_POOL</code>.</p>
+        </td>
+      </tr>
     </tbody>
   </table>
   </p>
