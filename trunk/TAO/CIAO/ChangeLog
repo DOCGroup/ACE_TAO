@@ -1,3 +1,9 @@
+Fri Jan 20 20:33:23 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+            Changed the Domain Application Manager to remove the dependency on
+            NodeManager_stub.
+        
 Fri Jan 20 07:24:47 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/spec_RepositoryManager/PC_Updater.h:
