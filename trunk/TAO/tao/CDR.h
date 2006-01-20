@@ -277,6 +277,8 @@ public:
   /// Accessor
   TAO_ORB_Core *orb_core (void) const;
 
+  ACE_Message_Block::Message_Flags
+    clr_mb_flags( ACE_Message_Block::Message_Flags less_flags );
 
   // = TAO specific methods.
   static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
