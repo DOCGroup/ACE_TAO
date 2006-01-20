@@ -1,29 +1,38 @@
+Fri Jan 20 11:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+          Fixed bug related to the slot functionality of PICurrent, when the
+          slot count is not equal to zero and there is no PICurrent yet,
+          then force the creation of PICurrent by the ORB to make sure we
+          don't loose the slot_count. Thanks to Boris Kolpackov
+          <boris at dre dot vanderbilt dot edu> for providing the patch
+
 Thu Jan 19 02:45:48 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log_i.cpp:
-        
+
           Call reset_capacity_alarm_threshold () in set_max_size () and
           set_capacity_alarm_thresholds () if the value is changed.  If
           either the max size or the threshold list is changed, the old
           capacity index no longer makes sense.
-        
+
           Reseting the index means that a ThresholdAlarm event will be
           sent after the next threshold is crossed.  It is unclear whether
           this is the correct behavior.  An argument could be made that an
           event should be sent for each threshold that has already been
           crossed given the new max size or capacity alarm threshold list.
-        
+
           Unfortunately the current version of the specification does not
           describe what is the correct behavior.
 
 Wed Jan 18 23:35:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
-        
+
           Regenerate.
-        
+
         * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
-        
+
           Fix typos in symbol export header file names.
 
 Wed Jan 18 19:43:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
@@ -32,7 +41,7 @@ Wed Jan 18 19:43:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
         * orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
         * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
-        
+
           Now that we use the *_Serv_Export versions of the symbol export
           macros, we need to #include "*_serv_export.h"
 
