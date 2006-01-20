@@ -139,6 +139,18 @@ TAO_ORB_Parameters::nodelay (int x)
 }
 
 ACE_INLINE int
+TAO_ORB_Parameters::sock_keepalive (void)
+{
+  return this->sock_keepalive_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::sock_keepalive (int x)
+{
+  this->sock_keepalive_ = x;
+}
+
+ACE_INLINE int
 TAO_ORB_Parameters::ace_sched_policy (void) const
 {
   return this->ace_sched_policy_;
