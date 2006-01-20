@@ -7,7 +7,7 @@
  *
  *  $Id$
  *
- *  Parses a URL
+ *  Parses a URL into its logical chunks
  *
  *
  *  @author Stoyan Paunov
