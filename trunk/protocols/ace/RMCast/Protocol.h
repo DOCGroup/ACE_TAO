@@ -239,7 +239,7 @@ namespace ACE_RMCast
   class Message;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Message, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<Message, Mutex>
   Message_ptr;
 
   class Message
