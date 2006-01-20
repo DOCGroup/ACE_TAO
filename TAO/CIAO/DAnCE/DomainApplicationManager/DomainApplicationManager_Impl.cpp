@@ -1,7 +1,7 @@
 // $Id$
 
 #include "DomainApplicationManager_Impl.h"
-#include "NodeManager/NodeManagerC.h"
+//#include "NodeManager/NodeManagerC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
