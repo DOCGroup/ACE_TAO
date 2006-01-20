@@ -1,3 +1,8 @@
+Fri Jan 20 15:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/WIN32_Proactor.h:
+          No need to export ACE_WIN32_Asynch_Timer
+
 Fri Jan 20 14:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
