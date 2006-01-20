@@ -243,17 +243,17 @@ class JAWS_Synch_IO_No_Cache : public JAWS_IO
   // = TITLE
   //
   //     This class defines the interface for a Synchronous I/O class,
-  //	 however in this class we do not use any caching. 
+  //   however in this class we do not use any caching.
   //
   // = DESCRIPTION
   //
-  //	 Wondering how this is useful? 
-  //	 The ACE_Filecache ACE_NOMAP option is broken and even if it were not, there
-  //	 are other use cases in which we want to avoid caching altogether. For example,
-  //	 we use JAWS in conjunction with the CIAO Repository Manager, however the two 
-  //	 do not have any explicit knowledge of each other. Therefore if the RM tried 
-  //	 to remove a package and its files from disk, its operation would [partially] 
-  //	 fail if JAWS still holds some of the files in its cache.
+  //   Wondering how this is useful?
+  //   The ACE_Filecache ACE_NOMAP option is broken and even if it were not, there
+  //   are other use cases in which we want to avoid caching altogether. For example,
+  //   we use JAWS in conjunction with the CIAO Repository Manager, however the two
+  //   do not have any explicit knowledge of each other. Therefore if the RM tried
+  //   to remove a package and its files from disk, its operation would [partially]
+  //   fail if JAWS still holds some of the files in its cache.
   //
 {
 public:

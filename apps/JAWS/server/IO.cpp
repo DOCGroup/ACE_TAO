@@ -465,105 +465,87 @@ JAWS_Synch_IO_No_Cache::read (ACE_Message_Block &mb,
 
 void
 JAWS_Synch_IO_No_Cache::receive_file (const char *filename,
-									  void *initial_data,
-									  int initial_data_length,
-									  int entire_length)
+                                      void *initial_data,
+                                      int initial_data_length,
+                                      int entire_length)
 {
-	//ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
-	this->handler_->receive_file_error (5);
+  //ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
+  this->handler_->receive_file_error (5);
 
-  //ACE_Filecache_Handle handle (filename, entire_length);
-
-  //int result = handle.error ();
-
-  //if (result == ACE_Filecache_Handle::ACE_SUCCESS)
-  //  {
-  //    ACE_SOCK_Stream stream;
-  //    stream.set_handle (this->handle_);
-
-  //    int bytes_to_memcpy = ACE_MIN (entire_length, initial_data_length);
-  //    ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
-
-  //    int bytes_to_read = entire_length - bytes_to_memcpy;
-
-  //    int bytes = stream.recv_n ((char *) handle.address () + initial_data_length,
-  //                               bytes_to_read);
-  //    if (bytes == bytes_to_read)
-  //      this->handler_->receive_file_complete ();
-  //    else
-  //      result = -1;
-  //  }
-
-  //if (result != ACE_Filecache_Handle::ACE_SUCCESS)
-  //  this->handler_->receive_file_error (result);
-
+  //To get rid of warnings on some platforms
+  //NOTE: this function is necessary because the base class
+  //version of the function is pure virtual
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (initial_data);
+  ACE_UNUSED_ARG (initial_data_length);
+  ACE_UNUSED_ARG (entire_length);
 }
 
 void
 JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
-									   const char *header,
-									   int header_size,
-									   const char *trailer,
-									   int trailer_size)
+                     const char *header,
+                     int header_size,
+                     const char *trailer,
+                     int trailer_size)
 {
-	int result = 0;
+  int result = 0;
 
-	// Can we access the file?
-	if (ACE_OS::access (filename, R_OK) == -1)
-	{
-		//ugly hack to send in HTTP_Status_Code::STATUS_NOT_FOUND
-		result = ACE_Filecache_Handle::ACE_ACCESS_FAILED;
-		this->handler_->transmit_file_error (result);
-		return;
-	}
+  // Can we access the file?
+  if (ACE_OS::access (filename, R_OK) == -1)
+  {
+    //ugly hack to send in HTTP_Status_Code::STATUS_NOT_FOUND
+    result = ACE_Filecache_Handle::ACE_ACCESS_FAILED;
+    this->handler_->transmit_file_error (result);
+    return;
+  }
 
-	ACE_stat stat;
+  ACE_stat stat;
 
-	// Can we stat the file?
-	if (ACE_OS::stat (filename, &stat) == -1)
-	{
-		//ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
-		result = ACE_Filecache_Handle::ACE_STAT_FAILED;
-	    this->handler_->transmit_file_error (result);
-		return;
-	}
+  // Can we stat the file?
+  if (ACE_OS::stat (filename, &stat) == -1)
+  {
+    //ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
+    result = ACE_Filecache_Handle::ACE_STAT_FAILED;
+      this->handler_->transmit_file_error (result);
+    return;
+  }
 
-	size_t size = stat.st_size;
+  ssize_t size = stat.st_size;
 
-	// Can we open the file?
-	ACE_HANDLE handle = ACE_OS::open (filename, O_RDONLY);
-	if (handle == ACE_INVALID_HANDLE)
-	{
-		//ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
-		result = ACE_Filecache_Handle::ACE_OPEN_FAILED;
-	    this->handler_->transmit_file_error (result);
-		return;
-	}
+  // Can we open the file?
+  ACE_HANDLE handle = ACE_OS::open (filename, O_RDONLY);
+  if (handle == ACE_INVALID_HANDLE)
+  {
+    //ugly hack to send HTTP_Status_Code::STATUS_FORBIDDEN
+    result = ACE_Filecache_Handle::ACE_OPEN_FAILED;
+      this->handler_->transmit_file_error (result);
+    return;
+  }
 
-	char* f = new char[size];
-	auto_ptr<char> file (f);	
+  char* f = new char[size];
+  auto_ptr<char> file (f);
 
-	ACE_OS::read_n (handle, f, size);
+  ACE_OS::read_n (handle, f, size);
 
-	ACE_SOCK_Stream stream;
-	stream.set_handle (this->handle_);
+  ACE_SOCK_Stream stream;
+  stream.set_handle (this->handle_);
 
-	if ((stream.send_n (header, header_size) == header_size)
-			&& (stream.send_n (f, size) == size)
-			&& (stream.send_n (trailer, trailer_size) == trailer_size))
-			this->handler_->transmit_file_complete ();
-	else
-	{
-		//ugly hack to default to HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR
-		result = -1;
-		this->handler_->transmit_file_error (result);
-		return;
-	}
+  if ((stream.send_n (header, header_size) == header_size)
+      && (stream.send_n (f, size) == size)
+      && (stream.send_n (trailer, trailer_size) == trailer_size))
+      this->handler_->transmit_file_complete ();
+  else
+  {
+    //ugly hack to default to HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR
+    result = -1;
+    this->handler_->transmit_file_error (result);
+    return;
+  }
 }
 
 void
 JAWS_Synch_IO_No_Cache::send_confirmation_message (const char *buffer,
-												   int length)
+                           int length)
 {
   this->send_message (buffer, length);
   this->handler_->confirmation_message_complete ();
@@ -571,7 +553,7 @@ JAWS_Synch_IO_No_Cache::send_confirmation_message (const char *buffer,
 
 void
 JAWS_Synch_IO_No_Cache::send_error_message (const char *buffer,
-										    int length)
+                        int length)
 {
   this->send_message (buffer, length);
   this->handler_->error_message_complete ();
@@ -579,7 +561,7 @@ JAWS_Synch_IO_No_Cache::send_error_message (const char *buffer,
 
 void
 JAWS_Synch_IO_No_Cache::send_message (const char *buffer,
-									  int length)
+                    int length)
 {
   ACE_SOCK_Stream stream;
   stream.set_handle (this->handle_);
