@@ -188,6 +188,14 @@ namespace CIAO
                               "Press <Enter> to tear down application\n"));
                   char dummy [256];
                   std::cin.getline (dummy, 256);
+
+                  // Tear down the assembly
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Plan_Launcher: destroy the application....."));
+                  if (! launcher.teardown_plan (uuid))
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                                  "unkonw plan uuid.\n"));
                 }
             }
           else if (mode == pl_mode_redeployment && new_package_url != 0) // do redeployment

@@ -175,12 +175,16 @@ namespace CIAO
 
     Reference_Count_Map ref_count_map_;
 
-    /// A list to track the names of shared component instances
-    CORBA::StringSeq shared_components_;
+    /// A set to track the names of shared component instances
+    //CORBA::StringSeq shared_components_;
+    ACE_Unbounded_Set<ACE_CString> shared_components_;
+
+    CORBA::StringSeq * shared_components_seq (void);
 
     /// Cached object references of ports (facets/consumers) of
     /// all components. This is useful for getting the port object
-    /// references of "shared components".
+    /// references of "shared components". The key in the map
+    /// is the component instance name.
     typedef
     ACE_Hash_Map_Manager_Ex <ACE_CString,
                              Components::FacetDescriptions_var,
