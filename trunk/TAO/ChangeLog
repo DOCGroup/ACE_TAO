@@ -1,3 +1,20 @@
+Fri Jan 20 17:11:49 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
+
+          Add configuration option -ORBKeepalive to allow users to specify
+          that the SO_KEEPALIVE option be set on TCP sockets.
+
+          This fixes bug #2374.
+
+        * docs/Options.html:
+
+          Add documentation for the above.
+
 Fri Jan 20 16:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * docs/Options.html

@@ -130,6 +130,20 @@ TAO_IIOP_Connection_Handler::open (void*)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
+  int keepalive = this->orb_core ()->orb_params ()->sock_keepalive ();
+
+  if (keepalive)
+    {
+      if (this->peer ().set_option (SOL_SOCKET,
+                                    SO_KEEPALIVE,
+                                    (void *) &keepalive,
+                                    sizeof (int)) == -1
+          && errno != ENOTSUP)
+        {
+          return -1;
+        }
+    }
+
   if (this->transport ()->wait_strategy ()->non_blocking ()
       || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)
     {
