@@ -1,3 +1,18 @@
+Fri Jan 20 22:51:09 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * apps/JAWS/server/IO.h:
+        * apps/JAWS/server/IO.cpp:
+
+          Fixed unused paramerer warnings.
+
+        * apps/JAWS2/JAWS/IO.h:
+        * apps/JAWS2/JAWS/IO.cpp:
+
+          tried to fix the 'cast to pointer from interger of different size' 
+          warning. It had to do with the fact that x86_64 void* are 8 bytes and
+          the cast was from an int which 4 bytes. When James Hu wrote that 
+          code there were no 64 bit archs so the error is showing up now.
+
 Fri Jan 20 15:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/WIN32_Proactor.h:
