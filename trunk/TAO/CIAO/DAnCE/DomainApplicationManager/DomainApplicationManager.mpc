@@ -2,7 +2,6 @@
 // $Id$
 
 project (DomainApplicationManager): ciao_deployment_svnt  {
-  after += NodeManager_stub 
   sharedname = DomainApplicationManager
 
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
