@@ -1,3 +1,12 @@
+Fri Jan 20 15:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/CDR.cpp:
+        * tao/CDR.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+          Fix for Bug 2372.
+          Possiably unnecessary reply_cdr_.clone_from() inside
+          TAO_Synch_Reply_Dispatcher::dispatch_reply() averted.
+
 Fri Jan 20 11:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/AdvSlot/*:
