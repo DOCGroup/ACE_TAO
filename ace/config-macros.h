@@ -56,8 +56,16 @@
 
 // These two are only for backward compatibility. You should avoid
 // using them if not necessary.
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+/**
+ * @deprecated The ACE_SYNCH_1 macro is deprecated
+ */
 # define ACE_SYNCH_1 ACE_SYNCH_DECL
+/**
+ * @deprecated The ACE_SYNCH_2 macro is deprecated
+ */
 # define ACE_SYNCH_2 ACE_SYNCH_USE
+#endif
 
 // For Win32 compatibility...
 # if !defined (ACE_WSOCK_VERSION)
@@ -81,11 +89,16 @@
 #   define ACE_INITIALIZE_MEMORY_BEFORE_USE
 # endif /* ACE_HAS_VALGRIND */
 
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
 # if defined (ACE_HAS_USING_KEYWORD)
+/**
+ * @deprecated The @c ACE_HAS_USING macros are deprecated
+ */
 #   define ACE_USING using
 # else
 #   define ACE_USING
 # endif /* ACE_HAS_USING_KEYWORD */
+#endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
 # if defined (ACE_HAS_TYPENAME_KEYWORD)
 #   define ACE_TYPENAME typename
@@ -502,7 +515,7 @@ typedef ACE_HANDLE ACE_SOCKET;
 // indicate that the actual thread function doesn't return anything. The
 // rest of ACE uses a real type so there's no a ton of conditional code
 // everywhere to deal with the possibility of no return type.
-# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+# if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
 # elif defined (ACE_PSOS)
@@ -513,7 +526,7 @@ typedef int ACE_THR_FUNC_RETURN;
 typedef DWORD ACE_THR_FUNC_RETURN;
 # else
 typedef void* ACE_THR_FUNC_RETURN;
-# endif /* VXWORKS */
+# endif /* ACE_VXWORKS */
 typedef ACE_THR_FUNC_RETURN (*ACE_THR_FUNC)(void *);
 
 #ifdef __cplusplus
@@ -526,19 +539,19 @@ typedef void (*ACE_THR_C_DEST)(void *);
 typedef void (*ACE_THR_DEST)(void *);
 
 // Now some platforms have special requirements...
-# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+# if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
 # else
 typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
-# endif /* VXWORKS */
+# endif /* ACE_VXWORKS */
 
 # ifdef __cplusplus
 extern "C"
 {
 # endif  /* __cplusplus */
-# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+# if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 // needed to handle task entry point type inconsistencies in pSOS+
@@ -546,7 +559,7 @@ typedef void (*PSOS_TASK_ENTRY_POINT)();
 typedef void (*ACE_THR_C_FUNC)(void *);
 # else
 typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
-# endif /* VXWORKS */
+# endif /* ACE_VXWORKS */
 # ifdef __cplusplus
 }
 # endif  /* __cplusplus */
