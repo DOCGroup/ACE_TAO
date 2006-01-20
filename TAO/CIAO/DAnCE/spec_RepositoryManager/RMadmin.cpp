@@ -1,7 +1,10 @@
-// $Id$
+
+/* -*- C++ -*- */
 
 /***
  * file RMClient.cpp
+ *
+ * $Id$
  *
  * A sample client to the RepositoryManager showcasing how to use it
  *

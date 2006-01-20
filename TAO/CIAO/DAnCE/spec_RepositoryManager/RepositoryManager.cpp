@@ -1,11 +1,20 @@
-// $Id$
 
-/***
- * file RepositoryManager.cpp
+/* -*- C++ -*- */
+
+//======================================================================
+/**
+ * @file RepositoryManager.cpp
  *
- * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
- **/
-
+ * $Id$
+ *
+ * Description:
+ *  Main driver program for the CIAO RepositoryManager
+ *  Please run as follows:
+ *       RepositoryManagerDeamon [int:nthreads]
+ *
+ * @author Stoyan Paunov
+ */
+//======================================================================
 
 #include "RepositoryManager_Impl.h"
 #include "ace/OS_NS_stdio.h"
@@ -20,7 +29,7 @@ namespace
 const char * rm_ior = "RepositoryManagerDeamon.ior";
 
 ///default number of worker threads to run in the multi-threaded RM
-const unsigned int nthreads = 3;
+unsigned int nthreads = 3;
 }
 
 
@@ -93,16 +102,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_OS::fprintf (ior_out, "%s", ior.in ());
     ACE_OS::fclose (ior_out);
 
+    if (argc > 1)
+      nthreads = ACE_OS::atoi (argv[1]);
+
     Worker worker (orb.in ());
-    if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                         nthreads) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot activate worker threads\n"),
-                 1);
+    if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nthreads) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate worker threads\n"),
+                           1);
 
-      worker.thr_mgr ()->wait ();
+    worker.thr_mgr ()->wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+    ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
     //done
     return 0;

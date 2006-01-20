@@ -1,9 +1,16 @@
 // $Id$
 
-///====================================================================
-// filename: RepositoryManager_Impl.cpp
-// Author: Stoyan Paunov  spaunov@isis.vanderbilt.edu
-//
+//====================================================================
+/**
+ * @file RepositoryManager_Impl.cpp
+ *
+ * $Id$
+ *
+ * Description: Actial implementation of the RepoMan
+ *
+ * @author Stoyan Paunov
+ */
+//====================================================================
 
 #include "RepositoryManager_Impl.h"
 
@@ -18,9 +25,9 @@
 // ---> need to include ace/OS_NS_stdio.h which would include the correct file for any OS!
 #include "ace/OS_NS_stdio.h"
 
-#include "ZIP_Wrapper.h"          //Wrapper around zzip
-#include "ace/Containers_T.h"        //for ACE_Double_Linked_List
-#include "ace/Malloc_Allocator.h"      //for ACE_New_Allocator needed by the doubly link list
+#include "ZIP_Wrapper.h"                //Wrapper around zzip
+#include "ace/Containers_T.h"           //for ACE_Double_Linked_List
+#include "ace/Malloc_Allocator.h"       //for ACE_New_Allocator
 
 //for the PackageConfiguration parsing
 #include "Config_Handlers/STD_PC_Intf.h"
@@ -29,16 +36,16 @@
 #include "Config_Handlers/Utils/XML_Helper.h"
 #include "xercesc/dom/DOM.hpp"
 
-#include "RM_Helper.h"          //to be able to externalize/internalize a PackageConfiguration
-#include "ace/Message_Block.h"      //for ACE_Message_Block
+#include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration
+#include "ace/Message_Block.h"    //for ACE_Message_Block
 
-#include "ace/Thread.h"          //for obtaining the ID of the current thread
-#include "ace/OS_NS_stdlib.h"      //for itoa ()
+#include "ace/Thread.h"           //for obtaining the ID of the current thread
+#include "ace/OS_NS_stdlib.h"     //for itoa ()
 
-#include "URL_Parser.h"          //for parsing the URL
-#include "HTTP_Client.h"        //the HTTP client class to downloading packages
+#include "URL_Parser.h"           //for parsing the URL
+#include "HTTP_Client.h"          //the HTTP client class to downloading packages
 
-#include "PC_Updater.h"          //A visitor class to walk through the elements of the PC
+#include "PC_Updater.h"           //A visitor class to walk through the elements of the PC
 
 #include <iostream>
 using namespace std;
@@ -82,12 +89,11 @@ CIAO_RepositoryManagerDaemon_i::~CIAO_RepositoryManagerDaemon_i (void)
 //
 //-----------------------------------------------------------------
 
-void CIAO_RepositoryManagerDaemon_i::shutdown (
+void CIAO_RepositoryManagerDaemon_i::shutdown ()
 
-  )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+                ACE_THROW_SPEC ((
+                                CORBA::SystemException
+                                ))
 {
 
   this->names_.unbind_all ();
@@ -106,11 +112,11 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
                                                      const char * installationName,
                                                      const char * location
                                                      )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   ::Deployment::NameExists,
-                   ::Deployment::PackageError
-                   ))
+                     ACE_THROW_SPEC ((
+                                      CORBA::SystemException,
+                                      ::Deployment::NameExists,
+                                      ::Deployment::PackageError
+                                     ))
 {
 
   PCEntry *entry = 0;
@@ -251,8 +257,9 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   this->dump ();
 
-
-  ACE_TRACE (("Installed PackageConfiguration with: \nlabel %s \nuuid %s\n", pc->label, pc->UUID));
+  ACE_DEBUG ((LM_INFO,
+              "Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
+              installationName, pc->UUID));
 }
 
 
@@ -267,11 +274,11 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                                                     const char * baseLocation,
                                                     ::CORBA::Boolean replace
                                                     )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   ::Deployment::NameExists,
-                   ::Deployment::PackageError
-                   ))
+                   ACE_THROW_SPEC ((
+                                    CORBA::SystemException,
+                                    ::Deployment::NameExists,
+                                    ::Deployment::PackageError
+                                   ))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
@@ -282,13 +289,13 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 //
 //-----------------------------------------------------------------
 
-::Deployment::PackageConfiguration * CIAO_RepositoryManagerDaemon_i::findPackageByName (
-                                                                                        const char * name
-                                                                                        )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   ::Deployment::NoSuchName
-                   ))
+::Deployment::PackageConfiguration*
+CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
+
+                               ACE_THROW_SPEC ((
+                                                CORBA::SystemException,
+                                                ::Deployment::NoSuchName
+                                               ))
 {
   // Find out if the PackageConfiguration was installed in the repository,
   // return it if found or throw and exception otherwise
@@ -312,6 +319,8 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
+  ACE_DEBUG ((LM_INFO, "Successfully looked up \'%s\'.\n", name));
+
   return pc._retn ();
 }
 
@@ -321,13 +330,13 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 //
 //-----------------------------------------------------------------
 
-::Deployment::PackageConfiguration * CIAO_RepositoryManagerDaemon_i::findPackageByUUID (
-                                                                                        const char * UUID
-                                                                                        )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   ::Deployment::NoSuchName
-                   ))
+::Deployment::PackageConfiguration*
+CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
+
+                              ACE_THROW_SPEC ((
+                                              CORBA::SystemException,
+                                              ::Deployment::NoSuchName
+                                              ))
 {
   // Find out if the PackageConfiguration was installed in the repository,
   // return it if found or throw and exception otherwise
@@ -350,6 +359,8 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  ACE_DEBUG ((LM_INFO, "Successfully looked up %s.\n", UUID));
 
   return pc._retn ();
 }
@@ -436,12 +447,12 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 //
 //-----------------------------------------------------------------
 
-::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::getAllNames (
+::CORBA::StringSeq*
+CIAO_RepositoryManagerDaemon_i::getAllNames ()
 
-  )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+                   ACE_THROW_SPEC ((
+                                   CORBA::SystemException
+                                   ))
 {
   //Map.current_size () gives you the current number with the duplicates
   //Map.total_size () gives you the allocated space + the empty slots
@@ -455,26 +466,23 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
          ++i)
      ++num_entries;
 
-  ACE_DEBUG ((LM_DEBUG, "# names: %d\n", num_entries));
-
   CORBA::StringSeq_var seq;
   ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::INTERNAL ());
 
   ACE_CHECK_RETURN (0);
 
   seq->length (num_entries);
-  ACE_DEBUG ((LM_DEBUG, "SEQ LEN: %d\n", seq->length ()));
 
   CORBA::ULong index = 0;
   for (PCMap_Iterator iter = this->names_.begin ();
     iter != this->names_.end () && index < num_entries;
     ++iter, ++index)
-
   {
     CIEntry& element = *iter;
     seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
-    ACE_DEBUG ((LM_DEBUG, "Enumerating: %s\n", element.ext_id_.c_str ()));
   }
+
+  ACE_DEBUG ((LM_INFO, "Current # packages [ %d ]\n", seq->length ()));
 
   return seq._retn ();    //release the underlying CORBA::StringSeq
 }
@@ -547,10 +555,10 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 void CIAO_RepositoryManagerDaemon_i::deletePackage (
                                                     const char * installationName
                                                     )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   ::Deployment::NoSuchName
-                   ))
+                     ACE_THROW_SPEC ((
+                                      CORBA::SystemException,
+                                      ::Deployment::NoSuchName
+                                     ))
 {
   bool internal_err = false;
 
@@ -618,6 +626,8 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
 
   if (internal_err)
     ACE_THROW (CORBA::INTERNAL ());
+  else
+    ACE_DEBUG ((LM_INFO, "Successfully deleting \'%s\'\n", installationName));
 
 }
 
