@@ -161,6 +161,15 @@ TAO::ORBInitializer_Registry::post_init (
 
 #if TAO_HAS_INTERCEPTORS == 1
       CORBA::Object_ptr picurrent_ptr = orb_core->pi_current ();
+      PortableInterceptor::SlotId slot_count = orb_init_info_->slot_count ();
+
+      if (CORBA::is_nil (picurrent_ptr) && slot_count != 0)
+        {
+          // Force instantiation of the PICurrent object. If we do not do it
+          // now, the slot count will be lost.
+          CORBA::Object_var tmp = orb_core->resolve_picurrent ();
+          picurrent_ptr = orb_core->pi_current ();
+        }
 
       if (!CORBA::is_nil (picurrent_ptr))
         {
@@ -168,7 +177,7 @@ TAO::ORBInitializer_Registry::post_init (
 
           if (pi)
             {
-              pi->initialize (orb_init_info_->slot_count () ACE_ENV_ARG_PARAMETER);
+              pi->initialize (slot_count ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
