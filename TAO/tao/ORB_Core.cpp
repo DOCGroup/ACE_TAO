@@ -140,6 +140,11 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
+#if TAO_USE_LOCAL_MEMORY_POOL == 1
+    use_local_memory_pool_ (true),
+#else
+    use_local_memory_pool_ (false),
+#endif
     lock_ (),
     thread_lane_resources_manager_ (0),
     collocation_resolver_ (0),
@@ -915,6 +920,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBUseLocalMemoryPool"))))
+        {
+          this->use_local_memory_pool_ = (0 != ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+        }
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
@@ -1009,6 +1021,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                           CORBA::COMPLETED_NO),
                         -1);
     }
+
+  // Set whether or not to use the local memory pool for the cdr allocators.
+
+  trf->use_local_memory_pool (this->use_local_memory_pool_);
 
   // @@ ????
   // Make sure the reactor is initialized...

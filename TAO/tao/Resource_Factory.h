@@ -153,6 +153,9 @@ public:
   /// Return a connector to be utilized.
   virtual TAO_Connector_Registry *get_connector_registry (void);
 
+  /// Return the Allocator's memory pool type
+  virtual void use_local_memory_pool (bool);
+
   /// @name Access the input CDR allocators.
   //@{
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);

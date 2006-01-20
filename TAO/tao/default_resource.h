@@ -108,6 +108,7 @@ public:
   virtual void reclaim_reactor (ACE_Reactor *);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
+  virtual void use_local_memory_pool (bool);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
@@ -211,6 +212,10 @@ protected:
   /// If it has been disabled we should print warnings if options
   /// were processed before (or later).
   int factory_disabled_;
+
+  /// This flag is used to determine whether the cdr allocators
+  /// should use the local memory pool or not.
+  bool use_local_memory_pool_;
 
 private:
   void init_codeset_descriptors (void);
