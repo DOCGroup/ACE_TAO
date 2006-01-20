@@ -90,6 +90,11 @@ TAO_Resource_Factory::get_acceptor_registry (void)
   return 0;
 }
 
+void
+TAO_Resource_Factory::use_local_memory_pool (bool)
+{
+}
+
 ACE_Allocator *
 TAO_Resource_Factory::input_cdr_dblock_allocator (void)
 {
