@@ -319,8 +319,50 @@ CIAO::NodeManager_Impl_Base::destroyManager
   ACE_ENDTRY;
 }
 
+void 
+CIAO::NodeManager_Impl_Base::
+destroyPlan (const Deployment::DeploymentPlan & plan
+             ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::StopError))
+{
+  // Update the reference counting map (subtract by 1 for each instance)
+  // If the ref count becomes 0, then remove this component, otherwise,
+  // we should remove the necesary bindings on this component specified
+  // in the deployment plan.
+
+  // Create a list of components that are not to be removed, and send
+  // this list to the NAM, who will delegate to appropriate NAs to 
+  // remove bindings from these components.
+
+  // The problem is that we probably also want to call another NAM, which
+  // manages the shared components in a different child plan. :(
+
+
+  // Find the NAM from the map and invoke the destroyPlan() operation on
+  // it, which will actuall remove components and connections in this plan.
+  // If 
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+  ACE_TRY_CHECK;
+
+  Deployment::NodeApplicationManager_var nam =
+    Deployment::NodeApplicationManager::_narrow (obj.in ());
+  ACE_TRY_CHECK;
+
+  nam->destroyApplication (0);
+
+
+
+  // The problem is that we should NOT actually kill the NA process if
+  // there are some components that are shared by other plans.
+
+}
+
+
 bool
-CIAO::NodeManager_Impl_Base::validate_plan (const Deployment::DeploymentPlan &plan)
+CIAO::NodeManager_Impl_Base::
+validate_plan (const Deployment::DeploymentPlan &plan)
 {
   const char * resource_id = 0;
   CORBA::ULong i = 0;

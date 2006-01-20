@@ -1059,12 +1059,8 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyApplication");
   ACE_TRY
     {
-      CORBA::ULong i;
-
-      // Invoke ciao_passivate () operation on each cached NodeApplication object.
-      for (i = 0; i < this->num_child_plans_; ++i)
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
-          // Get the NodeApplication object references.
           ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
@@ -1072,52 +1068,59 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
             {
               ACE_ERROR ((LM_ERROR,
                           "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                    "CIAO::DomainApplicationManager_Impl::destroyApplication -"
+                          "CIAO::DomainApplicationManager_Impl::destroyApplication -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_TRY_THROW (Deployment::StopError ());
+              ACE_CString error
+                 ("Unable to resolve a reference to NodeManager: ");
+              error += this->node_manager_names_[i];
+
+              ACE_TRY_THROW
+                (Deployment::StopError
+                   ("DomainApplicationManager_Impl::destroyApplication",
+                     error.c_str ()));
             }
 
+          // Invoke ciao_passivate () operation on each cached NodeApplication object.
           ::Deployment::NodeApplication_ptr my_na =
               (entry->int_id_).node_application_.in ();
 
           my_na->ciao_passivate ();
+
+          Deployment::Connections * my_connections =
+            this->get_outgoing_connections (
+              (entry->int_id_).child_plan_.in (),
+              true, // yes, get *all* the connections
+              true  // yes, we search the current plan
+					    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-        }
 
-      // Invoke destroyManager() operation on each cached
-      // NodeManager object.
-      for (i = 0; i < this->num_child_plans_; ++i)
-        {
-          // Get the NodeManager and NodeApplicationManager object references.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
-
-          if (this->artifact_map_.find (this->node_manager_names_[i],
-                                        entry) != 0)
+          // Invoke finishLaunch() on NodeApplication to remove bindings.
+          if (my_connections->length () != 0)
             {
-              ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                    "CIAO::DomainApplicationManager_Impl::destroyApplication -"
-                          "ERROR while finding the node specific plan "
-                          "for the node [%s] \n",
-                          this->node_manager_names_[i].c_str ()));
-
-              ACE_TRY_THROW (Deployment::StopError ());
+              entry->int_id_.node_application_->finishLaunch
+                 (*my_connections,
+                  start,
+                  true // "true" => remove new connections only
+                  ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
 
-          ::Deployment::NodeApplicationManager_ptr
-              my_node_application_manager =
-                  (entry->int_id_).node_application_manager_.in ();
+          // Invoke destroyPlan() operation on the NodeManager
+          Deployment::NodeManager_var
+              my_node_manager = (entry->int_id_).node_manager_;
 
-          // Invoke destoryApplication() operation on the NodeApplicationManger.
-          // Since we have the first arg is not used by NAM anyway.
-          my_node_application_manager->destroyApplication
-              (0
-               ACE_ENV_ARG_PARAMETER);
+          my_node_manager->destroyPlan ((entry->int_id_).child_plan_
+                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+
+      // Invoke destroyManager () operation on the NodeManager, since we need
+      // to clean up all the NodeApplicationManagers associated with this deployment 
+      // plan (one NodeApplicationManager per Node per plan).
+
     }
   ACE_CATCHANY
     {
@@ -1216,7 +1219,7 @@ perform_redeployment (
       // node level, the connections are cached within the NodeApplication *and*
       // Container, then we should modify the implementation of the
       // <finishLaunch> on the NodeApplication to accomplish this.
-      this->finishLaunch (true, true);  // true means start activtion also.
+      this->finishLaunch (true, true);  // true means start activation also.
                                         // ture means "ReDAC" is desired
     }
   ACE_CATCHANY

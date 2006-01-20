@@ -3,17 +3,18 @@
 
 project(Plan_Launcher_Impl) : ciao_component_dnc, ciao_config_handlers {
   sharedname = Plan_Launcher_Impl
-  after +=  ExecutionManager_stub NodeDaemon_stub
+  after    += ExecutionManager_stub
   libs     += ExecutionManager_stub
 
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
 
   Source_Files {
     Plan_Launcher_Impl.cpp
-    DAM_Map.cpp
+    ../ExecutionManager/DAM_Map.cpp
   }
 
   Header_Files {
+    ../ExecutionManager/DAM_Map.h
     Plan_Launcher_Impl_Export.h
   }
 }

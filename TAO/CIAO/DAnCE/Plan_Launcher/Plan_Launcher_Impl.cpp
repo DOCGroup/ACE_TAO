@@ -228,20 +228,29 @@ namespace CIAO
     bool
     Plan_Launcher_i::teardown_plan (const char *uuid)
     {
-      size_t map_size = this->map_.size ();
+      // Since people could always run another instance of the Plan_Launcher
+      // executable to tear down a plan, so we could NOT rely on the local
+      // DAM_Map to fetch DAM obj reference. Instead, we make a remote call
+      // on ExecutionManager to fetch it.
+      ACE_TRY 
+        {
+          ::Deployment::DomainApplicationManager_var dapp_mgr =
+            this->em_->getManager (uuid);
 
-      if (!this->map_.is_plan_available (uuid))
-        return false;
-      
-      ::Deployment::DomainApplicationManager_var dapp_mgr 
-          (this->map_.fetch_dam_reference (uuid));
-      
-      dapp_mgr->destroyApplication ();
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+            dapp_mgr->destroyApplication ();
+            if (CIAO::debug_level ())
+              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-      this->map_.unbind_dam (uuid);
-      
+            this->destroy_dam (dapp_mgr.in ());
+        }
+      ACE_CATCHANY
+        {
+          ACE_DEBUG ((LM_ERROR, "Unable to find DomainApplicationManager "
+                                "for plan with uuid: %s\n", uuid));
+          return false;
+        }
+      ACE_ENDTRY;
+
       return true;
     }
     
@@ -258,7 +267,7 @@ namespace CIAO
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-      this->destroy_dam (dam);      
+      this->destroy_dam (dam);
       
       return true;
     }

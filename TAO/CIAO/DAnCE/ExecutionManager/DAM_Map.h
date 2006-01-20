@@ -52,6 +52,8 @@ namespace CIAO
       get_dams (ACE_ENV_SINGLE_ARG_DECL);
 
       bool unbind_dam (const ACE_CString &str);
+      
+      size_t size (void);
 
     private:
       typedef
