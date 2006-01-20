@@ -44,7 +44,6 @@ main (int argc, char *argv[])
     in <<= CORBA::ULong (1);
     pic->set_slot (slot_id, in);
 
-
     CORBA::ULong v (0);
     CORBA::Any_var out = pic->get_slot (slot_id);
     out >>= v;
