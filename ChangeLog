@@ -1,3 +1,14 @@
+Fri Jan 20 11:29:54 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * protocols/ace/RMCast/Protocol.h:
+
+          Fixed a race condition.
+
+        * protocols/ace/TMCast/FaultDetector.hpp:
+
+          Added a flag to prevent a single group member from terminating
+          until data is received from other members.
+
 Fri Jan 20 11:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
