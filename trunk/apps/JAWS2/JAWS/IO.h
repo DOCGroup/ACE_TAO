@@ -238,7 +238,7 @@ protected:
   virtual void send_message (JAWS_IO_Handler *ioh,
                              const char *buffer,
                              unsigned int length,
-                             int act);
+                             long act);
 };
 
 typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>

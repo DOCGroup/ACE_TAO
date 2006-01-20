@@ -17,6 +17,8 @@
 #include "JAWS/IO_Acceptor.h"
 #include "JAWS/Filecache.h"
 
+#include "ace/Asynch_IO.h"  //for ACE_Asynch_Write_Stream
+
 // #include "HTTP_Helpers.h"
 
 ACE_RCSID(JAWS, IO, "$Id$")
@@ -554,7 +556,7 @@ void
 JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
                               const char *buffer,
                               unsigned int length,
-                              int act)
+                              long act)
 {
   ioh->idle ();
 
