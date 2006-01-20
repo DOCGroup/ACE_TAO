@@ -85,6 +85,10 @@ public:
   int nodelay (void) const;
   void nodelay (int);
 
+  /// Set/Get whether we should set SO_KEEPALIVE on the socket or not.
+  int sock_keepalive (void);
+  void sock_keepalive (int);
+
   /**
    * Octet sequences are marshalled without doing any copies, we
    * simply append a block to the CDR message block chain. When the
@@ -226,6 +230,9 @@ private:
 
   /// 1 if we're using TCP_NODELAY and 0 otherwise.
   int nodelay_;
+
+  /// 1 if we're using SO_KEEPALIV and 0 otherwise (default 0).
+  int sock_keepalive_;
 
   /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.

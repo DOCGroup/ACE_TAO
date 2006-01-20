@@ -331,6 +331,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // Use TCP_NODELAY.
   int nodelay = 1;
 
+  // Use SO_KEEPALIVE (default 0).
+  int so_keepalive = 0;
+
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded
   //    protocol to use a character representation for the numeric
@@ -434,6 +437,15 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
         {
           // Use TCP_NODELAY or not.
           nodelay =
+            ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBKeepalive"))))
+        {
+          // Use SO_KEEPALIVE or not.
+          so_keepalive =
             ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
@@ -1133,6 +1145,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                              || dotted_decimal_addresses);
   this->orb_params ()->linger (linger);
   this->orb_params ()->nodelay (nodelay);
+  this->orb_params ()->sock_keepalive (so_keepalive);
   if (rcv_sock_size >= 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size >= 0)
