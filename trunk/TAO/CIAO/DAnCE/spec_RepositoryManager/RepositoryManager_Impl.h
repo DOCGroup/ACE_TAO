@@ -1,15 +1,25 @@
-// $Id$
+
+/* -*- C++ -*- */
+
+//======================================================================
+/**
+ * @file RepositoryManager_Impl.h
+ *
+ * $Id$
+ *
+ * Description:
+ *  This file is the main implementation file for the RepositoryManager
+ *  in CIAO. We have used a number of techniques in order to increase
+ *  scalability of the RepoMan while still maintaining complience with
+ *  the D&C spec
+ *
+ * @author Stoyan Paunov
+ */
+//======================================================================
 
 #ifndef REPOSITORYMANAGERI_H_
 #define REPOSITORYMANAGERI_H_
 
-///====================================================================
-// filename: RepositoryManager_Impl.h
-// Author: Stoyan Paunov  spaunov@isis.vanderbilt.edu
-//
-// Purpose: This class is the implementation class for the spec
-//          complient RepositoryManager
-//
 
 //-----------------------------NOTE---------------------------------
 //I need to disable all the code which has to do with interface
@@ -236,8 +246,8 @@ public:
   /// Cached information about the installed Component Interfaces
   /// A map which associates Component Interface UUIDs with the
   /// names of packages which implement this component type
-    /// Key:  Component Interface UUID
-    /// Value:  linked list of the names of installed packages which
+  /// Key:  Component Interface UUID
+  /// Value:  linked list of the names of installed packages which
   ///      implement this component type
 
   ///Based on the synchronization needed we can parametrize this with either
@@ -280,7 +290,6 @@ public:
   ACE_CString HTTP_server_;    //location of the server
 
 };
-
 
 #endif /* REPOSITORYMANAGER_H_  */
 

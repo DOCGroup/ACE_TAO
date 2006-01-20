@@ -1,3 +1,23 @@
+Fri Jan 20 07:24:47 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/spec_RepositoryManager/PC_Updater.h:
+        * DAnCE/spec_RepositoryManager/RMadmin.cpp:
+        * DAnCE/spec_RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/spec_RepositoryManager/URL_Parser.h:
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.h:
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp:
+
+          Improved the documentation, the output and added some minor features.
+          Changed all occurnences of 'new' to ACE_NEW in ZIP_Wrapper.cpp which 
+          I had previously forgotten.
+
+        * DAnCE/new_RepositoryManager/packages/inconsistent.cpk:
+        * DAnCE/new_RepositoryManager/packages/package.cpk:
+
+          Removed these files.
+
 Thu Jan 19 01:29:58 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/spec_RepositoryManager/HTTP_Handler.h:

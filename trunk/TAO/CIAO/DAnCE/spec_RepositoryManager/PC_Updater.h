@@ -1,15 +1,19 @@
 
 /* -*- C++ -*- */
 
-//==================================================================
+//========================================================================
 /**
  *  file  PC_Updater.h
  *
  * $Id$
  *
+ *  This class is used to update the location field of the implementation
+ *  artifacts in the PackageConfiguration, so that they point to the
+ *  physical libraries on the collocated HTTP server
+ *
  *  author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  */
-//=====================================================================
+//========================================================================
 
 #ifndef PC_UPDATER_H
 #define PC_UPDATER_H
