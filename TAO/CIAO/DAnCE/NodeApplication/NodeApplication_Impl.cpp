@@ -575,8 +575,8 @@ CIAO::NodeApplication_Impl::create_container (
                   ::Components::CreateFailure,
                   ::Components::InvalidConfiguration))
 {
-  if (CIAO::debug_level () > 1)
-    ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::create_container()\n"));
+  //if (CIAO::debug_level () > 1)
+  //  ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::create_container()\n"));
 
   CORBA::PolicyList_var policies
     = this->configurator_.find_container_policies (properties);
@@ -627,9 +627,9 @@ CIAO::NodeApplication_Impl::create_container (
     this->container_set_.add (ci.in ());
   }
 
-  if (CIAO::debug_level () > 1)
-    ACE_DEBUG ((LM_DEBUG,
-                "LEAVING: NodeApplication_Impl::create_container()\n"));
+  //if (CIAO::debug_level () > 1)
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "LEAVING: NodeApplication_Impl::create_container()\n"));
   return ci._retn ();
 }
 
