@@ -293,7 +293,7 @@ protected:
  * called, the <handler>'s handle_timeout method will be
  * called.
  */
-class ACE_Export ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
+class ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
 {
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
