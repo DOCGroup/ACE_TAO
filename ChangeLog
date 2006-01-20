@@ -1,3 +1,11 @@
+Fri Jan 20 13:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Replace VXWORKS with ACE_VXWORKS and guarded the following
+          macros with ACE_LACKS_DEPRECATED_MACROS so that usage of these
+          deprecated macros within ACE/TAO is prevented: ACE_USING,
+          ACE_SYNCH_1, and ACE_SYNCH_2
+
 Fri Jan 20 11:29:54 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * protocols/ace/RMCast/Protocol.h:
