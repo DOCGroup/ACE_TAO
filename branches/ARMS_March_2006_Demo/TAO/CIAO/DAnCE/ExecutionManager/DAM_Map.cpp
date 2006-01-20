@@ -15,6 +15,12 @@ namespace CIAO
     {
     }
 
+    size_t
+    DAM_Map::size (void)
+    {
+      return this->map_.current_size ();
+    }
+
     bool
     DAM_Map::is_plan_available (const ACE_CString &str)
     {

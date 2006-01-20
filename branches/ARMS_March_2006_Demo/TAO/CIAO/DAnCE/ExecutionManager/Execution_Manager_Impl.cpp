@@ -122,6 +122,14 @@ namespace CIAO
       return this->map_.get_dams (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
+    Deployment::DomainApplicationManager_ptr
+    Execution_Manager_Impl::getManager (const char * plan_uuid
+                                        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist))
+    {
+      return this->map_.fetch_dam_reference (plan_uuid);
+    }
+
     void
     Execution_Manager_Impl::destroyManager (
       Deployment::DomainApplicationManager_ptr manager

@@ -66,8 +66,9 @@ CIAO::NodeApplication_Impl::finishLaunch (
 {
   ACE_UNUSED_ARG (start);
 
-  // parameter "true" means we want to establish new connections
-  // instead of "remove" existing connections.
+  // If parameter "is_ReDAC" is true, then it means we want to "remove"
+  // existing connections. Otherwise, it means we want to "add" new
+  // connections
   this->finishLaunch_i (providedReference, start, is_ReDAC);
 }
 

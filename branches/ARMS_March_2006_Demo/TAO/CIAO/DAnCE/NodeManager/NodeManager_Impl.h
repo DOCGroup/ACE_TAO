@@ -95,6 +95,13 @@ namespace CIAO
                        Deployment::StopError,
                        Deployment::InvalidReference));
 
+    // CIAO specific extension, which is particularly useful for dealing with
+    // shared components issue
+    virtual void destroyPlan (const Deployment::DeploymentPlan & plan
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Deployment::StopError));
+
     // ********* CIAO Specific Helper functions ************
 
     virtual const ::Components::FacetDescriptions &
@@ -110,7 +117,6 @@ namespace CIAO
     virtual void
     set_all_consumers (ACE_CString &name,
                        const ::Components::ConsumerDescriptions_var & consumers);
-
 
   private:
     /// Validate the child deployment plan. In particular, we are

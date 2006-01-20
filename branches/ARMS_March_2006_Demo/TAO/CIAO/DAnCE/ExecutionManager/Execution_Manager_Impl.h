@@ -61,6 +61,12 @@ namespace CIAO
       getManagers (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
+      // Below method is CIAO specific extension
+      virtual Deployment::DomainApplicationManager_ptr
+      getManager (const char * plan_uuid
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist));
+
       virtual void
       destroyManager (Deployment::DomainApplicationManager_ptr manager
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)

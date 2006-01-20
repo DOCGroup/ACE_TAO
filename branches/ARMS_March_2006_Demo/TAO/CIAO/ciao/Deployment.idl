@@ -40,6 +40,10 @@ module Deployment {
   exception InvalidReference {
   };
 
+  // Below exception types are CIAO specific
+  exception PlanNotExist {
+  };
+
   interface ApplicationManager {
     Application startLaunch (in Properties configProperty,
                              out Connections providedReference,
@@ -72,9 +76,11 @@ module Deployment {
     void start ()
       raises (StartError);
 
+    // CIAO speicifc extension
     void destroyApplication ()
       raises (StopError);
 
+    // CIAO specific extension to destroy NodeApplicationManager
     void destroyManager ()
       raises (StopError);
 
@@ -95,7 +101,12 @@ module Deployment {
     DomainApplicationManager preparePlan (in DeploymentPlan plan, 
                                           in boolean commitResources)
       raises (ResourceNotAvailable, PlanError, StartError);
+
     DomainApplicationManagers getManagers ();
+
+    DomainApplicationManager getManager (in string plan_uuid)
+      raises (PlanNotExist);
+
     void destroyManager (in DomainApplicationManager manager)
       raises (StopError);
 
@@ -162,11 +173,22 @@ module Deployment {
     void joinDomain (in Domain ciao_domain, 
                      in TargetManager manager,
                      in Logger log);
+
     void leaveDomain ();
+
     NodeApplicationManager preparePlan (in DeploymentPlan plan)
       raises (StartError, PlanError);
+
     void destroyManager (in NodeApplicationManager appManager)
       raises (StopError, InvalidReference);
+
+    // CIAO specific extension
+    // Destroy the NAM and all the associated NAs with this child_plan
+    // We can guarantee that the input DeploymentPlan is valid, since it
+    // is fetched from the cached DeploymentPlan of DAM, which has been
+    // validated before.
+    void destroyPlan (in DeploymentPlan plan)
+      raises (StopError);
   };
 
   interface RepositoryManager {
