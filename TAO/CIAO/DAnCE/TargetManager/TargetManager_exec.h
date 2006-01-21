@@ -47,6 +47,12 @@ namespace CIDL_TargetManager_i
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual ::CIAO::CCM_TargetManagerExt_ptr 
+      get_target_manager_ext (
+                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+                              )
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
     // Operations from Components::SessionComponent
 
     virtual void
@@ -100,7 +106,32 @@ namespace CIDL_TargetManager_i
     ::Deployment::CCM_TargetManager_var exec_object_;
   };
 
+  class TARGETMANAGER_EXEC_Export TargetManagerExt_exec_i
+    : public virtual ::CIAO::CCM_TargetManagerExt,
+  public virtual TAO_Local_RefCounted_Object
+    {
+    public:
+      TargetManagerExt_exec_i (void);
+      virtual ~TargetManagerExt_exec_i (void);
 
+      // Operations from ::CIAO::TargetManagerExt
+
+      virtual ::CORBA::Long
+        get_pid (
+      const char * component_uuid
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual ::CIAO::Host_Infos *
+        get_host_cpu (
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual ::CIAO::Component_Infos *
+        get_component_cpu (
+                           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
  class TARGETMANAGER_EXEC_Export TargetManager_exec_i
   : public virtual ::Deployment::CCM_TargetManager,
