@@ -1,7 +1,31 @@
+Sat Jan 21 02:04:15 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Removed trailing whitespaces and tabs
+
+        * DAnCE/NodeManager/BaseMonitor.h:
+        * DAnCE/NodeManager/CIAO_Monitor.h:
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+        * DAnCE/NodeManager/MonitorCB.h:
+        * DAnCE/NodeManager/MonitorCB.cpp:
+        * DAnCE/NodeManager/MonitorController.h:
+        * DAnCE/NodeManager/MonitorController.cpp:
+          Removed system headers and replaced systme calls with ACE calls.
+          Also updated documentation with doxygen standard
+
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Removed system headers and replaced systme calls with ACE calls.
+          Also updated documentation with doxygen standard
+
+        * tools/Config_Handlers/DD_Handler.h:
+        * tools/Config_Handlers/DD_Handler.cpp:
+          Removed system headers and replaced systme calls with ACE calls.
+          Also updated documentation with doxygen standard
+
 Fri Jan 20 22:30:21 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-          The include to NodeManagerC.h is removed since the dependency on 
+          The include to NodeManagerC.h is removed since the dependency on
           NodeManager_stub was removed.
 
 Fri Jan 20 20:33:23 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>

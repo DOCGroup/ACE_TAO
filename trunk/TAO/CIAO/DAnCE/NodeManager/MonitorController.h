@@ -17,7 +17,7 @@
 #include "TargetManagerC.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
-#include <memory>
+#include "ace/Auto_Ptr.h"
 
 class MonitorBase;
 /**
@@ -73,13 +73,12 @@ class MonitorController : public ACE_Task_Base
     /**
      * @function terminating.
      * @brief returns the terminating flag
-     *
-     * The terminate flag is returned.
+     * @return bool The terminting state of the thread
      */
     bool terminating ();
 
     /// The monitor object
-    std::auto_ptr <MonitorBase>  monitor_;
+    auto_ptr <MonitorBase>  monitor_;
 
     /// The TargetManagerImpl object
     CIAO::TargetManagerImpl_var target_impl_cmp_;
