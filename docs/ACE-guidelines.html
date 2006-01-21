@@ -35,7 +35,12 @@ bgcolor="#ffffff">
     <li>Do not end text lines with spaces.  Emacs users can add this to
         their <strong>.emacs</strong>:
 
-        <pre>(setq-default nuke-trailing-whitespace-p t)</pre><p>
+        <pre>(setq-default nuke-trailing-whitespace-p t)</pre>
+
+        <strong>Note for Microsoft Visual Studio .NET Users:</strong>
+        <p>There is a macro project <code>(ace_guidelines.vsmacros)</code>
+        located in <code>$ACE_ROOT/docs</code> that replaces tabs with spaces
+        and removes trailing spaces each time you save a file.</p>
 
     <li>Try to limit the length of source code lines to less than 80
         characters.  Users with 14 inch monitors appreciate it when
@@ -915,8 +920,8 @@ Foo::bar ()
   <ul>
     <li>Whenever you add a new test or example to ACE or TAO, make
         sure that you modify the MPC file in the parent directory.
-	    This will make sure that your code gets compiled on a
-	    regular basis.<p>
+      This will make sure that your code gets compiled on a
+      regular basis.<p>
   </ul><p>
 </ul>
 
