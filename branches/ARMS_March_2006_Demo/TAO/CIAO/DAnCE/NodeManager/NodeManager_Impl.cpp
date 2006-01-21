@@ -129,27 +129,6 @@ set_all_consumers (ACE_CString &name,
   this->comp_consumers_map_.rebind (name, consumers);
 }
 
-CORBA::StringSeq *
-CIAO::NodeManager_Impl_Base::shared_components_seq (void)
-{
-  CORBA::StringSeq * retv;
-  ACE_NEW_RETURN (retv, CORBA::StringSeq, 0);
-  retv->length (0);
-
-  ACE_Unbounded_Set<ACE_CString>::iterator end = this->shared_components_.end ();
-  for (ACE_Unbounded_Set<ACE_CString>::iterator 
-         iter = this->shared_components_.begin ();
-       iter != end;
-       ++iter)
-    {
-      CORBA::ULong curr_len = retv->length ();
-      retv->length (curr_len + 1);
-      (*retv)[curr_len] = (*iter).c_str ();
-    }
-
-  return retv;
-}
-
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                                           ACE_ENV_ARG_DECL)
@@ -177,13 +156,17 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
       Reference_Count_Map::ENTRY *entry = 0;
       if (this->ref_count_map_.find (plan.instance[i].name.in (), entry) != 0)
         {
-          // Initial ref count is set to "1"
-          this->ref_count_map_.bind (plan.instance[i].name.in (), 1);
+          // Create a new entry, set the initial ref count "1", and insert to the map.
+          Ref_Count_Info new_entry;
+          new_entry.plan_uuid_ = plan.UUID.in ();
+          new_entry.count_ = 1;
+          this->ref_count_map_.bind (plan.instance[i].name.in (), new_entry);
         }
       else
         {
+          // Increase the ref count by 1
           this->shared_components_.insert (plan.instance[i].name.in ());
-          ++entry->int_id_; // increase ref count by 1
+          ++ entry->int_id_.count_;
         }
     }
 
@@ -358,9 +341,9 @@ destroyPlan (const Deployment::DeploymentPlan & plan
       Reference_Count_Map::ENTRY *entry = 0;
       if (this->ref_count_map_.find (plan.instance[i].name.in (), entry) == 0)
         {
-          --entry->int_id_; // decrease ref count by 1
+          --entry->int_id_.count_; // decrease ref count by 1
 
-          if (entry->int_id_ == 0)
+          if (entry->int_id_.count_ == 0)
             {
               // Remove this component from the shared set
               this->shared_components_.remove (plan.instance[i].name.in ());
@@ -407,11 +390,74 @@ destroyPlan (const Deployment::DeploymentPlan & plan
   // there are some components that are shared by other plans.
 }
 
-CORBA::StringSeq *
+Deployment::ComponentPlans *
 CIAO::NodeManager_Impl_Base::
 get_shared_components (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return this->shared_components_seq ();
+  return this->get_shared_components_i ();
+}
+
+Deployment::ComponentPlans *
+CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
+{
+  Deployment::ComponentPlans_var retv;
+  ACE_NEW_RETURN (retv, 
+                  Deployment::ComponentPlans,
+                  0);
+  retv->length (0);
+
+  ACE_Unbounded_Set<ACE_CString>::iterator 
+    end = this->shared_components_.end ();
+
+  for (ACE_Unbounded_Set<ACE_CString>::iterator 
+         iter = this->shared_components_.begin ();
+       iter != end;
+       ++iter)
+    {
+      CORBA::ULong curr_len = retv->length ();
+      retv->length (curr_len + 1);
+      (*retv)[curr_len].name = (*iter).c_str ();
+      
+      // Fill in the plan_uuid information about this component, by 
+      // searching in the ref_count_map_
+      Reference_Count_Map::ENTRY *entry = 0;
+      if (this->ref_count_map_.find ((*iter).c_str (), entry) == 0)
+        {
+          // Get the plan_uuid_ info and populate the field
+          (*retv)[curr_len].plan_uuid = entry->int_id_.plan_uuid_.c_str ();
+        }
+      else
+        {
+          // should never happen
+          ACE_DEBUG ((LM_ERROR, "Component [%s] in the list of shared component, "
+                                "was not found in the NodeManager ref count map.\n",
+                                (*iter).c_str ()));
+        }
+    }
+
+  return retv._retn ();
+}
+
+
+CORBA::StringSeq *
+CIAO::NodeManager_Impl_Base::shared_components_seq (void)
+{
+  CORBA::StringSeq * retv;
+  ACE_NEW_RETURN (retv, CORBA::StringSeq, 0);
+  retv->length (0);
+
+  ACE_Unbounded_Set<ACE_CString>::iterator end = this->shared_components_.end ();
+  for (ACE_Unbounded_Set<ACE_CString>::iterator 
+         iter = this->shared_components_.begin ();
+       iter != end;
+       ++iter)
+    {
+      CORBA::ULong curr_len = retv->length ();
+      retv->length (curr_len + 1);
+      (*retv)[curr_len] = (*iter).c_str ();
+    }
+
+  return retv;
 }
 
 bool

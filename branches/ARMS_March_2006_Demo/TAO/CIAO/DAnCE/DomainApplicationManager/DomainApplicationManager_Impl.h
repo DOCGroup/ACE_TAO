@@ -248,9 +248,34 @@ namespace CIAO
      * Construct <Component_Binding_Info> struct for the component instance.
      * 
      * @para name component instance name
+     * @para child_uuid child plan uuid string
      */
     Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
-      populate_binding_info (const char * name, const char * child_uuid);
+      populate_binding_info (const ACE_CString& name, 
+                             const ACE_CString& child_uuid);
+
+
+    /**
+     * Contact each NodeManager to get shared compnents information
+     * and then update its internal cache.
+     */
+    void synchronize_shared_components_with_node_managers (void);
+
+    /**
+     * A helper function to add a list of shared components into 
+     * the cached shared component list.
+     * 
+     * @para shared A list of shared components to be added.
+     */
+    void add_shared_components (const Deployment::ComponentPlans & shared);
+
+    /**
+     * A private function to check whether a component is in the shared
+     * component list.
+     * 
+     * @para name The name of a component instance.
+     */
+    bool is_shared_component (const char * name);
 
     /**
      * Cache the incoming connections, which is a sequence of Connections,
@@ -306,8 +331,8 @@ namespace CIAO
     /// to pass CORBA object reference back and forth.
     Execution_Manager::Execution_Manager_Impl * execution_manager_;
 
-    /// Cache a object reference to this servant.
-    /// Deployment::DomainApplicationManager_var objref_;
+    /// Cache a list of shared components
+    Deployment::ComponentPlans_var shared_;
 
     /// Cache the ior of the previous reference
     CORBA::String_var ior_;
