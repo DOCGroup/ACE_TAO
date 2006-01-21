@@ -19,7 +19,7 @@
 /**
  * @class MonitorCB
  *
- * @brief Updates data back the TM.
+ * @brief Updates data back to the TM.
  *
  */
 
@@ -27,31 +27,35 @@ class MonitorCB
 {
   public:
     /**
-     *     Constructor .. accepts the ORB pointer as the parameter..
+     *  @constructor
+     *  @param _orb The ORB pointer
+     *  @param The TargetManager reference
+     *  @param interval The time interval to sent update
      */
     MonitorCB (CORBA::ORB_ptr _orb,Deployment::TargetManager_ptr,int interval);
     /**
-     *   Function Name : UpdateData
-     *  Param         : Domain - contains the updated Domain data
-     *  Return Value  : int indicates success.
-     *  Description   : This function is called by the monitor to
-     *                  update Domain data, which is then sent to
-     *                  TM.
+     *  @function update_data
+     *  @param  data Contains the updated Domain data
+     *  @return int indicates success.
+     *  @description This function is called by the monitor to
+     *               update Domain data, which is then sent to
+     *               TM.
      */
       int update_data (::Deployment::Domain& data);
   private:
     // The ORB pointer
     CORBA::ORB_ptr orb_;
 
-    // The Target Manager pointer to send back the
-    // update
+    /// The Target Manager pointer to send back the
+    /// update
     ::Deployment::TargetManager_ptr target_mgr_;
 
-    // The interval after which updates need to be send
+    /// The interval after which updates need to be send
     int interval_;
 
 };
 
+/// The Callback function pointer
 typedef int (MonitorCB::*CallBack) (::Deployment::Domain &);
 
 #endif /* MONITOR_CBH */

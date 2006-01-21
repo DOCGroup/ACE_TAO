@@ -31,7 +31,7 @@ class MonitorBase
                                    int interval
                                    )=0;
   /** @function start
-   *  @param  ORB_ptr
+   *  @param  ORB_ptr The ORB pointer
    *  @description  This function is called by the controller 
    *                to start up the monitor.
    */

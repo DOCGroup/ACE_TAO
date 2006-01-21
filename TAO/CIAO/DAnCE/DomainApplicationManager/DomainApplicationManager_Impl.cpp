@@ -337,7 +337,7 @@ split_plan (void)
     else
       artifacts.old_child_plan_ = 0;
 
-    // In case we are doing redeployment, rebind will help replace the 
+    // In case we are doing redeployment, rebind will help replace the
     // old child plan with the new child plan.
     this->artifact_map_.rebind (node_manager_names_[i], artifacts);
   }
@@ -353,7 +353,7 @@ split_plan (void)
       // then we overwrite the existing instance, since the new instance
       // might have different resource usage requirements.
 
-      
+
 
       // Get the instance deployment description
       const ::Deployment::InstanceDeploymentDescription & my_instance =
@@ -638,7 +638,7 @@ finishLaunch (CORBA::Boolean start,
               ACE_DEBUG ((LM_DEBUG,
                  "==============================================\n"));
               ACE_DEBUG ((LM_DEBUG,
-                 "dump incoming connections for child plan:%s\n", 
+                 "dump incoming connections for child plan:%s\n",
                  (entry->int_id_).child_plan_->UUID.in ()));
               dump_connections (this->all_connections_.in ());
               ACE_DEBUG ((LM_DEBUG,
@@ -677,7 +677,7 @@ finishLaunch (CORBA::Boolean start,
               ACE_DEBUG ((LM_DEBUG,
                   "==============================================\n"));
               ACE_DEBUG ((LM_DEBUG,
-                  "dump outgoing connections for child plan:%s\n", 
+                  "dump outgoing connections for child plan:%s\n",
                  (entry->int_id_).child_plan_->UUID.in ()));
               dump_connections (*my_connections);
               ACE_DEBUG ((LM_DEBUG,
@@ -733,7 +733,7 @@ finishLaunch (CORBA::Boolean start,
                   ACE_DEBUG ((LM_DEBUG,
                       "==============================================\n"));
                   ACE_DEBUG ((LM_DEBUG,
-                      "dump to-be-removed connections for child plan:%s\n", 
+                      "dump to-be-removed connections for child plan:%s\n",
                       (entry->int_id_).child_plan_->UUID.in ()));
                   dump_connections (*unnecessary_connections);
                   ACE_DEBUG ((LM_DEBUG,
@@ -839,7 +839,7 @@ get_outgoing_connections_i (const char * instname,
     const Deployment::PlanConnectionDescription & curr_conn =
       tmp_plan.connection[i];
 
-    if (already_exists (curr_conn) && 
+    if (already_exists (curr_conn) &&
         !is_getting_all_connections) // ignore existing connections
       continue;
 
@@ -1297,7 +1297,7 @@ dump_connections (const ::Deployment::Connections & connections)
 
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown port kind.\n"));
-          
+
         }
     }
 }

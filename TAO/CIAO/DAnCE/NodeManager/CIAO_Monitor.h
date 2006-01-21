@@ -18,7 +18,7 @@
 #define CIAO_MONITORH
 
 #include "BaseMonitor.h"
-#include <string>
+#include "ace/Auto_Ptr.h"
 #include <memory>
 
 
@@ -34,24 +34,24 @@ class CIAO_Monitor : public MonitorBase
 {
   public:
 
-    /** Function :- Constructor
+    /** @function Constructor
      */
     CIAO_Monitor ();
 
-    /** @function :- initialize_params
-     *  @param : domain The Initial Domain for this host
-     *  @param   :- TargetManager_ptr
-     *  @param   interval : The time interval after whic updates need to be send.
-     *  Description :- This function is called by the controller to initialize
-     *                 parameters.
+    /** @function initialize_params
+     *  @param domain The Initial Domain for this host
+     *  @param   target_manager TargetManager_ptr
+     *  @param   interval The time interval after whic updates need to be send.
+     *  @description This function is called by the controller to initialize
+     *               parameters.
      */
     virtual int  initialize_params (
-                                   ::Deployment::Domain& domain,
-                                   ::Deployment::TargetManager_ptr target_manager,
-                                   int interval
-                                   );
+                                    ::Deployment::Domain& domain,
+                                    ::Deployment::TargetManager_ptr target_manager,
+                                    int interval
+                                    );
     /**
-     * Function :- Destructor
+     * @function Destructor
      */
     virtual ~CIAO_Monitor ();
 
@@ -84,16 +84,11 @@ class CIAO_Monitor : public MonitorBase
     /// The TargetManager Object to be sent to the RSSSubscriber ..
     ::Deployment::TargetManager_ptr target_ptr_;
 
-    /// The formula member variable ..
-    std::string formula_;
-
-    /// The hostname member variable
-    std::string host_;
 
     /// The interval after which update is to be returned.
     int interval_;
 
     /// The Domain data structure
-    std::auto_ptr <Deployment::Domain> current_domain_;
+    auto_ptr <Deployment::Domain> current_domain_;
 };
 #endif /* CIAO_MONITORH */

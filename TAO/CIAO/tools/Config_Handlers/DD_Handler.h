@@ -55,14 +55,14 @@ namespace CIAO
           /**
            * @operation constructor
            *
-           * @param Takes the Domain structure
+           * @param dmn The Domain structure
            */
           DD_Handler(Domain *dmn);
 
           /**
            * @operation constructor
            *
-           * @param Takes the Deployment::Domain structure
+           * @param dmn The Deployment::Domain structure
            */
           DD_Handler(::Deployment::Domain *dmn);
 

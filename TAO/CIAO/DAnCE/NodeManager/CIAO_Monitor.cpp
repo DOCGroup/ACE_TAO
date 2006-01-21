@@ -11,18 +11,13 @@
 //==========================================================================
 
 #include "CIAO_Monitor.h"
-#include <stdlib.h>
-//#include <unistd.h>
-#include <iostream>
-#include <fstream>
-#include <string>
 #include "CIAO_common.h"
+#include "ace/OS_NS_stdio.h"
 
-//extern CORBA::ORB_var orb_global;
 
 extern "C" ACE_Proper_Export_Flag MonitorBase * createMonitor ()
 {
-    return new CIAO_Monitor ();
+  return new CIAO_Monitor ();
 }
 
 CIAO_Monitor::CIAO_Monitor ()
@@ -40,7 +35,6 @@ int  CIAO_Monitor::initialize_params (
                                      int interval
                                      )
 {
-  //current_domain_ = new ::Deployment::Domain (domain);
   current_domain_.reset (new ::Deployment::Domain (domain));
   target_ptr_= target_manager;
   this->interval_=interval;
@@ -60,38 +54,32 @@ int CIAO_Monitor::stop ()
 
 ::Deployment::Domain* CIAO_Monitor::get_current_data ()
 {
-    if (CIAO::debug_level () > 9)
+  if (CIAO::debug_level () > 9)
     {
       ACE_DEBUG ((LM_DEBUG , "Inside the get_current_data"));
     }
-    char hostname [100];
-    memset (hostname , '\0' , 100);
-    if (gethostname (hostname , 100) == -1)
-      ACE_ERROR ((LM_DEBUG , "Error in getting host name"));
 
-    float current_load;
+  float current_load;
 
-    // get the load average value from the /proc/loadavg
-    std::ifstream load_file;
+  // get the load average value from the /proc/loadavg
 
-    load_file.open ("/proc/loadavg");
-
-
-    if (!load_file)
+  FILE *load_file = ACE_OS::fopen ("/proc/loadavg", "r");
+  
+  if (load_file == 0)
     {
       // load file cannot be opened ..
       current_load = 0;
     }
-    else
+  else
     {
-      load_file >> current_load;
+      fscanf (load_file, "%f", &current_load);
       if (CIAO::debug_level () > 9)
       {
         ACE_DEBUG ((LM_DEBUG , "Current load is %d\n",current_load));
       }
     }
 
-    load_file.close ();
+  ACE_OS::fclose (load_file);
 
     CORBA::Any any;
     any <<= current_load;
