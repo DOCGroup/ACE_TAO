@@ -45,14 +45,18 @@ namespace CIAO
   public:
     /// Constructor
     NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
-                                  PortableServer::POA_ptr p);
+                                      PortableServer::POA_ptr p);
 
     /*===========================================================
      * Below are operations from the NodeApplicationManager
      *
      *============================================================*/
 
-    //@@ The return type is NodeApplication_ptr actually.
+    /// The return type is NodeApplication_ptr actually.
+    /// For "external/shared" components of this child plan, they are
+    /// not actaully installed, however, the object references
+    /// of the ports of these external components are returned 
+    /// through <providedReference>.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
                  Deployment::Connections_out providedReference,

@@ -85,7 +85,7 @@ namespace CIAO
     virtual void
     finishLaunch (const Deployment::Connections & providedReference,
                   CORBA::Boolean start,
-                  CORBA::Boolean is_ReDAC
+                  CORBA::Boolean add_connection
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError,
@@ -198,7 +198,7 @@ namespace CIAO
     virtual void
     finishLaunch_i (const Deployment::Connections & providedReference,
                     CORBA::Boolean start,
-                    bool is_establishing_connection
+                    CORBA::Boolean add_connection
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError,

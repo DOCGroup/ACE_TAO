@@ -275,7 +275,7 @@ int
 ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "NEW PLAN LAUNCHER\n"));
+  //ACE_DEBUG ((LM_DEBUG, "NEW PLAN LAUNCHER\n"));
   
   return run_main_implementation (argc, argv);
 }

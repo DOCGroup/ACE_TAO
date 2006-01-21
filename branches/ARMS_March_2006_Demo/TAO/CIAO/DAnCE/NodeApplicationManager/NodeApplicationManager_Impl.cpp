@@ -160,6 +160,15 @@ startLaunch (const Deployment::Properties & configProperty,
       CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
       ACE_UNUSED_ARG (configProperty);
       ACE_UNUSED_ARG (start);
+
+      // If no additional components need to be installed, then we simply
+      // create a NA, but doesn't install any components on it.
+      if (this->plan_.instance.length () == this->shared_components_.length ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "Prespawn a NodeApplication process without "
+                                "installing any components.\n"));
+        }
+
       /**
        *  1. First Map properties to TAO/CIAO specific property/configurations
        *  2. Necessary property checking (needed?)
@@ -253,8 +262,8 @@ startLaunch (const Deployment::Properties & configProperty,
       for (CORBA::ULong j = 0; j < shared_comp_length; ++j)
         {
           if (this->component_map_.
-              bind (this->shared_components_[j].in (),
-                    Components::CCMObject::_nil ()))
+                bind (this->shared_components_[j].in (),
+                      Components::CCMObject::_nil ()))
             {
               ACE_CString error ("Duplicate component instance name ");
               error += this->shared_components_[j].in();
@@ -535,7 +544,6 @@ CIAO::NodeApplicationManager_Impl::init (
                       "NULL NodeApplication location. \n"));
           ACE_TRY_THROW (CORBA::BAD_PARAM ());
         }
-
 
       if (delay == 0)
         {

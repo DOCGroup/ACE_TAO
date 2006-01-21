@@ -14,12 +14,14 @@ CIAO::DomainApplicationManager_Impl::
 DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
+                               Execution_Manager::Execution_Manager_Impl * em,
                                const Deployment::DeploymentPlan & plan,
                                const char * deployment_file)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    target_manager_ (Deployment::TargetManager::_duplicate (manager)),
+    target_manager_ (Deployment::TargetManager::_duplicate (manager)), // object ref
+    execution_manager_ (em), // a plain C++ pointer
     plan_ (plan),
     num_child_plans_ (0),
   // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
@@ -48,6 +50,32 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
     {
       ACE_DEBUG ((LM_DEBUG, "DomainApplicationManager destroyed\n"));
     }
+}
+
+Deployment::NodeApplication_ptr 
+CIAO::DomainApplicationManager_Impl::
+get_node_app (const char * node_name)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::NoSuchName))
+{
+  // Get the NodeApplication object reference.
+  ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
+
+  if (this->artifact_map_.find (node_name,
+                                entry) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_Impl::get_node_app -"
+                  "ERROR while finding the node application "
+                  "for the node [%s] \n",
+                  node_name));
+      ACE_THROW (Deployment::NoSuchName ());
+    }
+
+  return 
+    Deployment::NodeApplication::_duplicate (
+      entry->int_id_.node_application_.in ());
 }
 
 void
@@ -300,6 +328,7 @@ split_plan (void)
     // The global UUID for the parent plan + the name of the node the
     // child plan is to be installed on.
     ACE_CString child_uuid (this->plan_.UUID.in ());
+    child_uuid += "@";
     child_uuid += this->node_manager_names_[i];
 
     tmp_plan->UUID = CORBA::string_dup (child_uuid.c_str ());
@@ -563,9 +592,9 @@ startLaunch (const ::Deployment::Properties & configProperty,
                           this->node_manager_names_[i].c_str ()));
 
               ACE_CString error
-                ("The DomainApplicationManager receives a nil\
-                 reference of NodeApplication after calling\
-                 startLaunch on NodeApplicationManager.\n");
+                ("The DomainApplicationManager receives a nil "
+                 "reference of NodeApplication after calling "
+                 "startLaunch on NodeApplicationManager.\n");
               ACE_ERROR ((LM_ERROR, error.c_str ()));
 
               ACE_TRY_THROW
@@ -606,6 +635,10 @@ finishLaunch (CORBA::Boolean start,
   ACE_TRY
     {
       // Invoke finishLaunch() operation on each cached NodeApplication object.
+      // This will establish bindings for only those internal components, but
+      // NOT for those external/shared components, which requires special
+      // handle, since these components are outside the control of this
+      // DomainApplicationManager.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplication object reference.
@@ -690,7 +723,7 @@ finishLaunch (CORBA::Boolean start,
               entry->int_id_.node_application_->finishLaunch
                  (*my_connections,
                   start,
-                  false // "false" => establish new connections only
+                  true // "true" => establish new connections only
                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
@@ -746,12 +779,15 @@ finishLaunch (CORBA::Boolean start,
                   entry->int_id_.node_application_->finishLaunch
                     (*unnecessary_connections,
                       start,
-                      true  // true ==> remove unnecessary connections
+                      false  // false ==> remove unnecessary connections
                       ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
             }
         }
+
+      // Establish bindings on external/shared components of this deployment plan.
+      this->post_finishLaunch ();
     }
   ACE_CATCHANY
     {
@@ -784,6 +820,89 @@ finishLaunch (CORBA::Boolean start,
 
   ACE_CHECK;
 }
+
+void
+CIAO::DomainApplicationManager_Impl::
+post_finishLaunch (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+        {
+          // Get the shared components from all the NodeManagers
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry = 0;
+          this->artifact_map_.find (this->node_manager_names_[i],entry);
+
+          ::Deployment::NodeManager_ptr
+              my_node_manager = (entry->int_id_).node_manager_.in ();
+
+          CORBA::StringSeq_var 
+            shared = my_node_manager->get_shared_components ();
+
+          // Invoke <finalize_global_binding> on ExecutionManager
+          CORBA::ULong length = shared->length ();
+          for (CORBA::ULong j = 0; j < length; ++j)
+            {
+              // Construct <Component_Binding_Info> struct for the component
+              Execution_Manager::Execution_Manager_Impl::
+                Component_Binding_Info * binding;
+
+              binding = this->populate_binding_info (shared[j].in (),
+                                                     "");
+
+              this->execution_manager_->finalize_global_binding (
+                *binding, true);
+
+              delete binding;
+            }
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::post_finishLaunch.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+CIAO::Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+CIAO::DomainApplicationManager_Impl::
+populate_binding_info (const char * name, const char * child_uuid)
+{
+  Execution_Manager::Execution_Manager_Impl::Component_Binding_Info * retv;
+  ACE_NEW_RETURN (retv,
+                 Execution_Manager::Execution_Manager_Impl::Component_Binding_Info (),
+                 0);
+
+  retv->name_ = name;
+
+  // @@TODO: Finish the parsing up...
+
+  // Parse the child_uuid string and populate the "node" name as well as the 
+  // parent plan uuid
+  //retv.node_ = 
+  //retv.plan_uuid_ = 
+
+  Deployment::Connections_var connections;
+  ACE_NEW_RETURN (connections,
+                  Deployment::Connections,
+                  0);
+
+  this->get_outgoing_connections_i (name, 
+                                    connections.inout (),
+                                    false,  // get *all* connections
+                                    true);  // search current plan
+
+  retv->providedReference_ = connections._retn ();
+
+  return retv;
+}
+
 
 Deployment::Connections *
 CIAO::DomainApplicationManager_Impl::
@@ -1103,7 +1222,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               entry->int_id_.node_application_->finishLaunch
                  (*my_connections,
                   start,
-                  true // "true" => remove new connections only
+                  false // "false" => remove new connections only
                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }

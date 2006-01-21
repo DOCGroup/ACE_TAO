@@ -58,7 +58,7 @@ void
 CIAO::NodeApplication_Impl::finishLaunch (
     const Deployment::Connections & providedReference,
     CORBA::Boolean start,
-    CORBA::Boolean is_ReDAC
+    CORBA::Boolean add_connection
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
@@ -66,17 +66,17 @@ CIAO::NodeApplication_Impl::finishLaunch (
 {
   ACE_UNUSED_ARG (start);
 
-  // If parameter "is_ReDAC" is true, then it means we want to "remove"
-  // existing connections. Otherwise, it means we want to "add" new
-  // connections
-  this->finishLaunch_i (providedReference, start, is_ReDAC);
+  // If parameter "add_connection" is true, then it means we want to "add"
+  // new connections, other, we remove existing connections
+  this->finishLaunch_i (providedReference, start, add_connection);
 }
 
+// if <false>, then we shall remove connections.
 void
 CIAO::NodeApplication_Impl::finishLaunch_i (
     const Deployment::Connections & providedReference,
     CORBA::Boolean start,
-    bool is_ReDAC
+    CORBA::Boolean add_connection 
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
@@ -126,7 +126,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                               name.c_str ()));
                 }
 
-              if (!is_ReDAC)
+              if (add_connection)
                 {
                   ::Components::Cookie_var cookie =
                     comp->connect (providedReference[i].portName.in (),
@@ -210,7 +210,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                               name.c_str ()));
                 }
 
-              if (!is_ReDAC)
+              if (add_connection)
                 {
                   comp->connect_consumer (providedReference[i].portName.in (),
                                           consumer.in ()
@@ -280,7 +280,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                               name.c_str ()));
                 }
 
-              if (!is_ReDAC)
+              if (add_connection)
                 {
                   ::Components::Cookie_var cookie =
                     comp->subscribe (providedReference[i].portName.in (),
