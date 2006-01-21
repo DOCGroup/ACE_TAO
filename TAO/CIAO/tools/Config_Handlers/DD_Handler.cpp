@@ -4,7 +4,6 @@
 #include "Any_Handler.h"
 #include "Deployment.hpp"
 #include "ciao/Deployment_BaseC.h"
-#include <iostream>
 #include "CIAO_common.h"
 
 using namespace std;
@@ -20,10 +19,20 @@ namespace CIAO
     {
       XML_Helper helper;
 
-      cout << "inside DD_Handler" << endl;
+      if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG , "inside DD_Handler"));
+      }
+
+
       XERCES_CPP_NAMESPACE::DOMDocument *dom =
         helper.create_dom (file);
-      cout << "after create dom" << endl;
+
+      if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG , "after create dom"));
+      }
+
       if (!dom)
         throw DD_Handler::NoDomain ();
 
@@ -32,10 +41,19 @@ namespace CIAO
 
 //      Domain d = domain (dom);
 
-      cout << "dom" << endl;
+      if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG , "dom"));
+      }
+
+
       this->domain_.reset (dm);
 
-      cout << "after reset " << endl;
+      if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG , "after reset"));
+      }
+
       if (!this->build_domain ())
         throw NoDomain ();
     }
@@ -125,7 +143,6 @@ namespace CIAO
                     CORBA::string_dup (res_type_iter->c_str ());
                 }
 
-              //cout << iter->resource ().property ().name ().c_str () << endl;
               CORBA::ULong property_len = res_iter->count_property ();
               this->idl_domain_->node[i].resource[res_id].property.length (property_len);
 

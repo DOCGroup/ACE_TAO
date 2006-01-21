@@ -11,7 +11,6 @@
  */
 //----------------------------------------------------------------------------------
 
-#include <iostream>
 #include "MonitorCB.h"
 #include "CIAO_common.h"
 
@@ -48,7 +47,7 @@ int MonitorCB::update_data (::Deployment::Domain& data)
   }
   catch (CORBA::Exception& ex)
     {
-      std::cout << ex << std::endl;
+      ACE_DEBUG ((LM_DEBUG, "Unknown Exception"));
     }
 
   return 0;

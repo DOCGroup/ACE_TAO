@@ -14,8 +14,7 @@
 #include "MonitorController.h"
 #include "BaseMonitor.h"
 #include "ace/DLL.h"
-#include <iostream>
-#include <stdio.h>
+#include <ace/SString.h>
 #include "MonitorCB.h"
 #include "CIAO_common.h"
 
@@ -53,7 +52,7 @@ int MonitorController::init()
   ACE_DLL dll;
 
   // forming the library name
-  std::string lib_name = ACE_DLL_PREFIX;
+  ACE_CString lib_name = ACE_DLL_PREFIX;
   lib_name  += monitor_lib_name;
 
   int retval
