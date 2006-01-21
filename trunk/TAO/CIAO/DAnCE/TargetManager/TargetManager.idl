@@ -6,27 +6,29 @@
  *
  * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
  */
+
 #ifndef TARGETMGR_IDL
 #define TARGETMGR_IDL
 
 
 
 #include "ciao/Components.idl"
-
 #include "ciao/Target_Data.idl"
+#include "TargetManagerExt.idl"
 
 /**
  * @module CIAO
  *
  * @brief TargetManager interface defintion
  *
- * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
  */
+
 module CIAO
 {
   component TargetManagerImpl
   {
     provides ::Deployment::TargetManager targetMgr;
+    provides CIAO::TargetManagerExt target_manager_ext;
   };
 
   home TargetManagerHome manages TargetManagerImpl

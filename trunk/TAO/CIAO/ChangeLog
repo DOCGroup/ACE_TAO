@@ -1,3 +1,14 @@
+Sat Jan 21 20:27:13 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/TargetManager.idl:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+          Added this file to include the facet for RACE Controller
+        * DAnCE/TargetManager/TargetManager_exec.h:
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Added implementation for the facet serving the RACE Controller.
+          
+
 Sat Jan 21 02:04:15 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:

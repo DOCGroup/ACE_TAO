@@ -106,6 +106,53 @@ namespace CIDL_TargetManager_i
                     updateKind
                     );
   }
+
+  //==================================================================
+  // Facet Executor Implementation Class:   TargetManagerExt_exec_i
+  // required for RACE
+  //==================================================================
+
+  TargetManagerExt_exec_i::TargetManagerExt_exec_i (void)
+  {
+  }
+
+  TargetManagerExt_exec_i::~TargetManagerExt_exec_i (void)
+  {
+  }
+
+  // Operations from ::CIAO::TargetManagerExt
+
+  ::CORBA::Long
+  TargetManagerExt_exec_i::get_pid (
+                                    const char * /* component_uuid */
+                                    ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    // Your code here.
+    ACE_DEBUG ((LM_DEBUG, "Get PID :: Skeleton Impl"));
+    return 0;
+  }
+
+  ::CIAO::Host_Infos *
+  TargetManagerExt_exec_i::get_host_cpu (
+                                         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    // Your code here.
+    ACE_DEBUG ((LM_DEBUG, "Get host cpu :: Skeleton Impl"));
+    return 0;
+  }
+
+  ::CIAO::Component_Infos *
+  TargetManagerExt_exec_i::get_component_cpu (
+                                              ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    // Your code here.
+    ACE_DEBUG ((LM_DEBUG, "Get component cpu :: Skeleton Impl"));
+    return 0;
+  }
+
   //==================================================================
   // Component Executor Implementation Class:   TargetManagerImpl_exec_i
   //==================================================================
@@ -144,6 +191,14 @@ namespace CIDL_TargetManager_i
                     );
     }
     return this->exec_object_.in ();
+  }
+
+  ::CIAO::CCM_TargetManagerExt_ptr TargetManagerImpl_exec_i
+  ::get_target_manager_ext (
+                            ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+                            ) ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return new  TargetManagerExt_exec_i ();
   }
 
   // Operations from Components::SessionComponent
