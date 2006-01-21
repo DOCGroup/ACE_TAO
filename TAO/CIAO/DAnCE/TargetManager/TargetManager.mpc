@@ -8,10 +8,12 @@ project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub {
 
   IDL_Files {
     TargetManager.idl
+    TargetManagerExt.idl
   }
 
   Source_Files {
     TargetManagerC.cpp
+    TargetManagerExtC.cpp
   }
 }
 
