@@ -35,6 +35,7 @@
 
 #include "Deployment_Configuration.h"
 #include "DomainApplicationManager_Export.h"
+#include "../ExecutionManager/Execution_Manager_Impl.h"
 #include "ciao/CIAO_common.h"
 
 namespace CIAO
@@ -69,6 +70,7 @@ namespace CIAO
     DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                    PortableServer::POA_ptr poa,
                                    Deployment::TargetManager_ptr manager,
+                                   Execution_Manager::Execution_Manager_Impl * em,
                                    const Deployment::DeploymentPlan &plan,
                                    const char * deployment_file)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -80,6 +82,8 @@ namespace CIAO
      *============================================================*/
     /**
      * Initialize the DomainApplicationManager.
+     * @para em A pointer to the ExecutionManager servant C++ object.
+     *
      * (1) Set the total number of child plans.
      * (2) Set the list of NodeManager names, which is an array of strings.
      *     The <node_manager_names> is a pointer to an array of ACE_CString
@@ -116,6 +120,16 @@ namespace CIAO
      *============================================================*/
 
     /**
+     * Fetch the NodeApplication object reference based on the NodeManager name.
+     */
+    virtual Deployment::NodeApplication_ptr get_node_app (
+        const char * node_name
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Deployment::NoSuchName));
+
+    /**
      * Executes the application, but does not start it yet. Users can
      * optionally provide launch-time configuration properties to
      * override properties that are part of the plan. Raises the
@@ -146,6 +160,18 @@ namespace CIAO
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
+
+    /**
+     * The last step in launching an application in the
+     * domain-level.  We establish connection bindings
+     * for external/shared components of this deployment plan
+     * components.
+     * Internally, this operation will invoke some operations
+     * on ExecutionManager to finish up this task.
+     */
+    virtual void post_finishLaunch (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
 
     /**
      * Starts the application. Raises the StartError exception if
@@ -218,6 +244,13 @@ namespace CIAO
      */
     int split_plan (void);
 
+    /**
+     * Construct <Component_Binding_Info> struct for the component instance.
+     * 
+     * @para name component instance name
+     */
+    Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+      populate_binding_info (const char * name, const char * child_uuid);
 
     /**
      * Cache the incoming connections, which is a sequence of Connections,
@@ -266,6 +299,12 @@ namespace CIAO
 
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
+
+    /// Pointer to the ExecutionManager_Impl "singleton" servant object
+    /// We could do this because ExecutionManager and DomainApplicationManager
+    /// are always collocated in the same process, so we don't have
+    /// to pass CORBA object reference back and forth.
+    Execution_Manager::Execution_Manager_Impl * execution_manager_;
 
     /// Cache a object reference to this servant.
     /// Deployment::DomainApplicationManager_var objref_;

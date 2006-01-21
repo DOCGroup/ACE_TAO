@@ -403,12 +403,16 @@ destroyPlan (const Deployment::DeploymentPlan & plan
   nam->destroyApplication (0);
 
 
-
   // The problem is that we should NOT actually kill the NA process if
   // there are some components that are shared by other plans.
-
 }
 
+CORBA::StringSeq *
+CIAO::NodeManager_Impl_Base::
+get_shared_components (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return this->shared_components_seq ();
+}
 
 bool
 CIAO::NodeManager_Impl_Base::

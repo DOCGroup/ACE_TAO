@@ -65,7 +65,6 @@ module Deployment {
     /// CIAO specific version of startLaunch implementation, this one
     /// differs with spec-defined operation in the sense that it doesn't
     /// return DomainApplication object reference.
-
     void startLaunch (in Properties configProperty, in boolean start)
       raises (ResourceNotAvailable, StartError, InvalidProperty);
 
@@ -76,15 +75,22 @@ module Deployment {
     void start ()
       raises (StartError);
 
-    // CIAO speicifc extension
+    /// CIAO specific extention
+    /// Fetch NodeApplication based on the given node name
+    NodeApplication get_node_app (in string node_name)
+      raises (NoSuchName);
+
+    /// CIAO speicifc extension, it differs with the spec defined one
+    /// for no input parameter.
     void destroyApplication ()
       raises (StopError);
 
-    // CIAO specific extension to destroy NodeApplicationManager
+    /// CIAO specific extension to destroy NodeApplicationManager
     void destroyManager ()
       raises (StopError);
 
-    // Perform the actual redeployment and reconfiguration on the dommain level.
+    /// CIAO specific extension
+    /// Perform the actual redeployment and reconfiguration on the dommain level.
     void perform_redeployment (in DeploymentPlan new_plan)
       raises (PlanError,
               InstallationFailure,
@@ -110,6 +116,10 @@ module Deployment {
     void destroyManager (in DomainApplicationManager manager)
       raises (StopError);
 
+    /// CIAO specific extention
+    /// "Get" operation, return the DeploymentPlan
+    DeploymentPlan getPlan (in string plan_uuid);
+
     /// CIAO specific operation to handle dynamic system redeployment
     /// and reconfiguration
     /// This operation could handle dynamic redeployment, and this
@@ -124,9 +134,6 @@ module Deployment {
               InvalidConnection,
               InvalidProperty,
               ::Components::RemoveFailure);
-
-    // Get operation
-    DeploymentPlan getPlan (in string plan_uuid);
   };
 
   interface TargetManager {
@@ -182,13 +189,17 @@ module Deployment {
     void destroyManager (in NodeApplicationManager appManager)
       raises (StopError, InvalidReference);
 
-    // CIAO specific extension
-    // Destroy the NAM and all the associated NAs with this child_plan
-    // We can guarantee that the input DeploymentPlan is valid, since it
-    // is fetched from the cached DeploymentPlan of DAM, which has been
-    // validated before.
+    /// CIAO specific extension
+    /// Destroy the NAM and all the associated NAs with this child_plan
+    /// We can guarantee that the input DeploymentPlan is valid, since it
+    /// is fetched from the cached DeploymentPlan of DAM, which has been
+    /// validated before.
     void destroyPlan (in DeploymentPlan plan)
       raises (StopError);
+
+    /// CIAO specific extension
+    /// Get all the shared components installed in this node
+    CORBA::StringSeq get_shared_components ();
   };
 
   interface RepositoryManager {

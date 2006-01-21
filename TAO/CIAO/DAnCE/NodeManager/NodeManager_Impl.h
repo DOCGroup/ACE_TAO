@@ -95,12 +95,17 @@ namespace CIAO
                        Deployment::StopError,
                        Deployment::InvalidReference));
 
-    // CIAO specific extension, which is particularly useful for dealing with
-    // shared components issue
+    /// CIAO specific extension, which is particularly useful for dealing with
+    /// shared components issue
     virtual void destroyPlan (const Deployment::DeploymentPlan & plan
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Deployment::StopError));
+
+    /// CIAO specific extension, return a set of shared components
+    virtual CORBA::StringSeq *
+    get_shared_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
     // ********* CIAO Specific Helper functions ************
 
@@ -173,6 +178,8 @@ namespace CIAO
                              ACE_Null_Mutex> Reference_Count_Map;
     typedef Reference_Count_Map::iterator Ref_Count_Iterator;
 
+    /// @@TODO We should also keep the information about *where* the
+    /// component is installed
     Reference_Count_Map ref_count_map_;
 
     /// A set to track the names of shared component instances
