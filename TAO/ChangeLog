@@ -1,3 +1,32 @@
+Sat Jan 21 01:56:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log_i.cpp:
+        
+          Call reset_capacity_alarm_threshold () in set_log_full_action()
+          if the value is changed.  
+        
+          If the log full action is DsLogAdmin::halt, capacity threshold
+          alarms are triggered when the size of a log exceeds one if its
+          capacity alarm thresholds; if the log full action is ::wrap,
+          capacity threshold alarms are triggered "as if coupled to a
+          guage that counts from zero to the highest capacity threshold
+          value".  The specification doesn't describe required behavior
+          when changing from one to the other.  Since the recordkeeping
+          needed for each option is so different, resetting may be the
+          only realistic option --- at least that way we won't be using
+          one set of data for the other.
+
+        * orbsvcs/orbsvcs/Log_i.cpp:
+        
+          The current revision of the log service spec is inconsistent
+          whether an AttributeValueChange event should generated only if
+          the attribute's value actually changed or whether it should be
+          sent unconditionally.  TAO's log service implements the former,
+          which I believe to be the most useful behavior.  Nevertheless,
+          I've filed a defect report with the OMG for clarification.  I've
+          also added a block comment to this effect before each instance
+          to alert future maintainers.
+        
 Sat Jan 21 01:02:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log_i.cpp:

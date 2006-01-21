@@ -154,6 +154,14 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
       ACE_THROW (DsLogAdmin::UnsupportedQoS (denied));
     }
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (qostype == old_qos)
     return;
 
@@ -216,6 +224,14 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life
   old_life = this->get_max_record_life (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (life == old_life)
     return;
 
@@ -259,6 +275,14 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
     this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (size == old_size)
     return;
 
@@ -344,6 +368,14 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
     this->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (action == old_action)
     return;
 
@@ -363,6 +395,24 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
    }
+  
+  // @@ The current revision of the specification (formal/03-07-01)
+  // doesn't specify the interaction betwen set_log_full_action() and the
+  // capacity alarm thresholds list.  Publicly available documentation
+  // I've read for other log service implementations doesn't offer any
+  // guidance either.  I will be submitting a defect report to the OMG
+  // for clarification.
+  //
+  // In the mean time, we will call reset_capacity_alarm_threshold()
+  // to reset the "current_threshold_" index.  This will result in
+  // ThresholdAlarm being sent when the next threshold is crossed.  An
+  // argument could be made that an event should be be sent for each
+  // threshold that has already been crossed.  Hopefully, this will be
+  // clarified when/if the OMG charters a RTF for the log service.
+  //    --jtc
+  //
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 DsLogAdmin::AdministrativeState
@@ -381,6 +431,14 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
     this->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (state == old_state)
     return;
 
@@ -418,6 +476,14 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
     this->get_forwarding_state (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (state == old_state)
     return;
 
@@ -470,6 +536,14 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
     this->get_interval (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (interval.start == old_interval.start &&
       interval.stop  == old_interval.stop)
     return;
@@ -568,6 +642,14 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
   DsLogAdmin::CapacityAlarmThresholdList old_threshs;
   old_threshs = thresholds_;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (threshs == old_threshs)
       return;
 
@@ -664,6 +746,14 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
   DsLogAdmin::WeekMask old_masks;
   old_masks = weekmask_;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (masks == old_masks)
     return;
 
