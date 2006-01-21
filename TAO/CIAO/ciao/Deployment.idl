@@ -1,7 +1,6 @@
 // $Id$
 #include "Packaging_Data.idl"
 #include "ServerResources.idl"
-#include <tao/StringSeq.pidl>
 
 module Deployment {
 
@@ -43,6 +42,16 @@ module Deployment {
   // Below exception types are CIAO specific
   exception PlanNotExist {
   };
+
+  // CIAO specific struct type used for shared component management
+  // mapping the name of component to its plan_uuid
+  struct ComponentPlan
+  {
+    string name;
+    string plan_uuid;
+  };
+
+  typedef sequence < ComponentPlan > ComponentPlans;
 
   interface ApplicationManager {
     Application startLaunch (in Properties configProperty,
@@ -199,7 +208,7 @@ module Deployment {
 
     /// CIAO specific extension
     /// Get all the shared components installed in this node
-    CORBA::StringSeq get_shared_components ();
+    ComponentPlans get_shared_components ();
   };
 
   interface RepositoryManager {

@@ -211,7 +211,7 @@ namespace CIAO
           ACE_DEBUG ((LM_ERROR,
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::perform_redeployment -"
-                      "Invalid plan uuid: %s!\n", plan.UUID.in ()));
+                      "Invalid plan uuid: %s\n", plan.UUID.in ()));
           ACE_THROW (Deployment::PlanError (
                         "Execution_Manager_Impl::perform_redeployment",
                         "Invalid plan uuid specified."));
@@ -247,7 +247,7 @@ namespace CIAO
           ACE_DEBUG ((LM_ERROR,
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::getPlan -"
-                      "Invalid plan uuid: %s!\n", plan_uuid));
+                      "Invalid plan uuid: %s\n", plan_uuid));
           ACE_THROW (::CORBA::BAD_PARAM ());
         }
 
@@ -273,12 +273,23 @@ namespace CIAO
           ::CORBA::SystemException,
           ::Deployment::InvalidConnection))
     {
+      ACE_DEBUG ((LM_ERROR, 
+                  "Execution_Manage::finalizing  global bindings.\n"));
+
       // Find the NodeApplication hosting the component, and then call 
       // <finishLaunch> on it
       ACE_TRY
       {
         Deployment::NodeApplication_var
           node_app = this->find_node_application (binding);
+
+        if (CORBA::is_nil (node_app.in ()))
+          {
+            ACE_DEBUG ((LM_ERROR,
+                        "Execution_Manager_Impl::finalize_global_binding - "
+                        "nil NodeApplication object reference.\n"));
+            ACE_THROW (Deployment::InvalidConnection ());
+          }
 
         node_app->finishLaunch (binding.providedReference_.in (),
                                 true, // start
@@ -310,7 +321,7 @@ namespace CIAO
           ACE_DEBUG ((LM_ERROR,
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::find_node_application -"
-                      "Invalid plan uuid: %s!\n", binding.plan_uuid_.c_str ()));
+                      "Invalid plan uuid: %s\n", binding.plan_uuid_.c_str ()));
           ACE_THROW (::CORBA::BAD_PARAM ());
         }
 

@@ -41,6 +41,10 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   ACE_NEW_THROW_EX (this->all_connections_,
                     Deployment::Connections (),
                     CORBA::NO_MEMORY ());
+
+  ACE_NEW_THROW_EX (this->shared_,
+                    Deployment::ComponentPlans (),
+                    CORBA::NO_MEMORY ());
   ACE_CHECK;
 }
 
@@ -611,6 +615,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
           // the hash table.
           (entry->int_id_).node_application_ = my_na._retn ();
         }
+
+      this->synchronize_shared_components_with_node_managers ();
     }
   ACE_CATCHANY
     {
@@ -829,34 +835,22 @@ post_finishLaunch (void)
 {
   ACE_TRY
     {
-      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+      // For each "external" component...
+      CORBA::ULong length = this->shared_->length ();
+      for (CORBA::ULong j = 0; j < length; ++j)
         {
-          // Get the shared components from all the NodeManagers
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry = 0;
-          this->artifact_map_.find (this->node_manager_names_[i],entry);
-
-          ::Deployment::NodeManager_ptr
-              my_node_manager = (entry->int_id_).node_manager_.in ();
-
-          CORBA::StringSeq_var 
-            shared = my_node_manager->get_shared_components ();
+          // Construct <Component_Binding_Info> struct for the component
+          Execution_Manager::Execution_Manager_Impl::
+            Component_Binding_Info * 
+              binding = this->populate_binding_info (
+                this->shared_[j].name.in (), 
+                this->shared_[j].plan_uuid.in ());
 
           // Invoke <finalize_global_binding> on ExecutionManager
-          CORBA::ULong length = shared->length ();
-          for (CORBA::ULong j = 0; j < length; ++j)
-            {
-              // Construct <Component_Binding_Info> struct for the component
-              Execution_Manager::Execution_Manager_Impl::
-                Component_Binding_Info * binding;
+          this->execution_manager_->finalize_global_binding (
+            *binding, true);
 
-              binding = this->populate_binding_info (shared[j].in (),
-                                                     "");
-
-              this->execution_manager_->finalize_global_binding (
-                *binding, true);
-
-              delete binding;
-            }
+          delete binding;
         }
     }
   ACE_CATCHANY
@@ -872,7 +866,8 @@ post_finishLaunch (void)
 
 CIAO::Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
 CIAO::DomainApplicationManager_Impl::
-populate_binding_info (const char * name, const char * child_uuid)
+populate_binding_info (const ACE_CString& name, 
+                       const ACE_CString& child_uuid)
 {
   Execution_Manager::Execution_Manager_Impl::Component_Binding_Info * retv;
   ACE_NEW_RETURN (retv,
@@ -881,19 +876,23 @@ populate_binding_info (const char * name, const char * child_uuid)
 
   retv->name_ = name;
 
-  // @@TODO: Finish the parsing up...
+  // Parse the child_uuid string and populate the "node" name and "plan_uuid" fields.
+  // Our protocol here is searching for the "@", the substring *before* that is the
+  // global plan uuid, and the substring *after* that is the node name.
+  size_t pos = child_uuid.find ('@');
 
-  // Parse the child_uuid string and populate the "node" name as well as the 
-  // parent plan uuid
-  //retv.node_ = 
-  //retv.plan_uuid_ = 
+  retv->plan_uuid_ = 
+    child_uuid.substring (0, pos);
+
+  retv->node_ = 
+    child_uuid.substring (pos+1, -1); // get the rest of the string
 
   Deployment::Connections_var connections;
   ACE_NEW_RETURN (connections,
                   Deployment::Connections,
                   0);
 
-  this->get_outgoing_connections_i (name, 
+  this->get_outgoing_connections_i (name.c_str (), 
                                     connections.inout (),
                                     false,  // get *all* connections
                                     true);  // search current plan
@@ -901,6 +900,74 @@ populate_binding_info (const char * name, const char * child_uuid)
   retv->providedReference_ = connections._retn ();
 
   return retv;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+add_shared_components (const Deployment::ComponentPlans & shared)
+{
+  for (CORBA::ULong i = 0; i < shared.length (); ++i)
+    {
+      CORBA::ULong curr_len = this->shared_->length ();
+      this->shared_->length (curr_len + 1);
+      this->shared_[curr_len] = shared[i];
+    }
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+is_shared_component (const char * name)
+{
+  for (CORBA::ULong i = 0; i < this->shared_->length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->shared_[i].name.in (),
+                          name) == 0)
+        return true;
+    }
+
+  return false;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+synchronize_shared_components_with_node_managers (void)
+{
+  for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+    {
+      // Get the NodeManager object reference.
+      ACE_Hash_Map_Entry
+        <ACE_CString,
+        Chained_Artifacts> *entry = 0;
+
+      if (this->artifact_map_.find (this->node_manager_names_[i],
+                                    entry) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                      "CIAO::DomainApplicationManager_Impl::startLaunch -"
+                      "ERROR while finding the node specific plan "
+                      "for the node [%s] \n",
+                      this->node_manager_names_[i].c_str ()));
+
+          ACE_CString error
+              ("Unable to resolve a reference to node manager: ");
+          error += this->node_manager_names_[i];
+
+          ACE_TRY_THROW
+              (Deployment::StartError
+                ("DomainApplicationManager_Impl:startLaunch",
+                  error.c_str ()));
+        }
+
+      // Update the shared components  list
+      ::Deployment::NodeManager_ptr
+          my_node_manager = (entry->int_id_).node_manager_.in ();
+
+      Deployment::ComponentPlans_var
+        shared = my_node_manager->get_shared_components ();
+
+      this->add_shared_components (shared.in ());
+    }
 }
 
 
@@ -920,7 +987,10 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
   // For each component instance in the child plan ...
   for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
   {
-    // Get the component instance name
+    if (this->is_shared_component (plan.instance[i].name.in ()))
+      continue;
+
+    // Get the outgoing connections of the component
     if (!get_outgoing_connections_i (plan.instance[i].name.in (),
                                      connections.inout (),
                                      is_getting_all_connections,

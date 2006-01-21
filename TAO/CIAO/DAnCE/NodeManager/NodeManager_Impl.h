@@ -6,13 +6,14 @@
  *  $Id$
  *
  *  This file contains servant implementation for Deployment:NodeManager
- *  interface. In the current design of the NodeManager, as with the
- *  legacy implementation of CIAO, Each NodeManager corresponds to
- *  ONE NodeApplication Manager. Though, the name intuitively suggests
+ *  interface. In the current design of the NodeManager, each NodeManager 
+ *  could manage one or more NodeApplication Managers. 
+ *  Though, the name intuitively suggests
  *  that there be one NodeManager  for every node, our design, allows
  *  the end-user to have multiple components run on the same node.
  *
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *  @author Gan Deng <dengg@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -47,6 +48,14 @@ namespace CIAO
     : public virtual POA_CIAO::NodeManager
   {
   public:
+    /// A struct that tracks the reference count of a particular
+    /// component as well as the "child_plan_uuid" where the component is 
+    /// actually installed
+    typedef struct _ref_count_info
+    {
+      ACE_CString plan_uuid_;
+      size_t count_;
+    } Ref_Count_Info;
 
     /// Constructor
     NodeManager_Impl_Base (const char *name,
@@ -103,7 +112,7 @@ namespace CIAO
                        ::Deployment::StopError));
 
     /// CIAO specific extension, return a set of shared components
-    virtual CORBA::StringSeq *
+    virtual ::Deployment::ComponentPlans *
     get_shared_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
@@ -144,6 +153,13 @@ namespace CIAO
                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))=0;
 
+    /// Actual implementation of the <get_shared_components> IDL operation
+    virtual ::Deployment::ComponentPlans *
+    get_shared_components_i (void);
+
+    /// A helper method that convert ACE_Unbounded_Set to CORBA StringSeq
+    CORBA::StringSeq * shared_components_seq (void);
+
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
@@ -170,23 +186,20 @@ namespace CIAO
     NAM_Map map_;
 
     /// A reference count map for the components installed on this node
+    /// @@TODO We should also keep the information about *where* the
+    /// component is installed
     typedef
     ACE_Hash_Map_Manager_Ex <ACE_CString,
-                             int,
+                             Ref_Count_Info,
                              ACE_Hash<ACE_CString>,
                              ACE_Equal_To<ACE_CString>,
                              ACE_Null_Mutex> Reference_Count_Map;
     typedef Reference_Count_Map::iterator Ref_Count_Iterator;
 
-    /// @@TODO We should also keep the information about *where* the
-    /// component is installed
     Reference_Count_Map ref_count_map_;
 
     /// A set to track the names of shared component instances
-    //CORBA::StringSeq shared_components_;
     ACE_Unbounded_Set<ACE_CString> shared_components_;
-
-    CORBA::StringSeq * shared_components_seq (void);
 
     /// Cached object references of ports (facets/consumers) of
     /// all components. This is useful for getting the port object
