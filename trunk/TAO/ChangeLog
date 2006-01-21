@@ -1,3 +1,22 @@
+Sat Jan 21 01:02:46 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log_i.h:
+
+          Changed set_week_mask() to avoid recomputing week_intervals_,
+          updating the record store, and sending an AttributeValueChange
+          event if the new mask has the same value as the old.
+
+          Added operator== and operator!= for many IDL generated types and
+          sequences.  Use them to compare old and new log attribute values
+          to decide whether to send an AttributeValueChange event.
+
+        * orbsvcs/orbsvcs/Log_i.cpp:
+
+          Although set_week_mask() updated week_intervals_ (an optimized
+          representation) from the new mask, it didn't actually save it;
+          this resulted in get_week_mask() returning the original value.
+
 Fri Jan 20 17:11:49 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tao/IIOP_Connection_Handler.cpp:

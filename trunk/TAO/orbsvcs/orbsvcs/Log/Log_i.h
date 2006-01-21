@@ -408,6 +408,46 @@ bool TAO_Log_Serv_Export
 operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
            const DsLogAdmin::CapacityAlarmThresholdList& lhs);
 
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs);
+	
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs);
+	
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::WeekMask& rhs,
+           const DsLogAdmin::WeekMask& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::WeekMask& rhs,
+           const DsLogAdmin::WeekMask& lhs);
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

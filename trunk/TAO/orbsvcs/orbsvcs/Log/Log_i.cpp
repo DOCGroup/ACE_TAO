@@ -627,6 +627,7 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
                    DsLogAdmin::InvalidTimeInterval,
                    DsLogAdmin::InvalidMask))
 {
+  // validate week mask
   for (CORBA::ULong i = 0; i < masks.length (); ++i)
     {
       if (masks[i].days > (DsLogAdmin::Sunday +
@@ -662,6 +663,11 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
 
   DsLogAdmin::WeekMask old_masks;
   old_masks = weekmask_;
+
+  if (masks == old_masks)
+    return;
+
+  weekmask_ = masks;
 
   DsLogAdmin::TimeInterval temp_interval;
   CORBA::ULong count = 0;
@@ -1330,13 +1336,14 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
   return true;
 }
 
+
 bool
 operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
            const DsLogAdmin::CapacityAlarmThresholdList& lhs)
 {
   const CORBA::ULong length = rhs.length ();
 
-  if (length != lhs.length())
+  if (length != lhs.length ())
     {
       return false;
     }
@@ -1355,6 +1362,114 @@ operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
 bool
 operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
            const DsLogAdmin::CapacityAlarmThresholdList& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length ())
+    {
+      return false;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (rhs[i] != lhs[i])
+        {
+           return false;
+        }
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs)
+{
+  return (rhs.hour   == lhs.hour &&
+          rhs.minute == lhs.minute);
+}
+
+bool
+operator!=(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs)
+{
+  return (rhs.start == lhs.start &&
+          rhs.stop  == lhs.stop);
+}
+
+bool
+operator!=(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs)
+{
+  return (rhs.days      == lhs.days &&
+          rhs.intervals == lhs.intervals);
+}
+
+bool
+operator!=(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::WeekMask& rhs,
+	   const DsLogAdmin::WeekMask& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length ())
+    {
+      return false;
+    }
+ 
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (rhs[i] != lhs[i]) 
+        {
+          return false;
+        }
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::WeekMask& rhs,
+	   const DsLogAdmin::WeekMask& lhs)
 {
   return !(lhs == rhs);
 }
