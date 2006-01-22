@@ -101,6 +101,6 @@ class MonitorController : public ACE_Task_Base
 
 #if defined (__ACE_INLINE__)
 #include "MonitorController.inl"
-#endif
+#endif /* defined INLINE */
 
 #endif
