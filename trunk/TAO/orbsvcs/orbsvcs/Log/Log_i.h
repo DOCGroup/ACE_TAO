@@ -349,17 +349,19 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+  /// The log's object reference
+  DsLogAdmin::Log_var log_;
 
-  /// The factory of the log
+  /// The log's factory's object reference
   DsLogAdmin::LogMgr_var factory_;
 
-  /// The id of the log
+  /// The log's id 
   DsLogAdmin::LogId logid_;
 
-  /// The operational state of the log
+  /// The log's operational state
   DsLogAdmin::OperationalState op_state_;
 
-  /// The availability of the log
+  /// The log's availability status
   DsLogAdmin::AvailabilityStatus avail_status_;
 
   /// The list of points at which the log should generate events

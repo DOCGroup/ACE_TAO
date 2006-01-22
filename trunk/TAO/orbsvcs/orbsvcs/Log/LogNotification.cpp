@@ -290,7 +290,7 @@ TAO_LogNotification::quality_of_service_value_change (
 }
 
 void
-TAO_LogNotification::state_change (DsLogAdmin::Log_ptr /* log */,
+TAO_LogNotification::state_change (DsLogAdmin::Log_ptr log,
                                    DsLogAdmin::LogId id,
                                    DsLogNotification::StateType type,
                                    CORBA::Any newValue
@@ -300,7 +300,7 @@ TAO_LogNotification::state_change (DsLogAdmin::Log_ptr /* log */,
   CORBA::Any any;
   DsLogNotification::StateChange event;
 
-  // The log id.
+  event.logref = log;
   event.id = id;
 
   TimeBase::TimeT current_time;
@@ -378,7 +378,7 @@ TAO_LogNotification::forwarding_state_change (DsLogAdmin::Log_ptr log,
 
 void
 TAO_LogNotification::threshold_alarm (
-    DsLogAdmin::Log_ptr /* log */,
+    DsLogAdmin::Log_ptr log,
     DsLogAdmin::LogId id,
     DsLogAdmin::Threshold crossedValue,
     DsLogAdmin::Threshold observedValue,
@@ -389,6 +389,7 @@ TAO_LogNotification::threshold_alarm (
   CORBA::Any any;
   DsLogNotification::ThresholdAlarm event;
 
+  event.logref = log;
   event.id = id;
 
   TimeBase::TimeT current_time;
