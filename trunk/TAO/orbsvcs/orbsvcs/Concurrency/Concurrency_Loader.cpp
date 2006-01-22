@@ -85,4 +85,4 @@ TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_FACTORY_DEFINE (TAO_Concurrency, TAO_Concurrency_Loader)
+ACE_FACTORY_DEFINE (TAO_Concurrency_Serv, TAO_Concurrency_Loader)

@@ -1,3 +1,10 @@
+Sun Jan 22 18:24:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.cpp:
+
+          Update ACE_FACTORY_DEFINE() that wasn't updated when splitting
+          the Concurrency Service libraries.
+
 Sun Jan 22 16:54:55 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * tests/Portable_Interceptors/AdvSlot/server.cpp:
