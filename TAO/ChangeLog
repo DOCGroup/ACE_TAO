@@ -1,3 +1,9 @@
+Sun Jan 22 16:54:55 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * tests/Portable_Interceptors/AdvSlot/server.cpp:
+
+          Fixed a problem with VC6.
+
 Sun Jan 22 02:42:21 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
