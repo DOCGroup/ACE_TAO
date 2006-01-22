@@ -37,6 +37,8 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
+  this->log_ = logmgr_i.create_log_reference (logid ACE_ENV_ARG_PARAMETER);
+
   recordstore_ = logmgr_i.get_log_record_store (logid
 						ACE_ENV_ARG_PARAMETER);
 
@@ -174,10 +176,6 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
       DsLogAdmin::QoSList* old_qoslist_ptr;
       ACE_NEW_THROW_EX (old_qoslist_ptr,
 			DsLogAdmin::QoSList (1),
@@ -198,8 +196,8 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
       new_qoslist->length(1);
       new_qoslist[0] = qostype;
 
-      notifier_->quality_of_service_value_change (log.in (),
-                                                  logid_,
+      notifier_->quality_of_service_value_change (this->log_.in (),
+                                                  this->logid_,
                                                   old_qoslist.in (),
                                                   new_qoslist.in ()
                                                   ACE_ENV_ARG_PARAMETER);
@@ -245,12 +243,8 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notifier_->max_record_life_value_change (log.in (),
-                                               logid_,
+      notifier_->max_record_life_value_change (this->log_.in (),
+                                               this->logid_,
                                                old_life,
                                                life
                                                ACE_ENV_ARG_PARAMETER);
@@ -302,12 +296,8 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-	this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notifier_->max_log_size_value_change (log.in (),
-					    logid_,
+      notifier_->max_log_size_value_change (this->log_.in (),
+					    this->logid_,
 					    old_size,
 					    size
 					    ACE_ENV_ARG_PARAMETER);
@@ -384,12 +374,8 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notifier_->log_full_action_value_change (log.in (),
-                                               logid_,
+      notifier_->log_full_action_value_change (this->log_.in (),
+                                               this->logid_,
                                                old_action,
                                                action
                                                ACE_ENV_ARG_PARAMETER);
@@ -447,12 +433,8 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notifier_->administrative_state_change (log.in (),
-                                              logid_,
+      notifier_->administrative_state_change (this->log_.in (),
+                                              this->logid_,
                                               state
                                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -492,12 +474,8 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notifier_->forwarding_state_change (log.in (),
-                                          logid_,
+      notifier_->forwarding_state_change (this->log_.in (),
+                                          this->logid_,
                                           state
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -553,14 +531,10 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
       if (interval.start != old_interval.start)
         {
-          notifier_->start_time_value_change (log.in (),
-                                              logid_,
+          notifier_->start_time_value_change (this->log_.in (),
+                                              this->logid_,
                                               old_interval.start,
                                               interval.start
                                               ACE_ENV_ARG_PARAMETER);
@@ -569,8 +543,8 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 
       if (interval.stop != old_interval.stop)
         {
-          notifier_->stop_time_value_change (log.in (),
-                                             logid_,
+          notifier_->stop_time_value_change (this->log_.in (),
+                                             this->logid_,
                                              old_interval.stop,
                                              interval.stop
                                              ACE_ENV_ARG_PARAMETER);
@@ -657,12 +631,8 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notifier_->capacity_alarm_threshold_value_change (log.in (),
-                                                        logid_,
+      notifier_->capacity_alarm_threshold_value_change (this->log_.in (),
+                                                        this->logid_,
                                                         old_threshs,
                                                         threshs
                                                         ACE_ENV_ARG_PARAMETER);
@@ -796,12 +766,8 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notifier_->week_mask_value_change (log.in (),
-                                         logid_,
+      notifier_->week_mask_value_change (this->log_.in (),
+                                         this->logid_,
                                          old_masks,
                                          masks
                                          ACE_ENV_ARG_PARAMETER);
@@ -1344,12 +1310,8 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
 
           if (notifier_)
             {
-              DsLogAdmin::Log_var log =
-                this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
-
               notifier_->threshold_alarm (
-                log.in (),
+                this->log_.in (),
                 logid_,
                 this->thresholds_[this->current_threshold_],
                 percent,
