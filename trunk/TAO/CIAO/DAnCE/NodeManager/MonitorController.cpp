@@ -20,10 +20,11 @@
 
 #include "ace/Log_Msg.h"
 
-typedef MonitorBase* (*MonitorFactory) (void);
+#if !defined (__ACE_INLINE__)
+#include "MonitorController.inl"
+#endif /* !defined INLINE */
 
-/// for the RSS Monitor
-//const char* monitor_lib_name = "rssmon";
+typedef MonitorBase* (*MonitorFactory) (void);
 
 /// for the CIAO monitor
 const char* monitor_lib_name = "ciaomonlib";
