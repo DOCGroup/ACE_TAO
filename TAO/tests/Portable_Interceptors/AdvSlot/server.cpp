@@ -159,7 +159,7 @@ main (int argc, char *argv[])
   POA_var root_poa (POA::_narrow (obj.in ()));
   POAManager_var poa_manager (root_poa->the_POAManager ());
 
-  StateTransferImpl* impl (new StateTransferImpl (orb.in ()));
+  StateTransferImpl* impl = new StateTransferImpl (orb.in ());
   ServantBase_var impl_var (impl);
 
   StateTransfer_var ref (impl->_this ());
