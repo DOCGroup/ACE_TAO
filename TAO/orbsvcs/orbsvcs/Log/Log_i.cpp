@@ -479,7 +479,7 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
                                           state
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-  }
+    }
 }
 
 DsLogAdmin::OperationalState
@@ -503,7 +503,7 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
                    DsLogAdmin::InvalidTime,
                    DsLogAdmin::InvalidTimeInterval))
 {
-
+  // validate interval
   if (interval.start != 0)
     {
       if (interval.start >= interval.stop)
@@ -522,8 +522,7 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
   //
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
-  if (interval.start == old_interval.start &&
-      interval.stop  == old_interval.stop)
+  if (interval == old_interval)
     return;
 
   this->recordstore_->set_interval (interval ACE_ENV_ARG_PARAMETER);
@@ -1450,6 +1449,36 @@ operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
 
 
 bool
+operator==(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length ())
+    {
+      return false;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (rhs[i] != lhs[i])
+        {
+           return false;
+        }
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
 operator==(const DsLogAdmin::Time24& rhs,
            const DsLogAdmin::Time24& lhs)
 {
@@ -1476,6 +1505,22 @@ operator==(const DsLogAdmin::Time24Interval& rhs,
 bool
 operator!=(const DsLogAdmin::Time24Interval& rhs,
            const DsLogAdmin::Time24Interval& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs)
+{
+  return (rhs.start == lhs.start &&
+          rhs.stop  == lhs.stop);
+}
+
+bool
+operator!=(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs)
 {
   return !(lhs == rhs);
 }
