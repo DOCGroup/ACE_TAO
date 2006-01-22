@@ -419,6 +419,14 @@ operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
            const DsLogAdmin::IntervalsOfDay& lhs);
 
 bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs);
+
+bool TAO_Log_Serv_Export
 operator==(const DsLogAdmin::Time24& rhs,
            const DsLogAdmin::Time24& lhs);
 
@@ -433,6 +441,14 @@ operator==(const DsLogAdmin::Time24Interval& rhs,
 bool TAO_Log_Serv_Export
 operator!=(const DsLogAdmin::Time24Interval& rhs,
            const DsLogAdmin::Time24Interval& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs);
 
 bool TAO_Log_Serv_Export
 operator==(const DsLogAdmin::WeekMaskItem& rhs,

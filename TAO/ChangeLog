@@ -1,3 +1,13 @@
+Sun Jan 22 02:42:21 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+
+          Added operator== and operator!= for IDL generated types
+          DsLogAdmin::QoSList and DsLogAdmin::TimeInterval. Use them to
+          compare old and new log attribute values to decide whether to
+          send an AttributeValueChange event.
+
 Sun Jan 22 02:34:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
