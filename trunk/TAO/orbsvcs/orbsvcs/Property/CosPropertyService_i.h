@@ -109,7 +109,7 @@ class TAO_PropertySet;
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
+class TAO_Property_Serv_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySet class objects.
@@ -162,7 +162,7 @@ class TAO_PropertySetDef;
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
+class TAO_Property_Serv_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySetDef objects.
@@ -208,7 +208,7 @@ private:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
+class TAO_Property_Serv_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
 {
   // = TITLE
   //    Gives operations for defining, deleting, enumerating and
@@ -365,7 +365,7 @@ protected:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
+class TAO_Property_Serv_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
                                               public virtual TAO_PropertySet
 {
   // = TITLE
@@ -488,7 +488,7 @@ public:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertyNamesIterator
+class TAO_Property_Serv_Export TAO_PropertyNamesIterator
   : public virtual POA_CosPropertyService::PropertyNamesIterator
 {
   // = TITLE
@@ -549,7 +549,7 @@ private:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertiesIterator
+class TAO_Property_Serv_Export TAO_PropertiesIterator
   : public virtual POA_CosPropertyService::PropertiesIterator
 {
   // = TITLE
