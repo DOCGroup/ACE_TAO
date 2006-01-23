@@ -41,7 +41,7 @@ pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 }
 
 ACE_INLINE int
-sigaction (int signum, const struct sigaction *nsa, struct sigaction *osa)
+ACE_OS::sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
 {
   ACE_OS_TRACE ("ACE_OS::sigaction");
   if (signum == 0)
