@@ -243,10 +243,43 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   RM_Helper::externalize (pc, pc_path.c_str ());
 
   //insert the package into the database
-  this->names_.bind (ACE_CString (installationName), path);
+  if (this->names_.bind (ACE_CString (installationName), path) == -1)
+  {
+     ACE_DEBUG ((LM_ERROR,
+                 "[RM] could not bind %s.\n",
+                 installationName));
+
+     //clean the extracted files
+     remove_extracted_package (package_path.c_str (), path.c_str ());
+     //remove the package
+     remove (package_path.c_str ());
+     //remove the PackageConfiguration externalization
+     remove (pc_path.c_str ());
+
+   //throw exception
+   ACE_THROW (CORBA::INTERNAL ());
+  }
 
   //ALSO NEED THE UUID here
-  this->uuids_.bind (ACE_CString (pc->UUID), path);
+  if (this->uuids_.bind (ACE_CString (pc->UUID), path) == -1)
+  {
+     ACE_DEBUG ((LM_ERROR,
+                 "[RM] could not bind %s.\n",
+                 pc->UUID));
+
+     //unbind the name
+     this->names_.unbind (installationName);
+
+     //clean the extracted files
+     remove_extracted_package (package_path.c_str (), path.c_str ());
+     //remove the package
+     remove (package_path.c_str ());
+     //remove the PackageConfiguration externalization
+     remove (pc_path.c_str ());
+
+     //throw exception
+     ACE_THROW (CORBA::INTERNAL ());
+  }
 
 #if defined ASSEMBLY_INTERFACE_SUPPORT
   //now add the type interface
@@ -571,7 +604,13 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   ACE_CString path (entry->int_id_.c_str ());
 
   //remove the name association
-  this->names_.unbind (installationName);
+  if (this->names_.unbind (installationName) == -1)
+  {
+    ACE_DEBUG ((LM_ERROR,
+                "Unable to unbind %s.\n",
+                installationName));
+    internal_err = true;
+  }
 
   //the package location
   ACE_CString package_path (path);
@@ -594,15 +633,20 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
       internal_err = true;
   }
 
-  if (this->uuids_.find (ACE_CString (pc->UUID), entry) != 0)
+  //if (this->uuids_.find (ACE_CString (pc->UUID), entry) != 0)
+  //{
+  //  ACE_DEBUG ((LM_ERROR, "Could not remove UUID\n"));
+  //  internal_err = true;
+  //}
+  //else
+  //  //remove the UUID association
+  //  this->uuids_.unbind (entry->int_id_.c_str ());
+
+  if (this->uuids_.unbind (ACE_CString (pc->UUID)) == -1)
   {
     ACE_DEBUG ((LM_ERROR, "Could not remove UUID\n"));
     internal_err = true;
   }
-  else
-    //remove the UUID association
-    this->uuids_.unbind (entry->int_id_.c_str ());
-
 
 #if defined ASSEMBLY_INTERFACE_SUPPORT
   //remove the type from the interface map

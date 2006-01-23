@@ -1,15 +1,21 @@
+Mon Jan 23 22:14:06 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp:
+
+          Adding couple more checks to increase robustness.
+
 Mon Jan 23 20:07:17 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/BaseMonitor.h
-        
+
           Added a virtual destructor to resolve warnings.
-        
+
         * DAnCE/TargetManager/DomainDataManager.cpp
         * DAnCE/TargetManager/TargetManager_exec.cpp
-        
-        Fixed some problems caused by 
+
+        Fixed some problems caused by
         Mon Jan 23 15:11:40 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
-        
+
 Mon Jan 23 17:03:09 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * RACE/Controller/Component/Controller_svnt_export.h:
