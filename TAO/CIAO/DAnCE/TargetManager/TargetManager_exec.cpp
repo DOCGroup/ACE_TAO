@@ -11,8 +11,8 @@
 #include "TargetManager_exec.h"
 #include "ciao/CIAO_common.h"
 #include <orbsvcs/CosNamingC.h>
-#include "DD_Handler.h"
-#include "DnC_Dump.h"
+#include "Config_Handlers/DD_Handler.h"
+#include "Config_Handlers/DnC_Dump.h"
 
 using namespace std;
 

@@ -18,6 +18,8 @@
 class MonitorBase
 {
   public:
+  virtual ~MonitorBase () {};
+  
   /** @function initialize_params
    *  @param  domain The Initital domain for this host
    *  @param  target_manager  TargetManager_ptr
