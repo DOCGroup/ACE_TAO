@@ -20,4 +20,6 @@ main (int argc, char *argv[])
   CORBA::Short n  = server->number ();
 
   ACE_DEBUG ((LM_ERROR, "Got number %d\n", n));
+
+  return 0;
 }

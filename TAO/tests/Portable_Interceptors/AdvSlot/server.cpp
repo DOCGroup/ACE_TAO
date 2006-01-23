@@ -194,4 +194,6 @@ main (int argc, char *argv[])
   orb->destroy ();
 
   ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
+
+  return 0;
 }

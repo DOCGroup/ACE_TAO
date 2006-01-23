@@ -13,12 +13,12 @@
 
 #include "MonitorController.h"
 #include "BaseMonitor.h"
-#include "ace/DLL.h"
-#include <ace/SString.h>
 #include "MonitorCB.h"
 #include "CIAO_common.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/DLL.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 #include "MonitorController.inl"

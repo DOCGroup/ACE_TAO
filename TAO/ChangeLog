@@ -1,3 +1,9 @@
+Mon Jan 23 12:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AdvSlot/client.cpp:
+        * tests/Portable_Interceptors/AdvSlot/server.cpp:
+          Fixed compile warnings
+
 Sun Jan 22 18:32:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
