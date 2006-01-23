@@ -1,3 +1,8 @@
+Mon Jan 23 08:02:08 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Pipe.cpp: Added static_cast<u_short> (0) rather than
+	  (u_short) 0 to the ACE_INET_Addr local_any in ACE_Pipe::open().
+
 Sat Jan 21 08:19:34 UTC 2006  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ACE-guidelines.html:
