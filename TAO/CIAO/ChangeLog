@@ -1,3 +1,9 @@
+Mon Jan 23 15:11:40 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/TargetManager.mpc
+        
+          Cleaned up the MPC file, fixed a linking error on OS X.
+
 Sat Jan 21 21:54:59 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/SizeTypeCalculator.cpp:
