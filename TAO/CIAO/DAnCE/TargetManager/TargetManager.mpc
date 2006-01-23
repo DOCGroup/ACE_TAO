@@ -36,6 +36,7 @@ project(CIAO_TargetManager_svnt) : ciao_servant_dnc {
   Source_Files {
     TargetManagerEC.cpp
     TargetManagerS.cpp
+    TargetManagerExtS.cpp
     TargetManager_svnt.cpp
   }
 }
@@ -45,11 +46,8 @@ project(CIAO_TargetManager_exec) : namingexe, ciao_component_dnc , ciao_config_h
   after   += CIAO_TargetManager_svnt DomainApplicationManager
   sharedname = TargetManager_exec
   libs      += TargetManager_stub TargetManager_svnt DomainApplicationManager
-  macros   += XML_USE_PTHREADS
   
-  includes += $(CIAO_ROOT)/tools/Config_Handlers \
-              $(CIAO_ROOT) \
-              $(CIAO_ROOT)/DomainApplicationManager
+  includes += $(CIAO_ROOT)/DomainApplicationManager
   
   idlflags  +=  -Wb,export_macro=TARGETMANAGER_EXEC_Export -Wb,export_include=TargetManager_exec_export.h
   dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL
