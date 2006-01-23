@@ -13,9 +13,9 @@
 //===============================================================
 #include "DomainDataManager.h"
 
-#include "DD_Handler.h"
-#include "DnC_Dump.h"
-#include "CIAO_common.h"
+#include "Config_Handlers/DD_Handler.h"
+#include "Config_Handlers/DnC_Dump.h"
+#include "ciao/CIAO_common.h"
 
 const char * domain_file_name = "Domain.cdd";
 
