@@ -1,3 +1,8 @@
+Mon Jan 23 18:07:00 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/Gateway/Gateway/Event_Channel.cpp: Put the ACE_INET_Addr
+          setup on separate lines to help aC++ optimizer get it right.
+
 Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_TLI.{h inl}: HP aC++ 03.56 (last aC++ for HP-UX 11.00) gets
