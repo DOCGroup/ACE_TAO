@@ -1,3 +1,32 @@
+Mon Jan 23 22:41:49 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/HTTP_Client.h:
+        * DAnCE/RepositoryManager/HTTP_Client.cpp:
+        * DAnCE/RepositoryManager/HTTP_Handler.h:
+        * DAnCE/RepositoryManager/HTTP_Handler.cpp:
+        * DAnCE/RepositoryManager/Options.h:
+        * DAnCE/RepositoryManager/Options.cpp:
+        * DAnCE/RepositoryManager/PC_Updater.h:
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/PC_Updater_T.h:
+        * DAnCE/RepositoryManager/PC_Updater_T.cpp:
+        * DAnCE/RepositoryManager/README.txt:
+        * DAnCE/RepositoryManager/RM_Helper.h:
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager.idl:
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/URL_Parser.h:
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+
+          Moving what used to be DAnCE/spec_RepositoryManager directory to
+          the DAnCE/RepositoryManager directory.
+
 Mon Jan 23 22:14:06 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp:
