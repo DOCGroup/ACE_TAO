@@ -47,7 +47,7 @@ ACE_Pipe::open (int buffer_size)
   ACE_SOCK_Stream writer;
   int result = 0;
 # if defined (ACE_WIN32)
-  ACE_INET_Addr local_any  ((u_short) 0, ACE_LOCALHOST);
+  ACE_INET_Addr local_any  (static_cast<u_short> (0), ACE_LOCALHOST);
 # else
   ACE_Addr local_any = ACE_Addr::sap_any;
 # endif /* ACE_WIN32 */
