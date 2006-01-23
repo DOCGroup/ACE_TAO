@@ -54,6 +54,8 @@ inline void __ace_clearerr(FILE *stream)
 #   endif /* defined (clearerr) */
 # endif /* !ACE_LACKS_CLEARERR */
 
+#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
+    && !defined(ACE_WIN32) && !defined (VXWORKS)
 /// Helper for the ACE_OS::cuserid() function
 /**
  * On some platforms cuserid is a macro.  Defining ACE_OS::cuserid()
@@ -68,8 +70,6 @@ inline void __ace_clearerr(FILE *stream)
  *       probably need to move some of it off into some sort of emulation
  *       function.
  */
-#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
-    && !defined(ACE_WIN32) && !defined (VXWORKS)
 inline char *ace_cuserid(char *user)
 {
   return cuserid(user);
