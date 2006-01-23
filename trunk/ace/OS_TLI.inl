@@ -231,7 +231,7 @@ t_open (char *path, int oflag, struct t_info *info)
 }
 
 ACE_INLINE int
-t_optmgmt (ACE_HANDLE handle, struct t_optmgmt *req, struct t_optmgmt *ret)
+t_optmgmt (ACE_HANDLE handle, ACE_TOPTMGMT *req, ACE_TOPTMGMT *ret)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_optmgmt (handle, req, ret), int, -1);
