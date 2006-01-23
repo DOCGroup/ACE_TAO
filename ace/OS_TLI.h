@@ -147,6 +147,16 @@ extern "C" {
 
 # endif /* ACE_HAS_XTI || ACE_HAS_TLI */
 
+// See ChangeLog:
+// Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
+// for background of this ACE_TOPTMGMT hack. It should be removed when
+// removing support for HP-UX 11.00.
+#if defined (__HP_aCC) && (__HP_aCC < 36000)
+typedef extern "C" struct t_optmgmt  ACE_TOPTMGMT;
+#else
+typedef struct t_optmgmt ACE_TOPTMGMT;
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -216,8 +226,8 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_optmgmt (ACE_HANDLE handle,
-                 struct t_optmgmt *req,
-                 struct t_optmgmt *ret);
+                 ACE_TOPTMGMT *req,
+                 ACE_TOPTMGMT *ret);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_rcv (ACE_HANDLE fildes,
