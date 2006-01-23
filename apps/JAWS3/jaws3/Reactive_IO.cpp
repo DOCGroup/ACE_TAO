@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/ACE.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
 
 #ifndef JAWS_BUILD_DLL

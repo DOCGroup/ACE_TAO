@@ -1,3 +1,20 @@
+Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_TLI.{h inl}: HP aC++ 03.56 (last aC++ for HP-UX 11.00) gets
+          confused with struct t_optmgmt being defined as extern "C" by the OS
+          and referenced in namespace ACE_OS by ACE. To help this compiler
+          deal, typedef ACE_TOPTMGMT appropriately, with extern "C" for
+          aC++ less than 03.60 and normally for all other compilers. This
+          should take care of the odd t_optmgmt errors.
+
+          When we remove support for HP-UX 11.00, this hack should be removed
+          as well.
+
+        * apps/JAWS3/jaws3/Reactive_IO.cpp: Replace #include "ace/OS.h" with
+          #include "ace/OS_NS_unistd.h". Leaving OS.h gets HP aCC into a state
+          where it gets confused about methods and types with the same name,
+          in this case t_optmgmt.
+
 Mon Jan 23 15:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Acceptor.h:
