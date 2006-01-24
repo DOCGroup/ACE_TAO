@@ -19,7 +19,7 @@ ACE_RCSID(ace, OS_NS_netdb, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
 
 struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
@@ -57,6 +57,10 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 
   return &ret;
 }
+
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYADDR */
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
 
 struct hostent *
 ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
@@ -108,6 +112,10 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
   return result;
 }
 
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYADDR */
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
+
 struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
@@ -136,6 +144,10 @@ ACE_OS::gethostbyname (const char *name)
 
   return &ret;
 }
+
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYNAME */
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
 
 struct hostent *
 ACE_OS::gethostbyname_r (const char *name, hostent *result,
@@ -185,7 +197,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   return result;
 }
 
-#endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYNAME*/
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
