@@ -69,6 +69,6 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_FACTORY_DECLARE (TAO_Concurrency, TAO_Concurrency_Loader)
+ACE_FACTORY_DECLARE (TAO_Concurrency_Serv, TAO_Concurrency_Loader)
 
 #endif /* TAO_CONCURRENCY_LOADER_H */
