@@ -184,6 +184,8 @@
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_SWAB
 #define ACE_LACKS_TEMPNAM
+#define ACE_LACKS_GETPROTOBYNUMBER
+#define ACE_LACKS_GETPROTOBYNAME
 
 #if defined (_WIN32_WCE_EMULATION)
 // @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)
