@@ -499,12 +499,27 @@ destroyApplication (Deployment::Application_ptr app
   if (CORBA::is_nil (this->nodeapp_.in () ))
     ACE_THROW (Deployment::StopError ());
 
-  // If there are no shared components within this NAM, then kill the NA
+  // Iterate over all the components within this NAM, and if it's
+  // not a shared component, then remove it. If all the components
+  // are removed, then we shall kill the NA totally.
+  bool kill_node_app  = true;
+  for (CORBA::ULong i = 0; i < this->plan_.instance.length (); ++i)
+    {
+      ACE_CString name = plan_.instance[i].name.in ();
+      if (this->is_shared_component (name))
+        {
+          kill_node_app = false;
+          continue;
+        }
 
-  // Otherwise, only remove those components from the NA
-
-  this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+        this->nodeapp_->remove_component (name.c_str ());
+    }
+  
+  if (kill_node_app)
+    {
+      this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 
   printf("Exiting NAM_Impl::destroyApplication\n");
   return;
