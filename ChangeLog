@@ -1,3 +1,10 @@
+Tue Jan 24 12:54:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Choosed a non-group sorting method if the MPC_GNUACE_NAMED_TARGETS
+          environment variable is set.
+
 Tue Jan 24 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_netdb.{h,cpp,inl}:
@@ -108,8 +115,8 @@ Mon Jan 23 15:43:56 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Mon Jan 23 08:02:08 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Pipe.cpp: Added static_cast<u_short> (0) rather than
-	  (u_short) 0 to the ACE_INET_Addr local_any in ACE_Pipe::open().
+        * ace/Pipe.cpp: Added static_cast<u_short> (0) rather than
+          (u_short) 0 to the ACE_INET_Addr local_any in ACE_Pipe::open().
 
 Sat Jan 21 08:19:34 UTC 2006  James H. Hill  <hillj@isis.vanderbilt.edu>
 
