@@ -1,3 +1,8 @@
+Tue Jan 24 13:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+          Removed ACE_LACKS_MKTEMP, VxWorks 6.2 delivers this function
+
 Tue Jan 24 13:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
