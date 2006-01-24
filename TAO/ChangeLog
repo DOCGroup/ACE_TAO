@@ -1,3 +1,13 @@
+Tue Jan 24 15:24:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+
+          Calling create_reference_with_id() (via create_log_reference) in
+          the constructor and/or ::init() appears to result in an infinate
+          loop within the ORB.  Until that's resolved, defer obtaining the
+          logs object reference until it's needed.
+
 Tue Jan 24 14:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.h:

@@ -349,6 +349,9 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+  /// Reference to the LogMgr servant
+  TAO_LogMgr_i& logmgr_i_;
+
   /// The log's object reference
   DsLogAdmin::Log_var log_;
 
