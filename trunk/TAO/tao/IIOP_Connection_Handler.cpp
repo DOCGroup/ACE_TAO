@@ -84,6 +84,8 @@ TAO_IIOP_Connection_Handler::open (void*)
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
+  protocol_properties.keep_alive_ =
+    this->orb_core ()->orb_params ()->sock_keepalive ();
 
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
@@ -130,14 +132,13 @@ TAO_IIOP_Connection_Handler::open (void*)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  int keepalive = this->orb_core ()->orb_params ()->sock_keepalive ();
-
-  if (keepalive)
+  if (protocol_properties.keep_alive_)
     {
-      if (this->peer ().set_option (SOL_SOCKET,
-                                    SO_KEEPALIVE,
-                                    (void *) &keepalive,
-                                    sizeof (int)) == -1
+      if (this->peer ().
+          set_option (SOL_SOCKET,
+                      SO_KEEPALIVE,
+                      (void *) &protocol_properties.keep_alive_,
+                      sizeof (protocol_properties.keep_alive_)) == -1
           && errno != ENOTSUP)
         {
           return -1;
