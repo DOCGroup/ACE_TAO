@@ -42,7 +42,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if !defined (VXWORKS)
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR))
 
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
@@ -67,6 +67,10 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
                        0);
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
+
+#endif
+
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR))
 
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr_r (const char *addr,
@@ -148,11 +152,15 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
+#endif
+
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME))
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname");
-# if defined (ACE_PSOS)
+# if defined (ACE_LACKS_GETHOSTBYNAME)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
@@ -166,6 +174,10 @@ ACE_OS::gethostbyname (const char *name)
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
 
+#endif
+
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME))
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyname_r (const char *name,
                          struct hostent *result,
@@ -173,7 +185,7 @@ ACE_OS::gethostbyname_r (const char *name,
                          int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname_r");
-#if defined (ACE_PSOS)
+#if defined (ACE_LACKS_GETHOSTBYNAME)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -245,6 +257,8 @@ ACE_OS::gethostbyname_r (const char *name,
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
+#endif
+
 ACE_INLINE struct hostent *
 ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 {
@@ -312,8 +326,6 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_PSOS */
 }
-
-#endif /* ! VXWORKS */
 
 ACE_INLINE struct protoent *
 ACE_OS::getprotobyname (const char *name)
