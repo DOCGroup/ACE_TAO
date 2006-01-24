@@ -1,3 +1,22 @@
+Tue Jan 24 12:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_netdb.h:
+        * ace/OS_NS_netdb.inl:
+          Use ACE_VXWORKS instead of VXWORKS and introduced
+          ACE_LACKS_GETHOSTBYADDR, ACE_LACKS_GETPROTOBYNUMBER and
+          ACE_LACKS_GETPROTOBYNAME to make maintenance easier
+
+        * ace/config-chorus.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-WinCE.h:
+          Added the new defines to the correct files
+
 Tue Jan 24 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_arpa_inet.cpp (inet_aton):
