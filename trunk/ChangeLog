@@ -1,3 +1,8 @@
+Tue Jan 24 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_resource.inl:
+          Use the ACE_UNUSED_ARG macro for arguments that are not used
+
 Tue Jan 24 12:54:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
