@@ -162,7 +162,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 #   else
   ACE_OSCALL_RETURN (::cxxshl_load(fname, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   endif  /* aC++ vs. Hp C++ */
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS) && !defined (__RTP__)
   MODULE* handle = 0;
   // Open readonly
   ACE_HANDLE filehandle = ACE_OS::open (fname,
@@ -260,7 +260,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
   return status == 0 ? value : 0;
 
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_VXWORKS) && !defined (__RTP__)
 
   // For now we use the VxWorks global symbol table
   // which resolves the most recently loaded symbols .. which resolve mostly what we want..
