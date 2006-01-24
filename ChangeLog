@@ -1,3 +1,8 @@
+Tue Jan 24 16:56:51 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_signal.inl: Removed explicit ACE_OS from sigaction
+          function - left over from trying to work around HP issues yesterday.
+
 Tue Jan 24 16:28:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
