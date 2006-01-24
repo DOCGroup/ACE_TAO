@@ -131,6 +131,8 @@
 #define ACE_LACKS_WRITEV
 #define ACE_LACKS_WAIT
 #define ACE_PAGE_SIZE 4096
+#define ACE_LACKS_KILL
+#define ACE_LACKS_SIGACTION
 
 // Chorus has syslog, but doesn't have setlogmask()
 #define ACE_LACKS_SETLOGMASK
