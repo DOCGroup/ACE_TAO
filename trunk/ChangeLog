@@ -1,3 +1,9 @@
+Tue Jan 24 16:28:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added feature tests for ACE_LACKS_KILL and ACE_LACKS_SIGACTION.
+
 Tue Jan 24 16:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dlfcn.inl:
