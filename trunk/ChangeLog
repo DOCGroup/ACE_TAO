@@ -1,3 +1,9 @@
+Tue Jan 24 14:44:35 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Activation_Queue.h: Corrected @retval for enqueue(). Returns
+          >0 (number of requests now queued) on success, not 0. Thanks to
+          Guy Peleg for this correction.
+
 Tue Jan 24 14:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdlib.cpp:
