@@ -41,6 +41,22 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
   Property Service, and RTEventLog Admin Service (TAO's RTEvent 
   varient of the OMG Telecom Log Service) have been committed.
 
+. Added a new ORB run-time option "-ORBUseLocalMemoryPool [0|1]" which
+  controls an individual application's use of TAO's Local Memory Pool.
+  TAO can use a local memory pool to satisfy some of its needs for
+  heap storage, as it is often more efficient than using the
+  platform's default memory allocator. The pool will always grow as
+  large as necessary to satisfy memory allocations, but it will never
+  shrink. This means that sometimes a process can retain memory that
+  it no longer needs. If the default allocator is used then TAO gives
+  memory back as soon as it is not needed.
+  The UseLocalMemoryPool option selects between using the local memory
+  pool or using the default allocator, where 0 means don't use the pool,
+  1 means use the pool. The default is still controlled by the original
+  compile-time option controlled by the #define TAO_USE_LOCAL_MEMORY_POOL
+  which defaults to 1 if not specified.
+
+
 USER VISIBLE CHANGES BETWEEN TAO-1.4.7 and TAO-1.4.8
 ====================================================
 
