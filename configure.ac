@@ -3502,6 +3502,8 @@ case "$host" in
     ;;
 esac
 
+ACE_CHECK_LACKS_FUNCS(kill)
+
 ACE_CHECK_LACKS_FUNCS(lstat)
 
 ACE_CHECK_LACKS_FUNCS(madvise)
@@ -3599,6 +3601,8 @@ if test "$ac_cv_func_setreuid" = yes; then
 fi
 
 ACE_CHECK_LACKS_FUNCS(setsid setuid)
+
+ACE_CHECK_LACKS_FUNCS(sigaction)
 
 ACE_CHECK_HAS_FUNCS(strnlen)
 
