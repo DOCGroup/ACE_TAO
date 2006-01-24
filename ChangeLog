@@ -1,3 +1,17 @@
+Tue Jan 24 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_netdb.{h,cpp,inl}:
+        * ace/config-vxworks5.x.h:
+          Simplified the vxworks specific code, VxWorks 6.2 does deliver several
+          of the API's we don't had with VxWorks 5.5.1.
+
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+          Added ACE_LACKS_GETHOSTBYNAME
+
 Tue Jan 24 12:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_netdb.h:
