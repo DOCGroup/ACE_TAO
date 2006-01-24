@@ -14,19 +14,19 @@ ACE_INLINE int
 kill (pid_t pid, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::kill");
-#if defined (ACE_WIN32) || defined (CHORUS) || defined (ACE_PSOS)
+#if defined (ACE_LACKS_KILL)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::kill (pid, signum), int, -1);
-#endif /* ACE_WIN32 || CHORUS || ACE_PSOS */
+#endif /* ACE_LACKS_KILL */
 }
 
 ACE_INLINE int
 pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
-#if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
+#if defined (ACE_HAS_PTHREADS_STD) && !defined (ACE_LACKS_PTHREAD_SIGMASK)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsp, osp),
                                        result),
@@ -60,8 +60,7 @@ ACE_OS::sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   else
     osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
-#elif defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS)
-  ACE_UNUSED_ARG (signum);
+#elif defined (ACE_LACKS_SIGACTION)
   ACE_UNUSED_ARG (nsa);
   ACE_UNUSED_ARG (osa);
   ACE_NOTSUP_RETURN (-1);
