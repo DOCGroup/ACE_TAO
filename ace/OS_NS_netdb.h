@@ -38,7 +38,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -47,7 +47,7 @@ namespace ACE_OS
                                  int length,
                                  int type);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -59,14 +59,14 @@ namespace ACE_OS
                                    ACE_HOSTENT_DATA buffer,
                                    int *h_errnop);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_VXWORKS */
   struct hostent *gethostbyname (const char *name);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -77,19 +77,11 @@ namespace ACE_OS
                                    int *h_errnop);
 
 
-#if defined (ACE_VXWORKS)
-  extern ACE_Export
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_VXWORKS */
   struct hostent *getipnodebyaddr (const void *src, size_t len,
                                    int family);
 
-#if defined (ACE_VXWORKS)
-  extern ACE_Export
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_VXWORKS */
   struct hostent *getipnodebyname (const char *name, int family,
                                    int flags = 0);
 
