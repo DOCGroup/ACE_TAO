@@ -1,3 +1,9 @@
+Tue Jan 24 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.cpp (inet_aton):
+          Use ACE_VXWORKS instead of VXWORKS and made it dependent on the
+          VxWorks version number
+
 Tue Jan 24 10:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * OS_NS_signal.inl:
