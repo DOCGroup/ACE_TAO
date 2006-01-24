@@ -111,7 +111,8 @@ public:
    *            earlier, however, if queue is closed, deactivated, or when
    *            a signal occurs.
    *
-   * @retval    0 on success.
+   * @retval    >0 The number of method requests on the queue after adding
+   *            the specified request.
    * @retval    -1 if an error occurs; errno contains further information. If
    *            the specified timeout elapses, errno will be @c EWOULDBLOCK.
    */
