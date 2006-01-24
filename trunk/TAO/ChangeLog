@@ -1,7 +1,12 @@
+Tue Jan 24 14:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.h:
+          Fixed export macro in ACE_FACTORY_DECLARE
+
 Tue Jan 24 10:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
-          Added -ORBUseLocalMmeoryPool option info.
+          Added -ORBUseLocalMemoryPool option info.
 
 Mon Jan 23 12:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
