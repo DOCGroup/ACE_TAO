@@ -118,10 +118,10 @@ namespace CIAO
 
     // ********* CIAO Specific Helper functions ************
 
-    virtual const ::Components::FacetDescriptions &
+    virtual ::Components::FacetDescriptions *
     get_all_facets (ACE_CString & name);
 
-    virtual const ::Components::ConsumerDescriptions &
+    virtual ::Components::ConsumerDescriptions *
     get_all_consumers (ACE_CString & name);
 
     virtual void

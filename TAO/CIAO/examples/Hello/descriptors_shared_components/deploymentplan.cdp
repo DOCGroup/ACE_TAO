@@ -133,6 +133,7 @@
     </internalEndpoint>
   </connection>
 
+<!--
   <connection>
     <name>hello_facet_connection</name>
     <internalEndpoint>
@@ -146,6 +147,7 @@
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
   </connection>
+-->
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">

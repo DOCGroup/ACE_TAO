@@ -691,7 +691,8 @@ finishLaunch (CORBA::Boolean start,
             this->get_outgoing_connections (
               (entry->int_id_).child_plan_.in (),
               !is_ReDAC,
-              true  // we search *new* plan
+              true,  // we search *new* plan
+              DomainApplicationManager_Impl::Internal_Connections
 					    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -745,7 +746,8 @@ finishLaunch (CORBA::Boolean start,
                 this->get_outgoing_connections (
                         (entry->int_id_).old_child_plan_.in (),
                         true, // yes, get *all* the connections
-                        false // search in the *old* plan
+                        false, // search in the *old* plan
+                        DomainApplicationManager_Impl::Internal_Connections
 					              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -755,7 +757,8 @@ finishLaunch (CORBA::Boolean start,
                 this->get_outgoing_connections (
                         (entry->int_id_).child_plan_.in (),
                         true, // yes, get *all* the connections
-                        true  // search in the *new* plan
+                        true,  // search in the *new* plan
+                        DomainApplicationManager_Impl::Internal_Connections
 					              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -902,6 +905,30 @@ populate_binding_info (const ACE_CString& name,
   return retv;
 }
 
+CIAO::Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+CIAO::DomainApplicationManager_Impl::
+populate_binding_info (const ACE_CString& name)
+{
+  Execution_Manager::Execution_Manager_Impl::Component_Binding_Info * retv;
+  ACE_NEW_RETURN (retv,
+                 Execution_Manager::Execution_Manager_Impl::Component_Binding_Info (),
+                 0);
+
+  // Looking for the child plan uuid through the shared compoonent list
+  for (CORBA::ULong i = 0; i < this->shared_->length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->shared_[i].name.in (),
+                          name.c_str ()) == 0)
+        {
+          ACE_CString child_uuid = this->shared_[i].plan_uuid.in ();
+          retv = this->populate_binding_info (name, child_uuid);
+          return retv;
+        }
+    }
+  
+  return 0; // If no matching is found (should never happen).
+}
+
 void
 CIAO::DomainApplicationManager_Impl::
 add_shared_components (const Deployment::ComponentPlans & shared)
@@ -975,7 +1002,8 @@ Deployment::Connections *
 CIAO::DomainApplicationManager_Impl::
 get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                           bool is_getting_all_connections,
-                          bool is_search_new_plan
+                          bool is_search_new_plan,
+                          Connection_Search_Type t
 			                    ACE_ENV_ARG_DECL)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
@@ -987,7 +1015,9 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
   // For each component instance in the child plan ...
   for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
   {
-    if (this->is_shared_component (plan.instance[i].name.in ()))
+
+    if (t == Internal_Connections &&
+        this->is_shared_component (plan.instance[i].name.in ()))
       continue;
 
     // Get the outgoing connections of the component
@@ -1278,24 +1308,63 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 
           my_na->ciao_passivate ();
 
-          Deployment::Connections * my_connections =
+          Deployment::Connections_var connections =
             this->get_outgoing_connections (
               (entry->int_id_).child_plan_.in (),
               true, // yes, get *all* the connections
-              true  // yes, we search the current plan
+              true,  // yes, we search the current plan
+              DomainApplicationManager_Impl::External_Connections
 					    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Invoke finishLaunch() on NodeApplication to remove bindings.
-          if (my_connections->length () != 0)
+          // If this NodeApplication is not within the control of this DAM,
+          // then we should delegate the call to the correct DAM through EM.
+
+          // Iterave over the returned connection list in <connections>,
+          // (1) If this is a shared component, then we remove this connection
+          //     from <connections>, and then populate a "Component_Binding_Info"
+          //     struct for it and send to EM for remove.
+          // (2) For the rest of the connections, we send them to the NAs
+          //     managed by the local DAM to remove.
+
+          for (CORBA::ULong j = 0; j < connections->length (); ++j)
             {
-              entry->int_id_.node_application_->finishLaunch
-                 (*my_connections,
-                  start,
-                  false // "false" => remove new connections only
-                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              if (this->is_shared_component (connections[j].instanceName.in ()))
+                {
+                  // ask EM to remove the binding for us
+                  Execution_Manager::Execution_Manager_Impl::
+                    Component_Binding_Info * 
+                      binding = this->populate_binding_info (
+                        connections[j].instanceName.in ());
+
+                  this->execution_manager_->finalize_global_binding (
+                    *binding, false);
+
+                  // If this element is the last one in the sequence
+                  if (j == connections->length () - 1)
+                    {
+                      connections->length (connections->length () - 1);
+                      break;
+                    }
+
+                  // otherwise, remove this element from the list
+                  for (CORBA::ULong k = j; k < connections->length (); ++k)
+                    {
+                      connections[k] = connections [k + 1];
+                      connections->length (connections->length () - 1);
+                    }
+                }
             }
+
+          entry->int_id_.node_application_->finishLaunch
+              (connections.in (),
+               start,
+               false // "false" => remove connections
+               ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // To invoke <destroy> operations on NodeManagers is the way to go.
 
           // Invoke destroyPlan() operation on the NodeManager
           Deployment::NodeManager_var

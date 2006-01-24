@@ -52,6 +52,16 @@ namespace CIAO
     : public virtual POA_Deployment::DomainApplicationManager
   {
   public:
+
+    // External_Connections means we search all the connections including
+    // the connectiosn for external/shared components of this plan which hold
+    // port objrefs of components within this plan
+    enum Connection_Search_Type
+      {
+        External_Connections, 
+        Internal_Connections
+      };
+
     /// Define the type which contains a list of DnC artifacts.
     /// @@ Assumption: Each NodeApplicationManager create only one
     /// NodeApplication when the startLaunch() operation is invoked,
@@ -254,6 +264,15 @@ namespace CIAO
       populate_binding_info (const ACE_CString& name, 
                              const ACE_CString& child_uuid);
 
+    /**
+     * Construct <Component_Binding_Info> struct for the component instance.
+     * Fetch the plan_uuid info from the internally cached shared component
+     * list.
+     *
+     * @para name component instance name
+     */
+    Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+      populate_binding_info (const ACE_CString& name);
 
     /**
      * Contact each NodeManager to get shared compnents information
@@ -292,8 +311,9 @@ namespace CIAO
     Deployment::Connections *
     get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                               bool is_getting_all_connections = true,
-                              bool is_search_new_plan = true
-			                        ACE_ENV_ARG_DECL);
+                              bool is_search_new_plan = true,
+                              Connection_Search_Type t = Internal_Connections
+			                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// This is a helper function to find the connection for a component.
     bool
@@ -301,7 +321,7 @@ namespace CIAO
                                 Deployment::Connections & retv,
                                 bool is_ReDAC,
                                 bool is_search_new_plan
-				                        ACE_ENV_ARG_DECL)
+				                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((Deployment::StartError));
 
     /// Dump connections, a static method

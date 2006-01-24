@@ -93,24 +93,58 @@ CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-const ::Components::FacetDescriptions &
+::Components::FacetDescriptions *
 CIAO::NodeManager_Impl_Base::
 get_all_facets (ACE_CString & name)
 {
   Component_Facets_Map::ENTRY *entry;
-  this->comp_facets_map_.find (name.c_str (), entry);
 
-  return entry->int_id_.in ();
+  if (this->comp_facets_map_.find (name.c_str (), entry) != 0)
+    ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+      "No component with name [%s] was found in the NodeManager\n", name.c_str ()));
+
+  CORBA::ULong facet_len = entry->int_id_->length ();
+
+  Components::FacetDescriptions_var retv;
+  ACE_NEW_RETURN (retv,
+                  Components::FacetDescriptions,
+                  0);
+
+  retv->length (facet_len);
+
+  for (CORBA::ULong i = 0; i < facet_len; ++i)
+    {
+      retv[i] = entry->int_id_[i];
+    }
+
+  return retv._retn ();
 }
 
-const ::Components::ConsumerDescriptions &
+::Components::ConsumerDescriptions *
 CIAO::NodeManager_Impl_Base::
 get_all_consumers (ACE_CString & name)
 {
   Component_Consumers_Map::ENTRY *entry;
-  this->comp_consumers_map_.find (name.c_str (), entry);
 
-  return entry->int_id_.in ();
+  if (this->comp_consumers_map_.find (name.c_str (), entry) != 0)
+    ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+      "Component [%s] was not found in the NodeManager\n", name.c_str ()));
+
+  CORBA::ULong consumer_len = entry->int_id_->length ();
+
+  Components::ConsumerDescriptions_var retv;
+  ACE_NEW_RETURN (retv,
+                  Components::ConsumerDescriptions,
+                  0);
+
+  retv->length (consumer_len);
+
+  for (CORBA::ULong i = 0; i < consumer_len; ++i)
+    {
+      retv[i] = entry->int_id_[i];
+    }
+
+  return retv._retn ();
 }
 
 void
@@ -334,7 +368,7 @@ destroyPlan (const Deployment::DeploymentPlan & plan
   // in the deployment plan.
 
   // Clean up the cached "Facets" and "Consumers" map of the components
-  // whose ref count is 0
+  // if their ref count become 0
   CORBA::ULong const length = plan.instance.length ();
   for (CORBA::ULong i = 0; i <  length; ++i)
     {
@@ -350,25 +384,20 @@ destroyPlan (const Deployment::DeploymentPlan & plan
 
               // Unbind this component from the ref_count_map_
               this->ref_count_map_.unbind (plan.instance[i].name.in ());
+
+              // Unbind this component from the facet/consumer maps
+              if (this->comp_facets_map_.unbind (
+                    plan.instance[i].name.in ()) != 0 ||
+                  this->comp_consumers_map_.unbind (
+                    plan.instance[i].name.in ()) != 0)
+                {
+                  ACE_TRY_THROW
+                    (Deployment::StopError ("NodeManager_Impl_Base::destroyPlan ",
+                                            "Unable to find component instance"));
+                }
             }
        }
-
-      if (this->comp_facets_map_.unbind (plan.instance[i].name.in ()) != 0 ||
-          this->comp_consumers_map_.unbind (plan.instance[i].name.in ()) != 0)
-        {
-          ACE_TRY_THROW
-            (Deployment::StopError ("NodeManager_Impl_Base::destroyPlan ",
-                                    "Unable to find component instance"));
-        }
     }
-
-  // Create a list of components that are not to be removed, and send
-  // this list to the NAM, who will delegate to appropriate NAs to 
-  // remove bindings from these components.
-
-  // The problem is that we probably also want to call another NAM, which
-  // manages the shared components in a different child plan. :(
-
 
   // Find the NAM from the map and invoke the destroyPlan() operation on
   // it, which will actuall remove components and connections in this plan.
@@ -379,7 +408,7 @@ destroyPlan (const Deployment::DeploymentPlan & plan
   Deployment::NodeApplicationManager_var nam =
     Deployment::NodeApplicationManager::_narrow (obj.in ());
 
-  // Convert the ACE Set into CORBA sequence, and reset it.
+  // Reset each NAM about the shared components information
   CORBA::StringSeq_var shared = this->shared_components_seq ();
   nam->set_shared_components (shared.in ());
 

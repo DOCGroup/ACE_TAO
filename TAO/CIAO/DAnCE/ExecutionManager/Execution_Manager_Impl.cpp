@@ -268,7 +268,7 @@ namespace CIAO
     void
     Execution_Manager_Impl::finalize_global_binding (
           const Component_Binding_Info & binding,
-          CORBA::Boolean add_connection)
+          CORBA::Boolean add_or_remove)
         ACE_THROW_SPEC ((
           ::CORBA::SystemException,
           ::Deployment::InvalidConnection))
@@ -293,7 +293,7 @@ namespace CIAO
 
         node_app->finishLaunch (binding.providedReference_.in (),
                                 true, // start
-                                true); // add_connection
+                                add_or_remove);
       }
       ACE_CATCHANY
         {
