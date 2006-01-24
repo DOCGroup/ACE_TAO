@@ -55,8 +55,8 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 #   endif /* ACE_HAS_RUSAGE_WHO_ENUM */
 # endif /* ACE_WIN32 */
 #else
-  who = who;
-  ru = ru;
+  ACE_UNUSED_ARG (who);
+  ACE_UNUSED_ARG (ru);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SYSCALL_GETRUSAGE */
 }
