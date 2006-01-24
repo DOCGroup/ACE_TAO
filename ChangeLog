@@ -1,3 +1,9 @@
+Tue Jan 24 18:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+          Readded ACE_LACKS_MKTEMP again, the function is declared but can't
+          be resolved during linking, reported this to WindRiver
+
 Tue Jan 24 16:56:51 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_signal.inl: Removed explicit ACE_OS from sigaction
