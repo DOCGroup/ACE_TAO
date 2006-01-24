@@ -28,7 +28,7 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
       Application->Initialize ();
       Application->Title = "CORBA Chat Client";
       Application->CreateForm(__classid(TChatClientWindow), &ChatClientWindow);
-                 Application->Run ();
+      Application->Run ();
     }
   catch (Exception &exception)
     {
