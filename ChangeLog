@@ -1,3 +1,9 @@
+Tue Jan 24 13:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+          Removed ACE_LACKS_MMAP and ACE_LACKS_MPROTECT, VxWorks 6.2 delivers
+          these functions
+
 Tue Jan 24 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_resource.inl:
