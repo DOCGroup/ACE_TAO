@@ -63,7 +63,7 @@ namespace CIAO
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::bind_dam_reference");
       int retval =
-        this->map_.bind (str,
+        this->map_.rebind (str,
                          dam);
 
       if (retval != 0)

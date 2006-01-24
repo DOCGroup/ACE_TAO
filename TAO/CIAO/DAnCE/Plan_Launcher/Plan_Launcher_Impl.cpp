@@ -241,7 +241,9 @@ namespace CIAO
             if (CIAO::debug_level ())
               ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-            this->destroy_dam (dapp_mgr.in ());
+            // Note that we should ask the DAM to tell EM whether the DAM should
+            // be destroyed
+            //this->destroy_dam (dapp_mgr.in ());
         }
       ACE_CATCHANY
         {
