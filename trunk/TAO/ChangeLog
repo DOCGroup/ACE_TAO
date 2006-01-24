@@ -1,3 +1,8 @@
+Tue Jan 24 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Borland/ChatClientWnd.cpp:
+          Fixed parameter unused warnings
+
 Tue Jan 24 15:24:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
