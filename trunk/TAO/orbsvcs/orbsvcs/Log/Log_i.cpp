@@ -28,7 +28,8 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
                       DsLogAdmin::LogMgr_ptr factory,
                       DsLogAdmin::LogId logid,
                       TAO_LogNotification *log_notifier)
-  : factory_ (DsLogAdmin::LogMgr::_duplicate (factory)),
+  : logmgr_i_(logmgr_i),
+    factory_ (DsLogAdmin::LogMgr::_duplicate (factory)),
     logid_ (logid),
     op_state_ (DsLogAdmin::disabled),
     reactor_ (orb->orb_core()->reactor()),
@@ -37,10 +38,8 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  this->log_ = logmgr_i.create_log_reference (logid ACE_ENV_ARG_PARAMETER);
-
-  recordstore_ = logmgr_i.get_log_record_store (logid
-						ACE_ENV_ARG_PARAMETER);
+  this->recordstore_ = logmgr_i_.get_log_record_store (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
 
   // TODO: get log parameters from (persistent?) store.
   avail_status_.off_duty = 0;
@@ -176,6 +175,16 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       DsLogAdmin::QoSList* old_qoslist_ptr;
       ACE_NEW_THROW_EX (old_qoslist_ptr,
 			DsLogAdmin::QoSList (1),
@@ -243,6 +252,16 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+
       notifier_->max_record_life_value_change (this->log_.in (),
                                                this->logid_,
                                                old_life,
@@ -296,6 +315,16 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       notifier_->max_log_size_value_change (this->log_.in (),
 					    this->logid_,
 					    old_size,
@@ -374,6 +403,16 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       notifier_->log_full_action_value_change (this->log_.in (),
                                                this->logid_,
                                                old_action,
@@ -433,6 +472,16 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       notifier_->administrative_state_change (this->log_.in (),
                                               this->logid_,
                                               state
@@ -474,6 +523,16 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       notifier_->forwarding_state_change (this->log_.in (),
                                           this->logid_,
                                           state
@@ -530,6 +589,16 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       if (interval.start != old_interval.start)
         {
           notifier_->start_time_value_change (this->log_.in (),
@@ -630,6 +699,16 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       notifier_->capacity_alarm_threshold_value_change (this->log_.in (),
                                                         this->logid_,
                                                         old_threshs,
@@ -765,6 +844,16 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
 
   if (notifier_)
     {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+	  
       notifier_->week_mask_value_change (this->log_.in (),
                                          this->logid_,
                                          old_masks,
@@ -1309,6 +1398,16 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
 
           if (notifier_)
             {
+	      // @@ Calling create_log_reference () in the ctor or in ::init()
+	      // leads to an infinate loop.  This should be removed when that
+	      // is fixed.
+	      if (CORBA::is_nil (this->log_.in ()))
+		{
+		  this->log_ = logmgr_i_.create_log_reference (this->logid_
+							       ACE_ENV_ARG_PARAMETER);
+		  ACE_CHECK;
+		}
+		  
               notifier_->threshold_alarm (
                 this->log_.in (),
                 logid_,
