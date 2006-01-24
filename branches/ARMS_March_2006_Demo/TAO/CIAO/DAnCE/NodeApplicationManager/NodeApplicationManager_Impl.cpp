@@ -57,8 +57,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
     Components::FacetDescriptions_var facets;
 
     if (is_shared_component (comp_name))
-      facets = const_cast<Components::FacetDescriptions*> 
-                (&(this->node_manager_->get_all_facets (comp_name)));
+      facets = this->node_manager_->get_all_facets (comp_name);
     else
       {
         facets = ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -79,8 +78,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
     Components::ConsumerDescriptions_var consumers;
     
     if (is_shared_component (comp_name))
-      consumers = const_cast<Components::ConsumerDescriptions*> 
-                    (&(this->node_manager_->get_all_consumers (comp_name)));
+      consumers = this->node_manager_->get_all_consumers (comp_name);
     else
       {
         consumers = 
@@ -98,8 +96,8 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
                   comp_name.c_str ()));
       }
 
-    const CORBA::ULong facet_len = facets->length ();
-    const CORBA::ULong consumer_len = consumers->length ();
+    CORBA::ULong facet_len = facets->length ();
+    CORBA::ULong consumer_len = consumers->length ();
 
     CORBA::ULong curr_len = retv->length ();
     retv->length (curr_len + facet_len + consumer_len);
@@ -500,6 +498,10 @@ destroyApplication (Deployment::Application_ptr app
   //   parameter is ignored for now.
   if (CORBA::is_nil (this->nodeapp_.in () ))
     ACE_THROW (Deployment::StopError ());
+
+  // If there are no shared components within this NAM, then kill the NA
+
+  // Otherwise, only remove those components from the NA
 
   this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
