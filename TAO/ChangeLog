@@ -1,3 +1,18 @@
+Tue Jan 24 20:37:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connection_Handler.cpp:
+
+          Extended Simon McQueen's Fri Jan 20 17:11:49 UTC 2006 addition
+          of support for SO_KEEPALIVE to include taking the value from
+          RTCORBA::TCPPrototocolProperties::keep_alive, when RTCORBA is
+          used, and the application is using a Server or Client
+          ProtocolPolicy.
+
+        * docs/rtcorba/issues.html:
+
+          Removed lack of support for the keep alive protocol property
+          from the list of issues.
+
 Tue Jan 24 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/ChatClientWnd.cpp:
