@@ -1,3 +1,8 @@
+Tue Jan 24 14:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.cpp:
+          Only with VxWorks 5.5.1 don't use limits, newer versions to have this
+
 Tue Jan 24 13:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
