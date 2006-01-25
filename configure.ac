@@ -653,6 +653,8 @@ ACE_CHECK_LACKS_HEADERS(sys/socket.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/stat.h)
 
+ACE_CHECK_LACKS_HEADERS(sys/sysctl.h)
+
 ACE_CHECK_LACKS_HEADERS(sys/time.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/types.h)
@@ -3675,6 +3677,8 @@ swab (src, dst, 2);
 )
 
 ACE_CHECK_LACKS_FUNCS(sysconf)
+
+ACE_CHECK_HAS_FUNCS(sysctl)
 
 AC_CHECK_FUNC([sysinfo],
   [
