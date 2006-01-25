@@ -5,4 +5,5 @@ workspace {
   ciao
   tools
   DAnCE
+  RACE
 }
