@@ -495,7 +495,7 @@ public:
    * If <status> != 0, it points to an integer where the function
    * stores the child's exit status.
    *
-   * NOTE: on UNIX platforms this function uses <ualarm>, i.e., it
+   * @note On UNIX platforms this function uses <ualarm>, i.e., it
    * overwrites any existing alarm.  In addition, it steals all
    * <SIGCHLD>s during the timeout period, which will break another
    * <ACE_Process_Manager> in the same process that's expecting

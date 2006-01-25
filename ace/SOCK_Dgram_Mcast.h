@@ -100,7 +100,7 @@ public:
    *
    * These control per-instance optional functionality.  They are set via
    * optional constructor arguments.
-   * Note: Certain option values are not valid for all environments (see
+   * @note Certain option values are not valid for all environments (see
    * comments in source file for environment-specific restrictions).  Default
    * values are always valid values for the compilation environment.
    */

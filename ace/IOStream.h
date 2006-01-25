@@ -216,8 +216,8 @@ public:
   /// Query the streambuf for the size of its buffers.
   u_int streambuf_size (void);
 
-  /// Did we take an error because of an IO operation timeout?  Note:
-  /// Invoking this resets the flag.
+  /// Did we take an error because of an IO operation timeout?
+  /// @note Invoking this resets the flag.
   u_char timeout (void);
 
 protected:

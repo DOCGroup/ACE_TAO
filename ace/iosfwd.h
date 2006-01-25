@@ -42,10 +42,10 @@
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY)  && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
-# if !defined (ACE_USES_OLD_IOSTREAMS) 
+# if !defined (ACE_USES_OLD_IOSTREAMS)
 #   include /**/ <iosfwd>
 # else
-  // NOTE: If these forward declarations don't work (e.g. aren't
+  // @note If these forward declarations don't work (e.g. aren't
   //       portable), we may have to include "ace/streams.h" as a last
   //       resort.  Doing so would defeat the purpose of this header,
   //       unfortunately.

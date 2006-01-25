@@ -117,7 +117,7 @@ public:
   // Get the preallocated object identified by "id".  Returns a
   // pointer to the object.  Beware: no error indication is provided,
   // because it can _only_ be used for accessing preallocated objects.
-  // Note: the function definition is inlined here so that it compiles
+  // @note The function definition is inlined here so that it compiles
   // on AIX 4.1 w/xlC v. 3.01.
 
   static TYPE *get_preallocated_array (ACE_Object_Manager::Preallocated_Array identifier)
@@ -135,7 +135,7 @@ public:
   // Get the preallocated array identified by "id".  Returns a
   // pointer to the array.  Beware: no error indication is provided,
   // because it can _only_ be used for accessing preallocated arrays.
-  // Note: the function definition is inlined here so that it compiles
+  // @note The function definition is inlined here so that it compiles
   // on AIX 4.1 w/xlC v. 3.01.
 
 protected:
