@@ -35,7 +35,7 @@
 
 #include "Deployment_Configuration.h"
 #include "DomainApplicationManager_Export.h"
-#include "../ExecutionManager/Execution_Manager_Impl.h"
+#include "ExecutionManager/Execution_Manager_Impl.h"
 #include "ciao/CIAO_common.h"
 
 namespace CIAO
@@ -260,7 +260,7 @@ namespace CIAO
      * @para name component instance name
      * @para child_uuid child plan uuid string
      */
-    Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+    CIAO::Component_Binding_Info *
       populate_binding_info (const ACE_CString& name, 
                              const ACE_CString& child_uuid);
 
@@ -271,7 +271,7 @@ namespace CIAO
      *
      * @para name component instance name
      */
-    Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+    CIAO::Component_Binding_Info *
       populate_binding_info (const ACE_CString& name);
 
     /**
