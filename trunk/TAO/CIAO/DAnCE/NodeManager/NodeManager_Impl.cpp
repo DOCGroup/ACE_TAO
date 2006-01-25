@@ -446,6 +446,7 @@ destroyPlan (const Deployment::DeploymentPlan & plan
 Deployment::ComponentPlans *
 CIAO::NodeManager_Impl_Base::
 get_shared_components (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return this->get_shared_components_i ();
 }
