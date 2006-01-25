@@ -1,3 +1,19 @@
+Wed Jan 25 20:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+        * ace/config-linux-common.h:
+        * ace/config-macros.h:
+        * ace/RB_Tree.h:
+          Doxygen improvements
+
+        * ace/config-freebsd.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-vxworks6.2.h:
+          Added ACE_HAS_SYSCTL, will be used in some new code that will
+          be added after x.4.9
+
 Wed Jan 25 19:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
