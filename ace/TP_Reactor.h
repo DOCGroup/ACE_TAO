@@ -6,16 +6,16 @@
  *
  *  $Id$
  *
- *  The <ACE_TP_Reactor> (aka, Thread Pool Reactor) uses the
+ *  The ACE_TP_Reactor (aka, Thread Pool Reactor) uses the
  *  Leader/Followers pattern to demultiplex events among a pool of
  *  threads.  When using a thread pool reactor, an application
  *  pre-spawns a _fixed_ number of threads.  When these threads
- *  invoke the <ACE_TP_Reactor>'s <handle_events> method, one thread
+ *  invoke the ACE_TP_Reactor's <handle_events> method, one thread
  *  will become the leader and wait for an event.  The other
  *  follower threads will queue up waiting for their turn to become
  *  the leader.  When an event occurs, the leader will pick a
  *  follower to become the leader and go on to handle the event.
- *  The consequence of using <ACE_TP_Reactor> is the amortization of
+ *  The consequence of using ACE_TP_Reactor is the amortization of
  *  the costs used to creating threads.  The context switching cost
  *  will also reduce.  More over, the total resources used by
  *  threads are bounded because there are a fixed number of threads.
@@ -173,15 +173,15 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Initialize <ACE_TP_Reactor> with the default size.
+  /// Initialize ACE_TP_Reactor with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
                   int mask_signals = 1,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
   /**
-   * Initialize the <ACE_TP_Reactor> to manage
-   * <max_number_of_handles>.  If <restart> is non-0 then the
+   * Initialize the ACE_TP_Reactor to manage
+   * @a max_number_of_handles.  If @a restart is non-0 then the
    * <ACE_Reactor>'s <handle_events> method will be restarted
    * automatically when <EINTR> occurs.  If <signal_handler> or
    * <timer_queue> are non-0 they are used as the signal handler and
@@ -189,8 +189,8 @@ public:
    */
   ACE_TP_Reactor (size_t max_number_of_handles,
                   int restart = 0,
-                  ACE_Sig_Handler * = 0,
-                  ACE_Timer_Queue * = 0,
+                  ACE_Sig_Handler *sh = 0,
+                  ACE_Timer_Queue *tq = 0,
                   int mask_signals = 1,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
@@ -217,7 +217,8 @@ public:
 
   virtual int handle_events (ACE_Time_Value &max_wait_time);
 
-  /* @todo The following methods are not supported. Support for
+  /*
+   * @todo The following methods are not supported. Support for
    * signals is not available in the TP_Reactor. These methods will be
    * supported once signal handling is supported.
    */
