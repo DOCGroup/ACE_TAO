@@ -1,6 +1,13 @@
+Wed Jan 25 15:05:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Added feature test for ACE_LACKS_SUSECONDS_T and 
+          ACE_LACKS_USECONDS_T.
+
 Wed Jan 25 15:00:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * autoconf.ac:
+        * configure.ac:
 
           Added feature tests for ACE_LACKS_SYS_SYSCTL_H and
           ACE_HAS_SYSCTL.
