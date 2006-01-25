@@ -1,3 +1,122 @@
+Wed Jan 25 00:47:02 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * examples/Hello/descriptors_RTCCM/RTsvc.conf
+        * examples/Hello/descriptors_RTCCM/input.csr
+        * examples/Hello/descriptors_RTCCM/rt-config-example.cdp
+        * examples/Hello/descriptors_RTCCM/rt-config-example.csr
+        * examples/Hello/descriptors_RTCCM/rt-example.cdp
+        * examples/Hello/descriptors_RTCCM/rt_run_test.pl
+        * examples/Hello/descriptors_ReDaC/deploymentplan.cdp
+        * examples/Hello/descriptors_ReDaC/deploymentplan_add.cdp
+        * examples/Hello/descriptors_ReDaC/deploymentplan_remove.cdp
+        * examples/Hello/descriptors_naming/deploymentplan_naming.cdp
+        
+          Create some new descriptors, reorganized them, and put 
+          them into different directories.
+
+Wed Jan 25 00:23:02 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * CIAODAnCE.mwc
+        
+          Added another mwc file which only builds CIAO and DAnCE.
+        
+        * examples/Hello/step-by-step.html
+        
+          Fixed an error in this documentation page.
+
+        * examples/Hello/descriptors/RTsvc.conf
+        * examples/Hello/descriptors/TestNodeManagerMap.dat
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns_add.cdp
+        * examples/Hello/descriptors/rt-config-example.cdp
+        * examples/Hello/descriptors/rt-config-example.csr
+        * examples/Hello/descriptors/rt-example.cdp
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns_add.cdp
+        * examples/Hello/descriptors/rt_run_test.pl
+
+          Removed these descriptor files and put them into separate
+          directories to better organize things.
+        
+        * examples/Hello/descriptors_shared_components/deploymentplan.cdp
+        * examples/Hello/descriptors_shared_components/
+          deploymentplan_shared_components.cdp
+        
+          Added a dedicated directory to put descriptors for shared
+          components scenario.
+
+Wed Jan 25 00:10:50 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/ExecutionManager/DAM_Map.cpp
+        * DAnCE/ExecutionManager/DAM_Map.h
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+        
+          Added capabilities to handle adding/removing
+          connections between components in new assembly and existing/external
+          components in old assemblies. This involves putting
+          ExecutionManager as a coordinator for different DAMs.
+        
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.inl
+        * DAnCE/NodeManager/NAM_Map.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        * DAnCE/NodeManager/Node_Manager.cpp
+        
+          Added capabilities for handling shared components across
+          different assemblies. This involves putting NodeManager
+          as a local coordinator for different NAMs.
+        
+        * DAnCE/NodeApplication/NodeApplication.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+          
+          Enhancement of adding/removing connections.
+        
+        * DAnCE/Plan_Launcher/DAM_Map.cpp
+        * DAnCE/Plan_Launcher/DAM_Map.h
+
+          Removed from the repo, since they are located in the other
+          directory as well, and we can use relative path to point
+          to those existing files.
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+        
+          Enhanced to handle shared components scenario which interacts
+          with *managers.
+        
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp
+        
+          Fixed for working with the newly enhanced DAnCE toolchain.
+        
+        * ciao/Deployment.idl
+        
+          Adding enhancements for adding shared components capabilities
+
+Wed Jan 25 00:01:37 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeManager/MonitorCB.cpp
+        
+          Fixed a warning about unreferenced variable in Windows build.
+        
+        * DAnCE/NodeManager/MonitorController.h
+        
+          Included header file missing path to its directory.
+        
+        * DAnCE/TargetManager/CmpClient.cpp
+        
+          Fixed a warning about unreferenced variable in Windows build.
+
 Mon Jan 23 23:10:32 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
 
