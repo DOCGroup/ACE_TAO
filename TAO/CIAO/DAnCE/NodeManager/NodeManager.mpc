@@ -4,7 +4,7 @@
 project(NodeManager): ciao_component_dnc, iortable, ifr_client {
   after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
   libs += NodeManager_stub NodeApplicationManager TargetManager_stub
-  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/Interfaces $(CIAO_ROOT)/DAnCE/TargetManager
   exename = NodeManager
 
   IDL_Files {
@@ -25,7 +25,7 @@ project(libNodeManager): ciao_component_dnc, iortable, ifr_client {
   sharedname = NodeManager
   after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
   libs += NodeManager_stub NodeApplicationManager TargetManager_stub
-  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/Interfaces $(CIAO_ROOT)/DAnCE/TargetManager
  
   IDL_Files {
   }

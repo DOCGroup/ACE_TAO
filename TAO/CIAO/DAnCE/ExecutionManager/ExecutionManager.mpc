@@ -6,14 +6,14 @@ project(ExecutionManager): ciao_component_dnc {
   exename = Execution_Manager
 
   after += DomainApplicationManager ExecutionManager_stub
-
+  includes += ../Interfaces
   libs += DomainApplicationManager ExecutionManager_stub
 
   IDL_Files {
   }
 
   Source_Files {
-    ../interfaces/ExecutionManagerS.cpp
+    ../Interfaces/ExecutionManagerS.cpp
     Execution_Manager.cpp
     Execution_Manager_Impl.cpp
     DAM_Map.cpp
