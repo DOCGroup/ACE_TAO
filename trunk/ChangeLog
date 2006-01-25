@@ -1,3 +1,9 @@
+Wed Jan 25 14:38:10 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/SSL/SSL_Asynch_BIO.h:
+        * include/makeinclude/platform_lynxos.GNU:
+          Fixed compile error on LynxOS when ssl=1.
+        
 Wed Jan 25 13:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Array.h:
