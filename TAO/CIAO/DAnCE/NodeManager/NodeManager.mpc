@@ -11,7 +11,7 @@ project(NodeManager): ciao_component_dnc, iortable, ifr_client {
   }
 
   Source_Files {
-    NodeManagerS.cpp
+    ../Interfaces/NodeManagerS.cpp
     NodeManager_Impl.cpp
     Node_Manager.cpp
     NAM_Map.cpp
@@ -31,7 +31,7 @@ project(libNodeManager): ciao_component_dnc, iortable, ifr_client {
   }
  
   Source_Files {
-    NodeManagerS.cpp
+    ../Interfaces/NodeManagerS.cpp
     NodeManager_Impl.cpp
     Node_Manager.cpp
     NAM_Map.cpp
