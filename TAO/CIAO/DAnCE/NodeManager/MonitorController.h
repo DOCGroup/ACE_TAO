@@ -14,7 +14,7 @@
 #ifndef MONITOR_CONTROLLER_H
 #define MONITOR_CONTROLLER_H
 
-#include "TargetManagerC.h"
+#include "TargetManager/TargetManagerC.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"

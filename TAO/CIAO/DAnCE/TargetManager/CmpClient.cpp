@@ -53,11 +53,11 @@ int main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG , "\n\nGetAllResources Returned \n"));
       ::Deployment::DnC_Dump::dump (domainV);
     }
-    catch(CORBA::NO_IMPLEMENT & ex)
+    catch(CORBA::NO_IMPLEMENT &)
     {
       ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
     }
-    catch(CORBA::Exception & ex)
+    catch(CORBA::Exception &)
     {
       ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:CORBA Generic Exception \n"));
       ACE_DEBUG((LM_DEBUG ,"Error:TargetManager:Exception in TargetManager call\n"));
@@ -70,7 +70,7 @@ int main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG , "\n\nGetAvailableResources Returned \n"));
       ::Deployment::DnC_Dump::dump (domainV);
     }
-    catch(CORBA::NO_IMPLEMENT & ex)
+    catch(CORBA::NO_IMPLEMENT &)
     {
       cerr << "Error:TargetManager:CORBA::NO_IMPLEMENT thrown" << endl;
     }

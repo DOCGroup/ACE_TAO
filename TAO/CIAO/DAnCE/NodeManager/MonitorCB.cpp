@@ -45,7 +45,7 @@ int MonitorCB::update_data (::Deployment::Domain& data)
       }
     target_mgr_->updateDomain (elements , domain , update_kind);
   }
-  catch (CORBA::Exception& ex)
+  catch (CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "Unknown Exception"));
     }
