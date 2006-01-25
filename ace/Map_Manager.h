@@ -264,8 +264,8 @@ public:
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the <ACE_Atomic_Op> with an
    * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>, or if you need to
-   * guard the state of an iterator.  NOTE: the right name would be
-   * <lock>, but HP/C++ will choke on that!
+   * guard the state of an iterator.
+   * @note The right name would be <lock>, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
 

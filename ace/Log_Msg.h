@@ -338,7 +338,7 @@ public:
    * allow "chaining". Note that as opposed to ACE_Log_Msg_Callback,
    * ACE_Log_Msg_Backend is a per-process entity.
    *
-   * Note: Be aware that because of the current architecture there is
+   * @note Be aware that because of the current architecture there is
    * no guarantee that open (), reset () and close () will be called
    * on a backend object.
    *
@@ -379,19 +379,19 @@ public:
   // because the *semantics* have changed (the objects are no longer
   // TSS).
   /// Get TSS exception action.
-  /// NOTE: The action is no longer TSS, they are global!
+  /// @note The action is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
 
   /// Set TSS exception action.
-  /// NOTE: The action is no longer TSS, they are global!
+  /// @note The action is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
 
   /// Get TSS exception handler.
-  /// NOTE: The handler is no longer TSS, they are global!
+  /// @note The handler is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
 
   /// Set TSS exception handler.
-  /// NOTE: The handler is no longer TSS, they are global!
+  /// @note The handler is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
 

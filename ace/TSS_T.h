@@ -51,7 +51,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * shield applications from the details of accessing
  * thread-specific storage.
  *
- * NOTE: For maximal portability, <TYPE> cannot be a built-in type,
+ * @note For maximal portability, <TYPE> cannot be a built-in type,
  * but instead should be a user-defined class (some compilers will
  * allow a built-in type, others won't).  See template class
  * ACE_TSS_Type_Adapter, below, for adapting built-in types to work

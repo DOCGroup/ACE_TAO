@@ -269,7 +269,7 @@ public:
    * \a buffer will be parsed.  Notice that ACE_Tokenizer will modify
    * \a buffer if you use <code> delimiter_replace </code> or <code>
    * preserve_designators </code> to do character substitution.
-   * NOTE: You should NOT pass a constant string or string literal
+   * @note You should NOT pass a constant string or string literal
    * to this constructor, since ACE_Tokenizer will try to modify
    * the string.
    * \sa preserve_designators

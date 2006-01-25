@@ -691,7 +691,7 @@ public:
   /**
   * Same as above but with scatter support, through chaining of
   * composite message blocks using the continuation field.
-  * NOTE: Each data block payload must be at least the size of a
+  * @note Each data block payload must be at least the size of a
   * system memory page and must be aligned on a system memory page
   * size boundary
   */
@@ -898,7 +898,7 @@ public:
   /**
   * Same as above but with gather support, through chaining of
   * composite message blocks using the continuation field.
-  * NOTE: Each data block payload must be at least the size of a
+  * @note Each data block payload must be at least the size of a
   * system memory page and must be aligned on a system memory page
   * size boundary
   */
