@@ -14,6 +14,7 @@ module Hello
 
   eventtype TimeOut
   {
+    public string data;
   };
 };
 
