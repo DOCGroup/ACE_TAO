@@ -242,7 +242,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * on the native MsgQ implementation to take care of that.  The
  * only system calls that it uses are VxWorks msgQLib calls, so
  * it is suitable for use in interrupt service routines.
- * NOTE: *Many* ACE_Message_Queue features are not supported with
+ * @note *Many* ACE_Message_Queue features are not supported with
  * this specialization, including:
  * * The two size arguments to the constructor and <open> are
  * interpreted differently.  The first is interpreted as the
@@ -430,7 +430,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Implementation of a strip-downed ACE_Message_Queue using NT's
  * IO completion port mechanism.
- * NOTE: *Many* ACE_Message_Queue features are not supported with
+ * @note *Many* ACE_Message_Queue features are not supported with
  * this implementation, including:
  * * <open> method have different signatures.
  * * <dequeue_head> *requires* that the <ACE_Message_Block>

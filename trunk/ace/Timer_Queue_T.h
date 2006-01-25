@@ -431,8 +431,8 @@ protected:
   virtual int dispatch_info_i (const ACE_Time_Value &current_time,
                                ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
-  /// Synchronization variable for <ACE_Timer_Queue>.
-  /// NOTE: the right name would be lock_, but HP/C++ will choke on that!
+  /// Synchronization variable for ACE_Timer_Queue.
+  /// @note The right name would be lock_, but HP/C++ will choke on that!
   ACE_LOCK mutex_;
 
   /// Class that implements a free list

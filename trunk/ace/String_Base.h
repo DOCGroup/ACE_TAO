@@ -38,7 +38,7 @@ class ACE_Allocator;
  * ACE_Allocator with a persistable memory pool.  This class is
  * optimized for efficiency, so it doesn't provide any internal
  * locking.
- * NOTE: if an instance of this class is constructed from or
+ * @note If an instance of this class is constructed from or
  * assigned an empty string (with first element of '\0'), then it
  * is not allocated new space.  Instead, its internal
  * representation is set equal to a global empty string.
