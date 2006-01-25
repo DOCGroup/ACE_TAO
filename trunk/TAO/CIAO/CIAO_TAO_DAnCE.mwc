@@ -1,0 +1,23 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  ../../ace
+  ../../apps/gperf/src
+  ../../ACEXML
+  ../tao
+  ../TAO_IDL
+  ../orbsvcs/orbsvcs/CosNaming.mpc
+  ../orbsvcs/orbsvcs/Svc_Utils.mpc
+  ../orbsvcs/orbsvcs/Security.mpc
+  ../orbsvcs/orbsvcs/IFRService.mpc
+  ciao
+  DAnCE
+
+  exclude {
+    // exclude old config handlers
+    DAnCE/Old_Config_Handlers
+    DAnCE/tests/Config_Handlers
+    DAnCE/spec_RepositoryManager
+  }
+}
