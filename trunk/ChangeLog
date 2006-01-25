@@ -1,8 +1,15 @@
+Wed Jan 25 19:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+          If ACE_LACKS_SUSECONDS_T is defined then define suseconds_t as
+          long. If ACE_LACKS_USECONDS_T is defined then define useconds_t
+          as unsigned long.
+
 Wed Jan 25 15:05:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
 
-          Added feature test for ACE_LACKS_SUSECONDS_T and 
+          Added feature test for ACE_LACKS_SUSECONDS_T and
           ACE_LACKS_USECONDS_T.
 
 Wed Jan 25 15:00:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
