@@ -1,3 +1,26 @@
+Wed Jan 25 19:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_SUSECONDS_T and ACE_LACKS_USECONDS_T
+
+        * ace/WIN32_Asynch_IO.h:
+        * ace/TSS_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/String_Base.h:
+        * ace/iosfwd.h:
+        * ace/High_Res_Timer.h:
+        * ace/Configuration.h:
+        * ace/Log_Msg.h:
+        * ace/Message_Queue.h:
+        * ace/Process.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/Managed_Object.h:
+        * ace/Map_Manager.h:
+        * ace/Containers_T.h:
+        * ace/SString.h:
+        * ace/IOStream.h:
+          Doxygen improvements
+
 Wed Jan 25 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
