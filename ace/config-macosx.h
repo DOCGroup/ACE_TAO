@@ -63,6 +63,8 @@
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
+#define ACE_HAS_SYSCTL
+
 //?
 #define ACE_LACKS_SIGSET
 

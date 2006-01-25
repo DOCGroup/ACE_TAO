@@ -107,6 +107,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_LACKS_STDINT_H
 #endif
 
+#define ACE_HAS_SYSCTL
 #define ACE_LACKS_STRRECVFD
 
 #define ACE_HAS_SIN_LEN

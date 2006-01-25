@@ -175,6 +175,8 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
+#define ACE_HAS_SYSCTL
+
 // Platform/compiler supports timezone * as second parameter to gettimeofday().
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
@@ -220,7 +222,7 @@
 #endif /* ! ACE_HAD_THREADS */
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 // OpenBSD actually has the clearerr call, but it causes a
 // bogus compiler syntax error.
