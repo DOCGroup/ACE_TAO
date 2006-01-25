@@ -348,6 +348,35 @@ protected:
    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Reset Log QoS
+  void reset_log_qos (const DsLogAdmin::QoSList& qos
+		      ACE_ENV_ARG_DECL);
+
+  /// Validate log QoS
+  void validate_log_qos (const DsLogAdmin::QoSList& qos
+			 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((DsLogAdmin::UnsupportedQoS));
+
+  /// Reset Week Mask
+  ///
+  /// Used to initialize internal data structures that represent the
+  /// week mask list when the log service starts, and to reinitialize
+  /// them when they are changed.
+  ///
+  void reset_week_mask (const DsLogAdmin::WeekMask& masks
+			ACE_ENV_ARG_DECL);
+
+  /// Validate Week Mask
+  ///
+  /// Used to check whether week mask is valid.  If not, throws an
+  /// InvalidTime, InvalidTimeInterval, or InvalidMask exception.
+  ///
+  void validate_week_mask (const DsLogAdmin::WeekMask& masks
+			   ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((DsLogAdmin::InvalidTime,
+                     DsLogAdmin::InvalidTimeInterval,
+                     DsLogAdmin::InvalidMask));
+
 protected:
   /// Reference to the LogMgr servant
   TAO_LogMgr_i& logmgr_i_;
@@ -373,9 +402,6 @@ protected:
 
   /// The next capacity alarm threshold.
   CORBA::ULong current_threshold_;
-
-  /// The days of the week that the log should be operational
-  DsLogAdmin::WeekMask weekmask_;
 
   /// A Sequence of the weekly intervals when the log is in operation.
   TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval> weekly_intervals_;

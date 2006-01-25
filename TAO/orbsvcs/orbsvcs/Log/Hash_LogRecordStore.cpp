@@ -44,6 +44,9 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
       this->thresholds_.length(1);
       this->thresholds_[0] = 100;
     }
+
+  this->log_qos_.length(1);
+  this->log_qos_[0] = DsLogAdmin::QoSNone;
 }
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
@@ -738,6 +741,36 @@ TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType acti
   this->log_full_action_ = action;
 }
 
+DsLogAdmin::QoSList *
+TAO_Hash_LogRecordStore::get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           lock_,
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+  
+  DsLogAdmin::QoSList* ret_val;
+  ACE_NEW_THROW_EX (ret_val,
+                    DsLogAdmin::QoSList (this->log_qos_),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  return ret_val;
+}
+
+void
+TAO_Hash_LogRecordStore::set_log_qos (const DsLogAdmin::QoSList& qos
+				      ACE_ENV_ARG_DECL)
+{
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                            guard,
+                            lock_,
+                            CORBA::INTERNAL ());
+  ACE_CHECK;
+
+  this->log_qos_ = qos;
+}
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL) const
@@ -787,6 +820,37 @@ TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size
   ACE_CHECK;
 
   this->max_size_ = size;
+}
+
+DsLogAdmin::WeekMask*
+TAO_Hash_LogRecordStore::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           lock_,
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
+  DsLogAdmin::WeekMask* ret_val;
+  ACE_NEW_THROW_EX (ret_val,
+                    DsLogAdmin::WeekMask (this->weekmask_),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  return ret_val;
+}
+
+void
+TAO_Hash_LogRecordStore::set_week_mask (const DsLogAdmin::WeekMask &masks
+					ACE_ENV_ARG_DECL)
+{
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
+
+  this->weekmask_ = masks;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

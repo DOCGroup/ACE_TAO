@@ -1,3 +1,17 @@
+Mon Jan 23 15:50:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+
+          Obtain the capacity alarm thresholds, log QoS, and week mask
+          from the record store.
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+
+          Added methods to get and set the log QoS and week mask.
+
 Tue Jan 24 20:37:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Connection_Handler.cpp:

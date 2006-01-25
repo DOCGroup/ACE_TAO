@@ -118,6 +118,15 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
     set_log_full_action(DsLogAdmin::LogFullActionType action
                         ACE_ENV_ARG_DECL);
 
+  /// Get the list of the QoS properties supported by the log.
+  virtual DsLogAdmin::QoSList*
+    get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const;
+
+  /// Set the list of the QoS properties supported by the log.
+  virtual void
+    set_log_qos (const DsLogAdmin::QoSList& qos
+		 ACE_ENV_ARG_DECL);
+
   /// Gets the max record life
   virtual CORBA::ULong
     get_max_record_life (ACE_ENV_SINGLE_ARG_DECL) const;
@@ -135,7 +144,16 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual void
     set_max_size (CORBA::ULongLong size
                   ACE_ENV_ARG_DECL);
-
+  
+  /// Get the weekly scheduling parameters
+  virtual DsLogAdmin::WeekMask*
+    get_week_mask (ACE_ENV_SINGLE_ARG_DECL);
+  
+  /// Set the weekly scheduling parameters.
+  virtual void
+    set_week_mask (const DsLogAdmin::WeekMask & masks
+		   ACE_ENV_ARG_DECL);
+  
 
   // = LogRecordStore status methods
 
@@ -307,8 +325,15 @@ protected:
   /// The action to take if the log reaches max capacity
   DsLogAdmin::LogFullActionType         log_full_action_;
 
+  /// The list of the QoS properties supported by the log.
+  DsLogAdmin::QoSList			log_qos_;
+
   /// The maximum record lifetime
   CORBA::ULong                          max_record_life_;
+
+  /// The days of the week that the log should be operational
+  DsLogAdmin::WeekMask			weekmask_;
+  
 
   ACE_Reactor*                          reactor_;
 
