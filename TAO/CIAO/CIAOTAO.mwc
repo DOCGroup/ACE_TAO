@@ -16,4 +16,5 @@ workspace {
   tools
   tests
   examples
+  RACE
 }
