@@ -88,6 +88,9 @@ CFLAGS = \
 #	-D<%pch_define%> \
 <%endfor%>
 <%endif%>
+<%if(compile_flags)%>
+        <%compile_flags%> \
+<%endif%>
 <%foreach(macros)%>
 	-D<%macro%> \
 <%endfor%>
