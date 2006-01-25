@@ -24,6 +24,7 @@
 
 #include "DAM_Map.h"
 #include "ace/SString.h"
+#include "ciao/Deployment_common.h"
 
 namespace CIAO
 {
@@ -42,32 +43,6 @@ namespace CIAO
       : public virtual POA_CIAO::ExecutionManagerDaemon
     {
     public:
-
-      /// A struct which captures the binding information about a component
-      typedef struct _component_binding
-      {
-        _component_binding ()
-        {
-          providedReference_ = 0;
-        }
-
-        ACE_CString name_;
-        ACE_CString plan_uuid_;
-        ACE_CString node_;
-
-        Deployment::Connections_var providedReference_;
-
-        bool operator==(const struct _component_binding & comp)
-        {
-          if (this->name_ == comp.name_ && 
-              this->plan_uuid_ == comp.plan_uuid_ &&
-              this->node_ == comp.node_)
-            return true;
-          else
-            return false;
-        }
-      } Component_Binding_Info;
-
       /// Constructor
       Execution_Manager_Impl (CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
@@ -172,7 +147,7 @@ namespace CIAO
 
     protected:
       /// Destructor.
-      ~Execution_Manager_Impl (void);
+      virtual ~Execution_Manager_Impl (void);
 
       /// Cached ORB pointer
       CORBA::ORB_var orb_;

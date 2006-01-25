@@ -1,3 +1,24 @@
+Wed Jan 25 19:46:57 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciao/Deployment_common.h
+        
+          Added this new file, which is supposed to contain all the
+          reusable types/classes/methods across the DAnCE toolchain.
+        
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+
+          Modified the code to accomodate the above refactoring work.
+        
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        
+          Got rid of a warning message about unreferenced variable.
+        
+        * DAnCE/DomainApplicationManager/DomainApplicationManage.mpc
+        
+          Added a dependency from DAM to ExecutionManager_stub project.
+        
 Wed Jan 25 02:53:07 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
