@@ -145,6 +145,8 @@ namespace CIAO
               manager->getPlan (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          // What if we still have components running within this plan?
+          // 
           (void) this->map_.unbind_dam (plan->UUID.in ());
 
           // Where does the POA deactivate happen?
