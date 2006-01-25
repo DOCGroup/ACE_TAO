@@ -13,7 +13,7 @@
 #include "ciao/DeploymentS.h"
 #include "ciao/CIAO_common.h"
 #include "ExecutionManager/DAM_Map.h"
-#include "ExecutionManager/ExecutionManagerC.h"
+#include "Interfaces/ExecutionManagerC.h"
 
 namespace CIAO
 {
