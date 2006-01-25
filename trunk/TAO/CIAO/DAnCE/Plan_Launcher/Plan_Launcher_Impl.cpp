@@ -243,7 +243,7 @@ namespace CIAO
 
             // Note that we should ask the DAM to tell EM whether the DAM should
             // be destroyed
-            //this->destroy_dam (dapp_mgr.in ());
+            this->destroy_dam_by_plan (uuid);
         }
       ACE_CATCHANY
         {
@@ -283,6 +283,20 @@ namespace CIAO
                     "CIAO_PlanLauncher: destroy the manager.....\n"));
 
       this->em_->destroyManager (dam);
+
+      if (CIAO::debug_level ())
+        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+    }
+
+    void 
+    Plan_Launcher_i::destroy_dam_by_plan (const char* plan_uuid
+                                          ACE_ENV_ARG_DECL)
+    {
+      if (CIAO::debug_level ())
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO_PlanLauncher: destroy the manager.....\n"));
+
+      this->em_->destroyManagerByPlan (plan_uuid);
 
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG, "[success]\n"));
