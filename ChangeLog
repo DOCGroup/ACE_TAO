@@ -1,3 +1,16 @@
+Wed Jan 25 13:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Array.h:
+        * ace/Asynch_IO.h:
+        * ace/Asynch_IO_Impl.h:
+        * ace/Atomic_Op_T.h:
+        * ace/Basic_Types.h:
+        * ace/Caching_Utility_T.h:
+        * ace/CDR_Size.h:
+        * ace/CDR_Stream.h:
+        * ace/Cleanup_Strategies_T.h:
+          Improved documentation by using @note doxygen tag
+
 Wed Jan 25 12:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.{h,cpp}:
