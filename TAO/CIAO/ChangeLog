@@ -1,3 +1,10 @@
+Wed Jan 25 22:11:23 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        
+          Changed order of the base member initialization list, which
+          should clear some warnings of the Linux builds.
+
 Wed Jan 25 21:32:44 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
