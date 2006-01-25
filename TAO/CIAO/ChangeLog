@@ -1,3 +1,9 @@
+Wed Jan 25 00:56:39 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * examples/Hello/descriptors/run_test_without_ns.pl
+        
+          Modified to use the correct NodeManagerMap.dat file.
+
 Wed Jan 25 00:47:02 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/descriptors_RTCCM/RTsvc.conf
