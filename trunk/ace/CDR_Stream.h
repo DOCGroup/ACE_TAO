@@ -229,7 +229,7 @@ public:
                                   const ACE_CDR::WChar *x);
   //@}
 
-  /// Note: the portion written starts at <x> and ends
+  /// @note the portion written starts at <x> and ends
   ///    at <x + length>.
   /// The length is *NOT* stored into the CDR stream.
   //@{ @name Array write operations
@@ -301,7 +301,7 @@ public:
 
   /**
    * Return the start of the message block chain for this CDR stream.
-   * NOTE: The complete CDR stream is represented by a chain of
+   * @note The complete CDR stream is represented by a chain of
    * message blocks.
    */
   const ACE_Message_Block *begin (void) const;
@@ -313,14 +313,14 @@ public:
   const ACE_Message_Block *current (void) const;
 
   /**
-   * Access the underlying buffer (read only).  NOTE: This
+   * Access the underlying buffer (read only).  @note This
    * method only returns a pointer to the first block in the
    * chain.
    */
   const char *buffer (void) const;
 
   /**
-   * Return the start and size of the internal buffer.NOTE: This
+   * Return the start and size of the internal buffer.@note This
    * method only returns information about the first block in the
    * chain.
    */

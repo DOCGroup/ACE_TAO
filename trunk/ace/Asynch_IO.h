@@ -593,7 +593,7 @@ public:
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system
+  * @note In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   int readv (ACE_Message_Block &message_block,
@@ -727,7 +727,7 @@ public:
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system
+  * @note In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   int writev (ACE_Message_Block &message_block,

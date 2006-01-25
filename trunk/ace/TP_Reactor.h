@@ -310,7 +310,7 @@ protected:
   int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
 
   /// Method to handle signals
-  /// NOTE: It is just busted at this point in time.
+  /// @note It is just busted at this point in time.
   int handle_signals (int &event_count,
                       ACE_TP_Token_Guard &g);
 
@@ -345,7 +345,7 @@ private:
   /// associated with <handle> that a particular event has occurred.
   int dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info);
 
-  /// Clear the <handle> from the read_set
+  /// Clear the @a handle from the read_set
   void clear_handle_read_set (ACE_HANDLE handle);
 
 private:

@@ -33,7 +33,7 @@
  *    - ACE_INT32
  *    - ACE_UINT32
  *    - ACE_UINT64
- *  (Note: ACE_INT64 is partly defined, there is no ACE_LongLong for
+ *  (@note ACE_INT64 is partly defined, there is no ACE_LongLong for
  *   platforms that don't have a native 8-byte integer type.)
  *
  *  Byte-order (endian-ness) determination:
@@ -537,7 +537,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
       double for_alignment_;
     };
 
-    // NOTE:  the following four accessors are inlined here in
+    // @note  the following four accessors are inlined here in
     // order to minimize the extent of the data_ struct.  It's
     // only used here; the .i and .cpp files use the accessors.
 
@@ -553,7 +553,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
     /// Internal utility function to hide access through struct.
     ACE_UINT32 &l_ () { return data_.lo_; }
 
-    // NOTE:  the above four accessors are inlined here in
+    // @note  the above four accessors are inlined here in
     // order to minimize the extent of the data_ struct.  It's
     // only used here; the .i and .cpp files use the accessors.
 

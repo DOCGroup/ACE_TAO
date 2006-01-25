@@ -36,7 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This class defines the methods commonly used by the different
  * caching strategies. For instance: <clear_cache> method which
- * decides and purges the entry from the container.  Note: This
+ * decides and purges the entry from the container.  @note This
  * class helps in the caching_strategies using a container
  * containing entries of <KEY, ACE_Pair<VALUE, attributes>>
  * kind. The attributes helps in deciding the entries to be
@@ -92,7 +92,7 @@ protected:
  *
  * This class defines the methods commonly used by the different
  * caching strategies. For instance: <clear_cache> method which
- * decides and purges the entry from the container.  Note: This
+ * decides and purges the entry from the container.  @note This
  * class helps in the caching_strategies using a container
  * containing entries of <KEY, Svc_Handler> kind. The attributes
  * helps in deciding the entries to be purged. The
@@ -151,7 +151,7 @@ private:
  *
  * This class defines the methods commonly used by the different
  * caching strategies. For instance: clear_cache () method which
- * decides and purges the entry from the container.  Note: This
+ * decides and purges the entry from the container.  @note This
  * class helps in the caching_strategies using a container
  * containing entries of <Refcounted_KEY,
  * Recyclable_Connection_Handler> kind. The attributes helps in
@@ -217,7 +217,7 @@ private:
  *
  * This class defines the methods commonly used by the different
  * caching strategies. For instance: <clear_cache> method which
- * decides and purges the entry from the container.  Note: This
+ * decides and purges the entry from the container.  @note This
  * class helps in the caching_strategies using a container
  * containing entries of <KEY, HANDLER> kind where the HANDLER
  * contains the caching attributes which help in deciding the
@@ -280,7 +280,7 @@ private:
  *
  * This class defines the methods commonly used by the different
  * caching strategies. For instance: <clear_cache> method which
- * decides and purges the entry from the container.  Note: This
+ * decides and purges the entry from the container.  @note This
  * class is be used with the Null_Caching_Strategy. The
  * Cleanup_Strategy is the callback class to which the entries to
  * be cleaned up will be delegated.
@@ -303,7 +303,7 @@ public:
   /**
    * Purge entries from the <container>. The Cleanup_Strategy will do
    * the actual job of cleanup once the entries to be cleaned up are
-   * decided. Note: Here it is a no-op.
+   * decided. @note Here it is a no-op.
    */
   int clear_cache (CONTAINER &container,
                    double purge_percent);
@@ -314,7 +314,7 @@ protected:
    * Find the entry with minimum caching attributes.  This is handler
    * specific since this utility is to be used very specifically for
    * handler who have caching_attributes for server side acched
-   * connection management.Note: Here it is a no-op.
+   * connection management.@note Here it is a no-op.
    */
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,

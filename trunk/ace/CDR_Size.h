@@ -89,7 +89,7 @@ public:
                                   const ACE_CDR::WChar *x);
   //@}
 
-  /// Note: the portion written starts at <x> and ends
+  /// @note the portion written starts at <x> and ends
   ///    at <x + length>.
   /// The length is *NOT* stored into the CDR stream.
   //@{ @name Array write operations
