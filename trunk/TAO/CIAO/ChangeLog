@@ -1,3 +1,10 @@
+Wed Jan 25 22:47:30 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc
+        
+          Added another mwc file which builds ACE, TAO, CIAO, DAnCE
+          minium to run a CIAO simple example.
+
 Wed Jan 25 22:28:06 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc
