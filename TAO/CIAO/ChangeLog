@@ -1,7 +1,14 @@
+Wed Jan 25 23:44:01 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * CIAOTAO.mwc:
+        * CIAO.mwc:
+
+        Added RACE to the workspace.
+
 Wed Jan 25 22:47:30 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc
-        
+
           Added another mwc file which builds ACE, TAO, CIAO, DAnCE
           minium to run a CIAO simple example.
 
@@ -9,17 +16,17 @@ Wed Jan 25 22:28:06 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc
         * DAnCE/NodeManager/NodeManager.mpc
-        
+
           Added include+= to find header files and fixed a typo.
-        
+
         * DAnCE/NodeManager/NodeManager_Impl.cpp
-        
+
           Fixed an error in Linux build.
 
 Wed Jan 25 22:11:23 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-        
+
           Changed order of the base member initialization list, which
           should clear some warnings of the Linux builds.
 
@@ -27,7 +34,7 @@ Wed Jan 25 21:32:44 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
         * DAnCE/NodeManager/NodeManager.mpc
-        
+
           Fixed dependency problems.
 
 Wed Jan 25 20:28:35 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
@@ -38,47 +45,47 @@ Wed Jan 25 20:28:35 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/Interfaces/NodeManager.idl
         * DAnCE/Interfaces/NodeManager_stub_export.h
         * DAnCE/Interfaces/ExecutionManager_stub_export.h
-        
+
           Added these files into a separate directory
           called DAnCE/Interfaces to termporarily solve the MPC
           directory dependency issue.
 
         * DAnCE/ExecutionManager/ExecutionManager.idl
         * DAnCE/NodeManager/NodeManager.idl
-        
+
           Removed these files.
-        
+
         * DAnCE/ExecutionManager/ExecutionManager.mpc
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h
         * DAnCE/NodeManager/NodeManager.mpc
         * DAnCE/NodeManager/NodeManager_Impl.h
-        
+
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
-        
+
           Modified to accomodate the above refactoring work.
-        
+
 Wed Jan 25 19:46:57 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciao/Deployment_common.h
-        
+
           Added this new file, which is supposed to contain all the
           reusable types/classes/methods across the DAnCE toolchain.
-        
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h
 
           Modified the code to accomodate the above refactoring work.
-        
+
         * DAnCE/TargetManager/DomainDataManager.cpp
-        
+
           Got rid of a warning message about unreferenced variable.
-        
+
         * DAnCE/DomainApplicationManager/DomainApplicationManage.mpc
-        
+
           Added a dependency from DAM to ExecutionManager_stub project.
-        
+
 Wed Jan 25 02:53:07 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
@@ -86,8 +93,8 @@ Wed Jan 25 02:53:07 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
         * ciao/Deployment.idl
-        
-          Fixed a bug about destroying *ApplicationManagers. 
+
+          Fixed a bug about destroying *ApplicationManagers.
           This fix will ensure that DAM won't be destroyed if any
           components managed by itself are still up and running.
 
@@ -95,22 +102,22 @@ Wed Jan 25 01:41:53 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
-        
+
           Some cosmetic changes.
-        
+
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
           Fixed a bug about when to killing a NodeApplication process.
-        
+
         * ciao/Container_Base.cpp
-        
+
           Comment out meaningless debug statement.
 
 Wed Jan 25 00:56:39 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test_without_ns.pl
-        
+
           Modified to use the correct NodeManagerMap.dat file.
 
 Wed Jan 25 00:47:02 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
@@ -125,18 +132,18 @@ Wed Jan 25 00:47:02 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * examples/Hello/descriptors_ReDaC/deploymentplan_add.cdp
         * examples/Hello/descriptors_ReDaC/deploymentplan_remove.cdp
         * examples/Hello/descriptors_naming/deploymentplan_naming.cdp
-        
-          Create some new descriptors, reorganized them, and put 
+
+          Create some new descriptors, reorganized them, and put
           them into different directories.
 
 Wed Jan 25 00:23:02 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * CIAODAnCE.mwc
-        
+
           Added another mwc file which only builds CIAO and DAnCE.
-        
+
         * examples/Hello/step-by-step.html
-        
+
           Fixed an error in this documentation page.
 
         * examples/Hello/descriptors/RTsvc.conf
@@ -150,11 +157,11 @@ Wed Jan 25 00:23:02 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
           Removed these descriptor files and put them into separate
           directories to better organize things.
-        
+
         * examples/Hello/descriptors_shared_components/deploymentplan.cdp
         * examples/Hello/descriptors_shared_components/
           deploymentplan_shared_components.cdp
-        
+
           Added a dedicated directory to put descriptors for shared
           components scenario.
 
@@ -166,12 +173,12 @@ Wed Jan 25 00:10:50 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/ExecutionManager/DAM_Map.h
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h
-        
+
           Added capabilities to handle adding/removing
           connections between components in new assembly and existing/external
           components in old assemblies. This involves putting
           ExecutionManager as a coordinator for different DAMs.
-        
+
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
         * DAnCE/NodeApplicationManager/Containers_Info_Map.h
         * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
@@ -184,52 +191,52 @@ Wed Jan 25 00:10:50 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/NodeManager/NodeManager_Impl.cpp
         * DAnCE/NodeManager/NodeManager_Impl.h
         * DAnCE/NodeManager/Node_Manager.cpp
-        
+
           Added capabilities for handling shared components across
           different assemblies. This involves putting NodeManager
           as a local coordinator for different NAMs.
-        
+
         * DAnCE/NodeApplication/NodeApplication.cpp
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp
         * DAnCE/NodeApplication/NodeApplication_Impl.h
-          
+
           Enhancement of adding/removing connections.
-        
+
         * DAnCE/Plan_Launcher/DAM_Map.cpp
         * DAnCE/Plan_Launcher/DAM_Map.h
 
           Removed from the repo, since they are located in the other
           directory as well, and we can use relative path to point
           to those existing files.
-        
+
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
-        
+
           Enhanced to handle shared components scenario which interacts
           with *managers.
-        
+
         * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp
-        
+
           Fixed for working with the newly enhanced DAnCE toolchain.
-        
+
         * ciao/Deployment.idl
-        
+
           Adding enhancements for adding shared components capabilities
 
 Wed Jan 25 00:01:37 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorCB.cpp
-        
+
           Fixed a warning about unreferenced variable in Windows build.
-        
+
         * DAnCE/NodeManager/MonitorController.h
-        
+
           Included header file missing path to its directory.
-        
+
         * DAnCE/TargetManager/CmpClient.cpp
-        
+
           Fixed a warning about unreferenced variable in Windows build.
 
 Mon Jan 23 23:10:32 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
