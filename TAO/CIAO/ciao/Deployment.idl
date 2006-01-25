@@ -118,6 +118,13 @@ module Deployment {
       raises (StopError);
 
     /// CIAO specific extention
+    /// Destroy ApplicatioManagers by plan_uuid, the unique semantics of this
+    /// operation lies in the fact that if some components are
+    /// still up and running, then the ApplicationManagers won't be destroyed.
+    void destroyManagerByPlan (in string plan_uuid)
+      raises (StopError);
+
+    /// CIAO specific extention
     /// "Get" operation, return the DeploymentPlan
     DeploymentPlan getPlan (in string plan_uuid);
 

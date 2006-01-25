@@ -34,7 +34,7 @@ namespace CIAO
       
       bool init (const char *em_ior, 
                  CORBA::ORB_ptr orb
-                 ACE_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       /**
        * @fn launch_plan
@@ -43,11 +43,11 @@ namespace CIAO
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
       const char * launch_plan (const char *plan_uri
-                                ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
       const char * re_launch_plan (const char *plan_uri
-                                   ACE_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
       
       /**
@@ -57,25 +57,28 @@ namespace CIAO
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
       const char * launch_plan (const ::Deployment::DeploymentPlan &plan
-                                ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
       const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan
-                                   ACE_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
       
       /// Returns the DAM associated with a given plan URI
       ::Deployment::DomainApplicationManager_ptr get_dam (const char *uuid
-                                                          ACE_ENV_ARG_DECL);
+                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
       
       /// Tears down a plan given the UUID
       bool teardown_plan (const char *uuid ACE_ENV_ARG_DECL);
       
       bool teardown_plan (::Deployment::DomainApplicationManager_ptr dam
-                          ACE_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
       
       void destroy_dam (::Deployment::DomainApplicationManager_ptr dam
-                        ACE_ENV_ARG_DECL);
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+      void destroy_dam_by_plan (const char * plan_uuid
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
       
     private:
       ::CIAO::ExecutionManagerDaemon_var em_;

@@ -100,6 +100,14 @@ namespace CIAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::StopError));
 
+      // Below method is CIAO specific extension, please see the IDL
+      // definition for more details.
+      virtual void 
+      destroyManagerByPlan (const char * plan_uuid
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((::CORBA::SystemException,
+                         ::Deployment::StopError));
+
       virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -146,6 +154,13 @@ namespace CIAO
       /// Remove shared component
       virtual void 
         remove_shared_component (const Component_Binding_Info & binding);
+
+      /// If the input component <name> was found in the internal
+      /// cached shared component list, and the plan_uuid also matches,
+      /// then this member function returns <true>, otherwise it 
+      /// returns <false>.
+      virtual bool
+        is_component_running (const char * name, const char * plan_uuid);
 
     protected:
       /// Return the NodeApplication hosting the given biding

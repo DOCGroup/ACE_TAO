@@ -175,6 +175,70 @@ namespace CIAO
       ACE_CHECK;
     }
 
+
+    void
+    Execution_Manager_Impl::destroyManagerByPlan (
+      const char * plan_uuid
+      ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StopError))
+    {
+      CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::destroyManagerByPlan");
+      ACE_TRY
+        {
+          // Get DomainApplicationManager first
+          if (! this->map_.is_plan_available (plan_uuid))
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          "Execution_Manager_Impl::destroyManagerByPlan - "
+                          "Invalid plan uuid [%s]\n", plan_uuid));
+              ACE_THROW (Deployment::StopError ());
+            }
+
+          Deployment::DomainApplicationManager_var
+            dam = this->map_.fetch_dam_reference (plan_uuid);
+
+          // Get the plan
+          Deployment::DeploymentPlan_var plan = dam->getPlan ();
+
+          // If any component is still running, then we return.
+          CORBA::ULong inst_lenth = plan->instance.length ();
+          for (CORBA::ULong i = 0; i < inst_lenth; ++i)
+            {
+              if (this->is_component_running (plan->instance[i].name.in (), 
+                                              plan_uuid))
+                return;
+            }
+
+          (void) this->map_.unbind_dam (plan->UUID.in ());
+
+          // Where does the POA deactivate happen?
+          //
+          dam->destroyManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+#if 0
+          PortableServer::ObjectId_var oid =
+            this->poa_->reference_to_id (manager
+                                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          this->poa_->deactivate_object (oid.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+#endif /*if 0*/
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Execution_Manager_Impl::destroyManager\t\n");
+          ACE_THROW (Deployment::StopError ());
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+
+
     void
     Execution_Manager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
@@ -296,6 +360,12 @@ namespace CIAO
         node_app->finishLaunch (binding.providedReference_.in (),
                                 true, // start
                                 add_or_remove);
+
+        // Update the internal shared component list
+        if (add_or_remove)
+          this->add_shared_component (binding);
+        else
+          this->remove_shared_component (binding);
       }
       ACE_CATCHANY
         {
@@ -358,5 +428,21 @@ namespace CIAO
       this->shared_components_.remove (comp);
     }
 
+    bool
+    Execution_Manager_Impl::
+    is_component_running (const char * name, const char * plan_uuid)
+    {
+      for (ACE_Unbounded_Set<Component_Binding_Info>::iterator
+           iter = this->shared_components_.begin ();
+           iter != this->shared_components_.end ();
+           ++iter)
+        {
+          if (ACE_OS::strcmp ((*iter).name_.c_str (), name) == 0 &&
+              ACE_OS::strcmp ((*iter).plan_uuid_.c_str (), plan_uuid) == 0)
+            return true;
+        }
+
+      return false;
+    }
   }
 }
