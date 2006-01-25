@@ -20,8 +20,8 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    target_manager_ (Deployment::TargetManager::_duplicate (manager)), // object ref
     execution_manager_ (em), // a plain C++ pointer
+    target_manager_ (Deployment::TargetManager::_duplicate (manager)), // object ref
     plan_ (plan),
     num_child_plans_ (0),
   // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
