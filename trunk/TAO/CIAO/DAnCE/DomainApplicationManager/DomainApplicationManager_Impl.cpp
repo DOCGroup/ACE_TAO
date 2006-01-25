@@ -1323,7 +1323,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 
           // Iterave over the returned connection list in <connections>,
           // (1) If this is a shared component, then we remove this connection
-          //     from <connections>, and then populate a "Component_Binding_Info"
+          //     from <connections> list, and then populate a "Component_Binding_Info"
           //     struct for it and send to EM for remove.
           // (2) For the rest of the connections, we send them to the NAs
           //     managed by the local DAM to remove.
