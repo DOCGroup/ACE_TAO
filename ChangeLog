@@ -1,3 +1,8 @@
+Wed Jan 25 12:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TP_Reactor.{h,cpp}:
+          Improved doxygen
+
 Wed Jan 25 12:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.h:
