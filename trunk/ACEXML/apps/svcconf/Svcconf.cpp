@@ -46,17 +46,6 @@ ACEXML_Svcconf_Parser::~ACEXML_Svcconf_Parser ()
 
 }
 
-void *
-ACEXML_Svcconf_Parser::operator new (size_t s)
-{
-  return ::new char[s];
-}
-
-void
-ACEXML_Svcconf_Parser::operator delete (void *p)
-{
-  delete[] (char*)p;
-}
 
 int
 ACEXML_Svcconf_Parser::parse_file (const ACE_TCHAR file[])
