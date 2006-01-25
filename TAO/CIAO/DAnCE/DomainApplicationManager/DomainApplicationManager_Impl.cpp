@@ -843,8 +843,7 @@ post_finishLaunch (void)
       for (CORBA::ULong j = 0; j < length; ++j)
         {
           // Construct <Component_Binding_Info> struct for the component
-          Execution_Manager::Execution_Manager_Impl::
-            Component_Binding_Info * 
+          CIAO::Component_Binding_Info * 
               binding = this->populate_binding_info (
                 this->shared_[j].name.in (), 
                 this->shared_[j].plan_uuid.in ());
@@ -867,15 +866,15 @@ post_finishLaunch (void)
   ACE_CHECK;
 }
 
-CIAO::Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+CIAO::Component_Binding_Info *
 CIAO::DomainApplicationManager_Impl::
 populate_binding_info (const ACE_CString& name, 
                        const ACE_CString& child_uuid)
 {
-  Execution_Manager::Execution_Manager_Impl::Component_Binding_Info * retv;
+  CIAO::Component_Binding_Info * retv;
   ACE_NEW_RETURN (retv,
-                 Execution_Manager::Execution_Manager_Impl::Component_Binding_Info (),
-                 0);
+                  CIAO::Component_Binding_Info (),
+                  0);
 
   retv->name_ = name;
 
@@ -905,14 +904,14 @@ populate_binding_info (const ACE_CString& name,
   return retv;
 }
 
-CIAO::Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+CIAO::Component_Binding_Info *
 CIAO::DomainApplicationManager_Impl::
 populate_binding_info (const ACE_CString& name)
 {
-  Execution_Manager::Execution_Manager_Impl::Component_Binding_Info * retv;
+  CIAO::Component_Binding_Info * retv;
   ACE_NEW_RETURN (retv,
-                 Execution_Manager::Execution_Manager_Impl::Component_Binding_Info (),
-                 0);
+                  CIAO::Component_Binding_Info (),
+                  0);
 
   // Looking for the child plan uuid through the shared compoonent list
   for (CORBA::ULong i = 0; i < this->shared_->length (); ++i)
@@ -1333,8 +1332,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               if (this->is_shared_component (connections[j].instanceName.in ()))
                 {
                   // ask EM to remove the binding for us
-                  Execution_Manager::Execution_Manager_Impl::
-                    Component_Binding_Info * 
+                  CIAO::Component_Binding_Info * 
                       binding = this->populate_binding_info (
                         connections[j].instanceName.in ());
 
@@ -1359,7 +1357,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 
           entry->int_id_.node_application_->finishLaunch
               (connections.in (),
-               start,
+               true, // "true" ==> start the components
                false // "false" => remove connections
                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

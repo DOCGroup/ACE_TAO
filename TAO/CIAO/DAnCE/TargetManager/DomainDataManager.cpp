@@ -136,7 +136,7 @@ int DomainDataManager::call_all_node_managers ()
             {
               node_manager->joinDomain (sub_domain , target_mgr_.in (), log);
             }
-          catch (CORBA::Exception& ex)
+          catch (CORBA::Exception&)
             {
               ACE_DEBUG ((LM_DEBUG , "Error in calling Join Domain==\n"));
             }

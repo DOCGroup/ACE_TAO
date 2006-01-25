@@ -3,6 +3,7 @@
 
 project (DomainApplicationManager): ciao_deployment_svnt  {
   sharedname = DomainApplicationManager
+  after += ExecutionManager_stub
 
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
   
