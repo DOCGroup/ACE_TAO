@@ -5,7 +5,7 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
   <label>Hello-DeploymentPlan</label>
-  <UUID>Hello_Plan_UUID_0001</UUID>
+  <UUID>Hello_Plan_UUID_0002</UUID>
   <!-- Could be ZERO  -->
   <realizes>
     <label>BasicSP-realizes-cid</label>
@@ -46,8 +46,8 @@
     -->
   </implementation>
 
-  <instance id="Hello-Sender-idd">
-    <name>Hello-Sender-idd</name>
+  <instance id="Hello-Sender-idd-new-component">
+    <name>Hello-Sender-idd-new-component</name>
     <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Sender-mdd</implementation>
@@ -60,7 +60,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Sender.ior</string>
+          <string>Sender_new_component.ior</string>
         </value>
       </value>
     </configProperty>
@@ -98,21 +98,6 @@
         </value>
       </value>
     </configProperty>
-
-    <deployedResource>
-      <resourceUsage>InstanceUsesResource</resourceUsage>
-      <requirementName>CIAO:PolicySet</requirementName>
-      <resourceName>test_server_resource_id</resourceName>
-      <resourceValue>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>test_policy_set_id</string>
-        </value>
-      </resourceValue>
-    </deployedResource>
-
   </instance>
 
   <instance id="Hello-Receiver-idd">
@@ -127,34 +112,24 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Receiver.ior</string>
+          <!-- ****************************************
+               This IOR file should NOT be generated. 
+               DAnCE should NOT create this component instance 
+               because it is a "shared" component  
+               **************************************** -->
+          <string>Receiver_new_component.ior</string>
         </value>
       </value>
     </configProperty>
-
-    <deployedResource>
-      <resourceUsage>InstanceUsesResource</resourceUsage>
-      <requirementName>CIAO:PolicySet</requirementName>
-      <resourceName>test_server_resource_id</resourceName>
-      <resourceValue>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>test_policy_set_id</string>
-        </value>
-      </resourceValue>
-    </deployedResource>
-
   </instance>
 
 
   <connection>
-    <name>hell_event_connection</name>
+    <name>hello_event_connection</name>
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>
-      <instance>Hello-Sender-idd</instance>
+      <instance>Hello-Sender-idd-new-component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>click_in</portName>
@@ -163,12 +138,13 @@
     </internalEndpoint>
   </connection>
 
+
   <connection>
     <name>hello_facet_connection</name>
     <internalEndpoint>
       <portName>push_message</portName>
       <kind>Facet</kind>
-      <instance>Hello-Sender-idd</instance>
+      <instance>Hello-Sender-idd-new-component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>read_message</portName>
@@ -176,6 +152,7 @@
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
   </connection>
+
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
@@ -249,17 +226,4 @@
       </value>
     </execParameter>
   </artifact>
-
-  <infoProperty>
-    <name>CIAOServerResources</name>
-    <value>
-      <type>
-        <kind>tk_string</kind>
-      </type>
-      <value>
-        <string>rt-config-example.csr</string>
-      </value>
-    </value>
-  </infoProperty>
-
 </Deployment:deploymentPlan>  
