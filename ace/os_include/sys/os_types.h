@@ -133,6 +133,14 @@ typedef double ACE_timer_t;
    typedef int ACE_exitcode;
 #endif /* ACE_WIN32 */
 
+#if defined (ACE_LACKS_SUSECONDS_T)
+  typedef long suseconds_t;
+#endif
+
+#if defined (ACE_LACKS_USECONDS_T)
+  typedef unsigned long useconds_t;
+#endif
+
 #if defined (ACE_WIN32) && !defined(__MINGW32__)
    typedef long pid_t;
 #elif defined (ACE_PSOS) && (!defined (ACE_PSOSIM) && defined (ACE_PSOS_CANT_USE_SYS_TYPES))
