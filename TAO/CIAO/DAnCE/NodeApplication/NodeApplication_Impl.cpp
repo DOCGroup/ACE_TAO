@@ -545,6 +545,10 @@ void
 CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // If we still have components installed, then do nothing
+  if (this->component_objref_map_.current_size () != 0)
+    return;
+
   // For each container, invoke <remove> operation to remove home and components.
   const CORBA::ULong set_size = this->container_set_.size ();
   for (CORBA::ULong i = 0; i < set_size; ++i)

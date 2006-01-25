@@ -1,3 +1,19 @@
+Wed Jan 25 01:41:53 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        
+          Some cosmetic changes.
+        
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+
+          Fixed a bug about when to killing a NodeApplication process.
+        
+        * ciao/Container_Base.cpp
+        
+          Comment out meaningless debug statement.
+
 Wed Jan 25 00:56:39 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test_without_ns.pl
