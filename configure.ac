@@ -1162,6 +1162,19 @@ AC_CHECK_TYPE([ssize_t],
 	      [],
 	      [#include <sys/types.h>])
 
+AC_CHECK_TYPE([suseconds_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_SUSECONDS_T], 1,
+			 [Define to 1 if the system lacks the type 'suseconds_t'.])],
+	      [#include <sys/types.h>])
+
+AC_CHECK_TYPE([useconds_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_USECONDS_T], 1,
+			 [Define to 1 if the system lacks the type 'useconds_t'.])],
+	      [#include <sys/types.h>])
+
+
 dnl Some platforms define ucontext_t in <sys/ucontext.h>, but ACE
 dnl doesn't explicitly include that header.  However, it is very
 dnl likely that <signal.h> does, either directly or indirectly.
