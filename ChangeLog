@@ -1,3 +1,11 @@
+Wed Jan 25 12:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vcl.mpb:
+          Add compile_flags that are needed to build vcl apps
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          If compile_flags is set, then add them to the CFLAGS
+
 Wed Jan 25 11:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/footprint.shtml:
