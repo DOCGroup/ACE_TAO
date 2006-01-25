@@ -1,3 +1,11 @@
+Tue Jan 24 23:09:08 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * apps/svcconf/Svcconf.cpp:
+        * apps/svcconf/Svcconf.h:
+
+          Removed the overridden operator new/delete.  I don't think that
+          they serve any purpose, and end up hiding the default variations.
+
 Mon Jan 23 14:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * common/ZipCharStream.h:
