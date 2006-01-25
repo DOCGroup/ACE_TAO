@@ -30,6 +30,6 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG, "This NodeApplication is quitting now!\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) - This NodeApplication is destroyed!\n"));
   return 0;
 }

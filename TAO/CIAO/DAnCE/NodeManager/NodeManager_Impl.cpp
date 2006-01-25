@@ -23,7 +23,6 @@ CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
 
 CIAO::NodeManager_Impl_Base::~NodeManager_Impl_Base ()
 {
-
 }
 
 void
@@ -43,7 +42,6 @@ CIAO::NodeManager_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
                                 0
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {
@@ -117,10 +115,79 @@ CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
+::Components::FacetDescriptions *
+CIAO::NodeManager_Impl_Base::
+get_all_facets (ACE_CString & name)
+{
+  Component_Facets_Map::ENTRY *entry;
+
+  if (this->comp_facets_map_.find (name.c_str (), entry) != 0)
+    ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+      "No component with name [%s] was found in the NodeManager\n", name.c_str ()));
+
+  CORBA::ULong facet_len = entry->int_id_->length ();
+
+  Components::FacetDescriptions_var retv;
+  ACE_NEW_RETURN (retv,
+                  Components::FacetDescriptions,
+                  0);
+
+  retv->length (facet_len);
+
+  for (CORBA::ULong i = 0; i < facet_len; ++i)
+    {
+      retv[i] = entry->int_id_[i];
+    }
+
+  return retv._retn ();
+}
+
+::Components::ConsumerDescriptions *
+CIAO::NodeManager_Impl_Base::
+get_all_consumers (ACE_CString & name)
+{
+  Component_Consumers_Map::ENTRY *entry;
+
+  if (this->comp_consumers_map_.find (name.c_str (), entry) != 0)
+    ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
+      "Component [%s] was not found in the NodeManager\n", name.c_str ()));
+
+  CORBA::ULong consumer_len = entry->int_id_->length ();
+
+  Components::ConsumerDescriptions_var retv;
+  ACE_NEW_RETURN (retv,
+                  Components::ConsumerDescriptions,
+                  0);
+
+  retv->length (consumer_len);
+
+  for (CORBA::ULong i = 0; i < consumer_len; ++i)
+    {
+      retv[i] = entry->int_id_[i];
+    }
+
+  return retv._retn ();
+}
+
+void
+CIAO::NodeManager_Impl_Base::
+set_all_facets (ACE_CString &name, 
+                const ::Components::FacetDescriptions_var & facets)
+{
+  this->comp_facets_map_.rebind (name, facets);
+}
+
+void
+CIAO::NodeManager_Impl_Base::
+set_all_consumers (ACE_CString &name, 
+                   const ::Components::ConsumerDescriptions_var & consumers)
+{
+  this->comp_consumers_map_.rebind (name, consumers);
+}
 
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
-                                     ACE_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::PlanError))
@@ -139,6 +206,27 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                         Deployment::NodeApplicationManager::_nil ());
     }
 
+  // Update the reference count map based on the deployment plan input
+  for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
+    {
+      Reference_Count_Map::ENTRY *entry = 0;
+      if (this->ref_count_map_.find (plan.instance[i].name.in (), entry) != 0)
+        {
+          // Create a new entry, set the initial ref count "1", and insert to the map.
+          Ref_Count_Info new_entry;
+          new_entry.plan_uuid_ = plan.UUID.in ();
+          new_entry.count_ = 1;
+          this->ref_count_map_.bind (plan.instance[i].name.in (), new_entry);
+        }
+      else
+        {
+          // Increase the ref count by 1
+          this->shared_components_.insert (plan.instance[i].name.in ());
+          ++ entry->int_id_.count_;
+        }
+    }
+
+  // Create/find NodeApplicationManager and set/reset plan on it
   ACE_TRY
     {
       if (!this->map_.is_available (plan.UUID.in ()))
@@ -151,26 +239,44 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
             }
 
           //Implementation undefined.
-          CIAO::NodeApplicationManager_Impl_Base *app_mgr;
-          app_mgr = this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+          CIAO::NodeApplicationManager_Impl_Base *node_app_mgr;
+          node_app_mgr = 
+            this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
+                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          PortableServer::ServantBase_var safe (app_mgr);
+          PortableServer::ServantBase_var safe (node_app_mgr);
 
           //@@ Note: after the init call the servant ref count would
           //   become 2. so we can leave the safeservant along and be
           //   dead. Also note that I added
           PortableServer::ObjectId_var oid  =
-            app_mgr->init (this->nodeapp_location_.in (),
-                           this->nodeapp_options_.in (),
-                           this->spawn_delay_,
-                           plan,
-                           this->callback_poa_.in ()
-                           ACE_ENV_ARG_PARAMETER);
+            node_app_mgr->init (this->nodeapp_location_.in (),
+                                this->nodeapp_options_.in (),
+                                this->spawn_delay_,
+                                plan,
+                                this->callback_poa_.in (),
+                                this // pass in a copy of ourself (servant object)
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->map_.insert_nam (plan.UUID.in (), oid.in ());
+
+          CORBA::Object_var obj =
+            this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+          ACE_TRY_CHECK;
+
+          // We should inform NAM about "shared" components, so they
+          // won't be instantiated again
+          Deployment::NodeApplicationManager_var nam =
+            Deployment::NodeApplicationManager::_narrow (obj.in ());
+
+          // Convert the ACE Set into CORBA sequence, and make the remote invocation
+          CORBA::StringSeq_var shared = this->shared_components_seq ();
+          nam->set_shared_components (shared.in ());
+ 
+          // narrow should return a nil reference if it fails.
+          return Deployment::NodeApplicationManager::_narrow (nam.in ());
         }
       else
         {
@@ -180,16 +286,27 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                           "with UUID: %s\n",
                           plan.UUID.in ()));
             }
+
+          CORBA::Object_var obj =
+            this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+          ACE_TRY_CHECK;
+
+          Deployment::NodeApplicationManager_var nam =
+            Deployment::NodeApplicationManager::_narrow (obj.in ());
+          ACE_TRY_CHECK;
+
+          nam->reset_plan (plan);
+          ACE_TRY_CHECK;
+
+          // Similarly, we should inform NAM about "shared" components, so 
+          // they won't be instantiated again
+          CORBA::StringSeq_var shared;
+          nam->set_shared_components (shared.in ());
+
+          // Potentially we could reset many other configuration settings
+          // such as command line options, service configuration file, etc.
+          return nam._retn ();
         }
-
-
-      CORBA::Object_var obj =
-        this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
-      ACE_TRY_CHECK;
-
-      // narrow should return a nil reference if it fails.
-      return
-        Deployment::NodeApplicationManager::_narrow (obj.in ());
     }
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {
@@ -262,8 +379,143 @@ CIAO::NodeManager_Impl_Base::destroyManager
   ACE_ENDTRY;
 }
 
+void 
+CIAO::NodeManager_Impl_Base::
+destroyPlan (const Deployment::DeploymentPlan & plan
+             ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::StopError))
+{
+  // Update the reference counting map (subtract by 1 for each instance)
+  // If the ref count becomes 0, then remove this component, otherwise,
+  // we should remove the necesary bindings on this component specified
+  // in the deployment plan.
+
+  // Clean up the cached "Facets" and "Consumers" map of the components
+  // if their ref count become 0
+  CORBA::ULong const length = plan.instance.length ();
+  for (CORBA::ULong i = 0; i <  length; ++i)
+    {
+      Reference_Count_Map::ENTRY *entry = 0;
+      if (this->ref_count_map_.find (plan.instance[i].name.in (), entry) == 0)
+        {
+          --entry->int_id_.count_; // decrease ref count by 1
+
+          if (entry->int_id_.count_ == 0)
+            {
+              // Remove this component from the shared set
+              this->shared_components_.remove (plan.instance[i].name.in ());
+
+              // Unbind this component from the ref_count_map_
+              this->ref_count_map_.unbind (plan.instance[i].name.in ());
+
+              // Unbind this component from the facet/consumer maps
+              if (this->comp_facets_map_.unbind (
+                    plan.instance[i].name.in ()) != 0 ||
+                  this->comp_consumers_map_.unbind (
+                    plan.instance[i].name.in ()) != 0)
+                {
+                  ACE_TRY_THROW
+                    (Deployment::StopError ("NodeManager_Impl_Base::destroyPlan ",
+                                            "Unable to find component instance"));
+                }
+            }
+       }
+    }
+
+  // Find the NAM from the map and invoke the destroyPlan() operation on
+  // it, which will actuall remove components and connections in this plan.
+  // If 
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+
+  Deployment::NodeApplicationManager_var nam =
+    Deployment::NodeApplicationManager::_narrow (obj.in ());
+
+  // Reset each NAM about the shared components information
+  CORBA::StringSeq_var shared = this->shared_components_seq ();
+  nam->set_shared_components (shared.in ());
+
+  nam->destroyApplication (0);
+
+
+  // The problem is that we should NOT actually kill the NA process if
+  // there are some components that are shared by other plans.
+}
+
+Deployment::ComponentPlans *
+CIAO::NodeManager_Impl_Base::
+get_shared_components (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return this->get_shared_components_i ();
+}
+
+Deployment::ComponentPlans *
+CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
+{
+  Deployment::ComponentPlans_var retv;
+  ACE_NEW_RETURN (retv, 
+                  Deployment::ComponentPlans,
+                  0);
+  retv->length (0);
+
+  ACE_Unbounded_Set<ACE_CString>::iterator 
+    end = this->shared_components_.end ();
+
+  for (ACE_Unbounded_Set<ACE_CString>::iterator 
+         iter = this->shared_components_.begin ();
+       iter != end;
+       ++iter)
+    {
+      CORBA::ULong curr_len = retv->length ();
+      retv->length (curr_len + 1);
+      (*retv)[curr_len].name = (*iter).c_str ();
+      
+      // Fill in the plan_uuid information about this component, by 
+      // searching in the ref_count_map_
+      Reference_Count_Map::ENTRY *entry = 0;
+      if (this->ref_count_map_.find ((*iter).c_str (), entry) == 0)
+        {
+          // Get the plan_uuid_ info and populate the field
+          (*retv)[curr_len].plan_uuid = entry->int_id_.plan_uuid_.c_str ();
+        }
+      else
+        {
+          // should never happen
+          ACE_DEBUG ((LM_ERROR, "Component [%s] in the list of shared component, "
+                                "was not found in the NodeManager ref count map.\n",
+                                (*iter).c_str ()));
+        }
+    }
+
+  return retv._retn ();
+}
+
+
+CORBA::StringSeq *
+CIAO::NodeManager_Impl_Base::shared_components_seq (void)
+{
+  CORBA::StringSeq * retv;
+  ACE_NEW_RETURN (retv, CORBA::StringSeq, 0);
+  retv->length (0);
+
+  ACE_Unbounded_Set<ACE_CString>::iterator end = this->shared_components_.end ();
+  for (ACE_Unbounded_Set<ACE_CString>::iterator 
+         iter = this->shared_components_.begin ();
+       iter != end;
+       ++iter)
+    {
+      CORBA::ULong curr_len = retv->length ();
+      retv->length (curr_len + 1);
+      (*retv)[curr_len] = (*iter).c_str ();
+    }
+
+  return retv;
+}
+
 bool
-CIAO::NodeManager_Impl_Base::validate_plan (const Deployment::DeploymentPlan &plan)
+CIAO::NodeManager_Impl_Base::
+validate_plan (const Deployment::DeploymentPlan &plan)
 {
   const char * resource_id = 0;
   CORBA::ULong i = 0;

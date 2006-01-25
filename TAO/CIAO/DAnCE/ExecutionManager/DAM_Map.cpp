@@ -15,6 +15,12 @@ namespace CIAO
     {
     }
 
+    size_t
+    DAM_Map::size (void)
+    {
+      return this->map_.current_size ();
+    }
+
     bool
     DAM_Map::is_plan_available (const ACE_CString &str)
     {
@@ -57,7 +63,7 @@ namespace CIAO
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::bind_dam_reference");
       int retval =
-        this->map_.bind (str,
+        this->map_.rebind (str,
                          dam);
 
       if (retval != 0)

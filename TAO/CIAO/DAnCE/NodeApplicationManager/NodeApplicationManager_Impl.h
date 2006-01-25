@@ -31,6 +31,7 @@
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"
+#include "NodeManager/NodeManager_Impl.h"
 #include "NodeApplication/NodeApplication_Core.h"
 
 namespace CIAO
@@ -44,14 +45,18 @@ namespace CIAO
   public:
     /// Constructor
     NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
-                                 PortableServer::POA_ptr p);
+                                      PortableServer::POA_ptr p);
 
     /*===========================================================
      * Below are operations from the NodeApplicationManager
      *
      *============================================================*/
 
-    //@@ The return type is NodeApplication_ptr actually.
+    /// The return type is NodeApplication_ptr actually.
+    /// For "external/shared" components of this child plan, they are
+    /// not actaully installed, however, the object references
+    /// of the ports of these external components are returned 
+    /// through <providedReference>.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
                  Deployment::Connections_out providedReference,
@@ -87,6 +92,11 @@ namespace CIAO
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
+    virtual void 
+    set_shared_components (const ::CORBA::StringSeq & components
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
     /**
      * A factory operation to create NodeApplicationManager interface, and return
      * the object reference.
@@ -114,6 +124,8 @@ namespace CIAO
      *
      * @param callback_poa contains child poa created for the callback interface.
      *
+     * @para nm Pointer to the NodeManager_Impl servant object
+     *
      * @return NodeApplicationManager_ptr.
      **/
     virtual PortableServer::ObjectId
@@ -121,7 +133,8 @@ namespace CIAO
           const char *nodeapp_options,
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
-          const PortableServer::POA_ptr callback_poa
+          const PortableServer::POA_ptr callback_poa,
+          NodeManager_Impl_Base * nm
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidProperty))=0;
@@ -133,7 +146,7 @@ namespace CIAO
     /// Destructor
     virtual ~NodeApplicationManager_Impl_Base (void);
 
-    // Internal help function to create new NodeApplicationProcess
+    /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -142,7 +155,7 @@ namespace CIAO
                        Deployment::StartError,
                        Deployment::InvalidProperty))=0;
 
-    // Helper function to get the connection.
+    /// Helper function to get the connection.
     virtual Deployment::Connections *
     create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -159,6 +172,10 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidProperty));
 
+    /// Helper function to check wheather a component instance
+    /// is in the "shared components list".
+    bool is_shared_component (ACE_CString & name);
+
   protected:
     /// location of the Nodeapplication
     ACE_CString nodeapp_path_;
@@ -168,6 +185,12 @@ namespace CIAO
 
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
+
+    /// Pointer to the NodeManager_Impl servant object
+    /// We could do this because NodeManager and NodeApplicationManager
+    /// are always collocated in the same process, so we don't have
+    /// to pass CORBA object reference back and forth.
+    NodeManager_Impl_Base * node_manager_;
 
     /// ObjectRef of ourself which will be needed by the callback
     Deployment::NodeApplicationManager_var objref_;
@@ -190,6 +213,9 @@ namespace CIAO
     /// Extracted commandline options to pass to the NodeApplication.
     CORBA::String_var nodeapp_command_op_;
 
+    /// A list of components shared across deployment plans
+    CORBA::StringSeq shared_components_;
+
     /// A map of the component created on this node.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMObject_var,
@@ -202,6 +228,7 @@ namespace CIAO
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
   };
+
 
   /**
    * @class NodeApplicationManager_Impl
@@ -219,7 +246,8 @@ namespace CIAO
           const char *nodeapp_options,
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
-          const PortableServer::POA_ptr callback_poa
+          const PortableServer::POA_ptr callback_poa,
+          NodeManager_Impl_Base * nm
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidProperty));
@@ -238,6 +266,8 @@ namespace CIAO
                        Deployment::StartError,
                        Deployment::InvalidProperty));
   };
+
+
 
   struct Static_Config_EntryPoints_Maps;
 
@@ -258,7 +288,8 @@ namespace CIAO
           const char *nodeapp_options,
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
-          const PortableServer::POA_ptr callback_poa
+          const PortableServer::POA_ptr callback_poa,
+          NodeManager_Impl_Base * nm
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidProperty));

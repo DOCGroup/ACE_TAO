@@ -35,6 +35,7 @@
 
 #include "Deployment_Configuration.h"
 #include "DomainApplicationManager_Export.h"
+#include "../ExecutionManager/Execution_Manager_Impl.h"
 #include "ciao/CIAO_common.h"
 
 namespace CIAO
@@ -51,6 +52,16 @@ namespace CIAO
     : public virtual POA_Deployment::DomainApplicationManager
   {
   public:
+
+    // External_Connections means we search all the connections including
+    // the connectiosn for external/shared components of this plan which hold
+    // port objrefs of components within this plan
+    enum Connection_Search_Type
+      {
+        External_Connections, 
+        Internal_Connections
+      };
+
     /// Define the type which contains a list of DnC artifacts.
     /// @@ Assumption: Each NodeApplicationManager create only one
     /// NodeApplication when the startLaunch() operation is invoked,
@@ -69,6 +80,7 @@ namespace CIAO
     DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                    PortableServer::POA_ptr poa,
                                    Deployment::TargetManager_ptr manager,
+                                   Execution_Manager::Execution_Manager_Impl * em,
                                    const Deployment::DeploymentPlan &plan,
                                    const char * deployment_file)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -80,6 +92,8 @@ namespace CIAO
      *============================================================*/
     /**
      * Initialize the DomainApplicationManager.
+     * @para em A pointer to the ExecutionManager servant C++ object.
+     *
      * (1) Set the total number of child plans.
      * (2) Set the list of NodeManager names, which is an array of strings.
      *     The <node_manager_names> is a pointer to an array of ACE_CString
@@ -116,6 +130,16 @@ namespace CIAO
      *============================================================*/
 
     /**
+     * Fetch the NodeApplication object reference based on the NodeManager name.
+     */
+    virtual Deployment::NodeApplication_ptr get_node_app (
+        const char * node_name
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Deployment::NoSuchName));
+
+    /**
      * Executes the application, but does not start it yet. Users can
      * optionally provide launch-time configuration properties to
      * override properties that are part of the plan. Raises the
@@ -146,6 +170,18 @@ namespace CIAO
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
+
+    /**
+     * The last step in launching an application in the
+     * domain-level.  We establish connection bindings
+     * for external/shared components of this deployment plan
+     * components.
+     * Internally, this operation will invoke some operations
+     * on ExecutionManager to finish up this task.
+     */
+    virtual void post_finishLaunch (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
 
     /**
      * Starts the application. Raises the StartError exception if
@@ -218,6 +254,47 @@ namespace CIAO
      */
     int split_plan (void);
 
+    /**
+     * Construct <Component_Binding_Info> struct for the component instance.
+     * 
+     * @para name component instance name
+     * @para child_uuid child plan uuid string
+     */
+    Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+      populate_binding_info (const ACE_CString& name, 
+                             const ACE_CString& child_uuid);
+
+    /**
+     * Construct <Component_Binding_Info> struct for the component instance.
+     * Fetch the plan_uuid info from the internally cached shared component
+     * list.
+     *
+     * @para name component instance name
+     */
+    Execution_Manager::Execution_Manager_Impl::Component_Binding_Info *
+      populate_binding_info (const ACE_CString& name);
+
+    /**
+     * Contact each NodeManager to get shared compnents information
+     * and then update its internal cache.
+     */
+    void synchronize_shared_components_with_node_managers (void);
+
+    /**
+     * A helper function to add a list of shared components into 
+     * the cached shared component list.
+     * 
+     * @para shared A list of shared components to be added.
+     */
+    void add_shared_components (const Deployment::ComponentPlans & shared);
+
+    /**
+     * A private function to check whether a component is in the shared
+     * component list.
+     * 
+     * @para name The name of a component instance.
+     */
+    bool is_shared_component (const char * name);
 
     /**
      * Cache the incoming connections, which is a sequence of Connections,
@@ -234,8 +311,9 @@ namespace CIAO
     Deployment::Connections *
     get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                               bool is_getting_all_connections = true,
-                              bool is_search_new_plan = true
-			                        ACE_ENV_ARG_DECL);
+                              bool is_search_new_plan = true,
+                              Connection_Search_Type t = Internal_Connections
+			                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// This is a helper function to find the connection for a component.
     bool
@@ -243,7 +321,7 @@ namespace CIAO
                                 Deployment::Connections & retv,
                                 bool is_ReDAC,
                                 bool is_search_new_plan
-				                        ACE_ENV_ARG_DECL)
+				                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((Deployment::StartError));
 
     /// Dump connections, a static method
@@ -267,8 +345,14 @@ namespace CIAO
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    /// Cache a object reference to this servant.
-    /// Deployment::DomainApplicationManager_var objref_;
+    /// Pointer to the ExecutionManager_Impl "singleton" servant object
+    /// We could do this because ExecutionManager and DomainApplicationManager
+    /// are always collocated in the same process, so we don't have
+    /// to pass CORBA object reference back and forth.
+    Execution_Manager::Execution_Manager_Impl * execution_manager_;
+
+    /// Cache a list of shared components
+    Deployment::ComponentPlans_var shared_;
 
     /// Cache the ior of the previous reference
     CORBA::String_var ior_;
