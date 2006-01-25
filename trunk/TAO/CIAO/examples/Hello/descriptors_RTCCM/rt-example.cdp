@@ -98,12 +98,26 @@
         </value>
       </value>
     </configProperty>
+
+    <deployedResource>
+      <resourceUsage>InstanceUsesResource</resourceUsage>
+      <requirementName>CIAO:PolicySet</requirementName>
+      <resourceName>test_server_resource_id</resourceName>
+      <resourceValue>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>test_policy_set_id</string>
+        </value>
+      </resourceValue>
+    </deployedResource>
+
   </instance>
 
-
-  <instance id="Hello-Receiver-idd-UPDATE-XXXXXXXX">
-    <name>Hello-Receiver-idd-UPDATE-XXXXXXXXX</name>
-    <node>ReceiverNode</node>
+  <instance id="Hello-Receiver-idd">
+    <name>Hello-Receiver-idd</name>
+    <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
@@ -113,15 +127,30 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Receiver_2.ior</string>
+          <string>Receiver.ior</string>
         </value>
       </value>
     </configProperty>
+
+    <deployedResource>
+      <resourceUsage>InstanceUsesResource</resourceUsage>
+      <requirementName>CIAO:PolicySet</requirementName>
+      <resourceName>test_server_resource_id</resourceName>
+      <resourceValue>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>test_policy_set_id</string>
+        </value>
+      </resourceValue>
+    </deployedResource>
+
   </instance>
 
 
   <connection>
-    <name>hello_event_connection_new</name>
+    <name>hell_event_connection</name>
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>
@@ -130,12 +159,12 @@
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>EventConsumer</kind>
-      <instance>Hello-Receiver-idd-UPDATE-XXXXXXXX</instance>
+      <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>hello_facet_connection_new</name>
+    <name>hello_facet_connection</name>
     <internalEndpoint>
       <portName>push_message</portName>
       <kind>Facet</kind>
@@ -144,7 +173,7 @@
     <internalEndpoint>
       <portName>read_message</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>Hello-Receiver-idd-UPDATE-XXXXXXXX</instance>
+      <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
   </connection>
 
@@ -220,4 +249,17 @@
       </value>
     </execParameter>
   </artifact>
+
+  <infoProperty>
+    <name>CIAOServerResources</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>rt-config-example.csr</string>
+      </value>
+    </value>
+  </infoProperty>
+
 </Deployment:deploymentPlan>  
