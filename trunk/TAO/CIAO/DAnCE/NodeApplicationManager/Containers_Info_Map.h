@@ -36,29 +36,13 @@ namespace CIAO
   {
   public:
 
-    Containers_Info_Map (const Deployment::DeploymentPlan & plan);
+    Containers_Info_Map (const Deployment::DeploymentPlan & plan,
+                         CORBA::StringSeq shared_components);
 
     Deployment::ContainerImplementationInfos *
       containers_info (void);
 
   private:
-    typedef 
-    ACE_Hash_Map_Manager_Ex <ACE_CString,
-                            Deployment::ContainerImplementationInfo *,
-                            ACE_Hash<ACE_CString>,
-                            ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> MAP;
-
-    typedef MAP::iterator Iterator;
-
-    MAP map_;
-
-    const Deployment::DeploymentPlan & plan_;
-
-    //Deployment::ContainerImplementationInfos_var containers_info_;
-
-  private:
-
     void initialize_map (void);
     bool build_map (void);
 
@@ -68,6 +52,28 @@ namespace CIAO
     bool insert_instance_into_container (
       const Deployment::InstanceDeploymentDescription & instance,
       Deployment::ComponentImplementationInfos & impl_infos);
+
+    /// Helper function to check wheather a component instance
+    /// is in the "shared components list".
+    bool is_shared_component (ACE_CString & name);
+
+    //Deployment::ContainerImplementationInfos_var containers_info_;
+
+    typedef 
+    ACE_Hash_Map_Manager_Ex <ACE_CString,
+                            Deployment::ContainerImplementationInfo *,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> MAP;
+
+    typedef MAP::iterator Iterator;
+    MAP map_;
+
+    const Deployment::DeploymentPlan & plan_;
+
+    /// shared components list, passed in from NodeImplementationInfoHandler
+    /// class.
+    CORBA::StringSeq shared_components_;
   };
 }
 

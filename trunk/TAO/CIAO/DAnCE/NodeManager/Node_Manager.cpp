@@ -172,10 +172,9 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (adapter.in ()))
           ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
 
-
-      // Create and install the CIAO Daemon servant
-      CIAO::NodeManager_Impl *daemon_servant = 0;
-      ACE_NEW_RETURN (daemon_servant,
+      // Create and install the CIAO NodeManager servant
+      CIAO::NodeManager_Impl *node_manager_servant = 0;
+      ACE_NEW_RETURN (node_manager_servant,
                       CIAO::NodeManager_Impl("NodeManager",
                                              orb.in (),
                                              poa.in (),
@@ -183,16 +182,17 @@ main (int argc, char *argv[])
                                              nodeapp_options_,
                                              spawn_delay),
                       -1);
-      PortableServer::ServantBase_var safe_daemon (daemon_servant);
 
-      daemon_servant->init ();
-
+      PortableServer::ServantBase_var safe_daemon (node_manager_servant);
+      
+      node_manager_servant->init ();
+      
       // Implicit activation
-      CIAO::NodeManager_var daemon =
-        daemon_servant->_this ();
+      CIAO::NodeManager_var node_manager =
+        node_manager_servant->_this ();
 
       CORBA::String_var str =
-        orb->object_to_string (daemon.in ()
+        orb->object_to_string (node_manager.in ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -216,7 +216,7 @@ main (int argc, char *argv[])
           // Register this name with the Naming Service
           (void) register_with_ns (name,
                                    orb.in (),
-                                   daemon.in ()
+                                   node_manager.in ()
                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -240,7 +240,8 @@ main (int argc, char *argv[])
        monitor_controller->activate ();
       ACE_DEBUG ((LM_DEBUG , "After Activate"));
 */
-      // End Deployment part
+
+      // Finishing Deployment part
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO_NodeManager is running...\n"));
 

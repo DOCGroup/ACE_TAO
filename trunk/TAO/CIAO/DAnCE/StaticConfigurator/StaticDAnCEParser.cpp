@@ -74,7 +74,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ::Deployment::DeploymentPlan_var plan =
       intf.get_plan ();
 
-  NodeImplementationInfoHandler handler (plan);
+  CORBA::StringSeq dummy;
+  dummy.length (0);
+
+  NodeImplementationInfoHandler handler (plan, dummy);
   
   Deployment::NodeImplementationInfo * node_impl_info =
     handler.node_impl_info ();
