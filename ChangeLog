@@ -1,3 +1,9 @@
+Wed Jan 25 10:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_sysctl.h:
+          New os_include system header include file, will be used after x.4.9
+          is out because using it now can break to much builds
+
 Tue Jan 24 18:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
