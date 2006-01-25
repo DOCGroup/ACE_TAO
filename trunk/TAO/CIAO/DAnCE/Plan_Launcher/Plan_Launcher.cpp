@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 
-#include "ExecutionManager/ExecutionManagerC.h"
+#include "Interfaces/ExecutionManagerC.h"
 
 namespace CIAO
 {
