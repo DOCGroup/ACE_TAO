@@ -1,3 +1,8 @@
+Wed Jan 25 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+          Don't use the directory group sorting with borland
+
 Wed Jan 25 19:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
