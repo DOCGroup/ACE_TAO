@@ -32,10 +32,6 @@ public:
 
   virtual int parse_string (const ACE_TCHAR str[]);
 
-  void * operator new (size_t bytes);
-
-  void operator delete (void *ptr);
-
 protected:
   ACEXML_Parser parser_;
   ACEXML_Svcconf_Handler svcconf_handler_;
