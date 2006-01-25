@@ -955,7 +955,7 @@ public:
    * address on success.  Returns 0 if local TSS had already been
    * setup for this thread.  There is no corresponding tss_close ()
    * because it is not needed.
-   * NOTE: tss_open () is called by ACE for threads that it spawns.
+   * @note tss_open () is called by ACE for threads that it spawns.
    * If your application spawns threads without using ACE, and it uses
    * ACE's TSS emulation, each of those threads should call tss_open
    * ().  See the ace_thread_adapter () implementation for an example.

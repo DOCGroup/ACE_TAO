@@ -110,7 +110,7 @@
 // macros to make prototypes visible.
 # define ACE_LACKS_GETPGID_PROTOTYPE
 
-// NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
+// @note  the following defines are necessary with glibc 2.0 (0.961212-5)
 //        on Alpha.  I assume that they're necessary on Intel as well,
 //        but that may depend on the version of glibc that is used.
 //# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
@@ -120,7 +120,7 @@
 // visible.  ACE shouldn't depend on feature test macros to make
 // prototypes visible.
 # define ACE_LACKS_STRTOK_R_PROTOTYPE
-// NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
+// @note  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 // These macros determined by reading <stdio.h> on RH 7.1 and glibc's
 // <features.h>.
