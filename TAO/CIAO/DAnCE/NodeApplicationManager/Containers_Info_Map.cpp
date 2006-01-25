@@ -6,9 +6,11 @@
 namespace CIAO
 {
   Containers_Info_Map::
-  Containers_Info_Map (const Deployment::DeploymentPlan & plan)
+  Containers_Info_Map (const Deployment::DeploymentPlan & plan,
+                       CORBA::StringSeq shared_components)
     : map_ (CIAO_DEFAULT_MAP_SIZE),
-      plan_ (plan)
+      plan_ (plan),
+      shared_components_ (shared_components)
   {
     this->initialize_map ();
     this->build_map ();
@@ -160,6 +162,12 @@ namespace CIAO
         const Deployment::InstanceDeploymentDescription & instance =
           this->plan_.instance[i];
 
+        // If this component instance happens to be in the "shared components 
+        // list", then we ignore it, otherwise we shall install it.
+        ACE_CString name (instance.name.in ());
+        if (this->is_shared_component (name))
+          continue;
+            
         if (! this->insert_instance_into_map (instance))
           return false;
       }
@@ -318,4 +326,18 @@ namespace CIAO
       }
     return true;
   }
+}
+
+bool
+CIAO::Containers_Info_Map::
+is_shared_component (ACE_CString & name)
+{
+  for (CORBA::ULong i = 0; i < this->shared_components_.length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->shared_components_[i].in (),
+                          name.c_str ()) == 0)
+        return true;
+    }
+
+  return false;
 }

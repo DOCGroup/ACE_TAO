@@ -19,6 +19,23 @@ NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
 {
 }
 
+CIAO::NodeApplicationManager_Impl_Base::~NodeApplicationManager_Impl_Base (void)
+{
+}
+
+void
+CIAO::NodeApplicationManager_Impl_Base::
+parse_config_value (ACE_CString & str
+                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::InvalidProperty))
+{
+  // The unused arg is for future improvemnts.
+  ACE_UNUSED_ARG (str);
+
+  ACE_THROW ( CORBA::NO_IMPLEMENT() );
+}
+
 ACE_INLINE
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeApplicationManager_Impl_Base::get_nodeapp_manager (void)
@@ -34,3 +51,4 @@ reset_plan (const ::Deployment::DeploymentPlan & plan
 {
   this->plan_ = plan;
 }
+

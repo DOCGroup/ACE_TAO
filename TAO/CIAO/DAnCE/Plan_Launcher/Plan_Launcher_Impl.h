@@ -82,7 +82,6 @@ namespace CIAO
       
       /// Local map for DAMs, to save expensive UUID lookups.
       Execution_Manager::DAM_Map map_;
-      
     };
     
   }

@@ -228,38 +228,55 @@ namespace CIAO
     bool
     Plan_Launcher_i::teardown_plan (const char *uuid)
     {
-      if (!this->map_.is_plan_available (uuid))
-        return false;
-      
-      ::Deployment::DomainApplicationManager_var dapp_mgr 
-          (this->map_.fetch_dam_reference (uuid));
-      
-      
-      this->map_.unbind_dam (uuid);
-      
+      // Since people could always run another instance of the Plan_Launcher
+      // executable to tear down a plan, so we could NOT rely on the local
+      // DAM_Map to fetch DAM obj reference. Instead, we make a remote call
+      // on ExecutionManager to fetch it.
+      ACE_TRY 
+        {
+          ::Deployment::DomainApplicationManager_var dapp_mgr =
+            this->em_->getManager (uuid);
+
+            dapp_mgr->destroyApplication ();
+            if (CIAO::debug_level ())
+              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+
+            // Note that we should ask the DAM to tell EM whether the DAM should
+            // be destroyed
+            //this->destroy_dam (dapp_mgr.in ());
+        }
+      ACE_CATCHANY
+        {
+          ACE_DEBUG ((LM_ERROR, "Unable to find DomainApplicationManager "
+                                "for plan with uuid: %s\n", uuid));
+          return false;
+        }
+      ACE_ENDTRY;
+
       return true;
     }
     
     bool 
     Plan_Launcher_i::teardown_plan (::Deployment::DomainApplicationManager_ptr dam
-                                  ACE_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
                     "CIAO_PlanLauncher: destroy the application.....\n"));
+
       dam->destroyApplication ();
       
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-      this->destroy_dam (dam);      
+      this->destroy_dam (dam);
       
       return true;
     }
     
     void 
     Plan_Launcher_i::destroy_dam (::Deployment::DomainApplicationManager_ptr dam
-                                ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
