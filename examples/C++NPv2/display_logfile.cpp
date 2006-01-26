@@ -198,10 +198,10 @@ public:
     : task_ (filename)
   {
     this->open (ACE_TEXT ("Logrec Reader"),
-		&task_, // Initialize writer-side.
-		0,      // Ignore reader-side.
-		0,
-		ACE_Module<ACE_SYNCH>::M_DELETE_READER);
+                &task_, // Initialize writer-side.
+                0,      // Ignore reader-side.
+                0,
+                ACE_Module<ACE_SYNCH>::M_DELETE_READER);
   }
 private:
   Logrec_Reader task_;
