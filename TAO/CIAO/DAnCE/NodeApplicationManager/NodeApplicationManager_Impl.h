@@ -93,7 +93,7 @@ namespace CIAO
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
     virtual void 
-    set_shared_components (const ::CORBA::StringSeq & components
+    set_shared_components (const Deployment::ComponentPlans & shared
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
@@ -176,6 +176,10 @@ namespace CIAO
     /// is in the "shared components list".
     bool is_shared_component (ACE_CString & name);
 
+    /// Helper function to check wheather a component instance
+    /// is in the "shared components list".
+    bool is_external_component (ACE_CString & name);
+
   protected:
     /// location of the Nodeapplication
     ACE_CString nodeapp_path_;
@@ -214,7 +218,10 @@ namespace CIAO
     CORBA::String_var nodeapp_command_op_;
 
     /// A list of components shared across deployment plans
-    CORBA::StringSeq shared_components_;
+    Deployment::ComponentPlans shared_components_;
+
+    /// A list of components that are "external" to this plan
+    Deployment::ComponentPlans external_components_;
 
     /// A map of the component created on this node.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

@@ -74,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ::Deployment::DeploymentPlan_var plan =
       intf.get_plan ();
 
-  CORBA::StringSeq dummy;
+  ::Deployment::ComponentPlans dummy;
   dummy.length (0);
 
   NodeImplementationInfoHandler handler (plan, dummy);

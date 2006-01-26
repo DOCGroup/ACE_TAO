@@ -1,3 +1,22 @@
+Thu Jan 26 01:44:15 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp
+        * ciao/Deployment.idl
+        
+          Fixed a bug of shared component capability. Originally, we
+          haven't differentiate between "shared components" and
+          "external components", so when a component ref count becomes
+          0, the "shared components" will become empty, however, since
+          some components are installed remotely, removing it will
+          cause problem if we don't have such differentiation.
+
 Wed Jan 25 23:44:01 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * CIAOTAO.mwc:
