@@ -229,7 +229,9 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual CORBA::ULong
     remove_old_records (ACE_ENV_SINGLE_ARG_DECL)		= 0;
 
-
+  /// Read-Write Lock
+  virtual ACE_SYNCH_RW_MUTEX& lock()				= 0;
+    
 protected:
   /// Constructor.
   TAO_LogRecordStore (void);
