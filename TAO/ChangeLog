@@ -1,3 +1,31 @@
+Thu Jan 26 15:37:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+
+          Added lock() method to LogRecordStore that returns a reference
+          to a ACE_SYNCH_RW_MUTEX.  Changed Log_i and Hash_Iterator_i to
+          use the lock (via the ACE_READ_GUARD... and ACE_WRITE_GUARD...
+          macros), while removing its use within the Hash_LogRecordStore
+          methods themselves.
+
+          This change avoids any race conditions in read-modify-write
+          operations (e.g. the set_* methods) that exist when locking is
+          done entirely within the LogRecordStore.
+
+          It also avoids acquiring and releasing the lock multiple times
+          in the course of a single operation, which resulted in a modest
+          performance improvement (~15%) for methods like write_records()
+          and write_recordlist().
+
+          In the future, we may want to abstract locking so instead of a
+          rwlock it may represent a database session or transaction.
+
 Mon Jan 23 15:50:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:

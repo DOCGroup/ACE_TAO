@@ -325,7 +325,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+  /// Get the availability status
+  /// @note must be called with locks held
+  DsLogAdmin::AvailabilityStatus
+  get_availability_status_i (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Tells if the Log is scheduled to run now.
+  /// @note must be called with locks held
   CORBA::Boolean scheduled (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

@@ -245,6 +245,9 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   virtual CORBA::ULong
     remove_old_records (ACE_ENV_SINGLE_ARG_DECL);
+  
+  /// Read-Write Lock
+  virtual ACE_SYNCH_RW_MUTEX& lock();
 
 /* protected: */
   /// Defines macros to represent the hash that maps ids to

@@ -48,6 +48,7 @@ public:
 
   /// Constructor.
   TAO_Hash_Iterator_i (ACE_Reactor* reactor,
+		       TAO_Hash_LogRecordStore* recordstore,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                        CORBA::ULong start,
@@ -65,6 +66,8 @@ public:
                      DsLogAdmin::InvalidParam));
 
 private:
+  /// Pointer to record store
+  TAO_Hash_LogRecordStore* recordstore_;
 
   /// Current Iterator.
   TAO_Hash_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
