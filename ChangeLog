@@ -1,3 +1,13 @@
+Thu Jan 26 14:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Block_Test.cpp:
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+          Moved real code out of ACE_ASSERT macro's, this functionality
+          wasn't executed in release mode builds. Found this because of
+          warnings in the Intel release build that a variable was used
+          before it was assigned a value.
+
 Thu Jan 26 13:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/performance_stats.sh:
