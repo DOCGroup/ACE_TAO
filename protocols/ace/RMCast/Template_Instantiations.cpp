@@ -28,6 +28,7 @@ template class ACE_Array_Base<unsigned char>;
 template class ACE_Array_Base<unsigned long>;
 template class ACE_Array_Base<unsigned long long>;
 template class ACE_Array_Base<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >;
+template class ACE_Array_Base<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >;
 template class ACE_Condition<ACE_Thread_Mutex>;
 template class ACE_Equal_To<ACE_INET_Addr>;
 template class ACE_Hash_Map_Const_Iterator_Base_Ex<unsigned short, ACE_Refcounted_Auto_Ptr<ACE_RMCast::Profile, ACE_Thread_Mutex>, ACE_Hash<unsigned short>, ACE_Equal_To<unsigned short>, ACE_Null_Mutex>;
@@ -64,14 +65,19 @@ template class ACE_Hash_Map_Manager_Ex<unsigned long, ACE_RMCast::Retransmit::De
 template class ACE_Hash_Map_Manager_Ex<unsigned long long, ACE_RMCast::Retransmit::Descr, ACE_Hash<unsigned long long>, ACE_Equal_To<unsigned long long>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<unsigned short, ACE_Refcounted_Auto_Ptr<ACE_RMCast::Profile, ACE_Thread_Mutex>, ACE_Hash<unsigned short>, ACE_Equal_To<unsigned short>, ACE_Null_Mutex>;
 template class ACE_Node<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >;
+template class ACE_Node<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >;
 template class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Data, ACE_Thread_Mutex>;
 template class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex>;
+template class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex>;
 template class ACE_Refcounted_Auto_Ptr<ACE_RMCast::NAK, ACE_Thread_Mutex>;
 template class ACE_Refcounted_Auto_Ptr<ACE_RMCast::NRTM, ACE_Thread_Mutex>;
 template class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Profile, ACE_Thread_Mutex>;
 template class ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >;
+template class ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >;
 template class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >;
+template class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >;
 template class ACE_Vector<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >;
+template class ACE_Vector<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >;
 template class ACE_Vector<unsigned char>;
 template class ACE_Vector<unsigned long>;
 template class ACE_Vector<unsigned long long>;
@@ -79,6 +85,7 @@ template class ACE_Vector_Iterator<unsigned char>;
 template class ACE_Vector_Iterator<unsigned long>;
 template class ACE_Vector_Iterator<unsigned long long>;
 template class ACE_Vector_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >;
+template class ACE_Vector_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -86,6 +93,7 @@ template class ACE_Vector_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, 
 # pragma instantiate class ACE_Array_Base<unsigned long>
 # pragma instantiate class ACE_Array_Base<unsigned long long>
 # pragma instantiate class ACE_Array_Base<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >
+# pragma instantiate class ACE_Array_Base<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >
 # pragma instantiate class ACE_Condition<ACE_Thread_Mutex>
 # pragma instantiate class ACE_Equal_To<ACE_INET_Addr>
 # pragma instantiate class ACE_Hash_Map_Const_Iterator_Base_Ex<unsigned long, ACE_RMCast::Acknowledge::Descr, ACE_Hash<unsigned long>, ACE_Equal_To<unsigned long>, ACE_Null_Mutex>
@@ -122,14 +130,19 @@ template class ACE_Vector_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, 
 # pragma instantiate class ACE_Hash_Map_Manager_Ex<unsigned long long, ACE_RMCast::Retransmit::Descr, ACE_Hash<unsigned long long>, ACE_Equal_To<unsigned long long>, ACE_Null_Mutex>
 # pragma instantiate class ACE_Hash_Map_Manager_Ex<unsigned short, ACE_Refcounted_Auto_Ptr<ACE_RMCast::Profile, ACE_Thread_Mutex>, ACE_Hash<unsigned short>, ACE_Equal_To<unsigned short>, ACE_Null_Mutex>
 # pragma instantiate class ACE_Node<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >
+# pragma instantiate class ACE_Node<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >
 # pragma instantiate class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Data, ACE_Thread_Mutex>
 # pragma instantiate class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex>
+# pragma instantiate class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex>
 # pragma instantiate class ACE_Refcounted_Auto_Ptr<ACE_RMCast::NAK, ACE_Thread_Mutex>
 # pragma instantiate class ACE_Refcounted_Auto_Ptr<ACE_RMCast::NRTM, ACE_Thread_Mutex>
 # pragma instantiate class ACE_Refcounted_Auto_Ptr<ACE_RMCast::Profile, ACE_Thread_Mutex>
 # pragma instantiate class ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >
+# pragma instantiate class ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >
 # pragma instantiate class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >
+# pragma instantiate class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >
 # pragma instantiate class ACE_Vector<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >
+# pragma instantiate class ACE_Vector<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >
 # pragma instantiate class ACE_Vector<unsigned char>
 # pragma instantiate class ACE_Vector<unsigned long>
 # pragma instantiate class ACE_Vector<unsigned long long>
@@ -137,6 +150,7 @@ template class ACE_Vector_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, 
 # pragma instantiate class ACE_Vector_Iterator<unsigned long>
 # pragma instantiate class ACE_Vector_Iterator<unsigned long long>
 # pragma instantiate class ACE_Vector_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Null_Mutex> >
+# pragma instantiate class ACE_Vector_Iterator<ACE_Refcounted_Auto_Ptr<ACE_RMCast::Message, ACE_Thread_Mutex> >
 
 #elif defined (__HP_aCC)
 // Make aC++ stop complaining about an empty translation unit
