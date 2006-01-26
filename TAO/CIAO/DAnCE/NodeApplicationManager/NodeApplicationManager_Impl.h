@@ -37,7 +37,7 @@
 namespace CIAO
 {
   /**
-   * @class NodeApplicationManager_Impl
+   * @class NodeApplicationManager_Impl_Base
    */
   class CIAO_NAM_Export NodeApplicationManager_Impl_Base
     : public virtual POA_Deployment::NodeApplicationManager
@@ -55,7 +55,7 @@ namespace CIAO
     /// The return type is NodeApplication_ptr actually.
     /// For "external/shared" components of this child plan, they are
     /// not actaully installed, however, the object references
-    /// of the ports of these external components are returned 
+    /// of the ports of these external components are returned
     /// through <providedReference>.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
@@ -87,12 +87,12 @@ namespace CIAO
                        ::Deployment::InvalidProperty,
                        ::Components::RemoveFailure));
 
-    virtual void 
+    virtual void
     reset_plan (const ::Deployment::DeploymentPlan & plan
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
-    virtual void 
+    virtual void
     set_shared_components (const Deployment::ComponentPlans & shared
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
