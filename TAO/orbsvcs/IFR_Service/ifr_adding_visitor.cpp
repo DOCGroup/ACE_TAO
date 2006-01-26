@@ -190,25 +190,14 @@ ifr_adding_visitor::visit_module (AST_Module *node)
             prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // If the line below is true, we are clobbering a previous
-          // entry from another IDL file. In that
-          // case we do what other ORB vendors do, and destroy the
-          // original entry, create the new one, and let the user beware.
-          if (kind != CORBA::dk_Module)
-            {
-              prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              // This call will take the brach where prev_def.in() is 0.
-              return this->visit_module (node);
-            }
-          else
+          if (kind == CORBA::dk_Module)
             {
               // We are either in a reopened module, are processing an IDL
               // IDL file for the second time, or are in a module whose
               // name already exists by coincidence - there is no way to
               // tell the difference. So any members whose repository ID
-              // already exists in this case will be skipped.
+              // already exists in this case will throw BAD_PARAM
+              // when we attempt to add them to the repository.
               this->in_reopened_ = 1;
 
               new_def =
@@ -2392,70 +2381,37 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Is this typedef already in the respository?
-      CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
+      this->element_type (node->base_type ()
+                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // If not, create a new entry.
-      if (CORBA::is_nil (prev_def.in ()))
+      CORBA::Container_ptr current_scope =
+        CORBA::Container::_nil ();
+
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          this->element_type (node->base_type ()
-                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          CORBA::Container_ptr current_scope =
-            CORBA::Container::_nil ();
-
-          if (be_global->ifr_scopes ().top (current_scope) == 0)
-            {
-              this->ir_current_ =
-                current_scope->create_alias (
-                   node->repoID (),
-                   node->local_name ()->get_string (),
-                   node->version (),
-                   this->ir_current_.in ()
-                   ACE_ENV_ARG_PARAMETER
-                 );
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_typedef -")
-                  ACE_TEXT (" scope stack is empty\n")
-                ),
-                -1
+          this->ir_current_ =
+            current_scope->create_alias (
+                node->repoID (),
+                node->local_name ()->get_string (),
+                node->version (),
+                this->ir_current_.in ()
+                ACE_ENV_ARG_PARAMETER
               );
-            }
-
-          node->ifr_added (1);
+          ACE_TRY_CHECK;
         }
       else
         {
-          // If the line below is true, we are clobbering a previous
-          // entry (from another IDL file) of another type. In that
-          // case we do what other ORB vendors do, and destroy the
-          // original entry, create the new one, and let the user beware.
-          // Unless we are in a module that has been seen before, in
-          // which case we might be just processing and IDL file a
-          // second time and we want to just update ir_current_.
-          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
-            {
-              prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              // This call will take the other branch.
-              return this->visit_typedef (node);
-            }
-
-          this->ir_current_ =
-            CORBA::TypedefDef::_narrow (prev_def.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_typedef -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),
+            -1
+          );
         }
+
+      node->ifr_added (1);
     }
   ACE_CATCHANY
     {
