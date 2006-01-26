@@ -51,7 +51,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * usual using <ACE_OS::thr_prio> or via the ACE_Thread
  * interface.  See the parameter descriptions in the private:
  * section below.
- * NOTE: this class does not do any checking of parameters.  It
+ * @note This class does not do any checking of parameters.  It
  * is just a container class.  If it is constructed with values
  * that are not supported on a platform, the call to
  * <ACE_OS::sched_params> will fail by returning -1 with EINVAL
