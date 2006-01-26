@@ -17,8 +17,24 @@ is_shared_component (ACE_CString & name)
 {
   for (CORBA::ULong i = 0; i < this->shared_components_.length (); ++i)
     {
-      if (ACE_OS::strcmp (this->shared_components_[i].in (),
+      if (ACE_OS::strcmp (this->shared_components_[i].name.in (),
                           name.c_str ()) == 0)
+        return true;
+    }
+
+  return false;
+}
+
+bool
+CIAO::NodeApplicationManager_Impl_Base::
+is_external_component (ACE_CString & name)
+{
+  for (CORBA::ULong i = 0; i < this->external_components_.length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->external_components_[i].name.in (),
+                          name.c_str ()) == 0 &&
+          ACE_OS::strcmp (this->external_components_[i].plan_uuid.in (),
+                          this->plan_.UUID.in ()))
         return true;
     }
 
@@ -159,6 +175,10 @@ startLaunch (const Deployment::Properties & configProperty,
       ACE_UNUSED_ARG (configProperty);
       ACE_UNUSED_ARG (start);
 
+      // In this step, we know all the "shared components" are
+      // the external components to ourself.
+      this->external_components_ = this->shared_components_;
+
       // If no additional components need to be installed, then we simply
       // create a NA, but doesn't install any components on it.
       if (this->plan_.instance.length () == this->shared_components_.length ())
@@ -260,11 +280,11 @@ startLaunch (const Deployment::Properties & configProperty,
       for (CORBA::ULong j = 0; j < shared_comp_length; ++j)
         {
           if (this->component_map_.
-                bind (this->shared_components_[j].in (),
+                bind (this->shared_components_[j].name.in (),
                       Components::CCMObject::_nil ()))
             {
               ACE_CString error ("Duplicate component instance name ");
-              error += this->shared_components_[j].in();
+              error += this->shared_components_[j].name.in();
 
               ACE_TRY_THROW
                 (Deployment::StartError
@@ -377,7 +397,8 @@ perform_redeployment (const Deployment::Properties & configProperty,
             }
 
           // package the components
-          NodeImplementationInfoHandler handler (tmp_plan, this->shared_components_);
+          NodeImplementationInfoHandler handler (tmp_plan, 
+                                                 this->shared_components_);
           Deployment::NodeImplementationInfo * node_info =
             handler.node_impl_info ();
 
@@ -475,11 +496,11 @@ perform_redeployment (const Deployment::Properties & configProperty,
 
 void
 CIAO::NodeApplicationManager_Impl_Base::
-set_shared_components (const ::CORBA::StringSeq & components
+set_shared_components (const Deployment::ComponentPlans & shared
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((::CORBA::SystemException))
 {
-  this->shared_components_ = components;
+  this->shared_components_ = shared;
 }
 
 void
@@ -508,6 +529,11 @@ destroyApplication (Deployment::Application_ptr app
       if (this->is_shared_component (name))
         continue;
 
+      // If this is not a shared component and is installed within
+      // this NAM, then remove it. Otherwise, we do nothing.
+      // Ideally, we should ask NM to remove this component for
+      // us even if this is not within this NAM.
+      if (! this->is_external_component (name))
         this->nodeapp_->remove_component (name.c_str ());
     }
   
