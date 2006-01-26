@@ -1,3 +1,12 @@
+Thu Jan 26 10:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO/DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+          Fixed incorrect doxygen tag
+
+        * CIAO/DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+          Added missing ACE_INLINE macro's
+
+
 Thu Jan 26 01:44:15 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
@@ -9,7 +18,7 @@ Thu Jan 26 01:44:15 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/NodeManager/NodeManager_Impl.cpp
         * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp
         * ciao/Deployment.idl
-        
+
           Fixed a bug of shared component capability. Originally, we
           haven't differentiate between "shared components" and
           "external components", so when a component ref count becomes
