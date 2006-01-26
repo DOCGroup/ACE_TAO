@@ -1,3 +1,11 @@
+Thu Jan 26 17:57:45 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/NodeManager/NodeManager.mpc
+        
+          Modified to inherit from a base project dance_extension_stub.mpb
+          to avoid explicily included path specification.
+
 Thu Jan 26 10:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO/DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
