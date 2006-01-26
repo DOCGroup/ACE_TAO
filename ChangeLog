@@ -1,3 +1,9 @@
+Thu Jan 26 13:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_footprint_chart.sh:
+          Generate the png images of size 800x600, little bit bigger, makes
+          it more easier to read
+
 Thu Jan 26 11:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Registry.h:
