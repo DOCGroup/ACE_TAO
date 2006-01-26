@@ -1,3 +1,11 @@
+Thu Jan 26 19:25:06 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/TargetManager/TargetManager.mpc
+        
+          Added an empty IDL_Files segment to the _exec project,
+          which should clean up tons of Windows VC build erros
+          and warnings.
+
 Thu Jan 26 17:57:45 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc
