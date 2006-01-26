@@ -52,9 +52,11 @@ project(CIAO_TargetManager_exec) : namingexe, ciao_component_dnc , ciao_config_h
   idlflags  +=  -Wb,export_macro=TARGETMANAGER_EXEC_Export -Wb,export_include=TargetManager_exec_export.h
   dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL
 
-
   Source_Files {
     DomainDataManager.cpp    
     TargetManager_exec.cpp
+  }
+
+  IDL_Files {
   }
 }
