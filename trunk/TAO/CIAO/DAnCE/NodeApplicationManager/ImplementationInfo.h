@@ -38,7 +38,7 @@ namespace CIAO
   {
   public:
     NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan,
-                                   CORBA::StringSeq shared_components);
+                  const Deployment::ComponentPlans & shared_components);
 
     Deployment::NodeImplementationInfo *
       node_impl_info (void) const;
@@ -55,9 +55,6 @@ namespace CIAO
     /// Helper class that helps populate the container_impl_infos
     /// field.
     Containers_Info_Map containers_info_map_;
-
-    /// shared components list, obtained from NodeApplicationManager
-    CORBA::StringSeq shared_components_;
   };
 }
 

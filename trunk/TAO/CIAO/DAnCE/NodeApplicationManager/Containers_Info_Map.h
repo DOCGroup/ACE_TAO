@@ -37,7 +37,7 @@ namespace CIAO
   public:
 
     Containers_Info_Map (const Deployment::DeploymentPlan & plan,
-                         CORBA::StringSeq shared_components);
+            const Deployment::ComponentPlans & shared_components);
 
     Deployment::ContainerImplementationInfos *
       containers_info (void);
@@ -73,7 +73,7 @@ namespace CIAO
 
     /// shared components list, passed in from NodeImplementationInfoHandler
     /// class.
-    CORBA::StringSeq shared_components_;
+    Deployment::ComponentPlans shared_components_;
   };
 }
 

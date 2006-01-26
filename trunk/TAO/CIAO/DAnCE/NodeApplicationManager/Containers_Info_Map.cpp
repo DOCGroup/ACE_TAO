@@ -7,7 +7,7 @@ namespace CIAO
 {
   Containers_Info_Map::
   Containers_Info_Map (const Deployment::DeploymentPlan & plan,
-                       CORBA::StringSeq shared_components)
+          const Deployment::ComponentPlans & shared_components)
     : map_ (CIAO_DEFAULT_MAP_SIZE),
       plan_ (plan),
       shared_components_ (shared_components)
@@ -334,7 +334,7 @@ is_shared_component (ACE_CString & name)
 {
   for (CORBA::ULong i = 0; i < this->shared_components_.length (); ++i)
     {
-      if (ACE_OS::strcmp (this->shared_components_[i].in (),
+      if (ACE_OS::strcmp (this->shared_components_[i].name.in (),
                           name.c_str ()) == 0)
         return true;
     }

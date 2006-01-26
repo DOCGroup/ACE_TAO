@@ -272,7 +272,8 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
             Deployment::NodeApplicationManager::_narrow (obj.in ());
 
           // Convert the ACE Set into CORBA sequence, and make the remote invocation
-          CORBA::StringSeq_var shared = this->shared_components_seq ();
+          Deployment::ComponentPlans_var shared = 
+            this->get_shared_components_i ();
           nam->set_shared_components (shared.in ());
  
           // narrow should return a nil reference if it fails.
@@ -300,7 +301,8 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
 
           // Similarly, we should inform NAM about "shared" components, so 
           // they won't be instantiated again
-          CORBA::StringSeq_var shared;
+          Deployment::ComponentPlans_var shared = 
+            this->get_shared_components_i ();
           nam->set_shared_components (shared.in ());
 
           // Potentially we could reset many other configuration settings
@@ -433,8 +435,8 @@ destroyPlan (const Deployment::DeploymentPlan & plan
     Deployment::NodeApplicationManager::_narrow (obj.in ());
 
   // Reset each NAM about the shared components information
-  CORBA::StringSeq_var shared = this->shared_components_seq ();
-  nam->set_shared_components (shared.in ());
+  Deployment::ComponentPlans_var shared = this->get_shared_components_i ();
+  nam->set_shared_components (shared.inout ());
 
   nam->destroyApplication (0);
 
