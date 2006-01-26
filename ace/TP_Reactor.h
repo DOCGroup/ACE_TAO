@@ -20,7 +20,6 @@
  *  will also reduce.  More over, the total resources used by
  *  threads are bounded because there are a fixed number of threads.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */

@@ -310,8 +310,8 @@ public:
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the <ACE_Atomic_Op> with an
    * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>, or if you need to
-   * guard the state of an iterator.  NOTE: the right name would be
-   * <lock>, but HP/C++ will choke on that!
+   * guard the state of an iterator.
+   * @note The right name would be <lock>, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
 
@@ -417,8 +417,8 @@ protected:
   int unbind_i (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry);
 
   /**
-   * Resize the map.  Must be called with locks held.  Note, that this
-   * method should never be called more than once or else all the
+   * Resize the map.  Must be called with locks held.
+   * @note This method should never be called more than once or else all the
    * hashing will get screwed up as the size will change.
    */
   int create_buckets (size_t size);
@@ -466,8 +466,9 @@ private:
   /// Total size of the hash table.
   size_t total_size_;
 
-  /// Current number of entries in the table (note that this can be
-  /// larger than <total_size_> due to the bucket chaining).
+  /// Current number of entries in the table
+  /// @note That this can be larger than <total_size_> due to the
+  /// bucket chaining).
   size_t cur_size_;
 
   // = Disallow these operations.

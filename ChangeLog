@@ -1,3 +1,12 @@
+Thu Jan 26 11:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Registry.h:
+        * ace/Token_Request_Reply.h:
+        * ace/Semaphore.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Sched_Params.h:
+          Doxygen improvements
+
 Thu Jan 26 10:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/detailed_footprint.shtml:
