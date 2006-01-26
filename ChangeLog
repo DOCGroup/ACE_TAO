@@ -1,3 +1,9 @@
+Thu Jan 26 17:59:16 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/dance_extension_stub.mpb
+        
+          Added a new MPC base project for DAnCE.
+
 Thu Jan 26 15:38:38 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * protocols/ace/RMCast/Template_Instantiations.cpp: Replace the
