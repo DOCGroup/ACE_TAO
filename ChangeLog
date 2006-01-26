@@ -1,3 +1,8 @@
+Thu Jan 26 15:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Singleton.h:
+          Doxygen improvements
+
 Thu Jan 26 15:05:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * protocols/ace/RMCast/Template_Instantiations.cpp: Add missing
