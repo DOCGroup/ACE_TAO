@@ -1,3 +1,10 @@
+Thu Jan 26 15:38:38 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * protocols/ace/RMCast/Template_Instantiations.cpp: Replace the
+          separate long and long long instantiations with u64 instantiations.
+          This is what the code says, and avoids issues with 64-bit
+          explicit instantiations builds.
+
 Thu Jan 26 15:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Singleton.h:
