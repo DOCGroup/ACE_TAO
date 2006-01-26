@@ -1,3 +1,11 @@
+Thu Jan 26 13:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Extended this script to generate a seperate page for the CIAO
+          footprint stats. Also made the generated png images the size
+          of 800x600 and get the gcc version from gcc itself instead of
+          generating it hardcoded
+
 Thu Jan 26 13:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_footprint_chart.sh:
