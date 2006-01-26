@@ -1,3 +1,13 @@
+Thu Jan 26 13:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+          Increased size of pictures to 800x600 and also put linux and
+          gcc version into a file which is used by the other html files
+
+        * bin/generate_performance_chart.sh:
+        * bin/generate_topinfo_charts.sh:
+          Generate pictures of 800x600
+
 Thu Jan 26 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/configuration.shtml:
