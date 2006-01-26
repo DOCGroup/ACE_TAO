@@ -64,7 +64,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * typedef ACE_Singleton<foo, ACE_Null_Mutex> FOO;
  * @endverbatim
  *
- * NOTE:  the best types to use for ACE_LOCK are
+ * @note The best types to use for ACE_LOCK are
  * ACE_Recursive_Thread_Mutex and ACE_Null_Mutex.
  * ACE_Recursive_Thread_Mutex should be used in multi-threaded
  * programs in which it is possible for more than one thread to
