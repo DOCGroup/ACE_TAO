@@ -208,7 +208,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_exitcode child_status;
       // Wait for the child processes we created to exit.
-      ACE_ASSERT (child.wait (&child_status) != -1);
+      int wait_result = child.wait (&child_status);
+      ACE_ASSERT (wait_result != -1);
       if (child_status == 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Child %d finished ok\n"),
