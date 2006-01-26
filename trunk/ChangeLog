@@ -1,3 +1,13 @@
+Thu Jan 26 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/configuration.shtml:
+          Get linux and gcc version from the file instead of hardcoding
+          it in this file
+
+        * html/Stats/simple_footprint.shtml:
+          Removed the smart proxies lib, it is always 0 size, added PI
+          and PI_Server
+
 Thu Jan 26 13:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
