@@ -1,3 +1,9 @@
+Thu Jan 26 23:48:47 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * examples/Hello/step-by-step.html
+        
+          Fixed a fuzz error about dependency on ~schmidt/ACE_wrappers.
+
 Thu Jan 26 19:25:06 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/TargetManager/TargetManager.mpc
