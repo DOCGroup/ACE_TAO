@@ -353,7 +353,7 @@ public:
     int flush (void);
 
     /// Close the handle of the context
-    /// Note: <close> does not call <flush>
+    /// @note <close> does not call <flush>
     int close (void);
 
     // Accessors

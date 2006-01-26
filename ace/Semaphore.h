@@ -66,7 +66,7 @@ public:
    * value of <tv> is updated upon return to show the actual
    * (absolute) acquisition time.
    *
-   * NOTE: Solaris threads do not support timed semaphores.
+   * @note Solaris threads do not support timed semaphores.
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
@@ -83,7 +83,7 @@ public:
    * The value of <*tv> is updated upon return to show the actual
    * (absolute) acquisition time.
    *
-   * NOTE: Solaris threads do not support timed semaphores.
+   * @note Solaris threads do not support timed semaphores.
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
