@@ -9,7 +9,7 @@
   <BODY>
 
     <!--#include file="navigation.html"-->
-    
+
     <DIV align="center">
       <P>
 	<TABLE BORDER="2">
@@ -233,20 +233,35 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>libTAO_SmartProxies</TD>
-	    <TD><A HREF="images/libTAO_SmartProxies.a_size.png">
-		<IMG ALT="libTAO_SmartProxies.a_size" SRC="images/thumbnails/libTAO_SmartProxies.a_size.png">
+    <TD>libTAO_PI</TD>
+      <TD><A HREF="images/libTAO_PI.a_size.png">
+    <IMG ALT="libTAO_PI.a_size" SRC="images/thumbnails/libTAO_PI.a_size.png">
 		</A>
 	    </TD>
 	  <TD>
 	      <PRE>
-<!--#include file="data/LAST_libTAO_SmartProxies.a_size.txt" -->
+<!--#include file="data/LAST_libTAO_PI.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
-	    <A HREF="data/libTAO_SmartProxies.a_size.txt">[Download]</A>
+      <A HREF="data/libTAO_PI.a_size.txt">[Download]</A>
 	  </TD>
 	</TR>
+  <TR>
+    <TD>libTAO_PI_Server</TD>
+      <TD><A HREF="images/libTAO_PI_Server.a_size.png">
+    <IMG ALT="libTAO_PI_Server.a_size" SRC="images/thumbnails/libTAO_PI_Server.a_size.png">
+    </A>
+      </TD>
+    <TD>
+        <PRE>
+<!--#include file="data/LAST_libTAO_PI_Server.a_size.txt" -->
+        </PRE>
+    </TD>
+    <TD>
+      <A HREF="data/libTAO_PI_Server.a_size.txt">[Download]</A>
+    </TD>
+  </TR>
 	<TR>
 	  <TD>libTAO_RTCORBA</TD>
 	    <TD><A HREF="images/libTAO_RTCORBA.a_size.png">
