@@ -38,18 +38,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
 
-  /// Calls OS <::wait> function, so it's only portable to UNIX/POSIX
+  /// Calls OS @c ::wait function, so it's only portable to UNIX/POSIX
   /// platforms.
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t wait (int * = 0);
 
   /**
-   * Calls <::WaitForSingleObject> on Win32 and <ACE::waitpid>
-   * otherwise.  Returns the passed in <pid_t> on success and -1 on
+   * Calls @c ::WaitForSingleObject on Win32 and ACE::waitpid ()
+   * otherwise.  Returns the passed in @a pid_t on success and -1 on
    * failure.
-   * On Win32, <pid> is ignored if the <handle> is not equal to 0.
-   * Passing the process <handle> is prefer on Win32 because using
-   * <pid> to wait on the project doesn't always work correctly
+   * On Win32, @a pid is ignored if the @a handle is not equal to 0.
+   * Passing the process @a handle is prefer on Win32 because using
+   * @a pid to wait on the project doesn't always work correctly
    * if the waited process has already terminated.
    */
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -59,11 +59,11 @@ namespace ACE_OS
               ACE_HANDLE handle = 0);
 
   /**
-   * Calls <::waitpid> on UNIX/POSIX platforms and <::await> on
-   * Chorus.  Does not work on Vxworks, or pSoS.
-   * On Win32, <pid> is ignored if the <handle> is not equal to 0.
-   * Passing the process <handle> is prefer on Win32 because using
-   * <pid> to wait on the project doesn't always work correctly
+   * Calls @c ::waitpid on UNIX/POSIX platforms and @c ::await on
+   * Chorus. Does not work on Vxworks 5.5.x, or pSoS.
+   * On Win32, @a pid is ignored if the @a handle is not equal to 0.
+   * Passing the process @a handle is prefer on Win32 because using
+   * @a pid to wait on the project doesn't always work correctly
    * if the waited process has already terminated.
    */
   ACE_NAMESPACE_INLINE_FUNCTION
