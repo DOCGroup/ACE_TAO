@@ -7761,7 +7761,7 @@ AC_CONFIG_FILES([
 ])
 
 dnl Configure examples if configured...
-if $ace_build_examples = yes; then
+if test $ace_build_examples = yes; then
   AC_CONFIG_FILES([
     examples/Makefile
     examples/APG/Makefile
@@ -7859,7 +7859,7 @@ if $ace_build_examples = yes; then
 fi
 
 dnl Configure examples if configured...
-if $ace_build_tests; then
+if test $ace_build_tests = yes; then
   AC_CONFIG_FILES([
     performance-tests/Makefile
     performance-tests/Misc/Makefile
