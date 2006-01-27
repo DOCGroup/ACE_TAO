@@ -1,27 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeManager): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
-  after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
-  libs += NodeManager_stub NodeApplicationManager TargetManager_stub
-  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
-  exename = NodeManager
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    ../Interfaces/NodeManagerS.cpp
-    NodeManager_Impl.cpp
-    Node_Manager.cpp
-    NAM_Map.cpp
-    MonitorController.cpp
-    MonitorCB.cpp
-  }
-}
-
 //For static D&C, the NodeManager should be available as a linkable library
-project(libNodeManager): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
+project(NodeManager_Impl): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
   sharedname = NodeManager
   after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
   libs += NodeManager_stub NodeApplicationManager TargetManager_stub
@@ -33,9 +14,23 @@ project(libNodeManager): ciao_component_dnc, iortable, ifr_client, dance_extensi
   Source_Files {
     ../Interfaces/NodeManagerS.cpp
     NodeManager_Impl.cpp
-    Node_Manager.cpp
     NAM_Map.cpp
     MonitorController.cpp
     MonitorCB.cpp
   }
 }
+
+project(NodeManager): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
+  after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
+  libs += NodeManager_stub NodeApplicationManager TargetManager_stub NodeManager_Impl
+  includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
+  exename = NodeManager
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Node_Manager.cpp
+  }
+}
+
