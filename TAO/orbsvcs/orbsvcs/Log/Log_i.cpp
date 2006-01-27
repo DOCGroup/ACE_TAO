@@ -66,7 +66,7 @@ TAO_Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // initialize the internal representation
-  this->thresholds_ = thresholds;
+  this->thresholds_ = thresholds.in ();
   this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -180,7 +180,7 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
   //
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
-  if (qos == old_qos)
+  if (qos == old_qos.in ())
     return;
 
   this->recordstore_->set_log_qos (qos ACE_ENV_ARG_PARAMETER);
@@ -792,7 +792,7 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
   //
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
-  if (threshs == old_threshs)
+  if (threshs == old_threshs.in ())
       return;
 
   this->recordstore_->set_capacity_alarm_thresholds (threshs
@@ -881,7 +881,7 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
   //
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
-  if (masks == old_masks)
+  if (masks == old_masks.in ())
     return;
 
   this->recordstore_->set_week_mask (masks ACE_ENV_ARG_PARAMETER);
