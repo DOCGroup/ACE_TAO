@@ -553,11 +553,71 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    ace_user_enable_reentrant_funcs=yes
   ])
 
-  ACE_ENABLE_CDR_SWAP_ON_READ
-  ACE_ENABLE_CDR_SWAP_ON_WRITE
-  ACE_ENABLE_CDR_ALIGNMENT
-  ACE_ENABLE_STRDUP_EMULATION
-  ACE_ENABLE_WCSDUP_EMULATION
+ AC_ARG_ENABLE([ace-tests],
+  AS_HELP_STRING(--enable-ace-tests,build ACE tests [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_build_tests=yes
+      ;;
+    no)
+      ace_build_tests=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ace-tests])
+      ;;
+   esac
+  ],
+  [
+   ace_build_tests=yes
+  ])
+ AM_CONDITIONAL([BUILD_TESTS], [test X$ace_build_tests = Xyes])
+
+ AC_ARG_ENABLE([ace-perftests],
+  AS_HELP_STRING(--enable-ace-perftests,build ACE performeance tests [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_build_perftests=yes
+      ;;
+    no)
+      ace_build_perftests=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ace-perftests])
+      ;;
+   esac
+  ],
+  [
+   ace_build_perftests=yes
+  ])
+ AM_CONDITIONAL([BUILD_PERFTESTS], [test X$ace_build_perftests = Xyes])
+
+ AC_ARG_ENABLE([ace-examples],
+  AS_HELP_STRING(--enable-ace-examples,build ACE examples [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_build_examples=yes
+      ;;
+    no)
+      ace_build_examples=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ace-examples])
+      ;;
+   esac
+  ],
+  [
+   ace_build_examples=yes
+  ])
+ AM_CONDITIONAL([BUILD_EXAMPLES], [test X$ace_build_examples = Xyes])
+
+ ACE_ENABLE_CDR_SWAP_ON_READ
+ ACE_ENABLE_CDR_SWAP_ON_WRITE
+ ACE_ENABLE_CDR_ALIGNMENT
+ ACE_ENABLE_STRDUP_EMULATION
+ ACE_ENABLE_WCSDUP_EMULATION
 ])
 
 

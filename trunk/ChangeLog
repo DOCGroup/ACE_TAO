@@ -1,3 +1,10 @@
+Thu Jan 26 18:53:10 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* Makefile.am (SUBDIRS): 
+	* m4/ace.m4: Added support to enable/disable building the ACE tests,
+	  performance tests, and examples.  Thanks to Thomas E Lackey
+ 	  <telackey at bozemanpass dot com> for contributing this.
+
 Thu Jan 26 20:25:39 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Streams/BasicTask.h:
