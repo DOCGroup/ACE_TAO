@@ -97,7 +97,7 @@ public:
   /// Handle.
   ACE_HANDLE handle_;
 
-  /// ACE_Event_Handler associated with the <ACE_HANDLE>.
+  /// ACE_Event_Handler associated with the ACE_HANDLE.
   ACE_Event_Handler *event_handler_;
 };
 
@@ -198,14 +198,14 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * ACE_Event_Handler object. If <eh> == 0, all notifications for all
+   * ACE_Event_Handler object. If @a eh == 0, all notifications for all
    * handlers are removed (but not any notifications posted just to wake up
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
    */
   virtual int purge_pending_notifications (
-      ACE_Event_Handler *,
-      ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+      ACE_Event_Handler *sh,
+      ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -222,8 +222,8 @@ protected:
   ACE_Select_Reactor_Impl *select_reactor_;
 
   /**
-   * Contains the <ACE_HANDLE> the ACE_Select_Reactor is listening
-   * on, as well as the <ACE_HANDLE> that threads wanting the
+   * Contains the ACE_HANDLE the ACE_Select_Reactor is listening
+   * on, as well as the ACE_HANDLE that threads wanting the
    * attention of the ACE_Select_Reactor will write to.
    */
   ACE_Pipe notification_pipe_;
@@ -262,11 +262,11 @@ protected:
 /**
  * @class ACE_Select_Reactor_Handler_Repository
  *
- * @brief Used to map <ACE_HANDLE>s onto the appropriate
+ * @brief Used to map ACE_HANDLEs onto the appropriate
  * ACE_Event_Handler *.
  *
  * This class is necessary to shield differences between UNIX
- * and Win32.  In UNIX, <ACE_HANDLE> is an int, whereas in Win32
+ * and Win32.  In UNIX, ACE_HANDLE is an int, whereas in Win32
  * it's a void *.  This class hides all these details from the
  * bulk of the ACE_Select_Reactor code.  All of these methods
  * are called with the main <Select_Reactor> token lock held.
@@ -300,19 +300,19 @@ public:
   // = Search structure operations.
 
   /**
-   * Return the <ACE_Event_Handler *> associated with <ACE_HANDLE>.
+   * Return the <ACE_Event_Handler *> associated with ACE_HANDLE.
    * If <index_p> is non-0, then return the index location of the
    * <handle>, if found.
    */
   ACE_Event_Handler *find (ACE_HANDLE handle, size_t *index_p = 0);
 
-  /// Bind the <ACE_Event_Handler *> to the <ACE_HANDLE> with the
-  /// appropriate <ACE_Reactor_Mask> settings.
+  /// Bind the ACE_Event_Handler * to the ACE_HANDLE with the
+  /// appropriate ACE_Reactor_Mask settings.
   int bind (ACE_HANDLE,
             ACE_Event_Handler *,
             ACE_Reactor_Mask);
 
-  /// Remove the binding of <ACE_HANDLE> in accordance with the <mask>.
+  /// Remove the binding of ACE_HANDLE in accordance with the @a mask.
   int unbind (ACE_HANDLE,
               ACE_Reactor_Mask mask);
 

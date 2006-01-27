@@ -33,8 +33,8 @@ typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
 /**
  * @class ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> >
  *
- * @brief Template specialization of <ACE_Guard> for the
- * <ACE_Null_Mutex>.
+ * @brief Template specialization of ACE_Guard for the
+ * ACE_Null_Mutex.
  *
  * This specialization is useful since it helps to speedup
  * performance of the "Null_Mutex" considerably.
