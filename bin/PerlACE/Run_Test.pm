@@ -51,6 +51,11 @@ sub VX_HostFile($)
     return $ENV{"HOST_ROOT"}."/".$file;
 }
 
+# Returns a random port within the range of 10002 - 32767
+sub random_port {
+  return (int(rand($$)) % 22766) + 10002;
+}
+
 # Returns a unique id, uid for unix, last digit of IP for NT
 sub uniqueid
 {
