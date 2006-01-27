@@ -1,9 +1,14 @@
+Fri Jan 27 19:15:19 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/Monitor.mpc: Added the dependancy on 
+          TargetManaer_stub
+
 Fri Jan 27 19:07:08 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorController.h
         * DAnCE/NodeManager/MonitorController.inl
-        
-        Refined the fix in 
+
+        Refined the fix in
         Fri Jan 27 17:29:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         to use ACE_SYNCH_MUTEX.  Thanks to Doug Schmidt for suggesting the
         improvement.
@@ -11,35 +16,35 @@ Fri Jan 27 19:07:08 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 Fri Jan 27 17:35:55 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * RACE/Controller/Component/Controller.mpc
-         
+
           Fixed linking errors on Mac OS X.
 
 Fri Jan 27 17:29:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorController.h
         * DAnCE/NodeManager/MonitorController.inl
-        
+
           Added preprocessor logic to fall back to an ACE_Mutex on
           platforms that don't support ACE_Thread_Mutex.
-        
+
 Fri Jan 27 16:59:11 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/NodeManager/NodeManager_Impl.cpp
-        
+
           Fixed a couple of warnings on SuSE_10_0_GCC4.0.2_x86_64_Valgrind
           build about pointer initialization.
 
 Thu Jan 26 23:48:47 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/step-by-step.html
-        
+
           Fixed a fuzz error about dependency on ~schmidt/ACE_wrappers.
 
 Thu Jan 26 19:25:06 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/TargetManager/TargetManager.mpc
-        
+
           Added an empty IDL_Files segment to the _exec project,
           which should clean up tons of Windows VC build erros
           and warnings.
@@ -48,7 +53,7 @@ Thu Jan 26 17:57:45 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc
         * DAnCE/NodeManager/NodeManager.mpc
-        
+
           Modified to inherit from a base project dance_extension_stub.mpb
           to avoid explicily included path specification.
 
