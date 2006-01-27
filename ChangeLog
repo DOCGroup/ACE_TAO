@@ -1,3 +1,9 @@
+Fri Jan 27 18:47:34 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/ace_for_tao.mpc
+        
+        Added Dirent.cpp to resolve linking errors in TAO_IDL on Windows.
+
 Fri Jan 27 14:53:03 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:
