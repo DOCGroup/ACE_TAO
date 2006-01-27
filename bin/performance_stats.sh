@@ -194,3 +194,4 @@ cat /etc/SuSE-release > linuxversion.txt
 
 cat $ACE_ROOT/ace/config.h > config.h.txt
 cat $ACE_ROOT/include/makeinclude/platform_macros.GNU > platform_macros.GNU.txt
+cp $ACE_ROOT/html/Stats/* $DEST
