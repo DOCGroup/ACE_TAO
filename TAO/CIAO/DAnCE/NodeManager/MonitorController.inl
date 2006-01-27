@@ -7,7 +7,7 @@ ACE_INLINE
 void MonitorController::terminate ()
 {
   // make the terminate flag false
-  ACE_GUARD (ACE_Thread_Mutex,
+  ACE_GUARD (Monitor_Mutex,
              guard,
              lock_
              );
@@ -18,7 +18,7 @@ void MonitorController::terminate ()
 ACE_INLINE
 bool MonitorController::terminating ()
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex,
+  ACE_GUARD_RETURN (Monitor_Mutex,
                     guard,
                     lock_,
                     0
