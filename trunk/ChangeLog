@@ -1,3 +1,9 @@
+Fri Jan 27 13:42:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Fix typo in last change.
+
 Fri Jan 27 12:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_shm.{h,inl}:
