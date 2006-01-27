@@ -16,14 +16,23 @@ if BUILD_ACEXML
 SUBDIRS += ACEXML 
 endif
 
+if BUILD_PERFTESTS
+SUBDIRS += performance-tests
+endif
+
+if BUILD_EXAMPLES
+SUBDIRS += examples
+endif
+
+if BUILD_TESTS
+SUBDIRS += tests
+endif
+
 SUBDIRS += \
         apps \
         bin \
         netsvcs \
-        performance-tests \
         protocols \
-        examples \
-        tests \
         websvcs \
 	@KOKYU@ \
 	@TAO@
