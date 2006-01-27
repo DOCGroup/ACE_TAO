@@ -1,3 +1,9 @@
+Fri Jan 27 10:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Swap.h:
+          Added a deprecated tag to this file, std::swap can be used without
+          problems on all platforms, we do it in TAO without problems
+
 Fri Jan 27 10:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_wait.h:
