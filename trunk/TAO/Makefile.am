@@ -18,10 +18,20 @@ SUBDIRS = \
         TAO_IDL \
         tao \
 	orbsvcs \
-	examples \
-        docs \
+        docs
+
+if BUILD_EXAMPLES
+SUBDIRS += \
+	examples
+endif
+
+if BUILD_TESTS
+SUBDIRS += \
 	performance-tests \
-	interop-tests \
+	interop-tests
+endif
+
+SUBDIRS += \
 	utils
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
