@@ -1,3 +1,8 @@
+Fri Jan 27 13:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.h:
+          Doxygen improvements
+
 Fri Jan 27 13:43:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/msvc_static_order.lst:
