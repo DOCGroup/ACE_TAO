@@ -1,3 +1,9 @@
+Fri Jan 27 20:58:19 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * tests/Bug_2130_Regression
+        
+          A place to host Bug 2130 test case.
+
 Fri Jan 27 20:42:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DnC_Dump_T.h
