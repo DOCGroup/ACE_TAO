@@ -1,3 +1,10 @@
+Fri Jan 27 03:51:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          If examples and/or tests have been disabled, don't bother
+          generating subdirectory hierarchies or Makefiles for them.
+
 Fri Jan 27 02:41:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * Makefile.am:
