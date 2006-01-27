@@ -25,6 +25,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Defines a function to swap two variables.
  *
+ * @deprecated This template is deprecated, you can use std::swap without
+ * problems on all platforms.
+ *
  */
 template<class T> class ACE_Swap
 {
