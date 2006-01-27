@@ -1,3 +1,9 @@
+Fri Jan 27 20:42:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DnC_Dump_T.h
+        
+          Silenced warnings in solaris. 
+
 Fri Jan 27 20:30:01 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp

@@ -23,16 +23,16 @@ namespace Deployment
   namespace DnC_Dump_T
   {
     template <typename SEQUENCE>
-    static void dump_sequence (const char* caption, const SEQUENCE &seq);
+    void dump_sequence (const char* caption, const SEQUENCE &seq);
 
     template <typename ROOT, typename SEQUENCE,
               typename DATA_TYPE, typename CLASS>
-    static void dump_ref_seq (const char* caption, SEQUENCE& seq,
+    void dump_ref_seq (const char* caption, SEQUENCE& seq,
                               const char* root, DATA_TYPE CLASS::*data);
 
     template <typename ROOT, typename REFERENCE, typename DATA_TYPE,
               typename CLASS>
-    static void dump_ref (const char* caption, REFERENCE& ref,
+    void dump_ref (const char* caption, REFERENCE& ref,
                           const char* root, DATA_TYPE CLASS::*data);
   }
 }
