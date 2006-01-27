@@ -28,7 +28,7 @@
 
 // Use all available T1248 thread aware wrapper functions for providing
 // non-blocking I/O.
-// [Note: this causes a significant performance degradation]
+// [@note this causes a significant performance degradation]
 //#define ACE_TANDEM_T1248_PTHREADS_ALL_IO_WRAPPERS
 
 
