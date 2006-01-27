@@ -16,10 +16,18 @@
 
 #include "TargetManager/TargetManagerC.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"
 
 class MonitorBase;
+
+#ifdef ACE_HAS_THREADS
+#include "ace/Thread_Mutex.h"
+typedef ACE_Thread_Mutex Monitor_Mutex;
+#else
+#include "ace/Mutex.h"
+typedef ACE_Mutex Monitor_Mutex;
+#endif /* ACE_HAS_THREADS */
+
 /**
  *  @class MonitorController
  *
@@ -90,7 +98,7 @@ class MonitorController : public ACE_Task_Base
     bool terminate_flag_;
 
     //Thread Mutex for synchronizing call
-    ACE_Thread_Mutex lock_;
+  Monitor_Mutex lock_;
 
     // the ORB pointer ..
     CORBA::ORB_ptr orb_;
