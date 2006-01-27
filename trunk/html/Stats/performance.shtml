@@ -20,7 +20,7 @@
   <P><HR>
   <BODY>
 
-    
+
     <P>
       Results for the performance experiments in
       <CODE>$ACE_ROOT/TAO/performance-tests/Latency</CODE>.
@@ -30,7 +30,7 @@
       <P>
 	<IMG alt="All Invocation Modes and Configurations" border=0
 	  src="images/CORBA.png"
-	  width="640" height="480">
+    width="800" height="600">
       </P>
     </DIV>
     <HR>
