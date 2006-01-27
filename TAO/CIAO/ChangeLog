@@ -1,3 +1,15 @@
+Fri Jan 27 20:30:01 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        
+          Fixed uninitialized variable warnings on Solaris GCC.
+         
+         *DAnCE/NodeManager/NodeManager.mpc
+         
+          Refactored the projects here so all files related to NodeManager
+          are only compiled once. 
+        
 Fri Jan 27 19:15:19 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Monitor.mpc: Added the dependancy on 
