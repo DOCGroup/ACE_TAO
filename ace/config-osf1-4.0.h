@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// NOTE:  if you are using Digital UNIX V4.0f or later, you must
+// @note If you are using Digital UNIX V4.0f or later, you must
 // use config-tru64.h instead of directly using this config file.
 
 // The following configuration file is designed to work for the

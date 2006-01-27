@@ -136,14 +136,14 @@
 #endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 
 #if !defined (__ACE_INLINE__)
-// NOTE:  if you have link problems with undefined inline template
+// @note If you have link problems with undefined inline template
 // functions with Sun C++, be sure that the #define of __ACE_INLINE__
 // below is not commented out.
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 // Platform supports the POSIX regular expression library.
-// NOTE:  please comment out the ACE_HAS_REGEX #define if you
+// @note Please comment out the ACE_HAS_REGEX #define if you
 // have link problems with g++ or egcs on SunOS 5.5.
 #define ACE_HAS_REGEX
 
