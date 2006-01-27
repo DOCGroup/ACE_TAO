@@ -1,6 +1,17 @@
+Fri Jan 27 02:43:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+        * m4/ace.m4:
+
+          Remove support for --{enable,disable}-ace-perftests.  The
+          performance tests are now enabled/disabled with the plain
+          --{enable,disable}-ace-tests option.  We decided this as
+          flags for each type of example and test gets a unwieldly
+          once we factor in TAO (and sometime in the future CIAO).
+
 Thu Jan 26 18:53:10 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Makefile.am (SUBDIRS): 
+	* Makefile.am (SUBDIRS):
 	* m4/ace.m4: Added support to enable/disable building the ACE tests,
 	  performance tests, and examples.  Thanks to Thomas E Lackey
  	  <telackey at bozemanpass dot com> for contributing this.
@@ -13,7 +24,7 @@ Thu Jan 26 20:25:39 UTC 2006  Steve Huston  <shuston@riverace.com>
 Thu Jan 26 17:59:16 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/dance_extension_stub.mpb
-        
+
           Added a new MPC base project for DAnCE.
 
 Thu Jan 26 15:38:38 UTC 2006  Steve Huston  <shuston@riverace.com>

@@ -16,15 +16,12 @@ if BUILD_ACEXML
 SUBDIRS += ACEXML 
 endif
 
-if BUILD_PERFTESTS
-SUBDIRS += performance-tests
-endif
-
 if BUILD_EXAMPLES
 SUBDIRS += examples
 endif
 
 if BUILD_TESTS
+SUBDIRS += performance-tests
 SUBDIRS += tests
 endif
 
