@@ -56,14 +56,14 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
     }
 }
 
-Deployment::NodeApplication_ptr 
+Deployment::NodeApplication_ptr
 CIAO::DomainApplicationManager_Impl::
 get_node_app (const char * node_name)
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Deployment::NoSuchName))
 {
   // Get the NodeApplication object reference.
-  ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+  ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
 
   if (this->artifact_map_.find (node_name,
                                 entry) != 0)
@@ -77,7 +77,7 @@ get_node_app (const char * node_name)
       ACE_THROW (Deployment::NoSuchName ());
     }
 
-  return 
+  return
     Deployment::NodeApplication::_duplicate (
       entry->int_id_.node_application_.in ());
 }
@@ -693,7 +693,7 @@ finishLaunch (CORBA::Boolean start,
               !is_ReDAC,
               true,  // we search *new* plan
               DomainApplicationManager_Impl::Internal_Connections
-					    ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (my_connections == 0)
@@ -748,7 +748,7 @@ finishLaunch (CORBA::Boolean start,
                         true, // yes, get *all* the connections
                         false, // search in the *old* plan
                         DomainApplicationManager_Impl::Internal_Connections
-					              ACE_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // Pass in the "false" parameter to get *all* the connections in
@@ -759,7 +759,7 @@ finishLaunch (CORBA::Boolean start,
                         true, // yes, get *all* the connections
                         true,  // search in the *new* plan
                         DomainApplicationManager_Impl::Internal_Connections
-					              ACE_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               Deployment::Connections * unnecessary_connections =
@@ -843,9 +843,9 @@ post_finishLaunch (void)
       for (CORBA::ULong j = 0; j < length; ++j)
         {
           // Construct <Component_Binding_Info> struct for the component
-          CIAO::Component_Binding_Info * 
+          CIAO::Component_Binding_Info *
               binding = this->populate_binding_info (
-                this->shared_[j].name.in (), 
+                this->shared_[j].name.in (),
                 this->shared_[j].plan_uuid.in ());
 
           // Invoke <finalize_global_binding> on ExecutionManager
@@ -868,7 +868,7 @@ post_finishLaunch (void)
 
 CIAO::Component_Binding_Info *
 CIAO::DomainApplicationManager_Impl::
-populate_binding_info (const ACE_CString& name, 
+populate_binding_info (const ACE_CString& name,
                        const ACE_CString& child_uuid)
 {
   CIAO::Component_Binding_Info * retv;
@@ -883,10 +883,10 @@ populate_binding_info (const ACE_CString& name,
   // global plan uuid, and the substring *after* that is the node name.
   size_t pos = child_uuid.find ('@');
 
-  retv->plan_uuid_ = 
+  retv->plan_uuid_ =
     child_uuid.substring (0, pos);
 
-  retv->node_ = 
+  retv->node_ =
     child_uuid.substring (pos+1, -1); // get the rest of the string
 
   Deployment::Connections_var connections;
@@ -894,7 +894,7 @@ populate_binding_info (const ACE_CString& name,
                   Deployment::Connections,
                   0);
 
-  this->get_outgoing_connections_i (name.c_str (), 
+  this->get_outgoing_connections_i (name.c_str (),
                                     connections.inout (),
                                     false,  // get *all* connections
                                     true);  // search current plan
@@ -924,7 +924,7 @@ populate_binding_info (const ACE_CString& name)
           return retv;
         }
     }
-  
+
   return 0; // If no matching is found (should never happen).
 }
 
@@ -1003,7 +1003,7 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                           bool is_getting_all_connections,
                           bool is_search_new_plan,
                           Connection_Search_Type t
-			                    ACE_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
   Deployment::Connections_var connections;
@@ -1024,7 +1024,7 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                                      connections.inout (),
                                      is_getting_all_connections,
                                      is_search_new_plan
-				                             ACE_ENV_ARG_PARAMETER))
+                                                             ACE_ENV_ARG_PARAMETER))
       return 0;
   }
   return connections._retn ();
@@ -1036,7 +1036,7 @@ get_outgoing_connections_i (const char * instname,
                             Deployment::Connections & retv,
                             bool is_getting_all_connections,
                             bool is_search_new_plan
-			                      ACE_ENV_ARG_DECL)
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((Deployment::StartError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
@@ -1142,8 +1142,8 @@ get_outgoing_connections_i (const char * instname,
                   error += curr_conn.name.in ();
                   ACE_THROW_RETURN (Deployment::StartError
                     ("DomainApplicationManager_Impl::create_connections_i",
-		                  error.c_str ()),
-		                  false);
+                                  error.c_str ()),
+                                  false);
                 }
 
               break;
@@ -1313,7 +1313,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               true, // yes, get *all* the connections
               true,  // yes, we search the current plan
               DomainApplicationManager_Impl::External_Connections
-					    ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Invoke finishLaunch() on NodeApplication to remove bindings.
@@ -1332,7 +1332,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               if (this->is_shared_component (connections[j].instanceName.in ()))
                 {
                   // ask EM to remove the binding for us
-                  CIAO::Component_Binding_Info * 
+                  CIAO::Component_Binding_Info *
                       binding = this->populate_binding_info (
                         connections[j].instanceName.in ());
 
@@ -1374,7 +1374,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       // Invoke destroyManager () operation on the NodeManager, since we need
-      // to clean up all the NodeApplicationManagers associated with this deployment 
+      // to clean up all the NodeApplicationManagers associated with this deployment
       // plan (one NodeApplicationManager per Node per plan).
 
     }

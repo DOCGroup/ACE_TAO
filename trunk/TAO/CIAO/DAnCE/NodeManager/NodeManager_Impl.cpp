@@ -119,7 +119,7 @@ CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
 CIAO::NodeManager_Impl_Base::
 get_all_facets (ACE_CString & name)
 {
-  Component_Facets_Map::ENTRY *entry = 0;
+  Component_Facets_Map::ENTRY *entry;
 
   if (this->comp_facets_map_.find (name.c_str (), entry) != 0)
     ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
@@ -146,7 +146,7 @@ get_all_facets (ACE_CString & name)
 CIAO::NodeManager_Impl_Base::
 get_all_consumers (ACE_CString & name)
 {
-  Component_Consumers_Map::ENTRY *entry = 0;
+  Component_Consumers_Map::ENTRY *entry;
 
   if (this->comp_consumers_map_.find (name.c_str (), entry) != 0)
     ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
@@ -171,7 +171,7 @@ get_all_consumers (ACE_CString & name)
 
 void
 CIAO::NodeManager_Impl_Base::
-set_all_facets (ACE_CString &name, 
+set_all_facets (ACE_CString &name,
                 const ::Components::FacetDescriptions_var & facets)
 {
   this->comp_facets_map_.rebind (name, facets);
@@ -179,7 +179,7 @@ set_all_facets (ACE_CString &name,
 
 void
 CIAO::NodeManager_Impl_Base::
-set_all_consumers (ACE_CString &name, 
+set_all_consumers (ACE_CString &name,
                    const ::Components::ConsumerDescriptions_var & consumers)
 {
   this->comp_consumers_map_.rebind (name, consumers);
@@ -240,7 +240,7 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
 
           //Implementation undefined.
           CIAO::NodeApplicationManager_Impl_Base *node_app_mgr;
-          node_app_mgr = 
+          node_app_mgr =
             this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -272,10 +272,10 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
             Deployment::NodeApplicationManager::_narrow (obj.in ());
 
           // Convert the ACE Set into CORBA sequence, and make the remote invocation
-          Deployment::ComponentPlans_var shared = 
+          Deployment::ComponentPlans_var shared =
             this->get_shared_components_i ();
           nam->set_shared_components (shared.in ());
- 
+
           // narrow should return a nil reference if it fails.
           return Deployment::NodeApplicationManager::_narrow (nam.in ());
         }
@@ -299,9 +299,9 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
           nam->reset_plan (plan);
           ACE_TRY_CHECK;
 
-          // Similarly, we should inform NAM about "shared" components, so 
+          // Similarly, we should inform NAM about "shared" components, so
           // they won't be instantiated again
-          Deployment::ComponentPlans_var shared = 
+          Deployment::ComponentPlans_var shared =
             this->get_shared_components_i ();
           nam->set_shared_components (shared.in ());
 
@@ -381,7 +381,7 @@ CIAO::NodeManager_Impl_Base::destroyManager
   ACE_ENDTRY;
 }
 
-void 
+void
 CIAO::NodeManager_Impl_Base::
 destroyPlan (const Deployment::DeploymentPlan & plan
              ACE_ENV_ARG_DECL)
@@ -427,7 +427,7 @@ destroyPlan (const Deployment::DeploymentPlan & plan
 
   // Find the NAM from the map and invoke the destroyPlan() operation on
   // it, which will actuall remove components and connections in this plan.
-  // If 
+  // If
   CORBA::Object_var obj =
     this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
 
@@ -457,15 +457,15 @@ Deployment::ComponentPlans *
 CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
 {
   Deployment::ComponentPlans_var retv;
-  ACE_NEW_RETURN (retv, 
+  ACE_NEW_RETURN (retv,
                   Deployment::ComponentPlans,
                   0);
   retv->length (0);
 
-  ACE_Unbounded_Set<ACE_CString>::iterator 
+  ACE_Unbounded_Set<ACE_CString>::iterator
     end = this->shared_components_.end ();
 
-  for (ACE_Unbounded_Set<ACE_CString>::iterator 
+  for (ACE_Unbounded_Set<ACE_CString>::iterator
          iter = this->shared_components_.begin ();
        iter != end;
        ++iter)
@@ -473,8 +473,8 @@ CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
       CORBA::ULong curr_len = retv->length ();
       retv->length (curr_len + 1);
       (*retv)[curr_len].name = (*iter).c_str ();
-      
-      // Fill in the plan_uuid information about this component, by 
+
+      // Fill in the plan_uuid information about this component, by
       // searching in the ref_count_map_
       Reference_Count_Map::ENTRY *entry = 0;
       if (this->ref_count_map_.find ((*iter).c_str (), entry) == 0)
@@ -503,7 +503,7 @@ CIAO::NodeManager_Impl_Base::shared_components_seq (void)
   retv->length (0);
 
   ACE_Unbounded_Set<ACE_CString>::iterator end = this->shared_components_.end ();
-  for (ACE_Unbounded_Set<ACE_CString>::iterator 
+  for (ACE_Unbounded_Set<ACE_CString>::iterator
          iter = this->shared_components_.begin ();
        iter != end;
        ++iter)
