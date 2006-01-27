@@ -119,7 +119,7 @@ CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
 CIAO::NodeManager_Impl_Base::
 get_all_facets (ACE_CString & name)
 {
-  Component_Facets_Map::ENTRY *entry;
+  Component_Facets_Map::ENTRY *entry = 0;
 
   if (this->comp_facets_map_.find (name.c_str (), entry) != 0)
     ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
@@ -146,7 +146,7 @@ get_all_facets (ACE_CString & name)
 CIAO::NodeManager_Impl_Base::
 get_all_consumers (ACE_CString & name)
 {
-  Component_Consumers_Map::ENTRY *entry;
+  Component_Consumers_Map::ENTRY *entry = 0;
 
   if (this->comp_consumers_map_.find (name.c_str (), entry) != 0)
     ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
