@@ -1,3 +1,9 @@
+Fri Jan 27 11:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_T.cpp:
+          Forgot this file to commit, only include the .inl file when
+          inlining is disabled
+
 Fri Jan 27 11:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Connector.h:
