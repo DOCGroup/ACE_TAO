@@ -1,13 +1,32 @@
+Fri Jan 27 02:41:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+        * orbsvcs/Makefile.am:
+
+          Use BUILD_EXAMPLES AND BUILD_TESTS automake conditionals to
+          control whether TAO's (and TAO's ORBservice's) examples and
+          tests are built.
+
+        * configure.ac:
+
+          Invoke TAO_ENABLE_EXAMPLES and TAO_ENABLE_TESTS.
+
+        * m4/tao.m4:
+
+          Added TAO_ENABLE_EXAMPLES and TAO_ENABLE_TESTS autoconf macros.
+          These enable/disable BUILD_EXAMPLES and BUILD_TESTS automake
+          conditionals.
+
 Thu Jan 26 20:36:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/be_produce.cpp(BE_cleanup):
-        
+
           Removed code to destory the temporary holding scope entry in
           the repository after each IDL file is processed. Instead the
           lifetime of that entry is now tied to the repository itself.
-          
+
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp (visit_typedef):
-        
+
           Removed code that replaces a typedef with the same repo id
           with a new entry, which would invalidate any references to
           the typedef entry that other entries may hold. The IFR will
@@ -17,12 +36,12 @@ Thu Jan 26 20:36:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           <richard dot spence dot extern at icn dot siemens dot de>
           for reporting the problem when the typdef is used as an
           operation parameter. This closes [BUGID:2381].
-          
+
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp (name_exists):
-        
+
           Changed the loop to be a FOR loop using the explicit section
           names, rather than a while loop calling enumerate_sections()
-          to get each section name. 
+          to get each section name.
 
 Thu Jan 26 15:37:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 

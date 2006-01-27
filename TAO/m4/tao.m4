@@ -42,3 +42,47 @@ tao_user_enable_minimum_corba=no
 AM_CONDITIONAL([BUILD_MINIMUM_CORBA], 
 	       [test X$tao_user_enable_minimum_corba = Xyes])
 ])
+
+AC_DEFUN([TAO_ENABLE_EXAMPLES],
+[AC_ARG_ENABLE([tao-examples],
+               AS_HELP_STRING([--enable-tao-examples],
+                              [build TAO examples [[[yes]]]]),
+[
+case "${enableval}" in
+  yes)
+    tao_build_examples=yes
+    ;;
+  no)
+    tao_build_examples=no
+    ;;
+  *)
+    AC_MSG_ERROR([bad value ${enableval} for --enable-tao-examples])
+    ;;
+esac
+],[
+tao_build_examples=yes
+])
+AM_CONDITIONAL([BUILD_EXAMPLES], [test X$tao_build_examples = Xyes])
+])
+
+AC_DEFUN([TAO_ENABLE_TESTS],
+[AC_ARG_ENABLE([tao-tests],
+               AS_HELP_STRING([--enable-tao-tests],
+			      [build TAO tests [[[yes]]]]),
+[
+case "${enableval}" in
+  yes)
+    tao_build_tests=yes
+    ;;
+  no)
+    tao_build_tests=no
+    ;;
+  *)
+    AC_MSG_ERROR([bad value ${enableval} for --enable-tao-tests])
+    ;;
+esac
+],[
+tao_build_tests=yes
+])
+AM_CONDITIONAL([BUILD_TESTS], [test X$tao_build_tests = Xyes])
+])
