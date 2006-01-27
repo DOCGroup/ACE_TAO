@@ -506,6 +506,11 @@ public:
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
         ACE_ENV_ARG_DECL);
 
+  int find_servant_priority (
+        const PortableServer::ObjectId &system_id,
+        CORBA::Short &priority
+        ACE_ENV_ARG_DECL);
+
   int unbind_using_user_id (const PortableServer::ObjectId &user_id);
 
   void cleanup_servant (

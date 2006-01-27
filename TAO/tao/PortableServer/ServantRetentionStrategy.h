@@ -55,6 +55,11 @@ namespace TAO
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
         ACE_ENV_ARG_DECL) = 0;
 
+      virtual int find_servant_priority (
+        const PortableServer::ObjectId &system_id,
+        CORBA::Short &priority
+        ACE_ENV_ARG_DECL) = 0;
+
       virtual PortableServer::ObjectId *activate_object (
         PortableServer::Servant servant,
         CORBA::Short priority,
