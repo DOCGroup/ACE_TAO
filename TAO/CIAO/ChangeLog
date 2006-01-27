@@ -1,3 +1,9 @@
+Fri Jan 27 17:35:55 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * RACE/Controller/Component/Controller.mpc
+         
+          Fixed linking errors on Mac OS X.
+
 Fri Jan 27 17:29:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorController.h
