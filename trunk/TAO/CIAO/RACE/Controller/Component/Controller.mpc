@@ -22,9 +22,9 @@ project(Controller_stub): ciao_deployment_stub {
 }
 
 project(Controller_svnt) : ciao_servant_dnc {
-  after +=  Controller_stub CIAO_TargetManager_stub
+  after +=  Controller_stub CIAO_TargetManager_svnt
   sharedname  = Controller_svnt
-  libs    += Controller_stub TargetManager_stub
+  libs    += Controller_stub TargetManager_stub TargetManager_svnt
 
   idlflags  +=  -Wb,export_macro=CONTROLLER_SVNT_Export \
                 -Wb,export_include=Controller_svnt_export.h
@@ -56,11 +56,9 @@ project(Controller_exec) : ciao_component_dnc {
   dynamicflags   = CONTROLLER_EXEC_BUILD_DLL
 
   IDL_Files {
-    Controller.idl
   }
 
   Source_Files {
-
     Controller_exec.cpp
   }
 }

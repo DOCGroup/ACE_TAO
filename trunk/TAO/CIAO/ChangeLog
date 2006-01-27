@@ -1,3 +1,9 @@
+Fri Jan 27 22:42:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * RACE/Controller/Component/Controller.mpc
+
+          Fixed linking errors on Windows.
+
 Fri Jan 27 20:58:19 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tests/Bug_2130_Regression
