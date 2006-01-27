@@ -137,6 +137,15 @@ namespace TAO
       return 0;
     }
 
+    int 
+    ServantRetentionStrategyNonRetain::find_servant_priority (
+        const PortableServer::ObjectId &system_id,
+        CORBA::Short &priority
+        ACE_ENV_ARG_DECL)
+    {
+      return -1;
+    }
+
     int
     ServantRetentionStrategyNonRetain::is_servant_in_map (
       PortableServer::Servant /*servant*/,

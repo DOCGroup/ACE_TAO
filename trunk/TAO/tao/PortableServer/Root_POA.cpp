@@ -2472,6 +2472,18 @@ TAO_Root_POA::find_servant (
                         ACE_ENV_ARG_PARAMETER);
 }
 
+int
+TAO_Root_POA::find_servant_priority (
+         const PortableServer::ObjectId &system_id,
+         CORBA::Short &priority
+        ACE_ENV_ARG_DECL)
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+          find_servant_priority (system_id,
+                                 priority
+                                 ACE_ENV_ARG_PARAMETER);
+}
+
 TAO::ORT_Adapter_Factory *
 TAO_Root_POA::ORT_adapter_factory (void)
 {

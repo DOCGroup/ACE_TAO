@@ -358,6 +358,44 @@ namespace TAO
       return servant;
     }
 
+    int 
+    ServantRetentionStrategyRetain::find_servant_priority (
+        const PortableServer::ObjectId &system_id,
+        CORBA::Short &priority
+        ACE_ENV_ARG_DECL)
+    {
+      PortableServer::ObjectId user_id;
+      // If we have the RETAIN policy, convert/transform from system id to
+      // user id.
+      if (this->active_object_map_->
+          find_user_id_using_system_id (system_id,
+                                        user_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            -1);
+        }
+
+      // If the POA has the RETAIN policy, the POA looks in the Active
+      // Object Map to find if there is a servant associated with the
+      // Object Id value from the request. If such a servant exists, the
+      // POA invokes the appropriate method on the servant.
+      PortableServer::Servant servant = 0;
+      TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
+      int result = this->active_object_map_->
+        find_servant_using_system_id_and_user_id (system_id,
+                                                  user_id,
+                                                  servant,
+                                                  active_object_map_entry);
+
+      if (result == 0)
+        {
+          priority = active_object_map_entry->priority_;
+          return 0;
+        }
+
+      return -1;
+    }
+
     int
     ServantRetentionStrategyRetain::is_servant_in_map (
       PortableServer::Servant servant,
@@ -1042,6 +1080,7 @@ namespace TAO
     {
       return this->active_object_map_->remaining_activations (servant);
     }
+
 
     ::PortableServer::ServantRetentionPolicyValue
     ServantRetentionStrategyRetain::type() const
