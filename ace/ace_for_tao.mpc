@@ -33,6 +33,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Condition_Thread_Mutex.cpp
     Countdown_Time.cpp
     Copy_Disabled.cpp
+    Dirent.cpp // Required by TAO_IDL
     Dump.cpp
     Dynamic.cpp
     Event.cpp
