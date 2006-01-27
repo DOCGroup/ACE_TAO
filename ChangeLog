@@ -1,3 +1,18 @@
+Fri Jan 27 09:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-osf1-4.0.h:
+          Doxygen improvements
+
+        * ace/Select_Reactor_T.{h,inl}:
+          Doxygen improvements and enabled inlining in the inline file again,
+          this was disabled and I could find that someone disable this 7 years
+          ago because of a bug in the Sun compiler at that moment. The current
+          supported versions don't have a problem with this, so enabled
+          inlining again in this core part of ACE.
+
 Fri Jan 27 03:09:01 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
