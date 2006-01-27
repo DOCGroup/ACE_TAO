@@ -1,3 +1,8 @@
+Fri Jan 27 14:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Performance_Test.cpp:
+          Initialise some pointers with 0
+
 Fri Jan 27 13:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.h:
