@@ -1,3 +1,13 @@
+Fri Jan 27 19:07:08 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/MonitorController.h
+        * DAnCE/NodeManager/MonitorController.inl
+        
+        Refined the fix in 
+        Fri Jan 27 17:29:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+        to use ACE_SYNCH_MUTEX.  Thanks to Doug Schmidt for suggesting the
+        improvement.
+
 Fri Jan 27 17:35:55 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * RACE/Controller/Component/Controller.mpc
