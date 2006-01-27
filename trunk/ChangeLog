@@ -1,3 +1,10 @@
+Fri Jan 27 14:53:03 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Added a method to get a random port number within the range of
+          10002 - 32767.
+
 Fri Jan 27 14:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reactor_Performance_Test.cpp:
@@ -100,10 +107,10 @@ Fri Jan 27 02:43:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Thu Jan 26 18:53:10 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Makefile.am (SUBDIRS):
-	* m4/ace.m4: Added support to enable/disable building the ACE tests,
-	  performance tests, and examples.  Thanks to Thomas E Lackey
- 	  <telackey at bozemanpass dot com> for contributing this.
+        * Makefile.am (SUBDIRS):
+        * m4/ace.m4: Added support to enable/disable building the ACE tests,
+          performance tests, and examples.  Thanks to Thomas E Lackey
+          <telackey at bozemanpass dot com> for contributing this.
 
 Thu Jan 26 20:25:39 UTC 2006  Steve Huston  <shuston@riverace.com>
 
