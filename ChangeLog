@@ -1,3 +1,9 @@
+Fri Jan 27 12:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_shm.{h,inl}:
+          Changed for the shmdt and shmat methods the void* argument to
+          const void*, this is the way posix defines these methods.
+
 Fri Jan 27 11:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_T.cpp:
