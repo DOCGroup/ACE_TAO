@@ -70,11 +70,11 @@ public:
   const ACE_TCHAR *dll_name () const;
 
   /**
-   * This method opens and dynamically links <dll_name>.  The default
+   * This method opens and dynamically links @a dll_name.  The default
    * mode is <RTLD_LAZY>, which loads identifier symbols but not the
    * symbols for functions, which are loaded dynamically on-demand.
    * Other supported modes include: <RTLD_NOW>, which performs all
-   * necessary relocations when <dll_name> is first loaded and
+   * necessary relocations when @a dll_name is first loaded and
    * <RTLD_GLOBAL>, which makes symbols available for relocation
    * processing of any other DLLs.  Returns -1 on failure and 0 on
    * success.
@@ -91,15 +91,15 @@ public:
   /// Return the current refcount.
   sig_atomic_t refcount (void) const;
 
-  /// If <symbol_name> is in the symbol table of the DLL a pointer to
-  /// the <symbol_name> is returned.  Otherwise, returns 0.  Set the
+  /// If @a symbol_name is in the symbol table of the DLL a pointer to
+  /// the @a symbol_name is returned.  Otherwise, returns 0.  Set the
   /// ignore_errors flag to supress logging errors if symbol_name isn't
   /// found.  This is nice if you just want to probe a dll to see what's
   /// available, since missing functions in that case aren't really errors.
   void *symbol (const ACE_TCHAR *symbol_name, int ignore_errors = 0);
 
   /**
-   * Return the handle to the caller.  If <become_owner> is non-0 then
+   * Return the handle to the caller.  If @a become_owner is non-0 then
    * caller assumes ownership of the handle so we decrement the retcount.
    */
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0);
