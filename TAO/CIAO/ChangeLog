@@ -1,3 +1,11 @@
+Fri Jan 27 16:59:11 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        
+          Fixed a couple of warnings on SuSE_10_0_GCC4.0.2_x86_64_Valgrind
+          build about pointer initialization.
+
 Thu Jan 26 23:48:47 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * examples/Hello/step-by-step.html
