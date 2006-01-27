@@ -176,7 +176,7 @@ public:
   /**
    * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
-   * only flag that is processed is <ACE_NONBLOCK>, which enabled
+   * only flag that is processed is ACE_NONBLOCK, which enabled
    * non-blocking I/O on the <SVC_HANDLER> when it is opened.
    */
   ACE_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
@@ -185,7 +185,7 @@ public:
   /**
    * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
-   * only flag that is processed is <ACE_NONBLOCK>, which enabled
+   * only flag that is processed is ACE_NONBLOCK, which enabled
    * non-blocking I/O on the <SVC_HANDLER> when it is opened.
    */
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
@@ -201,7 +201,7 @@ public:
    * using <synch_options>.  If the caller wants to designate the
    * selected <local_addr> they can (and can also insist that the
    * <local_addr> be reused by passing a value <reuse_addr> ==
-   * 1). <flags> and <perms> can be used to pass any flags that are
+   * 1). @a flags and <perms> can be used to pass any flags that are
    * needed to perform specific operations such as opening a file
    * within connect with certain permissions.  If the connection fails
    * the <close> hook on the <svc_handler> will be called
@@ -378,7 +378,7 @@ private:
   /**
    * Flags that indicate how <SVC_HANDLER>'s should be initialized
    * prior to being activated.  Right now, the only flag that is
-   * processed is <ACE_NONBLOCK>, which enabled non-blocking I/O on
+   * processed is ACE_NONBLOCK, which enabled non-blocking I/O on
    * the <SVC_HANDLER> when it is opened.
    */
   int flags_;
@@ -432,9 +432,9 @@ public:
   SUPER;
 
   /**
-   * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
-   * only flag that is processed is <ACE_NONBLOCK>, which enabled
+   * only flag that is processed is ACE_NONBLOCK, which enabled
    * non-blocking I/O on the <SVC_HANDLER> when it is opened.
    */
   ACE_Strategy_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
@@ -444,9 +444,9 @@ public:
                           int flags = 0);
 
   /**
-   * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
-   * only flag that is processed is <ACE_NONBLOCK>, which enabled
+   * only flag that is processed is ACE_NONBLOCK, which enabled
    * non-blocking I/O on the <SVC_HANDLER> when it is opened.
    * Default strategies would be created and used.
    */
@@ -454,9 +454,9 @@ public:
                     int flags);
 
   /**
-   * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
-   * only flag that is processed is <ACE_NONBLOCK>, which enabled
+   * only flag that is processed is ACE_NONBLOCK, which enabled
    * non-blocking I/O on the <SVC_HANDLER> when it is opened.
    */
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
