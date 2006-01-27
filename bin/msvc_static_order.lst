@@ -61,6 +61,8 @@ TAO/orbsvcs/orbsvcs/CosEvent_Skel
 TAO/orbsvcs/orbsvcs/CosEvent_Serv
 TAO/orbsvcs/orbsvcs/RTKokyuEvent
 TAO/orbsvcs/orbsvcs/CosConcurrency
+TAO/orbsvcs/orbsvcs/CosConcurrency_Skel
+TAO/orbsvcs/orbsvcs/CosConcurrency_Serv
 TAO/orbsvcs/orbsvcs/CosLifeCycle
 TAO/orbsvcs/orbsvcs/CosTime
 TAO/orbsvcs/orbsvcs/CosNotification_IDL
@@ -105,6 +107,7 @@ TAO/orbsvcs/ImplRepo_Service/ImR_Locator_Service
 TAO/orbsvcs/ImplRepo_Service/tao_imr
 TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Lib
 TAO/orbsvcs/orbsvcs/FTRT_ClientORB
+TAO/orbsvcs/tests/Concurrency/CC_client
 TAO/orbsvcs/tests/Event/lib/Event_Test_Lib
 TAO/orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib
 TAO/orbsvcs/tests/Trading/Trading_Test_Lib
