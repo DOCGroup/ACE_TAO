@@ -1,3 +1,48 @@
+Fri Jan 27 22:03:14 UTC 2006  Ming Xiong <ming.xiong@vanderbilt.edu>
+
+        * tao/PortableServer/ServantRetentionStrategy.h
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp
+        * tao/PortableServer/ServantRetentionStrategyRetain.h
+        
+        Add a find_servant_priority () method to 
+        PortableServer::ServantRetentionStrategy
+        PortableServer::ServantRetentionStrategyNonRetain
+        PortableServer::ServantRetentionStrategyRetain
+        
+        
+        * tao/PortableServer/Root_POA.cpp
+        * tao/PortableServer/Root_POA.h
+        
+        Add a find_servant_priority () method to TAO_Root_POA
+        
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp
+        
+        Change the way TAO_RT_Collocation_Resolver::is_collocated
+        retrieves servant priority. In particular, it will use
+        poa->find_servant_priority () instread of locate_servant_i ()
+        
+        This change is aimed at fixing TAO Bug 2325, which has a misuse
+        of Servant_Upcall, causing the aom entry reference counts to 
+        be incorrectly incremented.
+
+
+Fri Jan 27 21:59:00 UTC 2006  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * 
+
+Fri Jan 27 21:56:40 UTC 2006  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * tao/PortableServer/ServantRetentionStrategy.h
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp
+        * tao/PortableServer/ServantRetentionStrategyRetain.h
+        * tao/PortableServer/Root_POA.cpp
+        * tao/PortableServer/Root_POA.h
+        
+        
 Fri Jan 27 14:53:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
