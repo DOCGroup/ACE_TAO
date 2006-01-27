@@ -1,3 +1,14 @@
+Fri Jan 27 09:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/performance.shtml:
+          Changed picture to 800*600
+
+        * bin/performance_stats.sh:
+          Copy the contents of html/Stats to the destination directory, this
+          way any change in this directory is automatically published on
+          the webserver. The old contents of the webserver has been checked
+          to make sure we don't loose any data.
+
 Fri Jan 27 09:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.h:
