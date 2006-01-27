@@ -7739,98 +7739,6 @@ AC_CONFIG_FILES([
   apps/soreduce/Makefile
   bin/Makefile
   bin/PerlACE/Makefile
-  examples/Makefile
-  examples/APG/Makefile
-  examples/APG/Active_Objects/Makefile
-  examples/APG/Config/Makefile
-  examples/APG/Containers/Makefile
-  examples/APG/Logging/Makefile
-  examples/APG/Misc_IPC/Makefile
-  examples/APG/Naming/Makefile
-  examples/APG/Proactor/Makefile
-  examples/APG/Processes/Makefile
-  examples/APG/Reactor/Makefile
-  examples/APG/Shared_Memory/Makefile
-  examples/APG/Signals/Makefile
-  examples/APG/Sockets/Makefile
-  examples/APG/Streams/Makefile
-  examples/APG/Svc_Config/Makefile
-  examples/APG/ThreadManagement/Makefile
-  examples/APG/ThreadPools/Makefile
-  examples/APG/ThreadSafety/Makefile
-  examples/APG/Threads/Makefile
-  examples/APG/Timers/Makefile
-  examples/ASX/Makefile
-  examples/ASX/CCM_App/Makefile
-  examples/ASX/Message_Queue/Makefile
-  examples/Bounded_Packet_Relay/Makefile
-  examples/C++NPv1/Makefile
-  examples/C++NPv2/Makefile
-  examples/Connection/Makefile
-  examples/Connection/blocking/Makefile
-  examples/Connection/misc/Makefile
-  examples/Connection/non_blocking/Makefile
-  examples/DLL/Makefile
-  examples/Export/Makefile
-  examples/IOStream/Makefile
-  examples/IOStream/client/Makefile
-  examples/IOStream/server/Makefile
-  examples/IPC_SAP/Makefile
-  examples/IPC_SAP/ATM_SAP/Makefile
-  examples/IPC_SAP/DEV_SAP/Makefile
-  examples/IPC_SAP/DEV_SAP/reader/Makefile
-  examples/IPC_SAP/DEV_SAP/writer/Makefile
-  examples/IPC_SAP/FIFO_SAP/Makefile
-  examples/IPC_SAP/FILE_SAP/Makefile
-  examples/IPC_SAP/SOCK_SAP/Makefile
-  examples/IPC_SAP/SPIPE_SAP/Makefile
-  examples/IPC_SAP/SSL_SAP/Makefile
-  examples/IPC_SAP/TLI_SAP/Makefile
-  examples/IPC_SAP/UPIPE_SAP/Makefile
-  examples/Log_Msg/Makefile
-  examples/Logger/Makefile
-  examples/Logger/Acceptor-server/Makefile
-  examples/Logger/client/Makefile
-  examples/Logger/simple-server/Makefile
-  examples/Mem_Map/Makefile
-  examples/Mem_Map/IO-tests/Makefile
-  examples/Mem_Map/file-reverse/Makefile
-  examples/Misc/Makefile
-  examples/NT_Service/Makefile
-  examples/Naming/Makefile
-  examples/OS/Makefile
-  examples/OS/Process/Makefile
-  examples/QOS/Makefile
-  examples/QOS/Change_Receiver_FlowSpec/Makefile
-  examples/QOS/Change_Sender_TSpec/Makefile
-  examples/QOS/Diffserv/Makefile
-  examples/QOS/Simple/Makefile
-  examples/Reactor/Makefile
-  examples/Reactor/Dgram/Makefile
-  examples/Reactor/FIFO/Makefile
-  examples/Reactor/Misc/Makefile
-  examples/Reactor/Multicast/Makefile
-  examples/Reactor/Ntalker/Makefile
-  examples/Reactor/Proactor/Makefile
-  examples/Reactor/WFMO_Reactor/Makefile
-  examples/Registry/Makefile
-  examples/Service_Configurator/Makefile
-  examples/Service_Configurator/IPC-tests/Makefile
-  examples/Service_Configurator/IPC-tests/client/Makefile
-  examples/Service_Configurator/IPC-tests/server/Makefile
-  examples/Service_Configurator/Misc/Makefile
-  examples/Shared_Malloc/Makefile
-  examples/Shared_Memory/Makefile
-  examples/Smart_Pointers/Makefile
-  examples/Synch/Makefile
-  examples/System_V_IPC/Makefile
-  examples/System_V_IPC/SV_Message_Queues/Makefile
-  examples/System_V_IPC/SV_Semaphores/Makefile
-  examples/TMCast/Makefile
-  examples/TMCast/Member/Makefile
-  examples/Threads/Makefile
-  examples/Timer_Queue/Makefile
-  examples/Web_Crawler/Makefile
   netsvcs/Makefile
   netsvcs/lib/Makefile
   netsvcs/clients/Makefile
@@ -7839,18 +7747,6 @@ AC_CONFIG_FILES([
   netsvcs/clients/Naming/Client/Makefile
   netsvcs/clients/Naming/Dump_Restore/Makefile
   netsvcs/servers/Makefile
-  performance-tests/Makefile
-  performance-tests/Misc/Makefile
-  performance-tests/SCTP/Makefile
-  performance-tests/Server_Concurrency/Makefile
-  performance-tests/Server_Concurrency/Leader_Follower/Makefile
-  performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
-  performance-tests/Synch-Benchmarks/Makefile
-  performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
-  performance-tests/Synch-Benchmarks/Base_Test/Makefile
-  performance-tests/Synch-Benchmarks/Perf_Test/Makefile
-  performance-tests/TCP/Makefile
-  performance-tests/UDP/Makefile
   protocols/Makefile
   protocols/ace/Makefile
   protocols/ace/HTBP/Makefile
@@ -7859,17 +7755,133 @@ AC_CONFIG_FILES([
   protocols/examples/Makefile
   protocols/examples/RMCast/Makefile
   protocols/examples/RMCast/Send_Msg/Makefile
-  tests/Makefile
-  tests/HTBP/Makefile
-  tests/HTBP/Reactor_Tests/Makefile
-  tests/HTBP/Send_Large_Msg/Makefile
-  tests/HTBP/Send_Recv_Tests/Makefile
-  tests/HTBP/ping/Makefile
-  tests/SSL/Makefile
   websvcs/Makefile
   websvcs/lib/Makefile
   websvcs/tests/Makefile
 ])
+
+dnl Configure examples if configured...
+if $ace_build_examples = yes; then
+  AC_CONFIG_FILES([
+    examples/Makefile
+    examples/APG/Makefile
+    examples/APG/Active_Objects/Makefile
+    examples/APG/Config/Makefile
+    examples/APG/Containers/Makefile
+    examples/APG/Logging/Makefile
+    examples/APG/Misc_IPC/Makefile
+    examples/APG/Naming/Makefile
+    examples/APG/Proactor/Makefile
+    examples/APG/Processes/Makefile
+    examples/APG/Reactor/Makefile
+    examples/APG/Shared_Memory/Makefile
+    examples/APG/Signals/Makefile
+    examples/APG/Sockets/Makefile
+    examples/APG/Streams/Makefile
+    examples/APG/Svc_Config/Makefile
+    examples/APG/ThreadManagement/Makefile
+    examples/APG/ThreadPools/Makefile
+    examples/APG/ThreadSafety/Makefile
+    examples/APG/Threads/Makefile
+    examples/APG/Timers/Makefile
+    examples/ASX/Makefile
+    examples/ASX/CCM_App/Makefile
+    examples/ASX/Message_Queue/Makefile
+    examples/Bounded_Packet_Relay/Makefile
+    examples/C++NPv1/Makefile
+    examples/C++NPv2/Makefile
+    examples/Connection/Makefile
+    examples/Connection/blocking/Makefile
+    examples/Connection/misc/Makefile
+    examples/Connection/non_blocking/Makefile
+    examples/DLL/Makefile
+    examples/Export/Makefile
+    examples/IOStream/Makefile
+    examples/IOStream/client/Makefile
+    examples/IOStream/server/Makefile
+    examples/IPC_SAP/Makefile
+    examples/IPC_SAP/ATM_SAP/Makefile
+    examples/IPC_SAP/DEV_SAP/Makefile
+    examples/IPC_SAP/DEV_SAP/reader/Makefile
+    examples/IPC_SAP/DEV_SAP/writer/Makefile
+    examples/IPC_SAP/FIFO_SAP/Makefile
+    examples/IPC_SAP/FILE_SAP/Makefile
+    examples/IPC_SAP/SOCK_SAP/Makefile
+    examples/IPC_SAP/SPIPE_SAP/Makefile
+    examples/IPC_SAP/SSL_SAP/Makefile
+    examples/IPC_SAP/TLI_SAP/Makefile
+    examples/IPC_SAP/UPIPE_SAP/Makefile
+    examples/Log_Msg/Makefile
+    examples/Logger/Makefile
+    examples/Logger/Acceptor-server/Makefile
+    examples/Logger/client/Makefile
+    examples/Logger/simple-server/Makefile
+    examples/Mem_Map/Makefile
+    examples/Mem_Map/IO-tests/Makefile
+    examples/Mem_Map/file-reverse/Makefile
+    examples/Misc/Makefile
+    examples/NT_Service/Makefile
+    examples/Naming/Makefile
+    examples/OS/Makefile
+    examples/OS/Process/Makefile
+    examples/QOS/Makefile
+    examples/QOS/Change_Receiver_FlowSpec/Makefile
+    examples/QOS/Change_Sender_TSpec/Makefile
+    examples/QOS/Diffserv/Makefile
+    examples/QOS/Simple/Makefile
+    examples/Reactor/Makefile
+    examples/Reactor/Dgram/Makefile
+    examples/Reactor/FIFO/Makefile
+    examples/Reactor/Misc/Makefile
+    examples/Reactor/Multicast/Makefile
+    examples/Reactor/Ntalker/Makefile
+    examples/Reactor/Proactor/Makefile
+    examples/Reactor/WFMO_Reactor/Makefile
+    examples/Registry/Makefile
+    examples/Service_Configurator/Makefile
+    examples/Service_Configurator/IPC-tests/Makefile
+    examples/Service_Configurator/IPC-tests/client/Makefile
+    examples/Service_Configurator/IPC-tests/server/Makefile
+    examples/Service_Configurator/Misc/Makefile
+    examples/Shared_Malloc/Makefile
+    examples/Shared_Memory/Makefile
+    examples/Smart_Pointers/Makefile
+    examples/Synch/Makefile
+    examples/System_V_IPC/Makefile
+    examples/System_V_IPC/SV_Message_Queues/Makefile
+    examples/System_V_IPC/SV_Semaphores/Makefile
+    examples/TMCast/Makefile
+    examples/TMCast/Member/Makefile
+    examples/Threads/Makefile
+    examples/Timer_Queue/Makefile
+    examples/Web_Crawler/Makefile
+  ])
+fi
+
+dnl Configure examples if configured...
+if $ace_build_tests; then
+  AC_CONFIG_FILES([
+    performance-tests/Makefile
+    performance-tests/Misc/Makefile
+    performance-tests/SCTP/Makefile
+    performance-tests/Server_Concurrency/Makefile
+    performance-tests/Server_Concurrency/Leader_Follower/Makefile
+    performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
+    performance-tests/Synch-Benchmarks/Makefile
+    performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
+    performance-tests/Synch-Benchmarks/Base_Test/Makefile
+    performance-tests/Synch-Benchmarks/Perf_Test/Makefile
+    performance-tests/TCP/Makefile
+    performance-tests/UDP/Makefile
+    tests/Makefile
+    tests/HTBP/Makefile
+    tests/HTBP/Reactor_Tests/Makefile
+    tests/HTBP/Send_Large_Msg/Makefile
+    tests/HTBP/Send_Recv_Tests/Makefile
+    tests/HTBP/ping/Makefile
+    tests/SSL/Makefile
+  ])
+fi
 
 dnl Configure subdirectories if they are present.
 if test -d $srcdir/ACEXML; then
