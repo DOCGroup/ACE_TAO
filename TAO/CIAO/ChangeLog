@@ -1,3 +1,9 @@
+Sat Jan 28 05:55:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/NodeManager.mpc
+        
+          Added a missing after clause. 
+
 Fri Jan 27 22:42:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * RACE/Controller/Component/Controller.mpc
