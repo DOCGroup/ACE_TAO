@@ -139,8 +139,8 @@ namespace TAO
 
     int 
     ServantRetentionStrategyNonRetain::find_servant_priority (
-        const PortableServer::ObjectId &system_id,
-        CORBA::Short &priority
+        const PortableServer::ObjectId &/*system_id*/,
+        CORBA::Short &/*priority*/
         ACE_ENV_ARG_DECL)
     {
       return -1;
