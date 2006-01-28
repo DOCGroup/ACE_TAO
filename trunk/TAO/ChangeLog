@@ -1,8 +1,19 @@
+Sat Jan 28 23:15:13 UTC 2006  Martin Corino <mcorino@remedy.nl>
+
+        * tao/IIOP_Profile.cpp:
+
+          Added enhancement to TAO_IIOP_Profile::to_string() to return
+          *all* endpoints in profile embedded in a corbaloc URL like:
+          corbaloc:iiop:1.2@host:port,iiop:1.2@host:port,.../key
+          Thanks to Victor Chernenko (GE Healthcare) for suggesting this
+          and providing a first patch.
+
+
 Sat Jan 28 22:22:13 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp
-          
-          Fixed unused argument warning. 
+
+          Fixed unused argument warning.
 
 Fri Jan 27 22:03:14 UTC 2006  Ming Xiong <ming.xiong@vanderbilt.edu>
 

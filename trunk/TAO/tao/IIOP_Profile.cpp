@@ -24,7 +24,7 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
   TAO_Endpoint *tmp = 0;
-                                                                                              
+
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != 0;
        next = tmp)
@@ -372,64 +372,85 @@ TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
 char *
 TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
+  // corbaloc:iiop:1.2@host:port,iiop:1.2@host:port,.../key
+
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->ref_object_key_->object_key ());
 
-  size_t buflen = (8 /* "corbaloc" */ +
-                   1 /* colon separator */ +
-                   ACE_OS::strlen (::the_prefix) +
-                   1 /* colon separator */ +
-                   1 /* major version */ +
-                   1 /* decimal point */ +
-                   1 /* minor version */ +
-                   1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
-                   1 /* colon separator */ +
-                   5 /* port number */ +
-                   1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
-#if defined (ACE_HAS_IPV6)
-  if (this->endpoint_.is_ipv6_decimal_)
-    buflen += 2; // room for '[' and ']'
-#endif /* ACE_HAS_IPV6 */
+  size_t buflen = (
+       8 /* "corbaloc" */ +
+       1 /* colon separator */ +
+       1 /* object key separator */ +
+       ACE_OS::strlen (key.in ()));
+  size_t pfx_len = (
+       ACE_OS::strlen (::the_prefix) /* "iiop" */ +
+       1 /* colon separator */);
 
-  char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
+ const TAO_IIOP_Endpoint *endp = 0;
+ for (endp = &this->endpoint_; endp != 0; endp = endp->next_)
+   {
+      buflen += (
+          pfx_len +
+          1 /* major version */ +
+          1 /* decimal point */ +
+          1 /* minor version */ +
+          1 /* `@' character */ +
+          ACE_OS::strlen (endp->host ()) +
+          1 /* colon separator */ +
+          5 /* port number */ +
+          1 /* comma */);
+#if defined (ACE_HAS_IPV6)
+      if (endp.is_ipv6_decimal_)
+        buflen += 2; // room for '[' and ']'
+#endif /* ACE_HAS_IPV6 */
+   }
 
   static const char digits [] = "0123456789";
 
-#if defined (ACE_HAS_IPV6)
-  if (this->endpoint_.is_ipv6_decimal_)
+  char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
+
+  ACE_OS::strcpy(buf, "corbaloc:");
+
+  for (endp = &this->endpoint_; endp != 0; endp = endp->next_)
     {
-      // Don't publish scopeid if included.
-      ACE_CString tmp(this->endpoint_.host ());
-      ssize_t pos = tmp.find('%');
-      if (pos != ACE_CString::npos)
+      if(&this->endpoint_ != endp)
+      ACE_OS::strcat(buf, ",");
+
+#if defined (ACE_HAS_IPV6)
+      if (endp.is_ipv6_decimal_)
         {
-          tmp = tmp.substr(0, pos + 1);
-          tmp[pos] = '\0';
+          // Don't publish scopeid if included.
+          ACE_CString tmp(endp.host ());
+          ssize_t pos = tmp.find('%');
+          if (pos != ACE_CString::npos)
+            {
+              tmp = tmp.substr(0, pos + 1);
+              tmp[pos] = '\0';
+            }
+          ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
+                  "%s:%c.%c@[%s]:%d",
+                  ::the_prefix,
+                  digits [this->version_.major],
+                  digits [this->version_.minor],
+                  tmp.c_str (),
+                  endp->port () );
         }
-      ACE_OS::sprintf (buf,
-                       "corbaloc:%s:%c.%c@[%s]:%d%c%s",
-                       ::the_prefix,
-                       digits [this->version_.major],
-                       digits [this->version_.minor],
-                       tmp.c_str (),
-                       this->endpoint_.port (),
-                       this->object_key_delimiter_,
-                       key.in ());
-    }
-  else
-#endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (buf,
-                   "corbaloc:%s:%c.%c@%s:%d%c%s",
-                   ::the_prefix,
-                   digits [this->version_.major],
-                   digits [this->version_.minor],
-                   this->endpoint_.host (),
-                   this->endpoint_.port (),
-                   this->object_key_delimiter_,
-                   key.in ());
+      else
+#endif
+      ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
+              "%s:%c.%c@%s:%d",
+              ::the_prefix,
+              digits [this->version_.major],
+              digits [this->version_.minor],
+              endp->host (),
+              endp->port () );
+
+  }
+  ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
+          "%c%s",
+          this->object_key_delimiter_,
+          key.in ());
 
   return buf;
 }
