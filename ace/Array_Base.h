@@ -119,7 +119,7 @@ public:
    */
   int max_size (size_t new_size);
 
-private:
+protected:
   /// Returns 1 if <slot> is within range, i.e., 0 >= <slot> <
   /// <cur_size_>, else returns 0.
   int in_range (size_t slot) const;
