@@ -1,3 +1,14 @@
+Sun Jan 29 22:23:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp (DRV_usage):
+        * TAO_IDL/be/be_global.cpp (usage):
+        
+          Moved all all usage messages about -Wb options to the IDL
+          compiler back end, which they are specific to. Thanks to
+          Andy Gokhale <a.gokhale@vanderbilt.edu> for pointing
+          out that these usage message were appearing with the
+          idl_to_picml executable, where they are not relevant.
+
 Sun Jan 29 15:01:13 UTC 2006  Martin Corino <mcorino@remedy.nl>
 
         * tao/IIOP_Profile.cpp:
