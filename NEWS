@@ -9,6 +9,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.8 and ACE-5.4.9
 . Added dozens of new ACE_LACKS and ACE_HAS defines which are used to
   simplify the ACE_OS layer
 
+. Constructors of ACE_Time_Value have been made explicit to prevent
+  implicit conversions.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 ====================================================
 
