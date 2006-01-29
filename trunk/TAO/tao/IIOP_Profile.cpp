@@ -401,7 +401,7 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           5 /* port number */ +
           1 /* comma */);
 #if defined (ACE_HAS_IPV6)
-      if (endp.is_ipv6_decimal_)
+      if (endp->is_ipv6_decimal_)
         buflen += 2; // room for '[' and ']'
 #endif /* ACE_HAS_IPV6 */
    }
@@ -418,10 +418,10 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_OS::strcat(buf, ",");
 
 #if defined (ACE_HAS_IPV6)
-      if (endp.is_ipv6_decimal_)
+      if (endp->is_ipv6_decimal_)
         {
           // Don't publish scopeid if included.
-          ACE_CString tmp(endp.host ());
+          ACE_CString tmp(endp->host ());
           ssize_t pos = tmp.find('%');
           if (pos != ACE_CString::npos)
             {
