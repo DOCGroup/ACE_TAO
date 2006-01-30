@@ -6,8 +6,8 @@
  *  $Id$
  *
  *  This file contains servant implementation for Deployment:NodeManager
- *  interface. In the current design of the NodeManager, each NodeManager 
- *  could manage one or more NodeApplication Managers. 
+ *  interface. In the current design of the NodeManager, each NodeManager
+ *  could manage one or more NodeApplication Managers.
  *  Though, the name intuitively suggests
  *  that there be one NodeManager  for every node, our design, allows
  *  the end-user to have multiple components run on the same node.
@@ -33,6 +33,7 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+#include "CIAO_NodeManager_Export.h"
 #include "NAM_Map.h"
 #include "MonitorController.h"
 #include "ace/Vector_T.h"
@@ -50,12 +51,12 @@ namespace CIAO
    * This class implements the CIAO:NodeManager interface.
    *
    */
-  class NodeManager_Impl_Base
+  class CIAO_NodeManager_Export NodeManager_Impl_Base
     : public virtual POA_CIAO::NodeManager
   {
   public:
     /// A struct that tracks the reference count of a particular
-    /// component as well as the "child_plan_uuid" where the component is 
+    /// component as well as the "child_plan_uuid" where the component is
     /// actually installed
     typedef struct _ref_count_info
     {
@@ -131,7 +132,7 @@ namespace CIAO
     get_all_consumers (ACE_CString & name);
 
     virtual void
-    set_all_facets (ACE_CString &name, 
+    set_all_facets (ACE_CString &name,
                    const ::Components::FacetDescriptions_var & facets);
 
     virtual void
@@ -238,7 +239,7 @@ namespace CIAO
    * @class NodeManager_Impl
    *
    */
-  class NodeManager_Impl
+  class CIAO_NodeManager_Export NodeManager_Impl
     : public virtual NodeManager_Impl_Base
   {
   public:
@@ -273,7 +274,7 @@ namespace CIAO
    * @class Static_NodeManager_Impl
    *
    */
-  class Static_NodeManager_Impl
+  class CIAO_NodeManager_Export Static_NodeManager_Impl
     : public virtual NodeManager_Impl_Base
   {
   public:
