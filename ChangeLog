@@ -1,3 +1,10 @@
+Mon Jan 30 17:53:10 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst
+        
+        Added a !NOXERCES qualifier so it is possible to run only tests
+        that do not require xerces. 
+
 Sat Jan 28 18:40:30 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Array_Base.h (class ACE_Array_Base): Changed private to
