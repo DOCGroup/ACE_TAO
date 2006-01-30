@@ -1,7 +1,31 @@
+Mon Jan 30 21:16:40 UTC 2006  Ming Xiong <ming.xiong@vanderbilt.edu>
+
+        * docs/tutorials/CoSMIC/01.html
+        * docs/tutorials/CoSMIC/02.html
+        * docs/tutorials/CoSMIC/03.html
+        * docs/tutorials/CoSMIC/04.html
+        * docs/tutorials/CoSMIC/index.html
+        * docs/tutorials/CoSMIC/Icons/AddConnMode.gif
+        * docs/tutorials/CoSMIC/Icons/SetMode.gif
+        * docs/tutorials/CoSMIC/Images/fig1.jpg
+        * docs/tutorials/CoSMIC/Images/fig10.jpg
+        * docs/tutorials/CoSMIC/Images/fig11.jpg
+        * docs/tutorials/CoSMIC/Images/fig2.jpg
+        * docs/tutorials/CoSMIC/Images/fig3.jpg
+        * docs/tutorials/CoSMIC/Images/fig4.jpg
+        * docs/tutorials/CoSMIC/Images/fig5.jpg
+        * docs/tutorials/CoSMIC/Images/fig6.jpg
+        * docs/tutorials/CoSMIC/Images/fig7.jpg
+        * docs/tutorials/CoSMIC/Images/fig8.jpg
+        * docs/tutorials/CoSMIC/Images/fig9.jpg
+        * docs/tutorials/CoSMIC/Model/Quoter.xme
+
+          Added CoSMIC tutorial for /docs/tutorials/Quoter/Simple
+
 Mon Jan 30 17:50:38 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-        
+
           Modified to inherit from dance_extension_stub project
           so the included header file could be found.
 
@@ -10,53 +34,53 @@ Mon Jan 30 17:35:12 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/Interfaces/Interfaces.mpc
         * DAnCE/NodeManager/NodeManager.mpc
         * DAnCE/NodeManager/NodeManager_Impl.h
-        
+
           Fixed a linking error of NodeManager when trying to
           link to IDL generated servant code.
-        
+
         * DAnCE/NodeManager/CIAO_NodeManager_Export.h
         * DAnCE/Interfaces/NodeManager_svnt_export.h
-        
-          Removed the first one and added the second one to 
+
+          Removed the first one and added the second one to
           fix the linking error when trying to find entry
           point for IDL compiler generated servant code.
 
 Mon Jan 30 05:07:09 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/NodeManagerMap.dat
-        
+
         Corrected the ports to match those in the run_test.pl script.
 
 Mon Jan 30 01:59:23 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-        
+
           Cosmetic change.
-        
+
         * DAnCE/NodeManager/NodeManager.mpc
 
           Fixed a typo.
-        
+
 Mon Jan 30 01:47:21 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeManager.mpc
         * DAnCE/NodeManager/NodeManager_Impl.h
         * DAnCE/NodeManager/NodeManager_Export.h
-        
+
           Added dll import/export mechanism into NodeManager library.
 
 Sat Jan 28 22:24:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test.pl
-        
-          Corrected the name of the NodeManagerMap passed to ExecutionManager. 
-          This was causing the test to fail across all platforms. 
+
+          Corrected the name of the NodeManagerMap passed to ExecutionManager.
+          This was causing the test to fail across all platforms.
 
 Sat Jan 28 05:55:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeManager.mpc
-        
-          Added a missing after clause. 
+
+          Added a missing after clause.
 
 Fri Jan 27 22:42:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -67,30 +91,30 @@ Fri Jan 27 22:42:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 Fri Jan 27 20:58:19 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tests/Bug_2130_Regression
-        
+
           A place to host Bug 2130 test case.
 
 Fri Jan 27 20:42:47 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DnC_Dump_T.h
-        
-          Silenced warnings in solaris. 
+
+          Silenced warnings in solaris.
 
 Fri Jan 27 20:30:01 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/NodeManager/NodeManager_Impl.cpp
-        
+
           Fixed uninitialized variable warnings on Solaris GCC.
-         
+
          *DAnCE/NodeManager/NodeManager.mpc
-         
+
           Refactored the projects here so all files related to NodeManager
-          are only compiled once. 
-        
+          are only compiled once.
+
 Fri Jan 27 19:15:19 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-        * DAnCE/NodeManager/Monitor.mpc: Added the dependancy on 
+        * DAnCE/NodeManager/Monitor.mpc: Added the dependancy on
           TargetManaer_stub
 
 Fri Jan 27 19:07:08 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
