@@ -33,7 +33,7 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-#include "CIAO_NodeManager_Export.h"
+#include "NodeManager_svnt_export.h"
 #include "NAM_Map.h"
 #include "MonitorController.h"
 #include "ace/Vector_T.h"
@@ -51,7 +51,7 @@ namespace CIAO
    * This class implements the CIAO:NodeManager interface.
    *
    */
-  class CIAO_NodeManager_Export NodeManager_Impl_Base
+  class NodeManager_svnt_Export NodeManager_Impl_Base
     : public virtual POA_CIAO::NodeManager
   {
   public:
@@ -239,7 +239,7 @@ namespace CIAO
    * @class NodeManager_Impl
    *
    */
-  class CIAO_NodeManager_Export NodeManager_Impl
+  class NodeManager_svnt_Export NodeManager_Impl
     : public virtual NodeManager_Impl_Base
   {
   public:
@@ -274,7 +274,7 @@ namespace CIAO
    * @class Static_NodeManager_Impl
    *
    */
-  class CIAO_NodeManager_Export Static_NodeManager_Impl
+  class NodeManager_svnt_Export Static_NodeManager_Impl
     : public virtual NodeManager_Impl_Base
   {
   public:
