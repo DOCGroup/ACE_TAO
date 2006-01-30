@@ -59,7 +59,10 @@ Fri Jan 27 22:03:14 UTC 2006  Ming Xiong <ming.xiong@vanderbilt.edu>
 
         This change is aimed at fixing TAO Bug 2325, which has a misuse
         of Servant_Upcall, causing the aom entry reference counts to
-        be incorrectly incremented.
+        be incorrectly incremented.Thanks to Abhi (abhi dot qualcomm
+        dot com) and Johnny for reporting this bug and helping out 
+        with the solution.
+        
 
 Fri Jan 27 14:53:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
