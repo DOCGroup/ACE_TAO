@@ -1,3 +1,11 @@
+
+Mon Jan 30 22:43:26 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * examples/Hello/descriptors/run_NodeDaemons.pl:
+
+          Fixing this script so that the Hello example deploys successfully.
+
+
 Mon Jan 30 21:16:40 UTC 2006  Ming Xiong <ming.xiong@vanderbilt.edu>
 
         * docs/tutorials/CoSMIC/01.html
