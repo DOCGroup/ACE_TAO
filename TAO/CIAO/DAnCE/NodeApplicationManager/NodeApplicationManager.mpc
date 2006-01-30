@@ -1,4 +1,4 @@
-	// -*- MPC -*-
+// -*- MPC -*-
 // $Id$
 
 project(NodeApplicationManager): ciao_component_dnc, ciao_deployment_svnt {

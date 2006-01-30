@@ -2,12 +2,12 @@
 // $Id$
 
 //For static D&C, the NodeManager should be available as a linkable library
-project(NodeManager_Impl): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
+project(NodeManager_svnt): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
   sharedname = NodeManager
   after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
   libs += NodeManager_stub NodeApplicationManager TargetManager_stub
   includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/Interfaces $(CIAO_ROOT)/DAnCE/TargetManager
-  dynamicflags = CIAO_NodeManager_BUILD_DLL
+  dynamicflags = CIAO_NODEMANAGER_BUILD_DLL
  
   IDL_Files {
   }
@@ -22,8 +22,8 @@ project(NodeManager_Impl): ciao_component_dnc, iortable, ifr_client, dance_exten
 }
 
 project(NodeManager): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
-  after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub NodeManager_Impl
-  libs += NodeManager_stub NodeApplicationManager TargetManager_stub NodeManager
+  after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub NodeManager_svnt
+  libs += NodeManager_stub NodeManager NodeApplicationManager TargetManager_stub
   includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
   exename = NodeManager
 
