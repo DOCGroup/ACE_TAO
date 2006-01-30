@@ -1,3 +1,9 @@
+Mon Jan 30 05:07:09 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors/NodeManagerMap.dat
+        
+        Corrected the ports to match those in the run_test.pl script.
+
 Mon Jan 30 01:59:23 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
