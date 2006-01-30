@@ -506,6 +506,14 @@ public:
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
         ACE_ENV_ARG_DECL);
 
+  /**
+   * Find the the servant with ObjectId <system_id>, and retrieve
+   * its priority.Usually used in RT CORBA with SERVER_DECLARED
+   * priority model.
+   *
+   * @return -1 if servant does not exist, else 0 indicating the
+   * servant exists and priority successfully retrieved.
+   */
   int find_servant_priority (
         const PortableServer::ObjectId &system_id,
         CORBA::Short &priority
@@ -568,7 +576,7 @@ public:
       ACE_ENV_SINGLE_ARG_DECL
     );
 
-  /// These hooks are needed by the CSD strategy to override 
+  /// These hooks are needed by the CSD strategy to override
   /// and no-ops by default.
 
   /// Hook - The POA has been (or is being) activated.
@@ -578,12 +586,12 @@ public:
   virtual void poa_deactivated_hook ();
 
   /// Hook - A servant has been activated.
-  virtual void servant_activated_hook (PortableServer::Servant servant, 
+  virtual void servant_activated_hook (PortableServer::Servant servant,
                                const PortableServer::ObjectId& oid
                                ACE_ENV_ARG_DECL);
 
   /// Hook - A servant has been deactivated.
-  virtual void servant_deactivated_hook (PortableServer::Servant servant, 
+  virtual void servant_deactivated_hook (PortableServer::Servant servant,
                                  const PortableServer::ObjectId& oid
                                  ACE_ENV_ARG_DECL);
 
