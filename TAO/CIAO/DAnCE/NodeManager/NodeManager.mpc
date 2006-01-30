@@ -7,6 +7,7 @@ project(NodeManager_Impl): ciao_component_dnc, iortable, ifr_client, dance_exten
   after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
   libs += NodeManager_stub NodeApplicationManager TargetManager_stub
   includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/Interfaces $(CIAO_ROOT)/DAnCE/TargetManager
+  dynamicflags = CIAO_NodeManager_BUILD_DLL
  
   IDL_Files {
   }
