@@ -15,6 +15,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OCI) Fix Notification Service detection of dead consumers.
 
+. (Wallace) Finish Distributed Scheduling Service implementation.
+
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 ====================================================
 
