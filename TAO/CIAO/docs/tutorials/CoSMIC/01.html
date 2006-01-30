@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<!-- $Id$ -->
+  <title>Getting Started</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ link="#000fff" vlink="#ff0f0f">
+<h3>Getting Started<br>
+</h3>
+<b>Writing IDL files</b><br>
+<br>
+We will start from writing the idl file for each
+component. <br>
+&nbsp;&nbsp;&nbsp;1. Create a directory named <code> MyQuoter</code>.<br>
+&nbsp;&nbsp;&nbsp;2. In <code>MyQuoter</code> directory, create one
+directory for the basic idl; <code>Stock_Base</code> and for each
+component; <code>Broker</code> and <code>Distributor</code>. In <code>MyQuoter/Stock_Base</code>,
+place the
+idl file <code>Stock_Base.idl</code> that you could copy from <a
+ href="../Quoter/Simple/Stock_Base/Stock_Base.idl">this</a>.
+This file defines the interfaces and events that will be used by both
+Stock Distributor and Stock Broker. We put together the
+common definitions so the generated base library can be shared by both
+components, thus reducing the size of "real" components. <br>
+&nbsp;&nbsp;&nbsp;3. In <code>MyQuoter/Distributor</code>, place the
+idl
+file <code>Distributor.idl</code> that looks like <a
+ href="../Quoter/Simple/Distributor/Distributor.idl">this</a>.
+This file defines the Stock Distributor component interfaces.<br>
+&nbsp;&nbsp;&nbsp;4. In <code>MyQuoter/Broker</code> place the idl
+file for the stock broker; the <code>Broker.idl</code>
+that looks like <a href="../Quoter/Simple/Broker/Broker.idl">this</a>.
+This file defines the StockBroker component interface.<br>
+<br>
+<b>Importing IDL to PICML</b><br>
+<br>
+&nbsp;&nbsp; To quick start our Stock Quoter
+modeling process in GME, CoSMIC provides <code>tao_picml</code>; that
+enables you to
+import the IDL files you just created into modeling elements in PICML. <br>
+&nbsp;&nbsp;&nbsp; 1. Make sure <code>%COSMIC_ROOT%\bin</code> is
+included in the
+PATH variable. <br>
+&nbsp;&nbsp;&nbsp; 2. Open a command prompt, run VCVARS32.BAT from the
+MSVC .NET folder if you haven't done so. It will set the environment
+for using Microsoft Visual Studio .NET tools so that tao_picml works
+properly.<br>
+In my machine, VCVARS32.bat is in C:\Program Files\Microsoft Visual
+Studio .NET 2003\Vc7\bin<br>
+&nbsp;&nbsp;&nbsp; 3. In the same command prompt, change directory to <code>MyQuoter\</code>,
+and type the following
+command:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt; <code>tao_picml -x MyQuoter
+.\Broker\Broker.idl
+.\Distributor\Distributor.idl .\Stock_Base\Stock_Base.idl -I %TAO_ROOT%
+-I %TAO_ROOT%\orbsvcs -I %CIAO_ROOT%\DAnCE\ciao</code> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The <code>tao_picml</code>
+will parse
+your IDL files and generated a <code>MyQuoter.xme</code> file in the <code>MyQuoter</code>
+directory.<br>
+&nbsp;&nbsp;&nbsp; 4. Start GME, select <strong>File-&gt;Import xml..</strong>,
+and choose
+the xme file just generated. You should be able to see an imported
+PICML model similar to the one shown in Figure 2.<br>
+<br>
+<div style="text-align: center;"><img alt="" src="Images/fig2.jpg"
+ style="width: 781px; height: 635px;"><br>
+<br>
+Figure 2<br>
+<div style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp; In the Browser
+of the generated model, the <em>PredefinedTypes
+</em>folder contains a bunch of atomic datatype elements that will be
+referenced by other modeling parts later. You don't have to worry about
+them for now. The models in <em>InterfaceDefinitions</em> folder
+are the PICML representations ofthe IDL files you just imported.
+Double-click to open <em>Broker</em>, it will show you
+a white document-shaped entity which represents a
+&lt;&lt;FileRef&gt;&gt; instance and a yellow box-shaped entity
+representing a &lt;&lt;Package&gt;&gt; instance. Their equivalent
+representations in IDL files are "#include" and "module" respectively.
+Play around with them, and you will get familiar with PICML
+representation of
+IDL elements.
+Figure 3 gives you a clear view of
+GME representation of all the 3 idl files created.<br>
+<br>
+<div style="text-align: center;"><img alt="" src="Images/fig3.jpg"
+ style="width: 223px; height: 336px;"><br>
+<br>
+Figure 3<br>
+<br>
+<div style="text-align: left;">Now we are ready to model the rest of
+the Stock Quoter systems by hand. <br>
+<br>
+<br>
+</div>
+</div>
+<span style="font-weight: bold;"><span style="font-weight: bold;"></span></span></div>
+</div>
+<big><big><small><span style="font-weight: bold;"><small><span
+ style="font-weight: bold;"><span style="font-weight: bold;"></span></span></small></span></small></big></big>&nbsp;&nbsp;&nbsp;
+<br style="font-style: italic;">
+<hr style="font-style: italic;">
+<address><a href="mailto:ming.xiong@vanderbilt.edu">Ming Xiong<br>
+</a></address>
+<!-- Created: Sat Nov 27 15:25:06 CST 1999 --><!-- hhmts start -->
+Last modified:<!-- hhmts end -->
+</body>
+</html>
