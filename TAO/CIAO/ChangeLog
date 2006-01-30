@@ -1,3 +1,10 @@
+Mon Jan 30 17:50:38 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        
+          Modified to inherit from dance_extension_stub project
+          so the included header file could be found.
+
 Mon Jan 30 17:35:12 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Interfaces/Interfaces.mpc
