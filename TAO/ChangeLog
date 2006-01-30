@@ -1,3 +1,9 @@
+Mon Jan 30 22:04:39 UTC 2006  Ming Xiong <ming.xiong@vanderbilt.edu>
+
+        * TAO/tao/PortableServer/Root_POA.h
+
+         Improved documentation for find_servant_priority ()
+
 Mon Jan 30 17:22:50 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * NEWS:
