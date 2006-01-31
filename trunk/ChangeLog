@@ -1,3 +1,17 @@
+Tue Jan 31 16:51:27 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst
+        * bin/tao_other_tests.lst
+        * tests/run_test.lst
+        
+          Added a bunch of !ACE_FOR_TAO qualifiers to tests that are not
+          built/runnable when the ACE_FOR_TAO feature is used.
+
+        * tests/run_test.lst
+        
+          Removed the avoid of ace_for_tao from the Dirent test, as Dirent.cpp
+          is now built as part of ace_for_tao.
+        
 Tue Jan 31 09:44:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_shm.{h,inl}:
