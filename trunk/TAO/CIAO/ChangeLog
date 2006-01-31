@@ -4,6 +4,10 @@ Tue Jan 31 21:29:06 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         
           Updated to force naming service to not use multicast, instead
           using NameServiceIOR environment variable.
+        
+        * examples/Hello/descriptors/run_test_without_ns.pl
+        
+          Updated ports to reflect new NodeManagerMap.
 
 Tue Jan 31 15:11:29 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
