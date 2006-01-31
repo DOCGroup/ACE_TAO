@@ -9,6 +9,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"
+#include "ace/OS_NS_errno.h"
 
 #if defined (ACE_HAS_DUMP)
 #  include "ace/Log_Msg.h"
@@ -73,7 +74,7 @@ ACE_Barrier::ACE_Barrier (unsigned int count,
     sub_barrier_1_ (count, lock_, name, arg),
     sub_barrier_2_ (count, lock_, name, arg)
 {
-// ACE_TRACE ("ACE_Barrier::ACE_Barrier");
+  ACE_TRACE ("ACE_Barrier::ACE_Barrier");
   this->sub_barrier_[0] = &this->sub_barrier_1_;
   this->sub_barrier_[1] = &this->sub_barrier_2_;
 }
@@ -81,7 +82,7 @@ ACE_Barrier::ACE_Barrier (unsigned int count,
 int
 ACE_Barrier::wait (void)
 {
-// ACE_TRACE ("ACE_Barrier::wait");
+  ACE_TRACE ("ACE_Barrier::wait");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   ACE_Sub_Barrier *sbp =
@@ -89,14 +90,18 @@ ACE_Barrier::wait (void)
 
   // Check for shutdown...
   if (sbp == 0)
-    return -1;
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
+
+  int retval = 0;
 
   if (sbp->running_threads_ == 1)
     {
       // We're the last running thread, so swap generations and tell
       // all the threads waiting on the barrier to continue on their
       // way.
-
       sbp->running_threads_ = this->count_;
       // Swap generations.
       this->current_generation_ = 1 - this->current_generation_;
@@ -109,7 +114,42 @@ ACE_Barrier::wait (void)
       // Block until all the other threads wait().
       while (sbp->running_threads_ != this->count_)
         sbp->barrier_finished_.wait ();
+
+      // We're awake and the count has completed. See if it completed
+      // because all threads hit the barrier, or because the barrier
+      // was shut down.
+      if (this->sub_barrier_[this->current_generation_] == 0)
+        {
+          errno = ESHUTDOWN;
+          retval = -1;
+        }
     }
+
+  return retval;
+}
+
+int
+ACE_Barrier::shutdown (void)
+{
+  ACE_TRACE ("ACE_Barrier::shutdown");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+
+  ACE_Sub_Barrier *sbp =
+    this->sub_barrier_[this->current_generation_];
+
+  // Check for shutdown...
+  if (sbp == 0)
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
+
+  // Flag the shutdown
+  this->sub_barrier_[0] = 0;
+  this->sub_barrier_[1] = 0;
+  // Tell all the threads waiting on the barrier to continue on their way.
+  sbp->running_threads_ = this->count_;
+  sbp->barrier_finished_.broadcast ();
 
   return 0;
 }

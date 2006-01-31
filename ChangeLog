@@ -1,3 +1,13 @@
+Tue Jan 31 22:08:57 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Barrier.{h cpp}: Added a new shutdown () method which aborts all
+          waiting on the barrier. Thanks to John Lilley <jlilley at datalever
+          dot com> for contributing this method.
+          Also note that the wait() method can now return -1 with errno
+          ESHUTDOWN if the barrier is shut down while waiting for it.
+
+        * tests/Barrier_Test.cpp: Added a test for barrier shutdown.
+
 Tue Jan 31 21:34:34 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst
