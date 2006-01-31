@@ -296,7 +296,7 @@ project(Dev Poll Reactor Test) : acetest {
 }
 
 project(Dirent Test) : acetest {
-  avoids += ace_for_tao
+
   exename = Dirent_Test
   Source_Files {
     Dirent_Test.cpp
