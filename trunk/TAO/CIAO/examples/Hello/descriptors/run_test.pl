@@ -98,7 +98,7 @@ delete_ior_files ();
 
 # Invoke naming service
 
-$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -o $nsior");
+$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:60003 -o ns.ior");
 
 $NS->Spawn ();
 
@@ -110,6 +110,9 @@ if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
     $NS->Kill ();
     exit 1;
 }
+
+# Set up NamingService environment
+$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
 
 # Invoke node daemons.
 print "Invoking node daemons\n";
