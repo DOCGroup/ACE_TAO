@@ -63,7 +63,7 @@ get_node_app (const char * node_name)
                    ::Deployment::NoSuchName))
 {
   // Get the NodeApplication object reference.
-  ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
+  ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
   if (this->artifact_map_.find (node_name,
                                 entry) != 0)
