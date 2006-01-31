@@ -1,9 +1,22 @@
+Tue Jan 31 09:44:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_shm.{h,inl}:
+          Reverted my change below, removed the const, it causes problems with
+          solaris, have to add a special case for solaris, but will do that
+          after x.4.9 is out
+
+          Fri Jan 27 12:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * ace/OS_NS_sys_shm.{h,inl}:
+            Changed for the shmdt and shmat methods the void* argument to
+            const void*, this is the way posix defines these methods.
+
 Mon Jan 30 17:53:10 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst
-        
+
         Added a !NOXERCES qualifier so it is possible to run only tests
-        that do not require xerces. 
+        that do not require xerces.
 
 Sat Jan 28 18:40:30 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
