@@ -110,6 +110,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
   To see how to use this feature, please see the ReDaC-Usage.html 
   under the $CIAO_ROOT/examples/Hello/ directory.
 
+. Removed the Old Config Handlers, which have been deprecated for some
+  time.  Please see tools/Config_Handlers for the current version.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
 . The deprecated RepositoryManager implementation, under
