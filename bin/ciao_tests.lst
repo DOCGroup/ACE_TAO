@@ -7,7 +7,7 @@
 #
 # Example: TAO\examples\foo\run_test.pl: !MINIMUM !ST
 #
-TAO/CIAO/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !NOXERCES
+TAO/CIAO/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !NOXERCES !ACE_FOR_TAO
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_simple.pl: !STATIC !MINIMUM
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test.pl: !STATIC !MINIMUM
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_ex.pl: !STATIC !MINIMUM
