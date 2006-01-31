@@ -106,7 +106,17 @@ public:
 
   /// Block the caller until all @c count threads have called @c wait and
   /// then allow all the caller threads to continue in parallel.
+  ///
+  /// @retval 0 after successfully waiting for all threads to wait. -1 if
+  /// an error occurs or the barrier is shut down (@sa shutdown ()).
   int wait (void);
+
+  /// Shut the barrier down, aborting the wait of all waiting threads.
+  /// Any threads waiting on the barrier when it is shut down will return with
+  /// value -1, errno ESHUTDOWN.
+  ///
+  /// @retval 0 for success, -1 if already shut down.
+  int shutdown (void);
 
   /// Dump the state of an object.
   void dump (void) const;
