@@ -576,7 +576,7 @@ NodeManager_Impl (const char *name,
 
 
 ::CIAO::NodeApplicationManager_Impl_Base *
-::CIAO::NodeManager_Impl::
+CIAO::NodeManager_Impl::
 create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa
                          ACE_ENV_ARG_DECL)
@@ -607,7 +607,7 @@ Static_NodeManager_Impl (const char *name,
 {}
 
 ::CIAO::NodeApplicationManager_Impl_Base *
-::CIAO::Static_NodeManager_Impl::
+CIAO::Static_NodeManager_Impl::
 create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa
                          ACE_ENV_ARG_DECL)
