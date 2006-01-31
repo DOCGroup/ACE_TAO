@@ -41,7 +41,7 @@ namespace ACE_OS
   //@{ @name A set of wrappers for System V shared memory.
   ACE_NAMESPACE_INLINE_FUNCTION
   void *shmat (int int_id,
-               const void *shmaddr,
+               void *shmaddr,
                int shmflg);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -50,7 +50,7 @@ namespace ACE_OS
               struct shmid_ds *buf);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int shmdt (const void *shmaddr);
+  int shmdt (void *shmaddr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int shmget (key_t key,
