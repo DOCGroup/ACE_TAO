@@ -1,3 +1,8 @@
+Tue Jan 31 19:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/rtcorba/issues.html:
+          Fixed bugzilla link
+
 Mon Jan 30 22:04:39 UTC 2006  Ming Xiong <ming.xiong@vanderbilt.edu>
 
         * TAO/tao/PortableServer/Root_POA.h
@@ -44,7 +49,6 @@ Sat Jan 28 23:15:13 UTC 2006  Martin Corino <mcorino@remedy.nl>
           corbaloc:iiop:1.2@host:port,iiop:1.2@host:port,.../key
           Thanks to Victor Chernenko (GE Healthcare) for suggesting this
           and providing a first patch.
-
 
 Sat Jan 28 22:22:13 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
