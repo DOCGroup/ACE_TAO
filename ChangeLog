@@ -8,6 +8,8 @@ Tue Jan 31 22:08:57 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Barrier_Test.cpp: Added a test for barrier shutdown.
 
+        * THANKS: Added John Lilley to the Hall of Fame.
+
 Tue Jan 31 21:34:34 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst
