@@ -49,7 +49,7 @@ project(Controller_svnt) : ciao_servant_dnc {
 project(Controller_exec) : ciao_component_dnc {
   after   += Controller_svnt
   sharedname = Controller_exec
-  libs      += Controller_stub Controller_svnt TargetManager_stub
+  libs      += Controller_stub Controller_svnt TargetManager_stub TargetManager_svnt
 
   idlflags  +=  -Wb,export_macro=CONTROLLER_EXEC_Export \
                 -Wb,export_include=Controller_exec_export.h
