@@ -1,3 +1,12 @@
+Tue Jan 31 21:51:52 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors/run_test.pl
+        * examples/Hello/descriptors/run_test_without_ns.pl
+        
+          Added a parameter to the NodeManagers to cause them to wait
+          up to 30 seconds for the NodeApplications to spawn before failing.
+          This should fix the hello test on several platforms.
+
 Tue Jan 31 21:29:06 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test.pl
