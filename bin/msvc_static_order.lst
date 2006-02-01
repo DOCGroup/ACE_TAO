@@ -60,6 +60,7 @@ TAO/orbsvcs/orbsvcs/CosEvent
 TAO/orbsvcs/orbsvcs/CosEvent_Skel
 TAO/orbsvcs/orbsvcs/CosEvent_Serv
 TAO/orbsvcs/orbsvcs/RTKokyuEvent
+TAO/orbsvcs/orbsvcs/CosConcurrency_IDL
 TAO/orbsvcs/orbsvcs/CosConcurrency
 TAO/orbsvcs/orbsvcs/CosConcurrency_Skel
 TAO/orbsvcs/orbsvcs/CosConcurrency_Serv
