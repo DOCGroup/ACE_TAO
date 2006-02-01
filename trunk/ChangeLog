@@ -1,3 +1,8 @@
+Wed Feb  1 20:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler.h:
+          Doxygen improvement
+
 Wed Feb  1 20:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
