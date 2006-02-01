@@ -1,3 +1,21 @@
+Wed Feb  1 21:21:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/BaseMonitor.h
+        * DAnCE/NodeManager/CIAO_Monitor.cpp
+        * DAnCE/NodeManager/CIAO_Monitor.h
+        * DAnCE/NodeManager/MonitorCB.cpp
+        * DAnCE/NodeManager/MonitorCB.h
+        * DAnCE/NodeManager/MonitorController.cpp
+        * DAnCE/NodeManager/MonitorController.h
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        * DAnCE/TargetManager/DomainDataManager.h
+        * DAnCE/TargetManager/TargetManager_exec.cpp
+        * DAnCE/TargetManager/TargetManager_exec.h
+        
+        Wraps the TargetManager/Monitors inside the CIAO namespace. 
+        Thanks to  Nilabja Roy (nilabjar@dre.vanderbilt.edu) for
+        making these changes. 
+        
 Wed Feb  1 20:42:42 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp

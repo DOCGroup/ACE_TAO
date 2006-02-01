@@ -58,20 +58,20 @@ namespace CIAO
             const ComponentPackageDescription &desc,
             ::Deployment::ComponentPackageDescription &toconfig);
 
-//@@Note: This part has yet to be added in the future
-//     ComponentPortDescription
-//     component_package_descr (
-//         const Deployment::ComponentPortDescription& src);
+      //@@Note: This part has yet to be added in the future
+      //     ComponentPortDescription
+      //     component_package_descr (
+      //         const Deployment::ComponentPortDescription& src);
     private:
       // disable the default constructor
       STD_CPD_Handler ()
         :xml_helper_ (0)
       {
       }
-
+      
       XML_Helper *xml_helper_;
     };
- }
+  }
 }
 
 #include /**/ "ace/post.h"

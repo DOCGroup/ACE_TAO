@@ -15,7 +15,7 @@
 #include "CIAO_common.h"
 
 
-MonitorCB::MonitorCB (CORBA::ORB_ptr orb,
+CIAO::MonitorCB::MonitorCB (CORBA::ORB_ptr orb,
                       Deployment::TargetManager_ptr target,
                       int interval
                       ):orb_ (orb),
@@ -24,7 +24,7 @@ MonitorCB::MonitorCB (CORBA::ORB_ptr orb,
 {
 }
 
-int MonitorCB::update_data (::Deployment::Domain& data)
+int CIAO::MonitorCB::update_data (::Deployment::Domain& data)
 {
   CORBA::StringSeq elements;
   elements.length (0);

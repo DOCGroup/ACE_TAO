@@ -16,7 +16,7 @@ $daemons = 2;
 @ports = ( 60001, 60002 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
-$dat_file = "TestNodeManagerMap.dat";
+$dat_file = "NodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 

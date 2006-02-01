@@ -15,21 +15,21 @@
 #include "ace/OS_NS_stdio.h"
 
 
-extern "C" ACE_Proper_Export_Flag MonitorBase * createMonitor ()
+extern "C" ACE_Proper_Export_Flag CIAO::MonitorBase * CIAO::createMonitor ()
 {
-  return new CIAO_Monitor ();
+  return new CIAO::CIAO_Monitor ();
 }
 
-CIAO_Monitor::CIAO_Monitor ()
+CIAO::CIAO_Monitor::CIAO_Monitor ()
 {
 }
 
 /// The Desctructor
-CIAO_Monitor::~CIAO_Monitor ()
+CIAO::CIAO_Monitor::~CIAO_Monitor ()
 {
 }
 
-int  CIAO_Monitor::initialize_params (
+int CIAO::CIAO_Monitor::initialize_params (
                                      ::Deployment::Domain& domain,
                                      ::Deployment::TargetManager_ptr target_manager,
                                      int interval
@@ -42,17 +42,17 @@ int  CIAO_Monitor::initialize_params (
   return 0;
 }
 
-int CIAO_Monitor::start (CORBA::ORB_ptr)
+int CIAO::CIAO_Monitor::start (CORBA::ORB_ptr)
 {
   return 0;
 }
 
-int CIAO_Monitor::stop ()
+int CIAO::CIAO_Monitor::stop ()
 {
   return 0;
 }
 
-::Deployment::Domain* CIAO_Monitor::get_current_data ()
+::Deployment::Domain* CIAO::CIAO_Monitor::get_current_data ()
 {
   if (CIAO::debug_level () > 9)
     {
