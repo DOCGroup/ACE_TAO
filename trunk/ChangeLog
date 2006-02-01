@@ -1,8 +1,13 @@
+Wed Feb  1 20:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added CosConcurrency_IDL
+
 Wed Feb  1 18:00:06 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/ace_for_tao.mpc
-        
-          Added Dirent_Selector.cpp to fix the Dirent test. 
+
+          Added Dirent_Selector.cpp to fix the Dirent test.
 
 Wed Feb  1 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
