@@ -11,7 +11,7 @@ ACE_OS::shmat (int int_id, void *shmaddr, int shmflg)
 {
   ACE_OS_TRACE ("ACE_OS::shmat");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::shmat (int_id, shmaddr, shmflg), void *, (void *) -1);
+  ACE_OSCALL_RETURN (::shmat (int_id, static_cast <char *> (shmaddr), shmflg), void *, (void *) -1);
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (shmaddr);
@@ -41,7 +41,7 @@ ACE_OS::shmdt (void *shmaddr)
 {
   ACE_OS_TRACE ("ACE_OS::shmdt");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::shmdt (shmaddr), int, -1);
+  ACE_OSCALL_RETURN (::shmdt ((char *) shmaddr), int, -1);
 #else
   ACE_UNUSED_ARG (shmaddr);
 
