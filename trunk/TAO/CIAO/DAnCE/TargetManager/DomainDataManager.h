@@ -18,91 +18,101 @@
 #include "Deployment_Configuration.h"
 
 /**
- * @class DomainDataManager
+ * @namespace CIAO
  *
- * @brief Responsible for maintaining the Domain Information
+ * @brief The main CIAO namespace
  *
- * It maintains both the Current Domain Information as well
- * as the Initial domain at full capacity.
  */
-class DomainDataManager
+namespace CIAO
 {
-
-  public :
-    /**
-     * @operation updateDomain
-     * @brief     This function is called by the other classes to update
-     *            current domain data.
-     * @param     elements The string sequence of elements
-     *            being updated
-     * @param     domainSubset The subset of the actual Domain to be updated
-     * @param     updateKind Specifies the update type eg. add, delete, update
-     *
-     */
-    int update_domain (const ::CORBA::StringSeq & elements,
-                       const ::Deployment::Domain & domainSubset,
-                       ::Deployment::DomainUpdateKind updateKind
-                       );
   /**
-   * @operation    getInitialDomain
-   * @brief        This function is called the Executor code
-   *               to get the Original Domain data.
-   * @return       Domain* The Initial Domain
+   * @class DomainDataManager
    *
+   * @brief Responsible for maintaining the Domain Information
+   *
+   * It maintains both the Current Domain Information as well
+   * as the Initial domain at full capacity.
    */
-  ::Deployment::Domain* get_initial_domain ();
+  class DomainDataManager
+    {
 
-  /**
-   * @operation   getCurrentDomain
-   * @brief       This function is called the Executor code
-   *              to get the Current Domain data.
-   * @return      Domain* The Current Domain
-   */
-  ::Deployment::Domain* get_current_domain ();
+      public :
+        /**
+         * @operation updateDomain
+         * @brief     This function is called by the other classes to update
+         *            current domain data.
+         * @param     elements The string sequence of elements
+         *            being updated
+         * @param     domainSubset The subset of the actual Domain to be updated
+         * @param     updateKind Specifies the update type eg. add, delete, update
+         *
+         */
+        int update_domain (const ::CORBA::StringSeq & elements,
+                           const ::Deployment::Domain & domainSubset,
+                           ::Deployment::DomainUpdateKind updateKind
+                           );
+      /**
+       * @operation    getInitialDomain
+       * @brief        This function is called the Executor code
+       *               to get the Original Domain data.
+       * @return       Domain* The Initial Domain
+       *
+       */
+      ::Deployment::Domain* get_initial_domain ();
 
-
-  /**
-   * @operation   Constructor
-   * @param orb The orb pointer
-   * @param target The Target Manager Object Reference
-   */
-  DomainDataManager (CORBA::ORB_ptr orb,
-                     ::Deployment::TargetManager_ptr target
-                     );
-
- protected:
-
-  /**
-   * @operation readinDomainData
-   * @brief   It will read the initial Domain data from
-   *          XML files.
-   */
-  int readin_domain_data ();
-
-  /**
-   * @operation call_all_node_managers
-   * @brief This function calls all NM and gives them
-   * the sub-domain
-   */
-  int call_all_node_managers ();
-
-  /// The ORB pointer
-  CORBA::ORB_var orb_;
-
-  /// The Deployment Configuration
-  CIAO::Deployment_Configuration deployment_config_;
-
-  /// The Initial Domain - contains resources
-  /// at total capacity
-  ::Deployment::Domain initial_domain_;
+      /**
+       * @operation   getCurrentDomain
+       * @brief       This function is called the Executor code
+       *              to get the Current Domain data.
+       * @return      Domain* The Current Domain
+       */
+      ::Deployment::Domain* get_current_domain ();
 
 
-  /// The Current Domain - contains resources
-  /// at current capacity
-  ::Deployment::Domain current_domain_;
+      /**
+       * @operation   Constructor
+       * @param orb The orb pointer
+       * @param target The Target Manager Object Reference
+       */
+      DomainDataManager (CORBA::ORB_ptr orb,
+                         ::Deployment::TargetManager_ptr target
+                         );
 
-  /// The Target Manager Context
-  ::Deployment::TargetManager_var target_mgr_;
-};
+    protected:
+
+      /**
+       * @operation readinDomainData
+       * @brief   It will read the initial Domain data from
+       *          XML files.
+       */
+      int readin_domain_data ();
+
+      /**
+       * @operation call_all_node_managers
+       * @brief This function calls all NM and gives them
+       * the sub-domain
+       */
+      int call_all_node_managers ();
+
+      /// The ORB pointer
+      CORBA::ORB_var orb_;
+
+      /// The Deployment Configuration
+      CIAO::Deployment_Configuration deployment_config_;
+
+      /// The Initial Domain - contains resources
+      /// at total capacity
+      ::Deployment::Domain initial_domain_;
+
+
+      /// The Current Domain - contains resources
+      /// at current capacity
+      ::Deployment::Domain current_domain_;
+
+      /// The Target Manager Context
+      ::Deployment::TargetManager_var target_mgr_;
+    };
+
+}; // CIAO
 
 #endif /* DOMAIN_DATA_MGRH */

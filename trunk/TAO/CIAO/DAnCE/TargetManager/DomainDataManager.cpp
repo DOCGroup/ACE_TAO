@@ -19,7 +19,7 @@
 
 const char * domain_file_name = "Domain.cdd";
 
-int DomainDataManager::update_domain (const ::CORBA::StringSeq &,
+int CIAO::DomainDataManager::update_domain (const ::CORBA::StringSeq &,
                                       const ::Deployment::Domain & domainSubset,
                                       ::Deployment::DomainUpdateKind )
 {
@@ -67,7 +67,7 @@ int DomainDataManager::update_domain (const ::CORBA::StringSeq &,
   return 0;
 }
 
-DomainDataManager::
+CIAO::DomainDataManager::
 DomainDataManager (CORBA::ORB_ptr orb,
                    ::Deployment::TargetManager_ptr target)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -83,26 +83,26 @@ DomainDataManager (CORBA::ORB_ptr orb,
   call_all_node_managers ();
 }
 
-::Deployment::Domain* DomainDataManager::get_current_domain ()
+::Deployment::Domain* CIAO::DomainDataManager::get_current_domain ()
 {
   ::Deployment::Domain * retval = new ::Deployment::Domain (current_domain_);
   return retval;
 }
 
-::Deployment::Domain* DomainDataManager::get_initial_domain ()
+::Deployment::Domain* CIAO::DomainDataManager::get_initial_domain ()
 {
   ::Deployment::Domain * retval = new ::Deployment::Domain (initial_domain_);
   return retval;
 }
 
-int DomainDataManager::readin_domain_data ()
+int CIAO::DomainDataManager::readin_domain_data ()
 {
   // here read in Domain data ...
   //
   return 0;
 }
 
-int DomainDataManager::call_all_node_managers ()
+int CIAO::DomainDataManager::call_all_node_managers ()
 {
   if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
     {

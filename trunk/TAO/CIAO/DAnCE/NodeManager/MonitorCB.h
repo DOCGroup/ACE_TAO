@@ -16,46 +16,59 @@
 
 #include "TargetManagerC.h"
 
+
+
 /**
- * @class MonitorCB
+ * @namespace CIAO
  *
- * @brief Updates data back to the TM.
+ * @brief The top level CIAO namespace
  *
  */
 
-class MonitorCB
+namespace CIAO
 {
-  public:
-    /**
-     *  @constructor
-     *  @param _orb The ORB pointer
-     *  @param The TargetManager reference
-     *  @param interval The time interval to sent update
-     */
-    MonitorCB (CORBA::ORB_ptr _orb,Deployment::TargetManager_ptr,int interval);
-    /**
-     *  @function update_data
-     *  @param  data Contains the updated Domain data
-     *  @return int indicates success.
-     *  @description This function is called by the monitor to
-     *               update Domain data, which is then sent to
-     *               TM.
-     */
+  /**
+   * @class MonitorCB
+   *
+   * @brief Updates data back to the TM.
+   *
+   */
+
+  class MonitorCB
+    {
+    public:
+      /**
+       *  @constructor
+       *  @param _orb The ORB pointer
+       *  @param The TargetManager reference
+       *  @param interval The time interval to sent update
+       */
+      MonitorCB (CORBA::ORB_ptr _orb,Deployment::TargetManager_ptr,int interval);
+      /**
+       *  @function update_data
+       *  @param  data Contains the updated Domain data
+       *  @return int indicates success.
+       *  @description This function is called by the monitor to
+       *               update Domain data, which is then sent to
+       *               TM.
+       */
       int update_data (::Deployment::Domain& data);
-  private:
-    // The ORB pointer
-    CORBA::ORB_ptr orb_;
+    private:
+      /// The ORB pointer
+      CORBA::ORB_ptr orb_;
 
-    /// The Target Manager pointer to send back the
-    /// update
-    ::Deployment::TargetManager_ptr target_mgr_;
+      /// The Target Manager pointer to send back the
+      /// update
+      ::Deployment::TargetManager_ptr target_mgr_;
 
-    /// The interval after which updates need to be send
-    int interval_;
+      /// The interval after which updates need to be send
+      int interval_;
 
-};
+    };
 
-/// The Callback function pointer
-typedef int (MonitorCB::*CallBack) (::Deployment::Domain &);
+  /// The Callback function pointer
+  typedef int (MonitorCB::*CallBack) (::Deployment::Domain &);
+
+}; // CIAO namespace
 
 #endif /* MONITOR_CBH */

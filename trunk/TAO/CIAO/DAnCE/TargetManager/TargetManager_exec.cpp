@@ -41,7 +41,7 @@ namespace CIDL_TargetManager_i
             CIAO::TargetManagerImpl::_narrow (object.in ());
     ::Deployment::TargetManager_var target =
             target_impl->provide_targetMgr ();
-    dataManager_.reset (new DomainDataManager (orb, target.in ()));
+    dataManager_.reset (new CIAO::DomainDataManager (orb, target.in ()));
   }
 
   TargetManager_exec_i::~TargetManager_exec_i (void)
