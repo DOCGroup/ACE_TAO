@@ -1,25 +1,30 @@
+Wed Feb  1 14:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+          Small doxygein improvement
+
 Wed Feb  1 04:32:38 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * RACE/Planner_Manager/Component/Planner_Manager.idl
-        
-          Resolve a linking error on Windows. 
+
+          Resolve a linking error on Windows.
 
 Tue Jan 31 23:33:23 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Old_Config_Handlers
         * DAnCE/test/Config_Handlers_Tests
-        
+
           Removed deprecated config handlers.
-        
+
         * NEWS
-        
+
           Commented on this removal.
 
 Tue Jan 31 21:51:52 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test.pl
         * examples/Hello/descriptors/run_test_without_ns.pl
-        
+
           Added a parameter to the NodeManagers to cause them to wait
           up to 30 seconds for the NodeApplications to spawn before failing.
           This should fix the hello test on several platforms.
@@ -27,25 +32,25 @@ Tue Jan 31 21:51:52 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 Tue Jan 31 21:29:06 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test.pl
-        
+
           Updated to force naming service to not use multicast, instead
           using NameServiceIOR environment variable.
-        
+
         * examples/Hello/descriptors/run_test_without_ns.pl
-        
+
           Updated ports to reflect new NodeManagerMap.
 
 Tue Jan 31 15:11:29 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * RACE/Controller/Component/Controller.mpc
-        
+
         Fixed linking errors on OS X.
 
 Tue Jan 31 14:41:31 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/NodeManager/NodeManager_Impl.cpp
-        
+
           Fixed a couple of warning on SuSE_10_0_GCC4.0.2_x86_64_Valgrind
           build.
 
