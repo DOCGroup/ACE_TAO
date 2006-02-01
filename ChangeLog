@@ -1,3 +1,8 @@
+Wed Feb  1 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_shm.inl:
+          Reverted another part of my changes
+
 Wed Feb  1 07:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
