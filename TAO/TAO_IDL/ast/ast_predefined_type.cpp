@@ -76,9 +76,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (ast, 
-           ast_predefined_type, 
+ACE_RCSID (ast,
+           ast_predefined_type,
            "$Id$")
 
 AST_PredefinedType::AST_PredefinedType (void)
@@ -208,6 +209,22 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
 
       new_name->nconc (conc_name);
     }
+
+  // The repo id computation in the AST_Decl constructor can't
+  // be easily modified to work for predefined types.
+  ACE_CString repo_id = ACE_CString ("IDL:omg.org/CORBA/")
+                        + id->get_string ()
+                        + ":"
+                        + this->version ();
+  delete [] this->repoID_;
+  size_t len = repo_id.length ();
+  ACE_NEW (this->repoID_,
+           char[len + 1]);
+  this->repoID_[0] = '\0';
+  ACE_OS::sprintf (this->repoID_,
+                   "%s",
+                   repo_id.c_str ());
+  this->repoID_[len] = '\0';
 
   this->set_name (new_name);
 }
