@@ -1,3 +1,20 @@
+Wed Feb  1 21:02:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+
+          Fixed a bug in the computation of repository ids for
+          predefined types.
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp (fill_valuemember_sequence):
+
+          Fixed a bug in retrieving the repository path to the type of
+          a valuetype member.
+
+        * orbsvcs/IFR_Service/adding_visitor.cpp(create_value_member):
+
+          Fixed a bug in looking up a valuetype member's type in the
+          repository.
+
 Wed Feb  1 20:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/pluggable_messaging.html:
