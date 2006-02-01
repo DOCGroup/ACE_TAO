@@ -1,3 +1,10 @@
+Wed Feb  1 20:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/pluggable_messaging.html:
+          Added some info how to load IIOP Lite when the strategies lib
+          is used. Thanks to Kobi Cohen Arazi <kobi dot cohenarazi at gmail
+          dot com> for reporting this.
+
 Wed Feb  1 14:46:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * NEWS:
