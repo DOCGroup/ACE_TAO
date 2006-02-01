@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/ImR_Client/ImR_Client.h"
 
 int main(int argc, char* argv[])
 {
@@ -36,5 +37,5 @@ int main(int argc, char* argv[])
   {
     // ... normally print an error here
   }
-  return 1;
+  return 0;
 }
