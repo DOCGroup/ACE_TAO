@@ -1,3 +1,13 @@
+Wed Feb  1 20:42:42 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp
+        * tools/Config_Handlers/Utils/XercesString.cpp
+        * tools/Config_Handlers/Utils/XercesString.h
+        * tools/Config_Handlers/XMLSchema/Writer.hpp
+        
+          Fixes for warnings on ICC platforms. 
+
 Wed Feb  1 14:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/DomainDataManager.h:

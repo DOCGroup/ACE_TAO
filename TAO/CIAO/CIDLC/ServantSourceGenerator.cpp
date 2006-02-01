@@ -3367,7 +3367,8 @@ namespace
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_CR] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{";
+         << "{"
+         << STRS[ACE_UA] << " (ck);" << endl;
 
       if (swapping)
       {
@@ -3402,7 +3403,6 @@ namespace
       os << STRS[ACE_TR] << " (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << STRS[ACE_UA] << " (ck);" << endl
          << "}";
 
       // Generate generic operations for receptacles.
