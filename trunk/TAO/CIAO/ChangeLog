@@ -1,3 +1,20 @@
+Wed Feb  1 04:32:38 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * RACE/Planner_Manager/Component/Planner_Manager.idl
+        
+          Resolve a linking error on Windows. 
+
+Tue Jan 31 23:33:23 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Old_Config_Handlers
+        * DAnCE/test/Config_Handlers_Tests
+        
+          Removed deprecated config handlers.
+        
+        * NEWS
+        
+          Commented on this removal.
+
 Tue Jan 31 21:51:52 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test.pl

@@ -5,6 +5,9 @@
 #include <Components.idl>
 #include "../Interface/Planner_Manager_I.idl"
 
+#include "../../Planners/Interface/Planner_I.idl"
+#include "../../Output_Adapters/Interface/PlanEgress.idl"
+
 module CIAO
 {
   module RACE
