@@ -22,16 +22,26 @@
 #include <memory>
 
 
-class ReceiverThread;
 
 /**
- * @class CIAO_Monitor
+ * @namespace CIAO
  *
- * @brief The Monitor class
+ * @brief The top level CIAO namespace
  *
  */
-class CIAO_Monitor : public MonitorBase
+
+namespace CIAO
 {
+  class ReceiverThread;
+
+  /**
+   * @class CIAO_Monitor
+   *
+   * @brief The Monitor class
+   *
+   */
+  class CIAO_Monitor : public MonitorBase
+  {
   public:
 
     /** @function Constructor
@@ -90,5 +100,7 @@ class CIAO_Monitor : public MonitorBase
 
     /// The Domain data structure
     auto_ptr <Deployment::Domain> current_domain_;
-};
+  };
+
+}; // CIAO
 #endif /* CIAO_MONITORH */
