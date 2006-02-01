@@ -1,3 +1,9 @@
+Wed Feb  1 14:46:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * NEWS:
+
+          Describe changes to Telecom Log Service Strategy interface.
+
 Wed Feb  1 14:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2345_Regression/Bug_2345_Regression.mpc:
