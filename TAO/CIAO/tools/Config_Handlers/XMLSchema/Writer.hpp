@@ -26,8 +26,8 @@ namespace XMLSchema
       }
 
       using XSCRT::Writer<C>::top_;
-      using XSCRT::Writer<C>::attr_;
-
+      using XSCRT::Writer<C>::attr_;      
+      
       virtual void
       traverse (T const& o)
       {
@@ -48,6 +48,12 @@ namespace XMLSchema
       }
 
     protected:
+      virtual void
+      traverse (T &t)
+      {
+        Traversal::Traverser<T>::traverse (t);
+      }
+
       FundamentalType ()
       {
       }
@@ -83,6 +89,13 @@ namespace XMLSchema
       }
 
     protected:
+      
+      virtual void
+      traverse (typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type &o)
+      {
+        Traversal::Traverser<XMLSchema::IDREF<C> >::traverse (o);
+      }
+      
       IDREF ()
       {
       }

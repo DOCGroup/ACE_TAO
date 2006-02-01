@@ -52,7 +52,7 @@ namespace Config_Handlers
 
     XMLCh operator [] (const int i);
 
-    const XMLCh operator [] (const int i) const;
+    XMLCh operator [] (const int i) const;
 
     operator const XMLCh* () const { return _wstr; };
 
