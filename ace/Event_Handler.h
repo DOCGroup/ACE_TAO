@@ -125,7 +125,7 @@ public:
   virtual int handle_exit (ACE_Process *);
 
   /// Called when a <handle_*()> method returns -1 or when the
-  /// <remove_handler> method is called on an <ACE_Reactor>.  The
+  /// <remove_handler> method is called on an ACE_Reactor.  The
   /// <close_mask> indicates which event has triggered the
   /// <handle_close> method callback on a particular <handle>.
   virtual int handle_close (ACE_HANDLE handle,
