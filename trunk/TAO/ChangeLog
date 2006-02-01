@@ -1,3 +1,10 @@
+Wed Feb  1 14:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2345_Regression/Bug_2345_Regression.mpc:
+        * tests/Bug_2345_Regression/server.cpp:
+          Link in the ImR_Client library explicitly, this is needed for
+          this test
+
 Wed Feb  1 13:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/pluggable_messaging.html:
