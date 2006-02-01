@@ -3510,18 +3510,41 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
   ACE_TRY_NEW_ENV
     {
       AST_Type *bt = node->field_type ();
+      AST_Decl::NodeType nt = bt->node_type ();
 
-      /// This will put the repo entry into ir_current_ whether it exists
-      /// already or not.
-      if (bt->ast_accept (this) != 0)
+      // We can't use lookup_id() on these, because
+      // they don't inherit from Contained.
+      if (nt == AST_Decl::NT_pre_defined
+          || nt == AST_Decl::NT_string
+          || nt == AST_Decl::NT_wstring
+          || nt == AST_Decl::NT_array
+          || nt == AST_Decl::NT_sequence)
         {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_value_member -")
-              ACE_TEXT (" visit base type failed\n")
-            ),
-            -1
-          );
+          /// This will put the repo entry into ir_current_.
+          if (bt->ast_accept (this) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("create_value_member -")
+                  ACE_TEXT (" visit base type failed\n")
+                ),
+                -1
+              );
+            }
+        }
+      else
+        {
+          // If the IDL is legal, this will succeed.
+          CORBA::Contained_var holder =
+                be_global->repository ()->lookup_id (bt->repoID ()
+                                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          this->ir_current_ =
+            CORBA::IDLType::_narrow (holder.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
         }
 
       CORBA::Visibility vis = CORBA::PUBLIC_MEMBER;

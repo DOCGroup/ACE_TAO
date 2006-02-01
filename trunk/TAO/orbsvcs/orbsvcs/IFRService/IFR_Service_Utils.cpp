@@ -654,12 +654,12 @@ TAO_IFR_Service_Utils::name_exists (
       repo->config ()->get_integer_value (refs_key,
                                           "count",
                                           count);
-                                          
+
       for (CORBA::ULong i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key member_key;
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          
+
           repo->config ()->open_section (refs_key,
                                          stringified,
                                          0,
@@ -690,12 +690,12 @@ TAO_IFR_Service_Utils::name_exists (
       repo->config ()->get_integer_value (defns_key,
                                           "count",
                                           count);
-                                          
+
       for (CORBA::ULong i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          
+
           repo->config ()->open_section (defns_key,
                                          stringified,
                                          0,
@@ -1163,8 +1163,8 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
                                          "version",
                                          holder);
       vm_seq[i].version = holder.fast_rep ();
-      repo->config ()->get_string_value (repo->repo_ids_key (),
-                                         vm_seq[i].id.in (),
+      repo->config ()->get_string_value (member_key,
+                                         "type_path",
                                          holder);
       TAO_IDLType_i *impl =
         TAO_IFR_Service_Utils::path_to_idltype (holder,
