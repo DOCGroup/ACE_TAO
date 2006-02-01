@@ -31,12 +31,12 @@ class DomainDataManager
   public :
     /**
      * @operation updateDomain
-     * @brief   : This function is called by the other classes to update
+     * @brief     This function is called by the other classes to update
      *            current domain data.
      * @param     elements The string sequence of elements
      *            being updated
-     * @param     domainsubset The subset of the actual Domain to be updated
-     * @param     updatekind Specifies the update type eg. add, delete, update
+     * @param     domainSubset The subset of the actual Domain to be updated
+     * @param     updateKind Specifies the update type eg. add, delete, update
      *
      */
     int update_domain (const ::CORBA::StringSeq & elements,
