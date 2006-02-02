@@ -32,7 +32,7 @@ namespace CIAO
   const int interval = 10;
 
   static const char* factory_func = "createMonitor";
-};
+}
 
 CIAO::MonitorController::MonitorController (CORBA::ORB_ptr orb,
                                             ::Deployment::Domain& domain,

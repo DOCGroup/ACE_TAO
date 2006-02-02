@@ -69,6 +69,6 @@ namespace CIAO
   /// The Callback function pointer
   typedef int (MonitorCB::*CallBack) (::Deployment::Domain &);
 
-}; // CIAO namespace
+} // CIAO namespace
 
 #endif /* MONITOR_CBH */
