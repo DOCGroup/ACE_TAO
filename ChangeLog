@@ -1,3 +1,9 @@
+Thu Feb  2 17:49:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_string.h:
+
+          Add ACE_Export decoration to ACE_OS::fast_memcpy() declaration.
+
 Thu Feb  2 15:47:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Map_Manager/Map_Manager.mpc:

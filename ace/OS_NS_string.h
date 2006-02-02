@@ -75,6 +75,7 @@ namespace ACE_OS {
  * On certain platforms this results in better performance.
  * This is determined and set via autoconf.
  */
+  extern ACE_Export
   void *fast_memcpy (void *t, const void *s, size_t len);
 #endif
 
