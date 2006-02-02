@@ -50,11 +50,11 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
   simplify adding debug printouts based on various tool-specific debug
   levels.
 
-. RepositoryManager:
-  - implement the missing rest of the fuctions to support type-based queries
-    and retrievals
-  - fully integrate with the DAnCE toolchain
-  - stress-testing
+. Add support for querying for interface types to the
+  RepositoryManager.
+ 
+. Implement a planner to query the TargetManager and RepositoryManager
+  and generate deployment plans on the fly.
 
 PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 ==========================================
@@ -65,13 +65,8 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 . Seamless integration of swapping into the main line programming model,
   so that DAnCE can actually kickstart swapping.
 
-. Integrate TargetManager into the DAnCE toolchain.
-
-. Integrate RepositoryManager into the DAnCE toolchain.
-
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
-. Move new_RepositoryManager to RepositoryManager
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================
@@ -112,6 +107,63 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 
 . Removed the Old Config Handlers, which have been deprecated for some
   time.  Please see tools/Config_Handlers for the current version.
+
+. Added a step-by-step CoSMIC tutorial for modeling CIAO components
+  using PICML($CIAO_ROOT/docs/tutorials/CoSMIC). Using a simple Stock
+  Quoter system as example, this tutorial demonstrates all the steps
+  that needed to model Component-Based applications.
+
+. DAnCE now supports making connections among components across
+  different assemblies, and allow components to be "shared"
+  across assemblies seamlessly.
+
+  Internally, DAnCE provides a reference counting mechanism when
+  deploying/destroying components, and a reference count table
+  is maintained on each NodeManager.
+
+  From a deployer's point of view, if he/she chooses to deploy
+  a new assembly of component and simultaneously wants to reuse
+  previous deployed components in an existing running assembly,
+  then in the new deployment plan descriptor, he could refer
+  to an old component instance in the <InstanceDeploymentDescriptions>
+  XML tag. The "key" to identify the old component instance is
+  through the <Component_UUID, Node> pair, if such a key is found
+  present in a previous deployed assembly, then DAnCE won't
+  install this component instance (specified by the <Component_UUID>)
+  again, but instead it will increase the reference count of this
+  component instance.
+
+  DAnCE also supports making connections from existing running
+  components to newly deployed components in another assembly, and
+  vice versa.
+
+. The RepositoryManager has been enhanced to support standards based
+  interfaces. A number of techniques have been used to ensure high
+  performance and scalability. 
+
+. The RepositoryManager can now retrieve packages from remote locations via
+  HTTP. 
+
+. The Target Manager is released with this CIAO release. It is an
+  infrastructure component which keeps track of resource usage in the
+  target domain. The initial domain configuration remains with the
+  Target Manager. A monitor framework has been built into Node Manager which
+  monitors the resources used within each host. This monitor reports its
+  data intermittently to the Target Manager which aggregates the data
+  received across all such hosts acroos the Target domain. The monitor
+  is implemented using a strategy pattern, thus enabling the plug-in of
+  new monitors which can monitor different resources in the domain. The
+  Target manager is a component thus it needs to be started using a
+  deployment plan. It is right now a optional component in the DAnCE
+  tool chain. 
+
+. We added a skeleton implementation of the Resource Allocation and
+  Control Engine (RACE) which is a middleware framework built atop
+  CIAO/DAnCE that integrates multiple resource management algorithms for
+  (re)deploying and (re)configuring application components. We are in
+  the process of developing resource management algorithms (both
+  resource allocation and control algorithms) that will be a part of
+  future releases.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
