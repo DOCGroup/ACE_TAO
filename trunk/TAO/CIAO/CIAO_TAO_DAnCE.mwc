@@ -15,9 +15,6 @@ workspace {
   DAnCE
 
   exclude {
-    // exclude old config handlers
-    DAnCE/Old_Config_Handlers
     DAnCE/tests/Config_Handlers
-    DAnCE/spec_RepositoryManager
   }
 }
