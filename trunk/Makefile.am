@@ -16,6 +16,12 @@ if BUILD_ACEXML
 SUBDIRS += ACEXML 
 endif
 
+SUBDIRS += \
+        apps \
+        bin \
+        netsvcs \
+        protocols 
+
 if BUILD_EXAMPLES
 SUBDIRS += examples
 endif
@@ -26,10 +32,6 @@ SUBDIRS += tests
 endif
 
 SUBDIRS += \
-        apps \
-        bin \
-        netsvcs \
-        protocols \
         websvcs \
 	@KOKYU@ \
 	@TAO@
@@ -37,4 +39,3 @@ SUBDIRS += \
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
 AUTOMAKE_OPTIONS = foreign
-
