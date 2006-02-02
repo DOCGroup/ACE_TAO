@@ -1,3 +1,16 @@
+Thu Feb  2 13:08:31 Pacific Standard Time 2006    <ossama@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+
+          Added ability to set "versioned" namespace opening and closing
+          text.  Addresses problem where applications that do not enable
+          versioned namespace support in their own code need not get
+          "versioned" stubs/skeletons.  This was previously done for all
+          other IDL types.  Valuetypes were overlooked.
+
 Thu Feb  2 12:20:16 Pacific Standard Time 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
