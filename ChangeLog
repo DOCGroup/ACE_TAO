@@ -1,3 +1,11 @@
+Thu Feb  2 15:47:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Map_Manager/Map_Manager.mpc:
+
+          Added an mpc file to create the right kind of project.  The
+          symptoms of bad or missing mpc files are stray library symbolic
+          links.                                     
+
 Thu Feb  2 14:48:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * Makefile.am:
@@ -98,9 +106,9 @@ Mon Jan 30 17:53:10 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
 Sat Jan 28 18:40:30 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Array_Base.h (class ACE_Array_Base): Changed private to
-	  protected to enable access to certain members in derived
- 	  classes.  Thanks to luxi78@gmail.com for suggesting this.
+        * ace/Array_Base.h (class ACE_Array_Base): Changed private to
+          protected to enable access to certain members in derived
+          classes.  Thanks to luxi78@gmail.com for suggesting this.
 
 Fri Jan 27 23:29:44 UTC 2006  James H. Hill  <hillj@isis.vanderbilt.edu>
 
