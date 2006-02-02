@@ -1,3 +1,11 @@
+Thu Feb  2 12:20:16 Pacific Standard Time 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
+          (ImR_Activator_IDL, ImR_Locator_IDL):
+        
+          Added missing "tao_versioning_idl_defaults" base project.  Fixes
+          syntax errors in versioned namespace builds.
+
 Thu Feb  2 17:48:16 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Makefile.am:
