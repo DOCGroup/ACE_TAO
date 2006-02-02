@@ -1,3 +1,10 @@
+Thu Feb  2 23:41:39 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+        
+          Added zlib to the feature inherits to resolve linking errors
+          on Windows.
+
 Thu Feb  2 13:35:18 Pacific Standard Time 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/OS_NS_Thread.h:
@@ -38,6 +45,7 @@ Thu Feb  2 06:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/run_test.lst:
           Fixed another error in this file
 
+>>>>>>> 4.9803
 Wed Feb  1 20:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Event_Handler.h:
