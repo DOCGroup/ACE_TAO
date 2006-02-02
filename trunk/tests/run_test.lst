@@ -81,7 +81,7 @@ Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus !ACE_FOR_TAO
 Message_Queue_Test_Ex: !chorus !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk
-Multihomed_INET_Addr_Test !ACE_FOR_TAO
+Multihomed_INET_Addr_Test: !ACE_FOR_TAO
 Naming_Test: !chorus !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO
 Network_Adapters_Test
 New_Fail_Test: ALL !DISABLED
