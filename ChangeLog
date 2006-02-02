@@ -1,3 +1,12 @@
+Thu Feb  2 14:48:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+
+          Build examples and tests subdirectories after building
+          protocols.  I think all of the HTBP, RMCast and TMCast examples
+          and tests should be moved underneath protocols eventually , but
+          it's too close to the release to do it safely.
+
 Thu Feb  2 11:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Naming_Test.cpp:
