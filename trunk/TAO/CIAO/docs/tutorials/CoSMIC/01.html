@@ -17,7 +17,8 @@ component. <br>
 directory for the basic idl; <code>Stock_Base</code> and for each
 component; <code>Broker</code> and <code>Distributor</code>. In <code>MyQuoter/Stock_Base</code>,
 place the
-idl file <code>Stock_Base.idl</code> that you could copy from <a
+idl file <code style="font-style: italic;">Stock_Base.idl</code> that
+you could copy from <a
  href="../Quoter/Simple/Stock_Base/Stock_Base.idl">this</a>.
 This file defines the interfaces and events that will be used by both
 Stock Distributor and Stock Broker. We put together the
@@ -25,41 +26,59 @@ common definitions so the generated base library can be shared by both
 components, thus reducing the size of "real" components. <br>
 &nbsp;&nbsp;&nbsp;3. In <code>MyQuoter/Distributor</code>, place the
 idl
-file <code>Distributor.idl</code> that looks like <a
- href="../Quoter/Simple/Distributor/Distributor.idl">this</a>.
+file <code style="font-style: italic;">Distributor.idl</code> that
+looks like <a href="../Quoter/Simple/Distributor/Distributor.idl">this</a>.
 This file defines the Stock Distributor component interfaces.<br>
 &nbsp;&nbsp;&nbsp;4. In <code>MyQuoter/Broker</code> place the idl
-file for the stock broker; the <code>Broker.idl</code>
+file for the stock broker; the <code><span style="font-style: italic;">Broker.id</span>l</code>
 that looks like <a href="../Quoter/Simple/Broker/Broker.idl">this</a>.
 This file defines the StockBroker component interface.<br>
 <br>
 <b>Importing IDL to PICML</b><br>
 <br>
 &nbsp;&nbsp; To quick start our Stock Quoter
-modeling process in GME, CoSMIC provides <code>tao_picml</code>; that
-enables you to
-import the IDL files you just created into modeling elements in PICML. <br>
+modeling process in GME, CoSMIC introduces <i style=""><span
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;" lang="EN-US">idl_to_picml
+</span></i>, which is an executable program that imports the IDL files
+you just created into modeling elements in PICML. <br>
 &nbsp;&nbsp;&nbsp; 1. Make sure <code>%COSMIC_ROOT%\bin</code> is
 included in the
 PATH variable. <br>
 &nbsp;&nbsp;&nbsp; 2. Open a command prompt, run VCVARS32.BAT from the
 MSVC .NET folder if you haven't done so. It will set the environment
-for using Microsoft Visual Studio .NET tools so that tao_picml works
+for using Microsoft Visual Studio .NET tools so that <span
+ style="font-style: italic;">idl_to_picml</span> works
 properly.<br>
 In my machine, VCVARS32.bat is in C:\Program Files\Microsoft Visual
 Studio .NET 2003\Vc7\bin<br>
-&nbsp;&nbsp;&nbsp; 3. In the same command prompt, change directory to <code>MyQuoter\</code>,
+&nbsp;&nbsp;&nbsp; 3. Copy all three idl files, i.e.
+MyQuoter\Stock_Base\Stock_Base.idl MyQuoter\Broker\Broker.idl
+MyQuoter\Distributor\Distributor.idl&nbsp; to the .\MyQuoter directory.
+And make sure you <span style="font-weight: bold;">remove(or comment)</span>
+the include declaration in <span style="font-style: italic;">Distributor.idl</span>
+and <span style="font-style: italic;">Broker.idl</span>, e.g., //
+#include "../Stock_Base/Stock_Base.idl. This step is important because <span
+ style="font-style: italic;">idl_to_picml </span>does not generate XML
+for included idls, so you have to parse the closure set of all included
+files into the command line. <br>
+&nbsp;&nbsp;&nbsp; 4. In the same command prompt, change directory to <code>MyQuoter\</code>,
 and type the following
 command:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt; <code>tao_picml -x MyQuoter
-.\Broker\Broker.idl
-.\Distributor\Distributor.idl .\Stock_Base\Stock_Base.idl -I %TAO_ROOT%
--I %TAO_ROOT%\orbsvcs -I %CIAO_ROOT%\DAnCE\ciao</code> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The <code>tao_picml</code>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &gt; <span
+ style="font-family: monospace;">idl_to_picml</span><code> -x MyQuoter
+Stock_Base.idl Broker.idl Distributor.idl<br>
+&nbsp;&nbsp; (if the above command does not work, you may also try this<br>
+&nbsp;&nbsp; &gt;idl_to_picml -x MyQuoter Stock_Base.idl Broker.idl
+Distributor.idl&nbsp; -I %TAO_ROOT%
+-I %TAO_ROOT%\orbsvcs -I %CIAO_ROOT%\ciao)</code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+ style="font-style: italic;">idl_to_picml</span>
 will parse
 your IDL files and generated a <code>MyQuoter.xme</code> file in the <code>MyQuoter</code>
-directory.<br>
-&nbsp;&nbsp;&nbsp; 4. Start GME, select <strong>File-&gt;Import xml..</strong>,
+directory. Note that if -x option is not used, the default xme file
+name will be <span
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;" lang="EN-US">PICML_default_xme_file.xme.</span><br>
+&nbsp;&nbsp;&nbsp; 5. Start GME, select <strong>File-&gt;Import xml..</strong>,
 and choose
 the xme file just generated. You should be able to see an imported
 PICML model similar to the one shown in Figure 2.<br>
