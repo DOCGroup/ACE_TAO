@@ -1,3 +1,9 @@
+Thu Feb  2 16:58:15 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO_DAnCE.mwc:
+        * CIAODAnCE.mwc:
+          Removed Old_Config_Handlers and spec_RepositoryManager
+
 Thu Feb  2 16:31:15 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/BaseMonitor.h
@@ -6,12 +12,12 @@ Thu Feb  2 16:31:15 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/NodeManager/MonitorController.cpp
         * DAnCE/NodeManager/MonitorController.h
         * DAnCE/TargetManager/DomainDataManager.h
-        
+
           Removed extra ';' after closing braces on namespaces.
-          Was causing errors on GCC4 builds. 
-        
+          Was causing errors on GCC4 builds.
+
         * DAnCE/NodeManager/MonitorController.inl
-        
+
           Removed this file, as it is no longer used.
 
 Wed Feb  1 21:21:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
@@ -27,11 +33,11 @@ Wed Feb  1 21:21:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/TargetManager/DomainDataManager.h
         * DAnCE/TargetManager/TargetManager_exec.cpp
         * DAnCE/TargetManager/TargetManager_exec.h
-        
-        Wraps the TargetManager/Monitors inside the CIAO namespace. 
+
+        Wraps the TargetManager/Monitors inside the CIAO namespace.
         Thanks to  Nilabja Roy (nilabjar@dre.vanderbilt.edu) for
         making these changes and thanks to Johnny for noticing this!
-	
+
 Wed Feb  1 20:42:42 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp
@@ -39,8 +45,8 @@ Wed Feb  1 20:42:42 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Utils/XercesString.cpp
         * tools/Config_Handlers/Utils/XercesString.h
         * tools/Config_Handlers/XMLSchema/Writer.hpp
-        
-          Fixes for warnings on ICC platforms. 
+
+          Fixes for warnings on ICC platforms.
 
 Wed Feb  1 14:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
