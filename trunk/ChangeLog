@@ -1,3 +1,8 @@
+Thu Feb  2 11:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Naming_Test.cpp:
+          Moved some real test code out of ACE_ASSERT calls
+
 Thu Feb  2 06:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
