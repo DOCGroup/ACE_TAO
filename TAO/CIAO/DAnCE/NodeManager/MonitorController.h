@@ -105,6 +105,6 @@ namespace CIAO
       ::Deployment::Domain initial_domain_;
     };
 
-}; // CIAO
+} // CIAO
   
 #endif

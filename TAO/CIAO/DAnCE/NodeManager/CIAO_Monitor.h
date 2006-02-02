@@ -102,5 +102,5 @@ namespace CIAO
     auto_ptr <Deployment::Domain> current_domain_;
   };
 
-}; // CIAO
+} // CIAO
 #endif /* CIAO_MONITORH */
