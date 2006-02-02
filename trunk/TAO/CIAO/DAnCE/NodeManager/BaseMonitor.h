@@ -57,7 +57,7 @@ namespace CIAO
   extern "C" ACE_Proper_Export_Flag CIAO::MonitorBase *
     createMonitor (void);
 
-}; // CIAO
+} // CIAO
 
 
 #endif /* MONITOR_BASEH */

@@ -1,3 +1,19 @@
+Thu Feb  2 16:31:15 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/BaseMonitor.h
+        * DAnCE/NodeManager/CIAO_Monitor.h
+        * DAnCE/NodeManager/MonitorCB.h
+        * DAnCE/NodeManager/MonitorController.cpp
+        * DAnCE/NodeManager/MonitorController.h
+        * DAnCE/TargetManager/DomainDataManager.h
+        
+          Removed extra ';' after closing braces on namespaces.
+          Was causing errors on GCC4 builds. 
+        
+        * DAnCE/NodeManager/MonitorController.inl
+        
+          Removed this file, as it is no longer used.
+
 Wed Feb  1 21:21:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/BaseMonitor.h

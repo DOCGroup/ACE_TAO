@@ -113,6 +113,6 @@ namespace CIAO
       ::Deployment::TargetManager_var target_mgr_;
     };
 
-}; // CIAO
+} // CIAO
 
 #endif /* DOMAIN_DATA_MGRH */
