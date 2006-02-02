@@ -1,3 +1,10 @@
+Thu Feb  2 13:35:18 Pacific Standard Time 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_Thread.h:
+
+          Fixed versioned namespace related errors in single-threaded
+          builds with that feature enabled.
+
 Thu Feb  2 17:49:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_string.h:

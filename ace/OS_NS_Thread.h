@@ -1944,6 +1944,8 @@ namespace ACE_OS {
 #endif /* ACE_USES_WCHAR */
 } /* namespace ACE_OS */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if !defined (ACE_WIN32)
 
 extern "C"
@@ -1992,6 +1994,8 @@ extern "C"
   } ACE_eventdata_t;
 }
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_event_t
  *
@@ -2028,9 +2032,13 @@ protected:
 #endif
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_OS_Thread_Mutex_Guard
