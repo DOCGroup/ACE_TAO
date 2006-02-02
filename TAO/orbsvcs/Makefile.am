@@ -30,13 +30,14 @@ SUBDIRS = \
         CosEvent_Service \
         Concurrency_Service
 
-if BUILD_EXAMPLES
-SUBDIRS += \
-        examples
-endif
-
 if BUILD_TESTS
 SUBDIRS += \
         performance-tests \
         tests
 endif
+
+if BUILD_EXAMPLES
+SUBDIRS += \
+        examples
+endif
+
