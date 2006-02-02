@@ -1,3 +1,9 @@
+Thu Feb  2 15:49:31 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* docs/tutorials/CoSMIC/01.html: Commited a fix for a typo detected by
+	  Abdullah Sowayan <abdullah dot sowayan at lmco dot com> and
+ 	  fixed by Ming Xiong.
+
 Thu Feb  2 16:58:15 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO_DAnCE.mwc:
