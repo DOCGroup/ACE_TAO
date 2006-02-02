@@ -1,3 +1,10 @@
+Thu Feb  2 22:59:23 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp
+        
+          Updated include from zziplib.h to zzip/zzip.h, as the former
+          is deprecated and absent in the most recent release.
+
 Thu Feb  2 15:49:31 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* docs/tutorials/CoSMIC/01.html: Commited a fix for a typo detected by
