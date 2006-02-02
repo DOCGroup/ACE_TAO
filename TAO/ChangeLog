@@ -1,4 +1,4 @@
-Thu Feb  2 13:08:31 Pacific Standard Time 2006    <ossama@dre.vanderbilt.edu>
+Thu Feb  2 13:08:31 Pacific Standard Time 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
         * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
@@ -11,7 +11,7 @@ Thu Feb  2 13:08:31 Pacific Standard Time 2006    <ossama@dre.vanderbilt.edu>
           "versioned" stubs/skeletons.  This was previously done for all
           other IDL types.  Valuetypes were overlooked.
 
-Thu Feb  2 12:20:16 Pacific Standard Time 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Thu Feb  2 12:20:16 Pacific Standard Time 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
           (ImR_Activator_IDL, ImR_Locator_IDL):
