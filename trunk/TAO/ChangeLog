@@ -1,3 +1,14 @@
+Fri Feb  3 15:16:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Hang_Shutdown/Test.idl:
+        * tests/Hang_Shutdown/client.cpp:
+        * tests/Hang_Shutdown/server.cpp:
+        * tests/Hang_Shutdown/test_i.h:
+
+          Removed outer "TAO" namespace.  It served no useful purpose, and
+          conflicted with the versioned TAO namespace used in the core TAO
+          libraries.
+
 Thu Feb  3 14:54:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * be/be_visitor_valuebox/valuebox_ci.cpp:
