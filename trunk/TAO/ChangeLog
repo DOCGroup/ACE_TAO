@@ -1,3 +1,20 @@
+Thu Feb  3 14:54:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * be/be_visitor_valuebox/valuebox_ci.cpp:
+        * be/be_visitor_valuebox/valuebox_cs.cpp:
+        * be_include/be_visitor_valuebox/valuebox_ci.h:
+        * be_include/be_visitor_valuebox/valuebox_cs.h:
+
+          Moved generated inlined virtual functions out of line.  The
+          TAO_IDL valuebox code previously generated inlined virtual
+          functions, including a virtual destructor, which can cause RTTI
+          problems when attempting to downcast a valuebox object found in
+          a shared library that was compiled with g++ 4.0's
+          "-fvisibility-inlines-hidden" command line option.  The virtual
+          functions marked as "inline" (as opposed to actually inlined)
+          end up being left out of the export table, which breaks RTTI for
+          valueboxes in the shared library.
+
 Fri Feb  3 10:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/TAO-metrics.html:
