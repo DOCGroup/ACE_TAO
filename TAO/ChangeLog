@@ -13,7 +13,7 @@ Thu Feb  3 14:54:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           "-fvisibility-inlines-hidden" command line option.  The virtual
           functions marked as "inline" (as opposed to actually inlined)
           end up being left out of the export table, which breaks RTTI for
-          valueboxes in the shared library.
+          valueboxes in the shared library.  [Bug 2392]
 
 Fri Feb  3 10:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
