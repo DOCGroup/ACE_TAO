@@ -1,5 +1,14 @@
 Fri Feb  3 15:16:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
+        * tests/Bug_1495_Regression/Server_Task.h:
+        * tests/Bug_2084_Regression/Server_Task.h:
+        * tests/Collocation_Exception_Test/Server_Task.h:
+        * tests/Collocation_Oneway_Tests/Server_Task.h:
+        * tests/Collocation_Tests/Server_Task.h:
+
+          Place ACE_Manual_Event forward declaration within versioned
+          namespace.
+
         * tests/Hang_Shutdown/Test.idl:
         * tests/Hang_Shutdown/client.cpp:
         * tests/Hang_Shutdown/server.cpp:
