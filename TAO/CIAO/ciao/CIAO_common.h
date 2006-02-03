@@ -30,7 +30,7 @@
         factory->_remove_ref ();      }
 
 // By default tracing is turned off.
-#if !defined (CIAO_NTRACE) 
+#if !defined (CIAO_NTRACE)
 #  if !defined (ACE_NTRACE)
 #    define CIAO_NTRACE 1
 #  else
