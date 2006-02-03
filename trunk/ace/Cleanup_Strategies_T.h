@@ -24,6 +24,8 @@
 // For linkers that cant grok long names.
 #define ACE_Cleanup_Strategy ACLE
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Cleanup_Strategy
  *
@@ -138,6 +140,8 @@ public:
   /// The dummy cleanup method.
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cleanup_Strategies_T.cpp"

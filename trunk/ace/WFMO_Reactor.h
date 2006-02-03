@@ -73,6 +73,8 @@ int WSAEnumNetworkEvents (SOCKET s,
 
 #endif /* !defined ACE_HAS_WINSOCK2 */
 
+class ACE_WFMO_Reactor_Test;  // Must be out of versioned namespace.
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl.
