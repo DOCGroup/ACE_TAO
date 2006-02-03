@@ -849,13 +849,18 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
   }
   #endif /*ACE_HAS_WINSOCK2*/
 
-  ACE_SOCKCALL_RETURN (::setsockopt ((ACE_SOCKET) handle,
-                                     level,
-                                     optname,
-                                     (ACE_SOCKOPT_TYPE1) optval,
-                                     optlen),
-                       int,
-                       -1);
+  int result;
+  ACE_SOCKCALL (::setsockopt ((ACE_SOCKET) handle,
+                              level,
+                              optname,
+                              (ACE_SOCKOPT_TYPE1) optval,
+                              optlen),
+                int,
+                -1,
+                result);
+  if (result == -1 && errno == WSAEOPNOTSUPP)
+    errno = ENOTSUP;
+  return result;
 }
 
 ACE_INLINE int
