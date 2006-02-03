@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : pi, portableserver, rtcorba {
-  after   += RTPortableServer
-  libs    += TAO_RTPortableServer
-}
