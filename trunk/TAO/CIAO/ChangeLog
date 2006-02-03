@@ -9,13 +9,13 @@ Fri Feb  3 24:30:19  UTC 2006  Ossama Othman  <ossama_othman at symantec dot com
 Thu Feb  2 23:55:01 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS
-        
-          Updated the release notes. 
+
+          Updated the release notes.
 
 Thu Feb  2 22:59:23 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/ZIP_Wrapper.cpp
-        
+
           Updated include from zziplib.h to zzip/zzip.h, as the former
           is deprecated and absent in the most recent release.
 
