@@ -12,7 +12,7 @@ Fri Feb  3 14:47:53 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
 Fri Feb  3 07:53:16 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_sys_socket.inl (setsockopt): Make sure to 
+	* ace/OS_NS_sys_socket.inl (setsockopt): Make sure to
 	  map WSAEOPNOTSUPP to the ENOTSUP errno value so the code is
  	  portable across versions of sockets!  Thanks to David Hauck
  	  <davidh at netacquire dot com> for this fix.
@@ -24,14 +24,14 @@ Fri Feb  3 07:53:16 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Thu Feb  2 23:59:37 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * html/index.html
-         
+
           Removed the XML_helpers link, as that documentation is no
           longer generated.
 
 Thu Feb  2 23:41:39 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb
-        
+
           Added zlib to the feature inherits to resolve linking errors
           on Windows.
 
@@ -54,7 +54,7 @@ Thu Feb  2 15:47:35 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
           Added an mpc file to create the right kind of project.  The
           symptoms of bad or missing mpc files are stray library symbolic
-          links.                                     
+          links.
 
 Thu Feb  2 14:48:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
