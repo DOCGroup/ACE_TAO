@@ -5,6 +5,10 @@ Fri Feb  3 07:53:16 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
  	  portable across versions of sockets!  Thanks to David Hauck
  	  <davidh at netacquire dot com> for this fix.
 
+	* ace/OS_NS_sys_socket.inl (setsockopt): Only check for
+ 	  WSAEOPNOTSUPP on platforms that actually support thi smacro!
+  	  Thanks to Wallace Zhang for reporting this.
+
 Thu Feb  2 23:59:37 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * html/index.html
