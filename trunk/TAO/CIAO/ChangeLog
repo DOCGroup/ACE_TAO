@@ -1,3 +1,11 @@
+Fri Feb  3 24:30:19  UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ciao/Client_init.h:
+
+          Moved CIAO namespace out of TAO-versioned namespace block.  It
+          shouldn't have been there.  Fixes namespace clashes in versioned
+          namespace enabled builds.
+
 Thu Feb  2 23:55:01 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS
