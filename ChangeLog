@@ -4,6 +4,11 @@ Fri Feb  3 14:47:53 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
           Added missing versioned namespace declarations.
 
+        * ace/Guard_T.h:
+
+          Fixed versioned namespace related errors in single-threaded
+          builds with that feature enabled.
+
         * ace/WFMO_Reactor.h:
 
           Forward declare the ACE_WFMO_Reactor_Test class outside of the

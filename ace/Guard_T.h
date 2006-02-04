@@ -345,9 +345,9 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))) */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Guard_T.inl"
