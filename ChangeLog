@@ -1,3 +1,20 @@
+Fri Feb  3 23:48:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Barrier.h: Noted shutdown() was added for 5.4.9.
+
+        * ace/Message_Queue_T.{h cpp}: Changed enqueue_head(), enqueue_tail()
+          to recognize that the ACE_Message_Block passed may have other
+          block(s) connected to it via the next() pointers. This allows a
+          caller to pre-connect a series of ACE_Message_Blocks and coalesce
+          the enqueueing of the series into a single method call.
+          Thanks to Guy Peleg <guy dot peleg at amdocs dot com> for suggesting
+          this enhancement.
+          Also revamped the Doxygenization of ACE_Message_Queue's
+          documentation.
+
+        * tests/Message_Queue_Test.cpp: Added chained_block_test() to test
+          the new functionality above.
+
 Fri Feb  3 14:47:53 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Cleanup_Strategies_T.h:

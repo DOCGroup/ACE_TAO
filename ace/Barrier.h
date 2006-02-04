@@ -116,6 +116,8 @@ public:
   /// value -1, errno ESHUTDOWN.
   ///
   /// @retval 0 for success, -1 if already shut down.
+  ///
+  /// @since ACE beta 5.4.9.
   int shutdown (void);
 
   /// Dump the state of an object.
