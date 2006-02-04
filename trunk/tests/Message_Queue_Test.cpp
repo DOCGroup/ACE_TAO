@@ -183,6 +183,98 @@ iterator_test (void)
 #if defined (ACE_HAS_THREADS)
 
 static int
+chained_block_test (void)
+{
+
+  QUEUE q;
+  const char * s = "123456789";      // Will be length 10 when copied to block
+  const size_t slen = 10;
+  const size_t num_blks = 10;
+  ACE_Message_Block b[num_blks];
+  size_t i;
+  int status = 0;
+
+  for (i = 0; i < num_blks; ++i)
+    {
+      b[i].init (slen);
+      b[i].copy (s);
+    }
+
+  // Test enqueueing single and chained blocks and be sure they end up with
+  // the proper enqueued block count and sizes. Then be sure they are dequeued
+  // in the proper order.
+  b[0].next (&b[1]);
+  b[1].next (&b[2]);
+  // b[3] and b[4] are unchained.
+  b[5].next (&b[6]);
+  b[6].next (&b[7]);
+  b[7].next (&b[8]);
+  // b[9] is unchained
+  q.enqueue_tail (&b[3]);
+  q.enqueue_tail (&b[4]);
+  int num = q.enqueue_head (&b[0]);
+  if (num != 5)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 5; has %d\n"),
+                  num));
+      status = -1;
+    }
+  num = q.enqueue_tail (&b[5]);
+  if (num != 9)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 9; has %d\n"),
+                  num));
+      status = -1;
+    }
+  num = q.enqueue_tail (&b[9]);
+  if (num != 10)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 10; has %d\n"),
+                  num));
+      status = -1;
+    }
+  size_t msgs, bytes;
+  msgs = q.message_count ();
+  bytes = q.message_bytes ();
+  if (msgs != 10 || bytes != 100)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Chained enqueue totals: %d msgs, %d bytes; ")
+                  ACE_TEXT ("should be 10 msgs, 100 bytes\n"),
+                  (int)msgs, (int)bytes));
+      status = -1;
+    }
+
+  // Now see if we can dequeue them, checking the order.
+  ACE_Time_Value nowait (ACE_OS::gettimeofday ());
+  ACE_Message_Block *bp;
+  int qstat;
+  for (i = 0; i < num_blks; ++i)
+    {
+      qstat = q.dequeue_head (bp, &nowait);
+      if (qstat == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Checking chained blocks, pass %d: %p\n"),
+                      (int)i, ACE_TEXT ("dequeue_head")));
+          status = -1;
+        }
+      else if (bp != &b[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Checking chained blocks, pass %d: ")
+                      ACE_TEXT ("block out of order\n"),
+                      (int)i));
+          status = -1;
+        }
+    }
+
+  if (status == 0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Chained block test OK\n")));
+  return status;
+}
+
+static int
 single_thread_performance_test (int queue_type = 0)
 {
   const char test_message[] =
@@ -560,6 +652,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_HAS_THREADS)
   if (status == 0)
     status = timeout_test ();
+
+  if (status == 0)
+    status = chained_block_test ();
 
   if (status == 0)
     status = single_thread_performance_test ();
