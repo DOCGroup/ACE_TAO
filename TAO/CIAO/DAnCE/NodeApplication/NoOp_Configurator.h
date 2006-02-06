@@ -15,7 +15,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "NodeApp_Configurator.h"
-#include "NoOp_Configurator_Export.h"
+#include "NoOp_Configurator_export.h"
 
 namespace CIAO
 {
