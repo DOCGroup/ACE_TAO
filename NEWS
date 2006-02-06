@@ -20,6 +20,16 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.8 and ACE-5.4.9
   chained to it via its next() pointer, the entire chain of blocks 
   will be enqueued at once.
 
+. Improved the support for high-resolution timers with
+  ACE_Timer_Queue_Adapter.
+
+. Make it possible to disable file caching in JAWS.
+
+. Improved ACE_Pipe implementation so that it uses localhost to avoid
+  firewall problems.
+      
+. Added Unicode support to the Service Configurator.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 ====================================================
 
