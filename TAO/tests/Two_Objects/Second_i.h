@@ -1,13 +1,15 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 #ifndef TAO_TWO_OBJECTS_SECOND_I_H
 #define TAO_TWO_OBEJCTS_SECOND_I_H
 
 #include "Two_ObjectsS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Auto_Event;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /// Implement the POA_Two_Objects_Test::Second interface
 class Second_i
