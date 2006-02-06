@@ -1,3 +1,9 @@
+Mon Feb  6 14:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Improved documentation for the BCBVER environment setting which
+          is required for building with the Borland C++ compilers
+
 Fri Feb  3 23:48:32 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Barrier.h: Noted shutdown() was added for 5.4.9.
