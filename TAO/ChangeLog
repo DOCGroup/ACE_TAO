@@ -1,3 +1,31 @@
+Mon Feb  6 16:46:57 Pacific Standard Time 2006    Ossama Othman  <ossama_othman at symantec dot com>
+
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+
+          Added ability to set "versioned" namespace opening and closing
+          text.  Addresses problem where applications that do not enable
+          versioned namespace support in their own code need not get
+          "versioned" stubs/skeletons.  This was previously done for all
+          other IDL types.  Forward interface declarations were
+          overlooked.
+
+        * tests/MT_BiDir/Sender_i.h:
+        * tests/MT_BiDir/Server_Task.h:
+        * tests/NestedUpcall/MT_Client_Test/local_server.h:
+        * tests/OBV/Collocated/Forward/Server_Task.h:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.h:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Server_Task.h:
+        * tests/Two_Objects/First_i.cpp:
+        * tests/Two_Objects/First_i.h:
+        * tests/Two_Objects/Object_Factory_i.h:
+        * tests/Two_Objects/Second_i.h:
+
+          Placed forward declarations for ACE/TAO types in the appropriate
+          versioned namespace.
+
 Fri Feb  3 15:16:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/Bug_1495_Regression/Server_Task.h:
