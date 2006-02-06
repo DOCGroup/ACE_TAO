@@ -7,6 +7,7 @@ project(NodeApplicationManager): ciao_component_dnc, ciao_deployment_svnt, dance
   after       += NodeManager_stub CIAO_TargetManager_stub
   idlflags    += -Wb,export_include=CIAO_NAM_Export.h -Wb,export_macro=CIAO_NAM_Export
   dynamicflags = CIAO_NAM_BUILD_DLL
+  dynamicflags += NOOP_CONFIGURATOR_BUILD_DLL
 
 // @@TODO: This ../NodeApplication business need to go.  It would be better
 // to factor that stuff into a separate lib, ie. NodeApplication_Impl
