@@ -1,52 +1,18 @@
 // $Id$
 
 #include "Configurator_Factory.h"
+#include "NoOp_Configurator.h"
 #include "ace/Null_Mutex.h"
 #include "ciao/CIAO_common.h"
 #include "ace/Arg_Shifter.h"
 
-CIAO::NoOp_Configurator::~NoOp_Configurator (void)
-{
-  // Not much to do.
-}
-
-int
-CIAO::NoOp_Configurator::pre_orb_initialize ()
-{
-  return 0;
-}
-
-int
-CIAO::NoOp_Configurator::post_orb_initialize (CORBA::ORB_ptr)
-{
-  return 0;
-}
-
-int
-CIAO::NoOp_Configurator::init_resource_manager
-(const ::Deployment::Properties & /*properties*/)
-{
-  // @@ Currently do thing.  We should go over the resource struct in
-  // the future and throw exceptions if there are
-  // un-recognizable/supported stuff in it.
-  return 0;
-}
-
-CORBA::PolicyList *
-CIAO::NoOp_Configurator::find_container_policies
-(const ::Deployment::Properties & /*properties*/)
-{
-  // Not much to do.
-
-  return 0;
-}
 
 int
 CIAO::NodeApplication_Options::parse_args (int argc, char *argv[])
 {
   //  ACE_Get_Opt get_opts (argc, argv, "nrk:o:");
   ACE_Arg_Shifter shifter (argc, argv);
-  
+
   while (shifter.is_anything_left ()) {
     const char *parm = 0;
 
@@ -86,7 +52,7 @@ CIAO::NodeApplication_Options::parse_args (int argc, char *argv[])
       }
     else
       shifter.ignore_arg ();
-    
+
   }
 
   if (this->use_callback_ && this->callback_ior_.length() == 0)

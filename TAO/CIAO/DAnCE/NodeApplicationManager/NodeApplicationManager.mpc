@@ -8,6 +8,10 @@ project(NodeApplicationManager): ciao_component_dnc, ciao_deployment_svnt, dance
   idlflags    += -Wb,export_include=CIAO_NAM_Export.h -Wb,export_macro=CIAO_NAM_Export
   dynamicflags = CIAO_NAM_BUILD_DLL
 
+// @@TODO: This ../NodeApplication business need to go.  It would be better
+// to factor that stuff into a separate lib, ie. NodeApplication_Impl
+// and link it in.  For the time being, since the release is so close,
+// i will leave it the way it is.
   Source_Files {
     NodeApplicationManager_Impl.cpp
     ImplementationInfo.cpp
@@ -17,6 +21,7 @@ project(NodeApplicationManager): ciao_component_dnc, ciao_deployment_svnt, dance
     ../NodeApplication/NodeApplication_Impl.cpp
     ../NodeApplication/Container_Impl.cpp
     ../NodeApplication/Configurator_Factory.cpp
+    ../NodeApplication/NoOp_Configurator.cpp
   }
 
   Header_Files {

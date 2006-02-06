@@ -14,6 +14,7 @@
 #ifndef MONITOR_CONTROLLER_H
 #define MONITOR_CONTROLLER_H
 
+#include "NodeManager_svnt_export.h"
 #include "TargetManager/TargetManagerC.h"
 #include "ace/Task.h"
 #include "ace/Auto_Ptr.h"
@@ -44,7 +45,7 @@ namespace CIAO
    *  module
    *
    */
-  class MonitorController : public ACE_Task_Base
+  class NodeManager_svnt_Export MonitorController : public ACE_Task_Base
     {
     public:
       /**

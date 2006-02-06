@@ -29,6 +29,7 @@
 #include "ace/Task.h"
 #include "ace/Auto_Ptr.h"
 #include "Configurator_Factory.h"
+#include "NoOp_Configurator.h"
 
 namespace CIAO
 {
