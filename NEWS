@@ -12,6 +12,14 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.8 and ACE-5.4.9
 . Constructors of ACE_Time_Value have been made explicit to prevent
   implicit conversions.
 
+. Added a shutdown() method to ACE_Barrier. The new method aborts the
+  wait by all threads.
+
+. Changed the behavior of ACE_Message_Queue::enqueue_head() and
+  enqueue_tail(). If the enqueued message block has other blocks
+  chained to it via its next() pointer, the entire chain of blocks 
+  will be enqueued at once.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 ====================================================
 
