@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Configurator Facotry contains the factory method for creating concret
- *  NodeApp_Configurator object.  
+ *  NodeApp_Configurator object.
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
@@ -33,41 +33,6 @@
 
 namespace CIAO
 {
-  /**
-   * @class NoOP_Configurator
-   *
-   * @brief The NoOp_Configurator doesn't do anything.
-   */
-  class NoOp_Configurator : public NodeApp_Configurator
-  {
-  public:
-    /// Default destructor.
-    virtual ~NoOp_Configurator (void);
-
-    /**
-     * @brief "pre_orb_initialize" is called before ORB_init.
-     */
-    virtual int pre_orb_initialize (void);
-
-    /**
-     * @brief "post_orb_initialize" is called after NodeApplication
-     * get a hold at this object.
-     */
-    virtual int post_orb_initialize (CORBA::ORB_ptr o);
-
-    /**
-     * @brief "init_resource_manager" is called by NodeApplication when
-     * it receives an "install" commands.
-     */
-    virtual int
-    init_resource_manager (const ::Deployment::Properties &properties);
-
-    /**
-     * @brief get a policyset by its name.
-     */
-    virtual CORBA::PolicyList *
-    find_container_policies (const ::Deployment::Properties &properties);
-  };
 
 
   /**
@@ -90,7 +55,7 @@ namespace CIAO
     // default ctor.
     NodeApplication_Options () : use_callback_ (1), rt_support_ (0) {}
 
-    // extracting commandline arguments 
+    // extracting commandline arguments
     int parse_args (int argc, char *argv[]);
 
     NodeApp_Configurator *create_nodeapp_configurator (void);

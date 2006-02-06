@@ -8,6 +8,18 @@
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
+
+
+// Fixes the VC6 warning 4786.
+#include "vc6-4786.h"
+ 
+// Fix for Borland compilers, which seem to have a broken
+// <string> include.
+#ifdef __BORLANDC__
+# include <string.h>
+#endif
+
+#include "XSC_XML_Handlers_Export.h"
  
 #ifndef CDD_HPP
 #define CDD_HPP

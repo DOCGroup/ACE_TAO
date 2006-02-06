@@ -1,3 +1,24 @@
+Mon Feb  6 00:39:41 UTC 2006  William Otte    <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/Configurator_Factory.cpp
+        * DAnCE/NodeApplication/Configurator_Factory.h
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/NodeApplication/NodeApplication_Core.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeManager/MonitorController.h
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/NodeApplication/NoOp_Configurator.cpp
+        * DAnCE/NodeApplication/NoOp_Configurator.h
+        * DAnCE/NodeApplication/NoOp_Configurator_export.h
+
+          Fixed linking errors on Borland 6. Mostly involved improper
+          symbol export control.
+
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.hpp
+
+          Addded a fix for a broken <string> include in Borland 6.
+
 Fri Feb  3 24:30:19  UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ciao/CIAO_common.h:
@@ -25,9 +46,9 @@ Thu Feb  2 22:59:23 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
 Thu Feb  2 15:49:31 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* docs/tutorials/CoSMIC/01.html: Commited a fix for a typo detected by
-	  Abdullah Sowayan <abdullah dot sowayan at lmco dot com> and
- 	  fixed by Ming Xiong.
+        * docs/tutorials/CoSMIC/01.html: Commited a fix for a typo detected by
+          Abdullah Sowayan <abdullah dot sowayan at lmco dot com> and
+          fixed by Ming Xiong.
 
 Thu Feb  2 16:58:15 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
