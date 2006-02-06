@@ -1,3 +1,14 @@
+Mon Feb  6 19:13:13 UTC 2006  William Otte    <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        
+          Fixed an export problem manifesting in VC8.
+        
+        * performance-tests/Benchmark/Benchmark.mpc
+        
+          Added an empty IDL_Files section to the servant to prevent
+          nmake from regenerating from the IDL file. 
+
 Mon Feb  6 13:54:39 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ciao/ComponentsC.h:

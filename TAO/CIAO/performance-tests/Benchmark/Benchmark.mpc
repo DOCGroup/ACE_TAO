@@ -22,6 +22,8 @@ project(Benchmark_svnt) : ciao_component_dnc {
 
   idlflags  +=  -Wb,export_macro=BENCHMARK_SVNT_Export -Wb,export_include=Benchmark_svnt_export.h
   dynamicflags = BENCHMARK_SVNT_BUILD_DLL
+  IDL_Files {
+  }
 
   Source_Files {
     BenchmarkS.cpp
