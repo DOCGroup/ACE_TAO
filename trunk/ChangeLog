@@ -1,3 +1,9 @@
+Mon Feb  6 15:49:57 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * NEWS:
+
+          Updated with info from Steve Huston.
+
 Mon Feb  6 14:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
@@ -40,14 +46,14 @@ Fri Feb  3 14:47:53 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
 Fri Feb  3 07:53:16 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_sys_socket.inl (setsockopt): Make sure to
-	  map WSAEOPNOTSUPP to the ENOTSUP errno value so the code is
- 	  portable across versions of sockets!  Thanks to David Hauck
- 	  <davidh at netacquire dot com> for this fix.
+        * ace/OS_NS_sys_socket.inl (setsockopt): Make sure to
+          map WSAEOPNOTSUPP to the ENOTSUP errno value so the code is
+          portable across versions of sockets!  Thanks to David Hauck
+          <davidh at netacquire dot com> for this fix.
 
-	* ace/OS_NS_sys_socket.inl (setsockopt): Only check for
- 	  WSAEOPNOTSUPP on platforms that actually support this macro!
-  	  Thanks to Wallace Zhang for reporting this.
+        * ace/OS_NS_sys_socket.inl (setsockopt): Only check for
+          WSAEOPNOTSUPP on platforms that actually support this macro!
+          Thanks to Wallace Zhang for reporting this.
 
 Thu Feb  2 23:59:37 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
