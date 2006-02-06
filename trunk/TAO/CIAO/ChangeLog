@@ -1084,7 +1084,6 @@ Fri Jan  6 20:09:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           Updated the hand-crafted descriptor files in CIAO tests and
           examples to reflect the changes above.
 
->>>>>>> 1.1632
 Thu Jan  5 21:28:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
