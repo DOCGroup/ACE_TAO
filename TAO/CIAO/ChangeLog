@@ -9,8 +9,8 @@ Mon Feb  6 13:54:39 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 Mon Feb  6 13:33:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NoOp_Configurator.h
-        
-          Case sensitivity error from previous commit. 
+
+          Case sensitivity error from previous commit.
 
 Mon Feb  6 00:39:41 UTC 2006  William Otte    <wotte@dre.vanderbilt.edu>
 
