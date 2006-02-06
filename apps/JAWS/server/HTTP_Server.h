@@ -35,8 +35,10 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward declaration.
 class ACE_Proactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
 typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> HTTP_SOCK_Acceptor;
