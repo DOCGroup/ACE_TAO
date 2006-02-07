@@ -17,7 +17,7 @@
 try { statement; } catch(...) { \
   BOOST_ERROR("unexpected exception raised"); }
 
-using namespace TAO::details;
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
 using namespace boost::unit_test_framework;
 
@@ -172,7 +172,7 @@ private:
 
 struct Foo { int y; };
 
-test_suite *
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
   test_suite * ts =

@@ -11,6 +11,8 @@
  * @author Johnny Willemsen
  */
 
+#include "tao/Basic_Types.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO {
   namespace details {
     template <typename stream, typename sequence>
@@ -36,7 +38,7 @@ namespace TAO {
 
     template <typename stream, typename sequence>
     bool insert_unbounded_sequence(stream & strm, const sequence & source) {
-      const ::CORBA::ULong length = source.length ();
+      const CORBA::ULong length = source.length ();
       if (!(strm << length)) {
         return false;
       }
@@ -50,4 +52,5 @@ namespace TAO {
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* guard_unbounded_sequence_cdr */

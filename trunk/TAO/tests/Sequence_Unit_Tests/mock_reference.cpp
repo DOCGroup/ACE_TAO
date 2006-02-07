@@ -7,6 +7,8 @@
  */
 #include "mock_reference.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 call_counter mock_reference::duplicate_calls;
 call_counter mock_reference::release_calls;
 call_counter mock_reference::serialize_calls;
@@ -93,3 +95,4 @@ CORBA::Boolean operator>> (mock_stream &, mock_reference *&)
   mock_reference::deserialize_calls ();
   return true;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL

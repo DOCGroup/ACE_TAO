@@ -23,7 +23,7 @@
 #include <boost/weak_ptr.hpp>
 
 using namespace boost::unit_test_framework;
-using namespace TAO;
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 typedef unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
 
@@ -109,7 +109,7 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-test_suite *
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
   test_suite * ts =

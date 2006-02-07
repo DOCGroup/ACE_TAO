@@ -14,6 +14,8 @@
 #include "generic_sequence.hpp"
 #include "object_reference_sequence_element.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -99,4 +101,5 @@ private:
 
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_unbounded_object_reference_sequence_hpp

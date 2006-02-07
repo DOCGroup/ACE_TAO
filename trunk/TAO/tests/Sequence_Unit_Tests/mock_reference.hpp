@@ -14,6 +14,9 @@
 
 #include "testing_counters.hpp"
 
+#include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward declare the class a CORBA::release function for it.  That
 // avoids having to introduce CORBA::Object into the tests.
 // Ideally the T_var and T_out types should accept mock objects
@@ -26,7 +29,11 @@ void release(mock_reference*);
 
 class mock_stream;
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "tao/Objref_VarOut_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef mock_reference *mock_reference_ptr;
 typedef TAO_Objref_Var_T<mock_reference> mock_reference_var;
@@ -96,5 +103,5 @@ namespace TAO
     static CORBA::Boolean marshal (mock_reference_ptr p, TAO_OutputCDR & cdr);
   };
 }
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_mock_reference_hpp

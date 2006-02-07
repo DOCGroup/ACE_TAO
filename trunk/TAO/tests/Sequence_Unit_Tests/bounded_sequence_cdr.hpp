@@ -11,6 +11,8 @@
  * @author Johnny Willemsen
  */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO {
   namespace details {
     template <typename stream, typename sequence>
@@ -53,4 +55,5 @@ namespace TAO {
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* guard_bounded_sequence_cdr */
