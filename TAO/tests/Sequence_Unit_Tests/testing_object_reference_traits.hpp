@@ -56,6 +56,7 @@ testing_object_reference_traits<object_t,object_t_var>::duplicate_calls;
 template<typename object_t,typename object_t_var> call_counter
 testing_object_reference_traits<object_t,object_t_var>::release_calls;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 namespace details
@@ -69,5 +70,6 @@ struct object_reference_traits<object_t,object_t_var,true>
 
 } // namespace details
 } // namespace TAO
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_testing_object_reference_traits_hpp

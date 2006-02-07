@@ -15,6 +15,8 @@
 #include <algorithm>
 #include <functional>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 namespace details
@@ -78,4 +80,5 @@ struct object_reference_traits
 } // namespace details
 } // namespace CORBA
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_object_reference_traits_hpp

@@ -10,8 +10,11 @@
  *
  * @author Carlos O'Ryan
  */
+#include "tao/Basic_Types.h"
 
 #include <algorithm>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -45,5 +48,7 @@ struct value_traits
 
 } // namespace details
 } // namespace CORBA
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_value_traits_hpp

@@ -14,6 +14,8 @@
 #include "tao/CORBA_String.h"
 #include "tao/Managed_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 namespace details
@@ -79,4 +81,5 @@ struct string_traits_base<CORBA::WChar>
 } // namespace details
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_string_traits_base_hpp

@@ -15,6 +15,8 @@
 #include "value_traits.hpp"
 #include "generic_sequence.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -90,5 +92,7 @@ private:
 };
 
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_bounded_string_sequence_hpp

@@ -16,6 +16,8 @@
 
 #include "tao/Objref_VarOut_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class fwd_mock_reference;
 typedef fwd_mock_reference * fwd_mock_reference_ptr;
 typedef TAO_Objref_Var_T<fwd_mock_reference> fwd_mock_reference_var;
@@ -33,4 +35,5 @@ struct Objref_Traits< fwd_mock_reference>
 };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_fwd_mock_reference_hpp
