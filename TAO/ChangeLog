@@ -1,3 +1,16 @@
+Tue Feb  7 21:07:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp
+        
+          Surrounded valuetype CDR operators with versioned namespace
+          macros. 
+        
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h
+        * tests/NestedUpcall/MT_Client_Test/local_server.h
+        
+          Surrounded forward declarations of ACE/TAO types with versioned
+          namespace macros. 
+        
 Mon Feb  6 16:46:57 Pacific Standard Time 2006    Ossama Othman  <ossama_othman at symantec dot com>
 
         * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
