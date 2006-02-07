@@ -1,6 +1,6 @@
 Tue Feb  7 22:40:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
-        * M tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp
+        * tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp
         * tests/Sequence_Unit_Tests/bounded_object_reference_sequence.hpp
         * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp
         * tests/Sequence_Unit_Tests/bounded_reference_allocation_traits.hpp
