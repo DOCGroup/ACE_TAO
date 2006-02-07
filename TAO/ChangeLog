@@ -1,3 +1,61 @@
+Tue Feb  7 22:40:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * M tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence.hpp
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/bounded_reference_allocation_traits.hpp
+        * tests/Sequence_Unit_Tests/bounded_sequence_cdr.hpp
+        * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp
+        * tests/Sequence_Unit_Tests/bounded_string_sequence.hpp
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/bounded_value_allocation_traits.hpp
+        * tests/Sequence_Unit_Tests/bounded_value_sequence.hpp
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/bounded_wstring_sequence.hpp
+        * tests/Sequence_Unit_Tests/fwd_mock_reference.cpp
+        * tests/Sequence_Unit_Tests/fwd_mock_reference.hpp
+        * tests/Sequence_Unit_Tests/generic_sequence.hpp
+        * tests/Sequence_Unit_Tests/mock_reference.cpp
+        * tests/Sequence_Unit_Tests/mock_reference.hpp
+        * tests/Sequence_Unit_Tests/mock_stream.cpp
+        * tests/Sequence_Unit_Tests/mock_stream.hpp
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element.hpp
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp
+        * tests/Sequence_Unit_Tests/object_reference_traits.hpp
+        * tests/Sequence_Unit_Tests/object_reference_traits_base.hpp
+        * tests/Sequence_Unit_Tests/range_checking.hpp
+        * tests/Sequence_Unit_Tests/string_sequence_element.hpp
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp
+        * tests/Sequence_Unit_Tests/string_traits.hpp
+        * tests/Sequence_Unit_Tests/string_traits_base.hpp
+        * tests/Sequence_Unit_Tests/testing_allocation_traits.hpp
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp
+        * tests/Sequence_Unit_Tests/testing_object_reference_traits.hpp
+        * tests/Sequence_Unit_Tests/testing_range_checking.hpp
+        * tests/Sequence_Unit_Tests/testing_string_traits.hpp
+        * tests/Sequence_Unit_Tests/unbounded_basic_string_sequence.hpp
+        * tests/Sequence_Unit_Tests/unbounded_fwd_object_reference_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence.hpp
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence.hpp
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_reference_allocation_traits.hpp
+        * tests/Sequence_Unit_Tests/unbounded_sequence_cdr.hpp
+        * tests/Sequence_Unit_Tests/unbounded_sequence_cdr_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_value_allocation_traits.hpp
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/unbounded_wstring_sequence.hpp
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp
+        * tests/Sequence_Unit_Tests/value_traits.hpp
+        
+          Fixes for versioned namespace compile problems.  Thanks to
+          Ossama Othman (ossama_othman at symantec dot com) for providing
+          assistance..
+        
 Tue Feb  7 21:07:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp

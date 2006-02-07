@@ -7,6 +7,11 @@
  *
  * @author Johnny Willemsen
  */
+
+#include <boost/test/unit_test.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
@@ -14,15 +19,11 @@
 
 #include "value_sequence_tester.hpp"
 
-#include <boost/test/unit_test.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
-
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
 
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 using namespace boost::unit_test_framework;
-using namespace TAO;
 
 typedef unbounded_value_sequence<CORBA::Octet> tested_sequence;
 typedef tested_sequence::element_traits tested_element_traits;
@@ -426,7 +427,9 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-test_suite *
+using namespace boost::unit_test_framework;
+
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
   test_suite * ts =
@@ -445,4 +448,3 @@ init_unit_test_suite(int, char*[])
 
   return ts;
 }
-

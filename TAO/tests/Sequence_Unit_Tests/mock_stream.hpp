@@ -14,6 +14,8 @@
 #include "testing_counters.hpp"
 #include "tao/Basic_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class mock_stream
  *
@@ -32,5 +34,7 @@ public:
 
 CORBA::Boolean operator<< (mock_stream &, const CORBA::ULong);
 CORBA::Boolean operator>> (mock_stream &, CORBA::ULong &);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_mock_stream_hpp

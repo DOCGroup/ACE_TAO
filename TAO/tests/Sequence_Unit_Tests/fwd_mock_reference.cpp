@@ -7,6 +7,8 @@
  */
 #include "fwd_mock_reference.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 fwd_mock_reference *
 TAO::Objref_Traits<fwd_mock_reference>::duplicate (
     fwd_mock_reference_ptr
@@ -36,3 +38,5 @@ TAO::Objref_Traits<fwd_mock_reference>::marshal (
 {
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

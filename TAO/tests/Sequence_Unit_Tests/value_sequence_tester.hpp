@@ -9,10 +9,13 @@
  *
  * @author Carlos O'Ryan
  */
+#include "tao/Basic_Types.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class tested_sequence,
     class tested_allocation_traits>
@@ -262,4 +265,5 @@ private:
   boost::weak_ptr<value_sequence_tester> self_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_value_sequence_tester_hpp

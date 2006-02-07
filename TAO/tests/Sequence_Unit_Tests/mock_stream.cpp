@@ -7,6 +7,8 @@
  */
 #include "mock_stream.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 call_counter mock_stream::serialize_calls;
 call_counter mock_stream::deserialize_calls;
 
@@ -30,3 +32,4 @@ CORBA::Boolean operator>> (mock_stream &, CORBA::ULong &)
   return true;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

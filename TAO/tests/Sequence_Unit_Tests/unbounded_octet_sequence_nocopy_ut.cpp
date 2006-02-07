@@ -23,7 +23,7 @@
 #include "tao/CDR.h"
 
 using namespace boost::unit_test_framework;
-using namespace TAO;
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 typedef unbounded_value_sequence<CORBA::Octet> tested_sequence;
 typedef tested_sequence::element_traits tested_element_traits;
@@ -465,7 +465,7 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-test_suite *
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
   test_suite * ts =

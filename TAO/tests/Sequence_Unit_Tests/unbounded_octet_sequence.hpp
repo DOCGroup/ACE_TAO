@@ -23,6 +23,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 template<>
@@ -276,6 +278,7 @@ private:
 
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif
 
 #endif // guard_unbounded_octet_sequence_hpp
