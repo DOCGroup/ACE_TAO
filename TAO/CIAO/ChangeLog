@@ -1,3 +1,9 @@
+Tue Feb  7 16:10:10 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/NodeManager.mpc
+        
+          Fixed an ordering problem.
+
 Mon Feb  6 19:13:13 UTC 2006  William Otte    <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc

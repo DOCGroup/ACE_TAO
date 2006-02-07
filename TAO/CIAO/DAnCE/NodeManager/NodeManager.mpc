@@ -4,7 +4,7 @@
 //For static D&C, the NodeManager should be available as a linkable library
 project(NodeManager_svnt): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
   sharedname = NodeManager
-  after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub
+  after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub NoOp_Configurator
   libs += NodeManager_stub NodeApplicationManager TargetManager_stub CIAO_NoOp_Configurator
   includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/Interfaces $(CIAO_ROOT)/DAnCE/TargetManager
   dynamicflags = NODEMANAGER_SVNT_BUILD_DLL
