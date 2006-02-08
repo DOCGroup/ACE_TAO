@@ -1,0 +1,32 @@
+#
+# $Id$
+#
+# Makefile flags for recursive invocations of make
+#
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG
+!endif
+
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif
+
+!ifdef CODEGUARD
+CODEGUARD_FLAG = -DCODEGUARD
+!endif
+
+!ifdef INSTALL_DIR
+INSTALL_DIR_FLAG = -DINSTALL_DIR=$(INSTALL_DIR)
+!endif
+
+!ifdef UNICODE
+UNICODE_FLAG = -DUNICODE
+!endif
+
+!ifdef NO_FULL_PATH
+NO_FULL_PATH_FLAG = -DNO_FULL_PATH
+!endif
+
+MAKE_FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(UNICODE_FLAG) \
+       $(CODEGUARD_FLAG) $(INSTALL_DIR_FLAG) $(NO_FULL_PATH_FLAG)
