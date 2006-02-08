@@ -1,0 +1,2 @@
+Default corbaloc:iiop:localhost:10000/ServerActivator
+Remote  corbaloc:iiop:localhost:12000/ServerActivator
