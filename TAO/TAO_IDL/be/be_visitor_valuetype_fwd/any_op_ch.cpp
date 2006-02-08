@@ -85,6 +85,7 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       // corresponding to their module, others do not.
       *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
 
+      *os << be_global->core_versioning_begin () << be_nl;
       be_util::gen_nested_namespace_begin (os, module);
 
       // emit  nested variation of any operators
@@ -99,10 +100,12 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
           << node->local_name () << " *&);";
 
       be_util::gen_nested_namespace_end (os, module);
-
+      *os << be_global->core_versioning_end () << be_nl;
       // emit #else
       *os << "#else\n\n";
     }
+  
+  *os << be_global->core_versioning_begin () << be_nl;
 
   *os << macro << " void"
       << " operator<<= ( ::CORBA::Any &, " << node->name ()
@@ -113,7 +116,8 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
   *os << macro << " ::CORBA::Boolean"
       << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
-
+  
+  *os << be_global->core_versioning_end () << be_nl;
   if (module != 0)
     {
       *os << "\n\n#endif";
