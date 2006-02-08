@@ -1,3 +1,11 @@
+Wed Feb  8 04:46:33 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
+        
+          Added versioned namespace macros to generation of
+          any insertion/extraction operators.  Thanks to Ossama
+          Othman for pointing out this problem. 
+
 Tue Feb  7 22:40:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp
