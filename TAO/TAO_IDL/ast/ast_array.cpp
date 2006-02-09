@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (ast, 
-           ast_array, 
+ACE_RCSID (ast,
+           ast_array,
            "$Id$")
 
 // Constructor(s) and destructor.
@@ -98,13 +98,13 @@ AST_Array::AST_Array (void)
 AST_Array::AST_Array (UTL_ScopedName *n,
                       unsigned long nd,
                       UTL_ExprList *ds,
-                      idl_bool local,
-                      idl_bool abstract)
+                      bool local,
+                      bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_array,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_array,
               n),
     AST_ConcreteType (AST_Decl::NT_array,
@@ -188,7 +188,7 @@ AST_Array::compute_size_type (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_array::compute_size_type - "
-                         "bad base type\n"), 
+                         "bad base type\n"),
                         -1);
     }
 

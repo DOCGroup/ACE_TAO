@@ -58,7 +58,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  node->cli_stub_cdr_op_gen (I_TRUE);
+  node->cli_stub_cdr_op_gen (true);
 
   if (this->visit_scope (node) == -1)
     {

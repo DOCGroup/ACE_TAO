@@ -139,7 +139,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (I_TRUE);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 

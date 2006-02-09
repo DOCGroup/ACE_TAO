@@ -127,7 +127,7 @@ AST_Module::fe_add_predefined_type (AST_PredefinedType *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -160,7 +160,7 @@ AST_Module::fe_add_predefined_type (AST_PredefinedType *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -193,7 +193,7 @@ AST_Module::fe_add_module (AST_Module *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -252,7 +252,7 @@ AST_Module::fe_add_module (AST_Module *t)
 
       // Add it to set of locally referenced symbols.
       this->add_to_referenced (t,
-                               I_FALSE,
+                               false,
                                t->local_name ());
     }
 
@@ -272,7 +272,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
   AST_Interface *fwd = 0;
 
   // Already defined?
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_interface)
@@ -342,7 +342,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
   return t;
 }
@@ -355,7 +355,7 @@ AST_Module::fe_add_valuebox (AST_ValueBox *t)
   AST_Decl *predef = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (predef))
         {
@@ -389,7 +389,7 @@ AST_Module::fe_add_valuebox (AST_ValueBox *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
   return t;
 }
@@ -408,7 +408,7 @@ AST_Module::fe_add_valuetype (AST_ValueType *t)
   AST_ValueType *fwd = 0;
 
   // Already defined?
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_valuetype)
@@ -477,7 +477,7 @@ AST_Module::fe_add_valuetype (AST_ValueType *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
   return t;
 }
@@ -495,7 +495,7 @@ AST_Module::fe_add_eventtype (AST_EventType *t)
   AST_EventType *fwd = 0;
 
   // Already defined?
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_eventtype)
@@ -564,7 +564,7 @@ AST_Module::fe_add_eventtype (AST_EventType *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
   return t;
 }
@@ -582,7 +582,7 @@ AST_Module::fe_add_component (AST_Component *t)
   AST_Component *fwd = 0;
 
   // Already defined?
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_component)
@@ -651,7 +651,7 @@ AST_Module::fe_add_component (AST_Component *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
   return t;
 }
@@ -663,7 +663,7 @@ AST_Module::fe_add_home (AST_Home *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -709,7 +709,7 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (i, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (i, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -770,7 +770,7 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (i,
-                           I_FALSE,
+                           false,
                            i->local_name ());
 
   return i;
@@ -784,7 +784,7 @@ AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (v, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (v, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -851,7 +851,7 @@ AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (v,
-                           I_FALSE,
+                           false,
                            v->local_name ());
 
   return v;
@@ -865,7 +865,7 @@ AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (v, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (v, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -932,7 +932,7 @@ AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (v,
-                           I_FALSE,
+                           false,
                            v->local_name ());
 
   return v;
@@ -946,7 +946,7 @@ AST_Module::fe_add_component_fwd (AST_ComponentFwd *c)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (c, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (c, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -1013,7 +1013,7 @@ AST_Module::fe_add_component_fwd (AST_ComponentFwd *c)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (c,
-                           I_FALSE,
+                           false,
                            c->local_name ());
 
   return c;
@@ -1026,7 +1026,7 @@ AST_Module::fe_add_constant (AST_Constant *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1059,7 +1059,7 @@ AST_Module::fe_add_constant (AST_Constant *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1072,7 +1072,7 @@ AST_Module::fe_add_exception (AST_Exception *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1105,7 +1105,7 @@ AST_Module::fe_add_exception (AST_Exception *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1116,7 +1116,7 @@ AST_Union *
 AST_Module::fe_add_union (AST_Union *t)
 {
   AST_UnionFwd *fwd = 0;
-  AST_Decl *predef = this->lookup_for_add (t, I_FALSE);
+  AST_Decl *predef = this->lookup_for_add (t, false);
 
   if (predef != 0)
     {
@@ -1188,7 +1188,7 @@ AST_Module::fe_add_union (AST_Union *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1202,7 +1202,7 @@ AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -1262,7 +1262,7 @@ AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   // Must check later that all struct and union forward declarations
@@ -1278,7 +1278,7 @@ AST_Module::fe_add_structure (AST_Structure *t)
   AST_Decl *predef = 0;
   AST_StructureFwd *fwd = 0;
 
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_struct_fwd)
@@ -1348,7 +1348,7 @@ AST_Module::fe_add_structure (AST_Structure *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1362,7 +1362,7 @@ AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -1422,7 +1422,7 @@ AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   // Must check later that all struct and union forward declarations
@@ -1438,7 +1438,7 @@ AST_Module::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1471,7 +1471,7 @@ AST_Module::fe_add_enum (AST_Enum *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1487,7 +1487,7 @@ AST_Module::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add(t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add(t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1520,7 +1520,7 @@ AST_Module::fe_add_enum_val (AST_EnumVal *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1533,7 +1533,7 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add(t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add(t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1566,7 +1566,7 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   AST_Type *bt = t->base_type ();
@@ -1575,7 +1575,7 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
   if (mru != 0)
     {
       this->add_to_referenced (bt,
-                               I_FALSE,
+                               false,
                                mru->first_component ());
     }
 
@@ -1589,7 +1589,7 @@ AST_Module::fe_add_native (AST_Native *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1622,7 +1622,7 @@ AST_Module::fe_add_native (AST_Native *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1660,7 +1660,7 @@ AST_Module::set_has_nested_valuetype (void)
   this->pd_has_nested_valuetype = 1;
 }
 
-idl_bool
+bool
 AST_Module::has_nested_valuetype (void)
 {
   return this->pd_has_nested_valuetype;
@@ -1676,7 +1676,7 @@ AST_Module::be_add_interface (AST_Interface *i,
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (i,
-                           I_FALSE,
+                           false,
                            i->local_name (),
                            ix);
 
@@ -1684,17 +1684,17 @@ AST_Module::be_add_interface (AST_Interface *i,
 }
 
 // Has this node been referenced here before?
-idl_bool
+bool
 AST_Module::referenced (AST_Decl *e,
                         Identifier *id)
 {
-  idl_bool refd = this->UTL_Scope::referenced (e, id);
-  
+  bool refd = this->UTL_Scope::referenced (e, id);
+
   if (refd)
     {
-      return I_TRUE;
+      return true;
     }
-    
+
   return this->look_in_previous (e->local_name (), true) != 0;
 }
 
@@ -1763,11 +1763,11 @@ AST_Module::look_in_previous (Identifier *e, bool ignore_fwd)
        iter.advance ())
     {
       iter.next (d);
-      
+
       if (ignore_fwd)
         {
           AST_Decl::NodeType nt = (*d)->node_type ();
-          
+
           if (nt == AST_Decl::NT_interface_fwd
               || nt == AST_Decl::NT_eventtype_fwd
               || nt == AST_Decl::NT_component_fwd

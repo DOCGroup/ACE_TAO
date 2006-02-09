@@ -91,6 +91,6 @@ int be_visitor_union_ci::visit_union (be_union *node)
                         -1);
     }
 
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }

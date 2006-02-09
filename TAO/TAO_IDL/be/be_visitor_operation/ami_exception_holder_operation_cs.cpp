@@ -205,8 +205,8 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
       << "this->marshaled_exception ().get_buffer ()," << be_nl
       << "this->marshaled_exception ().length ()," << be_nl
       << "this->byte_order ()," << be_nl
-      << "this->is_system_exception ()" << be_nl
-      << "ACE_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl;
+      << "this->is_system_exception ()" << env_arg
+      << ");" << be_uidt << be_uidt_nl;
 
   *os << "}\n\n";
 #else

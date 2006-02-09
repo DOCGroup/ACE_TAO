@@ -151,6 +151,6 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   *os << ";";
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

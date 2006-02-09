@@ -213,15 +213,15 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
-          << "virtual void ciao_preactivate (" << be_idt << be_idt_nl
-          << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << "virtual void ciao_preactivate (" << be_idt << be_idt
+          << env_sngl_dflts << be_uidt_nl
           << ")" << be_nl
           << "ACE_THROW_SPEC ((" << be_idt_nl
           << "::CORBA::SystemException," << be_nl
           << "::Components::CCMException" << be_uidt_nl
           << "));" << be_uidt_nl << be_nl
-          << "virtual void ciao_postactivate (" << be_idt << be_idt_nl
-          << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << "virtual void ciao_postactivate (" << be_idt << be_idt
+          << env_sngl_dflts << be_uidt_nl
           << ")" << be_nl
           << "ACE_THROW_SPEC ((" << be_idt_nl
           << "::CORBA::SystemException," << be_nl
@@ -238,8 +238,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // The _is_a method
   *os << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char *type_id" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "const char *type_id" << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // The _interface_repository_id method.
@@ -386,7 +385,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }
 
@@ -452,14 +451,14 @@ be_visitor_interface_ch::gen_xxx_narrow (const char *nar,
 
   if (node->is_abstract ())
     {
-      *os << "::CORBA::AbstractBase_ptr obj" << be_nl;
+      *os << "::CORBA::AbstractBase_ptr obj";
     }
   else
     {
-      *os << "::CORBA::Object_ptr obj" << be_nl;
+      *os << "::CORBA::Object_ptr obj";
     }
 
-  *os << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+  *os << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   return true;

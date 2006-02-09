@@ -84,31 +84,27 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the skeleton class name.
-  *os << "class " << class_name.c_str () << ";" << be_nl;
+  *os << be_nl << be_nl
+      << "class " << class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
   *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
-      << "_ptr;" << be_nl << be_nl;
+      << "_ptr;";
 
 
   if (be_global->gen_direct_collocation ())
     {
-      *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
+      *os << be_nl << be_nl
+          << "class " << node->direct_proxy_impl_name () << ";" << be_nl
+          << "class " << node->strategized_proxy_broker_name () << ";";
     }
-
-  if (be_global->gen_direct_collocation ())
-    {
-      *os << "class " << node->strategized_proxy_broker_name ()
-          << ";" << be_nl;
-    }
-
-  *os << be_nl;
 
   // Now generate the class definition.
-  *os << "class " << be_global->skel_export_macro ()
+  *os << be_nl << be_nl
+      << "class " << be_global->skel_export_macro ()
       << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
 
   long n_parents = node->n_inherits ();
@@ -169,8 +165,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
           << be_nl
           << "virtual ::CORBA::Boolean ciao_is_substitutable ("
           << be_idt << be_idt_nl
-          << "const char *event_repo_id" << be_nl
-          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << "const char *event_repo_id" << env_dflts << be_uidt_nl
           << ")" << be_nl
           << "ACE_THROW_SPEC (( ::CORBA::SystemException));"
           << be_uidt_nl << be_nl;
@@ -178,56 +173,49 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // _is_a
   *os << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "const char* logical_type_id" << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
       << "void * servant_upcall," << be_nl
-      << "void * servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void * servant" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _non_existent method.
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
       << "void * servant_upcall," << be_nl
-      << "void * servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void * servant" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _interface method.
   *os << "static void _interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
       << "void * servant_upcall," << be_nl
-      << "void * servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void * servant" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _component method.
   *os << "static void _component_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
       << "void * servant_upcall," << be_nl
-      << "void * servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void * servant" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _repository_id method.
   *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
       << "void * servant_upcall," << be_nl
-      << "void * servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void * servant" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
-      << "void * servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void * servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   this->this_method (node);
@@ -392,7 +380,7 @@ be_visitor_interface_sh::this_method (be_interface *node)
 
   // Print out the _this() method.
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << env_dflts << be_uidt_nl
       << ");" << be_uidt << be_nl;
 }
 
@@ -400,7 +388,7 @@ int
 be_visitor_interface_sh::generate_amh_classes (be_interface *node)
 {
   // We have to check for any abstract ancestor until AMH is integrated
-  // with abstract interfaces. If the node itself is abstract, this 
+  // with abstract interfaces. If the node itself is abstract, this
   // visitor would not be created.
   if (be_global->gen_amh_classes () && !node->has_mixed_parentage ())
   {

@@ -10,8 +10,8 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_home, 
+ACE_RCSID (ast,
+           ast_home,
            "$Id$")
 
 AST_Home::AST_Home (void)
@@ -34,8 +34,8 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                     long n_supports,
                     AST_Interface **supports_flat,
                     long n_supports_flat)
-  : COMMON_Base (I_FALSE,
-                 I_FALSE),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_home,
               n),
     AST_Type (AST_Decl::NT_home,
@@ -46,8 +46,8 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
-                   I_FALSE,
-                   I_FALSE),
+                   false,
+                   false),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
     pd_primary_key (primary_key)
@@ -64,22 +64,22 @@ AST_Home::~AST_Home (void)
 
 AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
-                             idl_bool treat_as_ref)
+                             bool treat_as_ref)
 {
   AST_Decl *d = 0;
-  
+
   if (this->pd_base_home != 0)
     {
       d = this->pd_base_home->lookup_by_name (e, treat_as_ref);
     }
-  
+
   return d;
 }
 
 // Look through supported interface list.
 AST_Decl *
 AST_Home::look_in_supported (UTL_ScopedName *e,
-                             idl_bool treat_as_ref)
+                             bool treat_as_ref)
 {
   AST_Decl *d = 0;
   AST_Interface **is = 0;
@@ -110,7 +110,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
           break;
         }
     }
-    
+
   return d;
 }
 
@@ -129,7 +129,7 @@ AST_Home::supports (void) const
   return this->pd_base_home ? this->inherits () + 1 : this->inherits ();
 }
 
-long 
+long
 AST_Home::n_supports (void) const
 {
   return this->n_inherits ();

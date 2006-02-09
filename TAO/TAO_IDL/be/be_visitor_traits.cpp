@@ -146,7 +146,7 @@ be_visitor_traits::visit_interface (be_interface *node)
                         -1);
     }
 
-  node->cli_traits_gen (I_TRUE);
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -171,7 +171,7 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
                         -1);
     }
 
-  node->cli_traits_gen (I_TRUE);
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -206,7 +206,7 @@ be_visitor_traits::visit_valuebox (be_valuebox *node)
       os->gen_endif ();
     }
 
-  node->cli_traits_gen (I_TRUE);
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -251,7 +251,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  node->cli_traits_gen (I_TRUE);
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -278,7 +278,7 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
                         -1);
     }
 
-  node->cli_traits_gen (I_TRUE);
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -456,7 +456,7 @@ be_visitor_traits::visit_array (be_array *node)
 
 //  os->gen_endif ();
 
-  node->cli_traits_gen (I_TRUE);
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -478,6 +478,6 @@ be_visitor_traits::visit_typedef (be_typedef *node)
     }
 
   this->ctx_->alias (0);
-  node->cli_traits_gen (I_TRUE);
+  node->cli_traits_gen (true);
   return 0;
 }

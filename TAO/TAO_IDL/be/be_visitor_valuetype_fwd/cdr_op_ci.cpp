@@ -92,6 +92,6 @@ be_visitor_valuetype_fwd_cdr_op_ci::visit_valuetype_fwd (
       << node->full_name () << " *&);";
 
   // Done with this.
-  node->cli_inline_cdr_op_gen (I_TRUE);
+  node->cli_inline_cdr_op_gen (true);
   return 0;
 }

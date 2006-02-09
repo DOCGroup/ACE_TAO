@@ -66,7 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
-#include "idl_bool.h"
+
 #include "idl_defines.h"
 #include "global_extern.h"
 #include "fe_extern.h"
@@ -169,17 +169,17 @@ DRV_get_line (FILE *f)
 
     if (l == 0)
       {
-        return I_FALSE;
+        return false;
       }
 
     if (*l == '\0' && feof (f))
       {
-        return I_FALSE;
+        return false;
       }
 
     if (*l == '\0')
       {
-        return I_TRUE;
+        return true;
       }
 
     i = strlen(l) - 1;
@@ -189,7 +189,7 @@ DRV_get_line (FILE *f)
         l[i] = '\0';
       }
 
-    return I_TRUE;
+    return true;
 }
 
 // Initialize the cpp argument list.
@@ -283,8 +283,6 @@ DRV_cpp_init (void)
               // TAO_IDL_INCLUDE_DIR should be in quotes,
               // e.g. "/usr/local/include/tao"
               ACE_OS::strcat (option1, TAO_IDL_INCLUDE_DIR);
-              ACE_OS::strcat (option2, TAO_IDL_INCLUDE_DIR);
-              ACE_OS::strcat (option2, "/tao");
 #else
               ACE_ERROR ((LM_WARNING,
                           "NOTE: The environment variables "
@@ -293,16 +291,17 @@ DRV_cpp_init (void)
                           "locate orb.idl\n"));
 
               ACE_OS::strcat (option1, ".");
-              ACE_OS::strcat (option2, ".");
 #endif  /* TAO_IDL_INCLUDE_DIR */
             }
         }
 
       DRV_cpp_putarg (option1);
-      DRV_cpp_putarg (option2);
       idl_global->add_include_path (ACE_CString (option1 + 2).c_str ());
-      idl_global->add_include_path (ACE_CString (option2 + 2).c_str ());
       idl_global->tao_root (option1 + 2);
+#if !defined (TAO_IDL_INCLUDE_DIR)
+      DRV_cpp_putarg (option2);
+      idl_global->add_include_path (ACE_CString (option2 + 2).c_str ());
+#endif  /* TAO_IDL_INCLUDE_DIR */
     }
 
   // Add any flags in cpp_args to cpp's arglist.

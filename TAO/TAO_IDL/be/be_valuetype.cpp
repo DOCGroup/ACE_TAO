@@ -58,7 +58,7 @@ be_valuetype::be_valuetype (void)
     }
 
   // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 }
 
 // Constructor used to build the AST.
@@ -71,9 +71,9 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                             AST_Interface **supports,
                             long n_supports,
                             AST_Interface *supports_concrete,
-                            idl_bool abstract,
-                            idl_bool truncatable,
-                            idl_bool custom)
+                            bool abstract,
+                            bool truncatable,
+                            bool custom)
   : COMMON_Base (0,
                  abstract),
     AST_Decl (AST_Decl::NT_valuetype,
@@ -129,13 +129,13 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     }
 
   // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 
   for (long i = 0; i < this->pd_n_supports; ++i)
     {
       if (this->pd_supports[i]->is_abstract ())
         {
-          this->supports_abstract_ = I_TRUE;
+          this->supports_abstract_ = true;
           break;
         }
     }
@@ -170,7 +170,7 @@ be_valuetype::redefine (AST_Interface *from)
 
 // Is true if non-virtual accessor and modifier should be generated
 // If #pragma TAO OBV opt_accessor (todo) is used or -Wb,obv_opt_accessor.
-idl_bool
+bool
 be_valuetype::opt_accessor (void)
 {
   return be_global->obv_opt_accessor ();
@@ -214,8 +214,8 @@ be_valuetype::determine_factory_style (void)
     }
 
   // Check whether we have at least one operation or not.
-  idl_bool have_operation = this->have_operation ();
-  idl_bool have_factory = 0;
+  bool have_operation = this->have_operation ();
+  bool have_factory = 0;
 
   // Try only our own scope.
   if (this->nmembers () > 0)
@@ -266,12 +266,12 @@ be_valuetype::determine_factory_style (void)
   return factory_style;
 }
 
-idl_bool
+bool
 be_valuetype::have_operation (void)
 {
   // Check whatever scope we get for operations/attributes.
 
-  idl_bool have_operation = I_FALSE;
+  bool have_operation = false;
 
   // Operations are either operations or attributes of:
   // -its own
@@ -304,7 +304,7 @@ be_valuetype::have_operation (void)
 
           if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
             {
-              have_operation = I_TRUE;
+              have_operation = true;
               break;
             }
         } // end of for loop
@@ -323,7 +323,7 @@ be_valuetype::have_operation (void)
 
           if (vt != 0 && vt->have_operation ())
             {
-              have_operation = I_TRUE;
+              have_operation = true;
               break;
             }
         }
@@ -348,15 +348,15 @@ be_valuetype::have_operation (void)
   return have_operation;
 }
 
-idl_bool
+bool
 be_valuetype::have_supported_op (be_interface * node)
 {
 
-  idl_bool have_supported_op = 0;
+  bool have_supported_op = 0;
 
   if (node->nmembers () == 0)
     {
-      return I_FALSE;
+      return false;
     }
 
   // Initialize an iterator for supported interface elements
@@ -410,7 +410,7 @@ be_valuetype::have_supported_op (be_interface * node)
   return have_supported_op;
 }
 
-idl_bool
+bool
 be_valuetype::will_have_factory (void)
 {
   FactoryStyle fs = this->determine_factory_style ();
@@ -422,19 +422,19 @@ bool
 be_valuetype::has_member (void)
 {
   AST_ValueType *parent = this->pd_inherits_concrete;
-  
+
   // We're looking for inherited members too.
   if (parent != 0)
     {
       be_valuetype *be_parent =
         be_valuetype::narrow_from_decl (parent);
-      
+
       if (be_parent->has_member ())
         {
           return true;
         }
     }
-    
+
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
@@ -444,7 +444,7 @@ be_valuetype::has_member (void)
           return true;
         }
     }
-    
+
   return false;
 }
 
@@ -458,7 +458,7 @@ be_valuetype::gen_helper_header (char *, char *)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   *os << "namespace CORBA" << be_nl
       << "{"
       << be_idt_nl
@@ -471,7 +471,7 @@ be_valuetype::gen_helper_header (char *, char *)
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;
-  
+
   return 0;
 }
 
@@ -650,7 +650,7 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
   return count;
 }
 
-idl_bool
+bool
 be_valuetype::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
   list.enqueue_tail (this);
@@ -728,7 +728,7 @@ be_valuetype::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   return this->in_recursion_;
 }
 
-idl_bool
+bool
 be_valuetype::supports_abstract (void) const
 {
   return this->supports_abstract_;
@@ -741,11 +741,11 @@ int
 be_valuetype::traverse_supports_list_graphs (
     be_interface::tao_code_emitter gen,
     TAO_OutStream *os,
-    idl_bool use_abstract_paths,
-    idl_bool use_concrete_paths
+    bool use_abstract_paths,
+    bool use_concrete_paths
   )
 {
-  idl_bool abstract_paths_only = use_abstract_paths && !use_concrete_paths;
+  bool abstract_paths_only = use_abstract_paths && !use_concrete_paths;
 
   long n_supports = this->n_supports ();
 
@@ -893,8 +893,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest &req, " << be_nl
                       << "void *obj," << be_nl
-                      << "void *context" << be_nl
-                      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+                      << "void *context" << env_dflts << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
               else
@@ -906,8 +905,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
-                      << "void *context" << be_nl
-                      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+                      << "void *context" << env_decl << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
                   *os << ancestor->full_skel_name ()
@@ -920,8 +918,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
                       << "req," << be_nl
                       << "(" << ancestor->full_skel_name ()
                       << "_ptr) impl," << be_nl
-                      << "context" << be_nl
-                      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+                      << "context" << env_arg << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}\n";
                 }

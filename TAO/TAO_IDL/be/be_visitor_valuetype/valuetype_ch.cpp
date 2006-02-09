@@ -78,7 +78,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Node valuetype inherits from other valuetypes (OMG 20.17.9)
   // (ordinary (not abstract) interfaces ignored).
 
-  *os << be_idt_nl <<": " << be_idt;
+  *os << be_idt_nl << ": " << be_idt;
 
   long i;  // loop index
   be_valuetype *inherited = 0;
@@ -134,13 +134,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   **      2.3) Make the destructor public (instead of protected)
   **      2.4) Generate a private CORBA::Exception* field.
   **      2.5) Generate the tao_marshal and tao_unmarshal methods as
-  **           non-abstarct.
+  **           non-abstract.
   **      2.6) Generate the right throw spec for the AMH ExceptionHolders
   ************************************************************************/
 
   /****************************************************************/
   // 1) Find out if the ValueType is an AMH_*ExceptionHolder
-  idl_bool is_an_amh_exception_holder = this->is_amh_exception_holder (node);
+  bool is_an_amh_exception_holder = this->is_amh_exception_holder (node);
 
   if (is_an_amh_exception_holder)
     {
@@ -151,8 +151,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
       *os << "public virtual ::CORBA::DefaultValueRefCountBase";
     }
-
-  if (node->node_type () == AST_Decl::NT_eventtype)
+  else if (node->node_type () == AST_Decl::NT_eventtype)
     {
       if (inherits_eventtype == 0)
         {
@@ -166,11 +165,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
   else if (n_inherits == 0)
     {
-      if (is_an_amh_exception_holder)
-        {
-          *os << "," << be_nl;
-        }
-
       *os << "public virtual ::CORBA::ValueBase";
     }
 
@@ -234,8 +228,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     node->traverse_supports_list_graphs (
         be_visitor_valuetype_ch::gen_supported_ops,
         os,
-        I_FALSE,
-        I_TRUE
+        false,
+        true
       );
 
   if (status == -1)
@@ -379,7 +373,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
         }
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
 
   return 0;
 }

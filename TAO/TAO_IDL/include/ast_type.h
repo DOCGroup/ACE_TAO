@@ -97,14 +97,14 @@ public:
 
   virtual ~AST_Type (void);
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
 
   // To be overridden by the subclasses interface, struct, union, and
   // the corresponding forward declaration classes.
-  virtual idl_bool is_defined (void);
+  virtual bool is_defined (void);
 
   virtual void size_type (SIZE_TYPE);
   // Set the size type.
@@ -114,26 +114,26 @@ public:
 
   // Accessors/mutators for the private members.
 
-  idl_bool has_constructor (void);
+  bool has_constructor (void);
   // Accessor for protected member.
 
-  void has_constructor (idl_bool value);
+  void has_constructor (bool value);
   // Mutator for protected member.
 
-  idl_bool ifr_added (void);
-  void ifr_added (idl_bool val);
+  bool ifr_added (void);
+  void ifr_added (bool val);
 
-  idl_bool ifr_fwd_added (void);
-  void ifr_fwd_added (idl_bool val);
+  bool ifr_fwd_added (void);
+  void ifr_fwd_added (bool val);
 
   const char *nested_type_name (AST_Decl *d,
                                 const char *suffix = 0,
                                 const char *prefix = 0);
   // Type name of a node used when generating declarations.
-  
+
   AST_Type *unaliased_type (void);
   // Utility function to make sure we are using the unaliased type.
-  
+
   virtual bool legal_for_primary_key (void) const;
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
@@ -159,30 +159,30 @@ protected:
                            const char *suffix,
                            const char *prefix);
   // Type name of a node used when generating declarations.
-  
-  idl_bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
-  
+
+  bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
+
 protected:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
-  idl_bool ifr_added_;
+  bool ifr_added_;
 
   // Has this node been forward declared in this IDL file?
-  idl_bool ifr_fwd_added_;
+  bool ifr_fwd_added_;
 
   SIZE_TYPE size_type_;
   // Whether we are fixed or variable size (by default fixed).
 
-  idl_bool has_constructor_;
+  bool has_constructor_;
   // Attribute that helps a union determine whether a member
   // should be included by value or by reference.
 
   char *nested_type_name_;
   // For the corresponding method.
-  
+
   long in_recursion_;
   // Storage once the value has been computed.
-  
+
   mutable bool recursing_in_legal_pk_;
   // Node-specific flag to abort recursion in legal_for_primary_key().
 };

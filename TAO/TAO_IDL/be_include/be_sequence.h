@@ -61,8 +61,8 @@ public:
   be_sequence (AST_Expression *v,
                AST_Type *bt,
                UTL_ScopedName *n,
-               idl_bool local,
-               idl_bool abstract);
+               bool local,
+               bool abstract);
   // Constructor.
 
   virtual int create_name (be_typedef *node);

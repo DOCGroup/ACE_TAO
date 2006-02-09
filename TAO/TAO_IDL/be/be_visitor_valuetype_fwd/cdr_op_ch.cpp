@@ -90,8 +90,8 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_hdr_cdr_op_gen (I_TRUE);
-  bfd->cli_hdr_cdr_op_gen (I_TRUE);
+  node->cli_hdr_cdr_op_gen (true);
+  bfd->cli_hdr_cdr_op_gen (true);
 
   return 0;
 }

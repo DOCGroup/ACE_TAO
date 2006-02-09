@@ -3,8 +3,8 @@
 #include "ast_native.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast, 
-           ast_native, 
+ACE_RCSID (ast,
+           ast_native,
            "$Id$")
 
 AST_Native::AST_Native (void)
@@ -29,11 +29,11 @@ AST_Native::AST_Native (UTL_ScopedName *n)
     UTL_Scope (AST_Decl::NT_native),
     AST_Structure (AST_Decl::NT_native,
                    n,
-                   I_TRUE,
-                   I_FALSE),
+                   true,
+                   false),
     AST_Exception (n,
-                   I_TRUE,
-                   I_FALSE)
+                   true,
+                   false)
 {
 }
 

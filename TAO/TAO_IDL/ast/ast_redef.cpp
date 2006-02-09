@@ -66,13 +66,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_decl.h"
 
-ACE_RCSID (ast, 
-           ast_redef, 
+ACE_RCSID (ast,
+           ast_redef,
            "$Id$")
 
 // Return TRUE if the node d represents an IDL construct whose name
 // can be redefined.
-idl_bool
+bool
 can_be_redefined (AST_Decl *d)
 {
   switch (d->node_type ())
@@ -102,7 +102,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_enum:
     case AST_Decl::NT_typedef:
     case AST_Decl::NT_valuebox:
-      return I_TRUE;
+      return true;
 
     case AST_Decl::NT_union_branch:
     case AST_Decl::NT_field:
@@ -111,7 +111,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_pre_defined:
     case AST_Decl::NT_factory:
     default:
-      return I_FALSE;
+      return false;
     }
 }
 

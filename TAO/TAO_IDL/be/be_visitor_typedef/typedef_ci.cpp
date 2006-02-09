@@ -220,7 +220,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       *os << "}" << be_nl << be_nl;
     }
 
-  bt->cli_inline_gen (I_TRUE);
+  bt->cli_inline_gen (true);
   return 0;
 }
 

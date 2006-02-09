@@ -25,8 +25,8 @@
 #include "be_visitor_context.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be, 
-           be_visitor_scope, 
+ACE_RCSID (be,
+           be_visitor_scope,
            "$Id$")
 
 // ******************************************************
@@ -196,7 +196,7 @@ be_visitor_scope::next_elem (be_decl *elem,
   return 0;
 }
 
-idl_bool
+bool
 be_visitor_scope::last_node (be_decl *bd)
 {
   be_decl *next = 0;
@@ -213,7 +213,7 @@ be_visitor_scope::last_node (be_decl *bd)
   return 1;
 }
 
-idl_bool
+bool
 be_visitor_scope::last_inout_or_out_node (be_decl *)
 {
   // Return true if we are the last inout or out argument.

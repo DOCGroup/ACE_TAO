@@ -432,7 +432,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
 
   excep_holder->set_defined_in (s);
   excep_holder->set_name (excep_holder_name);
-  excep_holder->seen_in_operation (I_TRUE);
+  excep_holder->seen_in_operation (true);
 
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
@@ -565,7 +565,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   0);
 
   inherit_vt->set_name (inherit_name);
-  inherit_vt->seen_in_operation (I_TRUE);
+  inherit_vt->seen_in_operation (true);
 
   // Notice the valuetype "ExceptionHolder" that it is defined in the
   // "Messaging" module
@@ -607,7 +607,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   0);
 
   idl_global->scopes ().pop ();
-  excep_holder->seen_in_operation (I_TRUE);
+  excep_holder->seen_in_operation (true);
   excep_holder->cli_hdr_gen (true);
   excep_holder->set_imported (true);
 

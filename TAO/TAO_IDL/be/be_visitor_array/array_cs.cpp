@@ -352,7 +352,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  node->cli_stub_gen (I_TRUE);
+  node->cli_stub_gen (true);
   return 0;
 }
 

@@ -98,6 +98,6 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
         }
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

@@ -167,7 +167,7 @@ public:
           unsigned short      usval;    // Contains unsigned short expr value.
           long                lval;     // Contains long expression value.
           unsigned long       ulval;    // Contains unsigned long expr value.
-          unsigned long       bval;     // Contains boolean expression value.
+          bool                bval;     // Contains boolean expression value.
 #if ! defined (ACE_LACKS_LONGLONG_T)
           ACE_CDR::LongLong   llval;   // Contains long long expr value.
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
@@ -205,8 +205,7 @@ public:
 
   AST_Expression (long l);
 
-  AST_Expression (long l,
-                  ExprType t);
+  AST_Expression (bool b);
 
   AST_Expression (unsigned long ul);
 
@@ -301,7 +300,7 @@ protected:
 
   AST_ExprValue *eval_symbol (EvalKind ek);
 
-  idl_bool type_mismatch (ExprType et);
+  bool type_mismatch (ExprType et);
 
 private:
   UTL_Scope *pd_defined_in;
