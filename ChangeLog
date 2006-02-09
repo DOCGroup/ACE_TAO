@@ -1,3 +1,19 @@
+Thu Feb  9 20:07:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Time_Value.cpp:
+
+          Some platforms pollute the namespace with a max() macro, which
+          makes it impossible to invoke std::numeric_limits<T>::max().
+          #undef max after all the headers have been #included.
+
+Thu Feb  9 18:51:16 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          #include <sys/types.h> in the ACE_HAS_2_PARAM_SCHED_GETAFFINITY
+          and ACE_HAS_2_PARAM_SCHED_SETAFFININTY feature tests.  Thanks to
+          Doug McCorkle <mccdo at iastate dot edu> for reporting this bug.
+
 Thu Feb  9 20:05:00 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_other_tests.lst:
