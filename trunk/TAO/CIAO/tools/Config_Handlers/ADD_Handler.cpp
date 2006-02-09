@@ -21,6 +21,7 @@ namespace CIAO
         const DeploymentPlan &src,
         ::Deployment::ArtifactDeploymentDescriptions &dest)
     {
+      CIAO_TRACE("ADD_Handler::atrifact_deployment_descrs");
       DeploymentPlan::artifact_const_iterator aci_e =
         src.end_artifact ();
       dest.length (src.count_artifact ());
@@ -43,6 +44,7 @@ namespace CIAO
         Deployment::ArtifactDeploymentDescription &dest,
         CORBA::ULong pos)
     {
+      CIAO_TRACE("ADD_Handler::atrifact_deployment_descr");
       dest.name = src.name ().c_str ();
 
       dest.node = src.node ().c_str ();
@@ -127,39 +129,40 @@ namespace CIAO
       ADD_Handler::artifact_deployment_descr (
 	  const Deployment::ArtifactDeploymentDescription &src)
       {
+        CIAO_TRACE("ADD_Handler::atrifact_deployment_descr - reverse");
 	  //Get the name and node and store them in the add
-	  XMLSchema::string< char > name ((src.name));
-	  XMLSchema::string< char > node ((src.node));
-	  
-	  ArtifactDeploymentDescription add (name,node);
-
-	  //Get the location(s) and store it/them in the add
-	  size_t total = src.location.length ();
-	  for (size_t i = 0; i < total; ++i)
+        XMLSchema::string< char > name ((src.name));
+        XMLSchema::string< char > node ((src.node));
+        
+        ArtifactDeploymentDescription add (name,node);
+        
+        //Get the location(s) and store it/them in the add
+        size_t total = src.location.length ();
+        for (size_t i = 0; i < total; ++i)
 	  {
-	      XMLSchema::string< char > curr ((src.location[i]));
-	      add.add_location (curr);
+            XMLSchema::string< char > curr ((src.location[i]));
+            add.add_location (curr);
 	  }
-
-	  //As above, for the source(s)
-	  total = src.source.length ();
-	  for (size_t j = 0; j < total; ++j)
+        
+        //As above, for the source(s)
+        total = src.source.length ();
+        for (size_t j = 0; j < total; ++j)
 	  {
-	      XMLSchema::string< char > curr ((src.source[j]));
-	      add.add_source (curr);
+            XMLSchema::string< char > curr ((src.source[j]));
+            add.add_source (curr);
 	  }  
-
-	  //As above for the execParameter(s)
-	  total = src.execParameter.length ();
+        
+        //As above for the execParameter(s)
+        total = src.execParameter.length ();
 	  for (size_t k = 0; k < total; ++k)
-	  {
+            {
 	      add.add_execParameter (
 		  Property_Handler::get_property (
 		      src.execParameter[k]));
-	  }
-        
+            }
+          
 	  return add;       
-    }
+      }
 
     
 

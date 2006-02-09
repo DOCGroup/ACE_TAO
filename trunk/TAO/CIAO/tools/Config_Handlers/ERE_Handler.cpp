@@ -3,7 +3,7 @@
 #include "ERE_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
-
+#include "ciao/CIAO_common.h"
 namespace CIAO
 {
   namespace Config_Handlers
@@ -13,6 +13,7 @@ namespace CIAO
         const PlanConnectionDescription &src,
         Deployment::ExternalReferenceEndpoints &dest)
     {
+      CIAO_TRACE("ERE_Handler::external_ref_endpoints");
       PlanConnectionDescription::externalReference_const_iterator erep_e =
         src.end_externalReference ();
 
@@ -33,6 +34,7 @@ namespace CIAO
         const ExternalReferenceEndpoint &src,
         Deployment::ExternalReferenceEndpoint &dest)
     {
+      CIAO_TRACE("ERE_Handler::external_ref_endpoint");
       dest.location =
         src.location ().c_str ();
     }
@@ -41,6 +43,7 @@ namespace CIAO
     ERE_Handler::external_ref_endpoint (
         const Deployment::ExternalReferenceEndpoint& src)
     {
+      CIAO_TRACE("ERE_Handler::external_ref_endpoint - reverse");
       XMLSchema::string< char > loc ((src.location));
       ExternalReferenceEndpoint erp (loc);
       return erp;

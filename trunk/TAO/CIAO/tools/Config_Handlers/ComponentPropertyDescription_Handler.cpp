@@ -3,7 +3,7 @@
 #include "ComponentPropertyDescription_Handler.h"
 #include "DataType_Handler.h"
 #include "ciao/Deployment_DataC.h"
-
+#include "ciao/CIAO_common.h"
 namespace CIAO
 {
   namespace Config_Handlers
@@ -13,6 +13,7 @@ namespace CIAO
         const ComponentPropertyDescription& desc,
         ::Deployment::ComponentPropertyDescription& toconfig)
     {
+      CIAO_TRACE("ComponentPropertyDescription_Handler::component_property_description");
       toconfig.name = CORBA::string_dup (desc.name ().c_str ());
 
       // Delegate the DataType to the
@@ -29,6 +30,7 @@ namespace CIAO
     ComponentPropertyDescription_Handler::component_property_description (
       const ::Deployment::ComponentPropertyDescription &src)
     {
+      CIAO_TRACE("ComponentPropertyDescription_Handler::component_property_description - reverse");
       XMLSchema::string< char > name ((src.name));
       DataType dt (DataType_Handler::data_type (src.type));
       ComponentPropertyDescription cpd (name,dt);
