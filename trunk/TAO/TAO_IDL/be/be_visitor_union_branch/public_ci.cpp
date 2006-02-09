@@ -351,7 +351,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       ub->gen_default_label_value (os, bu);
     }
 
-  idl_bool bt_is_defined = node->is_defined ();
+  bool bt_is_defined = node->is_defined ();
 
   *os << ";" << be_nl
       << "typedef "
@@ -448,7 +448,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       ub->gen_default_label_value (os, bu);
     }
 
-  idl_bool bt_is_defined = node->full_definition ()->is_defined ();
+  bool bt_is_defined = node->full_definition ()->is_defined ();
 
   *os << ";" << be_nl
       << "typedef "

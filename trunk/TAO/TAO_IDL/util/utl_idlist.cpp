@@ -68,9 +68,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //   inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//   It relies on a type-unsafe cast from UTL_List to subclasses, which
+//   will cease to operate correctly if you use either multiple or
+//   public virtual inheritance.
 
 #include "utl_idlist.h"
 #include "utl_identifier.h"
@@ -80,8 +80,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (util, 
-           utl_idlist, 
+ACE_RCSID (util,
+           utl_idlist,
            "$Id$")
 
 // Constructor
@@ -164,7 +164,7 @@ UTL_IdList::compare (UTL_IdList *other)
         {
           return 1;
         }
-     
+
       return ((UTL_IdList *) this_tail)->compare (other);
     }
 
@@ -210,8 +210,8 @@ UTL_IdList::compare (UTL_IdList *other)
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  long first = I_TRUE;
-  long second = I_FALSE;
+  long first = true;
+  long second = false;
 
   for (UTL_IdListActiveIterator i (this);
        !i.is_done ();
@@ -223,7 +223,7 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
         }
       else if (second)
         {
-          first = second = I_FALSE;
+          first = second = false;
         }
 
       i.item ()->dump (o);
@@ -232,11 +232,11 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
         {
           if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
             {
-              first = I_FALSE;
+              first = false;
             }
           else
             {
-              second = I_TRUE;
+              second = true;
             }
         }
     }

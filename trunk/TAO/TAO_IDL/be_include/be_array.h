@@ -39,8 +39,8 @@ public:
   be_array (UTL_ScopedName *n,
             unsigned long ndims,
             UTL_ExprList *dims,
-            idl_bool local,
-            idl_bool abstract);
+            bool local,
+            bool abstract);
   // Constructor.
 
   ~be_array (void);

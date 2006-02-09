@@ -26,11 +26,11 @@ public:
 
   // Extend lookup to the base component.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       idl_bool treat_as_ref);
+                                       bool treat_as_ref);
 
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       idl_bool treat_as_ref);
+                                       bool treat_as_ref);
 
   // Utility data structure for port declarations.
   struct port_description
@@ -41,7 +41,7 @@ public:
     // Fields.
     Identifier *id;
     AST_Type *impl;
-    idl_bool is_multiple;
+    bool is_multiple;
   };
 
   // Accessors.
@@ -74,7 +74,7 @@ public:
 
   // Check if we have redefined any of our parents' operations or attributes,
   // and check if there is such a clash among the parents
-  virtual idl_bool redef_clash (void);
+  virtual bool redef_clash (void);
 
 private:
   AST_Component *pd_base_component;

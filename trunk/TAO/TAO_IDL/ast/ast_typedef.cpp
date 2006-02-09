@@ -76,8 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (ast, 
-           ast_typedef, 
+ACE_RCSID (ast,
+           ast_typedef,
            "$Id$")
 
 AST_Typedef::AST_Typedef (void)
@@ -90,8 +90,8 @@ AST_Typedef::AST_Typedef (void)
 
 AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_ScopedName *n,
-                          idl_bool local,
-                          idl_bool abstract)
+                          bool local,
+                          bool abstract)
   : COMMON_Base (bt->is_local () || local,
                  abstract),
     AST_Decl (AST_Decl::NT_typedef,

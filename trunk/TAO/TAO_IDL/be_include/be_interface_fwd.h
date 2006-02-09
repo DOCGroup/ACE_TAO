@@ -48,9 +48,9 @@ public:
   virtual ~be_interface_fwd (void);
   // Destructor.
 
-  virtual void seq_elem_tmplinst (idl_bool val);
-  virtual void seen_in_sequence (idl_bool val);
-  virtual void seen_in_operation (idl_bool val);
+  virtual void seq_elem_tmplinst (bool val);
+  virtual void seen_in_sequence (bool val);
+  virtual void seen_in_operation (bool val);
   // Mutator overrides for be_type members. If we have been
   // defined, we want the full definition to be set as well.
 

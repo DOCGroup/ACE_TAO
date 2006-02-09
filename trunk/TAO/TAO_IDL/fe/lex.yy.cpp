@@ -902,7 +902,7 @@ static idl_uns_long     idl_atoui (char *, long);
 static void             idl_parse_line_and_file (char *);
 static void             idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
-static idl_bool         idl_valid_version (char *);
+static bool         idl_valid_version (char *);
 static AST_Decl *       idl_find_node (char *);
 
 #define ace_tao_yytext tao_yytext
@@ -2655,9 +2655,9 @@ idl_parse_line_and_file (char *buf)
     }
 
   UTL_String *fname = idl_global->filename ();
-  idl_bool in_main_file = I_FALSE;
-  idl_bool is_real_filename = fname->compare (idl_global->real_filename ());
-  idl_bool is_main_filename = I_FALSE;
+  bool in_main_file = false;
+  bool is_real_filename = fname->compare (idl_global->real_filename ());
+  bool is_main_filename = false;
 
   if (!is_real_filename)
     {
@@ -2666,7 +2666,7 @@ idl_parse_line_and_file (char *buf)
 
   if (is_real_filename || is_main_filename)
     {
-      in_main_file = I_TRUE;
+      in_main_file = true;
     }
 
   idl_global->set_in_main_file (in_main_file);
@@ -2738,13 +2738,13 @@ idl_store_pragma (char *buf)
 
   if (ACE_OS::strstr (buf + 8, "import") != 0)
     {
-      idl_global->set_import (I_TRUE);
+      idl_global->set_import (true);
       return;
     }
 
   if (ACE_OS::strstr (buf + 8, "include") != 0)
     {
-      idl_global->set_import (I_FALSE);
+      idl_global->set_import (false);
       return;
     }
 
@@ -2770,7 +2770,7 @@ idl_store_pragma (char *buf)
 
           if (depth > 1)
             {
-              top_scope->has_prefix (I_TRUE);
+              top_scope->has_prefix (true);
               ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
@@ -2779,8 +2779,8 @@ idl_store_pragma (char *buf)
           if (idl_global->in_main_file ())
             {
               idl_global->root ()->prefix (new_prefix);
-              idl_global->root ()->set_imported (I_FALSE);
-              top_scope->has_prefix (I_TRUE);
+              idl_global->root ()->set_imported (false);
+              top_scope->has_prefix (true);
             }
 
           ACE_CString ext_id;
@@ -2871,7 +2871,7 @@ idl_store_pragma (char *buf)
             }
 
           d->repoID (new_id);
-          d->typeid_set (I_TRUE);
+          d->typeid_set (true);
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_TYPE", 14) == 0)
@@ -3205,7 +3205,7 @@ idl_get_pragma_string (char *pragma)
   return retval;
 }
 
-static idl_bool
+static bool
 idl_valid_version (char *s)
 {
   // Nothing preceding decimal point.
@@ -3268,7 +3268,7 @@ idl_find_node (char *s)
   if (node != 0)
     {
       d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
-                                                                 I_TRUE);
+                                                                 true);
     }
 
   if (d == 0)

@@ -40,7 +40,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
 
-  idl_bool first_concrete = I_TRUE;
+  bool first_concrete = true;
 
   if (node->n_inherits () > 0)
     {
@@ -60,17 +60,17 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
           if (first_concrete)
             {
-              *os << be_nl 
+              *os << be_nl
                   << "  : " << be_idt << be_idt;
             }
           else
             {
-	            *os << "," << be_nl;
+              *os << "," << be_nl;
             }
 
-          first_concrete = I_FALSE;
+          first_concrete = false;
 
-          *os << "public virtual ::" 
+          *os << "public virtual ::"
               << inherited->full_direct_proxy_impl_name ();
         }
 

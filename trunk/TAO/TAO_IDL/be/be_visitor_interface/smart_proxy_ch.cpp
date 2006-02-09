@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           smart_proxy_ch, 
+ACE_RCSID (be_visitor_interface,
+           smart_proxy_ch,
            "$Id$")
 
 
@@ -75,8 +75,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "virtual "<< node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
       << node->local_name ()
-      << "_ptr proxy" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "_ptr proxy" << env_dflts << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "};\n\n";
 
@@ -89,16 +88,14 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
       << "void register_proxy_factory (" << be_idt << be_idt_nl
       << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
-      << "int one_shot_factory = 1" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "int one_shot_factory = 1" << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl
-      << "void unregister_proxy_factory (" << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "void unregister_proxy_factory (" << be_idt << be_idt
+      << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl
       << node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
-      << node->local_name () << "_ptr proxy" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << node->local_name () << "_ptr proxy" << env_dflts << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl
       << "TAO_" << node->flat_name ()
@@ -160,11 +157,11 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 
   *os << "{" << be_nl
       << "public:" << be_idt_nl
-      << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);" 
+      << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"
       << be_nl
       // Just to keep Old g++ complier (version: 2.7.2.3) happy it's
       // necesssary to declare and define the destructor explicitly.
-      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);" 
+      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"
       << be_nl
       // This method will delegate this method to the <base_proxy_>
       // member of the smart proxy and so the smart proxy's (nil)
@@ -185,7 +182,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_ch::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 
-ACE_RCSID (ast, 
-           ast_exception, 
+ACE_RCSID (ast,
+           ast_exception,
            "$Id$")
 
 AST_Exception::AST_Exception (void)
@@ -93,8 +93,8 @@ AST_Exception::AST_Exception (void)
 }
 
 AST_Exception::AST_Exception (UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_except,
@@ -118,14 +118,14 @@ AST_Exception::~AST_Exception (void)
 // Public operations.
 
 // Are we or the parameter node involved in any recursion?
-idl_bool
+bool
 AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
       list.enqueue_tail (this);
-        
+
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
@@ -178,7 +178,7 @@ AST_Exception::fe_add_field (AST_Field *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -211,7 +211,7 @@ AST_Exception::fe_add_field (AST_Field *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   AST_Type *ft = t->field_type ();
@@ -220,7 +220,7 @@ AST_Exception::fe_add_field (AST_Field *t)
   if (mru != 0)
     {
       this->add_to_referenced (ft,
-                               I_FALSE,
+                               false,
                                mru->first_component ());
     }
 
@@ -236,7 +236,7 @@ AST_Exception::fe_add_union (AST_Union *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -269,7 +269,7 @@ AST_Exception::fe_add_union (AST_Union *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -283,7 +283,7 @@ AST_Exception::fe_add_structure (AST_Structure *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -315,7 +315,7 @@ AST_Exception::fe_add_structure (AST_Structure *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -328,7 +328,7 @@ AST_Exception::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -361,7 +361,7 @@ AST_Exception::fe_add_enum (AST_Enum *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -377,7 +377,7 @@ AST_Exception::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -410,7 +410,7 @@ AST_Exception::fe_add_enum_val (AST_EnumVal *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;

@@ -74,8 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
-           ast_interface_fwd, 
+ACE_RCSID( ast,
+           ast_interface_fwd,
            "$Id$")
 
 AST_InterfaceFwd::AST_InterfaceFwd (void)
@@ -107,18 +107,18 @@ AST_InterfaceFwd::~AST_InterfaceFwd (void)
 
 // Private operations.
 
-idl_bool
+bool
 AST_InterfaceFwd::is_local (void)
 {
   return this->full_definition ()->is_local ();
 }
 
-idl_bool AST_InterfaceFwd::is_valuetype (void)
+bool AST_InterfaceFwd::is_valuetype (void)
 {
   return this->full_definition ()->node_type () == AST_Decl::NT_valuetype;
 }
 
-idl_bool
+bool
 AST_InterfaceFwd::is_abstract_valuetype (void)
 {
   return (this->full_definition ()->is_abstract ()
@@ -167,7 +167,7 @@ AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
   this->pd_full_definition = nfd;
 }
 
-idl_bool
+bool
 AST_InterfaceFwd::is_defined (void)
 {
   return this->pd_full_definition->is_defined ();

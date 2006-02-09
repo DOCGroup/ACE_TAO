@@ -110,7 +110,7 @@ be_visitor_interface::visit_scope (be_scope *node)
   int status =
     intf->traverse_inheritance_graph (helper,
                                       this->ctx_->stream (),
-                                      I_FALSE);
+                                      false);
 
   if (status == -1)
     {

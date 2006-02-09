@@ -248,6 +248,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   *os << be_nl;
 
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }

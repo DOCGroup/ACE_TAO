@@ -136,7 +136,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   *os << node->name () << "::~" << node->local_name () << " (void)" << be_nl;
   *os << "{}\n" << be_nl;
 
-  idl_bool is_an_amh_exception_holder =
+  bool is_an_amh_exception_holder =
     this->is_amh_exception_holder (node);
 
   // Nothing to marshal if abstract valuetype.

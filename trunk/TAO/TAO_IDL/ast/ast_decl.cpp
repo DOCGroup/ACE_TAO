@@ -97,20 +97,20 @@ ACE_RCSID (ast,
            ast_decl,
            "$Id$")
 
-COMMON_Base::COMMON_Base (idl_bool local,
-                          idl_bool abstract)
+COMMON_Base::COMMON_Base (bool local,
+                          bool abstract)
   : is_local_ (local),
     is_abstract_ (abstract)
 {
 }
 
-idl_bool
+bool
 COMMON_Base::is_local (void)
 {
   return this->is_local_;
 }
 
-idl_bool
+bool
 COMMON_Base::is_abstract (void)
 {
   return this->is_abstract_;
@@ -128,20 +128,20 @@ AST_Decl::AST_Decl (void)
     repoID_ (0),
     flat_name_ (0),
     contains_wstring_ (-1),
-    pd_imported (I_FALSE),
-    pd_in_main_file (I_FALSE),
+    pd_imported (false),
+    pd_in_main_file (false),
     pd_defined_in (0),
     pd_node_type (NT_module),
     pd_line (-1),
     pd_file_name (0),
     pd_local_name (0),
     pd_original_local_name (0),
-    pd_added (I_FALSE),
+    pd_added (false),
     full_name_ (0),
     prefix_ (0),
     version_ (0),
-    anonymous_ (I_FALSE),
-    typeid_set_ (I_FALSE),
+    anonymous_ (false),
+    typeid_set_ (false),
     last_referenced_as_ (0),
     prefix_scope_ (0)
 {
@@ -149,7 +149,7 @@ AST_Decl::AST_Decl (void)
 
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
-                    idl_bool anonymous)
+                    bool anonymous)
   : COMMON_Base (),
     repoID_ (0),
     flat_name_ (0),
@@ -165,12 +165,12 @@ AST_Decl::AST_Decl (NodeType nt,
     pd_name (0),
     pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
     pd_original_local_name (0),
-    pd_added (I_FALSE),
+    pd_added (false),
     full_name_ (0),
     prefix_ (0),
     version_ (0),
     anonymous_ (anonymous),
-    typeid_set_ (I_FALSE),
+    typeid_set_ (false),
     last_referenced_as_ (0),
     prefix_scope_ (0)
 {
@@ -275,7 +275,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
     {
       AST_Decl *decl = ScopeAsDecl (this->prefix_scope_);
 
-      idl_bool overridden =
+      bool overridden =
         decl->has_ancestor (ScopeAsDecl (appeared_in));
 
       if (overridden)
@@ -351,8 +351,8 @@ AST_Decl::compute_full_name (void)
   else
     {
       size_t namelen = 0;
-      long first = I_TRUE;
-      long second = I_FALSE;
+      long first = true;
+      long second = false;
       char *name = 0;
 
       for (UTL_IdListActiveIterator i (this->name ());
@@ -365,7 +365,7 @@ AST_Decl::compute_full_name (void)
             }
           else if (second)
             {
-              first = second = I_FALSE;
+              first = second = false;
             }
 
           // Print the identifier.
@@ -377,11 +377,11 @@ AST_Decl::compute_full_name (void)
               if (ACE_OS::strcmp (name, "") != 0)
                 {
                   // Does not start with a "".
-                  first = I_FALSE;
+                  first = false;
                 }
               else
                 {
-                  second = I_TRUE;
+                  second = true;
                 }
             }
         }
@@ -390,8 +390,8 @@ AST_Decl::compute_full_name (void)
                char[namelen + 1]);
 
       this->full_name_[0] = '\0';
-      first = I_TRUE;
-      second = I_FALSE;
+      first = true;
+      second = false;
 
       for (UTL_IdListActiveIterator j (this->name ());
            !j.is_done ();
@@ -403,7 +403,7 @@ AST_Decl::compute_full_name (void)
             }
           else if (second)
             {
-              first = second = I_FALSE;
+              first = second = false;
             }
 
           // Print the identifier.
@@ -415,11 +415,11 @@ AST_Decl::compute_full_name (void)
               if (ACE_OS::strcmp (name, "") != 0)
                 {
                   // Does not start with a "".
-                  first = I_FALSE;
+                  first = false;
                 }
               else
                 {
-                  second = I_TRUE;
+                  second = true;
                 }
             }
         }
@@ -436,8 +436,8 @@ AST_Decl::compute_repoID (void)
     }
 
   size_t namelen = 4; // for the prefix "IDL:"
-  long first = I_TRUE;
-  long second = I_FALSE;
+  long first = true;
+  long second = false;
   char *name = 0;
   const char *prefix = (this->prefix_ ? this->prefix_ : "");
   UTL_Scope *scope = this->defined_in ();
@@ -494,7 +494,7 @@ AST_Decl::compute_repoID (void)
         }
       else if (second)
         {
-          first = second = I_FALSE;
+          first = second = false;
         }
 
       // Print the identifier.
@@ -515,11 +515,11 @@ AST_Decl::compute_repoID (void)
           if (ACE_OS::strcmp (name, "") != 0)
             {
               // Does not start with a "".
-              first = I_FALSE;
+              first = false;
             }
           else
             {
-              second = I_TRUE;
+              second = true;
             }
         }
     }
@@ -541,8 +541,8 @@ AST_Decl::compute_repoID (void)
       ACE_OS::strcat (this->repoID_, "/");
     }
 
-  first = I_TRUE;
-  second = I_FALSE;
+  first = true;
+  second = false;
 
   for (UTL_IdListActiveIterator j (this->name ());
        !j.is_done ();
@@ -554,7 +554,7 @@ AST_Decl::compute_repoID (void)
         }
       else if (second)
         {
-          first = second = I_FALSE;
+          first = second = false;
         }
 
       // Print the identifier.
@@ -576,11 +576,11 @@ AST_Decl::compute_repoID (void)
           if (ACE_OS::strcmp (name, "") != 0)
             {
               // Does not start with a "".
-              first = I_FALSE;
+              first = false;
             }
           else
             {
-              second = I_TRUE;
+              second = true;
             }
         }
     }
@@ -623,8 +623,8 @@ AST_Decl::compute_flat_name (void)
   else
     {
       size_t namelen = 0;
-      long first = I_TRUE;
-      long second = I_FALSE;
+      long first = true;
+      long second = false;
       char *item_name = 0;
 
       // In the first loop, compute the total length.
@@ -638,7 +638,7 @@ AST_Decl::compute_flat_name (void)
             }
           else if (second)
             {
-              first = second = I_FALSE;
+              first = second = false;
             }
 
           // Print the identifier.
@@ -650,11 +650,11 @@ AST_Decl::compute_flat_name (void)
               if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
-                  first = I_FALSE;
+                  first = false;
                 }
               else
                 {
-                  second = I_TRUE;
+                  second = true;
                 }
             }
         }
@@ -663,8 +663,8 @@ AST_Decl::compute_flat_name (void)
                char[namelen + 1]);
 
       this->flat_name_[0] = '\0';
-      first = I_TRUE;
-      second = I_FALSE;
+      first = true;
+      second = false;
 
       for (UTL_IdListActiveIterator j (this->name ());
            !j.is_done ();
@@ -676,7 +676,7 @@ AST_Decl::compute_flat_name (void)
             }
           else if (second)
             {
-              first = second = I_FALSE;
+              first = second = false;
             }
 
           // Print the identifier.
@@ -688,11 +688,11 @@ AST_Decl::compute_flat_name (void)
               if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
-                  first = I_FALSE;
+                  first = false;
                 }
               else
                 {
-                  second = I_TRUE;
+                  second = true;
                 }
             }
         }
@@ -701,12 +701,12 @@ AST_Decl::compute_flat_name (void)
 
 // Return TRUE if one of my ancestor scopes is "s"
 // and FALSE otherwise.
-idl_bool
+bool
 AST_Decl::has_ancestor (AST_Decl *s)
 {
   if (this == s)
     {
-      return I_TRUE;
+      return true;
     }
 
   if (s->node_type () == AST_Decl::NT_module)
@@ -718,7 +718,7 @@ AST_Decl::has_ancestor (AST_Decl *s)
         {
           if (this == other_opening)
             {
-              return I_TRUE;
+              return true;
             }
 
           other_opening = enclosing->lookup_by_name_local (s->local_name (),
@@ -728,13 +728,13 @@ AST_Decl::has_ancestor (AST_Decl *s)
 
   if (this->pd_defined_in == 0)
     {
-      return I_FALSE;
+      return false;
     }
 
   return ScopeAsDecl (this->pd_defined_in)->has_ancestor (s);
 }
 
-idl_bool
+bool
 AST_Decl::is_child (AST_Decl *s)
 {
   if (this->defined_in ())
@@ -755,7 +755,7 @@ AST_Decl::is_child (AST_Decl *s)
   return 0; // Not a child.
 }
 
-idl_bool
+bool
 AST_Decl::is_nested (void)
 {
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
@@ -764,10 +764,10 @@ AST_Decl::is_nested (void)
   // then we are defined at some nesting level.
   if (d != 0 && d->node_type () != AST_Decl::NT_root)
     {
-      return I_TRUE;
+      return true;
     }
 
-  return I_FALSE;
+  return false;
 }
 
 // Dump this AST_Decl to the ostream o.
@@ -955,26 +955,26 @@ AST_Decl::version (char *value)
     }
 }
 
-idl_bool
+bool
 AST_Decl::anonymous (void) const
 {
   return this->anonymous_;
 }
 
 void
-AST_Decl::anonymous (idl_bool val)
+AST_Decl::anonymous (bool val)
 {
   this->anonymous_ = val;
 }
 
-idl_bool
+bool
 AST_Decl::typeid_set (void) const
 {
   return this->typeid_set_;
 }
 
 void
-AST_Decl::typeid_set (idl_bool val)
+AST_Decl::typeid_set (bool val)
 {
   this->typeid_set_ = val;
 }
@@ -1030,7 +1030,7 @@ AST_Decl::set_id_with_typeid (char *value)
   delete [] this->repoID_;
   this->repoID_ = 0;
   this->repoID (value);
-  this->typeid_set_ = I_TRUE;
+  this->typeid_set_ = true;
 }
 
 void
@@ -1059,38 +1059,38 @@ AST_Decl::set_prefix_with_typeprefix (const char *value)
                                       DeclAsScope (this));
 }
 
-idl_bool
+bool
 AST_Decl::imported (void)
 {
   return this->pd_imported;
 }
 
 void
-AST_Decl::set_imported (idl_bool is_it)
+AST_Decl::set_imported (bool is_it)
 {
   this->pd_imported = is_it;
 }
 
-idl_bool
+bool
 AST_Decl::in_main_file (void)
 {
   return this->pd_in_main_file;
 }
 
 void
-AST_Decl::set_in_main_file (idl_bool is_it)
+AST_Decl::set_in_main_file (bool is_it)
 {
   this->pd_in_main_file = is_it;
 }
 
-idl_bool
+bool
 AST_Decl::added (void)
 {
   return this->pd_added;
 }
 
 void
-AST_Decl::set_added (idl_bool is_it)
+AST_Decl::set_added (bool is_it)
 {
   this->pd_added = is_it;
 }

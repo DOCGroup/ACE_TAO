@@ -63,16 +63,16 @@ public:
   void gen_common_varout (TAO_OutStream *os);
   // Generate _var and _out typedefs for structs and unions.
 
-  idl_bool seq_elem_tmplinst (void) const;
-  virtual void seq_elem_tmplinst (idl_bool val);
+  bool seq_elem_tmplinst (void) const;
+  virtual void seq_elem_tmplinst (bool val);
   // Accessors for the member.
 
-  idl_bool seen_in_sequence (void) const;
-  virtual void seen_in_sequence (idl_bool val);
+  bool seen_in_sequence (void) const;
+  virtual void seen_in_sequence (bool val);
   // Accessors for the member.
 
-  idl_bool seen_in_operation (void) const;
-  virtual void seen_in_operation (idl_bool val);
+  bool seen_in_operation (void) const;
+  virtual void seen_in_operation (bool val);
   // Accessors for the member.
 
   virtual AST_Decl::NodeType base_node_type (void) const;
@@ -101,17 +101,17 @@ protected:
   ACE_CString fwd_helper_name_;
   // Used by interfaces, valuetypes and arrays to name helper structs.
 
-  idl_bool common_varout_gen_;
+  bool common_varout_gen_;
   // Have we generated our _var and _out class typedefs yet?
 
-  idl_bool seq_elem_tmplinst_;
+  bool seq_elem_tmplinst_;
   // Have we generated an explicit template instantiation for a sequence
   // with this element?
 
-  idl_bool seen_in_sequence_;
+  bool seen_in_sequence_;
   // Has this declaration been used as a sequence element?
 
-  idl_bool seen_in_operation_;
+  bool seen_in_operation_;
   // Has this declaration been used as a return type or parameter?
 };
 

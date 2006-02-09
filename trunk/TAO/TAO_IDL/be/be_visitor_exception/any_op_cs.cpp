@@ -50,7 +50,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   if (!node->is_local ())
     {
       *os << be_nl << be_nl
@@ -68,16 +68,21 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
-          << "ACE_TRY_NEW_ENV" << be_idt_nl
+          << (be_global->use_raw_throw () ? "try" :"ACE_TRY_NEW_ENV")
+          << be_idt_nl
           << "{" << be_idt_nl
-          << "this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);" << be_nl
-          << "ACE_TRY_CHECK;" << be_uidt_nl
+          << "this->value_->_tao_decode (cdr"
+          << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+          <<  ");" << ace_try_check << be_uidt_nl
           << "}" << be_uidt_nl
-          << "ACE_CATCHANY" << be_idt_nl
+          << (be_global->use_raw_throw ()
+                ? "catch ( ::CORBA::Exception &)"
+                : "ACE_CATCHANY")
+          << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "ACE_ENDTRY;" << be_nl << be_nl
+          << "}" << be_uidt
+          << ace_endtry << be_nl << be_nl
           << "return true;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "}";

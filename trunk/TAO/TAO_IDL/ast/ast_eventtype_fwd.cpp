@@ -5,8 +5,8 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
-           ast_eventtype_fwd, 
+ACE_RCSID( ast,
+           ast_eventtype_fwd,
            "$Id$")
 
 AST_EventTypeFwd::AST_EventTypeFwd (void)
@@ -20,7 +20,7 @@ AST_EventTypeFwd::AST_EventTypeFwd (void)
 
 AST_EventTypeFwd::AST_EventTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : COMMON_Base (I_FALSE,
+  : COMMON_Base (false,
                  dummy->is_abstract ()),
     AST_Decl (AST_Decl::NT_eventtype_fwd,
               n),

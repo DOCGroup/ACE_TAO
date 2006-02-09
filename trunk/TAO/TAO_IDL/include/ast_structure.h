@@ -88,13 +88,13 @@ public:
   AST_Structure (void);
 
   AST_Structure (UTL_ScopedName *n,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
   AST_Structure (AST_Decl::NodeType nt,
                  UTL_ScopedName *n,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
   virtual ~AST_Structure (void);
 
@@ -120,10 +120,10 @@ public:
                      size_t slot) const;
   // Get an individual field node.
 
-  virtual idl_bool is_local (void);
+  virtual bool is_local (void);
   // Overwrite the is_local method.
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
   virtual int contains_wstring (void);
@@ -132,7 +132,7 @@ public:
   // Is this struct or union defined? This predicate returns FALSE when a
   // forward declaration is not defined yet, and TRUE in
   // all other cases.
-  idl_bool is_defined (void)
+  bool is_defined (void)
   {
     return this->size_type () != AST_Type::SIZE_UNKNOWN;
   }
@@ -181,7 +181,7 @@ private:
   int member_count_;
   // Number of members.
 
-  idl_bool local_struct_;
+  int local_struct_;
   // We also need to determine whether we contain any local type.
 };
 

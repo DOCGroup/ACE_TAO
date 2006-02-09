@@ -45,7 +45,7 @@ public:
 
   virtual int visit_field (be_field *node);
 private:
-  idl_bool opt_accessor_;
+  bool opt_accessor_;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_CI_H_ */

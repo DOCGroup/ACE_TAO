@@ -66,8 +66,8 @@ public:
                 long nih,
                 AST_Interface **ih_flat,
                 long nih_flat,
-                idl_bool local,
-                idl_bool abstract);
+                bool local,
+                bool abstract);
   // Constructor that sets its scoped name <n>, a list of inherited interfaces
   // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>.
 
@@ -188,7 +188,7 @@ public:
   int traverse_inheritance_graph (
       TAO_IDL_Inheritance_Hierarchy_Worker &worker,
       TAO_OutStream *os,
-      idl_bool abstract_paths_only = I_FALSE
+      bool abstract_paths_only = false
     );
 
   /// Wrap the @c gen parameter and call the generic version of
@@ -196,7 +196,7 @@ public:
   int traverse_inheritance_graph (
       tao_code_emitter gen,
       TAO_OutStream *os,
-      idl_bool abstract_paths_only = I_FALSE
+      bool abstract_paths_only = false
     );
 
   int in_mult_inheritance (void);
@@ -294,7 +294,7 @@ public:
                                         be_interface *ancestor,
                                         AST_Decl *d,
                                         const char *prefix,
-                                        idl_bool direct,
+                                        bool direct,
                                         UTL_ExceptList *list,
                                         TAO_OutStream *os);
   // Common code called from gen_colloc_op_defn_helper().
@@ -329,8 +329,8 @@ public:
 
   int session_component_child (void);
   // Is Components::SessionComponent an immediate parent?
-  
-  idl_bool is_event_consumer (void);
+
+  bool is_event_consumer (void);
   // Is EventConsumerBase our parent?
 
 private:

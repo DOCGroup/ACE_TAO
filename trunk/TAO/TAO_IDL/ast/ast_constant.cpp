@@ -77,8 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "nr_extern.h"
 
-ACE_RCSID (ast, 
-           ast_constant, 
+ACE_RCSID (ast,
+           ast_constant,
            "$Id$")
 
 // Static functions.
@@ -140,27 +140,27 @@ AST_Constant::AST_Constant (void)
 
 // Used in constructing AST_EnumVal nodes.
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
-			                      AST_Decl::NodeType nt,
-			                      AST_Expression *v,
-			                      UTL_ScopedName *n)
+                            AST_Decl::NodeType nt,
+                            AST_Expression *v,
+                            UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (nt,
               n),
-	  pd_constant_value (v),
-	  pd_et (t),
+    pd_constant_value (v),
+    pd_et (t),
     ifr_added_ (0)
 {
 }
 
 // Used when constructing AST_Constant nodes.
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
-			                      AST_Expression *v,
-			                      UTL_ScopedName *n)
+                            AST_Expression *v,
+                            UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_const,
               n),
-	  pd_constant_value (v),
-	  pd_et (t),
+    pd_constant_value (v),
+    pd_et (t),
     ifr_added_ (0)
 {
   // Avoids a truncation warning on MSVC when assigning a decimal
@@ -171,7 +171,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
   // of truncation would not apply.
   if (t == AST_Expression::EV_float && v->ev ()->et == AST_Expression::EV_double)
     {
-      AST_Expression::AST_ExprValue *ev = 
+      AST_Expression::AST_ExprValue *ev =
         this->pd_constant_value->ev ();
       ev->et = t;
       ev->u.fval = (float) ev->u.dval;
@@ -236,14 +236,14 @@ AST_Constant::et (void)
   return this->pd_et;
 }
 
-idl_bool
+bool
 AST_Constant::ifr_added (void)
 {
   return this->ifr_added_;
 }
 
 void
-AST_Constant::ifr_added (idl_bool val)
+AST_Constant::ifr_added (bool val)
 {
   this->ifr_added_ = val;
 }

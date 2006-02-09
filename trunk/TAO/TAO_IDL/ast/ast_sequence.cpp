@@ -80,8 +80,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (ast, 
-           ast_sequence, 
+ACE_RCSID (ast,
+           ast_sequence,
            "$Id$")
 
 AST_Sequence::AST_Sequence (void)
@@ -99,13 +99,13 @@ AST_Sequence::AST_Sequence (void)
 AST_Sequence::AST_Sequence (AST_Expression *ms,
                             AST_Type *bt,
                             UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
   : COMMON_Base (bt->is_local () || local,
                  abstract),
     AST_Decl (AST_Decl::NT_sequence,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_sequence,
               n),
     AST_ConcreteType (AST_Decl::NT_sequence,
@@ -117,11 +117,11 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
   // unbounded.
   if (ms->ev ()->u.ulval == 0)
     {
-      this->unbounded_ = I_TRUE;
+      this->unbounded_ = true;
     }
   else
     {
-      this->unbounded_ = I_FALSE;
+      this->unbounded_ = false;
     }
 
   // A sequence data type is always VARIABLE.
@@ -134,7 +134,7 @@ AST_Sequence::~AST_Sequence (void)
 
 // Public operations.
 
-idl_bool
+bool
 AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
   // We should calculate this only once. If it has already been
@@ -154,16 +154,16 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                          ACE_TEXT ("bad base type\n")),
                         0);
     }
-    
+
   if (type->node_type () == AST_Decl::NT_typedef)
     {
       AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
       type = td->primitive_base_type ();
       AST_Decl::NodeType nt = type->node_type ();
-      
+
       if (nt != AST_Decl::NT_struct && nt != AST_Decl::NT_union)
         {
-          return I_FALSE;
+          return false;
         }
     }
 
@@ -180,12 +180,12 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       ACE_Unbounded_Queue<AST_Type *> scope_list = list;
       scope_list.enqueue_tail (this);
       this->in_recursion_ = type->in_recursion (scope_list);
-      
+
       if (this->in_recursion_ == 1)
         {
           idl_global->recursive_type_seen_ = true;
         }
-      
+
       return this->in_recursion_;
     }
 }
@@ -223,7 +223,7 @@ AST_Sequence::base_type (void) const
   return this->pd_base_type;
 }
 
-idl_bool
+bool
 AST_Sequence::unbounded (void) const
 {
   return this->unbounded_;

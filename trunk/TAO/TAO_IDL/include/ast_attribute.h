@@ -81,18 +81,18 @@ public:
   // Constructor(s).
   AST_Attribute (void);
 
-  AST_Attribute (idl_bool readonly,
+  AST_Attribute (bool readonly,
                  AST_Type *ft,
                  UTL_ScopedName *n,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
   // Destructor.
   virtual ~AST_Attribute (void);
 
   // Data Accessors.
 
-  idl_bool readonly (void) const;
+  bool readonly (void) const;
   UTL_ExceptList *get_get_exceptions (void) const;
   UTL_ExceptList *get_set_exceptions (void) const;
 
@@ -113,7 +113,7 @@ public:
 private:
   // Data.
 
-  const idl_bool pd_readonly;
+  const bool pd_readonly;
   // Is attribute read-only?
 
   UTL_ExceptList *pd_get_exceptions;

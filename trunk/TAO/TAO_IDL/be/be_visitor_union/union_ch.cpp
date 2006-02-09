@@ -203,6 +203,6 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   os->gen_endif ();
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

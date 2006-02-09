@@ -47,11 +47,11 @@ be_attribute::be_attribute (void)
   this->set_strategy_ = bods;
 }
 
-be_attribute::be_attribute (idl_bool ro,
+be_attribute::be_attribute (bool ro,
                             AST_Type *ft,
                             UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_attr,

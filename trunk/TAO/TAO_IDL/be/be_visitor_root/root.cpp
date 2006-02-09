@@ -198,7 +198,7 @@ int be_visitor_root::visit_root (be_root *node)
               << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
           *os << be_global->core_versioning_begin () << be_nl;
-          
+
           *os << "// Overrides of CORBA::release and CORBA::is_nil for"
               << be_nl
               << "// interfaces that inherit from both CORBA::Object" << be_nl
@@ -230,7 +230,7 @@ int be_visitor_root::visit_root (be_root *node)
   // Make one more pass over the entire tree and generate the OBV_ namespaces
   // and OBV_ classes.
 
-  idl_bool obv = 1;
+  bool obv = 1;
   status = 0;
 
   switch (this->ctx_->state ())

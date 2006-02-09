@@ -69,7 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 #include "idl_global.h"
-#include "idl_bool.h"
+
 
 class AST_Decl;
 
@@ -82,6 +82,6 @@ extern TAO_IDL_FE_Export IDL_GlobalData *idl_global;
 
 // Return TRUE when the name of this AST_Decl can be reused in
 // a definition in this scope
-extern idl_bool can_be_redefined (AST_Decl *);
+extern bool can_be_redefined (AST_Decl *);
 
 #endif           // _GLOBAL_EXTERN_GLOBAL_EXTERN_HH

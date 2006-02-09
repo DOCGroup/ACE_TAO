@@ -72,8 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
-ACE_RCSID (ast, 
-           ast_enum, 
+ACE_RCSID (ast,
+           ast_enum,
            "$Id$")
 
 AST_Enum::AST_Enum (void)
@@ -82,24 +82,24 @@ AST_Enum::AST_Enum (void)
     AST_Type (),
     AST_ConcreteType (),
     UTL_Scope (),
-	  pd_enum_counter (0),
+    pd_enum_counter (0),
     member_count_ (-1)
 {
   this->size_type (AST_Type::FIXED);
 }
 
 AST_Enum::AST_Enum (UTL_ScopedName *n,
-                    idl_bool local,
-                    idl_bool abstract)
+                    bool local,
+                    bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_enum,
               n),
-	  AST_Type (AST_Decl::NT_enum,
+    AST_Type (AST_Decl::NT_enum,
               n),
-	  AST_ConcreteType (AST_Decl::NT_enum,
+    AST_ConcreteType (AST_Decl::NT_enum,
                       n),
-	  UTL_Scope (AST_Decl::NT_enum),
+    UTL_Scope (AST_Decl::NT_enum),
     pd_enum_counter (0),
     member_count_ (-1)
 {
@@ -150,7 +150,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
   AST_EnumVal *item = 0;
   AST_Decl *d = 0;
 
-  for (UTL_ScopeActiveIterator i (this, IK_decls); 
+  for (UTL_ScopeActiveIterator i (this, IK_decls);
        !i.is_done ();
        i.next ())
     {
@@ -220,8 +220,8 @@ AST_Enum::compute_member_count (void)
   // If there are elements in this scope
   if (this->nmembers () > 0)
     {
-      for (UTL_ScopeActiveIterator i (this, IK_decls); 
-           !i.is_done (); 
+      for (UTL_ScopeActiveIterator i (this, IK_decls);
+           !i.is_done ();
            i.next ())
         {
           // Get the next AST decl node.
@@ -247,7 +247,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
       t1 = idl_global->gen ()->create_enum_val (tmp,
                                                 t->name ());
 
-      UTL_ScopedName *sn = 
+      UTL_ScopedName *sn =
         munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
                                 t->local_name ());
 
@@ -260,7 +260,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -293,7 +293,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   // Add it to enclosing scope.

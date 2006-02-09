@@ -19,8 +19,8 @@
 #include "be_native.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be, 
-           be_native, 
+ACE_RCSID (be,
+           be_native,
            "$Id$")
 
 
@@ -50,19 +50,19 @@ be_native::be_native (UTL_ScopedName *n)
     UTL_Scope (AST_Decl::NT_native),
     AST_Structure (AST_Decl::NT_native,
                    n,
-                   I_TRUE,
-                   I_FALSE),
+                   true,
+                   false),
     AST_Exception (n,
-                   I_TRUE,
-                   I_FALSE),
+                   true,
+                   false),
     AST_Native (n),
     be_decl (AST_Decl::NT_native,
              n),
     be_type (AST_Decl::NT_native,
              n),
     be_exception (n,
-                  I_TRUE,
-                  I_FALSE)
+                  true,
+                  false)
 {
 }
 

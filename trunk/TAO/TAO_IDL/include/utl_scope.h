@@ -229,8 +229,8 @@ public:
 
   // Name Lookup Mechanism
   AST_Decl *lookup_by_name (UTL_ScopedName *,
-                            idl_bool treat_as_ref,
-                            idl_bool in_parent = 1);
+                            bool treat_as_ref,
+                            bool in_parent = 1);
 
   // Look up the Identifier * specified only in the local scope.
   AST_Decl *lookup_by_name_local (Identifier *,
@@ -261,8 +261,8 @@ public:
   void add_to_name_referenced (Identifier *id);
 
   // Accessors for the has_prefix_ member.
-  idl_bool has_prefix (void);
-  void has_prefix (idl_bool val);
+  bool has_prefix (void);
+  void has_prefix (bool val);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -289,37 +289,37 @@ protected:
   // If ex is not 0 'e' will be inserted at the position
   // after ex, which is already in the list.
   void add_to_referenced (AST_Decl *e,
-                          idl_bool recursive,
+                          bool recursive,
                           Identifier *id,
                           AST_Decl *ex = 0);
-                          
+
   // Add to local types. Node represents a local manifest type.
   void add_to_local_types (AST_Decl *e);
 
   // Has this node been referenced here already?
-  virtual idl_bool referenced (AST_Decl *e,
+  virtual bool referenced (AST_Decl *e,
                                Identifier *id = 0);
 
   // Look up a scoped name in the inherited list.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *,
-                                       idl_bool treat_as_ref);
-                                       
+                                       bool treat_as_ref);
+
   // Look up a scoped name in the supported interface list.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *,
-                                       idl_bool treat_as_ref);
-                                       
+                                       bool treat_as_ref);
+
   // Lookup based on the local name.
   AST_Decl *lookup_for_add (AST_Decl *d,
-                            idl_bool treat_as_ref);
+                            bool treat_as_ref);
 
   // Is there a (case-insensitive) clash between a local name
   // and an IDL keyword?
   int idl_keyword_clash (Identifier *e);
 
   // Checks for modules, or defns of forward declared struct or unions.
-  idl_bool redef_clash (AST_Decl::NodeType new_nt,
+  bool redef_clash (AST_Decl::NodeType new_nt,
                         AST_Decl::NodeType scope_elem_nt);
-                        
+
   void check_for_predef_seq (AST_Decl *d);
   // Set the appropriate *_seen_ flag if we are seeing a spec-defined
   // sequence of a basic type.
@@ -354,7 +354,7 @@ protected:
   long pd_name_referenced_used;       // How many used?
 
   // Have we seen a #pragma prefix declaration in this scope?
-  idl_bool has_prefix_;
+  bool has_prefix_;
 
   // Friend class UTL_ScopeActiveIterator defines active iterator for
   // UTL_Scope. Definition follows below.
@@ -450,7 +450,7 @@ public:
   AST_Decl *item (void);
 
   // Have we iterated over entire scope?
-  idl_bool is_done (void);
+  bool is_done (void);
 
   // What kind of iterator is this?
   UTL_Scope::ScopeIterationKind iteration_kind (void);

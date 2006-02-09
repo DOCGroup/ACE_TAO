@@ -39,14 +39,14 @@ public:
 
   be_union (AST_ConcreteType *dt,
             UTL_ScopedName *n,
-            idl_bool local,
-            idl_bool abstract);
+            bool local,
+            bool abstract);
   // Constructor.
 
   virtual void redefine (AST_Structure *from);
   // Catch BE-specific member values before delegating to the base class.
 
-  virtual idl_bool has_duplicate_case_labels (void);
+  virtual bool has_duplicate_case_labels (void);
   // Do we have at least one member with multiple case labels?
 
   virtual void destroy (void);
@@ -55,10 +55,10 @@ public:
   virtual int accept (be_visitor *visitor);
   // Visiting.
 
-  idl_bool gen_empty_default_label (void);
+  bool gen_empty_default_label (void);
   // Decides whether a default switch case label in the generated copy
   // constructor, assignment operator, etc. is needed.
-  
+
   unsigned long nlabels (void);
   // Returns total number of labels, useful when the union has
   // multiple case labels.

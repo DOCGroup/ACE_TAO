@@ -46,7 +46,7 @@ be_visitor_valuebox_cdr_op_cs::visit_valuebox (be_valuebox *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  node->cli_stub_cdr_op_gen (I_TRUE);
+  node->cli_stub_cdr_op_gen (true);
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;

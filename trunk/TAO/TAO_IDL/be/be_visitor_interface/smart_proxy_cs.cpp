@@ -97,8 +97,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory::create_proxy (" << be_idt << be_idt_nl
           << "::" << node->full_name ()
-          << "_ptr proxy" << be_nl
-          << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+          << "_ptr proxy" << env_not << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "return proxy;" << be_uidt_nl
@@ -158,8 +157,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter::register_proxy_factory (" << be_idt << be_idt_nl
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory *df," << be_nl
-          << "int one_shot_factory" << be_nl
-          << "ACE_ENV_ARG_DECL" << be_uidt_nl
+          << "int one_shot_factory" << env_decl << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_MT (" << be_idt << be_idt_nl
@@ -169,9 +167,13 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "this->lock_" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" <<be_uidt_nl << be_nl
-          << "// Remove any existing <proxy_factory_> and replace with the new one." << be_nl
-          << "this->unregister_proxy_factory (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl
-          << "ACE_CHECK;" << be_nl
+          << "// Remove any existing <proxy_factory_> and "
+          << "replace with the new one." << be_nl
+          << "this->unregister_proxy_factory ("
+          << (be_global->use_raw_throw ()
+                ? ""
+                : "ACE_ENV_SINGLE_ARG_PARAMETER")
+          << ");" << TAO_ACE_CHECK () << be_nl
           << "this->proxy_factory_ = df;" << be_nl
           << "this->one_shot_factory_ = one_shot_factory;" << be_uidt_nl
           << "}\n\n";
@@ -186,8 +188,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os << "TAO_"<< node->flat_name ()
           << "_Proxy_Factory_Adapter::unregister_proxy_factory ("
-          << be_idt << be_idt_nl
-          << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
+          << be_idt << be_idt
+          << env_sngl_not << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_MT (" << be_idt << be_idt_nl
@@ -222,8 +224,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "TAO_"<< node->flat_name ()
           << "_Proxy_Factory_Adapter::create_proxy (" << be_idt << be_idt_nl
           << "::" << node->full_name ()
-          << "_ptr proxy" << be_nl
-          << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+          << "_ptr proxy" << env_not << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_MT (ACE_GUARD_RETURN ("

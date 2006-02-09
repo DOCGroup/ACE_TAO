@@ -79,7 +79,7 @@
 #include        "utl_identifier.h"
 #include        "utl_string.h"
 #include        "ast_expression.h"
-#include        "idl_bool.h"
+#include        "bool.h"
 #include        "utl_scope.h"
 #include        "ast_decl.h"
 #include        "ast_type.h"

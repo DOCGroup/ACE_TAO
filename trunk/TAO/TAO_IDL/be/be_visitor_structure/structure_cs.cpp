@@ -91,6 +91,6 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
                         -1);
     }
 
-  node->cli_stub_gen (I_TRUE);
+  node->cli_stub_gen (true);
   return 0;
 }

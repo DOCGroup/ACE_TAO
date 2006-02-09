@@ -10,8 +10,8 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
-           ast_structure_fwd, 
+ACE_RCSID( ast,
+           ast_structure_fwd,
            "$Id$")
 
 AST_StructureFwd::AST_StructureFwd (void)
@@ -69,7 +69,7 @@ AST_StructureFwd::set_full_definition (AST_Structure *nfd)
   this->pd_full_definition = nfd;
 }
 
-idl_bool
+bool
 AST_StructureFwd::is_defined (void)
 {
   return (this->pd_full_definition != 0);
