@@ -29,29 +29,29 @@ ACE_RCSID (IFR_Service,
 TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
-  : removing_ (I_FALSE),
+  : removing_ (false),
     holding_scope_name_ (CORBA::string_dup ("TAO_IFR_holding_scope_module")),
     filename_ (0),
-    enable_locking_ (I_FALSE),
-    do_included_files_ (I_TRUE)
+    enable_locking_ (false),
+    do_included_files_ (true)
 {
   // At this point, the FE has been initialized.  We can
   // now instruct it that we want to preserve c++ keywords.
-  idl_global->preserve_cpp_keywords (I_TRUE);
+  idl_global->preserve_cpp_keywords (true);
 }
 
 BE_GlobalData::~BE_GlobalData (void)
 {
 }
 
-idl_bool
+bool
 BE_GlobalData::removing (void) const
 {
   return this->removing_;
 }
 
 void
-BE_GlobalData::removing (idl_bool value)
+BE_GlobalData::removing (bool value)
 {
   this->removing_ = value;
 }
@@ -121,26 +121,26 @@ BE_GlobalData::filename (char *fname)
   this->filename_ = fname;
 }
 
-idl_bool
+bool
 BE_GlobalData::enable_locking (void) const
 {
   return this->enable_locking_;
 }
 
 void
-BE_GlobalData::enable_locking (idl_bool value)
+BE_GlobalData::enable_locking (bool value)
 {
   this->enable_locking_ = value;
 }
 
-idl_bool
+bool
 BE_GlobalData::do_included_files (void) const
 {
   return this->do_included_files_;
 }
 
 void
-BE_GlobalData::do_included_files (idl_bool val)
+BE_GlobalData::do_included_files (bool val)
 {
   this->do_included_files_ = val;
 }
@@ -169,10 +169,10 @@ BE_GlobalData::parse_args (long &i, char **av)
   switch (av[i][1])
     {
       case 'L':
-        be_global->enable_locking (I_TRUE);
+        be_global->enable_locking (true);
         break;
       case 'r':
-        be_global->removing (I_TRUE);
+        be_global->removing (true);
         break;
       case 'S':
         // Suppress ...
