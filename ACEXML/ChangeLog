@@ -1,3 +1,19 @@
+Thu Feb  9 22:49:18 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * common/NamespaceSupport.h:
+        * common/NamespaceSupport.cpp:  Use a normal ACE_Unbounded_Stack
+          instead of yet another custom stack.
+
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp:
+
+          Fixed a mismatched push/pop of the namespace context due to
+          popping namespace contexts without matching the end of the
+          element that caused a push.  This resulted in more pops that
+          push and corrupting the memory.  Also fixed an indirection into
+          a pointer that might have been corrupt when calling
+          startNamespacePrefix().
+
 Tue Jan 24 23:09:08 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * apps/svcconf/Svcconf.cpp:
