@@ -6,7 +6,7 @@
 #include "DataType_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "tao/AnyTypeCode/Any.h"
-
+#include "ciao/CIAO_common.h"
 #include "DynAny_Handler/DynAny_Handler.h"
 
 namespace CIAO
@@ -27,6 +27,7 @@ namespace CIAO
                                    CORBA::Any& toconfig)
 
     {
+      CIAO_TRACE("Any_Handler::extract_into_any");
       DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
                                                  desc.value ());
       
@@ -37,6 +38,7 @@ namespace CIAO
 
     Any Any_Handler::get_any (const ::CORBA::Any& src)
     {
+      CIAO_TRACE("Any_Handler::extract_into_any - reverse");
       //MAJO
       //@Bala ... still haven't figured this one out yet
       //I was saving it for last...going from corba::any

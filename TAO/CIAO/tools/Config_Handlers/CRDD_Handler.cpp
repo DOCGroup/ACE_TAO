@@ -4,7 +4,7 @@
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
-
+#include "ciao/CIAO_common.h"
 namespace CIAO
 {
   namespace Config_Handlers
@@ -25,6 +25,7 @@ namespace CIAO
                 Deployment::ConnectionResourceDeploymentDescription& toconfig,
                 ConnectionResourceDeploymentDescription& desc)
     {
+      CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDeploymentDescription");
       toconfig.targetName = CORBA::string_dup (desc.targetName ().c_str ());
       toconfig.requirementName =
         CORBA::string_dup (desc.requirementName ().c_str ());
@@ -39,6 +40,7 @@ namespace CIAO
     CRDD_Handler::connection_resource_depl_desc (
       const ::Deployment::ConnectionResourceDeploymentDescription& src)
     {
+      CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDeploymentDescription- reverse");
       XMLSchema::string< char > tname ((src.targetName));
       XMLSchema::string< char > reqname ((src.requirementName));
       XMLSchema::string< char > resname ((src.resourceName));

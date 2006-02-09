@@ -93,6 +93,8 @@ namespace CIAO
     bool
     DP_Handler::resolve_plan (DeploymentPlan &xsc_dp)
     {
+      CIAO_TRACE ("DP_Handler::resolve_plan");
+      
       ::Deployment::DeploymentPlan *tmp =
           new Deployment::DeploymentPlan;
 
@@ -181,6 +183,8 @@ namespace CIAO
     bool
     DP_Handler::build_xsc (const ::Deployment::DeploymentPlan &plan)
     {
+      CIAO_TRACE ("DP_Handler::build_xsc");
+      
       size_t len; //Used for checking the length of struct data members
       
       // Read in the label, if present, since minoccurs = 0

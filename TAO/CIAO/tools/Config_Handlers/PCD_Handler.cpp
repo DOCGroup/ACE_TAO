@@ -8,6 +8,7 @@
 #include "CRDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
+#include "ciao/CIAO_common.h"
 
 namespace CIAO
 {
@@ -29,6 +30,8 @@ namespace CIAO
                 Deployment::PlanConnectionDescription& toconfig,
                 PlanConnectionDescription& desc)
     {
+      CIAO_TRACE("PCD_Handler::get_PlanConnectionDescription");
+      
       toconfig.name = CORBA::string_dup (desc.name ().c_str ());
 
       //Source is mapped to a string in the schema and a sequence
@@ -95,66 +98,63 @@ namespace CIAO
 
     }
       
-      PlanConnectionDescription PCD_Handler::get_PlanConnectionDescription (
-	  const Deployment::PlanConnectionDescription &src)
-      {
-	  XMLSchema::string< char > name ((src.name));
+    PlanConnectionDescription PCD_Handler::get_PlanConnectionDescription (
+        const Deployment::PlanConnectionDescription &src)
+    {
+      CIAO_TRACE("PCD_Handler::get_PlanConnectionDescription");
+      
+      XMLSchema::string< char > name ((src.name));
+      
+      PlanConnectionDescription pcd(name);
+      
+      //Get the source if it exists
+      if(src.source.length() != 0)
+        {
+          XMLSchema::string< char > source((src.source[0]));
+          pcd.source(source);
+        }
 
-	  PlanConnectionDescription pcd(name);
+      //Get any externalEndpoint(s) and store them
+      size_t total = src.externalEndpoint.length();
+      for(size_t i = 0; i < total; i++)
+        {
+          pcd.add_externalEndpoint(
+            CEPE_Handler::external_port_endpoint(src.externalEndpoint[i]));
+        }
 
-	  //Get the source if it exists
-	  if(src.source.length() != 0)
-	  {
-	      XMLSchema::string< char > source((src.source[0]));
-	      pcd.source(source);
-	  }
+      //Get any externalReference(s) and store them
+      total = src.externalReference.length();
+      for(size_t j = 0; j < total; j++)
+        {
+          pcd.add_externalReference(
+             ERE_Handler::external_ref_endpoint(src.externalReference[j]));
+        }
 
-	  //Get any externalEndpoint(s) and store them
-	  size_t total = src.externalEndpoint.length();
-	  for(size_t i = 0; i < total; i++)
-	  {
-	      pcd.add_externalEndpoint(
-		  CEPE_Handler::external_port_endpoint(
-		      src.externalEndpoint[i]));
-	  }
-
-	  //Get any externalReference(s) and store them
-	  total = src.externalReference.length();
-	  for(size_t j = 0; j < total; j++)
-	  {
-	      pcd.add_externalReference(
-		  ERE_Handler::external_ref_endpoint(
-		      src.externalReference[j]));
-	  }
-
-	  //Get any internalEndpoint(s) and store them
-	  total = src.internalEndpoint.length();
-	  for(size_t k = 0; k < total; k++)
-	  {
-	      pcd.add_internalEndpoint(
-		  PSPE_Handler::sub_component_port_endpoint(
-		      src.internalEndpoint[k]));
-	  }
+      //Get any internalEndpoint(s) and store them
+      total = src.internalEndpoint.length();
+      for(size_t k = 0; k < total; k++)
+        {
+          pcd.add_internalEndpoint(
+              PSPE_Handler::sub_component_port_endpoint(src.internalEndpoint[k]));
+        }
 	  
-	  //Get any deployedResource(s) and store them
-	  total = src.deployedResource.length();
-	  for(size_t l = 0; l < total; l++)
-	  {
-	      pcd.add_deployedResource(
-		  CRDD_Handler::connection_resource_depl_desc(
-		      src.deployedResource[l]));
-	  }
+      //Get any deployedResource(s) and store them
+      total = src.deployedResource.length();
+      for(size_t l = 0; l < total; l++)
+        {
+          pcd.add_deployedResource(
+              CRDD_Handler::connection_resource_depl_desc(src.deployedResource[l]));
+        }
 
-	  //Get any deployRequirement(s) and store them
-	  total = src.deployRequirement.length();
-	  for(size_t m = 0; m < total; m++)
-	  {
-	      pcd.add_deployRequirement(
-		  Req_Handler::get_requirement(
-		      src.deployRequirement[m]));
-	  }
+      //Get any deployRequirement(s) and store them
+      total = src.deployRequirement.length();
+      for(size_t m = 0; m < total; m++)
+        {
+          pcd.add_deployRequirement(
+               Req_Handler::get_requirement(src.deployRequirement[m]));
+        }
 
-	  return pcd;
-      }
+      return pcd;
+    }
   }
 }

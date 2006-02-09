@@ -11,7 +11,7 @@
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"
-
+#include "ciao/CIAO_common.h"
 
 
 namespace CIAO
@@ -27,6 +27,8 @@ namespace CIAO
     bool
     XML_File_Intf::read_process_file (const char *file)
     {
+      CIAO_TRACE("XML_File_Intf::read_process_file");
+      
       XML_Helper helper;
 
       if (!helper.is_initialized ())
@@ -55,12 +57,15 @@ namespace CIAO
     ::Deployment::DeploymentPlan const *
     XML_File_Intf::get_plan (void) const
     {
+      CIAO_TRACE("get_plan");
       return this->idl_dp_.get ();
     }
 
     ::Deployment::DeploymentPlan *
     XML_File_Intf::get_plan (void)
     {
+      CIAO_TRACE("XML_File_Intf::get_plan");
+      
       return this->idl_dp_.release ();
     }
   }

@@ -2,6 +2,8 @@
 #include "CPD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
+#include "ciao/CIAO_common.h"
+
 namespace CIAO
 {
   namespace Config_Handlers
@@ -11,6 +13,7 @@ namespace CIAO
       const ComponentPortDescription& desc,
       Deployment::ComponentPortDescription& toconfig)
     {
+      CIAO_TRACE("CPD_Handler::component_port_description");
       toconfig.name =
         desc.name ().c_str ();
 
@@ -67,6 +70,7 @@ namespace CIAO
     CPD_Handler::component_port_description (
       const Deployment::ComponentPortDescription& src)
     {
+      CIAO_TRACE("CPD_Handler::component_port_description - reverse");
       ::XMLSchema::string< char > name ((src.name));
       ::XMLSchema::string< char > stype ((src.specificType));
      
