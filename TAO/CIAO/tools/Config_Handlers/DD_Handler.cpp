@@ -17,6 +17,7 @@ namespace CIAO
       domain_ (0),
       retval_ (false)
     {
+      CIAO_TRACE("DP_PCD_Handler::constructor");
       XML_Helper helper;
 
       if (CIAO::debug_level () > 9)
@@ -63,6 +64,7 @@ namespace CIAO
       domain_(dmn),
       retval_(false)
     {
+      CIAO_TRACE("DP_PCD_Handler::constructor - Domain");
       if(!this->build_domain ())
         throw NoDomain ();
     }
@@ -83,6 +85,7 @@ namespace CIAO
     bool
     DD_Handler::build_domain ()
     {
+      CIAO_TRACE("DP_PCD_Handler::build_domain");
       this->idl_domain_.reset ( new ::Deployment::Domain );
 
       // Read in the name

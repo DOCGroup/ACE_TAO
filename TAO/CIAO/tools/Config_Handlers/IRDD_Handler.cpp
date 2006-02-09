@@ -6,7 +6,7 @@
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
 #include "Any_Handler.h"
-
+#include "ciao/CIAO_common.h"
 
 
 namespace CIAO
@@ -29,6 +29,7 @@ namespace CIAO
                     Deployment::InstanceResourceDeploymentDescription& toconfig)
       throw (Config_Error)
     {
+      CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr");
       
       switch (desc.resourceUsage ().integral ())
 	{
@@ -72,6 +73,8 @@ namespace CIAO
       const Deployment::InstanceResourceDeploymentDescription& src)
       throw (Config_Error)
     {
+      CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr - reverse");
+      
       XMLSchema::string< char > reqname ((src.requirementName));
       XMLSchema::string< char > resname ((src.resourceName));
       Any resval (Any_Handler::get_any (src.resourceValue));

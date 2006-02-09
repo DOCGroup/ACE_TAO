@@ -21,6 +21,7 @@ namespace CIAO
         Deployment::InstanceDeploymentDescriptions& dest)
       throw (Config_Error)
     {
+      CIAO_TRACE("IDD_Handler::instance_deployment_descrs");
       DeploymentPlan::instance_const_iterator idd_e =
         src.end_instance ();
       
@@ -44,6 +45,7 @@ namespace CIAO
         CORBA::ULong pos)
       throw (Config_Error)
     {
+      CIAO_TRACE("IDD_Handler::instance_deployment_descr");
       try
 	{
 	  dest.name = src.name ().c_str ();
@@ -114,38 +116,38 @@ namespace CIAO
 	const Deployment::InstanceDeploymentDescription& src)
       throw (Config_Error)
     {
-	
-	//Get all the string/IDREFs
-	XMLSchema::string < ACE_TCHAR > name ((src.name));
-	XMLSchema::string < ACE_TCHAR > node ((src.node));
-	XMLSchema::string < ACE_TCHAR > source ((src.source[0]));
-	ACE_CString temp;
-	MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
-	XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
-
-	// Instantiate the IDD
-	InstanceDeploymentDescription idd (name, node, source, implementation);
-
-	//Get and store the configProperty(s)
-	size_t total = src.configProperty.length();
-	for(size_t j = 0; j < total; j++)
+      CIAO_TRACE("IDD_Handler::instance_deployment_descr - reverse");
+      //Get all the string/IDREFs
+      XMLSchema::string < ACE_TCHAR > name ((src.name));
+      XMLSchema::string < ACE_TCHAR > node ((src.node));
+      XMLSchema::string < ACE_TCHAR > source ((src.source[0]));
+      ACE_CString temp;
+      MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
+      XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
+      
+      // Instantiate the IDD
+      InstanceDeploymentDescription idd (name, node, source, implementation);
+      
+      //Get and store the configProperty(s)
+      size_t total = src.configProperty.length();
+      for(size_t j = 0; j < total; j++)
 	{
-	    idd.add_configProperty(
+          idd.add_configProperty(
 		Property_Handler::get_property (
 		    src.configProperty[j]));
 	}
 
-	//Check if there is a deployedResource, if so store
-	if(src.deployedResource.length() != 0)
-	    idd.deployedResource(
+      //Check if there is a deployedResource, if so store
+      if(src.deployedResource.length() != 0)
+        idd.deployedResource(
 		IRDD_Handler::instance_resource_deployment_descr(
 		    src.deployedResource[0]));
 
-	//Check if there is a deployedSharedResource, if so store it
-	if(src.deployedSharedResource.length() != 0)
-	    idd. deployedSharedResource(
+      //Check if there is a deployedSharedResource, if so store it
+      if(src.deployedSharedResource.length() != 0)
+        idd. deployedSharedResource(
 		IRDD_Handler::instance_resource_deployment_descr(
-		    src.deployedSharedResource[0]));
+                    src.deployedSharedResource[0]));
 
 	return idd;
     }	

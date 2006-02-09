@@ -3,7 +3,7 @@
 #include "CEPE_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
-
+#include "ciao/CIAO_common.h"
 namespace CIAO
 {
   namespace Config_Handlers
@@ -13,6 +13,7 @@ namespace CIAO
         const PlanConnectionDescription &src,
         ::Deployment::ComponentExternalPortEndpoints &dest)
     {
+      CIAO_TRACE("CEOE_Handler::external_port_endpoints");
       PlanConnectionDescription::externalEndpoint_const_iterator eeci_e =
         src.end_externalEndpoint ();
 
@@ -33,6 +34,7 @@ namespace CIAO
         const ComponentExternalPortEndpoint &src,
         ::Deployment::ComponentExternalPortEndpoint &dest)
     {
+      CIAO_TRACE("CEOE_Handler::external_port_endpoint");
       dest.portName = src.portName ().c_str ();
     }
     
@@ -40,6 +42,7 @@ namespace CIAO
     CEPE_Handler::external_port_endpoint (
       const ::Deployment::ComponentExternalPortEndpoint &src)
     {
+      CIAO_TRACE("CEOE_Handler::external_port_endpoint - reverse");
       //MAJO Unfinished
       XMLSchema::string< char > portname ((src.portName));
       ComponentExternalPortEndpoint cepe (portname);

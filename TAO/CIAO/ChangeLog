@@ -1,3 +1,32 @@
+Thu Feb  9 16:33:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/CCD_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/CRDD_Handler.cpp
+        * tools/Config_Handlers/ComponentPropertyDescription_Handler.cpp
+        * tools/Config_Handlers/DD_Handler.cpp
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/DP_PCD_Handler.cpp
+        * tools/Config_Handlers/DataType_Handler.cpp
+        * tools/Config_Handlers/ERE_Handler.cpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        * tools/Config_Handlers/IDREF_Base.cpp
+        * tools/Config_Handlers/ID_Handler.cpp
+        * tools/Config_Handlers/IRDD_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        * tools/Config_Handlers/Property_Handler.cpp
+        * tools/Config_Handlers/RDD_Handler.cpp
+        * tools/Config_Handlers/Req_Handler.cpp
+        * tools/Config_Handlers/STD_PC_Intf.cpp
+        * tools/Config_Handlers/XML_File_Intf.cpp
+        
+          Added CIAO_TRACE statements to aid in debugging. 
+        
 Wed Feb 08 15:53:31 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * CIAO version 0.4.9 released.
