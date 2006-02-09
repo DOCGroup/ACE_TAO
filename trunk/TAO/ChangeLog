@@ -1,3 +1,39 @@
+Thu Feb  9 14:06:09 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_global.cpp:
+
+          Whitespace.
+
+        * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+
+          Prevent arguments called T from clashing with the temmplate class
+          identifier. This fixes bug #2390.
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+
+          Prevent generation of spurious SystemException throw specs on
+          valuetype factroy methods. This fixes bug #2375.
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Change all '#include "foo.idl"' entries in IDL files to
+          '#include <foo.idl>' before feeding them to the pre-processor.
+          Prevents accidental processing of IDL files from the users tmp
+          directory. This fixes bug #2399.
+
+        * tests/Bug_2375_Regression/Bug_2375_Regression.mpc:
+        * tests/Bug_2375_Regression/README:
+        * tests/Bug_2375_Regression/test.cpp:
+        * tests/Bug_2375_Regression/test.idl:
+        * tests/Bug_2399_Regression/README:
+        * tests/Bug_2399_Regression/included.idl:
+        * tests/Bug_2399_Regression/mytmp/included.idl:
+        * tests/Bug_2399_Regression/Bug_2399_Regression.mpc:
+        * tests/Bug_2399_Regression/test.idl:
+        * tests/Bug_2399_Regression/test.cpp:
+
+          Regression tests for two of the above bugs.
+
 Wed Feb 08 15:49:54 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * TAO version 1.4.9 released.
@@ -5,10 +41,10 @@ Wed Feb 08 15:49:54 2006  Wallace Zhang  <zhangw@ociweb.com>
 Wed Feb  8 04:46:33 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
-        
+
           Added versioned namespace macros to generation of
           any insertion/extraction operators.  Thanks to Ossama
-          Othman for pointing out this problem. 
+          Othman for pointing out this problem.
 
 Tue Feb  7 22:40:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -63,24 +99,24 @@ Tue Feb  7 22:40:54 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         * tests/Sequence_Unit_Tests/unbounded_wstring_sequence.hpp
         * tests/Sequence_Unit_Tests/value_sequence_tester.hpp
         * tests/Sequence_Unit_Tests/value_traits.hpp
-        
+
           Fixes for versioned namespace compile problems.  Thanks to
           Ossama Othman (ossama_othman at symantec dot com) for providing
           assistance..
-        
+
 Tue Feb  7 21:07:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp
-        
+
           Surrounded valuetype CDR operators with versioned namespace
-          macros. 
-        
+          macros.
+
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.h
         * tests/NestedUpcall/MT_Client_Test/local_server.h
-        
+
           Surrounded forward declarations of ACE/TAO types with versioned
-          namespace macros. 
-        
+          namespace macros.
+
 Mon Feb  6 16:46:57 Pacific Standard Time 2006    Ossama Othman  <ossama_othman at symantec dot com>
 
         * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:

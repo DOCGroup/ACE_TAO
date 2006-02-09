@@ -227,7 +227,7 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-  
+
   return be_change_idl_file_extension (idl_file_name,
                                        orb_file
                                          ? "C.h"
@@ -259,7 +259,7 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-  
+
   return be_change_idl_file_extension (idl_file_name,
                                        orb_file
                                          ? "S.h"
