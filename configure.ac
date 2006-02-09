@@ -4426,6 +4426,9 @@ dnl Check which one we have.
 AC_MSG_CHECKING([for 2- or 3-param sched_getaffinity])
 AC_LINK_IFELSE([AC_LANG_PROGRAM(
           [[
+#if !defined(ACE_LACKS_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
 #if !defined(ACE_LACKS_SCHED_H)
 #include <sched.h>
 #endif
@@ -4452,6 +4455,9 @@ dnl Check which one we have.
 AC_MSG_CHECKING([for 2- or 3-param sched_setaffinity])
 AC_LINK_IFELSE([AC_LANG_PROGRAM(
           [[
+#if !defined(ACE_LACKS_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
 #if !defined(ACE_LACKS_SCHED_H)
 #include <sched.h>
 #endif
