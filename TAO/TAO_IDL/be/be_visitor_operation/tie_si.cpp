@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           tie_si, 
+ACE_RCSID (be_visitor_operation,
+           tie_si,
            "$Id$")
 
 // ************************************************************
@@ -64,10 +64,43 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
                         -1);
     }
 
+  // Although unlikely it is possible that the 'T' in 'template class<T>' will
+  // conflict with an argument name...
+  ACE_CString template_name ("T");
+  bool template_name_ok = false;
+
+  while (!template_name_ok)
+    {
+      template_name_ok = true;
+
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+          ! si.is_done () && template_name_ok;
+          si.next ())
+        {
+          // Check for conflicts between the arg name and the proposed template
+          // class identifier
+          AST_Argument *arg =
+            AST_Argument::narrow_from_decl (si.item ());
+
+          if (! ACE_OS::strcmp (arg->local_name ()->get_string (),
+                                template_name.c_str ()))
+            {
+              // clash !
+              template_name_ok = false;
+            }
+        }
+
+      if (! template_name_ok)
+        {
+          // We had a clash - postfix an underscore and try again
+          template_name += "_";
+        }
+    }
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE\n";
+  *os << "template <class " << template_name.c_str () << "> ACE_INLINE\n";
 
   // Generate the return type mapping (same as in the header file).
   be_visitor_context ctx (*this->ctx_);
@@ -82,7 +115,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << " " << intf->full_skel_name () << "_tie<T>::"
+  *os << " " << intf->full_skel_name () << "_tie<" << template_name.c_str () << ">::"
       << node->local_name () << " ";
 
   // STEP 4: generate the argument list with the appropriate mapping (same as
