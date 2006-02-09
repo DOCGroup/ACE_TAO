@@ -11,7 +11,14 @@ ACE_RCSID (ace,
 
 #if !defined(ACE_LACKS_NUMERIC_LIMITS)
 #include <limits>
+
+// Bleh, some platforms pollute the namespace by defining a max() macro
+#ifdef max
+#undef max
 #endif
+
+#endif /* ACE_LACKS_NUMERIC_LIMITS */
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,7 +38,7 @@ const ACE_Time_Value ACE_Time_Value::max_time (
 #if !defined(ACE_LACKS_NUMERIC_LIMITS)
                                                std::numeric_limits<time_t>::max (),
 #else
-					       LONG_MAX,
+                                               LONG_MAX,
 #endif
                                                ACE_ONE_SECOND_IN_USECS - 1);
 
