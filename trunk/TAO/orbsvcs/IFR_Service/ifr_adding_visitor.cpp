@@ -577,11 +577,59 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int
-ifr_adding_visitor::visit_valuebox (AST_ValueBox *)
+ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
 {
+  if (node->imported () && !be_global->do_included_files ())
+    {
+      return 0;
+    }
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->element_type (node->boxed_type ()
+                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::Container_ptr current_scope =
+        CORBA::Container::_nil ();
+
+      if (be_global->ifr_scopes ().top (current_scope) == 0)
+        {
+          this->ir_current_ =
+            current_scope->create_value_box (
+                node->repoID (),
+                node->local_name ()->get_string (),
+                node->version (),
+                this->ir_current_.in ()
+                ACE_ENV_ARG_PARAMETER
+              );
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_valuebox -")
+              ACE_TEXT (" scope stack is empty\n")
+            ),
+            -1
+          );
+        }
+
+      node->ifr_added (1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("visit_valuebox"));
+
+      return -1;
+    }
+  ACE_ENDTRY;
+
   return 0;
 }
-
 
 int
 ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
@@ -3832,7 +3880,7 @@ ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
     {
       AST_Interface **list = node->inherits ();
       CORBA::ULong u_length = static_cast<CORBA::ULong> (s_length);
-      idl_bool first_abs = list[0]->is_abstract ();
+      bool first_abs = list[0]->is_abstract ();
       result.length (first_abs ? u_length : u_length - 1);
 
       for (CORBA::ULong i = 0; i < u_length; ++i)
