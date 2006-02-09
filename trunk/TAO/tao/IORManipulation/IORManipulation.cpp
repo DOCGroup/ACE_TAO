@@ -184,17 +184,15 @@ TAO_IOR_Manipulation_impl::remove_profiles (
     ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
-  ACE_AUTO_PTR_RESET (tmp_pfiles,
-                      ior2->_stubobj ()->make_profiles (),
-                      TAO_MProfile);
-
-  if (Diff_Profiles.remove_profiles (tmp_pfiles.get ()) < 0)
-    ACE_THROW_RETURN (TAO_IOP::NotFound (),
-                      CORBA::Object::_nil ());
-
-  // MS C++ knows nothing about reset!
-  // tmp_pfiles.reset (0); // get rid of last MProfile
-
+  // We are done with add_profiles.
+  // At this point, we don't do remove_profiles()
+  // immediately like before,
+  // because it could result in an
+  // Object Reference with 0 profile. And it would not pass
+  // the CORBA::is_nil() evaluation.
+  // Instead, we create the Object Reference right here, which is
+  // earlier than before.(Actually, I just moved some code
+  // from below up to here).
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
@@ -224,6 +222,20 @@ TAO_IOR_Manipulation_impl::remove_profiles (
       ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
                         CORBA::Object::_nil ());
     }
+
+  // Now we can remove the profiles which we want to elimitate from
+  // the Object.
+  ACE_AUTO_PTR_RESET (tmp_pfiles,
+                      ior2->_stubobj ()->make_profiles (),
+                      TAO_MProfile);
+
+  TAO_MProfile& mp = stub -> base_profiles();
+  if (mp.remove_profiles (tmp_pfiles.get ()) < 0)
+    ACE_THROW_RETURN (TAO_IOP::NotFound (),
+                      CORBA::Object::_nil ());
+
+  // MS C++ knows nothing about reset!
+  // tmp_pfiles.reset (0); // get rid of last MProfile
 
   return new_obj._retn ();
 }
