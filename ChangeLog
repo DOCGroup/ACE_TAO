@@ -1,3 +1,9 @@
+Thu Feb  9 20:05:00 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        
+          Added the new secure policies test.
+
 Thu Feb  9 17:40:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_string.cpp (ACE_OS::strerror):
@@ -12,14 +18,14 @@ Thu Feb  9 16:59:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           Align test_reactive() and test_concurrent() so the same
           error/warnings are emitted.
 
-	* Flag_Manip.cpp:
-	* IPC_SAP.cpp
+        * Flag_Manip.cpp:
+        * IPC_SAP.cpp
         * MEM_IO.cpp:
         * SOCK_Dgram.cpp:
         * SSL/SSL_SOCK_Stream.cpp:
 
-	  Change type of FIONBIO and FIONREAD ioctl from u_long,
-	  ACE_INT32, etc. to int for portability.
+          Change type of FIONBIO and FIONREAD ioctl from u_long,
+          ACE_INT32, etc. to int for portability.
 
         * ace/Time_Value.cpp:
 
@@ -42,35 +48,35 @@ Thu Feb  9 16:59:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           Handle ETIMEDOUT as we do for EWOULDBLOCK.  Fixes
           Cached_Conn_Test on NetBSD systems.
 
-	* ace/config-freebsd.h:
-	* ace/config-netbsd.h:
-	* ace/config-openbsd.h:
-	* ace/config-macosx-panther.h:
-	* ace/config-macosx-tiger.h:
-	* ace/config-macosx.h:
+        * ace/config-freebsd.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
 
           Define ACE_HAS_SOCKADDR_IN6_SIN6_LEN.
           This may be needed for other canned configs.
 
-	* ace/config-aix-4.x.h:
-	* ace/config-cray.h:
-	* ace/config-freebsd.h:
-	* ace/config-macosx-panther.h:
-	* ace/config-macosx-tiger.h:
-	* ace/config-macosx.h:
-       	* ace/config-mvs.h:
-	* ace/config-netbsd.h:
-	* ace/config-openbsd.h:
-	* ace/config-qnx-neutrino.h:
-	* ace/config-qnx-rtp-62x.h:
-	* ace/config-qnx-rtp-pre62x.h:
-	* ace/config-unixware-7.1.0.h:
-	* ace/config-unixware-7.1.0.udk.h:
-	* ace/config-win32-interix.h:
+        * ace/config-aix-4.x.h:
+        * ace/config-cray.h:
+        * ace/config-freebsd.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-mvs.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-win32-interix.h:
 
           Change ACE_HAS_SIN_LEN to ACE_HAS_SOCKADDR_IN_SIN_LEN.
 
-	* ace/README:
+        * ace/README:
 
           Document new feature test macros ACE_HAS_SOCKADDR_IN_SIN_LEN and
           ACE_HAS_SOCKADDR_IN6_SIN6.
@@ -81,7 +87,7 @@ Thu Feb  9 16:59:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           naming conventions.
 
         * ace/INET_Addr.cpp:
-	* ace/INET_Addr.inl:
+        * ace/INET_Addr.inl:
 
           Set the sockaddr_in.sin_len and sockaddr_in6.sin6_len members if
           new ACE_HAS_SOCKADDR_IN_SIN_LEN or ACE_HAS_SOCKADDR_IN6_SIN6_LEN
