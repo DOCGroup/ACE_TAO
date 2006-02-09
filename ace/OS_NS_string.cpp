@@ -120,7 +120,7 @@ ACE_OS::strerror (int errnum)
   ACE_Errno_Guard g (errno);
   errno = 0;
   char *errmsg = ::strerror (errnum);
-  if (errno == EINVAL || ACE_OS::strlen (errmsg) == 0)
+  if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
     {
       ACE_OS::sprintf (ret_errortext, "Unknown error %d", errnum);
       errmsg = ret_errortext;
