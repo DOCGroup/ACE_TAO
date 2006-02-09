@@ -82,7 +82,7 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);
   virtual int visit_native (AST_Native *node);
-  
+
 private:
   void check_prefix (AST_Decl *d);
   void check_id_and_version (AST_Decl *d);
@@ -104,8 +104,8 @@ private:
   void gen_params (UTL_Scope *s, int arg_count);
   void gen_exception_list (UTL_ExceptList *exceptions,
                            const char *prefix = "",
-                           idl_bool closed = I_TRUE);
-  
+                           bool closed = true);
+
 private:
   TAO_OutStream *os;
   AST_Type *disc_type_;

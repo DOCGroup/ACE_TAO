@@ -1,3 +1,16 @@
+Thu Feb  9 16:48:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_init.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+
+          Removed all usage of internal 'idl_bool' typedef in the
+          IDL3 to IDL2 converter, consistently with the changes to
+          the TAO IDL compiler front end, which is used by this
+          tool.
+
 Thu Feb  9 16:33:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/ADD_Handler.cpp
@@ -24,9 +37,9 @@ Thu Feb  9 16:33:45 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Req_Handler.cpp
         * tools/Config_Handlers/STD_PC_Intf.cpp
         * tools/Config_Handlers/XML_File_Intf.cpp
-        
-          Added CIAO_TRACE statements to aid in debugging. 
-        
+
+          Added CIAO_TRACE statements to aid in debugging.
+
 Wed Feb 08 15:53:31 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * CIAO version 0.4.9 released.
@@ -34,19 +47,19 @@ Wed Feb 08 15:53:31 2006  Wallace Zhang  <zhangw@ociweb.com>
 Tue Feb  7 16:10:10 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeManager.mpc
-        
+
           Fixed an ordering problem.
 
 Mon Feb  6 19:13:13 UTC 2006  William Otte    <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-        
+
           Fixed an export problem manifesting in VC8.
-        
+
         * performance-tests/Benchmark/Benchmark.mpc
-        
+
           Added an empty IDL_Files section to the servant to prevent
-          nmake from regenerating from the IDL file. 
+          nmake from regenerating from the IDL file.
 
 Mon Feb  6 13:54:39 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
