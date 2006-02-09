@@ -1,3 +1,17 @@
+Thu Feb  9 21:07:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          Changed the signature of the TAO_OutStream operator that
+          takes a TAO_ACE_CHECK struct to get a const reference of
+          the struct, instead of a non-const reference. In code
+          generation, this struct is passed to the operator as a
+          temporary, and gcc is evidently catching that a temporary
+          shouldn't be passed as a non-const reference (Visual Studio
+          did not catch it), but reporting the error as a failure to
+          resolve the operator overload.
+
 Thu Feb  9 20:17:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
@@ -14,7 +28,7 @@ Thu Feb  9 20:06:18 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
 
           Changed the return value of function is_profile_equivalent when
-          comparing an IOR and an IOGR. Basically, when you compare an 
+          comparing an IOR and an IOGR. Basically, when you compare an
           IOR and an IOGR, we need to return "DONT_KNOW",not
           "NOT_EQUIVALENT".
 
