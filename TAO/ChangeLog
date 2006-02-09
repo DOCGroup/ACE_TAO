@@ -1,3 +1,26 @@
+Thu Feb  9 20:06:18 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+
+          Corrected the use of the length of the passing parameter to a
+          function.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+
+          Changed the return value of function is_profile_equivalent when
+          comparing an IOR and an IOGR. Basically, when you compare an 
+          IOR and an IOGR, we need to return "DONT_KNOW",not
+          "NOT_EQUIVALENT".
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+
+          A fix for using the object reference.
+
+        * tao/IORManipulation/IORManipulation.cpp:
+
+          Corrected the order of adding, removing profiles, and creating
+          Object References.
+
 Thu Feb  9 19:59:41 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           This change was adds enforcement for any Security::SecQoP*

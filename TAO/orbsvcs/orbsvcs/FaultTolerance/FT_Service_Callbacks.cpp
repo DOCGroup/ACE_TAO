@@ -119,15 +119,17 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
                // Both have matching tags - true
                return TAO_Service_Callbacks::EQUIVALENT;
              }
-        }
 
-      return TAO_Service_Callbacks::NOT_EQUIVALENT;
+          return TAO_Service_Callbacks::NOT_EQUIVALENT;
+        }
+      else
+        return TAO_Service_Callbacks::DONT_KNOW;
     }
   else
     {
       if (that_comp.get_component (that_tc) == 1)
         {
-          return TAO_Service_Callbacks::NOT_EQUIVALENT;
+          return TAO_Service_Callbacks::DONT_KNOW;
         }
     }
 
