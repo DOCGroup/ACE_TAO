@@ -516,7 +516,7 @@ TAO_OutStream::operator<< (const TAO_ENV_ARG& i)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (TAO_ACE_CHECK& i)
+TAO_OutStream::operator<< (const TAO_ACE_CHECK& i)
 {
   if (!be_global->use_raw_throw ())
     {
