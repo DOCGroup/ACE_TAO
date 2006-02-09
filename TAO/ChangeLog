@@ -1,3 +1,19 @@
+Thu Feb  9 16:45:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Servicebe_global.h:
+        * orbsvcs/IFR_Serviceifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Serviceifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Serviceifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Serviceifr_adding_visitor_union.cpp:
+
+          - removed all usage of idl_bool typedef in the IFR loader,
+            consistentlty with changes in
+
+            Thu Feb  9 16:31:17 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          - added support for boxed valuetypes to the IFR loader
+
 Thu Feb  9 16:31:17 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_bool.h:
