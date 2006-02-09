@@ -8,7 +8,7 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
-includedir = @includedir@/orbsvcs
+includedir = @includedir@/orbsvcs/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
@@ -4913,6 +4913,7 @@ nobase_include_HEADERS += \
   HTIOP/HTIOP_Factory.h \
   HTIOP/HTIOP_Profile.h \
   HTIOP/HTIOP_Transport.h \
+  HTIOP/htiop_endpoints.pidl \
   HTIOP/htiop_endpointsC.h \
   HTIOPC.h \
   HTIOPC.inl \
@@ -6037,6 +6038,7 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_Util.h \
   SSLIOP/SSLIOP_X509.h \
   SSLIOP/params_dup.h \
+  SSLIOP/ssl_endpoints.pidl \
   SSLIOP/ssl_endpointsC.h \
   SSLIOPC.h \
   SSLIOPC.inl

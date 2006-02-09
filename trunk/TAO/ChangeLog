@@ -1,3 +1,15 @@
+Thu Feb  9 19:27:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/HTOIP.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+
+          Add Pidl_Files section so that *_endpoints.pidl files are
+          installed in autoconf builds.
+
 Thu Feb  9 18:25:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/driver/drv_preproc.cpp:
