@@ -261,7 +261,7 @@
 #define ACE_HAS_SIG_ATOMIC_T
 
 /* Platform supports new BSD inet_addr len field. */
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 
 /* OS/compiler uses size_t * rather than int * for socket lengths */
 #define ACE_HAS_SIZET_SOCKET_LEN

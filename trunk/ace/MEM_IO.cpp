@@ -434,11 +434,11 @@ ACE_MEM_IO::recvv (iovec *io_vec,
       break;
     }
 
-  u_long inlen;
+  int inlen;
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-                     (u_long *) &inlen) == -1)
+                     &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {

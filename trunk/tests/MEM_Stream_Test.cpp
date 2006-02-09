@@ -308,8 +308,8 @@ test_reactive (const ACE_TCHAR *prog,
                   ACE_TEXT ("Reactor::run_event_loop timeout\n")));
       status = 1;
     }
-
-  ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->wait () == -1)
@@ -403,11 +403,11 @@ test_concurrent (const ACE_TCHAR *prog,
     ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
 #if defined (_TEST_USES_THREADS)
-  // We need to call this method if we use the
-  // ACE_Thread_Strategy<Echo_Handler>.
-  ACE_Thread_Manager::instance ()->wait ();
+  if (ACE_Thread_Manager::instance ()->wait () == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
 #else
-  ACE_Process_Manager::instance ()->wait ();
+  if (ACE_Process_Manager::instance ()->wait () == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
 #endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)

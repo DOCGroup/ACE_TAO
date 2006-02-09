@@ -59,7 +59,7 @@ ACE_IPC_SAP::enable (int value) const
       {
         // nonblocking argument (1)
         // blocking:            (0)
-        u_long nonblock = 1;
+        int nonblock = 1;
         return ACE_OS::ioctl (this->handle_,
                               FIONBIO,
                               &nonblock);
@@ -131,7 +131,7 @@ ACE_IPC_SAP::disable (int value) const
       // nonblocking argument (1)
       // blocking:            (0)
       {
-        u_long nonblock = 0;
+        int nonblock = 0;
         return ACE_OS::ioctl (this->handle_,
                               FIONBIO,
                               &nonblock);
