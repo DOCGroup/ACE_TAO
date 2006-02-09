@@ -283,6 +283,7 @@ DRV_cpp_init (void)
               // TAO_IDL_INCLUDE_DIR should be in quotes,
               // e.g. "/usr/local/include/tao"
               ACE_OS::strcat (option1, TAO_IDL_INCLUDE_DIR);
+              ACE_OS::strcat (option2, ".");
 #else
               ACE_ERROR ((LM_WARNING,
                           "NOTE: The environment variables "
@@ -297,11 +298,9 @@ DRV_cpp_init (void)
 
       DRV_cpp_putarg (option1);
       idl_global->add_include_path (ACE_CString (option1 + 2).c_str ());
-      idl_global->tao_root (option1 + 2);
-#if !defined (TAO_IDL_INCLUDE_DIR)
       DRV_cpp_putarg (option2);
       idl_global->add_include_path (ACE_CString (option2 + 2).c_str ());
-#endif  /* TAO_IDL_INCLUDE_DIR */
+      idl_global->tao_root (option1 + 2);
     }
 
   // Add any flags in cpp_args to cpp's arglist.
@@ -482,20 +481,9 @@ DRV_cpp_post_init (void)
         }
       else
         {
-#if defined (TAO_IDL_INCLUDE_DIR)
-          // TAO_IDL_INCLUDE_DIR should be in quotes,
-          // e.g. "/usr/local/include/tao"
-          ACE_OS::strcat (option3, TAO_IDL_INCLUDE_DIR);
-          ACE_OS::strcat (option4, TAO_IDL_INCLUDE_DIR);
-          ACE_OS::strcat (option5, TAO_IDL_INCLUDE_DIR);
-          ACE_OS::strcat (option3, "/orbsvcs");
-          ACE_OS::strcat (option4, "/CIAO");
-          ACE_OS::strcat (option5, "/CIAO/ciao");
-#else
           ACE_OS::strcat (option3, ".");
           ACE_OS::strcat (option4, ".");
           ACE_OS::strcat (option5, ".");
-#endif
         }
     }
 

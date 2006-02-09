@@ -1,3 +1,19 @@
+Thu Feb  9 18:25:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          If TAO_ROOT or ACE_ROOT environment variables are set they
+          override the path set by 'TAO_IDL_INCLUDE_DIR'.  Both $TAO_ROOT
+          and $TAO_ROOT/tao (or $ACE_ROOT/TAO and $ACE_ROOT/TAO/tao) have
+          to be added to the list of preprocessor include paths.  Instead
+          of unconditionally disabling appending the second include path
+          when TAO_IDL_INCLUDE_PATH is defined, we just set it to '.' in
+          the case neither TAO_ROOT or ACE_ROOT environment variables are
+          set.
+
+          Similarly, disable appending /orbsvcs, /CIAO, and /CIAO/ciao to
+          TAO_IDL_INCLUDE_PATH, again setting the include paths to '.'.
+
 Thu Feb  9 16:45:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/be_global.cpp:
