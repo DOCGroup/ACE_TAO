@@ -1,3 +1,10 @@
+Thu Feb  9 17:40:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_string.cpp (ACE_OS::strerror):
+
+          Don't use strlen() to see if length is zero, check if the
+          first char is null (O(1) vs. O(N)).
+
 Thu Feb  9 16:59:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * test/MEM_Stream_Test.cpp:
