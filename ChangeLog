@@ -1,3 +1,13 @@
+Tue Feb  7 23:28:29 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/SPIPE_Acceptor.cpp (close): On Windows, wait for completion
+          (cancellation) of an outstanding ConnectNamedPipe operation. If
+          left outstanding and the ACE_SPIPE_Acceptor object is deleted, the
+          OS will write into deleted memory. Thanks to Nathan Bamford
+          <nbamford at datalever dot com> for reporting this.
+
+        * THANKS: Added Nathan Bamford to the Hall of Fame.
+
 Wed Feb 08 15:46:51 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * ACE version 5.4.9 released.
