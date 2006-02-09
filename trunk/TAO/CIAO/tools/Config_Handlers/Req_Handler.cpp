@@ -43,7 +43,8 @@ namespace CIAO
     Requirement
     Req_Handler::get_requirement (const Deployment::Requirement& src)
     {
-      CIAO_TRACE("Req_Handler::get_requirement - reverse")
+      CIAO_TRACE("Req_Handler::get_requirement - reverse");
+      
       //Get the values for name and res
       XMLSchema::string< char > name ((src.name));
       XMLSchema::string< char > res ((src.resourceType));
