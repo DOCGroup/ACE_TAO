@@ -31,4 +31,8 @@ project(SSLIOP) : orbsvcslib, core, security, ssl, pi_server, interceptors, tao_
 
   Template_Files {
   }
+
+  Pidl_Files {
+    SSLIOP
+  }
 }

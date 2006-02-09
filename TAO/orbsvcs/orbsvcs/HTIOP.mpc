@@ -20,4 +20,8 @@ project : htbp, orbsvcslib, core, tao_versioning_idl_defaults {
       HTIOP
     }
   }
+
+  Pidl_Files {
+    HTIOP
+  }
 }
