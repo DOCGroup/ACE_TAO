@@ -569,11 +569,13 @@ ACE_HAS_SIG_ATOMIC_T                    Compiler/platform defines the
                                         sig_atomic_t typedef
 ACE_HAS_SIG_C_FUNC                      Compiler requires extern "C"
                                         functions for signals.
-ACE_HAS_SIN_LEN                         Platform supports new BSD
-                                        inet_addr len field.
 ACE_HAS_SIZET_SOCKET_LEN                OS/compiler uses size_t *
                                         rather than int * for socket
                                         lengths
+ACE_HAS_SOCKADDR_IN_SIN_LEN		Platform has sin_len member in struct
+					sockaddr_in.
+ACE_HAS_SOCKADDR_IN6_SIN_LEN		Platform has sin6_len member in struct
+					sockaddr_in6.
 ACE_HAS_SOCKADDR_MSG_NAME               Platform requires (struct
                                         sockaddr *) for msg_name field
                                         of struct msghdr.
@@ -978,6 +980,7 @@ ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
+ACE_LACKS_NUMERIC_LIMITS		Platform lacks std::numeric_limits<>.
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind

@@ -275,7 +275,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
       // for the <Connector> to notify the cache of the completion of
       // connect().
 
-      if (errno == EWOULDBLOCK)
+      if (errno == EWOULDBLOCK || errno == ETIMEDOUT)
         errno = ENOTSUP;
       else if (ACE::out_of_handles (errno) || errno == EADDRINUSE)
         {
@@ -296,7 +296,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
                                     flags,
                                     perms) == -1)
             {
-              if (errno == EWOULDBLOCK)
+              if (errno == EWOULDBLOCK || errno == ETIMEDOUT)
                 errno = ENOTSUP;
               return -1;
             }

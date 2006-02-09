@@ -1549,22 +1549,30 @@ if test "$ace_cv_struct_siginfo_t" = yes; then
 fi dnl test "$ace_cv_struct_siginfo_t" = yes
 
 dnl Check for sin_len member in struct sockaddr_in
-ACE_CACHE_CHECK([for sin_len member in struct sockaddr_in],
-    [ace_cv_lib_has_sin_len],[
-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+AC_CHECK_MEMBER([struct sockaddr_in.sin_len],
+		[AC_DEFINE([ACE_HAS_SOCKADDR_IN_SIN_LEN], 1,
+		           [Define to 1 if `sin_len' is a member of `sockaddr_in'.])],
+		[],
+		[
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
+#include <sys/socket.h>
 #include <netinet/in.h>
-          ]],[[
-           sockaddr_in ace_sin;
-           ace_sin.sin_len = sizeof(ace_sin);
-          ]])],[
-           ace_cv_lib_has_sin_len=yes
-          ],[
-           ace_cv_lib_has_sin_len=no
-          ])
-],[AC_DEFINE([ACE_HAS_SIN_LEN])],)
+		])
+
+dnl Check for sin6_len member in struct sockaddr_in6
+AC_CHECK_MEMBER([struct sockaddr_in6.sin6_len],
+		[AC_DEFINE([ACE_HAS_SOCKADDR_IN6_SIN6_LEN], 1,
+		           [Define to 1 if `sin6_len' is a member of `sockaddr_in6'.])],
+		[],
+		[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <netinet/in.h>
+		])
 
 dnl Check for sys_siglist
 dnl TODO: Check whether this variable can be defined somewhere else.
@@ -1923,6 +1931,17 @@ AC_CHECK_TYPE([uint64_t],
 #ifndef ACE_LACKS_INTTYPES_H
 #include <inttypes.h>
 #endif])
+
+AC_CACHE_CHECK([for std::numeric_limits<>],
+[ace_func_numeric_limits],
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([#include <limits>],
+		  [return std::numeric_limits<int>::max();])],
+		  [ace_cv_func_numeric_limits=yes],
+		  [ace_cv_func_numeric_limits=no])])
+if test $ace_cv_func_numeric_limits = no; then
+  AC_DEFINE([ACE_LACKS_NUMERIC_LIMITS], 1,
+	    [Define to 1 if platfom lacks std::numeric_limits<>.])
+fi
 
 
 dnl Other checks

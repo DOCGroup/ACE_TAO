@@ -231,7 +231,7 @@
 #endif /* ACE_AIX_VERS >= 403 */
 
 #define ACE_HAS_SIGWAIT
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_STRBUF_T
 
 // Compiler supports stropts.h

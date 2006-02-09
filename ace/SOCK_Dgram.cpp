@@ -86,10 +86,11 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
-  u_long inlen;
+  int inlen;
 
   if (ACE_OS::ioctl (this->get_handle (),
-                     FIONREAD, (u_long *) &inlen) == -1)
+                     FIONREAD, 
+		     &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
