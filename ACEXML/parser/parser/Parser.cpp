@@ -868,7 +868,7 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
             this->xml_namespace_.processName(startname, ns_uri,
                                              ns_lname, 0);
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                  ns_uri, ns_lname, 1
+                                  ns_uri, 1
                                   ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK;
             this->content_handler_->startElement(ns_uri, ns_lname,
@@ -879,7 +879,7 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
                                                 ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK;
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                  ns_uri, ns_lname, 0
+                                  ns_uri, 0
                                   ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK;
             if (ns_flag)
@@ -892,7 +892,7 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
             this->xml_namespace_.processName (startname, ns_uri,
                                               ns_lname, 0);
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                  ns_uri, ns_lname, 1
+                                  ns_uri, 1
                                   ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK;
             this->content_handler_->startElement(ns_uri, ns_lname, startname,
@@ -982,15 +982,15 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
             break;
         }
     }
-  if (this->parse_content (startname, ns_uri, ns_lname
+  if (this->parse_content (startname, ns_uri, ns_lname, ns_flag
                            ACEXML_ENV_ARG_PARAMETER) != 0)
     return;
 }
 
 int
 ACEXML_Parser::parse_content (const ACEXML_Char* startname,
-                              const ACEXML_Char* ns_uri,
-                              const ACEXML_Char* ns_lname ACEXML_ENV_ARG_DECL)
+                              const ACEXML_Char*& ns_uri,
+                              const ACEXML_Char*& ns_lname, int ns_flag ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char *cdata;
@@ -1076,13 +1076,16 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                                                         ACEXML_ENV_ARG_PARAMETER);
                     ACEXML_CHECK_RETURN (-1);
                     this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                          ns_uri, ns_lname, 0
+                                          ns_uri, 0
                                           ACEXML_ENV_ARG_PARAMETER);
                     ACEXML_CHECK_RETURN (-1);
+                    if (this->namespaces_ && ns_flag)
+                      {
                     if (this->nested_namespace_ >= 1)
                       {
                         this->xml_namespace_.popContext ();
                         this->nested_namespace_--;
+                      }
                       }
                     return 0;
                   }
@@ -2900,13 +2903,12 @@ ACEXML_Parser::parse_sddecl (ACEXML_Char*& str)
 void
 ACEXML_Parser::prefix_mapping (const ACEXML_Char* prefix,
                                const ACEXML_Char* uri,
-                               const ACEXML_Char* name,
                                int start ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->namespaces_)
     {
-      const ACEXML_Char* temp = (name == 0) ? empty_string : prefix;
+      const ACEXML_Char* temp = (prefix == 0) ? empty_string : prefix;
       if (start) {
         this->content_handler_->startPrefixMapping (temp, uri
                                                     ACEXML_ENV_ARG_PARAMETER);
