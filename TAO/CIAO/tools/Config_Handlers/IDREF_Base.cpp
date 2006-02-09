@@ -67,7 +67,8 @@ namespace CIAO
     bool
     IDREF_Base<T>::unbind_refs (void)
     {
-      CIAO_TRACE("IDREF_Base<T>::unbind_refs")
+      CIAO_TRACE("IDREF_Base<T>::unbind_refs");
+      
       int retval =
         idref_map_.unbind_all ();
  
