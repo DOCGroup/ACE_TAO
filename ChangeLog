@@ -1,3 +1,85 @@
+Thu Feb  9 16:59:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * test/MEM_Stream_Test.cpp:
+
+          Align test_reactive() and test_concurrent() so the same
+          error/warnings are emitted.
+
+	* Flag_Manip.cpp:
+	* IPC_SAP.cpp
+        * MEM_IO.cpp:
+        * SOCK_Dgram.cpp:
+        * SSL/SSL_SOCK_Stream.cpp:
+
+	  Change type of FIONBIO and FIONREAD ioctl from u_long,
+	  ACE_INT32, etc. to int for portability.
+
+        * ace/Time_Value.cpp:
+
+          Use std::numeric_limits<time_t>::max () instead of LONG_MAX
+          as ctor's first argument when initializing ACE_Time_Value::
+          max_time if !ACE_LACKS_NUMERIC_LIMITS, as time_t may not be
+          a long. Fixes Timer_Queue_Reference_Counting_Test on NetBSD/amd64.
+
+        * configure.ac:
+
+          Added ACE_LACKS_NUMERIC_LIMITS feature test.
+
+        * ace/README:
+
+          Document new ACE_LACKS_NUMERIC_LIMITS feature test macro, which
+          should be defined to 1 if platform lacks std::numeric_limits<>.
+
+        * ace/Cached_Connect_Strategy_T.cpp (cached_connect):
+
+          Handle ETIMEDOUT as we do for EWOULDBLOCK.  Fixes
+          Cached_Conn_Test on NetBSD systems.
+
+	* ace/config-freebsd.h:
+	* ace/config-netbsd.h:
+	* ace/config-openbsd.h:
+	* ace/config-macosx-panther.h:
+	* ace/config-macosx-tiger.h:
+	* ace/config-macosx.h:
+
+          Define ACE_HAS_SOCKADDR_IN6_SIN6_LEN.
+          This may be needed for other canned configs.
+
+	* ace/config-aix-4.x.h:
+	* ace/config-cray.h:
+	* ace/config-freebsd.h:
+	* ace/config-macosx-panther.h:
+	* ace/config-macosx-tiger.h:
+	* ace/config-macosx.h:
+       	* ace/config-mvs.h:
+	* ace/config-netbsd.h:
+	* ace/config-openbsd.h:
+	* ace/config-qnx-neutrino.h:
+	* ace/config-qnx-rtp-62x.h:
+	* ace/config-qnx-rtp-pre62x.h:
+	* ace/config-unixware-7.1.0.h:
+	* ace/config-unixware-7.1.0.udk.h:
+	* ace/config-win32-interix.h:
+
+          Change ACE_HAS_SIN_LEN to ACE_HAS_SOCKADDR_IN_SIN_LEN.
+
+	* ace/README:
+
+          Document new feature test macros ACE_HAS_SOCKADDR_IN_SIN_LEN and
+          ACE_HAS_SOCKADDR_IN6_SIN6.
+
+          Removed description of ACE_HAS_SIN_LEN.  This macro was defined,
+          but not used anywhere in ACE, TAO, or CIAO.  It's being removed
+          rather than used because the new macros follow our feature test
+          naming conventions.
+
+        * ace/INET_Addr.cpp:
+	* ace/INET_Addr.inl:
+
+          Set the sockaddr_in.sin_len and sockaddr_in6.sin6_len members if
+          new ACE_HAS_SOCKADDR_IN_SIN_LEN or ACE_HAS_SOCKADDR_IN6_SIN6_LEN
+          feature test macros are defined.
+
 Tue Feb  7 23:28:29 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/SPIPE_Acceptor.cpp (close): On Windows, wait for completion

@@ -859,6 +859,9 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 
       if (this->get_type () == AF_INET && map == 0) {
         this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
+#ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
+	this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
+#endif
         this->inet_addr_.in4_.sin_family = AF_INET;
         this->set_size (sizeof (this->inet_addr_.in4_));
         ACE_OS::memcpy (&this->inet_addr_.in4_.sin_addr,
@@ -870,6 +873,9 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
         {
           // this->set_type (AF_INET);
           this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
+#ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
+	  this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
+#endif
           this->inet_addr_.in4_.sin_family = AF_INET;
           this->set_size (sizeof (this->inet_addr_.in4_));
           ACE_OS::memcpy (&this->inet_addr_.in4_.sin_addr,
@@ -880,6 +886,9 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
       else
         {
           this->base_set (AF_INET6, sizeof (this->inet_addr_.in6_));
+#ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
+	  this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
+#endif
           this->inet_addr_.in6_.sin6_family = AF_INET6;
           this->set_size (sizeof (this->inet_addr_.in6_));
           if (ip4 == INADDR_ANY)

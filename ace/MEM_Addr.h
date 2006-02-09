@@ -57,7 +57,7 @@ public:
   /// Default initialization routine.
   int initialize_local (u_short port);
 
-  /// Check if @a sap designate an enpoint withing the same host.
+  /// Check if @a sap designates an endpoint on the same host.
   int same_host (const ACE_INET_Addr& sap);
 
   // These methods are useful after the object has been constructed.

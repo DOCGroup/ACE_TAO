@@ -158,7 +158,7 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
       break;
     }
 
-  ACE_UINT32 inlen;
+  int inlen;
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,

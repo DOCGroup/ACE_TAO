@@ -9,6 +9,9 @@ ACE_RCSID (ace,
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+#include <limits>
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,7 +25,14 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // Its primary use is in time computations such as those used by the
 // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 // Note: this object requires static construction.
-const ACE_Time_Value ACE_Time_Value::max_time (LONG_MAX,
+// Note: on platforms without std::numeric_limits<>, we assume time_t is
+// a long, the historical type used for time.
+const ACE_Time_Value ACE_Time_Value::max_time (
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+                                               std::numeric_limits<time_t>::max (),
+#else
+					       LONG_MAX,
+#endif
                                                ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
