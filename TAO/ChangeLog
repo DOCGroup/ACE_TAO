@@ -1,3 +1,9 @@
+Thu Feb  9 20:17:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Fix typo in regeneration.
+
 Thu Feb  9 20:06:18 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
