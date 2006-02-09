@@ -36,7 +36,7 @@ namespace CIAO
         const PlanSubcomponentPortEndpoint &src,
         ::Deployment::PlanSubcomponentPortEndpoint &dest)
     {
-      CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint")
+      CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint");
       dest.portName =
         src.portName ().c_str ();
 
@@ -91,7 +91,7 @@ namespace CIAO
     PSPE_Handler::sub_component_port_endpoint (
       const Deployment::PlanSubcomponentPortEndpoint &src)
     { // @@MAJO
-      CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse")
+      CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
       XMLSchema::string< char > pname ((src.portName));
       XMLSchema::string< char > tval  ("true");
       XMLSchema::string< char > prov  ("");
