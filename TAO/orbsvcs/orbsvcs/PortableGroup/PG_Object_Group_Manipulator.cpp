@@ -71,7 +71,7 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
 
   // Create a reference for the ObjectGroup
   CORBA::Object_var object_group =
-    this->poa_->create_reference_with_id (ACE_U64_TO_U32 (group_id),
+    this->poa_->create_reference_with_id (oid.in(),
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());

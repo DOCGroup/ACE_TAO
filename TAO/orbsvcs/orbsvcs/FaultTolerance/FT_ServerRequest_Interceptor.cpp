@@ -206,8 +206,10 @@ namespace TAO
       ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (param->length () > 2 ||
-        param->length () == 0)
+    // this is only for checking the tao_update_object_group operation
+    // which accepts three parameters, i.e.,an iogr as a string,
+    // a version object and a boolean.
+    if (param->length () != 3 )
       ACE_THROW (CORBA::TRANSIENT ());
 
 
@@ -216,6 +218,7 @@ namespace TAO
 
     (*param)[0].argument >>= str;
     (*param)[1].argument >>= this->object_group_ref_version_;
+    (*param)[2].argument >>= CORBA::Any::to_boolean(this->is_primary_);
 
     CORBA::String_var obj (str);
 
