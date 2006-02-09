@@ -7,7 +7,11 @@ workspace {
   ../../ACEXML
   ../tao
   ../TAO_IDL
+  ../orbsvcs/orbsvcs/CosEvent.mpc
   ../orbsvcs/orbsvcs/CosNaming.mpc
+  ../orbsvcs/orbsvcs/CosNaming_Serv.mpc
+  ../orbsvcs/orbsvcs/CosNaming_Skel.mpc
+  ../orbsvcs/Naming_Service
   ../orbsvcs/orbsvcs/Svc_Utils.mpc
   ../orbsvcs/orbsvcs/Security.mpc
   ../orbsvcs/orbsvcs/IFRService.mpc
