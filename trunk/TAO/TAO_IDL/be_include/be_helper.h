@@ -239,7 +239,7 @@ public:
   TAO_OutStream &operator<< (const TAO_ENV_ARG& i);
   // Conditional and generic output for all forms of "ACE_ENV_*".
 
-  TAO_OutStream &operator<< (TAO_ACE_CHECK& i);
+  TAO_OutStream &operator<< (const TAO_ACE_CHECK& i);
   // Conditional and generic output for all forms of "ACE_CHECK".
 
   TAO_OutStream &operator<< (const TAO_ACE_TRY_CHECK& i);
