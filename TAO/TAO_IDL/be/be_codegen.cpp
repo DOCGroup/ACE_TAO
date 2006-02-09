@@ -443,7 +443,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   if (idl_global->non_local_iface_seen_)
     {
       // Include the Messaging files if AMI is enabled.
-      if (be_global->ami_call_back () == I_TRUE)
+      if (be_global->ami_call_back () == true)
         {
           // Include Messaging skeleton file.
           this->gen_standard_include (this->server_header_,
@@ -1531,7 +1531,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                   "tao/Valuetype/AbstractBase.h");
 
       // Turn on generation of the rest of the Valuetype library includes.
-      idl_global->valuetype_seen_ = I_TRUE;
+      idl_global->valuetype_seen_ = true;
     }
 
   if (idl_global->valuebase_seen_)
@@ -1642,7 +1642,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                this->client_header_);
 
   // Include the Messaging library entry point, if AMI is enabled.
-  if (be_global->ami_call_back () == I_TRUE)
+  if (be_global->ami_call_back () == true)
     {
       // Include Messaging skeleton file.
       this->gen_standard_include (this->client_header_,
@@ -1650,7 +1650,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   // Include the smart proxy base class if smart proxies are enabled.
-  if (be_global->gen_smart_proxies () == I_TRUE)
+  if (be_global->gen_smart_proxies () == true)
     {
       this->gen_standard_include (this->client_header_,
                                   "tao/SmartProxies/Smart_Proxies.h");
@@ -1782,7 +1782,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
         );
     }
 
-  if (be_global->ami_call_back () == I_TRUE)
+  if (be_global->ami_call_back () == true)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/Asynch_Invocation_Adapter.h");
@@ -1868,7 +1868,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "ace/OS_NS_string.h");
     }
 
-  if (be_global->gen_amh_classes () == I_TRUE)
+  if (be_global->gen_amh_classes () == true)
     {
       // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,

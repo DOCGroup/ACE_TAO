@@ -135,8 +135,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "TAO_ServerRequest & req," << be_nl
                   << "void * context," << be_nl
-                  << "void * obj" << be_nl
-                  << "ACE_ENV_ARG_DECL" << be_uidt_nl
+                  << "void * obj" << env_decl << be_uidt_nl
                   << ")" << be_uidt_nl
                   << "{" << be_idt_nl;
               *os << ancestor_amh_name
@@ -148,8 +147,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "req," << be_nl
                   << "context," << be_nl
-                  << "impl" << be_nl
-                  << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+                  << "impl" << env_arg << be_uidt_nl
                   << ");" << be_uidt << be_uidt_nl
                   << "}";
             }
@@ -173,8 +171,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "TAO_ServerRequest & req," << be_nl
                   << "void * context," << be_nl
-                  << "void * obj" << be_nl
-                  << "ACE_ENV_ARG_DECL" << be_uidt_nl
+                  << "void * obj" << env_decl << be_uidt_nl
                   << ")" << be_uidt_nl
                   << "{" << be_idt_nl;
 
@@ -188,8 +185,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "req," << be_nl
                   << "context," << be_nl
-                  << "impl" << be_nl
-                  << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+                  << "impl" << env_arg << be_uidt_nl
                   << ");" << be_uidt << be_uidt_nl
                   << "}";
 
@@ -207,8 +203,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & req," << be_nl
                       << "void * context," << be_nl
-                      << "void * obj" << be_nl
-                      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+                      << "void * obj" << env_decl << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -222,8 +217,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "req," << be_nl
                       << "context," << be_nl
-                      << "impl" << be_nl
-                      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+                      << "impl" << env_arg << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }

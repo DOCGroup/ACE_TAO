@@ -66,7 +66,7 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
       << "}" << be_nl << be_nl;
 
   // Indicate that code is already generated for this node.
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
 
   return 0;
 }

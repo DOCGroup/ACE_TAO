@@ -71,6 +71,6 @@ be_visitor_enum_serializer_op_cs::visit_enum (be_enum *node)
       << "return _tao_result;" << be_uidt_nl
       << "}";
 
-  node->cli_stub_serializer_op_gen (I_TRUE);
+  node->cli_stub_serializer_op_gen (true);
   return 0;
 }

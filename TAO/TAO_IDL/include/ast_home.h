@@ -29,18 +29,18 @@ public:
 
   // Extend lookup to the base home.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       idl_bool treat_as_ref);
+                                       bool treat_as_ref);
 
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       idl_bool treat_as_ref);
-                                       
+                                       bool treat_as_ref);
+
   // Accessors.
 
   AST_Home *base_home (void) const;
 
   AST_Interface **supports (void) const;
-  
+
   long n_supports (void) const;
 
   AST_Component *managed_component (void) const;

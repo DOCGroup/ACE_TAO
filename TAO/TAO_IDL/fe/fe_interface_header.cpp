@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
-ACE_RCSID (fe, 
-           fe_interface_header, 
+ACE_RCSID (fe,
+           fe_interface_header,
            "$Id$")
 
 #undef  INCREMENT
@@ -179,11 +179,11 @@ already_seen (AST_Interface *ip)
     {
       if (iseen[i] == ip)
         {
-          return I_TRUE;
+          return true;
         }
     }
 
-  return I_FALSE;
+  return false;
 }
 
 // Have we already seen this interface in the flat list?
@@ -194,11 +194,11 @@ already_seen_flat (AST_Interface *ip)
     {
       if (iseen_flat[i] == ip)
         {
-          return I_TRUE;
+          return true;
         }
     }
 
-  return I_FALSE;
+  return false;
 }
 
 // @@@ (JP) Here are the rules for interface inheritance and
@@ -231,14 +231,14 @@ interface, a derived valuetype may also be declared to support an
 interface, as long as it is derived from all interfaces that are
 supported by any base valuetypes.  Here is an example:
 
-interface I1 { }; 
-interface I2 { }; 
-interface I3: I1, I2 { }; 
+interface I1 { };
+interface I2 { };
+interface I3: I1, I2 { };
 
-abstract valuetype V1 supports I1 { }; 
-abstract valuetype V2 supports I2 { }; 
-valuetype V3: V1, V2 supports I3 { }; // legal 
-valuetype V4: V1 supports I2 { }; // illegal 
+abstract valuetype V1 supports I1 { };
+abstract valuetype V2 supports I2 { };
+valuetype V3: V1, V2 supports I3 { }; // legal
+valuetype V4: V1 supports I2 { }; // illegal
 
 This last rule was made to guarantee that any given valuetype supported
 at most one most-derived interface.  We didn't want valuetypes to extend
@@ -248,9 +248,9 @@ interfaces.
 
 FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
                                         UTL_NameList *inherits,
-                                        idl_bool is_local,
-                                        idl_bool is_abstract,
-                                        idl_bool compile_now)
+                                        bool is_local,
+                                        bool is_abstract,
+                                        bool compile_now)
   : pd_interface_name (n),
     pd_inherits (0),
     pd_n_inherits (0),
@@ -262,7 +262,7 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
   if (compile_now)
     {
       this->compile_inheritance (inherits,
-                                 I_FALSE);
+                                 false);
     }
 }
 
@@ -270,13 +270,13 @@ FE_InterfaceHeader::~FE_InterfaceHeader (void)
 {
 }
 
-idl_bool
+bool
 FE_InterfaceHeader::is_local (void) const
 {
   return this->pd_is_local;
 }
 
-idl_bool
+bool
 FE_InterfaceHeader::is_abstract (void) const
 {
   return this->pd_is_abstract;
@@ -289,7 +289,7 @@ FE_InterfaceHeader::destroy (void)
     {
       return;
     }
-    
+
   this->pd_interface_name->destroy ();
   delete this->pd_interface_name;
   this->pd_interface_name = 0;
@@ -340,7 +340,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
 // Compute the list of top-level interfaces this one inherits from.
 void
 FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
-                                         idl_bool for_valuetype)
+                                         bool for_valuetype)
 {
   if (ifaces == 0)
     {
@@ -368,7 +368,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       if (idl_global->scopes ().top () == 0)
         {
           idl_global->err ()->lookup_error (item);
-      
+
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
           exit (99);
@@ -378,7 +378,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       UTL_Scope *s = idl_global->scopes ().top ();
 
       d = s->lookup_by_name  (item,
-                              I_TRUE);
+                              true);
 
       if (d == 0)
         {
@@ -396,7 +396,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       if (d == 0)
         {
           idl_global->err ()->lookup_error (item);
-      
+
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
           exit (99);
@@ -477,11 +477,11 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
 int
 FE_InterfaceHeader::check_inherit (AST_Interface *i,
-                                   idl_bool for_valuetype)
+                                   bool for_valuetype)
 {
   // We use the narrow instead of node_type() here so we can get a
   // match with both valuetypes and eventtypes.
-  idl_bool is_valuetype = (AST_ValueType::narrow_from_decl (i) != 0);
+  bool is_valuetype = (AST_ValueType::narrow_from_decl (i) != 0);
 
   if (
       // Non-local interfaces may not inherit from local ones.
@@ -535,13 +535,13 @@ FE_InterfaceHeader::n_inherits_flat (void) const
 FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
                             UTL_NameList *inherits,
                             UTL_NameList *supports,
-                            idl_bool truncatable,
-                            idl_bool is_eventtype)
+                            bool truncatable,
+                            bool is_eventtype)
   : FE_InterfaceHeader (n,
                         inherits,
-                        I_FALSE,
-                        I_FALSE,
-                        I_FALSE),
+                        false,
+                        false,
+                        false),
     pd_supports (0),
     pd_inherits_concrete (0),
     pd_supports_concrete (0),
@@ -584,7 +584,7 @@ FE_OBVHeader::supports_concrete (void) const
   return this->pd_supports_concrete;
 }
 
-idl_bool
+bool
 FE_OBVHeader::truncatable (void) const
 {
   return this->pd_truncatable;
@@ -592,10 +592,10 @@ FE_OBVHeader::truncatable (void) const
 
 void
 FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
-                                   idl_bool is_eventtype)
+                                   bool is_eventtype)
 {
   this->FE_InterfaceHeader::compile_inheritance (vtypes,
-                                                 I_TRUE);
+                                                 true);
 
   if (this->pd_n_inherits > 0)
     {
@@ -603,7 +603,7 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
       AST_ValueType *vt = AST_ValueType::narrow_from_decl (iface);
 
       if (vt != 0
-          && vt->is_abstract () == I_FALSE)
+          && vt->is_abstract () == false)
         {
           this->pd_inherits_concrete = vt;
         }
@@ -660,7 +660,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       if (idl_global->scopes ().top () == 0)
         {
           idl_global->err ()->lookup_error (item);
-      
+
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
           exit (99);
@@ -670,7 +670,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       UTL_Scope *s = idl_global->scopes ().top ();
 
       d = s->lookup_by_name  (item,
-                              I_TRUE);
+                              true);
 
       if (d == 0)
         {
@@ -688,7 +688,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       if (d == 0)
         {
           idl_global->err ()->lookup_error (item);
-      
+
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
           exit (99);
@@ -744,7 +744,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
     }
 }
 
-idl_bool 
+bool
 FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 {
   AST_ValueType *vt = 0;
@@ -783,12 +783,12 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 FE_EventHeader::FE_EventHeader (UTL_ScopedName *n,
                                 UTL_NameList *inherits,
                                 UTL_NameList *supports,
-                                idl_bool truncatable)
+                                bool truncatable)
   : FE_OBVHeader (n,
                   inherits,
                   supports,
                   truncatable,
-                  I_TRUE)
+                  true)
 {
 }
 
@@ -798,15 +798,15 @@ FE_EventHeader::~FE_EventHeader (void)
 
 //************************************************************************
 
-FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n, 
-                                        UTL_ScopedName *base_component, 
+FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
+                                        UTL_ScopedName *base_component,
                                         UTL_NameList *supports,
-                                        idl_bool /* compile_now */)
+                                        bool /* compile_now */)
   : FE_InterfaceHeader (n,
                         supports,
-                        I_FALSE,
-                        I_FALSE,
-                        I_FALSE),
+                        false,
+                        false,
+                        false),
     pd_base_component (0)
 {
   if (base_component != 0 && supports != 0)
@@ -836,7 +836,7 @@ FE_ComponentHeader::supports (void) const
   return this->pd_inherits;
 }
 
-long 
+long
 FE_ComponentHeader::n_supports (void) const
 {
   return this->pd_n_inherits;
@@ -863,20 +863,20 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
     {
       return;
     }
-    
+
   UTL_Scope *s = idl_global->scopes ().top_non_null ();
   AST_Decl *d = s->lookup_by_name (base_component,
-                                   I_TRUE);
+                                   true);
 
   if (d == 0)
     {
       idl_global->err ()->lookup_error (base_component);
-      
+
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
       exit (99);
     }
- 
+
   if (d->node_type () == AST_Decl::NT_typedef)
     {
       d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
@@ -927,7 +927,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       if (idl_global->scopes ().top () == 0)
         {
           idl_global->err ()->lookup_error (item);
-      
+
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
           exit (99);
@@ -937,7 +937,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       UTL_Scope *s = idl_global->scopes ().top ();
 
       d = s->lookup_by_name  (item,
-                              I_TRUE);
+                              true);
 
       if (d == 0)
         {
@@ -955,7 +955,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       if (d == 0)
         {
           idl_global->err ()->lookup_error (item);
-          
+
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
           exit (99);
@@ -975,7 +975,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           idl_global->err ()->interface_expected (d);
           continue;
         }
-        
+
       // Undefined interface?
       if (!i->is_defined ())
         {
@@ -1037,7 +1037,7 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
   : FE_ComponentHeader (n,
                         0,
                         supports,
-                        I_FALSE),
+                        false),
     pd_base_home (0),
     pd_primary_key (0)
 {
@@ -1086,12 +1086,12 @@ FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
 
   UTL_Scope *s = idl_global->scopes ().top_non_null ();
   AST_Decl *d = s->lookup_by_name (base_home,
-                                   I_TRUE);
+                                   true);
 
   if (d == 0)
     {
       idl_global->err ()->lookup_error (base_home);
-      
+
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
       exit (99);
@@ -1121,12 +1121,12 @@ FE_HomeHeader::compile_managed_component (UTL_ScopedName *managed_component)
 
   UTL_Scope *s = idl_global->scopes ().top_non_null ();
   AST_Decl *d = s->lookup_by_name (managed_component,
-                                   I_TRUE);
+                                   true);
 
   if (d == 0)
     {
       idl_global->err ()->lookup_error (managed_component);
-      
+
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
       exit (99);
@@ -1153,20 +1153,20 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
     {
       return;
     }
-    
+
   UTL_Scope *s = idl_global->scopes ().top_non_null ();
   AST_Decl *d = s->lookup_by_name (primary_key,
-                                   I_TRUE);
+                                   true);
 
   if (d == 0)
     {
       idl_global->err ()->lookup_error (primary_key);
-      
+
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
       exit (99);
     }
-    
+
   AST_Decl::NodeType nt = d->node_type ();
 
   if (nt == AST_Decl::NT_typedef)

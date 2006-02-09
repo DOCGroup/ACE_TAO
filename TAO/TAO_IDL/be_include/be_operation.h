@@ -43,8 +43,8 @@ public:
   be_operation (AST_Type *rt,
                 AST_Operation::Flags fl,
                 UTL_ScopedName *n,
-                idl_bool local,
-                idl_bool abstract);
+                bool local,
+                bool abstract);
   // Constructor
 
   ~be_operation (void);

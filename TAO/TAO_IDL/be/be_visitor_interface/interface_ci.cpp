@@ -54,7 +54,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   // Nothing to generate for a local interface except from it scope.
   if (node->is_local ())
     {
-      node->cli_inline_gen (I_TRUE);
+      node->cli_inline_gen (true);
       return 0;
     }
 
@@ -107,6 +107,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     }
 
   os->gen_endif ();
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }

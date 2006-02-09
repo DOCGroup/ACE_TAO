@@ -48,13 +48,13 @@ be_array::be_array (void)
 be_array::be_array (UTL_ScopedName *n,
                     unsigned long ndims,
                     UTL_ExprList *dims,
-                    idl_bool local,
-                    idl_bool abstract)
+                    bool local,
+                    bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_array,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_array,
               n),
     AST_ConcreteType (AST_Decl::NT_array,

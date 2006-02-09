@@ -54,19 +54,19 @@ be_sequence::be_sequence (void)
     field_node_ (0)
 {
   // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 }
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
                           UTL_ScopedName *n,
-                          idl_bool local,
-                          idl_bool abstract)
+                          bool local,
+                          bool abstract)
   : COMMON_Base (t->is_local () || local,
                  abstract),
     AST_Decl (AST_Decl::NT_sequence,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_sequence,
               n),
     AST_ConcreteType (AST_Decl::NT_sequence,
@@ -86,7 +86,7 @@ be_sequence::be_sequence (AST_Expression *v,
     field_node_ (0)
 {
   // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 
   // Don't want to set any bits below for imported nodes.
   if (this->imported ())
@@ -216,7 +216,7 @@ be_sequence::gen_name (void)
     }
 
   // Append the size (if any).
-  if (this->unbounded () == I_FALSE)
+  if (this->unbounded () == false)
     {
       char ulval_str [NAMEBUFSIZE];
       ACE_OS::sprintf (ulval_str,

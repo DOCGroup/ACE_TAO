@@ -132,16 +132,12 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   *os << "TAO_InputCDR &_tao_in, " << be_nl
       << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "::CORBA::ULong reply_status";
-
-  *os << be_nl
-      << "ACE_ENV_ARG_DECL";
-
-  *os << ")" << be_uidt << be_uidt_nl;
+      << env_decl << ")" << be_uidt << be_uidt_nl;
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
   // last argument - is always ACE_ENV_ARG_PARAMETER
-  *os << "{\n" << be_idt;
+  *os << "{" << be_idt_nl;
 
   // Generate any pre stub info if and only if none of our parameters is of the
   // native type.
@@ -169,9 +165,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "_tao_reply_handler_object =" << be_idt_nl;
 
   *os << parent->full_name ();
-  *os << "::_narrow (_tao_reply_handler ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
-
-  *os << "ACE_CHECK;" << be_nl << be_nl
+  *os << "::_narrow (_tao_reply_handler"
+      << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+      << ");" << be_uidt
+      << TAO_ACE_CHECK () << be_nl << be_nl
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_nl
       << "{" << be_idt_nl
@@ -366,28 +363,19 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   // Generate the argument list.
   *os << "TAO_InputCDR &_tao_in, " << be_nl
       << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-      << "::CORBA::ULong reply_status";
-
-  *os << be_nl
-      << "ACE_ENV_ARG_DECL";
-
-  *os << ")" << be_uidt << be_uidt_nl;
-
-  // Generate the actual code for the stub. However, if any of the argument
-  // types is "native", we flag a MARSHAL exception.
-  // last argument - is always ACE_ENV_ARG_PARAMETER
-  *os << "{\n" << be_idt;
-
-  os->indent();
+      << "::CORBA::ULong reply_status"
+      << env_decl << ")" << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl;
 
   *os << "// Retrieve Reply Handler object." << be_nl;
   *os << parent->full_name () << "_var "
       << "_tao_reply_handler_object =" << be_idt_nl;
 
   *os << parent->full_name ();
-  *os << "::_narrow (_tao_reply_handler ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
-
-  *os << "ACE_CHECK;" << be_nl << be_nl
+  *os << "::_narrow (_tao_reply_handler"
+      << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+      << ");" << be_uidt
+      << TAO_ACE_CHECK () << be_nl << be_nl
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_nl
       << "{" << be_idt_nl
@@ -486,9 +474,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
         }
 
-      *os << be_uidt_nl << "};\n\n";
+      *os << be_uidt_nl << "};" << be_nl << be_nl;
 
-      os->indent ();
       *os << "::CORBA::ULong exceptions_count = "
           << excep_count << ";\n" << be_nl;
 
@@ -700,8 +687,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
                         -1);
     }
 
-  *os << be_uidt_nl << ");" << be_uidt_nl;
-  *os << "ACE_CHECK;" << be_nl;
+  *os << be_uidt_nl << ");" << be_uidt
+      << TAO_ACE_CHECK () << be_nl;
 
   return 0;
 }

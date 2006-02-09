@@ -161,8 +161,6 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                         -1);
     }
 
-  *os << be_nl;
-
   ACE_CString upcall_command_name =
     ACE_CString (node->local_name ()->get_string()) + "_"  +
     ACE_CString (intf->local_name());
@@ -211,14 +209,13 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-      << "void * servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void * servant" << env_decl << be_uidt_nl
       << ")" << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -301,11 +298,9 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "                       , exceptions" << be_nl
       << "                       , nexceptions"
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
-      << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
-      << "ACE_CHECK;" << be_nl;
-
-
-  *os << be_uidt_nl
+      << "                       "
+      << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
+      << ");" << TAO_ACE_CHECK () << be_uidt_nl
       << "}";
 
   return 0;

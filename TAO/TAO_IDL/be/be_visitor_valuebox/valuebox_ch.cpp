@@ -153,7 +153,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
     }
 
   // Indicate that code is already generated for this node.
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
 
   return 0;
 }
@@ -276,7 +276,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
     }
 
   // Indicate that this type has been used as a sequence element.
-  bt->seen_in_sequence (I_TRUE);
+  bt->seen_in_sequence (true);
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;

@@ -31,7 +31,7 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (
   os->indent ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                 Remote Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
@@ -54,12 +54,11 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (
       << be_nl << be_nl;
 
   // Accessor Method
-  *os << "virtual " << node->base_proxy_impl_name () << " &" 
+  *os << "virtual " << node->base_proxy_impl_name () << " &"
       << "select_proxy ("
       << be_idt << be_idt_nl;
 
-  *os << node->local_name () << " *object" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+  *os << node->local_name () << " *object" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "private:" << be_idt_nl
@@ -71,7 +70,7 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (
   // Factory Member Function declaration.
   *os << "// This member function is used to get an handle to the "
       << "unique instance" << be_nl
-      << "// of the Remote Proxy Broker that is available for a given" 
+      << "// of the Remote Proxy Broker that is available for a given"
       << be_nl
       << "// interface." << be_nl
       << "static " << node->remote_proxy_broker_name ()

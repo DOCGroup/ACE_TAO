@@ -83,7 +83,7 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Factory::AST_Factory (void)
-  : COMMON_Base (), 
+  : COMMON_Base (),
     AST_Decl (),
     UTL_Scope (),
     pd_exceptions (0),
@@ -234,7 +234,7 @@ AST_Factory::fe_add_argument (AST_Argument *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -254,7 +254,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
       nl_n = nl_i.item ();
 
       d = this->lookup_by_name (nl_n,
-                                I_TRUE);
+                                true);
 
       if (d == 0 || d->node_type() != AST_Decl::NT_except)
         {

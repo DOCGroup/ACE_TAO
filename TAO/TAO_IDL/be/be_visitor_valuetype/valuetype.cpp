@@ -803,9 +803,9 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       Identifier id (arg_name.c_str ());
       UTL_ScopedName sn (&id, 0);
       be_type *ft = be_type::narrow_from_decl (f->field_type ());
-      idl_bool seen = ft->seen_in_operation ();
+      bool seen = ft->seen_in_operation ();
 
-      // This sets ft->seen_in_operation (I_TRUE), so we have to
+      // This sets ft->seen_in_operation (true), so we have to
       // restore the original value below.
       be_argument arg (AST_Argument::dir_IN,
                        ft,
@@ -888,7 +888,7 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
   return 0;
 }
 
-idl_bool
+bool
 be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 {
   // VT needs RefCounter if it has concrete factory or supports an
@@ -918,7 +918,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   return 1;
 }
 
-idl_bool
+bool
 be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
 
@@ -950,7 +950,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
   return 0;
 }
 
-idl_bool
+bool
 be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
 {
  if (ACE_OS::strncmp (node->local_name (), "AMH_", 4) == 0)
@@ -961,9 +961,9 @@ be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
      if (last_E != 0
          && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
        {
-         return I_TRUE;
+         return true;
        }
    }
 
-  return I_FALSE;
+  return false;
 }

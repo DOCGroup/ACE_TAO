@@ -51,9 +51,9 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
                             AST_Interface **supports,
                             long n_supports,
                             AST_Interface *supports_concrete,
-                            idl_bool abstract,
-                            idl_bool truncatable,
-                            idl_bool custom)
+                            bool abstract,
+                            bool truncatable,
+                            bool custom)
   : COMMON_Base (0,
                  abstract),
     AST_Decl (AST_Decl::NT_eventtype,

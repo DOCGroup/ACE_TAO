@@ -86,11 +86,11 @@ public:
   AST_Interface *full_definition (void);
   void set_full_definition (AST_Interface *nfd);
 
-  virtual idl_bool is_defined (void);
+  virtual bool is_defined (void);
 
-  virtual idl_bool is_local (void);
-  virtual idl_bool is_valuetype (void);
-  virtual idl_bool is_abstract_valuetype (void);
+  virtual bool is_local (void);
+  virtual bool is_valuetype (void);
+  virtual bool is_abstract_valuetype (void);
 
   // Cleanup function.
   virtual void destroy (void);

@@ -68,19 +68,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "global_extern.h"
 
-ACE_RCSID (util, 
-           utl_stack, 
+ACE_RCSID (util,
+           utl_stack,
            "$Id$")
 
-#undef	INCREMENT
-#define	INCREMENT	64
+#undef  INCREMENT
+#define  INCREMENT  64
 
 UTL_ScopeStack::UTL_ScopeStack (void)
   : pd_stack_data_nalloced (INCREMENT),
     pd_stack_top (0)
 {
   ACE_NEW (this->pd_stack_data,
-           UTL_Scope *[INCREMENT]); 
+           UTL_Scope *[INCREMENT]);
 }
 
 UTL_ScopeStack::~UTL_ScopeStack (void)
@@ -95,7 +95,7 @@ UTL_ScopeStack::~UTL_ScopeStack (void)
 UTL_ScopeStack *
 UTL_ScopeStack::push (UTL_Scope *el)
 {
-  UTL_Scope	**tmp;
+  UTL_Scope  **tmp;
   long ostack_data_nalloced;
   long i;
 
@@ -187,18 +187,18 @@ UTL_ScopeStack::depth (void)
 UTL_Scope *
 UTL_ScopeStack::next_to_top (void)
 {
-  UTL_Scope	*tmp, *retval;
+  UTL_Scope  *tmp, *retval;
 
   if (this->depth () < 2)
     {
       return 0;
     }
 
-  tmp = top ();		// Save top
-  (void) pop ();		// Pop it
-  retval = top ();	// Get next one down
-  (void) push (tmp);	// Push top back
-  return retval;	// Return next one down
+  tmp = top ();    // Save top
+  (void) pop ();    // Pop it
+  retval = top ();  // Get next one down
+  (void) push (tmp);  // Push top back
+  return retval;  // Return next one down
 }
 
 // Return topmost non-NULL element.
@@ -217,8 +217,8 @@ UTL_ScopeStack::top_non_null (void)
 }
 
 UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
-	: source (s),
-		il (s.pd_stack_top - 1)
+  : source (s),
+    il (s.pd_stack_top - 1)
 {
 }
 
@@ -247,9 +247,9 @@ UTL_ScopeStackActiveIterator::is_done (void)
 {
   if (this->il >= 0)
     {
-      return I_FALSE;
+      return false;
     }
 
-  return I_TRUE;
+  return true;
 }
 

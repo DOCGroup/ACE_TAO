@@ -222,7 +222,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
     }
 
   // Indicate that code is already generated for this node.
-  node->cli_stub_gen (I_TRUE);
+  node->cli_stub_gen (true);
 
   return 0;
 }

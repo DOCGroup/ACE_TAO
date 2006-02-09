@@ -100,7 +100,7 @@ public:
 
   // Involved in OBV_ namespace generation.
   void set_has_nested_valuetype (void);
-  idl_bool has_nested_valuetype (void);
+  bool has_nested_valuetype (void);
 
   // Allows adding an interface to a later point
   // The interface i is inserted after interface ix, if
@@ -110,7 +110,7 @@ public:
 
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.
-  virtual idl_bool referenced (AST_Decl *e,
+  virtual bool referenced (AST_Decl *e,
                                Identifier *id = 0);
 
   // Add decls from previous opening of this module to the
@@ -181,7 +181,7 @@ private:
 
   virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
 
-  idl_bool pd_has_nested_valuetype;
+  bool pd_has_nested_valuetype;
 
   ACE_Unbounded_Set<AST_Decl *> previous_;
   // Container for declaration from previous openings of this module.

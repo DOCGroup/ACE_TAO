@@ -173,12 +173,14 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
   // initializer for the class argument array member/attribute.
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      os << be_nl;
+      os << be_idt_nl;
 
       if (be_global->gen_thru_poa_collocation ())
-        os << ", operation_details_ (operation_details)" << be_nl;
+        {
+          os << ", operation_details_ (operation_details)" << be_nl;
+        }
 
-      os << ", args_ (args)";
+      os << ", args_ (args)" << be_uidt;
     }
 
   os << be_uidt_nl;
@@ -187,7 +189,9 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
      << "}" << be_nl << be_nl;
 
   // Generate execute() method.
-  os << "virtual void execute (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
+  os << "virtual void execute ("
+     << (be_global->use_raw_throw () ? "void" : "ACE_ENV_SINGLE_ARG_DECL")
+     << ")" << be_nl
      << "{" << be_idt_nl;
 
   if (!node->void_return_type ())
@@ -267,7 +271,7 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
     }
 
   os << be_uidt_nl
-     << "};" << be_nl;
+     << "};";
 
   if (module != 0)
     {
@@ -421,24 +425,34 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
     }
 
   os << "this->servant_->" << node->local_name () << " ("
-     << be_idt_nl;
+     << be_idt;
 
   size_t const count = node->argument_count ();
 
   for (unsigned int i = 0; i < count; ++i)
-    os << (i == 0 ? "" : ", ") << "arg_" << i + 1 << be_nl;
+    {
+      os << be_nl
+         << (i == 0 ? "" : ", ") << "arg_" << i + 1;
+    }
 
   if (count > 0)
-    os << "ACE_ENV_ARG_PARAMETER);";
+    {
+      os << env_arg;
+    }
   else
-    os << "ACE_ENV_SINGLE_ARG_PARAMETER);";
+    {
+      os << env_sngl_arg;
+    }
+
+  os << ");";
 
   if (!node->void_return_type ())
     {
       os << be_uidt;
     }
 
-  os << be_uidt_nl << "ACE_CHECK;" << be_uidt_nl;
+  os << be_uidt
+     << TAO_ACE_CHECK () << be_uidt_nl;
 
   return 0;
 }

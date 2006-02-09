@@ -598,7 +598,7 @@ interface_header :
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n = 0;
+          UTL_ScopedName *n = 0;
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ($1, 0),
                           1);
@@ -622,7 +622,7 @@ interface_header :
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n = 0;
+          UTL_ScopedName *n = 0;
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ($2, 0),
                           1);
@@ -646,7 +646,7 @@ interface_header :
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n = 0;
+          UTL_ScopedName *n = 0;
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ($2, 0),
                           1);
@@ -734,7 +734,7 @@ value_concrete_decl :
                */
               v = AST_ValueType::narrow_from_decl (i);
               (void) s->fe_add_valuetype (v);
-              
+
               // FE_OBVHeader is not automatically destroyed in the AST
               $1->destroy ();
               delete $1;
@@ -968,7 +968,7 @@ value_box_decl
         {
 // value_box_decl : value_decl type_spec
         idl_global->set_parse_state (IDL_GlobalData::PS_ValueBoxDeclSeen);
-              
+
         UTL_Scope *s = idl_global->scopes ().top_non_null ();
         UTL_ScopedName n ($1,
                           0);
@@ -977,7 +977,7 @@ value_box_decl
           {
             /*
              * Get the type_spec associated with the valuebox
-             */ 
+             */
             AST_Type *tp = 0;
             AST_Typedef *td
               = AST_Typedef::narrow_from_decl ($2);
@@ -1740,14 +1740,12 @@ literal
         | IDL_TRUETOK
         {
 //      | IDL_TRUETOK
-          $$ = idl_global->gen ()->create_expr ((idl_bool) I_TRUE,
-                                                AST_Expression::EV_bool);
+          $$ = idl_global->gen ()->create_expr (true);
         }
         | IDL_FALSETOK
         {
 //      | IDL_FALSETOK
-          $$ = idl_global->gen ()->create_expr ((idl_bool) I_FALSE,
-                                                AST_Expression::EV_bool);
+          $$ = idl_global->gen ()->create_expr (false);
         }
         ;
 
@@ -5246,7 +5244,7 @@ event_decl :
                */
               e = AST_EventType::narrow_from_decl (i);
               (void) s->fe_add_eventtype (e);
-              
+
               // FE_EventHeader is not automatically destroyed in the AST
               $2->destroy ();
               delete $2;

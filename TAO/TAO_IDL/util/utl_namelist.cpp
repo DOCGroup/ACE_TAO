@@ -68,21 +68,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	     will cease to operate correctly if you use either multiple or
-//	     public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
 #include "utl_namelist.h"
 
-ACE_RCSID (util, 
-           utl_namelist, 
+ACE_RCSID (util,
+           utl_namelist,
            "$Id$")
 
-UTL_NameList::UTL_NameList (UTL_ScopedName *s, 
+UTL_NameList::UTL_NameList (UTL_ScopedName *s,
                             UTL_NameList *cdr)
-	: UTL_List (cdr),
-	  pd_car_data (s),
-    pd_truncatable (I_FALSE)
+  : UTL_List (cdr),
+    pd_car_data (s),
+    pd_truncatable (false)
 {
 }
 
@@ -93,20 +93,20 @@ UTL_NameList::head (void)
   return this->pd_car_data;
 }
 
-idl_bool
+bool
 UTL_NameList::truncatable (void) const
 {
   return this->pd_truncatable;
 }
 
 void
-UTL_NameList::truncatable (idl_bool val)
+UTL_NameList::truncatable (bool val)
 {
   this->pd_truncatable = val;
 }
 
 UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)
-	: UTL_ListActiveIterator(s)
+  : UTL_ListActiveIterator(s)
 {
 }
 

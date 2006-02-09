@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           tie_sh, 
+ACE_RCSID (be_visitor_interface,
+           tie_sh,
            "$Id$")
 
 // ************************************************************
@@ -117,11 +117,11 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
       << "// set the ownership" << be_nl << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt
+      << env_sngl_dflts << be_uidt_nl
       << ");" << be_uidt;
 
-  int status = 
+  int status =
     node->traverse_inheritance_graph (
               be_visitor_interface_tie_sh::method_helper,
               os
@@ -161,7 +161,7 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
                                             TAO_OutStream *os)
 {
   // Any methods from abstract parents have already been
-  // "added" to the derived interface scope by the overridden 
+  // "added" to the derived interface scope by the overridden
   // visit_scope() method in be_visitor_interface, so we can skip
   // this base interface, if it is abstract.
   if (node->is_abstract ())
@@ -178,7 +178,7 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh::"
-                         "method_helper\n"), 
+                         "method_helper\n"),
                         -1);
     }
 

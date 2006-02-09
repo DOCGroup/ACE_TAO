@@ -116,8 +116,7 @@ be_visitor_component_ch::visit_component (be_component *node)
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl
-      << "::CORBA::Object_ptr obj" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "::CORBA::Object_ptr obj" << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // This method is defined in the header file to workaround old
@@ -166,8 +165,7 @@ be_visitor_component_ch::visit_component (be_component *node)
 
   *os << be_nl << be_nl
       << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char *type_id" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "const char *type_id" << env_dflts << be_uidt_nl
       << ");" << be_uidt;
 
   // The _interface_repository_id method.
@@ -274,6 +272,6 @@ be_visitor_component_ch::visit_component (be_component *node)
         }
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

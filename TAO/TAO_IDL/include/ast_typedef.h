@@ -82,8 +82,8 @@ public:
 
   AST_Typedef (AST_Type *base_type,
                UTL_ScopedName *n,
-               idl_bool local,
-               idl_bool abstract);
+               bool local,
+               bool abstract);
 
   virtual ~AST_Typedef (void);
 
@@ -93,7 +93,7 @@ public:
 
   // Data Accessors.
   AST_Type *base_type (void) const;
-  
+
   virtual bool legal_for_primary_key (void) const;
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,

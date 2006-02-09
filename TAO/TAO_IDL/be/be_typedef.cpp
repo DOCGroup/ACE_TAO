@@ -39,8 +39,8 @@ be_typedef::be_typedef (void)
 
 be_typedef::be_typedef (AST_Type *bt,
                         UTL_ScopedName *n,
-                        idl_bool local,
-                        idl_bool abstract)
+                        bool local,
+                        bool abstract)
   : COMMON_Base (bt->is_local () || local,
                  abstract),
     AST_Decl (AST_Decl::NT_typedef,
@@ -61,26 +61,26 @@ be_typedef::be_typedef (AST_Type *bt,
 
   if (nt == AST_Decl::NT_sequence)
     {
-      pbt->anonymous (I_FALSE);
+      pbt->anonymous (false);
     }
 }
 
 void
-be_typedef::seq_elem_tmplinst (idl_bool val)
+be_typedef::seq_elem_tmplinst (bool val)
 {
   this->be_type::seq_elem_tmplinst (val);
   this->primitive_base_type ()->seq_elem_tmplinst (val);
 }
 
 void
-be_typedef::seen_in_sequence (idl_bool val)
+be_typedef::seen_in_sequence (bool val)
 {
   this->be_type::seen_in_sequence (val);
   this->primitive_base_type ()->seen_in_sequence (val);
 }
 
 void
-be_typedef::seen_in_operation (idl_bool val)
+be_typedef::seen_in_operation (bool val)
 {
   this->be_type::seen_in_operation (val);
   this->primitive_base_type ()->seen_in_operation (val);

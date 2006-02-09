@@ -41,8 +41,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 
-  *os << be_nl
-      << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
 
   // When there are exceptions and typecode support is enabled, then generate
   // the typecodes of the user exceptions this operation can throw.

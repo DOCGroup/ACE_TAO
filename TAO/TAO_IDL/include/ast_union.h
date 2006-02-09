@@ -87,8 +87,8 @@ public:
 
   AST_Union (AST_ConcreteType *disc_type,
              UTL_ScopedName *n,
-             idl_bool local,
-             idl_bool abstract);
+             bool local,
+             bool abstract);
 
   // Destructor.
   virtual ~AST_Union (void);
@@ -96,7 +96,7 @@ public:
   // This also calls the base class version.
   virtual void redefine (AST_Structure *from);
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the parameter node involved in some kind of recursion?
 
   // Data Accessors.
@@ -116,7 +116,7 @@ public:
     {
       char char_val;
       ACE_CDR::WChar wchar_val;
-      unsigned long bool_val;
+      bool bool_val;
       ACE_INT16 short_val;
       ACE_UINT16 ushort_val;
       ACE_INT32 long_val;
@@ -185,7 +185,7 @@ private:
   virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
-  
+
   virtual int compute_default_value (void);
   // Compute the default value (if any).
 

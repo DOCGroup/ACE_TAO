@@ -613,8 +613,8 @@ FE_init (void)
   idl_global->set_main_filename (0);
   idl_global->set_real_filename (0);
   idl_global->set_stripped_filename (0);
-  idl_global->set_import (I_TRUE);
-  idl_global->set_in_main_file (I_FALSE);
+  idl_global->set_import (true);
+  idl_global->set_in_main_file (false);
   idl_global->set_lineno (-1);
   idl_global->set_prog_name (0);
 
@@ -628,7 +628,7 @@ FE_init (void)
   idl_global->set_include_file_names (0);
   idl_global->set_n_include_file_names (0);
   idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-  idl_global->preserve_cpp_keywords (I_FALSE);
+  idl_global->preserve_cpp_keywords (false);
 
   // Put an empty prefix on the stack for the global scope.
   idl_global->pragma_prefixes ().push (ACE::strnew (""));
@@ -673,7 +673,7 @@ FE_populate (void)
   fe_populate_global_scope (idl_global->root ());
 
   // Set flag to indicate we are processing the main file now.
-  idl_global->set_in_main_file (I_TRUE);
+  idl_global->set_in_main_file (true);
 
   // Populate the IDL keyword container, for checking local identifiers.
   fe_populate_idl_keywords ();

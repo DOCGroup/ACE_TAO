@@ -9,8 +9,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
 
-ACE_RCSID (be, 
-           be_sunsoft, 
+ACE_RCSID (be,
+           be_sunsoft,
            "$Id$")
 
 TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
@@ -34,8 +34,8 @@ TAO_SunSoft_OutStream::print (Identifier *id)
 TAO_OutStream &
 TAO_SunSoft_OutStream::print (UTL_IdList *idl)
 {
-  long first = I_TRUE;
-  long second = I_FALSE;
+  long first = true;
+  long second = false;
   Identifier *id = 0;
 
   for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())
@@ -46,7 +46,7 @@ TAO_SunSoft_OutStream::print (UTL_IdList *idl)
         }
       else if (second)
         {
-          first = second = I_FALSE;
+          first = second = false;
         }
 
       // Print the identifier.
@@ -58,11 +58,11 @@ TAO_SunSoft_OutStream::print (UTL_IdList *idl)
           if (ACE_OS::strcmp (id->get_string (), "") != 0)
             {
               // Does not start with a "".
-              first = I_FALSE;
+              first = false;
             }
           else
             {
-              second = I_TRUE;
+              second = true;
             }
         }
     }
@@ -126,8 +126,8 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
             this->TAO_OutStream::print ("%hd", ev->u.cval);
           else if (isprint (ev->u.cval))
-	          this->TAO_OutStream::print ("'%c'", ev->u.cval);
-	        else if (iscntrl (ev->u.cval))
+            this->TAO_OutStream::print ("'%c'", ev->u.cval);
+          else if (iscntrl (ev->u.cval))
             switch (ev->u.cval)
               {
                 case '\n':
@@ -157,8 +157,8 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
               default:
                 this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
               }
- 	        else
-	          this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
+           else
+            this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:
           this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);
