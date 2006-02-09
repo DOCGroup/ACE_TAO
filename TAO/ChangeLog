@@ -1,3 +1,44 @@
+Thu Feb  9 19:59:41 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This change was adds enforcement for any Security::SecQoP*
+          policies applicable on a POA, that may be different from the ORB
+          default. It resolves an bug, which allowed security unaware
+          clients to make invocations on "secure" objects when the ORB is
+          configured with support for Security::SecQoPNoProtection.
+          ("Secure" in this context means that the object is activated in
+          a POA, for wich security policy was set to at least
+          Security::SecQoPIntegrity.)
+
+       * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+
+          Added code to the interception point to ensure that any
+          Security::SecQoP* policies are enforced.
+
+        * orbsvcs/tests/Security/Policies/Foo.idl:
+        * orbsvcs/tests/Security/Policies/Foo_i.h:
+        * orbsvcs/tests/Security/Policies/Foo_i.cpp:
+        * orbsvcs/tests/Security/Policies/Policies.mpc:
+        * orbsvcs/tests/Security/Policies/README:
+        * orbsvcs/tests/Security/Policies/cacert.pem:
+        * orbsvcs/tests/Security/Policies/client.conf:
+        * orbsvcs/tests/Security/Policies/client.conf.xml:
+        * orbsvcs/tests/Security/Policies/client.cpp:
+        * orbsvcs/tests/Security/Policies/client_cert.pem:
+        * orbsvcs/tests/Security/Policies/client_key.pem:
+        * orbsvcs/tests/Security/Policies/client_nopasswd.conf:
+        * orbsvcs/tests/Security/Policies/client_nopasswd.conf.xml:
+        * orbsvcs/tests/Security/Policies/run_test.pl:
+        * orbsvcs/tests/Security/Policies/server.conf:
+        * orbsvcs/tests/Security/Policies/server.conf.xml:
+        * orbsvcs/tests/Security/Policies/server.cpp:
+        * orbsvcs/tests/Security/Policies/server_cert.pem:
+        * orbsvcs/tests/Security/Policies/server_key.pem:
+        * orbsvcs/tests/Security/Policies/server_key_nopasswd.pem:
+
+          Added a test to excercise the various combinations of clients
+          making invocations on servers that either support or requre
+          protection.
+
 Thu Feb  9 19:27:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:

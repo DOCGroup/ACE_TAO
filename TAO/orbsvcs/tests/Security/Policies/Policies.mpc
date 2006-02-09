@@ -1,0 +1,19 @@
+// -*- MPC -*-
+// $Id$
+
+project(*server): taoserver, orbsvcslib, security, ssliop {
+  exename = server
+  Source_Files {
+    Foo_i.cpp
+    server.cpp
+  }
+}
+
+project(*client): taoclient, orbsvcslib, security {
+  exename = client
+  Source_Files {
+    FooC.cpp
+    client.cpp
+  }
+}
+
