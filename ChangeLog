@@ -1,3 +1,12 @@
+Fri Feb 10 22:49:07 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+        * ace/config-sunos5.5.h:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Added Sun Studio 8 or better symbol visibility/scope support.
+          Provides improved shared libraries by reducing footprint
+          (e.g. 17% reduction for ACE), reducing symbol clashes with
+          third party libraries and increasing run-time performance
+
 Fri Feb 10 21:26:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
