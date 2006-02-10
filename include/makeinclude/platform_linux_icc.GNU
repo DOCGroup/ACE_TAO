@@ -1,14 +1,12 @@
 # $Id$
 
-# According to Roger Tragin <r.tragin@computer.org>, this file
-# should allow ACE to be built on Linux, using the Intel compiler.
-#
-# This is just a copy of platform_linux.GNU, with a few things changed.
+# This file should allow ACE to be built on Linux, using the Intel compiler.
 
 exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
+no_hidden_visibility ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
