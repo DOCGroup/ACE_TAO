@@ -206,7 +206,7 @@ public:
    * number of errors encountered loading the services in the
    * specified svc.conf configuration file.  If @a ignore_debug_flag is
    * non-0 then the application is responsible for setting the
-   * <ACE_Log_Msg::priority_mask> appropriately.
+   * @c ACE_Log_Msg::priority_mask appropriately.
    */
   static int open (const ACE_TCHAR program_name[],
                    const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
@@ -327,7 +327,7 @@ public:
    * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
    * being suspended in the Service Repository and call the <suspend>
-   * member function on the appropriate <ACE_Service_Object>.  A
+   * member function on the appropriate ACE_Service_Object.  A
    * service can be resumed later on by calling the <RESUME> member
    * function...
    */
@@ -391,7 +391,7 @@ public:
 
   /**
    * Handle the command-line options intended for the
-   * <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
+   * ACE_Service_Config.  Note that @c argv[0] is assumed to be the
    * program name.
    * The arguments that are valid in a call to this method are
    * - '-b' Option to indicate that we should be a daemon
@@ -479,7 +479,7 @@ private:
   static ACE_Sig_Adapter *signal_handler_;
 
   /**
-   * Keep track of whether the <ACE_Service_Config> is already
+   * Keep track of whether the ACE_Service_Config is already
    * initialized.  If so, we can't allow <yyparse> to be called since
    * it's not reentrant.  This variable is incremented by the
    * <ACE_Service_Config::open> method and decremented by the
