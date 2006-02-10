@@ -7,6 +7,7 @@
  * I'm also puting some utilities functions here.
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ * @author Gan Deng <dengg@dre.vanderbilt.edu>
  */
 
 #ifndef CIAO_SERVER_INIT_H
@@ -15,6 +16,7 @@
 
 #include "CIAO_Server_Export.h"
 #include "tao/Versioned_Namespace.h"
+#include <orbsvcs/CosNamingC.h>
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
@@ -46,6 +48,42 @@ namespace CIAO
     /// overwritten.
     CIAO_SERVER_Export int write_IOR (const char *pathname,
                                       const char *IOR);
+
+    class CIAO_SERVER_Export NameUtility
+    {
+      /**
+      * A utility class to bind naming context. This class is contributed by
+      * Dipa Suri <dipa.suri@lmco.com>.
+      *
+      * The concept/code are derived from
+      * http://www.informit.com/articles/article.asp?p=23266&seqNum=6
+      */
+
+    public:
+      /// For each 'NameComponent' in 'name', create a corresponding 'NamingContext'.
+      static  void CreateContextPath (const CosNaming::NamingContextExt_ptr,
+                                      const CosNaming::Name &);
+
+      /// For the first [0, length-2] NameComponents of 'name', create a
+      /// corresponding 'NamingContext'.
+      /// For the length-1 NameComponent of 'name', bind it to the object
+      /// reference 'obj'.
+      static  void BindObjectPath (const CosNaming::NamingContextExt_ptr,
+                                   const CosNaming::Name&,
+                                   const CORBA::Object_var);
+
+      /// Get a list of all bindings under the given context, up to
+      /// max_list_size.
+      static CosNaming::BindingList * listBindings (const CosNaming::NamingContext_ptr,
+                                                    const CosNaming::Name&,
+                                                    CORBA::ULong);
+
+      /// Recursively unbind all objects and contexts below the given name
+      /// context, given the initial context nc.
+      /// Assumes a tree shape to service (not cyclic)
+      static void recursiveUnbind (const CosNaming::NamingContext_ptr,
+                                   const CosNaming::Name&);
+    };
   }
 }
 
