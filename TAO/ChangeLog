@@ -1,3 +1,13 @@
+Fri Feb 10 08:28:55 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
+
+        * TAO/utils/catior/catior.cpp
+	* TAO/utils/catior/catior.mpc
+
+	  Incorporate <ossama@dre.vanderbilt.edu> proposed changes for
+	  Bugzilla 2400 plus
+	  Better error reporting
+	  Implement name server IOR lookup.
+
 Thu Feb  9 21:07:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_helper.cpp:
