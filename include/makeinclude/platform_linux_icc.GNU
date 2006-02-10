@@ -100,9 +100,6 @@ PLATFORM_QT_LIBS ?= -lqt-mt
 PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
 
 OCFLAGS += -O3
-ifneq ($(SYSARCH),ia64)
-  OCFLAGS += -axK
-endif
 
 # Disable floating point optimizer solves problem with
 # min/max float values in the TAO_IDL compiler tests
