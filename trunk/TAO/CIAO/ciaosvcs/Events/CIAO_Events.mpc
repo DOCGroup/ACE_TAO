@@ -1,0 +1,27 @@
+// -*- MPC -*-
+// $Id$
+
+
+project (CIAO_DnC_Events_Base) : orbsvcslib, ciao_events_dnc {
+
+  after += CIAO_DnC_Client
+  sharedname  = CIAO_DnC_Events
+  idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
+  dynamicflags = CIAO_EVENTS_BUILD_DLL
+
+  IDL_Files {
+    CIAO_Events.idl
+  }
+
+  Source_Files {
+    CIAO_EventService_Factory_Base.cpp
+  }
+
+  Header_Files {
+    CIAO_EventService_Factory_Base.h
+    CIAO_EventServiceBase.h
+  }
+}
+
+
+
