@@ -1,3 +1,21 @@
+Fri Feb 10 14:23:06 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Fixed the add_path() method to work on both Windows and UNIX.
+
+        * bin/depgen.pl:
+
+          If the -i option is passed, create a dependency file even if there
+          are no source files.  This will allow NMake files to proceed
+          without warning.
+
+        * bin/generate_export_file.pl:
+
+          Changed to always emit the static library code unless the -n is
+          used.  There is no reason not to support static libraries by
+          default.
+
 Fri Feb 10 14:20:54 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * bin/ciao_tests.lst

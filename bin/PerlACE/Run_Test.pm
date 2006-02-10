@@ -155,14 +155,7 @@ sub add_path {
   my $name   = shift;
   my $value  = shift;
   if (defined $ENV{$name}) {
-    # $Config{'path_sep'} gives '/' or '\'  we want ':' or ';'
-    #$ENV{$name} .= $Config{'path_sep'} . $value
-    if ($^O eq "MSWin32") {
-      $ENV{$name} .= ';' . $value
-    }
-    else {
-      $ENV{$name} .= ';' . $value
-    }
+    $ENV{$name} .= ($^O eq 'MSWin32' ? ';' : ':') . $value
   }
   else {
     $ENV{$name} = $value;

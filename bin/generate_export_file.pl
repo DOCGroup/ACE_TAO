@@ -15,13 +15,13 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-if (!getopts ('df:hs') || $opt_h) {
+if (!getopts ('df:hsn') || $opt_h) {
     print STDERR
-          "generate_export_file.pl [-d] [-f dependency] [-s] library_name\n",
+          "generate_export_file.pl [-d] [-f dependency] [-n] library_name\n",
           "\n",
           "    -d         Turn on debug mode\n",
           "    -f         Adds a dependency to another *_HAS_DLL macro\n",
-          "    -s         Add in ACE_AS_STATIC_LIBS check\n",
+          "    -n         Do not add in ACE_AS_STATIC_LIBS check\n",
           "\n",
           "generate_export_file creates the *_export files that are used\n",
           "in exporting of symbols for DLLs (and not exporting them when\n",
@@ -39,8 +39,8 @@ if (defined $opt_d) {
         print STDERR "Dependency to $opt_f\n";
     }
 
-    if (defined $opt_s) {
-        print STDERR "ACE_AS_STATIC_LIBS turned on\n";
+    if (defined $opt_n) {
+        print STDERR "ACE_AS_STATIC_LIBS turned off\n";
     }
 }
 
@@ -72,7 +72,7 @@ $prologue = '
 ##############################################################################
 # Static Stuff
 
-if (defined $opt_s)
+if (!defined $opt_n)
 {
     $static_stuff = "
 #if defined (ACE_AS_STATIC_LIBS) && !defined (-UC-_HAS_DLL)
