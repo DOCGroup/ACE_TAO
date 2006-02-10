@@ -1,3 +1,10 @@
+Fri Feb 10 16:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Removed "Request_Interceptor_Flow" Portable Interceptors test
+          when configuration HAS_EXTENDED_FT_INTERCEPTORS as it will
+          fail.
+
 Fri Feb 10 15:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Dirent_Test.cpp:
