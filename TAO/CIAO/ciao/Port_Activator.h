@@ -54,7 +54,7 @@ namespace CIAO
     /// Return the name of port that this activator encapulates.
     const char*  name (void) const;
 
-    /// set the name
+    /// Set the name
     void set_name (const char* name);
 
     /// Activate the servant reponsible for this port.
@@ -79,7 +79,7 @@ namespace CIAO
     /// Name of the port
     CORBA::String_var name_;
 
-    /// What type of port is it, a conumer or facet.
+    /// What type of port is it, a consumer or facet.
     Type t_;
   };
 }
