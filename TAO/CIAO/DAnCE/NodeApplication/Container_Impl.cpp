@@ -111,19 +111,6 @@ CIAO::Container_Impl::install (
          if (CORBA::is_nil (comp.in ()))
            ACE_TRY_THROW (Deployment::InstallationFailure ());
 
-    ACE_DEBUG((LM_DEBUG, "Narrowing to SessionComponent ...\n"));
-
-    ::Components::SessionComponent_var session_comp
-         = ::Components::SessionComponent::_narrow(comp.in ());
-
-    if (CORBA::is_nil(session_comp))
-    {
-      ACE_DEBUG((LM_DEBUG, "session_comp is null\n"));
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-    else
-      ACE_DEBUG((LM_DEBUG, "session_comp is good\n"));
-
          if (this->component_map_.bind
                 (impl_infos[i].component_instance_name.in (),
                  Components::CCMObject::_duplicate (comp.in ())))
@@ -485,7 +472,7 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
 }
 
 bool
-CIAO::Container_Impl::register_with_ns (const char * obj_name,
+CIAO::Container_Impl::register_with_ns (const char * s,
                                         CORBA::ORB_ptr orb,
                                         Components::CCMObject_ptr obj
                                         ACE_ENV_ARG_DECL)
@@ -500,23 +487,43 @@ CIAO::Container_Impl::register_with_ns (const char * obj_name,
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the Naming Service.\n"),
-                          false);
+                           "DAnCE: (%P|%t) Unable to get the Naming Service.\n"),
+                           false);
 
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+      CosNaming::NamingContextExt_var root =
+        CosNaming::NamingContextExt::_narrow (naming_obj.in ()
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Create a Naming Sequence
-      CosNaming::Name name (1);
-      name.length (1);
-      name[0].id = CORBA::string_dup (obj_name);
-      name[0].kind = CORBA::string_dup ("");
+      CosNaming::Name name (0);
+      name.length (0);
 
-      // Register with the Name Server
-      naming_context->bind (name, obj ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // Get the multicomponent naming context from the <naming_context>.
+      // The convention of this <naming_context> input string is that
+      // different naming context is separated by character '/', such as
+      // "create a naming context A/B/C/D".
+      ACE_CString tmp (s);
+      char * naming_string = tmp.rep ();
+      char seps[]   = "/:";
+
+      char *token;
+      token = ACE_OS::strtok (naming_string, seps);
+
+      for (CORBA::ULong i = 0; token != NULL; ++i)
+        {
+            // While there still are tokens in the "naming_string"
+            name.length (name.length () + 1);
+            name[i].id = CORBA::string_dup (token);
+
+            // Get next naming context
+            token = ACE_OS::strtok ( NULL, seps );
+        }
+
+      // Let's create the context path first
+      Utility::NameUtility::CreateContextPath (root.in (), name);
+
+      // Bind the actual object
+      Utility::NameUtility::BindObjectPath (root.in (), name, obj);
 
       return true;
     }
@@ -583,4 +590,3 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
   ACE_ENDTRY;
   return true;
 }
-
