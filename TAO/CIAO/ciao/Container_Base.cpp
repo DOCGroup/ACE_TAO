@@ -53,13 +53,13 @@ namespace CIAO
 
   ///////////////////////////////////////////////////////////////
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long>
   Session_Container::serial_number_ (0);
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
                                         Container_Impl *container_impl,
                                         bool static_config_flag,
-                                    const Static_Config_EntryPoints_Maps* maps)
+                                        const Static_Config_EntryPoints_Maps* maps)
   : Container (o, container_impl),
     number_ (0),
     static_config_flag_ (static_config_flag),
@@ -298,13 +298,13 @@ namespace CIAO
     HomeFactory hcreator = 0;
     ServantFactory screator = 0;
 
-    if (this->static_config_flag_ == 0)
+    if (this->static_config_flag_ == false)
       {
         ACE_DLL executor_dll, servant_dll;
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
           {
-	    ACE_CString exception;
+            ACE_CString exception;
 
             if (exe_dll_name == 0)
               {

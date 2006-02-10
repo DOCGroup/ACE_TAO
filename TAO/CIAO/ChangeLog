@@ -1,14 +1,26 @@
+Fri Feb 10 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Port_Activator.h:
+          Doxygen improvements
+
+        * ciao/NodeApp_CB_Impl.h:
+          Made destructor protected
+
+        * ciao/Container_Base.{h,cpp}:
+          Made the refcount unsigned long, addressed several comments and
+          improved documentation
+
 Fri Feb 10 04:56:26 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplication/Container_Impl.cpp
         * DAnCE/NodeApplication/Container_Impl.h
         * ciao/Server_init.cpp
         * ciao/Server_init.h
-        
+
           Added support for creating multicomponent naming context through
           the deployment plan. Thanks Dipa Suri <dipa.suri @ lmco.com> for
           contributing a NameUtility class implementation.
-        
+
         * ciaosvcs/Events/CIAO_Events.idl
         * ciaosvcs/Events/CIAO_Events.mpc
         * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.cpp
@@ -17,17 +29,17 @@ Fri Feb 10 04:56:26 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.mpc
         * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent_Factory.cpp
         * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent_Factory.h
-        
+
           Added some files for event channel integration for CIAO.
           More file check-ins are on the way.
 
 Thu Feb  9 23:38:19 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * TAO/CIAO/CIAOTAO.mwc
-        
+
         Updated mwc to include some dependencies required by tests
         and examples.
-        
+
         * tests/Bug_2130_Regression/Logs/PROBLEM-REPORT-FORM
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.cidl
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.idl
@@ -49,7 +61,7 @@ Thu Feb  9 23:38:19 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
         * tests/Bug_2130_Regression/interfaces/ENW_stub_export.h
         * tests/Bug_2130_Regression/interfaces/ENW_svnt_export.h
 
-        Added a new tests for Bug_2130. 
+        Added a new tests for Bug_2130.
         Thanks Roland Schimmack <Roland.Schimmack @ gmx.de> for
         providing this test case.
 
