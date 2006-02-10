@@ -1,3 +1,11 @@
+Fri Feb 10 15:28:50 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+
+          Applied the fix suggested by Johnny Willemsen
+          <jwillemsen@remedy.nl> in [BUGID:2145], since it was
+          never supplied by the bug reporter, and closed the entry.
+
 Fri Feb 10 15:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/configurations.html:
@@ -65,12 +73,12 @@ Fri Feb 10 11:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri Feb 10 08:28:55 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
         * TAO/utils/catior/catior.cpp
-	* TAO/utils/catior/catior.mpc
+  * TAO/utils/catior/catior.mpc
 
-	  Incorporate <ossama@dre.vanderbilt.edu> proposed changes for
-	  Bugzilla 2400 plus
-	  Better error reporting
-	  Implement name server IOR lookup.
+    Incorporate <ossama@dre.vanderbilt.edu> proposed changes for
+    Bugzilla 2400 plus
+    Better error reporting
+    Implement name server IOR lookup.
 
 Thu Feb  9 21:07:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
