@@ -21,8 +21,20 @@ $T2 = new PerlACE::Process ("EC_Mcast",
                             "-c $sample_cfg -ORBSvcConf $svc_conf "
                             . "-n 100 -t 50000 -f Set02");
 
-$T1->Spawn ();
-$T2->Spawn ();
+$sp1 = $T1->Spawn ();
+
+if ($sp1 != 0) {
+    print STDERR "ERROR: could not spawn EC_MCast, returned $sp1\n";
+    exit 1;
+}
+
+$sp2 = $T2->Spawn ();
+
+if ($sp2 != 0) {
+    print STDERR "ERROR: could not spawn EC_MCast, returned $sp2\n";
+    $T1->Kill ();
+    exit 1;
+}
 
 $test1 = $T1->WaitKill (60);
 
