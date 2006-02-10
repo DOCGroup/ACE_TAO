@@ -1,3 +1,11 @@
+Fri Feb 10 20:40:31 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * orbsvcs/tests/Security/Policies/Foo_i.cpp:
+        * orbsvcs/tests/Security/Policies/client.cpp:
+
+          Minor updates to printed output to prevent the regression suite
+          from incorrectly interpreting debug output as test failure.
+
 Fri Feb 10 19:22:34 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosTrading.mpc:
