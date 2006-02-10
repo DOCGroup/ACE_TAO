@@ -1,3 +1,10 @@
+Fri Feb 10 21:26:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Added ACE_HAS_CHARPTR_SHMAT and ACE_HAS_CHARPTR_SHMDT 
+          feature tests.  Fixes bug 2388.
+
 Fri Feb 10 19:24:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/trading_serv.mpb:

@@ -5953,35 +5953,76 @@ AC_CACHE_CHECK([if msgrcv() takes a void* second argument],
   ])
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-dnl TODO: This doesn't work.
-dnl The linux compiler issues a warning regarding the invalid void*
-dnl conversion.
-dnl
-dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
-dnl                                 -Ossama
-ACE_CONVERT_WARNINGS_TO_ERRORS(
-[
-dnl Check if shmat() takes a void* second argument
-AC_CACHE_CHECK([if shmat() takes a void* second argument],
-  [ace_cv_lib_posix_shmat_voidp_2],[
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-# include <sys/ipc.h>
-# include <sys/shm.h>
-      ]], [[
-       int shmid = 0;
-       void* shmaddr = 0;
-       int shmflg = 0;
-       shmat(shmid, shmaddr, shmflg);
-      ]])],[
-       ace_cv_lib_posix_shmat_voidp_2=yes
-      ],[
-       ace_cv_lib_posix_shmat_voidp_2=no
+
+if test "$ac_cv_func_shmat" = yes; then
+    dnl TODO: This doesn't work.
+    dnl The linux compiler issues a warning regarding the invalid void*
+    dnl conversion.
+    dnl
+    dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
+    dnl                                 -Ossama
+    ACE_CONVERT_WARNINGS_TO_ERRORS(
+    [
+    dnl Check if shmat() takes a void* second argument
+    AC_CACHE_CHECK([if shmat() takes a void* second argument],
+      [ace_cv_lib_posix_shmat_voidp_2],[
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+           #ifndef ACE_LACKS_SYS_TYPES_H
+           # include <sys/types.h>
+           #endif
+           # include <sys/ipc.h>
+           # include <sys/shm.h>
+          ]], [[
+           int shmid = 0;
+           void* shmaddr = 0;
+           int shmflg = 0;
+           shmat(shmid, shmaddr, shmflg);
+          ]])],[
+           ace_cv_lib_posix_shmat_voidp_2=yes
+          ],[
+           ace_cv_lib_posix_shmat_voidp_2=no
+          ])
       ])
-  ])
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+    ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+    if test ace_cv_lib_posix_shmat_voidp_2 = no; then
+       AC_DEFINE([ACE_HAS_CHARPTR_SHMAT], 1,
+                 [Define to 1 if arg 2 of 'shmat' is char *'])
+    fi
+fi
+
+if test "$ac_cv_func_shmat" = yes; then
+    dnl TODO: This doesn't work.
+    dnl The linux compiler issues a warning regarding the invalid void*
+    dnl conversion.
+    dnl
+    dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
+    dnl                                 -Ossama
+    ACE_CONVERT_WARNINGS_TO_ERRORS(
+    [
+    dnl Check if shmdt() takes a void* second argument
+    AC_CACHE_CHECK([if shmdt() takes a void* argument],
+      [ace_cv_lib_posix_shmdt_voidp],[
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+           #ifndef ACE_LACKS_SYS_TYPES_H
+           # include <sys/types.h>
+           #endif
+           # include <sys/ipc.h>
+           # include <sys/shm.h>
+          ]], [[
+           void* shmaddr = 0;
+           shmdt(shmaddr);
+          ]])],[
+           ace_cv_lib_posix_shmdt_voidp=yes
+          ],[
+           ace_cv_lib_posix_shmdt_voidp=no
+          ])
+      ])
+    ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+    if test ace_cv_lib_posix_shmdt_voidp = no; then
+       AC_DEFINE([ACE_HAS_CHARPTR_SHMDT], 1,
+                 [Define to 1 if arg 1 of 'shmdt' is char *'])
+    fi
+fi
 
 dnl TODO: This doesn't work.
 dnl The linux compiler issues a warning regarding the invalid void*
