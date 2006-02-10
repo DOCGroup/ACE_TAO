@@ -1,3 +1,241 @@
+Fri Feb 10 10:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated link to tenermerx code
+
+        * ace/Asynch_IO.h:
+          Fixed problem when ACE_HAS_WINNT4 has been set to 0. Thanks to
+          Karl Schmitt <Karl dot Schmitt at dfs dot de> for reporting this.
+
+        * ace/ACE.cpp:
+        * ace/Select_Reactor_T.cpp:
+          Fixed incorrect comment after endif
+
+        * ace/Auto_Event.h:
+        * ace/Based_Pointer_Repository.h:
+        * ace/Based_Pointer_T.h:
+        * ace/Default_Constants.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Event_Handler.h:
+        * ace/File_Lock.h:
+        * ace/Framework_Component.h:
+        * ace/Free_List.h:
+        * ace/Future.h:
+        * ace/Future_Set.h:
+        * ace/Guard_T.h:
+        * ace/Handle_Gobbler.h:
+        * ace/Handle_Set.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_With_Allocator_T.h:
+        * ace/Local_Tokens.h:
+        * ace/Map_Manager.h:
+        * ace/MEM_IO.h:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Stream.h:
+        * ace/Message_Block.h:
+        * ace/Message_Queue.h:
+        * ace/Msg_WFMO_Reactor.h:
+        * ace/Node.h:
+        * ace/Null_Mutex.h:
+        * ace/Null_Semaphore.h:
+        * ace/Object_Manager.h:
+        * ace/Process_Manager.h:
+        * ace/Reactor.h:
+        * ace/Reactor_Notification_Strategy.h:
+        * ace/Proactor.h:
+        * ace/Recursive_Thread_Mutex.h:
+        * ace/Service_Object.h:
+        * ace/WFMO_Reactor.h:
+        * ace/Reactor_Impl.h:
+        * ace/Proactor_Impl.h:
+        * ace/Signal.h:
+        * ace/Svc_Handler.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/Test_and_Set.h:
+        * ace/Thread_Mutex.h:
+        * ace/Timer_Heap_T.h:
+        * ace/TP_Reactor.h:
+        * ace/Timer_Queue_Adapters.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Unbounded_Set.h:
+        * ace/Select_Reactor_T.h:
+        * ace/Service_Config.h:
+          Doxygen improvements
+
+        * ace/Auto_IncDec_T.h:
+          Removed incorrect comment
+
+        * ace/config-aix-4.x.h:
+        * ace/config-borland-common.h:
+        * ace/config-cray.h:
+        * ace/config-cxx-common.h:
+        * ace/config-doxygen.h:
+        * ace/config-g++-common.h:
+        * ace/config-hpux-10.x-hpc++.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-icc-common.h:
+        * ace/config-integritySCA.h:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/config-kcc-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-osf1-4.0.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.6.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-msvc-6.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-visualage.h:
+        * ace/README:
+          Removed ACE_HAS_USING_KEYWORD, all our compilers have it so need
+          for a seperate define anymore
+
+        * ace/config-borland-common.h:
+          Removed ACE_LACKS_INLINE_ASSEMBLY, ACE_NEW_THROWS_EXCEPTIONS, and
+          ACE_SIZEOF_LONG_DOUBLE and added ACE_HAS_NEW_NOTHROW
+
+        * ace/config-doxygen.h:
+          Fixed define of __ACE_INLINE__
+
+        * ace/config-icc-common.h:
+          Added custom export macros, the ICC compiler does support the
+          visibility attribute
+
+        * ace/config-lynxos.h:
+          Added ACE_HAS_CHARPTR_SHMAT
+
+        * ace/config-macros.h:
+          Always expand ACE_USING to using
+
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+          Added ACE_LACKS_ENV
+
+        * ace/config-sunos5.5.h:
+          Added ACE_HAS_CHARPTR_SHMDT
+
+        * ace/config-win32-borland.h:
+          Removed ACE_LACKS_STDINT_H, ACE_LACKS_DIRENT_H, undef the
+          following defines, borland has them, ACE_LACKS_STRUCT_DIR,
+          ACE_LACKS_CLOSEDIR, ACE_LACKS_OPENDIR, ACE_LACKS_READDIR,
+          ACE_LACKS_REWINDDIR, added ACE_HAS_WOPENDIR, ACE_HAS_WCLOSEDIR,
+          ACE_HAS_WREADDIR, ACE_HAS_WREWINDDIR
+
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_PIPE
+
+        * ace/Dirent.{h,inl}:
+        * ace/Dirent_Selector.{h,cpp,inl}:
+        * ace/os_include/os_dirent.h:
+        * ace/OS_NS_dirent.{h,cpp,inl}:
+          Borland delivers wopendir, wclosedir for wchar_t directory names
+          but also wdirent instead of dirent. Added a ACE_DIRENT macro that
+          normally expands to dirent but with Borland it can expand to
+          wdirent when build with ACE_USES_WCHAR
+
+        * ace/DLL_Manager.h:
+          No need to export ACE_DLL_Handle, internal class
+
+        * ace/Framework_Component.h:
+          Declare private copy constructor/assignment operator,
+          should allow making a copy
+
+        * ace/INET_Addr.cpp:
+          Changed some tests for VxWorks, only a specific implementation
+          should be used when ACE_LACKS_GETHOSTBYNAME and
+          ACE_LACKS_GETHOSTBYADDR are set, with newer VxWorks version we
+          don't have these defines set, so we don't need to use a different
+          code path for VxWorks
+
+        * ace/Local_Name_Space.cpp:
+        * ace/Name_Space.cpp:
+        * ace/Parse_Node.cpp:
+          Initialize all members, fixes GCC warnings
+
+        * ace/MEM_SAP.h:
+          Don't export ACE_MEM_SAP_Node, it is an internal class
+
+        * ace/Message_Queue.cpp:
+        * ace/WIN32_Proactor.cpp:
+          Removed win32 bit specific code, the 64bit case is the one also to
+          use for 32bit.
+
+        * ace/Time_Value.h:
+        * ace/os_include/os_time.h:
+          Moved timespec to os_time, it belongs there.
+
+        * ace/Node.h:
+          Declare private assignment operator
+
+        * ace/OS_NS_stdlib.inl (getenv):
+          Removed psos specific part, solved by adding a define to the
+          psos confi files
+
+        * ace/OS_NS_sys_utsname.cpp:
+          Merged the two uname implementations to one method to make
+          the maintenance easier
+
+        * ace/OS_NS_Thread.inl:
+          Replaced VXWORKS with ACE_VXWORKS
+
+        * ace/Select_Reactor_Base.h:
+          Added forward declaration of ACE_Sig_Handler, this class is
+          used in the interfaces as pointer
+
+        * ace/OS_NS_sys_shm.{h,inl}:
+          Changed the void* argument of shmdt and shmat to a const void*,
+          introduced ACE_HAS_CHARPTR_SHMAT and ACE_HAS_CHARPTR_SHMDT for
+          the platforms that have a char* version of these methods.
+
+        * ace/TP_Reactor.{h,cpp}:
+          Don't export ACE_EH_Dispatch_Info and ACE_TP_Token_Guard, it are
+          internal classes. Renamed grab_token to acquire_read_token as the
+          todo mentioned, addded private copy constructor and assignment
+          operator for ACE_TP_Token_Guard, no copying should be allowed
+
+        * ace/Unbounded_Queue.cpp:
+        * ace/Unbounded_Set.cpp:
+          Use prefix increment/decrement
+
+        * ace/OS_NS_unistd.inl:
+          Merged the two pipe methods to one and replaced some c-style casts
+          with C++ casts.
+
+        * ace/OS_NS_unistd.cpp:
+          Refactored num_processors, use sysconf when _SC_NPROCESSORS_CONF is
+          defined, when ACE_HAS_SYSCTL has been set we use sysctl
+          Refactored num_processors_online, use sysconf when
+          _SC_NPROCESSORS_ONLN is defined, when ACE_HAS_SYSCTL has been
+          set we use sysctl.
+
+        * ace/Time_Value.{h,cpp,inl}:
+          Use suseconds_t as type for usec
+
+        * ace/Select_Reactor_T.inl:
+          Added include of Signal.h to fix compile error in the solaris
+          autoconf build
+
+        * bin/tao_other_tests.lst:
+          Also run EC_MT_MCast in a static configuration
+
+        * bin/tao_orb_tests.lst:
+          Added AMH_Oneway and Bug_2319_Regression
+
+        * bin/perltest2cpp.pl:
+          Removed this file
+
 Thu Feb  9 20:07:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Time_Value.cpp:
@@ -17,7 +255,7 @@ Thu Feb  9 18:51:16 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 Thu Feb  9 20:05:00 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_other_tests.lst:
-        
+
           Added the new secure policies test.
 
 Thu Feb  9 17:40:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
