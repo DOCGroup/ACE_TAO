@@ -255,9 +255,6 @@ if (!defined $files[0]) {
   if ($needsrc) {
     usageAndExit($base, 'No files specified');
   }
-  else {
-    exit(0);
-  }
 }
 
 my($editor) = new DependencyEditor();
