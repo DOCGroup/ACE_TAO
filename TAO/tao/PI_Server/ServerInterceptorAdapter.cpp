@@ -39,11 +39,18 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
 {
   // This method implements one of the "starting" server side
   // interception point.
-  bool is_remote_request = !server_request.collocated ();
 
   ACE_TRY
     {
       oc = 0;
+
+      bool is_remote_request = !server_request.collocated ();
+      TAO::ServerRequestInfo request_info (server_request,
+                                          args,
+                                          nargs,
+                                          servant_upcall,
+                                          exceptions,
+                                          nexceptions);
 
       for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
@@ -53,7 +60,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                tao_ft_interception_point (ri,
+                tao_ft_interception_point (&request_info,
                                            oc
                                            ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -61,7 +68,12 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
 
           if (oc != 0)
             {
-              (void) this->send_other (ri
+              (void) this->send_other (server_request,
+                                       args,
+                                       nargs,
+                                       servant_upcall,
+                                       exceptions,
+                                       nexceptions
                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -75,12 +87,16 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri->forward_reference (exc);
-      this->send_other (ri
-                        ACE_ENV_ARG_PARAMETER);
+      server_request.forward_location (exc.forward.in ());
+      server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
+      (void) this->send_other (server_request,
+                               args,
+                               nargs,
+                               servant_upcall,
+                               exceptions,
+                               nexceptions
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -98,9 +114,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 {
   // This method implements one of the "intermediate" server side
   // interception point.
-  bool is_remote_request = !server_request.collocated ();
 
-  if (this->interceptor_list_.size() != this->server_request.interceptor_count ())
+  if (this->interceptor_list_.size() != server_request.interceptor_count ())
     {
       // This method (i.e. the receive_request() interception point)
       // should only be invoked if all of the interceptors registered
@@ -119,8 +134,16 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
       // current (TSC) upon leaving this scope, i.e. just after the
       // receive_request_service_contexts() completes.  A "guard" is
       // used to make the copy also occur if an exception is thrown.
-      TAO::PICurrent_Guard const pi_guard (ri->server_request (),
+      TAO::PICurrent_Guard const pi_guard (server_request,
                                            false /* Copy RSC to TSC */);
+
+      bool is_remote_request = !server_request.collocated ();
+      TAO::ServerRequestInfo request_info (server_request,
+                                           args,
+                                           nargs,
+                                           servant_upcall,
+                                           exceptions,
+                                           nexceptions);
 
       for (size_t i = 0 ; i < server_request.interceptor_count (); ++i)
         {
@@ -130,7 +153,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                receive_request_service_contexts (ri
+                receive_request_service_contexts (&request_info
                                                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
@@ -138,12 +161,16 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      ri->forward_reference (exc);
-      this->send_other (ri
-                        ACE_ENV_ARG_PARAMETER);
+      server_request.forward_location (exc.forward.in ());
+      server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
+      (void) this->send_other (server_request,
+                               args,
+                               nargs,
+                               servant_upcall,
+                               exceptions,
+                               nexceptions
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -167,15 +194,6 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   // This method implements one of the "starting" server side
   // interception point if extended interceptors are not in place.
 
-  bool is_remote_request = !server_request.collocated ();
-
-  TAO::ServerRequestInfo request_info (server_request,
-                                       args,
-                                       nargs,
-                                       servant_upcall,
-                                       exceptions,
-                                       nexceptions);
-
   ACE_TRY
     {
       // Copy the request scope current (RSC) to the thread scope
@@ -184,6 +202,15 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
       // used to make the copy also occur if an exception is thrown.
       TAO::PICurrent_Guard const pi_guard (server_request,
                                            false /* Copy RSC to TSC */);
+
+      bool is_remote_request = !server_request.collocated ();
+
+      TAO::ServerRequestInfo request_info (server_request,
+                                           args,
+                                           nargs,
+                                           servant_upcall,
+                                           exceptions,
+                                           nexceptions);
 
       for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
@@ -207,13 +234,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
-      this->send_other (server_request,
-                        args,
-                        nargs,
-                        servant_upcall,
-                        exceptions,
-                        nexceptions
-                        ACE_ENV_ARG_PARAMETER);
+      (void) this->send_other (server_request,
+                               args,
+                               nargs,
+                               servant_upcall,
+                               exceptions,
+                               nexceptions
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_ENDTRY;
