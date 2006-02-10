@@ -12,17 +12,16 @@
 //=============================================================================
 #ifndef TAO_FLRESOURCE_FACTORY_H
 #define TAO_FLRESOURCE_FACTORY_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/TAO_FlResource_Export.h"
-#include "tao/GUIResource_Factory.h"
-
-#include "ace/FlReactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/FlReactor.h"
+#include "tao/GUIResource_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

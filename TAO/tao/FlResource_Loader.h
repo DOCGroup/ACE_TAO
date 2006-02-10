@@ -13,7 +13,6 @@
 
 #ifndef TAO_FLRESOURCE_LOADER_H
 #define TAO_FLRESOURCE_LOADER_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/TAO_FlResource_Export.h"

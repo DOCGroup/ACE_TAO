@@ -7,8 +7,6 @@ ACE_RCSID( TAO_FlResource,
            FlResource_Loader,
            "$Id$");
 
-#include "ace/FlReactor.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -20,10 +18,10 @@ namespace TAO
     ACE_NEW (tmp,
              FlResource_Factory ());
 
-    TAO_ORB_Core::set_gui_resource_factory( tmp );
+    TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
-  FlResource_Loader::~FlResource_Loader ()
+  FlResource_Loader::~FlResource_Loader (void)
   {
   }
 }

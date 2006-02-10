@@ -80,7 +80,7 @@ TAO_RT_POA::new_POA (const String &name,
                      TAO_Object_Adapter *object_adapter
                      ACE_ENV_ARG_DECL)
 {
-  TAO_RT_POA *poa;
+  TAO_RT_POA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
