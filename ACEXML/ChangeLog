@@ -1,3 +1,8 @@
+Fri Feb 10 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/NamespaceSupport.cpp:
+          Fixed compile error in unicode build
+
 Thu Feb  9 22:49:18 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * common/NamespaceSupport.h:
