@@ -87,7 +87,11 @@ ACE_WIN32_Proactor::close (void)
         {
           ACE_OVERLAPPED *overlapped = 0;
           u_long bytes_transferred = 0;
+#if defined (_MSC_VER) && (_MSC_VER < 1300)
+          ULONG completion_key = 0;
+#else
           ULONG_PTR completion_key = 0;
+#endif
 
           // Get the next asynchronous operation that completes
           BOOL res = ::GetQueuedCompletionStatus
