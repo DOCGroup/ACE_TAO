@@ -18,6 +18,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
+#include "tao/IORTable/IORTable.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -245,6 +246,25 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
                        "%s",
                        this->ior_.in ());
       ACE_OS::fclose (this->ior_output_file_);
+    }
+
+  CORBA::Object_var table_object =
+    orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  IORTable::Table_var adapter =
+    IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  if (CORBA::is_nil (adapter.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+    } 
+  else
+    {
+      adapter->bind ("TradingService",
+                     this->ior_.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 
   if (this->federate_)
