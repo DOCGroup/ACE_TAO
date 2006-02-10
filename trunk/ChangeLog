@@ -1,3 +1,10 @@
+Fri Feb 10 14:20:54 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * bin/ciao_tests.lst
+
+          Reverse a previous change to ciao_tests due to concerns
+          for autobuild logging.A smaller test will be added instead.
+
 Fri Feb 10 13:22:34 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * bin/ciao_tests.lst

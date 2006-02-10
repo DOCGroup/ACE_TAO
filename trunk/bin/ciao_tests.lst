@@ -12,4 +12,3 @@ TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !NO
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_simple.pl: !STATIC !MINIMUM
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test.pl: !STATIC !MINIMUM
 TAO/CIAO/DAnCE/tests/NodeApplicationTest/run_test_ex.pl: !STATIC !MINIMUM
-TAO/CIAO/tests/Bug_2130_Regression/descriptors/run_test.pl: !STATIC !MINIMUM !NOXERCES !ACE_FOR_TAO
