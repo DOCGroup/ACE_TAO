@@ -82,6 +82,29 @@
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */
 
+
+// Take advantage of Sun Studio 8 (Sun C++ 5.5) or better symbol
+// visibility to generate improved shared library binaries.
+#  if (__SUNPRO_CC > 0x540)
+
+#    if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
+#     undef ACE_HAS_CUSTOM_EXPORT_MACROS
+#    else
+#      ifndef ACE_HAS_CUSTOM_EXPORT_MACROS
+#        define ACE_HAS_CUSTOM_EXPORT_MACROS
+#      endif  /* !ACE_HAS_CUSTOM_EXPORT_MACROS */
+#      define ACE_Proper_Export_Flag __symbolic
+#      define ACE_Proper_Import_Flag __global
+
+#      define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
+#      define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
+
+#      define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
+#      define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE<CLASS, LOCK>;
+
+#    endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
+#  endif  /* __SUNPRO_CC > 0x540 (> Sun C++ 5.4) */
+
 #elif defined (__GNUG__)
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.

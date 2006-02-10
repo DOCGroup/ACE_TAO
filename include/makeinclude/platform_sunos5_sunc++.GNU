@@ -65,7 +65,7 @@ endif # threads
 CC              = cc
 CXX             = CC
 
-CC_VERSION = $(shell $(CXX) -V 2>&1)
+CC_VERSION := $(shell $(CXX) -V 2>&1)
 
 ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
   PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
@@ -227,6 +227,24 @@ ifeq (0,$(exceptions))
     endif
   endif
 endif # ! exceptions
+
+ifeq ($(shared_libs), 1)
+  ifneq ($(static_libs_only), 1)
+
+   # Sun Studio 8 or better has version greater than 5.3.
+    SUN_STUDIO_8_OR_BETTER := $(shell a=`echo $(CC_VERSION) | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*$$/\1\2/g'`; if test "$$a" -gt 53; then echo 1; else echo 0; fi)
+
+    # Take advantage of Sun Studio 8 (v5.5) symbol scopes to
+    # generate improved shared library binaries.
+    ifeq ($(SUN_STUDIO_8_OR_BETTER),1)
+      ifneq ($(no_hidden_visibility),1)
+        CCFLAGS += -xldscope=hidden
+      else
+        CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
+      endif # no_hidden_visibility
+    endif # Sun Studio 8 (C++ 5.5) or better.
+  endif # static_libs_only
+endif # shared_libs
 
 LD              = $(CXX)
 ifeq ($(distrib),0)
