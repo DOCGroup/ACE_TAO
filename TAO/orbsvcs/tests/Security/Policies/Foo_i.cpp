@@ -44,8 +44,9 @@ Foo_i::baz (ACE_ENV_SINGLE_ARG_DECL)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server-side Exception");
-    ACE_DEBUG ((LM_WARNING, "FOO (%P|%t) Ignoring exception while servant is trying to obtain ClientCredentials\n"));
+    // ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server-side Exception");
+    ACE_DEBUG ((LM_WARNING, "FOO (%P|%t) WARNING Ignoring exception while a servant"
+                " is trying to obtain ClientCredentials\n"));
   }
   ACE_ENDTRY;
 

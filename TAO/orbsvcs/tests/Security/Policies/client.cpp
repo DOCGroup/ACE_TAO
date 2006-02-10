@@ -174,12 +174,21 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught client-side exception:");
+      if (test_failure_expected)
+      {
+        ACE_DEBUG ((LM_WARNING,
+                    "An expected, client-side exception was caught."));
+      }
+      else
+      {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "Caught client-side exception:");
+      }
     }
   ACE_ENDTRY;
 
-  if ((test_aborting && test_failure_expected) || (!test_aborting && !test_failure_expected))
+  if ((test_aborting && test_failure_expected)
+      || (!test_aborting && !test_failure_expected))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "\n"
