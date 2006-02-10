@@ -27,6 +27,10 @@
 #include "ace/CORBA_macros.h"
 #include "tao/SystemException.h"
 
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
+# include "tao/OctetSeqC.h"
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
