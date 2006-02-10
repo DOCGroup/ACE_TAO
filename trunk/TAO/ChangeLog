@@ -110,7 +110,6 @@ Fri Feb 10 08:28:55 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
           Implement name server IOR lookup.
 
-
 Wed Feb  8 12:00:57 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * utils/catior/catior.cpp (cat_codeset_info):
@@ -551,7 +550,6 @@ Wed Feb 08 15:49:54 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * TAO version 1.4.9 released.
 
->>>>>>> 1.7537
 Wed Feb  8 04:46:33 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
