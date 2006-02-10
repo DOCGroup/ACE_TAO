@@ -741,7 +741,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
         {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
           CORBA::OctetSeq_var ocs;
-          sri_adapter.tao_ft_interception_point (request,
+          sri_adapter->tao_ft_interception_point (request,
                                                  0,  // args
                                                  0,  // nargs
                                                  0,  // servant_upcall
