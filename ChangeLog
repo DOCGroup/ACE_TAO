@@ -1,3 +1,10 @@
+Fri Feb 10 12:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Removed OCFLAGS += -axK, this flag is really dependent on the CPU
+          that is targeted, it is just not a good idea to do this in general
+          when optimization is enabled
+
 Fri Feb 10 12:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue.cpp:
