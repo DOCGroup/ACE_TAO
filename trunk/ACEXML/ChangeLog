@@ -1,3 +1,8 @@
+Fri Feb 10 23:45:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * common/NamespaceSupport.cpp: Add missing template instantiations to
+          match change below.
+
 Fri Feb 10 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * common/NamespaceSupport.cpp:
