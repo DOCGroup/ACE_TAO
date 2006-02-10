@@ -1,3 +1,8 @@
+Fri Feb 10 13:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl (write):
+          Use another const cast when ACE_HAS_CHARPTR_SOCKOPT is defined
+
 Fri Feb 10 12:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
