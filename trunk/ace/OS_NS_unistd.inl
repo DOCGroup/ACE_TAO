@@ -1320,9 +1320,9 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
 # endif /* defined (ACE_PSOS_LACKS_PHILE) */
 #else
 # if defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::write_f(handle, (void *) buf, nbyte), ssize_t, -1);
+  ACE_OSCALL_RETURN (::write_f(handle, const_cast <void *> (buf), nbyte), ssize_t, -1);
 # elif defined (ACE_HAS_CHARPTR_SOCKOPT)
-  ACE_OSCALL_RETURN (::write (handle, static_cast <char *> (buf), nbyte), ssize_t, -1);
+  ACE_OSCALL_RETURN (::write (handle, static_cast <char *> (const_cast <void *> (buf)), nbyte), ssize_t, -1);
 # else
   ACE_OSCALL_RETURN (::write (handle, buf, nbyte), ssize_t, -1);
 # endif /* ACE_PSOS */
