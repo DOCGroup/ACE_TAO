@@ -81,7 +81,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
       iov[iovcnt].iov_base = rd_ptr;
       iov[iovcnt].iov_len  = l;
       fragment_size += l;
-      iovcnt++;
+      ++iovcnt;
       while (fragment_size > max_fragment_payload)
         {
           // This fragment is full, we have to send it...
@@ -102,7 +102,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                iovcnt
                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          fragment_id++;
+          ++fragment_id;
           fragment_offset += max_fragment_payload;
 
           // Reset, but don't forget that the last Message_Block
@@ -130,7 +130,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                iovcnt
                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          fragment_id++;
+          ++fragment_id;
           fragment_offset += max_fragment_payload;
 
           iovcnt = 1;
@@ -151,7 +151,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                iovcnt
                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          fragment_id++;
+          ++fragment_id;
           fragment_offset += fragment_size;
 
           iovcnt = 1;
@@ -175,7 +175,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                            iovcnt
                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      fragment_id++;
+      ++fragment_id;
       fragment_offset += fragment_size;
 
       // reset, not needed here...

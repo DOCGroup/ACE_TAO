@@ -1,3 +1,28 @@
+Fri Feb 10 11:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2319_Regression/*:
+          Added regression for this bug. Thanks to  Toha Bakanovsky
+          <im-scooter at yandex dot ru> for creating this. This bug
+          is not fixed
+
+        * tao/Blocked_Connect_Strategy.h:
+          Doxygen improvements
+
+        * tao/FlResource_Loader.cpp:
+          Removed not needed include
+
+        * tao/FlResource_Factory.h:
+          Reordered includes
+
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+          We did copy PICurrent too often from TSC to RSC and back
+
+        * tao/PortableServer/Servant_Upcall.h:
+          Made single argument constructor explicit
+
+        * tao/RTPortableServer/RT_POA.cpp:
+          Initialize pointer with 0
+
 Fri Feb 10 08:28:55 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
         * TAO/utils/catior/catior.cpp
