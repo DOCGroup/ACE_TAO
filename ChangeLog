@@ -1,3 +1,9 @@
+Fri Feb 10 14:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Disable visibility by default, seems the Intel C++ compiler
+          has some issues which we reported to Intel
+
 Fri Feb 10 14:23:06 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:
