@@ -1,3 +1,10 @@
+Fri Feb 10 19:24:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/trading_serv.mpb:
+
+          Added iortable as a base project as the TAO_CosTrading_Serv
+          library now utilizes the TAO_IORTable library.
+
 Fri Feb 10 16:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_orb_tests.lst:
