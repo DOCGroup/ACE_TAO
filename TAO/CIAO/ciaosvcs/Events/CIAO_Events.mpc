@@ -4,6 +4,7 @@
 
 project (CIAO_DnC_Events_Base) : orbsvcslib, ciao_events_dnc {
 
+  requires += dummy_label
   after += CIAO_DnC_Client
   sharedname  = CIAO_DnC_Events
   idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
