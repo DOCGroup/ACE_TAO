@@ -7,7 +7,7 @@
 
 exceptions ?= 1
 debug ?= 1
-optimize ?= 0
+optimize ?= 1
 threads ?= 1
 
 PLATFORM_XT_CPPFLAGS=
@@ -131,8 +131,15 @@ PRELIB  = @true
 ifeq ($(shared_libs), 1)
   ifneq ($static_libs_only), 1)
     LDFLAGS += -Wl,-E
+
+    ifneq ($(no_hidden_visibility),1)
+      CCFLAGS += -fvisibility=hidden
+    else
+      CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
+    endif # no_hidden_visibility
   endif
 endif
+
 
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
