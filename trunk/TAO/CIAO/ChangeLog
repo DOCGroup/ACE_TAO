@@ -1,3 +1,22 @@
+Fri Feb 10 14:28:14 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * docs/tutorials/CoSMIC/01.html
+        * docs/tutorials/CoSMIC/02.html
+        * docs/tutorials/CoSMIC/index.html
+        * docs/tutorials/CoSMIC/Images/fig10.jpg
+        * docs/tutorials/CoSMIC/Images/fig11.jpg
+        * docs/tutorials/CoSMIC/Images/fig2.jpg
+        * docs/tutorials/CoSMIC/Images/fig4.jpg
+        * docs/tutorials/CoSMIC/Images/fig5.jpg
+        * docs/tutorials/CoSMIC/Images/fig6.jpg
+        * docs/tutorials/CoSMIC/Images/fig7.jpg
+        * docs/tutorials/CoSMIC/Images/fig8.jpg
+        * docs/tutorials/CoSMIC/Images/fig9.jpg
+        * docs/tutorials/CoSMIC/Model/Quoter.xme
+
+          Updated  the CoSMIC tutorial so that it is consistent with
+          the latest GME and CoSMIC.
+
 Fri Feb 10 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Port_Activator.h:
