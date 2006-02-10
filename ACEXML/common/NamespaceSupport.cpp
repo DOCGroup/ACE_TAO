@@ -211,7 +211,7 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
         break;
       }
 
-  ACEXML_String prefix ("",0,0);
+  ACEXML_String prefix (ACE_TEXT(""),0,0);
   if (len == -1)
       name = qName;
   else
