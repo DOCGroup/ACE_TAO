@@ -34,9 +34,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * implementations.
  *
  * Classes that inherit from <ACE_Service_Objects> are capable
- * of being registered with the <ACE_Reactor> (due to the
- * <ACE_Event_Handler>, as well as being dynamically linked by
- * the <ACE_Service_Config> (due to the <ACE_Shared_Object>).
+ * of being registered with the ACE_Reactor (due to the
+ * ACE_Event_Handler, as well as being dynamically linked by
+ * the ACE_Service_Config (due to the <ACE_Shared_Object>).
  */
 class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Shared_Object
 {
@@ -142,7 +142,7 @@ private:
  * @class ACE_Service_Object_Ptr
  *
  * @brief This is a smart pointer that holds onto the associated
- * <ACE_Service_Object> * until the current scope is left, at
+ * ACE_Service_Object * until the current scope is left, at
  * which point the object's <fini> hook is called and the
  * service_object_ gets deleted.
  *

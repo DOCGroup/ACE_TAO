@@ -98,14 +98,14 @@ public:
   /// Returns the current size of the free list.
   virtual size_t size (void);
 
-  /// Resizes the free list to <newsize>.
+  /// Resizes the free list to @a newsize.
   virtual void resize (size_t newsize);
 
 protected:
-  /// Allocates <n> extra nodes for the freelist.
+  /// Allocates @a n extra nodes for the freelist.
   virtual void alloc (size_t n);
 
-  /// Removes and frees <n> nodes from the freelist.
+  /// Removes and frees @a n nodes from the freelist.
   virtual void dealloc (size_t n);
 
   /// Free list operation mode, either ACE_FREE_LIST_WITH_POOL or
@@ -127,7 +127,7 @@ protected:
   /// Keeps track of the size of the list.
   size_t size_;
 
-  /// Synchronization variable for <ACE_Timer_Queue>.
+  /// Synchronization variable for ACE_Timer_Queue.
   ACE_LOCK mutex_;
 
 private:

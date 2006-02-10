@@ -38,6 +38,7 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
+class ACE_Sig_Handler;
 
 /*
  * Hook to specialize the Select_Reactor_Base implementation

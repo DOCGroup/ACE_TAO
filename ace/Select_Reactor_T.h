@@ -198,7 +198,7 @@ public:
    */
   virtual void deactivate (int do_stop);
 
-  // = Register and remove <ACE_Event_Handler>s.
+  // = Register and remove ACE_Event_Handlers.
   /**
    * Register a <eh> with a particular <mask>.  Note that the
    * <Select_Reactor> will call <ACE_Event_Handler::get_handle> to
@@ -381,7 +381,7 @@ public:
                             int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single <ACE_Event_Handler> that matches the <timer_id>
+   * Cancel the single ACE_Event_Handler that matches the <timer_id>
    * value (which was returned from the <schedule> method).  If arg is
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the <Event_Handler> was registered.  This
@@ -615,9 +615,9 @@ protected:
   // = Dispatching methods.
 
   /**
-   * Template Method that dispatches <ACE_Event_Handler>s for time
+   * Template Method that dispatches ACE_Event_Handlers for time
    * events, I/O events, and signal events.  Returns the total number
-   * of <ACE_Event_Handler>s that were dispatched or -1 if something
+   * of ACE_Event_Handlers that were dispatched or -1 if something
    * goes wrong.
    */
   virtual int dispatch (int nfound,

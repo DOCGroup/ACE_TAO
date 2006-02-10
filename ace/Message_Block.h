@@ -526,7 +526,7 @@ public:
   // = <ACE_Data_Block> methods.
 
   /**
-   * Get a pointer to the data block. Note that the <ACE_Message_Block>
+   * Get a pointer to the data block. Note that the ACE_Message_Block
    * still references the block; this call does not change the reference
    * count.
    */
@@ -535,7 +535,7 @@ public:
   /**
    * Set a new data block pointer. The original <ACE_Data_Block> is released
    * as a result of this call. If you need to keep the original block, call
-   * <replace_data_block> instead. Upon return, this <ACE_Message_Block>
+   * <replace_data_block> instead. Upon return, this ACE_Message_Block
    * holds a pointer to the new <ACE_Data_Block>, taking over the reference
    * you held on it prior to the call.
    */
@@ -552,14 +552,14 @@ public:
   /// Set the continuation field.
   void cont (ACE_Message_Block *);
 
-  // = Pointer to the <Message_Block> directly ahead in the <ACE_Message_Queue>.
+  // = Pointer to the <Message_Block> directly ahead in the ACE_Message_Queue.
   /// Get link to next message.
   ACE_Message_Block *next (void) const;
 
   /// Set link to next message.
   void next (ACE_Message_Block *);
 
-  // = Pointer to the <Message_Block> directly behind in the <ACE_Message_Queue>.
+  // = Pointer to the <Message_Block> directly behind in the ACE_Message_Queue.
   /// Get link to prev message.
   ACE_Message_Block *prev (void) const;
 
@@ -842,7 +842,7 @@ protected:
    * Reference count for this <ACE_Data_Block>, which is used to avoid
    * deep copies (i.e., <clone>).  Note that this pointer value is
    * shared by all owners of the <Data_Block>'s data, i.e., all the
-   * <ACE_Message_Block>s.
+   * ACE_Message_Blocks.
    */
   int reference_count_;
 

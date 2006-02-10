@@ -110,7 +110,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. Returns the number of notifications
+   * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
@@ -152,7 +152,7 @@ public:
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq) = 0;
 
-  /// Return the current <ACE_Timer_Queue>.
+  /// Return the current ACE_Timer_Queue.
   virtual ACE_Timer_Queue *timer_queue (void) const = 0;
 
   /// Close down and release all resources.
@@ -179,7 +179,7 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * Returns the total number of <ACE_Event_Handler>s that were
+   * Returns the total number of ACE_Event_Handlers that were
    * dispatched, 0 if the <max_wait_time> elapsed without dispatching
    * any handlers, or -1 if an error occurs.
    *
@@ -469,7 +469,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. Returns the number of notifications
+   * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = 0,

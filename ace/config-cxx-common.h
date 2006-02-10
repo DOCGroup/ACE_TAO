@@ -37,7 +37,6 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
-#   define ACE_HAS_USING_KEYWORD
 
 #   define ACE_ENDLESS_LOOP \
       unsigned int ace_endless_loop____ = 0; if (ace_endless_loop____) break;

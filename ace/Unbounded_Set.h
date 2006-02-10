@@ -98,8 +98,8 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Set.
-  /// Returns 0 when all items have been seen, else 1.
+  /// Pass back the @a next_item that hasn't been seen in the Set.
+  /// @return Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
   /// Move forward by one element in the set.  Returns 0 when all the

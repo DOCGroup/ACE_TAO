@@ -33,7 +33,7 @@ class ACE_Time_Value;
 /**
  * @class ACE_Null_Condition
  *
- * @brief Implement a do nothing <ACE_Condition> variable wrapper,
+ * @brief Implement a do nothing ACE_Condition variable wrapper,
  * i.e., all methods are no ops.  This class is necessary since
  * some C++ compilers are *very* lame...
  */

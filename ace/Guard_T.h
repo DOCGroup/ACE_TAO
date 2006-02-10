@@ -47,7 +47,7 @@ public:
   ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
-  /// lock.  If <block> is non-0 then <acquire> the <ACE_LOCK>, else
+  /// lock.  If @a block is non-0 then <acquire> the <ACE_LOCK>, else
   /// <tryacquire> it.
   ACE_Guard (ACE_LOCK &l, int block);
 
@@ -110,7 +110,7 @@ private:
 /**
  * @class ACE_Write_Guard
  *
- * @brief This class is similar to class <ACE_Guard>, though it
+ * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a write lock automatically (naturally, the
  * <ACE_LOCK> it is instantiated with must support the appropriate
  * API).
@@ -154,7 +154,7 @@ public:
 /**
  * @class ACE_Read_Guard
  *
- * @brief This class is similar to class <ACE_Guard>, though it
+ * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a read lock automatically (naturally, the
  * <ACE_LOCK> it is instantiated with must support the appropriate
  * API).

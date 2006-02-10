@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  *     This class keeps track of the status of <is_set_>, which can
  *     be set based on various events (such as receipt of a
- *     signal).  This class is derived from <ACE_Event_Handler> so
+ *     signal).  This class is derived from ACE_Event_Handler so
  *     that it can be "signaled" by a Reactor when a signal occurs.
  *     We assume that <TYPE> is a data type that can be assigned the
  *     value 0 or 1.

@@ -124,7 +124,7 @@ private:
   /**
    * Attaches the specified observer to a subject (i.e., the <ACE_Future_Rep>).
    * The update method of the specified subject will be invoked with a copy of
-   * the written-to <ACE_Future> as input when the result gets set.
+   * the written-to ACE_Future as input when the result gets set.
    *
    * Returns 0 if the observer is successfully attached, 1 if the
    * observer is already attached, and -1 if failures occur.

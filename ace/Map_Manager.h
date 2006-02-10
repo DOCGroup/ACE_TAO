@@ -567,7 +567,7 @@ protected:
  * <ACE_Map_Manager> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
+ * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -614,7 +614,7 @@ public:
  * <ACE_Map_Manager> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
+ * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -661,7 +661,7 @@ public:
  * <ACE_Map_Manager> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
+ * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>

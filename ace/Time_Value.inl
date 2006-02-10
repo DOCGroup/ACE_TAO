@@ -49,7 +49,7 @@ ACE_Time_Value::operator const timeval * () const
 }
 
 ACE_INLINE void
-ACE_Time_Value::set (time_t sec, long usec)
+ACE_Time_Value::set (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
   this->tv_.tv_sec = sec;
@@ -69,7 +69,7 @@ ACE_Time_Value::set (double d)
   // ACE_OS_TRACE ("ACE_Time_Value::set");
   long l = (long) d;
   this->tv_.tv_sec = l;
-  this->tv_.tv_usec = (long) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS + .5);
+  this->tv_.tv_usec = (suseconds_t) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS + .5);
   this->normalize ();
 }
 
@@ -97,7 +97,7 @@ ACE_Time_Value::ACE_Time_Value (void)
 }
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (time_t sec, long usec)
+ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (sec, usec);
@@ -155,7 +155,7 @@ ACE_Time_Value::msec (long milliseconds)
 
 // Returns number of micro-seconds.
 
-ACE_INLINE long
+ACE_INLINE suseconds_t
 ACE_Time_Value::usec (void) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::usec");
@@ -165,7 +165,7 @@ ACE_Time_Value::usec (void) const
 // Sets the number of micro-seconds.
 
 ACE_INLINE void
-ACE_Time_Value::usec (long usec)
+ACE_Time_Value::usec (suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::usec");
   this->tv_.tv_usec = usec;

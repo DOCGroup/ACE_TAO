@@ -82,7 +82,7 @@ public:
   /// Constructor.
   ACE_SOCK_SEQPACK_Association (void);
 
-  /// Constructor (sets the underlying <ACE_HANDLE> with <h>).
+  /// Constructor (sets the underlying ACE_HANDLE with <h>).
   ACE_SOCK_SEQPACK_Association (ACE_HANDLE h);
 
   /// Destructor.

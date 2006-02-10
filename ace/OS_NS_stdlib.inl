@@ -138,9 +138,6 @@ ACE_OS::getenv (const char *symbol)
 #if defined (ACE_LACKS_ENV)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (symbol);
-  ACE_NOTSUP_RETURN (0);
 #else /* ACE_PSOS */
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
 #endif /* ACE_LACKS_ENV */

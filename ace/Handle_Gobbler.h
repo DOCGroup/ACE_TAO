@@ -47,7 +47,7 @@ public:
    */
   inline int consume_handles (size_t n_handles_to_keep_available);
 
-  /// Free up <n_handles>.
+  /// Free up @a n_handles.
   inline int free_handles (size_t n_handles);
 
   /// All remaining handles are closed.

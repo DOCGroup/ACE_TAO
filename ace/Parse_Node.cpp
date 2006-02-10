@@ -358,6 +358,7 @@ ACE_Location_Node::dump (void) const
 
 ACE_Location_Node::ACE_Location_Node (void)
   : pathname_ (0),
+    dll_ (),
     symbol_ (0)
 {
   ACE_TRACE ("ACE_Location_Node::ACE_Location_Node");

@@ -41,7 +41,7 @@ class ACE_Based_Pointer_Repository_Rep;
 class ACE_Export ACE_Based_Pointer_Repository
 {
 public:
-  // = Use <ACE_Null_Mutex> to allow locking while iterating.
+  // = Use ACE_Null_Mutex to allow locking while iterating.
 
   // = Initialization and termination methods.
   ACE_Based_Pointer_Repository (void);
@@ -49,9 +49,9 @@ public:
 
   // = Search structure methods.
   /**
-   * Return the appropriate <base_addr> region that contains <addr>.
-   * Returns 1 on success and 0 if the <addr> isn't contained in any
-   * <base_addr> region.
+   * Return the appropriate @a base_addr region that contains @a addr.
+   * Returns 1 on success and 0 if the @a addr isn't contained in any
+   * @a base_addr region.
    */
   int find (void *addr,
             void *&base_addr);

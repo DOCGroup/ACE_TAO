@@ -61,7 +61,11 @@ private:
   ACE_Node (const T &i, ACE_Node<T> *n);
   ACE_Node (ACE_Node<T> *n = 0, int = 0);
   ACE_Node (const ACE_Node<T> &n);
+private:
+  /// Not possible
+  void operator= (const ACE_Node<T> &);
 
+private:
   /// Pointer to next element in the list of <ACE_Node>s.
   ACE_Node<T> *next_;
 

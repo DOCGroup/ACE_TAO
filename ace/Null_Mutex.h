@@ -122,8 +122,8 @@ class ACE_Guard;
 /**
  * @class ACE_Guard<ACE_Null_Mutex>
  *
- * @brief Template specialization of <ACE_Guard> for the
- * <ACE_Null_Mutex>.
+ * @brief Template specialization of ACE_Guard for the
+ * ACE_Null_Mutex.
  *
  * This specialization is useful since it helps to speedup
  * performance of the "Null_Mutex" considerably.

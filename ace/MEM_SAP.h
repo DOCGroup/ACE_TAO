@@ -39,7 +39,7 @@ class ACE_MEM_IO;
 // Internal data structure
 // MEM_SAP uses to queue up
 // data.
-class ACE_Export ACE_MEM_SAP_Node
+class ACE_MEM_SAP_Node
 {
 public:
 //    friend class ACE_MEM_SAP;
@@ -103,7 +103,7 @@ public:
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
-   * using ACE::recv, <timeout> only applies to ACE::recv.
+   * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,

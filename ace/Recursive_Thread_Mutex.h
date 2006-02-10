@@ -103,7 +103,7 @@ public:
   int tryacquire_write (void);
 
   /**
-   * This is only here to make the <ACE_Recursive_Thread_Mutex>
+   * This is only here to make the ACE_Recursive_Thread_Mutex
    * interface consistent with the other synchronization APIs.
    * Assumes the caller has already acquired the mutex using one of
    * the above calls, and returns 0 (success) always.
