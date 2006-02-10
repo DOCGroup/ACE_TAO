@@ -1,3 +1,8 @@
+Fri Feb 10 15:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/configurations.html:
+          Fixed link
+
 Fri Feb 10 15:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/ServerRequestInterceptor_Adapter.h
