@@ -41,6 +41,7 @@
 # define ACE_HAS_EXCEPTIONS
 #endif /* __GNUG__ */
 
+#define ACE_LACKS_ENV
 #define ACE_LACKS_SETEGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID

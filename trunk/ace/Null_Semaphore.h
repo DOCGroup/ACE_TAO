@@ -31,7 +31,7 @@ class ACE_Time_Value;
 /**
  * @class ACE_Null_Semaphore
  *
- * @brief Implement a do nothing <ACE_Semaphore>, i.e., all the methods are
+ * @brief Implement a do nothing ACE_Semaphore, i.e., all the methods are
  * no ops.
  *
  * Although the methods are no-ops, the return values are different for

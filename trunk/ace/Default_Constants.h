@@ -443,7 +443,7 @@
 #  define ACE_MAX_DEFAULT_PORT 65535
 #endif /* ACE_MAX_DEFAULT_PORT */
 
-// Default number of <ACE_Event_Handler>s supported by
+// Default number of ACE_Event_Handlers supported by
 // <ACE_Timer_Heap>.
 # if !defined (ACE_DEFAULT_TIMERS)
 #   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX

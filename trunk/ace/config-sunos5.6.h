@@ -54,9 +54,6 @@
 #ifndef ACE_HAS_TYPENAME_KEYWORD
 #define ACE_HAS_TYPENAME_KEYWORD                1
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
-#ifndef ACE_HAS_USING_KEYWORD
-#define ACE_HAS_USING_KEYWORD                   1
-#endif /* ACE_HAS_USING_KEYWORD */
 #ifndef ACE_HAS_THR_C_DEST
 #define ACE_HAS_THR_C_DEST                      1
 #endif /* ACE_HAS_THR_C_DEST */

@@ -49,13 +49,13 @@ public:
   /// Close the IO completion port.
   virtual int close (void) = 0;
 
-  /// This method adds the <handle> to the I/O completion port. This
+  /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems.
   virtual int register_handle (ACE_HANDLE handle,
                                const void *completion_key) = 0;
 
   /**
-   * Dispatch a single set of events.  If <wait_time> elapses before
+   * Dispatch a single set of events.  If @a wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
@@ -251,7 +251,7 @@ public:
                          int signal_number = 0) = 0;
 
   /**
-   * Post <how_many> completions to the completion port so that all
+   * Post @a how_many completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the
    * <run_event_loop>.
    */

@@ -177,7 +177,7 @@ public:
    * non-sockets (such as ACE_STDIN).  This is commonly used in
    * situations where the Reactor is used to demultiplex read events
    * on ACE_STDIN on UNIX.  Note that <event_handler> must be a
-   * subclass of <ACE_Event_Handler>.  If the <get_handle> method of
+   * subclass of ACE_Event_Handler.  If the <get_handle> method of
    * this event handler returns <ACE_INVALID_HANDLE> we default to
    * reading from ACE_STDIN.
    */

@@ -45,7 +45,7 @@ public:
   int length (void) const;
 
   /// Return the entry at @a index.
-  dirent *operator[] (const int index) const;
+  ACE_DIRENT *operator[] (const int index) const;
 
   /// Free up resources.
   int close (void);
@@ -53,14 +53,14 @@ public:
   /// Open the directory @a dir and populate the <namelist_> array with
   /// directory entries that match the @a selector and @a comparator.
   int open (const ACE_TCHAR *dir,
-            int (*selector)(const dirent *d) = 0,
-            int (*comparator)(const dirent **d1, const dirent **d2) = 0);
+            int (*selector)(const ACE_DIRENT *d) = 0,
+            int (*comparator)(const ACE_DIRENT **d1, const ACE_DIRENT **d2) = 0);
 
 protected:
   /// Ptr to the namelist array.
-  dirent **namelist_;
+  ACE_DIRENT **namelist_;
 
-  /// # of entries in the array.
+  /// Number of entries in the array.
   int n_;
 };
 

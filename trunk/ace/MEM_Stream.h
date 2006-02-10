@@ -37,9 +37,9 @@ class ACE_MEM_Connector;
 /**
  * @class ACE_MEM_Stream
  *
- * @brief Defines the methods in the <ACE_MEM_Stream> abstraction.
+ * @brief Defines the methods in the ACE_MEM_Stream abstraction.
  *
- * This adds additional wrapper methods atop the <ACE_MEM_IO>
+ * This adds additional wrapper methods atop the ACE_MEM_IO
  * class.  Notice that ACE_MEM_Stream can only send messages no bigger
  * than the underlying MMAP file size minus sizeof (ACE_MEM_SAP_Node).
  * The size of the MMAP file is default to ACE_MEM_STREAM_MIN_BUFFER.
@@ -61,7 +61,7 @@ public:
   /// Constructor.
   ACE_MEM_Stream (void);
 
-  /// Constructor (sets the underlying <ACE_HANDLE> with <h>).
+  /// Constructor (sets the underlying ACE_HANDLE with <h>).
   ACE_MEM_Stream (ACE_HANDLE h);
 
   /// Destructor.

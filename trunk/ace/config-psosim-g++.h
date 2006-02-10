@@ -53,6 +53,7 @@
 #endif /* __GNUG__ */
 
 #define ACE_HAS_IP_MULTICAST
+#define ACE_LACKS_ENV
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_WAITPID
 #define ACE_HAS_CPLUSPLUS_HEADERS

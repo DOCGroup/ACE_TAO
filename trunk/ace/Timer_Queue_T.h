@@ -164,7 +164,7 @@ private:
  * @class ACE_Timer_Queue_Iterator_T
  *
  * @brief Generic interface for iterating over a subclass of
- * <ACE_Timer_Queue>.
+ * ACE_Timer_Queue.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it isn't guaranteed
@@ -380,7 +380,7 @@ public:
   /// Accessor to the upcall functor
   FUNCTOR &upcall_functor (void);
 
-  /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+  /// Returns a pointer to this ACE_Timer_Queue's iterator.
   virtual ITERATOR &iter (void) = 0;
 
   /// Removes the earliest node from the queue and returns it

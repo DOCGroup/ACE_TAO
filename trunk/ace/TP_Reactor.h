@@ -46,7 +46,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This structure contains information of the activated event
  * handler.
  */
-class ACE_Export ACE_EH_Dispatch_Info
+class ACE_EH_Dispatch_Info
 {
 public:
 
@@ -86,7 +86,7 @@ private:
  * and manages the ownership
  */
 
-class ACE_Export ACE_TP_Token_Guard
+class ACE_TP_Token_Guard
 {
 public:
 
@@ -106,13 +106,12 @@ public:
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
-  /// @todo Should probably be called acquire_read_token ()
-  int grab_token (ACE_Time_Value *max_wait_time = 0);
+  int acquire_read_token (ACE_Time_Value *max_wait_time = 0);
 
   /**
    * A helper method that grabs the token for us, after which the
    * thread that owns that can do some actual work. This differs from
-   * grab_token () as it uses acquire () to get the token instead of
+   * acquire_read_token() as it uses acquire () to get the token instead of
    * acquire_read ()
    */
   int acquire_token (ACE_Time_Value *max_wait_time = 0);
@@ -121,6 +120,10 @@ private:
 
   // Disallow default construction.
   ACE_TP_Token_Guard (void);
+
+  // Disallow copying and assignment.
+  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &);
+  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &);
 
 private:
 
@@ -181,7 +184,7 @@ public:
   /**
    * Initialize the ACE_TP_Reactor to manage
    * @a max_number_of_handles.  If @a restart is non-0 then the
-   * <ACE_Reactor>'s <handle_events> method will be restarted
+   * ACE_Reactor's <handle_events> method will be restarted
    * automatically when <EINTR> occurs.  If <signal_handler> or
    * <timer_queue> are non-0 they are used as the signal handler and
    * timer queue, respectively.
@@ -208,7 +211,7 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * Returns the total number of <ACE_Event_Handler>s that were
+   * Returns the total number of ACE_Event_Handlers that were
    * dispatched, 0 if the <max_wait_time> elapsed without dispatching
    * any handlers, or -1 if something goes wrong.
    */
@@ -302,7 +305,7 @@ protected:
   int dispatch_i (ACE_Time_Value *max_wait_time,
                   ACE_TP_Token_Guard &guard);
 
-  /// Get the event that needs dispatching.It could be either a
+  /// Get the event that needs dispatching. It could be either a
   /// signal, timer, notification handlers or return possibly 1 I/O
   /// handler for dispatching. In the most common use case, this would
   /// return 1 I/O handler for dispatching

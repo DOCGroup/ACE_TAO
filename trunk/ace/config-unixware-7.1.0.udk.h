@@ -366,9 +366,6 @@
 /* Compiler supports the C++ typename keyword */
 #define ACE_HAS_TYPENAME_KEYWORD 1
 
-/* Compiler supports the new using keyword for C++ namespaces. */
-#define ACE_HAS_USING_KEYWORD 1
-
 /* Prints out console message in ACE_NOTSUP.  Useful for tracking down origin
    of ACE_NOTSUP. */
 /* #undef ACE_HAS_VERBOSE_NOTSUP */

@@ -76,17 +76,17 @@ public:
   /**
    * Wait up to <tv> time to get the <value>.  Note that <tv> must be
    * specified in absolute time rather than relative time.); get the
-   * next <ACE_Future> that is readable.  If <tv> = 0, the will block
+   * next ACE_Future that is readable.  If <tv> = 0, the will block
    * forever.
    *
    * If a readable future becomes available, then the input
-   * <ACE_Future> object param will be assigned with it and 1 will
-   * be returned.  If the <ACE_Future_Set> is empty (i.e. see definition
-   * of <ACE_Future_Set::is_empty>), then 0 is returned.
+   * ACE_Future object param will be assigned with it and 1 will
+   * be returned.  If the ACE_Future_Set is empty (i.e. see definition
+   * of ACE_Future_Set::is_empty()), then 0 is returned.
    *
-   * When a readable <ACE_Future> object is retrieved via the
-   * <ACE_Future_Set::next_readable> method, the <ACE_Future_Set> will
-   * remove that <ACE_Future> object from its list of subjects.
+   * When a readable ACE_Future object is retrieved via the
+   * ACE_Future_Set::next_readable() method, the ACE_Future_Set will
+   * remove that ACE_Future object from its list of subjects.
    */
   int next_readable (ACE_Future<T> &result,
                      ACE_Time_Value *tv = 0);

@@ -44,7 +44,6 @@
 // Keywords
 
 # define ACE_HAS_TYPENAME_KEYWORD
-# define ACE_HAS_USING_KEYWORD
 
 // No support for member templates.
 #define ACE_LACKS_MEMBER_TEMPLATES

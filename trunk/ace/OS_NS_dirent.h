@@ -44,22 +44,22 @@ namespace ACE_OS {
   ACE_DIR *opendir (const ACE_TCHAR *filename);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  dirent *readdir (ACE_DIR *);
+  struct ACE_DIRENT *readdir (ACE_DIR *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int readdir_r (ACE_DIR *dirp,
-                 struct dirent *entry,
-                 struct dirent **result);
+                 struct ACE_DIRENT *entry,
+                 struct ACE_DIRENT **result);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void rewinddir (ACE_DIR *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int scandir (const ACE_TCHAR *dirname,
-               struct dirent **namelist[],
-               int (*selector) (const struct dirent *filename),
-               int (*comparator) (const struct dirent **f1,
-                                  const struct dirent **f2));
+               struct ACE_DIRENT **namelist[],
+               int (*selector) (const struct ACE_DIRENT *filename),
+               int (*comparator) (const struct ACE_DIRENT **f1,
+                                  const struct ACE_DIRENT **f2));
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void seekdir (ACE_DIR *,
@@ -74,16 +74,16 @@ namespace ACE_OS {
 
   extern ACE_Export
   int scandir_emulation (const ACE_TCHAR *dirname,
-                         dirent **namelist[],
-                         int (*selector)(const dirent *entry),
-                         int (*comparator)(const dirent **f1,
-                                           const dirent**f2));
+                         ACE_DIRENT **namelist[],
+                         int (*selector)(const ACE_DIRENT *entry),
+                         int (*comparator)(const ACE_DIRENT **f1,
+                                           const ACE_DIRENT**f2));
 
   extern ACE_Export
   void closedir_emulation (ACE_DIR *);
 
   extern ACE_Export
-  dirent *readdir_emulation (ACE_DIR *);
+  struct ACE_DIRENT *readdir_emulation (ACE_DIR *);
 
 } /* namespace ACE_OS */
 

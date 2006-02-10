@@ -39,14 +39,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Auto_Event : public ACE_Event
 {
 public:
-  /// constructor which will create auto event
+  /// Constructor which will create auto event
   ACE_Auto_Event (int initial_state = 0,
                   int type = USYNC_THREAD,
                   const char *name = 0,
                   void *arg = 0);
 
 #if defined (ACE_HAS_WCHAR)
-  /// constructor which will create auto event (wchar_t version)
+  /// Constructor which will create auto event (wchar_t version)
   ACE_Auto_Event (int initial_state,
                   int type,
                   const wchar_t *name,

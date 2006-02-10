@@ -3,6 +3,7 @@
 // $Id$
 
 #include "ace/Reactor.h"
+#include "ace/Signal.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

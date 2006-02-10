@@ -27,7 +27,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Used to notify an ACE_Reactor
  *
- * Integrates the <ACE_Message_Queue> notification into the
+ * Integrates the ACE_Message_Queue notification into the
  * <ACE_Reactor::notify> method.
  */
 class ACE_Export ACE_Reactor_Notification_Strategy : public ACE_Notification_Strategy

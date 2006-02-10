@@ -85,7 +85,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
   t_getreg (0, PSOS_TASK_REG_TSS, &tss_base);
   return ((void **) tss_base)[key_index];
 #  else
-#    if defined (VXWORKS)
+#    if defined (ACE_VXWORKS)
     /* If someone wants tss_base make sure they get one.  This
        gets used if someone spawns a VxWorks task directly, not
        through ACE.  The allocated array will never be deleted! */

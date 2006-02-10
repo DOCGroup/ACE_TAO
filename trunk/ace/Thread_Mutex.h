@@ -44,7 +44,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ACE_Thread_Mutex is recursive on some platforms (like
  * Win32). However, on most platforms (like Solaris) it is not
  * recursive.  To be totally safe and portable, developers
- * should use <ACE_Recursive_Thread_Mutex> when they need a
+ * should use ACE_Recursive_Thread_Mutex when they need a
  * recursive mutex.
  */
 class ACE_Export ACE_Thread_Mutex
@@ -69,10 +69,10 @@ public:
   int acquire (void);
 
   /**
-   * Block the thread until we acquire the mutex or until <tv> times
+   * Block the thread until we acquire the mutex or until @a tv times
    * out, in which case -1 is returned with <errno> == <ETIME>.  Note
-   * that <tv> is assumed to be in "absolute" rather than "relative"
-   * time.  The value of <tv> is updated upon return to show the
+   * that @a tv is assumed to be in "absolute" rather than "relative"
+   * time.  The value of @a tv is updated upon return to show the
    * actual (absolute) acquisition time.
    */
   int acquire (ACE_Time_Value &tv);

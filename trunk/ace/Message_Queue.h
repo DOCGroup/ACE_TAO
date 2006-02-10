@@ -32,7 +32,7 @@ template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 /**
  * @class ACE_Message_Queue_Base
  *
- * @brief Base class for <ACE_Message_Queue>, which is the central
+ * @brief Base class for ACE_Message_Queue, which is the central
  * queueing facility for messages in the ACE framework.
  *
  * For all the <ACE_Time_Value> pointer parameters the caller will
@@ -90,7 +90,7 @@ public:
   // = Enqueue and dequeue methods.
 
   /**
-   * Retrieve the first <ACE_Message_Block> without removing it.  Note
+   * Retrieve the first ACE_Message_Block without removing it.  Note
    * that <timeout> uses <{absolute}> time rather than <{relative}>
    * time.  If the <timeout> elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
@@ -259,7 +259,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * * <peek_dequeue_head>.
  * * <ACE_Message_Queue_Iterators>.
  * * The ability to change low and high water marks after creation.
- * * <Message_Block> chains.  The continuation field of <ACE_Message_Block>
+ * * <Message_Block> chains.  The continuation field of ACE_Message_Block
  * *   is ignored; only the first block of a fragment chain is
  * *   recognized.
  */
@@ -433,8 +433,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @note *Many* ACE_Message_Queue features are not supported with
  * this implementation, including:
  * * <open> method have different signatures.
- * * <dequeue_head> *requires* that the <ACE_Message_Block>
- * pointer argument point to an <ACE_Message_Block> that was
+ * * <dequeue_head> *requires* that the ACE_Message_Block
+ * pointer argument point to an ACE_Message_Block that was
  * allocated by the caller.
  * * <peek_dequeue_head>.
  * * <ACE_Message_Queue_Iterators>.

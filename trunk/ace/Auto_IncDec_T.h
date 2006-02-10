@@ -68,7 +68,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_IncDec_T.inl"
-// On non-Win32 platforms, this code will be inlined
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

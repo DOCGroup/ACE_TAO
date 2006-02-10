@@ -50,7 +50,7 @@ public:
   /// Constructor
   /**
    * Register the SIGALRM handler.  If @a mask == 0 then block all
-   * signals when <SIGALRM> is run.  Otherwise, just block the signals
+   * signals when @c SIGALRM is run.  Otherwise, just block the signals
    * indicated in @a mask.
    */
   ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *mask = 0);
@@ -71,7 +71,7 @@ public:
   /// passed in.
   int cancel (long timer_id, const void **act = 0);
 
-  /// Dispatch all timers whose values are <= <cur_time>.  Returns the
+  /// Dispatch all timers whose values are <= cur_time.  Returns the
   /// number of timers canceled.
   int expire (void);
 

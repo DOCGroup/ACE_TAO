@@ -15,24 +15,13 @@ ACE_RCSID(ace, OS_NS_sys_utsname, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+int
+ACE_OS::uname (ACE_utsname *name)
+{
+  ACE_OS_TRACE ("ACE_OS::uname");
 #if !defined (ACE_LACKS_UNAME)
-int
-ACE_OS::uname (ACE_utsname *name)
-{
-  ACE_OS_TRACE ("ACE_OS::uname");
   ACE_OSCALL_RETURN (::uname (name), int, -1);
-}
-#endif /* ! ACE_LACKS_UNAME */
-
-#if defined (ACE_LACKS_UNAME)
-// Don't inline on those platforms because this function contains
-// string literals, and some compilers, e.g., g++, don't handle those
-// efficiently in unused inline functions.
-int
-ACE_OS::uname (ACE_utsname *name)
-{
-  ACE_OS_TRACE ("ACE_OS::uname");
-# if defined (ACE_WIN32)
+#elif defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname,
                   ACE_LIB_TEXT ("Win32"));
@@ -225,7 +214,7 @@ ACE_OS::uname (ACE_utsname *name)
   return ACE_OS::hostname (name->nodename, maxnamelen);
 # endif /* ACE_LACKS_HOSTNAME */
 
-# elif defined (ACE_VXWORKS)
+#elif defined (ACE_VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "VxWorks");
   ACE_OS::strcpy (name->release, "???");
@@ -233,7 +222,7 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
-# elif defined (CHORUS)
+#elif defined (CHORUS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "CHORUS/ClassiX");
   ACE_OS::strcpy (name->release, "???");
@@ -263,6 +252,5 @@ ACE_OS::uname (ACE_utsname *name)
   return status;
 #endif /* ACE_WIN32 */
 }
-#endif /* ACE_LACKS_UNAME */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

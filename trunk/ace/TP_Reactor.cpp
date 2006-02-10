@@ -20,9 +20,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
 int
-ACE_TP_Token_Guard::grab_token (ACE_Time_Value *max_wait_time)
+ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
 {
-  ACE_TRACE ("ACE_TP_Token_Guard::grab_token");
+  ACE_TRACE ("ACE_TP_Token_Guard::acquire_read_token");
 
   // The order of these events is very subtle, modify with care.
 
@@ -157,7 +157,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // this thread.
   ACE_TP_Token_Guard guard (this->token_);
 
-  int result = guard.grab_token (max_wait_time);
+  int result = guard.acquire_read_token (max_wait_time);
 
   // If the guard is NOT the owner just return the retval
   if (!guard.is_owner ())
@@ -545,18 +545,9 @@ ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
       // yet have a size_ > 0. This is an attempt to remedy the affect,
       // without knowing why it happens.
 
-      //# if !(defined (__SUNPRO_CC) && (__SUNPRO_CC > 0x500))
-      // SunCC seems to be having problems with this piece of code
-      // here. I am  not sure why though. This works fine with other
-      // compilers. As we dont seem to understand when this piece of
-      // code is needed and as it creates problems for SunCC we will
-      // not compile this. Most of the tests in TAO seem to be happy
-      // without this in SunCC.
       this->ready_set_.rd_mask_.sync (this->ready_set_.rd_mask_.max_set ());
       this->ready_set_.wr_mask_.sync (this->ready_set_.wr_mask_.max_set ());
       this->ready_set_.ex_mask_.sync (this->ready_set_.ex_mask_.max_set ());
-      //# endif /* ! __SUNPRO_CC */
-
     }
 
   return this->wait_for_multiple_events (this->ready_set_,
