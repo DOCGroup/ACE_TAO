@@ -1,3 +1,12 @@
+Fri Feb 10 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Set exceptions default to 1
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Set optimize to 1 again now Intel has fixed a bug in their IA64
+          compiler, also added support for visibility
+
 Fri Feb 10 10:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

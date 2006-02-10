@@ -43,13 +43,6 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
 
   ACE_TRY
     {
-      // Copy the request scope current (RSC) to the thread scope
-      // current (TSC) upon leaving this scope, i.e. just after the
-      // receive_request_service_contexts() completes.  A "guard" is
-      // used to make the copy also occur if an exception is thrown.
-      TAO::PICurrent_Guard const pi_guard (ri->server_request (),
-                                           false /* Copy RSC to TSC */);
-
       oc = 0;
 
       for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
@@ -185,7 +178,6 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 
   ACE_TRY
     {
-
       // Copy the request scope current (RSC) to the thread scope
       // current (TSC) upon leaving this scope, i.e. just after the
       // receive_request_service_contexts() completes.  A "guard" is
@@ -244,8 +236,6 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
   // point.  Interceptors are invoked in the same order they were
   // pushed on to the flow stack.
 
-  bool is_remote_request = !server_request.collocated ();
-
   if (this->interceptor_list_.size() != server_request.interceptor_count ())
     {
       // This method (i.e. the receive_request() interception point)
@@ -266,11 +256,10 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
                                        exceptions,
                                        nexceptions);
 
-  TAO::PICurrent_Guard pi_guard (server_request,
-                                 true  /* Copy TSC to RSC */);
-
   ACE_TRY
     {
+      bool is_remote_request = !server_request.collocated ();
+
       for (size_t i = 0; i < server_request.interceptor_count (); ++i)
         {
           ServerRequestInterceptor_List::RegisteredInterceptor& registered =
@@ -596,8 +585,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
   TAO::Upcall_Command & command
   ACE_ENV_ARG_DECL)
 {
-  TAO::PICurrent_Guard pi_guard (server_request,
-                                 true  /* Copy TSC to RSC */);
+  TAO::PICurrent_Guard const pi_guard (server_request,
+                                       true  /* Copy TSC to RSC */);
 
   // The actual upcall.
   command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);

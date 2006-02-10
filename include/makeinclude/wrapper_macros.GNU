@@ -287,10 +287,10 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions off (0), fast off (0), rtti on (1), and
+#### Defaults are exceptions on (1), fast off (0), rtti on (1), and
 #### versioned_so on (1).
 ####
-exceptions ?= 0
+exceptions ?= 1
 
 fast ?= 0
 

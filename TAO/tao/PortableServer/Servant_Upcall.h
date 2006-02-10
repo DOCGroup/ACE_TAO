@@ -91,7 +91,7 @@ namespace TAO
       };
 
       /// Constructor.
-      Servant_Upcall (TAO_ORB_Core *orb_core);
+      explicit Servant_Upcall (TAO_ORB_Core *orb_core);
 
       /// Destructor.
       ~Servant_Upcall (void);
