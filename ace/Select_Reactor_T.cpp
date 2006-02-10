@@ -1489,7 +1489,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       select_width = 0;
 #  else
       select_width = int (h) + 1;
-#  endif /* ACE_WIN64 */
+#  endif /* ACE_WIN32 */
 
       if (ACE_OS::select (select_width,
                           rd_mask, 0, 0,

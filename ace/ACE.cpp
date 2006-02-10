@@ -214,7 +214,7 @@ ACE::select (int width,
 #if !defined (ACE_WIN32)
   if (result > 0)
     readfds.sync ((ACE_HANDLE) width);
-#endif /* ACE_WIN64 */
+#endif /* ACE_WIN32 */
   return result;
 }
 

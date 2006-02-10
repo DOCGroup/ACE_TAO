@@ -619,7 +619,7 @@ protected:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -665,7 +665,7 @@ public:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -713,7 +713,7 @@ public:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  *
  * Note that a creation method for this new iterator cannot be added
@@ -784,7 +784,7 @@ protected:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>

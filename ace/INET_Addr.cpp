@@ -322,7 +322,7 @@ ACE_INET_Addr::set (u_short port_number,
                       encode);
   else
     {
-#  if defined (ACE_VXWORKS) || defined (CHORUS)
+#  if (defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)) || defined (CHORUS)
       hostent *hp = ACE_OS::gethostbyname (host_name);
 #  else
       hostent hentry;
@@ -782,7 +782,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
     }
   else
     {
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
       ACE_UNUSED_ARG (len);
       int error =
         ::hostGetByAddr ((int) this->inet_addr_.in4_.sin_addr.s_addr,

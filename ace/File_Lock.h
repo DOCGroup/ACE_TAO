@@ -120,11 +120,11 @@ public:
    */
   int tryacquire_read (short whence = 0, off_t start = 0, off_t len = 1);
 
-  /// Get underlying <ACE_HANDLE> for the file.
+  /// Get underlying ACE_HANDLE for the file.
   ACE_HANDLE get_handle (void) const;
 
   /**
-   * Set underlying <ACE_HANDLE>.  Note that this method assumes
+   * Set underlying ACE_HANDLE.  Note that this method assumes
    * ownership of the <handle> and will close it down in <remove>.  If
    * you want the <handle> to stay open when <remove> is called make
    * sure to call <dup> on the <handle> before closing it. You are

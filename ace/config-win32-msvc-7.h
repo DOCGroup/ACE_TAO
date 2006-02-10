@@ -38,7 +38,6 @@
 #endif
 
 #define ACE_HAS_TYPENAME_KEYWORD
-#define ACE_HAS_USING_KEYWORD
 
 #define ACE_HAS_ITOA
 

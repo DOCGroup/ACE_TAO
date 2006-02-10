@@ -134,7 +134,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
                              this->allocator_->free,
                              ACE_Node,
                              <T>);
-      this->cur_size_--;
+      --this->cur_size_;
       // @@ Doesnt make sense to have this check since
       // this will always be true.
       //   ACE_ASSERT (this->cur_size_ >= 0);
@@ -174,7 +174,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
   // just a pointer to the dummy node.
   this->head_->next_ = temp;
 
-  this->cur_size_++;
+  ++this->cur_size_;
   return 0;
 }
 
@@ -201,7 +201,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   // Point the head to the new dummy node.
   this->head_ = temp;
 
-  this->cur_size_++;
+  ++this->cur_size_;
   return 0;
 }
 

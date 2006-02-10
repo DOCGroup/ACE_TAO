@@ -397,7 +397,7 @@ public:
   /**
    * Set the low watermark, which determines how many bytes must be in
    * the queue before supplier threads are allowed to enqueue
-   * additional <ACE_Message_Block>s.
+   * additional ACE_Message_Blocks.
    */
   virtual void low_water_mark (size_t lwm);
   //@}
@@ -466,7 +466,7 @@ public:
   virtual void notification_strategy (ACE_Notification_Strategy *s);
   //@}
 
-  /// Returns a reference to the lock used by the <ACE_Message_Queue>.
+  /// Returns a reference to the lock used by the ACE_Message_Queue.
   virtual ACE_SYNCH_MUTEX_T &lock (void);
 
   /// Dump the state of an object.
@@ -480,7 +480,7 @@ protected:
 
   // These routines assume that locks are held by the corresponding
   // public methods.  Since they are virtual, you can change the
-  // queueing mechanism by subclassing from <ACE_Message_Queue>.
+  // queueing mechanism by subclassing from ACE_Message_Queue.
 
   /// Enqueue an <ACE_Message_Block *> in accordance with its priority.
   virtual int enqueue_i (ACE_Message_Block *new_item);
@@ -605,7 +605,7 @@ typedef ACE_Message_Queue<ACE_SYNCH> ACE_DEFAULT_MESSAGE_QUEUE_TYPE;
 /**
  * @class ACE_Message_Queue_Iterator
  *
- * @brief Iterator for the <ACE_Message_Queue>.
+ * @brief Iterator for the ACE_Message_Queue.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Iterator
@@ -643,7 +643,7 @@ private:
 /**
  * @class ACE_Message_Queue_Reverse_Iterator
  *
- * @brief Reverse Iterator for the <ACE_Message_Queue>.
+ * @brief Reverse Iterator for the ACE_Message_Queue.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Reverse_Iterator
@@ -681,7 +681,7 @@ private:
 /**
  * @class ACE_Dynamic_Message_Queue
  *
- * @brief A derived class which adapts the <ACE_Message_Queue>
+ * @brief A derived class which adapts the ACE_Message_Queue
  * class in order to maintain dynamic priorities for enqueued
  * <ACE_Message_Blocks> and manage the queue order according
  * to these dynamic priorities.
@@ -949,7 +949,7 @@ public:
  *        queueing facilities in System V STREAMs.
  *
  * An <ACE_Message_Queue_Ex> is a strongly-typed version of the
- * <ACE_Message_Queue>.  If
+ * ACE_Message_Queue.  If
  * <ACE_SYNCH_DECL> is <ACE_MT_SYNCH> then all operations are
  * thread-safe. Otherwise, if it's <ACE_NULL_SYNCH> then there's no
  * locking overhead.
@@ -981,12 +981,12 @@ public:
   // = Initialization and termination methods.
 
   /**
-   * Initialize an <ACE_Message_Queue>.  The <high_water_mark>
+   * Initialize an ACE_Message_Queue.  The <high_water_mark>
    * determines how many bytes can be stored in a queue before it's
    * considered "full."  Supplier threads must block until the queue
    * is no longer full.  The <low_water_mark> determines how many
    * bytes must be in the queue before supplier threads are allowed to
-   * enqueue additional <ACE_Message_Block>s.  By default, the
+   * enqueue additional ACE_Message_Blocks.  By default, the
    * <high_water_mark> equals the <low_water_mark>, which means that
    * suppliers will be able to enqueue new messages as soon as a
    * consumer removes any message from the queue.  Making the
@@ -1000,12 +1000,12 @@ public:
                         ACE_Notification_Strategy * = 0);
 
   /**
-   * Initialize an <ACE_Message_Queue>.  The <high_water_mark>
+   * Initialize an ACE_Message_Queue.  The <high_water_mark>
    * determines how many bytes can be stored in a queue before it's
    * considered "full."  Supplier threads must block until the queue
    * is no longer full.  The <low_water_mark> determines how many
    * bytes must be in the queue before supplier threads are allowed to
-   * enqueue additional <ACE_Message_Block>s.  By default, the
+   * enqueue additional ACE_Message_Blocks.  By default, the
    * <high_water_mark> equals the <low_water_mark>, which means that
    * suppliers will be able to enqueue new messages as soon as a
    * consumer removes any message from the queue.  Making the
@@ -1029,9 +1029,10 @@ public:
   /// messages flushed.
   virtual int flush (void);
 
-  /// Release all resources from the message queue but do not mark it as deactivated.
-  /// This method does not hold the queue lock during this operation, i.e., it assume
-  /// the lock is held externally.    Returns the number of messages flushed.
+  /// Release all resources from the message queue but do not mark it as
+  /// deactivated. This method does not hold the queue lock during this
+  /// operation, i.e., it assume the lock is held externally.
+  /// Returns the number of messages flushed.
   virtual int flush_i (void);
 
   // = Enqueue and dequeue methods.
@@ -1292,7 +1293,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Implement this via an <ACE_Message_Queue>.
+  /// Implement this via an ACE_Message_Queue.
   ACE_Message_Queue<ACE_SYNCH_USE> queue_;
 };
 

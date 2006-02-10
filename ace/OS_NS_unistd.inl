@@ -879,7 +879,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   ssize_t result;
 
 # if defined (ACE_HAS_CHARPTR_SOCKOPT)
-  ACE_OSCALL (::read (handle, (char *) buf, len), ssize_t, -1, result);
+  ACE_OSCALL (::read (handle, static_cast <char *> (buf), len), ssize_t, -1, result);
 # else
   ACE_OSCALL (::read (handle, buf, len), ssize_t, -1, result);
 # endif /* ACE_HAS_CHARPTR_SOCKOPT */
@@ -941,8 +941,6 @@ ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
 # endif /* ACE_LACKS_READLINK */
 }
 
-#if !defined (ACE_WIN32)
-
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
@@ -950,27 +948,14 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 # if defined (ACE_LACKS_PIPE)
   ACE_UNUSED_ARG (fds);
   ACE_NOTSUP_RETURN (-1);
-# else
-  ACE_OSCALL_RETURN (::pipe (fds), int, -1);
-# endif /* ACE_LACKS_PIPE */
-}
-
-#else /* ACE_WIN32 */
-
-ACE_INLINE int
-ACE_OS::pipe (ACE_HANDLE fds[])
-{
-# if !defined (ACE_HAS_WINCE) && !defined (__IBMCPP__)
-  ACE_OS_TRACE ("ACE_OS::pipe");
+# elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL
                         (::CreatePipe (&fds[0], &fds[1], 0, 0),
                          ace_result_), int, -1);
 # else
-  ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_WINCE && !__IBMCPP__ */
+  ACE_OSCALL_RETURN (::pipe (fds), int, -1);
+# endif /* ACE_LACKS_PIPE */
 }
-
-#endif /* !ACE_WIN32 */
 
 ACE_INLINE void *
 ACE_OS::sbrk (ptrdiff_t brk)
@@ -1337,7 +1322,7 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
 # if defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::write_f(handle, (void *) buf, nbyte), ssize_t, -1);
 # elif defined (ACE_HAS_CHARPTR_SOCKOPT)
-  ACE_OSCALL_RETURN (::write (handle, (char *) buf, nbyte), ssize_t, -1);
+  ACE_OSCALL_RETURN (::write (handle, static_cast <char *> (buf), nbyte), ssize_t, -1);
 # else
   ACE_OSCALL_RETURN (::write (handle, buf, nbyte), ssize_t, -1);
 # endif /* ACE_PSOS */

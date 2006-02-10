@@ -21,33 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
-# include "ace/os_include/sys/os_time.h"
-#endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
+# include "ace/os_include/os_time.h"
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
 #define ACE_ONE_SECOND_IN_USECS 1000000L
 #define ACE_ONE_SECOND_IN_NSECS 1000000000L
-
-# if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
-// Definition per POSIX.
-typedef struct timespec
-{
-  /// Seconds
-  time_t tv_sec;
-  /// Nanoseconds
-  long tv_nsec;
-} timespec_t;
-# elif defined (ACE_HAS_BROKEN_POSIX_TIME)
-// OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
-#   include /**/ <sys/timers.h>
-# endif /* !ACE_HAS_POSIX_TIME */
-
-# if defined(ACE_LACKS_TIMESPEC_T)
-typedef struct timespec timespec_t;
-# endif /* ACE_LACKS_TIMESPEC_T */
 
 // needed for ACE_UINT64
 #include "ace/Basic_Types.h"
@@ -106,7 +86,7 @@ public:
   ACE_Time_Value (void);
 
   /// Constructor.
-  explicit ACE_Time_Value (time_t sec, long usec = 0);
+  explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);
 
   // = Methods for converting to/from various time formats.
 
@@ -122,7 +102,7 @@ public:
 # endif /* ACE_WIN32 */
 
   /// Initializes the ACE_Time_Value from seconds and useconds.
-  void set (time_t sec, long usec);
+  void set (time_t sec, suseconds_t usec);
 
   /// Initializes the ACE_Time_Value from a double, which is assumed to be
   /// in second format, with any remainder treated as microseconds.
@@ -208,10 +188,10 @@ public:
    * @note The semantics of this method differs from the msec()
    *       method.
    */
-  long usec (void) const;
+  suseconds_t usec (void) const;
 
   /// Set microseconds.
-  void usec (long usec);
+  void usec (suseconds_t usec);
 
 #if !defined (ACE_LACKS_LONGLONG_T)
   /**
@@ -316,7 +296,7 @@ public:
                                                const ACE_Time_Value &tv);
 
   friend ACE_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
-                                                  double d);
+                                               double d);
   //@}
 
   /// Dump is a no-op.

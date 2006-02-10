@@ -64,7 +64,6 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD
-# define ACE_HAS_USING_KEYWORD
 #elif defined (__KCC)
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-kcc-common.h"

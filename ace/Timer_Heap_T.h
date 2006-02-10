@@ -162,7 +162,7 @@ public:
                       const void **act = 0,
                       int dont_call_handle_close = 1);
 
-  /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+  /// Returns a pointer to this ACE_Timer_Queue's iterator.
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
 
   /**

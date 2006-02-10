@@ -76,7 +76,7 @@ public:
    *
    * <MsgWaitForMultipleObjects> is used as the demultiplexing call
    *
-   * Returns the total number of <ACE_Event_Handler>s that were
+   * Returns the total number of ACE_Event_Handlers that were
    * dispatched, 0 if the <max_wait_time> elapsed without dispatching
    * any handlers, or -1 if an error occurs.
    *

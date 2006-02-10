@@ -717,9 +717,6 @@ ACE_HAS_UNION_WAIT                      The wait() system call takes a
 ACE_HAS_UNIXWARE_SVR4_SIGNAL_T          Has inconsistent SVR4 signal
                                         stuff, but not the same as the
                                         other platforms
-ACE_HAS_USING_KEYWORD                   Compiler supports the new
-                                        using keyword for C++
-                                        namespaces.
 ACE_HAS_VALGRIND                        Running with valgrind
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for

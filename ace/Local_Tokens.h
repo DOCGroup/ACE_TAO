@@ -358,15 +358,15 @@ protected:
  * Not a public interface.
  * Currently, I don't see a reason for providing an abstract
  * interface at this level of the library.  As of yet, no one
- * uses <ACE_Tokens> derivatives through this abstract interface
- * except for <ACE_Token_Manager>.  It only uses the statistical
+ * uses ACE_Tokens derivatives through this abstract interface
+ * except for ACE_Token_Manager.  It only uses the statistical
  * methods which are shared by all Tokens.  For that reason, it
  * still makes since to have a common base class.  However,
  * acquire, renew, and release do not need to have matching
  * interfaces throughout all Tokens.
  * To add a new type of token (e.g. semaphore), this class must
  * be subtyped to define the new semantics.  See
- * <ACE_Token_Manager> for details.
+ * ACE_Token_Manager for details.
  */
 class ACE_Export ACE_Tokens
 {

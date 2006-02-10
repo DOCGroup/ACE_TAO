@@ -98,10 +98,6 @@
 // Compiler supports the 'typename' qualifier.
 #  define ACE_HAS_TYPENAME_KEYWORD
 
-// This is legit for A.01.12 and probably at least as far back as A.01.07.
-// Before that, not sure.  But you shouldn't be there anyway ;-)
-#  define ACE_HAS_USING_KEYWORD
-
 // Platform lacks streambuf "linebuffered ()".
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
 

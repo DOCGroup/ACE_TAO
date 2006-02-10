@@ -50,7 +50,7 @@ class ACE_Sig_Set;
  *
  * @brief The responsibility of this class is to forward all methods to
  * its delegation/implementation class, e.g.,
- * <ACE_Select_Reactor> or <ACE_WFMO_Reactor>.
+ * ACE_Select_Reactor or ACE_WFMO_Reactor.
  */
 class ACE_Export ACE_Reactor : public ACE_Reactor_Timer_Interface
 {
@@ -80,11 +80,11 @@ public:
    */
   typedef int (*REACTOR_EVENT_HOOK)(ACE_Reactor *);
 
-  /// Get pointer to a process-wide <ACE_Reactor>.
+  /// Get pointer to a process-wide ACE_Reactor.
   static ACE_Reactor *instance (void);
 
   /**
-   * Set pointer to a process-wide <ACE_Reactor> and return existing
+   * Set pointer to a process-wide ACE_Reactor and return existing
    * pointer.  If <delete_reactor> != 0 then we'll delete the Reactor
    * at destruction time.
    */
@@ -164,7 +164,7 @@ public:
   static void reset_event_loop (void);
 
   /**
-   * The singleton reactor is used by the <ACE_Service_Config>.
+   * The singleton reactor is used by the ACE_Service_Config.
    * Therefore, we must check for the reconfiguration request and
    * handle it after handling an event.
    */
@@ -228,8 +228,8 @@ public:
   virtual ~ACE_Reactor (void);
 
   /**
-   * Initialize the <ACE_Reactor> to manage <max_number_of_handles>.
-   * If <restart> is non-0 then the <ACE_Reactor>'s <handle_events>
+   * Initialize the ACE_Reactor to manage <max_number_of_handles>.
+   * If <restart> is non-0 then the ACE_Reactor's <handle_events>
    * method will be restarted automatically when <EINTR> occurs.  If
    * <signal_handler> or <timer_queue> are non-0 they are used as the
    * signal handler and timer queue, respectively.
@@ -273,7 +273,7 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * Returns the total number of timers and I/O <ACE_Event_Handler>s
+   * Returns the total number of timers and I/O ACE_Event_Handlers
    * that were dispatched, 0 if the <max_wait_time> elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
@@ -384,12 +384,12 @@ public:
   /**
    * Register handler for signals.
    *
-   * Register <new_sh> to handle the signal <signum> using the
-   * <new_disp>.  Returns the <old_sh> that was previously registered
-   * (if any), along with the <old_disp> of the signal handler.
+   * Register @a new_sh to handle the signal @a signum using the
+   * @a new_disp.  Returns the @a old_sh that was previously registered
+   * (if any), along with the @a old_disp of the signal handler.
    *
-   * Reactor will call ACE_Event_Handler::add_reference() on <new_sh>
-   * and ACE_Event_Handler::remove_reference() on <old_sh>.
+   * Reactor will call ACE_Event_Handler::add_reference() on @a new_sh
+   * and ACE_Event_Handler::remove_reference() on @a old_sh.
    */
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
@@ -548,16 +548,19 @@ public:
    * @see cancel_timer()
    * @see reset_timer_interval()
    *
-   * @param event_handler  event handler to schedule on reactor
-   * @param arg  argument passed to the handle_timeout() method of  event_handler
-   * @param delay  time interval after which the timer will expire
-   * @param interval  time interval after which the timer will be automatically rescheduled
+   * @param event_handler Event handler to schedule on reactor
+   * @param arg Argument passed to the handle_timeout() method of
+   * event_handler
+   * @param delay Time interval after which the timer will expire
+   * @param interval Time interval after which the timer will be automatically
+   * rescheduled
    * @return -1 on failure, a timer_id value on success
    */
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                               const ACE_Time_Value &interval =
+                                ACE_Time_Value::zero);
 
   /**
    * Reset recurring timer interval.
@@ -717,7 +720,8 @@ public:
    * be called.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler *eh,
-                                           ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                                           ACE_Reactor_Mask =
+                                            ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // = Assorted helper methods.
 
@@ -843,7 +847,7 @@ protected:
   /// the implementation instance
   int delete_implementation_;
 
-  /// Pointer to a process-wide <ACE_Reactor> singleton.
+  /// Pointer to a process-wide ACE_Reactor singleton.
   static ACE_Reactor *reactor_;
 
   /// Must delete the <reactor_> singleton if non-0.

@@ -46,8 +46,6 @@
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
-#define ACE_HAS_USING_KEYWORD
-
 #define ACE_HAS_SSIZE_T
 
 #define ACE_HAS_SYSV_IPC
@@ -87,7 +85,7 @@
 #define ACE_HAS_POSIX_NONBLOCK
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 #define ACE_HAS_DIRENT
 

@@ -90,14 +90,10 @@
 # endif /* ACE_HAS_VALGRIND */
 
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
-# if defined (ACE_HAS_USING_KEYWORD)
 /**
  * @deprecated The @c ACE_HAS_USING macros are deprecated
  */
 #   define ACE_USING using
-# else
-#   define ACE_USING
-# endif /* ACE_HAS_USING_KEYWORD */
 #endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
 # if defined (ACE_HAS_TYPENAME_KEYWORD)

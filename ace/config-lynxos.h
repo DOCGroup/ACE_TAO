@@ -43,6 +43,7 @@
 #define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
 #define ACE_HAS_AUTOMATIC_INIT_FINI
+#define ACE_HAS_CHARPTR_SHMAT
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -149,11 +150,6 @@
 // #define ACE_POSIX_SIG_PROACTOR
 
 #define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
-
-// Looks like the modern compilers  have support for namespaces. Or
-// rather we dont support any compiler without this support. Need to
-// get this macro off of ACE.
-#define ACE_HAS_USING_KEYWORD
 
 #if __GNUC__ == 2  &&  __GNUC_MINOR__ == 9
   // config-g++-common.h defines these incorrectly for LynxOS 3.x

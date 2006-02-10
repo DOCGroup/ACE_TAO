@@ -93,8 +93,8 @@ private:
  * <Process> exits, or when any <Process> without a specific
  * <Event_Handler> exits.  When a <Process> exits, the
  * appropriate <Event_Handler>'s <handle_input> is called; the
- * <ACE_HANDLE> passed is either the Process' HANDLE (on Win32),
- * or its pid cast to an <ACE_HANDLE> (on unix).
+ * ACE_HANDLE passed is either the Process' HANDLE (on Win32),
+ * or its pid cast to an ACE_HANDLE (on unix).
  * It is also possible to call the <Process_Manager::wait>
  * functions even though the <Process_Manager> is registered with
  * a <Reactor>.
@@ -138,7 +138,7 @@ public:
    * needed.  If a non-NULL <reactor> is provided, this
    * <ACE_Process_Manager> uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
-   * <ACE_Reactor>.
+   * ACE_Reactor.
    */
   ACE_Process_Manager (size_t size = ACE_Process_Manager::DEFAULT_SIZE,
                        ACE_Reactor *reactor = 0);
@@ -149,7 +149,7 @@ public:
    * needed.  If a non-NULL <reactor> is provided, this
    * <ACE_Process_Manager> uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
-   * <ACE_Reactor>.
+   * ACE_Reactor.
    */
   int open (size_t size = DEFAULT_SIZE,
             ACE_Reactor *r = 0);
@@ -179,8 +179,8 @@ public:
   // = Process creation methods.
 
   /**
-   * Create a new process by passing <options> to <proc.spawn>.  
-   * Register <event_handler> to be called back when the process exits.  
+   * Create a new process by passing <options> to <proc.spawn>.
+   * Register <event_handler> to be called back when the process exits.
    *
    * On success, returns the process id of the child that was created.
    * On failure, returns ACE_INVALID_PID.
@@ -190,8 +190,8 @@ public:
 	       ACE_Event_Handler *event_handler = 0);
 
   /**
-   * Create a new process by passing <options> to <ACE_Process::spawn>.  
-   * Register <event_handler> to be called back when the process exits.  
+   * Create a new process by passing <options> to <ACE_Process::spawn>.
+   * Register <event_handler> to be called back when the process exits.
    *
    * On success, returns the process id of the child that was created.
    * On failure, returns ACE_INVALID_PID.
@@ -204,7 +204,7 @@ public:
    * <ACE_Process::spawn>, which is called <n> times.  If <child_pids>
    * is non-0 it is expected to be an array of <n> <pid_t>'s, which
    * are filled in with the process ids of each newly created process.
-   * Register <event_handler> to be called back when each process exits.  
+   * Register <event_handler> to be called back when each process exits.
    * Returns 0 on success and -1 on failure.
    */
   int spawn_n (size_t n,
@@ -366,7 +366,7 @@ private:
 
   /// Insert a process in the table (checks for duplicates).  Omitting
   /// the process handle won't work on Win32...
-  /// Register <event_handler> to be called back when the process exits.  
+  /// Register <event_handler> to be called back when the process exits.
   int insert_proc (ACE_Process *process,
 		   ACE_Event_Handler *event_handler = 0);
 
@@ -374,7 +374,7 @@ private:
    * Append information about a process, i.e., its <process_id> in the
    * <process_table_>.  Each entry is added at the end, growing the
    * table if necessary.
-   * Register <event_handler> to be called back when the process exits.  
+   * Register <event_handler> to be called back when the process exits.
    */
   int append_proc (ACE_Process *process,
 		   ACE_Event_Handler *event_handler = 0);

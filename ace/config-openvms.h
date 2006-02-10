@@ -266,10 +266,6 @@
                                         functions.*/
 #define ACE_HAS_UALARM 1
                                         /*Platform supports ualarm()*/
-#define ACE_HAS_USING_KEYWORD 1
-                                        /*Compiler supports the new
-                                        using keyword for C++
-                                        namespaces.*/
 #define ACE_HAS_VOIDPTR_MMAP 1
                                         /*Platform requires void * for
                                         mmap().*/

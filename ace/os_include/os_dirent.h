@@ -70,6 +70,8 @@ struct dirent {
   ACE_TCHAR *d_name;
 };
 
+#define ACE_DIRENT dirent
+
 struct ACE_DIR {
   /// The name of the directory we are looking into
   ACE_TCHAR *directory_name_;
@@ -78,7 +80,7 @@ struct ACE_DIR {
   HANDLE current_handle_;
 
   /// The struct for the results
-  dirent *dirent_;
+  ACE_DIRENT *dirent_;
 
   /// The struct for intermediate results.
   ACE_TEXT_WIN32_FIND_DATA fdata_;
@@ -97,9 +99,16 @@ struct ACE_DIR
   /// The directory entry
   struct dirent   dirent;
 };
+
+#define ACE_DIRENT dirent
+
+#elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#define ACE_DIRENT wdirent
+typedef wDIR ACE_DIR;
 #else
+#define ACE_DIRENT dirent
 typedef DIR ACE_DIR;
-# endif /* ACE_LACKS_STRUCT_DIR */
+#endif /* ACE_LACKS_STRUCT_DIR */
 
 #if defined rewinddir
 # undef rewinddir

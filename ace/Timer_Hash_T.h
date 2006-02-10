@@ -245,7 +245,7 @@ public:
    */
   virtual int expire (const ACE_Time_Value &current_time);
 
-  /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+  /// Returns a pointer to this ACE_Timer_Queue's iterator.
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
 
   /// Removes the earliest node from the queue and returns it

@@ -399,9 +399,6 @@ extern int cma_sigwait  (sigset_t *);
 // Following will not be needed if use standard c library (G06.20 and later)
 #define ACE_LACKS_SIGNED_CHAR
 
-// Compiler supports the new using keyword for C++ namespaces.
-#define ACE_HAS_USING_KEYWORD
-
 //=========================================================================
 // Build options
 //=========================================================================

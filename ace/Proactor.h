@@ -46,7 +46,7 @@ class ACE_Proactor_Timer_Handler;
 /**
  * @class ACE_Proactor_Handle_Timeout_Upcall
  *
- * @brief Functor for <ACE_Timer_Queue>.
+ * @brief Functor for ACE_Timer_Queue.
  *
  * This class implements the functor required by the Timer
  * Queue to call <handle_timeout> on ACE_Handlers.
@@ -240,7 +240,7 @@ public:
   static int reset_event_loop (void);
 
   /**
-   * The singleton proactor is used by the <ACE_Service_Config>.
+   * The singleton proactor is used by the ACE_Service_Config.
    * Therefore, we must check for the reconfiguration request and
    * handle it after handling an event.
    */

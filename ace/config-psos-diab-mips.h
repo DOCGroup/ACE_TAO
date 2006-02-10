@@ -34,6 +34,7 @@
 #define ACE_USE_RCSID 0
 #endif /* #if !defined (ACE_USE_RCSID) */
 
+#define ACE_LACKS_ENV
 #define ACE_LACKS_SETEGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETSID

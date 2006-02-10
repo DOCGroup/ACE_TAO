@@ -50,8 +50,6 @@
 // Compiler doesn't support static data member templates.
 //#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
-#define ACE_HAS_USING_KEYWORD
-
 // Define this if you want to use the standard C++ library
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_HAS_STRING_CLASS
