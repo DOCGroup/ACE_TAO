@@ -1,3 +1,18 @@
+Fri Feb 10 19:22:34 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Added iortable as a base project for the CosTrading_Serv library.
+
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+
+          Add the TradingService IOR to the IORTable so that it may be used
+          as a corbaloc within a -ORBInitRef.
+
+        * orbsvcs/tests/Trading/run_test.pl:
+
+          Modified this test to use a corbaloc to locate the TradingService.
+
 Fri Feb 10 15:49:17 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
