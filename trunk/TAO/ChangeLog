@@ -1,3 +1,11 @@
+Fri Feb 10 14:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Mcast/run_test.pl:
+        * orbsvcs/tests/EC_MT_Mcast/run_test.pl:
+          When we can't spawn the processes, just exit directly instead
+          of waiting on a timeout. Speedsup the daily builds when we
+          can't build the executables
+
 Fri Feb 10 11:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
