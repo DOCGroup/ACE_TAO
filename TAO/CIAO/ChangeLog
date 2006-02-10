@@ -26,8 +26,9 @@ Thu Feb  9 23:38:19 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
         * tests/Bug_2130_Regression/interfaces/ENW_stub_export.h
         * tests/Bug_2130_Regression/interfaces/ENW_svnt_export.h
 
-        Added a new tests for Bug_2130
-        
+        Added a new tests for Bug_2130. 
+        Thanks Roland Schimmack <Roland.Schimmack @ gmx.de> for
+        providing this test case.
 
 Thu Feb  9 16:48:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
