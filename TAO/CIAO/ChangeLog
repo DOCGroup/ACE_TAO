@@ -1,3 +1,10 @@
+Sat Feb 11 21:39:54 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.h
+        * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent_Factory.h
+        
+          Fixed fuzz build erros.
+
 Sat Feb 11 21:26:08 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tests/Bug_2130_Regression/descriptors/run_test.pl
