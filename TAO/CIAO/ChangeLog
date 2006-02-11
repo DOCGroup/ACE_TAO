@@ -1,3 +1,9 @@
+Sat Feb 11 21:00:00 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * ciao/Server_init.cpp
+
+          Removed an extra explicit qualification
+
 Sat Feb 11 18:49:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciaosvcs/Events/CIAO_Events.mpc
