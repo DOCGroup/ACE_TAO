@@ -1,3 +1,11 @@
+Sat Feb 11 15:36:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/OBV/ValueBox/Test_impl.cpp:
+
+          Divide sizeof(VBlongarray) by sizeof(CORBA::Long) instead of
+          sizeof(long).  Fixes OBV/ValueBox test on systems with 64 bit
+          longs.
+
 Sat Feb 11 04:08:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/Makefile.am:
