@@ -1,9 +1,15 @@
+Sat Feb 11 19:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_SUSECONDS_T and ACE_LACKS_USECONDS_T
+
 Sat Feb 11 10:37:04 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/ace_wchar.inl (convert): Fixed a bug where the character
 	  conversion was getting improperly sign converted.  Thanks to
- 	  Olivier Brunet <o dot brunet at free dot fr> for this fix.	
-  
+ 	  Olivier Brunet <o dot brunet at free dot fr> for this fix.
+
 Fri Feb 10 22:49:07 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/config-sunos5.5.h:
 	* include/makeinclude/platform_sunos5_sunc++.GNU:
