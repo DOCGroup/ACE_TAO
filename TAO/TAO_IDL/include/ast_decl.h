@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
 #include "ace/os_include/sys/os_types.h"
+#include "ace/SString.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
@@ -183,8 +184,8 @@ public:
   long line (void);
   void set_line (long l);
 
-  UTL_String *file_name (void);
-  void set_file_name (UTL_String *s);
+  ACE_CString file_name (void);
+  void set_file_name (ACE_CString s);
 
   UTL_ScopedName *name (void);
 
@@ -325,7 +326,7 @@ private:
   long pd_line;
   // Line defined in.
 
-  UTL_String *pd_file_name;
+  ACE_CString pd_file_name;
   // What file defined in.
 
   UTL_ScopedName *pd_name;
