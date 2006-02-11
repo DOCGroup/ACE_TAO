@@ -63,9 +63,5 @@
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-# if defined (ACE_HAS_EXCEPTIONS)
-#   define ACE_NEW_THROWS_EXCEPTIONS
-# endif /* ACE_HAS_EXCEPTIONS */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_LINUX_ICC_COMMON_H */

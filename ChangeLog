@@ -1,3 +1,11 @@
+Sat Feb 11 19:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_SUSECONDS_T and ACE_LACKS_USECONDS_T
+
+        * ace/config-hpux-11.00.h:
+          Added ACE_LACKS_SUSECONDS_T
+
 Sat Feb 11 19:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.cpp:
