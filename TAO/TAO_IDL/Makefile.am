@@ -141,7 +141,6 @@ noinst_HEADERS = \
   include/fe_interface_header.h \
   include/fe_private.h \
   include/global_extern.h \
-  include/idl_bool.h \
   include/idl_defines.h \
   include/idl_global.h \
   include/idl_narrow.h \

@@ -1,3 +1,10 @@
+Sat Feb 11 04:08:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * TAO_IDL/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
 Sat Feb 11 000:26:18 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
