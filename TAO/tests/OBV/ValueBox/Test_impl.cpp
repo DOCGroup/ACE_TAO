@@ -268,7 +268,7 @@ Test_impl::array_op1 (::VBlongarray * p1,
                       ACE_ENV_ARG_DECL_NOT_USED)
                   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  long array_len = sizeof(LongArray) / sizeof(long);
+  long array_len = sizeof(LongArray) / sizeof(CORBA::Long);
 
   for (long i=0; i<array_len; i++)
     {
@@ -294,7 +294,7 @@ Test_impl::array_op2 (const ::LongArray p1,
                       ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  long array_len = sizeof(LongArray) / sizeof(long);
+  long array_len = sizeof(LongArray) / sizeof(CORBA::Long);
 
   long i;
   for (i=0; i<array_len; i++)
