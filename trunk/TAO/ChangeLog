@@ -1,3 +1,20 @@
+Sat Feb 11 000:26:18 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Changed base class AST_Decl to use ACE_CString for its
+          pd_file_name member, instead of using UTL_String*. Also
+          changed static method idl_error_header() to take an
+          ACE_CString for the filename argument. Easier to get
+          this member type to stick around until we check for
+          illegal primary keys, which must be done after all
+          other parsing.
+
 Fri Feb 10 20:40:31 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * orbsvcs/tests/Security/Policies/Foo_i.cpp:

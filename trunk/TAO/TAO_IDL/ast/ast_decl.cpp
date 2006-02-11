@@ -86,6 +86,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 #include "utl_identifier.h"
+#include "utl_string.h"
 #include "utl_scope.h"
 #include "utl_err.h"
 #include "ace/OS_NS_stdio.h"
@@ -133,7 +134,6 @@ AST_Decl::AST_Decl (void)
     pd_defined_in (0),
     pd_node_type (NT_module),
     pd_line (-1),
-    pd_file_name (0),
     pd_local_name (0),
     pd_original_local_name (0),
     pd_added (false),
@@ -161,7 +161,6 @@ AST_Decl::AST_Decl (NodeType nt,
                      : 0),
     pd_node_type (nt),
     pd_line (idl_global->lineno ()),
-    pd_file_name (idl_global->filename ()),
     pd_name (0),
     pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
     pd_original_local_name (0),
@@ -174,6 +173,10 @@ AST_Decl::AST_Decl (NodeType nt,
     last_referenced_as_ (0),
     prefix_scope_ (0)
 {
+  // If this is the root node, the filename won't have been set yet.
+  UTL_String *fn = idl_global->filename ();
+  this->pd_file_name = (fn != 0 ? fn->get_string () : "");
+
   this->compute_full_name (n);
 
   char *prefix = 0;
@@ -1125,14 +1128,14 @@ AST_Decl::set_line (long l)
   this->pd_line = l;
 }
 
-UTL_String *
+ACE_CString
 AST_Decl::file_name (void)
 {
   return this->pd_file_name;
 }
 
 void
-AST_Decl::set_file_name (UTL_String *s)
+AST_Decl::set_file_name (ACE_CString s)
 {
   this->pd_file_name = s;
 }
