@@ -129,6 +129,8 @@ ifeq ($(shared_libs), 1)
 
     ifneq ($(no_hidden_visibility),1)
       CCFLAGS += -fvisibility=hidden
+    else
+      CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
     endif # no_hidden_visibility
   endif
 endif
