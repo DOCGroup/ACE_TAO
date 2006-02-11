@@ -9,7 +9,7 @@
 namespace CIAO
 {
   int
-  CIAO::Server_init (CORBA::ORB_ptr o)
+  Server_init (CORBA::ORB_ptr o)
   {
     CIAO_REGISTER_VALUE_FACTORY (o, CIAO::Map_Key_Cookie_init,
                                 Components::Cookie);
