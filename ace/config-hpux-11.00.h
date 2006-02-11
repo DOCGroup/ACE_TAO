@@ -403,6 +403,8 @@
 #define ACE_LACKS_SETEGID
 #define ACE_LACKS_SETEUID
 
+#define ACE_LACKS_SUSECONDS_T
+
 // Shared library name/path components
 #define ACE_DLL_SUFFIX  ".sl"
 #if defined (__LP64__)
