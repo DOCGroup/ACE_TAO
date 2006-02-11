@@ -104,8 +104,7 @@ namespace CIAO
    * is specified as the event service type.
    */
   class Direct_Consumer_Config_impl :
-    public virtual POA_CIAO::Direct_Consumer_Config,
-    public virtual PortableServer::RefCountServantBase
+    public virtual POA_CIAO::Direct_Consumer_Config
   {
 
   public:
@@ -164,10 +163,8 @@ namespace CIAO
    * is specified as the event service type.
    */
   class Direct_Supplier_Config_impl :
-    public virtual POA_CIAO::Direct_Supplier_Config,
-    public virtual PortableServer::RefCountServantBase
+    public virtual POA_CIAO::Direct_Supplier_Config
   {
-
   public:
 
     Direct_Supplier_Config_impl (PortableServer::POA_ptr poa);

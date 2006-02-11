@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file CIAO_EventService_Factory_impl.h
+ *  @file CIAO_DirectEvent_Factory.h
  *
  *  $Id$
  *
