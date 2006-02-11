@@ -2,6 +2,7 @@ Sat Feb 11 19:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h
         * ace/config-vxworks5.x.h:
+        * ace/config-macosx-panther.h:
           Added ACE_LACKS_SUSECONDS_T and ACE_LACKS_USECONDS_T
 
 Sat Feb 11 10:37:04 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
