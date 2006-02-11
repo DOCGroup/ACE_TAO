@@ -1,3 +1,9 @@
+Sat Feb 11 19:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.cpp:
+          Also undef min when defined and do it before including limits,
+          should fix our MingW build
+
 Sat Feb 11 19:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h
