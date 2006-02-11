@@ -365,11 +365,11 @@ public:
   virtual UTL_String       *stripped_filename (void);   // Stripped filename
   virtual void             set_stripped_filename (UTL_String *);  // Set it
 
-  virtual bool         imported (void);             // Are we imported?
-  virtual bool         import (void);               // Is import on?
+  virtual bool             imported (void);             // Are we imported?
+  virtual bool             import (void);               // Is import on?
   virtual void             set_import (bool);       // Set it
 
-  virtual bool         in_main_file (void);         // Are we?
+  virtual bool             in_main_file (void);         // Are we?
   virtual void             set_in_main_file (bool); // Set it
 
   virtual const char       *prog_name (void);           // Invoked as..
