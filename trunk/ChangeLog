@@ -1,6 +1,12 @@
+Sat Feb 11 10:37:04 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/ace_wchar.inl (convert): Fixed a bug where the character
+	  conversion was getting improperly sign converted.  Thanks to
+ 	  Olivier Brunet <o dot brunet at free dot fr> for this fix.	
+  
 Fri Feb 10 22:49:07 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/config-sunos5.5.h:
-        * include/makeinclude/platform_sunos5_sunc++.GNU:
+	* include/makeinclude/platform_sunos5_sunc++.GNU:
 
           Added Sun Studio 8 or better symbol visibility/scope support.
           Provides improved shared libraries by reducing footprint

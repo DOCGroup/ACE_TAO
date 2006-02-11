@@ -110,7 +110,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
   for (size_t i = 0; i < len; i++)
     {
       char *t = const_cast<char *> (str);
-      wstr[i] = static_cast<wchar_t> (*(t + i));
+      wstr[i] = static_cast<wchar_t> (*((unsigned char*)(t + i)));
     }
 # endif /* ACE_WIN32 */
   return wstr;
