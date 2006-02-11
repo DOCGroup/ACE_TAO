@@ -10,13 +10,14 @@ ACE_RCSID (ace,
 #endif /* __ACE_INLINE__ */
 
 #if !defined(ACE_LACKS_NUMERIC_LIMITS)
-#include <limits>
-
-// Bleh, some platforms pollute the namespace by defining a max() macro
+// Bleh, some platforms pollute the namespace by defining a max() and min() macro
 #ifdef max
 #undef max
 #endif
-
+#ifdef min
+#undef min
+#endif
+#include <limits>
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
 
 
