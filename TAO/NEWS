@@ -28,14 +28,17 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 
 . (OCI) Made TAO compilable when ACE_USES_WCHAR is set
 
+USER VISIBLE CHANGES BETWEEN TAO-1.4.9 and TAO-1.4.10
+====================================================
+
+. Fixed an bug, which allowed security unaware clients to make
+  invocations on secure objects, when the ORB was configured with
+  support for Security::SecQoPNoProtection.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
 ====================================================
 
-. (OCI) Fixed an bug, which allowed security unaware clients to make 
-  invocations on secure objects, when the ORB was configured with 
-  support for Security::SecQoPNoProtection.
-
-. (OCI) Added new endpoint selector implementation - Optimized
+. Added new endpoint selector implementation - Optimized
   Connection Endpoint Selector. A member of the tao/Strategies library,
   use svc.conf file to load the OC_Endpoint_Factory object. See
   tests/AlternateIIOP/svc.conf for an example.
