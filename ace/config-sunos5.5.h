@@ -282,6 +282,7 @@
 
 // SunOS 5.5.x does not support mkstemp
 #define ACE_LACKS_MKSTEMP
+#define ACE_LACKS_SYS_SYSCTL_H
 
 #if !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION - 0 >= 4))
 #  define ACE_HAS_CHARPTR_SHMDT
