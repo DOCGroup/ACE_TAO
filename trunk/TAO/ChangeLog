@@ -1,14 +1,30 @@
+Sun Feb 12 08:32:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * Makefile.am:
+
+          Regenerated.
+
+        * utils/catior/catior.cpp:
+
+          Use #include "orbsvcs/CosNamingC.h" instead of #include
+          "CosNamingC.h", as per normal TAO include path conventions.
+
+        * utils/catior/catior.mpc:
+
+          Remove includes += definition.  The include path already has
+          orbsvcs via inheritance from namingexe.
+
 Sun Feb 12 05:29:06 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
-        
+
           Cosmetic change to source code.
-          
+
         * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp (gen_throw_spec):
-        
+
           Fixed code generation error introduced with a change to this
           file in
-          
+
           Thu Feb  9 14:06:09 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
 Sat Feb 11 15:36:12 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>

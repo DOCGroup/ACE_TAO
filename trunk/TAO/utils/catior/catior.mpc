@@ -1,7 +1,5 @@
 // $Id$
 project : namingexe, rtcorba, core {
-  includes += ../../orbsvcs/orbsvcs
-  includes += ../../orbsvcs
   libpaths += $(ACE_ROOT)/lib
   libpaths += $(ACE_ROOT)/ace
   exename   = catior
