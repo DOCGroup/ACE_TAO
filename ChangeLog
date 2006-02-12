@@ -1,3 +1,8 @@
+Sun Feb 12 08:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Removed ACE_LACKS_USECONDS_T, Cygwin does deliver useconds_t
+
 Sat Feb 11 19:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lynxos.h:
