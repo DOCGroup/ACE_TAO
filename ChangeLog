@@ -1,3 +1,8 @@
+Sun Feb 12 13:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_SYS_SYSCTL_H
+
 Sun Feb 12 13:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_shm.inl (shmdt):
