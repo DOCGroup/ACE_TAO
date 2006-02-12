@@ -618,8 +618,6 @@ AH_TEMPLATE([ACE_HAS_SIGNAL_OBJECT_AND_WAIT],
 AH_TEMPLATE([ACE_HAS_SIG_C_FUNC],
 [Compiler requires extern "C" functions for signals.])
 
-AH_TEMPLATE([ACE_HAS_SIN_LEN],[Platform supports new BSD inet_addr len field.])
-
 AH_TEMPLATE([ACE_HAS_SIZET_SOCKET_LEN],
 [OS/compiler uses size_t * rather than int * for socket lengths])
 
