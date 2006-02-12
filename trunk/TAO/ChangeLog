@@ -1,3 +1,12 @@
+Sun Feb 12 13:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+        * orbsvcs/tests/Security/Policies/client.cpp:
+          Fixed conversion warning
+
+        * orbsvcs/tests/Security/Policies/Policies.mpc:
+          No need to set exename
+
 Sun Feb 12 08:32:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * Makefile.am:
