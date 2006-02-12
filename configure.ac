@@ -7064,6 +7064,12 @@ else
   AC_MSG_RESULT([none])
 fi dnl PTHREAD DRAFT CHECKS
 
+if test "$ac_cv_func_pthread_getschedparam" = yes &&
+   test "$ac_cv_func_pthread_setschedparam" = yes; then
+  AC_DEFINE([ACE_HAS_PTHREAD_SCHEDPARAM], 1,
+            [Define to 1 if platform has pthread_{get,set}param])
+fi
+
 dnl Check if we have UNIX International threads
 AC_MSG_CHECKING([if a UNIX International thread library was found])
 if test "$ace_has_sthreads" = yes; then
