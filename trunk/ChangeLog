@@ -1,3 +1,8 @@
+Sun Feb 12 13:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_shm.inl (shmdt):
+          Added a const cast when ACE_HAS_CHARPTR_SHMDT is defined
+
 Sun Feb 12 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h:
