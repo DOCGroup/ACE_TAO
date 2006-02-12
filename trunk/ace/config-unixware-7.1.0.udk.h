@@ -223,9 +223,6 @@
    PTHREAD_PROCESS_SHARED values */
 #define ACE_HAS_PTHREAD_PROCESS_ENUM
 
-/* Platform has pthread_sigmask() defined. */
-#define ACE_HAS_PTHREAD_SIGMASK
-
 /* Platform will recurse infinitely on thread exits from TSS cleanup routines
    (e.g., AIX) */
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
