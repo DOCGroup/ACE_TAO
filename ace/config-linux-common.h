@@ -178,7 +178,9 @@
 
 // Then the compiler specific parts
 
-#if defined (__GNUG__)
+#if defined (__INTEL_COMPILER)
+# include "ace/config-icc-common.h"
+#elif defined (__GNUG__)
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
@@ -197,8 +199,6 @@
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
-#elif defined (__INTEL_COMPILER)
-# include "ace/config-icc-common.h"
 #elif defined (__BORLANDC__)
 # undef ACE_HAS_LLSEEK
 # undef ACE_HAS_LSEEK64
