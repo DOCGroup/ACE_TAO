@@ -36,7 +36,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Log_Msg.h"
-#include "CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 CORBA::Boolean
 catiiop (char* string
