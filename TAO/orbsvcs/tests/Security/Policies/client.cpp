@@ -134,7 +134,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       Foo::Bar_var server =
-        Foo::Bar::_narrow (object ACE_ENV_ARG_PARAMETER);
+        Foo::Bar::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (CORBA::is_nil (server.in ()))
