@@ -528,17 +528,6 @@ AH_TEMPLATE([ACE_HAS_POWERPC_TIMER],
 
 AH_TEMPLATE([ACE_HAS_PRUSAGE_T],[Platform supports the prusage_t struct])
 
-AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT4],
-[Platform supports POSIX Threads .4a Draft 4])
-
-AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT6],
-[Platform supports POSIX Threads .4a Draft 6])
-
-AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT7],a
-[Platform supports POSIX Threads .1c Draft 7])
-
-AH_TEMPLATE([ACE_HAS_PTHREADS_STD],[Platform supports POSIX.1c-1995 threads])
-
 AH_TEMPLATE([ACE_HAS_PTHREADS_UNIX98_EXT],
 [Platform has the UNIX98 extensions to Pthreads (rwlocks)])
 
