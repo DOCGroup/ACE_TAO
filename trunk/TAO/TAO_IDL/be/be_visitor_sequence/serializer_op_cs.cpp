@@ -779,7 +779,6 @@ be_visitor_sequence_serializer_op_cs::visit_node (be_type *bt)
       nt = td->base_node_type ();
     }
 
-
 switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_IS_BOUNDED_SIZE:

@@ -132,7 +132,9 @@ be_visitor_valuetype_init_arglist_ch::gen_throw_spec (be_factory *node)
           throw_spec_close = "))";
         }
 
-      *os << be_nl << throw_spec_open;
+      *os << be_nl << throw_spec_open << be_idt;
+      
+      bool first = true;
 
       // Initialize an iterator to iterate thru the exception list.
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
@@ -152,9 +154,12 @@ be_visitor_valuetype_init_arglist_ch::gen_throw_spec (be_factory *node)
 
             }
 
-          *os << "," << be_nl;
-          *os << excp->name ();
+          *os << (first ? "" : ",") << be_nl
+              << excp->name ();
+              
+           first = false;
         }
+        
       *os << be_uidt_nl << throw_spec_close << be_uidt;
     }
 
