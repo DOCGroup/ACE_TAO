@@ -46,7 +46,8 @@ ACE_OS::shmdt (const void *shmaddr)
   ACE_OS_TRACE ("ACE_OS::shmdt");
 #if defined (ACE_HAS_SYSV_IPC)
 #  if defined (ACE_HAS_CHARPTR_SHMDT)
-     ACE_OSCALL_RETURN (::shmdt (static_cast <char*> (shmaddr)), int, -1);
+     ACE_OSCALL_RETURN (::shmdt (
+      static_cast <char*> (const_cast <void *>(shmaddr))), int, -1);
 # else
      ACE_OSCALL_RETURN (::shmdt (shmaddr), int, -1);
 #  endif /* ACE_HAS_CHARPTR_SHMDT */
