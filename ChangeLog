@@ -1,3 +1,14 @@
+Sun Feb 12 19:07:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-netbsd.h:
+
+          Define ACE_HAS_PTHREAD_SCHEDPARAM.
+
+        * configure.ac:
+
+          Define ACE_HAS_PTHREAD_SCHEDPARAM if platform supports
+          pthread_getschedparam() and pthread_setschedparam().
+
 Sun Feb 12 19:01:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/config-macosx-panther.h:
