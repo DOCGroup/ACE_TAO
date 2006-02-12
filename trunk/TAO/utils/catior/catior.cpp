@@ -478,9 +478,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         "opening a connection to the NamingService\n"
                         "resolving the CosName %s\n",
                         get_opt.opt_arg ()));
-    
+
             CORBA::Object_var server_object;
-    
+
             ACE_TRY
               {
                 // Find the Naming Service.
@@ -490,23 +490,23 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 CosNaming::NamingContextExt_var naming_context =
                   CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
                                                         ACE_ENV_ARG_PARAMETER);
-      
-                if (CORBA::is_nil (naming_context))
+
+                if (CORBA::is_nil (naming_context.in ()))
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
                                     "NameService cannot be resolved\n"),
                                    -1);
                 }
-          
+
                 CosNaming::Name *name =
                   naming_context->to_name (get_opt.opt_arg ()
                                            ACE_ENV_ARG_PARAMETER);
-  
+
                 ACE_TRY_EX (RESOLUTION)
                   {
                     server_object = naming_context->resolve (*name
                                                          ACE_ENV_ARG_PARAMETER);
-                      if (CORBA::is_nil (server_object))
+                      if (CORBA::is_nil (server_object.in ()))
                       {
                         ACE_ERROR_RETURN ((LM_ERROR,
                               "name %s is not resolved to a valid object\n"),
@@ -516,7 +516,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 ACE_CATCH (const CosNaming::NamingContext::NotFound, nf)
                   {
                     const char     *reason;
-            
+
                     switch (nf.why)
                       {
                         case CosNaming::NamingContext::missing_node:
@@ -566,26 +566,26 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       -1);
                   }
                 ACE_ENDTRY;
-           
+
                 ACE_CString aString;
-  
+
                 aString = orb_var->object_to_string (server_object.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-  
+
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
                             aString.rep ()));
-  
+
                 char* str;
                 if (aString.find ("IOR:") == 0)
                   {
                     ACE_DEBUG ((LM_DEBUG,
                                 "decoding an IOR:\n"));
-  
+
                     // Strip the IOR: off the string.
                     ACE_CString prefix = "IOR:";
                     size_t prefixLength = prefix.length ();
-  
+
                     ACE_CString subString =
                       aString.substring (prefixLength,
                                          aString.length () - prefixLength);
@@ -597,10 +597,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   {
                     ACE_DEBUG ((LM_DEBUG,
                                 "decoding an IIOP URL IOR\n"));
-  
+
                     ACE_CString prefix = "IIOP:";
                     size_t prefixLength = prefix.length ();
-  
+
                     ACE_CString subString =
                       aString.substring (prefixLength,
                                          aString.length () - prefixLength);
@@ -612,7 +612,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   {
                     ACE_DEBUG ((LM_DEBUG,
                                 "decoding an POOP IOR\n"));
-  
+
                     str = aString.rep ();
                     b = catpoop (str ACE_ENV_ARG_PARAMETER);
                   }
@@ -630,7 +630,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                   -1);
               }
             ACE_ENDTRY;
-  
+
             if (b == 1)
               ACE_DEBUG ((LM_DEBUG,
                           "catior returned true\n"));
