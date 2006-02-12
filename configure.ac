@@ -7020,7 +7020,8 @@ dnl   test "$ac_cv_func_pthread_getspecific" = yes &&
    test "$ac_cv_func_pthread_kill" = yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft 4])
-  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT4])
+  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT4], 1,
+            [Platform supports POSIX Threads .4a Draft 4])
 dnl Check if we have Pthreads Draft 6
 elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_mutexattr_destroy" = yes &&
@@ -7032,7 +7033,8 @@ elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_setintrtype" = yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft 6])
-  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT6])
+  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT6], 1,
+            [Platform supports POSIX Threads .4a Draft 6])
 dnl Check if we have Pthreads Draft 7
 elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_mutexattr_destroy" = yes &&
@@ -7045,7 +7047,8 @@ elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ace_has_sched_yield" != yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft 7])
-  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT7])
+  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT7], 1,
+            [Platform supports POSIX Threads .1c Draft 7])
 dnl Check if we have Pthreads Draft Standard
 elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_mutexattr_destroy" = yes &&
@@ -7058,7 +7061,8 @@ elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ace_has_sched_yield" = yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft Standard])
-  AC_DEFINE([ACE_HAS_PTHREADS_STD])
+  AC_DEFINE([ACE_HAS_PTHREADS_STD], 1,
+            [Platform supports POSIX.1c-1995 threads])
 else
   ace_has_pthreads=no
   AC_MSG_RESULT([none])
@@ -7067,7 +7071,7 @@ fi dnl PTHREAD DRAFT CHECKS
 if test "$ac_cv_func_pthread_getschedparam" = yes &&
    test "$ac_cv_func_pthread_setschedparam" = yes; then
   AC_DEFINE([ACE_HAS_PTHREAD_SCHEDPARAM], 1,
-            [Define to 1 if platform has pthread_{get,set}param])
+            [Define to 1 if platform has pthread_{get,set}param().])
 fi
 
 dnl Check if we have UNIX International threads
