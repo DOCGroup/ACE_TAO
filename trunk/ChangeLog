@@ -1,3 +1,9 @@
+Sun Feb 12 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Check for icc as the first compiler, when icc is used in gcc
+          compatibility mode we else incorrectly use gcc.
+
 Sun Feb 12 13:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h:
