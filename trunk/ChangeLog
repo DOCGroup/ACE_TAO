@@ -1,3 +1,15 @@
+Mon Feb 13 14:51:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Svc_Conf_Lexer.cpp:
+
+          Catch the possible situation where we were unable to allocate a
+          converter and mark it as a conversion failure.
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+
+          If we are compiling for a PPC, we need to add the -mlongcall
+          option for many TAO tests (and some user applications).
+
 Mon Feb 13 11:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/servers/svc.conf:
@@ -173,13 +185,13 @@ Sat Feb 11 19:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Feb 11 10:37:04 2006  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/ace_wchar.inl (convert): Fixed a bug where the character
-	  conversion was getting improperly sign converted.  Thanks to
- 	  Olivier Brunet <o dot brunet at free dot fr> for this fix.
+        * ace/ace_wchar.inl (convert): Fixed a bug where the character
+          conversion was getting improperly sign converted.  Thanks to
+          Olivier Brunet <o dot brunet at free dot fr> for this fix.
 
 Fri Feb 10 22:49:07 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/config-sunos5.5.h:
-	* include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
 
           Added Sun Studio 8 or better symbol visibility/scope support.
           Provides improved shared libraries by reducing footprint
