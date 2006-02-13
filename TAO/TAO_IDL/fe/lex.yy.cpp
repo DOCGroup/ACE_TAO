@@ -1513,7 +1513,7 @@ TAO_YY_RULE_SETUP
 {
                   /* Skip the quotes */
                   char *tmp = ace_tao_yytext;
-                  for(int i = strlen(tmp) - 1; i >= 0; --i) {
+                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
@@ -1521,7 +1521,7 @@ TAO_YY_RULE_SETUP
                       break;
                     }
                   }
-                  tmp[strlen (tmp) - 1] = '\0';
+                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
                                   UTL_String (tmp + 1),
                                   IDL_STRING_LITERAL);
@@ -1533,7 +1533,15 @@ TAO_YY_RULE_SETUP
 {
                   /* Skip the bookends */
                   char *tmp = ACE_OS::strdup (ace_tao_yytext);
-                  tmp[strlen (tmp) - 1] = '\0';
+                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
+                    if (isspace(tmp[i])) {
+                      tmp[i] = '\0';
+                    }
+                    else {
+                      break;
+                    }
+                  }
+                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   tao_yylval.wsval = idl_wstring_escape_reader(tmp + 2);
                   return IDL_WSTRING_LITERAL;
                 }
