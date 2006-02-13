@@ -51,7 +51,7 @@
 
 namespace Impl
 {
-  typedef ACE_Thread_Mutex TMutex;
+  typedef ACE_SYNCH_MUTEX TMutex;
 
   class TSEC_CheckPoint_exec_i;
 
@@ -210,7 +210,7 @@ namespace Impl
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
-    int init( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS 
+    int init( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
     CORBA::Object_ptr installServant
