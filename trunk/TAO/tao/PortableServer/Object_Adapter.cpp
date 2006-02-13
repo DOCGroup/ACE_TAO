@@ -166,7 +166,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
 
   new_hint_strategy->object_adapter (this);
 
-  persistent_poa_name_map *ppnm;
+  persistent_poa_name_map *ppnm = 0;
   switch (creation_parameters.poa_lookup_strategy_for_persistent_id_policy_)
     {
     case TAO_LINEAR:
@@ -296,7 +296,7 @@ TAO_Object_Adapter::create_lock (int enable_locking,
 #if defined (ACE_HAS_THREADS)
   if (enable_locking)
     {
-      ACE_Lock *the_lock;
+      ACE_Lock *the_lock = 0;
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
                       0);
@@ -307,7 +307,7 @@ TAO_Object_Adapter::create_lock (int enable_locking,
   ACE_UNUSED_ARG (thread_lock);
 #endif /* ACE_HAS_THREADS */
 
-  ACE_Lock *the_lock;
+  ACE_Lock *the_lock = 0;
   ACE_NEW_RETURN (the_lock,
                   ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                   0);
