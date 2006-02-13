@@ -164,6 +164,9 @@ namespace CIAO
                    ::Deployment::PlanError,
                    ::Components::RemoveFailure));
 
+    virtual bool
+    is_to_be_removed (const char * name);
+
     /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options
