@@ -1,3 +1,10 @@
+Mon Feb 13 15:41:21 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp
+        
+          Fixed a warning about "deprecated conversion from string 
+          constant to `char*' on RHEL_Static_GCC-3.4.2 build.
+
 Mon Feb 13 11:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.h:
