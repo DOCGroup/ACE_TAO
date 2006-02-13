@@ -207,7 +207,7 @@ Impl::TSEC_CheckPoint_exec_i::init
   int argc = sizeof( argv ) / sizeof( argv[0] );
 
   CORBA::ORB_var orb = CORBA::ORB_init( argc,
-                                        ACE_const_cast (char **, argv)
+                                        const_cast<char **> (argv)
                                         ACE_ENV_ARG_PARAMETER );
   _orb               = CORBA::ORB::_duplicate( orb.in () );
 
