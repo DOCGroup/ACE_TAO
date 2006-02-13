@@ -337,9 +337,9 @@ Impl::TSEC_CheckPoint_exec_i::acquireSession
     }
 
     p_sessionImpl->isInUse( 1 );
-    //CORBA::Object_var obj = this->getObjRef( p_sessionImpl) ;
-    //session = ENW::TSession::_narrow ( obj.in () ACE_ENV_ARG_PARAMETER );
-    session = sessionVector[Ident-1]._session;
+    CORBA::Object_var obj = this->getObjRef( p_sessionImpl) ;
+    session = ENW::TSession::_narrow ( obj.in () ACE_ENV_ARG_PARAMETER );
+    //session = sessionVector[Ident-1]._session;
   }
   ACE_CATCHANY
   {
