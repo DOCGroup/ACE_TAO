@@ -1,19 +1,26 @@
+Mon Feb 13 08:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Server_init.cpp:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp:
+          Fixed conversion warnings
+
 Sat Feb 11 21:39:54 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.h
         * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent_Factory.h
-        
+
           Fixed fuzz build erros.
 
 Sat Feb 11 21:26:08 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tests/Bug_2130_Regression/descriptors/run_test.pl
-        
+
           Fixed the command line option to start the NodeApplication
           to enable real-time support.
           Thanks Roland Schimmack <Roland.Schimmack @ gmx.de> for
           reporting this error.
-        
+
 Sat Feb 11 21:00:00 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * ciao/Server_init.cpp
