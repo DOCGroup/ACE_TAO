@@ -21,5 +21,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_ERROR, "Got number %d\n", n));
 
+  server->shutdown ();
+
   return 0;
 }
