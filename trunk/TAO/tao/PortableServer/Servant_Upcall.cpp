@@ -100,7 +100,7 @@ namespace TAO
         ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                           TAO_Adapter::DS_FAILED);
 
-      // We have acquired the object adapater lock.  Record this for later
+      // We have acquired the object adapter lock.  Record this for later
       // use.
       this->state_ = OBJECT_ADAPTER_LOCK_ACQUIRED;
 
@@ -245,7 +245,7 @@ namespace TAO
         ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                           0);
 
-      // We have acquired the object adapater lock.  Record this for later
+      // We have acquired the object adapter lock.  Record this for later
       // use.
       this->state_ = OBJECT_ADAPTER_LOCK_ACQUIRED;
 

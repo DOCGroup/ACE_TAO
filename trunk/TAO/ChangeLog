@@ -1,3 +1,8 @@
+Mon Feb 13 11:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Initialise some pointers with 0
+
 Mon Feb 13 11:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Thread_Pool.{h,cpp}:
