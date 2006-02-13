@@ -1,3 +1,27 @@
+Mon Feb 13 14:21:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_union.cpp (compute_default_value):
+
+          When a clash is found between a declared case label value and
+          the initialized default discriminator value for a boolean
+          discriminator, changed the method of modifying the intialized
+          discriminator defaul value from '++' to '^=', in order to
+          be consistent with the changes in
+
+          Thu Feb  9 16:31:17 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since this type of discriminator value is now stored internally as
+          a native boolean instead of a signed long.
+
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+
+          Changed signature of one of the create_expr() overloads
+          to match the signature change to constructors of be_expression
+          and AST_Expression in
+
+          Thu Feb  9 16:31:17 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Feb 13 13:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/AdvSlot/server.cpp:
