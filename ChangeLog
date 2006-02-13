@@ -1,3 +1,15 @@
+Mon Feb 13 05:12:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-netbsd.h:
+        * configure.ac:
+
+          Revert:
+          Sun Feb 12 19:07:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+          Caused build failures because NetBSD doesn't support
+          pthread_attr_{get,set}schedpolicy().  It's not clear what
+          ACE_HAS_PTHREAD_SCHEDPARAM actually means.
+
 Sun Feb 12 19:48:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
