@@ -131,7 +131,7 @@ ACE_INLINE
 TAO_FixedSeq_Var_T<T,T_elem>::TAO_FixedSeq_Var_T (const T & p)
 {
   ACE_NEW (this->ptr_,
-	   T (p));
+           T (p));
 }
 
 template<typename T, typename T_elem>
@@ -148,6 +148,14 @@ template<typename T, typename T_elem>
 ACE_INLINE
 T_elem &
 TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+const T_elem &
+TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index) const
 {
   return this->ptr_->operator[] (index);
 }
@@ -196,6 +204,14 @@ template<typename T, typename T_elem>
 ACE_INLINE
 T_elem &
 TAO_VarSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+const T_elem &
+TAO_VarSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index) const
 {
   return this->ptr_->operator[] (index);
 }
