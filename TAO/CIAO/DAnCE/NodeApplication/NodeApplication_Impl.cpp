@@ -76,7 +76,7 @@ void
 CIAO::NodeApplication_Impl::finishLaunch_i (
     const Deployment::Connections & providedReference,
     CORBA::Boolean start,
-    CORBA::Boolean add_connection 
+    CORBA::Boolean add_connection
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
@@ -178,8 +178,8 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 }
               break;
 
-	        // @@ (GD) A place holder where the Event Channel connections
-	        //         should be set up.
+          // @@ (GD) A place holder where the Event Channel connections
+          //         should be set up.
 
             case Deployment::EventEmitter:
 
@@ -488,7 +488,7 @@ CIAO::NodeApplication_Impl::install (
       {
         //Since we know the type ahead of time...narrow is omitted here.
         if (this->component_objref_map_.bind (
-        	  retv[len].component_instance_name.in(),
+            retv[len].component_instance_name.in(),
               Components::CCMObject::_duplicate (retv[len].
                 component_ref.in ())))
           {
@@ -573,7 +573,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 // Create a container interface, which will be hosted in this NodeApplication.
 ::Deployment::Container_ptr
 CIAO::NodeApplication_Impl::create_container (
-	const ::Deployment::Properties &properties
+  const ::Deployment::Properties &properties
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   ::Components::CreateFailure,

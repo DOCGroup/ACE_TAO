@@ -1,3 +1,23 @@
+Mon Feb 13 20:01:38 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        
+          Cosmetics change.
+        
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        
+          Enhanced to call ccm_activate, ciao_preactivate, and
+          ciao_postactivate when installing new components.
+          Thanks Sandro Andrade <sandro @dcc.ufba.br> for reporting
+          this issue.
+
+          Also added the logic for remove_existing_components into
+          the class, which has not been integrated yet.
+        
+          Refactor the code by putting these logics into separate
+          methods to enhance readability.
+        
 Mon Feb 13 17:12:09 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp
