@@ -12,7 +12,7 @@ ACE_OS::shmat (int int_id, const void *shmaddr, int shmflg)
   ACE_OS_TRACE ("ACE_OS::shmat");
 #if defined (ACE_HAS_SYSV_IPC)
 #  if defined (ACE_HAS_CHARPTR_SHMAT)
-  ACE_OSCALL_RETURN (::shmat (int_id, static_cast <char*> (shmaddr), shmflg), void *, (void *) -1);
+  ACE_OSCALL_RETURN (::shmat (int_id, static_cast <char*> (const_cast <void *>(shmaddr)), shmflg), void *, (void *) -1);
 #  else
   ACE_OSCALL_RETURN (::shmat (int_id, shmaddr, shmflg), void *, (void *) -1);
 #  endif /* ACE_HAS_CHARPTR_SHMAT */
