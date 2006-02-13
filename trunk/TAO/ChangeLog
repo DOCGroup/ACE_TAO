@@ -1,3 +1,8 @@
+Mon Feb 13 09:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/Policies/Foo_i.cpp:
+          Use CORBA::is_nil to check if an object reference is nil or not
+
 Mon Feb 13 09:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
