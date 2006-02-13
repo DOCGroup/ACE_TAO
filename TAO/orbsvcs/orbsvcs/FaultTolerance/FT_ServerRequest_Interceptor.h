@@ -111,8 +111,6 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
            PortableInterceptor::ForwardRequest));
 
-    bool is_primary (void);
-
     void update_iogr (
         PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL)
@@ -122,7 +120,7 @@ namespace TAO
 
     CORBA::ULong object_group_ref_version_;
 
-    bool is_primary_;
+    CORBA::Boolean is_primary_;
 
     CORBA::Object_var iogr_;
 
