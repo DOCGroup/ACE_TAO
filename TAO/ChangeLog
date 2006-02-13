@@ -1,3 +1,8 @@
+Mon Feb 13 12:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AdvSlot/client.cpp:
+          Call shutdown on the server when ready
+
 Mon Feb 13 11:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Upcall.cpp:
