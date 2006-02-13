@@ -153,7 +153,7 @@ main
 
             ENW::TSession_var session = sessionService->acquireSession( _ident );
             //CORBA::Long ident = session->getIdent();
-            sessionService->releaseSession( _ident, session );
+            sessionService->releaseSession( _ident, session.in () );
 
             ACE_DEBUG( ( LM_DEBUG, "(%P|%t@%T) Executing testcase acquire release session...[ready]\n" ) );
           }
@@ -168,7 +168,7 @@ main
             CORBA::Long ident = session->getIdent();
             ACE_DEBUG(( LM_DEBUG, "(%P|%t@%T) Ident: %d\n", ident ) );
 
-            if( !sessionService->destroySession( session ) )
+            if( !sessionService->destroySession( session.in () ) )
             {
               ACE_DEBUG( ( LM_DEBUG, "(%P|%t@%T) Executing testcase create destroy session...[ERROR]\n" ) );
             }
