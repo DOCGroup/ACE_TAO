@@ -22,12 +22,11 @@ Foo_i::baz (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Foo::Bar::NoSecurityAttributes))
 {
-  if (this->current_ == 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, "FOO (%P|%t) No ClientCredentials available \n"));
-    return;
-  }
-
+  if (CORBA::is_nil (this->current_.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "FOO (%P|%t) No ClientCredentials available \n"));
+      return;
+    }
 
   ACE_TRY_NEW_ENV
   {
