@@ -120,9 +120,10 @@
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
 // Lack of (and broken) support for placement operator delete is a known
-// bug by HP, at least as of aC++ A.03.10. It may be fixed later, and if so
-// this would change to be a #if against an appropriate value of __HP_aCC
-#    define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+// bug by HP, up until aC++ A.03.55.02.
+#    if (__HP_aCC < 35502)
+#      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+#    endif /* __HP_aCC < 35502 */
 
 // Compiler's 'new' throws exceptions on failure, regardless of whether or
 // not exception handling is enabled in the compiler options. Fortunately,
