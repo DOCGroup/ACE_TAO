@@ -1,3 +1,8 @@
+Mon Feb 13 10:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Obstack_T.h:
+          Doxygen improvement
+
 Mon Feb 13 10:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Proactor_Test.cpp:
