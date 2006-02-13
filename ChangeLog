@@ -1,3 +1,12 @@
+Mon Feb 13 09:33:20 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/config-sunos5.5.h (ACE_IMPORT_SINGLETON_DECLARATION):
+          (ACE_IMPORT_SINGLETON_DECLARE):
+
+          Comment out these macro definitions.  The "extern template"
+          extension available in MSVC++ and g++ doesn't work for Sun
+          Studio C++ compilers.  An alternative may need to be found.
+
 Mon Feb 13 14:51:10 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Svc_Conf_Lexer.cpp:
