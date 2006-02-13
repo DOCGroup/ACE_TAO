@@ -329,12 +329,6 @@ ACE_OS::num_processors_online (void)
   return sys_info.dwNumberOfProcessors;
 #elif defined (_SC_NPROCESSORS_ONLN)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
-#elif defined (__hpux)
-  struct pst_dynamic psd;
-  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
-    return psd.psd_proc_cnt;
-  else
-    return -1;
 #elif defined (ACE_HAS_SYSCTL)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
@@ -342,6 +336,12 @@ ACE_OS::num_processors_online (void)
 
   sysctl(mib, 2, &num_processors, &len, NULL, 0);
   return num_processors;
+#elif defined (__hpux)
+  struct pst_dynamic psd;
+  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
+    return psd.psd_proc_cnt;
+  else
+    return -1;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
