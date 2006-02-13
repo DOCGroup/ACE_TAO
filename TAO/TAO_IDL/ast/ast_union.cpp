@@ -816,7 +816,7 @@ AST_Union::compute_default_value (void)
                           if (this->default_value_.u.bool_val
                                 == expr->ev ()->u.bval)
                             {
-                              this->default_value_.u.bool_val++;
+                              this->default_value_.u.bool_val ^= true;
                               break_loop = 1;
                             }
 
