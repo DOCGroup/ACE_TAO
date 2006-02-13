@@ -1,3 +1,10 @@
+Mon Feb 13 13:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AdvSlot/server.cpp:
+          Improved this test, explicitly put a Long with value 5 in the PI
+          slot and retrieve it later, this we can check whether we get
+          the correct value back.
+
 Mon Feb 13 13:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PICurrent_Copy_Callback.h:
