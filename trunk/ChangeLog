@@ -1,3 +1,8 @@
+Mon Feb 13 08:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_NUMERIC_LIMITS
+
 Mon Feb 13 08:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
