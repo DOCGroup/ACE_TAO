@@ -201,7 +201,8 @@ private:
   void validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL);
 
   int create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
-                        CORBA::ULong number_of_threads);
+                        CORBA::ULong number_of_threads,
+                        long thread_flags);
 
   /// Create @a number_of_threads of dynamic threads.  Can be called
   /// multiple times.
