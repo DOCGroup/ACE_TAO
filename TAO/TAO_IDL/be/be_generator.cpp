@@ -705,13 +705,11 @@ be_generator::create_expr (long l)
 }
 
 AST_Expression *
-be_generator::create_expr (long l,
-                           AST_Expression::ExprType t)
+be_generator::create_expr (bool b)
 {
   be_expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_expression (l,
-                                 t),
+                  be_expression (b),
                   0);
 
   return retval;

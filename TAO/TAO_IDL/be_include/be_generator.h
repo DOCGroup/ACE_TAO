@@ -217,15 +217,14 @@ public:
                                        AST_Expression *v1,
                                        AST_Expression *v2);
 
-  virtual AST_Expression *create_expr(long v);
+  virtual AST_Expression *create_expr (long v);
 
-  virtual AST_Expression *create_expr (long v,
-                                       AST_Expression::ExprType t);
+  virtual AST_Expression *create_expr (bool b);
 
   virtual AST_Expression *create_expr (idl_uns_long v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr(UTL_String *s);
+  virtual AST_Expression *create_expr( UTL_String *s);
 
   virtual AST_Expression *create_expr (char *s);
 
