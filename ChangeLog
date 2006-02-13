@@ -1,3 +1,8 @@
+Mon Feb 13 08:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_SYS_SYSCTL_H
+
 Mon Feb 13 05:12:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/config-netbsd.h:
