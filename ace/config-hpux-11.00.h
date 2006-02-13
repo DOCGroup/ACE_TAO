@@ -404,6 +404,7 @@
 #define ACE_LACKS_SETEUID
 
 #define ACE_LACKS_SUSECONDS_T
+#define ACE_LACKS_SYS_SYSCTL_H
 
 // Shared library name/path components
 #define ACE_DLL_SUFFIX  ".sl"
