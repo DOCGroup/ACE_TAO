@@ -195,7 +195,9 @@ TAO_Thread_Lane::new_dynamic_thread (void)
                     this->dynamic_threads_number_));
 
       int result =
-        this->create_threads_i (this->dynamic_threads_, 1);
+        this->create_threads_i (this->dynamic_threads_,
+                                1,
+                                THR_BOUND | THR_DETACHED);
 
       if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -384,7 +386,8 @@ TAO_Thread_Lane::create_static_threads (void)
 
   // Create static threads.
   return this->create_threads_i (this->static_threads_,
-                                 this->static_threads_number_);
+                                 this->static_threads_number_,
+                                 THR_NEW_LWP | THR_JOINABLE);
 }
 
 int
@@ -395,18 +398,20 @@ TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
                     this->lock_,
                     0);
 
-  return this->create_threads_i (this->dynamic_threads_, number_of_threads);
+  return this->create_threads_i (this->dynamic_threads_,
+                                 number_of_threads,
+                                 THR_BOUND | THR_DETACHED);
 }
 
 int
 TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
-                                   CORBA::ULong number_of_threads)
+                                   CORBA::ULong number_of_threads,
+                                   long thread_flags)
 {
   // Overwritten parameters.
   int force_active = 1;
 
   // Default parameters.
-  long default_flags = THR_NEW_LWP | THR_JOINABLE;
   int default_grp_id = -1;
   ACE_Task_Base *default_task = 0;
   ACE_hthread_t *default_thread_handles = 0;
@@ -432,7 +437,7 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
     this->pool ().manager ().orb_core ();
 
   long flags =
-    default_flags |
+    thread_flags |
     orb_core.orb_params ()->thread_creation_flags ();
 
   // Activate the threads.
