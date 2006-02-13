@@ -1,3 +1,8 @@
+Mon Feb 13 08:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_shm.inl (shmat):
+          Added const_cast to get rid of compile errors with LynxOS
+
 Mon Feb 13 08:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macosx-panther.h:
