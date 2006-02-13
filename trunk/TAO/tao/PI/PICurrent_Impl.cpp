@@ -47,6 +47,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
 
+  // Get the slot table that is currently active
   PICurrent_Impl::Table & table = this->current_slot_table ();
 
   ACE_ASSERT (this->lc_slot_table_ != &this->slot_table_);
