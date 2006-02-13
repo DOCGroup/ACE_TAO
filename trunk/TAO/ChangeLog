@@ -1,3 +1,10 @@
+Mon Feb 13 20:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/DII/client.cpp:
+        * performance-tests/Sequence_Latency/DII/client.cpp:
+          Use a cast to convert a ACE_hrtime_t to a CORBA::ULongLong. This
+          fixes compile errors on Solaris 64bit
+
 Mon Feb 13 16:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/releasenotes/orbcore.html:
