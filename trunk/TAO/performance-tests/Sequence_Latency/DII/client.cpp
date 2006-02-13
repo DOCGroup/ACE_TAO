@@ -98,13 +98,14 @@ test_octet_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   for (int i = 0; i < niterations; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
+      CORBA::ULongLong start_time = static_cast <CORBA::ULongLong> (start);
 
       CORBA::Request_var request =
         object->_request ("test_octet_method" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       request->add_in_arg("octet_load") <<= ol;
-	  request->add_in_arg("send_time") <<= start;
+      request->add_in_arg("send_time") <<= start_time;
 
       request->set_return_type (CORBA::_tc_ulonglong);
       request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
