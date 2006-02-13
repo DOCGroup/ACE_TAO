@@ -95,6 +95,10 @@ else
   override CPU := $(CPU)
 endif
 
+ifeq ($(findstring PPC, $(CPU)), PPC)
+  CCFLAGS += -mlongcall
+endif
+
 ifeq ($(shared_libs),1)
   SHARED_LIBS = 1
 endif

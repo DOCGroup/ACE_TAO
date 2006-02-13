@@ -525,7 +525,7 @@ ACE_Svc_Conf_Lexer::convert_to_utf8 (
                       size_t skip_bytes,
                       ACE_Encoding_Converter_Factory::Encoding_Hint hint)
 {
-  bool status = true;
+  bool status = false;
   if (param->buffer->converter_ == 0)
     {
       param->buffer->converter_ =
@@ -546,10 +546,7 @@ ACE_Svc_Conf_Lexer::convert_to_utf8 (
         {
           ACE_OS::strcpy (param->buffer->input_ + skip_bytes, target);
           param->buffer->size_ = ACE_OS::strlen (target) + skip_bytes;
-        }
-      else
-        {
-          status = false;
+          status = true;
         }
     }
 
