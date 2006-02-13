@@ -1,3 +1,8 @@
+Mon Feb 13 13:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PICurrent_Copy_Callback.h:
+          Disallow copy and assignment
+
 Mon Feb 13 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PICurrent_Impl.cpp:
