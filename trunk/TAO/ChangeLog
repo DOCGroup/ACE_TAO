@@ -1,3 +1,10 @@
+Mon Feb 13 15:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+          Changed is_primary from bool to CORBA::Boolean to fix compile
+          errors with MacOS. Also removed is_primary method, was just
+          declared and I couldn't find any implementation
+
 Mon Feb 13 14:21:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_union.cpp (compute_default_value):
