@@ -270,7 +270,7 @@ namespace Impl
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
   };
-};  // Impl
+}  // Impl
 
 extern "C" TSEC_CHECKPOINT_EXEC_Export ::Components::HomeExecutorBase_ptr
 createTSEC_CheckPointHome_Impl();
