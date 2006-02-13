@@ -26,20 +26,18 @@ class StateTransferImpl: public virtual POA_StateTransfer
 {
 public:
   StateTransferImpl (ORB_ptr orb)
-      : number_ (0), orb_ (ORB::_duplicate (orb))
+      : orb_ (ORB::_duplicate (orb))
   {
   }
 
   virtual Short
   number () throw (SystemException)
   {
-    ++number_;
-
-
     // Prepare state update.
     //
     Any state;
-    state <<= number_;
+    CORBA::Long number = 5;
+    state <<= number;
 
     Object_var obj (orb_->resolve_initial_references ("PICurrent"));
     PortableInterceptor::Current_var pic (
@@ -47,7 +45,7 @@ public:
 
     pic->set_slot (slot_id, state);
 
-    return number_;
+    return 1;
   }
 
   virtual void
@@ -58,7 +56,6 @@ public:
   }
 
 private:
-  Short number_;
   ORB_var orb_;
 };
 
@@ -104,10 +101,13 @@ public:
   send_reply (ServerRequestInfo_ptr ri) throw (SystemException)
   {
     Any_var state (ri->get_slot (slot_id));
-    Short n (0);
+    CORBA::Long n (0);
     state >>= n;
 
-    ACE_DEBUG ((LM_DEBUG, "State value is %d.\n", n));
+    if (n == 5)
+      ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
+    else
+      ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
   }
 
   virtual void
