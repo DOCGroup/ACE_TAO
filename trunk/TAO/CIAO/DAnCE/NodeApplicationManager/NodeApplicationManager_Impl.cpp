@@ -450,7 +450,7 @@ add_new_components ()
       tmp_plan.instance.length (0);
 
       const CORBA::ULong length = this->plan_.instance.length ();
-      for (CORBA::ULong i = 0; i <  length; ++i)
+      for (CORBA::ULong i = 0; i < length; ++i)
         {
           // add the new components into the tmp_plan
           if (this->component_map_.find (this->plan_.instance[i].name.in ()) != 0)
@@ -539,15 +539,10 @@ remove_existing_components ()
           // should remove it
           ACE_CString comp_name ((*iter).ext_id_.c_str ());
 
-          const CORBA::ULong length = this->plan_.instance.length ();
-          for (CORBA::ULong i = 0; i <  length; ++i)
+          if (this->is_to_be_removed (comp_name.c_str ()))
             {
-              if (ACE_OS::strcmp (comp_name.c_str (),
-                    this->plan_.instance[i].name.in ()) == 0)
-                {
-                  ((*iter).int_id_)->ciao_passivate ();
-                  this->nodeapp_->remove_component (comp_name.c_str ());
-                }
+              ((*iter).int_id_)->ciao_passivate ();
+              this->nodeapp_->remove_component (comp_name.c_str ());
             }
         }
     }
@@ -560,6 +555,23 @@ remove_existing_components ()
   ACE_ENDTRY;
 }
 
+bool
+CIAO::NodeApplicationManager_Impl_Base::
+is_to_be_removed (const char * name)
+{
+  const CORBA::ULong length = this->plan_.instance.length ();
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (ACE_OS::strcmp (name,
+             this->plan_.instance[i].name.in ()) == 0)
+        {
+          // If we have found it in the new plan, then this component
+          // needs to be kept, and should not be removed.
+          return false;
+        }
+    }
+  return true;
+}
 
 void
 CIAO::NodeApplicationManager_Impl_Base::
