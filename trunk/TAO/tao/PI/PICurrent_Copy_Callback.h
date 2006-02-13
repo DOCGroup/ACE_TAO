@@ -58,6 +58,9 @@ namespace TAO
     void src_and_dst (PICurrent_Impl * src, PICurrent_Impl * dst);
 
   private:
+    /// Disallow copying and assignment.
+    PICurrent_Copy_Callback (const PICurrent_Copy_Callback &);
+    PICurrent_Copy_Callback &operator= (const PICurrent_Copy_Callback &);
 
     /// Source PICurrent from which copies will be made.
     PICurrent_Impl * src_;
