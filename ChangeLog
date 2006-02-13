@@ -1,3 +1,8 @@
+Mon Feb 13 08:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-borland-common.h:
+          Readded ACE_SIZEOF_LONG_DOUBLE 10 again
+
 Mon Feb 13 08:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_shm.inl (shmat):

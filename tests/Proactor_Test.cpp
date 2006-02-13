@@ -1362,7 +1362,7 @@ Client::initiate_read_stream (void)
   static const size_t complete_message_length =
     ACE_OS::strlen (complete_message);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0,
