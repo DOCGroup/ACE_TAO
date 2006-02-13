@@ -85,6 +85,7 @@ namespace TAO
     /// notified of this object's destruction.
     void destruction_callback (PICurrent_Impl *p);
 
+    /// Execute the destruction callback object
     void execute_destruction_callback (Table *old_lc_slot_table);
 
     /// Return a reference to the underlying slot table.
@@ -111,7 +112,7 @@ namespace TAO
   private:
 
     /// Prevent copying through the copy constructor and the assignment
-    //operator.
+    /// operator.
     //@{
     PICurrent_Impl (const PICurrent_Impl &);
     void operator= (const PICurrent_Impl &);
