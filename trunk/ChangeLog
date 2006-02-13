@@ -1,3 +1,13 @@
+Mon Feb 13 10:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Proactor_Test.cpp:
+          Don't test certain functionality when ACE_HAS_WINNT4 is 0
+
+        * tests/Future_Test.cpp:
+        * tests/Future_Set_Test.cpp:
+          Moved real code out of ACE_ASSERT, fixes crashing of these
+          tests in release builds
+
 Mon Feb 13 08:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-borland-common.h:
