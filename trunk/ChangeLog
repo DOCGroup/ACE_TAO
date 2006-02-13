@@ -1,3 +1,12 @@
+Mon Feb 13 17:50:49 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Svc_Handler.{h cpp}: Add placement operator delete to match
+          the nothrow variant placement operator new. This ensures proper
+          cleanup if the constructor throws an exception.
+
+        * ace/config-hpux-11.00.h: Only set ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+          for aC++ versions earlier than A.03.55.02. Fixes Bugzilla #2394.
+
 Mon Feb 13 18:23:27 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
