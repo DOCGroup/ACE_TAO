@@ -5984,13 +5984,13 @@ if test "$ac_cv_func_shmat" = yes; then
           ])
       ])
     ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
-    if test ace_cv_lib_posix_shmat_voidp_2 = no; then
+    if test "$ace_cv_lib_posix_shmat_voidp_2" = no; then
        AC_DEFINE([ACE_HAS_CHARPTR_SHMAT], 1,
                  [Define to 1 if arg 2 of 'shmat' is char *'])
     fi
 fi
 
-if test "$ac_cv_func_shmat" = yes; then
+if test "$ac_cv_func_shmdt" = yes; then
     dnl TODO: This doesn't work.
     dnl The linux compiler issues a warning regarding the invalid void*
     dnl conversion.
@@ -6018,7 +6018,7 @@ if test "$ac_cv_func_shmat" = yes; then
           ])
       ])
     ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
-    if test ace_cv_lib_posix_shmdt_voidp = no; then
+    if test "$ace_cv_lib_posix_shmdt_voidp" = no; then
        AC_DEFINE([ACE_HAS_CHARPTR_SHMDT], 1,
                  [Define to 1 if arg 1 of 'shmdt' is char *'])
     fi
