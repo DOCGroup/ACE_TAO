@@ -146,6 +146,24 @@ namespace CIAO
     /// Destructor
     virtual ~NodeApplicationManager_Impl_Base (void);
 
+    /// Add new components
+    virtual void
+    add_new_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      ::Deployment::PlanError,
+                      ::Deployment::InstallationFailure,
+                      ::Deployment::UnknownImplId,
+                      ::Deployment::ImplEntryPointNotFound,
+                      ::Deployment::InvalidConnection,
+                      ::Deployment::InvalidProperty));
+
+    /// Remove existing components
+    virtual void
+    remove_existing_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Deployment::PlanError,
+                   ::Components::RemoveFailure));
+
     /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options
