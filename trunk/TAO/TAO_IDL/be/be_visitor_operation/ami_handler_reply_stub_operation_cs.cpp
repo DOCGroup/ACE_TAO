@@ -491,16 +491,19 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "0" << be_uidt_nl
       << ");" << be_uidt_nl;
 
- *os  << "::Messaging::ExceptionHolder_var exception_holder_var;" << be_nl
+ *os  << "::Messaging::ExceptionHolder* exception_holder_ptr = 0;" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
-      << "exception_holder_var," << be_nl
+      << "exception_holder_ptr," << be_nl
       << "::TAO::ExceptionHolder (" << be_idt_nl
       << "(reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)," << be_nl
       << "_tao_in.byte_order ()," << be_nl
       << "_tao_marshaled_exception," << be_nl
       << exception_data_arg << "," << be_nl
       << exception_count_arg << ")" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");" << be_uidt_nl << be_uidt_nl;
+
+  *os << "::Messaging::ExceptionHolder_var exception_holder_var = "
+      << "exception_holder_ptr;" << be_nl;
 
   *os << "_tao_reply_handler_object->"
       << node->local_name () << "_excep (" << be_idt << be_idt_nl
