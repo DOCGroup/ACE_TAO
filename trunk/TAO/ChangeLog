@@ -1,3 +1,10 @@
+Mon Feb 13 09:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+          Do the allocation of the ExceptionHolder in two steps, for allocate
+          is using a pointer and then assign this pointer to a _var. Fixes
+          compile problems in the Borland builds
+
 Sun Feb 12 13:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
