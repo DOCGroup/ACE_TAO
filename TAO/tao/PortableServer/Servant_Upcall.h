@@ -54,7 +54,8 @@ namespace TAO
      *
      * @brief This class finds out the POA and the servant to perform an
      * upcall.  It can only be instantiated without the object
-     * adapter's lock held.
+     * adapter's lock held. For each upcall a new instance of this
+     * class is created.
      */
     class TAO_PortableServer_Export Servant_Upcall
     {
