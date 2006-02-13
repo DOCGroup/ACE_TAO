@@ -1,3 +1,9 @@
+Mon Feb 13 11:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Manager.h:
+        * ace/Service_Repository.h:
+          Doxygen improvements
+
 Mon Feb 13 10:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Obstack_T.h:
