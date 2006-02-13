@@ -1,3 +1,13 @@
+Mon Feb 13 17:12:09 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
+        
+          Fixed a bug about registering EM with naming service, originally
+          an invalid naming context is specified.
+          Also allowed EM to both register to naming service AND dump
+          and IOR file. Thanks Sandro Andrade <sandro @ dcc.ufba.br>
+          for reporting this bug.
+
 Mon Feb 13 15:41:21 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp
