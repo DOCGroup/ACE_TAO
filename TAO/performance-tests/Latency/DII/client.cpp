@@ -130,7 +130,8 @@ main (int argc, char *argv[])
             object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          request->add_in_arg("send_time") <<= start;
+          CORBA::ULongLong start_time = static_cast <CORBA::ULongLong> (start);
+          request->add_in_arg("send_time") <<= start_time;
 
           request->set_return_type (CORBA::_tc_ulonglong);
           request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
