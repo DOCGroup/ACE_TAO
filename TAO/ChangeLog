@@ -1,3 +1,11 @@
+Mon Feb 13 11:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Upcall.cpp:
+          Fixed typo in comment
+
+        * tao/PortableServer/Servant_Upcall.h:
+          Document that we have an instance per upcall
+
 Mon Feb 13 11:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.cpp:
