@@ -207,7 +207,7 @@ Impl::TSEC_CheckPoint_exec_i::init
   int argc = sizeof( argv ) / sizeof( argv[0] );
 
   CORBA::ORB_var orb = CORBA::ORB_init( argc, argv ACE_ENV_ARG_PARAMETER );
-  _orb               = CORBA::ORB::_duplicate( orb );
+  _orb               = CORBA::ORB::_duplicate( orb.in () );
 
   return 0;
 }
@@ -518,7 +518,7 @@ Impl::TSEC_CheckPoint_exec_i::ccm_activate
                                                   ACE_ENV_ARG_PARAMETER );
     ENW::TSession_var session =
                      ENW::TSession::_narrow ( obj.in () ACE_ENV_ARG_PARAMETER );
-    sessionVector[i] = TSEC_SessionEntry( p_sessionImpl, session );
+    sessionVector[i] = TSEC_SessionEntry( p_sessionImpl, session.in () );
   }
 
   _isActivated = true;

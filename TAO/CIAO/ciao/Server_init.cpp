@@ -157,9 +157,9 @@ namespace CIAO
       else
         {
           objV = nc->resolve(name);
-          tmpContextV = CosNaming::NamingContext::_narrow(objV);
+          tmpContextV = CosNaming::NamingContext::_narrow(objV.in ());
         }
-      if (CORBA::is_nil(tmpContextV))
+      if (CORBA::is_nil(tmpContextV.in ()))
         {
           ACE_DEBUG ((LM_ERROR, "listBindings: Nil context.\n"));
           return 0;
@@ -168,7 +168,7 @@ namespace CIAO
       tmpContextV->list(max_list_size, basicListV.out(), bIterV.out());
 
       CORBA::Long   max_remaining = max_list_size - basicListV->length();
-      CORBA::Boolean moreBindings = !CORBA::is_nil(bIterV);
+      CORBA::Boolean moreBindings = !CORBA::is_nil(bIterV.in ());
 
       if (moreBindings)
         {
@@ -204,8 +204,8 @@ namespace CIAO
       CosNaming::NamingContext_var tmpContextV;
 
       objV = nc->resolve(name);
-      tmpContextV = CosNaming::NamingContext::_narrow(objV);
-      if (CORBA::is_nil(tmpContextV))
+      tmpContextV = CosNaming::NamingContext::_narrow(objV.in ());
+      if (CORBA::is_nil(tmpContextV.in ()))
         {
           ACE_DEBUG ((LM_ERROR, "recursiveUnbind: Nil context reference.\n"));
           return;

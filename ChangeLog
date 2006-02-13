@@ -1,3 +1,8 @@
+Mon Feb 13 08:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-panther.h:
+          Removed ACE_LACKS_USECONDS_T
+
 Mon Feb 13 08:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-aix-4.x.h:
