@@ -1,3 +1,11 @@
+Mon Feb 13 11:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/servers/svc.conf:
+        * netsvcs/servers/svc.conf.xml:
+          Use port 20006 for the Name_Server, is the same port as we
+          default to in ACE. Fixes a problem that the Name_Server and
+          Logging Server both use the same port as default
+
 Mon Feb 13 11:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Manager.h:
