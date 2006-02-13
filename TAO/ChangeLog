@@ -1,3 +1,9 @@
+Mon Feb 13 15:23:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/EC_MT_Mcast/Makefile.am:
+
+          Regenerate.  Test now requires Strategies library.
+
 Mon Feb 13 15:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
