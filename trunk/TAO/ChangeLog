@@ -1,3 +1,8 @@
+Mon Feb 13 12:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PICurrent_Impl.h:
+          Doxygen improvements
+
 Mon Feb 13 12:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/AdvSlot/client.cpp:
