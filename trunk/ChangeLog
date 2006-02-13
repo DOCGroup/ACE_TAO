@@ -447,7 +447,8 @@ Fri Feb 10 10:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.h:
         * ace/os_include/os_time.h:
-          Moved timespec to os_time, it belongs there.
+          Moved timespec to os_time, it belongs there. Fixes bugzilla
+          bug [2380].
 
         * ace/Node.h:
           Declare private assignment operator
