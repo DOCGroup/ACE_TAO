@@ -157,7 +157,9 @@ public:
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
   void *operator new (size_t n, const ACE_nothrow_t&) throw();
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *p, const ACE_nothrow_t&) throw ();
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
 
   /// This operator permits "placement new" on a per-object basis.
