@@ -1,3 +1,9 @@
+Tue Feb 14 22:56:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * include/makeinclude/rules.local.GNU:
+        
+          Added *.core to list of files to clean.
+
 Tue Feb 14 22:04:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/security.mpb

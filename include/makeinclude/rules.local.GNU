@@ -356,7 +356,7 @@ ifdef DO_CLEANUP
 	GNUmakefile.old core-r $(CLEANUP_DIRS) \
 	cxx_repository ptrepository ti_files \
 	gcctemp.c gcctemp so_locations *.ics \
-	templateregistry templateregistry.* ir.out core.* $(CLEANUP_OBJS)
+	templateregistry templateregistry.* ir.out core.* *.core $(CLEANUP_OBJS)
 endif # DO_CLEANUP
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
