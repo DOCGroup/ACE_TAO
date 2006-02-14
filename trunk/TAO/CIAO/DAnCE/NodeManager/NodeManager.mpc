@@ -23,7 +23,7 @@ project(NodeManager_svnt): ciao_component_dnc, iortable, ifr_client, dance_exten
 
 project(NodeManager): ciao_component_dnc, iortable, ifr_client, dance_extension_stub  {
   after += NodeApplicationManager NodeManager_stub CIAO_TargetManager_stub NodeManager_svnt
-  libs += NodeManager_stub NodeManager NodeApplicationManager TargetManager_stub
+  libs += NodeManager_stub NodeManager NodeApplicationManager TargetManager_stub CIAO_NoOp_Configurator
   includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/TargetManager
   exename = NodeManager
 

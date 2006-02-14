@@ -1,6 +1,6 @@
 //$Id$
 
-project(TSEC_CheckPoint_stub): ciao_client_dnc {
+project(TSEC_CheckPoint_stub): ciao_client_dnc, event {
   after  += ENW_stub
   libpaths += ../interfaces
   libs     += ENW_stub
@@ -17,7 +17,7 @@ project(TSEC_CheckPoint_stub): ciao_client_dnc {
   }
 }
 
-project(TSEC_CheckPoint_svnt) : ciao_servant_dnc {
+project(TSEC_CheckPoint_svnt) : ciao_servant_dnc, event {
   after +=  TSEC_CheckPoint_stub
   after +=  ENW_svnt ENW_stub
   sharedname  = TSEC_CheckPoint_svnt
@@ -44,7 +44,7 @@ project(TSEC_CheckPoint_svnt) : ciao_servant_dnc {
 }
 
 
-project(TSEC_CheckPoint_exec) : ciao_component_dnc {
+project(TSEC_CheckPoint_exec) : ciao_component_dnc, event {
   after   += TSEC_CheckPoint_svnt
   after   += ENW_svnt ENW_stub
 
@@ -69,7 +69,7 @@ project(TSEC_CheckPoint_exec) : ciao_component_dnc {
 }
 
 
-project(TSEC_CheckPoint_controller) : ciao_client_dnc, valuetype {
+project(TSEC_CheckPoint_controller) : ciao_client_dnc, valuetype, event {
   exename = controller
   after += TSEC_CheckPoint_stub
   libs += TSEC_CheckPoint_stub ENW_stub

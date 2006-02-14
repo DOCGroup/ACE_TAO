@@ -1,3 +1,14 @@
+Tue Feb 14 22:02:59 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc
+        
+          Added naming service and Config_Handlers. 
+        
+        * DAnCE/NodeManager/NodeManager.mpc
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc
+        
+          Fixed link time warnings on OS X.
+        
 Tue Feb 14 19:57:32 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
