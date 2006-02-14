@@ -729,10 +729,11 @@ int test_boxed_struct (void)
                     1);
 
     // Test boxed copy ctor.
-    VBfixed_struct1_var valuebox2;
-    ACE_NEW_RETURN (valuebox2,
+    VBfixed_struct1* valuebox2_ptr = 0;
+    ACE_NEW_RETURN (valuebox2_ptr,
                     VBfixed_struct1 (*valuebox1),
                     1);
+    VBfixed_struct1_var valuebox2 = valuebox2_ptr;
 
     VERIFY (valuebox1->l () == valuebox2->l ());
     VERIFY ((valuebox1->abstruct ()).s1 == (valuebox2->abstruct ()).s1 );
