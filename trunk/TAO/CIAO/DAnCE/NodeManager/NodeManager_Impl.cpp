@@ -185,9 +185,11 @@ set_all_consumers (ACE_CString &name,
   this->comp_consumers_map_.rebind (name, consumers);
 }
 
+
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
-                                          ACE_ENV_ARG_DECL)
+CIAO::NodeManager_Impl_Base::
+preparePlan (const Deployment::DeploymentPlan &plan
+             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::PlanError))
@@ -220,7 +222,15 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
         }
       else
         {
-          // Increase the ref count by 1
+          // If the instance is  within the same deployment plan, e.g.,
+          // when ReDaC service is used, then just do nothing since it is NOT
+          // actually a shared component at all.
+          if (ACE_OS::strcmp (plan.UUID.in (),
+                              entry->int_id_.plan_uuid_.c_str ()) == 0)
+            continue;
+
+          // Otherwise, it is really a shared component, so let's increase
+          // the ref count by 1
           this->shared_components_.insert (plan.instance[i].name.in ());
           ++ entry->int_id_.count_;
         }
@@ -436,12 +446,11 @@ destroyPlan (const Deployment::DeploymentPlan & plan
 
   // Reset each NAM about the shared components information
   Deployment::ComponentPlans_var shared = this->get_shared_components_i ();
-  nam->set_shared_components (shared.inout ());
+  nam->set_shared_components (shared.in ());
 
   nam->destroyApplication (0);
 
-
-  // The problem is that we should NOT actually kill the NA process if
+  // @@ The problem is that we should NOT actually kill the NA process if
   // there are some components that are shared by other plans.
 }
 

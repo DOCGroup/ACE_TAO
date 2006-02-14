@@ -363,7 +363,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
   //
   //
   //    (1) If this is an brand new NAM, then only new installation is needed.
-  //    (2) Then we coudl pretty much clone the "startLaunch" implementation.
+  //    (2) Then we could pretty much clone the "startLaunch" implementation.
   //        This capability is useful to install a set of new components into
   //        some totally new nodes.
 
@@ -399,11 +399,11 @@ perform_redeployment (const Deployment::Properties & configProperty,
       else // This is a new NodeApplication process, then we need to install
            // all the components. We should try to reuse much of the above code.
         {
-            this->startLaunch (configProperty,
-                               providedReference,
-                               start
-                               ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+          this->startLaunch (configProperty,
+                             providedReference,
+                             start
+                             ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (Deployment::UnknownImplId, e)
@@ -463,7 +463,7 @@ add_new_components ()
 
       // package the components
       NodeImplementationInfoHandler handler (tmp_plan,
-                                              this->shared_components_);
+                                             this->shared_components_);
       Deployment::NodeImplementationInfo * node_info =
         handler.node_impl_info ();
 
@@ -576,7 +576,7 @@ is_to_be_removed (const char * name)
 void
 CIAO::NodeApplicationManager_Impl_Base::
 set_shared_components (const Deployment::ComponentPlans & shared
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   this->shared_components_ = shared;
