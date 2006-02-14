@@ -144,6 +144,9 @@ main (int argc, char *argv[])
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_INFO, "Event loop finished.\n"));
     }
   ACE_CATCHANY
