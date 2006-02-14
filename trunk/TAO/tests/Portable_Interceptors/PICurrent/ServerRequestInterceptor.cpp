@@ -105,8 +105,8 @@ ServerRequestInterceptor::receive_request (
       ACE_TRY_CHECK;
 
       CORBA::Long number2 = 0;
-      if (!(data2.in () >>= number2)
-          || number == number2)
+      if ((data2.in () >>= number2)
+          && number == number2)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR: TSC was modified because "
