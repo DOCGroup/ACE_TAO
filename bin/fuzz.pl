@@ -730,21 +730,21 @@ sub check_for_versioned_namespace_begin_end ()
     if (open (FILE, $file)) {
       print "Looking at file $file\n" if $opt_d;
       while (<FILE>) {
-	if (/^\s*\w+_BEGIN_VERSIONED_NAMESPACE_DECL/) {
-	  ++$begin_count;
-	}
-	if (/^\s*\w+_END_VERSIONED_NAMESPACE_DECL/) {
-	  ++$end_count;
-	}
+        if (/^\s*\w+_BEGIN_VERSIONED_NAMESPACE_DECL/) {
+          ++$begin_count;
+        }
+        if (/^\s*\w+_END_VERSIONED_NAMESPACE_DECL/) {
+          ++$end_count;
+        }
         if ($begin_count > $end_count and /^\s*#\s*include\s*/) {
-	  print_error ("$file:$.: #include directive within Versioned namespace block");
-	}
+          print_error ("$file:$.: #include directive within Versioned namespace block");
+        }
       }
 
       close (FILE);
 
       if ($begin_count != $end_count) {
-	print_error ("$file: Versioned namespace begin($begin_count)/end($end_count) mismatch");
+        print_error ("$file: Versioned namespace begin($begin_count)/end($end_count) mismatch");
       }
     }
     else {
@@ -1286,7 +1286,7 @@ sub check_for_long_file_names ()
             print_error ("File name $file exceeds $max_filename chars.");
         }
     }
-    foreach $file (@files_mpc) {
+    foreach $file (grep(/\.mpc$/, @files_mpc)) {
         if ( length( basename($file) ) >= $max_mpc_filename )
         {
             print_warning ("File name $file exceeds $max_mpc_filename chars.");
