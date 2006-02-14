@@ -1,3 +1,10 @@
+Tue Feb 14 08:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
+          Added a test case for bugzilla bug 2401, in the receive_request we
+          modifity the RSC, this should not effect the TSC, this bug has not
+          been fixed yet, working on it
+
 Tue Feb 14 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/ValueBox/client.cpp:
