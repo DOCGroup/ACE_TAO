@@ -1,3 +1,8 @@
+Tue Feb 14 12:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
+          Improved check in receive_request to not give bad output
+
 Tue Feb 14 11:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/test_i.cpp:
