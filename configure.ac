@@ -3547,7 +3547,12 @@ if test $ac_cv_func_madvise = yes; then
 		  [AC_DEFINE([ACE_LACKS_MADVISE_PROTOTYPE], 1,
 			     [Define to 1 if platform lacks the declaration
 			     of madvise().])],
-		  [#include <sys/mman.h>])
+		  [
+#if !defined(ACE_LACKS_SYS_TYPES_H)
+# include <sys/types.h>
+#endif
+#include <sys/mman.h>
+		  ])
 fi
 
 ACE_CHECK_HAS_FUNCS(memchr)
