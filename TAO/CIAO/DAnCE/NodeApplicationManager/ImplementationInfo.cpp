@@ -6,8 +6,9 @@
 #include "ace/SString.h"
 
 CIAO::NodeImplementationInfoHandler::
-NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan,
-              const Deployment::ComponentPlans & shared_components) : 
+NodeImplementationInfoHandler (
+     const ::Deployment::DeploymentPlan & plan,
+     const Deployment::ComponentPlans & shared_components) :
   plan_ (plan),
   node_info_ (0),
   containers_info_map_ (plan, shared_components)
@@ -17,17 +18,17 @@ NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan,
   this->populate_container_impl_infos ();
 }
 
-Deployment::NodeImplementationInfo * 
+Deployment::NodeImplementationInfo *
 CIAO::NodeImplementationInfoHandler::node_impl_info (void) const
 {
   Deployment::NodeImplementationInfo_var retv;
-  ACE_NEW_RETURN (retv, 
+  ACE_NEW_RETURN (retv,
                   Deployment::NodeImplementationInfo (this->node_info_.in ()),
                   0);
   return retv._retn ();
 }
 
-void 
+void
 CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
 {
   const CORBA::ULong instance_len = plan_.instance.length ();
@@ -39,13 +40,13 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
   // has been specified
   // TODO: We shoud do some sanity check here, since all the component
   // instance in this NodeApplication should have the same "server_resource_def"
-  // defined. Since currently we ignored this sanity check, then will allow 
+  // defined. Since currently we ignored this sanity check, then will allow
   // users to specify some self-conflicting configuration in the descriptor.
   for (i = 0; i < instance_len; ++i)
     {
       if (this->plan_.instance[i].deployedResource.length () != 0)
         {
-          target_resource_id = 
+          target_resource_id =
             this->plan_.instance[i].deployedResource[0].resourceName.in ();
 
           // Some component instance has server resource usage defined, so we
@@ -55,16 +56,16 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
               CIAO::DAnCE::ServerResource *server_resource_def = 0;
               this->plan_.infoProperty[j].value >>= server_resource_def;
 
-              if (ACE_OS::strcmp ((*server_resource_def).Id, 
+              if (ACE_OS::strcmp ((*server_resource_def).Id,
                                   target_resource_id) == 0)
                 {
                   // Found the target server resource def, and store it.
                   this->node_info_->nodeapp_config.length (1);
 
-                  this->node_info_->nodeapp_config[0].name = 
+                  this->node_info_->nodeapp_config[0].name =
                     CORBA::string_dup ("CIAOServerResource");
 
-                  this->node_info_->nodeapp_config[0].value <<= 
+                  this->node_info_->nodeapp_config[0].value <<=
                     *server_resource_def;
                   break;
                 }
@@ -73,15 +74,15 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
     }
 }
 
-void 
+void
 CIAO::NodeImplementationInfoHandler::populate_container_impl_infos (void)
 {
-  CORBA::ULong curr_len = 
+  CORBA::ULong curr_len =
     this->containers_info_map_.containers_info ()->length ();
   ACE_UNUSED_ARG (curr_len);
-  
+
   // assignment operation
-  this->node_info_->impl_infos = 
+  this->node_info_->impl_infos =
     *(this->containers_info_map_.containers_info ());
 }
 

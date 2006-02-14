@@ -42,8 +42,8 @@ CIAO::NodeApplication_Impl::create_all_containers (
 
       // Build the Component_Container_Map
       for (CORBA::ULong j = 0;
-          j < container_infos[i].impl_infos.length ();
-          ++j)
+           j < container_infos[i].impl_infos.length ();
+           ++j)
         {
           this->component_container_map_.bind (
             container_infos[i].impl_infos[j].component_instance_name.in (),
@@ -447,6 +447,10 @@ CIAO::NodeApplication_Impl::install (
                       "CIAO::NodeApplication_Impl::install -"
                       "creating all the containers. \n"));
         }
+
+
+      CORBA::ULong old_set_size = this->container_set_.size ();
+
       (void) this->create_all_containers (container_infos);
       if (CIAO::debug_level () > 9)
         {
@@ -464,8 +468,9 @@ CIAO::NodeApplication_Impl::install (
       for (CORBA::ULong i = 0; i < num_containers; ++i)
         {
           Deployment::ComponentInfos_var comp_infos =
-            this->container_set_.at(i)->install (container_infos[i]
-                                                 ACE_ENV_ARG_PARAMETER);
+            this->container_set_.at(i+old_set_size)->
+                    install (container_infos[i]
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Append the return sequence to the *big* return sequence
@@ -573,7 +578,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 // Create a container interface, which will be hosted in this NodeApplication.
 ::Deployment::Container_ptr
 CIAO::NodeApplication_Impl::create_container (
-  const ::Deployment::Properties &properties
+    const ::Deployment::Properties &properties
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   ::Components::CreateFailure,

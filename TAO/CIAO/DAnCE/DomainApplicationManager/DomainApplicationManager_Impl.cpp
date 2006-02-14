@@ -164,9 +164,6 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 
           Chained_Artifacts & artifacts = entry->int_id_;
 
-          // The dump() function is broken.
-          //Deployment::DnC_Dump::dump (artifacts.child_plan_);
-
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.
@@ -1003,7 +1000,7 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                           bool is_getting_all_connections,
                           bool is_search_new_plan,
                           Connection_Search_Type t
-                                            ACE_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
   Deployment::Connections_var connections;
@@ -1024,7 +1021,7 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                                      connections.inout (),
                                      is_getting_all_connections,
                                      is_search_new_plan
-                                                             ACE_ENV_ARG_PARAMETER))
+                                     ACE_ENV_ARG_PARAMETER))
       return 0;
   }
   return connections._retn ();
@@ -1102,8 +1099,8 @@ get_outgoing_connections_i (const char * instname,
             // connections to get the objRef.
             const CORBA::ULong all_conn_len = this->all_connections_->length ();
             for (CORBA::ULong conn_index = 0;
-                conn_index < all_conn_len;
-                ++conn_index)
+                 conn_index < all_conn_len;
+                 ++conn_index)
               {
                 const Deployment::Connection curr_rev_conn =
                     this->all_connections_[conn_index];
@@ -1313,7 +1310,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               true, // yes, get *all* the connections
               true,  // yes, we search the current plan
               DomainApplicationManager_Impl::External_Connections
-                                            ACE_ENV_ARG_PARAMETER);
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Invoke finishLaunch() on NodeApplication to remove bindings.
