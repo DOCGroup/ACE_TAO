@@ -94,8 +94,8 @@ main (int argc, char *argv[])
       // Do local test
 
       OBV_AnyTest::VA_var va1, va2;
-      ACE_NEW_RETURN (va1, OBV_OBV_AnyTest::VA, 1);
-      ACE_NEW_RETURN (va2, OBV_OBV_AnyTest::VA, 1);
+      ACE_NEW_RETURN (va1.inout (), OBV_OBV_AnyTest::VA, 1);
+      ACE_NEW_RETURN (va2.inout (), OBV_OBV_AnyTest::VA, 1);
 
       const CORBA::ULong magic = 3145;
 
