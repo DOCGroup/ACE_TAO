@@ -1,3 +1,8 @@
+Tue Feb 14 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/ValueBox/client.cpp:
+          Fixed compile errors with Borland C++
+
 Mon Feb 13 20:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Latency/DII/client.cpp:
