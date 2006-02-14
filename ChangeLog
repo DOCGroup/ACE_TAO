@@ -1,3 +1,10 @@
+Tue Feb 14 22:04:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/security.mpb
+        * bin/MakeProjectCreator/config/ssliop.mpb
+
+          Fixes for linking errors/warnings in OS X. 
+        
 Tue Feb 14 21:43:01 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
