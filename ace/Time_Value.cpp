@@ -10,7 +10,7 @@ ACE_RCSID (ace,
 #endif /* __ACE_INLINE__ */
 
 #if !defined(ACE_LACKS_NUMERIC_LIMITS)
-// Bleh, some platforms pollute the namespace by defining a max() and min() macro
+// some platforms pollute the namespace by defining max() and min() macros
 #ifdef max
 #undef max
 #endif
@@ -235,15 +235,20 @@ ACE_Time_Value::operator *= (double d)
      + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
   // shall we saturate the result?
-  static const double max_int = ACE_INT32_MAX + 0.999999;
-  static const double min_int = ACE_INT32_MIN - 0.999999;
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+  static const double max_int = std::numeric_limits<time_t>::max ();
+  static const double min_int = std::numeric_limits<time_t>::min ();
+#else
+  static const double max_int = LONG_MAX;
+  static const double min_int = LONG_MIN;
+#endif
 
   if (time_total > max_int)
     time_total = max_int;
   if (time_total < min_int)
     time_total = min_int;
 
-  const long time_sec = static_cast<long> (time_total);
+  const time_t time_sec = static_cast<time_t> (time_total);
 
   time_total -= time_sec;
   time_total *= ACE_ONE_SECOND_IN_USECS;
@@ -257,7 +262,6 @@ ACE_Time_Value::operator *= (double d)
     --time_usec;
 
   this->set (time_sec, time_usec);
-  this->normalize (); // protect against future changes in normalization
 
   return *this;
 }

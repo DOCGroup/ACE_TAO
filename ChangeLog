@@ -1,3 +1,18 @@
+Tue Feb 14 18:36:16 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Time_Value.cpp:
+
+          Changed operator *= to use std::numeric_limits<time_t>::max()
+          and std::numeric_limits<time_t>::min() (or LONG_MAX and LONG_MIN
+          for those platforms that lack std::numeric_limits<T>) instead of
+          ACE_INT32_MAX and ACE_INT32_MIN when saturating the results.
+
+          This uses the correct limits for whatever underlying type time_t
+          is when std::numeric_limits<T> is available, and uses the limits
+          for the traditional type, long, when it is not.
+
+          Removed call to normalize(), as set() already normalizes results.
+
 Tue Feb 14 14:47:00 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
