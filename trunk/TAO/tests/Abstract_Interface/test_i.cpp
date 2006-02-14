@@ -78,7 +78,7 @@ passer_i::pass_state (base_out outarg
     ))
 {
   TreeController_var tc;
-  ACE_NEW (tc,
+  ACE_NEW (tc.inout (),
            OBV_TreeController);
 
   // Create the root node.

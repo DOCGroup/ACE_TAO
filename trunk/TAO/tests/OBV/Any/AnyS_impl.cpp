@@ -16,15 +16,16 @@ Test_impl::get_something (
     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Any_var ret_val;
-  ACE_NEW_RETURN (ret_val, CORBA::Any, 0);
+  CORBA::Any_ptr ret_val_ptr = 0;
+  ACE_NEW_RETURN (ret_val_ptr, CORBA::Any, 0);
+  CORBA::Any_var ret_val = ret_val_ptr;
 
   const CORBA::ULong magic = 3145;
 
   if (need_vb)
     {
       OBV_AnyTest::VB_var vb;
-      ACE_NEW_RETURN (vb, OBV_OBV_AnyTest::VB, 0);
+      ACE_NEW_RETURN (vb.inout (), OBV_OBV_AnyTest::VB, 0);
 
       vb->id (magic);
 
@@ -33,7 +34,7 @@ Test_impl::get_something (
   else
     {
       OBV_AnyTest::VA_var va;
-      ACE_NEW_RETURN (va, OBV_OBV_AnyTest::VA, 0);
+      ACE_NEW_RETURN (va.inout (), OBV_OBV_AnyTest::VA, 0);
 
       va->id (magic);
 
