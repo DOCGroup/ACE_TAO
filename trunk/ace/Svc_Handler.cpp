@@ -92,6 +92,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n,
     }
 }
 
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *p,
 							  const ACE_nothrow_t&) throw()
@@ -100,6 +101,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *p,
     ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete(nothrow)");
   ::delete (p);
 }
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 #endif /* ACE_HAS_NEW_NOTHROW */
 
