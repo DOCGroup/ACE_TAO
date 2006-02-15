@@ -1,3 +1,11 @@
+Wed Feb 15 16:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Objref_TypeCode.cpp:
+        * tao/Special_Basic_Argument_T.cpp:
+          Added includes to fix the solaris autoconf build. Thanks to
+          Vladimir Panov <gbr at voidland dot org> for reporting this
+          and providing patches.
+
 Wed Feb 15 11:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PICurrent_Impl.h:
