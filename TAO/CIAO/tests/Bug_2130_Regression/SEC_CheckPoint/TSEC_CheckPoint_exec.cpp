@@ -98,7 +98,7 @@ Impl::TSEC_Session_impl::hash
 )
 {
   CORBA::ULong hash =
-       ACE_static_cast( CORBA::ULong, ACE_reinterpret_cast( ptrdiff_t, this ) );
+       static_cast <CORBA::ULong> (reinterpret_cast <ptrdiff_t> (this));
 
   return hash % Maximum;
 }
