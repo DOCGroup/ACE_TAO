@@ -94,9 +94,20 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // method is invoked.
 
   // Perform deep copy of the logically copied slot table, if
-  // necessary, before modifying our own slot table.
+  // necessary, before modifying our own slot table. This is a setup
+  // where another PICurrent refers to our slot table, so we force the
+  // the other PICurrent does copy our table before making changes to
+  // our table.
   if (this->copy_callback_ != 0)
     this->copy_callback_->execute ();
+
+  // If we have a logical copied slot table we refer to, just make a
+  // copy of that table first before making changes to our table.
+  if (this->lc_slot_table_ != 0)
+    {
+      this->slot_table_ = *this->lc_slot_table_;
+      this->lc_slot_table_ = 0;
+    }
 
   // If the slot table array isn't large enough, then increase its
   // size.  We're guaranteed not to exceed the number of allocated
