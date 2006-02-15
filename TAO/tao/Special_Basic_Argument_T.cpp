@@ -4,6 +4,7 @@
 #define TAO_SPECIAL_BASIC_ARGUMENT_T_CPP
 
 #include "tao/Special_Basic_Argument_T.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Special_Basic_Argument_T.inl"
