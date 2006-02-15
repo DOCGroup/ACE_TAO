@@ -128,11 +128,16 @@ namespace TAO
     Table *lc_slot_table_;
 
     /// Callback object responsible for performing deep copies of a
-    /// PICurrent's slot table.
+    /// PICurrent's slot table. This is the PICurrent that has our slot_table_
+    /// referred as lc_slot_table_. This copy is there to make sure that when
+    /// we want to modify our table, that we can first copy our table to
+    /// the PICurrent that refers to our table so that it has an unique copy
+    /// of the data.
     PICurrent_Copy_Callback *copy_callback_;
 
     /// PICurrent_Impl object that will be notified of this object's
-    /// destruction.
+    /// destruction. This is the PICurrent that has our slot_table_ as
+    /// lc_slot_table_.
     PICurrent_Impl *destruction_callback_;
 
   };
