@@ -1,3 +1,10 @@
+Wed Feb 15 20:11:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+
+          Renamed many of the projects within this MPC file to avoid fuzz
+          warnings.
+
 Wed Feb 15 16:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Objref_TypeCode.cpp:
