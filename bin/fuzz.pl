@@ -1283,7 +1283,7 @@ sub check_for_long_file_names ()
                    @files_bor ) {
         if ( length( basename($file) ) >= $max_filename )
         {
-            print_error ("File name $file exceeds $max_filename chars.");
+            print_error ("File name $file meets or exceeds $max_filename chars.");
         }
     }
     foreach $file (grep(/\.mpc$/, @files_mpc)) {
@@ -1292,7 +1292,7 @@ sub check_for_long_file_names ()
         while(<FH>) {
           if (/project\s*(:.*)\s*{/) {
             if ($blen >= $max_mpc_projectname) {
-              print_warning ("File name $file exceeds $max_mpc_projectname chars.");
+              print_warning ("File name $file meets or exceeds $max_mpc_projectname chars.");
             }
           }
           elsif (/project\s*\(([^\)]+)\)/) {
@@ -1300,12 +1300,12 @@ sub check_for_long_file_names ()
             if ($name =~ /\*/) {
               my($length) = length($name) + (($name =~ tr/*//) * $blen);
               if ($length >= $max_mpc_projectname) {
-                print_warning ("Project name ($name) from $file will exceed $max_mpc_projectname chars when expanded by MPC.");
+                print_warning ("Project name ($name) from $file will meet or exceed $max_mpc_projectname chars when expanded by MPC.");
               }
             }
             else {
               if (length($name) >= $max_mpc_projectname) {
-                print_warning ("Project name ($name) from $file exceeds $max_mpc_projectname chars.");
+                print_warning ("Project name ($name) from $file meets or exceeds $max_mpc_projectname chars.");
               }
             }
           }
