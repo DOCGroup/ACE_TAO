@@ -10,6 +10,7 @@
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/CDR.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/OS_NS_string.h"
 
