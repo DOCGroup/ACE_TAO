@@ -19,6 +19,8 @@ Wed Feb 15 11:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Only copy the slot table from source to destination when the
           destination still refers to the table of the source.
 
+          These changes together fix bugzilla bug 2401 and 2398.
+
 Wed Feb 15 09:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PICurrent_Copy_Callback.{h,cpp}:
