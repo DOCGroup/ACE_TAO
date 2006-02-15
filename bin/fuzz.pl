@@ -1280,7 +1280,7 @@ sub check_for_long_file_names ()
     foreach $file (@files_cpp, @files_inl, @files_h, @files_html,
                    @files_dsp, @files_dsw, @files_gnu, @files_idl,
                    @files_pl, @files_changelog, @files_makefile,
-                   @files_bor ) {
+                   @files_bor, @files_mpc) {
         if ( length( basename($file) ) >= $max_filename )
         {
             print_error ("File name $file meets or exceeds $max_filename chars.");
