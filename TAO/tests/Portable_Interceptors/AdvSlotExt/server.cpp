@@ -110,6 +110,15 @@ public:
     CORBA::Long number6 = 6;
     state <<= number6;
     ri->set_slot (slot_id, state);
+
+    Any_var state_get (pi_current_->get_slot (slot_id));
+    CORBA::Long n (0);
+    state_get >>= n;
+
+    if (n == 5)
+      ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
+    else
+      ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
   }
 
   virtual void
