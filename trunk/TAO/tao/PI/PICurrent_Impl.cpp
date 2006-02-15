@@ -95,9 +95,8 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
 
   // Perform deep copy of the logically copied slot table, if
   // necessary, before modifying our own slot table.
-  if (this->copy_callback_ != 0
-      && this->copy_callback_->execute () != 0)
-    ACE_THROW (CORBA::INTERNAL ());
+  if (this->copy_callback_ != 0)
+    this->copy_callback_->execute ();
 
   // If the slot table array isn't large enough, then increase its
   // size.  We're guaranteed not to exceed the number of allocated
