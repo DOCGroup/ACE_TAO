@@ -1,3 +1,10 @@
+Wed Feb 15 18:16:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Time_Value.cpp:
+
+          Adding/subtracting 0.999999 from max and min is required to really
+          represent a saturated time value.
+
 Wed Feb 15 12:32:37 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Svc_Conf_Lexer.cpp:
