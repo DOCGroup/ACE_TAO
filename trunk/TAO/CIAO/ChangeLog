@@ -1,3 +1,8 @@
+Wed Feb 15 07:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+          Fixed generation so that it compiles with Borland
+
 Tue Feb 14 23:01:46 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp
@@ -7,38 +12,38 @@ Tue Feb 14 23:01:46 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
           handling newly installed components.
           Thanks Sandro Andrade <sandro @dcc.ufba.br> for reporting
           this issue.
-        
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-        
+
           Some cosmetic changes.
-        
+
         * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
         * DAnCE/NodeApplicationManager/ImplementationInfo.h
-        
+
           Added a const modifier in the constructor to ensure safety.
-        
+
         * DAnCE/NodeManager/NodeManager_Impl.cpp
 
           Fixed a bug when detecting whether a component is shared
           by multiple assemblies. Earlier, when ReDaC is used, existing
           components are wrongly treated as shared components.
-        
+
 Tue Feb 14 22:02:59 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc
-        
-          Added naming service and Config_Handlers. 
-        
+
+          Added naming service and Config_Handlers.
+
         * DAnCE/NodeManager/NodeManager.mpc
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc
-        
+
           Fixed link time warnings on OS X.
-        
+
 Tue Feb 14 19:57:32 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
-        
+
           Fixed a bug about when a component has a name with "Exec"
           string in it, the _stub library could be picked up
           incorrectly.
@@ -47,7 +52,7 @@ Mon Feb 13 20:53:58 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
-        
+
           Fixed a bug about removing existing components. Earlier
           the logic in detecting "to-be-removed" components has
           a bug.
@@ -55,7 +60,7 @@ Mon Feb 13 20:53:58 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 Mon Feb 13 20:11:35 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp
-        
+
           Changed ACE_const_cast to c++ native const_cast since the
           former one is deprecated. Also changed the implementation of
           the acquireSession() logic, so the deadlock bug could
@@ -64,12 +69,12 @@ Mon Feb 13 20:11:35 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 Mon Feb 13 20:01:38 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp
-        
+
           Cosmetics change.
-        
+
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
-        
+
           Enhanced to call ccm_activate, ciao_preactivate, and
           ciao_postactivate when installing new components.
           Thanks Sandro Andrade <sandro @dcc.ufba.br> for reporting
@@ -77,14 +82,14 @@ Mon Feb 13 20:01:38 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
           Also added the logic for remove_existing_components into
           the class, which has not been integrated yet.
-        
+
           Refactor the code by putting these logics into separate
           methods to enhance readability.
-        
+
 Mon Feb 13 17:12:09 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp
-        
+
           Fixed a bug about registering EM with naming service, originally
           an invalid naming context is specified.
           Also allowed EM to both register to naming service AND dump
@@ -94,8 +99,8 @@ Mon Feb 13 17:12:09 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 Mon Feb 13 15:41:21 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp
-        
-          Fixed a warning about "deprecated conversion from string 
+
+          Fixed a warning about "deprecated conversion from string
           constant to `char*' on RHEL_Static_GCC-3.4.2 build.
 
 Mon Feb 13 11:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
