@@ -1386,6 +1386,9 @@ ACE_CACHE_CHECK([for POSIX timer structure],
  [ace_cv_lib_posix_timer_struct],
  [
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#if !defined(ACE_LACKS_SYS_TIME_H)
+# include <sys/time.h>
+#endif
 #include <time.h>
         ]],[[
          timespec sr;
