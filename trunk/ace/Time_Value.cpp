@@ -236,11 +236,11 @@ ACE_Time_Value::operator *= (double d)
 
   // shall we saturate the result?
 #if !defined(ACE_LACKS_NUMERIC_LIMITS)
-  static const double max_int = std::numeric_limits<time_t>::max ();
-  static const double min_int = std::numeric_limits<time_t>::min ();
+  static const double max_int = std::numeric_limits<time_t>::max () + 0.999999;
+  static const double min_int = std::numeric_limits<time_t>::min () - 0.999999;
 #else
-  static const double max_int = LONG_MAX;
-  static const double min_int = LONG_MIN;
+  static const double max_int = LONG_MAX + 0.999999;
+  static const double min_int = LONG_MIN - 0.999999;
 #endif
 
   if (time_total > max_int)
