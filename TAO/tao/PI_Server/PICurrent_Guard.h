@@ -48,7 +48,7 @@ namespace TAO
    *
    * @note This Guard class is only used on the server side.
    */
-  class TAO_PI_Server_Export PICurrent_Guard
+  class PICurrent_Guard
   {
   public:
 
