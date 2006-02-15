@@ -1274,7 +1274,7 @@ sub check_for_non_bool_operators ()
 sub check_for_long_file_names ()
 {
     my $max_filename = 50;
-    my $max_mpc_filename = $max_filename - 20;
+    my $max_mpc_projectname = $max_filename - 12; ## GNUmakefile.[project_name]
     print "Running file names check\n";
 
     foreach $file (@files_cpp, @files_inl, @files_h, @files_html,
@@ -1287,11 +1287,31 @@ sub check_for_long_file_names ()
         }
     }
     foreach $file (grep(/\.mpc$/, @files_mpc)) {
-        if ( length( basename($file) ) >= $max_mpc_filename )
-        {
-            print_warning ("File name $file exceeds $max_mpc_filename chars.");
+      if (open(FH, $file)) {
+        my($blen) = length(basename($file));
+        while(<FH>) {
+          if (/project\s*(:.*)\s*{/) {
+            if ($blen >= $max_mpc_projectname) {
+              print_warning ("File name $file exceeds $max_mpc_projectname chars.");
+            }
+          }
+          elsif (/project\s*\(([^\)]+)\)/) {
+            my($name) = $1;
+            if ($name =~ /\*/) {
+              my($length) = length($name) + (($name =~ tr/*//) * $blen);
+              if ($length >= $max_mpc_projectname) {
+                print_warning ("Project name ($name) from $file will exceed $max_mpc_projectname chars when expanded by MPC.");
+              }
+            }
+            else {
+              if (length($name) >= $max_mpc_projectname) {
+                print_warning ("Project name ($name) from $file exceeds $max_mpc_projectname chars.");
+              }
+            }
+          }
         }
-
+        close(FH);
+      }
     }
 }
 
