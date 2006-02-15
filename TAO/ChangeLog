@@ -1,3 +1,24 @@
+Wed Feb 15 11:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PICurrent_Impl.h:
+          Extended documentation
+
+        * tests/Portable_Interceptors/AdvSlotExt/*:
+          Another new PI test. We test the PI functionality in
+          receive_request. When we set a value in TSC, then this should
+          be independent of any change in RSC, so we set a value in
+          TSC, then another value in RSC and then read TSC again and
+          check if we did get the correct value back.
+
+        * tao/PI/PICurrent_Impl.cpp (set_slot):
+          When this PICurrent has a lc_slot_table set, then copy this
+          table we refer to to our own table befor we start modifiying
+          our table.
+
+        * tao/PI/PICurrent_Copy_Callback.cpp:
+          Only copy the slot table from source to destination when the
+          destination still refers to the table of the source.
+
 Wed Feb 15 09:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PICurrent_Copy_Callback.{h,cpp}:
