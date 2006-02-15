@@ -1207,7 +1207,7 @@ namespace
            << STRS[ACE_CR] << " (0);" << endl;
 
         os << "ACE_NEW_THROW_EX (" << endl
-           << "retv[i].ck," << endl
+           << "retv[i].ck.inout ()," << endl
            << "CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
            << "CORBA::NO_MEMORY ());" << endl
            << "++i;" << endl
