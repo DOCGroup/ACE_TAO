@@ -1,3 +1,10 @@
+Wed Feb 15 12:32:37 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Svc_Conf_Lexer.cpp:
+
+          Changed two instances of memcpy() to memmove().  The areas being
+          copied could possibly overlap.
+
 Wed Feb 16 11:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
