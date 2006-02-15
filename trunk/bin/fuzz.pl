@@ -1288,7 +1288,7 @@ sub check_for_long_file_names ()
     }
     foreach $file (grep(/\.mpc$/, @files_mpc)) {
       if (open(FH, $file)) {
-        my($blen) = length(basename($file));
+        my($blen) = length(basename($file)) - 4; ## .mpc
         while(<FH>) {
           if (/project\s*(:.*)\s*{/) {
             if ($blen >= $max_mpc_projectname) {
