@@ -95,7 +95,7 @@ struct ace_yy_buffer_state
 // ******************************************************************
 
 int
-ace_yylex(ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
+ace_yylex (ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,
@@ -178,9 +178,9 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
                     input (param,
                            param->buffer->input_ + amount,
                            read_more);
-                    ACE_OS::memcpy (param->buffer->input_,
-                                    param->buffer->input_ + read_more,
-                                    amount);
+                    ACE_OS::memmove (param->buffer->input_,
+                                     param->buffer->input_ + read_more,
+                                     amount);
                   }
               }
 #endif /* ACE_USES_WCHAR */
@@ -215,27 +215,27 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
     {
     case ACE_Svc_Conf_Param::SVC_CONF_FILE:
       errno = 0;
-      while ((result = ACE_OS::fread(buf, 1,
-                                     max_size, param->source.file)) == 0 &&
-             ferror(param->source.file))
+      while ((result = ACE_OS::fread (buf, 1,
+                                      max_size, param->source.file)) == 0 &&
+             ferror (param->source.file))
         {
           if (errno == EINTR)
             {
               errno = 0;
 #if !defined (ACE_LACKS_CLEARERR)
-              ACE_OS::clearerr(param->source.file);
+              ACE_OS::clearerr (param->source.file);
 #endif /* !ACE_LACKS_CLEARERR */
             }
           else
             {
-              ACE_OS::fprintf(stderr, "ERROR: input in scanner failed\n");
+              ACE_OS::fprintf (stderr, "ERROR: input in scanner failed\n");
               ACE_OS::exit (2);
             }
         }
       break;
     case ACE_Svc_Conf_Param::SVC_CONF_DIRECTIVE:
       result = ACE_OS::strlen (param->source.directive +
-                               param->buffer->start_) * sizeof(ACE_TCHAR);
+                               param->buffer->start_) * sizeof (ACE_TCHAR);
       if (result != 0)
         {
           // Make sure that the amount we are going to copy
@@ -261,8 +261,8 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
 }
 
 int
-ACE_Svc_Conf_Lexer::scan(ACE_YYSTYPE* ace_yylval,
-                         ACE_Svc_Conf_Param* param)
+ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
+                          ACE_Svc_Conf_Param* param)
 
 {
   ace_yy_buffer_state* buffer = param->buffer;
@@ -279,12 +279,12 @@ ACE_Svc_Conf_Lexer::scan(ACE_YYSTYPE* ace_yylval,
 
   size_t current;
   size_t last = buffer->size_ + (buffer->eof_ ? 1 : 0);
-  for(current = buffer->index_; current < last; current++)
+  for (current = buffer->index_; current < last; current++)
     {
       static const char* separators = " \t\r\n:*(){}";
       char c = (buffer->eof_ && current == buffer->size_ ?
                                      '\n' : buffer->input_[current]);
-      switch(buffer->state_)
+      switch (buffer->state_)
         {
           case ACE_COMMENT:
             if (c == '\n')
@@ -470,9 +470,9 @@ ACE_Svc_Conf_Lexer::scan(ACE_YYSTYPE* ace_yylval,
                       {
                         static const ACE_TCHAR* path_parts =
                                                 ACE_TEXT ("/\\:%.~-");
-                        for(const ACE_TCHAR* p = path_parts; *p != '\0'; p++)
+                        for (const ACE_TCHAR* p = path_parts; *p != '\0'; p++)
                           {
-                            if (ACE_OS::strchr(ace_yylval->ident_, *p) != 0)
+                            if (ACE_OS::strchr (ace_yylval->ident_, *p) != 0)
                               {
                                 token = ACE_PATHNAME;
                                 break;
@@ -508,8 +508,8 @@ ACE_Svc_Conf_Lexer::scan(ACE_YYSTYPE* ace_yylval,
         {
           buffer->size_ = current - buffer->index_;
           if (buffer->size_ != 0 && buffer->index_ != 0)
-            ACE_OS::memcpy(buffer->input_,
-                           buffer->input_ + buffer->index_, buffer->size_);
+            ACE_OS::memmove (buffer->input_,
+                             buffer->input_ + buffer->index_, buffer->size_);
           buffer->index_ = 0;
           buffer->state_ = ACE_NO_STATE;
         }
@@ -600,7 +600,7 @@ ACE_Svc_Conf_Lexer::locate_bom (char* source,
     { 3, "\xef\xbb\xbf",     ACE_Encoding_Converter_Factory::ACE_UTF_8    },
   };
 
-  for(size_t i = 0; i < sizeof (boms) / sizeof (bom); i++)
+  for (size_t i = 0; i < sizeof (boms) / sizeof (bom); i++)
     {
       if (source_size >= boms[i].length_)
         {
