@@ -48,6 +48,7 @@ threads ?= 1
 versioned_so ?= 1
 tk_reactor ?= 0
 ace_with_x11 ?= 0
+no_hidden_visibility ?= 1
 
 PLATFORM_TK_CPPFLAGS=
 PLATFORM_TK_LIBS=-ltk -ltcl
