@@ -1,3 +1,11 @@
+Wed Feb 15 20:04:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          #include <sys/time.h> in ACE_HAS_POSIX_TIME feature test (if
+          supported by platform).  Thanks to Vladimir Panov <gbr at
+          voidland dot org> for reporting this bug.
+        
 Wed Feb 15 19:58:36 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
