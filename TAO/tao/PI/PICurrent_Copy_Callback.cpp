@@ -26,7 +26,7 @@ TAO::PICurrent_Copy_Callback::~PICurrent_Copy_Callback (void)
     this->src_->copy_callback (0);
 }
 
-int
+void
 TAO::PICurrent_Copy_Callback::execute (void)
 {
   if (this->src_ != 0 && this->dst_ != 0
@@ -46,8 +46,6 @@ TAO::PICurrent_Copy_Callback::execute (void)
       // callback.
       this->src_->copy_callback (0);
     }
-
-  return 0;
 }
 
 void
