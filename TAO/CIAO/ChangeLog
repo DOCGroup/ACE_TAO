@@ -1,3 +1,24 @@
+Wed Feb 15 19:24:31 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO.mwc
+        
+          This file now builds all of CIAO. 
+        
+        * CIAODAnCE.mwc
+        * CIAO_DAnCE.mwc        
+          
+          Renamed this file to CIAO_DAnCE.mwc
+        
+        * CIAOTAO.mwc
+        * CIAO_TAO.mwc
+        
+          Renamed this file to CIAO_TAO.mwc.
+        
+        * CIAO_TAO_DAnCE.mwc
+        
+          Removed the DAnCE/tests/Config_Handlers exclusion, as it no
+          longer exists. 
+        
 Wed Feb 15 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp:
