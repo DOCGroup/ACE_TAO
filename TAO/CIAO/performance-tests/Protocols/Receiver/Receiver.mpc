@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p Protocols Receiver"
 
 project(Protocols_Receiver_stub): ciao_client_dnc, exceptions {
+  avoids += ace_for_tao
   libs += Protocols_stub
   after += Protocols_stub
   sharedname = Protocols_Receiver_stub
@@ -18,6 +19,7 @@ project(Protocols_Receiver_stub): ciao_client_dnc, exceptions {
 }
 
 project(Protocols_Receiver_svnt) : ciao_servant_dnc, exceptions {
+  avoids += ace_for_tao
   after += Protocols_svnt Protocols_Receiver_stub
   sharedname  = Protocols_Receiver_svnt
   libs    += Protocols_Receiver_stub Protocols_stub Protocols_svnt
@@ -41,6 +43,7 @@ project(Protocols_Receiver_svnt) : ciao_servant_dnc, exceptions {
 
 
 project(Protocols_Receiver_exec) : ciao_component_dnc, exceptions {
+  avoids += ace_for_tao
   after   += Protocols_Receiver_svnt
   sharedname = Protocols_Receiver_exec
   libs      += Protocols_Receiver_stub Protocols_Receiver_svnt Protocols_stub Protocols_svnt
