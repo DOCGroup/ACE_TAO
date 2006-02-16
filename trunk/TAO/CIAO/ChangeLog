@@ -1,3 +1,11 @@
+Thu Feb 16 04:14:15 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        
+          Disabled building some project when ace_for_tao is set. 
+        
 Wed Feb 15 19:24:31 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO.mwc
