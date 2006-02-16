@@ -1,3 +1,8 @@
+Thu Feb 16 09:23:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Changed the exclude of mwc files, use TAO_* and CIAO_*
+
 Thu Feb 16 08:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/performance_stats.sh:
