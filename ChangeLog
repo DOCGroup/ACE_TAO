@@ -1,3 +1,8 @@
+Thu Feb 16 13:38:00 UTC  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Added regression test for Bugzilla 2403
+
 Thu Feb 16 09:23:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
