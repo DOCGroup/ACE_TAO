@@ -1,3 +1,13 @@
+Thu Feb 16 12:35:00 UTC  Simon Massey  <sma@prismtech.com>
+
+        * tests/Portable_Interceptors/AdvSlotDblCpy/AdvSlotDblCpy.mpc:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/InvokeMe.idl:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/README:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+          Added regression test for Bugzilla 2403
+
 Thu Feb 16 09:21:51 UTC Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAOACE.mwc:
