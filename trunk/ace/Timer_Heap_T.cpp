@@ -765,6 +765,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
           number_of_cancellations++;
 
           this->free_node (temp);
+
+          // We reset to zero so that we don't miss checking any nodes
+          // if a reheapify occurs when a node is removed.  There
+          // may be a better fix than this, however.
+          i = 0;
         }
       else
         i++;
