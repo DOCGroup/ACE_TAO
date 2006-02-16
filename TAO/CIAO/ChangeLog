@@ -1,34 +1,39 @@
+Thu Feb 16 15:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_DAnCE.mwc:
+          Fixed typo in this file
+
 Thu Feb 16 04:14:15 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
         * performance-tests/Protocols/Receiver/Receiver.mpc
         * performance-tests/Protocols/Sender/Sender.mpc
-        
-          Disabled building some project when ace_for_tao is set. 
-        
+
+          Disabled building some project when ace_for_tao is set.
+
 Wed Feb 15 19:24:31 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO.mwc
-        
-          This file now builds all of CIAO. 
-        
+
+          This file now builds all of CIAO.
+
         * CIAODAnCE.mwc
-        * CIAO_DAnCE.mwc        
-          
+        * CIAO_DAnCE.mwc
+
           Renamed this file to CIAO_DAnCE.mwc
-        
+
         * CIAOTAO.mwc
         * CIAO_TAO.mwc
-        
+
           Renamed this file to CIAO_TAO.mwc.
 
           Thanks to Chad Elliott (elliott_c at ociweb dot com) for suggesting
-          these changes.       
+          these changes.
 
         * CIAO_TAO_DAnCE.mwc
-        
+
           Removed the DAnCE/tests/Config_Handlers exclusion, as it no
-          longer exists. 
+          longer exists.
 
 Wed Feb 15 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
