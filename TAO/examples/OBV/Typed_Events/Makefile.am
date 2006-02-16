@@ -50,6 +50,9 @@ Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Event_Types.idl
+
 ## Makefile.Typed_Events_Client.am
 
 if !BUILD_MINIMUM_CORBA

@@ -52,6 +52,9 @@ time-stamp: $(srcdir)/time.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  time.idl
+
 endif BUILD_EXCEPTIONS
 
 ## Makefile.Advanced_Ch_3_Client.am

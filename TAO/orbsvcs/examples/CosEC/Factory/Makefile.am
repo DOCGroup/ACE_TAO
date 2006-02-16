@@ -50,6 +50,9 @@ CosEventChannelFactory-stamp: $(srcdir)/CosEventChannelFactory.idl $(TAO_IDL_DEP
 	@touch $@
 
 
+noinst_HEADERS = \
+  CosEventChannelFactory.idl
+
 ## Makefile.CosEC_Factory_Client.am
 
 if !BUILD_MINIMUM_CORBA

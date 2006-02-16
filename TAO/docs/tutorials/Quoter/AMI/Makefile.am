@@ -53,6 +53,9 @@ Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Quoter.idl
+
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

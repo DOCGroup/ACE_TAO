@@ -50,6 +50,9 @@ Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Web_Server.idl
+
 ## Makefile.SMI_Iterator_Client.am
 
 if !BUILD_ACE_FOR_TAO

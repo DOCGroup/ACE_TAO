@@ -51,6 +51,9 @@ CLEANFILES = \
 	@touch $@
 
 
+noinst_HEADERS = \
+  ../NavWeap.idl
+
 ## Makefile.Event_Supplier_DualEC_Sup.am
 
 if BUILD_CORBA_MESSAGING

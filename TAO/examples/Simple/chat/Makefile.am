@@ -77,6 +77,10 @@ Broadcaster-stamp: $(srcdir)/Broadcaster.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Broadcaster.idl \
+  Receiver.idl
+
 ## Makefile.chat_client.am
 
 noinst_PROGRAMS = client

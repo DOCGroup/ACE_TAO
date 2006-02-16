@@ -79,6 +79,10 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  service_config.idl \
+  test.idl
+
 ## Makefile.ImR_Combined_Service.am
 
 if BUILD_EXCEPTIONS
@@ -149,7 +153,7 @@ libDynServer_la_SOURCES = \
   testC.cpp \
   testS.cpp
 
-noinst_HEADERS = \
+noinst_HEADERS += \
   dynserver.h \
   dynserver_export.h
 

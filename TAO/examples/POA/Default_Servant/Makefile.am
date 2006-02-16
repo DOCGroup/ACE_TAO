@@ -50,6 +50,9 @@ File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  File.idl
+
 ## Makefile.POA_Default_Servant_Client.am
 
 if !BUILD_MINIMUM_CORBA

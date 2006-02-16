@@ -48,6 +48,9 @@ interop_wchar-stamp: $(srcdir)/interop_wchar.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  interop_wchar.idl
+
 ## Makefile.Interop_Wchar_Client.am
 
 noinst_PROGRAMS = client

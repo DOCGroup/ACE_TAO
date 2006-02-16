@@ -18,7 +18,6 @@ noinst_PROGRAMS =
 ## Makefile.Log_RTEvent_Consumer.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += RTEvent_Consumer
 
@@ -36,13 +35,6 @@ RTEvent_Consumer_SOURCES = \
 
 RTEvent_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
@@ -57,13 +49,11 @@ RTEvent_Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Log_RTEvent_Supplier.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += RTEvent_Supplier
 
@@ -81,13 +71,6 @@ RTEvent_Supplier_SOURCES = \
 
 RTEvent_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
@@ -102,7 +85,6 @@ RTEvent_Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

@@ -48,6 +48,9 @@ Logger-stamp: $(srcdir)/Logger.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Logger.idl
+
 ## Makefile.Logging_Service.am
 
 noinst_PROGRAMS = Logging_Service

@@ -50,6 +50,9 @@ go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  go.idl
+
 ## Makefile.Ordering_Ntf_Seq_Cons.am
 
 if BUILD_CORBA_MESSAGING

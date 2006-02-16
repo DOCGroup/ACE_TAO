@@ -50,6 +50,9 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  test.idl
+
 ## Makefile.HTIOP_BiDirectional_Client.am
 
 if !BUILD_MINIMUM_CORBA

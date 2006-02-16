@@ -53,6 +53,9 @@ Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Push_Web_Server.idl
+
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

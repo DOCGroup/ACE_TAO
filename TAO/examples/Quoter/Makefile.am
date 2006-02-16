@@ -50,6 +50,9 @@ Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Quoter.idl
+
 ## Makefile.Quoter_Client.am
 
 if !BUILD_MINIMUM_CORBA

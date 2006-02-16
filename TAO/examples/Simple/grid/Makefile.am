@@ -48,6 +48,9 @@ Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Grid.idl
+
 ## Makefile.grid_client.am
 
 noinst_PROGRAMS = client

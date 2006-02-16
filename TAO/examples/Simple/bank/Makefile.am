@@ -48,6 +48,9 @@ Bank-stamp: $(srcdir)/Bank.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Bank.idl
+
 ## Makefile.bank_client.am
 
 noinst_PROGRAMS = client
