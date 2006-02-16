@@ -79,6 +79,10 @@ client-stamp: $(srcdir)/client.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  client.idl \
+  server.idl
+
 ## Makefile.Callback_Security_Client.am
 
 if BUILD_SSL

@@ -52,6 +52,9 @@ go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  go.idl
+
 endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.Filter_Notify_Perf_Sequence_Consumer.am

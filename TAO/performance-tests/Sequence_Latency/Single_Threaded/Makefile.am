@@ -52,6 +52,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Single_Threaded_Sequence_Client.am

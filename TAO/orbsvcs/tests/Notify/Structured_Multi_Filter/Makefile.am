@@ -50,6 +50,9 @@ go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  go.idl
+
 ## Makefile.Struct_Multi_Filter_Ntf_Struct_Cons.am
 
 if BUILD_CORBA_MESSAGING

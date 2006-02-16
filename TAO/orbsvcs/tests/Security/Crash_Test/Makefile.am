@@ -50,6 +50,9 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  test.idl
+
 ## Makefile.Security_Crash_Test_Client.am
 
 if BUILD_CORBA_MESSAGING
@@ -79,12 +82,12 @@ client_LDFLAGS = \
  @ACE_TLS_LDFLAGS@
 
 client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_SSLIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -128,12 +131,12 @@ server_LDFLAGS = \
  @ACE_TLS_LDFLAGS@
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_SSLIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

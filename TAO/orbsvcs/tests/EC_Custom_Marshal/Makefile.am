@@ -52,6 +52,9 @@ data-stamp: $(srcdir)/data.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  data.idl
+
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.ECM_Consumer.am

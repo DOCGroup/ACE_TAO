@@ -52,6 +52,9 @@ cubit-stamp: $(srcdir)/cubit.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  cubit.idl
+
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.IDL_Cubit_Client.am

@@ -50,6 +50,9 @@ TX_Object-stamp: $(srcdir)/TX_Object.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  TX_Object.idl
+
 ## Makefile.Big_Request_Security_Client.am
 
 if BUILD_SSL

@@ -50,6 +50,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 ## Makefile.Implicit_Activation_Client.am
 
 if !BUILD_ACE_FOR_TAO

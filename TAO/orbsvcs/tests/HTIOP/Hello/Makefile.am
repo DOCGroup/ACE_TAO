@@ -48,6 +48,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 ## Makefile.HTIOP_Hello_Client.am
 
 noinst_PROGRAMS = client

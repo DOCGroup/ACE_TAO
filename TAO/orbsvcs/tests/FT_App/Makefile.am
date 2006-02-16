@@ -106,6 +106,9 @@ FT_TestReplica-stamp: $(srcdir)/FT_TestReplica.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  FT_TestReplica.idl
+
 ## Makefile.FT_App_Client.am
 
 if BUILD_ACE_UUID

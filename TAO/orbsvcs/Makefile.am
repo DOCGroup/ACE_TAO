@@ -28,16 +28,8 @@ SUBDIRS = \
         Event_Service \
         Dump_Schedule \
         CosEvent_Service \
-        Concurrency_Service
-
-if BUILD_TESTS
-SUBDIRS += \
+        Concurrency_Service \
         performance-tests \
-        tests
-endif
-
-if BUILD_EXAMPLES
-SUBDIRS += \
+        tests \
         examples
-endif
 

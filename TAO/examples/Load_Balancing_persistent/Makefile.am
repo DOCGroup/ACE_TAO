@@ -79,6 +79,10 @@ Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Identity.idl \
+  Load_Balancer.idl
+
 ## Makefile.Load_Balancing_Persistent_Balancer.am
 
 if !BUILD_ACE_FOR_TAO

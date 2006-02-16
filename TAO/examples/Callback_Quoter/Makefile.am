@@ -77,6 +77,10 @@ Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Consumer.idl \
+  Notifier.idl
+
 ## Makefile.Callback_Quoter_consumer.am
 
 noinst_PROGRAMS = consumer

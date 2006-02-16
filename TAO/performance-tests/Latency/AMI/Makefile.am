@@ -53,6 +53,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

@@ -50,6 +50,9 @@ RolyPoly-stamp: $(srcdir)/RolyPoly.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  RolyPoly.idl
+
 ## Makefile.RolyPoly_Client.am
 
 if BUILD_ACE_UUID

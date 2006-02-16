@@ -50,6 +50,9 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  test.idl
+
 ## Makefile.Secure_BiDir_SSL_Client.am
 
 if !BUILD_MINIMUM_CORBA
