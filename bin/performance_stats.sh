@@ -133,7 +133,8 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set yrange [0:]
     set terminal png small size 800,600 color
     set output "/dev/null"
-    plot 'DII.txt' using 1:2 title 'DII' w l
+    plot 'AMI.txt' using 1:2 title 'AMI' w l
+    replot 'DII.txt' using 1:2 title 'DII' w l
     replot 'DSI.txt' using 1:2 title 'DSI' w l
     replot 'Deferred.txt' using 1:2 title 'Deferred' w l
     replot 'Single_Threaded.txt' using 1:2 title 'Single_Threaded' w l
@@ -155,7 +156,8 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set yrange [0:35000]
     set terminal png small size 800,600 color
     set output "/dev/null"
-    plot 'DII.txt' using 1:2 title 'DII' w l
+    plot 'AMI.txt' using 1:2 title 'AMI' w l
+    replot 'DII.txt' using 1:2 title 'DII' w l
     replot 'DSI.txt' using 1:2 title 'DSI' w l
     replot 'Deferred.txt' using 1:2 title 'Deferred' w l
     replot 'Single_Threaded.txt' using 1:2 title 'Single_Threaded' w l
