@@ -1,3 +1,10 @@
+Thu Feb 16 09:21:51 UTC Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAOACE.mwc:
+        * TAO_ACE.mwc:
+          Renamed TAOACE to TAO_ACE, makes it easier for the builds to
+          exclude
+
 Thu Feb 16 03:33:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * docs/tutorials/Quoter/AMI/Makefile.am:
