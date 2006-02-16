@@ -1,3 +1,16 @@
+Thu Feb 16 18:11:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/default_client.cpp:
+        
+          Report an error if unknown/unsupported argument is used with
+          -ORBIIOPProfileLock.
+        
+          Changed -ORBConnectionHandlerCleanup to support 0 and 1 as
+          arguments.  Previously it only supported false, which made it
+          impossible to set the option after the default was changed to
+          false last September.  Support false (and now true) arguments
+          for backwards compatibility.
+
 Thu Feb 16 16:00:07 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
