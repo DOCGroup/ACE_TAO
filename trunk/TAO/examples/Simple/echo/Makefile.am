@@ -48,6 +48,9 @@ Echo-stamp: $(srcdir)/Echo.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Echo.idl
+
 ## Makefile.echo_client.am
 
 noinst_PROGRAMS = client

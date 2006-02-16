@@ -48,6 +48,9 @@ corbaloc-stamp: $(srcdir)/corbaloc.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  corbaloc.idl
+
 ## Makefile.ior_corbaloc_client.am
 
 noinst_PROGRAMS = client

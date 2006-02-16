@@ -49,6 +49,9 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  test.idl
+
 ## Makefile.MT_IIOP_SSL_Security_Client.am
 
 noinst_PROGRAMS = client
@@ -106,11 +109,11 @@ server_LDFLAGS = \
  @ACE_TLS_LDFLAGS@
 
 server_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_SSLIOP.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_SSLIOP.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

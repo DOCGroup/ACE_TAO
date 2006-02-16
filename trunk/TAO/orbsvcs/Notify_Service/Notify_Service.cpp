@@ -411,6 +411,7 @@ Worker::orb (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
+#if 0
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -422,6 +423,7 @@ Worker::svc (void)
     }
 
   ACE_DEBUG ((LM_DEBUG, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
+#endif
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

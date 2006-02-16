@@ -52,6 +52,9 @@ CosNaming-stamp: $(srcdir)/CosNaming.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+nobase_include_HEADERS = \
+  CosNaming.idl
+
 ## Makefile.CosNaming.am
 
 lib_LTLIBRARIES = libTAO_CosNaming.la
@@ -77,7 +80,7 @@ libTAO_CosNaming_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_include_HEADERS = \
+nobase_include_HEADERS += \
   CosNamingC.h \
   CosNamingC.inl \
   Naming/Naming_Client.h \
@@ -157,6 +160,10 @@ CosPropertyService-stamp: $(srcdir)/CosPropertyService.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosPropertyService.idl
 	@touch $@
 
+
+nobase_include_HEADERS += \
+  CosProperty.idl \
+  CosPropertyService.idl
 
 ## Makefile.CosProperty.am
 
@@ -535,6 +542,9 @@ CosConcurrencyControl-stamp: $(srcdir)/CosConcurrencyControl.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+nobase_include_HEADERS += \
+  CosConcurrencyControl.idl
+
 ## Makefile.CosConcurrency.am
 
 lib_LTLIBRARIES += libTAO_CosConcurrency.la
@@ -793,6 +803,12 @@ CosEventChannelAdmin-stamp: $(srcdir)/CosEventChannelAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventChannelAdmin.idl
 	@touch $@
 
+
+nobase_include_HEADERS += \
+  CosEventChannelAdmin.idl \
+  CosEventComm.idl \
+  CosTypedEventChannelAdmin.idl \
+  CosTypedEventComm.idl
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -1999,6 +2015,14 @@ Event_Forwarder-stamp: $(srcdir)/Event_Forwarder.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+nobase_include_HEADERS += \
+  CosNotification.idl \
+  CosNotifyChannelAdmin.idl \
+  CosNotifyComm.idl \
+  CosNotifyFilter.idl \
+  Event_Forwarder.idl \
+  NotifyExt.idl
+
 endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosNotification.am
@@ -2670,6 +2694,11 @@ CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+nobase_include_HEADERS += \
+  CosTrading.idl \
+  CosTradingDynamic.idl \
+  CosTradingRepos.idl
+
 ## Makefile.CosTrading.am
 
 lib_LTLIBRARIES += libTAO_CosTrading.la
@@ -2920,6 +2949,10 @@ DsLogNotification-stamp: $(srcdir)/DsLogNotification.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+nobase_include_HEADERS += \
+  DsLogAdmin.idl \
+  DsLogNotification.idl
+
 ## Makefile.DsLogAdmin.am
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin.la
@@ -2999,6 +3032,9 @@ DsEventLogAdmin-stamp: $(srcdir)/DsEventLogAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h $(srcdir)/DsEventLogAdmin.idl
 	@touch $@
 
+
+nobase_include_HEADERS += \
+  DsEventLogAdmin.idl
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -3351,6 +3387,9 @@ DsNotifyLogAdmin-stamp: $(srcdir)/DsNotifyLogAdmin.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+nobase_include_HEADERS += \
+  DsNotifyLogAdmin.idl
+
 endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.DsNotifyLogAdmin.am
@@ -3534,6 +3573,57 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   TAO_DsNotifyLogAdmin_Serv.pc.in
 
+
+## Makefile.ESF.am
+
+
+nobase_include_HEADERS += \
+  ESF/ESF_Busy_Lock.cpp \
+  ESF/ESF_Busy_Lock.h \
+  ESF/ESF_Busy_Lock.i \
+  ESF/ESF_Copy_On_Read.cpp \
+  ESF/ESF_Copy_On_Read.h \
+  ESF/ESF_Copy_On_Write.cpp \
+  ESF/ESF_Copy_On_Write.h \
+  ESF/ESF_Copy_On_Write.i \
+  ESF/ESF_Defaults.h \
+  ESF/ESF_Delayed_Changes.cpp \
+  ESF/ESF_Delayed_Changes.h \
+  ESF/ESF_Delayed_Changes.i \
+  ESF/ESF_Delayed_Command.cpp \
+  ESF/ESF_Delayed_Command.h \
+  ESF/ESF_Delayed_Command.i \
+  ESF/ESF_Immediate_Changes.cpp \
+  ESF/ESF_Immediate_Changes.h \
+  ESF/ESF_Immediate_Changes.i \
+  ESF/ESF_Peer_Admin.cpp \
+  ESF/ESF_Peer_Admin.h \
+  ESF/ESF_Peer_Workers.cpp \
+  ESF/ESF_Peer_Workers.h \
+  ESF/ESF_Peer_Workers.i \
+  ESF/ESF_Proxy_Admin.cpp \
+  ESF/ESF_Proxy_Admin.h \
+  ESF/ESF_Proxy_Admin.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_List.cpp \
+  ESF/ESF_Proxy_List.h \
+  ESF/ESF_Proxy_List.i \
+  ESF/ESF_Proxy_RB_Tree.cpp \
+  ESF/ESF_Proxy_RB_Tree.h \
+  ESF/ESF_Proxy_RB_Tree.i \
+  ESF/ESF_Proxy_RefCount_Guard.cpp \
+  ESF/ESF_Proxy_RefCount_Guard.h \
+  ESF/ESF_Proxy_RefCount_Guard.i \
+  ESF/ESF_RefCount_Guard.cpp \
+  ESF/ESF_RefCount_Guard.h \
+  ESF/ESF_RefCount_Guard.i \
+  ESF/ESF_Shutdown_Proxy.cpp \
+  ESF/ESF_Shutdown_Proxy.h \
+  ESF/ESF_Shutdown_Proxy.i \
+  ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/esf_export.h
 
 ## Makefile.FTORB_Utils.am
 
@@ -5168,6 +5258,9 @@ RTEventLogAdmin-stamp: $(srcdir)/RTEventLogAdmin.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+nobase_include_HEADERS += \
+  RTEventLogAdmin.idl
+
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTEventLogAdmin.am
@@ -5989,10 +6082,10 @@ libTAO_SSLIOP_la_LDFLAGS = \
 
 libTAO_SSLIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
   libTAO_Security.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

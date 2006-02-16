@@ -50,6 +50,9 @@ UDP-stamp: $(srcdir)/UDP.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  UDP.idl
+
 ## Makefile.Performance_Client.am
 
 if !BUILD_ACE_FOR_TAO

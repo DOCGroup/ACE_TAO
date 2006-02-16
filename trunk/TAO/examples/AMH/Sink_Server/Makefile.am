@@ -52,6 +52,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Sink_Server_Client.am

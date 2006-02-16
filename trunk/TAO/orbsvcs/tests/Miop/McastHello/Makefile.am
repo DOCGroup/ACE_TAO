@@ -50,6 +50,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 ## Makefile.McastHello_Client.am
 
 if BUILD_CORBA_MESSAGING

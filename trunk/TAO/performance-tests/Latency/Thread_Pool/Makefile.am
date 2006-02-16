@@ -52,6 +52,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Thread_Pool_Latency_Client.am

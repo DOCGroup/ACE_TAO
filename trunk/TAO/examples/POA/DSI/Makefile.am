@@ -50,6 +50,9 @@ Database-stamp: $(srcdir)/Database.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Database.idl
+
 ## Makefile.POA_DSI_Client.am
 
 if BUILD_CORBA_MESSAGING

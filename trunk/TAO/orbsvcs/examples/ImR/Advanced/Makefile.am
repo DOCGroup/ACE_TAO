@@ -79,6 +79,10 @@ Messenger-stamp: $(srcdir)/Messenger.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Manager.idl \
+  Messenger.idl
+
 ## Makefile.Advanced_Client.am
 
 if BUILD_EXCEPTIONS

@@ -52,6 +52,9 @@ callback-stamp: $(srcdir)/callback.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  callback.idl
+
 endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Callback_Client.am

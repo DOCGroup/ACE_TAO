@@ -48,6 +48,9 @@ Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Event_Comm.idl
+
 ## Makefile.Event_Comm_Consumer.am
 
 noinst_PROGRAMS = consumer

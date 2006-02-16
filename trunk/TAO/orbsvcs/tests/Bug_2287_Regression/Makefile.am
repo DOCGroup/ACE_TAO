@@ -50,6 +50,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 ## Makefile.Bug_2287_Regression_Client.am
 
 if BUILD_ACE_UUID

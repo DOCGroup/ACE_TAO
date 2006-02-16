@@ -55,6 +55,9 @@ Airplane-stamp: $(srcdir)/Airplane.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Airplane.idl
+
 ## Makefile.airplane_client.am
 
 if !BUILD_MINIMUM_CORBA
@@ -145,6 +148,9 @@ Nestea-stamp: $(srcdir)/Nestea.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Nestea.idl
 	@touch $@
 
+
+noinst_HEADERS += \
+  Nestea.idl
 
 ## Makefile.nestea_client.am
 

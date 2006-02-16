@@ -48,6 +48,9 @@ Time-stamp: $(srcdir)/Time.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Time.idl
+
 ## Makefile.time_client.am
 
 noinst_PROGRAMS = client
