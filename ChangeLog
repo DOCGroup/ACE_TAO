@@ -1,3 +1,9 @@
+Thu Feb 16 13:38:39 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * bin/generate_rel_manpages:
+
+          Updated the script with latest info at naboo.dre.
+
 Thu Feb 16 13:38:00 UTC  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_orb_tests.lst:
@@ -15,9 +21,9 @@ Thu Feb 16 08:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Feb 15 20:06:42 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/Timer_Heap_T.cpp: Fixed cancel() so that it doesn't miss any
-	  nodes due to reheapifying during a remove.  Thanks to Oh Yoon
- 	  Sik <boom at estsoft dot com> for this fix.
+        * ace/Timer_Heap_T.cpp: Fixed cancel() so that it doesn't miss any
+          nodes due to reheapifying during a remove.  Thanks to Oh Yoon
+          Sik <boom at estsoft dot com> for this fix.
 
 Wed Feb 15 20:04:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
