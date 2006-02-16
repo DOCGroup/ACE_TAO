@@ -1,3 +1,8 @@
+Thu Feb 16 08:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+          Added AMI to the combined performance figure
+
 Wed Feb 15 20:06:42 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/Timer_Heap_T.cpp: Fixed cancel() so that it doesn't miss any
@@ -7,11 +12,11 @@ Wed Feb 15 20:06:42 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 Wed Feb 15 20:04:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
+
           #include <sys/time.h> in ACE_HAS_POSIX_TIME feature test (if
           supported by platform).  Thanks to Vladimir Panov <gbr at
           voidland dot org> for reporting this bug.
-        
+
 Wed Feb 15 19:58:36 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
