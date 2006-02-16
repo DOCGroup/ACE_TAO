@@ -106,6 +106,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("null")) == 0)
                 this->profile_lock_type_ = TAO_NULL_LOCK;
+	      else
+		this->report_option_value_error (ACE_TEXT("-ORBIIOPProfileLock"), name);
             }
         }
 
@@ -210,9 +212,14 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              {
                ACE_TCHAR* name = argv[curarg];
 
-               if (ACE_OS::strcasecmp (name,
-                                       ACE_TEXT("false")) == 0)
+               if (ACE_OS::strcmp (name, ACE_TEXT("0")) == 0 ||
+                   ACE_OS::strcasecmp (name, ACE_TEXT("false")) == 0)
                  this->use_cleanup_options_ = false;
+               else if (ACE_OS::strcmp (name, ACE_TEXT("1")) == 0 ||
+                        ACE_OS::strcasecmp (name, ACE_TEXT("true")) == 0)
+                 this->use_cleanup_options_ = true;
+               else 
+                 this->report_option_value_error (ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
              }
          }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)
