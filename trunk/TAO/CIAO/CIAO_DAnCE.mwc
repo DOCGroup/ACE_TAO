@@ -3,5 +3,5 @@
 workspace {
   ciao
   DAnCE
-  tools/Config_Handles
+  tools/Config_Handlers
 }
