@@ -68,6 +68,29 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
+======================================================
+
+. Enhanced DAnCE ReDaC service to enforce the correct
+  assembly redeployment and reconfiguration order.
+
+  The order that ReDaC currently enforces:
+
+  (1) Install new components,
+  (2) Set up new connections,
+  (3) Activate new components,
+  (4) Passivate old components,
+  (5) Remove old connections
+  (6) Remove old components.
+
+. Enhanced DAnCE to create hierarchical naming context
+  path through XML descriptors.
+
+. Enhanced DAnCE to maintain a component state map in
+  the component server to manage component life cycle.
+
+. Some bug fixes in DAnCE. 
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================
 . RTTI enabled versions of the Xerces library are no longer needed on
