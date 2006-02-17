@@ -43,6 +43,21 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.9 and TAO-1.4.10
 
 . Fixed several bugs in the PICurrent implementation
 
+. Fixed GOA factory name
+
+. Fixed -ORBConnectionHandlerCleanup arguments to accept 0 and 1.
+
+. Improved Portable Interceptor implementation.
+
+. Autoconfig improvements.
+
+. Improved Real-time CORBA support for dynamic threads.
+
+IDL COMPILER:
+-------------
+
+. Some bug fixes. See bug #2375 and #2390.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
 ====================================================
 
