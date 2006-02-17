@@ -1,3 +1,8 @@
+Fri Feb 17 09:40:00 UTC  Simon Massey  <sma@prismtech.com>
+
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+          Work around GCC4.0 template resolusion compilation bug?
+
 Fri Feb 17 09:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:

@@ -6,6 +6,7 @@
 
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "ace/OS_NS_stdio.h"
 
