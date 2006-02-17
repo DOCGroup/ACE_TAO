@@ -3,6 +3,24 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) VxWorks 6.2 support
 
+USER VISIBLE CHANGES BETWEEN ACE-5.4.9 and ACE-5.4.10
+====================================================
+
+. Fixed a bug in ACE_Timer_Heap_T::cancel().
+
+. Improved ACE_Time_Value support for boundary conditions.
+
+. Fixed problems with operator placement delete on certain C++ compilers.
+
+. Fixed a bug with the ACE_SPIPE_Acceptor on Windows.
+
+. Correctly set sockaddr_in.sin_len and sockaddr_in6.sin6_len on 
+  platforms that have these fields.
+
+. Avoided problems with namespace pollution for max() macros.
+
+. Many fixes for ACE_LACKS* and ACE_HAS* macros for autoconfig.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.8 and ACE-5.4.9
 ====================================================
 
