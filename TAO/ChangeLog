@@ -1,3 +1,8 @@
+Fri Feb 17 13:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp:
+          Removed escape character that slipped in by accident
+
 Fri Feb 17 09:40:00 UTC  Simon Massey  <sma@prismtech.com>
 
         * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
