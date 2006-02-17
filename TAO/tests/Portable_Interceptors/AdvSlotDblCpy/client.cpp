@@ -1,4 +1,4 @@
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
 #include "InvokeMeC.h"
@@ -32,7 +32,7 @@ main (int argc, char *argv[])
   CORBA::Object_var obj = orb->string_to_object (argv[1]);
   InvokeMe_var server = InvokeMe::_narrow (obj.in ());
 
-  always Shutdown( server ); // When goes out of scope!
+  always Shutdown( server.in () ); // When goes out of scope!
   server->invoke_me ();
 
   return 0;
