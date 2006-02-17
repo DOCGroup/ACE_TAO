@@ -1032,8 +1032,8 @@ TAO::FT_ReplicationManager::create_object (
     // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_var factory_id = 0;
-  ACE_NEW_THROW_EX (factory_id,
+  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = 0;
+  ACE_NEW_THROW_EX (factory_id_ptr,
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
@@ -1041,6 +1041,7 @@ TAO::FT_ReplicationManager::create_object (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  PortableGroup::GenericFactory::FactoryCreationId_var factory_id = factory_id_ptr;
   PortableGroup::ObjectGroupId group_id = group->get_object_group_id ();
   factory_id <<= group_id;
   factory_creation_id = factory_id._retn();
