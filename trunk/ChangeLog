@@ -1,3 +1,8 @@
+Sun Feb 19 13:38:32 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Fixed bug in excluding of mwc files
+
 Fri Feb 17 19:16:32 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * NEWS:
