@@ -1,3 +1,8 @@
+Sun Feb 19 11:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+          Fixed conversion warning and fixed compile error with gcc4
+
 Fri Feb 17 19:30:59 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * NEWS:
