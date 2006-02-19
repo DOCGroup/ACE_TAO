@@ -29,7 +29,7 @@ namespace
       op= ri->operation ();
 
     const bool correctOperation=
-      (0 == ACE_OS::strcmp( op, "invoke_me" ));
+      (0 == ACE_OS::strcmp( op.in (), "invoke_me" ));
 
     if (correctOperation)
     {
