@@ -1,12 +1,13 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include "tao/LocalObject.h"
-#include "tao/ORBInitializer_Registry.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+
+#include "tao/LocalObject.h"
+#include "tao/ORBInitializer_Registry.h"
 
 #include "ace/OS_NS_stdio.h"
 
