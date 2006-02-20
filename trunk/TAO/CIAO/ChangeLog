@@ -1,3 +1,9 @@
+Mon Feb 20 19:48:12 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_Impl.ccd
+
+          Removed this file because it is generated
+
 Mon Feb 20 05:21:58 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * CIAO version 0.4.10 released.
