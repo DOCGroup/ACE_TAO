@@ -1,7 +1,3 @@
-Sun Feb 19 22:18:57 2006  Wallace Zhang  <zhangw@ociweb.com>
-
-        * TAO version 1.4.10 released.
-
 Sun Feb 19 11:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
