@@ -1,0 +1,23 @@
+This directory contains a test example for the DEV_SAP
+class category. It implements a class TTY_IO that is
+derived from ACE_DEV_IO and adds a control method
+with specific features for a serial line connection
+(e.g. /dev/ttya and /dev/ttyb on UNIX systems).
+
+The reader/reader executable initializes its
+device-special file (given as command-line parameter),
+reads characters from it (until it recognizes character 'q')
+ands sends the characters read to stdout.
+
+The writer/writer executable also initializes its
+device-special file (given as command-line parameter),
+reads characters from stdin (until'q') and sends them
+to the device.
+
+To run the tests I connect /dev/ttya and /dev/ttyb (with a
+zero modem cable) and start the reader with "reader /dev/ttya"
+and the writer (in a different window) with "writer /dev/ttyb".
+
+Characters typed in the writer window should now appear as output
+in the reader window. Note that characters are buffered till EOL.
+
