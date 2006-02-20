@@ -1,7 +1,0 @@
-//$Id$
-
-workspace {
-  ciao
-  DAnCE
-  tools/Config_Handlers
-}
