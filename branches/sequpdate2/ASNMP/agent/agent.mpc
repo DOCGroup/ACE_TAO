@@ -1,0 +1,14 @@
+// $Id$
+
+project (asnmp_agent) : aceexe {
+  exename = agent
+  after += asnmp_lib
+  libs  += asnmp
+  avoids += uses_wchar
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    agent_impl.cpp
+    main.cpp
+    snmp_agent.cpp
+  }
+}

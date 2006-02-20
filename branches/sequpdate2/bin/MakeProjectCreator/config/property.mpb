@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcslib {
+  after     += CosProperty
+  libs      += TAO_CosProperty
+}

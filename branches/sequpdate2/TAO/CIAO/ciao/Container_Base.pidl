@@ -1,0 +1,33 @@
+// $Id$
+
+/**
+ * CIAO's internal container interface definitions.
+ */
+
+//#define CIAO_HAS_IMPORT_KEYWORD
+
+#if !defined (CONTAINER_BASE_PIDL)
+#define CONTAINER_BASE_PIDL
+
+#include "CIAO_Component.pidl"
+#include <SecurityLevel2.idl>
+#include "CIAO_Transaction.pidl"
+
+// *************** Basic Container interfaces ***************
+
+module CIAO
+{
+  typeprefix Components "wustl.edu";
+
+  local interface Container
+    {
+      // Return the POA
+      PortableServer::POA the_POA ();
+    };
+
+  local interface SessionContainer
+    {
+
+    };
+};
+#endif /* CONTAINER_BASE_PIDL */
