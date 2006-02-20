@@ -1,0 +1,1339 @@
+Thu Feb 20 19:18:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ChangeLogs/ChangeLog-02b:
+	* ChangeLogs/ChangeLog-03a: New files having all the old ChangeLog
+	  entries till 5.3.1.
+	* ChangeLog: Shortened the changelog for ease of use. 
+
+Thu Feb 20 10:35:15 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Strategies_T.h:
+	* ace/Strategies_T.cpp:
+
+	  Reverted part of changes that introduced extensive use of
+	  traits since they were forcing the introduction of the
+	  ACE_TYPENAME macro in more places than is desirable at this
+	  point in time.  They may be reintroduced in the future.
+
+Thu Feb 20 09:24:00 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.h:
+
+	  Forward declare ACE_Service_Object.  Necessitated by inter-header
+	  dependency reductions.
+
+Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Acceptor.h:
+	* ace/Connector.h:
+
+	  No need to include "ace/Service_Config.h" and
+	  "ace/Svc_Handler.h".
+
+	  Include "ace/Synch_Options.h".  Necessitated by inter-header
+	  dependency reductions.
+
+	* ace/Acceptor.cpp:
+	* ace/Connector.cpp:
+
+	  Include "ace/Svc_Handler.h".  Necessitated by inter-header
+	  dependency reductions.
+
+	* ace/Atomic_Op.h:
+
+	  Fixed doxygen documentation.
+
+	* ace/Atomic_Op.i (operator++, operator--):
+
+	  Implement these post{in,de}crement operators in terms of their
+	  corresponding pre{in,de}crement operators to ensure consistent
+	  semantics.
+
+	* ace/Atomic_Op_T.h (mutex_, own_mutex_):
+
+	  Improved const-correctness by making these mutex members
+	  mutable.  This allows us to avoid casting away the constness.
+
+	* ace/Atomic_Op_T.i (operator==, operator>=, operator>):
+	  (operator<=, operator<, value, operator=):
+
+	  Do not cast away the constness of the mutex.  That hack is no
+	  longer necessary since the mutex is now mutable.
+
+	* ace/Basic_Types.h:
+
+	  Improved doxygen documentation.
+
+	  Moved endianness determination macros prior to ACE_U_LongLong
+	  class.
+
+	  (operator=):
+
+	  Added ACE_ULongLong assignment operator declarations that accept
+	  32 bit signed and unsigned integers.
+
+	  (operator++, operator--):
+
+	  Added missing ACE_ULongLong post{in,de}crement operator
+	  declarations.
+
+	  (data_):
+
+	  Make declaration order of lower and upper 32 bit members (lo_
+	  and hi_) of this structure dependant on the endianness of the
+	  platform.  This mimics what is done for the ACE_LongLong type
+	  in the ACE_CDR classes.
+
+	* ace/Basic_Types.i (operator=):
+
+	  Added ACE_ULongLong assignment operator implementation that
+	  accept 32 bit signed and unsigned integers.
+
+	  (operator++, operator--):
+
+	  Added missing ACE_ULongLong post{in,de}crement operator
+	  implementations.
+
+	* ace/CDR_Base.cpp (mb_align):
+
+	  Uninlined this method in order to reduce inter-header
+	  dependencies.
+
+	  (operator<, operator<=, operator>, operator>=, operator==):
+	  (operator!=):
+
+	  Added these missing operator for the ACE_LongLong type.
+
+	  (Float, operator=, operator!=):
+
+	  Fixed potential unused argument warnings for the Cray/UNICOS
+	  case.
+
+	* ace/CDR_Base.h:
+
+	  Include "ace/OS.h" instead of "ace/Message_Block.h", and forward
+	  declare ACE_Message_Block in order to reduce inter-header
+	  dependencies.
+
+	  Changed all uses of typedefs like "u_char" and "u_long" to their
+	  non-typedef counterparts, e.g. "unsigned char" and "unsigned
+	  long".  Makes it possible to avoid including headers that
+	  contain those typedefs.
+
+	  (operator=):
+
+	  Added ACE_LongLong constructors assignment operators that accept
+	  32-bit integers.
+
+	  (operator==, operator!=, operator<=, operator<, operator>=):
+	  (operator>):
+
+	  Added these missing ACE_LongLong relation operators.
+
+	* ace/CDR_Base.inl (operator=):
+
+	  Added ACE_LongLong constructors assignment operators that accept
+	  32-bit integers.
+
+	  (operator==, operator!=, operator<=, operator<, operator>=):
+	  (operator>):
+
+	  Added these missing ACE_LongLong relation operators.
+
+	* ace/CDR_Stream.h:
+
+	  Moved definition of the ACE_CDR_BYTE_ORDER macros from OS.h to
+	  this header.  Helps with header dependency reduction.
+
+	* ace/Capabilities.h:
+
+	  Use ACE_Hash_Map_Manager_Ex instead of ACE_Hash_Map_Manager.
+	  Doing so saves us three template instantiations.
+
+	* ace/Capabilities.i:
+
+	  Cosmetic changes.
+
+	* ace/Capabilities.cpp:
+
+	  No need to include "ace/Map_Manager.h".
+
+	  Added missing ACE_RCSID macro.
+
+	  Improved conformance to ACE coding conventions.
+
+	  Removed explicit template instantiations for the
+	  ACE_Hash_Map_Manager template.  That template is no longer
+	  used.
+
+	  (reset_caps):
+
+	  Use ACE_Hash_Map_Manager_Ex template traits instead of the
+	  actual template type.  Makes for cleaner code.
+
+	* ace/Configuration.cpp:
+	* ace/Configuration.h:
+	* ace/Strategies_T.cpp:
+	* ace/Token_Collection.cpp:
+	* ace/Token_Collection.h:
+	* ace/Token_Invariants.cpp:
+	* ace/Token_Invariants.h:
+	* ace/Token_Manager.cpp:
+	* ace/Token_Manager.h:
+	* ace/WIN32_Asynch_IO.cpp:
+	* ace/WIN32_Asynch_IO.h:
+
+	  Take advantage of template traits to improve clarity of code.
+
+	* ace/Copy_Disabled.h:
+
+	  Corrected comment.
+
+	* ace/Default_Constants.h:
+
+	  Moved ACE_DEFAULT_CDR_BUFSIZE, ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
+	  ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK,
+	  ACE_DEFAULT_CDR_MEMCPY_TRADEOFF macros from OS.h to this
+	  header.  Helps with inter-header dependency reduction.
+
+	* ace/Dynamic_Service_Base.cpp:
+	* ace/Parse_Node.cpp:
+	* ace/Service_Manager.cpp:
+	* ace/Service_Repository.cpp:
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf_y.cpp:
+
+	  Include "ace/Service_Types.h".  Necessitated by inter-header
+	  dependency reduction.
+
+	* ace/Filecache.h:
+	* ace/Filecache.cpp:
+	* ace/Hash_Map_With_Allocator_T.h:
+	* ace/Hash_Map_With_Allocator_T.cpp:
+	* ace/Local_Name_Space_T.h:
+	* ace/Local_Name_Space.cpp:
+
+	  Use ACE_Hash_Map_Manager_Ex instead of ACE_Hash_Map_Manager.
+	  Doing so saves us three template instantiations.
+
+	* ace/Future_Set.h:
+	* ace/Map_T.h:
+
+	  Include "ace/Hash_Map_Manager_T.h" instead of
+	  "ace/Hash_Map_Manager.h".  The former is all that is needed, and
+	  the latter already includes the former.
+
+	* ace/Hash_Map_Manager_T.i (operator++, operator--):
+	* ace/Map_Manager.i:
+	* ace/RB_Tree.i:
+
+	  Implement the post-{in,de}crement operators in terms of their
+	  pre-{in,de}crement operator counterparts to ensure consistency.
+
+	* ace/Local_Name_Space_T.cpp:
+
+	  No need to include "ace/Auto_Ptr.h"
+
+	  Use template traits to improve code clarity.
+
+	* ace/OS.h:
+
+	  Moved ACE_CDR_BYTE_ORDER macro definition to CDR_Stream.h.
+	  Helps with inter-header dependencies.
+
+	  Moved ACE_DEFAULT_CDR_BUFSIZE, ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
+	  ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK,
+	  ACE_DEFAULT_CDR_MEMCPY_TRADEOFF to Default_Constants.h.  Helps
+	  with inter-header dependency reduction.
+
+	* ace/POSIX_Asynch_IO.cpp:
+
+	  Added missing ACE_RCSID macro.
+
+	  (bytes_transferred):
+	  Use map template traits to improve code clarity.
+	
+	* ace/POSIX_Asynch_IO.h:
+
+	  Redefined old map typedefs in terms of the map traits.
+
+	* ace/Parse_Node.h:
+	* ace/Service_Repository.h:
+
+	  No need to include "ace/Service_Types.h".  A forward declaration
+	  for ACE_Service_Types is enough.
+
+	* ace/Service_Config.h:
+
+	  No need to include "ace/Service_Types.h" and "ace/Signal.h".
+	  Forward declaring ACE_Service_Types and ACE_Sig_Adapter is
+	  enough.
+
+	* ace/Strategies_T.h:
+
+	  No need to include "ace/Service_Config.h" and
+	  "ace/Synch_Options.h".
+
+	* ace/Synch_Options.h:
+
+	  Changed all uses of typedefs like "u_char" and "u_long" to their
+	  non-typedef counterparts, e.g. "unsigned char" and "unsigned
+	  long".  Makes it possible to avoid including OS.h.  A big win in
+	  compile time reduction.
+
+	  Include "ace/Time_Value.h".  Necessitated by inter-header
+	  dependency reduction.
+
+	* ace/Synch_Options.cpp:
+
+	  Changed all uses of typedefs like "u_char" and "u_long" to their
+	  non-typedef counterparts, e.g. "unsigned char" and "unsigned
+	  long".  Makes it possible to avoid including OS.h.  A big win in
+	  compile time reduction.
+
+	  Include "ace/Trace.h".  Necessitated by inter-header
+	  dependency reduction.
+
+	* ace/Template_Instantiations.cpp:
+
+	  Removed all ACE_Hash_Map_Manager related template
+	  instantiations.  The ones for ACE_Hash_Map_Manager_Ex are all
+	  that are needed.
+
+	* ace/SSL/SSL_SOCK_Acceptor.h (ACE_SSL_SOCK_Acceptor):
+
+	  Inherit privately from ACE_SSL_SOCK, instead of publically.
+	  ACE_SSL_SOCK_Acceptor is IMPLEMENTED-IN-TERMS-OF ACE_SSL_SOCK.
+	  It does not satisfy the IS-A relationship.
+
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+
+	  Use ACE_Countdown_Time to take into account the time between
+	  each call to select() instead of using the same timeout value in
+	  each loop iteration.
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (get_remote_addr):
+
+	  Retrieve the remote addr from the parent ACE_SSL_SOCK class, not
+	  ACE_SOCK.  Addresses potential inconsistencies in the future.
+
+	* ace/SSL/SSL_SOCK_Stream.h (ACE_SSL_SOCK_Stream):
+
+	  Removed friend declarations for the
+	  ACE_SSL_SOCK_{Acceptor,Connector} classes.  They are
+	  unnecessary.
+
+Wed Feb 19 12:50:58 2003  Heather Drury  <oci@cs.wustl.edu>
+
+        * ACE version 5.3.1 released.
+
+Mon Feb 17 15:21:18 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: The Server_Protocol and the ORB_init
+	  test in RTCORBA will not run in ST builds since the operations
+	  ACE_OS::thr_getprio () are not supported.
+
+Fri Feb 14 09:53:43 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/config-osf1-4.0.h: Tru64 lacks the clearerr
+          function when built without threads (thread=0).
+          Thanks to Abhay Kulkarni <Abhay.Kulkarni@veritas.com> 
+          for reporting the problem.
+
+Thu Feb 13 17:50:07 2003  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU: Build static libraries
+          using xargs with the list of all the object files instead of
+          using them directly on the command line. This works around
+          brokenness of systems that have a small limit on the length of
+          the command-line arguments. Thanks to Abhay Kulkarni
+          <Abhay.Kulkarni@veritas.com> for reporting the problem.
+
+Thu Feb 13 12:43:27 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* bin/auto_run_tests.lst:
+	  Added TAO/examples/RTCORBA/Activity/run_test.pl to this list.
+
+Thu Feb 13 07:36:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* THANKS: Added Dmitri Belogaj to the hall of fame.
+
+Wed Feb 12 12:40:21 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Prevented a few RTCORBA tests to be run
+	  in our daily builds since changing priorities requires root
+	  access.
+
+Wed Feb 12 12:06:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Strategies.h: Added this file for backward
+	  compatibility. Backward compatibility was broken with the
+	  following checkin
+
+	  "Tue Nov 20 12:48:39 2001  Balachandran Natarajan
+	  <bala@cs.wustl.edu>". Thanks to  Dmitri Belogaj
+	  <belogaj@nentec.de> for reporting this problem.
+
+Wed Feb 12 10:18:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/MakeProjectCreator/templates/vc7.mpd: Checked in Chad's
+	  missing ssl_libs fix.
+
+Wed Feb 12 08:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/UPIPE_Addr.h:
+          Removed ACE_UPIPE_Addr class which isn't used, typedef ACE_UPIPE_Addr
+          still is there.
+
+Tue Feb 11 22:19:39 2003  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * examples/DLL/Makefile.Today (SHLIB):
+        * examples/DLL/Makefile.Newsweek (SHLIB):
+
+          Removed extra space at the end which caused compilation to
+          break. Thanks to Bill Cassanova <BCassanova@weather.com> for
+          reporting the problem.
+
+Wed Feb 12 00:00:12 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/OS.h:
+	* ace/OS.i (thr_setprio): Add a new default thr_policy parameter which
+	  allows us to explicitly set the policy in pthread_setschedparam().
+	  Introduced to eliminate a bug discovered in RT-CORBA implementation.
+
+Tue Feb 11 14:01:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* vc7_nightly.mwc: Added a temporary file specifying core nightly
+	  build targets.  Notice this file includes both ACE and TAO.
+
+	* ace/ace.mpc: Added XML_Svc_Conf.cpp.
+
+	* ace/SSL/ssl.mpc: Fixed dllflags setting.
+
+Mon Feb 10 18:08:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* THANKS: Added Otis Nyandoro to the hall of fame.
+
+Mon Feb 10 18:02:41 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Don't special-case SEH support on ACE_HAS_WINCE. First,
+          CE can do SEH; second, the switching of this on/off can and should
+          be done in the config file.
+
+        * ace/config-win32-common.h: Enable ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+          for WinCE.
+
+          Thanks to Emmanuel Thevenot Beaufort
+          <emmanuel.thevenot-beaufort@jci.com> for this fix.
+
+        * ace/Handle_Set.{h i}: Remove the ACE_Handle_Set destructor for
+          ACE_HAS_WINCE. The need for this predates the supported vc 3 and 4
+          compilers, and having it in there triggers an SEH warning.
+
+        * ace/SPIPE_Stream.i: Follow-up to:
+          Mon Feb 10 09:22:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+          Added the need for ACE_HAS_WINSOCK2 to enable this code. The calls
+          and structures used aren't available in Winsock1.
+
+        * ace/config-wince.h: Disable Winsock2 for CE versions less than 4.0.
+
+Mon Feb 10 12:14:35 2003  Jeffrey Graham <jgraham@titan.com>
+
+	* bin/ace-install:
+
+	  Fixed problem where all TAO executables were not installed.
+
+	  Fixed installed file permission problem.  Files that should have
+	  global access didn't have it.
+
+	  Fixed problem where the script did not easily flatten the
+	  install directory, requires the ACE_ARCH subdirectory trees be
+	  built.
+
+	  Fixed problem where all binaries were not filtered out.
+
+Mon Feb 10 19:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ATM_Acceptor.h:
+          Converted old style documentation to doxygen style
+
+        * ace/Arg_Shifter.h:
+          Added private declaration of copy constructor and assignment
+          operator. Instances of these class can not be copied using the
+          default ones. Also fixes a MSVC6 level 4 warning.
+
+        * ace/Configuration.cpp:
+          Removed not needed MingW ifdef, the normal code also compiles with
+          MingW
+
+        * ace/config-win32.h:
+          Removed cygwin from this file. For cygwin the config-cygwin32.h
+          must be included directly in config.h
+
+        * ace/Notification_Strategy.h:
+        * ace/Notification_Strategy.inl:
+          Made mask() method const
+
+        * include/makeinclude/ace_flags.bor:
+          If TAO_ROOT isn't defined, define it as $(ACE_ROOT)/TAO
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+          Thanks for Christopher Kohlhoff <chris@kohlhoff.com> for providing
+          a fix for the singleton template with Borland. The problem is that
+          with a singleton template the code is implicitly generated into
+          every object file that references it. The linker then strips out
+          all but a single copy of the code. When linking an exe that refers
+          to a singleton template in a dll, the linker would choose one
+          of the template code instances in the exe's .obj files, and
+          completely ignore the instance that was exported by the dll.
+
+          The key to the solution is that it appears that the borland linker
+          chooses the first instance of the template symbols that it sees. The
+          linker will let you list the .lib files in the place normally used
+          for object files. By listing the library files before any of the
+          object files, it resolves the template code against the dll exports.
+
+        * examples/Service_Configurator/Misc/Makefile:
+        * examples/Service_Configurator/Misc/Makefile.Timer:
+        * examples/Service_Configurator/Misc/Makefile.main:
+          Splitted the original GNU makefile in multiple files, one for the
+          shared library and one for the exe and one to trigger the other
+          two. This fixes the compile errors with this example with Cygwin
+          and MingW. Thanks for Vince Mounts <vince@mounts.cc> for making
+          these makefiles.
+
+Mon Feb 10 09:22:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/SPIPE_Stream.i: Added a special case for win32 platforms to
+          ACE_SPIPE_Stream::send_handle() and recv_handle() to allow handle
+          passing. The extension is necessary since the receiving side must
+          open the duplicate handle before the sending side closes it.
+
+Fri Feb  7 17:22:39 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp (ACE_OS::thr_create): Moved the pthread_setstack() call
+          (and the check for whether it's available) from inside the
+          Pthreads draft 4/6 section to the Pthreads standard section
+          and corrected the condition it's used (defined
+          ACE_HAS_PTHREAD_SETSTACK, not !defined ACE_HAS_PTHREAD_SETSTACK).
+
+          Also see:
+          Thu Jan 16 19:06:19 2003  Stephen Torri <storri@cse.wustl.edu>
+
+Fri Feb  7 16:55:58 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/config-aix-4.x.h: Reverted change to aix config file:
+
+          Fri Feb  7 15:27:40 2003  Heather Drury  <drury_h@ociweb.com>
+
+Fri Feb  7 15:37:19 2003  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Define DCCFLAGS with the
+          debugging options for xlC_r; Change DCFLAGS to just -g (for the C
+          compiler). Thanks to Trevor Fields <fields_t@ociweb.com> for
+          reporting this problem.
+
+Fri Feb  7 15:27:40 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/config-aix-4.x.h: Restored the defining of
+          ACE_TEMPLATES_REQUIRE_SOURCE for AIX VisualAge 5,
+          which is needed for building TAO.  Thanks to Trevor
+          Fields <fields_t@ociweb.com> for this fix.
+
+Fri Feb  7 13:04:51 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_wchar.h: Added a new macro, ACE_TEXT_ALWAYS_WCHAR(STRING).
+          It's the inverse of ACE_TEXT_ALWAYS_CHAR - whatever STRING is,
+          the macro produces a wide-char string. Thanks to
+          Emmanuel Thevenot Beaufort <emmanuel.thevenot-beaufort@jci.com>
+          for this macro.
+
+Thu Feb  6 19:30:18 2003  Steve Huston  <shuston@riverace.com>
+
+        * tests/SString_Test.cpp: Added a test for wide-string compares of
+          equal-length strings that differ in the last character.
+
+        * ace/String_Base.i (compare): When memcmp()-ing to compare, take
+          the size of CHAR into account when calculating byte length. Thanks
+          to Emmanuel Thevenot Beaufort <emmanuel.thevenot-beaufort@jci.com>
+          for this fix.
+
+Thu Feb  6 16:06:29 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/config-tru64.h: Added a guard around the
+          ACE_HAS_SNPRINTF as versions earlier than 5.0 do not seem
+          have this function.
+
+Thu Feb  6 15:03:04 2003  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU: Make the removal of IDL
+          generated files in realclean target dependent upon the
+          definition of IDL_FILES. MingW make crashes on empty "rm -f "
+          commands.
+
+Thu Feb  6 15:19:28 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.i: Made the other get() method const. See
+          previous ChangeLog entry.
+
+Thu Feb  6 07:13:06 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * ace/Refcounted_Auto_Ptr.{h,i} (get): Made the get() method const.
+          Thanks to Jenny Kowald <jkowald@agile.tv> for suggesting this.
+
+Wed Feb  5 20:48:47 2003  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU: Added rules to generate
+          object files from C++ file extensions .cxx, .C and .cc, in
+          addition to .cpp.
+
+Wed Feb  5 20:15:18 2003  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU: Removed the conditional
+          setting of VSHOBJS and VSHOBJS1 based on PRELIB. There is too
+          much bogosity here. This should fix HP-UX and AIX breakage.
+
+Sat Feb  1 08:43:53 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * ace/Stream_Modules.cpp (put): Return 0 rather than -1 to be consistent
+          wrt the put() semantics elsewhere in ACE.  Thanks to Jody Hagins
+          <jody@atdesk.com> for help with this.
+
+        * tests/FIFO_Test.cpp (server): Only compile this on platforms
+          that aren't Win32 since FIFO's don't work there.  Thanks to Carl
+          Halvorson <cyberdesk@yahoo.com> for reporting this.
+
+Wed Feb  5 09:45:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          Removed desciption to MINGW_BASE.
+
+Tue Feb  4 13:13:08 2003  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.bin.GNU:
+
+          Generalized the creation of objects from source files by
+          removing the dependency that the source files be named *.cpp.
+          Also removed a lot of junk.
+
+        * include/makeinclude/wrapper_macros.GNU: Removed some more
+          accumulated cruft.
+
+        * include/makeinclude/rules.nested.GNU: Fix recursive make so
+          that users can name the makefiles in sub-directories as
+          something other than Makefile by introducing a new variable
+          SUBDIR_MAKEFILE.
+
+        * ace/Makefile: Fix the Makefile to use the above extension when
+          recursing into directories.
+
+        * include/makeinclude/rules.local.GNU: Add a new local target
+          clean_idl_stubs.local which cleans all the IDL generated files.
+          This target is linked to realclean so the IDL generated files
+          will only be cleaned with realclean.
+
+          Thanks to James Mansion <james.mansion@uk.nomura.com> for
+          reporting the bugs and suggesting some fixes.
+
+Tue Feb  4 11:21:13 MST 2003 Rob Andzik <andzik@rtlogic.com>
+
+         * ACE_wrappers/include/makeinclude/platform_vxworks5.x_g++.GNU
+            - Added three new variables
+                         GCC_VERSION (defaults to gcc-2.96)
+                         VXWORKS_VERSION_FLAG (defaults to -DACE_VXWORKS=0x542)
+                         VXWORKS_STDINC_FLAG (defaults to <null>)
+
+            - Modified all sets of GCCLIB_DIR to use GCC_VERSION
+            - Modified all references to ACE_VXWORKS to use VXWORKS_VERSION_FLAG
+            - replaced -nostdinc with VXWORKS_STDINC_FLAG
+
+         * ACE_wrappers/ace/config-vxworks5.x.h
+            - Added define ACE_LACKS_CLEARERR (wrapped in ACE_VXWORKS check)
+
+         * ACE_wrappers/ace/OS.i
+            - Added ACE_UNUSED_ARG where warnings occurred.
+
+Mon Feb  3 16:33:02 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/config-freebsd.h: msgsnd() with const parameter was recently
+          added to FreeBSD-CURRENT. Thanks to Craig Rodrigues' for this change.
+
+Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
+
+        * bin/auto_run_tests.lst:
+
+          Disable TAO's IORInterceptor test for the GIOP 1.0 build
+          configuration.  The test requires IOR tagged components that are
+          not supported in GIOP 1.0.  Fixes a false positive in our
+          scoreboard.
+
+Sat Feb  1 07:50 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * Our deepest sympathies to the families and friends of the crew of
+          the US Space Shuttle Columbia, which was lost over Texas this
+          morning.
+
+          "We shall never forget them nor the last time we saw them, as
+          they prepared for their mission and waved good-bye and slipped
+          the surly bonds of Earth to touch the face of God."
+
+             - President Reagan (addressing NASA employees following the
+               tragic loss of the Challenger 7 crew on STS-51L.)
+
+          Ad astra per aspera.
+
+Sat Feb  1 09:00:00 2003  Steve Huston  <shuston@riverace.com>
+
+        * Space Shuttle Columbia breaks up at 200,000ft altitude at
+          12,500mph. 7 astronauts killed; the US and Israel mourn their loss.
+
+Fri Jan 31 12:55:26 2003  Frank Hunleth  <frank@hunleth.com>
+
+        * tests/Reactor_Exceptions_Test.cpp (worker):  Added #if defined
+          (ACE_HAS_THREADS) guard around worker () function to remove a
+          compiler warning on single threaded configurations that have
+          exceptions enabled.
+
+Thu Jan 30 21:57:58 2003  Frank Hunleth  <frank@hunleth.com>
+
+        * examples/Threads/thread_specific.cpp (worker): Added __OpenBSD__
+          to the list of OS/compilers that can check printf arguments.
+          This removes a compilation warning.
+
+Thu Jan 30 21:50:27 2003  Frank Hunleth  <frank@hunleth.com>
+
+        * ace/config-openbsd.h: Added ACE_LACKS_SETSCHED, since it turns
+          out that sched_setscheduler hasn't been implemented on OpenBSD.
+
+        * bin/auto_run_tests.lst: Disabled the MT_Cubit test for OpenBSD,
+          since it fails completely when sched_params returns an error.
+
+Thu Jan 30 10:34:02 2003  Ossama Othman  <ossama@uci.edu>
+
+        From Olivier Brunet <o.brunet@free.fr>
+        * ace/SSL/SSL_Context.cpp (report_error):
+
+          Corrected format specifier for wide string case.
+
+Wed Jan 29 12:31:51 2003  Frank Hunleth  <frank@hunleth.com>
+
+        * ace/config-openbsd.h:
+        * ace/config-openbsd-pthreads.h: Merged config files together and
+          removed config-openbsd-pthreads.h like what was done for
+          FreeBSD.
+
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_openbsd_pthreads.GNU:  Merged files
+          together and removed platform_openbsd_pthreads.GNU like
+          FreeBSD.  Also removed gratuitous link of -lstdc++.  g++ already
+          does that for us.  Thanks to Craig Rodrigues' changelog entry.
+
+Wed Jan 29 11:47:29 2003  Steve Huston  <shuston@riverace.com>
+
+        * ACEXML/tests/ContentHandler_Test.cpp: Fixed compile errors by
+          adding/correcting use of the ACEXML exception macros.
+
+Wed Jan 29 08:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Vector_T.cpp:
+          Fixed bug in resize() method, of the original vector, the last
+          item was lost during resize(). Thanks to Denis Parnaland
+          <denis.parnaland@tde.alstom.com> for reporting this.
+
+        * tests/Vector_Test.cpp:
+          Extended this test to test the resize() method of ACE_Vector.
+
+        * THANKS: Added Denis Parnaland.
+
+Tue Jan 28 18:46:41 2003  Steve Huston  <shuston@riverace.com>
+
+        * ACEXML/parser/parser/Parser.cpp (parse_element): When converting
+          an escape sequence, add its length, don't lose the length of
+          already-parsed content. Thanks to Emmanuel Thevenot Beaufort
+          <emmanuel.thevenot-beaufort@jci.com> for this fix.
+
+        * ACEXML/tests/ContentHandler_Test.{cpp dsp}: New test that
+          illustrates the problem above and validates the fix.
+
+        * ACEXML/tests/Tests.dsw:
+        * ACEXML/Makefile:
+        * ACEXML/Makefile.bor: Added ContentHandler_Test.
+
+        * THANKS: Added Emmanuel Thevenot Beaufort to the Hall of Fame.
+
+Tue Jan 28 15:47:29 2003  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU: For distrib builds,
+          changed the +h option to not specify the whole path; put the path
+          in the path search option (+b).
+
+Mon Jan 27 14:28:16 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * include/makeinclude/wrapper_macros.GNU: Remove unnecessary use
+          of GNU make basename command.  Supplied by Ganesh Pai <gpai@sonusnet.com>.
+
+Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          When AIO support is found, set the right define but also add the
+          library liblrt to the lists to link with. Only when building with
+          threading support link with the pthread library.
+
+Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Don't set any BUILD_DLL defines in this file, the BUILD_DLL defines
+          are set in the specific makefiles.
+
+Sat Jan 25 20:31:56 2003  Frank Hunleth  <frank@hunleth.com>
+
+        * ace/config-openbsd.h:
+        * ace/config-openbsd-pthread.h: Added ACE_HAS_SNPRINTF since
+          OpenBSD has snprintf() and to fix buffer overflow tested for by
+          tests/Log_Msg_Test.
+
+Sat Jan 25 18:15:48 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/auto_run_tests.lst: Added a new test to the daily builds.
+
+Sat Jan 25 13:39:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * include/makeinclude/platform_mingw32.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Removed the usage of MINGW_BASE. This is not needed for using MingW.
+          Thankx to Viktor Ransmayr <viktor.ransmayr@t-online.de> for
+          confirming that this is not needed.
+
+Fri Jan 24 07:54:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+          VxWorks 5.4 lacks some ANSI prototypes. These are defined by
+          VxWorks 5.5 so we only define these ANSI prototypes when defined
+          ACE_VXWORKS and this is equal or smaller 0x540. Else we just
+          include apra/inet.h.
+
+Thu Jan 23 17:57:05 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/README: Deleted non-ascii characters around ACE_HAS_PTHREAD_SETSTACK.
+
+Thu Jan 23 17:44:38 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * include/makeinclude/platform_freebsd.GNU: Remove gratuitous link
+          of -lstdc++.  g++ already does that for us.
+
+Wed Jan 22 21:08:48 2003  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp (Quit_Handler):
+          Sync with code in the book.
+
+Wed Jan 22 18:12:41 2003  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Service_Reporter.cpp:
+        * examples/C++NPv2/Configurable_Logging_Server.cpp: Change the
+          name of the static service descriptor from Reporter to
+          Reporter_Descriptor. This is more descriptive and matches
+          the book.
+
+Wed Jan 22 18:08:27 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * ace/config-freebsd.h: Add ACE_HAS_SNPRINTF.  Fixes Log_Msg_Test.
+
+Wed Jan 22 18:03:35 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_icc.GNU:
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Remove defines of _POSIX_THREADS and _POSIX_THREAD_SAFE_FUNCTIONS.
+          These POSIX constants are not meant to be defined by
+          the user.  The user must include <unistd.h> and *check*
+          the value of these constants.  On Linux glibc systems,
+          after including <unistd.h>, the header <bits/posix_opt.h>
+          will be eventually be included...these constants are
+          defined by the glibc implementation in that header.
+
+Wed Jan 22 10:55:39 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-tru64.h: Added ACE_HAS_SNPRINTF. Thanks to Vladimir
+          Chovanec <Vladimir.CHOVANEC@asset.sk> for this fix.
+
+Wed Jan 22 01:24:51 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * ace/Message_Queue_T.h: Corrected the documentation for
+          ACE_Message_Block_Ex so it says ACE_MESSAGE_TYPE rather than
+          ACE_Message_Block.
+
+Tue Jan 21 21:44:04 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ACEXML/examples/SAXPrint/broken.xml: Added a new broken XML file
+          to make sure we handle this case properly.
+
+        * ACEXML/parser/parser/Parser.i (get): Added a check for
+          successful <get> operation from the input CharStream to avoid
+          out of the infinite loop when reading broken XML files.  Thanks
+          to Volodymyr Orlenko <vorlenko@jaalam.com> for reporting this
+          and submitting the patch.
+
+Mon Jan 20 20:32:55 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+        * ace/Log_Msg.cpp (log): Added a '}' at line 1531 to fix a
+          nasty compiler bug on Digital UNIX.  Thanks to Igor Pisarenko
+          <Igor.Pisarenko@computershare.com.au> and
+          Pit Linnartz <Pit.Linnartz@t-mobile.de> for reporting this.
+
+Tue Jan 21 19:29:04 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * bin/auto_run_tests.lst: Disabled orbsvcs/Test/EC_MT_MCast on
+          static builds.
+
+Tue Jan 21 08:43:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/generate_doxygen.pl: Fixed a cut and paste error.
+
+Mon Jan 20 16:22:43 2003  Heather Drury <drury_h@ociweb.com>
+
+        * ace/NT_Service.cpp: Modified return statement as the
+          wait_for_service_state function is declared as void and it was
+          returning an int.
+
+Mon Jan 20 15:48:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/auto_run_tests.lst: Added a TAO test to the daily builds.
+
+Mon Jan 20 13:58:25 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/config-macosx.h: Added ACE_HAS_SNPRINTF as well as
+          ACE_LACKS_PERFECT_MULTICAST_FILTERING to make the ACE
+          Mac OSX 10.2.x build pass the Log_Msg_Test and the
+          Multicast_Test.  Thanks to John Michael Zorko <j.zorko@att.net>
+          for providing this patch.
+
+Mon Jan 20 18:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv2/Makefile.CLD:
+        * examples/C++NPv2/Makefile.SLD:
+        * examples/C++NPv2/Makefile.SLDex:
+        * examples/C++NPv2/Makefile.TPCLS:
+        * examples/C++NPv2/Makefile.TPLS:
+        * ace/RMCast/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler. Thanks to Vince Mounts
+          <vince@mounts.cc> for providing the patches.
+
+Mon Jan 20 11:58:00 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/generate_doxygen.pl: Fixed the spaces in the file names
+          of generated man pages. Thanks to Olver Kellogg for providing
+          this patch.
+
+Sun Jan 19 11:40:10 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * ace/NT_Service.{h,cpp}: Enhanced the wait_For_service_state() so
+          that it actually uses the wait_time parameter.  Thanks to Theo
+          Landman <tlandman@justcroft.com> for contributing this.
+
+        * ace/Process_Manager.cpp (spawn): Cleanup dynamically allocated
+          memory if the spawn() fails.  Thanks to Kobi Cohen-Arazi
+          <kobi@mivzak.com> for this fix.
+
+Sun Jan 19 15:03:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * websvcs/lib/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
+Sat Jan 18 17:49:20 2003  Steve Huston  <shuston@riverace.com>
+
+        * Makefile: Removed PACE references.
+
+Sat Jan 18 17:11:21 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/make_release: Use doxygen 1.2.18 as opposed to doxygen
+          1.2.13.1.
+
+Fri Jan 17 09:00:17 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * ACE-INSTALL.html (make): Removed all claims that we support
+          SunC++ 4.2.  Thanks to Kirat Singh <kirat.singh@gs.com> for
+          reporting this.
+
+Sat Jan 18 09:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.DLL_Test:
+        * tests/Makefile.Framework_Component_DLL:
+        * tests/Makefile.Service_Config_DLL:
+        * examples/Service_Configurator/IPC-tests/server/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
+Fri Jan 17 12:34:51 2003  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Updated platform and compiler information.
+
+Thu Jan 16 19:06:19 2003  Stephen Torri <storri@cse.wustl.edu>
+
+        * ace/OS.cpp:
+        * ace/config-linux-common.h:
+        * ace/config-freebsd.h:
+        * ace/README:
+
+          Added a new macro called ACE_HAS_PTHREAD_SETSTACK for systems
+          that use the newer glibc (2.3+). Eliminates linker warning about
+          not using the pthread function called pthread_setstack.
+
+Thu Jan 16 16:25:45 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/auto_run_tests.lst: Added a TAO/orbsvcs/tests/EC_MT_Mcast
+          test to the daily builds.
+
+Thu Jan 16 12:27:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * COPYING: Extended the validity of the copyright notice from 2002
+          to 2003. Should have been done yesterday, anyway, better late
+          than never.
+
+Wed Jan 15 18:02:01 2003  Bala  <bala@cs.wustl.edu>
+
+        * ACE version 5.3 released.
+
+Wed Jan 15 10:48:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/make_release: Did the following enhancements
+
+          - If it is a minor release do not append the beta version. Looks
+            like somone broke this and the script started writing out
+            things as x.3.0, whcih is bad BTW.
+
+          - We now POSIX.1 tar, instead of old tar format with the -H
+            option in cpio. This helps to tar files deep in the hierarchy
+            tree to be properly zipped. We were loosing this in many
+            betas.
+
+          - Fixes for the generated filenames copied into the
+            previous_versions directory.
+
+          - Fix to get the right Version.h file in TAO.
+
+
+Tue Jan 14 18:51:49 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/Auto_Ptr.h: Added pragma to disable warning 4284 for Microsoft
+          compilers. The warned-of behavior is exactly what is intended.
+
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+          Added a "WCE emulator" configuration section. This allows builds
+          for the WinCE emulator, necessary for working with the WinCE.NET
+          Standard SDK emulator.
+
+Tue Jan 14 14:56:12 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: For WinCE, don't include wce.h unless
+          building with MFC. wce.h is an MFC file.
+
+        * ace/config-WinCE.h: Add pragmas to link _with_ corelibc.lib and
+          _without_ oldnames.lib. These weren't needed with WinCE 3/PocketPC
+          (but they don't hurt) and are needed for WinCE .NET. The ATL headers
+          do these pragmas, but we don't want to add a dependency on ATL.
+
+Tue Jan 14 11:07:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/generate_export_file.pl: Added a patch from
+          Gonzalo Diethelm <gonzalo.diethelm@aditiva.com> which generates
+          an empty CVS Id string.
+
+Mon Jan 13 12:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          The MingW compiler can handle the export/import macros.
+
+        * ace/config-cygwin32.h:
+          Corrected the guards around this header file.
+
+Sat Jan 11 09:37:24 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+        * ace/OS_String.cpp (wcslen_emulation): Fixed a nasty formatting
+          glitch that made the code hard to read.  Thanks to Ruslan
+          Zasukhin <sunshine@public.kherson.ua> for reporting this.
+
+Fri Jan  3 21:46:00 2003  John Michael Zorko  <j.zorko@att.net>
+
+        * netsvcs/clients/Naming/Client/Makefile: Added $(ACELIB) to
+          ACE_SHLIBS to fix multple -lACE problem.  This wasn't an
+          issue on Mac OS X 10.2, but could be on other platforms.
+
+        * examples/ASX/CCM_App/Makefile: same as above
+        * netsvcs/clients/Naming/Dump_Restore/Makefile: same as above
+
+Wed Jan  8 19:27:49 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.h: Doxygenized comments for release() and copy().
+
+        * ace/UPIPE_Stream.{h cpp}: Removed the remaining_ member; use the
+          ACE_Message_BLock::length() member function to find the amount
+          of remaining data.
+
+Wed Jan  8 12:17:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/ace-install: Fixed the improper usage of "or" in the "find "
+          command used to find the inlined files with extensions .i and
+          .inl. Thanks to Oliver Kellog for providing the patch.
+
+Tue Jan  7 13:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/Makefile:
+          Set ACEXML_BUILD_DLL when building the shared lib.
+
+Mon Jan  6 18:31:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/generate_topinfo_charts.sh: Removed the range for the
+          Y-AXIS, for the graphs to auto-adjust while plotting.
+
+Mon Jan  6 16:56:04 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/topinfo_iorsize_stats.sh: Scripts for capturing the size of
+          the server and client when shipping large IOR's
+
+        * bin/topinfo_stats.sh: Renamed to topinfo_simple_stats.sh. This
+          is a better to show that we capture the sizes of a simple server
+          and client.
+
+        * bin/topinfo_simple_stats.sh: New file. We need to do some code
+          sharing between these two scripts. Just postponing that for the
+          timebeing.
+
+Mon Jan  6 11:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Removed setting ACE_OS_HAS_DLL to 1, this should be done more
+          specific in the makefiles
+
+Sat Jan  4 18:46:19 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix5.1.h: Add a #define ACE_AIX_VERS 501 if ACE_AIX_VERS
+          isn't already defined. Helps to build with Visual Age C++ incremental
+          mode. Support for incremental mode is going away after ACE 5.3, but
+          this crutch can be used for now.
+
+        * ace/Makefile.ace: Remove SOCK_Dgram_Mcast_T from TEMPLATE_FILES. See
+          Tue Jun 25 23:22:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * ace/ace.icc: Corrected the list of source files to build ACE with.
+          In addition to updating the source list, if building with Visual
+          Age C++ 5, add the TEMPLATE_FILES to the sources that get compiled.
+          Visual Age C++ 5 incremental needs to see them all.
+
+        * examples/C++NPv1/Makefile: Add .NOTPARALLEL since some of the
+          sub-makes share object files and they can get confused.
+
+        * tests/makeicc.pl: Add additional template-getting stuff for
+          Visual Age C++ 5.
+
+        * tests/ARGV_Test.icc:
+        * tests/Aio_Platform_Test.icc:
+        * tests/Arg_Shifter_Test.icc:
+        * tests/Atomic_Op_Test.icc:
+        * tests/Auto_IncDec_Test.icc:
+        * tests/Barrier_Test.icc:
+        * tests/Basic_Types_Test.icc:
+        * tests/Bound_Ptr_Test.icc:
+        * tests/Buffer_Stream_Test.icc:
+        * tests/CDR_Array_Test.icc:
+        * tests/CDR_File_Test.icc:
+        * tests/CDR_Test.icc:
+        * tests/Cache_Map_Manager_Test.icc:
+        * tests/Cached_Accept_Conn_Test.icc:
+        * tests/Cached_Allocator_Test.icc:
+        * tests/Cached_Conn_Test.icc:
+        * tests/Capabilities_Test.icc:
+        * tests/Codecs_Test.icc:
+        * tests/Collection_Test.icc:
+        * tests/Config_Test.icc:
+        * tests/Conn_Test.icc:
+        * tests/DLL_Test.icc:
+        * tests/DLL_Test_Impl.icc:
+        * tests/DLList_Test.icc:
+        * tests/Date_Time_Test.icc:
+        * tests/Dev_Poll_Reactor_Test.icc:
+        * tests/Dirent_Test.icc:
+        * tests/Dynamic_Priority_Test.icc:
+        * tests/Enum_Interfaces_Test.icc:
+        * tests/Env_Value_Test.icc:
+        * tests/FIFO_Test.icc:
+        * tests/FlReactor_Test.icc:
+        * tests/Framework_Component_DLL.icc:
+        * tests/Framework_Component_Test.icc:
+        * tests/Future_Set_Test.icc:
+        * tests/Future_Test.icc:
+        * tests/Get_Opt_Test.icc:
+        * tests/Handle_Set_Test.icc:
+        * tests/Hash_Map_Bucket_Iterator_Test.icc:
+        * tests/Hash_Map_Manager_Test.icc:
+        * tests/High_Res_Timer_Test.icc:
+        * tests/INET_Addr_Test.icc:
+        * tests/IOStream_Test.icc:
+        * tests/Lazy_Map_Manager_Test.icc:
+        * tests/Log_Msg_Test.icc:
+        * tests/Logging_Strategy_Test.icc:
+        * tests/MEM_Stream_Test.icc:
+        * tests/MM_Shared_Memory_Test.icc:
+        * tests/MT_Reactor_Timer_Test.icc:
+        * tests/MT_Reactor_Upcall_Test.icc:
+        * tests/MT_SOCK_Test.icc:
+        * tests/Malloc_Test.icc:
+        * tests/Map_Manager_Test.icc:
+        * tests/Map_Test.icc:
+        * tests/Max_Default_Port_Test.icc:
+        * tests/Mem_Map_Test.icc:
+        * tests/Message_Block_Test.icc:
+        * tests/Message_Queue_Notifications_Test.icc:
+        * tests/Message_Queue_Test.icc:
+        * tests/Message_Queue_Test_Ex.icc:
+        * tests/Multicast_Test.icc:
+        * tests/Naming_Test.icc:
+        * tests/New_Fail_Test.icc:
+        * tests/Notify_Performance_Test.icc:
+        * tests/OS_Test.icc:
+        * tests/Object_Manager_Test.icc:
+        * tests/Obstack_Test.icc:
+        * tests/OrdMultiSet_Test.icc:
+        * tests/Pipe_Test.icc:
+        * tests/Priority_Buffer_Test.icc:
+        * tests/Priority_Reactor_Test.icc:
+        * tests/Priority_Task_Test.icc:
+        * tests/Proactor_Scatter_Gather_Test.icc:
+        * tests/Proactor_Test.icc:
+        * tests/Proactor_Timer_Test.icc:
+        * tests/Process_Manager_Test.icc:
+        * tests/Process_Mutex_Test.icc:
+        * tests/Process_Strategy_Test.icc:
+        * tests/RB_Tree_Test.icc:
+        * tests/Reactor_Dispatch_Order_Test.icc:
+        * tests/Reactor_Exceptions_Test.icc:
+        * tests/Reactor_Notify_Test.icc:
+        * tests/Reactor_Performance_Test.icc:
+        * tests/Reactor_Timer_Test.icc:
+        * tests/Reactors_Test.icc:
+        * tests/Reader_Writer_Test.icc:
+        * tests/Recursive_Condition_Test.icc:
+        * tests/Recursive_Mutex_Test.icc:
+        * tests/Refcounted_Auto_Ptr_Test.icc:
+        * tests/Reverse_Lock_Test.icc:
+        * tests/SOCK_Connector_Test.icc:
+        * tests/SOCK_Send_Recv_Test.icc:
+        * tests/SOCK_Test.icc:
+        * tests/SPIPE_Test.icc:
+        * tests/SString_Test.icc:
+        * tests/SV_Shared_Memory_Test.icc:
+        * tests/Semaphore_Test.icc:
+        * tests/Service_Config_DLL.icc:
+        * tests/Service_Config_Test.icc:
+        * tests/Signal_Test.icc:
+        * tests/Sigset_Ops_Test.icc:
+        * tests/Simple_Message_Block_Test.icc:
+        * tests/Svc_Handler_Test.icc:
+        * tests/TP_Reactor_Test.icc:
+        * tests/TSS_Test.icc:
+        * tests/Task_Test.icc:
+        * tests/Thread_Manager_Test.icc:
+        * tests/Thread_Mutex_Test.icc:
+        * tests/Thread_Pool_Reactor_Resume_Test.icc:
+        * tests/Thread_Pool_Reactor_Test.icc:
+        * tests/Thread_Pool_Test.icc:
+        * tests/Time_Service_Test.icc:
+        * tests/Time_Value_Test.icc:
+        * tests/Timeprobe_Test.icc:
+        * tests/Timer_Queue_Test.icc:
+        * tests/TkReactor_Test.icc:
+        * tests/Token_Strategy_Test.icc:
+        * tests/Tokens_Test.icc:
+        * tests/UPIPE_SAP_Test.icc:
+        * tests/Upgradable_RW_Test.icc:
+        * tests/Vector_Test.icc:
+        * tests/XtReactor_Test.icc: Mostly updated to build with Visual Age
+          C++ 5 in incremental mode. Most of the tests that use templates
+          don't build. They require explicitly including the needed template
+          source files names in the .icc file. I don't have time to add them
+          all now - if anyone uses this compiler, please contact me. No wonder
+          IBM ditched this piece of junk.
+
+Fri Jan  3 17:58:21 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_Context.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler.cpp: Add __hpux to condition
+          where template members are explicitly instantiated. Also see:
+          Tue Dec  3 20:47:39 2002  Steve Huston  <shuston@riverace.com>
+
+Fri Jan  3 17:45:29 2003  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_gcc.GNU: Use HP's /usr/bin/ar
+          instead of GNU ar (which may be picked up first in PATH). GNU ar
+          crashes - missing libfl.sl.
+
+        * performance-tests/Misc/test_singleton.cpp: Add __hpux to conditions
+          for explicitly instantiating ACE_Singleton::singleton_.
+
+Fri Jan  3 07:49:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/aix_shr:
+
+          Changed the name of the AIX template instantiation macro and
+          commented on why it's needed.
+
+Thu Jan  2 17:44:29 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * ace/config-cygwin32-common.h: Set the custom export
+          macro's. These will be used when building dynamically with the
+          cygwin compiler.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd: Generate dllflags and
+          libflags into the GNU makefiles. These are important for the
+          Cygwin/MingW and Kylix compiler.
+
+Thu Jan  2 16:11:38 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * ace/config-freebsd.h: Fix use of macros for FreeBSD 4.6:
+          ACE_LACKS_RWLOCK_T, ACE_LACKS_READDIR_R, ACE_LACKS_SETSCHED,
+          ACE_LACKS_PTHREAD_THR_SIGSETMASK. Do not define SCHED_RR,
+          SCHED_IO, SCHED_FIFO, SCHED_OTHER for FreeBSD >= 4.0, since they
+          are defined in sched.h. Thanks to Craig Rodrigues for providng
+          the patch.
+
+Thu Jan  2 13:33:01 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Refcounted_Auto_Ptr.i:
+
+          Added #include of ace/Log_Msg.h for ACE_ASSERT.
+
+        * bin/aix_shr:
+
+          Added -DTAO_INSTANTIATING_TEMPLATES to the link command line.
+
+Thu Jan  2 12:38:55 2003  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Makefile.ace: Set the dllflags in Makefile. This makes it
+          possible to do __declspec (dllexport) for the symbols in the
+          dll. This is needed for the Cygwin/MingW and Kylix compiler.
+
+          Thid change takes care of the static and dynamic library cases.
+
+Thu Jan  2 08:57:26 2003  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cygwin32.GNU:  Add
+          --enable-auto-import to the linker flags. This will result in
+          the linker doing auto-import without giving warnings about
+          it.
+
+Wed Jan  1 14:26:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * bin/topinfo_stats.sh: Forgot that we run this scripts in cron
+          environment. Set the path and other details that would help to
+          ease things.
+
