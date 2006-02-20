@@ -1,0 +1,4 @@
+// $Id$
+project(Latency*): taoserver, strategies {
+  exename = Collocated_Test
+}

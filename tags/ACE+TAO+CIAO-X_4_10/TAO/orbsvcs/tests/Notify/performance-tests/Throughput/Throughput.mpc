@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Ntf Perf Throughput): notifytest, strategies, messaging, minimum_corba {
+  exename  = Throughput
+}

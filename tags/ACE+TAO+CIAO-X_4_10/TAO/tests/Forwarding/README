@@ -1,0 +1,30 @@
+/**
+
+@page Forwarding Test README File
+
+$Id$
+
+	This is a minimal test for location forwarding.  It verifies
+that the client ORB can process LOCATION_FORWARD replies correctly.
+It takes advantage of the IORTable facilities in TAO to create a
+simple corbaloc IOR, TAO always responds with a LOCATION_FORWARD
+message when a requests is made for an object in the IORTable.
+
+	The test tries to invoke a method on the object using both the
+full IOR and the corbaloc IOR, both should work to pass the test
+successfully.  The test was originally implemented because the ORB was
+having problems with location forward messages received by a follower
+thread.
+
+	To execute the test simply run:
+
+$ ./run_test.pl
+
+	the script returns 0 on success and non-zero on failures.
+
+@todo The test is not nearly a complete test for location forwarding,
+      for example, it does not test deeeply nested location forwards
+      or the interactions between location forwarding and multiple
+      profiles. 
+
+*/
