@@ -1,3 +1,9 @@
+Tue Feb 21 17:40:20 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/MonitorController.cpp:
+
+        Fixed ACE_TRACE compilation error.
+
 Mon Feb 20 15:08:49 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * CIAO version 0.4.10 released.
