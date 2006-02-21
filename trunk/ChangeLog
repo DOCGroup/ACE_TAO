@@ -1,3 +1,13 @@
+Fri Feb 17 08:15:57 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/Asynch_Acceptor.h: Used ACE_DEFAULT_ASYNCH_BACKLOG instead 
+	  of ACE_DEFAULT_BACKLOG since the latter is set to a huge value
+ 	  on Windows.  Thanks to Alex Libman and Daniel <__daniel___ at icg
+ 	  do tu-graz dot ac dot at> for their help.
+
+	* ace/Default_Constants.h: Added a new macro called
+	  ACE_DEFAULT_ASYNCH_BACKLOG that defaults to 5. 
+
 Mon Feb 20 15:03:01 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * ACE version 5.4.10 released.
