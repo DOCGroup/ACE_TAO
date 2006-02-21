@@ -72,7 +72,7 @@ int CIAO::MonitorController::svc (void)
                        "dll.symbol"),
                       -1);
   {
-    ACE_TRACE ((LM_DEBUG "Inside the init call\n"));
+    ACE_TRACE ((LM_DEBUG, "Inside the init call\n"));
 
     monitor_.reset ((MonitorBase*) factory ());
     monitor_->initialize_params (initial_domain_,
