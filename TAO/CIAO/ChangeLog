@@ -1,3 +1,17 @@
+Tue Feb 21 19:43:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Protocols/Controller/Controller.mpc
+        
+          Added avoids+= ace_for_tao to two additional projects. 
+        
+        * examples/Display/descriptors/EM.ior
+        * examples/Display/descriptors/GPS.ior
+        * examples/Display/descriptors/NavDisplay.ior
+        * examples/Display/descriptors/NavDisplayGUI.ior
+
+          Removed these ior files.  
+        
 Tue Feb 21 17:40:20 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorController.cpp:
