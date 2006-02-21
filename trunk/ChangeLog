@@ -1,3 +1,34 @@
+Tue Feb 21 23:49:20 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Truncate.{h inl cpp}: New function template, ACE_Utils::Truncate,
+          for truncating types to int. Compares the value to the maximum int
+          value and, if passed value is greater, returns the max int; else
+          returns the original value cast to int. Useful for the many places
+          that return int but maintain larger types (such as size_t)
+          internally. There's a specialization for size_t since it's used so
+          much.
+
+        * ace/ace.mpc: Add Truncate.cpp
+
+        * ace/Makefile.am: Added Truncate.{h inl cpp}
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue.cpp: Use ACE_Utils::Truncate() to return size/count
+          related values that may overflow the range of an int. Prevents odd
+          conditions that may appear as failures when dealing with very large
+          numbers of items in a queue. And, resolves compile warnings.
+
+        * ace/Timer_Heap_T.cpp: In constructor, add checks to see if max_size_
+          is outside the range of a long and reduce it if so. This ensures we
+          can cast size_t values to a long as a timer ID (pop_freelist).
+          NOTE!!! In grow_heap(), the size is doubled and there's no check for
+          failures in range or in allocation. This a problem that should be
+          looked at.
+
+        * ace/Service_Manager.cpp (reconfigure_services):
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/UPIPE_Connector.cpp (connect): Fix compiler warnings.
+
 Tue Feb 21 23:08:38 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_time.cpp: Add missing close brace for blank namespace

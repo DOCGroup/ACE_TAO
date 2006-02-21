@@ -92,7 +92,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
         // connection anymore since we're linked via the Message_Queue
         // now.
         new_stream.ACE_SPIPE::close ();
-      return result;
+      return static_cast<int> (result);
     }
 }
 
