@@ -12,6 +12,7 @@
 #include "Profile.h"
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
+#include "Remote_Object_Proxy_Broker.h"
 #include "Transport_Queueing_Strategies.h"
 #include "debug.h"
 #include "Policy_Manager.h"
@@ -36,7 +37,10 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   : type_id (repository_id)
   , orb_core_ (orb_core)
   , orb_ ()
+  , is_collocated_ (0)
   , servant_orb_ ()
+  , collocated_servant_ (0)
+  , object_proxy_broker_ (the_tao_remote_object_proxy_broker ())
   , base_profiles_ ((CORBA::ULong) 0)
   , forward_profiles_ (0)
   , profile_in_use_ (0)
@@ -267,7 +271,25 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
   return 0;
 }
 
-
+void
+TAO_Stub::is_collocated (CORBA::Boolean collocated)
+{
+  if (this->is_collocated_ != collocated)
+    {
+      if (collocated &&
+          _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
+        {
+          this->object_proxy_broker_ =
+            _TAO_Object_Proxy_Broker_Factory_function_pointer ();
+        }
+      else
+        {
+          this->object_proxy_broker_ =
+            the_tao_remote_object_proxy_broker ();
+        }
+      this->is_collocated_ = collocated;
+    }
+}
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -364,7 +386,6 @@ TAO_Stub::forward_back_one (void)
       from->get_current_profile ()->forward_to (0);
       this->forward_profiles_ = from;
     }
-
 }
 
 

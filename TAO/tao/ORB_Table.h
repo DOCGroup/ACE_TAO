@@ -61,6 +61,7 @@ namespace TAO
    */
   class TAO_Export ORB_Table
   {
+  friend class TAO_ORB_Core;
   public:
 
     /// Constructor

@@ -78,13 +78,19 @@ TAO_Stub::next_forward_profile (void)
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile_i (void)
 {
-
   TAO_Profile *pfile_next = 0;
   if (this->forward_profiles_)
     {
       pfile_next = this->next_forward_profile ();
       if (pfile_next == 0)
-        pfile_next = this->base_profiles_.get_next ();
+        {
+          // Fall back to base profiles
+          pfile_next = this->base_profiles_.get_next ();
+        }
+
+      // We may have been forwarded to / from a collocated situation
+      // Check for this and apply / remove optimisation if required.
+      this->orb_core_->reinitialize_object (this);
     }
   else
     pfile_next = this->base_profiles_.get_next ();
@@ -135,6 +141,10 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
                             0));
 
   // first reset things so we start from scratch!
+
+  // @note This reset forward could effect the collocation status
+  // but as this method is only used from the Stub ctr, when the status
+  // is already correctly set, we don't reinitialise here. sm.
   this->reset_forward ();
   this->base_profiles_.set (mprofiles);
   this->reset_base ();
@@ -152,6 +162,11 @@ TAO_Stub::next_profile_retry (void)
 
   if (this->profile_success_ && this->forward_profiles_)
     {
+      // We have a forwarded reference that we have managed to *send* a message to
+      // previously in the remote path only (but not counting object proxy broker ops).
+      // @todo I can see little sense to this. It is at best highly inconsistent. sm.
+
+      // In this case we are falling back from the forwarded IOR stright to the base IOR
       this->reset_profiles_i ();
       return 1;
     }
@@ -199,6 +214,12 @@ TAO_Stub::forward_profiles (void) const
   return this->forward_profiles_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_Stub::is_collocated (void) const
+{
+  return this->is_collocated_;
+}
+
 ACE_INLINE TAO_ORB_Core*
 TAO_Stub::orb_core (void) const
 {
@@ -223,6 +244,30 @@ ACE_INLINE void
 TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
 {
   this->servant_orb_ = CORBA::ORB::_duplicate (orb);
+}
+
+ACE_INLINE TAO_Abstract_ServantBase *
+TAO_Stub::collocated_servant (void) const
+{
+  return collocated_servant_;
+}
+
+ACE_INLINE void
+TAO_Stub::collocated_servant (TAO_Abstract_ServantBase * servant)
+{
+  this->collocated_servant_ = servant;
+}
+
+ACE_INLINE TAO::Object_Proxy_Broker *
+TAO_Stub::object_proxy_broker (void) const
+{
+  return this->object_proxy_broker_;
+}
+
+ACE_INLINE void
+TAO_Stub::object_proxy_broker (TAO::Object_Proxy_Broker * object_proxy_broker)
+{
+  this->object_proxy_broker_ = object_proxy_broker;
 }
 
 ACE_INLINE void

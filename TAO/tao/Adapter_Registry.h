@@ -95,8 +95,7 @@ public:
 
   /// Initialize a collocated object using the given stub and object
   /// pointer for lazily evaluated object references.
-  CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                            CORBA::Object_ptr o);
+  CORBA::Long initialize_collocated_object (TAO_Stub *);
 
   /// Fetch the adapter named @a name
   TAO_Adapter *find_adapter (const char *name) const;

@@ -1,3 +1,99 @@
+Tue Feb 21 17:48:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Adapter.h:
+
+          Remove the CORBA::Object_ptr argument from
+          ::initialize_collocated_object on TAO_Adapter. We need to call this
+          method in circumstances when a CORBA::Object is not available.
+
+        * tao/Adapter_Registry.h:
+        * tao/Adapter_Registry.cpp:
+
+          Reflect the above change. Also ::initialize_collocated_object must
+          now only return 0 for success if the stub it is working on has been
+          fully initialized. The registry reflects this by continuing to try
+          adapters until one returns 0.
+
+          Similarly ::create_collocated_object now will potentially call the
+          above method on all remaining adapters if, after an adapter has
+          created an Object, the Object has not been fully initialized.
+
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+
+          Create a common method ::find_object which attempts to locate an
+          object in in the table. Implement ::dispatch in terms of this method.
+
+          Implement ::initialize_collocated_object to search the table using
+          the above mentioned ::find_object method and, if one is found, to
+          forward the stub it is initializing to this object ref. Reflect the
+          change in API for ::initialize_collocated_object.
+
+          Add an implementation of ::create_collocated_object in terms of
+          ::initialize_collocated_object.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Table.h:
+
+          Include the locking changes proposed by Robert Hancock (Robert dot
+          Hancock at sedsystems dot ca) on bug #2130 with a couple of small
+          mods. Thanks to Robert Hancock for providing these.
+
+          Add a new method ::reinitialize_object to be called on stubs whenever
+          an object has been forwarded or has fallen back from a forwarded
+          location. This method determines if the stub has become (or ceased to
+          be) collocated and performs the necessary actions to set the
+          collocation relevent attributes on the stub.
+
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Object.cpp:
+
+          Remove the members TAO::Object_Proxy_Broker *proxy_broker_,
+          TAO_Abstract_ServantBase *servant_ and
+          CORBA::Boolean is_collocated_ from this class. These are now held on
+          the stub. Change all access to these values to delegate to the stub.
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+
+          Remove the CORBA::Object_ptr argument from the function
+          _TAO_collocation_Object_Proxy_Broker_Factory. It was unused and we
+          need to use this when we don't have an Object.
+
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+
+          Reflect the change in API for ::initialize_collocated_object. Make
+          that method and ::create_collocated_object use the new accessors
+          for collocation attributes on the stub rather than the CORBA::Object.
+          Make ::initialize_object only return 0 for success if it has fully
+          completed the intialisation of an object. i.e. it managed to locate
+          a collocated servant for the stub.
+
+        * tao/Stub.h:
+        * tao/Stub.i:
+        * tao/Stub.cpp:
+
+          Add the collocated servant, collocated indicator, and object proxy
+          broker members from CORBA::Object to this class with appropriate
+          accessors.
+
+          Insert calls to ::reinitialize_object on the stubs ORB core at points
+          where the stub may have moved to / from being collocated.
+
+          Together all these changes fix bugzilla bugs #1741 / #2134; #2289;
+          #1493; #2130.
+
+        * tests/Bug_2134_Regression/Bug_2134_Regression.mpc:
+        * tests/Bug_2134_Regression/Hello.idl:
+        * tests/Bug_2134_Regression/Hello.cpp:
+        * tests/Bug_2134_Regression/README:
+        * tests/Bug_2134_Regression/run_test.pl:
+
+          A regression test for bugzilla #1741 / #2134. #2289 is already in the
+          repo, as is #1493.
+
 Tue Feb 21 17:45:06 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:

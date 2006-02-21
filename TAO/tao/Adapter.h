@@ -104,10 +104,9 @@ public:
   /// Create a collocated object using the given profile and stub.
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &) = 0;
-  /// Initialize a collocated object using the given stub and object
+  /// Initialize a collocated object using the given stub
   /// pointer for lazily evaluated object references.
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                                    CORBA::Object_ptr) = 0;
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -307,11 +307,8 @@ the_tao_collocated_object_proxy_broker (void)
   return &the_broker;
 }
 
-TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (
-                               CORBA::Object_ptr obj
-                               )
+TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (void)
 {
-  ACE_UNUSED_ARG (obj);
   return the_tao_collocated_object_proxy_broker ();
 }
 
