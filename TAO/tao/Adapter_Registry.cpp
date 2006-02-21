@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Object.h"
+#include "Stub.h"
 #include "Adapter_Registry.h"
 #include "Adapter.h"
 #include "SystemException.h"
@@ -162,22 +163,38 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
         this->adapters_[i]->create_collocated_object (stub,
                                                       mprofile);
       if (x != 0)
-        return x;
+        {
+          if (!stub->collocated_servant ())
+            {
+              // This adapter created an object but it was not able to locate
+              // a servant so we need to give the rest of the adapters a chance to
+              // initialise the stub and find a servant or forward us or whatever.
+              for (CORBA::Long go_on = 1; go_on && i != this->adapters_count_; ++i)
+                {
+                  // initialize_collocated_object only returns 0 if it has completely
+                  // initialised the object.
+                  go_on = this->adapters_[i]->initialize_collocated_object (stub);
+                }
+            }
+          return x;
+        }
     }
   return 0;
 }
 
 CORBA::Long
-TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub,
-                                                    CORBA::Object_ptr obj)
+TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
       int retval =
-        this->adapters_[i]->initialize_collocated_object (stub,
-                                                          obj);
-      if (retval != 0)
-        return retval;
+        this->adapters_[i]->initialize_collocated_object (stub);
+      if (retval == 0)
+        {
+          // initialize_collocated_object only returns 0 if it has completely
+          // initialised the object. We can return early.
+          return retval;
+        }
     }
   return 0;
 }

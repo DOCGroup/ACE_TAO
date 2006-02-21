@@ -883,7 +883,8 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   stub->servant_orb (this->orb_core_.orb ());
 
   // It is ok to create a collocated object even when <sb> is
-  // zero.
+  // zero. This constructor will set the stub collocated indicator and
+  // the strategized proxy broker if required.
   CORBA::Object_ptr x;
   ACE_NEW_RETURN (x,
                   CORBA::Object (stub,
@@ -891,20 +892,16 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                                  sb),
                   CORBA::Object::_nil ());
 
-  // Here we set the strategized Proxy Broker.
-  x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
-
   // Success.
   return x;
 }
 
 CORBA::Long
-TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
-                                                  CORBA::Object_ptr obj)
+TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub)
 {
-  // @@ What about forwarding.  With this approach we are never
-  //    forwarded  when we use collocation!
-  const TAO_MProfile &mp = stub->base_profiles ();
+  // If we have been forwarded: use the forwarded profiles
+  const TAO_MProfile &mp = stub->forward_profiles () ? *(stub->forward_profiles ())
+                                                     : stub->base_profiles ();
 
   TAO_ServantBase *sb = this->get_collocated_servant (mp);
 
@@ -914,13 +911,14 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
 
   // It is ok to set the object as a collocated object even when
   // <sb> is zero.
-  obj->set_collocated_servant (sb);
+  stub->collocated_servant (sb);
 
-  // Here we set the strategized Proxy Broker.
-  obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
+  // Mark the stub as collocated. This will set the strategized object
+  // proxy broker if required.
+  stub->is_collocated (true);
 
-  // Success.
-  return 0;
+  // Return 0 (success) iff we found a servant.
+  return ! sb;
 }
 
 TAO_ServantBase *
