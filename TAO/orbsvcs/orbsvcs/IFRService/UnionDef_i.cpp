@@ -289,6 +289,9 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var obj;
   TAO_IDLType_i *impl = 0;
 
+  // Store to replace below.
+  ACE_Configuration_Section_Key key_holder = this->section_key_;
+
   for (CORBA::ULong k = 0; k < size; ++k)
     {
       key_queue.dequeue_head (next_key);
@@ -326,6 +329,11 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 
       retval[k].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+
+      // If this union contains a nested union (of another type) at
+      // some level, the above code will have changed the section key
+      // so we have to replace it with the value we stored above.
+      this->section_key (key_holder);
     }
 
   return retval._retn ();

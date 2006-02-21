@@ -1,3 +1,20 @@
+Tue Feb 21 17:45:06 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+
+          Cosmetic change to source code.
+
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp (members_i):
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp (members_i):
+
+          Fixed a bug with nested structs/nested unions that results
+          in the servant's ACE_Configuration_Section_Key (its
+          placeholder in the repository) being changed to the key
+          of the nested type, when processing returns to the top level
+          Thanks to Richard Spence <richard.spence.extern@icn.siemens.de>
+          for reporting the bogus exception thrown in TypeCodeFactory
+          that uncovered the problem. This fix closes [BUGID:2407].
+
 Mon Feb 20 15:06:27 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * TAO version 1.4.10 released.
