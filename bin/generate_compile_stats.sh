@@ -822,7 +822,7 @@ create_page ()
   fi
 
   echo "<br><hr><br>"
-  echo "<center><h2>Detail</h2></center>"
+  echo "<center><h2>Detail (${DATE})</h2></center>"
 
   echo '<TABLE border="2"><TBODY><TR><TD rowspan=2><b>Object</b></TD>'
   echo '<TD colspan="3"; align=center><b>Last Compile</b></TD></TR>'
@@ -870,6 +870,13 @@ create_page ()
       let VAL_INT="$VAL_TMP/10"
       let VAL_TENTH="$VAL_TMP-($VAL_INT*10)"
       echo "<TD align=right>${VAL_SIGN}${VAL_INT}.${VAL_TENTH}</TD></TR>"
+    else
+      echo '<TR><TD>'
+      echo "${i}"
+      echo '</TD><TD>'
+      echo '?'
+      echo "</TD><TD align=right>?</TD>"
+      echo "<TD align=right>?</TD></TR>"
     fi
   done # for
   echo '</TBODY></TABLE>'
