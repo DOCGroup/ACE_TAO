@@ -79,6 +79,7 @@ project(RoundTripClient_exec) : ciao_component_dnc {
 
 
 project (*client) : ciao_client_dnc {
+  avoids += ace_for_tao
   exename = client
   after += RoundTripClient_stub
   libs += RoundTripClient_stub Benchmark_stub
