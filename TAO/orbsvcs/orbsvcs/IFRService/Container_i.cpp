@@ -1487,7 +1487,7 @@ TAO_Container_i::create_value_box_i (const char *id,
   ACE_CHECK_RETURN (CORBA::ValueBoxDef::_nil ());
 
   return CORBA::ValueBoxDef::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ExceptionDef_ptr
