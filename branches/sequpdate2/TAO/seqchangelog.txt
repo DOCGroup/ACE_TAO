@@ -4,6 +4,12 @@
           we lack one, we get a compile error instead of this empty default
           one.
 
+        * tao/Objref_VarOut_T.h:
+          Only do an empty forward declaration of Objref_Traits. This will
+          make sure that we have to do each specialization explicitly, if
+          we lack one, we get a compile error instead of this empty default
+          one.
+
         * tao/Basic_Types.h:
           Updated the string types, these are implemented by a template now.
 
@@ -14,6 +20,9 @@
         * tao/DomainC.{h,cpp}:
         * tao/DoubleSeqC.{h,cpp}:
         * tao/FloatSeqC.{h,cpp}:
+        * tao/WStringSeqC.{h,cpp}:
+        * tao/LongSeqC.{h,cpp}:
+        * tao/IIOP_EndpointsC.{h,cpp}:
           Updated all these files because of the changes to the sequence
           implementation. The base classes are changed including the way we
           marshal and demarshal sequences. The argument to the marshal method
@@ -23,6 +32,9 @@
         * tao/Bounded_Reference_Allocation_Traits_T.h:
         * tao/Bounded_Value_Allocation_Traits_T.h:
           New allocation traits for bounded sequences
+
+        * tao/Value_Traits_T.h:
+          New value traits.
 
         * tao/Bounded_Array_Sequence_T.h:
           New template for Bounded Array Sequences
@@ -51,3 +63,36 @@
 
         * tao/Generic_Sequence_T.h:
           New generic sequence template
+
+        * tao/Managed_Types.{h,cpp,i}:
+          Removed these files
+
+        * tao/MProfile.cpp:
+          Initialise pointers with 0 and fixed retrieval of a policy
+
+        * tao/Object.{h,cpp}:
+          Made the argument of the marshal method const
+
+        * tao/operation_details.i:
+          Changed the way we reset the service info
+
+        * tao/ORB.h:
+          Updated all typedefs in this file
+
+        * tao/Policy_Set.{h,cpp.i}:
+          Made the get_policy_by_index const and fixed the
+          set_policy_overrides to work with the new sequences, as a result
+          the workarounds could be removed
+
+        * tao/Sequence_T.{cpp,i}:
+          Removed these files
+
+        * tao/Sequence_T.h:
+          Include all new sequence template files, makes it easy for old apps
+          to keep compiling
+
+        * tao/String_Alloc.{h,cpp}:
+          All string allocation methods
+
+        * tao/VarOut_T.h:
+          Removed THIS_OUT_TYPE typedef

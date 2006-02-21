@@ -33,18 +33,11 @@ namespace TAO
   /**
    * struct Objref_Traits
    *
-   * @brief Specialized for each interface in generated code.
-   *
+   * @brief Specialized for each interface in generated code. Just forward
+   * declare, a specialization must always be there, if not, we get a
+   * compile error.
    */
-  template<typename T>
-  struct Objref_Traits
-  {
-    static T * duplicate (T *);
-    static void release (T *);
-    static T * nil (void);
-    static CORBA::Boolean marshal (T *,
-                                   TAO_OutputCDR &);
-  };
+  template<typename T> struct Objref_Traits;
 }
 
 /**

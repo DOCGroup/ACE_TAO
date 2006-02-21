@@ -1004,7 +1004,7 @@ namespace TAO
   }
 
   CORBA::Boolean
-  Objref_Traits<CORBA::Object>::marshal (CORBA::Object_ptr p,
+  Objref_Traits<CORBA::Object>::marshal (const CORBA::Object_ptr p,
                                          TAO_OutputCDR & cdr)
   {
     return p->marshal (cdr);
