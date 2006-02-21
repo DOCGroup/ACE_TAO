@@ -1,0 +1,53 @@
+        * tao/Array_VarOut_T.h:
+          Only do an empty forward declaration of Array_Traits. This will
+          make sure that we have to do each specialization explicitly, if
+          we lack one, we get a compile error instead of this empty default
+          one.
+
+        * tao/Basic_Types.h:
+          Updated the string types, these are implemented by a template now.
+
+        * tao/BooleanSeqC.{h,cpp}:
+        * tao/CharSeqC.{h,cpp}:
+        * tao/CONV_FRAMEC.{h,cpp}:
+        * tao/CurrentC.{h,cpp}:
+        * tao/DomainC.{h,cpp}:
+        * tao/DoubleSeqC.{h,cpp}:
+        * tao/FloatSeqC.{h,cpp}:
+          Updated all these files because of the changes to the sequence
+          implementation. The base classes are changed including the way we
+          marshal and demarshal sequences. The argument to the marshal method
+          is also const.
+
+        * tao/Bounded_Array_Allocation_Traits.h:
+        * tao/Bounded_Reference_Allocation_Traits_T.h:
+        * tao/Bounded_Value_Allocation_Traits_T.h:
+          New allocation traits for bounded sequences
+
+        * tao/Bounded_Array_Sequence_T.h:
+          New template for Bounded Array Sequences
+
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Bounded_String_Sequence_T.h:
+        * tao/Bounded_Wstring_Sequence_T.h:
+          New template for bounded strings, derived are string and wstring
+          bounded sequences
+
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+          New template for bounded object reference sequences
+
+          New allocation traits for bounded reference
+
+        * tao/Bounded_Sequence_CDR_T.h:
+          Template method for sequence marshal/demarshal
+
+        * tao/corba.h:
+          Updated includes, Managed_Types.h is replaced with
+          String_Manager_T.h
+
+        * tao/CORBA_String.{h,cpp,inl}:
+          The CORBA::String_var/_out and CORBA::WString_var/_out are now
+          implemented with the new TAO::String_var/_out template
+
+        * tao/Generic_Sequence_T.h:
+          New generic sequence template

@@ -59,33 +59,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_WSTRINGSEQ_CH_)
 #define _CORBA_WSTRINGSEQ_CH_
-  
+
   class WStringSeq;
-  
+
   typedef
-    TAO_MngSeq_Var_T<
-        WStringSeq,
-        TAO_SeqElem_WString_Manager
+    TAO_VarSeq_Var_T<
+        WStringSeq
       >
     WStringSeq_var;
-  
+
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         WStringSeq,
-        WStringSeq_var,
-        TAO_SeqElem_WString_Manager
+        WStringSeq_var
       >
     WStringSeq_out;
-  
+
   class TAO_Export WStringSeq
     : public
-        TAO_Unbounded_WString_Sequence
+        TAO::unbounded_wstring_sequence
   {
   public:
     WStringSeq (void);
@@ -93,14 +91,14 @@ namespace CORBA
     WStringSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::WChar ** buffer, 
+        ::CORBA::WChar ** buffer,
         ::CORBA::Boolean release = 0
       );
     WStringSeq (const WStringSeq &);
     ~WStringSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef WStringSeq_var _var_type;
   };
 

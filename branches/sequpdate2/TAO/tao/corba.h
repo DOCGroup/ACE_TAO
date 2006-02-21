@@ -68,9 +68,8 @@
 // TAO specific files, avoid them as much as possible.
 
 #include "tao/CDR.h"
-
-#include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
+#include "tao/String_Manager_T.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"
