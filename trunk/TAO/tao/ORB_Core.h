@@ -614,6 +614,11 @@ public:
   CORBA::Long initialize_object (TAO_Stub *the_stub,
                                  CORBA::Object_ptr obj);
 
+  /// Reinitialise a stub after the effective profile has changed.
+  /// This will happen after a location forward has been received
+  /// or if a location forward supplied new target subsequently fails.
+  CORBA::Long reinitialize_object (TAO_Stub *stub);
+
   /// Return ORBid string.
   const char *orbid (void) const;
 
@@ -955,6 +960,10 @@ protected:
   /// Return pointer to the orb initializer registry associated with
   /// this ORB core.
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_i (void);
+
+  /// Common code from ::initialize_object and ::reinitialize_object
+  CORBA::Long initialize_object_i (TAO_Stub *the_stub,
+                                   const TAO_MProfile& mprofile);
 
 private:
 

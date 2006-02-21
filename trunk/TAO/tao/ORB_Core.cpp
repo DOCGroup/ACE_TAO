@@ -1804,11 +1804,15 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
 
   // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
   // but we are stuck in platforms without exceptions!
-  CORBA::Object_ptr x;
+  TAO_ORB_Core_Auto_Ptr collocated_orb_core;
+  CORBA::Object_ptr x = 0;
+
   {
+    // Lock the ORB_Table against concurrent modification while we
+    // iterate through the ORBs.
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
-                      this->lock_,
+                      TAO::ORB_Table::instance()->lock_,
                       CORBA::Object::_nil ());
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
@@ -1820,38 +1824,69 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
           {
-            TAO_Adapter_Registry *ar =
-              other_core->adapter_registry ();
-
-            return ar->create_collocated_object (stub,
-                                                 mprofile);
+            collocated_orb_core = other_core->_incr_refcnt();
+            break;
           }
       }
   }
 
-  // The constructor sets the proxy broker as the
-  // Remote one.
-  ACE_NEW_RETURN (x,
-                  CORBA::Object (stub, 0),
-                  0);
+  if (collocated_orb_core.get ())
+    {
+      TAO_Adapter_Registry *ar =
+        collocated_orb_core.get ()->adapter_registry ();
+
+      x = ar->create_collocated_object (stub,
+                                        mprofile);
+    }
+
+
+  if (!x)
+    {
+      // The constructor sets the proxy broker as the
+      // Remote one.
+      ACE_NEW_RETURN (x,
+                      CORBA::Object (stub, 0),
+                      0);
+    }
+
   return x;
 }
 
 CORBA::Long
 TAO_ORB_Core::initialize_object (TAO_Stub *stub,
-                                 CORBA::Object_ptr obj)
+                                 CORBA::Object_ptr)
 {
   // @@ What about forwarding.  With this approach we are never forwarded
   //    when we use collocation!
   const TAO_MProfile &mprofile =
     stub->base_profiles ();
+
+  return initialize_object_i (stub,
+                              mprofile);
+}
+
+CORBA::Long
+TAO_ORB_Core::reinitialize_object (TAO_Stub *stub)
+{
+  return initialize_object_i (stub, stub->forward_profiles ()
+                                    ? *(stub->forward_profiles ())
+                                    : stub->base_profiles ());
+}
+
+CORBA::Long
+TAO_ORB_Core::initialize_object_i (TAO_Stub *stub,
+                                   const TAO_MProfile &mprofile)
+
+{
+  CORBA::Long retval = 0;
+  TAO_ORB_Core_Auto_Ptr collocated_orb_core;
+
   {
-    // @@ Ossama: maybe we need another lock for the table, to
-    //    reduce contention on the Static_Object_Lock below, if so
-    //    then we need to use that lock in the ORB_init() function.
+    // Lock the ORB_Table against concurrent modification while we
+    // iterate through the ORBs.
     ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                               guard,
-                              this->lock_,
+                              TAO::ORB_Table::instance()->lock_,
                               0));
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
@@ -1863,16 +1898,21 @@ TAO_ORB_Core::initialize_object (TAO_Stub *stub,
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
           {
-            TAO_Adapter_Registry * const ar =
-              other_core->adapter_registry ();
-
-            return ar->initialize_collocated_object (stub,
-                                                     obj);
+            collocated_orb_core = other_core->_incr_refcnt ();
+            break;
           }
       }
   }
 
-  return 0;
+  if (collocated_orb_core.get ())
+    {
+      TAO_Adapter_Registry *ar =
+        collocated_orb_core->get ()->adapter_registry ();
+
+      retval = ar->initialize_collocated_object (stub);
+    }
+
+  return retval;
 }
 
 CORBA::Boolean

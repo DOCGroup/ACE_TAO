@@ -36,12 +36,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
+class TAO_Abstract_ServantBase;
 class TAO_Policy_Set;
 class TAO_Profile;
 
 namespace TAO
 {
   class ObjectKey;
+  class Object_Proxy_Broker;
   class Transport_Queueing_Strategy;
 }
 
@@ -200,6 +202,12 @@ public:
   /// Accessor.
   TAO_ORB_Core* orb_core (void) const;
 
+  /// Is this stub collocated with the servant?
+  CORBA::Boolean is_collocated (void) const;
+
+  /// Mutator to mark this stub as being collocated with the servant.
+  void is_collocated (CORBA::Boolean);
+
   /// This returns a duplicated ORB pointer.
   CORBA::ORB_ptr servant_orb_ptr (void);
 
@@ -213,6 +221,22 @@ public:
    * temporary.
    */
   void servant_orb (CORBA::ORB_ptr orb);
+
+  /// Mutator for setting the servant in collocated cases.
+  void collocated_servant (TAO_Abstract_ServantBase* servant);
+
+  /// Accessor for the servant reference in collocated cases.
+  TAO_Abstract_ServantBase* collocated_servant (void) const;
+
+  /// Mutator for setting the object proxy broker pointer.
+  /// CORBA::Objects using this stub will use this for standard calls
+  /// like is_a; get_interface; etc...
+  void object_proxy_broker (TAO::Object_Proxy_Broker *proxy_broker);
+
+  /// Accessor for getting the object proxy broker pointer.
+  /// CORBA::Objects using this stub use this for standard calls
+  /// like is_a; get_interface; etc...
+  TAO::Object_Proxy_Broker *object_proxy_broker (void) const;
 
   /**
    * Create the IOP::IOR info. We will create the info at most once.
@@ -302,6 +326,10 @@ protected:
    */
   CORBA::ORB_var orb_;
 
+  /// Flag that indicates that this stub is collocated (and that it
+  /// belongs to an ORB for which collocation optimisation is active).
+  CORBA::Boolean is_collocated_;
+
   /**
    * If this stub refers to a collocated object then we need to hold on to
    * the servant's ORB (which may be different from the client ORB) so that,
@@ -310,6 +338,18 @@ protected:
    *      the ORB's RootPOA.
    */
   CORBA::ORB_var servant_orb_;
+
+  /// Servant pointer.  It is 0 except for collocated objects.
+  TAO_Abstract_ServantBase *collocated_servant_;
+
+  /// Pointer to the Proxy Broker
+  /**
+    * This cached pointer instance takes care of routing the call for
+    * standard calls in CORBA::Object like _is_a (), _get_component
+    * () etc.
+    */
+  TAO::Object_Proxy_Broker *object_proxy_broker_;
+
 
   /// Ordered list of profiles for this object.
   TAO_MProfile base_profiles_;

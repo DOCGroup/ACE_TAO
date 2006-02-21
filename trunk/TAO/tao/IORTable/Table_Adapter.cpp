@@ -11,7 +11,9 @@
 #include "IOR_Table_Impl.h"
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
+#include "tao/Stub.h"
 #include "tao/ORB.h"
+#include "tao/Profile.h"
 
 ACE_RCSID (IORTable,
            Table_Adapter,
@@ -64,26 +66,8 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var object_key;
-  TAO::ObjectKey::encode_sequence_to_string (object_key.out (),
-                                            key);
-  ACE_TRY
-    {
-      CORBA::String_var ior =
-        this->root_->find (object_key.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      forward_to =
-        this->orb_core_->orb ()->string_to_object (ior.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (IORTable::NotFound, nf_ex)
-    {
-      return TAO_Adapter::DS_MISMATCHED_KEY;
-    }
-  ACE_ENDTRY;
-  return TAO_Adapter::DS_FORWARD;
+  return this->find_object (key, forward_to) ? TAO_Adapter::DS_FORWARD
+                                             : TAO_Adapter::DS_MISMATCHED_KEY;
 }
 
 const char *
@@ -102,15 +86,88 @@ CORBA::Object_ptr
 TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
                                              const TAO_MProfile &)
 {
-  return new CORBA::Object (stub);
+  CORBA::Object_ptr result = CORBA::Object::_nil ();
+
+  if (! this->initialize_collocated_object (stub)) // 0 == success
+    {
+      // A reference was found in the table. The stub has been forwarded
+      // to this. The collocation indicators are now correct on the stub
+      // (although they may well now indicate that the stub is not in fact
+      // collocated at all).
+      ACE_NEW_RETURN (result,
+                      CORBA::Object (stub,
+                                     stub->is_collocated (),
+                                     stub->collocated_servant ()),
+                      CORBA::Object::_nil ());
+
+    }
+
+  return result;
 }
 
 CORBA::Long
-TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *,
-                                                 CORBA::Object_ptr )
+TAO_Table_Adapter::initialize_collocated_object (TAO_Stub * stub)
 {
-  return 0;
+  // Get the effective profile set.
+  const TAO_MProfile &mp = stub->forward_profiles () ? *(stub->forward_profiles ())
+                                                     : stub->base_profiles ();
+  TAO_PHandle j = 0;
+  // We only look at the key from the 0th profile but we only really care about
+  // corbaloc's here where all profiles share a single object key
+  TAO::ObjectKey_var key = mp.get_profile (j)->_key ();
+
+  CORBA::Object_var forward_to = CORBA::Object::_nil ();
+  CORBA::Boolean found = false;
+
+  ACE_TRY_NEW_ENV
+    {
+      found = this->find_object (key, forward_to.out ());
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
+  if (found)
+    {
+      // This call will set the appropriate collocation values
+      // to correspond to the reference we found in the table.
+      stub->add_forward_profiles (forward_to->_stubobj ()->base_profiles ());
+      stub->next_profile ();
+    }
+
+  // 0 for success
+  return ! found;
 }
+
+CORBA::Long
+TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
+                                CORBA::Object_out forward_to
+                                ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::String_var object_key;
+  TAO::ObjectKey::encode_sequence_to_string (object_key.out (),
+                                            key);
+  ACE_TRY
+    {
+      CORBA::String_var ior =
+        this->root_->find (object_key.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      forward_to =
+        this->orb_core_->orb ()->string_to_object (ior.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (IORTable::NotFound, nf_ex)
+    {
+      return 0;
+    }
+  ACE_ENDTRY;
+  return 1;
+}
+
 // ****************************************************************
 
 TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory (void)

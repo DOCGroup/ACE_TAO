@@ -56,9 +56,15 @@ public:
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                                    CORBA::Object_ptr);
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
 private:
+  /// Helper method to find an object bound in the table.
+  /// @return 1 if found, 0 otherwise.
+  CORBA::Long find_object (TAO::ObjectKey &key,
+                           CORBA::Object_out forward_to
+                           ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// The ORB Core we belong to
   TAO_ORB_Core *orb_core_;
 
