@@ -72,7 +72,7 @@ public:
    *                associated @c ACE_Service_Handler::addresses() method
    *                after any call to @c validate_new_connection() and prior
    *                to the @c open() hook method call.
-   * @param backlog Optional, defaulting to @c ACE_DEFAULT_BACKLOG (which
+   * @param backlog Optional, defaulting to @c ACE_DEFAULT_ASYNCH_BACKLOG (which
    *                can be adjusted in your platform's @c config.h file).
    *                Specifies the listening backlog for the listening socket.
    * @param reuse_addr Optional, indicates whether the @c SO_REUSEADDR
@@ -109,7 +109,7 @@ public:
   virtual int open (const ACE_INET_Addr &address,
                     size_t bytes_to_read = 0,
                     int pass_addresses = 0,
-                    int backlog = ACE_DEFAULT_BACKLOG,
+                    int backlog = ACE_DEFAULT_ASYNCH_BACKLOG,
                     int reuse_addr = 1,
                     ACE_Proactor *proactor = 0,
                     int validate_new_connection = 0,
