@@ -1,3 +1,8 @@
+Tue Feb 21 23:08:38 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_time.cpp: Add missing close brace for blank namespace
+          in ACE_HAS_WINCE case.
+
 Tue Feb 21 20:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/ace/TMCast/MTQueue.hpp:

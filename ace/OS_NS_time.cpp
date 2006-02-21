@@ -48,6 +48,7 @@ namespace
     };
 
   static ACE_TCHAR const ACE_OS_CTIME_R_FMTSTR[] = ACE_LIB_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+} /* end blank namespace */
 #endif /* ACE_HAS_WINCE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
