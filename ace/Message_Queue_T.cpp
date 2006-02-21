@@ -14,6 +14,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Notification_Strategy.h"
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1015,7 +1016,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
   if (this->signal_dequeue_waiters () == -1)
     return -1;
   else
-    return this->cur_count_;
+    return ACE_Utils::Truncate (this->cur_count_);
 }
 
 // Actually put the node(s) at the head (no locking)
@@ -1059,7 +1060,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
   if (this->signal_dequeue_waiters () == -1)
     return -1;
   else
-    return this->cur_count_;
+    return ACE_Utils::Truncate (this->cur_count_);
 }
 
 // Actually put the node at its proper position relative to its
@@ -1130,7 +1131,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
   if (this->signal_dequeue_waiters () == -1)
     return -1;
   else
-    return this->cur_count_;
+    return ACE_Utils::Truncate (this->cur_count_);
 }
 
 // Actually put the node at its proper position relative to its
@@ -1246,7 +1247,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
       && this->signal_enqueue_waiters () == -1)
     return -1;
   else
-    return this->cur_count_;
+    return ACE_Utils::Truncate (this->cur_count_);
 }
 
 // Get the earliest (i.e., FIFO) ACE_Message_Block with the lowest
@@ -1322,7 +1323,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
       && this->signal_enqueue_waiters () == -1)
     return -1;
   else
-    return this->cur_count_;
+    return ACE_Utils::Truncate (this->cur_count_);
 }
 
 // Actually get the last ACE_Message_Block (no locking, so must be
@@ -1371,7 +1372,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i (ACE_Message_Block *&dequeued)
       && this->signal_enqueue_waiters () == -1)
     return -1;
   else
-    return this->cur_count_;
+    return ACE_Utils::Truncate (this->cur_count_);
 }
 
 // Actually get the ACE_Message_Block with the lowest deadline time
@@ -1467,7 +1468,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
     return -1;
 
   first_item = this->head_;
-  return this->cur_count_;
+  return ACE_Utils::Truncate (this->cur_count_);
 }
 
 template <ACE_SYNCH_DECL> int

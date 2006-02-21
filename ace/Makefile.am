@@ -323,6 +323,7 @@ libACE_la_SOURCES = \
   Token_Manager.cpp \
   Token_Request_Reply.cpp \
   Trace.cpp \
+  Truncate.cpp \
   UNIX_Addr.cpp \
   UPIPE_Acceptor.cpp \
   UPIPE_Connector.cpp \
@@ -1043,6 +1044,8 @@ nobase_include_HEADERS += \
   Token_Request_Reply.h \
   Token_Request_Reply.inl \
   Trace.h \
+  Truncate.h \
+  Truncate.inl \
   Typed_SV_Message.cpp \
   Typed_SV_Message.h \
   Typed_SV_Message.inl \

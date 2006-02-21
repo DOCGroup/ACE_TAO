@@ -233,8 +233,8 @@ ACE_Service_Manager::reconfigure_services (void)
   // the rug" out from underneath the existing services in a
   // problematic way.
   ACE_Service_Config::reconfig_occurred ((sig_atomic_t) 1);
-  return this->client_stream_.send_n ("done\n",
-                                      sizeof ("done\n"));
+  return static_cast<int> (this->client_stream_.send_n ("done\n",
+                                                        sizeof ("done\n")));
 }
 
 // isolate the request-processing code

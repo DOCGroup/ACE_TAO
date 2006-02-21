@@ -3340,15 +3340,15 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
-  int initiate_result = ACE_OS::recvfrom (result->handle (),
-                                          iov,
-                                          iovcnt,
-                                          number_of_bytes_recvd,
-                                          result->flags_,
-                                          result->saddr (),
-                                          &(result->addr_len_),
-                                          result,
-                                          0);
+  ssize_t initiate_result = ACE_OS::recvfrom (result->handle (),
+                                              iov,
+                                              iovcnt,
+                                              number_of_bytes_recvd,
+                                              result->flags_,
+                                              result->saddr (),
+                                              &(result->addr_len_),
+                                              result,
+                                              0);
   if (initiate_result == SOCKET_ERROR)
   {
     // If initiate failed, check for a bad error.
@@ -3667,15 +3667,15 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 
   // do the scatter/gather send
 
-  int initiate_result = ACE_OS::sendto (result->handle (),
-                                        iov,
-                                        iovcnt,
-                                        number_of_bytes_sent,
-                                        result->flags_,
-                                        (sockaddr *) addr.get_addr (),
-                                        addr.get_size(),
-                                        result,
-                                        0);
+  ssize_t initiate_result = ACE_OS::sendto (result->handle (),
+                                            iov,
+                                            iovcnt,
+                                            number_of_bytes_sent,
+                                            result->flags_,
+                                            (sockaddr *) addr.get_addr (),
+                                            addr.get_size(),
+                                            result,
+                                            0);
 
 
   if (initiate_result == SOCKET_ERROR)
