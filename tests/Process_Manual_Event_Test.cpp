@@ -92,7 +92,7 @@ acquire_release (void)
           event_ping.signal ();
 
           if (event_pong.wait ())
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P) %p\n"),
                         ACE_TEXT ("Failed acquiring pong")));
           else
@@ -109,12 +109,14 @@ acquire_release (void)
       wait.sec (wait.sec () + 3); // timeout in 3 secs
 
       if (event_pong.wait (&wait))
-        if (errno != ETIME)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P) %p, but expected ETIME\n"),
-                      ACE_TEXT ("event_pong.wait()")));
+        {
+          if (errno != ETIME)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P) %p, but expected ETIME\n"),
+                        ACE_TEXT ("event_pong.wait()")));
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquired pong without release()\n")));
 
       event_ping.signal ();   // release waiting parent before timeout
@@ -124,7 +126,7 @@ acquire_release (void)
       for (i = 0; i < iterations; ++i)
         {
           if (event_ping.wait ())
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P) %p\n"),
                         ACE_TEXT ("Failed acquiring ping")));
           else
@@ -149,8 +151,8 @@ acquire_release (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P) %p but should be ETIME\n"),
                         ACE_TEXT ("Acquire pong")));
-          else
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) Acquire pong timed out\n")));
+
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) Acquire pong timed out\n")));
         }
     }
 }
