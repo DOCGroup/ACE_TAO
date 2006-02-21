@@ -291,12 +291,10 @@ endif # threads
 #### versioned_so on (1).
 ####
 exceptions ?= 1
-
 fast ?= 0
-
 rtti ?= 1
-
 versioned_so ?= 1
+use_dep_libs ?= 1
 
 SOVERSION ?=
 SONAME ?=
