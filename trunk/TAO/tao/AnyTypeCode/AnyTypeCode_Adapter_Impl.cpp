@@ -92,6 +92,42 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Short va
 }
 
 void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::UShort value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Float value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Double value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::LongLong value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::ULongLong value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::LongDouble value)
+{
+  (*any) <<= value;
+}
+
+void
 TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy)
 {
   (*any) <<= policy;
