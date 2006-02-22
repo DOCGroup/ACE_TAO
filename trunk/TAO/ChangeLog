@@ -1,7 +1,13 @@
+Wed Feb 22 23:42:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerate for new files.
+
 Wed Feb 22 20:54:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/LogNotification.cpp:
-        
+
           _duplicate() log reference before assigning it to event's logref
           field to get life cycle/reference count management right.  Fixes
           bugzilla issue #2416.
@@ -10,7 +16,7 @@ Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
         * tao/PluggableMessaging.h: Remove abstract operation:
         read_message, missing_data, get_message_data. Add abstract
         operation parse_next_message (), consolidate_fragmented_message,
-        discard_fragmented_message. 
+        discard_fragmented_message.
 
         * tao/GIOPMessageBase.{h,cpp}: Remove implementation for
         read_message. Add parse_incoming_messages. Add implementation for
@@ -22,7 +28,7 @@ Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
         unknown size, allocating message_blocks of size
         ACE_CDR::DEFAULT_BUFSIZE. Handle memory allocation failures in
         code. Wrap output-strings with ACE_TEXT macro.
-            
+
         * tao/GIOP_Message_Lite.{h,cpp}: Remove implementation of
         read_message and get_message_data. Handle
         GIOP_MESSAGE_CANCELREQUEST. IMplement new virtual method
@@ -40,7 +46,7 @@ Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
         missing_data_tail, find_fragment_chain. Change return type to
         "int" for operation consolidate, return value -1 indicating out of
         memory cases.
-        
+
         * tao/Transport.{h,cpp}: Major changes: New implementation of
         operation handle_input() fixing following, errors with GIOP
         fragment handling that showed up testing with Java_Big_Request
@@ -56,17 +62,17 @@ Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
         "incoming_message_stack_" of type Incomig_Message_Stack. Minor
         changes: Wrap output strings with ACE_TEXT macro, remove
         ACE_ASSERT statements.
-        
+
         * tao/Strategies/DIOP_Transport.cpp: Compensate memory buffer
         alignment.
-        
+
         * tao/Strategies/SHMIOP_Transport.{h,cpp}: Compensate memory
         buffer alignment.  Adapt to new interface of
         PluggableMessaging. Add specialized implemenation of
         PLuggable_Messaging::handle_input()
-        
+
         * tao/tao.mpc: Add dependency to tao/IncomingMessageStack.{h,cpp}
-        
+
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Tranport.cpp: Adapt to new
         interface of PluggableMessaging.
 
@@ -89,7 +95,7 @@ Wed Feb 22 16:45:29 GMT 2006  Rich Seibel <seibel_r@ociweb.com>
           Only broken builds, like MSVC6 should require the
           reinterpret_cast<>, otherwise builds should need
           no cast.  Thus, only the broken compilers should
-          be singled out.  Thanks to the XL 7 compiler on 
+          be singled out.  Thanks to the XL 7 compiler on
           AIX for pointing this out.
 
 Wed Feb 22 15:56:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
