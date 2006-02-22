@@ -1,3 +1,17 @@
+Wed Feb 22 16:31:28 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/vcl.mpb:
+
+          Added the 'bmake' type in order to support VCL.
+
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Simplified these scripts by using FindBin.  Also, made a
+          modification to preserve @ARGV so that when it is used by the
+          workspace creators, it contains the original arguments provided by
+          the user.
+
 Wed Feb 22 16:26:43 GMT 2006  Rich Seibel <seibel_r@ociweb.com>
 
         * include/makeinclude/platform_aix_ibm.GNU:
