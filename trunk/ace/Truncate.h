@@ -34,11 +34,11 @@ namespace ACE_Utils
  *        diagnostics.
  */
 template<typename X>
-ACE_NAMESPACE_INLINE_FUNCTION int Truncate (const X& val);
+ACE_INLINE_TEMPLATE_FUNCTION int Truncate (const X& val);
 
 // Specialize one for size_t to alleviate the explicit instantiation pain.
 template<>
-ACE_NAMESPACE_INLINE_FUNCTION int Truncate<size_t> (const size_t& val);
+ACE_INLINE_TEMPLATE_FUNCTION int Truncate<size_t> (const size_t& val);
 
 } // namespace ACE_Utils
 
