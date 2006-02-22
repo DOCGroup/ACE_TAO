@@ -292,6 +292,16 @@ ACE_String_Base<CHAR>::clear (int release)
 
 // Assignment operator (does copy memory).
 template <class CHAR> ACE_String_Base<CHAR> &
+ACE_String_Base<CHAR>::operator= (const CHAR *s)
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::operator=");
+  if (s != 0)
+    this->set (s, 1);
+  return *this;
+}
+
+// Assignment operator (does copy memory).
+template <class CHAR> ACE_String_Base<CHAR> &
 ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator=");
@@ -475,7 +485,7 @@ ACE_String_Base<CHAR>::operator+= (const CHAR* s)
   size_t slen = 0;
   if (s != 0)
     slen = ACE_OS::strlen (s);
-  return this->append(s, slen);
+  return this->append (s, slen);
 }
 
 template <class CHAR> ACE_String_Base<CHAR> &

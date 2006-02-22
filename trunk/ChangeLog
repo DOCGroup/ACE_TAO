@@ -1,3 +1,12 @@
+Wed Feb 22 16:50:16 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.{h cpp}: Add operator= to set string from a
+          CHAR*. Optimizes performance in this case by removing the need
+          for a temporary object. Thanks to Kelly Hickel <kfh at mqsoftware
+          dot com> for this improvement.
+
+        * tests/SString_Test.cpp: Added test for new operator=.
+
 Wed Feb 22 17:26:01 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.h:
