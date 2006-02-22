@@ -139,72 +139,11 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ACE_TRY
-  {
-    // I would much rather avoid exceptions here, however the
-    // ServerRequestInfo provides no other means of getting the
-    // effective POA policies (as of CORBA 3.0.3)
-    CORBA::Policy_var policy =
-      ri->get_server_policy (Security::SecQOPPolicy
-                             ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    SecurityLevel2::QOPPolicy_var qop_policy =
-      SecurityLevel2::QOPPolicy::_narrow (policy.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    CORBA::Boolean no_ssl =
-      this->ssliop_current_->no_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    Security::QOP qop = qop_policy->qop();
-
-    if (TAO_debug_level >= 3)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("SSLIOP (%P|%t) Interceptor, ")
-                  ACE_TEXT("server policy qop=%x, ssl context=%d\n"),
-                  qop, !(no_ssl)));
-
-    // If the active policy requires stronger security guarantees
-    // than SecQOPNoProtection and this invocation is not within
-    // a secure channel then it cannot proceed.
-    if (no_ssl && qop > ::Security::SecQOPNoProtection)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("SSLIOP (%P|%t) No SSL context and a server policy")
-                  ACE_TEXT(" mandates higher QoP (0x%x), than NoProtection\n"),
-                  qop, this->qop_));
-
-      ACE_THROW (CORBA::NO_PERMISSION ());
-    }
-  }
-  ACE_CATCH (CORBA::INV_POLICY, ex)
-  {
-    // No policy specific set, i.e. assume same as this->qop_
-    if (ex.minor () == (CORBA::OMGVMCID | 3))
-    {
-      if (TAO_debug_level >= 3)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("SSLIOP (%P|%t) No explicit")
-                    ACE_TEXT(" server security policy was set.\n")));
-      }
-      return;
-    }
-
-    // If a policy for the given type was not registered via
-    // register_policy_factory, this operation (get_server_policy)
-    // will raise INV_POLICY with a standard minor code of 3.
-    // Anything else gets re-thrown.
-    ACE_RE_THROW;
-  }
-  ACE_ENDTRY;
 }
 
 void

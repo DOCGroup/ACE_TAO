@@ -1,3 +1,42 @@
+Wed Feb 22 15:56:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          Reverting a change, added with the commits from
+          Fri Feb 10 20:40:31 UTC 2006 and Thu Feb  9 19:59:41 UTC
+          2006. The original intent was to ensure that unsecured clients
+          can not make invocations on servants, explicitly marked as
+          secure. The problem is in that a client-side-only policy
+          (Security::SecQoP*) was used, which is not permitted by the
+          CORBA specification. An alternative solution, based upon
+          SecurityLevel2 SecureInvocationPolicy or SecurityLevel3
+          ObjectCredentialsPolicy should be sought. Thanks
+          to Ossama Othman <Ossama_Othman at symantec dot com> for
+          pointing that out and discussing the alternatives.
+
+        * NEWS:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * orbsvcs/tests/Security/Policies/Foo.idl:
+        * orbsvcs/tests/Security/Policies/Foo_i.h:
+        * orbsvcs/tests/Security/Policies/Foo_i.cpp:
+        * orbsvcs/tests/Security/Policies/Policies.mpc:
+        * orbsvcs/tests/Security/Policies/README:
+        * orbsvcs/tests/Security/Policies/cacert.pem:
+        * orbsvcs/tests/Security/Policies/client.conf:
+        * orbsvcs/tests/Security/Policies/client.conf.xml:
+        * orbsvcs/tests/Security/Policies/client.cpp:
+        * orbsvcs/tests/Security/Policies/client_cert.pem:
+        * orbsvcs/tests/Security/Policies/client_key.pem:
+        * orbsvcs/tests/Security/Policies/client_nopasswd.conf:
+        * orbsvcs/tests/Security/Policies/client_nopasswd.conf.xml:
+        * orbsvcs/tests/Security/Policies/run_test.pl:
+        * orbsvcs/tests/Security/Policies/server.conf:
+        * orbsvcs/tests/Security/Policies/server.conf.xml:
+        * orbsvcs/tests/Security/Policies/server.cpp:
+        * orbsvcs/tests/Security/Policies/server_cert.pem:
+        * orbsvcs/tests/Security/Policies/server_key.pem:
+        * orbsvcs/tests/Security/Policies/server_key_nopasswd.pem:
+
+          Removed these files.
+
 Wed Feb 22 12:15:30 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2134_Regression/Hello.cpp:
