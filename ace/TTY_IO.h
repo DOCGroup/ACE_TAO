@@ -91,8 +91,8 @@ public:
     bool rcvenb;
     /** Controls whether DSR is disabled or enabled (Win32). */
     bool dsrenb;
-    /** Controls whether DTR is disabled or enabled (Win32). */
-    int dtrdisable;
+    /** Controls whether DTR is disabled or enabled. */
+    bool dtrdisable;
     /** Data bits. Valid values 5, 6, 7 and 8 data bits.
         Additionally Win32 supports 4 data bits. */
     unsigned char databits;
