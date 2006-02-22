@@ -1,4 +1,9 @@
+Wed Feb 22 15:48:15 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Heap_T.cpp: Fixed mismatch signed/unsigned compare warning.
+
 Wed Feb 22 08:33:03 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
         * include/makeinclude/platform_lynxos.GNU
         * ace/config-lynxos.h
           change settings for building dynamic libraries
