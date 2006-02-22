@@ -1,8 +1,13 @@
+Wed Feb 22 22:18:56 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Run some more tests on LynxOS.
+
 Wed Feb 22 21:30:35 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/Truncate.inl:
           Added include "ace/os_include/os_limits.h" to pull INT_MAX.
-	  
+
         * ace/config-lynxos.h:
           Define ACE_LACKS_NUMERIC_LIMITS when compiling with GCC 2.x.
           Define ACE_HAS_POSIX_SEM on LynxOS 4.0.
