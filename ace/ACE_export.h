@@ -58,8 +58,15 @@
 #  else
 #    define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS inline
 #  endif
+#  define ACE_INLINE_TEMPLATE_FUNCTION inline
 #else
 #  define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS
+// Microsoft Visual C++ will accept 'extern'; others refuse.
+#  if defined (_MSC_VER)
+#    define ACE_INLINE_TEMPLATE_FUNCTION extern
+#  else
+#    define ACE_INLINE_TEMPLATE_FUNCTION
+#  endif
 #endif
 
 #endif     /* ACE_EXPORT_H */
