@@ -62,6 +62,17 @@ namespace CIAO
     : public virtual POA_Deployment::NodeApplication
   {
   public:
+    enum Component_State
+    {
+      NEW_BORN, PRE_ACTIVE, ACTIVE, POST_ACTIVE, PASSIVE, DEACTIVATED
+    };
+
+    typedef struct _component_state_info
+    {
+      Components::CCMObject_var objref_;
+      Component_State state_;
+    } Component_State_Info;
+
     NodeApplication_Impl (CORBA::ORB_ptr o,
                           PortableServer::POA_ptr p,
                           NodeApp_Configurator &c,
@@ -224,14 +235,14 @@ namespace CIAO
     Component_Container_Map component_container_map_;
 
 
-    /// To store all created Component object.
+    /// To store all created Component object as well as their state.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Components::CCMObject_var,
+                                    Component_State_Info,
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> CCMComponent_Map;
     typedef CCMComponent_Map::iterator Component_Iterator;
-    CCMComponent_Map component_objref_map_;
+    CCMComponent_Map component_state_map_;
 
     /// A Map which stores all the connection cookies
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
