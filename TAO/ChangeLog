@@ -1,3 +1,11 @@
+Wed Feb 22 16:55:24 GMT 2006  Rich Seibel <seibel_r@ociweb.com>
+
+        * examples/RTScheduling/MIF_Scheduler/svc.conf.client:
+        * examples/RTScheduling/MIF_Scheduler/svc.conf.server:
+          Changed priority policy from direct to continuous.
+          The direct does not work on AIX 5.3, but continuous
+          seems to work everywhere.
+
 Wed Feb 22 16:45:29 GMT 2006  Rich Seibel <seibel_r@ociweb.com>
 
         * tao/Array_VarOut_T.inl:
