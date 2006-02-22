@@ -34,6 +34,8 @@ main (int argc, char *argv[])
 
   always Shutdown( server.in () ); // When goes out of scope!
   server->invoke_me ();
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+  server->invoke_me ();
 
   return 0;
 }
