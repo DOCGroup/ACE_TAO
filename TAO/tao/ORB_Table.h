@@ -25,7 +25,6 @@
 
 #include "tao/orbconf.h"
 #include "tao/CORBA_String.h"
-#include "tao/ORB_Core.h"
 
 #include "ace/Array_Map.h"
 #include "ace/Thread_Mutex.h"
