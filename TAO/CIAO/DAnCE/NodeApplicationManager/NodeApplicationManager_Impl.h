@@ -7,6 +7,7 @@
  *  @file    NodeApplicationManager_Impl.h
  *
  *  @author  Tao Lu <lu@dre.vanderbilt.edu>
+ *  @author  Gan Deng <dengg@dre.vanderbilt.edu>
  *
  *  This file contains implementation for the servant of
  *  Deployment::NodeApplicationManager.
@@ -76,6 +77,7 @@ namespace CIAO
     virtual Deployment::Application_ptr
     perform_redeployment (const Deployment::Properties & configProperty,
                           Deployment::Connections_out providedReference,
+                          CORBA::Boolean add_or_remove,
                           CORBA::Boolean start
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException,
@@ -164,6 +166,8 @@ namespace CIAO
                    ::Deployment::PlanError,
                    ::Components::RemoveFailure));
 
+    /// Determine whether a component is absent in the new_plan
+    /// Return true if absent
     virtual bool
     is_to_be_removed (const char * name);
 

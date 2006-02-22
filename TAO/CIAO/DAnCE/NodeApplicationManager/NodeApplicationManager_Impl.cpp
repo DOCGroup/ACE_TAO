@@ -3,6 +3,7 @@
 #include "NodeApplicationManager_Impl.h"
 #include "ace/Process.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Vector_T.h"
 #include "ciao/Container_Base.h"
 #include "NodeApplication/NodeApplication_Impl.h"
 
@@ -335,6 +336,7 @@ Deployment::Application_ptr
 CIAO::NodeApplicationManager_Impl_Base::
 perform_redeployment (const Deployment::Properties & configProperty,
                       Deployment::Connections_out providedReference,
+                      CORBA::Boolean add_or_remove, // true means "add" only
                       CORBA::Boolean start
                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((::CORBA::SystemException,
@@ -363,7 +365,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
   //
   //
   //    (1) If this is an brand new NAM, then only new installation is needed.
-  //    (2) Then we could pretty much clone the "startLaunch" implementation.
+  //    (2) Then we could pretty much replicate the "startLaunch" implementation.
   //        This capability is useful to install a set of new components into
   //        some totally new nodes.
 
@@ -379,8 +381,14 @@ perform_redeployment (const Deployment::Properties & configProperty,
     {
       if (! CORBA::is_nil (this->nodeapp_.in ()))
         {
-          this->add_new_components ();
-          this->remove_existing_components ();
+          if (add_or_remove == true)
+            {
+              this->add_new_components ();
+            }
+          else
+            {
+              this->remove_existing_components ();
+            }
 
           // NOTE: We are propogating back "all" the facets/consumers object
           // references to the DAM, including the previous existing ones.
@@ -461,6 +469,10 @@ add_new_components ()
             }
         }
 
+      // If there are no new components to be installed ...
+      if (tmp_plan.instance.length () == 0)
+        return;
+
       // package the components
       NodeImplementationInfoHandler handler (tmp_plan,
                                              this->shared_components_);
@@ -505,10 +517,6 @@ add_new_components ()
                   ("NodeApplicationManager_Impl::startLaunch",
                     error.c_str ()));
             }
-
-          comp_info[len].component_ref->ciao_preactivate ();
-          comp_info[len].component_ref->ciao_activate ();
-          comp_info[len].component_ref->ciao_postactivate ();
         }
     }
   ACE_CATCHANY
@@ -530,21 +538,26 @@ remove_existing_components ()
 {
   ACE_TRY
     {
-      const Component_Iterator end (this->component_map_.end ());
+      ACE_Vector<ACE_CString> gone_component_list;
+
       for (Component_Iterator iter (this->component_map_.begin ());
-          iter != end;
-          ++iter)
+           iter != this->component_map_.end ();
+           ++iter)
         {
-          // If this component is not in the new deployment plan, then we
-          // should remove it
           ACE_CString comp_name ((*iter).ext_id_.c_str ());
 
+          // If this component is not in the new deployment plan, then we
+          // should destroy this component and unbind from the map.
           if (this->is_to_be_removed (comp_name.c_str ()))
             {
               ((*iter).int_id_)->ciao_passivate ();
               this->nodeapp_->remove_component (comp_name.c_str ());
+              gone_component_list.push_back (comp_name);
             }
         }
+
+        for (size_t i = 0; i < gone_component_list.size (); ++i)
+          this->component_map_.unbind (gone_component_list[i]);
     }
   ACE_CATCHANY
     {

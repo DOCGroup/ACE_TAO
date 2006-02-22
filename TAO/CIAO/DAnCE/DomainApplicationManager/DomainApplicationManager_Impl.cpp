@@ -5,6 +5,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
+#include "ace/Assert.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -571,9 +572,16 @@ startLaunch (const ::Deployment::Properties & configProperty,
             }
           else
             {
+              //=============================================================
+              //                  Add New Components Logic
+              //=============================================================
+              // Let's add new components only now, the to-be-removed
+              // components should be removed AFTER the connections
+              // are removed.
               temp_application =
                 my_nam->perform_redeployment (configProperty,
                                               retn_connections.out (),
+                                              true, // add new components only now
                                               0);
             }
 
@@ -629,7 +637,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 void
 CIAO::DomainApplicationManager_Impl::
 finishLaunch (CORBA::Boolean start,
-              CORBA::Boolean is_ReDAC
+              CORBA::Boolean is_ReDaC
               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
@@ -681,13 +689,13 @@ finishLaunch (CORBA::Boolean start,
                   "==============================================\n"));
             }
 
-          // Get the Connections variable, if ReDAC is true, then we get
+          // Get the Connections variable, if ReDaC is true, then we get
           // those new connections only. NOTE: get_outgoing_connections
           // by default will get *all* connections.
           Deployment::Connections * my_connections =
             this->get_outgoing_connections (
               (entry->int_id_).child_plan_.in (),
-              !is_ReDAC,
+              !is_ReDaC,
               true,  // we search *new* plan
               DomainApplicationManager_Impl::Internal_Connections
                                             ACE_ENV_ARG_PARAMETER);
@@ -732,7 +740,11 @@ finishLaunch (CORBA::Boolean start,
               ACE_TRY_CHECK;
             }
 
-          if (is_ReDAC) // We should also remove unnecessary connections
+          //=============================================================
+          //                  Remove Old Connections Logic
+          //=============================================================
+
+          if (is_ReDaC) // We should also *REMOVE* unnecessary connections
             {
               // If this is a brand new child plan, then continue.
               if ((entry->int_id_).old_child_plan_ == 0)
@@ -782,6 +794,7 @@ finishLaunch (CORBA::Boolean start,
               // Invoke finishLaunch() operation on NodeApplication.
               if (unnecessary_connections->length () != 0)
                 {
+                  ACE_ASSERT (!CORBA::is_nil (entry->int_id_.node_application_.in ()));
                   entry->int_id_.node_application_->finishLaunch
                     (*unnecessary_connections,
                       start,
@@ -789,6 +802,23 @@ finishLaunch (CORBA::Boolean start,
                       ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
+
+              //=============================================================
+              //                  Remove Old Components Logic
+              //=============================================================
+              // Finally we need to remove those to-be-removed components
+              ::Deployment::Properties_var configProperty;
+              ACE_NEW (configProperty,
+                       Deployment::Properties);
+
+              ::Deployment::Connections_var retn_connections;
+
+              Deployment::Application_var temp_application =
+                entry->int_id_.node_application_manager_->
+                   perform_redeployment (configProperty,
+                                         retn_connections.out (),
+                                         false, // remove old components only
+                                         false);// do not "start"
             }
         }
 
@@ -1033,7 +1063,7 @@ get_outgoing_connections_i (const char * instname,
                             Deployment::Connections & retv,
                             bool is_getting_all_connections,
                             bool is_search_new_plan
-                                              ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((Deployment::StartError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
@@ -1467,13 +1497,15 @@ perform_redeployment (
 
       this->startLaunch (properties.in (), false);
 
-      // finishLaunch() will not only establish new connections, but also
-      // should get rid of those non-existing connections. As we know, in the
+      // finishLaunch will (1) establish new connections, and (2)
+      // get rid of those non-existing connections. As we know, in the
       // node level, the connections are cached within the NodeApplication *and*
       // Container, then we should modify the implementation of the
       // <finishLaunch> on the NodeApplication to accomplish this.
       this->finishLaunch (true, true);  // true means start activation also.
-                                        // ture means "ReDAC" is desired
+                                        // ture means "ReDaC" is desired
+
+      this->start ();
     }
   ACE_CATCHANY
     {

@@ -1,6 +1,7 @@
 // $Id$
 #include "Container_Impl.h"
 #include "ciao/CCM_ComponentC.h" // for calling StandardConfigurator interface
+#include "ace/Assert.h"
 
 #include "orbsvcs/CosNamingC.h"
 
@@ -176,10 +177,13 @@ CIAO::Container_Impl::install (
                  // Register the component with the naming service
                  ACE_DEBUG ((LM_DEBUG,
                              "Register component with naming service.\n"));
-                 bool result = register_with_ns (naming_context,
-                                                 this->orb_.in (),
-                                                 comp.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
+                 bool result =
+                   register_with_ns (
+                           naming_context,
+                           this->orb_.in (),
+                           Components::CCMObject::_duplicate (comp.in ())
+                           ACE_ENV_ARG_PARAMETER
+                         );
                  ACE_TRY_CHECK;
 
                  if (!result)
@@ -437,7 +441,7 @@ CIAO::Container_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
 
 // Below method is not used actually.
 void
-CIAO::Container_Impl::remove_component (const char * comp_ins_name
+CIAO::Container_Impl::remove_component (const char * str
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
@@ -445,7 +449,7 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   Components::CCMObject_var comp;
   Components::CCMHome_ptr home;
 
-  ACE_CString str (comp_ins_name);
+  //ACE_CString str (comp_ins_name);
 
   /* Before we do remove component we have to inform the homeservant so
    * Component::ccm_passivate ()
