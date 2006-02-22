@@ -60,11 +60,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
     defined (ACE_HAS_TSS_EMULATION)
 
+static ACE_thread_key_t the_log_msg_tss_key = 0;
+
 ACE_thread_key_t *log_msg_tss_key (void)
 {
-  static ACE_thread_key_t key = 0;
-
-  return &key;
+  return &the_log_msg_tss_key;
 }
 
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
@@ -251,6 +251,15 @@ ACE_TSS_CLEANUP_NAME (void *ptr)
    log_msg->thr_desc()->log_msg_cleanup(log_msg);
   else
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+#ifdef ACE_HAS_BROKEN_THREAD_KEYFREE
+    if ( ACE_Thread::setspecific( (*log_msg_tss_key()),
+                                  (void *)NULL ) != 0 )
+    {
+       ACE_DEBUG ((LM_DEBUG,
+                   ACE_LIB_TEXT ("(%P|%t) ACE_Log_Msg::close failed to ACE_Thread::setspecific to NULL\n")));
+  
+    }
+#endif /* ACE_HAS_BROKEN_THREAD_KEYFREE */
   delete (ACE_Log_Msg *) ptr;
 }
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */

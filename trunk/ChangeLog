@@ -1,3 +1,15 @@
+Wed Feb 22 08:33:03 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+        * include/makeinclude/platform_lynxos.GNU
+        * ace/config-lynxos.h
+          change settings for building dynamic libraries
+
+        * ace/config-lynxos-pthread.h
+          new file for handling LynxOS' use of macros
+
+        * ace/Log_Msg.cpp
+        * ace/os_include/os_pthread.h
+          Handle broken thread key free on LynxOS
+
 Tue Feb 21 23:49:20 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Truncate.{h inl cpp}: New function template, ACE_Utils::Truncate,
@@ -65,13 +77,13 @@ Tue Feb 21 19:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Feb 17 08:15:57 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/Asynch_Acceptor.h: Used ACE_DEFAULT_ASYNCH_BACKLOG instead
-	  of ACE_DEFAULT_BACKLOG since the latter is set to a huge value
- 	  on Windows.  Thanks to Alex Libman and Daniel <__daniel___ at icg
- 	  do tu-graz dot ac dot at> for their help.
+        * ace/Asynch_Acceptor.h: Used ACE_DEFAULT_ASYNCH_BACKLOG instead
+          of ACE_DEFAULT_BACKLOG since the latter is set to a huge value
+          on Windows.  Thanks to Alex Libman and Daniel <__daniel___ at icg
+          do tu-graz dot ac dot at> for their help.
 
-	* ace/Default_Constants.h: Added a new macro called
-	  ACE_DEFAULT_ASYNCH_BACKLOG that defaults to 5.
+        * ace/Default_Constants.h: Added a new macro called
+          ACE_DEFAULT_ASYNCH_BACKLOG that defaults to 5.
 
 Mon Feb 20 15:03:01 2006  Wallace Zhang  <zhangw@ociweb.com>
 
