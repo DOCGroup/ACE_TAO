@@ -37,35 +37,6 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
     }
 }
 
-size_t
-TAO_Incoming_Message_Queue::copy_tail (ACE_Message_Block &block)
-{
-  // The size of message that is copied
-  size_t n = 0;
-
-  if (this->size_ > 0)
-    {
-      // Check to see if the length of the incoming block is less than
-      // that of the <missing_data_> of the tail.
-      if ((CORBA::Long)block.length () < this->last_added_->missing_data_)
-        {
-          n = block.length ();
-        }
-      else
-        {
-          n = this->last_added_->missing_data_;
-        }
-
-      // Do the copy
-      this->last_added_->msg_block_->copy (block.rd_ptr (),
-                                            n);
-
-      // Decerement the missing data
-      this->last_added_->missing_data_ -= n;
-    }
-
-  return n;
-}
 
 TAO_Queued_Data *
 TAO_Incoming_Message_Queue::dequeue_head (void)
@@ -135,54 +106,6 @@ TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
   return 0;
 }
 
-TAO_Queued_Data *
-TAO_Incoming_Message_Queue::find_fragment_chain (CORBA::Octet major,
-                                                 CORBA::Octet minor) const
-{
-  TAO_Queued_Data *found = 0;
-  if (this->last_added_ != 0)
-    {
-      TAO_Queued_Data *qd = this->last_added_->next_;
-
-      do {
-        if (qd->more_fragments_ &&
-            qd->major_version_ == major && qd->minor_version_ == minor)
-          {
-            found = qd;
-          }
-        else
-          {
-            qd = qd->next_;
-          }
-      } while (found == 0 && qd != this->last_added_->next_);
-    }
-
-  return found;
-}
-
-TAO_Queued_Data *
-TAO_Incoming_Message_Queue::find_fragment_chain (CORBA::ULong request_id) const
-{
-  TAO_Queued_Data *found = 0;
-  if (this->last_added_ != 0)
-    {
-      TAO_Queued_Data *qd = this->last_added_->next_;
-
-      do {
-        if (qd->more_fragments_ && qd->request_id_ == request_id)
-          {
-            found = qd;
-          }
-        else
-          {
-            qd = qd->next_;
-          }
-      } while (found == 0 && qd != this->last_added_->next_);
-    }
-
-  return found;
-}
-
 
 /************************************************************************/
 // Methods  for TAO_Queued_Data
@@ -249,11 +172,10 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
 TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
   : msg_block_ (0),
     missing_data_ (0),
-    byte_order_ (0),
     major_version_ (0),
     minor_version_ (0),
+    byte_order_ (0),
     more_fragments_ (0),
-    request_id_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
     next_ (0),
     allocator_ (alloc)
@@ -264,11 +186,10 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
                                   ACE_Allocator *alloc)
   : msg_block_ (mb),
     missing_data_ (0),
-    byte_order_ (0),
     major_version_ (0),
     minor_version_ (0),
+    byte_order_ (0),
     more_fragments_ (0),
-    request_id_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
     next_ (0),
     allocator_ (alloc)
@@ -278,11 +199,10 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
 TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
   : msg_block_ (qd.msg_block_->duplicate ()),
     missing_data_ (qd.missing_data_),
-    byte_order_ (qd.byte_order_),
     major_version_ (qd.major_version_),
     minor_version_ (qd.minor_version_),
+    byte_order_ (qd.byte_order_),
     more_fragments_ (qd.more_fragments_),
-    request_id_ (qd.request_id_),
     msg_type_ (qd.msg_type_),
     next_ (0),
     allocator_ (qd.allocator_)
@@ -399,7 +319,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
   return qd;
 }
 
-void
+int
 TAO_Queued_Data::consolidate (void)
 {
   // Is this a chain of fragments?
@@ -409,6 +329,15 @@ TAO_Queued_Data::consolidate (void)
       ACE_Message_Block *dest = clone_mb_nocopy_size (
                                       this->msg_block_,
                                       this->msg_block_->total_length ());
+
+      if (0 == dest) 
+        {
+          // out of memory
+          return -1;
+        }
+      // Memory allocation succeeded, the new message block can hold the consolidated 
+      // message. The following code just copies all the data into this new message block.
+      // No further memory allocation will take place.
 
       // Reset the cont() parameter.  We have cloned the message
       // block but not the chain as we will no longer have chain.
@@ -424,6 +353,8 @@ TAO_Queued_Data::consolidate (void)
       this->msg_block_ = dest;
       this->more_fragments_ = 0;
     }
+
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -90,6 +90,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Transport.cpp
     IIOPC.cpp
     Incoming_Message_Queue.cpp
+    Incoming_Message_Stack.cpp
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
@@ -344,6 +345,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h
+    Incoming_Message_Stack.h
     Invocation_Adapter.h
     Invocation_Base.h
     Invocation_Endpoint_Selectors.h

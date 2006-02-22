@@ -167,7 +167,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // The buffer on the stack which will be used to hold the input
   // messages
-  char buf [ACE_MAX_DGRAM_SIZE];
+  char buf [ACE_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   (void) ACE_OS::memset (buf,
@@ -212,20 +212,32 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
+  // Make a node of the message block..
+  TAO_Queued_Data qd (&message_block);
+  size_t mesg_length;
+
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->parse_incoming_messages (message_block) == -1)
+  if (this->messaging_object ()->parse_next_message (message_block, 
+                                                     qd,
+                                                     mesg_length) == -1) 
     return -1;
+
+  if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED)
+    {
+      // parse/marshal error
+      return -1;
+    }
+  
+  if (message_block.length () > mesg_length)
+    {
+      // we read too much data
+      return -1;
+    }
 
   // NOTE: We are not performing any queueing nor any checking for
   // missing data. We are assuming that ALL the data would be got in a
   // single read.
-
-  // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block);
-
-  // Extract the data for the node..
-  this->messaging_object ()->get_message_data (&qd);
 
   // Process the message
   return this->process_parsed_messages (&qd, rh);

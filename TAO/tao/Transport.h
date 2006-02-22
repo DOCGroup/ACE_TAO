@@ -26,6 +26,7 @@
 
 #include "tao/Transport_Timer.h"
 #include "tao/Incoming_Message_Queue.h"
+#include "tao/Incoming_Message_Stack.h"
 #include "ace/Time_Value.h"
 
 struct iovec;
@@ -646,59 +647,10 @@ public:
 
 protected:
 
-  /// Called by the handle_input_i(). This method is used to parse
-  /// message read by the handle_input_i() call. It also decides
-  /// whether the message  needs consolidation before processing.
-  int parse_consolidate_messages (ACE_Message_Block &bl,
-                                  TAO_Resume_Handle &rh,
-                                  ACE_Time_Value *time = 0);
-
-
-  /// Method does parsing of the message if we have a fresh message in
-  /// the @a message_block or just returns if we have read part of the
-  /// previously stored message.
-  int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Return if we have any missing data in the queue of messages
-  /// or determine if we have more information left out in the
-  /// presently read message to make it complete.
-  ssize_t missing_data (ACE_Message_Block &message_block);
-
-  /// Consolidate the currently read message or consolidate the last
-  /// message in the queue. The consolidation of the last message in
-  /// the queue is done by calling consolidate_message_queue ().
-  virtual int consolidate_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time);
-
-  /// @@Bala: Docu???
-  int consolidate_fragments (TAO_Queued_Data *qd,
-                             TAO_Resume_Handle &rh);
-
-  /// First consolidate the message queue.  If the message is still not
-  /// complete, try to read from the handle again to make it
-  /// complete. If these dont help put the message back in the queue
-  /// and try to check the queue if we have message to process. (the
-  /// thread  needs to do some work anyway :-))
-  int consolidate_message_queue (ACE_Message_Block &incoming,
-                                 ssize_t missing_data,
-                                 TAO_Resume_Handle &rh,
-                                 ACE_Time_Value *max_wait_time);
-
-  /// Called by parse_consolidate_message () if we have more messages
-  /// in one read. Queue up the messages and try to process one of
-  /// them, atleast at the head of them.
-  int consolidate_extra_messages (ACE_Message_Block &incoming,
-                                  TAO_Resume_Handle &rh);
-
   /// Process the message by sending it to the higher layers of the
   /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd,
                                TAO_Resume_Handle &rh);
-
-  /// Make a queued data from the @a incoming message block
-  TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
 
   /// Implement send_message_shared() assuming the handler_lock_ is
   /// held.
@@ -887,10 +839,35 @@ private:
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
+  /// Is invoked by handle_input operation. It consolidate message on 
+  /// top of incoming_message_stack.  The amount of missing data is 
+  /// known and recv operation copies data directly into message buffer, 
+  /// as much as a single recv-invocation provides. 
+  int handle_input_missing_data (TAO_Resume_Handle &rh,
+                                 ACE_Time_Value *max_wait_time,
+                                 TAO_Queued_Data *q_data);
+
+  /// Is invoked by handle_input operation. It parses new messages from input stream 
+  /// or consolidates messages whose header has been partially read, the message 
+  /// size being unknown so far. It parses as much data as a single recv-invocation provides.
+  int handle_input_parse_data (TAO_Resume_Handle &rh,
+                               ACE_Time_Value *max_wait_time);
+
+  /// Is invoked by handle_input_parse_data. Parses all messages remaining in @message_block.
+  int handle_input_parse_extra_messages (ACE_Message_Block &message_block);
+
+  /// @return -1 error, otherwise 0
+  int consolidate_enqueue_message (TAO_Queued_Data *qd);
+
+  /// @return -1 error, otherwise 0
+  int consolidate_process_message (TAO_Queued_Data *qd, TAO_Resume_Handle &rh);
+
   /*
    * Process the message that is in the head of the incoming queue.
    * If there are more messages in the queue, this method calls
    * this->notify_reactor () to wake up a thread
+   * @return -1 on error, 0 if successfully processing enqueued messages, 
+   * 1 if no message present in queue
    */
   int process_queue_head (TAO_Resume_Handle &rh);
 
@@ -902,14 +879,6 @@ private:
 
   /// Assume the lock is held
   void send_connection_closed_notifications_i (void);
-
-  /// Process a non-version specific fragment by either consolidating
-  /// the fragments or enqueuing the queueable message
-  void process_fragment (TAO_Queued_Data* fragment_message,
-                         TAO_Queued_Data* queueable_message,
-                         CORBA::Octet major,
-                         CORBA::Octet minor,
-                         TAO_Resume_Handle &rh);
 
   /// Allocate a partial message block and store it in our
   /// partial_message_ data member.
@@ -972,8 +941,12 @@ protected:
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
 
-  /// Queue of the incoming messages..
+  /// Queue of the consolidated, incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
+
+  /// Stack of icoming fragments, consolidated messages 
+  /// are going to be enqueued in "incoming_message_queue_"
+  TAO::Incoming_Message_Stack incoming_message_stack_;
 
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is
