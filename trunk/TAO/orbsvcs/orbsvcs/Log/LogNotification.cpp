@@ -98,12 +98,12 @@ TAO_LogNotification::attribute_value_change (DsLogAdmin::Log_ptr log,
   CORBA::Any any;
   DsLogNotification::AttributeValueChange event;
 
-  event.logref = log;
+  event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
 
   TimeBase::TimeT current_time;
   ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
+  ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
 
   event.time = current_time;
 
@@ -300,12 +300,12 @@ TAO_LogNotification::state_change (DsLogAdmin::Log_ptr log,
   CORBA::Any any;
   DsLogNotification::StateChange event;
 
-  event.logref = log;
+  event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
 
   TimeBase::TimeT current_time;
   ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
+  ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
   event.time = current_time;
 
   // Administrative, Operational or Forwarding state.
@@ -389,7 +389,7 @@ TAO_LogNotification::threshold_alarm (
   CORBA::Any any;
   DsLogNotification::ThresholdAlarm event;
 
-  event.logref = log;
+  event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
 
   TimeBase::TimeT current_time;
