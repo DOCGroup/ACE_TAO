@@ -1,3 +1,9 @@
+Wed Feb 22 12:15:30 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2134_Regression/Hello.cpp:
+
+          Fix error on FC4_ACE_FOR_TAO build. Spurious ';'s in the code.
+
 Wed Feb 22 11:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/PI/PICurrent_Copy_Callback.cpp:
