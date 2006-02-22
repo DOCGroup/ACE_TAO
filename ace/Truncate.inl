@@ -17,7 +17,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename X> ACE_NAMESPACE_INLINE_FUNCTION int
+template<typename X> ACE_INLINE_TEMPLATE_FUNCTION int
 ACE_Utils::Truncate (const X &val)
 {
 #if !defined (ACE_LACKS_NUMERIC_LIMITS)
@@ -30,7 +30,7 @@ ACE_Utils::Truncate (const X &val)
   return static_cast<int> (val);
 }
 
-template<> ACE_NAMESPACE_INLINE_FUNCTION int
+template<> ACE_INLINE_TEMPLATE_FUNCTION int
 ACE_Utils::Truncate<size_t> (const size_t &val)
 {
 #if !defined (ACE_LACKS_NUMERIC_LIMITS)

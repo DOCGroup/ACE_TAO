@@ -1,3 +1,15 @@
+Wed Feb 22 20:56:17 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE_export.h: Added another macro, ACE_INLINE_TEMPLATE_FUNCTION,
+          to take care of the compiler differences when an inlineable
+          function template can be out-lined. Some compilers (e.g. Microsoft)
+          like an extern storage class to prevent multiple instances; others
+          (practically all others) refuse the extern storage class and
+          resolve the multiples at link time.
+
+        * ace/Truncate.{h inl}: Change ACE_NAMESPACE_INLINE_FUNCTION use to
+          ACE_INLINE_TEMPLATE_FUNCTION.
+
 Wed Feb 22 22:18:56 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:
