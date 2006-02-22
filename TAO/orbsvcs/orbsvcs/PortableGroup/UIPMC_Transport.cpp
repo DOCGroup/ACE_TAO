@@ -494,7 +494,7 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Make a node of the message block..
   TAO_Queued_Data qd (&message_block);
-  CORBA::ULong mesg_length; 
+  size_t mesg_length; 
 
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
