@@ -110,9 +110,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
 
   // Possibly reduce size to fit in a long.
 #if !defined(ACE_LACKS_NUMERIC_LIMITS)
-  if (size > std::numeric_limits<long>::max ())
+  if (size > static_cast<size_t> (std::numeric_limits<long>::max ()))
     {
-      size = std::numeric_limits<long>::max ();
+      size = static_cast<size_t> (std::numeric_limits<long>::max ());
       this->max_size_ = size;
     }
 #else
