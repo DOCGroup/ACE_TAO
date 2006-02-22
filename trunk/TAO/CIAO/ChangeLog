@@ -1,7 +1,19 @@
+Wed Feb 22 16:38:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO-INSTALL.html:
+
+          Updated the documentation on how to build cidlc on Windows.
+
+        * examples/Swapping/Receiver/Receiver.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+
+          Shortened the project names in these MPC files to avoid fuzz
+          warnings.
+
 Wed Feb 22 01:11:59 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplication/Container_Impl.cpp
-        
+
           Fixed a bug about naming service registration.
           Thanks Sandro Andrade <sandro @dcc.ufba.br> for reporting
           a bug about removing component error.
@@ -9,41 +21,41 @@ Wed Feb 22 01:11:59 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 Tue Feb 21 23:59:05 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciao/Deployment.idl
-         
+
           Added a parameter to the perform_redeployment() operation
           to the NodeApplicationManager interface to separate the
           "installation of new components" from the "removal of
           existing components".
-         
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-        
+
           Modified the logic of perform_redeployment() functionality
           to enforce correct order of ReDaC, which is:
           (1) Install new components,
           (2) Set up new connections,
           (3) Remove old connections, and
           (4) Remove old components.
-        
+
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
 
           Fixed a bug about removing components when using ReDaC.
-          In NodeApplicationManager, after the perform_redeployment() 
-          call calls the remove_components() method to actually 
+          In NodeApplicationManager, after the perform_redeployment()
+          call calls the remove_components() method to actually
           destroy components from the component server, DAnCE NAM doesn't
           unbind those components from the cached component_map_, hence
-          when the create_connections() method is called afterwords, 
-          NAM tries to access the destroyed components to get 
+          when the create_connections() method is called afterwords,
+          NAM tries to access the destroyed components to get
           their port information, which causes the Object_Not_Exist
           exception thrown.
 
-          The fix will unbind the removed components from the 
+          The fix will unbind the removed components from the
           cached component map. However, the trick is that after
           we unbind these components,  the port iinformation of
-          these components are also lost, then the 
-          DomainApplicaitonManager could not handle the 
+          these components are also lost, then the
+          DomainApplicaitonManager could not handle the
           "removal" of connections correctly.
-        
+
           The Right Fix is to enforce correct call sequence, which
           are illustrated above.
           Thanks Sandro Andrade <sandro @dcc.ufba.br> for reporting
@@ -51,7 +63,7 @@ Tue Feb 21 23:59:05 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.h
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp
-        
+
           Added a component state map to keep track of component state
           information. With this map, components will be activated
           only when they are newly created, and will be passivated
@@ -63,28 +75,28 @@ Tue Feb 21 23:59:05 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
           which is not compliant to the Spec defined semantics.
           This fix shall ensure that the components are activated AFTER
           their connections have been setup.
-        
+
         * DAnCE/NodeApplication/Container_Impl.cpp
-        
+
           Fixed a bug when passing object reference to a local function.
-          Earlier the memory of the object reference is released by 
+          Earlier the memory of the object reference is released by
           the callee, which causes the object reference becomes invalid
           after the function returns.
-        
+
 Tue Feb 21 19:43:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
         * performance-tests/Protocols/Controller/Controller.mpc
-        
-          Added avoids+= ace_for_tao to two additional projects. 
-        
+
+          Added avoids+= ace_for_tao to two additional projects.
+
         * examples/Display/descriptors/EM.ior
         * examples/Display/descriptors/GPS.ior
         * examples/Display/descriptors/NavDisplay.ior
         * examples/Display/descriptors/NavDisplayGUI.ior
 
-          Removed these ior files.  
-        
+          Removed these ior files.
+
 Tue Feb 21 17:40:20 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorController.cpp:
