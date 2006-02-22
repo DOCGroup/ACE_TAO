@@ -1,3 +1,11 @@
+Wed Feb 22 20:54:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/LogNotification.cpp:
+        
+          _duplicate() log reference before assigning it to event's logref
+          field to get life cycle/reference count management right.  Fixes
+          bugzilla issue #2416.
+
 Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
         * tao/PluggableMessaging.h: Remove abstract operation:
         read_message, missing_data, get_message_data. Add abstract
