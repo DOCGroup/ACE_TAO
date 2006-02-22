@@ -29,25 +29,36 @@ TAO::PICurrent_Impl::current_slot_table (void)
     this->lc_slot_table_ == 0 ? this->slot_table_ : *this->lc_slot_table_;
 }
 
-ACE_INLINE void
+ACE_INLINE bool
 TAO::PICurrent_Impl::lc_slot_table (TAO::PICurrent_Impl *p)
 {
+  // Being told to lazy copy some other table?
   if (p != 0)
     {
+      // Which actual table are we supposed to lazy copy?
       Table * t = &p->current_slot_table ();
 
+      // Only if we have not already lazy copied this table
       if (t != this->lc_slot_table_)
         {
-          this->lc_slot_table_ = t;
+          // Whould this be a lazy copy of ourselves?
+          if (t == &this->slot_table_)
+            this->lc_slot_table_ = 0; // Already ourself!
+          else
+            {
+              this->lc_slot_table_ = t;
 
-          if (this != p)
-            p->destruction_callback (this);
+              // Ensure remote table will tell us if it is
+              // going to change or destroy itself.
+              if (this != p)
+                p->destruction_callback (this);
+            }
         }
-      else
-        this->lc_slot_table_ = 0;
     }
   else
     this->lc_slot_table_ = 0;
+
+  return (0 != this->lc_slot_table_);
 }
 
 ACE_INLINE TAO::PICurrent_Impl::Table *
