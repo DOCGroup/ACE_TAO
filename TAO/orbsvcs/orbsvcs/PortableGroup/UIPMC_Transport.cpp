@@ -491,16 +491,34 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer.
   message_block.wr_ptr (n);
 
+
+  // Make a node of the message block..
+  TAO_Queued_Data qd (&message_block);
+  CORBA::ULong mesg_length; 
+
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->parse_incoming_messages (message_block) == -1)
+  if (this->messaging_object ()->parse_next_message (message_block, 
+                                                     qd,
+                                                     mesg_length) == -1)
     {
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO: (%P|%t|%N|%l) parse_incoming_messages failed on transport %d after fault %p\n"),
-                      this->id (),
-                      ACE_TEXT ("handle_input_i ()\n")));
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) handle_input failed on transport %d after fault\n"),
+                      this->id () ));
+        }
+
+      return -1;
+    }
+
+  if (message_block.length () > mesg_length)
+    {
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) handle_input  failed on transport %d after fault\n"),
+                      this->id () ));
         }
 
       return -1;
@@ -509,12 +527,6 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
   // NOTE: We are not performing any queueing nor any checking for
   // missing data. We are assuming that ALL the data would be got in a
   // single read.
-
-  // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block);
-
-  // Extract the data for the node..
-  this->messaging_object ()->get_message_data (&qd);
 
   // Process the message
   return this->process_parsed_messages (&qd, rh);

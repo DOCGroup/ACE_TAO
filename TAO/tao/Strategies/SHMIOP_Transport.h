@@ -84,11 +84,9 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
-  virtual int consolidate_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time);
-
+  virtual int handle_input (TAO_Resume_Handle &rh, 
+                            ACE_Time_Value *max_wait_time, 
+                            int block = 0);
   //@}
 
 public:

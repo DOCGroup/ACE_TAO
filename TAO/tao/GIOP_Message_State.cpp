@@ -22,7 +22,6 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
     byte_order_ (0),
     message_type_ (0),
     message_size_ (0),
-    request_id_ (0),
     more_fragments_ (0),
     missing_data_ (0)
 {
@@ -98,8 +97,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
         }
     }
 
-  // Get the request id
-  return this->parse_fragment_header (buf, incoming.length ());
+  return 0; // success
 }
 
 
@@ -171,7 +169,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
   if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - GIOP_Message_State::get_byte_order_info\n"));
+                  ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::get_byte_order_info\n") ));
     }
 
     // Let us be specific that this is for 1.0
@@ -187,8 +185,8 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
           if (TAO_debug_level > 2)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, "
-                          "invalid byte order <%d> for version <1.0>\n",
+                          ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, ")
+                          ACE_TEXT ("invalid byte order <%d> for version <1.0>\n"),
                           this->byte_order_));
             }
           return -1;
@@ -231,36 +229,8 @@ TAO_GIOP_Message_State::get_payload_size (char *rd_ptr)
   this->message_size_ =  this->read_ulong (rd_ptr);
 }
 
-
-
-int
-TAO_GIOP_Message_State::parse_fragment_header (const char *buf,
-                                               size_t length)
-{
-  // By this point we are doubly sure that we have a more or less
-  // valid GIOP message with a valid major revision number.
-  if ((this->giop_version_.major > 1 || this->giop_version_.minor >= 2) &&
-      (this->more_fragments_ || this->message_type_ == TAO_GIOP_FRAGMENT))
-    {
-      static const size_t len =
-        TAO_GIOP_MESSAGE_HEADER_LEN + TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
-
-      // If there is not enough data in the header to get the request
-      // id, then we need to indicate that by returning 1.
-      if (length < len)
-        return 1;
-
-      // Fragmented message in GIOP 1.2 should have a fragment header
-      // following the GIOP header.
-      buf += TAO_GIOP_MESSAGE_HEADER_LEN;
-      this->request_id_ = this->read_ulong (buf);
-    }
-
-  return 0;
-}
-
 CORBA::ULong
-TAO_GIOP_Message_State::read_ulong (const char *rd_ptr)
+TAO_GIOP_Message_State::read_ulong (const char *rd_ptr) const 
 {
   CORBA::ULong x = 0;
 
