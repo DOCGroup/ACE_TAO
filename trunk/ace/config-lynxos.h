@@ -3,13 +3,6 @@
 // The following configuration file is designed to work for LynxOS,
 // version 3.0.0 and later, using the GNU g++ compiler.
 
-// Note on why ACE_HAS_POSIX_SEM is not #defined:
-// ACE_HAS_POSIX_SEM would cause native LynxOS mutexes and condition
-// variables to be used.  But, they don't appear to be intended to be
-// used between processes.  Without ACE_HAS_POSIX_SEM, ACE uses
-// semaphores for all synchronization.  Those can be used between
-// processes
-
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
@@ -162,6 +155,10 @@
 # undef ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #endif /* __GNUC__ == 2  &&  __GNUC_MINOR__ == 9 */
 
+#if __GNUC__ < 3
+# define ACE_LACKS_NUMERIC_LIMITS
+#endif /* __GNUC__ < 3 */
+
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
 # define ACE_USE_RCSID 0
@@ -173,12 +170,21 @@
 #if ACE_LYNXOS_MAJOR > 3 /* LynxOS 4.x */
 # define ACE_HAS_SVR4_DYNAMIC_LINKING
 # define ACE_HAS_BROKEN_THREAD_KEYFREE
+# define ACE_HAS_POSIX_SEM
   // "changes signedness" error (OS.i and many other files)
 # define ACE_HAS_SOCKLEN_T
   // LSOCK.cpp uses a macro from param.h, not included
 # define ALIGNBYTES (sizeof(int) - 1)
 # define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 #else /* LynxOS 3.x */
+  // Note on why ACE_HAS_POSIX_SEM is not #defined:
+  // ACE_HAS_POSIX_SEM would cause native LynxOS mutexes and condition
+  // variables to be used.  But, they don't appear to be intended to be
+  // used between processes.  Without ACE_HAS_POSIX_SEM, ACE uses
+  // semaphores for all synchronization.  Those can be used between
+  // processes
+  //# define ACE_HAS_POSIX_SEM
+
   // Don't use MAP_FIXED, at least for now.
 # define ACE_MAP_FIXED 0
   // LynxOS, through 3.0.0, does not support MAP_PRIVATE,
