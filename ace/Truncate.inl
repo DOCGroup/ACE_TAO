@@ -11,6 +11,8 @@
 #undef min
 #endif
 #include <limits>
+#else
+#include "ace/os_include/os_limits.h"
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

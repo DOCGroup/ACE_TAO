@@ -1,3 +1,12 @@
+Wed Feb 22 21:30:35 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/Truncate.inl:
+          Added include "ace/os_include/os_limits.h" to pull INT_MAX.
+	  
+        * ace/config-lynxos.h:
+          Define ACE_LACKS_NUMERIC_LIMITS when compiling with GCC 2.x.
+          Define ACE_HAS_POSIX_SEM on LynxOS 4.0.
+
 Wed Feb 22 19:16:32 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE_export.h: Add __HP_aCC 06.05 and up to the list of compilers
@@ -20,7 +29,7 @@ Wed Feb 22 17:26:01 UTC 2006  Olli Savia  <ops@iki.fi>
         * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
         * examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
           Changed to reflect recent changes in TTY_IO.h.
-        
+
 Wed Feb 22 16:31:28 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/vcl.mpb:
