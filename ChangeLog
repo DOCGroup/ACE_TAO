@@ -1,3 +1,8 @@
+Wed Feb 22 19:16:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE_export.h: Add __HP_aCC 06.05 and up to the list of compilers
+          that don't like "extern inline".
+
 Wed Feb 22 16:50:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/String_Base.{h cpp}: Add operator= to set string from a
