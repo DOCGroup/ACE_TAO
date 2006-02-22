@@ -1,7 +1,6 @@
 // $Id$
 #include "Container_Impl.h"
 #include "ciao/CCM_ComponentC.h" // for calling StandardConfigurator interface
-#include "ace/Assert.h"
 
 #include "orbsvcs/CosNamingC.h"
 
@@ -441,7 +440,7 @@ CIAO::Container_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
 
 // Below method is not used actually.
 void
-CIAO::Container_Impl::remove_component (const char * str
+CIAO::Container_Impl::remove_component (const char * comp_ins_name
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
@@ -449,7 +448,7 @@ CIAO::Container_Impl::remove_component (const char * str
   Components::CCMObject_var comp;
   Components::CCMHome_ptr home;
 
-  //ACE_CString str (comp_ins_name);
+  ACE_CString str (comp_ins_name);
 
   /* Before we do remove component we have to inform the homeservant so
    * Component::ccm_passivate ()
@@ -510,7 +509,7 @@ CIAO::Container_Impl::register_with_ns (const char * s,
       char * naming_string = tmp.rep ();
       char seps[]   = "/:";
 
-      char *token;
+      char *token, *lastToken = NULL;
       token = ACE_OS::strtok (naming_string, seps);
 
       for (CORBA::ULong i = 0; token != NULL; ++i)
@@ -520,11 +519,18 @@ CIAO::Container_Impl::register_with_ns (const char * s,
             name[i].id = CORBA::string_dup (token);
 
             // Get next naming context
+            lastToken = token;
             token = ACE_OS::strtok ( NULL, seps );
         }
 
-      // Let's create the context path first
-      Utility::NameUtility::CreateContextPath (root.in (), name);
+      if (name.length() > 1)
+         {
+            // Let's create the context path first
+            name.length(name.length()-1);
+            Utility::NameUtility::CreateContextPath (root.in (), name);
+            name.length(name.length()+1);
+            name[name.length()-1].id = CORBA::string_dup(lastToken);
+         }
 
       // Bind the actual object
       Utility::NameUtility::BindObjectPath (root.in (), name, obj);

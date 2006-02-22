@@ -1,3 +1,11 @@
+Wed Feb 22 01:11:59 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplication/Container_Impl.cpp
+        
+          Fixed a bug about naming service registration.
+          Thanks Sandro Andrade <sandro @dcc.ufba.br> for reporting
+          a bug about removing component error.
+
 Tue Feb 21 23:59:05 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciao/Deployment.idl
