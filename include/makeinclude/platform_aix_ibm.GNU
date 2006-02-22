@@ -121,7 +121,18 @@ else    # Visual Age 5 and up
       endif
     else
       ifeq ($(XLCVERSION),0x0700)
-        CCFLAGS += -qflag=w:w -qtemplateregistry=templateregistry.$(MAKEFILE)
+        CCFLAGS += -qflag=w:w
+	ifeq ($(templates),manual)
+	  CCFLAGS    += -qnotempinc -qnotemplateregistry -DACE_TEMPLATES_REQUIRE_SOURCE
+        else
+          CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE) -DACE_TEMPLATES_REQUIRE_SOURCE
+        endif
+	# According to documentation, default is -qeh, which is equivalent
+	# to -qeh=v5.  Apparently 6.0 fixed some problems with nested
+	# try-catch blocks.
+	ifeq ($(exceptions),1)
+	  CCFLAGS     += -qeh=v6
+	endif
       else
         CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
       endif

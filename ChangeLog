@@ -1,3 +1,15 @@
+Wed Feb 22 16:26:43 GMT 2006  Rich Seibel <seibel_r@ociweb.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * THANKS
+          Added templates=manual to set manually instantiated
+          templates (without setting ACE_HAS_EXPLICIT_TEMPLATE_
+          INSTANTIATION) and determining that -qeh=v6 is needed
+          to get the more general exception behavior.
+
+          Thanks to Marc Brown and Andrew Keane for suggesting
+          these changes.
+
 Wed Feb 22 15:48:15 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Heap_T.cpp: Fixed mismatch signed/unsigned compare warning.
