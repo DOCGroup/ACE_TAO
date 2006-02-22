@@ -1,3 +1,71 @@
+Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
+        * tao/PluggableMessaging.h: Remove abstract operation:
+        read_message, missing_data, get_message_data. Add abstract
+        operation parse_next_message (), consolidate_fragmented_message,
+        discard_fragmented_message. 
+
+        * tao/GIOPMessageBase.{h,cpp}: Remove implementation for
+        read_message. Add parse_incoming_messages. Add implementation for
+        new abstract methods consolidate_fragmented_message,
+        parse_next_message, discard_fragmented_message. Declare as private
+        parse_incoming_messages, parse_request_id.  Add new member
+        attribute fragment_stack_ of type Incoming_Message_Stack. Handle
+        TAO_GIOP_MESSAGE_ERROR not as error. For incomplete messages of
+        unknown size, allocating message_blocks of size
+        ACE_CDR::DEFAULT_BUFSIZE. Handle memory allocation failures in
+        code. Wrap output-strings with ACE_TEXT macro.
+            
+        * tao/GIOP_Message_Lite.{h,cpp}: Remove implementation of
+        read_message and get_message_data. Handle
+        GIOP_MESSAGE_CANCELREQUEST. IMplement new virtual method
+        parse_next_message, Handle out-of-memory cases. Dummy
+        implementations for consolidate_fragmented_message and
+        discard_fragmented_message.
+
+        * tao/Incoming_Message_Stack.{h,cpp}: New class providing stack
+        operations for TAO_Queued_Data, operations do not require dynamic
+        memory allocation.
+
+        * tao/Incoming_Message_Queue.{h,cpp,inl}: remove obsolet
+        operations for interface TAO_Incoming_Message_Queue: copy_tail,
+        is_tail_complete, is_head_complete, is_tail_fragmented,
+        missing_data_tail, find_fragment_chain. Change return type to
+        "int" for operation consolidate, return value -1 indicating out of
+        memory cases.
+        
+        * tao/Transport.{h,cpp}: Major changes: New implementation of
+        operation handle_input() fixing following, errors with GIOP
+        fragment handling that showed up testing with Java_Big_Request
+        test (w/ jre1.4), handling of messages bigger than 2Go, concurrent
+        processing of short messages using single-read-optimization, keep
+        connection in case of GIOP CancelRequests, compensate memory
+        buffer alignment. Remote methods from interface
+        parse_consolidate_messages, parse_incoming_messages, missing_data,
+        consolidate_message, consolidate_fragments,
+        consolidate_message_queue, consolidate_extra_messages,
+        make_queued_data. Add methods handle_input_missing_data,
+        handle_input_parse_data. Add instance member
+        "incoming_message_stack_" of type Incomig_Message_Stack. Minor
+        changes: Wrap output strings with ACE_TEXT macro, remove
+        ACE_ASSERT statements.
+        
+        * tao/Strategies/DIOP_Transport.cpp: Compensate memory buffer
+        alignment.
+        
+        * tao/Strategies/SHMIOP_Transport.{h,cpp}: Compensate memory
+        buffer alignment.  Adapt to new interface of
+        PluggableMessaging. Add specialized implemenation of
+        PLuggable_Messaging::handle_input()
+        
+        * tao/tao.mpc: Add dependency to tao/IncomingMessageStack.{h,cpp}
+        
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Tranport.cpp: Adapt to new
+        interface of PluggableMessaging.
+
+        These changes require to recompile and modify custom Messaging
+        implementations.  This patch fixes #2303, 2305, 2306, 2307, 2308,
+        2309, 2313, 2361, 2365
+
 Wed Feb 22 16:55:24 GMT 2006  Rich Seibel <seibel_r@ociweb.com>
 
         * examples/RTScheduling/MIF_Scheduler/svc.conf.client:

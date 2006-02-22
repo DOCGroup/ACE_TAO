@@ -91,14 +91,9 @@ private:
   /// Gets the size of the payload and set the size in the <state>
   void get_payload_size (char *buf);
 
-  /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
-  /// stream.
-  int parse_fragment_header (const char *buf,
-                             size_t length);
-
   /// Read the unsigned long from the buffer. The <buf> should just
   /// point to the next 4 bytes data that represent the ULong
-  CORBA::ULong read_ulong (const char *buf);
+  CORBA::ULong read_ulong (const char *buf) const;
 
 private:
   // GIOP version information..
@@ -112,9 +107,6 @@ private:
 
   /// in byte_order!
   CORBA::ULong message_size_;
-
-  /// Request Id from the Fragment header
-  CORBA::ULong request_id_;
 
   /// (Requests and Replys)
   /// A value of zero indicates that this message does not have any
