@@ -154,8 +154,10 @@ module Deployment {
     /// and reconfiguration
     /// This operation could handle dynamic redeployment for
     /// a node-level deployment plan within a node
+    /// @para add_or_remove If true, we add new components only, vice vesa.
     Application perform_redeployment (in Properties configProperty,
                                       out Connections providedReference,
+                                      in boolean add_or_remove,
                                       in boolean start)
       raises (PlanError,
               InstallationFailure,

@@ -92,9 +92,9 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
       for (CORBA::ULong i = 0; i < length; ++i)
         {
           ACE_CString name = providedReference[i].instanceName.in ();
-          Components::CCMObject_var comp;
+          Component_State_Info comp_state;
 
-          if (this->component_objref_map_.find (name, comp) != 0)
+          if (this->component_state_map_.find (name, comp_state) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -104,6 +104,8 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                           name.c_str ()));
               ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
+
+          Components::CCMObject_var comp = comp_state.objref_;
 
           Components::EventConsumerBase_var consumer;
 
@@ -355,13 +357,18 @@ CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
-  Component_Iterator end = this->component_objref_map_.end ();
-  for (Component_Iterator iter (this->component_objref_map_.begin ());
+  Component_Iterator end = this->component_state_map_.end ();
+  for (Component_Iterator iter (this->component_state_map_.begin ());
        iter != end;
        ++iter)
   {
-    ((*iter).int_id_)->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    if (((*iter).int_id_).state_ == NEW_BORN)
+      {
+        ((*iter).int_id_).objref_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
+    ((*iter).int_id_).state_ = PRE_ACTIVE;
   }
 }
 
@@ -370,13 +377,18 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
-  Component_Iterator end = this->component_objref_map_.end ();
-  for (Component_Iterator iter (this->component_objref_map_.begin ());
+  Component_Iterator end = this->component_state_map_.end ();
+  for (Component_Iterator iter (this->component_state_map_.begin ());
        iter != end;
        ++iter)
   {
-    ((*iter).int_id_)->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    if (((*iter).int_id_).state_ == PRE_ACTIVE)
+      {
+        ((*iter).int_id_).objref_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
+    ((*iter).int_id_).state_ = ACTIVE;
   }
 }
 
@@ -385,13 +397,18 @@ CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
-  Component_Iterator end = this->component_objref_map_.end ();
-  for (Component_Iterator iter (this->component_objref_map_.begin ());
+  Component_Iterator end = this->component_state_map_.end ();
+  for (Component_Iterator iter (this->component_state_map_.begin ());
        iter != end;
        ++iter)
   {
-    ((*iter).int_id_)->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    if (((*iter).int_id_).state_ == ACTIVE)
+      {
+        ((*iter).int_id_).objref_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+
+        ((*iter).int_id_).state_ = POST_ACTIVE;
+      }
   }
 }
 
@@ -400,13 +417,15 @@ CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
-  Component_Iterator end = this->component_objref_map_.end ();
-  for (Component_Iterator iter (this->component_objref_map_.begin ());
+  Component_Iterator end = this->component_state_map_.end ();
+  for (Component_Iterator iter (this->component_state_map_.begin ());
        iter != end;
        ++iter)
   {
-    ((*iter).int_id_)->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ((*iter).int_id_).objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
+    ((*iter).int_id_).state_ = PASSIVE;
   }
 }
 
@@ -440,7 +459,7 @@ CIAO::NodeApplication_Impl::install (
       // @@(GD): The "create_all_containers" mechanism needs to be refined, so
       // we should always try to reuse existing containers as much as possible!
       // We need not only factory pattern, but also finder pattern here as well.
-      if (CIAO::debug_level () > 9)
+      if (CIAO::debug_level () > 15)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "CIAO (%P|%t) NodeApplication_Impl.cpp -"
@@ -457,7 +476,7 @@ CIAO::NodeApplication_Impl::install (
           ACE_DEBUG ((LM_DEBUG,
                       "CIAO (%P|%t) NodeApplication_Impl.cpp -"
                       "CIAO::NodeApplication_Impl::install -"
-                      "created all the containers. \n"));
+                      "create_all_containers() called.\n"));
         }
 
       // For each container, invoke <install> operation, this will return
@@ -491,11 +510,15 @@ CIAO::NodeApplication_Impl::install (
           len < comp_len;
           ++len)
       {
+        Component_State_Info tmp;
+
+        tmp.state_ = NEW_BORN;
+        tmp.objref_ =
+          Components::CCMObject::_duplicate (retv[len].component_ref.in ());
+
         //Since we know the type ahead of time...narrow is omitted here.
-        if (this->component_objref_map_.bind (
-            retv[len].component_instance_name.in(),
-              Components::CCMObject::_duplicate (retv[len].
-                component_ref.in ())))
+        if (this->component_state_map_.rebind (
+            retv[len].component_instance_name.in(), tmp))
           {
             ACE_DEBUG ((LM_DEBUG,
                         "CIAO (%P|%t) NodeApplication_Impl.cpp -"
@@ -542,7 +565,7 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
   // Remove this component instance from the node application
   ACE_CString name (inst_name);
   this->component_container_map_.unbind (name);
-  this->component_objref_map_.unbind (name);
+  this->component_state_map_.unbind (name);
   container_ref->remove_component (inst_name);
 }
 
@@ -551,7 +574,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If we still have components installed, then do nothing
-  if (this->component_objref_map_.current_size () != 0)
+  if (this->component_state_map_.current_size () != 0)
     return;
 
   // For each container, invoke <remove> operation to remove home and components.
