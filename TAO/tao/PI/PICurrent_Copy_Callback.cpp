@@ -50,6 +50,7 @@ TAO::PICurrent_Copy_Callback::execute (void)
       // Prevent subsequent deep copies, effectively disabling this
       // callback.
       this->src_->copy_callback (0);
+      this->src_->destruction_callback (0);
     }
 }
 

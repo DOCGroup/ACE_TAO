@@ -100,7 +100,8 @@ namespace TAO
     Table & current_slot_table (void);
 
     /// Logically (shallow) copy the given slot table.
-    void lc_slot_table (PICurrent_Impl *p);
+    // returns true if copied, false if it would be self-referencing.
+    bool lc_slot_table (PICurrent_Impl *p);
 
     /// Return pointer to the logically copied slot table.
     /**
