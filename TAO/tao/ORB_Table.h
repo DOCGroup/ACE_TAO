@@ -25,9 +25,11 @@
 
 #include "tao/orbconf.h"
 #include "tao/CORBA_String.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Array_Map.h"
 #include "ace/Thread_Mutex.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -61,7 +63,7 @@ namespace TAO
    */
   class TAO_Export ORB_Table
   {
-  friend class TAO_ORB_Core;
+  friend class ::TAO_ORB_Core;
   public:
 
     /// Constructor
@@ -86,7 +88,7 @@ namespace TAO
     //@{
     iterator begin (void);
     iterator end (void);
-    int bind (const char *orb_id, TAO_ORB_Core *orb_core);
+    int bind (const char *orb_id, ::TAO_ORB_Core *orb_core);
 
     /// Return @c TAO_ORB_Core corresponding to ORB with given @a
     /// orb_id.
@@ -94,16 +96,16 @@ namespace TAO
      * @note The caller must decrease the reference count on the
      *       returned ORB_Core, i.e. the callers "owns" it.
      */
-    TAO_ORB_Core* find (const char *orb_id);
+    ::TAO_ORB_Core* find (const char *orb_id);
 
     int unbind (const char *orb_id);
     //@}
 
-    TAO_ORB_Core * const * get_orbs (size_t& num_orbs);
+    ::TAO_ORB_Core * const * get_orbs (size_t& num_orbs);
 
     /// Obtain the first ORB for the @c ORB_Core_instance()
     /// implementation.
-    TAO_ORB_Core * first_orb (void);
+    ::TAO_ORB_Core * first_orb (void);
 
     /// Return a unique instance
     static ORB_Table * instance (void);
@@ -127,7 +129,7 @@ namespace TAO
 
     /// Return @c TAO_ORB_Core corresponding to ORB with given @a
     /// orb_id.  (underlying unlocked implementation).
-    TAO_ORB_Core * find_i (char const * orb_id);
+    ::TAO_ORB_Core * find_i (char const * orb_id);
 
     /// Update our list of orbs
     /**
@@ -138,7 +140,7 @@ namespace TAO
   private:
 
     /// Lock used to synchronize access to the internal state.
-    TAO_SYNCH_MUTEX lock_;
+    ::TAO_SYNCH_MUTEX lock_;
 
     /// Variable to check if the first ORB decides not to be the
     /// default.
@@ -148,13 +150,13 @@ namespace TAO
     Table table_;
 
     /// The first ORB created by the user
-    TAO_ORB_Core * first_orb_;
+    ::TAO_ORB_Core * first_orb_;
 
     /// List of orbs for get_orbs call
     /**
      * @todo ORB_Table::orbs_ appears to be unused.  Remove it?
      */
-    TAO_ORB_Core ** orbs_;
+    ::TAO_ORB_Core ** orbs_;
 
     /// Number of ORBs in the table.
     size_t num_orbs_;
@@ -178,7 +180,7 @@ namespace TAO
     ORB_Core_Ref_Counter (void);
 
     /// Constructor.
-    ORB_Core_Ref_Counter (TAO_ORB_Core * core);
+    ORB_Core_Ref_Counter (::TAO_ORB_Core * core);
 
     /// Destructor.
     ~ORB_Core_Ref_Counter (void);
@@ -190,11 +192,11 @@ namespace TAO
     void operator= (ORB_Core_Ref_Counter const & rhs);
 
     /// ORB_Core pointer accessor.
-    TAO_ORB_Core * core (void) const { return this->core_; }
+    ::TAO_ORB_Core * core (void) const { return this->core_; }
 
   private:
 
-    TAO_ORB_Core * core_;
+    ::TAO_ORB_Core * core_;
 
   };
 
