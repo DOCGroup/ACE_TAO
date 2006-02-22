@@ -158,6 +158,14 @@ public:
   /**
    *  Assignment operator (does copy memory).
    *
+   *  @param s Input null-terminated CHAR string to assign to this object.
+   *  @return Return a copy of the this string.
+   */
+  ACE_String_Base < CHAR > &operator = (const CHAR * s);
+
+  /**
+   *  Assignment operator (does copy memory).
+   *
    *  @param s Input ACE_String_Base string to assign to this object.
    *  @return Return a copy of the this string.
    */
