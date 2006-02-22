@@ -21,11 +21,14 @@ namespace
 {
   PortableInterceptor::SlotId slot_id;
 
-  void getMySlot(
+  CORBA::Long getMySlot(
     PortableInterceptor::ServerRequestInfo_ptr ri,
     PortableInterceptor::Current_ptr pi_current,
-    const char *location)
+    const char *location,
+    const CORBA::Long correctTSCvalue,
+    const CORBA::Long correctRSCvalue)
   {
+    CORBA::Long number= 0;
     CORBA::String_var
       op= ri->operation ();
 
@@ -41,7 +44,25 @@ namespace
       CORBA::TypeCode_var
         tc= data->type();
       if (tc->kind() == CORBA::tk_null)
-        ACE_DEBUG ((LM_DEBUG, "EMPTY\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG, "EMPTY -> "));
+        if (0 != correctTSCvalue)
+        {
+          ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
+          throw INTERNAL ();
+        }
+        ACE_DEBUG ((LM_DEBUG, "OK\n"));
+      }
+      else if (data.in() >>= number)
+      {
+        ACE_DEBUG ((LM_DEBUG, "long (%d) -> ", number));
+        if ((0 != correctTSCvalue) && (correctTSCvalue != number))
+        {
+          ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
+          throw INTERNAL ();
+        }
+        ACE_DEBUG ((LM_DEBUG, "OK\n"));
+      }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "UNKNOWN TYPE\n"));
@@ -53,12 +74,73 @@ namespace
 
       tc= data->type();
       if (tc->kind() == CORBA::tk_null)
-        ACE_DEBUG ((LM_DEBUG, "EMPTY\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG, "EMPTY -> "));
+        if (0 != correctRSCvalue)
+        {
+          ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
+          throw INTERNAL ();
+        }
+        ACE_DEBUG ((LM_DEBUG, "OK\n"));
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
+        number= 61;
+#else
+        number= 62;
+#endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1 */
+      }
+      else if (data.in() >>= number)
+      {
+        ACE_DEBUG ((LM_DEBUG, "long (%d) -> ", number));
+        if ((0 != correctRSCvalue) && (correctRSCvalue != number))
+        {
+          ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
+          throw INTERNAL ();
+        }
+        ACE_DEBUG ((LM_DEBUG, "OK\n"));
+        ++number;
+      }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "WRONG TYPE\n"));
         throw INTERNAL();
       }
+    }
+
+    return number;
+  }
+
+  void getAndSetMySlot(
+    PortableInterceptor::ServerRequestInfo_ptr ri,
+    PortableInterceptor::Current_ptr pi_current,
+    const char *location,
+    const CORBA::Long correctTSCvalue,
+    const CORBA::Long correctRSCvalue)
+  {
+    const CORBA::Long number=
+      getMySlot(
+        ri,
+        pi_current,
+        location,
+        correctTSCvalue,
+        correctRSCvalue );
+
+    if (number && (0 != ACE_OS::strcmp( location, "receive_request" )))
+    {
+      // Insert data into the RSC (request scope current).
+      CORBA::Any data;
+      data <<= number;
+
+      ACE_DEBUG ((LM_DEBUG, "SERVER %s -> set_slot(RSC)", location));
+      ri->set_slot( slot_id, data );
+
+      ACE_DEBUG ((LM_DEBUG, " -> long (%d)\n", number));
+
+      getMySlot(
+          ri,
+          pi_current,
+          location,
+          correctTSCvalue,
+          number );
     }
   }
 }
@@ -118,7 +200,7 @@ public:
   tao_ft_interception_point (ServerRequestInfo_ptr ri, OctetSeq_out)
     throw (SystemException, ForwardRequest)
   {
-    getMySlot( ri, this->pi_current_, "tao_ft_interception_point" );
+    getAndSetMySlot( ri, this->pi_current_, "tao_ft_interception_point", 0, 0 );
   }
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
@@ -126,34 +208,38 @@ public:
   receive_request_service_contexts (ServerRequestInfo_ptr ri)
     throw (SystemException, ForwardRequest)
   {
-    getMySlot( ri, this->pi_current_, "receive_request_service_contexts" );
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
+    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 61 );
+#else
+    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 0 );
+#endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1 */
   }
 
   virtual void
   receive_request (ServerRequestInfo_ptr ri)
     throw (SystemException, ForwardRequest)
   {
-    getMySlot( ri, this->pi_current_, "receive_request" );
+    getAndSetMySlot( ri, this->pi_current_, "receive_request", 62, 62 );
   }
 
   virtual void
   send_reply (ServerRequestInfo_ptr ri) throw (SystemException)
   {
-    getMySlot( ri, this->pi_current_, "send_reply" );
+    getAndSetMySlot( ri, this->pi_current_, "send_reply", 62, 62 );
   }
 
   virtual void
   send_exception (ServerRequestInfo_ptr ri)
     throw (SystemException, ForwardRequest)
   {
-    getMySlot( ri, this->pi_current_, "send_exception" );
+    getAndSetMySlot( ri, this->pi_current_, "send_exception", 62, 62 );
   }
 
   virtual void
   send_other (ServerRequestInfo_ptr ri)
     throw (SystemException, ForwardRequest)
   {
-    getMySlot( ri, this->pi_current_, "send_other" );
+    getAndSetMySlot( ri, this->pi_current_, "send_other", 62, 62 );
   }
 };
 
