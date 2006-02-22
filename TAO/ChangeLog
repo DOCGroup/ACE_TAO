@@ -1,3 +1,13 @@
+Wed Feb 22 16:45:29 GMT 2006  Rich Seibel <seibel_r@ociweb.com>
+
+        * tao/Array_VarOut_T.inl:
+          Removed a nasty cast that shouldn't be necessary.
+          Only broken builds, like MSVC6 should require the
+          reinterpret_cast<>, otherwise builds should need
+          no cast.  Thus, only the broken compilers should
+          be singled out.  Thanks to the XL 7 compiler on 
+          AIX for pointing this out.
+
 Wed Feb 22 15:56:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           Reverting a change, added with the commits from
