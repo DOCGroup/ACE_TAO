@@ -16,7 +16,7 @@ ACE_RCSID (tao,
 #include "tao/TAO_Server_Request.h"
 #include "tao/SystemException.h"
 #include "ace/Log_Msg.h"
-
+#include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,7 +50,13 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
   // Get the slot table that is currently active
   PICurrent_Impl::Table & table = this->current_slot_table ();
 
-  ACE_ASSERT (this->lc_slot_table_ != &this->slot_table_);
+  // The active slot table should never be a lazy copy of itself!
+  if (this->lc_slot_table_ == &this->slot_table_)
+  {
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "(lc_slot_table_ == &slot_table_) at " __FILE__ ":%d", __LINE__));
+    ACE_THROW (CORBA::INTERNAL ());
+  }
 
   CORBA::Any * any = 0;
 
@@ -123,6 +129,12 @@ void
 TAO::PICurrent_Impl::execute_destruction_callback (
   TAO::PICurrent_Impl::Table * old_lc_slot_table)
 {
+  // we are being asked to lc another table, if this
+  // is null, make sure we take a physical copy of the
+  // existing table we had lc before it disappears.
+  if ((0 == old_lc_slot_table) && (0 != this->lc_slot_table_))
+    this->slot_table_ = *this->lc_slot_table_;
+
   this->lc_slot_table_ = old_lc_slot_table;
 }
 

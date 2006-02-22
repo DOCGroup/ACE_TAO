@@ -1,3 +1,13 @@
+Wed Feb 22 11:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/PI/PICurrent_Copy_Callback.cpp:
+        * tao/PI/PICurrent_Impl.cpp:
+        * tao/PI/PICurrent_Impl.h:
+        * tao/PI/PICurrent_Impl.inl:
+        * tao/PI_Server/PICurrent_Guard.cpp:
+
+          bugzilla bugfix #2304.
+
 Wed Feb 22 09:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp:

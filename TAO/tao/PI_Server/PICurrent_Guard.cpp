@@ -64,11 +64,9 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
 TAO::PICurrent_Guard::~PICurrent_Guard (void)
 {
   if (this->src_ != 0 && this->dest_ != 0
-      && this->src_ != this->dest_)
+      && this->src_ != this->dest_
+      && this->dest_->lc_slot_table (this->src_))
     {
-      // This copy better be exception-safe!
-      this->dest_->lc_slot_table (this->src_);
-
       // PICurrent will potentially have to call back on the request
       // scope current so that it can deep copy the contents of the
       // thread scope current if the contents of the thread scope
@@ -78,6 +76,7 @@ TAO::PICurrent_Guard::~PICurrent_Guard (void)
       // necessary, if the thread scope current is modified after its
       // contents have been *logically* copied to the request scope
       // current.  The same goes for the reverse, i.e. RSC to TSC.
+
       this->copy_callback_->src_and_dst (this->src_, this->dest_);
       this->src_->copy_callback (this->copy_callback_);
     }
