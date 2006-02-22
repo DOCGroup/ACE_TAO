@@ -1819,12 +1819,14 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
     TAO::ORB_Table::iterator const end = table->end ();
     for (TAO::ORB_Table::iterator i = table->begin (); i != end; ++i)
       {
-        TAO_ORB_Core * const other_core = (*i).second.core ();
+        ::TAO_ORB_Core * const other_core = (*i).second.core ();
 
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
           {
-            collocated_orb_core = other_core->_incr_refcnt();
+	    other_core->_incr_refcnt();
+	     TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
+	     collocated_orb_core = tmp_auto_ptr;
             break;
           }
       }
@@ -1898,7 +1900,9 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub,
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
           {
-            collocated_orb_core = other_core->_incr_refcnt ();
+	    other_core->_incr_refcnt ();
+	    TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
+            collocated_orb_core = tmp_auto_ptr;
             break;
           }
       }
@@ -1907,7 +1911,7 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub,
   if (collocated_orb_core.get ())
     {
       TAO_Adapter_Registry *ar =
-        collocated_orb_core->get ()->adapter_registry ();
+        collocated_orb_core.get ()->adapter_registry ();
 
       retval = ar->initialize_collocated_object (stub);
     }

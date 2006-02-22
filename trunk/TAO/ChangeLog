@@ -1,3 +1,16 @@
+Wed Feb 22 04:45:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
+        * tao/ORB_Core.cpp: 
+          Fixing TAO_ORB_Core_Auto_Ptr assignment
+        
+        * tao/ORB_Table.{h,inl}:
+          Fixing namespace-ing for TAO_ORB_Core.
+        
+        * tao/Stub.i:
+          Fixing TAO_ORB_Core declaration
+        
+          Together all these changes are related to previous commit for
+          bugzilla bugs #1741 / #2134; #2289; #1493; #2130.
+
 Tue Feb 21 19:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.{h,cpp}:
