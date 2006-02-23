@@ -1120,11 +1120,64 @@ AC_DEFUN([ACE_PATH_QT],
 ])
 
 
+# ACE_PATH_TCL
+#---------------------------------------------------------------------------
+# Find Tcl Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_TCL], 
+[AC_ARG_WITH([tclconfig],
+ AS_HELP_STRING([--with-tclconfig=DIR],
+                [path to tclConfig.sh [[automatic]]]),
+ [ ac_tclconfig_dir="${withval}" ])
+ if test X"${ac_tclconfig_dir}" = X; then
+   AC_PATH_PROG([TCLCONFIG], [tclConfig.sh], [],
+                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tcl8.4:/usr/lib/tcl8.3:/usr/lib])
+ else
+  AC_MSG_CHECKING([whether tclConfig.sh exists in ${ac_tclconfig_dir}])
+   if test -f "${ac_tclconfig_dir}/tclConfig.sh"; then
+     TCLCONFIG="${ac_tclconfig_dir}/tclConfig.sh"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${TCLCONFIG}" != X; then
+   . ${TCLCONFIG}
+   ACE_TCL_CPPFLAGS="${TCL_INCLUDE_SPEC}"
+   eval "ACE_TCL_LIBS=\"${TCL_LIB_SPEC}\""
+   AC_SUBST(ACE_TCL_CPPFLAGS)
+   AC_SUBST(ACE_TCL_LIBS)
+ fi
+])
+
+
 # ACE_PATH_TK
 #---------------------------------------------------------------------------
 # Find Tk Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TK],
-[
+AC_DEFUN([ACE_PATH_TK], 
+[AC_REQUIRE([ACE_PATH_TCL])
+ AC_ARG_WITH([tkconfig],
+ AS_HELP_STRING([--with-tkconfig=DIR],
+                [path to tkConfig.sh [[automatic]]]),
+ [ ac_tkconfig_dir="${withval}" ])
+ if test X"${ac_tkconfig_dir}" = X; then
+   AC_PATH_PROG([TKCONFIG], [tkConfig.sh], [],
+                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tk8.4:/usr/lib/tk8.3:/usr/lib])
+ else
+   AC_MSG_CHECKING([whether tkConfig.sh exists in ${ac_tkconfig_dir}])
+   if test -f "${ac_tkconfig_dir}/tkConfig.sh"; then
+     TKCONFIG="${ac_tkconfig_dir}/tkConfig.sh"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${TKCONFIG}" != X; then
+   . ${TKCONFIG}
+   ACE_TK_CPPFLAGS="-I${TK_INC_DIR} ${TK_DEFS}"
+   ACE_TK_LIBS="${TK_LIB_FLAG}"
+   AC_SUBST(ACE_TK_CPPFLAGS)
+   AC_SUBST(ACE_TK_LIBS)
+ fi
 ])
 
 
@@ -1151,11 +1204,11 @@ AC_ARG_ENABLE([fl-reactor],
                 [
                  ace_user_enable_fl_reactor=no
                 ])
-AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
+AM_CONDITIONAL([BUILD_FL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
-               [test X$ace_enable_fl_reactor = Xyes])
+               [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_FLRESOURCE],
-               [test X$ace_enable_fl_reactor = Xyes])
+               [test X$ace_user_enable_fl_reactor = Xyes])
 ])
 
 
@@ -1182,11 +1235,11 @@ AC_ARG_ENABLE([qt-reactor],
                 [
                  ace_user_enable_qt_reactor=no
                 ])
-AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_QT], [test X$ace_user_enable_qt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_QTREACTOR],
-               [test X$ace_enable_qt_reactor = Xyes])
+               [test X$ace_user_enable_qt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_QTRESOURCE],
-               [test X$ace_enable_qt_reactor = Xyes])
+               [test X$ace_user_enable_qt_reactor = Xyes])
 ])
 
 
@@ -1199,11 +1252,13 @@ AC_ARG_ENABLE([tk-reactor],
 		              [build support for the TkReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
-		  ace_user_enable_tk_reactor=yes
+                  AS_IF([test X"${TCLCONFIG}" != X],
+                        [AS_IF([test X"${TKCONFIG}" != X],
+                               [ace_user_enable_tk_reactor=yes],
+                               [AC_MSG_ERROR([ACE_TkReactor cannot be enabled: tkConfig not found.])])],
+                        [AC_MSG_ERROR([ACE_TkReactor cannot be enabled: tclConfig not found.])])
 		  ;;
 		no)
-		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
 		  ace_user_enable_tk_reactor=no
 		  ;;
 		*)
@@ -1213,11 +1268,11 @@ AC_ARG_ENABLE([tk-reactor],
                 [
                  ace_user_enable_tk_reactor=no
                 ])
-AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TK], [test X$ace_user_enable_tk_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_TKREACTOR],
-               [test X$ace_enable_tk_reactor = Xyes])
+               [test X$ace_user_enable_tk_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_TKRESOURCE],
-               [test X$ace_enable_tk_reactor = Xyes])
+               [test X$ace_user_enable_tk_reactor = Xyes])
 ])
 
 
@@ -1255,10 +1310,10 @@ dnl line, then "no_x" is set to "yes."
                   ACE_XLIBS=""
                   ace_user_enable_xt_reactor=no
 		])
-AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
-AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_X11], [test X$ace_user_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_XT], [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
-               [test X$ace_enable_xt_reactor = Xyes])
+               [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
-               [test X$ace_enable_xt_reactor = Xyes])
+               [test X$ace_user_enable_xt_reactor = Xyes])
 ])
