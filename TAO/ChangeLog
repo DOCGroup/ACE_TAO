@@ -1,3 +1,10 @@
+Thu Feb 23 17:14:25 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+
+          Fixed unused argument warning.
+
 Thu Feb 23 16:45:36 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2186_Regression/Bug_2186_Regression.mpc:

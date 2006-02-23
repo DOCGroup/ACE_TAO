@@ -1768,7 +1768,7 @@ TAO_GIOP_Message_Lite::consolidate_fragmented_message (TAO_Queued_Data* /* qd */
 /// @return -1 on failure, 0 on success, 1 no fragment on stack
 /// relating to CancelRequest.
 int 
-TAO_GIOP_Message_Lite::discard_fragmented_message (const TAO_Queued_Data *cancel_request)
+TAO_GIOP_Message_Lite::discard_fragmented_message (const TAO_Queued_Data *)
 {
   return 1; // no fragment on stack relating to cancel-request
 }
