@@ -73,8 +73,15 @@ template <typename T>
 TAO_Value_Var_T<T> &
 TAO_Value_Var_T<T>::operator= (T * p)
 {
-  TAO_Value_Var_T<T> tmp (p);
-  std::swap (this->ptr_, tmp.ptr_);
+  if (this->ptr_ != p)
+    {
+      // This constructor doesn't increase the reference count so we
+      // we must check for self-assignment.  Otherwise the reference
+      // count would be prematurely decremented upon exiting this
+      // scope.
+      TAO_Value_Var_T<T> tmp (p);
+      std::swap (this->ptr_, tmp.ptr_);
+    }
 
   return *this;
 }

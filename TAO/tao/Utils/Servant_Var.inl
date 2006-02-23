@@ -64,8 +64,16 @@ template <class T>
 ACE_INLINE typename TAO::Utils::Servant_Var<T> &
 TAO::Utils::Servant_Var<T>::operator= (T * p)
 {
-  TAO::Utils::Servant_Var<T> tmp (p);
-  this->swap (tmp);
+  if (this->ptr_ != p)
+    {
+      // This constructor doesn't increase the reference count so we
+      // we must check for self-assignment.  Otherwise the reference
+      // count would be prematurely decremented upon exiting this
+      // scope.
+      TAO::Utils::Servant_Var<T> tmp (p);
+      this->swap (tmp);
+    }
+
   return *this;
 }
 
@@ -119,8 +127,16 @@ template <class T> template <class Y>
 ACE_INLINE typename TAO::Utils::Servant_Var<T> &
 TAO::Utils::Servant_Var<T>::operator= (Y * p)
 {
-  TAO::Utils::Servant_Var<T> tmp (p);
-  this->swap (tmp);
+  if (this->ptr_ != p)
+    {
+      // This constructor doesn't increase the reference count so we
+      // we must check for self-assignment.  Otherwise the reference
+      // count would be prematurely decremented upon exiting this
+      // scope.
+      TAO::Utils::Servant_Var<T> tmp (p);
+      this->swap (tmp);
+    }
+
   return *this;
 }
 #endif /* ACE_LACKS_MEMBER_TEMPLATES */
