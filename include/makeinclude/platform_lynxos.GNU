@@ -115,8 +115,8 @@ ifeq ($(threads),1)
 endif
 
 ifeq ($(shared_libs),1)
-  CFLAGS  += -mshared
-  SOFLAGS += -mshared
+  CFLAGS  += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
+  SOFLAGS += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
   LIBS    += -ldl
 else
   LIBS    += -lnetinet -lnsl
