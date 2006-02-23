@@ -209,8 +209,12 @@ TAO_FT_IOGR_Property::set_primary (
        ctr < count;
        ctr ++)
     {
-      if (prim_profile->is_equivalent (
-          ior2->_stubobj ()->base_profiles ().get_profile (ctr)) == 1)
+      // used a helper function instead of the is_equivalent() function,
+      // because we are a testing a profile from non-group ior and a profile
+      // from group ior. If we use is_equivalent(), it will always return
+      // return false.
+      if (is_profile_equiv (prim_profile,
+          ior2->_stubobj ()->base_profiles ().get_profile (ctr)))
         {
           // We know that <ior1> exists in <io2>
           // Take the index of that and break out of the loop
@@ -423,6 +427,15 @@ TAO_FT_IOGR_Property::remove_primary_tag (
         }
     }
   return 0;
+}
+
+CORBA::Boolean TAO_FT_IOGR_Property::is_profile_equiv(TAO_Profile *p1, TAO_Profile *p2)
+{
+  return p1->tag () == p1->tag ()
+    && const_cast<TAO_GIOP_Message_Version &> (p1->version ()) ==
+       const_cast<TAO_GIOP_Message_Version &>(p2->version ())
+    && p1->endpoint_count () == p2->endpoint_count ()
+    && p1->object_key () == p2->object_key ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
