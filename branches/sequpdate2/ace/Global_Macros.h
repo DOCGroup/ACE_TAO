@@ -129,13 +129,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // ----------------------------------------------------------------
 
 // Deal with MSVC++ 6 (or less) insanity for CORBA...
-# if !defined (ACE_NESTED_CLASS)
-#   if defined (ACE_HAS_BROKEN_NAMESPACES)
-#     define ACE_NESTED_CLASS(TYPE, NAME) NAME
-#   else  /* ! ACE_HAS_BROKEN_NAMESPACES */
-#     define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
-#   endif /* ! ACE_HAS_BROKEN_NAMESPACES */
-# endif  /* !ACE_NESTED_CLASS */
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+/**
+ * This macro is deprecated
+ */
+#  define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
   /**
