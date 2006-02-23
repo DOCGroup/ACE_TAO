@@ -64,6 +64,8 @@ module DsLogAdmin
     TimeT stop;
   };
 
+  typedef sequence<TimeInterval> TimeIntervalSeq;
+
   struct LogRecord
   {
     RecordId id;

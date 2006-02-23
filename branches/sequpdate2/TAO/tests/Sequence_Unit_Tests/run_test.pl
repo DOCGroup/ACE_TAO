@@ -12,6 +12,7 @@ use strict;
 my $final_result = 0;
 
 my @tests = qw(unbounded_value_sequence_ut
+               unbounded_array_sequence_ut
                bounded_value_sequence_ut
                string_sequence_element_ut
                unbounded_string_sequence_ut

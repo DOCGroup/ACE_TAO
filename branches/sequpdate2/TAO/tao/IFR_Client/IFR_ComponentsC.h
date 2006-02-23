@@ -69,13 +69,9 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-<<<<<<< IFR_ComponentsC.h
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
-=======
-// TAO_IDL - Generated from
->>>>>>> 1.32.6.1
 // be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
@@ -2212,10 +2208,10 @@ namespace CORBA
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       // TAO_IDL - Generated from
       // be\be_visitor_operation/operation_ch.cpp:46
-      
+
       virtual void managed_component (
           ::CORBA::ComponentIR::ComponentDef_ptr managed_component
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2223,20 +2219,20 @@ namespace CORBA
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       // TAO_IDL - Generated from
       // be\be_visitor_operation/operation_ch.cpp:46
-      
+
       virtual ::CORBA::ValueDef_ptr primary_key (
           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       // TAO_IDL - Generated from
       // be\be_visitor_operation/operation_ch.cpp:46
-      
+
       virtual void primary_key (
           ::CORBA::ValueDef_ptr primary_key
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2244,10 +2240,10 @@ namespace CORBA
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       // TAO_IDL - Generated from
       // be\be_visitor_operation/operation_ch.cpp:46
-      
+
       virtual ::CORBA::ComponentIR::FactoryDef_ptr create_factory (
           const char * id,
           const char * name,
@@ -2259,10 +2255,10 @@ namespace CORBA
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       // TAO_IDL - Generated from
       // be\be_visitor_operation/operation_ch.cpp:46
-      
+
       virtual ::CORBA::ComponentIR::FinderDef_ptr create_finder (
           const char * id,
           const char * name,
@@ -2274,34 +2270,34 @@ namespace CORBA
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       // TAO_IDL - Generated from
       // be\be_visitor_interface/interface_ch.cpp:210
-      
+
       virtual CORBA::Boolean _is_a (
           const char *type_id
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       virtual const char* _interface_repository_id (void) const;
       virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     private:
       TAO::Collocation_Proxy_Broker *the_TAO_HomeDef_Proxy_Broker_;
-    
+
     protected:
       // Concrete interface only.
       HomeDef (void);
-      
+
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
       virtual void CORBA_ComponentIR_HomeDef_setup_collocation (void);
-      
+
       // Concrete non-local interface only.
       HomeDef (
           IOP::IOR *ior,
           TAO_ORB_Core *orb_core = 0
         );
-      
+
       // Non-local interface only.
       HomeDef (
           TAO_Stub *objref,
@@ -2309,48 +2305,48 @@ namespace CORBA
           TAO_Abstract_ServantBase *servant = 0,
           TAO_ORB_Core *orb_core = 0
         );
-      
+
       virtual ~HomeDef (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       HomeDef (const HomeDef &);
-      
+
       void operator= (const HomeDef &);
     };
 
 #endif /* end #if !defined */
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:49
-    
+
     extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_HomeDef;
-    
+
     // TAO_IDL - Generated from
     // be\be_type.cpp:258
-    
+
     struct HomeDescription;
-    
+
     typedef
       TAO_Var_Var_T<
           HomeDescription
         >
       HomeDescription_var;
-    
+
     typedef
       TAO_Out_T<
           HomeDescription,
           HomeDescription_var
         >
       HomeDescription_out;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_structure/structure_ch.cpp:57
-    
+
     struct TAO_IFR_Client_Export HomeDescription
     {
       typedef HomeDescription_var _var_type;
-      
+
       static void _tao_any_destructor (void *);
       TAO_String_Manager name;
       TAO_String_Manager id;
@@ -2365,15 +2361,15 @@ namespace CORBA
       CORBA::ExtAttrDescriptionSeq attributes;
       CORBA::TypeCode_var type;
     };
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:49
-    
+
     extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_HomeDescription;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_module/module_ch.cpp:66
-  
+
   } // module CORBA::ComponentIR
 
 // TAO_IDL - Generated from
@@ -2479,7 +2475,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_EVENTDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::EventDef>
   {
@@ -2500,7 +2496,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_CONTAINER__TRAITS_)
 #define _CORBA_COMPONENTIR_CONTAINER__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::Container>
   {
@@ -2521,7 +2517,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_MODULEDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_MODULEDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ModuleDef>
   {
@@ -2542,7 +2538,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_REPOSITORY__TRAITS_)
 #define _CORBA_COMPONENTIR_REPOSITORY__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::Repository>
   {
@@ -2563,7 +2559,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ProvidesDef>
   {
@@ -2584,7 +2580,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_USESDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_USESDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::UsesDef>
   {
@@ -2605,7 +2601,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_EVENTPORTDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::EventPortDef>
   {
@@ -2626,7 +2622,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_EMITSDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::EmitsDef>
   {
@@ -2647,7 +2643,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::PublishesDef>
   {
@@ -2668,7 +2664,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ConsumesDef>
   {
@@ -2689,7 +2685,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::ComponentDef>
   {
@@ -2710,7 +2706,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_FACTORYDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::FactoryDef>
   {
@@ -2731,7 +2727,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_FINDERDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::FinderDef>
   {
@@ -2752,7 +2748,7 @@ namespace TAO
 
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF__TRAITS_)
 #define _CORBA_COMPONENTIR_HOMEDEF__TRAITS_
-  
+
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ComponentIR::HomeDef>
   {

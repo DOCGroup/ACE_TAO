@@ -72,13 +72,9 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-<<<<<<< IFR_BasicC.h
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
-=======
-// TAO_IDL - Generated from
->>>>>>> 1.33.6.2
 // be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
