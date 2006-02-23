@@ -1,3 +1,10 @@
+Thu Feb 23 20:01:29 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated for autoconf TK Reactor / TK Resource Factory
+          support.
+
 Thu Feb 23 18:41:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/Utils/Servant_Var.inl (operator=):
