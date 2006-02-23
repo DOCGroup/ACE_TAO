@@ -63,8 +63,6 @@ public:
   virtual int visit_array (be_array *node);
 
   virtual int visit_typedef (be_typedef *node);
-
-  virtual int visit_valuebox (be_valuebox *node);
 };
 
 
