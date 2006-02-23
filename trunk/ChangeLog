@@ -1,3 +1,11 @@
+Thu Feb 23 23:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+        
+          Use "eval" when setting ACE_TCL_LIB to expand any variables in
+          ${TCL_LIB_SPEC}.  Thanks to Thomas Girard <thomas dot g dot
+          girard at free dot fr>.
+
 Thu Feb 23 19:53:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/DLL_Test_Impl.cpp:
