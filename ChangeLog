@@ -130,7 +130,6 @@ Wed Feb 22 16:50:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/SString_Test.cpp: Added test for new operator=.
 
->>>>>>> 4.9917
 Wed Feb 22 17:26:01 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.h:
@@ -183,7 +182,6 @@ Wed Feb 22 08:33:03 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
         * ace/os_include/os_pthread.h
           Handle broken thread key free on LynxOS
 
->>>>>>> 4.9907
 Tue Feb 21 23:49:20 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Truncate.{h inl cpp}: New function template, ACE_Utils::Truncate,
