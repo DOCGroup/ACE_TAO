@@ -47,6 +47,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+#include "tao/String_Manager_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -88,8 +89,8 @@ typedef
 struct TAO_Strategies_Export TAO_SCIOP_Endpoint_Info
 {
   typedef TAO_SCIOP_Endpoint_Info_var _var_type;
-  
-  
+
+
   TAO_String_Manager host;
   CORBA::Short port;
   CORBA::Short priority;
@@ -110,22 +111,20 @@ class TAO_SCIOPEndpointSequence;
 
 typedef
   TAO_VarSeq_Var_T<
-      TAO_SCIOPEndpointSequence,
-      TAO_SCIOP_Endpoint_Info
+      TAO_SCIOPEndpointSequence
     >
   TAO_SCIOPEndpointSequence_var;
 
 typedef
   TAO_Seq_Out_T<
       TAO_SCIOPEndpointSequence,
-      TAO_SCIOPEndpointSequence_var,
-      TAO_SCIOP_Endpoint_Info
+      TAO_SCIOPEndpointSequence_var
     >
   TAO_SCIOPEndpointSequence_out;
 
 class TAO_Strategies_Export TAO_SCIOPEndpointSequence
   : public
-      TAO_Unbounded_Sequence<
+      TAO::unbounded_value_sequence<
           TAO_SCIOP_Endpoint_Info
         >
 {
@@ -135,12 +134,12 @@ public:
   TAO_SCIOPEndpointSequence (
       CORBA::ULong max,
       CORBA::ULong length,
-      TAO_SCIOP_Endpoint_Info* buffer, 
+      TAO_SCIOP_Endpoint_Info* buffer,
       CORBA::Boolean release = 0
     );
   TAO_SCIOPEndpointSequence (const TAO_SCIOPEndpointSequence &);
   ~TAO_SCIOPEndpointSequence (void);
-  
+
   typedef TAO_SCIOPEndpointSequence_var _var_type;
 };
 

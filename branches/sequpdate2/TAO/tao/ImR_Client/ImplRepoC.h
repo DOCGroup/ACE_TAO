@@ -60,13 +60,9 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_IMR_Client_Export
 
-<<<<<<< ImplRepoC.h
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
-=======
-// TAO_IDL - Generated from
->>>>>>> 1.22.6.1
 // be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO

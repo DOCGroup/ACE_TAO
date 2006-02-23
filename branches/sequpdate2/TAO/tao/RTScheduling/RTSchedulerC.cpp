@@ -262,7 +262,7 @@ RTScheduling::DistributableThread::_duplicate (DistributableThread_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -348,7 +348,7 @@ TAO::Objref_Traits<RTScheduling::Current>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::UNSUPPORTED_SCHEDULING_DISCIPLINE (void)
@@ -436,7 +436,7 @@ CORBA::TypeCode_ptr RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_t
   return ::RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTSCHEDULING_CURRENT_IDTYPE_CS_)
@@ -448,7 +448,7 @@ RTScheduling::Current::IdType::IdType (void)
 RTScheduling::Current::IdType::IdType (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (max)
@@ -460,7 +460,7 @@ RTScheduling::Current::IdType::IdType (
     CORBA::Octet * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (max, length, buffer, release)
@@ -469,7 +469,7 @@ RTScheduling::Current::IdType::IdType (
 RTScheduling::Current::IdType::IdType (
     const IdType &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (seq)
@@ -480,7 +480,7 @@ RTScheduling::Current::IdType::~IdType (void)
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTSCHEDULING_CURRENT_NAMELIST_CS_)
@@ -492,7 +492,7 @@ RTScheduling::Current::NameList::NameList (void)
 RTScheduling::Current::NameList::NameList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (max)
 {}
 
@@ -502,14 +502,14 @@ RTScheduling::Current::NameList::NameList (
     char * * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (max, length, buffer, release)
 {}
 
 RTScheduling::Current::NameList::NameList (
     const NameList &seq
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (seq)
 {}
 
@@ -553,7 +553,7 @@ RTScheduling::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -682,7 +682,7 @@ RTScheduling::ResourceManager::_duplicate (ResourceManager_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -772,7 +772,7 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::INCOMPATIBLE_SCHEDULING_DISCIPLINES (void)
@@ -895,7 +895,7 @@ RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

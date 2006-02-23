@@ -78,7 +78,7 @@ PortableServer::POAList::POAList (void)
 PortableServer::POAList::POAList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         PortableServer::POA,
         PortableServer::POA_var
       >
@@ -91,7 +91,7 @@ PortableServer::POAList::POAList (
     PortableServer::POA_ptr * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         PortableServer::POA,
         PortableServer::POA_var
       >
@@ -101,7 +101,7 @@ PortableServer::POAList::POAList (
 PortableServer::POAList::POAList (
     const POAList &seq
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         PortableServer::POA,
         PortableServer::POA_var
       >

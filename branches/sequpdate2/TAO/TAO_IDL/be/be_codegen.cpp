@@ -236,7 +236,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                             -1);
         }
     }
-    
+
   // Generate the TAO_EXPORT_MACRO macro.
   *this->client_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
   *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
@@ -1638,7 +1638,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // Generated if (w)string member of struct/union/exception/array/valuetype
   // has been seen.
   this->gen_cond_file_include (idl_global->string_member_seen_,
-                               "tao/Managed_Types.h",
+                               "tao/String_Manager_T.h",
                                this->client_header_);
 
   // Include the Messaging library entry point, if AMI is enabled.
