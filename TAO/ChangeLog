@@ -1,3 +1,11 @@
+Thu Feb 23 15:10:18 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+
+          Added A helper function that tests the equivalency of two 
+          profiles that come from an ior and an iogr.
+
 Thu Feb 23 10:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/Portable_Interceptors/AdvSlotDblCpy/README:
