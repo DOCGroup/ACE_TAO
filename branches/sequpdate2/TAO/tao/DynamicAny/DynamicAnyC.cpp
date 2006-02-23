@@ -84,7 +84,7 @@ TAO::Objref_Traits<DynamicAny::DynAny>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::InvalidValue::InvalidValue (void)
@@ -168,7 +168,7 @@ void DynamicAny::DynAny::InvalidValue::_tao_decode (
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (void)
@@ -268,10 +268,10 @@ DynamicAny::DynAny::_narrow (
     {
       return DynAny::_nil ();
     }
-  
+
   DynAny_ptr proxy =
     dynamic_cast<DynAny_ptr> (_tao_objref);
-  
+
   return DynAny::_duplicate (proxy);
 }
 
@@ -285,10 +285,10 @@ DynamicAny::DynAny::_unchecked_narrow (
     {
       return DynAny::_nil ();
     }
-  
+
   DynAny_ptr proxy =
     dynamic_cast<DynAny_ptr> (_tao_objref);
-  
+
   return DynAny::_duplicate (proxy);
 }
 
@@ -299,7 +299,7 @@ DynamicAny::DynAny::_duplicate (DynAny_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -401,10 +401,10 @@ DynamicAny::DynFixed::_narrow (
     {
       return DynFixed::_nil ();
     }
-  
+
   DynFixed_ptr proxy =
     dynamic_cast<DynFixed_ptr> (_tao_objref);
-  
+
   return DynFixed::_duplicate (proxy);
 }
 
@@ -418,10 +418,10 @@ DynamicAny::DynFixed::_unchecked_narrow (
     {
       return DynFixed::_nil ();
     }
-  
+
   DynFixed_ptr proxy =
     dynamic_cast<DynFixed_ptr> (_tao_objref);
-  
+
   return DynFixed::_duplicate (proxy);
 }
 
@@ -432,7 +432,7 @@ DynamicAny::DynFixed::_duplicate (DynFixed_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -538,10 +538,10 @@ DynamicAny::DynEnum::_narrow (
     {
       return DynEnum::_nil ();
     }
-  
+
   DynEnum_ptr proxy =
     dynamic_cast<DynEnum_ptr> (_tao_objref);
-  
+
   return DynEnum::_duplicate (proxy);
 }
 
@@ -555,10 +555,10 @@ DynamicAny::DynEnum::_unchecked_narrow (
     {
       return DynEnum::_nil ();
     }
-  
+
   DynEnum_ptr proxy =
     dynamic_cast<DynEnum_ptr> (_tao_objref);
-  
+
   return DynEnum::_duplicate (proxy);
 }
 
@@ -569,7 +569,7 @@ DynamicAny::DynEnum::_duplicate (DynEnum_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -623,12 +623,12 @@ DynamicAny::DynEnum::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CS_)
@@ -640,7 +640,7 @@ DynamicAny::NameValuePairSeq::NameValuePairSeq (void)
 DynamicAny::NameValuePairSeq::NameValuePairSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         DynamicAny::NameValuePair
       >
     (max)
@@ -652,7 +652,7 @@ DynamicAny::NameValuePairSeq::NameValuePairSeq (
     DynamicAny::NameValuePair * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         DynamicAny::NameValuePair
       >
     (max, length, buffer, release)
@@ -661,7 +661,7 @@ DynamicAny::NameValuePairSeq::NameValuePairSeq (
 DynamicAny::NameValuePairSeq::NameValuePairSeq (
     const NameValuePairSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         DynamicAny::NameValuePair
       >
     (seq)
@@ -672,12 +672,12 @@ DynamicAny::NameValuePairSeq::~NameValuePairSeq (void)
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_)
@@ -689,7 +689,7 @@ DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (void)
 DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         DynamicAny::NameDynAnyPair
       >
     (max)
@@ -701,7 +701,7 @@ DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (
     DynamicAny::NameDynAnyPair * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         DynamicAny::NameDynAnyPair
       >
     (max, length, buffer, release)
@@ -710,7 +710,7 @@ DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (
 DynamicAny::NameDynAnyPairSeq::NameDynAnyPairSeq (
     const NameDynAnyPairSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         DynamicAny::NameDynAnyPair
       >
     (seq)
@@ -773,10 +773,10 @@ DynamicAny::DynStruct::_narrow (
     {
       return DynStruct::_nil ();
     }
-  
+
   DynStruct_ptr proxy =
     dynamic_cast<DynStruct_ptr> (_tao_objref);
-  
+
   return DynStruct::_duplicate (proxy);
 }
 
@@ -790,10 +790,10 @@ DynamicAny::DynStruct::_unchecked_narrow (
     {
       return DynStruct::_nil ();
     }
-  
+
   DynStruct_ptr proxy =
     dynamic_cast<DynStruct_ptr> (_tao_objref);
-  
+
   return DynStruct::_duplicate (proxy);
 }
 
@@ -804,7 +804,7 @@ DynamicAny::DynStruct::_duplicate (DynStruct_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -910,10 +910,10 @@ DynamicAny::DynUnion::_narrow (
     {
       return DynUnion::_nil ();
     }
-  
+
   DynUnion_ptr proxy =
     dynamic_cast<DynUnion_ptr> (_tao_objref);
-  
+
   return DynUnion::_duplicate (proxy);
 }
 
@@ -927,10 +927,10 @@ DynamicAny::DynUnion::_unchecked_narrow (
     {
       return DynUnion::_nil ();
     }
-  
+
   DynUnion_ptr proxy =
     dynamic_cast<DynUnion_ptr> (_tao_objref);
-  
+
   return DynUnion::_duplicate (proxy);
 }
 
@@ -941,7 +941,7 @@ DynamicAny::DynUnion::_duplicate (DynUnion_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -995,7 +995,7 @@ DynamicAny::DynUnion::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_ANYSEQ_CS_)
@@ -1007,7 +1007,7 @@ DynamicAny::AnySeq::AnySeq (void)
 DynamicAny::AnySeq::AnySeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Any
       >
     (max)
@@ -1019,7 +1019,7 @@ DynamicAny::AnySeq::AnySeq (
     CORBA::Any * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Any
       >
     (max, length, buffer, release)
@@ -1028,7 +1028,7 @@ DynamicAny::AnySeq::AnySeq (
 DynamicAny::AnySeq::AnySeq (
     const AnySeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Any
       >
     (seq)
@@ -1039,7 +1039,7 @@ DynamicAny::AnySeq::~AnySeq (void)
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMICANY_DYNANYSEQ_CS_)
@@ -1051,7 +1051,7 @@ DynamicAny::DynAnySeq::DynAnySeq (void)
 DynamicAny::DynAnySeq::DynAnySeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         DynamicAny::DynAny,
         DynamicAny::DynAny_var
       >
@@ -1064,7 +1064,7 @@ DynamicAny::DynAnySeq::DynAnySeq (
     DynamicAny::DynAny_ptr * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         DynamicAny::DynAny,
         DynamicAny::DynAny_var
       >
@@ -1074,7 +1074,7 @@ DynamicAny::DynAnySeq::DynAnySeq (
 DynamicAny::DynAnySeq::DynAnySeq (
     const DynAnySeq &seq
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         DynamicAny::DynAny,
         DynamicAny::DynAny_var
       >
@@ -1138,10 +1138,10 @@ DynamicAny::DynSequence::_narrow (
     {
       return DynSequence::_nil ();
     }
-  
+
   DynSequence_ptr proxy =
     dynamic_cast<DynSequence_ptr> (_tao_objref);
-  
+
   return DynSequence::_duplicate (proxy);
 }
 
@@ -1155,10 +1155,10 @@ DynamicAny::DynSequence::_unchecked_narrow (
     {
       return DynSequence::_nil ();
     }
-  
+
   DynSequence_ptr proxy =
     dynamic_cast<DynSequence_ptr> (_tao_objref);
-  
+
   return DynSequence::_duplicate (proxy);
 }
 
@@ -1169,7 +1169,7 @@ DynamicAny::DynSequence::_duplicate (DynSequence_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1275,10 +1275,10 @@ DynamicAny::DynArray::_narrow (
     {
       return DynArray::_nil ();
     }
-  
+
   DynArray_ptr proxy =
     dynamic_cast<DynArray_ptr> (_tao_objref);
-  
+
   return DynArray::_duplicate (proxy);
 }
 
@@ -1292,10 +1292,10 @@ DynamicAny::DynArray::_unchecked_narrow (
     {
       return DynArray::_nil ();
     }
-  
+
   DynArray_ptr proxy =
     dynamic_cast<DynArray_ptr> (_tao_objref);
-  
+
   return DynArray::_duplicate (proxy);
 }
 
@@ -1306,7 +1306,7 @@ DynamicAny::DynArray::_duplicate (DynArray_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1412,10 +1412,10 @@ DynamicAny::DynValue::_narrow (
     {
       return DynValue::_nil ();
     }
-  
+
   DynValue_ptr proxy =
     dynamic_cast<DynValue_ptr> (_tao_objref);
-  
+
   return DynValue::_duplicate (proxy);
 }
 
@@ -1429,10 +1429,10 @@ DynamicAny::DynValue::_unchecked_narrow (
     {
       return DynValue::_nil ();
     }
-  
+
   DynValue_ptr proxy =
     dynamic_cast<DynValue_ptr> (_tao_objref);
-  
+
   return DynValue::_duplicate (proxy);
 }
 
@@ -1443,7 +1443,7 @@ DynamicAny::DynValue::_duplicate (DynValue_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1533,7 +1533,7 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (void)
@@ -1633,10 +1633,10 @@ DynamicAny::DynAnyFactory::_narrow (
     {
       return DynAnyFactory::_nil ();
     }
-  
+
   DynAnyFactory_ptr proxy =
     dynamic_cast<DynAnyFactory_ptr> (_tao_objref);
-  
+
   return DynAnyFactory::_duplicate (proxy);
 }
 
@@ -1650,10 +1650,10 @@ DynamicAny::DynAnyFactory::_unchecked_narrow (
     {
       return DynAnyFactory::_nil ();
     }
-  
+
   DynAnyFactory_ptr proxy =
     dynamic_cast<DynAnyFactory_ptr> (_tao_objref);
-  
+
   return DynAnyFactory::_duplicate (proxy);
 }
 
@@ -1664,7 +1664,7 @@ DynamicAny::DynAnyFactory::_duplicate (DynAnyFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1748,22 +1748,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -1771,40 +1756,7 @@ CORBA::Boolean operator>> (
     DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_CPP_ */
@@ -1820,22 +1772,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::AnySeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -1843,40 +1780,7 @@ CORBA::Boolean operator>> (
     DynamicAny::AnySeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */

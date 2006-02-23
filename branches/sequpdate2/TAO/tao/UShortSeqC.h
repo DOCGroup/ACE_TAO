@@ -79,22 +79,20 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        UShortSeq,
-        CORBA::UShort
+        UShortSeq
       >
     UShortSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         UShortSeq,
-        UShortSeq_var,
-        CORBA::UShort
+        UShortSeq_var
       >
     UShortSeq_out;
 
   class TAO_Export UShortSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::UShort
           >
   {
@@ -139,7 +137,7 @@ namespace TAO
 // but we put the instantiation here because the application will
 // need to see it in *C.h to avoid the error.
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-  template class TAO_Export TAO_Unbounded_Sequence<CORBA::UShortSeq>;
+//  template class TAO_Export TAO_Unbounded_Sequence<CORBA::UShortSeq>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 // TAO_IDL - Generated from
