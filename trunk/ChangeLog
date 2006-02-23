@@ -1,3 +1,10 @@
+Thu Feb 23 08:08:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+        * tests/Makefile.am:
+
+          Regenerate for TK Reactor changes.
+
 Thu Feb 23 06:47:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/ace_tk.mpb:
