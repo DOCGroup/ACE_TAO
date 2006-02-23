@@ -2,7 +2,7 @@ Thu Feb 23 10:05:22 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_orb_tests.lst:
 
-	  Scheduled regression tests for bugs #2289 and #2134.
+          Scheduled regression tests for bugs #2289 and #2134.
 
 Thu Feb 23 09:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
