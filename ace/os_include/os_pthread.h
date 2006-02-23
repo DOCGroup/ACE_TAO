@@ -62,10 +62,6 @@ extern "C" pthread_t pthread_self (void);
 #   include /**/ <spthread.h>
 #   else
 #  include /**/ <pthread.h>
-#     if defined (__Lynx__)
-        // cope with LynxOS' use of macros
-#       include /**/ "ace/config-lynxos-pthread.h"
-#     endif /* __Lynx__ */
 #   endif
    }
 #endif /* !ACE_LACKS_PTHREAD_H */

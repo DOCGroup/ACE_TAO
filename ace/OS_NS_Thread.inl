@@ -2545,12 +2545,22 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-  ACE_OSCALL_RETURN (::pthread_cancel (thr_id), int, -1);
+#     ifdef pthread_cancel
+        // If it's a macro we can't say "::pthread_cancel"...
+        ACE_OSCALL_RETURN (pthread_cancel (thr_id), int, -1);
+#     else
+        ACE_OSCALL_RETURN (::pthread_cancel (thr_id), int, -1);
+#     endif /* pthread_cancel */
 #   else
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id),
-                                       result),
-                     int, -1);
+#     ifdef pthread_cancel
+        // If it's a macro we can't say "::pthread_cancel"...
+        ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cancel (thr_id),
+#     else
+        ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id),
+                                             result),
+                           int, -1);
+#     endif /* pthread_cancel */
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 # elif defined (VXWORKS)
   ACE_hthread_t tid;
