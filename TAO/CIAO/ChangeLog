@@ -1,3 +1,12 @@
+Thu Feb 23 23:35:59 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Swapping/Receiver/Receiver.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+
+          I was over zealous in my previous change.  I shortened too many
+          project names (those that are defined in projects outside of these
+          mpc files).
+
 Wed Feb 22 16:38:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * CIAO-INSTALL.html:
