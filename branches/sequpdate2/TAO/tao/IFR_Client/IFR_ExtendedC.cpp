@@ -434,7 +434,7 @@ TAO::Objref_Traits<CORBA::FixedDef>::release (
     CORBA::FixedDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::FixedDef_ptr
@@ -654,7 +654,7 @@ CORBA::FixedDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   FixedDef *_tao_tmp_pointer =
     static_cast<FixedDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::FixedDef_ptr
@@ -690,7 +690,7 @@ CORBA::FixedDef::_unchecked_narrow (
 CORBA::FixedDef_ptr
 CORBA::FixedDef::_duplicate (FixedDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -701,7 +701,7 @@ CORBA::FixedDef::_duplicate (FixedDef_ptr obj)
 void
 CORBA::FixedDef::_tao_release (FixedDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -934,7 +934,7 @@ TAO::Objref_Traits<CORBA::ValueMemberDef>::release (
     CORBA::ValueMemberDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ValueMemberDef_ptr
@@ -1196,7 +1196,7 @@ CORBA::ValueMemberDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ValueMemberDef *_tao_tmp_pointer =
     static_cast<ValueMemberDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ValueMemberDef_ptr
@@ -1232,7 +1232,7 @@ CORBA::ValueMemberDef::_unchecked_narrow (
 CORBA::ValueMemberDef_ptr
 CORBA::ValueMemberDef::_duplicate (ValueMemberDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1243,7 +1243,7 @@ CORBA::ValueMemberDef::_duplicate (ValueMemberDef_ptr obj)
 void
 CORBA::ValueMemberDef::_tao_release (ValueMemberDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1329,7 +1329,7 @@ TAO::Objref_Traits<CORBA::ValueDef>::release (
     CORBA::ValueDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ValueDef_ptr
@@ -2322,7 +2322,7 @@ CORBA::ValueDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ValueDef *_tao_tmp_pointer =
     static_cast<ValueDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ValueDef_ptr
@@ -2358,7 +2358,7 @@ CORBA::ValueDef::_unchecked_narrow (
 CORBA::ValueDef_ptr
 CORBA::ValueDef::_duplicate (ValueDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -2369,7 +2369,7 @@ CORBA::ValueDef::_duplicate (ValueDef_ptr obj)
 void
 CORBA::ValueDef::_tao_release (ValueDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -2522,7 +2522,7 @@ TAO::Objref_Traits<CORBA::ExtValueDef>::release (
     CORBA::ExtValueDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ExtValueDef_ptr
@@ -2841,7 +2841,7 @@ CORBA::ExtValueDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExtValueDef *_tao_tmp_pointer =
     static_cast<ExtValueDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ExtValueDef_ptr
@@ -2877,7 +2877,7 @@ CORBA::ExtValueDef::_unchecked_narrow (
 CORBA::ExtValueDef_ptr
 CORBA::ExtValueDef::_duplicate (ExtValueDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -2888,7 +2888,7 @@ CORBA::ExtValueDef::_duplicate (ExtValueDef_ptr obj)
 void
 CORBA::ExtValueDef::_tao_release (ExtValueDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -2986,7 +2986,7 @@ TAO::Objref_Traits<CORBA::ValueBoxDef>::release (
     CORBA::ValueBoxDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ValueBoxDef_ptr
@@ -3121,7 +3121,7 @@ CORBA::ValueBoxDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ValueBoxDef *_tao_tmp_pointer =
     static_cast<ValueBoxDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ValueBoxDef_ptr
@@ -3157,7 +3157,7 @@ CORBA::ValueBoxDef::_unchecked_narrow (
 CORBA::ValueBoxDef_ptr
 CORBA::ValueBoxDef::_duplicate (ValueBoxDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -3168,7 +3168,7 @@ CORBA::ValueBoxDef::_duplicate (ValueBoxDef_ptr obj)
 void
 CORBA::ValueBoxDef::_tao_release (ValueBoxDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

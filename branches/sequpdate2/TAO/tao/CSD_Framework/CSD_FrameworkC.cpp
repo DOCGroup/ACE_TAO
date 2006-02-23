@@ -63,7 +63,7 @@ TAO::Objref_Traits<CSD_Framework::Strategy>::release (
     CSD_Framework::Strategy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CSD_Framework::Strategy_ptr
@@ -112,18 +112,18 @@ CSD_Framework::Strategy::_unchecked_narrow (
 CSD_Framework::Strategy_ptr
 CSD_Framework::Strategy::_duplicate (Strategy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CSD_Framework::Strategy::_tao_release (Strategy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -184,7 +184,7 @@ TAO::Objref_Traits<CSD_Framework::POA>::release (
     CSD_Framework::POA_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CSD_Framework::POA_ptr
@@ -233,18 +233,18 @@ CSD_Framework::POA::_unchecked_narrow (
 CSD_Framework::POA_ptr
 CSD_Framework::POA::_duplicate (POA_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CSD_Framework::POA::_tao_release (POA_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

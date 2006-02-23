@@ -166,7 +166,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
         }
 
       // Duplicated by Any_Impl base class constructor.
-      CORBA::release (tc);
+      ::CORBA::release (tc);
     }
   ACE_CATCHANY
     {
@@ -186,7 +186,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::free_value (void)
       this->value_destructor_ = 0;
     }
 
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
   this->value_ = 0;
 }
 

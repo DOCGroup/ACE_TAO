@@ -443,7 +443,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::release (
     CORBA::ComponentIR::EventDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::EventDef_ptr
@@ -493,7 +493,7 @@ CORBA::ComponentIR::EventDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   EventDef *_tao_tmp_pointer =
     static_cast<EventDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::EventDef_ptr
@@ -529,7 +529,7 @@ CORBA::ComponentIR::EventDef::_unchecked_narrow (
 CORBA::ComponentIR::EventDef_ptr
 CORBA::ComponentIR::EventDef::_duplicate (EventDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -540,7 +540,7 @@ CORBA::ComponentIR::EventDef::_duplicate (EventDef_ptr obj)
 void
 CORBA::ComponentIR::EventDef::_tao_release (EventDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -645,7 +645,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::Container>::release (
     CORBA::ComponentIR::Container_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::Container_ptr
@@ -887,7 +887,7 @@ CORBA::ComponentIR::Container::_tao_any_destructor (void *_tao_void_pointer)
 {
   Container *_tao_tmp_pointer =
     static_cast<Container *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::Container_ptr
@@ -923,7 +923,7 @@ CORBA::ComponentIR::Container::_unchecked_narrow (
 CORBA::ComponentIR::Container_ptr
 CORBA::ComponentIR::Container::_duplicate (Container_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -934,7 +934,7 @@ CORBA::ComponentIR::Container::_duplicate (Container_ptr obj)
 void
 CORBA::ComponentIR::Container::_tao_release (Container_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1023,7 +1023,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>::release (
     CORBA::ComponentIR::ModuleDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::ModuleDef_ptr
@@ -1074,7 +1074,7 @@ CORBA::ComponentIR::ModuleDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ModuleDef *_tao_tmp_pointer =
     static_cast<ModuleDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::ModuleDef_ptr
@@ -1110,7 +1110,7 @@ CORBA::ComponentIR::ModuleDef::_unchecked_narrow (
 CORBA::ComponentIR::ModuleDef_ptr
 CORBA::ComponentIR::ModuleDef::_duplicate (ModuleDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1121,7 +1121,7 @@ CORBA::ComponentIR::ModuleDef::_duplicate (ModuleDef_ptr obj)
 void
 CORBA::ComponentIR::ModuleDef::_tao_release (ModuleDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1222,7 +1222,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::Repository>::release (
     CORBA::ComponentIR::Repository_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::Repository_ptr
@@ -1273,7 +1273,7 @@ CORBA::ComponentIR::Repository::_tao_any_destructor (void *_tao_void_pointer)
 {
   Repository *_tao_tmp_pointer =
     static_cast<Repository *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::Repository_ptr
@@ -1309,7 +1309,7 @@ CORBA::ComponentIR::Repository::_unchecked_narrow (
 CORBA::ComponentIR::Repository_ptr
 CORBA::ComponentIR::Repository::_duplicate (Repository_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1320,7 +1320,7 @@ CORBA::ComponentIR::Repository::_duplicate (Repository_ptr obj)
 void
 CORBA::ComponentIR::Repository::_tao_release (Repository_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1417,7 +1417,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>::release (
     CORBA::ComponentIR::ProvidesDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::ProvidesDef_ptr
@@ -1552,7 +1552,7 @@ CORBA::ComponentIR::ProvidesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ProvidesDef *_tao_tmp_pointer =
     static_cast<ProvidesDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::ProvidesDef_ptr
@@ -1588,7 +1588,7 @@ CORBA::ComponentIR::ProvidesDef::_unchecked_narrow (
 CORBA::ComponentIR::ProvidesDef_ptr
 CORBA::ComponentIR::ProvidesDef::_duplicate (ProvidesDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1599,7 +1599,7 @@ CORBA::ComponentIR::ProvidesDef::_duplicate (ProvidesDef_ptr obj)
 void
 CORBA::ComponentIR::ProvidesDef::_tao_release (ProvidesDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1735,7 +1735,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>::release (
     CORBA::ComponentIR::UsesDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::UsesDef_ptr
@@ -1955,7 +1955,7 @@ CORBA::ComponentIR::UsesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   UsesDef *_tao_tmp_pointer =
     static_cast<UsesDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::UsesDef_ptr
@@ -1991,7 +1991,7 @@ CORBA::ComponentIR::UsesDef::_unchecked_narrow (
 CORBA::ComponentIR::UsesDef_ptr
 CORBA::ComponentIR::UsesDef::_duplicate (UsesDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -2002,7 +2002,7 @@ CORBA::ComponentIR::UsesDef::_duplicate (UsesDef_ptr obj)
 void
 CORBA::ComponentIR::UsesDef::_tao_release (UsesDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -2139,7 +2139,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>::release (
     CORBA::ComponentIR::EventPortDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::EventPortDef_ptr
@@ -2319,7 +2319,7 @@ CORBA::ComponentIR::EventPortDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   EventPortDef *_tao_tmp_pointer =
     static_cast<EventPortDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::EventPortDef_ptr
@@ -2355,7 +2355,7 @@ CORBA::ComponentIR::EventPortDef::_unchecked_narrow (
 CORBA::ComponentIR::EventPortDef_ptr
 CORBA::ComponentIR::EventPortDef::_duplicate (EventPortDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -2366,7 +2366,7 @@ CORBA::ComponentIR::EventPortDef::_duplicate (EventPortDef_ptr obj)
 void
 CORBA::ComponentIR::EventPortDef::_tao_release (EventPortDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -2502,7 +2502,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>::release (
     CORBA::ComponentIR::EmitsDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::EmitsDef_ptr
@@ -2552,7 +2552,7 @@ CORBA::ComponentIR::EmitsDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   EmitsDef *_tao_tmp_pointer =
     static_cast<EmitsDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::EmitsDef_ptr
@@ -2588,7 +2588,7 @@ CORBA::ComponentIR::EmitsDef::_unchecked_narrow (
 CORBA::ComponentIR::EmitsDef_ptr
 CORBA::ComponentIR::EmitsDef::_duplicate (EmitsDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -2599,7 +2599,7 @@ CORBA::ComponentIR::EmitsDef::_duplicate (EmitsDef_ptr obj)
 void
 CORBA::ComponentIR::EmitsDef::_tao_release (EmitsDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -2692,7 +2692,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>::release (
     CORBA::ComponentIR::PublishesDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::PublishesDef_ptr
@@ -2742,7 +2742,7 @@ CORBA::ComponentIR::PublishesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   PublishesDef *_tao_tmp_pointer =
     static_cast<PublishesDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::PublishesDef_ptr
@@ -2778,7 +2778,7 @@ CORBA::ComponentIR::PublishesDef::_unchecked_narrow (
 CORBA::ComponentIR::PublishesDef_ptr
 CORBA::ComponentIR::PublishesDef::_duplicate (PublishesDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -2789,7 +2789,7 @@ CORBA::ComponentIR::PublishesDef::_duplicate (PublishesDef_ptr obj)
 void
 CORBA::ComponentIR::PublishesDef::_tao_release (PublishesDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -2882,7 +2882,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>::release (
     CORBA::ComponentIR::ConsumesDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::ConsumesDef_ptr
@@ -2932,7 +2932,7 @@ CORBA::ComponentIR::ConsumesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ConsumesDef *_tao_tmp_pointer =
     static_cast<ConsumesDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::ConsumesDef_ptr
@@ -2968,7 +2968,7 @@ CORBA::ComponentIR::ConsumesDef::_unchecked_narrow (
 CORBA::ComponentIR::ConsumesDef_ptr
 CORBA::ComponentIR::ConsumesDef::_duplicate (ConsumesDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -2979,7 +2979,7 @@ CORBA::ComponentIR::ConsumesDef::_duplicate (ConsumesDef_ptr obj)
 void
 CORBA::ComponentIR::ConsumesDef::_tao_release (ConsumesDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -3072,7 +3072,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>::release (
     CORBA::ComponentIR::ComponentDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
@@ -3565,7 +3565,7 @@ CORBA::ComponentIR::ComponentDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   ComponentDef *_tao_tmp_pointer =
     static_cast<ComponentDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
@@ -3601,7 +3601,7 @@ CORBA::ComponentIR::ComponentDef::_unchecked_narrow (
 CORBA::ComponentIR::ComponentDef_ptr
 CORBA::ComponentIR::ComponentDef::_duplicate (ComponentDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -3612,7 +3612,7 @@ CORBA::ComponentIR::ComponentDef::_duplicate (ComponentDef_ptr obj)
 void
 CORBA::ComponentIR::ComponentDef::_tao_release (ComponentDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -4127,7 +4127,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>::release (
     CORBA::ComponentIR::FactoryDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::FactoryDef_ptr
@@ -4177,7 +4177,7 @@ CORBA::ComponentIR::FactoryDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   FactoryDef *_tao_tmp_pointer =
     static_cast<FactoryDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::FactoryDef_ptr
@@ -4213,7 +4213,7 @@ CORBA::ComponentIR::FactoryDef::_unchecked_narrow (
 CORBA::ComponentIR::FactoryDef_ptr
 CORBA::ComponentIR::FactoryDef::_duplicate (FactoryDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -4224,7 +4224,7 @@ CORBA::ComponentIR::FactoryDef::_duplicate (FactoryDef_ptr obj)
 void
 CORBA::ComponentIR::FactoryDef::_tao_release (FactoryDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -4317,7 +4317,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>::release (
     CORBA::ComponentIR::FinderDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::FinderDef_ptr
@@ -4367,7 +4367,7 @@ CORBA::ComponentIR::FinderDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   FinderDef *_tao_tmp_pointer =
     static_cast<FinderDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::FinderDef_ptr
@@ -4403,7 +4403,7 @@ CORBA::ComponentIR::FinderDef::_unchecked_narrow (
 CORBA::ComponentIR::FinderDef_ptr
 CORBA::ComponentIR::FinderDef::_duplicate (FinderDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -4414,7 +4414,7 @@ CORBA::ComponentIR::FinderDef::_duplicate (FinderDef_ptr obj)
 void
 CORBA::ComponentIR::FinderDef::_tao_release (FinderDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -4507,7 +4507,7 @@ TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>::release (
     CORBA::ComponentIR::HomeDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ComponentIR::HomeDef_ptr
@@ -5011,7 +5011,7 @@ CORBA::ComponentIR::HomeDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   HomeDef *_tao_tmp_pointer =
     static_cast<HomeDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ComponentIR::HomeDef_ptr
@@ -5047,7 +5047,7 @@ CORBA::ComponentIR::HomeDef::_unchecked_narrow (
 CORBA::ComponentIR::HomeDef_ptr
 CORBA::ComponentIR::HomeDef::_duplicate (HomeDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -5058,7 +5058,7 @@ CORBA::ComponentIR::HomeDef::_duplicate (HomeDef_ptr obj)
 void
 CORBA::ComponentIR::HomeDef::_tao_release (HomeDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

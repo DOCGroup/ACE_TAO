@@ -146,7 +146,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::release (
     CORBA::DomainManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::DomainManager_ptr
@@ -239,7 +239,7 @@ CORBA::DomainManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   DomainManager *_tao_tmp_pointer =
     static_cast<DomainManager *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::DomainManager_ptr
@@ -275,7 +275,7 @@ CORBA::DomainManager::_unchecked_narrow (
 CORBA::DomainManager_ptr
 CORBA::DomainManager::_duplicate (DomainManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -286,7 +286,7 @@ CORBA::DomainManager::_duplicate (DomainManager_ptr obj)
 void
 CORBA::DomainManager::_tao_release (DomainManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -346,7 +346,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::release (
     CORBA::ConstructionPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ConstructionPolicy_ptr
@@ -442,7 +442,7 @@ CORBA::ConstructionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ConstructionPolicy *_tao_tmp_pointer =
     static_cast<ConstructionPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ConstructionPolicy_ptr
@@ -478,7 +478,7 @@ CORBA::ConstructionPolicy::_unchecked_narrow (
 CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_duplicate (ConstructionPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -489,7 +489,7 @@ CORBA::ConstructionPolicy::_duplicate (ConstructionPolicy_ptr obj)
 void
 CORBA::ConstructionPolicy::_tao_release (ConstructionPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

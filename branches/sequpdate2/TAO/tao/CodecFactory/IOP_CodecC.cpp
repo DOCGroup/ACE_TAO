@@ -72,7 +72,7 @@ TAO::Objref_Traits<IOP::Codec>::release (
     IOP::Codec_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 IOP::Codec_ptr
@@ -460,7 +460,7 @@ IOP::Codec::_unchecked_narrow (
 IOP::Codec_ptr
 IOP::Codec::_duplicate (Codec_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -471,7 +471,7 @@ IOP::Codec::_duplicate (Codec_ptr obj)
 void
 IOP::Codec::_tao_release (Codec_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -656,7 +656,7 @@ TAO::Objref_Traits<IOP::CodecFactory>::release (
     IOP::CodecFactory_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 IOP::CodecFactory_ptr
@@ -953,7 +953,7 @@ IOP::CodecFactory::_unchecked_narrow (
 IOP::CodecFactory_ptr
 IOP::CodecFactory::_duplicate (CodecFactory_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -964,7 +964,7 @@ IOP::CodecFactory::_duplicate (CodecFactory_ptr obj)
 void
 IOP::CodecFactory::_tao_release (CodecFactory_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

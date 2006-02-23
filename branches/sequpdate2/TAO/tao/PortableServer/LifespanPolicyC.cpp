@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableServer::LifespanPolicy>::release (
     PortableServer::LifespanPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::LifespanPolicy_ptr
@@ -111,18 +111,18 @@ PortableServer::LifespanPolicy::_unchecked_narrow (
 PortableServer::LifespanPolicy_ptr
 PortableServer::LifespanPolicy::_duplicate (LifespanPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::LifespanPolicy::_tao_release (LifespanPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -181,12 +181,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::LifespanPolicyVa
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::LifespanPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

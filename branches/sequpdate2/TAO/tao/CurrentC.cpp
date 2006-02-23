@@ -62,7 +62,7 @@ TAO::Objref_Traits<CORBA::Current>::release (
     CORBA::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Current_ptr
@@ -111,7 +111,7 @@ CORBA::Current::_unchecked_narrow (
 CORBA::Current_ptr
 CORBA::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -122,7 +122,7 @@ CORBA::Current::_duplicate (Current_ptr obj)
 void
 CORBA::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

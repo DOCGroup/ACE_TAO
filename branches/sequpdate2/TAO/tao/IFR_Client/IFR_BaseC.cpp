@@ -789,7 +789,7 @@ TAO::Objref_Traits<CORBA::IRObject>::release (
     CORBA::IRObject_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::IRObject_ptr
@@ -919,7 +919,7 @@ CORBA::IRObject::_tao_any_destructor (void *_tao_void_pointer)
 {
   IRObject *_tao_tmp_pointer =
     static_cast<IRObject *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::IRObject_ptr
@@ -955,7 +955,7 @@ CORBA::IRObject::_unchecked_narrow (
 CORBA::IRObject_ptr
 CORBA::IRObject::_duplicate (IRObject_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -966,7 +966,7 @@ CORBA::IRObject::_duplicate (IRObject_ptr obj)
 void
 CORBA::IRObject::_tao_release (IRObject_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1064,7 +1064,7 @@ TAO::Objref_Traits<CORBA::Contained>::release (
     CORBA::Contained_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Contained_ptr
@@ -1622,7 +1622,7 @@ CORBA::Contained::_tao_any_destructor (void *_tao_void_pointer)
 {
   Contained *_tao_tmp_pointer =
     static_cast<Contained *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::Contained_ptr
@@ -1658,7 +1658,7 @@ CORBA::Contained::_unchecked_narrow (
 CORBA::Contained_ptr
 CORBA::Contained::_duplicate (Contained_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1669,7 +1669,7 @@ CORBA::Contained::_duplicate (Contained_ptr obj)
 void
 CORBA::Contained::_tao_release (Contained_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -3554,7 +3554,7 @@ TAO::Objref_Traits<CORBA::Container>::release (
     CORBA::Container_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Container_ptr
@@ -4727,7 +4727,7 @@ CORBA::Container::_tao_any_destructor (void *_tao_void_pointer)
 {
   Container *_tao_tmp_pointer =
     static_cast<Container *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::Container_ptr
@@ -4763,7 +4763,7 @@ CORBA::Container::_unchecked_narrow (
 CORBA::Container_ptr
 CORBA::Container::_duplicate (Container_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -4774,7 +4774,7 @@ CORBA::Container::_duplicate (Container_ptr obj)
 void
 CORBA::Container::_tao_release (Container_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -4856,7 +4856,7 @@ TAO::Objref_Traits<CORBA::IDLType>::release (
     CORBA::IDLType_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::IDLType_ptr
@@ -4948,7 +4948,7 @@ CORBA::IDLType::_tao_any_destructor (void *_tao_void_pointer)
 {
   IDLType *_tao_tmp_pointer =
     static_cast<IDLType *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::IDLType_ptr
@@ -4984,7 +4984,7 @@ CORBA::IDLType::_unchecked_narrow (
 CORBA::IDLType_ptr
 CORBA::IDLType::_duplicate (IDLType_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -4995,7 +4995,7 @@ CORBA::IDLType::_duplicate (IDLType_ptr obj)
 void
 CORBA::IDLType::_tao_release (IDLType_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -5077,7 +5077,7 @@ TAO::Objref_Traits<CORBA::TypedefDef>::release (
     CORBA::TypedefDef_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::TypedefDef_ptr
@@ -5128,7 +5128,7 @@ CORBA::TypedefDef::_tao_any_destructor (void *_tao_void_pointer)
 {
   TypedefDef *_tao_tmp_pointer =
     static_cast<TypedefDef *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::TypedefDef_ptr
@@ -5164,7 +5164,7 @@ CORBA::TypedefDef::_unchecked_narrow (
 CORBA::TypedefDef_ptr
 CORBA::TypedefDef::_duplicate (TypedefDef_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -5175,7 +5175,7 @@ CORBA::TypedefDef::_duplicate (TypedefDef_ptr obj)
 void
 CORBA::TypedefDef::_tao_release (TypedefDef_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

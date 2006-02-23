@@ -66,7 +66,7 @@ TAO::Objref_Traits<DynamicAny::DynAny>::release (
     DynamicAny::DynAny_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynAny_ptr
@@ -295,7 +295,7 @@ DynamicAny::DynAny::_unchecked_narrow (
 DynamicAny::DynAny_ptr
 DynamicAny::DynAny::_duplicate (DynAny_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -306,7 +306,7 @@ DynamicAny::DynAny::_duplicate (DynAny_ptr obj)
 void
 DynamicAny::DynAny::_tao_release (DynAny_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -367,7 +367,7 @@ TAO::Objref_Traits<DynamicAny::DynFixed>::release (
     DynamicAny::DynFixed_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynFixed_ptr
@@ -428,7 +428,7 @@ DynamicAny::DynFixed::_unchecked_narrow (
 DynamicAny::DynFixed_ptr
 DynamicAny::DynFixed::_duplicate (DynFixed_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -439,7 +439,7 @@ DynamicAny::DynFixed::_duplicate (DynFixed_ptr obj)
 void
 DynamicAny::DynFixed::_tao_release (DynFixed_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -504,7 +504,7 @@ TAO::Objref_Traits<DynamicAny::DynEnum>::release (
     DynamicAny::DynEnum_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynEnum_ptr
@@ -565,7 +565,7 @@ DynamicAny::DynEnum::_unchecked_narrow (
 DynamicAny::DynEnum_ptr
 DynamicAny::DynEnum::_duplicate (DynEnum_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -576,7 +576,7 @@ DynamicAny::DynEnum::_duplicate (DynEnum_ptr obj)
 void
 DynamicAny::DynEnum::_tao_release (DynEnum_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -739,7 +739,7 @@ TAO::Objref_Traits<DynamicAny::DynStruct>::release (
     DynamicAny::DynStruct_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynStruct_ptr
@@ -800,7 +800,7 @@ DynamicAny::DynStruct::_unchecked_narrow (
 DynamicAny::DynStruct_ptr
 DynamicAny::DynStruct::_duplicate (DynStruct_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -811,7 +811,7 @@ DynamicAny::DynStruct::_duplicate (DynStruct_ptr obj)
 void
 DynamicAny::DynStruct::_tao_release (DynStruct_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -876,7 +876,7 @@ TAO::Objref_Traits<DynamicAny::DynUnion>::release (
     DynamicAny::DynUnion_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynUnion_ptr
@@ -937,7 +937,7 @@ DynamicAny::DynUnion::_unchecked_narrow (
 DynamicAny::DynUnion_ptr
 DynamicAny::DynUnion::_duplicate (DynUnion_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -948,7 +948,7 @@ DynamicAny::DynUnion::_duplicate (DynUnion_ptr obj)
 void
 DynamicAny::DynUnion::_tao_release (DynUnion_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1104,7 +1104,7 @@ TAO::Objref_Traits<DynamicAny::DynSequence>::release (
     DynamicAny::DynSequence_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynSequence_ptr
@@ -1165,7 +1165,7 @@ DynamicAny::DynSequence::_unchecked_narrow (
 DynamicAny::DynSequence_ptr
 DynamicAny::DynSequence::_duplicate (DynSequence_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1176,7 +1176,7 @@ DynamicAny::DynSequence::_duplicate (DynSequence_ptr obj)
 void
 DynamicAny::DynSequence::_tao_release (DynSequence_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1241,7 +1241,7 @@ TAO::Objref_Traits<DynamicAny::DynArray>::release (
     DynamicAny::DynArray_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynArray_ptr
@@ -1302,7 +1302,7 @@ DynamicAny::DynArray::_unchecked_narrow (
 DynamicAny::DynArray_ptr
 DynamicAny::DynArray::_duplicate (DynArray_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1313,7 +1313,7 @@ DynamicAny::DynArray::_duplicate (DynArray_ptr obj)
 void
 DynamicAny::DynArray::_tao_release (DynArray_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1378,7 +1378,7 @@ TAO::Objref_Traits<DynamicAny::DynValue>::release (
     DynamicAny::DynValue_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynValue_ptr
@@ -1439,7 +1439,7 @@ DynamicAny::DynValue::_unchecked_narrow (
 DynamicAny::DynValue_ptr
 DynamicAny::DynValue::_duplicate (DynValue_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1450,7 +1450,7 @@ DynamicAny::DynValue::_duplicate (DynValue_ptr obj)
 void
 DynamicAny::DynValue::_tao_release (DynValue_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1515,7 +1515,7 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::release (
     DynamicAny::DynAnyFactory_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 DynamicAny::DynAnyFactory_ptr
@@ -1660,7 +1660,7 @@ DynamicAny::DynAnyFactory::_unchecked_narrow (
 DynamicAny::DynAnyFactory_ptr
 DynamicAny::DynAnyFactory::_duplicate (DynAnyFactory_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1671,7 +1671,7 @@ DynamicAny::DynAnyFactory::_duplicate (DynAnyFactory_ptr obj)
 void
 DynamicAny::DynAnyFactory::_tao_release (DynAnyFactory_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

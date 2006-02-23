@@ -67,7 +67,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::release (
     Messaging::ReplyHandler_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::ReplyHandler_ptr
@@ -115,7 +115,7 @@ Messaging::ReplyHandler::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyHandler *_tao_tmp_pointer =
     static_cast<ReplyHandler *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 Messaging::ReplyHandler_ptr
@@ -151,7 +151,7 @@ Messaging::ReplyHandler::_unchecked_narrow (
 Messaging::ReplyHandler_ptr
 Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -162,7 +162,7 @@ Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
 void
 Messaging::ReplyHandler::_tao_release (ReplyHandler_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

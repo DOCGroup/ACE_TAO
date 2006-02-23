@@ -140,7 +140,7 @@ TAO::Objref_Traits<PortableServer::POA>::release (
     PortableServer::POA_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::POA_ptr
@@ -1141,7 +1141,7 @@ PortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
     static_cast<POA *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 PortableServer::POA_ptr
@@ -1169,7 +1169,7 @@ PortableServer::POA::_unchecked_narrow (
 PortableServer::POA_ptr
 PortableServer::POA::_duplicate (POA_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1180,7 +1180,7 @@ PortableServer::POA::_duplicate (POA_ptr obj)
 void
 PortableServer::POA::_tao_release (POA_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

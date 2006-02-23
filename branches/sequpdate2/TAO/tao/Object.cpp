@@ -156,7 +156,7 @@ void
 CORBA::Object::_tao_any_destructor (void *x)
 {
   CORBA::Object_ptr tmp = static_cast<CORBA::Object_ptr> (x);
-  CORBA::release (tmp);
+  ::CORBA::release (tmp);
 }
 
 // virtual -- do not inline
@@ -994,7 +994,7 @@ namespace TAO
   void
   Objref_Traits<CORBA::Object>::release (CORBA::Object_ptr p)
   {
-    CORBA::release (p);
+    ::CORBA::release (p);
   }
 
   CORBA::Object_ptr

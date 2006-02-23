@@ -88,7 +88,7 @@ TAO::Unknown_IDL_Type::value (void) const
 void
 TAO::Unknown_IDL_Type::free_value (void)
 {
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
 }
 
 TAO_InputCDR &

@@ -697,7 +697,7 @@ TAO_Object_Adapter::close (int wait_for_completion
                  wait_for_completion
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  CORBA::release (root);
+  ::CORBA::release (root);
 }
 
 void

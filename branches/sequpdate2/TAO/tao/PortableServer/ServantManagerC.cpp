@@ -63,7 +63,7 @@ TAO::Objref_Traits<PortableServer::ServantManager>::release (
     PortableServer::ServantManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::ServantManager_ptr
@@ -112,18 +112,18 @@ PortableServer::ServantManager::_unchecked_narrow (
 PortableServer::ServantManager_ptr
 PortableServer::ServantManager::_duplicate (ServantManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::ServantManager::_tao_release (ServantManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

@@ -1,5 +1,97 @@
 
         * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp
+        * TAO_IDL/be/be_visitor_root/root.cpp
+        * tao/CurrentC.cpp
+        * tao/DomainC.cpp
+        * tao/ORB_Core.cpp
+        * tao/Object.cpp
+        * tao/Object_Ref_Table.cpp
+        * tao/PolicyC.cpp
+        * tao/Pseudo_VarOut_T.cpp
+        * tao/Pseudo_VarOut_T.inl
+        * tao/TAOC.cpp
+        * tao/AnyTypeCode/Any_Array_Impl_T.cpp
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp
+        * tao/AnyTypeCode/Any_Basic_Impl_T.cpp
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp
+        * tao/AnyTypeCode/Any_Impl.cpp
+        * tao/AnyTypeCode/Any_Impl_T.cpp
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp
+        * tao/AnyTypeCode/TypeCode.cpp
+        * tao/AnyTypeCode/TypeCode.inl
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp
+        * tao/CSD_Framework/CSD_FrameworkC.cpp
+        * tao/CSD_Framework/CSD_POA.cpp
+        * tao/CodecFactory/IOP_CodecC.cpp
+        * tao/DynamicAny/DynamicAnyC.cpp
+        * tao/DynamicInterface/Dynamic_Implementation.cpp
+        * tao/DynamicInterface/ExceptionList.cpp
+        * tao/DynamicInterface/Request.cpp
+        * tao/DynamicInterface/Server_Request.cpp
+        * tao/IFR_Client/IFR_BaseC.cpp
+        * tao/IFR_Client/IFR_BasicC.cpp
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp
+        * tao/IFR_Client/IFR_ComponentsC.cpp
+        * tao/IFR_Client/IFR_ExtendedC.cpp
+        * tao/IORInterceptor/IORInfoC.cpp
+        * tao/IORInterceptor/IORInterceptorC.cpp
+        * tao/IORManipulation/IORC.cpp
+        * tao/IORManipulation/IORManipulation.cpp
+        * tao/IORTable/IORTableC.cpp
+        * tao/IORTable/Table_Adapter.cpp
+        * tao/ImR_Client/ImplRepoC.cpp
+        * tao/ImR_Client/ServerObjectC.cpp
+        * tao/Messaging/MessagingC.cpp
+        * tao/Messaging/Messaging_No_ImplC.cpp
+        * tao/Messaging/Messaging_RT_PolicyC.cpp
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp
+        * tao/Messaging/PollableC.cpp
+        * tao/Messaging/TAO_ExtC.cpp
+        * tao/PI/ClientRequestInfoC.cpp
+        * tao/PI/ClientRequestInterceptorC.cpp
+        * tao/PI/InterceptorC.cpp
+        * tao/PI/ORBInitInfo.cpp
+        * tao/PI/ORBInitInfoC.cpp
+        * tao/PI/ORBInitializerC.cpp
+        * tao/PI/PICurrentC.cpp
+        * tao/PI/PolicyFactoryC.cpp
+        * tao/PI/PolicyFactory_Registry.cpp
+        * tao/PI/ProcessingModePolicyC.cpp
+        * tao/PI/RequestInfoC.cpp
+        * tao/PI_Server/ServerRequestInfoC.cpp
+        * tao/PI_Server/ServerRequestInterceptorC.cpp
+        * tao/PortableServer/AdapterActivatorC.cpp
+        * tao/PortableServer/IdAssignmentPolicyC.cpp
+        * tao/PortableServer/IdUniquenessPolicyC.cpp
+        * tao/PortableServer/ImplicitActivationPolicyC.cpp
+        * tao/PortableServer/LifespanPolicyC.cpp
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/POAManager.cpp
+        * tao/PortableServer/POAManagerC.cpp
+        * tao/PortableServer/PS_CurrentC.cpp
+        * tao/PortableServer/PortableServerC.cpp
+        * tao/PortableServer/RequestProcessingPolicyC.cpp
+        * tao/PortableServer/Root_POA.cpp
+        * tao/PortableServer/ServantActivatorC.cpp
+        * tao/PortableServer/ServantLocatorC.cpp
+        * tao/PortableServer/ServantManagerC.cpp
+        * tao/PortableServer/ServantRetentionPolicyC.cpp
+        * tao/PortableServer/ThreadPolicyC.cpp
+        * tao/RTCORBA/RTCORBAC.cpp
+        * tao/RTPortableServer/RTPortableServerC.cpp
+        * tao/RTScheduling/Current.cpp
+        * tao/RTScheduling/RTSchedulerC.cpp
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp
+        * tao/Utils/Server_Main.cpp
+        * tao/Valuetype/AbstractBase.cpp:
+          Use :: before ::CORBA
+
+        * TAO_IDL/be/be_interface.cpp
         * tao/DomainC.cpp
         * tao/DomainC.inl
         * tao/GIOPC.h
@@ -87,7 +179,6 @@
 
         All changes below is the merge of the branch sequenceupdate to
         sequpdate2. This is the new sequence implementation for TAO.
-
 
         * tao/Array_VarOut_T.h:
           Only do an empty forward declaration of Array_Traits. This will

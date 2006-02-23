@@ -24,7 +24,7 @@ TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
 
   for (TABLE::iterator i = this->factories_.begin (); i != end; ++i)
     {
-      CORBA::release ((*i).int_id_);
+      ::CORBA::release ((*i).int_id_);
     }
 
   this->factories_.close ();
@@ -54,7 +54,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   if (result != 0)
     {
       // Release the duplicated factory to prevent a memory leak
-      CORBA::release (factory);
+      ::CORBA::release (factory);
 
       if (result == 1)
         {

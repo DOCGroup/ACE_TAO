@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::release (
     PortableServer::IdAssignmentPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::IdAssignmentPolicy_ptr
@@ -111,18 +111,18 @@ PortableServer::IdAssignmentPolicy::_unchecked_narrow (
 PortableServer::IdAssignmentPolicy_ptr
 PortableServer::IdAssignmentPolicy::_duplicate (IdAssignmentPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::IdAssignmentPolicy::_tao_release (IdAssignmentPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -181,12 +181,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::IdAssignmentPoli
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::IdAssignmentPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

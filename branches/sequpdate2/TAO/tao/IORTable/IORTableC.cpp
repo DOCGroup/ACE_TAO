@@ -254,7 +254,7 @@ TAO::Objref_Traits<IORTable::Table>::release (
     IORTable::Table_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 IORTable::Table_ptr
@@ -315,7 +315,7 @@ IORTable::Table::_unchecked_narrow (
 IORTable::Table_ptr
 IORTable::Table::_duplicate (Table_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -326,7 +326,7 @@ IORTable::Table::_duplicate (Table_ptr obj)
 void
 IORTable::Table::_tao_release (Table_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -387,7 +387,7 @@ TAO::Objref_Traits<IORTable::Locator>::release (
     IORTable::Locator_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 IORTable::Locator_ptr
@@ -448,7 +448,7 @@ IORTable::Locator::_unchecked_narrow (
 IORTable::Locator_ptr
 IORTable::Locator::_duplicate (Locator_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -459,7 +459,7 @@ IORTable::Locator::_duplicate (Locator_ptr obj)
 void
 IORTable::Locator::_tao_release (Locator_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

@@ -64,7 +64,7 @@ TAO::Objref_Traits<PortableServer::AdapterActivator>::release (
     PortableServer::AdapterActivator_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::AdapterActivator_ptr
@@ -113,18 +113,18 @@ PortableServer::AdapterActivator::_unchecked_narrow (
 PortableServer::AdapterActivator_ptr
 PortableServer::AdapterActivator::_duplicate (AdapterActivator_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::AdapterActivator::_tao_release (AdapterActivator_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

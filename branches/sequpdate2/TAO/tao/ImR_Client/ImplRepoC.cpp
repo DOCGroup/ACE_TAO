@@ -959,7 +959,7 @@ TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::release
     ImplementationRepository::ServerInformationIterator_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 ImplementationRepository::ServerInformationIterator_ptr
@@ -1095,7 +1095,7 @@ ImplementationRepository::ServerInformationIterator::_tao_any_destructor (void *
 {
   ServerInformationIterator *_tao_tmp_pointer =
     static_cast<ServerInformationIterator *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 ImplementationRepository::ServerInformationIterator_ptr
@@ -1131,7 +1131,7 @@ ImplementationRepository::ServerInformationIterator::_unchecked_narrow (
 ImplementationRepository::ServerInformationIterator_ptr
 ImplementationRepository::ServerInformationIterator::_duplicate (ServerInformationIterator_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1142,7 +1142,7 @@ ImplementationRepository::ServerInformationIterator::_duplicate (ServerInformati
 void
 ImplementationRepository::ServerInformationIterator::_tao_release (ServerInformationIterator_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -1220,7 +1220,7 @@ TAO::Objref_Traits<ImplementationRepository::Administration>::release (
     ImplementationRepository::Administration_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 ImplementationRepository::Administration_ptr
@@ -1788,7 +1788,7 @@ ImplementationRepository::Administration::_tao_any_destructor (void *_tao_void_p
 {
   Administration *_tao_tmp_pointer =
     static_cast<Administration *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 ImplementationRepository::Administration_ptr
@@ -1824,7 +1824,7 @@ ImplementationRepository::Administration::_unchecked_narrow (
 ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration::_duplicate (Administration_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1835,7 +1835,7 @@ ImplementationRepository::Administration::_duplicate (Administration_ptr obj)
 void
 ImplementationRepository::Administration::_tao_release (Administration_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

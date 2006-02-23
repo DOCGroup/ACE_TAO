@@ -27,7 +27,7 @@ TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core *orb_core)
 
 TAO_Table_Adapter::~TAO_Table_Adapter (void)
 {
-  CORBA::release (this->root_);
+  ::CORBA::release (this->root_);
 }
 
 void
@@ -42,7 +42,7 @@ TAO_Table_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_Table_Adapter::close (int  ACE_ENV_ARG_DECL_NOT_USED)
 {
-  CORBA::release (this->root_);
+  ::CORBA::release (this->root_);
   this->root_ = 0;
 }
 

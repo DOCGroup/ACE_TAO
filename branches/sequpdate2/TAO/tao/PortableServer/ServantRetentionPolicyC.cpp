@@ -64,7 +64,7 @@ TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::release (
     PortableServer::ServantRetentionPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::ServantRetentionPolicy_ptr
@@ -113,18 +113,18 @@ PortableServer::ServantRetentionPolicy::_unchecked_narrow (
 PortableServer::ServantRetentionPolicy_ptr
 PortableServer::ServantRetentionPolicy::_duplicate (ServantRetentionPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::ServantRetentionPolicy::_tao_release (ServantRetentionPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -183,12 +183,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ServantRetention
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ServantRetentionPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

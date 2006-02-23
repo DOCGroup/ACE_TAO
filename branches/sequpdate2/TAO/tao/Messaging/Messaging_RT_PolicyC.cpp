@@ -62,7 +62,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::release (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
@@ -111,18 +111,18 @@ Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (RelativeRoundtripTimeoutPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RelativeRoundtripTimeoutPolicy::_tao_release (RelativeRoundtripTimeoutPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

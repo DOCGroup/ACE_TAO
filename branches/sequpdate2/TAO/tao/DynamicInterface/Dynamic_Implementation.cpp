@@ -187,7 +187,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
     }
   ACE_ENDTRY;
 
-  CORBA::release (dsi_request);
+  ::CORBA::release (dsi_request);
 }
 
 CORBA::RepositoryId

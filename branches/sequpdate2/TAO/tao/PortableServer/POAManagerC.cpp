@@ -73,7 +73,7 @@ TAO::Objref_Traits<PortableServer::POAManager>::release (
     PortableServer::POAManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::POAManager_ptr
@@ -259,7 +259,7 @@ PortableServer::POAManager::_unchecked_narrow (
 PortableServer::POAManager_ptr
 PortableServer::POAManager::_duplicate (POAManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -270,7 +270,7 @@ PortableServer::POAManager::_duplicate (POAManager_ptr obj)
 void
 PortableServer::POAManager::_tao_release (POAManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

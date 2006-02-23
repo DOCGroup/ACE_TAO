@@ -74,7 +74,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::release (
     PortableInterceptor::ORBInitInfo_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::ORBInitInfo_ptr
@@ -386,7 +386,7 @@ PortableInterceptor::ORBInitInfo::_unchecked_narrow (
 PortableInterceptor::ORBInitInfo_ptr
 PortableInterceptor::ORBInitInfo::_duplicate (ORBInitInfo_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -397,7 +397,7 @@ PortableInterceptor::ORBInitInfo::_duplicate (ORBInitInfo_ptr obj)
 void
 PortableInterceptor::ORBInitInfo::_tao_release (ORBInitInfo_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -476,7 +476,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo_3_1>::release (
     PortableInterceptor::ORBInitInfo_3_1_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::ORBInitInfo_3_1_ptr
@@ -525,7 +525,7 @@ PortableInterceptor::ORBInitInfo_3_1::_unchecked_narrow (
 PortableInterceptor::ORBInitInfo_3_1_ptr
 PortableInterceptor::ORBInitInfo_3_1::_duplicate (ORBInitInfo_3_1_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -536,7 +536,7 @@ PortableInterceptor::ORBInitInfo_3_1::_duplicate (ORBInitInfo_3_1_ptr obj)
 void
 PortableInterceptor::ORBInitInfo_3_1::_tao_release (ORBInitInfo_3_1_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

@@ -455,7 +455,7 @@ namespace TAO
   void
   Objref_Traits<CORBA::TypeCode>::release (CORBA::TypeCode_ptr p)
   {
-    CORBA::release (p);
+    ::CORBA::release (p);
   }
 
   CORBA::TypeCode_ptr

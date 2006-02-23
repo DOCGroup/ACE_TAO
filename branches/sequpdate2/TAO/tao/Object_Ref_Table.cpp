@@ -32,7 +32,7 @@ TAO_Object_Ref_Table::bind (const char *id,
   // i.e. not nil.
   if (id == 0
       || ACE_OS::strlen (id) == 0
-      || CORBA::is_nil (obj))
+      || ::CORBA::is_nil (obj))
     {
       errno = EINVAL;
       return -1;

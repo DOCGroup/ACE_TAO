@@ -76,7 +76,7 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::release (
     ImplementationRepository::ServerObject_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 ImplementationRepository::ServerObject_ptr
@@ -205,7 +205,7 @@ ImplementationRepository::ServerObject::_tao_any_destructor (void *_tao_void_poi
 {
   ServerObject *_tao_tmp_pointer =
     static_cast<ServerObject *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 ImplementationRepository::ServerObject_ptr
@@ -241,7 +241,7 @@ ImplementationRepository::ServerObject::_unchecked_narrow (
 ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject::_duplicate (ServerObject_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -252,7 +252,7 @@ ImplementationRepository::ServerObject::_duplicate (ServerObject_ptr obj)
 void
 ImplementationRepository::ServerObject::_tao_release (ServerObject_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

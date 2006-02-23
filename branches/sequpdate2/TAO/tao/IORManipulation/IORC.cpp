@@ -591,7 +591,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::release (
     TAO_IOP::TAO_IOR_Property_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
@@ -620,7 +620,7 @@ TAO_IOP::TAO_IOR_Property::_tao_any_destructor (void *_tao_void_pointer)
 {
   TAO_IOR_Property *_tao_tmp_pointer =
     static_cast<TAO_IOR_Property *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
@@ -660,7 +660,7 @@ TAO_IOP::TAO_IOR_Property::_unchecked_narrow (
 TAO_IOP::TAO_IOR_Property_ptr
 TAO_IOP::TAO_IOR_Property::_duplicate (TAO_IOR_Property_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -671,7 +671,7 @@ TAO_IOP::TAO_IOR_Property::_duplicate (TAO_IOR_Property_ptr obj)
 void
 TAO_IOP::TAO_IOR_Property::_tao_release (TAO_IOR_Property_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -732,7 +732,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::release (
     TAO_IOP::TAO_IOR_Manipulation_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
@@ -817,7 +817,7 @@ TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor (void *_tao_void_pointer)
 {
   TAO_IOR_Manipulation *_tao_tmp_pointer =
     static_cast<TAO_IOR_Manipulation *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
@@ -857,7 +857,7 @@ TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
 TAO_IOP::TAO_IOR_Manipulation_ptr
 TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -868,7 +868,7 @@ TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
 void
 TAO_IOP::TAO_IOR_Manipulation::_tao_release (TAO_IOR_Manipulation_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

@@ -88,7 +88,7 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::release (
     RTScheduling::ThreadAction_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::ThreadAction_ptr
@@ -137,7 +137,7 @@ RTScheduling::ThreadAction::_unchecked_narrow (
 RTScheduling::ThreadAction_ptr
 RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -148,7 +148,7 @@ RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
 void
 RTScheduling::ThreadAction::_tao_release (ThreadAction_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -209,7 +209,7 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::release (
     RTScheduling::DistributableThread_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::DistributableThread_ptr
@@ -258,7 +258,7 @@ RTScheduling::DistributableThread::_unchecked_narrow (
 RTScheduling::DistributableThread_ptr
 RTScheduling::DistributableThread::_duplicate (DistributableThread_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -269,7 +269,7 @@ RTScheduling::DistributableThread::_duplicate (DistributableThread_ptr obj)
 void
 RTScheduling::DistributableThread::_tao_release (DistributableThread_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -330,7 +330,7 @@ TAO::Objref_Traits<RTScheduling::Current>::release (
     RTScheduling::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::Current_ptr
@@ -549,7 +549,7 @@ RTScheduling::Current::_unchecked_narrow (
 RTScheduling::Current_ptr
 RTScheduling::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -560,7 +560,7 @@ RTScheduling::Current::_duplicate (Current_ptr obj)
 void
 RTScheduling::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -629,7 +629,7 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::release (
     RTScheduling::ResourceManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::ResourceManager_ptr
@@ -678,7 +678,7 @@ RTScheduling::ResourceManager::_unchecked_narrow (
 RTScheduling::ResourceManager_ptr
 RTScheduling::ResourceManager::_duplicate (ResourceManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -689,7 +689,7 @@ RTScheduling::ResourceManager::_duplicate (ResourceManager_ptr obj)
 void
 RTScheduling::ResourceManager::_tao_release (ResourceManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -754,7 +754,7 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::release (
     RTScheduling::Scheduler_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::Scheduler_ptr
@@ -891,7 +891,7 @@ RTScheduling::Scheduler::_unchecked_narrow (
 RTScheduling::Scheduler_ptr
 RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -902,7 +902,7 @@ RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
 void
 RTScheduling::Scheduler::_tao_release (Scheduler_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

@@ -75,7 +75,7 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::release (
     TAO::BufferingConstraintPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO::BufferingConstraintPolicy_ptr
@@ -124,7 +124,7 @@ TAO::BufferingConstraintPolicy::_unchecked_narrow (
 TAO::BufferingConstraintPolicy_ptr
 TAO::BufferingConstraintPolicy::_duplicate (BufferingConstraintPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -135,7 +135,7 @@ TAO::BufferingConstraintPolicy::_duplicate (BufferingConstraintPolicy_ptr obj)
 void
 TAO::BufferingConstraintPolicy::_tao_release (BufferingConstraintPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

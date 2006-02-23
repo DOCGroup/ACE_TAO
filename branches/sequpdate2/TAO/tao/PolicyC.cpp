@@ -384,7 +384,7 @@ TAO::Objref_Traits<CORBA::Policy>::release (
     CORBA::Policy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Policy_ptr
@@ -556,7 +556,7 @@ CORBA::Policy::_tao_any_destructor (void *_tao_void_pointer)
 {
   Policy *_tao_tmp_pointer =
     static_cast<Policy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::Policy_ptr
@@ -592,7 +592,7 @@ CORBA::Policy::_unchecked_narrow (
 CORBA::Policy_ptr
 CORBA::Policy::_duplicate (Policy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -603,7 +603,7 @@ CORBA::Policy::_duplicate (Policy_ptr obj)
 void
 CORBA::Policy::_tao_release (Policy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -663,7 +663,7 @@ TAO::Objref_Traits<CORBA::PolicyManager>::release (
     CORBA::PolicyManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::PolicyManager_ptr
@@ -692,7 +692,7 @@ CORBA::PolicyManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyManager *_tao_tmp_pointer =
     static_cast<PolicyManager *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::PolicyManager_ptr
@@ -720,7 +720,7 @@ CORBA::PolicyManager::_unchecked_narrow (
 CORBA::PolicyManager_ptr
 CORBA::PolicyManager::_duplicate (PolicyManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -731,7 +731,7 @@ CORBA::PolicyManager::_duplicate (PolicyManager_ptr obj)
 void
 CORBA::PolicyManager::_tao_release (PolicyManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -792,7 +792,7 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::release (
     CORBA::PolicyCurrent_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::PolicyCurrent_ptr
@@ -821,7 +821,7 @@ CORBA::PolicyCurrent::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyCurrent *_tao_tmp_pointer =
     static_cast<PolicyCurrent *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::PolicyCurrent_ptr
@@ -849,7 +849,7 @@ CORBA::PolicyCurrent::_unchecked_narrow (
 CORBA::PolicyCurrent_ptr
 CORBA::PolicyCurrent::_duplicate (PolicyCurrent_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -860,7 +860,7 @@ CORBA::PolicyCurrent::_duplicate (PolicyCurrent_ptr obj)
 void
 CORBA::PolicyCurrent::_tao_release (PolicyCurrent_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

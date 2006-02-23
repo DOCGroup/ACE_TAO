@@ -71,7 +71,7 @@ TAO::Objref_Traits<CORBA::Pollable>::release (
     CORBA::Pollable_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Pollable_ptr
@@ -120,7 +120,7 @@ CORBA::Pollable::_unchecked_narrow (
 CORBA::Pollable_ptr
 CORBA::Pollable::_duplicate (Pollable_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -131,7 +131,7 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
 void
 CORBA::Pollable::_tao_release (Pollable_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -210,7 +210,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::release (
     CORBA::DIIPollable_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::DIIPollable_ptr
@@ -259,7 +259,7 @@ CORBA::DIIPollable::_unchecked_narrow (
 CORBA::DIIPollable_ptr
 CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -270,7 +270,7 @@ CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
 void
 CORBA::DIIPollable::_tao_release (DIIPollable_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -353,7 +353,7 @@ TAO::Objref_Traits<CORBA::PollableSet>::release (
     CORBA::PollableSet_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::PollableSet_ptr
@@ -628,7 +628,7 @@ CORBA::PollableSet::_unchecked_narrow (
 CORBA::PollableSet_ptr
 CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -639,7 +639,7 @@ CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
 void
 CORBA::PollableSet::_tao_release (PollableSet_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

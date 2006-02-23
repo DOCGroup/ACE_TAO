@@ -71,7 +71,7 @@ TAO::Objref_Traits<PortableServer::Current>::release (
     PortableServer::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::Current_ptr
@@ -233,7 +233,7 @@ PortableServer::Current::_unchecked_narrow (
 PortableServer::Current_ptr
 PortableServer::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -244,7 +244,7 @@ PortableServer::Current::_duplicate (Current_ptr obj)
 void
 PortableServer::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

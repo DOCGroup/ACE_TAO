@@ -27,7 +27,7 @@ template <typename T>
 ACE_INLINE
 TAO_Pseudo_Var_T<T>::~TAO_Pseudo_Var_T (void)
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
 }
 
 template <typename T>
@@ -35,7 +35,7 @@ ACE_INLINE
 TAO_Pseudo_Var_T<T> &
 TAO_Pseudo_Var_T<T>::operator= (T * p)
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
@@ -83,7 +83,7 @@ ACE_INLINE
 T *&
 TAO_Pseudo_Var_T<T>::out (void)
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
   this->ptr_ = T::_nil ();
   return this->ptr_;
 }
@@ -121,7 +121,7 @@ ACE_INLINE
 TAO_Pseudo_Out_T<T,T_var>::TAO_Pseudo_Out_T (T_var & p)
   : ptr_ (p.out ())
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
   this->ptr_ = T::_nil ();
 }
 
