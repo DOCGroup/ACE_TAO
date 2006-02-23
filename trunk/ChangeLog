@@ -63,6 +63,7 @@ Thu Feb 23 09:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Riethmueller for creating this example program.
 
 Thu Feb 23 08:35:09 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
         * ace/config-lynxos-pthread.h:
           Remove this file. Change handling for LynxOS' use of macros
 
