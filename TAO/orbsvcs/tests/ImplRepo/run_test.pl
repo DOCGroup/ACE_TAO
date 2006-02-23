@@ -143,44 +143,15 @@ sub nestea_test
     return $status;
 }
 
-###############################################################################
-# @todo: This test doesn't clean up too well if something fails
-
-sub nt_service_test
+sub nt_service_test_i
 {
-    my $result = 0;
-
-    # Just to show that it's possible, this test uses corbaloc instead of ior file.
-    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService";
-
-    # To avoid having to ensure that they LocalSystem account has the correct path
-    # we simply copy the imr executables to the same directory as the DLL's.
-    my $BIN_IMR_LOCATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImplRepo_Service","");
-    my $BIN_IMR_ACTIVATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImR_Activator","");
-    $BIN_IMR_LOCATOR->IgnoreExeSubDir(1);
-    $BIN_IMR_ACTIVATOR->IgnoreExeSubDir(1);
-
-    print "Copying ImplRepo services to the same location as the dlls.\n";
-    unlink $BIN_IMR_LOCATOR->Executable ();
-    copy ($IMR_LOCATOR->Executable (), $BIN_IMR_LOCATOR->Executable ());
-    unlink $BIN_IMR_ACTIVATOR->Executable ();
-    copy ($IMR_ACTIVATOR->Executable (), $BIN_IMR_ACTIVATOR->Executable ());
-
-    print "Stopping any existing TAO ImR Services\n";
-    system("net stop taoimractivator > nul 2>&1");
-    system("net stop taoimr > nul 2>&1");
-
-    print "Removing any existing TAO ImR Services\n";
-    $BIN_IMR_ACTIVATOR->Arguments ("-c remove");
-    $BIN_IMR_LOCATOR->Arguments ("-c remove");
-    $BIN_IMR_ACTIVATOR->SpawnWaitKill (5);
-    $BIN_IMR_LOCATOR->SpawnWaitKill (5);
+    my ($imr_initref, $BIN_IMR_ACTIVATOR, $BIN_IMR_LOCATOR) = @_;
 
     print "Installing TAO ImR Services\n";
     $BIN_IMR_ACTIVATOR->Arguments ("-c install $imr_initref -d 0");
     $BIN_IMR_LOCATOR->Arguments ("-c install -d 0 -orbendpoint iiop://:8888");
 
-    $result = $BIN_IMR_LOCATOR->SpawnWaitKill (5);
+    my $result = $BIN_IMR_LOCATOR->SpawnWaitKill (5);
     if ($result != 0) {
         print STDERR "ERROR: IMR Locator installation returned $result\n";
         return 1;
@@ -240,6 +211,41 @@ sub nt_service_test
         return 1;
     }
 
+    return 0;
+}
+
+sub nt_service_test
+{
+    my $result = 0;
+
+    # Just to show that it's possible, this test uses corbaloc instead of ior file.
+    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService";
+
+    # To avoid having to ensure that they LocalSystem account has the correct path
+    # we simply copy the imr executables to the same directory as the DLL's.
+    my $BIN_IMR_LOCATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImplRepo_Service","");
+    my $BIN_IMR_ACTIVATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImR_Activator","");
+    $BIN_IMR_LOCATOR->IgnoreExeSubDir(1);
+    $BIN_IMR_ACTIVATOR->IgnoreExeSubDir(1);
+
+    print "Copying ImplRepo services to the same location as the dlls.\n";
+    unlink $BIN_IMR_LOCATOR->Executable ();
+    copy ($IMR_LOCATOR->Executable (), $BIN_IMR_LOCATOR->Executable ());
+    unlink $BIN_IMR_ACTIVATOR->Executable ();
+    copy ($IMR_ACTIVATOR->Executable (), $BIN_IMR_ACTIVATOR->Executable ());
+
+    print "Stopping any existing TAO ImR Services\n";
+    system("net stop taoimractivator > nul 2>&1");
+    system("net stop taoimr > nul 2>&1");
+
+    print "Removing any existing TAO ImR Services\n";
+    $BIN_IMR_ACTIVATOR->Arguments ("-c remove");
+    $BIN_IMR_LOCATOR->Arguments ("-c remove");
+    $BIN_IMR_ACTIVATOR->SpawnWaitKill (5);
+    $BIN_IMR_LOCATOR->SpawnWaitKill (5);
+
+    $result = nt_service_test_i ($imr_initref, $BIN_IMR_ACTIVATOR, $BIN_IMR_LOCATOR);
+
     print "Stopping TAO Implementation Repository Service\n";
     system("net stop taoimractivator 2>&1");
     system("net stop taoimr 2>&1");
@@ -254,7 +260,7 @@ sub nt_service_test
     unlink $BIN_IMR_ACTIVATOR->Executable ();
     unlink $BIN_IMR_LOCATOR->Executable ();
 
-    return 0;
+    return $result;
 }
 
 ###############################################################################
