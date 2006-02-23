@@ -134,7 +134,7 @@ PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (const ::Portable
 PortableInterceptor::ORBInitInfo::DuplicateName&
 PortableInterceptor::ORBInitInfo::DuplicateName::operator= (const ::PortableInterceptor::ORBInitInfo::DuplicateName &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->name = ::CORBA::string_dup (_tao_excp.name.in ());
   return *this;
 }
@@ -268,7 +268,7 @@ PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (const ::PortableInte
 PortableInterceptor::ORBInitInfo::InvalidName&
 PortableInterceptor::ORBInitInfo::InvalidName::operator= (const ::PortableInterceptor::ORBInitInfo::InvalidName &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 

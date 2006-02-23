@@ -588,7 +588,7 @@ CORBA::ComponentIR::EventDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -686,7 +686,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Container_Proxy_Broker_ == 0)
@@ -745,7 +745,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Container_Proxy_Broker_ == 0)
@@ -811,7 +811,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Container_Proxy_Broker_ == 0)
@@ -966,7 +966,7 @@ CORBA::ComponentIR::Container::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1165,7 +1165,7 @@ CORBA::ComponentIR::ModuleDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1360,7 +1360,7 @@ CORBA::ComponentIR::Repository::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1453,7 +1453,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ProvidesDef_Proxy_Broker_ == 0)
@@ -1496,7 +1496,7 @@ void CORBA::ComponentIR::ProvidesDef::interface_type (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ProvidesDef_Proxy_Broker_ == 0)
@@ -1631,7 +1631,7 @@ CORBA::ComponentIR::ProvidesDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1771,7 +1771,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_UsesDef_Proxy_Broker_ == 0)
@@ -1814,7 +1814,7 @@ void CORBA::ComponentIR::UsesDef::interface_type (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_UsesDef_Proxy_Broker_ == 0)
@@ -1856,7 +1856,7 @@ CORBA::Boolean CORBA::ComponentIR::UsesDef::is_multiple (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_UsesDef_Proxy_Broker_ == 0)
@@ -1899,7 +1899,7 @@ void CORBA::ComponentIR::UsesDef::is_multiple (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_UsesDef_Proxy_Broker_ == 0)
@@ -2034,7 +2034,7 @@ CORBA::ComponentIR::UsesDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -2175,7 +2175,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_EventPortDef_Proxy_Broker_ == 0)
@@ -2218,7 +2218,7 @@ void CORBA::ComponentIR::EventPortDef::event (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_EventPortDef_Proxy_Broker_ == 0)
@@ -2261,7 +2261,7 @@ CORBA::Boolean CORBA::ComponentIR::EventPortDef::is_a (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_EventPortDef_Proxy_Broker_ == 0)
@@ -2398,7 +2398,7 @@ CORBA::ComponentIR::EventPortDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -2635,7 +2635,7 @@ CORBA::ComponentIR::EmitsDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -2825,7 +2825,7 @@ CORBA::ComponentIR::PublishesDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -3015,7 +3015,7 @@ CORBA::ComponentIR::ConsumesDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -3108,7 +3108,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3151,7 +3151,7 @@ void CORBA::ComponentIR::ComponentDef::base_component (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3193,7 +3193,7 @@ void CORBA::ComponentIR::ComponentDef::base_component (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3236,7 +3236,7 @@ void CORBA::ComponentIR::ComponentDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3282,7 +3282,7 @@ void CORBA::ComponentIR::ComponentDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3337,7 +3337,7 @@ void CORBA::ComponentIR::ComponentDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3393,7 +3393,7 @@ void CORBA::ComponentIR::ComponentDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3447,7 +3447,7 @@ void CORBA::ComponentIR::ComponentDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3501,7 +3501,7 @@ void CORBA::ComponentIR::ComponentDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ComponentDef_Proxy_Broker_ == 0)
@@ -3664,7 +3664,7 @@ CORBA::ComponentIR::ComponentDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -4260,7 +4260,7 @@ CORBA::ComponentIR::FactoryDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -4450,7 +4450,7 @@ CORBA::ComponentIR::FinderDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -4543,7 +4543,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4586,7 +4586,7 @@ void CORBA::ComponentIR::HomeDef::base_home (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4628,7 +4628,7 @@ void CORBA::ComponentIR::HomeDef::base_home (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4671,7 +4671,7 @@ void CORBA::ComponentIR::HomeDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4713,7 +4713,7 @@ void CORBA::ComponentIR::HomeDef::supported_interfaces (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4756,7 +4756,7 @@ void CORBA::ComponentIR::HomeDef::managed_component (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4798,7 +4798,7 @@ void CORBA::ComponentIR::HomeDef::managed_component (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4841,7 +4841,7 @@ void CORBA::ComponentIR::HomeDef::primary_key (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4888,7 +4888,7 @@ void CORBA::ComponentIR::HomeDef::primary_key (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -4945,7 +4945,7 @@ void CORBA::ComponentIR::HomeDef::primary_key (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_HomeDef_Proxy_Broker_ == 0)
@@ -5110,7 +5110,7 @@ CORBA::ComponentIR::HomeDef::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );

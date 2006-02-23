@@ -600,13 +600,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
       if (!this->is_abstract_
           && (!this->has_mixed_parentage_ || the_check))
         {
-          *os << "::CORBA::Object ("
-              << be_idt << be_idt_nl
-              << "objref," << be_nl
-              << "_tao_collocated," << be_nl
-              << "servant," << be_nl
-              << "oc" << be_uidt_nl
-              << ")" << be_uidt;
+          *os << "::CORBA::Object (objref, _tao_collocated, servant, oc)"
         }
 
       *os << "," << be_nl

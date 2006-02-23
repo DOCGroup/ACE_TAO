@@ -3442,10 +3442,10 @@ namespace CORBA
       TAO_String_Manager id;
       TAO_String_Manager defined_in;
       TAO_String_Manager version;
-      ACE_NESTED_CLASS (CORBA, OpDescriptionSeq) operations;
-      ACE_NESTED_CLASS (CORBA, AttrDescriptionSeq) attributes;
-      ACE_NESTED_CLASS (CORBA, RepositoryIdSeq) base_interfaces;
-      ACE_NESTED_CLASS (CORBA, TypeCode_var) type;
+      ::CORBA::OpDescriptionSeq operations;
+      ::CORBA::AttrDescriptionSeq attributes;
+      ::CORBA::RepositoryIdSeq base_interfaces;
+      ::CORBA::TypeCode_var type;
     };
 
     // TAO_IDL - Generated from
@@ -3674,10 +3674,10 @@ namespace CORBA
       TAO_String_Manager id;
       TAO_String_Manager defined_in;
       TAO_String_Manager version;
-      ACE_NESTED_CLASS (CORBA, OpDescriptionSeq) operations;
-      ACE_NESTED_CLASS (CORBA, ExtAttrDescriptionSeq) attributes;
-      ACE_NESTED_CLASS (CORBA, RepositoryIdSeq) base_interfaces;
-      ACE_NESTED_CLASS (CORBA, TypeCode_var) type;
+      ::CORBA::OpDescriptionSeq operations;
+      ::CORBA::ExtAttrDescriptionSeq attributes;
+      ::CORBA::RepositoryIdSeq base_interfaces;
+      ::CORBA::TypeCode_var type;
     };
 
     // TAO_IDL - Generated from

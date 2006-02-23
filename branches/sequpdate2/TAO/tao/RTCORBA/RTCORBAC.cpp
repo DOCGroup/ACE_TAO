@@ -2314,7 +2314,7 @@ RTCORBA::RTORB::MutexNotFound::MutexNotFound (const ::RTCORBA::RTORB::MutexNotFo
 RTCORBA::RTORB::MutexNotFound&
 RTCORBA::RTORB::MutexNotFound::operator= (const ::RTCORBA::RTORB::MutexNotFound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -2409,7 +2409,7 @@ RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (const ::RTCORBA::RTORB::In
 RTCORBA::RTORB::InvalidThreadpool&
 RTCORBA::RTORB::InvalidThreadpool::operator= (const ::RTCORBA::RTORB::InvalidThreadpool &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 

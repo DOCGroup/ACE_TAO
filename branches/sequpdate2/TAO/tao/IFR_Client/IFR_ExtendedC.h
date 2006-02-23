@@ -744,15 +744,15 @@ namespace CORBA
       CORBA::Boolean is_custom;
       TAO_String_Manager defined_in;
       TAO_String_Manager version;
-      ACE_NESTED_CLASS (CORBA, OpDescriptionSeq) operations;
-      ACE_NESTED_CLASS (CORBA, AttrDescriptionSeq) attributes;
-      ACE_NESTED_CLASS (CORBA, ValueMemberSeq) members;
-      ACE_NESTED_CLASS (CORBA, InitializerSeq) initializers;
-      ACE_NESTED_CLASS (CORBA, RepositoryIdSeq) supported_interfaces;
-      ACE_NESTED_CLASS (CORBA, RepositoryIdSeq) abstract_base_values;
+      CORBA::OpDescriptionSeq operations;
+      CORBA::AttrDescriptionSeq attributes;
+      CORBA::ValueMemberSeq members;
+      CORBA::InitializerSeq initializers;
+      CORBA::RepositoryIdSeq supported_interfaces;
+      CORBA::RepositoryIdSeq abstract_base_values;
       CORBA::Boolean is_truncatable;
       TAO_String_Manager base_value;
-      ACE_NESTED_CLASS (CORBA, TypeCode_var) type;
+      CORBA::TypeCode_var type;
     };
 
     // TAO_IDL - Generated from
@@ -1024,15 +1024,15 @@ namespace CORBA
       CORBA::Boolean is_custom;
       TAO_String_Manager defined_in;
       TAO_String_Manager version;
-      ACE_NESTED_CLASS (CORBA, OpDescriptionSeq) operations;
-      ACE_NESTED_CLASS (CORBA, ExtAttrDescriptionSeq) attributes;
-      ACE_NESTED_CLASS (CORBA, ValueMemberSeq) members;
-      ACE_NESTED_CLASS (CORBA, ExtInitializerSeq) initializers;
-      ACE_NESTED_CLASS (CORBA, RepositoryIdSeq) supported_interfaces;
-      ACE_NESTED_CLASS (CORBA, RepositoryIdSeq) abstract_base_values;
+      CORBA::OpDescriptionSeq operations;
+      CORBA::ExtAttrDescriptionSeq attributes;
+      CORBA::ValueMemberSeq members;
+      CORBA::ExtInitializerSeq initializers;
+      CORBA::RepositoryIdSeq supported_interfaces;
+      CORBA::RepositoryIdSeq abstract_base_values;
       CORBA::Boolean is_truncatable;
       TAO_String_Manager base_value;
-      ACE_NESTED_CLASS (CORBA, TypeCode_var) type;
+      CORBA::TypeCode_var type;
     };
 
     // TAO_IDL - Generated from

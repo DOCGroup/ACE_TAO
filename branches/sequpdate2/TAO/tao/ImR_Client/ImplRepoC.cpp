@@ -197,7 +197,7 @@ ImplementationRepository::AlreadyRegistered::AlreadyRegistered (const ::Implemen
 ImplementationRepository::AlreadyRegistered&
 ImplementationRepository::AlreadyRegistered::operator= (const ::ImplementationRepository::AlreadyRegistered &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -326,7 +326,7 @@ ImplementationRepository::CannotActivate::CannotActivate (const ::Implementation
 ImplementationRepository::CannotActivate&
 ImplementationRepository::CannotActivate::operator= (const ::ImplementationRepository::CannotActivate &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->reason = ::CORBA::string_dup (_tao_excp.reason.in ());
   return *this;
 }
@@ -475,7 +475,7 @@ ImplementationRepository::NotFound::NotFound (const ::ImplementationRepository::
 ImplementationRepository::NotFound&
 ImplementationRepository::NotFound::operator= (const ::ImplementationRepository::NotFound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -997,7 +997,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ServerInformationIterator_Proxy_Broker_ == 0)
@@ -1043,7 +1043,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ServerInformationIterator_Proxy_Broker_ == 0)
@@ -1166,7 +1166,7 @@ ImplementationRepository::ServerInformationIterator::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1259,7 +1259,7 @@ void ImplementationRepository::Administration::activate_server (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1328,7 +1328,7 @@ void ImplementationRepository::Administration::add_or_update_server (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1390,7 +1390,7 @@ void ImplementationRepository::Administration::remove_server (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1450,7 +1450,7 @@ void ImplementationRepository::Administration::shutdown_server (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1512,7 +1512,7 @@ void ImplementationRepository::Administration::server_is_running (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1576,7 +1576,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1636,7 +1636,7 @@ void ImplementationRepository::Administration::find (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1683,7 +1683,7 @@ void ImplementationRepository::Administration::list (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1731,7 +1731,7 @@ void ImplementationRepository::Administration::shutdown (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
@@ -1859,7 +1859,7 @@ ImplementationRepository::Administration::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );

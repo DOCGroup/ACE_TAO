@@ -1,3 +1,94 @@
+
+        * TAO_IDL/be/be_interface.cpp
+        * tao/DomainC.cpp
+        * tao/DomainC.inl
+        * tao/GIOPC.h
+        * tao/PolicyC.cpp
+        * tao/PolicyC.h
+        * tao/PolicyC.inl
+        * tao/WrongTransactionC.cpp
+        * tao/AnyTypeCode/Alias_TypeCode.inl
+        * tao/AnyTypeCode/Alias_TypeCode_Static.inl
+        * tao/AnyTypeCode/BoundsC.cpp
+        * tao/AnyTypeCode/Empty_Param_TypeCode.inl
+        * tao/AnyTypeCode/Enum_TypeCode.inl
+        * tao/AnyTypeCode/Enum_TypeCode_Static.inl
+        * tao/AnyTypeCode/Fixed_TypeCode.inl
+        * tao/AnyTypeCode/Objref_TypeCode.inl
+        * tao/AnyTypeCode/Objref_TypeCode_Static.inl
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.cpp
+        * tao/AnyTypeCode/Sequence_TypeCode.inl
+        * tao/AnyTypeCode/Sequence_TypeCode_Static.inl
+        * tao/AnyTypeCode/String_TypeCode.inl
+        * tao/AnyTypeCode/String_TypeCode_Static.inl
+        * tao/AnyTypeCode/Struct_TypeCode.inl
+        * tao/AnyTypeCode/Struct_TypeCode_Static.inl
+        * tao/AnyTypeCode/Union_TypeCode.inl
+        * tao/AnyTypeCode/Union_TypeCode_Static.inl
+        * tao/AnyTypeCode/Value_TypeCode.inl
+        * tao/AnyTypeCode/Value_TypeCode_Static.inl
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp
+        * tao/CodecFactory/IOP_CodecC.cpp
+        * tao/Domain/DomainS.cpp
+        * tao/DynamicAny/DynamicAnyC.cpp
+        * tao/IFR_Client/IFR_BaseC.cpp
+        * tao/IFR_Client/IFR_BaseC.h
+        * tao/IFR_Client/IFR_BaseC.inl
+        * tao/IFR_Client/IFR_BasicC.cpp
+        * tao/IFR_Client/IFR_BasicC.h
+        * tao/IFR_Client/IFR_BasicC.inl
+        * tao/IFR_Client/IFR_ComponentsC.cpp
+        * tao/IFR_Client/IFR_ComponentsC.inl
+        * tao/IFR_Client/IFR_ExtendedC.cpp
+        * tao/IFR_Client/IFR_ExtendedC.h
+        * tao/IFR_Client/IFR_ExtendedC.inl
+        * tao/IORManipulation/IORC.cpp
+        * tao/IORTable/IORTableC.cpp
+        * tao/ImR_Client/ImplRepoC.cpp
+        * tao/ImR_Client/ImplRepoC.inl
+        * tao/ImR_Client/ServerObjectC.cpp
+        * tao/ImR_Client/ServerObjectC.inl
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp
+        * tao/Messaging/MessagingC.cpp
+        * tao/Messaging/MessagingC.inl
+        * tao/Messaging/Messaging_Policy_i.cpp
+        * tao/Messaging/PollableC.cpp
+        * tao/PI/InvalidSlotC.cpp
+        * tao/PI/ORBInitInfoC.cpp
+        * tao/PI/PIForwardRequestC.cpp
+        * tao/PortableServer/ForwardRequestC.cpp
+        * tao/PortableServer/POAManagerC.cpp
+        * tao/PortableServer/PS_CurrentC.cpp
+        * tao/PortableServer/PortableServerC.cpp
+        * tao/RTCORBA/RTCORBAC.cpp
+        * tao/RTCORBA/RT_Policy_i.cpp
+        * tao/RTScheduling/RTSchedulerC.cpp
+        * tao/TypeCodeFactory/Recursive_TypeCode.inl
+        * tao/Valuetype/StringValueC.inl
+          Removed ACE_NESTED_CLASS
+
+        * TAO_IDL/ast/ast_type.cpp
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_visitor_component/component_ci.cpp
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/operation.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp
+          Removed generation of ACE_NESTED_CLASS, just use A::B instead
+
+        All changes below is the merge of the branch sequenceupdate to
+        sequpdate2. This is the new sequence implementation for TAO.
+
+
         * tao/Array_VarOut_T.h:
           Only do an empty forward declaration of Array_Traits. This will
           make sure that we have to do each specialization explicitly, if

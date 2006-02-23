@@ -12,8 +12,8 @@ TAO::TypeCode::Alias<char const *,
   char const * id,
   char const * name,
   CORBA::TypeCode_ptr const * tc)
-  : CORBA::TypeCode (kind)
-  , ACE_NESTED_CLASS (TAO, Null_RefCount_Policy) ()
+  : ::CORBA::TypeCode (kind)
+  , ::TAO::Null_RefCount_Policy ()
   , attributes_ (id, name)
   , content_type_ (tc)
 {

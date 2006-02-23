@@ -89,7 +89,7 @@ TAO::Objref_Traits<PortableServer::Current>::marshal (
   return ::CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::Current::NoContext::NoContext (void)
@@ -115,7 +115,7 @@ PortableServer::Current::NoContext::NoContext (const ::PortableServer::Current::
 PortableServer::Current::NoContext&
 PortableServer::Current::NoContext::operator= (const ::PortableServer::Current::NoContext &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -198,7 +198,7 @@ static TAO::TypeCode::Struct<char const *,
     "NoContext",
     _tao_fields_PortableServer_Current_NoContext,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::Current::_tc_NoContext =
   &_tao_tc_PortableServer_Current_NoContext;
 
@@ -237,7 +237,7 @@ PortableServer::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -300,7 +300,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/Current:2.3",
     "Current");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_Current =

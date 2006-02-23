@@ -517,7 +517,7 @@ namespace CORBA
       typedef Description_var _var_type;
 
       static void _tao_any_destructor (void *);
-      ACE_NESTED_CLASS (CORBA, DefinitionKind) kind;
+      ::CORBA::DefinitionKind kind;
       CORBA::Any value;
     };
 
@@ -2067,8 +2067,8 @@ namespace CORBA
       typedef Description_var _var_type;
 
       static void _tao_any_destructor (void *);
-      ACE_NESTED_CLASS (CORBA, Contained_var) contained_object;
-      ACE_NESTED_CLASS (CORBA, DefinitionKind) kind;
+      ::CORBA::Contained_var contained_object;
+      ::CORBA::DefinitionKind kind;
       CORBA::Any value;
     };
 

@@ -155,7 +155,7 @@ namespace CORBA
     // be\be_visitor_exception/exception_ctor.cpp:66
 
     PolicyError (
-        ACE_NESTED_CLASS (CORBA, PolicyErrorCode) _tao_reason
+        ::CORBA::PolicyErrorCode _tao_reason
       );
 
     // TAO_IDL - Generated from
@@ -208,7 +208,7 @@ namespace CORBA
     // be\be_visitor_exception/exception_ctor.cpp:66
 
     InvalidPolicies (
-        const ACE_NESTED_CLASS (CORBA, UShortSeq) & _tao_indices
+        const ::CORBA::UShortSeq & _tao_indices
       );
 
     // TAO_IDL - Generated from

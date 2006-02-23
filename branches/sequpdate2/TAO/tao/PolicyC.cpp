@@ -121,7 +121,7 @@ CORBA::PolicyError::PolicyError (const ::CORBA::PolicyError &_tao_excp)
 CORBA::PolicyError&
 CORBA::PolicyError::operator= (const ::CORBA::PolicyError &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->reason = _tao_excp.reason;
   return *this;
 }
@@ -257,7 +257,7 @@ CORBA::InvalidPolicies::InvalidPolicies (const ::CORBA::InvalidPolicies &_tao_ex
 CORBA::InvalidPolicies&
 CORBA::InvalidPolicies::operator= (const ::CORBA::InvalidPolicies &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->indices = _tao_excp.indices;
   return *this;
 }
@@ -420,7 +420,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
@@ -462,7 +462,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
@@ -504,7 +504,7 @@ void CORBA::Policy::destroy (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
@@ -627,7 +627,7 @@ CORBA::Policy::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );

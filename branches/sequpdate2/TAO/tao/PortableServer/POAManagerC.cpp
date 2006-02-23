@@ -91,7 +91,7 @@ TAO::Objref_Traits<PortableServer::POAManager>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
@@ -117,7 +117,7 @@ PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableSe
 PortableServer::POAManager::AdapterInactive&
 PortableServer::POAManager::AdapterInactive::operator= (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -200,7 +200,7 @@ static TAO::TypeCode::Struct<char const *,
     "AdapterInactive",
     _tao_fields_PortableServer_POAManager_AdapterInactive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_AdapterInactive =
   &_tao_tc_PortableServer_POAManager_AdapterInactive;
 
@@ -213,7 +213,7 @@ static char const * const _tao_enumerators_PortableServer_POAManager_State[] =
     "ACTIVE",
     "DISCARDING",
     "INACTIVE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -224,7 +224,7 @@ static TAO::TypeCode::Enum<char const *,
     "State",
     _tao_enumerators_PortableServer_POAManager_State,
     4);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_State =
   &_tao_tc_PortableServer_POAManager_State;
 
@@ -263,7 +263,7 @@ PortableServer::POAManager::_duplicate (POAManager_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -322,7 +322,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/POAManager:2.3",
     "POAManager");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POAManager =

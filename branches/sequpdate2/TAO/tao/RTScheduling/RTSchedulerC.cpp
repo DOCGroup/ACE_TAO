@@ -374,7 +374,7 @@ RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::UNSUPPORTED_SCHEDULING
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE&
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::operator= (const ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -798,7 +798,7 @@ RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::INCOMPATIBLE_SCHED
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES&
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::operator= (const ::RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 

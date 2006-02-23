@@ -116,7 +116,7 @@ IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (const ::IOP::Codec::
 IOP::Codec::InvalidTypeForEncoding&
 IOP::Codec::InvalidTypeForEncoding::operator= (const ::IOP::Codec::InvalidTypeForEncoding &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -203,7 +203,7 @@ static TAO::TypeCode::Struct<char const *,
 ::CORBA::TypeCode_ptr const IOP::Codec::_tc_InvalidTypeForEncoding =
   &_tao_tc_IOP_Codec_InvalidTypeForEncoding;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::FormatMismatch::FormatMismatch (void)
@@ -229,7 +229,7 @@ IOP::Codec::FormatMismatch::FormatMismatch (const ::IOP::Codec::FormatMismatch &
 IOP::Codec::FormatMismatch&
 IOP::Codec::FormatMismatch::operator= (const ::IOP::Codec::FormatMismatch &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -312,11 +312,11 @@ static TAO::TypeCode::Struct<char const *,
     "FormatMismatch",
     _tao_fields_IOP_Codec_FormatMismatch,
     0);
-  
+
 ::CORBA::TypeCode_ptr const IOP::Codec::_tc_FormatMismatch =
   &_tao_tc_IOP_Codec_FormatMismatch;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::TypeMismatch::TypeMismatch (void)
@@ -342,7 +342,7 @@ IOP::Codec::TypeMismatch::TypeMismatch (const ::IOP::Codec::TypeMismatch &_tao_e
 IOP::Codec::TypeMismatch&
 IOP::Codec::TypeMismatch::operator= (const ::IOP::Codec::TypeMismatch &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -425,7 +425,7 @@ static TAO::TypeCode::Struct<char const *,
     "TypeMismatch",
     _tao_fields_IOP_Codec_TypeMismatch,
     0);
-  
+
 ::CORBA::TypeCode_ptr const IOP::Codec::_tc_TypeMismatch =
   &_tao_tc_IOP_Codec_TypeMismatch;
 
@@ -464,7 +464,7 @@ IOP::Codec::_duplicate (Codec_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -523,7 +523,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/IOP/Codec:1.0",
     "Codec");
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_Codec =
@@ -543,7 +543,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/EncodingFormat:1.0",
     "EncodingFormat",
     &CORBA::_tc_short);
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_EncodingFormat =
@@ -560,7 +560,7 @@ static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> 
     { "format", &IOP::_tc_EncodingFormat },
     { "major_version", &CORBA::_tc_octet },
     { "minor_version", &CORBA::_tc_octet }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       ::CORBA::TypeCode_ptr const *,
@@ -572,7 +572,7 @@ static TAO::TypeCode::Struct<char const *,
     "Encoding",
     _tao_fields_IOP_Encoding,
     3);
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_Encoding =
@@ -581,10 +581,10 @@ namespace IOP
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 IOP::Encoding::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -604,7 +604,7 @@ static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> 
     { "minor_version", &CORBA::_tc_octet },
     { "char_codeset", &CONV_FRAME::_tc_CodeSetId },
     { "wchar_codeset", &CONV_FRAME::_tc_CodeSetId }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       ::CORBA::TypeCode_ptr const *,
@@ -616,7 +616,7 @@ static TAO::TypeCode::Struct<char const *,
     "Encoding_1_2",
     _tao_fields_IOP_Encoding_1_2,
     5);
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_Encoding_1_2 =
@@ -625,10 +625,10 @@ namespace IOP
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 IOP::Encoding_1_2::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -674,7 +674,7 @@ TAO::Objref_Traits<IOP::CodecFactory>::marshal (
   return ::CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (void)
@@ -700,7 +700,7 @@ IOP::CodecFactory::UnknownEncoding::UnknownEncoding (const ::IOP::CodecFactory::
 IOP::CodecFactory::UnknownEncoding&
 IOP::CodecFactory::UnknownEncoding::operator= (const ::IOP::CodecFactory::UnknownEncoding &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -783,11 +783,11 @@ static TAO::TypeCode::Struct<char const *,
     "UnknownEncoding",
     _tao_fields_IOP_CodecFactory_UnknownEncoding,
     0);
-  
+
 ::CORBA::TypeCode_ptr const IOP::CodecFactory::_tc_UnknownEncoding =
   &_tao_tc_IOP_CodecFactory_UnknownEncoding;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::CodecFactory::UnsupportedCodeset::UnsupportedCodeset (void)
@@ -814,7 +814,7 @@ IOP::CodecFactory::UnsupportedCodeset::UnsupportedCodeset (const ::IOP::CodecFac
 IOP::CodecFactory::UnsupportedCodeset&
 IOP::CodecFactory::UnsupportedCodeset::operator= (const ::IOP::CodecFactory::UnsupportedCodeset &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->codeset = _tao_excp.codeset;
   return *this;
 }
@@ -906,7 +906,7 @@ IOP::CodecFactory::UnsupportedCodeset::UnsupportedCodeset (
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_IOP_CodecFactory_UnsupportedCodeset[] =
   {
     { "codeset", &CONV_FRAME::_tc_CodeSetId }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       ::CORBA::TypeCode_ptr const *,
@@ -918,7 +918,7 @@ static TAO::TypeCode::Struct<char const *,
     "UnsupportedCodeset",
     _tao_fields_IOP_CodecFactory_UnsupportedCodeset,
     1);
-  
+
 ::CORBA::TypeCode_ptr const IOP::CodecFactory::_tc_UnsupportedCodeset =
   &_tao_tc_IOP_CodecFactory_UnsupportedCodeset;
 
@@ -957,7 +957,7 @@ IOP::CodecFactory::_duplicate (CodecFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1016,7 +1016,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/IOP/CodecFactory:1.0",
     "CodecFactory");
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_CodecFactory =
@@ -1025,7 +1025,7 @@ namespace IOP
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -1086,7 +1086,7 @@ void operator<<= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.

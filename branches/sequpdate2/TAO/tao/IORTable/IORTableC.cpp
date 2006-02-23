@@ -48,7 +48,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::AlreadyBound::AlreadyBound (void)
@@ -74,7 +74,7 @@ IORTable::AlreadyBound::AlreadyBound (const ::IORTable::AlreadyBound &_tao_excp)
 IORTable::AlreadyBound&
 IORTable::AlreadyBound::operator= (const ::IORTable::AlreadyBound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -123,7 +123,7 @@ void IORTable::AlreadyBound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -136,13 +136,13 @@ void IORTable::AlreadyBound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::NotFound::NotFound (void)
@@ -168,7 +168,7 @@ IORTable::NotFound::NotFound (const ::IORTable::NotFound &_tao_excp)
 IORTable::NotFound&
 IORTable::NotFound::operator= (const ::IORTable::NotFound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -217,7 +217,7 @@ void IORTable::NotFound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -230,7 +230,7 @@ void IORTable::NotFound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -288,10 +288,10 @@ IORTable::Table::_narrow (
     {
       return Table::_nil ();
     }
-  
+
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-  
+
   return Table::_duplicate (proxy);
 }
 
@@ -305,10 +305,10 @@ IORTable::Table::_unchecked_narrow (
     {
       return Table::_nil ();
     }
-  
+
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-  
+
   return Table::_duplicate (proxy);
 }
 
@@ -319,7 +319,7 @@ IORTable::Table::_duplicate (Table_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -421,10 +421,10 @@ IORTable::Locator::_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-  
+
   return Locator::_duplicate (proxy);
 }
 
@@ -438,10 +438,10 @@ IORTable::Locator::_unchecked_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-  
+
   return Locator::_duplicate (proxy);
 }
 
@@ -452,7 +452,7 @@ IORTable::Locator::_duplicate (Locator_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

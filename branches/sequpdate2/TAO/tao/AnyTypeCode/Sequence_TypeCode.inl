@@ -16,7 +16,7 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::Sequence (
   TypeCodeType const & content_type,
 #endif
   CORBA::ULong length)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , content_type_ (content_type)
   , length_ (length)

@@ -40,7 +40,7 @@ ImplementationRepository::ServerObject::ServerObject (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -56,7 +56,7 @@ ImplementationRepository::ServerObject::ServerObject (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_ServerObject_Proxy_Broker_ (0)
 {
 }

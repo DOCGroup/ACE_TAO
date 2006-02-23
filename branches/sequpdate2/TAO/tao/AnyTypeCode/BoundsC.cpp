@@ -75,7 +75,7 @@ CORBA::Bounds::Bounds (const ::CORBA::Bounds &_tao_excp)
 CORBA::Bounds&
 CORBA::Bounds::operator= (const ::CORBA::Bounds &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 

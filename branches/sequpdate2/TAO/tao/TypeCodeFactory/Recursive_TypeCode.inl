@@ -6,8 +6,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::TypeCodeFactory::Recursive_TypeCode::Recursive_TypeCode (char const * id)
-  : CORBA::TypeCode (CORBA::TAO_TC_KIND_COUNT)
-  , ACE_NESTED_CLASS (TAO, True_RefCount_Policy) ()
+  : ::CORBA::TypeCode (CORBA::TAO_TC_KIND_COUNT)
+  , ::TAO::True_RefCount_Policy ()
   , id_ (id)
   , the_typecode_ ()
 {

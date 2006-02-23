@@ -110,7 +110,7 @@ DynamicAny::DynAny::InvalidValue::InvalidValue (const ::DynamicAny::DynAny::Inva
 DynamicAny::DynAny::InvalidValue&
 DynamicAny::DynAny::InvalidValue::operator= (const ::DynamicAny::DynAny::InvalidValue &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -194,7 +194,7 @@ DynamicAny::DynAny::TypeMismatch::TypeMismatch (const ::DynamicAny::DynAny::Type
 DynamicAny::DynAny::TypeMismatch&
 DynamicAny::DynAny::TypeMismatch::operator= (const ::DynamicAny::DynAny::TypeMismatch &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1559,7 +1559,7 @@ DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (const ::D
 DynamicAny::DynAnyFactory::InconsistentTypeCode&
 DynamicAny::DynAnyFactory::InconsistentTypeCode::operator= (const ::DynamicAny::DynAnyFactory::InconsistentTypeCode &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
