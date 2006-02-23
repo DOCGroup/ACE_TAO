@@ -556,13 +556,6 @@ private:
   static int is_local_host (const ACE_TCHAR *machine_name);
 };
 
-// Fix me!  Shouldn't have to define this stuff
-
-#if defined (ACE_HAS_BROKEN_NESTED_TEMPLATES)
-  typedef ACE_Registry::Name_Component Name_Component;
-  typedef ACE_Registry::Binding Binding;
-#endif /* ACE_HAS_BROKEN_NESTED_TEMPLATES */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
