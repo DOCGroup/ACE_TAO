@@ -18,6 +18,7 @@
 #include "Constraint_Tokens.h"
 
 #include "tao/Basic_Types.h"
+#include "tao/String_Manager_T.h"
 
 #include "orbsvcs/Trader/trading_serv_export.h"
 
@@ -30,8 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Visitor;
 typedef unsigned short TAO_Expression_Type;
-
-class TAO_String_Manager;
 
 namespace CORBA
 {
