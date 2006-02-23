@@ -1,3 +1,18 @@
+Thu Feb 23 16:45:36 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2186_Regression/Bug_2186_Regression.mpc:
+        * tests/Bug_2186_Regression/Hello.h:
+        * tests/Bug_2186_Regression/Hello.cpp:
+        * tests/Bug_2186_Regression/README:
+        * tests/Bug_2186_Regression/Test.idl:
+        * tests/Bug_2186_Regression/client.cpp:
+        * tests/Bug_2186_Regression/run_test.pl:
+        * tests/Bug_2186_Regression/server.conf:
+        * tests/Bug_2186_Regression/server.cpp:
+
+          Added a regression test for this bug. This will fail until it is
+          fixed.
+
 Thu Feb 23 15:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tao/PI/PICurrent_Impl.cpp:
@@ -9,7 +24,7 @@ Thu Feb 23 15:10:18 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
         * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
         * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
 
-          Added A helper function that tests the equivalency of two 
+          Added A helper function that tests the equivalency of two
           profiles that come from an ior and an iogr.
 
 Thu Feb 23 10:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
