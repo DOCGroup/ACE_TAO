@@ -6,11 +6,10 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/./MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/./MPC/templates -type automake -noreldefs ACE.mwc
+## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 includedir = @includedir@/ace
 pkgconfigdir = @libdir@/pkgconfig
-DEFAULT_INCLUDES =
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -1182,6 +1181,7 @@ nobase_include_HEADERS += \
   os_include/sys/os_socket.h \
   os_include/sys/os_stat.h \
   os_include/sys/os_statvfs.h \
+  os_include/sys/os_sysctl.h \
   os_include/sys/os_time.h \
   os_include/sys/os_timeb.h \
   os_include/sys/os_times.h \
@@ -1315,6 +1315,8 @@ lib_LTLIBRARIES += libACE_TkReactor.la
 libACE_TkReactor_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
+  @ACE_TCL_CPPFLAGS@ \
+  @ACE_TK_CPPFLAGS@ \
   -DACE_TKREACTOR_BUILD_DLL
 
 libACE_TkReactor_la_SOURCES = \
@@ -1324,7 +1326,9 @@ libACE_TkReactor_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACE_TkReactor_la_LIBADD = \
-  libACE.la
+  libACE.la \
+  @ACE_TCL_LIBS@ \
+  @ACE_TK_LIBS@
 
 nobase_include_HEADERS += \
   ACE_TkReactor_export.h \
