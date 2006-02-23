@@ -267,7 +267,7 @@ Tue Feb 21 17:48:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
           where the stub may have moved to / from being collocated.
 
           Together all these changes fix bugzilla bugs #1741 / #2134; #2289;
-          #1493; #2130.
+          #1495; #2130.
 
         * tests/Bug_2134_Regression/Bug_2134_Regression.mpc:
         * tests/Bug_2134_Regression/Hello.idl:
@@ -276,7 +276,7 @@ Tue Feb 21 17:48:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
         * tests/Bug_2134_Regression/run_test.pl:
 
           A regression test for bugzilla #1741 / #2134. #2289 is already in the
-          repo, as is #1493.
+          repo, as is #1495.
 
 Tue Feb 21 17:45:06 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
