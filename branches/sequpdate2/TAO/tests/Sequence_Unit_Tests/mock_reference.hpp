@@ -89,8 +89,8 @@ private:
   int id_;
 };
 
-CORBA::Boolean operator<< (mock_stream &, const mock_reference *);
-CORBA::Boolean operator>> (mock_stream &, mock_reference *&);
+CORBA::Boolean operator<< (TAO_OutputCDR &, const mock_reference *);
+CORBA::Boolean operator>> (TAO_InputCDR &, mock_reference *&);
 
 namespace TAO
 {
@@ -100,8 +100,9 @@ namespace TAO
     static mock_reference_ptr duplicate (mock_reference_ptr);
     static void release (mock_reference_ptr);
     static mock_reference_ptr nil (void);
-    static CORBA::Boolean marshal (mock_reference_ptr p, TAO_OutputCDR & cdr);
+    static CORBA::Boolean marshal (const mock_reference_ptr p, TAO_OutputCDR & cdr);
   };
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_mock_reference_hpp
