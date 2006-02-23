@@ -271,6 +271,8 @@
         *
         orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
           Updated for sequence implementation
 
         * tests/Sequence_Unit_Tests/*:
