@@ -8,15 +8,16 @@
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"
-#include "object_reference_traits.hpp"
+#include "tao/Object_Reference_Traits_T.h"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
-#include "mock_stream.hpp"
 
-#include "bounded_object_reference_sequence.hpp"
-#include "bounded_sequence_cdr.hpp"
+#include "tao/Bounded_Object_Reference_Sequence_T.h"
+#include "tao/Bounded_Value_Sequence_T.h"
+#include "tao/Bounded_Sequence_CDR_T.h"
+#include "tao/CDR.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
@@ -29,14 +30,14 @@ CORBA::ULong const TMAX = 64;
 
 typedef bounded_object_reference_sequence<mock_reference, mock_reference_var,TMAX> tested_sequence;
 
-CORBA::Boolean operator<< (mock_stream &strm, const tested_sequence &sequence)
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
 {
-  return TAO::details::insert_bounded_sequence(strm, sequence);
+  return TAO::marshal_sequence(strm, sequence);
 }
 
-CORBA::Boolean operator>> (mock_stream &strm, tested_sequence &sequence)
+CORBA::Boolean operator>> (TAO_InputCDR &strm, tested_sequence &sequence)
 {
-  return TAO::details::extract_bounded_sequence(strm, sequence);
+  return TAO::demarshal_sequence(strm, sequence);
 }
 
 struct Tester
@@ -82,7 +83,7 @@ struct Tester
       BOOST_CHECK_EQUAL(false, a.release());
       check_values(a);
 
-      mock_stream stream;
+      TAO_OutputCDR stream;
       stream << a;
       BOOST_CHECK_MESSAGE(s.expect(4), s);
     }
