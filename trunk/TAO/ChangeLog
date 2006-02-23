@@ -1,3 +1,16 @@
+Thu Feb 23 18:41:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/Utils/Servant_Var.inl (operator=):
+        * tao/Valuetype/Value_VarOut_T.cpp (operator=):
+
+          Fixed problem where non-copying assignment prematurely decreased
+          reference count on contained object by adding a check for
+          self-assignment.  The canonical copy-and-swap idiom was used to
+          provide a strong exception safety guarantee.  It doesn't require
+          a self-assignment check for copying assignment but it may be
+          needed for non-copying assignment.  Addresses memory access
+          violations.
+
 Thu Feb 23 17:14:25 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tao/GIOP_Message_Lite.cpp:
