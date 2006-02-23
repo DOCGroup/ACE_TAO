@@ -3099,6 +3099,8 @@ libTAO_TkResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  @ACE_TCL_CPPFLAGS@ \
+  @ACE_TK_CPPFLAGS@ \
   -DTAO_TKRESOURCE_BUILD_DLL
 
 libTAO_TkResource_la_SOURCES = \
@@ -3111,7 +3113,9 @@ libTAO_TkResource_la_LDFLAGS = \
 libTAO_TkResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_TkReactor.la \
   libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TCL_LIBS@ \
+  @ACE_TK_LIBS@
 
 nobase_include_HEADERS += \
   TAO_TkResource_Export.h \
