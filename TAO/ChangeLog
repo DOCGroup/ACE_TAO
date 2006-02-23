@@ -1,3 +1,9 @@
+Thu Feb 23 10:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tests/Portable_Interceptors/AdvSlotDblCpy/README:
+
+        Updated README to show example test run.
+
 Wed Feb 22 23:42:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
