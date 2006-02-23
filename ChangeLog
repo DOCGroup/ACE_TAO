@@ -1,3 +1,10 @@
+Thu Feb 23 23:22:18 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Logging/Callback.h:
+        * examples/APG/Logging/Callback-2.h:
+        * examples/APG/Logging/Callback-3.h: Add conditional areas for
+          platforms lacking IOStream support.
+
 Thu Feb 23 23:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:
