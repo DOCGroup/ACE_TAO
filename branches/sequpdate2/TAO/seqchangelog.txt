@@ -56,6 +56,7 @@
         * tao/RTScheduling/RTSchedulerC.{h,cpp}:
         * tao/Strategies/sciop_endpointsC.{h,cpp}:
         * tao/Strategies/uiop_endpointsC.{h,cpp}:
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.{h,cpp}:
           Updated all these files because of the changes to the sequence
           implementation. The base classes are changed including the way we
           marshal and demarshal sequences. The argument to the marshal method
@@ -240,6 +241,36 @@
         * tests/Param_Test/big_union.cpp:
         *
         tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/orbsvcs/DsLogAdmin.idl:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.{cpp,i}:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.{h,cpp,i}
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.{h,cpp}
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        *
+        orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
           Updated for sequence implementation
 
         * tests/Sequence_Unit_Tests/*:
