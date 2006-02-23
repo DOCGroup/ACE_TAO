@@ -1,3 +1,14 @@
+Thu Feb 23 14:54:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+
+          Tweak how ACE_TCL_CPPFLAGS, ACE_TCL_LIBS, ACE_TK_CPPFLAGS,
+          and ACE_TK_LIBS are defined.
+
+        * tests/Makefile.am:
+
+          Fix regeneration bug.
+
 Thu Feb 23 10:05:22 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_orb_tests.lst:

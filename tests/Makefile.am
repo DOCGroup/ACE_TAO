@@ -2655,7 +2655,7 @@ noinst_PROGRAMS += TkReactor_Test
 
 TkReactor_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
+  -I$(ACE_BUILDDIR) \
   @ACE_TCL_CPPFLAGS@ \
   @ACE_TK_CPPFLAGS@
 
