@@ -20,8 +20,8 @@
 // Interface visitor for implementation skeletons.
 // ************************************************************
 
-ACE_RCSID (be_visitor_interface, 
-           interface_is, 
+ACE_RCSID (be_visitor_interface,
+           interface_is,
            "$Id$")
 
 be_visitor_interface_is::be_visitor_interface_is (be_visitor_context *ctx)
@@ -88,7 +88,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
           << be_global->impl_class_suffix () << "& rhs)" << be_idt_nl
           << ": TAO_Abstract_ServantBase (rhs)," << be_nl
           << "  TAO_ServantBase (rhs)";
-          
+
       if (node->traverse_inheritance_graph (be_interface::copy_ctor_helper,
                                             os)
            == -1)
@@ -108,8 +108,8 @@ be_visitor_interface_is::visit_interface (be_interface *node)
               be_decl *scope;
               scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-              *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ", "
-                  << node->local_name () << ") (rhs)";
+              *os << "  POA_" << scope->name () << "::"
+                  << node->local_name () << " (rhs)";
             }
           else
             {
@@ -150,7 +150,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   int status =
     node->traverse_inheritance_graph (
-              be_visitor_interface_is::method_helper, 
+              be_visitor_interface_is::method_helper,
               os
             );
 
@@ -186,7 +186,7 @@ be_visitor_interface_is::method_helper (be_interface *derived,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_is::"
-                             "method_helper\n"), 
+                             "method_helper\n"),
                             -1);
         }
 

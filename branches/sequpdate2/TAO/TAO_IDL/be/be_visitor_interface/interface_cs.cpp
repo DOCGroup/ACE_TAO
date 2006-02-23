@@ -280,7 +280,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "void" << be_nl
           << node->name () << "::_add_ref (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->ACE_NESTED_CLASS ( ::CORBA, Object)::_add_ref ();"
+          << "this->::CORBA::Object::_add_ref ();"
           << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -432,7 +432,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << "return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a ("
+      *os << "return this->::CORBA::Object::_is_a ("
           << be_idt << be_idt_nl
           << "value" << env_arg << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;

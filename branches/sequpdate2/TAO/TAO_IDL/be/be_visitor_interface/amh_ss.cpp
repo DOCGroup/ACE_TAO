@@ -243,8 +243,8 @@ emit (be_interface *derived,
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
-      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", AMH_"
-          << base->local_name () << ") (rhs)";
+      *os << "POA_" << scope->name () << "::AMH_"
+          << base->local_name () << " (rhs)";
     }
   else
     {

@@ -154,10 +154,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           be_decl *scope =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-          *os << "ACE_NESTED_CLASS ("
-              << scope->name () << ","
-              << node->local_name () << ")"
-              <<"::_tao_marshal_state (strm);" << be_uidt_nl;
+          *os << scope->name () << "::"
+              << node->local_name ()
+              << "::_tao_marshal_state (strm);" << be_uidt_nl;
         }
       else
         {
@@ -179,9 +178,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           be_decl *scope =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-          *os << "ACE_NESTED_CLASS ("
-              << scope->name () << ","
-              << node->local_name () << ")"
+          *os << scope->name () << "::"
+              << node->local_name ()
               <<"::_tao_unmarshal_state (strm);" << be_uidt_nl;
         }
       else
