@@ -304,6 +304,6 @@ private:
 };
 
 } // namespace details
-} // namespace CORBA
+} // namespace TAO
 
 #endif // guard_generic_sequence_hpp
