@@ -1,3 +1,10 @@
+Thu Feb 23 19:53:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/DLL_Test_Impl.cpp:
+        
+          Changed so nothrow operator delete has same exception
+          specification in declaration and definition.
+
 Thu Feb 23 17:01:15 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_orb_tests.lst:
