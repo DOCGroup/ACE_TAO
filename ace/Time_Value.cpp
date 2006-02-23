@@ -253,7 +253,7 @@ ACE_Time_Value::operator *= (double d)
   time_total -= time_sec;
   time_total *= ACE_ONE_SECOND_IN_USECS;
 
-  long time_usec = static_cast<long> (time_total);
+  suseconds_t time_usec = static_cast<suseconds_t> (time_total);
 
   // round up the result to save the last usec
   if (time_usec > 0 && (time_total - time_usec) >= 0.5)

@@ -267,7 +267,7 @@ private:
  * global/static variables and functions.
  *
  * Using this class a program can register an ACE_Event_Handler
- * with the <ACE_Sig_Handler> in order to handle a designated
+ * with the ACE_Sig_Handler in order to handle a designated
  * <signum>.  When a signal occurs that corresponds to this
  * <signum>, the <handle_signal> method of the registered
  * ACE_Event_Handler is invoked automatically.
@@ -314,7 +314,7 @@ public:
 
   // = Set/get the handler associated with a particular signal.
 
-  /// Return the <ACE_Sig_Handler> associated with <signum>.
+  /// Return the ACE_Sig_Handler associated with <signum>.
   virtual ACE_Event_Handler *handler (int signum);
 
   /// Set a new ACE_Event_Handler that is associated with <signum>.
@@ -469,7 +469,7 @@ public:
 
   // = Set/get the handler associated with a particular signal.
 
-  /// Return the head of the list of <ACE_Sig_Handler>s associated with
+  /// Return the head of the list of ACE_Sig_Handlers associated with
   /// SIGNUM.
   virtual ACE_Event_Handler *handler (int signum);
 

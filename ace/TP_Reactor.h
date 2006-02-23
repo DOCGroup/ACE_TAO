@@ -289,7 +289,7 @@ public:
   virtual int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
 
   /// Return the current owner of the thread.
-  virtual int owner (ACE_thread_t *);
+  virtual int owner (ACE_thread_t *t_id);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
