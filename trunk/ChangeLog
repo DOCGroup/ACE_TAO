@@ -1,3 +1,18 @@
+Thu Feb 23 09:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_Test_Impl.{h,cpp}:
+          Added nothrow operator delete
+
+        * ace/TP_Reactor.h:
+        * ace/Signal.h:
+          Documentation improvement
+
+        * ace/Time_Value.cpp (operator*):
+          Use correct type for usec
+
+        * ace/Svc_Handler.cpp:
+          Use casts in operator delete
+
 Thu Feb 23 08:08:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
