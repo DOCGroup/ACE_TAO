@@ -3,6 +3,14 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) VxWorks 6.2 support
 
+USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
+====================================================
+
+. Added a platform macros option "templates=manual", currently only
+  applies to AIX 5.3 with XL 7 compiler.  It allows the user to tell the
+  compiler to set -qnotempinc and -qnotemplateregistry and works well
+  in static builds.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.9 and ACE-5.4.10
 ====================================================
 
