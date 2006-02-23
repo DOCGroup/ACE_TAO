@@ -35,6 +35,7 @@ public:
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
   typedef element_type subscript_type;
+  typedef const_value_type const_subscript_type;
 
   inline unbounded_basic_string_sequence()
     : impl_()

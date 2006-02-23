@@ -22,7 +22,40 @@
         * tao/FloatSeqC.{h,cpp}:
         * tao/WStringSeqC.{h,cpp}:
         * tao/LongSeqC.{h,cpp}:
+        * tao/WCharSeqC.{h,cpp}:
+        * tao/Object_KeyC.{h,cpp}:
+        * tao/ObjectIdListC.{h,cpp}:
         * tao/IIOP_EndpointsC.{h,cpp}:
+        * tao/LongLongSeqC.{h,cpp}:
+        * tao/IIOPC.{h,cpp}:
+        * tao/IOP_IORC.{h,cpp}:
+        * tao/LongDoubleSeqC.{h,cpp}:
+        * tao/Messaging_PolicyValueC.{h,cpp}:
+        * tao/OctetSeqC.{h,cpp}:
+        * tao/Policy_ForwardC.{h,cpp}:
+        * tao/PolicyC.{h,cpp}:
+        * tao/ServicesC.{h,cpp}:
+        * tao/ShortSeqC.{h,cpp}:
+        * tao/StringSeqC.{h,cpp}:
+        * tao/TAOC.{h,cpp}:
+        * tao/ULongLongSeqC.{h,cpp}:
+        * tao/ULongSeqC.{h,cpp}:
+        * tao/UShortSeqC.{h,cpp}:
+        * tao/AnyTypeCode/AnySeqC.{h,cpp}:
+        * tao/AnyTypeCode/DynamicC.{h,cpp}:
+        * tao/DynamicAny/DynamicAnyC.{h,cpp}:
+        * tao/IFR_Client/IFR_ExtendedC.{h,cpp}:
+        * tao/IFR_Client/IFR_ComponentsC.{h,cpp}:
+        * tao/IFR_Client/IFR_BasicC.{h,cpp}:
+        * tao/IFR_Client/IFR_BaseC.{h,cpp}:
+        * tao/ImR_Client/ImplRepoC.{h,cpp}:
+        * tao/IORManipulation/IORC.{h,cpp}:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.{h,cpp}:
+        * tao/PortableServer/PortableServerC.{h,cpp}:
+        * tao/RTCORBA/RTCORBAC.{h,cpp}:
+        * tao/RTScheduling/RTSchedulerC.{h,cpp}:
+        * tao/Strategies/sciop_endpointsC.{h,cpp}:
+        * tao/Strategies/uiop_endpointsC.{h,cpp}:
           Updated all these files because of the changes to the sequence
           implementation. The base classes are changed including the way we
           marshal and demarshal sequences. The argument to the marshal method
@@ -96,3 +129,118 @@
 
         * tao/VarOut_T.h:
           Removed THIS_OUT_TYPE typedef
+
+        * tao/DynamicInterface/Request.h:
+          Removed include of Sequence.h, not needed
+
+        * tao/Profile.h:
+          Updated typedef for TAO_opaque
+
+        * tao/Object_Reference_Sequence_Element_T.h:
+        * tao/Object_Reference_Traits_Base_T.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/Range_Checking_T.h:
+          New files
+
+        * tao/Seq_Out_T.{h,inl}:
+          Removed TAO_MngSeq_Out_T, not needed anymore
+
+        * tao/Sequence.{h,cpp,i}:
+          Removed
+
+        * tao/Seq_Var_T.{h,cpp.inl}:
+          Removed TAO_MngSeq_Var_T, not needed anymore
+
+        * tao/String_Manager_T.h:
+          TAO string manager as template, new file
+
+        * tao/String_Sequence_Element_T.h:
+          Element in a string sequence
+
+        * tao/String_Traits_Base_T.h:
+        * tao/String_Traits_T.h:
+          String traits
+
+        * tao/Unbounded_Array_Allocation_Traits_T.h
+        * tao/Unbounded_Array_Sequence_T.h
+        * tao/Unbounded_Basic_String_Sequence_T.h
+        * tao/Unbounded_Object_Reference_Sequence_T.h
+        * tao/Unbounded_Octet_Sequence_T.h
+        * tao/Unbounded_Reference_Allocation_Traits_T.h
+        * tao/Unbounded_Sequence_CDR_T.h
+        * tao/Unbounded_String_Sequence_T.h
+        * tao/Unbounded_Value_Allocation_Traits_T.h
+        * tao/Unbounded_Value_Sequence_T.h
+        * tao/Unbounded_Wstring_Sequence_T.h
+          Unbounded sequence files
+
+        * tao/diffs/Object_Key.diff:
+          Updated
+
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI_Server/ServerRequestInfo.cpp:
+          Removed temporary object usage
+
+        * tao/RTCORBA/RT_Stub.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+          Updated for the fact that an object sequence now returns a _ptr
+          on the subscript operators instead of the _var which wasn't
+          confirming to the CORBA C++ mapping
+
+        * tao/RTScheduling/Current.h:
+          Updated IdType typedef
+
+        * tao/Valuetype/Bounded_Valuetype_Allocation_Traits_T.h
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h
+        * tao/Valuetype/Unbounded_Valuetype_Allocation_Traits_T.h
+        * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h
+        * tao/Valuetype/Valuetype_Sequence_Element_T.h
+        * tao/Valuetype/Valuetype_Traits_Base_T.h
+        * tao/Valuetype/Valuetype_Traits_T.h
+          New sequence implementated for valuetypes
+
+        * tao/Valuetype/Sequence_T.{cpp,inl}:
+          Removed
+
+        * tao/Valuetype/Sequence_T.h:
+          Just include the new files, easier for backward compatibility
+
+        * tao/Valuetype/Value_VarOut_T.{h,cpp}:
+          Just define an empty Value_Traits, make sure we get all
+          specializations
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+          Updated for new sequence implementation
+
+        * examples/CSD_Strategy/ThreadPool4/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientTask.cpp:
+        * examples/Load_Balancing/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/POA/NewPOA/NewPOA.cpp:
+        * examples/POA/POA_BiDir/POA_BiDir.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_ClientEngine.cpp:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+        * tests/Sequence_Unit_Tests/*:
+        * tests/ORT/ServerRequestInterceptor.cpp:
+        * tests/Param_Test/big_union.cpp:
+        *
+        tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.cpp:
+          Updated for sequence implementation
+
+        * tests/Sequence_Unit_Tests/*:
+          Removed files that are now in the core TAO lib

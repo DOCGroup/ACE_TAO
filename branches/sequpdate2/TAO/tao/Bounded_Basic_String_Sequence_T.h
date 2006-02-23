@@ -32,6 +32,7 @@ public:
 
   typedef details::string_sequence_element<element_traits> element_type;
   typedef element_type subscript_type;
+  typedef const_value_type const_subscript_type;
 
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 

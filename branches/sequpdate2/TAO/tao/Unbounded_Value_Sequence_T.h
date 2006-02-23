@@ -26,6 +26,7 @@ public:
   typedef T element_type;
   typedef T const const_value_type;
   typedef value_type & subscript_type;
+  typedef value_type const & const_subscript_type;
 
   typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;
   typedef details::value_traits<value_type,true> element_traits;
