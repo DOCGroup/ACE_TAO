@@ -1,3 +1,10 @@
+Thu Feb 23 15:56:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Svc_Handler.cpp:
+
+          Fix typo (identifier-name) introduced in:
+          Thu Feb 23 09:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Thu Feb 23 14:44:54 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * ace/Log_Msg.cpp:
