@@ -1,3 +1,23 @@
+Thu Feb 23 06:47:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+
+          Add automake specific section for TCL and TK CPPFLAGS and LIBS.
+
+        * m4/ace.m4:
+
+          Change ace_enable_{fl,qt,tk,xt}_reactor to
+          ace_user_enable_{fl,qt,tk,xt}_reactor for consistency.
+
+          Implement ACE_PATH_TCL.
+
+          Implement ACE_PATH_TK.
+
+          Implement ACE_ENABLE_TK_REACTOR.
+
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for these fixes.
+
 Wed Feb 22 20:56:17 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE_export.h: Added another macro, ACE_INLINE_TEMPLATE_FUNCTION,
