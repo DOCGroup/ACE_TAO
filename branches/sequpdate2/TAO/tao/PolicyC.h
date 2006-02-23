@@ -593,7 +593,7 @@ namespace TAO
       );
     static ::CORBA::Policy_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::Policy_ptr p,
+        const ::CORBA::Policy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -614,7 +614,7 @@ namespace TAO
       );
     static ::CORBA::PolicyManager_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::PolicyManager_ptr p,
+        const ::CORBA::PolicyManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -635,7 +635,7 @@ namespace TAO
       );
     static ::CORBA::PolicyCurrent_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::PolicyCurrent_ptr p,
+        const ::CORBA::PolicyCurrent_ptr p,
         TAO_OutputCDR & cdr
       );
   };

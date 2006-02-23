@@ -79,22 +79,20 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        LongDoubleSeq,
-        CORBA::LongDouble
+        LongDoubleSeq
       >
     LongDoubleSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         LongDoubleSeq,
-        LongDoubleSeq_var,
-        CORBA::LongDouble
+        LongDoubleSeq_var
       >
     LongDoubleSeq_out;
 
   class TAO_Export LongDoubleSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::LongDouble
           >
   {
