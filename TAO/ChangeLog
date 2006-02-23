@@ -1,3 +1,9 @@
+Thu Feb 23 15:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/PI/PICurrent_Impl.cpp:
+
+        Updated/TAOized debug text at line 57.
+
 Thu Feb 23 15:10:18 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
