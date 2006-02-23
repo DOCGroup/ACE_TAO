@@ -128,6 +128,9 @@ private:
       TAO_OutputCDR &cdr,
       IOP::TaggedComponent &tagged_components);
 
+  /// A helper function that tests the equivalency of two profiles that
+  /// come from an ior and an iogr.
+  CORBA::Boolean is_profile_equiv(TAO_Profile *p1, TAO_Profile *p2);
 private:
   /// Hold the reference to the FT group tagged component
   FT::TagFTGroupTaggedComponent *ft_group_tagged_component_;
