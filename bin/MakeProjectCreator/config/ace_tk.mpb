@@ -10,4 +10,9 @@ project {
     LIBS += $(PLATFORM_TCL_LIBS) $(PLATFORM_TK_LIBS)
     LDFLAGS += $(PLATFORM_TCL_LDFLAGS) $(PLATFORM_TK_LDFLAGS)
   }
+
+  specific(automake) {
+    compile_flags += @ACE_TCL_CPPFLAGS@ @ACE_TK_CPPFLAGS@
+    pure_libs += @ACE_TCL_LIBS@ @ACE_TK_LIBS@
+  }
 }
