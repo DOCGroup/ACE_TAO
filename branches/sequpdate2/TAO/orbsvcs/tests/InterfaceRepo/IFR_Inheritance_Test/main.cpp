@@ -18,7 +18,7 @@ void printContents( const CORBA::ContainedSeq& cont )
           if( cont[i]->describe()->kind == CORBA::dk_Interface )
             {
               CORBA::InterfaceDef_var intDef =
-                CORBA::InterfaceDef::_narrow (cont[i].in()
+                CORBA::InterfaceDef::_narrow (cont[i]
                 ACE_ENV_ARG_PARAMETER );
               ACE_TRY_CHECK;
 
@@ -41,7 +41,7 @@ void printContents( const CORBA::ContainedSeq& cont )
           else if( cont[i]->describe ()->kind == CORBA::dk_Module )
             {
               CORBA::ModuleDef_var moduleDef =
-                CORBA::ModuleDef::_narrow (cont[i].in ()
+                CORBA::ModuleDef::_narrow (cont[i]
                                            ACE_ENV_ARG_PARAMETER );
               ACE_TRY_CHECK;
 
