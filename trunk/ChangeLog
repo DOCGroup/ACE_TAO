@@ -1,3 +1,17 @@
+Thu Feb 23 08:35:09 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+        * ace/config-lynxos-pthread.h:
+          Remove this file. Change handling for LynxOS' use of macros
+
+        * include/makeinclude/platform_lynxos.GNU:
+        * ace/config-lynxos.h:
+          Revert changes for building dynamic libraries
+
+        * ace/os_include/os_pthread.h:
+          Remove inclusion of ace/config-lynxos-pthread.h
+
+        * ace/OS_NS_Thread.inl:
+          If it's a macro we can't say "::pthread_cancel"
+
 Thu Feb 23 09:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_Test_Impl.{h,cpp}:
