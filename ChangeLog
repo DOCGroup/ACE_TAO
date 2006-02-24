@@ -1,3 +1,9 @@
+Fri Feb 24 13:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/TP_Reactor/client.cpp:
+        * examples/Reactor/TP_Reactor/server.cpp:
+          Made these compiling with wchar enabled
+
 Fri Feb 24 11:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE_export.h:
