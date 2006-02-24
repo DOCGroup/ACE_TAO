@@ -252,6 +252,7 @@ public:
               ACE_exitcode *status = 0);
 
   /**
+   * @deprecated
    * Reap the result of a single process by calling <ACE_OS::waitpid>,
    * therefore, this method is not portable to Win32.  If the child is
    * successfully reaped, <remove> is called automatically.  This
