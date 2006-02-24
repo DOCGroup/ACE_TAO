@@ -1,3 +1,9 @@
+Fri Feb 24 19:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/run_test.pl:
+          Check what spawn returned, when there is no exe this speedsup
+          this test a lot
+
 Fri Feb 24 14:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2289_Regression/run_test.pl:
