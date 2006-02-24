@@ -523,7 +523,7 @@ public:
   size_t space (void) const;
   //@}
 
-  // = <ACE_Data_Block> methods.
+  // = ACE_Data_Block methods.
 
   /**
    * Get a pointer to the data block. Note that the ACE_Message_Block
@@ -533,15 +533,15 @@ public:
   ACE_Data_Block *data_block (void) const;
 
   /**
-   * Set a new data block pointer. The original <ACE_Data_Block> is released
+   * Set a new data block pointer. The original ACE_Data_Block is released
    * as a result of this call. If you need to keep the original block, call
    * <replace_data_block> instead. Upon return, this ACE_Message_Block
-   * holds a pointer to the new <ACE_Data_Block>, taking over the reference
+   * holds a pointer to the new ACE_Data_Block, taking over the reference
    * you held on it prior to the call.
    */
   void data_block (ACE_Data_Block *);
 
-  /// Set a new data block pointer. A pointer to the original <ACE_Data_Block>
+  /// Set a new data block pointer. A pointer to the original ACE_Data_Block
   /// is returned, and not released (as it is with <data_block>).
   ACE_Data_Block *replace_data_block (ACE_Data_Block*);
 
@@ -824,22 +824,22 @@ protected:
 
   // = Strategies.
   /**
-   * Pointer to the allocator defined for this <ACE_Data_Block>.  Note
+   * Pointer to the allocator defined for this ACE_Data_Block.  Note
    * that this pointer is shared by all owners of this
-   * <ACE_Data_Block>.
+   * ACE_Data_Block.
    */
   ACE_Allocator *allocator_strategy_;
 
   /**
    * Pointer to the locking strategy defined for this
-   * <ACE_Data_Block>.  This is used to protect regions of code that
-   * access shared <ACE_Data_Block> state.  Note that this lock is
-   * shared by all owners of the <ACE_Data_Block>'s data.
+   * ACE_Data_Block.  This is used to protect regions of code that
+   * access shared ACE_Data_Block state.  Note that this lock is
+   * shared by all owners of the ACE_Data_Block's data.
    */
   ACE_Lock *locking_strategy_;
 
   /**
-   * Reference count for this <ACE_Data_Block>, which is used to avoid
+   * Reference count for this ACE_Data_Block, which is used to avoid
    * deep copies (i.e., <clone>).  Note that this pointer value is
    * shared by all owners of the <Data_Block>'s data, i.e., all the
    * ACE_Message_Blocks.
