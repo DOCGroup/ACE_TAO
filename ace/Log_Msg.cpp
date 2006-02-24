@@ -251,15 +251,6 @@ ACE_TSS_CLEANUP_NAME (void *ptr)
    log_msg->thr_desc()->log_msg_cleanup(log_msg);
   else
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-#ifdef ACE_HAS_BROKEN_THREAD_KEYFREE
-    if ( ACE_Thread::setspecific( (*log_msg_tss_key()),
-                                  (void *)NULL ) != 0 )
-    {
-       ACE_DEBUG ((LM_DEBUG,
-                   ACE_LIB_TEXT ("(%P|%t) ACE_Log_Msg::close failed to ACE_Thread::setspecific to NULL\n")));
-
-    }
-#endif /* ACE_HAS_BROKEN_THREAD_KEYFREE */
   delete (ACE_Log_Msg *) ptr;
 }
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
@@ -502,24 +493,6 @@ ACE_Log_Msg::close (void)
              // already deleted by ACE_TSS_Cleanup::exit (), so we
              // don't want to access it again.
              key_created_ = 0;
-#ifdef ACE_HAS_BROKEN_THREAD_KEYFREE
-             // for some systems, e.g. LynxOS, we need to ensure that
-             // any registered thread destructor action for this thread
-             // is disabled. Otherwise in the event of a dynamic library
-             // unload of libACE, by a program not linked with libACE,
-             // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
-
-             ACE_Log_Msg *tss_log_msg = 0;
-
-             // Get the tss_log_msg from thread-specific storage.
-             if ( ACE_Thread::getspecific (*(log_msg_tss_key ()),
-                           ACE_reinterpret_cast (void **, &tss_log_msg)) != -1
-                  && tss_log_msg)
-             {
-               // we haven't been cleaned up
-               ACE_TSS_cleanup(tss_log_msg);
-             }
-#endif /* ACE_HAS_BROKEN_THREAD_KEYFREE */
            }
 
          ACE_OS::thread_mutex_unlock (lock);

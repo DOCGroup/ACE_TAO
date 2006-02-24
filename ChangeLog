@@ -1,3 +1,12 @@
+Fri Feb 24 15:26:07 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * ace/config-lynxos.h
+        * ace/Log_Msg.cpp:
+
+          Back out code dealing with system's that have a
+          BROKEN_THREAD_KEYFREE after Olli Savia <ops@iki.fi> pointed
+          out that it breaks Task_Ex_Test.
+
 Fri Feb 24 15:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Block.h:
