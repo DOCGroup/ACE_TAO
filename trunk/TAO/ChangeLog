@@ -261,7 +261,7 @@ Wed Feb 22 11:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
         * tao/PI/PICurrent_Impl.inl:
         * tao/PI_Server/PICurrent_Guard.cpp:
 
-          bugzilla bugfix #2304.
+          Bugzilla bugfix #2304, also fixes #2066
 
 Wed Feb 22 09:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
