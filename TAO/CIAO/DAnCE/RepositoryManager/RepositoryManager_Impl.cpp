@@ -153,7 +153,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
       //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
       ACE_Message_Block* mb;
-      ACE_NEW_THROW_EX (mb, ACE_Message_Block (0,0), CORBA::INTERNAL ());
+      ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::INTERNAL ());
       ACE_CHECK_RETURN (0);
 
       //get the remote file
@@ -169,6 +169,8 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
           mb->release ();
           ACE_THROW (CORBA::INTERNAL ());
         }
+
+      mb->release ();
     }
   else
     {
