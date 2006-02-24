@@ -50,7 +50,9 @@ bool URL_Parser::parseURL (char* url)
     url += ACE_OS::strlen ("http://");
 
   if (url[0] == '/')
-    this->filename_ = url;
+  {
+    this->filename_ = ACE_OS::strdup (url);
+  }
   else
   {
     if (ptr = ACE_OS::strstr (url, ":"))
@@ -63,13 +65,13 @@ bool URL_Parser::parseURL (char* url)
     else
     {
       size_t host_len = ptr - url;
-      ACE_NEW_RETURN (this->hostname_, char [host_len], false);
+      ACE_NEW_RETURN (this->hostname_, char [host_len + 1], false);
       ACE_OS::strncpy (this->hostname_, url, host_len);
       this->hostname_ [host_len] = '\0';
 
       if (ptr = ACE_OS::strstr (ptr, "/"))
       {
-        this->filename_ = ptr;
+        this->filename_ = ACE_OS::strdup(ptr);
       }
       else
         success = false;
@@ -89,5 +91,13 @@ void URL_Parser::Error (void)
   URL_Parser::~URL_Parser()
   {
     if(this->hostname_)
+    {
       delete [] this->hostname_;
+      this->hostname_ =0;
+    }
+    if (this->filename_)
+    {
+      ACE_OS::free (this->filename_);
+      this->filename_ = 0;
+    }
   }

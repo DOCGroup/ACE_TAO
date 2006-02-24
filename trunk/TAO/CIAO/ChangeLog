@@ -1,3 +1,17 @@
+Fri Feb 24 18:54:52 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/HTTP_Handler.cpp:
+        * DAnCE/RepositoryManager/RM_Helper.h:
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+          some cosmetic changes
+
+        * DAnCE/RepositoryManager/URL_Parser.h:
+          made the constructor protected and made the ACE_Singleton a friend
+
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+          fixed a bug and improved the robustness of the code
+
 Fri Feb 24 09:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO-INSTALL.html:

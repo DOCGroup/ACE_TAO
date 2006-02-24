@@ -25,7 +25,7 @@ HTTP_Handler::~HTTP_Handler (void)
 {
   if (filename_)
     {
-      ACE_OS::free ((void *) filename_);
+      ACE_OS::free (filename_);
       filename_ = 0;
     }
 }
@@ -35,10 +35,10 @@ int
 HTTP_Handler::open (void *)
 {
   if (this->send_request () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Handler::open():send_request failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Handler::open():send_request failed\n"), -1);
 
   if (this->receive_reply () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Handler::open():receive_reply failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Handler::open():receive_reply failed\n"), -1);
   return 0;
 
 }
@@ -101,7 +101,7 @@ HTTP_Reader::send_request (void)
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
-    ACE_ERROR_RETURN((LM_ERROR,"Error sending request"), -1);
+    ACE_ERROR_RETURN((LM_ERROR,"Error sending request\n"), -1);
 
 
   return 0;
@@ -124,7 +124,7 @@ HTTP_Reader::receive_reply (void)
       //Make sure that response type is 200 OK
       if (ACE_OS::strstr (buf,"200 OK") == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                            "HTTP_Reader::receiveReply(): Response is not 200 OK" ), -1);
+                            "HTTP_Reader::receiveReply(): Response is not 200 OK\n" ), -1);
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
@@ -141,7 +141,7 @@ HTTP_Reader::receive_reply (void)
 
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Reader::receiveReply():Error while reading header"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Reader::receiveReply():Error while reading header\n"), -1);
 
   // ***************************************************************
   // At this point, we have stripped off the header and are ready to
@@ -165,7 +165,7 @@ HTTP_Reader::receive_reply (void)
   // Copy over all the data bytes into our message buffer.
   if (curr->copy (buf_ptr, bytes_read) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                          "HTTP_Reader::receiveReply():Error copying data into Message_Block" ), -1);
+                          "HTTP_Reader::receiveReply():Error copying data into Message_Block\n" ), -1);
 
   //read the rest of the data into a number of ACE_Message_Blocks and
   //chain them together in a link list fashion
@@ -191,7 +191,7 @@ HTTP_Reader::receive_reply (void)
 
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Reader::receiveReply():Error while reading header"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Reader::receiveReply():Error while reading header\n"), -1);
 
   }while (num_recvd != 0);
 
