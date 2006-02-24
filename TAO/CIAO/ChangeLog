@@ -1,3 +1,9 @@
+Fri Feb 24 21:21:02 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers.mpc
+
+          Added a verbatim to disable hidden_visibility for Config_Handlers
+
 Fri Feb 24 18:54:52 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/HTTP_Handler.cpp:
