@@ -270,7 +270,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Token.cpp
     TP_Reactor.cpp
     Trace.cpp
-    Truncate.cpp
     TSS_Adapter.cpp
     TTY_IO.cpp
     UNIX_Addr.cpp

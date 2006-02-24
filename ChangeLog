@@ -1,3 +1,13 @@
+Fri Feb 24 17:29:47 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Truncate.h: Include all needed code inline here and mark the
+          function and specialization inline.
+        * ace/Truncate.{inl cpp}: Removed. All code for ACE_Truncate is inlined
+          and included in the Truncate.h file.
+
+        * ace/ace.mpc:
+        * ace/Makefile.am: Removed Truncate.cpp and Truncate.inl.
+
 Fri Feb 24 16:31:36 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Connector.{h cpp}: Changed the non_blocking_handles_ member
