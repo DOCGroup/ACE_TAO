@@ -168,7 +168,6 @@
 #define __NO_INCLUDE_WARN__
 
 #if ACE_LYNXOS_MAJOR > 3 /* LynxOS 4.x */
-# define ACE_HAS_BROKEN_THREAD_KEYFREE
 # define ACE_HAS_POSIX_SEM
   // "changes signedness" error (OS.i and many other files)
 # define ACE_HAS_SOCKLEN_T
