@@ -1,3 +1,8 @@
+Fri Feb 24 11:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2349_Regression/Bug_2349_Regression.mpc:
+          Added after to fix build problems with the vc8 ide
+
 Fri Feb 24 10:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Sequence_Latency/DII/client.cpp:
