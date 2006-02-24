@@ -1,3 +1,10 @@
+Fri Feb 24 15:38:20 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+
+          Fix tipo in last change:
+          Thu Feb 23 23:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Fri Feb 24 15:26:07 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * ace/config-lynxos.h
