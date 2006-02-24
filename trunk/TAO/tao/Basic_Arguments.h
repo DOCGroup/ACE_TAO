@@ -66,7 +66,7 @@ namespace TAO
 
   template<>
   class TAO_Export Arg_Traits<CORBA::UShort>
-    : public Basic_Arg_Traits_T<CORBA::UShort, TAO::Any_Insert_Policy_Stream <CORBA::UShort> >
+    : public Basic_Arg_Traits_T<CORBA::UShort, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::UShort> >
   {
   };
 
@@ -78,33 +78,33 @@ namespace TAO
 
   template<>
   class TAO_Export Arg_Traits<CORBA::Float>
-    : public Basic_Arg_Traits_T<CORBA::Float, TAO::Any_Insert_Policy_Stream <CORBA::Float> >
+    : public Basic_Arg_Traits_T<CORBA::Float, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Float> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::Double>
-    : public Basic_Arg_Traits_T<CORBA::Double, TAO::Any_Insert_Policy_Stream <CORBA::Double> >
+    : public Basic_Arg_Traits_T<CORBA::Double, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Double> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::LongLong>
-    : public Basic_Arg_Traits_T<CORBA::LongLong, TAO::Any_Insert_Policy_Stream <CORBA::LongLong> >
+    : public Basic_Arg_Traits_T<CORBA::LongLong, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::LongLong> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::ULongLong>
     : public Basic_Arg_Traits_T<CORBA::ULongLong,
-                                TAO::Any_Insert_Policy_Stream <CORBA::ULongLong> >
+                                TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::ULongLong> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::LongDouble>
     : public Basic_Arg_Traits_T<CORBA::LongDouble,
-                                TAO::Any_Insert_Policy_Stream <CORBA::LongDouble> >
+                                TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::LongDouble> >
   {
   };
 }
