@@ -1,6 +1,11 @@
 //$Id$
 
 project (XSC_XML_Handlers) : acelib, xerces {
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
   sharedname    += XSC_XML_Handlers
   dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros       += XML_USE_PTHREADS
@@ -26,6 +31,11 @@ project (XSC_XML_Handlers) : acelib, xerces {
 }
 
 project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typecodefactory {
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
   after += RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
