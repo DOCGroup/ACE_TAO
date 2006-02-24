@@ -1,3 +1,11 @@
+Fri Feb 24 14:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process_Manager.cpp:
+          Initialize pointer with 0
+
+        * ace/Process_Manager.h:
+          Tag the reap() method as deprecated
+
 Fri Feb 24 14:10:06 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
