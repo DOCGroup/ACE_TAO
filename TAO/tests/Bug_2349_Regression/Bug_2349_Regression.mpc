@@ -9,6 +9,7 @@ project(*server): taoserver, exceptions {
 }
 
 project(*client): taoclient, exceptions {
+  after += *Server
   Source_Files {
     fooC.cpp
     client.cpp
