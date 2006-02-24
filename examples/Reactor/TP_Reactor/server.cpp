@@ -34,7 +34,7 @@ ACE_THR_FUNC_RETURN threadFunc(void *arg) {
  * The main function sets up the TP reactor. The code is basically taken from
  * the solution to exercise 4c of the ACE course.
  */
-int main(int, char **) {
+int ACE_TMAIN(int, ACE_TCHAR **) {
 
     // create a reactor from a TP reactor
     ACE_TP_Reactor tpReactor;

@@ -21,7 +21,7 @@
  *
  * @param arg The progams name (argv[0]).
  */
-int printUsage(char *arg) {
+int printUsage(ACE_TCHAR *arg) {
     cerr << "Usage: " << arg << " size [count]" << endl;
     cerr << "\tSends <size> MiB to the server and optionally repeats that "
          << "<count> times." << endl;
@@ -30,7 +30,7 @@ int printUsage(char *arg) {
     return -1;
 }
 
-int main(int argc, char **argv) {
+int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
     // size and count for transmissions
     int size = 0, count = -1;
@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     char answer;
 
     // parse the <size> argument
-    if ((argc < 2) || (((size = strtol(argv[1], 0, 10)) < 1) ||
+    if ((argc < 2) || (((size = ACE_OS::strtol(argv[1], 0, 10)) < 1) ||
             (errno == EINVAL)))
         return printUsage(argv[0]);
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     auto_ptr<char> pSomeData(someData);
 
     // parse the <count> argument if available
-    if ((argc == 3) && (((count = strtol(argv[2], 0, 10)) < 1) ||
+    if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], 0, 10)) < 1) ||
             (errno == EINVAL)))
         return printUsage(argv[0]);
 
