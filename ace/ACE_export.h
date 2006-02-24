@@ -63,7 +63,7 @@
 #  define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS
 // Microsoft Visual C++ will accept 'extern'; others refuse.
 #  if defined (_MSC_VER)
-#    define ACE_INLINE_TEMPLATE_FUNCTION extern
+#    define ACE_INLINE_TEMPLATE_FUNCTION ACE_Export
 #  else
 #    define ACE_INLINE_TEMPLATE_FUNCTION
 #  endif
