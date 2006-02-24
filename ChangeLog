@@ -1,3 +1,9 @@
+Fri Feb 24 19:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          If we can't chdir to the directory then don't die, but just continue
+          with the next test
+
 Fri Feb 24 17:29:47 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Truncate.h: Include all needed code inline here and mark the
