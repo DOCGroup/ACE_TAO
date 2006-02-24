@@ -1,3 +1,11 @@
+Fri Feb 24 14:10:06 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+
+          Modified the 'vpath' code so that it does not require knowlege of
+          how MPC internally stores filename lists.  It does not change any
+          functionality.
+
 Fri Feb 24 13:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/TP_Reactor/client.cpp:
