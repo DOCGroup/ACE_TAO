@@ -52,7 +52,6 @@ sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
   my($value) = undef;
-  my($names) = $self->{'source_files'};
 
   if ($name eq 'mpc_files') {
     my(@mpc_files) = $self->list_mpc_files($self->get_inheritance_tree());
@@ -60,15 +59,10 @@ sub fill_value {
   }
   elsif ($name eq 'vpath') {
     my(%vpath) = ();
-    foreach my $name (keys %$names) {
-      my($comps) = $$names{$name};
-      foreach my $key (keys %$comps) {
-        foreach my $item (@{$$comps{$key}}) {
-          my($dname) = $self->relative($self->mpc_dirname($item));
-          if ($dname ne '.') {
-            $vpath{$dname} = 1;
-          }
-        }
+    foreach my $item ($self->get_component_list('source_files')) {
+      my($dname) = $self->relative($self->mpc_dirname($item));
+      if ($dname ne '.') {
+        $vpath{$dname} = 1;
       }
     }
     my($str) = join(':', keys %vpath);
