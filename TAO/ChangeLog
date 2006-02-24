@@ -1,3 +1,9 @@
+Fri Feb 24 09:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Basic_Arguments.h:
+          Use for the basic types the AnyTypeCode adapter, belonging to
+          Tue Feb 21 19:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Fri Feb 24 07:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduling/RTScheduler_includeS.h:

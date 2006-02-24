@@ -71,6 +71,10 @@ interface child : mother, father
 {
 };
 
+interface try
+{
+};
+
 // Definition below in file.
 interface later;
 
