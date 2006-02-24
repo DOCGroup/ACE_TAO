@@ -1,3 +1,12 @@
+Fri Feb 24 23:43:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Time_Value_Test.cpp:
+        
+          use std::numeric_limits<time_t>::max()
+          and std::numeric_limits<time_t>::min() (or LONG_MAX and LONG_MIN
+          for those platforms that lack std::numeric_limits<T>) instead of
+          ACE_INT32_MAX and ACE_INT32_MIN for time bounds.
+
 Fri Feb 24 21:16:48 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
