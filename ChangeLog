@@ -1,3 +1,9 @@
+Fri Feb 24 00:19:22 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE_export.h: Changed ACE_INLINE_TEMPLATE_FUNCTION to use
+          ACE_Export instead of "extern" for Visual C++. Fixes missing
+          ACE_Truncate symbols outside of the ACE library on Windows.
+
 Thu Feb 23 23:22:18 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Logging/Callback.h:
