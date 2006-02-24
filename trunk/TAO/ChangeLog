@@ -1,3 +1,8 @@
+Fri Feb 24 14:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2289_Regression/run_test.pl:
+          Fixed error message to say correct test number
+
 Fri Feb 24 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2234_Regression/run_test.pl:
