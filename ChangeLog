@@ -1,3 +1,10 @@
+Fri Feb 24 21:16:48 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
+
+          Add a verbatim to disable hidden_visibility for project
+          dependent on Config_Handlers
+
 Fri Feb 24 19:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
