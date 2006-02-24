@@ -38,7 +38,7 @@ if (PerlACE::waitforfile_timed ($server_ior_file, 10) == -1)
 $CLIENT->Arguments("-k corbaloc::127.0.0.1:$port/collocated_ior_bound_in_remote_iortable -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa");
 if ($CLIENT->SpawnWaitKill (60) != 0)
 {
-   print STDERR "ERROR: Bug #TAO135 Regression failed. Non zero result from client.\n";
+   print STDERR "ERROR: Bug 2289 Regression failed. Non zero result from client.\n";
    $SERVER->Kill();
    exit 1;
 }
