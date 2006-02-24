@@ -1,3 +1,8 @@
+Fri Feb 24 11:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Fixed casing of Bug_2289_Regression
+
 Fri Feb 24 00:19:22 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE_export.h: Changed ACE_INLINE_TEMPLATE_FUNCTION to use
@@ -14,7 +19,7 @@ Thu Feb 23 23:22:18 UTC 2006  Steve Huston  <shuston@riverace.com>
 Thu Feb 23 23:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:
-        
+
           Use "eval" when setting ACE_TCL_LIB to expand any variables in
           ${TCL_LIB_SPEC}.  Thanks to Thomas Girard <thomas dot g dot
           girard at free dot fr>.
@@ -22,7 +27,7 @@ Thu Feb 23 23:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 Thu Feb 23 19:53:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/DLL_Test_Impl.cpp:
-        
+
           Changed so nothrow operator delete has same exception
           specification in declaration and definition.
 
