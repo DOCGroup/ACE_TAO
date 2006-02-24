@@ -1,3 +1,8 @@
+Fri Feb 24 10:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Sequence_Latency/DII/client.cpp:
+          Added static casts to fix compile errors with SunCC 64bit
+
 Fri Feb 24 09:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/interface.idl:
