@@ -433,7 +433,7 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         default:
           // Should we bail out if we get an invalid mask?
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("invalid mask = %d\n"),
+                      ACE_LIB_TEXT ("dispatch_notify invalid mask = %d\n"),
                       buffer.mask_));
         }
       if (result == -1)
@@ -671,7 +671,6 @@ ACE_Dev_Poll_Reactor_Handler_Repository::find (ACE_HANDLE handle,
   if (this->handle_in_range (handle))
     {
       eh = this->handlers_[handle].event_handler;
-
       if (eh != 0)
         {
           if (index_p != 0)
@@ -1353,9 +1352,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
       short &revents          = pfds->revents;
 #endif /* ACE_HAS_EVENT_POLL */
 
-      if (revents == 0)
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%t) disp h %d events 0x%x\n"),
-                    handle, (int)revents));
       // Figure out what to do first in order to make it easier to manage
       // the bit twiddling and possible pfds increment before releasing
       // the token for dispatch.
@@ -1537,7 +1533,6 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
 
  if (this->handler_rep_.find (handle) == 0)
    {
-     ACE_DEBUG ((LM_DEBUG, "Need to add handle %d\n", handle));
      // Handler not present in the repository.  Bind it.
      if (this->handler_rep_.bind (handle, event_handler, mask) != 0)
        return -1;
@@ -1565,7 +1560,6 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      // Handler is already present in the repository, so register it
      // again, possibly for different event.  Add new mask to the
      // current one.
-     ACE_DEBUG ((LM_DEBUG, "Adding mask 0x%x for handle %d\n", mask, handle));
      if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "mask_ops_i"), -1);
    }
@@ -2181,7 +2175,10 @@ ACE_Dev_Poll_Reactor::find_handler (ACE_HANDLE handle)
 {
   ACE_MT (ACE_READ_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, 0));
 
-  return this->handler_rep_.find (handle);
+  ACE_Event_Handler *event_handler = this->handler_rep_.find (handle);
+  if (event_handler)
+    event_handler->add_reference ();
+  return event_handler;
 }
 
 int

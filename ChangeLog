@@ -1,8 +1,33 @@
+Fri Feb 24 16:31:36 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Connector.{h cpp}: Changed the non_blocking_handles_ member
+          used to remember handles currently in-progress with a non-blocking
+          connect from ACE_Handle_Set to ACE_Unbounded_Set. This enables
+          ACE_Connector to be used with handle values outside the range
+          that select() can deal with (FD_SETSIZE) and is needed to run
+          large numbers of handles as is now possible with the
+          ACE_Dev_Poll_Reactor.
+          Removed the deprecated internal-only
+          SVC_HANDLER* ACE_NonBlocking_Connect_Handler::close (void)
+          method. There was already a replacement close() with more
+          sensible arguments that performed close operations in the correct
+          order, avoiding accesses to event handlers that were deleted.
+          Don't ACE_ASSERT when seeing a ACE_Connector::close() error; log
+          an error and keep going.
+
+        * ace/Container_Instantiations.cpp: Added instantiations for
+          ACE_Unbounded_Set<ACE_HANDLE>, used in ACE_Connector.
+
+        * ace/Dev_Poll_Reactor.cpp (find_handler): Increment the found
+          handler's reference count, as the other reactor implementations do.
+
+        * ace/Dev_Poll_Reactor.h: Fix typos.
+
 Fri Feb 24 15:38:20 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:
 
-          Fix tipo in last change:
+          Fix typo in last change:
           Thu Feb 23 23:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Fri Feb 24 15:26:07 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
