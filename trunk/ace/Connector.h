@@ -23,7 +23,7 @@
 
 #include "ace/Strategies_T.h"
 #include "ace/Synch_Options.h"
-#include "ace/Handle_Set.h"
+#include "ace/Unbounded_Set.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -49,7 +49,7 @@ public:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  virtual ACE_Handle_Set &non_blocking_handles (void) = 0;
+  virtual ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void) = 0;
 };
 
 /**
@@ -67,17 +67,13 @@ public:
                                    SVC_HANDLER *,
                                    long timer_id);
 
-  /// Close up and return underlying SVC_HANDLER *.
-  /** @deprecated: This should be deprecated sooner or later. The next
-   *   method  should be used.
-   */
-  SVC_HANDLER *close (void);
-
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
    * If the return value is true the close was performed succesfully,
-   * and if the return value is false, the close was not
-   * successfull. The @c sh does not have any connection to the return
+   * implying that this object was removed from the reactor and thereby
+   * (by means of reference counting decremented to 0) deleted.
+   * If the return value is false, the close was not successful.
+   * The @c sh does not have any connection to the return
    * value. The argument will return a valid svc_handler object if a
    * valid one exists within the object. Returning a valid svc_handler
    * pointer also invalidates the svc_handler contained in this
@@ -349,7 +345,7 @@ protected:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  ACE_Handle_Set &non_blocking_handles (void);
+  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void);
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
@@ -387,7 +383,7 @@ private:
   ACE_Reactor *reactor_;
 
   /// Handle set representing the non-blocking connects in progress.
-  ACE_Handle_Set non_blocking_handles_;
+  ACE_Unbounded_Set<ACE_HANDLE> non_blocking_handles_;
 
 };
 

@@ -1178,14 +1178,14 @@ protected:
     /// Constructor that will grab the token for us
     Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
-    /// Destructor. This will release the token if it hasnt been
+    /// Destructor. This will release the token if it hasn't been
     /// released till this point
     ~Token_Guard (void);
 
     /// Release the token ..
     void release_token (void);
 
-    /// Returns whether the thread that created this object ownes the
+    /// Returns whether the thread that created this object owns the
     /// token or not.
     int is_owner (void);
 
@@ -1212,7 +1212,7 @@ protected:
 
     /// Flag that indicate whether the thread that created this object
     /// owns the token or not. A value of 0 indicates that this class
-    /// hasnt got the token (and hence the thread) and a value of 1
+    /// hasn't got the token (and hence the thread) and a value of 1
     /// vice-versa.
     int owner_;
 
