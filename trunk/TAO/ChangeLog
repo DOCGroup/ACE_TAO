@@ -1,3 +1,10 @@
+Fri Feb 24 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2234_Regression/run_test.pl:
+          Updated this script to work with VxWorks and when we can't
+          spawn the server directly exists, safes us some seconds in
+          the test run when nothing has been build
+
 Fri Feb 24 11:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2349_Regression/Bug_2349_Regression.mpc:
