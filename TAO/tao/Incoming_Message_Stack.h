@@ -46,9 +46,9 @@ public:
   /// destructor, releases all elements on stack
   ~Incoming_Message_Stack() ;
   
-  /// pushing a new element onto stack
-  /// @return 0 for Ok, -1 for error
-  int push(TAO_Queued_Data *data);
+  /// pushing a new element onto stack, 
+  /// @a data must be a valid pointer, not NULL
+  void push(TAO_Queued_Data *data);
   
   /// removing top element of stack,
   /// @return 0 for Ok and @a data is defined, -1 for error
@@ -57,9 +57,6 @@ public:
   /// peeking top element of stack
   /// @return 0 for Ok, -1 for error
   int top (TAO_Queued_Data* &data);
-  
-  ///  @return true if stack is empty otherwise false
-  bool is_empty ();
   
 private:
   /// top element of stack

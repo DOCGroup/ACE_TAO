@@ -1347,13 +1347,6 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
       switch (this->messaging_object()->consolidate_fragmented_message (q_data, new_q_data))
         {
         case -1: // error
-          if (TAO_debug_level > 0)
-            {
-               ACE_ERROR((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
-                  ACE_TEXT ("error consolidating fragmented message\n"),
-                  this->id ()));
-            }
           return -1;
           
         case 0:  // returning consolidated message in q_data
@@ -1423,13 +1416,6 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
   // paranoid check
   if (q_data->missing_data_ != 0) 
     {
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_enqueue_message, ")
-             ACE_TEXT ( "missing data\n"),
-             this->id ()));
-        }
        return -1;
     }
 
@@ -1441,14 +1427,7 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
       switch (this->messaging_object()->consolidate_fragmented_message (q_data, new_q_data))
         {
         case -1: // error
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_enqueue_message, ")
-                 ACE_TEXT ("error consolidating fragmented message\n"),
-                 this->id ()));
-            }
-           return -1;
+          return -1;
 
         case 0:  // returning consolidated message in new_q_data
           if (!new_q_data)
@@ -1466,13 +1445,6 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
           if (this->incoming_message_queue_.enqueue_tail (new_q_data) != 0) 
             {
               TAO_Queued_Data::release (new_q_data);
-              if (TAO_debug_level > 0)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_enqueue_message, ")
-                     ACE_TEXT ("error enqueueing consolidated message\n"),
-                     this->id ()));
-                }
               return -1;
             }
           break;
@@ -1486,14 +1458,6 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
       if (this->incoming_message_queue_.enqueue_tail (q_data) != 0) 
         {
           TAO_Queued_Data::release (q_data);
-
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_enqueue_message, ")
-                 ACE_TEXT ("error enqueueing message\n"),
-                 this->id ()));           
-            }
           return -1;
         }
     }
@@ -1506,16 +1470,9 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
                                           ACE_Time_Value * max_wait_time,
                                           TAO_Queued_Data *q_data)
 {
-  
+  // paranoid check
   if (q_data == 0) 
     {
-      if (TAO_debug_level > 3)
-        {
-          ACE_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_missing_data_message, ")
-             ACE_TEXT ("error q_data argument is null\n"),
-             this->id ()));
-        }
       return -1;
     }
 
@@ -1537,13 +1494,6 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
     {
       if (ACE_CDR::grow (q_data->msg_block_, message_size) == -1)
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_missing_data, ")
-                 ACE_TEXT ("error growing message buffer\n"),
-                 this->id () ));
-            }
           return -1;
         }
     }
@@ -1579,27 +1529,14 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
 
   if (q_data->missing_data_ == 0) 
     {
+      // paranoid check
       if (this->incoming_message_stack_.pop (q_data) == -1) 
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_missing_data, ")
-                 ACE_TEXT ("error operating on message stack\n"),
-                 this->id () ));
-            }
           return -1;
         }
 
       if (this->consolidate_process_message (q_data, rh) == -1)
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_missind_data, ")
-                 ACE_TEXT ("error consolidating fragmented message\n"),
-                 this->id () ));
-            }
           return -1;
         }
     }
@@ -1627,45 +1564,17 @@ TAO_Transport::handle_input_parse_extra_messages (ACE_Message_Block &message_blo
           (message_block, q_data)) != -1 &&
          q_data != 0) // paranoid check
     {
-      if (TAO_debug_level > 3)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_extra_messages, ")
-             ACE_TEXT ("Extracted message\n"),
-             this->id ()));
-        }
- 
       if (q_data->missing_data_ == 0) 
         {
           if (this->consolidate_enqueue_message (q_data) == -1) 
             {
-              if (TAO_debug_level > 0)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_extra_messages, ")
-                     ACE_TEXT ("error enqueueing message \n"),
-                     this->id () ));
-                }
               return -1;
             }
         }
       else  // incomplete message read, probably the last message in buffer
         {
-          if (this->incoming_message_stack_.push (q_data) == -1) 
-            {
-              // prevent memory leak
-              TAO_Queued_Data::release (q_data);
-               
-              if (TAO_debug_level > 0)
-                {
-                  // memory allocation failed
-                  ACE_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_extra_messages, ")
-                     ACE_TEXT ("error pushing data onto stack\n"),
-                     this->id () ));
-                }
-              return -1;
-            }
+          // can not fail
+          this->incoming_message_stack_.push (q_data);
         }
        
       q_data = 0; // reset      
@@ -1673,14 +1582,6 @@ TAO_Transport::handle_input_parse_extra_messages (ACE_Message_Block &message_blo
 
   if (buf_status == -1)
     {
-      if (TAO_debug_level > 0)
-        {
-          // memory allocation failed
-          ACE_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_extra_messages, ")
-             ACE_TEXT ("error parsing extra messages\n"),
-             this->id () ));
-        }
       return -1;
     }
     
@@ -1743,13 +1644,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   // paranoid check
   if (header_length > message_block.space ())
     {
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-             ACE_TEXT ("unable to copy the partial message\n"),
-             this->id () ));
-        }
       return -1;
     }
 
@@ -1803,13 +1697,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
         }
       else
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                 ACE_TEXT ("unable to copy the partial message\n"),
-                 this->id () ));
-            }
           return -1;
         }
     }
@@ -1826,10 +1713,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
         {
           ACE_ERROR ((LM_ERROR,
              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-             ACE_TEXT ("Error - reading frequently 0 bytes from stream would ")
-             ACE_TEXT ("cause endless looping, ")
-             ACE_TEXT ("probably the protocol implementation has a bug. ")
-             ACE_TEXT ("As workarround activate SINGLE_READ_OPTIMIZATION.\n"),
+             ACE_TEXT ("Error - endless loop detection, closing connection"),
              this->id ()));
         }
       return -1;
@@ -1878,14 +1762,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // MESSAGE CONSOLIDATION
       // 
 
-      if (TAO_debug_level > 3)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-             ACE_TEXT ("enter message consolidation\n"),
-             this->id ()));
-        }
-
       // Partial message on incoming_message_stack_ needs to be
       // consolidated.  The message header could not be parsed so far
       // and therefor the message size is unknown yet. Consolidating
@@ -1909,26 +1785,12 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       if (q_data->missing_data_ == 0)
         {
           if (this->incoming_message_stack_.pop (q_data) == -1) 
-                {
-              if (TAO_debug_level > 0)
-                {
-                  ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                     ACE_TEXT ("error operating on message stack\n"),
-                     this->id () ));
-                }
+            {
               return -1;
             }
 
           if (this->consolidate_enqueue_message (q_data) == -1) 
             {
-              if (TAO_debug_level > 0)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                     ACE_TEXT ("error enqueueing message \n"),
-                     this->id () ));
-                }
               return -1;
             }
         }
@@ -1936,28 +1798,12 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       if (message_block.length () > 0
           && this->handle_input_parse_extra_messages (message_block) == -1) 
         { 
-          if (TAO_debug_level > 0)
-            {
-              // processing failed
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                 ACE_TEXT ("error optimized processing message on thread-stack\n"),
-                 this->id () ));     
-            }
           return -1;
         }
 
       // In any case try to process the enqueued messages
       if (this->process_queue_head (rh) == -1)
         {
-          if (TAO_debug_level > 0)
-            {
-              // message/parse error  
-              ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                 ACE_TEXT ("error while processing queue head\n"),
-                 this->id () ));
-            }
           return -1;
         }                     
     }
@@ -1967,13 +1813,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // STACK PROCESSING (critical path)
       //
 
-      if (TAO_debug_level > 3)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-             ACE_TEXT ("enter stack processing\n"),
-             this->id () ));
-        }
       // Process the first message in buffer on stack 
 
       // (PRE: first message resides in aligned memory) Make a node of
@@ -1991,14 +1830,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               && mesg_length > message_block.length ()) )
         {
           // extracting message failed
-          if (TAO_debug_level > 0)
-            {
-              // message/parse error  
-             ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                ACE_TEXT ("error extracting message from incoming buffer\n"),
-                this->id () ));
-            }
           return -1;
         }
       // POST: qd.missing_data_ == 0 --> mesg_length <= message_block.length()
@@ -2011,27 +1842,11 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           if (qd.missing_data_ == 0) 
             {
               // Dealing with a fragment
-              if (TAO_debug_level > 3)
-                {
-                  // processing failed
-                  ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                     ACE_TEXT ("Stack processing: message is complete fragment\n"),
-                     this->id ()));     
-                }
-              
               TAO_Queued_Data *nqd = 
                 TAO_Queued_Data::duplicate (qd);
               
               if (nqd == 0) 
                 {
-                  if (TAO_debug_level > 0) 
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                         ACE_TEXT ("error duplicating queued data object\n"),
-                         this->id () ));
-                    }
                   return -1;
                 }
 
@@ -2046,56 +1861,24 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               // enqueue the message
               if (this->consolidate_enqueue_message (nqd) == -1) 
                 {
-                  if (TAO_debug_level > 0)
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                         ACE_TEXT ("error enqueueing message \n"),
-                         this->id () ));
-                    }
                   return -1;
                 }              
 
               if (message_block.length () > 0
                   && this->handle_input_parse_extra_messages (message_block) == -1) 
                 { 
-                  if (TAO_debug_level > 0)
-                    {
-                      // processing failed
-                      ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                         ACE_TEXT ("error optimized processing message on thread-stack\n"),
-                         this->id () ));     
-                    }
                   return -1;
                 }
 
               // In any case try to process the enqueued messages
               if (this->process_queue_head (rh) == -1)
                 {
-                  if (TAO_debug_level > 0)
-                    {
-                      // message/parse error  
-                      ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                         ACE_TEXT ("error while processing queue head\n"),
-                         this->id () ));
-                    }
                   return -1;
                 }                     
             }
           else 
             {
               // Incomplete message, must be the last one in buffer
-
-              if (TAO_debug_level > 3)
-                {
-                  // processing failed
-                  ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                     ACE_TEXT ("Stack processing: message is incomplete\n"),
-                     this->id ()));     
-                }
 
               if (qd.missing_data_ != TAO_MISSING_DATA_UNDEFINED &&
                   qd.missing_data_ > message_block.space ())
@@ -2105,14 +1888,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                      message_block.length ()
                                      + qd.missing_data_) == -1)
                     {
-                      
-                      if (TAO_debug_level > 0)
-                        {
-                          ACE_ERROR ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                             ACE_TEXT ("error growing message buffer\n"),
-                             this->id () ));
-                        }
                       return -1;
                     }
                 }
@@ -2122,34 +1897,13 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               
               if (nqd == 0) 
                 {
-                  if (TAO_debug_level > 0) 
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                         ACE_TEXT ("error duplicating queued data object\n"),
-                         this->id () ));
-                    }
                   return -1;
                 }
 
               // move read-pointer to end of buffer
               message_block.rd_ptr (message_block.length());
               
-              if (this->incoming_message_stack_.push (nqd) == -1) 
-                {
-                  // prevent memory leak
-                  TAO_Queued_Data::release (nqd);
-                  
-                  if (TAO_debug_level > 0)
-                    {
-                      // memory allocation failed
-                      ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                         ACE_TEXT ("error pushing data onto stack\n"),
-                         this->id () ));
-                    }
-                  return -1;
-                }
+              this->incoming_message_stack_.push (nqd);
             } 
         }
       else 
@@ -2157,14 +1911,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           //
           // critical path 
           //
-
-          if (TAO_debug_level > 3)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                 ACE_TEXT ("Stack processing: message fullfills all constraints (mesg length == %d)\n"),
-                 this->id (), mesg_length));     
-            }
 
           // We cant process the message on stack right now. First we
           // have got to parse extra messages from message_block,
@@ -2189,14 +1935,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               // heap processing
               if (this->handle_input_parse_extra_messages (message_block) == -1)
                 {
-                  if (TAO_debug_level > 0)
-                    {
-                      // processing failed
-                      ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                         ACE_TEXT ("error optimized processing message on thread-stack\n"),
-                        this->id () ));     
-                    }
                   return -1;
                 }
 
@@ -2247,27 +1985,11 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           if (this->process_parsed_messages (&qd,
                                              rh) == -1)
             {
-              if (TAO_debug_level > 0)
-                {
-                  // processing failed
-                  ACE_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                     ACE_TEXT ("error optimized processing message on thread-stack\n"),
-                     this->id () ));     
-                }
               return -1;
             }
 
           // move the rd_ptr tp position of end_marker
-          message_block.rd_ptr (end_marker);
-          
-          if (TAO_debug_level > 3)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                 ACE_TEXT ("Stack processing: leaving (remaining message buffer length == %d)\n"),
-                 this->id (), message_block.length ()));     
-            }      
+          message_block.rd_ptr (end_marker);          
         }
     }
 
@@ -2288,13 +2010,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
          }
        else
          {
-           if (TAO_debug_level > 0)
-             {
-               ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
-                  ACE_TEXT ("unable to save the partial message\n"),
-                  this->id () ));
-             }
            return -1;
          }
      }
