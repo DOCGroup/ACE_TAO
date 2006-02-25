@@ -1,3 +1,12 @@
+Sat Feb 25 03:00:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
+        * tao/Incoming_Message_Stack.{h,cpp,inl}: remove unused operation 
+          from interface and turn return type of push-operation to "void"
+        * tao/Transport.cpp:
+          tao/GIOP_Message_Base.cpp:
+          Adapt to interface of Incoming_Message_Stack and limit
+          number of ACE_ERROR message to usefull amount to reduce 
+          footprint size.
+
 Fri Feb 24 19:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/run_test.pl:
@@ -367,8 +376,8 @@ Tue Feb 21 17:48:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
           Reflect the change in API for ::initialize_collocated_object. Make
           that method and ::create_collocated_object use the new accessors
           for collocation attributes on the stub rather than the CORBA::Object.
-          Make ::initialize_object only return 0 for success if it has fully
-          completed the intialisation of an object. i.e. it managed to locate
+  Make ::initialize_object only return 0 for success if it has fully
+  completed the intialisation of an object. i.e. it managed to locate
           a collocated servant for the stub.
 
         * tao/Stub.h:
