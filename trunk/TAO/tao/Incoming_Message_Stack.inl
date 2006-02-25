@@ -27,14 +27,11 @@ Incoming_Message_Stack::~Incoming_Message_Stack()
     }
 }
 
-/* @return 0 for Ok, -1 for error */
-ACE_INLINE int
+ACE_INLINE void
 Incoming_Message_Stack::push(TAO_Queued_Data *data)
 {
   data->next_ = this->top_;
   this->top_ = data;
-  
-  return 0;
 }
 
     
@@ -62,10 +59,13 @@ Incoming_Message_Stack::top (TAO_Queued_Data* &data)
   return 0;
 }
 
+/*
 ACE_INLINE bool
 Incoming_Message_Stack::is_empty () 
 {
   return this->top_ == 0;
 }
-} /* namespace TAO */ 
+*/
+
+} /* namespace TAO */
 TAO_END_VERSIONED_NAMESPACE_DECL
