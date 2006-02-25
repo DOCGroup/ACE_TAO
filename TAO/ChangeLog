@@ -1,10 +1,16 @@
+Sat Feb 25 12:38:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/simple/CodeSets_simple.mpc:
+          Added after to fix parallel build problems with vc8
+
 Sat Feb 25 03:00:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
-        * tao/Incoming_Message_Stack.{h,cpp,inl}: remove unused operation 
+
+        * tao/Incoming_Message_Stack.{h,cpp,inl}: remove unused operation
           from interface and turn return type of push-operation to "void"
         * tao/Transport.cpp:
           tao/GIOP_Message_Base.cpp:
           Adapt to interface of Incoming_Message_Stack and limit
-          number of ACE_ERROR message to usefull amount to reduce 
+          number of ACE_ERROR message to usefull amount to reduce
           footprint size.
 
 Fri Feb 24 19:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
