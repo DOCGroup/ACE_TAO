@@ -478,15 +478,12 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       size_t len =
         qd->msg_block_->length ();
 
+      // paranoid check
       if (len >= TAO_GIOP_MESSAGE_HEADER_LEN) 
         {
-           if (TAO_debug_level > 0)
-             {
-               ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::consolidate_node, ")
-                  ACE_TEXT ("error inconsistency\n")));
-             }
-           return -1;          
+          // inconsistency - this code should have parsed the header
+          // so far
+          return -1;          
         }
 
       // We know that we would have space for
@@ -505,12 +502,6 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       if (qd->msg_block_->copy (incoming.rd_ptr (),
                                 n_copy) == -1) 
         {
-           if (TAO_debug_level > 0)
-             {
-               ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::consolidate_node, ")
-                  ACE_TEXT ("error copying data\n")));
-             }
            return -1;          
         }
 
@@ -541,12 +532,8 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
        if (ACE_CDR::grow (qd->msg_block_,
                           state.message_size ()) == -1)  /* GIOP_Header + Payload */ 
          {
-           if (TAO_debug_level > 0)
-             {
-               ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::consolidate_node, ")
-                  ACE_TEXT ("error growing message buffer\n")));
-             }
+           // on mem-error get rid of context silently, try to avoid
+           // system calls that might allocate additional memory
            return -1;
          }
 
@@ -574,12 +561,6 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       if (qd->msg_block_->copy (incoming.rd_ptr (),
                                 copy_len) == -1)
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::consolidate_node, ")
-                  ACE_TEXT ("error copying data\n")));
-            }
           return -1;
         }
 
@@ -603,15 +584,9 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
           copy_len = incoming.length ();
         }
 
-      // paranoid check
+      // paranoid check for  endless-event-looping 
       if (copy_len == 0) 
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::consolidate_node, ")
-                  ACE_TEXT ("error copy size is null\n")));
-            }
           return -1; 
         }
 
@@ -620,12 +595,6 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       if (qd->msg_block_->copy (incoming.rd_ptr (),
                                 copy_len) == -1)
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::consolidate_node, ")
-                  ACE_TEXT ("error copying data\n")));
-            }
           return -1;
         }
 
@@ -1904,14 +1873,10 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
   // If this is not the last fragment, push it onto stack for later processing
   if (qd->more_fragments_)
     {
-      if (this->fragment_stack_.push (qd) == -1) 
-        {
-          TAO_Queued_Data::release (qd);
-          return -1;  
-        }
+      this->fragment_stack_.push (qd);
 
-        msg = 0;   // no consolidated message available yet
-        return 1;  // status: more messages expected.
+      msg = 0;   // no consolidated message available yet
+      return 1;  // status: more messages expected.
     }
       
   tail = qd;  // init
@@ -1955,11 +1920,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
             }
           else
             {
-              if (reverse_stack.push (head) == -1) 
-                {
-                  TAO_Queued_Data::release (head);
-                  return -1;
-                }
+              reverse_stack.push (head);
             }
         }
     }
@@ -2000,12 +1961,13 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
             }
           else 
             {
-              if (parse_status == -1 ||
-                  reverse_stack.push (head) == -1) 
+              if (parse_status == -1)
                 {
                   TAO_Queued_Data::release (head);
                   return -1;
                 }
+
+              reverse_stack.push (head); 
             }
         } 
     } 
@@ -2013,11 +1975,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
   // restore stack
   while (reverse_stack.pop (head) != -1) 
     {
-      if (this->fragment_stack_.push (head) == -1)
-        {
-          TAO_Queued_Data::release (head);
-          return -1;
-        }
+      this->fragment_stack_.push (head);
     }
   
   if (tail->consolidate () == -1)
@@ -2054,11 +2012,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
   // Revert stack
   while (this->fragment_stack_.pop (head) != -1)
     {
-      if (reverse_stack.push (head) == -1)
-        {
-          TAO_Queued_Data::release (head);
-          return -1;
-        }
+      reverse_stack.push (head);
     }  
 
   int discard_all_GIOP11_messages = 0; // false
@@ -2096,10 +2050,9 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
         {
           TAO_Queued_Data::release (head);
         }
-      else if (this->fragment_stack_.push (head) == -1)
+      else 
         {
-          TAO_Queued_Data::release (head);
-          return -1;
+          this->fragment_stack_.push (head);
         }
     }  
 
