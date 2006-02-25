@@ -1,3 +1,8 @@
+Sat Feb 25 14:56:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Stack.h:
+          Export this class, fixes unresolved external errors with BCB6
+
 Sat Feb 25 12:38:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/simple/CodeSets_simple.mpc:
