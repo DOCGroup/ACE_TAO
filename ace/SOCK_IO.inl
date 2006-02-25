@@ -3,6 +3,7 @@
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,7 +55,7 @@ ACE_SOCK_IO::recvv (iovec iov[],
   ACE_TRACE ("ACE_SOCK_IO::recvv");
   return ACE::recvv (this->get_handle (),
                      iov,
-                     n,
+                     ACE_Truncate<size_t> (n),
                      timeout);
 }
 
@@ -124,7 +125,7 @@ ACE_SOCK_IO::sendv (const iovec iov[],
   ACE_TRACE ("ACE_SOCK_IO::sendv");
   return ACE::sendv (this->get_handle (),
                      iov,
-                     n,
+                     ACE_Truncate<size_t> (n),
                      timeout);
 }
 
