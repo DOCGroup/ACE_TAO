@@ -1,3 +1,17 @@
+Sat Feb 25 22:57:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Process_Manual_Event_Test.cpp: On Windows, use a complete
+          path name to spawn the child process with, else it doesn't work when
+          the test is in a subdir of ACE_wrappers/tests, as it is with
+          Win XP64 and WinCE.
+
+        * ace/SOCK_IO.h: Clarify that on recvv() and sendv(), the number of
+          iovecs handled will be limited to the maximum value of an int.
+        * ace/SOCK_IO.inl (sendv, recvv): ACE_Truncate the 'n' number of
+          iovecs passed down to the ACE level.
+        * ace/SOCK_IO.cpp (send, recv): Reduce the size_t n iovec count to an
+          int range after dividing by 2 to fit it into the ACE_OS level.
+
 Sat Feb 25 12:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
