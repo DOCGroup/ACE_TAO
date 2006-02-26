@@ -55,7 +55,7 @@ ACE_SOCK_IO::recvv (iovec iov[],
   ACE_TRACE ("ACE_SOCK_IO::recvv");
   return ACE::recvv (this->get_handle (),
                      iov,
-                     ACE_Truncate<size_t> (n),
+                     ACE_Utils::Truncate<size_t> (n),
                      timeout);
 }
 
@@ -125,7 +125,7 @@ ACE_SOCK_IO::sendv (const iovec iov[],
   ACE_TRACE ("ACE_SOCK_IO::sendv");
   return ACE::sendv (this->get_handle (),
                      iov,
-                     ACE_Truncate<size_t> (n),
+                     ACE_Utils::Truncate<size_t> (n),
                      timeout);
 }
 
