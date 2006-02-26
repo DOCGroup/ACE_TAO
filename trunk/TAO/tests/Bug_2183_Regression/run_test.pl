@@ -26,7 +26,12 @@ $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 $DUMMY_CLIENT->Arguments("hang_client.pl");
 $DUMMY_CLIENT->IgnoreExeSubDir(1);
 
-$SERVER->Arguments("-o $server_ior_file -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+if (PerlACE::is_vxworks_test()) {
+  $SERVER->Arguments("-o server.ior -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+}
+else {
+  $SERVER->Arguments("-o $server_ior_file -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+}
 
 # Fire up the server
 $sv = $SERVER->Spawn();
