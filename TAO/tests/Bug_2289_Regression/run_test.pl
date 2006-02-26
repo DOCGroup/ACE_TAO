@@ -16,7 +16,12 @@ unlink $server_ior_file;
 unlink $client_ior_file;
 
 # The client and server processes
-$SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
+if (PerlACE::is_vxworks_test()) {
+    $SERVER     = new PerlACE::ProcessVX(PerlACE::LocalFile("server"));
+}
+else {
+    $SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
+}
 $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 
 # We want the server to run on a fixed port
@@ -25,7 +30,12 @@ $port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 $SERVER->Arguments("-ORBEndpoint iiop://:$port -ORBDottedDecimalAddresses 1");
 
 # Fire up the server
-$SERVER->Spawn();
+$sv = $SERVER->Spawn();
+
+if ($sv != 0) {
+   print STDERR "ERROR: server returned $sv\n";
+   exit 1;
+}
 
 # We can wait on the IOR file
 if (PerlACE::waitforfile_timed ($server_ior_file, 10) == -1)
