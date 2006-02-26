@@ -1,3 +1,15 @@
+Sun Feb 26 11:57:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Stack.h:
+          Only export this class with BCB6, all other compilers don't have
+          problems with this.
+
+        * tests/Bug_2174_Regression/run_test.pl:
+        * tests/Bug_2183_Regression/run_test.pl:
+        * tests/Bug_2289_Regression/run_test.pl:
+        * tests/Smart_Proxies/dtor/run_test.pl:
+          Updated to work under VxWorks
+
 Sat Feb 25 14:56:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
