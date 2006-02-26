@@ -15,13 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/Incoming_Message_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Incoming_Message_Queue.h"
+#if defined (__BORLANDC__) && (__BORLANDC__ == 0x564)
+#include "tao/TAO_Export.h"
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
@@ -39,7 +41,11 @@ namespace TAO
  * Internal class, providing stack functionality for TAO_Queued_Data
  * objects.  Stack operations don't require memory allocation.
 */
+#if defined (__BORLANDC__) && (__BORLANDC__ == 0x564)
 class TAO_Export Incoming_Message_Stack
+#else
+class Incoming_Message_Stack
+#endif
 {
 public:
   /// default constructor, intiliazes empty stack.
