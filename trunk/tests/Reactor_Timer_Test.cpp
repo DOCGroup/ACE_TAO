@@ -104,7 +104,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     {
       int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
                                                                    ACE_Time_Value (count + 1));
-      ACE_ASSERT (result != -1);
+      if (result == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Error resetting timer interval\n")));
     }
   count += (1 + odd);
   return 0;
@@ -198,7 +200,9 @@ test_canceling_odd_timers (void)
       {
         int result =
           ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
-        ACE_ASSERT (result != -1);
+        if (result == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Error cancelling timer\n")));
       }
 
   while (!done)
