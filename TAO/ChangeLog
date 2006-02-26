@@ -1,3 +1,8 @@
+Sun Feb 26 12:26:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/AMI.mpc:
+          Added after to fix problems in vc8 ide build
+
 Sun Feb 26 11:57:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
