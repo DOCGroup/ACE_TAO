@@ -1,3 +1,8 @@
+Sun Feb 26 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_IO.{cpp,inl}:
+          Fixed compile errors, it is ACE_Utils::Truncate, not ACE_Truncate
+
 Sun Feb 26 13:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reactor_Timer_Test.cpp:
