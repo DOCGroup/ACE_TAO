@@ -1,3 +1,8 @@
+Sun Feb 26 13:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Timer_Test.cpp:
+          Replaced asserts with ace_error to fix warnings in release builds
+
 Sat Feb 25 22:57:32 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Process_Manual_Event_Test.cpp: On Windows, use a complete
