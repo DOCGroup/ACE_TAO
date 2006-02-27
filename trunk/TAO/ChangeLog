@@ -4,6 +4,16 @@ Mon Feb 27 18:19:03 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
           Suppress occasional spurious exception output on fast machines.
 
+Mon Feb 27 18:42:38 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+
+          Reverted my change on
+          Thu Feb 23 15:10:18 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+          Because it made the two tests IOGRManipulation and 2247 failed.
+          I will supply a better fix in x.5.1 after more thorough testing.
+
 Mon Feb 27 17:08:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
         * tao/Transport.cpp:
           Incomplete messages, smaller Header-Length, shall be put
