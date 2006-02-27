@@ -1,3 +1,10 @@
+Mon Feb 27 08:17:49 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (acquire_quietly): Moved the error message
+	  so that it only is printed if it's a real error, not just a
+ 	  timeout.  Thanks to Oh Yoon Sik <boom at estsoft dot com> for
+ 	  reporting this.
+
 Sun Feb 26 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_IO.{cpp,inl}:
