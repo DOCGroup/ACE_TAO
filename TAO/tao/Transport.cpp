@@ -1876,7 +1876,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                   return -1;
                 }                     
             }
-          else 
+          else if (qd.missing_data_ != TAO_MISSING_DATA_UNDEFINED)  
             {
               // Incomplete message, must be the last one in buffer
 
