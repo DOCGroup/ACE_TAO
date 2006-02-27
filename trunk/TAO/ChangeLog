@@ -1,3 +1,21 @@
+Mon Feb 27 16:23:50 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_argument.cpp:
+
+          Don't not generate skeleton includes for arguments from inherited
+          imported abtstract types.
+
+          This fixes bug #2419 howewer the ticket needs to stay open pending
+          a fix that can be described without ugly double negatives. ;-)
+
+        * tests/Bug_2419_Regression/Bug_2419_Regression.mpc:
+        * tests/Bug_2419_Regression/README:
+        * tests/Bug_2419_Regression/abstract_parent.idl:
+        * tests/Bug_2419_Regression/client.cpp:
+        * tests/Bug_2419_Regression/local_child.idl:
+
+          Small regression test for the above.
+
 Mon Feb 27 15:27:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log_i.cpp (TAO_Log_i::set_capacity_alarm_thresholds):
