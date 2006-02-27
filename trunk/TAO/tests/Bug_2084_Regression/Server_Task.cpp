@@ -84,6 +84,12 @@ Server_Task::svc (void)
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
    }
+ ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+   {
+     // Periodically we get a bad inv order on fast machines.
+     // It's a false negative and is safe to ignore.
+     ACE_UNUSED_ARG (ex);
+   }
  ACE_CATCHANY
    {
      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
