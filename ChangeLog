@@ -1,3 +1,9 @@
+Mon Feb 27 22:36:20 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/Makefile.am: Hand-corrected the addition of
+          ACE_TLS_CPPFLAGS, ACE_TLS_LDFLAGS, ACE_TLS_LIBS needed to pick up
+          user's specification of where the SSL libraries are.
+
 Mon Feb 27 08:17:49 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/Dev_Poll_Reactor.cpp (acquire_quietly): Moved the error message
