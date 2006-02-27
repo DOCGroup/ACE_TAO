@@ -58,7 +58,7 @@ be_argument::be_argument (AST_Argument::Direction d,
   // If there have been previous errors, dcl may be 0,
   // and we don't want to crash, so we check for non-zero.
   // Also, we don't want to set the bit if the operation is
-  // declared in an included file UNLESS the enclosing 
+  // declared in an included file UNLESS the enclosing
   // interface is abstract, in which case we regenerate the
   // operation.
   if (dcl != 0
@@ -68,6 +68,7 @@ be_argument::be_argument (AST_Argument::Direction d,
       be_type *bt = be_type::narrow_from_decl (ft);
       bt->seen_in_operation (true);
       this->set_arg_seen_bit (bt);
+      idl_global->non_local_iface_seen_ = true;
     }
 }
 
