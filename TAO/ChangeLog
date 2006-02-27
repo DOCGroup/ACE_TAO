@@ -1,3 +1,10 @@
+Mon Feb 27 15:27:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log_i.cpp (TAO_Log_i::set_capacity_alarm_thresholds):
+
+          Call get_capacity_alarm_thresholds() on the record store instead
+          of on "this" to avoid recursive lock invocation.
+
 Mon Feb 27 10:56:12 UTC 2006 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/PolicyFactory/run_test.pl:
