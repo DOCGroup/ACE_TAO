@@ -1,10 +1,8 @@
 Mon Feb 27 18:19:03 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
-        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
-
-        * tao/Profile.h:
-
         * tests/Bug_2084_Regression/Server_Task.cpp:
+
+          Suppress occasional spurious exception output on fast machines.
 
 Mon Feb 27 17:08:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
         * tao/Transport.cpp:
