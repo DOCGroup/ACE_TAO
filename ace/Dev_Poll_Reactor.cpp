@@ -2594,11 +2594,13 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)
   // Check for timeouts and errors.
   if (result == -1)
     {
-      ACE_ERROR ((LM_ERROR, "%t: %p\n", "token acquire_read"));
       if (errno == ETIME)
         return 0;
       else
-        return -1;
+        {
+          ACE_ERROR ((LM_ERROR, "%t: %p\n", "token acquire_read"));
+          return -1;
+        }
     }
 
   // We got the token and so let us mark ourselves as owner
