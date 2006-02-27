@@ -1,3 +1,8 @@
+Mon Feb 27 17:08:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
+        * tao/Transport.cpp: 
+          Incomplete messages, smaller Header-Length, shall be put 
+          into intermediate buffer
+
 Mon Feb 27 16:23:50 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_argument.cpp:
