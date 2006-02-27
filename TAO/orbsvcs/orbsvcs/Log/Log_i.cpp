@@ -781,7 +781,7 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
     ACE_THROW (DsLogAdmin::InvalidThreshold ());
 
   DsLogAdmin::CapacityAlarmThresholdList_var old_threshs =
-    get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ The current revision of the specification (formal/03-07-01) is
