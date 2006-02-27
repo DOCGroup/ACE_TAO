@@ -348,7 +348,7 @@ Tue Feb 21 19:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/AnyTypeCode_Adapter.h:
           Added insert_into_any methods for all basic types. Thanks to
           Nemoy Michael <michaeln at sintecmedia dot com> for providing
-          the patches. This also fixes bugzilla bugs 2371 and 2367
+          the patches. This also fixes bugzilla bugs 2371, 2367, and 2422
 
 Tue Feb 21 17:48:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
