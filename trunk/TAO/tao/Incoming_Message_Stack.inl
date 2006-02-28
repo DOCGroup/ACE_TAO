@@ -10,17 +10,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 ACE_INLINE
-Incoming_Message_Stack::Incoming_Message_Stack() 
+Incoming_Message_Stack::Incoming_Message_Stack()
 : top_(0)
 {
 }
 
 ACE_INLINE
-Incoming_Message_Stack::~Incoming_Message_Stack() 
+Incoming_Message_Stack::~Incoming_Message_Stack()
 {
   // Delete all the nodes left behind
-  TAO_Queued_Data *del;
-  
+  TAO_Queued_Data *del = 0;
+
   while (this->pop (del) != -1)
     {
       TAO_Queued_Data::release (del);
@@ -34,34 +34,34 @@ Incoming_Message_Stack::push(TAO_Queued_Data *data)
   this->top_ = data;
 }
 
-    
+
     /* @return 0 for Ok, -1 for error */
 ACE_INLINE int
-Incoming_Message_Stack::pop (TAO_Queued_Data* &data) 
+Incoming_Message_Stack::pop (TAO_Queued_Data* &data)
 {
-  if (this->top_ == 0) 
+  if (this->top_ == 0)
     return -1;
-  
+
   data = this->top_;
   this->top_ = data->next_;
-  
+
   return 0;
 }
 
 ACE_INLINE int
-Incoming_Message_Stack::top (TAO_Queued_Data* &data) 
+Incoming_Message_Stack::top (TAO_Queued_Data* &data)
 {
-  if (this->top_ == 0) 
+  if (this->top_ == 0)
     return -1;
-  
+
   data = this->top_;
-  
+
   return 0;
 }
 
 /*
 ACE_INLINE bool
-Incoming_Message_Stack::is_empty () 
+Incoming_Message_Stack::is_empty ()
 {
   return this->top_ == 0;
 }
