@@ -1,3 +1,19 @@
+Tue Feb 28 10:09:45 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Redo the fix for bug #2419 from:
+          Mon Feb 27 16:23:50 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+          Introduce a new flag to idl_global to indicate when we need to
+          force generation of the skeleton includes. Setting
+          non_local_iface_seen_ to be true was causing undesirable side effects
+          on non-inlined builds. Generate skeleton includes when the new
+          need_skeleton_includes_ or non_local_iface_seen_ is true.
+
 Tue Feb 28 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
