@@ -1,3 +1,9 @@
+Tue Feb 28 12:25:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * NEWS:
+
+          Updated.
+
 Tue Feb 28 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.inl (destructor):
