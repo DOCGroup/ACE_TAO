@@ -1,3 +1,10 @@
+Tue Feb 28 23:28:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+        
+          Add DEFAULT_INCLUDES definition that got lost during regeneration.
+          Fixes autoconf builds on case-insensitive filesystems.
+
 Tue Feb 28 19:46:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_SOCK_Test.cpp: Add a special-case check for Win64. It
