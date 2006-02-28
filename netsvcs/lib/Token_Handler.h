@@ -162,7 +162,7 @@ class ACE_TS_Mutex : public ACE_Local_Mutex
 
 public:
   /// Creation.
-  ACE_TS_Mutex (const char *name,
+  ACE_TS_Mutex (const ACE_TCHAR *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -197,7 +197,7 @@ class ACE_TS_RLock : public ACE_Local_RLock
 {
 public:
   /// Creation.
-  ACE_TS_RLock (const char *name,
+  ACE_TS_RLock (const ACE_TCHAR *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -232,7 +232,7 @@ class ACE_TS_WLock : public ACE_Local_WLock
 {
 public:
   /// Creation.
-  ACE_TS_WLock (const char *name,
+  ACE_TS_WLock (const ACE_TCHAR *name,
                 ACE_Token_Handler *th);
 
 protected:

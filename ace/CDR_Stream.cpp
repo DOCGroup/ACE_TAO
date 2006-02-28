@@ -173,10 +173,10 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
         ptrdiff_t(tmp->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
       ptrdiff_t curalign =
         ptrdiff_t(this->current_alignment_) % ACE_CDR::MAX_ALIGNMENT;
-      long offset = curalign - tmpalign;
+      ptrdiff_t offset = curalign - tmpalign;
       if (offset < 0)
         offset += ACE_CDR::MAX_ALIGNMENT;
-      tmp->rd_ptr (offset);
+      tmp->rd_ptr (static_cast<size_t> (offset));
       tmp->wr_ptr (tmp->rd_ptr ());
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 

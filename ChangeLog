@@ -1,3 +1,39 @@
+Tue Feb 28 00:21:53 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-WinCE.h: Don't set ACE_LACKS_IOSTREAM_TOTALLY for
+          MSVC 8 and up.
+
+        * ace/CDR_Stream.cpp (grow_and_adjust):
+        * ace/CDR_Base.cpp (consolidate): Avoid losing data when
+          comparing ptrdiff_t values.
+
+        * ace/Event_Handler.{h cpp}: Allow
+          ACE_Event_Handler:register_stdin_handler to build on WinCE.
+
+        * ace/FILE_IO.cpp (send, recv): Truncate the number of iovec tuples
+          down to range of an int.
+
+        * ace/OS_NS_stropts.{h cpp}:
+        * ace/OS_NS_sys_socket.{h cpp}: Allow QoS-enabled operations on WinCE
+          5.0 and up.
+
+        * ace/OS_NS_unistd.inl: 64-bit adjustments.
+
+        * ace/Time_Value.{cpp inl}:
+        * tests/Time_Value_Test.cpp: Add ACE_WIN64 to the platforms that use
+          LONG_MAX/LONG_MIN rather than std::numeric_limits<time_t> for the
+          time bounds. On Win64, time_t is 64 bits, yet the timeval members
+          used internally to ACE_Time_Value are still long. This makes time
+          values outside the LONG_MAX, LONG_MIN range very broken and many
+          tests start failing in odd ways. Thanks to J.T. Conklin for this fix.
+
+        * ace/Token_Request_Reply.{cpp inl}: 32/64 bit adjustments.
+
+        * netsvcs/lib/Token_Handler.{h cpp} (ACE_TS_Mutex, ACE_TS_WLock,
+          ACE_TS_RLock): Changed the name argument from char* to ACE_TCHAR*
+          to build clean on wchar systems. The classes that use this and that
+          this uses already were ACE_TCHAR.
+
 Mon Feb 27 22:36:20 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL/Makefile.am: Hand-corrected the addition of

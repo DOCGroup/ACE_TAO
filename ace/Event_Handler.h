@@ -170,7 +170,7 @@ public:
   /// Get only the reactor's timer related interface.
   virtual ACE_Reactor_Timer_Interface *reactor_timer_interface (void) const;
 
-#if !defined (ACE_HAS_WINCE)
+  //#if !defined (ACE_HAS_WINCE)
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
    * work around Win32 limitations that don't allow us to <select> on
@@ -196,7 +196,7 @@ public:
   /// Performs the inverse of the <register_stdin_handler> method.
   static int remove_stdin_handler (ACE_Reactor *reactor,
                                    ACE_Thread_Manager *thr_mgr);
-#endif /* ACE_HAS_WINCE */
+  //#endif /* ACE_HAS_WINCE */
 
   /// Reference count type.
   typedef long Reference_Count;

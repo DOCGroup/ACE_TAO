@@ -40,9 +40,9 @@ ACE_Token_Acceptor::parse_args (int argc, char *argv[])
 
   u_short svc_port = ACE_DEFAULT_SERVER_PORT;
 
-  ACE_LOG_MSG->open ("Token Service");
+  ACE_LOG_MSG->open (ACE_TEXT ("Token Service"));
 
-  ACE_Get_Opt get_opt (argc, argv, "p:", 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -76,9 +76,10 @@ ACE_Token_Acceptor::init (int argc, char *argv[])
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
                   0, 0, 0,
                   &this->scheduling_strategy_,
-                  "Token Server", "ACE token service") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n",
-                       "acceptor::open failed",
+                  ACE_TEXT ("Token Server"),
+                  ACE_TEXT ("ACE token service")) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p on port %d\n"),
+                       ACE_TEXT ("acceptor::open failed"),
                        this->service_addr_.get_port_number ()), -1);
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
@@ -545,7 +546,7 @@ ACE_Token_Handler::abandon (int send_error)
 // ************************************************************
 // ************************************************************
 
-ACE_TS_Mutex::ACE_TS_Mutex (const char *name,
+ACE_TS_Mutex::ACE_TS_Mutex (const ACE_TCHAR *name,
                             ACE_Token_Handler *th)
 : ACE_Local_Mutex (name, 0, 1), // The 1 is debug.
   th_ (th)
@@ -589,7 +590,7 @@ ACE_TS_Mutex::clone (void) const
 
 // ************************************************************
 
-ACE_TS_RLock::ACE_TS_RLock (const char *name,
+ACE_TS_RLock::ACE_TS_RLock (const ACE_TCHAR *name,
                             ACE_Token_Handler *th)
 : ACE_Local_RLock (name, 0, 1), // The 1 is debug.
   th_ (th)
@@ -634,7 +635,7 @@ ACE_TS_RLock::clone (void) const
 
 // ************************************************************
 
-ACE_TS_WLock::ACE_TS_WLock (const char *name,
+ACE_TS_WLock::ACE_TS_WLock (const ACE_TCHAR *name,
                             ACE_Token_Handler *th)
 : ACE_Local_WLock (name, 0, 1), // The 1 is debug.
   th_ (th)
