@@ -254,6 +254,8 @@ IDL_GlobalData::reset_flag_seen (void)
   vt_seq_seen_ = false;
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
+
+  need_skeleton_includes_ = false;
 }
 
 // Get or set scopes stack
