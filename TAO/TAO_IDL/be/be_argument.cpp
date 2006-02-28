@@ -68,7 +68,7 @@ be_argument::be_argument (AST_Argument::Direction d,
       be_type *bt = be_type::narrow_from_decl (ft);
       bt->seen_in_operation (true);
       this->set_arg_seen_bit (bt);
-      idl_global->non_local_iface_seen_ = true;
+      idl_global->need_skeleton_includes_ = true;
     }
 }
 

@@ -236,7 +236,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                             -1);
         }
     }
-    
+
   // Generate the TAO_EXPORT_MACRO macro.
   *this->client_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
   *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
@@ -1880,7 +1880,8 @@ void
 TAO_CodeGen::gen_skel_src_includes (void)
 {
   // Only non-local interfaces generate anything in the skeleton.
-  if (!idl_global->non_local_iface_seen_)
+  if (!(idl_global->non_local_iface_seen_
+        || idl_global->need_skeleton_includes_))
     {
       return;
     }

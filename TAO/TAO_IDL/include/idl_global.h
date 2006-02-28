@@ -323,6 +323,9 @@ public:
   bool wchar_seq_seen_;
   bool wstring_seq_seen_;
 
+  // flag to force generation of skeleton includes (see bug #2419).
+  bool need_skeleton_includes_;
+
   // Constructor
   IDL_GlobalData (void);
   // Destructor
