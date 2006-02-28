@@ -1,3 +1,12 @@
+Tue Feb 28 18:46:42 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment.xsd
+        * DAnCE/Deployment.xsd.orig
+        * DAnCE/XMI.xsd
+        * DAnCE/XMI.xsd.orig
+
+          Removed these schema files.  They were misleading and useless. 
+        
 Fri Feb 24 21:21:02 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc
