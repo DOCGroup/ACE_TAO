@@ -1,3 +1,8 @@
+Tue Feb 28 10:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Queue.cpp (destructor):
+          Use the correct datatype for the cleanup loop.
+
 Tue Feb 28 10:09:45 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_argument.cpp:
