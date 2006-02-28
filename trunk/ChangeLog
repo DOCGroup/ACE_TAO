@@ -1,3 +1,21 @@
+Tue Feb 28 19:46:16 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/MT_SOCK_Test.cpp: Add a special-case check for Win64. It
+          appears that Win64 listen/accept side has some changed behavior
+          but I haven't found any Windows docs to state this; just observed
+          behavior. It appears that WinXP-64 will appear to accept connections
+          at the TCP level past the listen backlog but if data arrives before
+          the actual application-level accept() occurs, the connection is
+          reset. I can see where this would be sensible for a web server or
+          something like that, but it causes a problem for this use case where
+          the test client side connects and starts sending.
+          Note I also tried modifying the checks in the connect path (in
+          ACE.cpp, handle_timed_complete()), but the connection really does
+          appear to be accepted clean; a peek recv will complete without
+          the reset being noticed, hence my speculation that Microsoft
+          "enhanced" the behavior at the server side.
+          Also, fixed a lot of bad indentation and some missing ACE_TEXTs.
+
 Tue Feb 28 11:12:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
 
         * ace/Connector.cpp:
