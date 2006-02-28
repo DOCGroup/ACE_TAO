@@ -9,6 +9,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Default_Constants.h"
 #include "ace/OS_Memory.h"
+#include "ace/Truncate.h"
 
 #if defined (ACE_HAS_CLOCK_GETTIME)
 # include "ace/os_include/os_time.h"
@@ -312,7 +313,12 @@ ACE_OS::execv (const char *path,
 # elif defined (__MINGW32__)
   return ::_execv (path, (char *const *) argv);
 # else
-  return ::_execv (path, (const char *const *) argv);
+  // Why this odd-looking code? If execv() returns at all, it's an error.
+  // Windows defines this as returning an intptr_t rather than a simple int,
+  // and the conversion triggers compile warnings. So just return -1 if
+  // the call returns.
+  ::_execv (path, (const char *const *) argv);
+  return -1;
 # endif /* __BORLANDC__ */
 #else
   ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
@@ -343,7 +349,12 @@ ACE_OS::execve (const char *path,
 # elif defined (__MINGW32__)
   return ::_execve (path, (char *const *) argv, (char *const *) envp);
 # else
-  return ::_execve (path, (const char *const *) argv, (const char *const *) envp);
+  // Why this odd-looking code? If execv() returns at all, it's an error.
+  // Windows defines this as returning an intptr_t rather than a simple int,
+  // and the conversion triggers compile warnings. So just return -1 if
+  // the call returns.
+  ::_execve (path, (const char *const *) argv, (const char *const *) envp);
+  return -1;
 # endif /* __BORLANDC__ */
 #else
   ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
@@ -372,7 +383,12 @@ ACE_OS::execvp (const char *file,
 # elif defined (__MINGW32__)
   return ::_execvp (file, (char *const *) argv);
 # else
-  return ::_execvp (file, (const char *const *) argv);
+  // Why this odd-looking code? If execv() returns at all, it's an error.
+  // Windows defines this as returning an intptr_t rather than a simple int,
+  // and the conversion triggers compile warnings. So just return -1 if
+  // the call returns.
+  ::_execvp (file, (const char *const *) argv);
+  return -1;
 # endif /* __BORLANDC__ */
 #else
   ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
@@ -668,7 +684,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #elif defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (ACE_WIN32)
-  if (::gethostname (name, maxnamelen) == 0)
+  if (::gethostname (name, ACE_Utils::Truncate (maxnamelen)) == 0)
   {
     return 0;
   }

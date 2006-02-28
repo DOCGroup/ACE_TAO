@@ -52,7 +52,18 @@ ACE_INLINE void
 ACE_Time_Value::set (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
+#if defined (ACE_WIN64)
+  // Win64 uses 'long' (32 bit) timeval and 64-bit time_t, so we have
+  // to get these back in range.
+  if (sec > LONG_MAX)
+    this->tv_.tv_sec = LONG_MAX;
+  else if (sec < LONG_MIN)
+    this->tv_.tv_sec = LONG_MIN;
+  else
+    this->tv_.tv_sec = static_cast<long> (sec);
+#else
   this->tv_.tv_sec = sec;
+#endif
   this->tv_.tv_usec = usec;
 #if __GNUC__
   if (__builtin_constant_p(sec) &&

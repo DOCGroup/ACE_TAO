@@ -1,4 +1,3 @@
-// FILE_IO.cpp
 // $Id$
 
 #include "ace/FILE_IO.h"
@@ -6,6 +5,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_Memory.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/FILE_IO.inl"
@@ -46,7 +46,7 @@ ACE_FILE_IO::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   va_list argp;
-  size_t total_tuples = n / 2;
+  int total_tuples = ACE_Utils::Truncate (n / 2);
   iovec *iovp = 0;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -58,7 +58,7 @@ ACE_FILE_IO::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -85,7 +85,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
   va_list argp;
-  size_t total_tuples = n / 2;
+  int total_tuples = ACE_Utils::Truncate (n / 2);
   iovec *iovp = 0;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -97,7 +97,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);

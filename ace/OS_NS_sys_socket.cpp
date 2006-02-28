@@ -14,7 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int ACE_OS::socket_initialized_;
 #endif /* ACE_WIN32 */
 
-#if !defined (ACE_HAS_WINCE)
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
 ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,
                 struct sockaddr *addr,
@@ -95,7 +95,7 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # endif /* ACE_HAS_WINSOCK2 */
 }
-#endif  // ACE_HAS_WINCE
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
 int
 ACE_OS::socket_init (int version_high, int version_low)
