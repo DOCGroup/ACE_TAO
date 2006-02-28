@@ -36,7 +36,7 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // Note: on platforms without std::numeric_limits<>, we assume time_t is
 // a long, the historical type used for time.
 const ACE_Time_Value ACE_Time_Value::max_time (
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
                                                std::numeric_limits<time_t>::max (),
 #else
                                                LONG_MAX,
@@ -235,7 +235,7 @@ ACE_Time_Value::operator *= (double d)
      + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
   // shall we saturate the result?
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
   static const double max_int = std::numeric_limits<time_t>::max () + 0.999999;
   static const double min_int = std::numeric_limits<time_t>::min () - 0.999999;
 #else

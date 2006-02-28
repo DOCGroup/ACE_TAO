@@ -32,11 +32,6 @@
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #endif
 
-// Win64 SDK compiler claims std::auto_ptr<>::reset not available.
-#if defined (_WIN64) || defined (WIN64)
-#define ACE_AUTO_PTR_LACKS_RESET
-#endif
-
 #define ACE_HAS_TYPENAME_KEYWORD
 
 #define ACE_HAS_ITOA

@@ -63,7 +63,7 @@ ACE_Token_Request::decode (void)
                 (void *) transfer_.arg_);
 
   // Decode the variable-sized portion.
-  int token_len = ACE_OS::strlen (this->token_name_);
+  size_t token_len = ACE_OS::strlen (this->token_name_);
 
   // Check to make sure this->tokenName_ isn't too long!
   if (token_len >= ACE_MAXTOKENNAMELEN)

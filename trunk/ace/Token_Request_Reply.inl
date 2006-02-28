@@ -4,6 +4,8 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
+#include "ace/Truncate.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Set/get the length of the encoded/decoded message.
@@ -102,7 +104,10 @@ ACE_Token_Request::options (const ACE_Synch_Options &opt)
   if (transfer_.use_timeout_ == 1)
     {
       transfer_.usec_ = options->timeout ().usec ();
-      transfer_.sec_ = options->timeout ().sec ();
+      if (options->timeout ().sec () > ACE_UINT32_MAX)
+        transfer_.sec_ = ACE_UINT32_MAX;
+      else
+        transfer_.sec_ = static_cast<ACE_UINT32> (options->timeout ().sec ());
     }
   else
     {
@@ -143,7 +148,7 @@ ACE_Token_Request::token_name (const ACE_TCHAR *token_name,
   // ... then add in the amount of the variable-sized portion.
   len += token_name_length + client_id_length + 1;
 
-  this->length (len);
+  this->length (ACE_Utils::Truncate (len));
 }
 
 // = Set/get the id of the client.
