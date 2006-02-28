@@ -25,10 +25,10 @@ TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  const int sz = this->size_;
+  const CORBA::ULong sz = this->size_;
 
   // Delete all the nodes left behind
-  for (int i = 0;
+  for (CORBA::ULong i = 0;
        i < sz;
        ++i)
     {
@@ -330,12 +330,12 @@ TAO_Queued_Data::consolidate (void)
                                       this->msg_block_,
                                       this->msg_block_->total_length ());
 
-      if (0 == dest) 
+      if (0 == dest)
         {
           // out of memory
           return -1;
         }
-      // Memory allocation succeeded, the new message block can hold the consolidated 
+      // Memory allocation succeeded, the new message block can hold the consolidated
       // message. The following code just copies all the data into this new message block.
       // No further memory allocation will take place.
 
