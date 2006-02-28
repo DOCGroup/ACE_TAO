@@ -173,7 +173,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_exception (ACE_HANDLE h)
   // On Win32, the except mask must also be set for asynchronous
   // connects.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_exception");
-
   return this->handle_output (h);
 }
 
@@ -370,7 +369,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_i
   if (this->make_svc_handler (sh) == -1)
     return -1;
 
-  ACE_Time_Value *timeout;
+  ACE_Time_Value *timeout = 0;
   int use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
 
   if (use_reactor)
@@ -653,7 +652,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
   // Go through all the non-blocking handles.  It is necessary to
   // create a new iterator each time because we remove from the handle
   // set when we cancel the Svc_Handler.
-  ACE_HANDLE *handle;
+  ACE_HANDLE *handle = 0;
   while (1)
     {
       ACE_Unbounded_Set_Iterator<ACE_HANDLE>
