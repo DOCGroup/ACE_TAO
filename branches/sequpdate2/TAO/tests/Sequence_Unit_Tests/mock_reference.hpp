@@ -62,6 +62,7 @@ public:
   static void _tao_release(mock_reference * rhs);
   static call_counter serialize_calls;
   static call_counter deserialize_calls;
+  static call_counter marshal_calls;
 
   inline bool operator==(mock_reference const & rhs) const
   {

@@ -70,7 +70,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
 
-    expected_calls s(mock_reference::serialize_calls);
+    expected_calls s(mock_reference::marshal_calls);
     {
       tested_sequence a;
       a.replace(8, 4, buffer, false);

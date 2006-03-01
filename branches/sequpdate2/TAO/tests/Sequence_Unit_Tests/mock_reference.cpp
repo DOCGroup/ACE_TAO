@@ -13,6 +13,7 @@ call_counter mock_reference::duplicate_calls;
 call_counter mock_reference::release_calls;
 call_counter mock_reference::serialize_calls;
 call_counter mock_reference::deserialize_calls;
+call_counter mock_reference::marshal_calls;
 
 mock_reference::
 ~mock_reference()
@@ -82,6 +83,7 @@ TAO::Objref_Traits<mock_reference>::marshal (
     TAO_OutputCDR &
   )
 {
+  mock_reference::marshal_calls ();
   return true;
 }
 
