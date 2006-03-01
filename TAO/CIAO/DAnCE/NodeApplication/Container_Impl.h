@@ -209,6 +209,13 @@ protected:
     typedef CCMComponent_Map::iterator Component_Iterator;
     CCMComponent_Map component_map_;
 
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    ACE_CString,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> CCMNaming_Map;
+    CCMNaming_Map naming_map_;
+
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }
