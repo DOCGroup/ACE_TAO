@@ -1,3 +1,9 @@
+Wed Mar  1 07:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc:
+          Added after to fix parallel build problems with vc8
+
 Tue Feb 28 12:25:24 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * NEWS:
