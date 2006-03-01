@@ -365,7 +365,7 @@ spawn (int num_clients)
             {
             case -1:
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %p\n", "spawn: fork failed")));
+                          ACE_TEXT ("(%P|%t) %p\n"), "spawn: fork failed")));
               i = num_clients;
               // Break out of 'for' loop.
               break;
