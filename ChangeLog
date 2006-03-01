@@ -1,3 +1,10 @@
+Wed Mar  1 09:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Env_Value_T.h:
+          First to all template specializations before the generic one and
+          use template<> for the specializations, this fixes the compile
+          errors with GCC 4.1
+
 Wed Mar  1 07:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/TP_Reactor/AcceptHandler.cpp:
