@@ -1,3 +1,8 @@
+Wed Mar  1 10:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MT_SOCK_Test.cpp:
+          Fixed compile problem
+
 Wed Mar  1 09:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Env_Value_T.h:
