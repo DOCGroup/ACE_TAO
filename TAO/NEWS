@@ -49,6 +49,8 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.10 and TAO-1.5.0
 . When suppressing any and typecodes during IDL compilation this will not
   trigger compile errors due to missing any insert operations
 
+. Bug fix in IFR when creating typecodes for nested structs and unions.
+
 IDL COMPILER
 ------------
 
