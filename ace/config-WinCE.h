@@ -69,24 +69,13 @@
 
 #define ACE_USES_WINCE_SEMA_SIMULATION
 
-#if (_MSC_VER < 1400)
-#  define ACE_LACKS_IOSTREAM_TOTALLY
-#endif
-#define ACE_LACKS_ACE_IOSTREAM
-#define ACE_LACKS_AUTO_PTR
-
-#if defined (ACE_HAS_STRICT)
-# undef ACE_HAS_STRICT
-#endif  // ACE_HAS_STRICT
-#define ACE_HAS_STRICT 1
-
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
 // FILE stuff isn't always defined in CE
-#ifndef _FILE_DEFINED
+#if (_MSC_VER < 1400) && !defined (_FILE_DEFINED)
   typedef void FILE;
 # define _FILE_DEFINED
-#endif  // _FILE_DEFINED
+#endif  /* _MSC_VER < 1400 && !_FILE_DEFINED */
 
 // This was defined in previous versions of CE, but not 2.11
 #define EXCEPTION_ACCESS_VIOLATION STATUS_ACCESS_VIOLATION
@@ -196,35 +185,18 @@
 # define ACE_LACKS_QSORT
 #endif  // _WIN32_WCE_EMULATION
 
-// @@ Followings are used to keep existing programs happy.
-
-#define ostream FILE
-# if !defined (BUFSIZ)
+#if !defined (BUFSIZ)
 #  define BUFSIZ 1024
-#endif  // BUFSIZ
+#endif
 
 typedef void (__cdecl * __sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;
 
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
 
-//#if (UNDER_CE < 300)  // from prior ACE porting effort; left for future reference
-//#define ACE_LACKS_STRPBRK
-//#define ACE_LACKS_STRSPN
-//#define ACE_LACKS_STRTOD
-//#define ACE_LACKS_STRTOL
-//#define ACE_LACKS_STRTOUL
-//#endif // UNDER_CE < 300
-
 #define ACE_HAS_WINCE_BROKEN_ERRNO
 
 #define ACE_HAS_STRDUP_EMULATION
-
-// CE doesn't have <sys/types.h> instead <types.h>
-#define ACE_HAS_FLAT_TYPES_H
-
-// @@ This needs to be defined and initialized as a static. (Singleton?)
-#define ACE_DEFAULT_LOG_STREAM 0
 
 // WinCE can't do fixed addresses for memory-mapped files.
 #if defined (ACE_DEFAULT_BASE_ADDR)
@@ -234,9 +206,8 @@ typedef long off_t;
 
 #define ACE_HAS_TSS_EMULATION
 
-// Not sure if this is true for all versions.  dhinton
+// This is still true up thru VC8...
 #define ACE_LACKS_ERRNO_H
-#define ACE_LACKS_TIME_H
 #define ACE_LACKS_SIGNAL_H
 #define ACE_LACKS_SYS_STAT_H
 

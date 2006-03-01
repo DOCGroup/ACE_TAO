@@ -268,10 +268,10 @@ class ACE_Token_Acceptor : public ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_S
 {
 public:
   /// Dynamic linking hook.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Parse svc.conf arguments.
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   /// The scheduling strategy is designed for Reactive services.

@@ -2,8 +2,8 @@
 
 #include "CE_fostream.h"
 
-// This is CE only.
-#if defined (ACE_HAS_WINCE)
+// This is CE only, prior to availability of iostreams (VC 8).
+#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 ACE_CE_fostream* ACE_CE_fostream::instance_ = 0;
 
@@ -146,4 +146,4 @@ ACE_CE_fostream& ACE_CE_fostream::operator << (const void* v)
     return *this;
 }
 
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_WINCE && ACE_LACKS_IOSTREAMS_TOTALLY */

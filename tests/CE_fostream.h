@@ -21,7 +21,7 @@
 
 #include "ace/config-all.h"
 
-#ifdef ACE_HAS_WINCE
+#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 #include "ace/Null_Mutex.h"
 #include "ace/Singleton.h"
@@ -101,5 +101,5 @@ private:
 
 typedef ACE_Singleton<ACE_CE_fostream, ACE_Null_Mutex> ACE_CE_OSTREAM;
 
-#endif  // ACE_HAS_WINCE
-#endif  // ACE_CE_fostream_h
+#endif  /* ACE_HAS_WINCE && ACE_LACKS_IOSTREAM_TOTALLY */
+#endif  /* ACE_CE_fostream_h */
