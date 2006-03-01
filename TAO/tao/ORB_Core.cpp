@@ -2136,6 +2136,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
 
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::release (this->pi_current_);
+      this->pi_current_ = CORBA::Object::_nil ();
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
   ACE_CATCHALL
