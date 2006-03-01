@@ -1,3 +1,10 @@
+Wed Mar  1 15:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp (shutdown):
+          After releasing pi_current_ set it to nil because this release could
+          result in the destruction of picurrent and then we read invalid
+          memory. Found from the AdvSlot test running with valgrind.
+
 Wed Mar  1 07:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc:
