@@ -1,3 +1,71 @@
+Wed Mar  1 23:47:13 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * bin/make_release: Added "wince=1" to the MPC -features option for
+          the WinCE file generation; helps prevents WinCE-hostile projects
+          from being generated.
+
+        * ace/config-win32-msvc-8.h: VC8 still lacks sigatomic_t for WinCE 5.
+
+        * ace/config-WinCE.h: Removed some compiler-specific settings that
+          were moved to compiler-specific configs previously but not updated
+          for CE. Updated things that are now available.
+
+        * tests/CDR_File_Test.cpp:
+        * tests/CE_fostream.{h cpp}: CE iostream hack not needed for CE when
+          iostreams are available (VC 8, included).
+
+        * examples/Reactor/TP_Reactor/client.cpp:
+        * examples/Reactor/TP_Reactor/server.cpp:
+        * examples/Reactor/TP_Reactor/AcceptHandler.cpp:
+        * examples/Reactor/TP_Reactor/ReadHandler.cpp:
+        * netsvcs/servers/main.cpp:
+        * tests/Array_Map_Test.cpp: Use ACE_TEXT around all pieces of
+          concatenated string; VC8 WinCE misses the line ending.
+          Removed ACE_TEXT around ACE_TRACE's argument; ACE_TRACE adds it.
+
+        * netsvcs/lib/Token_Handler.{h cpp} (init, parse_args): Changed argv
+          from char*[] to ACE_TCHAR*[]. Also fixed some missing ACE_TEXTs.
+
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Retransmit.cpp:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/TMCast/LinkListener.hpp:
+        * protocols/ace/TMCast/TransactionController.hpp:
+        * protocols/ace/TMCast/Group.cpp: ACEified naked system calls abort()
+          and perror().
+
+        * examples/APG/ThreadSafety/Tokens_Deadlock.cpp:
+        * examples/APG/Processes/Spawn.cpp:
+        * examples/APG/Processes/Process_Mutex.cpp: Add missing ACE_TEXT around
+          string args.
+
+        * examples/NT_Service/NT_Service.mpc: Add avoids += wince - CE doesn't
+          do services.
+
+        * examples/Web_Crawler/main.cpp: Don't try SIGFPE protection if
+          on WinCE.
+
+        * examples/Web_Crawler/URL_Status.h: Changed STATUS_NOT_FOUND to
+          STATUS_ITEM_NOT_FOUND and STATUS_NOT_IMPLEMENTED to
+          STATUS_OP_NOT_IMPLEMENTED. CE apparantly has macros with these
+          names that messes this up.
+
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc: Added wince to the
+          "avoids" clause for APC, Registry_Changes, Talker and
+          Window_Messages; WinCE doesn't the necessary features.
+
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp: Add missing
+          #include "ace/Auto_Event.h"
+
+        * tests/MT_SOCK_Test.cpp: Remove the #if ACE_WIN64 from the check
+          for first send causes reset. This happens with 32-bit as well,
+          at least on Win XP-64 SP2. It's unrelated to the functionality under
+          test, and if there's an actual sending side botch that causes the
+          socket to be closed prematurely, it should show up as another error
+          in the server side.
+
 Wed Mar  1 16:12:50 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Added !BAD_AIO to the Proactor_Test and

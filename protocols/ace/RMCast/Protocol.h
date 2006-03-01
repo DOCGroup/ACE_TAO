@@ -17,6 +17,7 @@
 #include "ace/Null_Mutex.h"
 
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include "Bits.h"
 
@@ -633,7 +634,7 @@ namespace ACE_RMCast
     size (size_t s)
     {
       if (s > capacity_)
-        abort ();
+        ACE_OS::abort ();
 
       size_ = s;
 

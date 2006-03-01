@@ -196,7 +196,7 @@ run_test (int write_file,
       output_cdr << cdr_test;
 
       // Output the data to cout.
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
       // Since CE does not have ostream, ace_file_stream and output_file() cannot
       // be used.  Just use 'hard-coded' file name here.
       (*ACE_CE_OSTREAM::instance()).open(ACE_TEXT("\\Log\\CDR_File_Test.txt"));
@@ -295,7 +295,7 @@ run_test (int write_file,
       // <CDR_Test> object.
       input_cdr >> temp;
 
-#ifdef ACE_HAS_WINCE
+#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
       (*ACE_CE_OSTREAM::instance()) << temp;
 #else
       *ace_file_stream::instance ()->output_file () << temp;
