@@ -1,3 +1,9 @@
+Wed Mar  1 07:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/TP_Reactor/AcceptHandler.cpp:
+        * examples/Reactor/TP_Reactor/server.cpp:
+          Fixed warnings in vc6 builds
+
 Wed Mar  1 00:16:26 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Recursive_Thread_Mutex.cpp (get_nesting_level): On Win64 with
@@ -14,7 +20,7 @@ Wed Mar  1 00:16:26 UTC 2006  Steve Huston  <shuston@riverace.com>
 Tue Feb 28 23:28:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
-        
+
           Add DEFAULT_INCLUDES definition that got lost during regeneration.
           Fixes autoconf builds on case-insensitive filesystems.
 
