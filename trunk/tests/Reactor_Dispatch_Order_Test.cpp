@@ -65,16 +65,25 @@ Handler::Handler (ACE_Reactor &reactor)
     dispatch_order_ (1)
 {
   // Create the pipe.
-  int result
-    = this->pipe_.open ();
-  ACE_ASSERT (result == 0);
-
-  // Register for all events.
-  result =
-    this->reactor ()->register_handler (this->pipe_.read_handle (),
-                                        this,
-                                        ACE_Event_Handler::ALL_EVENTS_MASK);
-  ACE_ASSERT (result == 0);
+  bool ok = true;
+  if (0 != this->pipe_.open ())
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
+      ok = false;
+    }
+  else
+    {
+      // Register for all events.
+      if (0 != this->reactor ()->register_handler
+                 (this->pipe_.read_handle (),
+                  this,
+                  ACE_Event_Handler::ALL_EVENTS_MASK))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
+          ok = false;
+        }
+    }
+  ACE_ASSERT (ok);
 }
 
 Handler::~Handler (void)
@@ -86,10 +95,13 @@ int
 Handler::handle_timeout (const ACE_Time_Value &,
                          const void *)
 {
-  ACE_ASSERT (this->dispatch_order_++ == 1);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Handler::handle_timeout\n"));
+  int me = this->dispatch_order_++;
+  if (me != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
+                me));
+  else
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_timeout\n")));
 
   return 0;
 }
@@ -97,10 +109,13 @@ Handler::handle_timeout (const ACE_Time_Value &,
 int
 Handler::handle_output (ACE_HANDLE)
 {
-  ACE_ASSERT (this->dispatch_order_++ == 2);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Handler::handle_output\n"));
+  int me = this->dispatch_order_++;
+  if (me != 2)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("handle_output should be #2; it's %d\n"),
+                me));
+  else
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
 
 #if defined (__OpenBSD__) || defined (ACE_VXWORKS) || defined (__Lynx__)
   // All that we need written has been written, so don't
@@ -116,20 +131,19 @@ Handler::handle_output (ACE_HANDLE)
 int
 Handler::handle_input (ACE_HANDLE fd)
 {
-  ACE_ASSERT (this->dispatch_order_++ == 3);
+  int me = this->dispatch_order_++;
+  if (me != 3)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("handle_timeout should be #3; it's %d\n"),
+                me));
 
   char buffer[BUFSIZ];
-  ssize_t result =
-    ACE::recv (fd,
-               buffer,
-               sizeof buffer);
+  ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
 
   ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
   buffer[result] = '\0';
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Handler::handle_input: %s\n",
-              ACE_TEXT_CHAR_TO_TCHAR (buffer)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
 
   ACE_ASSERT (ACE_OS::strcmp (buffer,
                               message) == 0);
@@ -174,7 +188,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Select_Reactor select_reactor_impl;
   ACE_Reactor select_reactor (&select_reactor_impl);
-
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_Select_Reactor\n")));
   test_reactor_dispatch_order (select_reactor);
 
   // WinCE can't do the necessary Winsock 2 things for WFMO_Reactor.
@@ -182,7 +196,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
   ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
-
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
   test_reactor_dispatch_order (wfmo_reactor);
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
