@@ -38,8 +38,8 @@ ReadHandler::~ReadHandler() {
     ACE_TRACE(ACE_TEXT("ReadHandler::~ReadHandler()"));
 
     if (mStream.close() == -1)
-        ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. "
-                    "(errno = %i: %m)\n"), errno));
+      ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. ")
+                 ACE_TEXT ("(errno = %i: %m)\n"), errno));
 
     delete[] mData;
 }
@@ -76,8 +76,8 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         //       platforms (i.e. little-endian/big-endian, data type size)
         if (mStream.recv_n(&mDataSize, sizeof(mDataSize),
                 &connTimeout) != sizeof(mDataSize)) {
-            ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive " \
-                        "request. (errno = %i: %m)\n"), errno));
+          ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive ")
+                     ACE_TEXT ("request. (errno = %i: %m)\n"), errno));
             INVOCATION_RETURN(-1);
         }
 
@@ -90,8 +90,8 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         if (mDataSize > 0) {
             mData = new (std::nothrow) char[mDataSize];
             if (mData == 0)
-                ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate " \
-                            "data buffer.\n")));
+              ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate ")
+                         ACE_TEXT ("data buffer.\n")));
             else
                 response = 'K';
         }
@@ -99,8 +99,8 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         // send the response to the client (which is still 0, if the
         // allocation did not succeed)
         if (mStream.send_n(&response, sizeof(response), &connTimeout) != 1) {
-            ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send "
-                            "response. (errno = %i: %m)\n"), errno));
+          ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
+                     ACE_TEXT ("response. (errno = %i: %m)\n"), errno));
             INVOCATION_RETURN(-1);
         }
 
@@ -121,16 +121,16 @@ int ReadHandler::handle_input(ACE_HANDLE) {
 
         // receive the data from the client
         if (mStream.recv_n(mData, mDataSize, &connTimeout) != mDataSize) {
-            ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive data." \
-                            "(errno = %i: %m)\n"), errno));
+          ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive data.")
+                     ACE_TEXT ("(errno = %i: %m)\n"), errno));
             INVOCATION_RETURN(-1);
         }
 
         response = 'K';
 
         if (mStream.send_n(&response, 1, &connTimeout) != 1) {
-            ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send "
-                            "confirmation. (errno = %i: %m)\n"), errno));
+          ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
+                     ACE_TEXT ("confirmation. (errno = %i: %m)\n"), errno));
             INVOCATION_RETURN(-1);
         }
 
@@ -143,8 +143,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
 }
 
 int ReadHandler::handle_close(ACE_HANDLE, ACE_Reactor_Mask) {
-    ACE_TRACE(ACE_TEXT("ReadHandler::handle_close(ACE_HANDLE, " \
-                "ACE_Reactor_Mask)"));
+  ACE_TRACE("ReadHandler::handle_close(ACE_HANDLE, ACE_Reactor_Mask)");
 
     delete this;
     return 0;

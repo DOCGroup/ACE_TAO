@@ -99,7 +99,6 @@ client (void *arg)
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send_n (c, 1) == -1)
       {
-#if defined (ACE_WIN64)
         // This is, I believe, more of an issue with WinXP-64 _server_
         // side, but we can trap it here since we know we're connecting
         // to localhost. It appears, though I haven't found documentation
@@ -116,7 +115,6 @@ client (void *arg)
             cli_stream.close ();
             return 0;
           }
-#endif /* ACE_WIN64 */
 
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) (errno %d) %p\n"), errno,

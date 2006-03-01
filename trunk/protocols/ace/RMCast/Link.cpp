@@ -3,6 +3,8 @@
 // cvs-id    : $Id$
 
 #include "ace/Time_Value.h"        // ACE_Time_Value
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_socket.h"
 
 #include "Link.h"
@@ -53,8 +55,8 @@ namespace ACE_RMCast
                          reinterpret_cast<sockaddr*> (addr_.get_addr ()),
                          addr_.get_addr_size ()) == -1)
     {
-      perror ("connect: ");
-      abort ();
+      ACE_OS::perror ("connect: ");
+      ACE_OS::abort ();
     }
 
 
@@ -161,7 +163,7 @@ namespace ACE_RMCast
                     (*i).ext_id_, (*i).int_id_->size ()));
       }
 
-      abort ();
+      ACE_OS::abort ();
     }
 
     ssock_.send (os.buffer (), os.length (), addr_);
@@ -216,7 +218,7 @@ namespace ACE_RMCast
         if (r == -1)
         {
           if (errno != ETIME)
-            abort ();
+            ACE_OS::abort ();
         }
         else
         {
@@ -307,7 +309,7 @@ namespace ACE_RMCast
         else
           {
             //cerr << 0 << "unknown profile id " << hdr.id () << endl;
-            abort ();
+            ACE_OS::abort ();
           }
       }
 
@@ -325,6 +327,6 @@ namespace ACE_RMCast
   void Link::
   recv (Message_ptr)
   {
-    abort ();
+    ACE_OS::abort ();
   }
 }

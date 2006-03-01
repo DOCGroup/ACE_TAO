@@ -48,8 +48,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     char *someData = new (std::nothrow) char[size];
 
     if (someData == 0)
-        ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate "
-                    "data buffer.\n")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%N:%l: Failed to allocate ")
+                         ACE_TEXT ("data buffer.\n")), -1);
 
     // put someData in an auto_ptr so it gets deleted automatically
     auto_ptr<char> pSomeData(someData);
@@ -74,8 +75,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
         // connect to the server and get the stream
         if (connector.connect(stream, serverAddr) == -1) {
-            ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to connect to " \
-                            "server. (errno = %i: %m)\n"), errno));
+          ACE_ERROR((LM_ERROR,
+                     ACE_TEXT("%N:%l: Failed to connect to ")
+                     ACE_TEXT ("server. (errno = %i: %m)\n"), errno));
             break;
         }
 
@@ -85,15 +87,15 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
             // Note: only use the sizeof and pointer to int on compatible
             //       platforms (i.e. little-endian/big-endian, data type size)
             if (stream.send_n(&size, sizeof(size), &connTimeout) != sizeof(size)) {
-                ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to  send " \
-                            "request. (errno = %i: %m)\n"), errno));
+                ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to  send ")
+                           ACE_TEXT ("request. (errno = %i: %m)\n"), errno));
                 throw(1);
             }
 
             // receive the answer
             if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1) {
-                ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive " \
-                                "1st response. (errno = %i: %m)\n"), errno));
+              ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
+                         ACE_TEXT ("1st response. (errno = %i: %m)\n"), errno));
                 throw(1);
             }
 
@@ -102,15 +104,15 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
                 // send a huge message to the server
                 if (stream.send_n(someData, size, &connTimeout) != size) {
-                    ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send " \
-                                "someData. (errno = %i: %m)\n"), errno));
+                  ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
+                             ACE_TEXT ("someData. (errno = %i: %m)\n"), errno));
                     throw(1);
                 }
 
                 // get an answer
                 if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1) {
-                    ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive " \
-                                "2nd response. (errno = %i: %m)\n"), errno));
+                  ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
+                             ACE_TEXT ("2nd response. (errno = %i: %m)\n"), errno));
                     throw(1);
                 }
 
@@ -127,8 +129,8 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
         // close the current stream
         if (stream.close() == -1) {
-            ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close " \
-                        "socket. (errno = %i: %m)\n"), errno));
+          ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close ")
+                     ACE_TEXT ("socket. (errno = %i: %m)\n"), errno));
             break;
         }
     } // while

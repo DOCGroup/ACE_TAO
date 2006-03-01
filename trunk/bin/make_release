@@ -807,7 +807,7 @@ sub generate_makefiles () {
     # and we're generating only CE builds, replace it instead of adding to it.
     my $tmp_ce = '-value_template platforms=\'"Pocket PC 2003 (ARMV4)"\' ';
     $tmp_ce = $tmp_ce.'-value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\'';
-    my $ce_option = '-name_modifier *_WinCE -features uses_wchar=1 '.$tmp_ce;
+    my $ce_option = '-name_modifier *_WinCE -features \'"uses_wchar=1,wince=1"\' '.$tmp_ce;
 
     &ex ("cd ACE_wrappers; \
           bin/mwc.pl $exclude_option $mpc_option; \

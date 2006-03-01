@@ -22,7 +22,7 @@
  * @param arg is expected to be of type (ACE_Reactor *)
  */
 ACE_THR_FUNC_RETURN threadFunc(void *arg) {
-    ACE_TRACE(ACE_TEXT("threadFunc(void *)"));
+    ACE_TRACE("threadFunc(void *)");
 
     ACE_Reactor *reactor = (ACE_Reactor *) arg;
     reactor->run_reactor_event_loop();
@@ -44,14 +44,14 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
     AcceptHandler *acceptHandler = 0;
     ACE_NEW_NORETURN (acceptHandler, AcceptHandler(&reactor));
     if (acceptHandler == 0)
-        ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate " \
-                        "accept handler. (errno = %i: %m)\n"), errno), -1);
+      ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
+                        ACE_TEXT ("accept handler. (errno = %i: %m)\n"), errno), -1);
 
     // open the accept handler
     if (acceptHandler->open() == -1) {
         delete acceptHandler;
-        ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to open accept " \
-                        "handler. Exiting.\n")), -1);
+        ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to open accept ")
+                          ACE_TEXT ("handler. Exiting.\n")), -1);
     }
 
     // spawn some threads which run the reactor event loop(s)

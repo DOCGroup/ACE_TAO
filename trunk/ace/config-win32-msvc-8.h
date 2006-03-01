@@ -51,7 +51,6 @@
 #  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x501)
 #    define ACE_HAS_SIG_ATOMIC_T
 #  endif /* !Win CE 5.0 or less */
-//#endif /* _WIN32_WCE && _WIN32_WCE < 500 */
 
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME
