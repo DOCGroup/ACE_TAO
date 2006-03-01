@@ -11,6 +11,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
   compiler to set -qnotempinc and -qnotemplateregistry and works well
   in static builds.
 
+. ACE and its tests compile error free with GCC 4.1 pre release.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.9 and ACE-5.4.10
 ====================================================
 
@@ -22,7 +24,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.9 and ACE-5.4.10
 
 . Fixed a bug with the ACE_SPIPE_Acceptor on Windows.
 
-. Correctly set sockaddr_in.sin_len and sockaddr_in6.sin6_len on 
+. Correctly set sockaddr_in.sin_len and sockaddr_in6.sin6_len on
   platforms that have these fields.
 
 . Avoided problems with namespace pollution for max() macros.
@@ -43,7 +45,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.8 and ACE-5.4.9
 
 . Changed the behavior of ACE_Message_Queue::enqueue_head() and
   enqueue_tail(). If the enqueued message block has other blocks
-  chained to it via its next() pointer, the entire chain of blocks 
+  chained to it via its next() pointer, the entire chain of blocks
   will be enqueued at once.
 
 . Improved the support for high-resolution timers with
@@ -53,7 +55,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.8 and ACE-5.4.9
 
 . Improved ACE_Pipe implementation so that it uses localhost to avoid
   firewall problems.
-      
+
 . Added Unicode support to the Service Configurator.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
