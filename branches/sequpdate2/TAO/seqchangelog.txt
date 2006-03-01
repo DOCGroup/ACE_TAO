@@ -1,4 +1,8 @@
 
+        * tao/PI/ClientRequestDetails.cpp:
+        * tao/PI_Server/ServerRequestDetails.cpp:
+          Added missing duplicate call
+
         * TAO_IDL/be/be_interface.cpp
         * TAO_IDL/be/be_visitor_component/component_cs.cpp
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
