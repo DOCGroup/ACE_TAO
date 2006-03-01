@@ -1,3 +1,9 @@
+Wed Mar  1 16:12:50 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Added !BAD_AIO to the Proactor_Test and
+          Proactor_Test_IPV6. This makes it possible to avoid this test on
+          platforms that simply aren't capable of performing decent AIO.
+
 Wed Mar  1 10:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MT_SOCK_Test.cpp:
