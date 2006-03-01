@@ -1,3 +1,11 @@
+Wed Mar  1 15:02:10 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * DAnCE/NodeApplication/Container_Impl.h
+        * DAnCE/NodeApplication/Container_Impl.cpp
+
+        Added codes to unregister with naming service when removing
+        components
+
 Tue Feb 28 18:46:42 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment.xsd
