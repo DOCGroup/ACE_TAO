@@ -67,6 +67,17 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
+====================================================
+
+. Changed MPC configuration of Config_Handlers to turn off hidden 
+visibility if applicable when compiling Config_Handlers or projects 
+that use Config_Handlers on linux. In particular, with gcc4.0.2, 
+some CIAO tests that use ConfigHandlers will get segmentation fault 
+on linux, due to some incompatibility between standard C++ library and 
+gcc's support of hidden visibility. Future work will enhance this by 
+using preprocessing macros in the codes.
+
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
 ======================================================
