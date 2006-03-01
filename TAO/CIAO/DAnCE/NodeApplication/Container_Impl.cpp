@@ -190,6 +190,22 @@ CIAO::Container_Impl::install (
                      ACE_DEBUG ((LM_DEBUG,
                                  "Failed to register with naming service.\n"));
                    }
+                 else
+                   {
+                     if (this->naming_map_.bind
+                         (impl_infos[i].component_instance_name.in (),
+                          ACE_CString (naming_context)))
+                       {
+                         ACE_DEBUG ((LM_DEBUG,
+                                     "CIAO (%P|%t) Container_Impl.cpp -"
+                                     "CIAO::Container_Impl::install -"
+                                     "error in binding component "
+                                     "instance name [%s] into the naming map \n",
+                                     impl_infos[i].component_instance_name.in ()));
+                         ACE_TRY_THROW (Deployment::InstallationFailure ());
+                       }
+                   }
+
 
                }
 
@@ -448,6 +464,8 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   Components::CCMObject_var comp;
   Components::CCMHome_ptr home;
 
+  ACE_CString naming_context;
+
   ACE_CString str (comp_ins_name);
 
   /* Before we do remove component we have to inform the homeservant so
@@ -472,6 +490,29 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   // @@ Still need to remove the home if the previous operation fails?
   if (this->component_map_.unbind (str) == -1)
     ACE_THROW (::Components::RemoveFailure ());
+
+  if (this->naming_map_.find (str, naming_context) == 0)
+    {
+
+      bool result =
+        unregister_with_ns (
+                            naming_context.c_str (),
+                            this->orb_.in ()
+                            ACE_ENV_ARG_PARAMETER
+                            );
+      ACE_TRY_CHECK;
+
+      if (!result)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Failed to unregister with naming service.\n"));
+        }
+      else
+        {
+          if (this->naming_map_.unbind (str) == -1)
+            ACE_THROW (::Components::RemoveFailure ());
+        }
+    }
 }
 
 bool
@@ -573,13 +614,33 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Create a Naming Sequence
-      CosNaming::Name name (1);
-      name.length (1);
-      name[0].id = CORBA::string_dup (obj_name);
-      name[0].kind = CORBA::string_dup ("");
 
-      // Register with the Name Server
+      CosNaming::Name name (0);
+      name.length (0);
+
+      // Get the multicomponent naming context from the <naming_context>.
+      // The convention of this <naming_context> input string is that
+      // different naming context is separated by character '/', such as
+      // "create a naming context A/B/C/D".
+      ACE_CString tmp (obj_name);
+      char * naming_string = tmp.rep ();
+      char seps[]   = "/:";
+
+      char *token, *lastToken = NULL;
+      token = ACE_OS::strtok (naming_string, seps);
+
+      for (CORBA::ULong i = 0; token != NULL; ++i)
+        {
+            // While there still are tokens in the "naming_string"
+            name.length (name.length () + 1);
+            name[i].id = CORBA::string_dup (token);
+
+            // Get next naming context
+            lastToken = token;
+            token = ACE_OS::strtok ( NULL, seps );
+        }
+
+      // Unregister with the Name Server
       ACE_DEBUG ((LM_DEBUG,
                   "Unregister component with the name server : %s!\n",
                   obj_name));
