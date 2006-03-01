@@ -63,7 +63,8 @@ int AcceptHandler::handle_input(ACE_HANDLE) {
     ACE_INET_Addr clientAddr;
 
     // create a new ReadHandler
-    ReadHandler *reader = new (std::nothrow) ReadHandler();
+    ReadHandler *reader = 0;
+    ACE_NEW_NORETURN (reader, ReadHandler());
     if (reader == 0)
         ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate " \
                     "reader. (errno = %i: %m)\n"), errno), -1);
