@@ -91,70 +91,69 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Default calls a CTOR on type T of the form 'T::T(const char*)', but
-// users can feel free to create their own specialized conversion
-// functions if necessary, as shown below.  Note that for 'char*' the
-// default is used because a simple cast will be performed and no
-// conversion will be necessary.
-
-template <class T> inline void
-ACE_Convert (const ACE_TCHAR *s, T &t)
-{
-  t = T (s);
-}
-
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, ACE_TCHAR *&v)
 {
   v = (ACE_TCHAR *) s;
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, const ACE_TCHAR *&v)
 {
   v = (const ACE_TCHAR *) s;
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, short &si)
 {
   si = static_cast<short> (ACE_OS::strtol (s, 0, 10));
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, u_short &us)
 {
   us = static_cast <u_short> (ACE_OS::strtol (s, 0, 10));
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, u_int &i)
 {
   i = static_cast<u_int> (ACE_OS::strtol (s, 0, 10));
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, long &l)
 {
   l = ACE_OS::strtol (s, 0, 10);
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, int &i)
 {
   i = static_cast<int> (ACE_OS::strtol (s, 0, 10));
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, u_long &ul)
 {
   ul = ACE_OS::strtoul (s, 0, 10);
 }
 
-inline void
+template <> inline void
 ACE_Convert (const ACE_TCHAR *s, double &d)
 {
   d = ACE_OS::strtod (s, 0);
+}
+
+// Default calls a CTOR on type T of the form 'T::T(const char*)', but
+// users can feel free to create their own specialized conversion
+// functions if necessary, as shown above.  Note that for 'char*' the
+// default is used because a simple cast will be performed and no
+// conversion will be necessary.
+template <class T> inline void
+ACE_Convert (const ACE_TCHAR *s, T &t)
+{
+  t = T (s);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
