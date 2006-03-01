@@ -1,3 +1,16 @@
+Wed Mar  1 00:16:26 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Recursive_Thread_Mutex.cpp (get_nesting_level): On Win64 with
+          AMD64/EM64T, use the CRITICAL_SECTION's RecursionCount member, not
+          LockCount, as was changed in this entry:
+          Tue May  6 11:50:18 2003  Chad Elliott  <elliott_c@ociweb.com>
+          It remains to be seen under what conditions LockCount is used (it
+          may be for Itanium, for example) but for now, use of RecursionCount
+          is conditional to AMD64.
+
+        * tests/Reactor_Dispatch_Order_Test.cpp: Print some useful order info
+          rather than ACE_ASSERT everywhere. Also fixed some ACE_TEXT stuff.
+
 Tue Feb 28 23:28:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:

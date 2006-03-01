@@ -92,8 +92,11 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
   // Nothing inside of a CRITICAL_SECTION object should ever be
   // accessed directly.  It is documented to change at any time.
-# if defined (ACE_WIN64)
-  // Things are different on Windows XP 64-bit
+# if defined (ACE_WIN64) && !defined(_M_AMD64)
+  // Things are different on Windows XP 64-bit. However, as of Feb 2006
+  // Windows XP 64-bit edition on Intel EM64T w/ VC8, LockCount is
+  // decremented at first acquire and then doesn't change. RecursionCount,
+  // however, works the same as Win32, below.
   return this->lock_.LockCount + 1;
 # elif defined (ACE_WIN32)
   // This is really a Win32-ism...
