@@ -1,3 +1,9 @@
+Wed Mar  1 22:39:37 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * NEWS:
+
+          Updated this file with info from Jeff Parsons
+
 Wed Mar  1 15:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp (shutdown):
