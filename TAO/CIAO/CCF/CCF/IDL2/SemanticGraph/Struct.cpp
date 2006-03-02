@@ -36,18 +36,28 @@ namespace CCF
       {
         if (defined ())
         {
+          CompilerElements::Context& ctx (
+            const_cast<CompilerElements::Context&> (context ()));
+
+          if (ctx.count ("struct-complete-test"))
+            return true;
+
+          ctx.set ("struct-complete-test", true);
+          bool c (true);
+
           for (Scope::NamesIterator i (names_begin ());
-               i != names_end ();
+               c && i != names_end ();
                ++i)
           {
             Member const& m (dynamic_cast<Member&> ((*i)->named ()));
             Type const& t (m.belongs ().type ());
 
             if (!t.complete ())
-              return false;
+              c = false;
           }
 
-          return true;
+          ctx.remove ("struct-complete-test");
+          return c;
         }
 
         return false;

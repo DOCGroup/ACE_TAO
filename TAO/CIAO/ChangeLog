@@ -1,3 +1,11 @@
+Thu Mar  2 17:50:36 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * CCF/CCF/IDL2/SemanticGraph/Struct.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Union.cpp:
+
+          Fixed a bug in the logic that determines completeness of recursive
+          structs and unions.
+
 Thu Mar  2 08:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/Container_Impl.cpp:
