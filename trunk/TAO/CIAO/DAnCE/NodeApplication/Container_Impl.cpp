@@ -550,10 +550,10 @@ CIAO::Container_Impl::register_with_ns (const char * s,
       char * naming_string = tmp.rep ();
       char seps[]   = "/:";
 
-      char *token, *lastToken = NULL;
+      char *token, *lastToken = 0;
       token = ACE_OS::strtok (naming_string, seps);
 
-      for (CORBA::ULong i = 0; token != NULL; ++i)
+      for (CORBA::ULong i = 0; token != 0; ++i)
         {
             // While there still are tokens in the "naming_string"
             name.length (name.length () + 1);
@@ -561,7 +561,7 @@ CIAO::Container_Impl::register_with_ns (const char * s,
 
             // Get next naming context
             lastToken = token;
-            token = ACE_OS::strtok ( NULL, seps );
+            token = ACE_OS::strtok ( 0, seps );
         }
 
       if (name.length() > 1)
@@ -626,10 +626,10 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
       char * naming_string = tmp.rep ();
       char seps[]   = "/:";
 
-      char *token, *lastToken = NULL;
+      char *token, *lastToken = 0;
       token = ACE_OS::strtok (naming_string, seps);
 
-      for (CORBA::ULong i = 0; token != NULL; ++i)
+      for (CORBA::ULong i = 0; token != 0; ++i)
         {
             // While there still are tokens in the "naming_string"
             name.length (name.length () + 1);
@@ -637,7 +637,7 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
 
             // Get next naming context
             lastToken = token;
-            token = ACE_OS::strtok ( NULL, seps );
+            token = ACE_OS::strtok ( 0, seps );
         }
 
       // Unregister with the Name Server
