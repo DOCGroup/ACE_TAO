@@ -1,3 +1,7 @@
+Thu Mar  2 00:51:18 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Added Win64 and WinCE notes.
+
 Wed Mar  1 23:47:13 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * bin/make_release: Added "wince=1" to the MPC -features option for

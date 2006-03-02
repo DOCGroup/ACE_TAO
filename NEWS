@@ -13,6 +13,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
 
 . ACE and its tests compile error free with GCC 4.1 pre release.
 
+. ACE_Recursive_Thread_Mutex::get_nesting_level() fixed for 64-bit Windows
+  XP on amd64/EM64T hardware.
+
+. Many build-time fixes for Windows Mobile 5 and Windows PocketPC 2003 using
+  Visual Studio .NET 2005 (VC8).
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.9 and ACE-5.4.10
 ====================================================
 
