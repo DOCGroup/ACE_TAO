@@ -70,14 +70,19 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
 ====================================================
 
-. Changed MPC configuration of Config_Handlers to turn off hidden 
-visibility if applicable when compiling Config_Handlers or projects 
-that use Config_Handlers on linux. In particular, with gcc4.0.2, 
-some CIAO tests that use ConfigHandlers will get segmentation fault 
-on linux, due to some incompatibility between standard C++ library and 
-gcc's support of hidden visibility. Future work will enhance this by 
-using preprocessing macros in the codes.
+. Changed MPC configuration of Config_Handlers to turn off hidden
+  visibility if applicable when compiling Config_Handlers or projects
+  that use Config_Handlers on linux.This change was to work around symbol
+  visibility inconsistencies in GNU standard C++ library when using g++
+  4.x's symbol visibility features. 
 
+. Enhanced ReDaC service to enforce the correct
+  assembly redeployment and reconfiguration order.
+
+. Some bug fixes in ReDaC about removing components. 
+
+. Fixed NodeApplication to unbind a component with naming service 
+  when removing it from the container. 
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
 ======================================================
