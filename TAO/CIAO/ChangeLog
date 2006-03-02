@@ -1,3 +1,8 @@
+Thu Mar  2 08:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+          Replaced NULL with 0
+
 Thu Mar  2 01:33:09 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * NEWS:
