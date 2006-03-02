@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__BORLANDC__) && ((__BORLANDC__ == 0x564) || (__BORLANDC__ == 0x581))
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
 #include "tao/TAO_Export.h"
 #endif
 
@@ -41,7 +41,7 @@ namespace TAO
  * Internal class, providing stack functionality for TAO_Queued_Data
  * objects.  Stack operations don't require memory allocation.
 */
-#if defined (__BORLANDC__) && ((__BORLANDC__ == 0x564) || (__BORLANDC__ == 0x581))
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
 class TAO_Export Incoming_Message_Stack
 #else
 class Incoming_Message_Stack
