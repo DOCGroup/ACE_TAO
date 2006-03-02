@@ -19,6 +19,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
 . Many build-time fixes for Windows Mobile 5 and Windows PocketPC 2003 using
   Visual Studio .NET 2005 (VC8).
 
+. Added support for the --enable-tk-reactor configure option to the
+  autoconf build infrastructure to build the ACE_TkReactor library.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.9 and ACE-5.4.10
 ====================================================
 
