@@ -1,3 +1,10 @@
+Thu Mar  2 14:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * tao/Incoming_Message_Stack.h:
+          For Borland C++ we have workarounds in these files, seems these
+          are also needed for BDS2006 with Update Pack 2
+
 Thu Mar  2 01:56:58 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * NEWS:
