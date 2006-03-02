@@ -1,3 +1,9 @@
+Thu Mar  2 02:01:12 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * NEWS:
+
+          Updated this file with more inputs.
+
 Thu Mar  2 00:51:18 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * NEWS: Added Win64 and WinCE notes.
@@ -181,10 +187,10 @@ Mon Feb 27 22:36:20 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Mon Feb 27 08:17:49 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/Dev_Poll_Reactor.cpp (acquire_quietly): Moved the error message
-	  so that it only is printed if it's a real error, not just a
- 	  timeout.  Thanks to Oh Yoon Sik <boom at estsoft dot com> for
- 	  reporting this.
+        * ace/Dev_Poll_Reactor.cpp (acquire_quietly): Moved the error message
+          so that it only is printed if it's a real error, not just a
+          timeout.  Thanks to Oh Yoon Sik <boom at estsoft dot com> for
+          reporting this.
 
 Sun Feb 26 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
