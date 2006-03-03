@@ -1,0 +1,15 @@
+//$Id$
+
+project(CIDL): cidlc {
+  sharedname =
+  staticname = CIDL
+  libout = ..
+
+  Source_Files {
+ 	.
+	./SemanticGraph
+	./Traversal
+        ./SemanticAction
+        ./SemanticAction/Impl
+  }
+}
