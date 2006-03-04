@@ -2,7 +2,8 @@ Sat Mar  4 14:09:44 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * ace/ATM_Acceptor.h:
 
-          Added a missing semicolon.
+          Added a missing semicolon.  Thanks to Felix Li <fengli at
+          gmail dot com> for reporting this.
 
 Fri Mar 03 15:17:18 2006  Wallace Zhang  <zhangw@ociweb.com>
 
