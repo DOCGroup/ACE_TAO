@@ -47,7 +47,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
-class ACE_Time_Value
+class ACE_Time_Value;
 
 /**
  * @class ACE_ATM_Acceptor
