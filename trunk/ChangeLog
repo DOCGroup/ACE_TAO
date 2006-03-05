@@ -1,3 +1,9 @@
+Sun Mar  5 15:35:54 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * bin/make_release:
+
+          Corrected a warning when generating WinCE projects.
+
 Sat Mar  4 14:09:44 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * ace/ATM_Acceptor.h:
