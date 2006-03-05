@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(winregistry) {
-  avoids   += ace_for_tao
-  requires += winregistry
-}

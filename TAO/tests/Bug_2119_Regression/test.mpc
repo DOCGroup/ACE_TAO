@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project (tao67_test) : taolib_with_idl, valuetype, portableserver  {
-}
-
