@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : iortable, svc_utils, typecodefactory, pi_server, minimum_corba {
-  avoids    += ace_for_tao    // Requires ace/Configuration
-  after     += IFRService
-  libs      += TAO_IFRService
-  tagchecks += IFRService
-}

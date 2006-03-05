@@ -1,9 +1,0 @@
-// $Id$
-
-project (perf*) : ciao_client_dnc, rtcorba, exceptions {
-  avoids += ace_for_tao
-  after += Protocols_Sender_stub Protocols_Receiver_stub
-  includes += ../Sender
-  includes += ../Receiver
-  libs += Protocols_Receiver_stub Protocols_Sender_stub Protocols_stub
-}
