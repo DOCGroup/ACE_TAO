@@ -1,0 +1,142 @@
+  <!-- $Id$ -->
+<HTML>
+
+<HEAD>
+<TITLE>TAO Interoperable Naming Service</TITLE>
+
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+<HR><P>
+<H3>TAO Interoperable Naming Service</H3>
+
+The CORBA <A HREF="http://www.omg.org/cgi-bin/doc?ptc/99-09-01">
+Interoperable Naming Service</A> (INS) service allows the ORB to be configured
+administratively to return object references from
+<CODE>CORBA::ORB::resolve_initial_references</CODE> for non-locality
+constrained objects.  The service also introduces the
+<CODE>corbaloc</CODE> and <CODE>corbaname</CODE> IOR formats, which can
+be used to bootstrap services not available at ORB installation time.
+<P>
+
+This document presents an overview of how the above mentioned features are
+implemented in TAO and addresses some common questions. <P>
+
+<HR align=left width=80% ><P>
+<H4>How does <CODE>resolve_initial_references</CODE> work ?</H4><P>
+
+The following is the order of mechanisms checked by <CODE>resolve_initial_references</CODE>
+for locating a service: <P>
+
+<OL>
+<LI><A HREF="#oir">ORBInitRef</A> <br>
+<LI><A HREF="#odir">ORBDefaultInitRef</A> <br>
+<LI>ORB Default Settings <br>
+<LI>Multicast to Service <p>
+</OL>
+
+TAO uses the ACE_Hash_Map_Manager
+to keep track of the ObjectID:IOR mappings specified on the
+command-line. The IOR could be in <CODE>IOR</CODE>, <CODE>iiop</CODE>,
+or <CODE>corbaloc</CODE> format.  If the ORB fails to resolve the IOR
+using the command-line parameters or the default settings, it uses UDP
+multicast to resolve the service. <P>
+
+The Naming Service process acts as an IIOP Agent to respond with the
+IOR for the given service name. If the service being resolved is the
+Naming Service or the Trading Service, TAO checks the appropriate <A
+HREF="Options.html#ev">environment variables</A> prior to using
+multicast to obtain the appropriate port number or IOR.<p>
+
+The following diagram illustrates the order in which these various
+components interact. <P>
+
+<img width=200 height=5
+src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif"><img width=723
+height=529
+src="http://www.cs.wustl.edu/~schmidt/gifs/interop-naming.gif"><p>
+
+<HR align=left width=80% ><P>
+
+<H4>ORB Parameters Used for Configuration</H4>
+<A NAME="oir"></A>
+<DL>
+<DT> <img alt="o" src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<B><FONT COLOR="#000000">-ORBInitRef :</FONT> </B>
+The ORB initial reference argument allows specification of an
+    arbitrary object reference for an initial service. The format is :
+    <p>
+    <CODE>-ORBInitRef [ObjectID]=[ObjectURL]</CODE> <p>
+    Examples of use are: <p>
+    <CODE>-ORBInitRef  NameService=IOR:0002342344AB345</CODE> ...<br>
+    <CODE>-ORBInitRef MyServiceID=corbaloc:iiop:tango.cs.wustl.edu:8777/myService </CODE><p>
+
+    This mechanism allows an ORB to be configured with new initial
+    service Object IDs that were not defined when the ORB was
+    installed. The ObjectURL can be any of the URL schemes supported
+    by <CODE>CORBA::ORB::string_to_object</CODE>.<p>
+
+    <A NAME="odir"></A>
+<DT> <img alt="o" src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif"><B><FONT COLOR="#000000">
+-ORBDefaultInitRef :</FONT></B></LI>
+The ORB default initial reference argument assists in resolution of
+    initial references not explicitly specified with
+    <CODE>-ORBInitRef</CODE>. <CODE>-ORBDefaultInitRef</CODE> requires a URL that, after
+    appending a slash '/' and a stringified object key, forms a new
+    URL to identify an initial object reference. <p>
+    For example: <P>
+    <CODE>-ORBDefaultInitRef
+    corbaloc:iiop:tango.cs.wustl.edu:8989,iiop:merengue.cs.wustl.edu:9999</CODE> <p>
+
+    A call to <CODE>resolve_initial_references ("NameService")</CODE> with this
+    argument results in a new multiple profile URL equivalent to the following: <P>
+    <CODE>iiop://tango.cs.wustl.edu:8989/NameService</CODE> <br>
+    <CODE>iiop://merengue.cs.wustl.edu:9999/NameService</CODE> <p>
+
+    The URL is passed to <CODE>CORBA::ORB::string_to_object</CODE> to obtain the
+    initial reference for the service.
+</DL>
+
+<HR align=left width=80% ><P>
+
+<H4>corbaloc: IOR format</H4>
+The <CODE>CORBA::ORB::string_to_object</CODE> now understands the <CODE>corbaloc:</CODE>
+format IORs (previously called iioploc). These are user-friendly multiple end-point IORs. For
+example - <p>
+ <img width=50 height=5
+src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">corbaloc:iiop:tango.cs.wustl.edu:9999,iiop:merengue.cs.wustl.edu:9999/SimpleKey <p>
+
+Each of the end-points can use any transport protocols ex: iiop, rir. 
+The corbaloc:rir URL is defined to allow access to the ORB's
+configured initial references through an URL. Each of the end-points
+is converted into a Profile. These profiles are used to construct the
+Multiple Profile Object. This object is then used to construct the
+Object Reference.<p>
+
+The object references constructed using this format have a
+'SimpleKey' in the Object Key field of the IOR. The server side ORB
+intercepts the incoming request, recognizes the Simple Key and
+looks up a table to get the complete IOR. It then raises a
+LOCATION_FORWARD or an OBJECT_NOT_EXIST exception to forward/fail the
+request depending on if a mapping for the given simple key exists. <p>
+
+All default TAO Object keys are preceded by a special sequence of
+octets ^t^a^o/0. This is taken care of by the POA when it generates
+the Object key for the IOR. The sequence is useful for the ORB to
+distinguish a simple key from the usual TAO object key. <p>
+
+<HR align=left width=80% ><P>
+
+<!--<EM>
+Visitor #1 since Thu Apr 15 22:33:36 1999
+
+from merengue.cs.wustl.edu
+
+<EM><br> -->
+<I> Last modified Tue Apr 20 14:47:21 CDT 1999 </I>
+
+
+</BODY>
+</HTML>
