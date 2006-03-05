@@ -1,0 +1,15 @@
+// $Id$
+
+This test proves that TAOs Fault Tolerant object group equivalence comparison is according to the spec. Any error (assuming the Fault Tolerance orbsvcs library, and all its prerequisites, is available on the test platform) will indicate a regression or some sort of IOR demarshalling problem.
+
+client.cpp ::string_to_object's the pair combinations of the IORs in this directory in a reasonably exhaustive manner and checks that the result of ::is_equivalent matches the expected result as per the spec. All the IORs have a single profile.
+
+Ep1 and Ep2 have an IIOP profile for differing endpoints (same host but port differs) and are not IOGRs (i.e. they have no FT tagged components).
+
+All other IORs are IOGRs, having an IIOP profile corresponding to the endpoint of either Ep1.ior or Ep2.ior, as indicated by the first part of the file name. This profile is set to be the primary and additionally the profile has an FT group tagged component (FT::TagFTGroupTaggedComponent) that contains values as indicated by the following IOR file name values:
+
+d1 / d2 -> group_domain_id == "Domain_1" / group_domain_id == "Domain_2"
+g1 / g2 -> object_group_id == 1          / object_group_id == 2
+v1 / v2 -> object_group_ref_version == 1 / object_group_ref_version == 2
+
+See Bugzilla #2137 for more.
