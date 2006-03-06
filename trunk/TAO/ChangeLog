@@ -1,3 +1,8 @@
+Mon Mar 06 16:00:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+          Use prefix increment instead of postfix
+
 Mon Mar 06 15:57:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Adapter.cpp:
