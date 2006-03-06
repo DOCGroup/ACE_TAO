@@ -96,10 +96,11 @@ namespace CIAO
     void create_connections_POA (PortableServer::POA_ptr root
                                  ACE_ENV_ARG_DECL);
   protected:
-    long number_;
+    unsigned long number_;
 
-    // @@ Jai, why should this be static?
-    static ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> serial_number_;
+    /// Static variable to store the highest number we have given out until
+    /// now
+    static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> serial_number_;
 
     Dynamic_Component_Activator *dsa_;
 
