@@ -136,12 +136,12 @@ TAO/orbsvcs/tests/EC_Mcast/run_test.pl: !NO_MCAST !NO_MESSAGING
 TAO/orbsvcs/tests/Property/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
 #HANGS TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane
 #HANGS'TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir
-TAO/orbsvcs/tests/Security/Big_Request/run_test.pl: SSL !STATIC
-TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC
-TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC
-TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC
-TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC
-TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC
+TAO/orbsvcs/tests/Security/Big_Request/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS
+TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS
+TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS
+TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS
+TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS
+TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1 !NO_MCAST
 # The following 2 tests use dynamic loading to change the default reactor on Windows
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !STATIC
