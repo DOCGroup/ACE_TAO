@@ -1,3 +1,39 @@
+Mon Mar  6 18:25:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/os_include/os_semaphore.h:
+
+          Added an implementation for timed semaphore wait provided by
+          Gottwald Port Technology.  It is very similar to the emulated
+          semphore in the event that ACE_HAS_POSIX_SEM is not defined.
+          Previously, this was not supported at all when ACE_HAS_POSIX_SEM
+          was defined.
+
+        * ace/os_include/sys/os_time.h:
+
+          Added sys to the file name to avoid Doxygen warnings.
+
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+
+          This change coincides with a change in MPC where the qt library
+          setting was changed.
+
+        * bin/tao_other_tests.lst:
+
+          I added !DISABLE_INTERCEPTORS to all the Security tests as
+          both the TAO_Security library and TAO_SSLIOP library require
+          interceptors.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Removed an extra dollar sign, that GNU Make apparently didn't care
+          about but shouldn't have been there anyway.
+
+        * bin/MakeProjectCreator/config/global.mpb:
+
+          Removed this file.  It is redundant to the global.mpb found in
+          MPC.
+
 Mon Mar 06 15:44:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DLL/Newsweek.{h,cpp}:
