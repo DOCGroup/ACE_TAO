@@ -1,3 +1,21 @@
+Mon Mar 06 15:44:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DLL/Newsweek.{h,cpp}:
+        * examples/DLL/Today.{h,cpp}:
+        * examples/Shared_Malloc/test_persistence.cpp:
+          Added operator delete, fixes warnings with icc 9.1
+
+        * ace/CDR_Stream.cpp:
+        * tests/Thread_Pool_Test.cpp:
+          Initialise pointer with 0
+
+        * ace/Pipe.inl:
+          Replaced c-style casts with C++ casts
+
+        * ace/Svc_Handler.h:
+          Made the closing_ member an int, it is used that way, not as
+          char.
+
 Mon Mar 06 15:13:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
