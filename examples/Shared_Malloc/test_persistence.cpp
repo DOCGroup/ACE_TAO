@@ -69,9 +69,18 @@ public:
   {
     return shmem_allocator->malloc (sizeof (Employee));
   }
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+  void operator delete (void *p, const ACE_nothrow_t&) throw ()
+  {
+    shmem_allocator->free (pointer);
+  }
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
 
-  void operator delete (void *pointer) { shmem_allocator->free (pointer); }
+  void operator delete (void *pointer)
+  {
+    shmem_allocator->free (pointer);
+  }
 
 private:
   char *name_;
@@ -199,7 +208,7 @@ GUI_Handler::insert_employee (const char *name,
 int
 GUI_Handler::find_employee (const char *name)
 {
-  void *temp;
+  void *temp = 0;
 
   if (shmem_allocator->find (name,
                              temp) == 0)
@@ -263,7 +272,7 @@ GUI_Handler::list_employees (void)
 int
 GUI_Handler::delete_employee (const char *name)
 {
-  void *temp;
+  void *temp = 0;
 
   if (shmem_allocator->unbind (name,
                                temp) == 0)

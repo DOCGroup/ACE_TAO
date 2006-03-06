@@ -50,6 +50,9 @@ public:
 #if defined (ACE_HAS_NEW_NOTHROW)
   // Overloaded new operator, nothrow_t variant.
   void *operator new (size_t bytes, const ACE_nothrow_t&);
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+  void operator delete (void *p, const ACE_nothrow_t&) throw ();
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
   void operator delete (void *ptr);
 };
