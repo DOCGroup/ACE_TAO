@@ -106,6 +106,7 @@ public:
   {
   }
 
+  /// Copy constructor
   generic_sequence(generic_sequence const & rhs)
     : maximum_(0)
     , length_(0)
@@ -119,6 +120,7 @@ public:
     swap(tmp);
   }
 
+  /// Assignment operator
   generic_sequence & operator=(generic_sequence const & rhs)
   {
     generic_sequence tmp(rhs);
@@ -147,11 +149,13 @@ public:
     return release_;
   }
 
+  /// Returns the length of the sequence
   inline CORBA::ULong length() const
   {
     return length_;
   }
 
+  /// Set a new length for the sequence
   void length(CORBA::ULong length)
   {
     if (length <= maximum_ || length <= length_)
@@ -181,12 +185,14 @@ public:
     swap(tmp);
   }
 
+  /// Get a const element from the sequence
   value_type const & operator[](CORBA::ULong i) const
   {
     range::check(i, length_, maximum_, "operator[]() const");
     return buffer_[i];
   }
 
+  /// Get an element from the sequence
   value_type & operator[](CORBA::ULong i)
   {
     range::check(i, length_, maximum_, "operator[]() non-const");
@@ -195,7 +201,7 @@ public:
 
   /**
    * Allows the buffer underlying a sequence to be replaced.  The
-   * parameters to <replace> are identical in type, order, and purpose
+   * parameters to replace() are identical in type, order, and purpose
    * to those for the <T *data> constructor for the sequence.
    */
   void replace(
@@ -223,33 +229,33 @@ public:
     return buffer_;
   }
 
+  /// Allows read-write access to the underlying buffer.
   /**
-   * Allows read-write access to the underlying buffer.  If <orphan>
-   * is FALSE the sequence returns a pointer to its buffer, allocating
-   * one if it has not yet done so.  The number of elements in the
-   * buffer can be determined from the sequence <length> accessor.
+   * If @a orphan is FALSE the sequence returns a pointer to its buffer,
+   * allocating one if it has not yet done so.  The number of elements in the
+   * buffer can be determined from the sequence length() accessor.
    *
-   * If the <orphan> argument to <get_buffer> is FALSE, the sequence
+   * If the @a orphan argument to get_buffer() is FALSE, the sequence
    * maintains ownership of the underlying buffer.  Elements in the
    * returned buffer may be directly replaced by the caller.  For
    * sequences of strings, wide strings, and object references, the
    * caller must use the sequence <release> accessor to determine
    * whether elements should be freed (using <string_free>,
-   * <wstring_free>, or <CORBA::release> for strings, wide straings,
+   * <wstring_free>, or <CORBA::release> for strings, wide strings,
    * and object references, respective) before being directly assigned
    * to.
    *
-   * If the <orphan> argument to <get_buffer> is TRUE, the sequence
-   * yields ownership of the buffer to the caller.  If <orphan> is
+   * If the @a orphan argument to @a get_buffer is TRUE, the sequence
+   * yields ownership of the buffer to the caller.  If @a orphan is
    * TRUE and the sequence does not own its buffer (i.e., its
-   * <release> flag is FALSE), the return value is a null pointer.  If
+   * release_ flag is FALSE), the return value is a null pointer.  If
    * the buffer is taken from the sequence using this form of
-   * <get_buffer>, the sequence reverts to the same state it would
+   * get_buffer(), the sequence reverts to the same state it would
    * have if constructed using its default constructor.  The caller
    * becomes responsible for eventually freeing each element of the
    * returned buffer (for strings, wide string, and object
    * references), and then freeing the returned buffer itself using
-   * <freebuf>.
+   * freebuf().
    */
   value_type * get_buffer(CORBA::Boolean orphan)
   {
