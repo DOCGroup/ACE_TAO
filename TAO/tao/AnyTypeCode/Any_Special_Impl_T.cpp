@@ -103,7 +103,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
       if (any_kind != try_kind)
         {
-          return 0;
+          return false;
         }
 
       CORBA::ULong length =
@@ -112,7 +112,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
       if (length != bound)
         {
-          return 0;
+          return false;
         }
 
       TAO::Any_Impl *impl = any.impl ();
@@ -127,11 +127,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
           if (narrow_impl == 0)
             {
-              return 0;
+              return false;
             }
 
           _tao_elem = (T *) narrow_impl->value_;
-          return 1;
+          return true;
         }
 
       TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = 0;
@@ -140,7 +140,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
                                                 tc,
                                                 0,
                                                 bound),
-                      0);
+                      false);
 
       auto_ptr<TAO::Any_Special_Impl_T<T, from_T, to_T> > replacement_safety (
           replacement
@@ -154,7 +154,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
       // shared by another Any. This copies the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean good_decode =
+      CORBA::Boolean const good_decode =
         replacement->demarshal_value (for_reading);
 
       if (good_decode)
@@ -162,7 +162,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           _tao_elem = replacement->value_;
           const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
-          return 1;
+          return true;
         }
 
       // Duplicated by Any_Impl base class constructor.

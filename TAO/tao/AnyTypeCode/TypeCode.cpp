@@ -333,7 +333,7 @@ CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::BadKind (*this),
                   0);

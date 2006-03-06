@@ -144,7 +144,7 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::label (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  CORBA::Any * value;
+  CORBA::Any * value = 0;
 
   ACE_NEW_THROW_EX (value,
                     CORBA::Any,
