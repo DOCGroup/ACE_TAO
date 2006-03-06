@@ -254,12 +254,14 @@ recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::StructMemberSeq members (2);
-  members.length (2);
+  CORBA::StructMemberSeq members (3);
+  members.length (3);
   members[0].name = "recursive_structs";
   members[0].type = seq_tc;
   members[1].name = "i";
   members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
+  members[2].name = "recursive_structs_second";
+  members[2].type = seq_tc;
 
   CORBA::TypeCode_var struct_tc =
     orb->create_struct_tc ("IDL:Test/RecursiveStruct:1.0",
