@@ -413,7 +413,7 @@ endif
 DEPGEN ?= $(ACE_ROOT)/bin/depgen.pl
 
 # Use findstring just in case the script was preceded by /usr/bin/perl
-ifeq ($(findstring depgen.pl, $$(notdir $(DEPGEN))), depgen.pl)
+ifeq ($(findstring depgen.pl, $(notdir $(DEPGEN))), depgen.pl)
   DEPEND_CMD_ARGS += -i
   ifeq ($(inline), 0)
     DEPEND_CMD_ARGS += -n
