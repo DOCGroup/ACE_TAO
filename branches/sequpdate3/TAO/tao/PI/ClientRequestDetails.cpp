@@ -26,7 +26,7 @@ namespace TAO
 
     for (CORBA::ULong i = 0; i < plen; ++i)
       {
-        CORBA::Policy_var policy = policies[i];
+        CORBA::Policy_var policy = CORBA::Policy::_duplicate (policies[i]);
 
         if (CORBA::is_nil (policy.in ()))
           {

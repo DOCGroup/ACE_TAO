@@ -123,7 +123,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
         }
 
       // Duplicated by Any_Impl base class constructor.
-      CORBA::release (any_tc);
+      ::CORBA::release (any_tc);
     }
   ACE_CATCHANY
     {
@@ -144,7 +144,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
     }
 
   this->value_ = 0;
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
 }
 
 template<typename T_slice, typename T_forany>

@@ -23,9 +23,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
   RTCORBA::PriorityModel priority_model,
   RTCORBA::Priority server_priority)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityModelPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_model_ (priority_model)
@@ -34,9 +34,9 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
 }
 
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityModelPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_model_ (rhs.priority_model_)
@@ -151,9 +151,9 @@ TAO_PriorityModelPolicy::_tao_scope (void) const
 // ****************************************************************
 
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ThreadpoolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , id_ (id)
@@ -161,9 +161,9 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 }
 
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ThreadpoolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , id_ (rhs.id_)
@@ -243,18 +243,18 @@ TAO_ThreadpoolPolicy::_tao_scope (void) const
 // ****************************************************************
 
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PrivateConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
 {
 }
 
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PrivateConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
 {
@@ -322,9 +322,9 @@ TAO_PrivateConnectionPolicy::_tao_scope (void) const
 // ****************************************************************
 
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_bands_ (bands)
@@ -332,9 +332,9 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RT
 }
 
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_bands_ (rhs.priority_bands_)
@@ -443,9 +443,9 @@ TAO_PriorityBandedConnectionPolicy::priority_bands_rep (void)
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList &protocols)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ServerProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (protocols)
@@ -453,9 +453,9 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList 
 }
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ServerProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (rhs.protocols_)
@@ -553,9 +553,9 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (void)
 
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ClientProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (protocols)
@@ -563,9 +563,9 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList 
 }
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ClientProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (rhs.protocols_)

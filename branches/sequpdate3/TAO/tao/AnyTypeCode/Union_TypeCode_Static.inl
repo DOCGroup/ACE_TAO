@@ -16,8 +16,8 @@ TAO::TypeCode::Union<char const *,
   Case<char const *, CORBA::TypeCode_ptr const *> const * const * cases,
   CORBA::ULong ncases,
   CORBA::Long default_index)
-  : CORBA::TypeCode (CORBA::tk_union)
-  , ACE_NESTED_CLASS (TAO, Null_RefCount_Policy) ()
+  : ::CORBA::TypeCode (CORBA::tk_union)
+  , ::TAO::Null_RefCount_Policy ()
   , base_attributes_ (id, name)
   , discriminant_type_ (discriminant_type)
   , default_index_ (default_index)

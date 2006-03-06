@@ -47,6 +47,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+#include "tao/String_Manager_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -88,8 +89,8 @@ typedef
 struct TAO_Strategies_Export TAO_UIOP_Endpoint_Info
 {
   typedef TAO_UIOP_Endpoint_Info_var _var_type;
-  
-  
+
+
   TAO_String_Manager rendezvous_point;
   CORBA::Short priority;
 };
@@ -109,22 +110,20 @@ class TAO_UIOPEndpointSequence;
 
 typedef
   TAO_VarSeq_Var_T<
-      TAO_UIOPEndpointSequence,
-      TAO_UIOP_Endpoint_Info
+      TAO_UIOPEndpointSequence
     >
   TAO_UIOPEndpointSequence_var;
 
 typedef
   TAO_Seq_Out_T<
       TAO_UIOPEndpointSequence,
-      TAO_UIOPEndpointSequence_var,
-      TAO_UIOP_Endpoint_Info
+      TAO_UIOPEndpointSequence_var
     >
   TAO_UIOPEndpointSequence_out;
 
 class TAO_Strategies_Export TAO_UIOPEndpointSequence
   : public
-      TAO_Unbounded_Sequence<
+      TAO::unbounded_value_sequence<
           TAO_UIOP_Endpoint_Info
         >
 {
@@ -134,12 +133,12 @@ public:
   TAO_UIOPEndpointSequence (
       CORBA::ULong max,
       CORBA::ULong length,
-      TAO_UIOP_Endpoint_Info* buffer, 
+      TAO_UIOP_Endpoint_Info* buffer,
       CORBA::Boolean release = 0
     );
   TAO_UIOPEndpointSequence (const TAO_UIOPEndpointSequence &);
   ~TAO_UIOPEndpointSequence (void);
-  
+
   typedef TAO_UIOPEndpointSequence_var _var_type;
 };
 

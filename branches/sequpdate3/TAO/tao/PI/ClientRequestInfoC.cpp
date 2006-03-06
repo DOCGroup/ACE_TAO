@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::release (
     PortableInterceptor::ClientRequestInfo_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::ClientRequestInfo_ptr
@@ -111,18 +111,18 @@ PortableInterceptor::ClientRequestInfo::_unchecked_narrow (
 PortableInterceptor::ClientRequestInfo_ptr
 PortableInterceptor::ClientRequestInfo::_duplicate (ClientRequestInfo_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::ClientRequestInfo::_tao_release (ClientRequestInfo_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

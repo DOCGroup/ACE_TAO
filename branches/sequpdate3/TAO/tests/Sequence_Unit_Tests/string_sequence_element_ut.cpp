@@ -9,7 +9,9 @@
  * @author Carlos O'Ryan
  */
 #include "testing_string_traits.hpp"
-#include "string_sequence_element.hpp"
+#include "tao/String_Sequence_Element_T.h"
+#include "tao/String_Manager_T.h"
+#include "tao/CORBA_String.h"
 
 #include "ace/OS_NS_string.h"
 

@@ -78,7 +78,7 @@ CORBA::WrongTransaction::WrongTransaction (const ::CORBA::WrongTransaction &_tao
 CORBA::WrongTransaction&
 CORBA::WrongTransaction::operator= (const ::CORBA::WrongTransaction &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 

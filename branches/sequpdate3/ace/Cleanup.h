@@ -27,20 +27,9 @@
 
 #include "ace/ACE_export.h"
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # include "ace/Global_Macros.h"
-
 # define ACE_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_cleanup_destroyer)
-
-#else
-
-# define ACE_CLEANUP_DESTROYER_NAME ace_cleanup_destroyer
-
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 

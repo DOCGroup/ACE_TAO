@@ -44,10 +44,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 TAO::BufferingConstraint::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -75,7 +75,7 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::release (
     TAO::BufferingConstraintPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO::BufferingConstraintPolicy_ptr
@@ -86,7 +86,7 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::marshal (
-    TAO::BufferingConstraintPolicy_ptr p,
+    const TAO::BufferingConstraintPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -124,18 +124,18 @@ TAO::BufferingConstraintPolicy::_unchecked_narrow (
 TAO::BufferingConstraintPolicy_ptr
 TAO::BufferingConstraintPolicy::_duplicate (BufferingConstraintPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 TAO::BufferingConstraintPolicy::_tao_release (BufferingConstraintPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

@@ -48,7 +48,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::EmptyProfileList::EmptyProfileList (void)
@@ -74,7 +74,7 @@ TAO_IOP::EmptyProfileList::EmptyProfileList (const ::TAO_IOP::EmptyProfileList &
 TAO_IOP::EmptyProfileList&
 TAO_IOP::EmptyProfileList::operator= (const ::TAO_IOP::EmptyProfileList &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -130,7 +130,7 @@ void TAO_IOP::EmptyProfileList::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -143,7 +143,7 @@ void TAO_IOP::EmptyProfileList::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -153,7 +153,7 @@ CORBA::TypeCode_ptr TAO_IOP::EmptyProfileList::_tao_type (void) const
   return ::TAO_IOP::_tc_EmptyProfileList;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::NotFound::NotFound (void)
@@ -179,7 +179,7 @@ TAO_IOP::NotFound::NotFound (const ::TAO_IOP::NotFound &_tao_excp)
 TAO_IOP::NotFound&
 TAO_IOP::NotFound::operator= (const ::TAO_IOP::NotFound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -235,7 +235,7 @@ void TAO_IOP::NotFound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -248,7 +248,7 @@ void TAO_IOP::NotFound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -258,7 +258,7 @@ CORBA::TypeCode_ptr TAO_IOP::NotFound::_tao_type (void) const
   return ::TAO_IOP::_tc_NotFound;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::Duplicate::Duplicate (void)
@@ -284,7 +284,7 @@ TAO_IOP::Duplicate::Duplicate (const ::TAO_IOP::Duplicate &_tao_excp)
 TAO_IOP::Duplicate&
 TAO_IOP::Duplicate::operator= (const ::TAO_IOP::Duplicate &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -340,7 +340,7 @@ void TAO_IOP::Duplicate::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -353,7 +353,7 @@ void TAO_IOP::Duplicate::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -363,7 +363,7 @@ CORBA::TypeCode_ptr TAO_IOP::Duplicate::_tao_type (void) const
   return ::TAO_IOP::_tc_Duplicate;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::Invalid_IOR::Invalid_IOR (void)
@@ -389,7 +389,7 @@ TAO_IOP::Invalid_IOR::Invalid_IOR (const ::TAO_IOP::Invalid_IOR &_tao_excp)
 TAO_IOP::Invalid_IOR&
 TAO_IOP::Invalid_IOR::operator= (const ::TAO_IOP::Invalid_IOR &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -445,7 +445,7 @@ void TAO_IOP::Invalid_IOR::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -458,7 +458,7 @@ void TAO_IOP::Invalid_IOR::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -468,7 +468,7 @@ CORBA::TypeCode_ptr TAO_IOP::Invalid_IOR::_tao_type (void) const
   return ::TAO_IOP::_tc_Invalid_IOR;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::MultiProfileList::MultiProfileList (void)
@@ -494,7 +494,7 @@ TAO_IOP::MultiProfileList::MultiProfileList (const ::TAO_IOP::MultiProfileList &
 TAO_IOP::MultiProfileList&
 TAO_IOP::MultiProfileList::operator= (const ::TAO_IOP::MultiProfileList &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -550,7 +550,7 @@ void TAO_IOP::MultiProfileList::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -563,7 +563,7 @@ void TAO_IOP::MultiProfileList::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -591,7 +591,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::release (
     TAO_IOP::TAO_IOR_Property_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
@@ -615,12 +615,12 @@ TAO_IOP::TAO_IOR_Property::TAO_IOR_Property (void)
 TAO_IOP::TAO_IOR_Property::~TAO_IOR_Property (void)
 {}
 
-void 
+void
 TAO_IOP::TAO_IOR_Property::_tao_any_destructor (void *_tao_void_pointer)
 {
   TAO_IOR_Property *_tao_tmp_pointer =
     static_cast<TAO_IOR_Property *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
@@ -633,10 +633,10 @@ TAO_IOP::TAO_IOR_Property::_narrow (
     {
       return TAO_IOR_Property::_nil ();
     }
-  
+
   TAO_IOR_Property_ptr proxy =
     dynamic_cast<TAO_IOR_Property_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Property::_duplicate (proxy);
 }
 
@@ -650,28 +650,28 @@ TAO_IOP::TAO_IOR_Property::_unchecked_narrow (
     {
       return TAO_IOR_Property::_nil ();
     }
-  
+
   TAO_IOR_Property_ptr proxy =
     dynamic_cast<TAO_IOR_Property_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Property::_duplicate (proxy);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
 TAO_IOP::TAO_IOR_Property::_duplicate (TAO_IOR_Property_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 TAO_IOP::TAO_IOR_Property::_tao_release (TAO_IOR_Property_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -732,7 +732,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::release (
     TAO_IOP::TAO_IOR_Manipulation_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
@@ -750,7 +750,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
@@ -762,8 +762,9 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (void)
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::Object,
+        CORBA::Object_var
       >
     (max)
 {}
@@ -774,8 +775,9 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
     CORBA::Object_ptr * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::Object,
+        CORBA::Object_var
       >
     (max, length, buffer, release)
 {}
@@ -783,8 +785,9 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
     const IORList &seq
   )
-  : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::Object,
+        CORBA::Object_var
       >
     (seq)
 {}
@@ -809,12 +812,12 @@ TAO_IOP::TAO_IOR_Manipulation::TAO_IOR_Manipulation (void)
 TAO_IOP::TAO_IOR_Manipulation::~TAO_IOR_Manipulation (void)
 {}
 
-void 
+void
 TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor (void *_tao_void_pointer)
 {
   TAO_IOR_Manipulation *_tao_tmp_pointer =
     static_cast<TAO_IOR_Manipulation *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
@@ -827,10 +830,10 @@ TAO_IOP::TAO_IOR_Manipulation::_narrow (
     {
       return TAO_IOR_Manipulation::_nil ();
     }
-  
+
   TAO_IOR_Manipulation_ptr proxy =
     dynamic_cast<TAO_IOR_Manipulation_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Manipulation::_duplicate (proxy);
 }
 
@@ -844,28 +847,28 @@ TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
     {
       return TAO_IOR_Manipulation::_nil ();
     }
-  
+
   TAO_IOR_Manipulation_ptr proxy =
     dynamic_cast<TAO_IOR_Manipulation_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Manipulation::_duplicate (proxy);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
 TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 TAO_IOP::TAO_IOR_Manipulation::_tao_release (TAO_IOR_Manipulation_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

@@ -59,33 +59,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_ULONGLONGSEQ_CH_)
 #define _CORBA_ULONGLONGSEQ_CH_
-  
+
   class ULongLongSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
-        ULongLongSeq,
-        CORBA::ULongLong
+        ULongLongSeq
       >
     ULongLongSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ULongLongSeq,
-        ULongLongSeq_var,
-        CORBA::ULongLong
+        ULongLongSeq_var
       >
     ULongLongSeq_out;
-  
+
   class TAO_Export ULongLongSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::ULongLong
           >
   {
@@ -95,14 +93,14 @@ namespace CORBA
     ULongLongSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::ULongLong* buffer, 
+        ::CORBA::ULongLong* buffer,
         ::CORBA::Boolean release = 0
       );
     ULongLongSeq (const ULongLongSeq &);
     ~ULongLongSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ULongLongSeq_var _var_type;
   };
 

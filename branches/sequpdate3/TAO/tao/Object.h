@@ -276,7 +276,7 @@ namespace CORBA
 
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.
-    static CORBA::Boolean marshal (Object_ptr obj,
+    static CORBA::Boolean marshal (const Object_ptr obj,
                                    TAO_OutputCDR &strm);
 
     /// Accessor for the cached servant reference held on the stub
@@ -434,7 +434,7 @@ namespace TAO
     static CORBA::Object_ptr duplicate (CORBA::Object_ptr);
     static void release (CORBA::Object_ptr);
     static CORBA::Object_ptr nil (void);
-    static CORBA::Boolean marshal (CORBA::Object_ptr p,
+    static CORBA::Boolean marshal (const CORBA::Object_ptr p,
                                    TAO_OutputCDR & cdr);
   };
 }

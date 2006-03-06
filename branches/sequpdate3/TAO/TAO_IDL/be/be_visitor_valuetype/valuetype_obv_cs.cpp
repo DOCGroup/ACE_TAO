@@ -67,8 +67,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   *os << node->local_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-  
-  // Initializing constructor.    
+
+  // Initializing constructor.
   if (node->has_member ())
     {
       *os << node->full_obv_skel_name () << "::";
@@ -79,16 +79,16 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
         }
 
       *os << node->local_name () << " (" << be_idt << be_idt;
-          
-      unsigned long index = 0;    
+
+      unsigned long index = 0;
       this->gen_obv_init_constructor_args (node, index);
 
       *os << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt;
-          
+
       this->gen_obv_init_constructor_inits (node);
-      
+
       *os << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -143,7 +143,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name ()
               << "::_add_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->ACE_NESTED_CLASS ( ::CORBA,DefaultValueRefCountBase)::_add_ref ();"
+              << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
               << be_uidt_nl
               << "}" << be_nl;
 
@@ -151,7 +151,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name ()
               << "::_remove_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->ACE_NESTED_CLASS ( ::CORBA,DefaultValueRefCountBase)::_remove_ref ();"
+              << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
               << be_uidt_nl
               << "}";
         }
@@ -193,7 +193,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_ValueType *parent = node->inherits_concrete ();
-  
+
   // Generate for inherited members first.
   if (parent != 0)
     {

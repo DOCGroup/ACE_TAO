@@ -76,7 +76,7 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::release (
     ImplementationRepository::ServerObject_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 ImplementationRepository::ServerObject_ptr
@@ -95,7 +95,7 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer) (
     ::CORBA::Object_ptr obj
   ) = 0;
@@ -112,21 +112,21 @@ void ImplementationRepository::ServerObject::ping (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_ServerObject_Proxy_Broker_ == 0)
     {
       ImplementationRepository_ServerObject_setup_collocation ();
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  
+
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _the_tao_operation_signature,
@@ -135,7 +135,7 @@ void ImplementationRepository::ServerObject::ping (
       4,
       this->the_TAO_ServerObject_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -152,21 +152,21 @@ void ImplementationRepository::ServerObject::shutdown (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_ServerObject_Proxy_Broker_ == 0)
     {
       ImplementationRepository_ServerObject_setup_collocation ();
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  
+
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _the_tao_operation_signature,
@@ -176,7 +176,7 @@ void ImplementationRepository::ServerObject::shutdown (
       this->the_TAO_ServerObject_Proxy_Broker_,
       TAO::TAO_ONEWAY_INVOCATION
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -200,12 +200,12 @@ ImplementationRepository::ServerObject::ImplementationRepository_ServerObject_se
 ImplementationRepository::ServerObject::~ServerObject (void)
 {}
 
-void 
+void
 ImplementationRepository::ServerObject::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServerObject *_tao_tmp_pointer =
     static_cast<ServerObject *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 ImplementationRepository::ServerObject_ptr
@@ -241,18 +241,18 @@ ImplementationRepository::ServerObject::_unchecked_narrow (
 ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject::_duplicate (ServerObject_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 ImplementationRepository::ServerObject::_tao_release (ServerObject_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -276,7 +276,7 @@ ImplementationRepository::ServerObject::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -303,7 +303,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:ImplementationRepository/ServerObject:1.0",
     "ServerObject");
-  
+
 namespace ImplementationRepository
 {
   ::CORBA::TypeCode_ptr const _tc_ServerObject =
@@ -332,8 +332,8 @@ namespace TAO
 
 namespace ImplementationRepository
 {
-  
-  
+
+
   // Copying insertion.
   void
   operator<<= (
@@ -345,7 +345,7 @@ namespace ImplementationRepository
       ServerObject::_duplicate (_tao_elem);
     _tao_any <<= &_tao_objptr;
   }
-  
+
   // Non-copying insertion.
   void
   operator<<= (
@@ -360,7 +360,7 @@ namespace ImplementationRepository
         *_tao_elem
       );
   }
-  
+
   ::CORBA::Boolean
   operator>>= (
       const ::CORBA::Any &_tao_any,
@@ -442,21 +442,21 @@ operator>>= (
   )
 {
   ::CORBA::Object_var obj;
-  
+
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-  
+
   typedef ::ImplementationRepository::ServerObject RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 

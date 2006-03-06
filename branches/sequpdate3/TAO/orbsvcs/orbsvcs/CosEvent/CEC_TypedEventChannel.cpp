@@ -289,7 +289,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("***** Base interface %s found on interface %s *****\n"),
-                              fid->base_interfaces[base].in(),
+                              static_cast<char const*>(fid->base_interfaces[base]),
                               interface_ ));
                 }
             }

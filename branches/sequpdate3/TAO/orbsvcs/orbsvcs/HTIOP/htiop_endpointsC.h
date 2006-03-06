@@ -47,6 +47,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+#include "tao/String_Manager_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -88,8 +89,8 @@ typedef
 struct HTIOP_Export HTIOP_Endpoint_Info
 {
   typedef HTIOP_Endpoint_Info_var _var_type;
-  
-  
+
+
   TAO_String_Manager host;
   CORBA::Short port;
   TAO_String_Manager htid;
@@ -110,22 +111,20 @@ class HTIOPEndpointSequence;
 
 typedef
   TAO_VarSeq_Var_T<
-      HTIOPEndpointSequence,
-      HTIOP_Endpoint_Info
+      HTIOPEndpointSequence
     >
   HTIOPEndpointSequence_var;
 
 typedef
   TAO_Seq_Out_T<
       HTIOPEndpointSequence,
-      HTIOPEndpointSequence_var,
-      HTIOP_Endpoint_Info
+      HTIOPEndpointSequence_var
     >
   HTIOPEndpointSequence_out;
 
 class HTIOP_Export HTIOPEndpointSequence
   : public
-      TAO_Unbounded_Sequence<
+      TAO::unbounded_value_sequence<
           HTIOP_Endpoint_Info
         >
 {
@@ -135,12 +134,12 @@ public:
   HTIOPEndpointSequence (
       CORBA::ULong max,
       CORBA::ULong length,
-      HTIOP_Endpoint_Info* buffer, 
+      HTIOP_Endpoint_Info* buffer,
       CORBA::Boolean release = 0
     );
   HTIOPEndpointSequence (const HTIOPEndpointSequence &);
   ~HTIOPEndpointSequence (void);
-  
+
   typedef HTIOPEndpointSequence_var _var_type;
 };
 

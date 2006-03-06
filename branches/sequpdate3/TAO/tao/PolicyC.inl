@@ -41,12 +41,7 @@ CORBA::Policy::Policy (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_Policy_Proxy_Broker_ (0)
 {
   this->CORBA_Policy_setup_collocation ();
@@ -57,7 +52,7 @@ CORBA::Policy::Policy (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_Policy_Proxy_Broker_ (0)
 {
 }

@@ -30,7 +30,6 @@ ACE_RCSID (be,
            be_codegen,
            "$Id$")
 
-
 TAO_CodeGen * tao_cg = 0;
 
 TAO_CodeGen::TAO_CodeGen (void)
@@ -1638,7 +1637,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // Generated if (w)string member of struct/union/exception/array/valuetype
   // has been seen.
   this->gen_cond_file_include (idl_global->string_member_seen_,
-                               "tao/Managed_Types.h",
+                               "tao/String_Manager_T.h",
                                this->client_header_);
 
   // Include the Messaging library entry point, if AMI is enabled.

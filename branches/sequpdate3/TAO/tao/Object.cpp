@@ -32,7 +32,6 @@ ACE_RCSID (tao,
            Object,
            "$Id$")
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object::~Object (void)
@@ -148,7 +147,7 @@ void
 CORBA::Object::_tao_any_destructor (void *x)
 {
   CORBA::Object_ptr tmp = static_cast<CORBA::Object_ptr> (x);
-  CORBA::release (tmp);
+  ::CORBA::release (tmp);
 }
 
 // virtual -- do not inline
@@ -1012,7 +1011,7 @@ namespace TAO
   void
   Objref_Traits<CORBA::Object>::release (CORBA::Object_ptr p)
   {
-    CORBA::release (p);
+    ::CORBA::release (p);
   }
 
   CORBA::Object_ptr
@@ -1022,7 +1021,7 @@ namespace TAO
   }
 
   CORBA::Boolean
-  Objref_Traits<CORBA::Object>::marshal (CORBA::Object_ptr p,
+  Objref_Traits<CORBA::Object>::marshal (const CORBA::Object_ptr p,
                                          TAO_OutputCDR & cdr)
   {
     return p->marshal (cdr);

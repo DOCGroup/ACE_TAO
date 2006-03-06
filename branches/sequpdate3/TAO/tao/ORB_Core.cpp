@@ -268,9 +268,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  CORBA::release (this->policy_manager_);
+  ::CORBA::release (this->policy_manager_);
   delete this->default_policies_;
-  CORBA::release (this->policy_current_);
+  ::CORBA::release (this->policy_current_);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -283,7 +283,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // Don't delete, is a process wide singleton shared by all orbs
   orbinitializer_registry_ = 0;
 
-  CORBA::release (this->orb_);
+  ::CORBA::release (this->orb_);
 }
 
 int
@@ -1238,17 +1238,17 @@ TAO_ORB_Core::fini (void)
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
 
-  CORBA::release (this->implrepo_service_);
+  ::CORBA::release (this->implrepo_service_);
 
-  CORBA::release (this->typecode_factory_);
+  ::CORBA::release (this->typecode_factory_);
 
-  CORBA::release (this->codec_factory_);
+  ::CORBA::release (this->codec_factory_);
 
-  CORBA::release (this->dynany_factory_);
+  ::CORBA::release (this->dynany_factory_);
 
-  CORBA::release (this->ior_manip_factory_);
+  ::CORBA::release (this->ior_manip_factory_);
 
-  CORBA::release (this->ior_table_);
+  ::CORBA::release (this->ior_table_);
 
   if (TAO_debug_level > 2)
     {

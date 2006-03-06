@@ -17,8 +17,8 @@ TAO::TypeCode::Value<char const *,
   CORBA::TypeCode_ptr const * concrete_base,
   Value_Field<char const *, CORBA::TypeCode_ptr const *> const * fields,
   CORBA::ULong nfields)
-  : CORBA::TypeCode (kind)
-  , ACE_NESTED_CLASS (TAO, Null_RefCount_Policy) ()
+  : ::CORBA::TypeCode (kind)
+  , ::TAO::Null_RefCount_Policy ()
   , base_attributes_ (id, name)
   , type_modifier_ (modifier)
   , concrete_base_ (concrete_base)

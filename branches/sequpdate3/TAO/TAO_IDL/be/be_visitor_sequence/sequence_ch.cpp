@@ -178,14 +178,14 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   if (be_global->any_support () && !node->anonymous ())
     {
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "static void _tao_any_destructor (void *);";
     }
 
   // Generate the _var_type typedef (only if we are not anonymous).
   if (this->ctx_->tdef () != 0)
     {
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "typedef " << node->local_name () << "_var _var_type;";
     }
 
@@ -220,7 +220,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                 << "::CORBA::ULong length," << be_nl
                 << "const ACE_Message_Block* mb" << be_uidt_nl
                 << ")" << be_uidt_nl
-                << "  : TAO_Unbounded_Sequence< ::CORBA::Octet>"
+                << "  : TAO::unbounded_value_sequence< ::CORBA::Octet>"
                 << " (length, mb) {}" << "\n"
                 << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
     }
@@ -239,145 +239,28 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
                                              be_type *elem)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *scope = this->ctx_->scope ();
 
   *os << be_nl << be_nl;
 
-  switch (node->managed_type ())
-    {
-    case be_sequence::MNG_OBJREF:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl << ">"
-          << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
+    AST_Type::SIZE_TYPE st = elem->size_type ();
 
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl << ">"
-          << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
+    *os << "typedef" << be_idt_nl
+        << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<"
+                                  : "TAO_VarSeq_Var_T<")
+        << be_idt << be_idt_nl
+        << node->local_name ();
 
-      break;
-    case be_sequence::MNG_PSEUDO:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
+    *os << be_uidt_nl
+        << ">" << be_uidt_nl
+        << node->local_name () << "_var;" << be_uidt;
 
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
+    *os << be_nl << be_nl
+        << "typedef" << be_idt_nl
+        << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+        << node->local_name () << "," << be_nl
+        << node->local_name () << "_var";
 
-      break;
-    case be_sequence::MNG_VALUE:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
-
-      break;
-    case be_sequence::MNG_STRING:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_SeqElem_String_Manager" << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_SeqElem_String_Manager" << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
-
-      break;
-    case be_sequence::MNG_WSTRING:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_SeqElem_WString_Manager" << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_SeqElem_WString_Manager" << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
-
-      break;
-    default: // Not a managed type.
-      {
-        AST_Type::SIZE_TYPE st = elem->size_type ();
-
-        *os << "typedef" << be_idt_nl
-            << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<"
-                                      : "TAO_VarSeq_Var_T<")
-            << be_idt << be_idt_nl
-            << node->local_name () << "," << be_nl
-            << elem->nested_type_name (scope);
-
-        *os << be_uidt_nl
-            << ">" << be_uidt_nl
-            << node->local_name () << "_var;" << be_uidt;
-
-        *os << be_nl << be_nl
-            << "typedef" << be_idt_nl
-            << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-            << node->local_name () << "," << be_nl
-            << node->local_name () << "_var," << be_nl
-            << elem->nested_type_name (scope);
-
-        *os << be_uidt_nl
-            << ">" << be_uidt_nl
-            << node->local_name () << "_out;" << be_uidt;
-      }
-
-      break;
-    }
+    *os << be_uidt_nl
+        << ">" << be_uidt_nl
+        << node->local_name () << "_out;" << be_uidt;
 }

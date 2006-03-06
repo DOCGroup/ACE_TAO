@@ -16,9 +16,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
   , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (relative_expiry)
@@ -27,9 +27,9 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
 
 TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   const TAO_ConnectionTimeoutPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
   , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (rhs.relative_expiry_)

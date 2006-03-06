@@ -31,18 +31,8 @@ namespace TAO
    * struct Value_Traits
    *
    * @brief Specialized for each valuetype in generated code.
-   *
    */
-  template<typename T>
-  struct Value_Traits
-  {
-    static void add_ref (T *);
-    static void remove_ref (T *);
-
-    // For INOUT value type arguments, so they can use the same set
-    // of arg classes as interfaces.
-    static void release (T *);
-  };
+  template<typename T> struct Value_Traits;
 }
 
 /**

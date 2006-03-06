@@ -96,7 +96,7 @@ HTIOPEndpointSequence::HTIOPEndpointSequence (void)
 HTIOPEndpointSequence::HTIOPEndpointSequence (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         HTIOP_Endpoint_Info
       >
     (max)
@@ -108,7 +108,7 @@ HTIOPEndpointSequence::HTIOPEndpointSequence (
     HTIOP_Endpoint_Info * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         HTIOP_Endpoint_Info
       >
     (max, length, buffer, release)
@@ -117,7 +117,7 @@ HTIOPEndpointSequence::HTIOPEndpointSequence (
 HTIOPEndpointSequence::HTIOPEndpointSequence (
     const HTIOPEndpointSequence &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         HTIOP_Endpoint_Info
       >
     (seq)

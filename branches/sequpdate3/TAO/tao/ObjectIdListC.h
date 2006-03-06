@@ -85,23 +85,21 @@ namespace CORBA
   class ORB_ObjectIdList;
 
   typedef
-    TAO_MngSeq_Var_T<
-        ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
+    TAO_VarSeq_Var_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         ORB_ObjectIdList,
-        ORB_ObjectIdList_var,
-        TAO_SeqElem_String_Manager
+        ORB_ObjectIdList_var
       >
     ORB_ObjectIdList_out;
 
   class TAO_Export ORB_ObjectIdList
     : public
-        TAO_Unbounded_String_Sequence
+        TAO::unbounded_string_sequence
   {
   public:
     ORB_ObjectIdList (void);

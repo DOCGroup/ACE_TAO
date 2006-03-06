@@ -129,13 +129,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // ----------------------------------------------------------------
 
 // Deal with MSVC++ 6 (or less) insanity for CORBA...
-# if !defined (ACE_NESTED_CLASS)
-#   if defined (ACE_HAS_BROKEN_NAMESPACES)
-#     define ACE_NESTED_CLASS(TYPE, NAME) NAME
-#   else  /* ! ACE_HAS_BROKEN_NAMESPACES */
-#     define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
-#   endif /* ! ACE_HAS_BROKEN_NAMESPACES */
-# endif  /* !ACE_NESTED_CLASS */
+//#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+/**
+ * This macro is deprecated
+ */
+#  define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
+//#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
   /**
@@ -631,20 +630,9 @@ static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
  *        implements the service.
  *
  */
-#if defined (_MSC_VER) && _MSC_VER <= 1200
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-/**
- * @todo Remove this macro once we drop MSVC++ 6 support.
- */
-# define ACE_FACTORY_DECLARE(CLS,SERVICE_CLASS) \
-extern "C" CLS##_Export ACE_Service_Object * \
-_make_ ## SERVICE_CLASS (ACE_Service_Object_Exterminator *);
-#else
 # define ACE_FACTORY_DECLARE(CLS,SERVICE_CLASS) \
 extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * \
 ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (ACE_Service_Object_Exterminator *);
-#endif  /* _MSC_VER <= 1200*/
 
 /// Define the factory method (and destructor) for a dynamically
 /// loadable service.
@@ -662,27 +650,6 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
  */
 # define ACE_Local_Service_Export
 
-#if defined (_MSC_VER) && _MSC_VER <= 1200
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-/**
- * @todo Remove this macro once we drop MSVC++ 6 support.
- */
-# define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
-void _gobble_ ## SERVICE_CLASS (void *p) { \
-  ACE_Service_Object * _p = \
-    static_cast<ACE_Service_Object *> (p); \
-  ACE_ASSERT (_p != 0); \
-  delete _p; } \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_ ## SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
-{ \
-  ACE_TRACE (#SERVICE_CLASS); \
-  if (gobbler != 0) \
-    *gobbler = (ACE_Service_Object_Exterminator) _gobble_ ## SERVICE_CLASS; \
-  return new SERVICE_CLASS; \
-}
-#else
 # define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
 void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
@@ -697,7 +664,6 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
     *gobbler = (ACE_Service_Object_Exterminator) ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS); \
   return new SERVICE_CLASS; \
 }
-#endif  /* _MSC_VER <= 1200 */
 
 /**
  * For service classes scoped within namespaces, use this macro in
@@ -725,27 +691,6 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
  * this will ensure unique generated signatures for the various C
  * style functions.
  */
-#if defined (_MSC_VER) && _MSC_VER <= 1200
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-/**
- * @todo Remove this macro once we drop MSVC++ 6 support.
- */
-# define ACE_FACTORY_NAMESPACE_DEFINE(CLS,SERVICE_CLASS,NAMESPACE_CLASS) \
-void _gobble_ ## SERVICE_CLASS (void *p) { \
-  ACE_Service_Object * _p = \
-    static_cast<ACE_Service_Object *> (p); \
-  ACE_ASSERT (_p != 0); \
-  delete _p; } \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_ ## SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
-{ \
-  ACE_TRACE (#SERVICE_CLASS); \
-  if (gobbler != 0) \
-    *gobbler = (ACE_Service_Object_Exterminator) _gobble_ ## SERVICE_CLASS; \
-  return new NAMESPACE_CLASS; \
-}
-#else
 # define ACE_FACTORY_NAMESPACE_DEFINE(CLS,SERVICE_CLASS,NAMESPACE_CLASS) \
 void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
@@ -760,19 +705,9 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
     *gobbler = (ACE_Service_Object_Exterminator) ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS); \
   return new NAMESPACE_CLASS; \
 }
-#endif  /* _MSC_VER <= 1200 */
 
 /// The canonical name for a service factory method
-#if defined (_MSC_VER) && _MSC_VER <= 1200
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-/**
- * @todo Remove this macro once we drop MSVC++ 6 support.
- */
-# define ACE_SVC_NAME(SERVICE_CLASS) _make_ ## SERVICE_CLASS
-#else
 # define ACE_SVC_NAME(SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS)
-#endif  /* ACE_SVC_NAME */
 
 /// The canonical way to invoke (i.e. construct) a service factory
 /// method.

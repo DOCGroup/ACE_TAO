@@ -1,0 +1,34 @@
+
+        * ace/config-win32-msvc.h:
+          Removed support for vc6 and vc7.0
+
+        * ace/Array_Base.cpp:
+        * ace/Array_Map.{h,cpp}:
+        * ace/Base_Thread_Adapter.h:
+        * ace/Cleanup.h:
+        * ace/Log_Msg.h:
+        * ace/Versioned_Namespace.h:
+        * ace/Get_Opt.cpp:
+        * ace/WIN32_Proactor.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/CDR_Base.h:
+          Removed work arounds for vc6
+
+        * ace/README
+        * ace/config-win32-msvc6.h:
+        * ace/Global_Macros.h:
+          Deprecated ACE_HAS_BROKEN_NAMESPACES, we drop msvc6 and I am
+          removing the workarounds for this compiler one by one as part of the
+          new sequence implementation. Because we deprecate this also
+          ACE_NESTED_CLASS is deprecated
+
+        * ace/config-win32-msvc6.h:
+        * ace/config-win32-msvc7.h:
+        * ace/config-win32-msvc8.h:
+          Removed ACE_HAS_BROKEN_IMPLICIT_CONST_CAST, not used in ACE
+
+        * ace/config-win32-msvc6.h:
+        * ace/config-win32-visualage.h:
+        * ace/Registry.h
+          Removed ACE_HAS_BROKEN_NESTED_TEMPLATES, only used for msvc6 and
+          visual age, both are being dropped

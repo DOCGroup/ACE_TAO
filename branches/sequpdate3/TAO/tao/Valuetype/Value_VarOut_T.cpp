@@ -8,31 +8,6 @@
 
 #include <algorithm>  /* For std::swap<>() */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-template<typename T>
-void
-TAO::Value_Traits<T>::add_ref (T * p)
-{
-  CORBA::add_ref (p);
-}
-
-template<typename T>
-void
-TAO::Value_Traits<T>::remove_ref (T * p)
-{
-  CORBA::remove_ref (p);
-}
-
-template<typename T>
-void
-TAO::Value_Traits<T>::release (T * p)
-{
-  CORBA::remove_ref (p);
-}
-
-// ===============================================================
-
 template <typename T>
 TAO_Value_Var_T<T>::TAO_Value_Var_T (void)
   : ptr_ (0)

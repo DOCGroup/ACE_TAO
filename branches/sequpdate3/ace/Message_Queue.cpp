@@ -432,11 +432,7 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
       size_t mlength = new_item->total_length ();
       // Note - we send ACTIVATED in the 3rd arg to tell the completion
       // routine it's _NOT_ being woken up because of deactivate().
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-      DWORD state_to_post;
-#else
       ULONG_PTR state_to_post;
-#endif
       state_to_post = ACE_Message_Queue_Base::ACTIVATED;
       if (::PostQueuedCompletionStatus (this->completion_port_,
                                         static_cast<DWORD> (msize),
@@ -475,11 +471,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
       ++this->cur_thrs_;        // Increase the waiting thread count.
   }
 
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-  DWORD queue_state;
-#else
   ULONG_PTR queue_state;
-#endif
   DWORD msize;
   // Get a message from the completion port.
   int retv = ::GetQueuedCompletionStatus (this->completion_port_,

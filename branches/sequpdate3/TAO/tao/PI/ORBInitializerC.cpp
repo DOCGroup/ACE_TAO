@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::release (
     PortableInterceptor::ORBInitializer_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::ORBInitializer_ptr
@@ -111,18 +111,18 @@ PortableInterceptor::ORBInitializer::_unchecked_narrow (
 PortableInterceptor::ORBInitializer_ptr
 PortableInterceptor::ORBInitializer::_duplicate (ORBInitializer_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::ORBInitializer::_tao_release (ORBInitializer_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

@@ -8,12 +8,14 @@
  * @author Carlos O'Ryan
  */
 #include "testing_string_traits.hpp"
-#include "string_traits.hpp"
+#include "tao/String_Traits_T.h"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "unbounded_string_sequence.hpp"
-#include "unbounded_wstring_sequence.hpp"
+#include "tao/Unbounded_String_Sequence_T.h"
+#include "tao/Unbounded_Wstring_Sequence_T.h"
+#include "tao/Unbounded_Wstring_Sequence_T.h"
+#include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
 

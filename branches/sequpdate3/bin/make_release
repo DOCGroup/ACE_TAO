@@ -817,9 +817,7 @@ sub generate_makefiles () {
           bin/mwc.pl -type vc8 $mpc_option $exclude_option $vc8_option; \
           bin/mwc.pl -type vc8 $mpc_option $exclude_option $ce_option; \
           bin/mwc.pl -type vc71 $mpc_option $exclude_option; \
-          bin/mwc.pl -type vc6  $mpc_option $exclude_option; \
           bin/mwc.pl -type borland  $mpc_option $exclude_option; \
-          bin/mwc.pl -type vc6 $static_option; \
           bin/mwc.pl -type vc71 $static_option; \
           find ./ -name '*.ds[p,w]' | /usr/bin/xargs chmod 0644;\
           find ./ -name '*.bor' | /usr/bin/xargs chmod 0644;\

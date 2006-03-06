@@ -38,12 +38,7 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
-
-#if !defined (_MSC_VER) || (_MSC_VER >= 1310)
-  // MSVC++ 6 can't handle partial template specializations so fall
-  // back on an unsigned char typedef.
-# include "ace/If_Then_Else.h"
-#endif  /* !_MSC_VER || _MSC_VER >= 1310 */
+#include "ace/If_Then_Else.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -173,15 +168,9 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-# if (defined (_MSC_VER) && (_MSC_VER < 1310))
-  // MSVC++ 6 can't handle partial template specializations so fall
-  // back on an unsigned char typedef.
-  typedef unsigned char Boolean;
-# else
   typedef ACE::If_Then_Else<(sizeof (bool) == 1),
                             bool,
                             unsigned char>::result_type Boolean;
-# endif  /* _MSC_VER <= 1310 */
   typedef unsigned char Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;

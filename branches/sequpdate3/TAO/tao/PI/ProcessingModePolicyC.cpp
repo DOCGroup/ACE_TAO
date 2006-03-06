@@ -63,7 +63,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:PortableInterceptor/ProcessingMode:1.0",
     "ProcessingMode",
     &CORBA::_tc_short);
-  
+
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_ProcessingMode =
@@ -90,7 +90,7 @@ TAO::Objref_Traits<PortableInterceptor::ProcessingModePolicy>::release (
     PortableInterceptor::ProcessingModePolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::ProcessingModePolicy_ptr
@@ -139,18 +139,18 @@ PortableInterceptor::ProcessingModePolicy::_unchecked_narrow (
 PortableInterceptor::ProcessingModePolicy_ptr
 PortableInterceptor::ProcessingModePolicy::_duplicate (ProcessingModePolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::ProcessingModePolicy::_tao_release (ProcessingModePolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -206,7 +206,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:PortableInterceptor/ProcessingModePolicy:1.0",
     "ProcessingModePolicy");
-  
+
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_ProcessingModePolicy =

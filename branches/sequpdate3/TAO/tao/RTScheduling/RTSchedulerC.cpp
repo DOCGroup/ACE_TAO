@@ -88,7 +88,7 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::release (
     RTScheduling::ThreadAction_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::ThreadAction_ptr
@@ -137,7 +137,7 @@ RTScheduling::ThreadAction::_unchecked_narrow (
 RTScheduling::ThreadAction_ptr
 RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -148,7 +148,7 @@ RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
 void
 RTScheduling::ThreadAction::_tao_release (ThreadAction_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -209,7 +209,7 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::release (
     RTScheduling::DistributableThread_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::DistributableThread_ptr
@@ -258,18 +258,18 @@ RTScheduling::DistributableThread::_unchecked_narrow (
 RTScheduling::DistributableThread_ptr
 RTScheduling::DistributableThread::_duplicate (DistributableThread_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 RTScheduling::DistributableThread::_tao_release (DistributableThread_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -330,7 +330,7 @@ TAO::Objref_Traits<RTScheduling::Current>::release (
     RTScheduling::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::Current_ptr
@@ -348,7 +348,7 @@ TAO::Objref_Traits<RTScheduling::Current>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::UNSUPPORTED_SCHEDULING_DISCIPLINE (void)
@@ -374,7 +374,7 @@ RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::UNSUPPORTED_SCHEDULING
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE&
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::operator= (const ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -436,7 +436,7 @@ CORBA::TypeCode_ptr RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_t
   return ::RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTSCHEDULING_CURRENT_IDTYPE_CS_)
@@ -448,7 +448,7 @@ RTScheduling::Current::IdType::IdType (void)
 RTScheduling::Current::IdType::IdType (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (max)
@@ -460,7 +460,7 @@ RTScheduling::Current::IdType::IdType (
     CORBA::Octet * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (max, length, buffer, release)
@@ -469,7 +469,7 @@ RTScheduling::Current::IdType::IdType (
 RTScheduling::Current::IdType::IdType (
     const IdType &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (seq)
@@ -480,7 +480,7 @@ RTScheduling::Current::IdType::~IdType (void)
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTSCHEDULING_CURRENT_NAMELIST_CS_)
@@ -492,7 +492,7 @@ RTScheduling::Current::NameList::NameList (void)
 RTScheduling::Current::NameList::NameList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (max)
 {}
 
@@ -502,14 +502,14 @@ RTScheduling::Current::NameList::NameList (
     char * * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (max, length, buffer, release)
 {}
 
 RTScheduling::Current::NameList::NameList (
     const NameList &seq
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (seq)
 {}
 
@@ -549,18 +549,18 @@ RTScheduling::Current::_unchecked_narrow (
 RTScheduling::Current_ptr
 RTScheduling::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 RTScheduling::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -629,7 +629,7 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::release (
     RTScheduling::ResourceManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::ResourceManager_ptr
@@ -678,18 +678,18 @@ RTScheduling::ResourceManager::_unchecked_narrow (
 RTScheduling::ResourceManager_ptr
 RTScheduling::ResourceManager::_duplicate (ResourceManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 RTScheduling::ResourceManager::_tao_release (ResourceManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -754,7 +754,7 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::release (
     RTScheduling::Scheduler_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTScheduling::Scheduler_ptr
@@ -772,7 +772,7 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::INCOMPATIBLE_SCHEDULING_DISCIPLINES (void)
@@ -798,7 +798,7 @@ RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::INCOMPATIBLE_SCHED
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES&
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::operator= (const ::RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -891,18 +891,18 @@ RTScheduling::Scheduler::_unchecked_narrow (
 RTScheduling::Scheduler_ptr
 RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 RTScheduling::Scheduler::_tao_release (Scheduler_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

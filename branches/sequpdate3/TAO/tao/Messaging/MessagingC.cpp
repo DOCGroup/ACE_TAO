@@ -67,7 +67,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::release (
     Messaging::ReplyHandler_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::ReplyHandler_ptr
@@ -86,7 +86,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
     ::CORBA::Object_ptr obj
   ) = 0;
@@ -110,12 +110,12 @@ Messaging::ReplyHandler::Messaging_ReplyHandler_setup_collocation ()
 Messaging::ReplyHandler::~ReplyHandler (void)
 {}
 
-void 
+void
 Messaging::ReplyHandler::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyHandler *_tao_tmp_pointer =
     static_cast<ReplyHandler *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 Messaging::ReplyHandler_ptr
@@ -151,18 +151,18 @@ Messaging::ReplyHandler::_unchecked_narrow (
 Messaging::ReplyHandler_ptr
 Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::ReplyHandler::_tao_release (ReplyHandler_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -186,7 +186,7 @@ Messaging::ReplyHandler::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -222,21 +222,21 @@ Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
   )
 {
   ::CORBA::Object_var obj;
-  
+
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-  
+
   typedef ::Messaging::ReplyHandler RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 

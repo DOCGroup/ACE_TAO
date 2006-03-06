@@ -21,7 +21,7 @@ TAO::TypeCode::Alias<StringType,
 #else
   TypeCodeType const & tc)
 #endif
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , attributes_ (id, name)
   , content_type_ (tc)

@@ -47,7 +47,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::ForwardRequest::ForwardRequest (void)
@@ -74,7 +74,7 @@ PortableServer::ForwardRequest::ForwardRequest (const ::PortableServer::ForwardR
 PortableServer::ForwardRequest&
 PortableServer::ForwardRequest::operator= (const ::PortableServer::ForwardRequest &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
   return *this;
 }
@@ -131,7 +131,7 @@ void PortableServer::ForwardRequest::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -144,7 +144,7 @@ void PortableServer::ForwardRequest::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 

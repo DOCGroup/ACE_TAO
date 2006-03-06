@@ -72,7 +72,7 @@ CORBA::ServerRequest::~ServerRequest (void)
 {
   if (this->params_ != 0)
     {
-      CORBA::release (this->params_);
+      ::CORBA::release (this->params_);
     }
 
   delete this->retval_;

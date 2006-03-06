@@ -59,33 +59,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_FLOATSEQ_CH_)
 #define _CORBA_FLOATSEQ_CH_
-  
+
   class FloatSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
-        FloatSeq,
-        CORBA::Float
+        FloatSeq
       >
     FloatSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         FloatSeq,
-        FloatSeq_var,
-        CORBA::Float
+        FloatSeq_var
       >
     FloatSeq_out;
-  
+
   class TAO_Export FloatSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Float
           >
   {
@@ -95,14 +93,14 @@ namespace CORBA
     FloatSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::Float* buffer, 
+        ::CORBA::Float* buffer,
         ::CORBA::Boolean release = 0
       );
     FloatSeq (const FloatSeq &);
     ~FloatSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef FloatSeq_var _var_type;
   };
 

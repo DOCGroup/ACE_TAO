@@ -182,7 +182,7 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       candidate =
-        CORBA::Container::_narrow (candidates[i].in ()
+        CORBA::Container::_narrow (candidates[i]
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN(-1);
 
@@ -219,7 +219,7 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
       if (!ACE_OS::strcmp (name.in (), this->interface_name.in ()))
         {
           this->target_def_ =
-            CORBA::InterfaceDef::_narrow (interfaces[j].in ()
+            CORBA::InterfaceDef::_narrow (interfaces[j]
                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN(-1);
         }
@@ -250,7 +250,7 @@ IFR_DII_Client::get_operation_def (ACE_ENV_SINGLE_ARG_DECL)
       if (!ACE_OS::strcmp (operation_name.in (), this->op_name.in ()))
         {
           this->op_ =
-            CORBA::OperationDef::_narrow (operations[i].in ()
+            CORBA::OperationDef::_narrow (operations[i]
                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 

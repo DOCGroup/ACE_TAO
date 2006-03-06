@@ -8,7 +8,7 @@ template <class RefCountPolicy>
 ACE_INLINE
 TAO::TypeCode::String<RefCountPolicy>::String (CORBA::TCKind kind,
                                                CORBA::ULong length)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , length_ (length)
 {

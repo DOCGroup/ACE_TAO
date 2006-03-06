@@ -60,7 +60,7 @@ TAO_IFR_Client_Adapter_Impl::dispose (
     CORBA::InterfaceDef_ptr orphan
   )
 {
-  CORBA::release (orphan);
+  ::CORBA::release (orphan);
 }
 
 CORBA::InterfaceDef_ptr

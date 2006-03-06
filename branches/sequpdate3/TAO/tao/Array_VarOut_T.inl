@@ -314,24 +314,8 @@ ACE_INLINE
 const T_slice &
 TAO_Array_Forany_T<T,T_slice,TAG>::operator[] (CORBA::ULong index) const
 {
-#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
-# if defined (_MSC_VER) && _MSC_VER <= 1200
-  // @@ (OO) MSVC++ 6 can't handle the const_cast<> in the
-  //         multi-dimensional array case so reinterpret_cast<> cast
-  //         instead.  It's not clear if this is really the right
-  //         thing to do but the code won't compile with MSVC++ 6
-  //         without it.  We use a reinterpret_cast<> instead of a
-  //         C-style "sledgehammer" cast to make it obvious that this
-  //         code may have unresolved issues, and also to make it
-  //         easier for others to find this code.
-  return reinterpret_cast<const T_slice &> (this->ptr_[index]);
-# else
-  return const_cast<const T_slice &> (this->ptr_[index]);
-# endif  /* _MSC_VER <= 1200 */
-#else
   const T_slice & tmp = this->ptr_[index];
   return tmp;
-#endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */
 }
 
 template<typename T, typename T_slice, typename TAG>
@@ -347,34 +331,7 @@ ACE_INLINE
 const T_slice *
 TAO_Array_Forany_T<T,T_slice,TAG>::in (void) const
 {
-  // @@@ (JP) This looks scary I know but it helps MSVC understand
-  // things better when the array is multi-dimensional.
-#if (defined (_MSC_VER) && _MSC_VER <= 1200)
-  // @@ (OO) MSVC++ 6 can't handle the const_cast<> in the
-  //         multi-dimensional array case so reinterpret_cast<> cast
-  //         instead.  It's not clear if this is really the right
-  //         thing to do but the code won't compile with MSVC++ 6
-  //         without it.  We use a reinterpret_cast<> instead of a
-  //         C-style "sledgehammer" cast to make it obvious that this
-  //         code may have unresolved issues, and also to make it
-  //         easier for others to find this code.
-  // @@ (RLS) It is not the const_cast<> that VC6 can't handle, it is
-  //         just confused.  The ptr_ is seen as int (* const) and
-  //         the desired type is const int *.  const_cast<> is used
-  //         to cast away const'ness and it does on VC6, yeilding
-  //         int * where const int * is desired, and specifically
-  //         directing the user to use either a reinterpret_cast<>
-  //         or a C-style cast.
-  // @@ (RLS) The IBM compiler was complaining about a bad cast only.
-  //         return const_cast<const T_slice *> (this->ptr_);
-  //         It is perfectly happy with the #else part below, as
-  //         is every other compiler I've tried it on.
-  return reinterpret_cast<const T_slice *> (this->ptr_);
-#else
-  // This should work on all platforms.  If a platform fails that it is
-  // that compiler that's wrong, not everyone else.  RLS
-  return (this->ptr_);
-#endif  /* _MSC_VER <= 1200 */
+  return this->ptr_;
 }
 
 template<typename T, typename T_slice, typename TAG>

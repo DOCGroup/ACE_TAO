@@ -704,18 +704,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define LOCAL_EXTERN_PREFIX
 #  endif /* ACE_HAS_THR_C_DEST */
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_TSS_CLEANUP_NAME ACE_PREPROC_CONCATENATE(ACE_,ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _TSS_cleanup))
-
-#else
-
-# define ACE_TSS_CLEANUP_NAME ACE_TSS_cleanup
-
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 

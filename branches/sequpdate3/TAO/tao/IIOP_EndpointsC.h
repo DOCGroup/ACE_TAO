@@ -44,6 +44,7 @@
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
+#include "tao/String_Manager_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
@@ -111,22 +112,20 @@ namespace TAO
 
   typedef
     TAO_VarSeq_Var_T<
-        IIOPEndpointSequence,
-        IIOP_Endpoint_Info
+        IIOPEndpointSequence
       >
     IIOPEndpointSequence_var;
 
   typedef
     TAO_Seq_Out_T<
         IIOPEndpointSequence,
-        IIOPEndpointSequence_var,
-        IIOP_Endpoint_Info
+        IIOPEndpointSequence_var
       >
     IIOPEndpointSequence_out;
 
   class TAO_Export IIOPEndpointSequence
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             IIOP_Endpoint_Info
           >
   {

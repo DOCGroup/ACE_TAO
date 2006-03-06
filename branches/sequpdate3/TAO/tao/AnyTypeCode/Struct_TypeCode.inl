@@ -18,7 +18,7 @@ TAO::TypeCode::Struct<StringType,
   char const * name,
   FieldArrayType const & fields,
   CORBA::ULong nfields)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , base_attributes_ (id, name)
   , nfields_ (nfields)
@@ -37,7 +37,7 @@ TAO::TypeCode::Struct<StringType,
                       RefCountPolicy>::Struct (
   CORBA::TCKind kind,
   char const * id)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , base_attributes_ (id)
   , nfields_ (0)

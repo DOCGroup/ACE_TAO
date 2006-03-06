@@ -180,22 +180,20 @@ namespace RTCORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        ThreadpoolLanes,
-        ThreadpoolLane
+        ThreadpoolLanes
       >
     ThreadpoolLanes_var;
 
   typedef
     TAO_Seq_Out_T<
         ThreadpoolLanes,
-        ThreadpoolLanes_var,
-        ThreadpoolLane
+        ThreadpoolLanes_var
       >
     ThreadpoolLanes_out;
 
   class TAO_RTCORBA_Export ThreadpoolLanes
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             ThreadpoolLane
           >
   {
@@ -635,22 +633,20 @@ namespace RTCORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        ProtocolList,
-        Protocol
+        ProtocolList
       >
     ProtocolList_var;
 
   typedef
     TAO_Seq_Out_T<
         ProtocolList,
-        ProtocolList_var,
-        Protocol
+        ProtocolList_var
       >
     ProtocolList_out;
 
   class TAO_RTCORBA_Export ProtocolList
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             Protocol
           >
   {
@@ -2099,22 +2095,20 @@ namespace RTCORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        PriorityBands,
-        PriorityBand
+        PriorityBands
       >
     PriorityBands_var;
 
   typedef
     TAO_Seq_Out_T<
         PriorityBands,
-        PriorityBands_var,
-        PriorityBand
+        PriorityBands_var
       >
     PriorityBands_out;
 
   class TAO_RTCORBA_Export PriorityBands
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             PriorityBand
           >
   {

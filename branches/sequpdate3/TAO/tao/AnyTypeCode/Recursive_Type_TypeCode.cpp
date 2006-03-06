@@ -130,7 +130,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
 
   // Top-level TypeCode case.
   if (!(this->in_recursion_))
-    return this->ACE_NESTED_CLASS (CORBA, TypeCode)::tao_marshal_kind (cdr);
+    return this->::CORBA::TypeCode::tao_marshal_kind (cdr);
 
   // Recursive/indirected TypeCode case.
   CORBA::ULong const indirection_kind = 0xffffffff;

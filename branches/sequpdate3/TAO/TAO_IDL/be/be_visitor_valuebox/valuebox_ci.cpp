@@ -108,8 +108,8 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->local_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
+      << ": ::CORBA::ValueBase (val)," << be_nl
+      << "  ::CORBA::DefaultValueRefCountBase (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name ()
@@ -740,8 +740,8 @@ be_visitor_valuebox_ci::emit_copy_constructor (void)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
+      << ": ::CORBA::ValueBase (val)," << be_nl
+      << "  ::CORBA::DefaultValueRefCountBase (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val._pd_value;" << be_uidt_nl
@@ -760,8 +760,8 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->full_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
+      << ": ::CORBA::ValueBase (val)," << be_nl
+      << "  ::CORBA::DefaultValueRefCountBase (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p = 0;" << be_nl

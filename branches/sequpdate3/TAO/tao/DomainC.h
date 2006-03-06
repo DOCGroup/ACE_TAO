@@ -330,31 +330,22 @@ namespace CORBA
   class DomainManagerList;
 
   typedef
-    TAO_MngSeq_Var_T<
-        DomainManagerList,
-        TAO_Object_Manager<
-            DomainManager,
-            DomainManager_var
-          >
+    TAO_VarSeq_Var_T<
+        DomainManagerList
       >
     DomainManagerList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         DomainManagerList,
-        DomainManagerList_var,
-        TAO_Object_Manager<
-            DomainManager,
-            DomainManager_var
-          >
+        DomainManager_var
       >
     DomainManagerList_out;
 
   class TAO_Export DomainManagerList
     : public
-        TAO_Unbounded_Object_Sequence<
-            DomainManager,
-            DomainManager_var
+        TAO::unbounded_object_reference_sequence<
+            DomainManager, DomainManager_var
           >
   {
   public:
@@ -419,7 +410,7 @@ namespace TAO
       );
     static ::CORBA::DomainManager_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::DomainManager_ptr p,
+        const ::CORBA::DomainManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -440,7 +431,7 @@ namespace TAO
       );
     static ::CORBA::ConstructionPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::ConstructionPolicy_ptr p,
+        const ::CORBA::ConstructionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };

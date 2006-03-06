@@ -14,11 +14,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Malloc_Base.h"
-
-#if defined (_MSC_VER) && _MSC_VER == 1200 && !defined (ACE_HAS_WINCE)
-#  include <new>  /* For placement new() operator. */
-#endif  /* _MSC_VER == 1200 */
-
 #include "ace/os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

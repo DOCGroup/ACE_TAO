@@ -358,7 +358,7 @@ TAO_Root_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   }
 
-  CORBA::release (this);
+  ::CORBA::release (this);
 }
 
 PortableServer::POA_ptr
@@ -2911,25 +2911,25 @@ TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
 {
 }
 
-void 
+void
 TAO_Root_POA::poa_activated_hook ()
 {
 }
 
-void 
+void
 TAO_Root_POA::poa_deactivated_hook ()
 {
 }
 
-void 
-TAO_Root_POA::servant_activated_hook (PortableServer::Servant, 
+void
+TAO_Root_POA::servant_activated_hook (PortableServer::Servant,
                                       const PortableServer::ObjectId&
                                       ACE_ENV_ARG_DECL)
 {
 }
 
-void 
-TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant, 
+void
+TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant,
                                         const PortableServer::ObjectId&
                                         ACE_ENV_ARG_DECL)
 {

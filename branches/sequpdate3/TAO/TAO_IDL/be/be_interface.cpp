@@ -551,9 +551,9 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 
       if (this->has_mixed_parentage_)
         {
-          *os << "ACE_NESTED_CLASS (::CORBA, "
+          *os << "::CORBA::"
               << (the_check ? "AbstractBase" : "Object")
-              << ") ("
+              << " ("
               << be_idt << be_idt << be_idt_nl
               << "objref," << be_nl
               << "_tao_collocated," << be_nl
@@ -564,7 +564,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           if (!the_check)
             {
               *os << "," << be_nl
-                  << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
+                  << "::CORBA::AbstractBase ("
                   << be_idt << be_idt_nl
                   << "objref," << be_nl
                   << "_tao_collocated," << be_nl
@@ -600,13 +600,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
       if (!this->is_abstract_
           && (!this->has_mixed_parentage_ || the_check))
         {
-          *os << "ACE_NESTED_CLASS (CORBA, Object) ("
-              << be_idt << be_idt_nl
-              << "objref," << be_nl
-              << "_tao_collocated," << be_nl
-              << "servant," << be_nl
-              << "oc" << be_uidt_nl
-              << ")" << be_uidt;
+          *os << "::CORBA::Object (objref, _tao_collocated, servant, oc)";
         }
 
       *os << "," << be_nl
@@ -2264,15 +2258,15 @@ be_interface::copy_ctor_helper (be_interface *derived,
 
   if (is_rh_base)
     {
-      *os << "ACE_NESTED_CLASS (POA_Messaging, ReplyHandler) (rhs)";
+      *os << "::POA_Messaging::ReplyHandler (rhs)";
     }
   else if (base->is_nested ())
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
-      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", "
-          << base->local_name () << ") (rhs)";
+      *os << "POA_" << scope->name () << "::"
+          << base->local_name () << " (rhs)";
     }
   else
     {
@@ -2333,9 +2327,9 @@ be_interface::gen_abstract_init_helper (be_interface *node,
       UTL_Scope *parent_scope = base->defined_in ();
       AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
 
-      *os << "ACE_NESTED_CLASS ("
-          << parent_decl->name () << ", "
-          << base->local_name ()<< ") (" << be_idt << be_idt_nl;
+      *os << ""
+          << parent_decl->name () << "::"
+          << base->local_name ()<< " (" << be_idt << be_idt_nl;
     }
   else
     {

@@ -81,12 +81,7 @@ ACE_Array_Map<Key, Value, EqualTo>::swap (
 }
 
 template<typename Key, typename Value, class EqualTo>
-#if defined (_MSC_VER) && (_MSC_VER <= 1200)
-// MSVC++ 6 doesn't like the typename qualification.
-std::pair<ACE_Array_Map<Key, Value, EqualTo>::iterator, bool>
-#else
 std::pair<typename ACE_Array_Map<Key, Value, EqualTo>::iterator, bool>
-#endif  /* _MSC_VER <= 1200 */
 ACE_Array_Map<Key, Value, EqualTo>::insert (
   typename ACE_Array_Map<Key, Value, EqualTo>::value_type const & x)
 {

@@ -269,7 +269,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var iorstr)
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", iorstr.ptr());
+  ACE_OS::fprintf (output_file, "%s", iorstr.in ());
   ACE_OS::fclose (output_file);
   return 0;
 }

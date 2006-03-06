@@ -302,7 +302,7 @@ TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
     {
       if (this->poa_collection_.is_empty ())
         {
-          CORBA::release (this);
+          ::CORBA::release (this);
         }
     }
 

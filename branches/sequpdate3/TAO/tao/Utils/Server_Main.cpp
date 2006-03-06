@@ -55,7 +55,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_init (argc, asciiArgv, name_ ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (! CORBA::is_nil(orb.in ()))
+    if (! ::CORBA::is_nil(orb.in ()))
     {
       // create an instance of the servant object and give it a
       // chance at the arguments.

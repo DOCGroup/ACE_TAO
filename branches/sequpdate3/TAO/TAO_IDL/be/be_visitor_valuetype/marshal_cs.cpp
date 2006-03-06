@@ -174,9 +174,8 @@ be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
       be_decl *scope =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-      *os << "ACE_NESTED_CLASS ("
-          << scope->name () << ","
-          << node->local_name () << ")";
+      *os << scope->name () << "::"
+          << node->local_name ();
     }
   else
     {
