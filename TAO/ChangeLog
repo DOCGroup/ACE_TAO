@@ -1,3 +1,14 @@
+Mon Mar 06 15:56:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/ValueBox/valuebox.mpc:
+          Use more specific base projects
+
+        * tests/OBV/Supports/Supports_Test.mpc:
+          Removed exename, not needed
+
 Mon Mar 06 15:32:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/client.cpp:
