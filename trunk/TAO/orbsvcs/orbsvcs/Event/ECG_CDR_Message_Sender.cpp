@@ -303,11 +303,11 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
       CORBA::ULong l = b->length ();
       total_length += l;
       fragment_size += l;
-      iovcnt++;
+      ++iovcnt;
       while (fragment_size > max_fragment_payload)
         {
           // Ran out of space, must create a fragment...
-          fragment_count++;
+          ++fragment_count;
 
           // The next iovector will contain what remains of this
           // buffer, but also consider
@@ -317,14 +317,14 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
         }
       if (fragment_size == max_fragment_payload)
         {
-          fragment_count++;
+          ++fragment_count;
           iovcnt = 1;
           fragment_size = 0;
         }
       if (iovcnt >= iov_size)
         {
           // Ran out of space in the iovector....
-          fragment_count++;
+          ++fragment_count;
           iovcnt = 1;
           fragment_size = 0;
         }
@@ -332,7 +332,7 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
   if (iovcnt != 1)
     {
       // Send the remaining data in another fragment
-      fragment_count++;
+      ++fragment_count;
     }
   return fragment_count;
 }

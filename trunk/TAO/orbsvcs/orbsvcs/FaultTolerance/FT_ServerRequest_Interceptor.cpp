@@ -212,9 +212,7 @@ namespace TAO
     if (param->length () != 3 )
       ACE_THROW (CORBA::TRANSIENT ());
 
-
     const char *str = 0;
-
 
     (*param)[0].argument >>= str;
     (*param)[1].argument >>= this->object_group_ref_version_;
