@@ -1,3 +1,44 @@
+Mon Mar 06 15:32:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Any/Recursive/client.cpp:
+        * tests/Any/Recursive/Test.idl:
+          Extended this test by making the IDL even a little bit more complex
+
+        * TAO_IDL/fe/fe_interface_header.cpp:
+          Explicitly initialize pd_n_supports to 0, fixes a crash of TAO_IDL
+          when build with Borland C++ when feeding it a certain incorrect
+          IDL file. This fixes bugzilla bug 2428
+
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/Any_Array_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_SystemException.cpp:
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * tao/AnyTypeCode/Empty_Param_TypeCode.cpp:
+        * tao/AnyTypeCode/Enum_TypeCode.cpp:
+        * tao/AnyTypeCode/Enum_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/ExceptionA.cpp:
+        * tao/AnyTypeCode/TypeCode.cpp:
+        * tao/AnyTypeCode/TypeCode_Case_T.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/AnyTypeCode/Union_TypeCode.cpp:
+        * tao/AnyTypeCode/Union_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Value_TypeCode.cpp:
+        * tao/AnyTypeCode/Value_TypeCode_Static.cpp:
+          Initialise some pointers with 0, made some local variables const,
+          use true/false instead of 1/0. Fixed bugzilla bug 2323 by:
+          - When marshaling recursive unions for each case use a seperate
+            stream so that the offsets do get calculated
+          - For each recursive type be able to handle multiple members of
+            the recursive type, we could only handle one occurence.
+          For recursive types we should have more test cases, probably there
+          are a few small bugs left in this code but these aren't catched
+          by the current regression test suite.
+
 Mon Mar 06 15:13:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2417_Regression/*:
