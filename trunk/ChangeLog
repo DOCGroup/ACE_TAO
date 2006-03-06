@@ -1,3 +1,8 @@
+Mon Mar 06 15:13:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2417_Regression
+
 Sun Mar 05 11:10:32 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * ACE version 5.5 released.
