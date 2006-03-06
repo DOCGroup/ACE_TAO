@@ -268,8 +268,6 @@ namespace TAO
     // Update the request id now that we have a transport
     details.request_id (resolver.transport ()->tms ()->request_id ());
 
-    Invocation_Status s = TAO_INVOKE_FAILURE;
-
     if (this->type_ == TAO_ONEWAY_INVOCATION)
       {
         return this->invoke_oneway (details,
@@ -287,7 +285,7 @@ namespace TAO
                                     ACE_ENV_ARG_PARAMETER);
       }
 
-    return s;
+    return TAO_INVOKE_FAILURE;
   }
 
   Invocation_Status
