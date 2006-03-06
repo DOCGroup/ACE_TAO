@@ -1,3 +1,11 @@
+Mon Mar 06 15:57:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation_Adapter.cpp:
+          Removed a not needed local variable.
+
+        * tao/IIOP_Transport.cpp:
+          Initialise pointer with 0
+
 Mon Mar 06 15:56:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Factory/OBV_Factory.mpc:
