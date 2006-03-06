@@ -368,9 +368,7 @@ public:
    * transformations of the data, such as SSLIOP or protocols that
    * compress the stream.
    *
-   * @param mblk contains the data that must be sent.  For each
-   * message block in the cont() chain all the data between rd_ptr()
-   * and wr_ptr() should be delivered to the remote peer.
+   * @param iov contains the data that must be sent.
    *
    * @param timeout is the maximum time that the application is
    * willing to wait for the data to be sent, useful in platforms that
@@ -393,7 +391,8 @@ public:
    * down).  In that case, it returns -1 and sets errno to
    * <code>ENOENT</code>.
    */
-  virtual ssize_t send (iovec *iov, int iovcnt,
+  virtual ssize_t send (iovec *iov,
+                        int iovcnt,
                         size_t &bytes_transferred,
                         const ACE_Time_Value *timeout = 0) = 0;
 
@@ -839,21 +838,22 @@ private:
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
-  /// Is invoked by handle_input operation. It consolidate message on 
-  /// top of incoming_message_stack.  The amount of missing data is 
-  /// known and recv operation copies data directly into message buffer, 
-  /// as much as a single recv-invocation provides. 
+  /// Is invoked by handle_input operation. It consolidate message on
+  /// top of incoming_message_stack.  The amount of missing data is
+  /// known and recv operation copies data directly into message buffer,
+  /// as much as a single recv-invocation provides.
   int handle_input_missing_data (TAO_Resume_Handle &rh,
                                  ACE_Time_Value *max_wait_time,
                                  TAO_Queued_Data *q_data);
 
-  /// Is invoked by handle_input operation. It parses new messages from input stream 
-  /// or consolidates messages whose header has been partially read, the message 
+  /// Is invoked by handle_input operation. It parses new messages from input stream
+  /// or consolidates messages whose header has been partially read, the message
   /// size being unknown so far. It parses as much data as a single recv-invocation provides.
   int handle_input_parse_data (TAO_Resume_Handle &rh,
                                ACE_Time_Value *max_wait_time);
 
-  /// Is invoked by handle_input_parse_data. Parses all messages remaining in @message_block.
+  /// Is invoked by handle_input_parse_data. Parses all messages remaining
+  /// in @a message_block.
   int handle_input_parse_extra_messages (ACE_Message_Block &message_block);
 
   /// @return -1 error, otherwise 0
@@ -866,8 +866,9 @@ private:
    * Process the message that is in the head of the incoming queue.
    * If there are more messages in the queue, this method calls
    * this->notify_reactor () to wake up a thread
-   * @return -1 on error, 0 if successfully processing enqueued messages, 
-   * 1 if no message present in queue
+   * @retval -1 on error
+   * @retval 0 if successfully processing enqueued messages
+   * @retval 1 if no message present in queue
    */
   int process_queue_head (TAO_Resume_Handle &rh);
 
@@ -944,11 +945,11 @@ protected:
   /// Queue of the consolidated, incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
 
-  /// Stack of icoming fragments, consolidated messages 
+  /// Stack of icoming fragments, consolidated messages
   /// are going to be enqueued in "incoming_message_queue_"
   TAO::Incoming_Message_Stack incoming_message_stack_;
 
-  /// The queue will start draining no later than <queing_deadline_>
+  /// The queue will start draining no later than <queeing_deadline_>
   /// *if* the deadline is
   ACE_Time_Value current_deadline_;
 
