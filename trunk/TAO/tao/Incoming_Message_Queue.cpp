@@ -112,19 +112,20 @@ TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
 /************************************************************************/
 
 /*!
-  \brief Allocate and return a new empty message block of size \a new_size mimicking parameters of \a mb.
-
-  This function allocates a new aligned message block using the same
-  allocators and flags as found in \a mb.  The size of the new message
-  block is at least \a new_size; the size may be adjusted up in order
-  to accomodate alignment requirements and still fit \a new_size bytes
-  into the aligned buffer.
-
-  \param mb message block whose parameters should be mimicked
-  \param new_size size of the new message block (will be adjusted for proper alignment)
-  \return an aligned message block with rd_ptr sitting at correct alignment spot, 0 on failure
-
-  \author Thanks to Rich Seibel for helping implement the public API for ACE_Message_Block!
+ * @brief Allocate and return a new empty message block of size \a span_size
+ * mimicking parameters of \a mb.
+ *
+ * This function allocates a new aligned message block using the same
+ * allocators and flags as found in \a mb.  The size of the new message
+ * block is at least \a span_size; the size may be adjusted up in order
+ * to accomodate alignment requirements and still fit \a span_size bytes
+ * into the aligned buffer.
+ *
+ * @param mb message block whose parameters should be mimicked
+ * @param span_size size of the new message block (will be adjusted for proper
+ * alignment)
+ * @return an aligned message block with rd_ptr sitting at correct
+ * alignment spot, 0 on failure
  */
 static ACE_Message_Block*
 clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
@@ -133,15 +134,15 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
   size_t aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
 
   // Get the allocators
-  ACE_Allocator *data_allocator;
-  ACE_Allocator *data_block_allocator;
-  ACE_Allocator *message_block_allocator;
+  ACE_Allocator *data_allocator = 0;
+  ACE_Allocator *data_block_allocator = 0;
+  ACE_Allocator *message_block_allocator = 0;
   mb->access_allocators (data_allocator,
                          data_block_allocator,
                          message_block_allocator);
 
   // Create a new Message Block
-  ACE_Message_Block *nb;
+  ACE_Message_Block *nb = 0;
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Message_Block*> (
                                          message_block_allocator->malloc (
