@@ -361,7 +361,7 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           continue;
         }
 
-      ACE_Message_Block* cont;
+      ACE_Message_Block* cont = 0;
       this->good_bit_ = false;
       ACE_NEW_RETURN (cont,
                       ACE_Message_Block (i->data_block ()->duplicate ()),
