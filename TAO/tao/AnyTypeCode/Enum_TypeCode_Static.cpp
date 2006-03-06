@@ -87,10 +87,10 @@ TAO::TypeCode::Enum<char const *,
 
   CORBA::ULong const tc_nenumerators =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_nenumerators != this->nenumerators_)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
     {
@@ -100,13 +100,13 @@ TAO::TypeCode::Enum<char const *,
         Traits<char const *>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -121,12 +121,12 @@ TAO::TypeCode::Enum<char const *,
 
   CORBA::ULong const tc_nenumerators =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_nenumerators != this->nenumerators_)
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
 
 CORBA::TypeCode_ptr

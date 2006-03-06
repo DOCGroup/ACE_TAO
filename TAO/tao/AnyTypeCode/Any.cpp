@@ -275,7 +275,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 
   if ((cdr >> tc.out ()) == 0)
     {
-      return 0;
+      return false;
     }
 
   ACE_TRY_NEW_ENV
@@ -283,7 +283,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc.in ()),
-                      0);
+                      false);
 
       any.replace (impl);
       impl->_tao_decode (cdr
@@ -292,11 +292,11 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
 
-  return 1;
+  return true;
 }
 
 // =======================================================================
@@ -768,7 +768,7 @@ namespace TAO
     ) const
   {
     _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return 1;
+    return true;
   }
 }
 

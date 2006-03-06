@@ -44,14 +44,14 @@ namespace TAO
                                    ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        return 1;
+        return true;
       }
     ACE_CATCHANY
       {
       }
     ACE_ENDTRY;
 
-    return 0;
+    return false;
   }
 
   template<>
@@ -64,14 +64,14 @@ namespace TAO
                                    ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        return 1;
+        return true;
       }
     ACE_CATCHANY
       {
       }
     ACE_ENDTRY;
 
-    return 0;
+    return false;
   }
 
   // This should never get called since we don't have extraction operators
@@ -87,7 +87,7 @@ namespace TAO
       const CORBA::Exception *&
     )
   {
-    return 0;
+    return false;
   }
 }
 

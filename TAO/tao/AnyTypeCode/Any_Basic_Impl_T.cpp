@@ -56,13 +56,13 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
   ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean _tao_equiv = any_tc->equivalent (tc
-                                                      ACE_ENV_ARG_PARAMETER);
+      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc
+                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (_tao_equiv == 0)
+      if (_tao_equiv == false)
         {
-          return 0;
+          return false;
         }
 
       TAO::Any_Impl *impl = any.impl ();
@@ -74,11 +74,11 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
 
           if (narrow_impl == 0)
             {
-              return 0;
+              return false;
             }
 
           _tao_elem = narrow_impl->value_;
-          return 1;
+          return true;
         }
 
       TAO::Any_Basic_Impl_T<T> *replacement =
@@ -94,7 +94,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
       // shared by another Any. This copies the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean good_decode =
+      CORBA::Boolean const good_decode =
         replacement->demarshal_value (for_reading);
 
       if (good_decode)
@@ -102,7 +102,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
           _tao_elem = replacement->value_;
           const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
-          return 1;
+          return true;
         }
 
       // Duplicated by Any_Impl base class constructor.
@@ -113,7 +113,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
     }
   ACE_ENDTRY;
 
-  return 0;
+  return false;
 }
 
 template<typename T>
