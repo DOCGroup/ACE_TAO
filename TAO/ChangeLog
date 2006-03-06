@@ -1,3 +1,10 @@
+Mon Mar 06 15:13:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2417_Regression/*:
+          New regression for bug 2417. Thanks to Jan Ohlenburg
+          <jan dot ohlenburg at fit dot fraunhofer dot de> for
+          delivering this test. This bug has not been fixed yet.
+
 Sun Mar 05 11:13:13 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * TAO version 1.5 released.

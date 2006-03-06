@@ -15,6 +15,7 @@ module Test
   {
     RecursiveStructSeq recursive_structs;
     long i;
+    RecursiveStructSeq recursive_structs_second;
   };
 
   // --------------------------
@@ -26,6 +27,10 @@ module Test
   {
   case 0:
     RecursiveUnionSeq recursive_unions;
+  case 1:
+    short a;
+  case 2:
+    RecursiveUnionSeq recursive_unions_second;
   default:
     long i;
   };
@@ -46,6 +51,7 @@ module Test
   valuetype DirectlyRecursiveValuetype
   {
     public DirectlyRecursiveValuetype recursive_valuetype;
+    public DirectlyRecursiveValuetype recursive_valuetype_second;
   };
 
   // --------------------------

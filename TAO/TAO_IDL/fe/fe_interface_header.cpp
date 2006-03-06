@@ -543,6 +543,7 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
                         false,
                         false),
     pd_supports (0),
+    pd_n_supports (0),
     pd_inherits_concrete (0),
     pd_supports_concrete (0),
     pd_truncatable (truncatable)

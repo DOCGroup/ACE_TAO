@@ -4,7 +4,6 @@
 #include "publisherC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include <conio.h>
 
 class ThreadPool : public ACE_Task_Base
 {
