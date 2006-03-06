@@ -111,7 +111,7 @@ namespace TAO
 
         if (_tao_equiv == 0)
           {
-            return 0;
+            return false;
           }
 
         TAO::Any_Impl *impl = any.impl ();
@@ -123,12 +123,12 @@ namespace TAO
 
             if (narrow_impl == 0)
               {
-                return 0;
+                return false;
               }
 
             Any_Basic_Impl::assign_value (_tao_elem,
                                           narrow_impl);
-            return 1;
+            return true;
           }
 
         TAO::Any_Basic_Impl *replacement =
@@ -150,7 +150,7 @@ namespace TAO
         // shared by another Any. This copies the state, not the buffer.
         TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-        CORBA::Boolean good_decode =
+        CORBA::Boolean const good_decode =
           replacement->demarshal_value (for_reading,
                                         static_cast<CORBA::Long> (tck));
 
@@ -161,7 +161,7 @@ namespace TAO
                                           tck);
             const_cast<CORBA::Any &> (any).replace (replacement);
             replacement_safety.release ();
-            return 1;
+            return true;
           }
 
         // Duplicated by Any_Impl base class constructor.
@@ -172,7 +172,7 @@ namespace TAO
       }
     ACE_ENDTRY;
 
-    return 0;
+    return false;
   }
 
   CORBA::Boolean

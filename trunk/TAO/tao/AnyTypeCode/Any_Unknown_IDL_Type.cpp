@@ -67,16 +67,16 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 
       if (status != TAO::TRAVERSE_CONTINUE)
         {
-          return 0;
+          return false;
         }
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
 
-  return 1;
+  return true;
 }
 
 const void *

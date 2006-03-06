@@ -110,7 +110,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
 
       if (_tao_equiv == 0)
         {
-          return 0;
+          return false;
         }
 
       TAO::Any_Impl *impl = any.impl ();
@@ -122,11 +122,11 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
 
           if (narrow_impl == 0)
             {
-              return 0;
+              return false;
             }
 
           _tao_elem = narrow_impl->value_;
-          return 1;
+          return true;
         }
 
       T *empty_value = 0;
@@ -150,7 +150,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
       // shared by another Any. This copies the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean good_decode =
+      CORBA::Boolean const good_decode =
         replacement->demarshal_value (for_reading);
 
       if (good_decode)
@@ -158,7 +158,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
           _tao_elem = replacement->value_;
           const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
-          return 1;
+          return true;
         }
 
       // Duplicated by Any_Impl base class constructor.

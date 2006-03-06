@@ -46,7 +46,7 @@ TAO::TypeCode::Empty_Param::equal_i (CORBA::TypeCode_ptr
   // Equality has already been established in the
   // CORBA::TypeCode base class.
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -62,12 +62,12 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc
   CORBA::TCKind const tc_kind =
     TAO::unaliased_kind (tc
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_kind != this->kind_)
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
 
 CORBA::TypeCode_ptr
