@@ -51,7 +51,7 @@ TAO/tests/Bug_2319_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2328_Regression/run_test.pl:
 TAO/tests/Bug_2345_Regression/run_test.pl:
 TAO/tests/Bug_2349_Regression/run_test.pl:
-TAO/tests/Bug_2417_Regression/run_test.pl: !MINIMUM
+TAO/tests/Bug_2417_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !IPV6
