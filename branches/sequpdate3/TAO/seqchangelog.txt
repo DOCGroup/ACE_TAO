@@ -1,4 +1,14 @@
 
+        * tao/Exception.h:
+          Moved constructors, assignment operator and copy constructor to
+          protected now vc6 has been dropped. Also moved
+          create_system_exception from TAO_Exceptions class to TAO namespace
+
+        * tao/Messaging/Messaging.cpp:
+        * tao/Sync_Invocation.cpp:
+        * tao/SystemException.cpp:
+          Updated because of the create_system_exception move
+
         * tao/String_Manager_T.h:
           Renamed String_Manager to String_Manager_T, this way we can have
           TAO::String_Manager and TAO::WString_Manager. These replace

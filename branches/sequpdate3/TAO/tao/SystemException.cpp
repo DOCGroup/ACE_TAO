@@ -936,7 +936,7 @@ STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
 CORBA::SystemException *
-TAO_Exceptions::create_system_exception (const char *id)
+TAO::create_system_exception (const char *id)
 {
   for (CORBA::ULong i = 0; i < array_sz; ++i)
     {
