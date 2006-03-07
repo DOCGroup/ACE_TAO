@@ -752,7 +752,8 @@ noinst_PROGRAMS += FlReactor_Test
 
 FlReactor_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
+  -I$(ACE_BUILDDIR) \
+  @ACE_FLTK_CPPFLAGS@
 
 FlReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -761,7 +762,8 @@ FlReactor_Test_SOURCES = \
 FlReactor_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
   libTest_Output.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_FLTK_LIBS@
 
 endif BUILD_X11
 endif BUILD_GL
@@ -1814,8 +1816,7 @@ noinst_PROGRAMS += QtReactor_Test
 QtReactor_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(QTDIR)/include \
-  -DQT_THREAD_SUPPORT
+  @ACE_QT_CPPFLAGS@
 
 QtReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1827,7 +1828,7 @@ QtReactor_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE_QtReactor.la \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  -lqt-mt
+  @ACE_QT_LIBS@
 
 endif BUILD_QT
 endif BUILD_ACE_QTREACTOR
