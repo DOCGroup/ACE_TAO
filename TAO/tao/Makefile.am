@@ -2820,6 +2820,7 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler_include.pidl \
   RTScheduling/RTScheduler_includeA.h \
   RTScheduling/RTScheduler_includeC.h \
+  RTScheduling/RTScheduler_includeS.h \
   RTScheduling/Request_Interceptor.h \
   RTScheduling/ThreadAction.h \
   RTScheduling/rtscheduler_export.h
@@ -3026,6 +3027,7 @@ libTAO_FlResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  @ACE_FLTK_CPPFLAGS@ \
   -DTAO_FLRESOURCE_BUILD_DLL
 
 libTAO_FlResource_la_SOURCES = \
@@ -3038,7 +3040,8 @@ libTAO_FlResource_la_LDFLAGS = \
 libTAO_FlResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
   libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_FLTK_LIBS@
 
 nobase_include_HEADERS += \
   FlResource_Factory.h \
@@ -3062,8 +3065,7 @@ libTAO_QtResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(QTDIR)/include \
-  -DQT_THREAD_SUPPORT \
+  @ACE_QT_CPPFLAGS@ \
   -DTAO_QTRESOURCE_BUILD_DLL
 
 libTAO_QtResource_la_SOURCES = \
@@ -3077,7 +3079,7 @@ libTAO_QtResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_QtReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  -lqt-mt
+  @ACE_QT_LIBS@
 
 nobase_include_HEADERS += \
   QtResource_Factory.h \
