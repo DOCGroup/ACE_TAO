@@ -1,3 +1,32 @@
+Tue Mar  7 05:50:31 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Regenerate.
+
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+
+          For autoconf build:
+            Add @ACE_FLTK_CPPFLAGS@ to compile_flags.
+            Add @ACE_FLTK_LIBS@ to pure_libs.
+
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+
+          For autoconf build:
+            Subtract 'qt-mt$(QT_VERSION)' from lit_libs.
+            Add @ACE_QT_CPPFLAGS@ to compile_flags.
+            Add @ACE_QT_LIBS@ to pure_libs.
+
+        * m4/ace.m4:
+
+          Implement ACE_PATH_FL.
+          Implement ACE_PATH_QT.
+          Implement ACE_ENABLE_FL_REACTOR.
+          Implement ACE_ENABLE_QT_REACTOR.
+
+        Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+        for these fixes.
+
 Mon Mar  6 18:25:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_Thread.inl:
@@ -26,8 +55,8 @@ Mon Mar  6 18:25:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
 
-          Removed an extra dollar sign, that GNU Make apparently didn't care
-          about but shouldn't have been there anyway.
+          Removed an extra dollar sign, that GNU Make apparently didn't
+          care about but shouldn't have been there anyway.
 
         * bin/MakeProjectCreator/config/global.mpb:
 

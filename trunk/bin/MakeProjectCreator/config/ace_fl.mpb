@@ -15,4 +15,9 @@ project : ace_x11, ace_gl {
   specific(vc8,vc71,vc7,vc6) {
      libs += fltkdll
   }
+
+  specific(automake) {
+     compile_flags += @ACE_FLTK_CPPFLAGS@
+     pure_libs += @ACE_FLTK_LIBS@
+  }
 }
