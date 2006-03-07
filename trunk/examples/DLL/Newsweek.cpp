@@ -29,7 +29,7 @@ Newsweek::operator new (size_t bytes, const ACE_nothrow_t&)
 }
 #if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
-Newsweek::operator delete (void *p, const ACE_nothrow_t&) throw ();
+Newsweek::operator delete (void *p, const ACE_nothrow_t&) throw ()
 {
   delete [] static_cast <char *> (ptr);
 }

@@ -72,7 +72,7 @@ public:
 #if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *p, const ACE_nothrow_t&) throw ()
   {
-    shmem_allocator->free (pointer);
+    shmem_allocator->free (p);
   }
 #endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
