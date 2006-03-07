@@ -12,7 +12,8 @@ project {
   }
 
   specific(automake) {
-    compile_flags += @ACE_TCL_CPPFLAGS@ @ACE_TK_CPPFLAGS@
-    pure_libs += @ACE_TCL_LIBS@ @ACE_TK_LIBS@
+    compile_flags += $(ACE_TK_CPPFLAGS) $(ACE_TCL_CPPFLAGS)
+    linkflags += $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
+    pure_libs += $(ACE_TK_LIBS) $(ACE_TCL_LIBS)
   }
 }

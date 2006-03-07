@@ -753,17 +753,20 @@ noinst_PROGRAMS += FlReactor_Test
 FlReactor_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  @ACE_FLTK_CPPFLAGS@
+  $(ACE_FLTK_CPPFLAGS)
 
 FlReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
   FlReactor_Test.cpp
 
+FlReactor_Test_LDFLAGS = \
+ $(ACE_FLTK_LDFLAGS)
+
 FlReactor_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_FLTK_LIBS@
+  $(ACE_FLTK_LIBS)
 
 endif BUILD_X11
 endif BUILD_GL
@@ -1816,7 +1819,7 @@ noinst_PROGRAMS += QtReactor_Test
 QtReactor_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  @ACE_QT_CPPFLAGS@
+  $(ACE_QT_CPPFLAGS)
 
 QtReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1824,11 +1827,14 @@ QtReactor_Test_SOURCES = \
   QtReactor_Test_moc.cpp \
   QtReactor_Test.h
 
+QtReactor_Test_LDFLAGS = \
+ $(ACE_QT_LDFLAGS)
+
 QtReactor_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE_QtReactor.la \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_QT_LIBS@
+  $(ACE_QT_LIBS)
 
 endif BUILD_QT
 endif BUILD_ACE_QTREACTOR
@@ -2657,19 +2663,22 @@ noinst_PROGRAMS += TkReactor_Test
 TkReactor_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  @ACE_TCL_CPPFLAGS@ \
-  @ACE_TK_CPPFLAGS@
+  $(ACE_TK_CPPFLAGS) \
+  $(ACE_TCL_CPPFLAGS)
 
 TkReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
   TkReactor_Test.cpp
 
+TkReactor_Test_LDFLAGS = \
+ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
+
 TkReactor_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE_TkReactor.la \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_TCL_LIBS@ \
-  @ACE_TK_LIBS@
+  $(ACE_TK_LIBS) \
+  $(ACE_TCL_LIBS)
 
 endif BUILD_TK
 endif BUILD_ACE_TKREACTOR
@@ -2812,6 +2821,76 @@ WFMO_Reactor_Test_SOURCES = \
 WFMO_Reactor_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.XtAthenaReactor_Test.am
+
+if BUILD_ACE_XTREACTOR
+if BUILD_ATHENA
+if BUILD_X11
+if BUILD_XT
+
+noinst_PROGRAMS += XtAthenaReactor_Test
+
+XtAthenaReactor_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  $(ACE_X11_CPPFLAGS) \
+  $(ACE_XT_CPPFLAGS)
+
+XtAthenaReactor_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  XtAthenaReactor_Test.cpp
+
+XtAthenaReactor_Test_LDFLAGS = \
+ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
+
+XtAthenaReactor_Test_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  -lXaw \
+  $(ACE_XT_LIBS) \
+  $(ACE_X11_LIBS)
+
+endif BUILD_XT
+endif BUILD_X11
+endif BUILD_ATHENA
+endif BUILD_ACE_XTREACTOR
+
+## Makefile.XtMotifReactor_Test.am
+
+if BUILD_ACE_XTREACTOR
+if BUILD_MOTIF
+if BUILD_X11
+if BUILD_XT
+
+noinst_PROGRAMS += XtMotifReactor_Test
+
+XtMotifReactor_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  $(ACE_X11_CPPFLAGS) \
+  $(ACE_XT_CPPFLAGS)
+
+XtMotifReactor_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  XtMotifReactor_Test.cpp
+
+XtMotifReactor_Test_LDFLAGS = \
+ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
+
+XtMotifReactor_Test_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  -lXm \
+  $(ACE_XT_LIBS) \
+  $(ACE_X11_LIBS)
+
+endif BUILD_XT
+endif BUILD_X11
+endif BUILD_MOTIF
+endif BUILD_ACE_XTREACTOR
 
 ## Clean up template repositories, etc.
 clean-local:
