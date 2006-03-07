@@ -1100,7 +1100,6 @@ AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_enable_acexml = Xyes])
 # Find OpenGL Libraries, flags, etc.
 AC_DEFUN([ACE_PATH_GL],
 [
-AM_CONDITIONAL([BUILD_GL], [false])
 ])
 
 
@@ -1109,6 +1108,28 @@ AM_CONDITIONAL([BUILD_GL], [false])
 # Find FL/TK Libraries, flags, etc.
 AC_DEFUN([ACE_PATH_FL],
 [AC_REQUIRE([ACE_PATH_GL])
+ AC_ARG_WITH([fltkconfig],
+ AS_HELP_STRING([--with-fltkconfig=DIR],
+                [path to fltk-config [[automatic]]]),
+ [ ac_fltkconfig_dir="${withval}" ])
+ if test X"${ac_fltkconfig_dir}" = X; then
+   AC_PATH_PROG([FLTKCONFIG], [fltk-config], [])
+ else
+   AC_MSG_CHECKING([whether fltk-config exists in ${ac_fltkconfig_dir}])
+   if test -f "${ac_fltkconfig_dir}/fltk-config"; then
+     FLTKCONFIG="${ac_fltkconfig_dir}/fltk-config"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${FLTKCONFIG}" != X; then
+   ACE_FLTK_CPPFLAGS=`$FLTKCONFIG --cxxflags 2>/dev/null`
+   ACE_FLTK_LIBS=`$FLTKCONFIG --ldflags 2>/dev/null`
+
+   AC_SUBST(ACE_FLTK_CPPFLAGS)
+   AC_SUBST(ACE_FLTK_LIBS)
+ fi
 ])
 
 
@@ -1117,6 +1138,21 @@ AC_DEFUN([ACE_PATH_FL],
 # Find Qt Libraries, flags, etc.
 AC_DEFUN([ACE_PATH_QT],
 [
+ ac_qt_found=no
+ PKG_CHECK_MODULES([Qt], [qt-mt],
+                   [ac_qt_found=yes],
+                   [AC_MSG_RESULT([not found])])
+ if test X"${ac_qt_found}" = Xyes; then
+   ACE_QT_CPPFLAGS="${Qt_CFLAGS}"
+   ACE_QT_LIBS="${Qt_LIBS}"
+   AC_SUBST(ACE_QT_CPPFLAGS)
+   AC_SUBST(ACE_QT_LIBS)
+
+   AS_IF([test -n "$QTDIR"],
+         [],
+         [QTDIR=`$PKG_CONFIG --variable=prefix qt-mt 2>/dev/null`])
+   AC_SUBST(QTDIR)
+ fi
 ])
 
 
@@ -1194,11 +1230,11 @@ AC_ARG_ENABLE([fl-reactor],
 		              [build support for the FlReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
-		  ace_user_enable_fl_reactor=yes
+                  AS_IF([test X"${FLTKCONFIG}" != X],
+                        [ace_user_enable_fl_reactor=yes],
+                        [AC_MSG_ERROR([ACE_FlReactor cannot be enabled: fltk-config not found.])])
 		  ;;
 		no)
-		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
 		  ace_user_enable_fl_reactor=no
 		  ;;
 		*)
@@ -1208,6 +1244,7 @@ AC_ARG_ENABLE([fl-reactor],
                 [
                  ace_user_enable_fl_reactor=no
                 ])
+AM_CONDITIONAL([BUILD_GL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_FL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
                [test X$ace_user_enable_fl_reactor = Xyes])
@@ -1225,11 +1262,11 @@ AC_ARG_ENABLE([qt-reactor],
 		              [build support for the QtReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
-		  ace_user_enable_qt_reactor=yes
+                  AS_IF([test X"${ac_qt_found}" = Xyes],
+                        [ace_user_enable_qt_reactor=yes],
+                        [AC_MSG_ERROR([ACE_QtReactor cannot be enabled: Qt not found.])])
 		  ;;
 		no)
-		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
 		  ace_user_enable_qt_reactor=no
 		  ;;
 		*)
