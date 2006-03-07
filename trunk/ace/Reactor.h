@@ -579,12 +579,12 @@ public:
   /**
    * Cancel timer.
    *
-   * Cancel timer associated with <timer_id> that was returned from
+   * Cancel timer associated with @a timer_id that was returned from
    * the schedule_timer() method.  If arg is non-NULL then it will be
    * set to point to the ``magic cookie'' argument passed in when the
    * handler was registered.  This makes it possible to free up the
    * memory and avoid memory leaks.  Returns 1 if cancellation
-   * succeeded and 0 if the <timer_id> wasn't found.
+   * succeeded and 0 if the @a timer_id wasn't found.
    *
    * On successful cancellation, ACE_Event_Handler::handle_close()
    * will be called with <ACE_Event_Handler::TIMER_MASK>.
@@ -624,8 +624,8 @@ public:
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added);
 
-  /// Add <masks_to_be_added> to the <handle>'s entry.  <event_handler>
-  /// associated with <handle> must already have been registered.
+  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// associated with @a handle must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
@@ -726,8 +726,8 @@ public:
   // = Assorted helper methods.
 
   /**
-   * Return the Event_Handler associated with <handle>.  Return 0 if
-   * <handle> is not registered.
+   * Return the Event_Handler associated with @a handle.  Return 0 if
+   * @a handle is not registered.
    *
    * Reactor will call ACE_Event_Handler::add_reference() on the
    * handler before returning it.
@@ -735,12 +735,12 @@ public:
   virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle);
 
   /**
-   * Check to see if <handle> is associated with a valid Event_Handler
-   * bound to <mask>.  Return the <event_handler> associated with this
-   * <handler> if <event_handler> != 0.
+   * Check to see if @a handle is associated with a valid Event_Handler
+   * bound to @a mask.  Return the @c event_handler associated with this
+   * @a handler if @a event_handler != 0.
    *
    * Reactor will call ACE_Event_Handler::add_reference() on the
-   * handler before returning it if <event_handler> != 0.
+   * handler before returning it if @a event_handler != 0.
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
@@ -749,7 +749,7 @@ public:
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
-   * this <handler> if <event_handler> != 0.
+   * this <handler> if @a event_handler != 0.
    */
   virtual int handler (int signum,
                        ACE_Event_Handler **event_handler = 0);
@@ -790,13 +790,13 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
-  /// <event_handler> and <mask>.
+  /// @a event_handler and @a mask.
   virtual int mask_ops (ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask,
                         int ops);
 
-  /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the <handle>
-  /// and <mask>.
+  /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the @a handle
+  /// and @a mask.
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
                         int ops);
