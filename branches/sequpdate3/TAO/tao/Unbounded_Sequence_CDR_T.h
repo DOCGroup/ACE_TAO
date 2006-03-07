@@ -11,7 +11,9 @@
  * @author Johnny Willemsen
  */
 
-  #include "tao/Unbounded_Basic_String_Sequence_T.h"
+#include "tao/Unbounded_Basic_String_Sequence_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO {
   template <typename stream>
@@ -526,5 +528,7 @@ namespace TAO {
     return true;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* guard_unbounded_sequence_cdr */

@@ -3,7 +3,7 @@
 /**
  * @file
  *
- * @brief Base class for the object reference traits.
+ * @brief Base class for the valuetype traits.
  *
  * $Id$
  *
@@ -11,6 +11,8 @@
  */
 
 #include "tao/Objref_VarOut_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -49,5 +51,7 @@ struct valuetype_traits_base
 
 } // namespace details
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // valuetype_traits_base_hpp

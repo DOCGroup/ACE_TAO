@@ -13,6 +13,8 @@
 
 #include "tao/Basic_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 namespace details
@@ -46,5 +48,7 @@ struct unbounded_array_allocation_traits
 
 } // namespace details
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_unbounded_array_allocation_traits_hpp

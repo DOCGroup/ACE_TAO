@@ -13,6 +13,8 @@
 #include "Generic_Sequence_T.h"
 #include "Array_Traits_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -138,5 +140,6 @@ namespace TAO
   }
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_bounded_array_sequence_hpp

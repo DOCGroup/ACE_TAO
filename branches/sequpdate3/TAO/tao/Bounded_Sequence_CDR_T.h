@@ -13,6 +13,8 @@
 
 #include "tao/Bounded_Basic_String_Sequence_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Short, MAX> & target) {
@@ -477,5 +479,7 @@ namespace TAO {
     return true;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* guard_bounded_sequence_cdr */

@@ -23,6 +23,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 template<>
@@ -310,5 +312,7 @@ operator!= (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
 {
   return !(lhs == rhs);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_unbounded_octet_sequence_hpp

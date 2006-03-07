@@ -12,6 +12,8 @@
 
 #include "tao/Objref_VarOut_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 namespace details
@@ -48,5 +50,7 @@ struct object_reference_traits_base
 
 } // namespace details
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // object_reference_traits_base_hpp

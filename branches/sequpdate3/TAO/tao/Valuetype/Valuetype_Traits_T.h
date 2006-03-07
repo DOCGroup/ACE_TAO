@@ -3,8 +3,7 @@
 /**
  * @file
  *
- * @brief Implement the element manipulation traits for object
- *        reference types.
+ * @brief Implement the element manipulation traits for valuetype types.
  *
  * $Id$
  *
@@ -14,6 +13,8 @@
 
 #include <algorithm>
 #include <functional>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -75,5 +76,7 @@ struct valuetype_traits
 
 } // namespace details
 } // namespace CORBA
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_valuetype_traits_hpp

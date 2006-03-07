@@ -12,6 +12,8 @@
 
 #include "tao/Bounded_Basic_String_Sequence_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -34,5 +36,7 @@ public:
 
 
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_bounded_wstring_sequence_hpp

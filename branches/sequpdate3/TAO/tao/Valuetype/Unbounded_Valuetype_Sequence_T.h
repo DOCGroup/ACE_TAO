@@ -3,7 +3,7 @@
 /**
  * @file
  *
- * @brief Implement unbounded sequences for object references.
+ * @brief Implement unbounded sequences for value types.
  *
  * $Id$
  *
@@ -13,6 +13,8 @@
 #include "Valuetype_Traits_T.h"
 #include "tao/Generic_Sequence_T.h"
 #include "Valuetype_Sequence_Element_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -136,5 +138,8 @@ private:
   }
 
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #endif // guard_unbounded_valuetype_sequence_hpp

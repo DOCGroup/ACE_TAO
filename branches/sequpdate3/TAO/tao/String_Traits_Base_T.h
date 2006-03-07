@@ -13,6 +13,8 @@
 
 #include "tao/String_Alloc.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 template<typename charT>
@@ -98,5 +100,7 @@ struct string_traits_base<CORBA::WChar>
 
 } // namespace details
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_string_traits_base_hpp
