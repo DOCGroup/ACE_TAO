@@ -1,3 +1,8 @@
+Tue Mar 07 09:36:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2417_Regression/Bug_2417_Regression.mpc:
+          Added threads as base project
+
 Tue Mar  7 07:51:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/LifeCycle_Service/Makefile.am:
