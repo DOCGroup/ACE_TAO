@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -111,7 +111,8 @@ progress_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
+  -I$(TAO_BUILDDIR) \
+  @ACE_FLTK_CPPFLAGS@
 
 progress_SOURCES = \
   Progress_i.cpp \
@@ -130,7 +131,8 @@ progress_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_FLTK_LIBS@
 
 endif BUILD_X11
 endif BUILD_TAO_FLRESOURCE
