@@ -1,3 +1,8 @@
+Tue Mar  7 10:16:50 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
+
+        * tests/Bug_2377_Regression/*:
+          New regression for bug 2377.
+
 Tue Mar 07 09:36:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2417_Regression/Bug_2417_Regression.mpc:
