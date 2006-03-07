@@ -1,3 +1,8 @@
+Tue Mar  7 18:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DLL/Newsweek.cpp:
+          Fixed compile error
+
 Tue Mar  7 13:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Reactor.h:
