@@ -11,7 +11,11 @@ project: qt {
   }
 
   specific(automake) {
+    includes -= $(QTDIR)/include
+    libpaths -= $(QTDIR)/lib
+    macros   -= QT_THREAD_SUPPORT
     lit_libs -= qt-mt$(QT_VERSION)
+
     compile_flags += @ACE_QT_CPPFLAGS@
     pure_libs += @ACE_QT_LIBS@
   }
