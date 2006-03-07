@@ -1,3 +1,17 @@
+Tue Mar  7 07:51:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+
+          Changed to not inherit from 'core' so LifeCycle_Service
+          executable is not installed.  It's not a stand-alone service
+          like the others in ${TAO_ROOT}/orbsvcs, it is an example for use
+          with ${TAO_ROOT}/examples/Quoter.  After x.5.1 we'll try to find
+          a better place for this.  See bugzilla issue 2410.
+
 Tue Mar  7 07:40:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/AMI/FL_Callback/Makefile.am:
