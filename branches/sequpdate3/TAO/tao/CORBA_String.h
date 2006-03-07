@@ -33,11 +33,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  template <typename charT> class String_Manager;  // Forward declaration.
+  template <typename charT> class String_Manager_T;  // Forward declaration.
+  typedef String_Manager_T<CORBA::Char> String_Manager;
+  typedef String_Manager_T<CORBA::WChar> WString_Manager;
 }
-
-typedef TAO::String_Manager<CORBA::Char> TAO_String_Manager;
-typedef TAO::String_Manager<CORBA::WChar> TAO_WString_Manager;
 
 namespace TAO
 {
@@ -190,7 +189,7 @@ namespace TAO
     {
     }
 
-    /// Construction from a TAO_String_Manager.
+    /// Construction from a TAO::String_Manager.
     inline String_out (string_mgr &p) : ptr_ (p.out ())
     {
     }

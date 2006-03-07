@@ -91,9 +91,9 @@ struct HTIOP_Export HTIOP_Endpoint_Info
   typedef HTIOP_Endpoint_Info_var _var_type;
 
 
-  TAO_String_Manager host;
+  TAO::String_Manager host;
   CORBA::Short port;
-  TAO_String_Manager htid;
+  TAO::String_Manager htid;
 };
 
 // TAO_IDL - Generated from

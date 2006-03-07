@@ -97,7 +97,7 @@ namespace TAO
     typedef IIOP_Endpoint_Info_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager host;
+    TAO::String_Manager host;
     CORBA::Short port;
     CORBA::Short priority;
   };

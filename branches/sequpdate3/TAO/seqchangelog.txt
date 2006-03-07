@@ -1,4 +1,42 @@
 
+        * tao/String_Manager_T.h:
+          Renamed String_Manager to String_Manager_T, this way we can have
+          TAO::String_Manager and TAO::WString_Manager. These replace
+          TAO_String_Manager and TAO_WString_Manager
+
+        * CIAO/tools/Config_Handlers/DnC_Dump.cpp
+        * CIAO/tools/Config_Handlers/DnC_Dump.h
+        * TAO_IDL/be/be_visitor_array/array.cpp
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp
+        * orbsvcs/PSS/PSDL_Exception_Visitor.cpp
+        * orbsvcs/PSS/PSDL_Node.h
+        * orbsvcs/PSS/PSDL_Struct_Visitor.cpp
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.h
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.h
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h
+        * tao/CORBA_String.h
+        * tao/IIOPC.h
+        * tao/IIOP_EndpointsC.h
+        * tao/IOP_IORC.h
+        * tao/String_Manager_T.h
+        * tao/String_Traits_Base_T.h
+        * tao/Tagged_Profile.h
+        * tao/DynamicAny/DynamicAnyC.h
+        * tao/IFR_Client/IFR_BaseC.h
+        * tao/IFR_Client/IFR_BasicC.h
+        * tao/IFR_Client/IFR_ComponentsC.h
+        * tao/IFR_Client/IFR_ExtendedC.h
+        * tao/ImR_Client/ImplRepoC.h
+        * tao/PI/ORBInitInfoC.h
+        * tao/Strategies/sciop_endpointsC.h
+        * tao/Strategies/uiop_endpointsC.h
+          Updated all these files because of TAO::String_Manager and
+          TAO::WString_Manager introduction
+
         * tests/Sequence_Unit_Tests/mock_reference.cpp:
         * tests/Sequence_Unit_Tests/mock_reference.hpp:
           Added counter to count number of marshal calls

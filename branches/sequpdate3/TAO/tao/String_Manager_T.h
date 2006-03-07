@@ -33,62 +33,62 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 template <typename charT>
-class String_Manager
+class String_Manager_T
 {
 public:
   typedef charT character_type;
   typedef TAO::details::string_traits_base <charT> s_traits;
 
   /// Default CTOR will initialize the underlying ptr_ to empty string.
-  inline String_Manager (void) : ptr_ (s_traits::default_initializer())
+  inline String_Manager_T (void) : ptr_ (s_traits::default_initializer())
   {
   }
 
   /// Copy constructor
-  inline String_Manager (const String_Manager<charT> &rhs) : ptr_ (s_traits::duplicate (rhs.ptr_))
+  inline String_Manager_T (const String_Manager_T<charT> &rhs) : ptr_ (s_traits::duplicate (rhs.ptr_))
   {
   }
 
   /// Constructor from const char* makes a copy.
-  inline String_Manager (const character_type *s) : ptr_ (s_traits::duplicate (s))
+  inline String_Manager_T (const character_type *s) : ptr_ (s_traits::duplicate (s))
   {
   }
 
   /// Destructor
-  inline ~String_Manager (void) {
+  inline ~String_Manager_T (void) {
     s_traits::release (this->ptr_);
   }
 
   /// Assignment from another managed type
-  inline String_Manager &operator= (const String_Manager<charT> &rhs) {
+  inline String_Manager_T &operator= (const String_Manager_T<charT> &rhs) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
-    String_Manager <character_type> tmp (rhs);
+    String_Manager_T <character_type> tmp (rhs);
     std::swap (this->ptr_, tmp.ptr_);
     return *this;
   }
 
   /// Assignment from var type will make a copy
-  inline String_Manager &operator= (const typename s_traits::string_var& value) {
+  inline String_Manager_T &operator= (const typename s_traits::string_var& value) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
-    String_Manager <character_type> tmp (value.in ());
+    String_Manager_T <character_type> tmp (value.in ());
     std::swap (this->ptr_, tmp.ptr_);
     return *this;
   }
 
   /// Assignment from a constant * will make a copy
-  inline String_Manager &operator= (const character_type *p) {
+  inline String_Manager_T &operator= (const character_type *p) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
-    String_Manager <character_type> tmp (p);
+    String_Manager_T <character_type> tmp (p);
     std::swap (this->ptr_, tmp.ptr_);
     return *this;
   }
 
-  /// Assignment from char* will not make a copy. The String_Manager will now
+  /// Assignment from char* will not make a copy. The String_Manager_T will now
   /// own the string.
-  inline String_Manager &operator= (character_type *p) {
+  inline String_Manager_T &operator= (character_type *p) {
     s_traits::release (this->ptr_);
     this->ptr_ = p;
     return *this;
@@ -127,10 +127,10 @@ private:
   /// The underlying string
   character_type *ptr_;
 };
-}
 
-typedef TAO::String_Manager<char> TAO_String_Manager;
-typedef TAO::String_Manager<CORBA::WChar> TAO_WString_Manager;
+  typedef TAO::String_Manager_T<CORBA::Char> String_Manager;
+  typedef TAO::String_Manager_T<CORBA::WChar> WString_Manager;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

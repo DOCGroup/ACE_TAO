@@ -789,11 +789,11 @@ namespace CORBA
       typedef ProvidesDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
-      TAO_String_Manager interface_type;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
+      TAO::String_Manager interface_type;
     };
 
     // TAO_IDL - Generated from
@@ -979,11 +979,11 @@ namespace CORBA
       typedef UsesDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
-      TAO_String_Manager interface_type;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
+      TAO::String_Manager interface_type;
       CORBA::Boolean is_multiple;
     };
 
@@ -1160,11 +1160,11 @@ namespace CORBA
       typedef EventPortDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
-      TAO_String_Manager event;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
+      TAO::String_Manager event;
     };
 
     // TAO_IDL - Generated from
@@ -1881,11 +1881,11 @@ namespace CORBA
       typedef ComponentDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
-      TAO_String_Manager base_component;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
+      TAO::String_Manager base_component;
       CORBA::RepositoryIdSeq supported_interfaces;
       CORBA::ComponentIR::ProvidesDescriptionSeq provided_interfaces;
       CORBA::ComponentIR::UsesDescriptionSeq used_interfaces;
@@ -2348,12 +2348,12 @@ namespace CORBA
       typedef HomeDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
-      TAO_String_Manager base_home;
-      TAO_String_Manager managed_component;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
+      TAO::String_Manager base_home;
+      TAO::String_Manager managed_component;
       CORBA::ValueDescription primary_key;
       CORBA::OpDescriptionSeq factories;
       CORBA::OpDescriptionSeq finders;

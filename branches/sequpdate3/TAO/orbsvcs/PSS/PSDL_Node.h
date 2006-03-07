@@ -36,7 +36,7 @@
 class TAO_PSDL_Node_Visitor;
 class TAO_PSDL_Scope_Visitor;
 
-class TAO_String_Manager;
+class TAO::String_Manager;
 
 class TAO_PSDL_Export TAO_PSDL_Node
 {

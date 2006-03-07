@@ -55,7 +55,7 @@ TAO_PSDL_Struct_Visitor::visit_type_spec (TAO_PSDL_Type_Spec *type_spec)
       if (ACE_OS::strcmp (type.c_str (), "char *") == 0)
         {
           ps_sh->indent ();
-          *ps_sh << " TAO_String_Manager ";
+          *ps_sh << " TAO::String_Manager ";
         }
       else
         {

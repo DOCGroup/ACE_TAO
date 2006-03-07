@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_array, 
-           array, 
+ACE_RCSID (be_visitor_array,
+           array,
            "$Id$")
 
 
@@ -83,7 +83,7 @@ be_visitor_array::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_PredefinedType::PredefinedType pt = node->pt ();
-  
+
   *os << "::";
 
   if (pt == AST_PredefinedType::PT_pseudo
@@ -112,11 +112,11 @@ be_visitor_array::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "TAO_String_Manager";
+      *os << "TAO::String_Manager";
     }
   else
     {
-      *os << "TAO_WString_Manager";
+      *os << "TAO::WString_Manager";
     }
 
   return 0;
@@ -142,20 +142,20 @@ be_visitor_array::visit_typedef (be_typedef *node)
   AST_Decl::NodeType nt = pbt->node_type ();
   AST_PredefinedType::PredefinedType pt = AST_PredefinedType:: PT_void;
   int result = 0;
-  
+
   // We check for these first, because in these cases, we replace the
   // entire slice type with one of the strings below, instead of using
   // the node's type name, possibly suffixed with '_var'.
   if (nt == AST_Decl::NT_string)
     {
-      *os << "TAO_String_Manager";
-      
+      *os << "TAO::String_Manager";
+
       return 0;
     }
   else if (nt == AST_Decl::NT_wstring)
     {
-      *os << "TAO_WString_Manager";
-      
+      *os << "TAO::WString_Manager";
+
       return 0;
     }
 
@@ -169,7 +169,7 @@ be_visitor_array::visit_typedef (be_typedef *node)
 
   // We must append a "_var" for typedefs of interfaces, CORBA::Objects or
   // typecodes.
-  if (nt == AST_Decl::NT_interface 
+  if (nt == AST_Decl::NT_interface
       || nt == AST_Decl::NT_interface_fwd
       || pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)

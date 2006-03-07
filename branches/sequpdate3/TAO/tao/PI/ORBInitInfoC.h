@@ -245,7 +245,7 @@ namespace PortableInterceptor
     {
     public:
 
-      TAO_String_Manager name;
+      TAO::String_Manager name;
       DuplicateName (void);
       DuplicateName (const DuplicateName &);
       ~DuplicateName (void);

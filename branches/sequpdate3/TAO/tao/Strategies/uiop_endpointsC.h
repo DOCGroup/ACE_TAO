@@ -91,7 +91,7 @@ struct TAO_Strategies_Export TAO_UIOP_Endpoint_Info
   typedef TAO_UIOP_Endpoint_Info_var _var_type;
 
 
-  TAO_String_Manager rendezvous_point;
+  TAO::String_Manager rendezvous_point;
   CORBA::Short priority;
 };
 

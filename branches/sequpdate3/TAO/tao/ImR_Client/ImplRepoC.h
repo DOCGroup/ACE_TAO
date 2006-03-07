@@ -134,7 +134,7 @@ namespace ImplementationRepository
   {
   public:
 
-    TAO_String_Manager reason;
+    TAO::String_Manager reason;
     CannotActivate (void);
     CannotActivate (const CannotActivate &);
     ~CannotActivate (void);
@@ -252,8 +252,8 @@ namespace ImplementationRepository
     typedef EnvironmentVariable_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager value;
+    TAO::String_Manager name;
+    TAO::String_Manager value;
   };
 
   // TAO_IDL - Generated from
@@ -356,11 +356,11 @@ namespace ImplementationRepository
     typedef StartupOptions_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager command_line;
+    TAO::String_Manager command_line;
     ImplementationRepository::EnvironmentList environment;
-    TAO_String_Manager working_directory;
+    TAO::String_Manager working_directory;
     ImplementationRepository::ActivationMode activation;
-    TAO_String_Manager activator;
+    TAO::String_Manager activator;
     ::CORBA::Long start_limit;
   };
 
@@ -395,9 +395,9 @@ namespace ImplementationRepository
     typedef ServerInformation_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager server;
+    TAO::String_Manager server;
     ImplementationRepository::StartupOptions startup;
-    TAO_String_Manager partial_ior;
+    TAO::String_Manager partial_ior;
   };
 
   // TAO_IDL - Generated from
@@ -772,21 +772,21 @@ namespace ImplementationRepository
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   private:
     TAO::Collocation_Proxy_Broker *the_TAO_Administration_Proxy_Broker_;
-  
+
   protected:
     // Concrete interface only.
     Administration (void);
-    
+
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
     virtual void ImplementationRepository_Administration_setup_collocation (void);
-    
+
     // Concrete non-local interface only.
     Administration (
         IOP::IOR *ior,
         TAO_ORB_Core *orb_core = 0
       );
-    
+
     // Non-local interface only.
     Administration (
         TAO_Stub *objref,
@@ -794,21 +794,21 @@ namespace ImplementationRepository
         TAO_Abstract_ServantBase *servant = 0,
         TAO_ORB_Core *orb_core = 0
       );
-    
+
     virtual ~Administration (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Administration (const Administration &);
-    
+
     void operator= (const Administration &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-  
+
   extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_Administration;
 
 // TAO_IDL - Generated from
@@ -842,7 +842,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_
-  
+
   template<>
   struct TAO_IMR_Client_Export Objref_Traits< ::ImplementationRepository::ServerInformationIterator>
   {
@@ -863,7 +863,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__TRAITS_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__TRAITS_
-  
+
   template<>
   struct TAO_IMR_Client_Export Objref_Traits< ::ImplementationRepository::Administration>
   {

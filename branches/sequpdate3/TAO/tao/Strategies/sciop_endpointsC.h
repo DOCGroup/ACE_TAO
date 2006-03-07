@@ -91,7 +91,7 @@ struct TAO_Strategies_Export TAO_SCIOP_Endpoint_Info
   typedef TAO_SCIOP_Endpoint_Info_var _var_type;
 
 
-  TAO_String_Manager host;
+  TAO::String_Manager host;
   CORBA::Short port;
   CORBA::Short priority;
 };

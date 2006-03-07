@@ -187,7 +187,7 @@ namespace IOP
     typedef IOR_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager type_id;
+    TAO::String_Manager type_id;
     IOP::TaggedProfileSeq profiles;
   };
 

@@ -291,7 +291,7 @@ TAO_Notify_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
       if (iter.next (entry) != 0)
         {
           // Why do we cast to a const object?
-          // We want to force the TAO_String_Manager to make a
+          // We want to force the TAO::String_Manager to make a
           // copy of the string. It wouldn't unless we coax it to use
           // the correct assignment operator.
           infoseq[index].constraint_expression =

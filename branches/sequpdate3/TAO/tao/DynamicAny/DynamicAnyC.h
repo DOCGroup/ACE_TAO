@@ -1144,7 +1144,7 @@ namespace DynamicAny
     typedef NameValuePair_var _var_type;
 
 
-    TAO_String_Manager id;
+    TAO::String_Manager id;
     CORBA::Any value;
   };
 
@@ -1218,7 +1218,7 @@ namespace DynamicAny
     typedef NameDynAnyPair_var _var_type;
 
 
-    TAO_String_Manager id;
+    TAO::String_Manager id;
     DynamicAny::DynAny_var value;
   };
 

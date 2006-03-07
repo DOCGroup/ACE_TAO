@@ -735,7 +735,7 @@ operator== (CORBA::Double left, const TAO_Literal_Constraint& right)
 }
 
 bool
-operator== (const TAO_String_Manager& left,
+operator== (const TAO::String_Manager& left,
             const TAO_Literal_Constraint& right)
 {
   bool result = false;

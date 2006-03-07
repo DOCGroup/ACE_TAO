@@ -1508,7 +1508,7 @@ namespace CORBA
     typedef StructMember_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
+    TAO::String_Manager name;
     CORBA::TypeCode_var type;
     CORBA::IDLType_var type_def;
   };
@@ -1596,7 +1596,7 @@ namespace CORBA
 
     static void _tao_any_destructor (void *);
     CORBA::StructMemberSeq members;
-    TAO_String_Manager name;
+    TAO::String_Manager name;
   };
 
   // TAO_IDL - Generated from
@@ -1681,10 +1681,10 @@ namespace CORBA
     typedef ExceptionDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::TypeCode_var type;
   };
 
@@ -1772,7 +1772,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
     CORBA::StructMemberSeq members;
     CORBA::ExcDescriptionSeq exceptions;
-    TAO_String_Manager name;
+    TAO::String_Manager name;
   };
 
   // TAO_IDL - Generated from
@@ -1857,7 +1857,7 @@ namespace CORBA
     typedef UnionMember_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
+    TAO::String_Manager name;
     CORBA::Any label;
     CORBA::TypeCode_var type;
     CORBA::IDLType_var type_def;
@@ -2634,10 +2634,10 @@ namespace CORBA
     typedef TypeDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::TypeCode_var type;
   };
 

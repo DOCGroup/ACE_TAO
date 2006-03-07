@@ -601,10 +601,10 @@ namespace CORBA
     typedef ModuleDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
   };
 
   // TAO_IDL - Generated from
@@ -800,10 +800,10 @@ namespace CORBA
     typedef ConstantDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::TypeCode_var type;
     CORBA::Any value;
   };
@@ -2469,10 +2469,10 @@ namespace CORBA
     typedef AttributeDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::TypeCode_var type;
     CORBA::AttributeMode mode;
   };
@@ -2508,10 +2508,10 @@ namespace CORBA
     typedef ExtAttributeDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::TypeCode_var type;
     CORBA::AttributeMode mode;
     CORBA::ExcDescriptionSeq get_exceptions;
@@ -2727,7 +2727,7 @@ namespace CORBA
     typedef ParameterDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
+    TAO::String_Manager name;
     CORBA::TypeCode_var type;
     CORBA::IDLType_var type_def;
     CORBA::ParameterMode mode;
@@ -3101,10 +3101,10 @@ namespace CORBA
     typedef OperationDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::TypeCode_var result;
     CORBA::OperationMode mode;
     CORBA::ContextIdSeq contexts;
@@ -3438,10 +3438,10 @@ namespace CORBA
       typedef FullInterfaceDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
       ::CORBA::OpDescriptionSeq operations;
       ::CORBA::AttrDescriptionSeq attributes;
       ::CORBA::RepositoryIdSeq base_interfaces;
@@ -3573,10 +3573,10 @@ namespace CORBA
     typedef InterfaceDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::RepositoryIdSeq base_interfaces;
   };
 
@@ -3670,10 +3670,10 @@ namespace CORBA
       typedef ExtFullInterfaceDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
       ::CORBA::OpDescriptionSeq operations;
       ::CORBA::ExtAttrDescriptionSeq attributes;
       ::CORBA::RepositoryIdSeq base_interfaces;

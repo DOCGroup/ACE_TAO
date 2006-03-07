@@ -341,7 +341,7 @@ namespace TAO
      * the GroupTaggedComponent that defines this group
      * contains:
      *   GIOP::Version component_version;
-     *   TAO_String_Manager group_domain_id;
+     *   TAO::String_Manager group_domain_id;
      *   PortableGroup::ObjectGroupId object_group_id;
      *   PortableGroup::ObjectGroupRefVersion object_group_ref_version;
      */

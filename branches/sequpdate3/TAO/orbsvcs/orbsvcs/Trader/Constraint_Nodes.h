@@ -294,7 +294,7 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
                 const TAO_Literal_Constraint& right);
 
   friend bool
-    operator== (const TAO_String_Manager& left,
+    operator== (const TAO::String_Manager& left,
                 const TAO_Literal_Constraint& right);
 
   // = Arithmetic operators.

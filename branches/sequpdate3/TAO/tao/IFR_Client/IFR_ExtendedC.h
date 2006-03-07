@@ -266,10 +266,10 @@ namespace CORBA
     typedef ValueMember_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::TypeCode_var type;
     CORBA::IDLType_var type_def;
     CORBA::Visibility access;
@@ -738,12 +738,12 @@ namespace CORBA
       typedef FullValueDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
       CORBA::Boolean is_abstract;
       CORBA::Boolean is_custom;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
       CORBA::OpDescriptionSeq operations;
       CORBA::AttrDescriptionSeq attributes;
       CORBA::ValueMemberSeq members;
@@ -751,7 +751,7 @@ namespace CORBA
       CORBA::RepositoryIdSeq supported_interfaces;
       CORBA::RepositoryIdSeq abstract_base_values;
       CORBA::Boolean is_truncatable;
-      TAO_String_Manager base_value;
+      TAO::String_Manager base_value;
       CORBA::TypeCode_var type;
     };
 
@@ -895,16 +895,16 @@ namespace CORBA
     typedef ValueDescription_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager name;
-    TAO_String_Manager id;
+    TAO::String_Manager name;
+    TAO::String_Manager id;
     CORBA::Boolean is_abstract;
     CORBA::Boolean is_custom;
-    TAO_String_Manager defined_in;
-    TAO_String_Manager version;
+    TAO::String_Manager defined_in;
+    TAO::String_Manager version;
     CORBA::RepositoryIdSeq supported_interfaces;
     CORBA::RepositoryIdSeq abstract_base_values;
     CORBA::Boolean is_truncatable;
-    TAO_String_Manager base_value;
+    TAO::String_Manager base_value;
   };
 
   // TAO_IDL - Generated from
@@ -1018,12 +1018,12 @@ namespace CORBA
       typedef ExtFullValueDescription_var _var_type;
 
       static void _tao_any_destructor (void *);
-      TAO_String_Manager name;
-      TAO_String_Manager id;
+      TAO::String_Manager name;
+      TAO::String_Manager id;
       CORBA::Boolean is_abstract;
       CORBA::Boolean is_custom;
-      TAO_String_Manager defined_in;
-      TAO_String_Manager version;
+      TAO::String_Manager defined_in;
+      TAO::String_Manager version;
       CORBA::OpDescriptionSeq operations;
       CORBA::ExtAttrDescriptionSeq attributes;
       CORBA::ValueMemberSeq members;
@@ -1031,7 +1031,7 @@ namespace CORBA
       CORBA::RepositoryIdSeq supported_interfaces;
       CORBA::RepositoryIdSeq abstract_base_values;
       CORBA::Boolean is_truncatable;
-      TAO_String_Manager base_value;
+      TAO::String_Manager base_value;
       CORBA::TypeCode_var type;
     };
 
