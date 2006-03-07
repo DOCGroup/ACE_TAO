@@ -73,8 +73,7 @@ int Publisher_impl::Worker::svc (void)
 					doShutdown = false;
 					try
 					{
-						unsigned int i = iter->count;
-						if (!CORBA::is_nil(iter->subscriber))
+            if (!CORBA::is_nil(iter->subscriber.in ()))
 							iter->subscriber->onData(data);
 						else
 							iter->unsubscribed = true;
