@@ -17,7 +17,13 @@ project : ace_x11, ace_gl {
   }
 
   specific(automake) {
-     compile_flags += @ACE_FLTK_CPPFLAGS@
-     pure_libs += @ACE_FLTK_LIBS@
+     // ACE_FLTK_* macros contain X11 settings
+     compile_flags -= $(ACE_X11_CPPFLAGS)
+     linkflags -= $(ACE_X11_LDFLAGS)
+     pure_libs -= $(ACE_X11_LIBS)
+
+     compile_flags += $(ACE_FLTK_CPPFLAGS)
+     linkflags += $(ACE_FLTK_LDFLAGS)
+     pure_libs += $(ACE_FLTK_LIBS)
   }
 }
