@@ -1,3 +1,10 @@
+Tue Mar  7 07:19:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+        * tests/Makefile.am:
+
+          Regenerated.
+
 Tue Mar  7 07:16:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ace.m4:
