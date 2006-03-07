@@ -1,3 +1,10 @@
+Tue Mar  7 08:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DLL/Newsweek.cpp:
+        * examples/DLL/Today.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp:
+          Fixed compile errors
+
 Tue Mar  7 07:19:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
