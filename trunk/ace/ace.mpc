@@ -425,6 +425,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Synch_Traits.h
     TSS_T.h
     Timer_Queuefwd.h
+    Truncate.h
     UPIPE_Addr.h
     Value_Ptr.h
     Version.h
