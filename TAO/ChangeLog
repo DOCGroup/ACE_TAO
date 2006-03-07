@@ -1,3 +1,8 @@
+Tue Mar 07 11:11:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2417_Regression/publisher_impl.cpp:
+          Fixed implicit conversion warnings
+
 Tue Mar  7 10:16:50 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
         * tests/Bug_2377_Regression/*:
