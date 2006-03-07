@@ -1,3 +1,9 @@
+Tue Mar  7 07:16:40 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ace.m4:
+
+          Add Truncate.h to Header_Files section.
+
 Tue Mar  7 07:12:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/ace_qt.mpb:
