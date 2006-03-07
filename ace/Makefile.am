@@ -22,7 +22,7 @@ SUBDIRS = \
 
 CLEANFILES =
 lib_LTLIBRARIES =
-nobase_include_HEADERS =
+nobase_include_HEADERS = \
 pkgconfig_DATA =
 
 ## Makefile.ACE.am
@@ -1221,6 +1221,7 @@ lib_LTLIBRARIES += libACE_FlReactor.la
 libACE_FlReactor_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
+  @ACE_FLTK_CPPFLAGS@ \
   -DACE_FLREACTOR_BUILD_DLL
 
 libACE_FlReactor_la_SOURCES = \
@@ -1230,7 +1231,8 @@ libACE_FlReactor_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACE_FlReactor_la_LIBADD = \
-  libACE.la
+  libACE.la \
+  @ACE_FLTK_LIBS@
 
 nobase_include_HEADERS += \
   ACE_FlReactor_export.h \
@@ -1271,8 +1273,7 @@ lib_LTLIBRARIES += libACE_QtReactor.la
 libACE_QtReactor_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(QTDIR)/include \
-  -DQT_THREAD_SUPPORT \
+  @ACE_QT_CPPFLAGS@ \
   -DACE_QTREACTOR_BUILD_DLL
 
 libACE_QtReactor_la_SOURCES = \
@@ -1284,7 +1285,7 @@ libACE_QtReactor_la_LDFLAGS = \
 
 libACE_QtReactor_la_LIBADD = \
   libACE.la \
-  -lqt-mt
+  @ACE_QT_LIBS@
 
 nobase_include_HEADERS += \
   ACE_QtReactor_export.h \
