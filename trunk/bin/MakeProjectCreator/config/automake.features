@@ -10,6 +10,8 @@ qos=0
 
 gl=1
 x11=1
+athena=1
+motif=1
 
 fl=1
 ace_flreactor=1

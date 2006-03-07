@@ -1,3 +1,59 @@
+Tue Mar  7 08:45:26 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+        * tests/Makefile.am:
+
+          Regenerate.
+
+        * bin/MakeProjectCreator/config/automake.features:
+
+          Set athena and motif to 1
+
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+
+          For autoconf build:
+
+            Change @ACE_FLTK_CPPFLAGS@ and @ACE_FLTK_LIBS@ to
+            $(ACE_FLTK_CPPFLAGS) and $(ACE_FLTK_LIBS)
+
+            Add $(ACE_FLTK_LDFLAGS) to linkflags.
+
+            Subtract '$(ACE_X11_CPPFLAGS)' from compile_flags.
+            Subtract '$(ACE_X11_LDFLAGS)' from libpaths.
+            Subtract '$(ACE_X11_LIBS)' from macros.
+
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+
+          For autoconf build:
+
+            Change @ACE_QT_CPPFLAGS@ and @ACE_QT_LIBS@ to
+            $(ACE_QT_CPPFLAGS) and $(ACE_QT_LIBS)
+
+            Add $(ACE_QT_LDFLAGS) to linkflags.
+
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+
+          For autoconf build:
+
+            Change @ACE_TK_CPPFLAGS@ and @ACE_TK_LIBS@ to
+            $(ACE_TK_CPPFLAGS) and $(ACE_TK_LIBS)
+
+            Add $(ACE_TK_LDFLAGS) to linkflags.
+
+        * bin/MakeProjectCreator/config/ace_xt.mpb:
+
+          For autoconf build:
+            Add $(ACE_XT_CPPFLAGS) to compile_flags.
+            Add $(ACE_XT_LDFLAGS) to linkflags.
+            Add $(ACE_XT_LIBS) to pure_libs.
+
+        * bin/MakeProjectCreator/config/ace_11.mpb:
+
+          For autoconf build:
+            Add $(ACE_X11_CPPFLAGS) to compile_flags.
+            Add $(ACE_X11_LDFLAGS) to linkflags.
+            Add $(ACE_X11_LIBS) to pure_libs.
+
 Tue Mar  7 08:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DLL/Newsweek.cpp:

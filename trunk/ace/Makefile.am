@@ -22,7 +22,7 @@ SUBDIRS = \
 
 CLEANFILES =
 lib_LTLIBRARIES =
-nobase_include_HEADERS = \
+nobase_include_HEADERS = 
 pkgconfig_DATA =
 
 ## Makefile.ACE.am
@@ -1221,18 +1221,18 @@ lib_LTLIBRARIES += libACE_FlReactor.la
 libACE_FlReactor_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  @ACE_FLTK_CPPFLAGS@ \
+  $(ACE_FLTK_CPPFLAGS) \
   -DACE_FLREACTOR_BUILD_DLL
 
 libACE_FlReactor_la_SOURCES = \
   FlReactor.cpp
 
 libACE_FlReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_FLTK_LDFLAGS)
 
 libACE_FlReactor_la_LIBADD = \
   libACE.la \
-  @ACE_FLTK_LIBS@
+  $(ACE_FLTK_LIBS)
 
 nobase_include_HEADERS += \
   ACE_FlReactor_export.h \
@@ -1273,7 +1273,7 @@ lib_LTLIBRARIES += libACE_QtReactor.la
 libACE_QtReactor_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  @ACE_QT_CPPFLAGS@ \
+  $(ACE_QT_CPPFLAGS) \
   -DACE_QTREACTOR_BUILD_DLL
 
 libACE_QtReactor_la_SOURCES = \
@@ -1281,11 +1281,11 @@ libACE_QtReactor_la_SOURCES = \
   QtReactor_moc.cpp
 
 libACE_QtReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_QT_LDFLAGS)
 
 libACE_QtReactor_la_LIBADD = \
   libACE.la \
-  @ACE_QT_LIBS@
+  $(ACE_QT_LIBS)
 
 nobase_include_HEADERS += \
   ACE_QtReactor_export.h \
@@ -1315,20 +1315,20 @@ lib_LTLIBRARIES += libACE_TkReactor.la
 libACE_TkReactor_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  @ACE_TCL_CPPFLAGS@ \
-  @ACE_TK_CPPFLAGS@ \
+  $(ACE_TK_CPPFLAGS) \
+  $(ACE_TCL_CPPFLAGS) \
   -DACE_TKREACTOR_BUILD_DLL
 
 libACE_TkReactor_la_SOURCES = \
   TkReactor.cpp
 
 libACE_TkReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
 
 libACE_TkReactor_la_LIBADD = \
   libACE.la \
-  @ACE_TCL_LIBS@ \
-  @ACE_TK_LIBS@
+  $(ACE_TK_LIBS) \
+  $(ACE_TCL_LIBS)
 
 nobase_include_HEADERS += \
   ACE_TkReactor_export.h \
@@ -1359,16 +1359,20 @@ lib_LTLIBRARIES += libACE_XtReactor.la
 libACE_XtReactor_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
+  $(ACE_X11_CPPFLAGS) \
+  $(ACE_XT_CPPFLAGS) \
   -DACE_XTREACTOR_BUILD_DLL
 
 libACE_XtReactor_la_SOURCES = \
   XtReactor.cpp
 
 libACE_XtReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
 
 libACE_XtReactor_la_LIBADD = \
-  libACE.la
+  libACE.la \
+  $(ACE_XT_LIBS) \
+  $(ACE_X11_LIBS)
 
 nobase_include_HEADERS += \
   ACE_XtReactor_export.h \
