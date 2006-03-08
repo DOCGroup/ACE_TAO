@@ -1,3 +1,8 @@
+Wed Mar  8 10:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * asnmp/*.h:
+          Converted to doxygen style of documentation
+
 Wed Jan  4 22:47:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:
@@ -8,7 +13,7 @@ Wed Jan  4 22:47:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           Added "Local Variables" section defining "add-log-time-format"
           to a really ugly lambda expression that formats changelog
           timestamps in UTC and works with both GNU Emacs and XEmacs.
-        
+
 Fri Dec 30 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * asnmp/transaction.cpp:
