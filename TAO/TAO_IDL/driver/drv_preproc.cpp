@@ -105,9 +105,10 @@ const char *DIR_DOT_DOT = "..";
 static char tmp_file [MAXPATHLEN + 1] = { 0 };
 static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
 
-// Lines can be 1024 chars long.
+// Lines can be 1024 chars long intially - it will expand as required.
 #define LINEBUF_SIZE 1024
-static char drv_line[LINEBUF_SIZE + 1];
+static char* drv_line = 0;
+static size_t drv_line_size = LINEBUF_SIZE + 1;
 
 // Push the new CPP location if we got a -Yp argument.
 void
@@ -163,9 +164,8 @@ static long
 DRV_get_line (FILE *f)
 {
     char *l = fgets (drv_line,
-                     LINEBUF_SIZE,
+                     drv_line_size,
                      f);
-    size_t i = 0;
 
     if (l == 0)
       {
@@ -182,11 +182,36 @@ DRV_get_line (FILE *f)
         return true;
       }
 
-    i = strlen(l) - 1;
-
-    if (l[i] == '\n')
+    while (strchr(drv_line, '\n') == NULL)
       {
-        l[i] = '\0';
+        // Haven't got to a newline yet
+        // Create a bigger buffer and keep reading
+        size_t temp_size;
+        temp_size = drv_line_size * 2;
+        char *temp = 0;
+        ACE_NEW_RETURN (temp,
+                        char[temp_size],
+                        false);
+        strcpy (temp, drv_line);
+        delete [] drv_line;
+        drv_line = temp;
+        drv_line_size = temp_size;
+
+        l = fgets (drv_line + strlen (drv_line),
+                   drv_line_size - strlen(drv_line),
+                   f);
+
+        if (l == 0 || *l == '\0')
+          {
+            break;
+          }
+      }
+
+    size_t i = strlen (drv_line) - 1;
+
+    if (drv_line[i] == '\n')
+      {
+        drv_line[i] = '\0';
       }
 
     return true;
@@ -196,6 +221,10 @@ DRV_get_line (FILE *f)
 void
 DRV_cpp_init (void)
 {
+  // Create the line buffer
+  ACE_NEW (drv_line,
+           char [drv_line_size]);
+
   const char *cpp_loc = FE_get_cpp_loc_from_env ();
   DRV_cpp_putarg (cpp_loc);
 
