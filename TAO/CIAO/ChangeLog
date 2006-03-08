@@ -1,3 +1,9 @@
+Wed Mar 08 14:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.ciao.GNU:
+          Added $(CIAO_ROOT)/ciao to LDFLAGS and $(CIAO) to INCLDIRS
+          as we do in rules.tao.GNU, this improves the footprint stats
+
 Mon Mar 06 16:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Swapping_Container.{h,cpp}:
