@@ -1,3 +1,8 @@
+Wed Mar  8 10:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/TP_Reactor/run_test.pl:
+          Both clients should start in parallel, not after each other
+
 Wed Mar  8 04:53:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:
