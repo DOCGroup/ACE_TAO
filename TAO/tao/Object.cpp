@@ -47,8 +47,8 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
                        CORBA::Boolean collocated,
                        TAO_Abstract_ServantBase * servant,
                        TAO_ORB_Core *orb_core)
-  : is_local_ (0)
-    , is_evaluated_ (1)
+  : is_local_ (false)
+    , is_evaluated_ (true)
     , ior_ (0)
     , orb_core_ (orb_core)
     , protocol_proxy_ (protocol_proxy)
@@ -76,8 +76,8 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
 
 CORBA::Object::Object (IOP::IOR *ior,
                        TAO_ORB_Core *orb_core)
-  : is_local_ (0)
-    , is_evaluated_ (0)
+  : is_local_ (false)
+    , is_evaluated_ (false)
     , ior_ (ior)
     , orb_core_ (orb_core)
     , protocol_proxy_ (0)
@@ -851,7 +851,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
   obj->protocol_proxy_ = objdata;
 
-  obj->is_evaluated_ = 1;
+  obj->is_evaluated_ = true;
 
   // Release the contents of the ior to keep memory consumption down.
   obj->ior_ = 0;
