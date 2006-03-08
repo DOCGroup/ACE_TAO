@@ -22,8 +22,6 @@
 
 #include "tao/orbconf.h"
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 #include "tao/Messaging/ExceptionHolderA.h"
 #include "tao/Messaging/ExceptionHolderC.h"
 #include "tao/Valuetype/ValueFactory.h"
@@ -94,8 +92,6 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif
 
 #include /**/ "ace/post.h"
 #endif /* TAO_MESSAGING_EXCEPTIONHOLDER_I_H */

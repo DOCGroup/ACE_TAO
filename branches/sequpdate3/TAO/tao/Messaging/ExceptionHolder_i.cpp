@@ -7,8 +7,6 @@ ACE_RCSID (Messaging,
            ExceptionHolder_i,
            "$Id$")
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 #include "tao/Messaging/Messaging.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -81,4 +79,3 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif

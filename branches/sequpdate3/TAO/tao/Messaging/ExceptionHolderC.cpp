@@ -35,8 +35,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 #if !defined (__ACE_INLINE__)
 #include "ExceptionHolderC.inl"
 #endif /* !defined INLINE */
@@ -308,4 +306,3 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif

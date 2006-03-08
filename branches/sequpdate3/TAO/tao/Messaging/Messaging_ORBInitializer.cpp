@@ -58,9 +58,6 @@ TAO_Messaging_ORBInitializer::register_value_factory (
   PortableInterceptor::ORBInitInfo_ptr info
   ACE_ENV_ARG_DECL)
 {
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-  ACE_UNUSED_ARG (info);
-#else
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info =
@@ -90,7 +87,6 @@ TAO_Messaging_ORBInitializer::register_value_factory (
         base_factory
         ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
-#endif
 }
 void
 TAO_Messaging_ORBInitializer::register_policy_factories (

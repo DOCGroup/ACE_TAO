@@ -56,8 +56,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Messaging_Export
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
@@ -288,8 +286,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ExceptionHolderC.inl"
 #endif /* defined INLINE */
-
-#endif
 
 #include /**/ "ace/post.h"
 
