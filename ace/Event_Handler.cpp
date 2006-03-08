@@ -258,8 +258,7 @@ ACE_Event_Handler::read_adapter (void *args)
   while (this_ptr->handle_input (ACE_STDIN) != -1)
     continue;
 
-  this_ptr->handle_close (handle,
-                          ACE_Event_Handler::READ_MASK);
+  this_ptr->handle_close (ACE_STDIN, ACE_Event_Handler::READ_MASK);
   this_ptr->reactor ()->notify ();
 
   return 0;
