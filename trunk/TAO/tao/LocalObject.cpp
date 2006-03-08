@@ -64,7 +64,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj
                                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (())
 {
-  return (other_obj == this) ? 1 : 0;
+  return (other_obj == this) ? true : false;
 }
 
 // TAO's extensions
@@ -90,7 +90,7 @@ CORBA::Boolean
 CORBA::LocalObject::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Always return false.
-  return 0;
+  return false;
 }
 
 void
@@ -205,7 +205,7 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
-                    0);
+                    false);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
