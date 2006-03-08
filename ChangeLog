@@ -29,6 +29,18 @@ Tue Mar  7 18:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/DLL/Newsweek.cpp:
           Fixed compile error
 
+Tue Mar  7 18:48:31 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Event_Handler.cpp (read_adapter): Never pass the handler's
+          handle value to handle_input(). The handle_input() call is being
+          made on behalf of stdin, not any other handle. It also mimics
+          the behavior of the non-Windows case, where ACE_STDIN is registered
+          with the reactor, regardless of the handler's handle value.
+          Thanks to Aaron Scamehorn <aaron dot scamehorn at cogcap dot com>
+          for noticing this problem.
+
+        * THANKS: Added Aaron Scamehorn to the Hall of Fame.
+
 Tue Mar  7 13:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Reactor.h:
