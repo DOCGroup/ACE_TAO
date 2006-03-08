@@ -1,3 +1,32 @@
+Wed Mar  8 14:58:07 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Use a dynamically allocated buffer to read IDL file lines and resize
+          it if required.
+
+          This fixes bug #2424.
+
+        * tests/Bug_2424_Regression/Bug_2424_Regression.mpc:
+        * tests/Bug_2424_Regression/OneLineCosNaming.idl:
+        * tests/Bug_2424_Regression/README:
+        * tests/Bug_2424_Regression/client.cpp:
+
+          Regression test for the above fix.
+
+        * tests/Bug_2429_Regression/Bug_2429_Regression.mpc:
+        * tests/Bug_2429_Regression/Child.idl:
+        * tests/Bug_2429_Regression/ChildServant.h:
+        * tests/Bug_2429_Regression/ChildServant.cpp:
+        * tests/Bug_2429_Regression/Parent.idl:
+        * tests/Bug_2429_Regression/README:
+        * tests/Bug_2429_Regression/client.cpp:
+        * tests/Bug_2429_Regression/run_test.pl:
+        * tests/Bug_2429_Regression/server.cpp:
+
+          Regression test for bug #2429. This bug is currently not fixed so
+          this test will fail.
+
 Wed Mar  8 13:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
