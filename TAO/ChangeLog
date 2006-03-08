@@ -1,4 +1,9 @@
-Wed Mar  8 11:19:37 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
+Wed Mar  8 12:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Use true/false instead of 1/0
+
+Wed Mar  8 12:19:37 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
         * tests/Bug_2377_Regression/*:
           removed from TAO level to the more appropriate orbsvcs
