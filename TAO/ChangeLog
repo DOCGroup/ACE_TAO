@@ -1,3 +1,9 @@
+Wed Mar  8 13:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+          Include IFR_BasicC.h instead of IFR_ExtendedC.h, all types
+          used in this file are from IFR_BasicC.h
+
 Wed Mar  8 12:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
