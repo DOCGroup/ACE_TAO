@@ -1,3 +1,9 @@
+Wed Mar  8 04:53:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+
+          Change ACE_PATH_FL to pass --enable-gl to fltk-config.
+
 Wed Mar  8 03:32:08 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:
