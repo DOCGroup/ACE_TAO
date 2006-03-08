@@ -7,15 +7,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
 
-  // Old OS files.  put these back and remove the OS_NS*, Cleanup.cpp, and
-  // Object_Manager_Base.cpp to improve compile times at the cost of
-  // footprint. dhinton
-  //OS.cpp
-  //OS_Dirent.cpp
-  //OS_Memory.cpp
-  //OS_String.cpp
-  //Synch.cpp
-
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
     ACE_crc_ccitt.cpp
@@ -368,9 +359,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Guard_T.inl
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
-    OS.inl
-    OS_Memory.inl
-    OS_String.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     Swap.inl

@@ -28,13 +28,5 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_ctype.h"
 
-# if defined (ACE_HAS_INLINED_OSCALLS)
-#   if defined (ACE_INLINE)
-#     undef ACE_INLINE
-#   endif /* ACE_INLINE */
-#   define ACE_INLINE inline
-#   include "ace/OS_String.inl"
-# endif /* ACE_HAS_INLINED_OSCALLS */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_STRING_H */

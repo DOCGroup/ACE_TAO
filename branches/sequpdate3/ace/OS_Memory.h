@@ -39,7 +39,7 @@
 // For completeness' sake, you should probably put
 //   #define ACE_HAS_STRDUP_EMULATION
 //   #define ACE_HAS_WCSDUP_EMULATION
-// too, so that you guarantee that strdup() and wcsdup() call your 
+// too, so that you guarantee that strdup() and wcsdup() call your
 // desired mallocator and not the system mallocator.
 //
 #if !defined (ACE_MALLOC_FUNC)
@@ -258,14 +258,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 //@}
 
 #include "ace/OS_NS_stdlib.h"
-
-# if defined (ACE_HAS_INLINED_OSCALLS)
-#   if defined (ACE_INLINE)
-#     undef ACE_INLINE
-#   endif /* ACE_INLINE */
-#   define ACE_INLINE inline
-#   include "ace/OS_Memory.inl"
-# endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_MEMORY_H */
