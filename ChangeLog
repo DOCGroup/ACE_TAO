@@ -1,3 +1,9 @@
+Wed Mar  8 20:58:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ACE-INSTALL.html:
+        
+          Improve documentation for autoconf/automake build.
+
 Wed Mar  8 15:06:56 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_orb_tests.lst:
