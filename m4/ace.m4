@@ -1221,10 +1221,51 @@ AC_DEFUN([ACE_PATH_TK],
 ])
 
 
+# ACE_PATH_XT
+#---------------------------------------------------------------------------
+# Find Xt libraries, flags, etc.
+AC_DEFUN([ACE_PATH_XT],
+[AC_REQUIRE([ACE_PATH_X11])
+
+if test "$no_x" != yes; then
+   ACE_XT_CPPFLAGS=""
+   ACE_XT_LDFLAGS=""
+   ACE_XT_LIBS="-lXt"
+
+   AC_SUBST(ACE_XT_CPPFLAGS)
+   AC_SUBST(ACE_XT_LDFLAGS)
+   AC_SUBST(ACE_XT_LIBS)
+fi
+AM_CONDITIONAL([BUILD_ATHENA], true)
+AM_CONDITIONAL([BUILD_MOTIF], false)
+])
+
+
+# ACE_PATH_X11
+#---------------------------------------------------------------------------
+# Find X11 libraries, flags, etc.
+AC_DEFUN([ACE_PATH_X11],
+[AC_REQUIRE([AC_PATH_XTRA])
+
+if test "$no_x" != yes; then
+   ACE_X11_CPPFLAGS="${X_CFLAGS}"
+   ACE_X11_LDFLAGS="${X_LIBS}"
+   ACE_X11_LIBS="${X_PRE_LIBS} -lX11 ${X_EXTRA_LIBS}"
+
+   AC_SUBST(ACE_X11_CPPFLAGS)
+   AC_SUBST(ACE_X11_LDFLAGS)
+   AC_SUBST(ACE_X11_LIBS)
+fi
+
+AM_CONDITIONAL([BUILD_X11], [test X$no_x != Xyes])
+])
+
+
 # ACE_ENABLE_FL_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_FL_REACTOR],
 [AC_REQUIRE([ACE_PATH_FL])
+AC_REQUIRE([ACE_PATH_X11])
 AC_ARG_ENABLE([fl-reactor],
   	       AS_HELP_STRING([--enable-fl-reactor],
 		              [build support for the FlReactor [[no]]]),
@@ -1320,27 +1361,24 @@ AM_CONDITIONAL([BUILD_TAO_TKRESOURCE],
 # ACE_ENABLE_XT_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_XT_REACTOR],
-[AC_ARG_ENABLE([xt-reactor],
+[AC_REQUIRE([ACE_PATH_XT])
+AC_ARG_ENABLE([xt-reactor],
                AS_HELP_STRING([--enable-xt-reactor],
                               [build support for the XtReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-                  AC_PATH_XTRA
 dnl Here, if X isn't found or the user sets "--without-x" on the command
 dnl line, then "no_x" is set to "yes."
                   AS_IF([test "$no_x" != yes],
-                        [
-		          ACE_XLIBS="-lX11 -lXt"
+			[
                           ace_user_enable_xt_reactor=yes
                         ],[
-                          ACE_XLIBS=""
                           ace_user_enable_xt_reactor=no
                           AC_MSG_WARN([X was not found or it was disabled.])
                           AC_MSG_WARN([ACE_XtReactor will not be enabled.])
                         ])
                   ;;
                  no)
-                  ACE_XLIBS=""
                   ace_user_enable_xt_reactor=no
                   ;;
                  *)
@@ -1348,10 +1386,8 @@ dnl line, then "no_x" is set to "yes."
 		  ;;
                 esac],
 		[
-                  ACE_XLIBS=""
                   ace_user_enable_xt_reactor=no
 		])
-AM_CONDITIONAL([BUILD_X11], [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_XT], [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
                [test X$ace_user_enable_xt_reactor = Xyes])
