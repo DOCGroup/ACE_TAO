@@ -357,7 +357,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                      ACE_ENV_ARG_PARAMETER);
 }
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x581)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
 // Borland gives warnings about argument not used on the construct as used
 // for the other compilers. This has been reported to Borland, adding
 // a workaround to suppress these warnings so that the real important ones
