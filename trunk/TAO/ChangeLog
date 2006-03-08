@@ -1,3 +1,11 @@
+Wed Mar  8 17:01:00 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
+
+        * orbsvcs/tests/Bug_2377_Regression/Hello.cpp:
+
+          Following a suggestion from Simon McQueen, <sm@prismtech.com>,
+          used a more portable method of invoking sub-second resolution
+          timing intervals.
+
 Wed Mar  8 14:58:07 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/driver/drv_preproc.cpp:
