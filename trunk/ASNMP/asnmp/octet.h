@@ -1,27 +1,22 @@
-// -*-C++-*-
 
-// $Id$
 
 #ifndef OCTET_CLS_
 #define OCTET_CLS_
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    octet.h
-//
-// = DESCRIPTION
-// This class is fully contained and does not rely on or any other
-// SNMP libraries. This class is portable across any platform
-// which supports C++.
-//
-// = AUTHOR
-//    Peter E Mellquist  / design/original code
-//    Michael R. MacFaden / modified for ACE, added suboid(),collapse ctor's
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    octet.h
+ *
+ *  $Id$
+ *
+ * This class is fully contained and does not rely on or any other
+ * SNMP libraries. This class is portable across any platform
+ * which supports C++.
+ *
+ *
+ *  @author Peter E Mellquist  / design/original code Michael R. MacFaden / modified for ACE
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -41,107 +36,112 @@
 //------------------------------------------------------------------------
 #include "asnmp/smival.h"
 
-class ASNMP_Export OctetStr: public  SnmpSyntax
-  // = TITLE
-  //      Implement RFC1155 Octet SMI data object
+/**
+ * @class OctetStr
+ *
+ * @brief Implement RFC1155 Octet SMI data object
+ */
+class ASNMP_Export OctetStr : public  SnmpSyntax
 
 {
 public:
+  /// construct octet from byte buffer, assume c style string if size == -1
   OctetStr( const char *string = "", long size = -1);
-  // construct octet from byte buffer, assume c style string if size == -1
 
+  /// constructor using another octet object
   OctetStr ( const OctetStr &octet);
-  // constructor using another octet object
 
+  /// destructor
   ~OctetStr();
-  // destructor
 
+  /// syntax type
   SmiUINT32 get_syntax();
-  // syntax type
 
+  /// set octet from byte buffer, assume c style string if size == -1
   void set_data( const SmiBYTE* string, long int size = -1);
-  // set octet from byte buffer, assume c style string if size == -1
 
+  /// assignment to a string operator overloaded
   OctetStr& operator=( const char *string);
-  // assignment to a string operator overloaded
 
+  /// assignment to another oid object overloaded
   OctetStr& operator=( const OctetStr &octet);
-  // assignment to another oid object overloaded
 
+  /// equivlence operator overloaded
   friend ASNMP_Export bool operator==( const OctetStr &lhs, const OctetStr &rhs);
-  // equivlence operator overloaded
 
+  /// not equivlence operator overloaded
   friend ASNMP_Export bool operator!=( const OctetStr &lhs, const OctetStr &rhs);
-  // not equivlence operator overloaded
 
+  /// less than < overloaded
   friend ASNMP_Export bool operator<( const OctetStr &lhs, const OctetStr &rhs);
-  // less than < overloaded
 
+  /// less than <= overloaded
   friend ASNMP_Export bool operator<=( const OctetStr &lhs,const OctetStr &rhs);
-  // less than <= overloaded
 
+  /// greater than > overloaded
   friend ASNMP_Export bool operator>( const OctetStr &lhs, const OctetStr &rhs);
-  // greater than > overloaded
 
+  /// greater than >= overloaded
   friend ASNMP_Export bool operator>=( const OctetStr &lhs, const OctetStr &rhs);
-  // greater than >= overloaded
 
+  /// equivlence operator overloaded
   friend ASNMP_Export bool operator==( const OctetStr &lhs,const char *rhs);
-  // equivlence operator overloaded
 
+  /// not equivlence operator overloaded
   friend ASNMP_Export bool operator!=( const OctetStr &lhs,const char  *rhs);
-  // not equivlence operator overloaded
 
+  /// less than < operator overloaded
   friend ASNMP_Export bool operator<( const OctetStr &lhs,const char  *rhs);
-  // less than < operator overloaded
 
+  /// less than <= operator overloaded
   friend ASNMP_Export bool operator<=( const OctetStr &lhs,char  *rhs);
-  // less than <= operator overloaded
 
+  /// greater than > operator overloaded
   friend ASNMP_Export bool operator>( const OctetStr &lhs,const char  *rhs);
-  // greater than > operator overloaded
 
+  /// greater than >= operator overloaded
   friend ASNMP_Export bool operator>=( const OctetStr &lhs,const char  *rhs);
-  // greater than >= operator overloaded
 
+  /// append operator, appends a string
   OctetStr& operator+=( const char  *a);
-  // append operator, appends a string
 
+  /// appends an int
   OctetStr& operator+=( const char c);
-  // appends an int
 
+  /// append one octetStr to another
   OctetStr& operator+=( const OctetStr& octetstr);
-  // append one octetStr to another
 
+  /// for non const [], allows reading and writing
   SmiBYTE& operator[]( int position);
-  // for non const [], allows reading and writing
 
+  /**
+   * compare the n leftmost bytes (left-to-right)
+   * returns 0, equal
+   * returns -1, <
+   * returns 1 , >
+   */
   int left_comparison( const long n, const OctetStr &o) const;
-  // compare the n leftmost bytes (left-to-right)
-  // returns 0, equal
-  // returns -1, <
-  // returns 1 , >
 
+  /// return the len of the oid
   size_t length() const ;
-  // return the len of the oid
 
+  /// returns validity
   int valid() const;
-  // returns validity
 
+  /// returns pointer to internal data
   SmiBYTE *data() const;
-  // returns pointer to internal data
 
+  /// get a printable ASCII value
   const char *to_string();
-  // get a printable ASCII value
 
+  /// get an ASCII formattted hex dump of the contents
   const char *to_string_hex();
-  // get an ASCII formattted hex dump of the contents
 
+  /// create a new instance of this Value
   SnmpSyntax  *clone() const;
-  // create a new instance of this Value
 
+  /// copy an instance of this Value
   SnmpSyntax& operator=( SnmpSyntax &val);
-  // copy an instance of this Value
 
 protected:
   //----[ instance variables ]
