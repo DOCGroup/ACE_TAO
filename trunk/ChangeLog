@@ -1,3 +1,18 @@
+Wed Mar  8 03:32:08 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+
+          Changed ACE_ENABLE_XT_REACTOR to AC_REQUIRE() ACE_PATH_XT
+          instead of AC_PATH_XTRA.
+
+          Changed ACE_PATH_FL to AC_REQUIRE() ACE_PATH_X11.
+
+          Add ACE_PATH_XT autoconf macro that sets ACE_XT_CPPFLAGS,
+          ACE_XT_LDFLAGS, and ACE_XT_LIBS.
+
+          Add ACE_PATH_X11 autoconf macro that sets ACE_X11_CPPFLAGS,
+          ACE_X11_LDFLAGS, and ACE_X11_LIBS.
+
 Tue Mar  7 18:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DLL/Newsweek.cpp:
