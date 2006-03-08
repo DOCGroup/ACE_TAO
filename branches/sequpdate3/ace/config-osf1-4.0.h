@@ -6,8 +6,8 @@
 
 // The following configuration file is designed to work for the
 // Digital UNIX V4.0a through V4.0d with either the GNU g++, DEC
-// cxx 5.4 and later, Rational RCC (2.4.1) compilers, or KAI 3.3
-// compilers.  It is configured to use the IEEE Std 1003.1c-1995,
+// cxx 5.4 and later, Rational RCC (2.4.1) compilers/
+// It is configured to use the IEEE Std 1003.1c-1995,
 // POSIX System Application Program Interface, or DCE threads (with
 // cxx only); it automatically selects the proper thread interface
 // depending on whether the cxx -pthread or -threads option was

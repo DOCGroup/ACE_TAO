@@ -319,18 +319,6 @@ public:
                      int signal_number) = 0;
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
-  // We don;t need to redefine the following function again because it
-  // has already been defined in ACE_Asynch_Read_Stream_Impl.  But we
-  // still need it here to supress a overwriting pure virtual function
-  // warning in KAI compiler.
-  /// This starts off an asynchronous read. Upto <bytes_to_read> will
-  /// be read and stored in the <message_block>.
-  virtual int read (ACE_Message_Block &message_block,
-                    size_t bytes_to_read,
-                    const void *act,
-                    int priority,
-                    int signal_number) = 0;
-
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
   /**
   * Same as above but with scatter support, through chaining of composite
@@ -407,19 +395,6 @@ public:
                       int priority,
                       int signal_number) = 0;
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
-
-
-  // We don;t need to redefine the following function again because it
-  // has already been defined in ACE_Asynch_Write_Stream_Impl.  But we
-  // still need it here to supress a overwriting pure virtual function
-  // warning in KAI compiler.
-  /// This starts off an asynchronous write.  Upto <bytes_to_write>
-  /// will be written from the <message_block>.
-  virtual int write (ACE_Message_Block &message_block,
-                     size_t bytes_to_write,
-                     const void *act,
-                     int priority,
-                     int signal_number) = 0;
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
   /**
