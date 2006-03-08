@@ -1,7 +1,7 @@
 // $Id$
 
 #include "IFR_Client_Adapter_Impl.h"
-#include "IFR_ExtendedC.h"
+#include "IFR_BasicC.h"
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
