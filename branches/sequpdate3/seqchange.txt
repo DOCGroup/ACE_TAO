@@ -1,4 +1,16 @@
 
+        * ace/config-win32-msvc6.h:
+        * ace/config-kcc-common.h:
+          Removed these files, vc6 and kcc are deprecated
+
+        * ace/config-irix6.x-kcc.h:
+        * ace/config-osf1-4.0.h:
+        * ace/config-sunos5.5.h:
+          Removed support for KCC
+
+        * ace/Asynch_IO_Impl.h:
+          Removed workarounds for KCC
+
         * ace/config-win32-msvc.h:
           Removed support for vc6 and vc7.0
 
