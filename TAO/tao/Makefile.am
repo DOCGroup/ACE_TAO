@@ -3027,7 +3027,7 @@ libTAO_FlResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  @ACE_FLTK_CPPFLAGS@ \
+  $(ACE_FLTK_CPPFLAGS) \
   -DTAO_FLRESOURCE_BUILD_DLL
 
 libTAO_FlResource_la_SOURCES = \
@@ -3035,13 +3035,13 @@ libTAO_FlResource_la_SOURCES = \
   FlResource_Loader.cpp
 
 libTAO_FlResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_FLTK_LDFLAGS)
 
 libTAO_FlResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_FLTK_LIBS@
+  $(ACE_FLTK_LIBS)
 
 nobase_include_HEADERS += \
   FlResource_Factory.h \
@@ -3065,7 +3065,7 @@ libTAO_QtResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  @ACE_QT_CPPFLAGS@ \
+  $(ACE_QT_CPPFLAGS) \
   -DTAO_QTRESOURCE_BUILD_DLL
 
 libTAO_QtResource_la_SOURCES = \
@@ -3073,13 +3073,13 @@ libTAO_QtResource_la_SOURCES = \
   QtResource_Loader.cpp
 
 libTAO_QtResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_QT_LDFLAGS)
 
 libTAO_QtResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_QtReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_QT_LIBS@
+  $(ACE_QT_LIBS)
 
 nobase_include_HEADERS += \
   QtResource_Factory.h \
@@ -3101,8 +3101,8 @@ libTAO_TkResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  @ACE_TCL_CPPFLAGS@ \
-  @ACE_TK_CPPFLAGS@ \
+  $(ACE_TK_CPPFLAGS) \
+  $(ACE_TCL_CPPFLAGS) \
   -DTAO_TKRESOURCE_BUILD_DLL
 
 libTAO_TkResource_la_SOURCES = \
@@ -3110,14 +3110,14 @@ libTAO_TkResource_la_SOURCES = \
   TkResource_Loader.cpp
 
 libTAO_TkResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
 
 libTAO_TkResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_TkReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_TCL_LIBS@ \
-  @ACE_TK_LIBS@
+  $(ACE_TK_LIBS) \
+  $(ACE_TCL_LIBS)
 
 nobase_include_HEADERS += \
   TAO_TkResource_Export.h \
@@ -3140,6 +3140,8 @@ libTAO_XtResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  $(ACE_X11_CPPFLAGS) \
+  $(ACE_XT_CPPFLAGS) \
   -DTAO_XTRESOURCE_BUILD_DLL
 
 libTAO_XtResource_la_SOURCES = \
@@ -3147,12 +3149,14 @@ libTAO_XtResource_la_SOURCES = \
   XtResource_Loader.cpp
 
 libTAO_XtResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
 
 libTAO_XtResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
   libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_XT_LIBS) \
+  $(ACE_X11_LIBS)
 
 nobase_include_HEADERS += \
   TAO_XtResource_Export.h \
