@@ -16,6 +16,13 @@ ifndef CIAO_ROOT
   CIAO_ROOT = $(TAO_ROOT)/CIAO
 endif
 
+ifeq (,$(findstring -L$(CIAO_ROOT)/ciao,$(LDFLAGS)))
+  LDFLAGS += -L$(CIAO_ROOT)/ciao
+endif
+ifeq (,$(findstring -I$(CIAO_ROOT),$(INCLDIRS)))
+  INCLDIRS += -I$(CIAO_ROOT)
+endif
+
 # Turn on symbol versioning. The scheme that we follow is to allow
 # applications dependent on libraries, with same version numbers (major,
 # minor and beta) to run, but applications with dependencies on libraries
