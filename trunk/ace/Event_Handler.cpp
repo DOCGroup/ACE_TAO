@@ -255,11 +255,7 @@ ACE_Event_Handler::read_adapter (void *args)
 {
   ACE_Event_Handler *this_ptr = static_cast<ACE_Event_Handler *> (args);
 
-  ACE_HANDLE handle = this_ptr->get_handle ();
-  if (handle == ACE_INVALID_HANDLE)
-    handle = ACE_STDIN;
-
-  while (this_ptr->handle_input (handle) != -1)
+  while (this_ptr->handle_input (ACE_STDIN) != -1)
     continue;
 
   this_ptr->handle_close (handle,
