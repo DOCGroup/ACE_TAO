@@ -1,3 +1,8 @@
+Wed Mar 08 15:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ServerResources.idl:
+          Fixed incorrect file header
+
 Wed Mar 08 14:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.ciao.GNU:
