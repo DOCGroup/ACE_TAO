@@ -1,3 +1,9 @@
+Wed Mar  8 12:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+          The workaround in this file for Borland C++ is also needed for
+          BCB2006 Update Pack 2
+
 Wed Mar  8 12:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
