@@ -8,6 +8,7 @@
 #include "ace/Task.h"
 #include "ace/Mutex.h"
 #include "ace/streams.h"
+#include "ace/OS_NS_time.h"
 #include "tao/debug.h"
 #include "tao/corba.h"
 #include "orbsvcs/PortableGroup/MIOP.h"
@@ -20,6 +21,9 @@
 void
 sleep(int millisec)
 {
+#ifdef ACE_WIN32
+    ::Sleep(millisec);
+#else
     struct timespec tv;
     tv.tv_sec = millisec / 1000;
     tv.tv_nsec = (millisec % 1000) * 1000000;
@@ -30,6 +34,7 @@ sleep(int millisec)
     {
         tv = tv_not_elapsed;
     }
+#endif /* ACE_WIN32 */
 };
 
 class MessageLog

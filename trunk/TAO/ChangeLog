@@ -1,3 +1,11 @@
+Wed Mar  8 11:19:37 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
+
+        * tests/Bug_2377_Regression/*:
+          removed from TAO level to the more appropriate orbsvcs
+
+        * orbsvcs/tests/Bug_2377_Regression/*:
+          Regression for bug 2377 moved here.
+
 Wed Mar  8 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LocalObject.cpp:
