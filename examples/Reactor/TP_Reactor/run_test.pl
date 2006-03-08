@@ -17,14 +17,14 @@ $SV->Spawn ();
 
 sleep (1);
 
-$client1 = $CL1->SpawnWaitKill (300);
+$client1 = $CL1->Spawn ();
 
 if ($client1 != 0) {
     print STDERR "ERROR: client 1 returned $client1\n";
     $status = 1;
 }
 
-$client2 = $CL2->SpawnWaitKill (300);
+$client2 = $CL2->Spawn ();
 
 if ($client2 != 0) {
     print STDERR "ERROR: client 2 returned $client2\n";
