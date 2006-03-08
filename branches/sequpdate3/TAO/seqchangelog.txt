@@ -1,4 +1,7 @@
 
+        * tao/Messaging/*:
+          Removed old AMI mapping. Fixes bugzilla bug 2273
+
         * tao/Exception.h:
           Moved constructors, assignment operator and copy constructor to
           protected now vc6 has been dropped. Also moved
