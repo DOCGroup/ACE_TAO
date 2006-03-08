@@ -1,3 +1,8 @@
+Wed Mar  8 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocalObject.cpp:
+          Use true/false instead of 1/0
+
 Wed Mar  8 07:14:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
