@@ -79,6 +79,7 @@ TAO/orbsvcs/tests/Bug_2285_Regression/run_test.pl: !MINIMUM !DISABLE_INTERCEPTOR
 TAO/orbsvcs/tests/Bug_2285_Regression/run_test2.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/orbsvcs/tests/Bug_2287_Regression/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/orbsvcs/tests/Bug_2316_Regression/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
+TAO/orbsvcs/tests/Bug_2377_Regression/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/CosEvent/Basic/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !SUNCC5_1 !MINIMUM !NO_MESSAGING !ACE_FOR_TAO
