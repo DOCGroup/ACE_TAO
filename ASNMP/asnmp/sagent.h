@@ -1,24 +1,20 @@
 /* -*-C++-*- */
-// $Id$
 #ifndef SAGENT_CLS_
 #define SAGENT_CLS_
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    sagent.h
-//
-// = DESCRIPTION
-//   SNMP agent class defintion. The sagent class provides an object oriented
-//   approach for creating SNMP Agents. The sagent class is an encapsulation of SNMP
-//   sessions, gets, sets, etc.
-//
-// = AUTHOR
-//    Michael R. MacFaden
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    sagent.h
+ *
+ *  $Id$
+ *
+ * SNMP agent class defintion. The sagent class provides an object oriented
+ * approach for creating SNMP Agents. The sagent class is an encapsulation of SNMP
+ * sessions, gets, sets, etc.
+ *
+ *  @author Michael R. MacFaden
+ */
+//=============================================================================
+
 #include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -39,10 +35,13 @@
 
 #define DEF_AGENT_PORT (161)
 
+/**
+ * @class sagent
+ *
+ * @brief Concrete class sagent defines the session and interface to
+ * communicate with another SNMP Version 1 manager
+ */
 class ASNMP_Export sagent : public ACE_Event_Handler, private Snmp
-  // = TITLE
-  //      Concrete class sagent defines the session and interface to
-  //      communicate with another SNMP Version 1 manager
 {
  public:
 
@@ -50,24 +49,24 @@ class ASNMP_Export sagent : public ACE_Event_Handler, private Snmp
     // override the next three methods (callbacks) to implment your agent
     //
 
+    /// retrieve data from a peer agent for a given list of oid values
     virtual int handle_get( Pdu &pdu, UdpTarget &target) = 0;
-    // retrieve data from a peer agent for a given list of oid values
 
+    /// retrieve data lexically adjacent to the oids specified in the pdu
+    /// from the peer agent
     virtual int handle_get_next( Pdu &pdu, UdpTarget &target) = 0;
-    // retrieve data lexically adjacent to the oids specified in the pdu
-    // from the peer agent
 
+    /// set data in the agent from the list of oids in the pdu
     virtual int handle_set( Pdu &pdu, UdpTarget &target) = 0;
-    // set data in the agent from the list of oids in the pdu
 
+    /// new pdu received from mgr (reactor calls this)
     virtual int handle_input(ACE_HANDLE);
-    // new pdu received from mgr (reactor calls this)
 
+    /// retrieve io descriptor (reactor uses this)
     virtual ACE_HANDLE get_handle() const;
-    // retrieve io descriptor (reactor uses this)
 
+    /// send a response pdu to the mgr
     int respond(Pdu& pdu, UdpTarget& tgt);
-    // send a response pdu to the mgr
 
  protected:
     sagent(unsigned short port = DEF_AGENT_PORT);
