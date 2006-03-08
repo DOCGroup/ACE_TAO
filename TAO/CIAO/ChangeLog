@@ -10,7 +10,7 @@ Mon Mar 06 16:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Made serial_number_ unsigned and documented why it is static
 
         * performance-tests/Benchmark/LatencyTest.h:
-          Removed not needed msvc pragma pust/pop
+          Removed not needed msvc pragma push/pop
 
 Sun Mar 05 11:16:46 2006  Wallace Zhang  <zhangw@ociweb.com>
 
