@@ -37,7 +37,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   : type_id (repository_id)
   , orb_core_ (orb_core)
   , orb_ ()
-  , is_collocated_ (0)
+  , is_collocated_ (false)
   , servant_orb_ ()
   , collocated_servant_ (0)
   , object_proxy_broker_ (the_tao_remote_object_proxy_broker ())
@@ -315,14 +315,14 @@ TAO_Stub::hash (CORBA::ULong max
 CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
-  if (CORBA::is_nil (other_obj) == 1)
-    return 0;
+  if (CORBA::is_nil (other_obj) == true)
+    return false;
 
   TAO_Profile *other_profile = other_obj->_stubobj ()->profile_in_use_;
   TAO_Profile *this_profile = this->profile_in_use_;
 
   if (other_profile == 0 || this_profile == 0)
-    return 0;
+    return false;
 
   // Compare the profiles
   return this_profile->is_equivalent (other_profile);
