@@ -4,4 +4,5 @@
 project : orbsvcslib {
   after     += CosNaming
   libs      += TAO_CosNaming
+  tagchecks += Naming
 }

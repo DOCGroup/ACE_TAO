@@ -4,5 +4,4 @@
 project : orbsvcslib, trading_skel, dynamicany, svc_utils, iortable {
   after     += CosTrading_Serv
   libs      += TAO_CosTrading_Serv
-  tagchecks += Trader
 }
