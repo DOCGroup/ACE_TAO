@@ -1,3 +1,27 @@
+Thu Mar  9 14:51:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Skel.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+
+          Support for the TAO_ORBSVCS GNU Make macro was broken for some
+          time.  I added the missing 'tagchecks' settings to these projects.
+
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+
+          Corrected the usage of 'tagchecks' so that the values were added
+          instead of being set absolutely.
+
 Thu Mar  9 12:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Stub.{cpp,i}:
