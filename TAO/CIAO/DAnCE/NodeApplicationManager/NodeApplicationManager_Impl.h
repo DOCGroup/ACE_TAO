@@ -28,7 +28,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ciao/NodeApp_CB_Impl.h"
-#include "ciao/DeploymentS.h"
+#include "ciao/NodeApplicationManagerS.h"
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"

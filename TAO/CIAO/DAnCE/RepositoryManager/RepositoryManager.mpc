@@ -10,12 +10,12 @@ project (RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, 
   requires += zzip zlib
 
   IDL_Files {
-    RepositoryManager.idl
+    RepositoryManagerDaemon.idl
   }
 
   Source_Files {
-    RepositoryManagerC.cpp
-    RepositoryManagerS.cpp
+    RepositoryManagerDaemonC.cpp
+    RepositoryManagerDaemonS.cpp
     ZIP_Wrapper.cpp
     RepositoryManager.cpp
     RepositoryManager_Impl.cpp
@@ -33,15 +33,15 @@ project (RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, 
 
 project (RMAdmin) : ciao_component_dnc, ciao_config_handlers {
   exename = RMadmin
-  after    += RepositoryManager
+  after  += RepositoryManager
 
   IDL_Files {
-   RepositoryManager.idl
+   RepositoryManagerDaemon.idl
   }
 
   Source_Files {
     RMadmin.cpp
-    RepositoryManagerC.cpp
+    RepositoryManagerDaemonC.cpp
     Options.cpp
     RM_Helper.cpp
   }

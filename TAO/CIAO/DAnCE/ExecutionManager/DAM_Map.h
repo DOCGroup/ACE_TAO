@@ -13,16 +13,15 @@
 #define CIAO_DAM_MAP_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Null_Mutex.h"
+#include "ciao/DomainApplicationManagerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ciao/DeploymentC.h"
 #include "ace/SString.h"
-
 
 namespace CIAO
 {
@@ -52,7 +51,7 @@ namespace CIAO
       get_dams (ACE_ENV_SINGLE_ARG_DECL);
 
       bool unbind_dam (const ACE_CString &str);
-      
+
       size_t size (void);
 
     private:

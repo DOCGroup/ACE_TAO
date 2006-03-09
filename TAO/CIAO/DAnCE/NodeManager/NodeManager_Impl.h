@@ -22,7 +22,7 @@
 #define CIAO_NODEMANAGER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "Interfaces/NodeManagerS.h"
+#include "Interfaces/NodeManagerDaemonS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,11 +48,11 @@ namespace CIAO
    * @brief Servant implementation CIAO's daemon process control
    * interface
    *
-   * This class implements the CIAO:NodeManager interface.
+   * This class implements the CIAO:NodeManagerDaemon interface.
    *
    */
   class NodeManager_svnt_Export NodeManager_Impl_Base
-    : public virtual POA_CIAO::NodeManager
+    : public virtual POA_CIAO::NodeManagerDaemon
   {
   public:
     /// A struct that tracks the reference count of a particular

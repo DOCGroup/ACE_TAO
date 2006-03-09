@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 
-#include "Interfaces/ExecutionManagerC.h"
+#include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
 
 namespace CIAO
 {
@@ -20,7 +20,7 @@ namespace CIAO
     const char* dap_ior_filename = 0;
     const char* dap_ior = 0;
 
-    enum mode_type { 
+    enum mode_type {
       pl_mode_start,
       pl_mode_interactive,
       pl_mode_stop_by_dam,
@@ -94,15 +94,15 @@ namespace CIAO
             }
         }
 
-      if ((mode != pl_mode_stop_by_dam) && 
+      if ((mode != pl_mode_stop_by_dam) &&
           (mode != pl_mode_stop_by_uuid) &&
-          (package_url == 0) && 
+          (package_url == 0) &&
           (new_package_url ==0))
         {
           usage (argv[0]);
           return false;
         }
-      
+
       return true;
     }
 
@@ -153,32 +153,32 @@ namespace CIAO
 
           if (parse_args (argc, argv) == false)
             return -1;
-          
-          
+
+
           Plan_Launcher_i launcher;
-          
+
           if (!launcher.init (use_naming ? 0 : ior_file,
                               orb.in ()))
             {
               ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
               return -1;
             }
-          
+
           ::Deployment::DomainApplicationManager_var dapp_mgr;
-          
+
           if (mode == pl_mode_start || mode == pl_mode_interactive)  // initial deployment
             {
               const char* uuid = launcher.launch_plan (package_url);
-              
+
               if (uuid == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error launching plan\n"));
                   return -1;
                 }
-              
+
               ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid));
               dapp_mgr = launcher.get_dam (uuid);
-              
+
               // Write out DAM ior if requested
               if (mode == pl_mode_start)
                 write_dap_ior (orb.in (), dapp_mgr.in ());

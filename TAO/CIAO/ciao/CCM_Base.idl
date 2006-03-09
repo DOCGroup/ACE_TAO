@@ -25,9 +25,6 @@
 
 module Components
 {
-  /**
-   * @@ Commented out temporarily for lack of typePrefix support.
-   */
   typeprefix Components "omg.org";
 
   typedef string FeatureName;

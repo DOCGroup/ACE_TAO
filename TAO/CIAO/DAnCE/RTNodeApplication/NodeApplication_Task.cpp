@@ -1,12 +1,11 @@
 // $Id$
 
 #include "ciao/NodeApplication_CallBackC.h"
-#include "NodeApplication_Task.h"
-#include "tao/RTPortableServer/RTPortableServer.h"
-#include "RTServer_Impl.h"
-#include "ace/Null_Mutex.h"
 #include "ciao/CIAO_common.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "ace/Null_Mutex.h"
+#include "NodeApplication_Task.h"
+#include "RTServer_Impl.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Task.inl"
@@ -84,18 +83,18 @@ CIAO::NodeApplication_Task::svc ()
        */
       bool retval = nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (retval)
       {
 	ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
                                initializing the session container!"));
 	return 1;
       }
-      
+
       CORBA::String_var str = this->orb_->object_to_string (nodeapp_obj.in ()
                                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (this->options_.ior_output_filename_.length () != 0)
         CIAO::Utility::write_IOR (this->options_.ior_output_filename_.c_str (),
                                   str.in ());

@@ -15,8 +15,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "UpgradeableContextC.h"
-#include "Context_Impl_T.h"
+#include "ciao/UpgradeableContextC.h"
+#include "ciao/Context_Impl_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,9 +31,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CIAO
 {
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   class Upgradeable_Context_Impl : public virtual Context_Impl<
                                    BASE_CTX, SVNT, COMP, COMP_VAR>
@@ -66,11 +66,14 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidName,
                        ::Components::InvalidConnection)) = 0;
-                       
+
   protected:
     SVNT *servant_;
     COMP_VAR component_;
     typedef Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR> session_context;
+  private:
+    /// Not to be used
+    Upgradeable_Context_Impl (void);
   };
 }
 

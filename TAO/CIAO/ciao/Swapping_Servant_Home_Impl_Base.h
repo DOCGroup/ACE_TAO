@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CIAO_Server_Export.h"
+#include "ciao/CIAO_Server_Export.h"
 
 namespace CIAO
 {

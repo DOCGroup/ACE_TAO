@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DeploymentC.h"
+#include "ciao/NodeManagerC.h"
 #include "DomainApplicationManager/DomainApplicationManager_Export.h"
 #include "ace/SString.h"
 #include "tao/Valuetype/ValueBase.h"
