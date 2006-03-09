@@ -3,11 +3,9 @@
 #define EXECUTIONMANAGER_IDL
 
 #include "Deployment.idl"
+#include "DomainApplicationManager.idl"
 
 module Deployment {
-  interface DomainApplicationManager;
-  typedef sequence < DomainApplicationManager > DomainApplicationManagers;
-
   interface ExecutionManager {
     DomainApplicationManager preparePlan (in DeploymentPlan plan,
                                           in boolean commitResources)

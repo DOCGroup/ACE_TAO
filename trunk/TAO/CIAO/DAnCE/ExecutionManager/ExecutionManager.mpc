@@ -12,7 +12,7 @@ project(ExecutionManager): ciao_component_dnc, dance_extension_stub {
   }
 
   Source_Files {
-    ../Interfaces/ExecutionManagerS.cpp
+    ../Interfaces/ExecutionManagerDaemonS.cpp
     Execution_Manager.cpp
     Execution_Manager_Impl.cpp
     DAM_Map.cpp
