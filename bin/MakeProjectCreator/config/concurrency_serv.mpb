@@ -4,5 +4,4 @@
 project : orbsvcslib, concurrency_skel {
   after     += CosConcurrency_Serv
   libs      += TAO_CosConcurrency_Serv
-  tagchecks += Concurrency
 }
