@@ -3,7 +3,6 @@
 #define DEPLOYMENT_BASE_IDL
 
 #include <orb.idl>
-#include "tao/ULongSeq.pidl"
 #include "Deployment_Core.idl"
 
 module Deployment {

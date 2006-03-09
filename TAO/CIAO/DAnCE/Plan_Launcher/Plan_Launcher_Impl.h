@@ -1,8 +1,8 @@
-/** 
+/**
  * $Id$
  * @file Plan_Launcher_Impl.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * Contains the Plan_Launcher_i class, which can be used by
  * applications to launch component assemblies.
  */
@@ -12,14 +12,14 @@
 #include "Plan_Launcher_Impl_Export.h"
 #include "ciao/DeploymentS.h"
 #include "ciao/CIAO_common.h"
-#include "ExecutionManager/DAM_Map.h"
-#include "Interfaces/ExecutionManagerC.h"
+#include "DAnCE/ExecutionManager/DAM_Map.h"
+#include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
 
 namespace CIAO
 {
   namespace Plan_Launcher
   {
-    
+
     /**
      * @class Plan_Launcher_i
      * @brief This class launches and manages deployment plans.
@@ -28,11 +28,11 @@ namespace CIAO
     {
     public:
       class Deployment_Failure {};
-      
+
       Plan_Launcher_i ();
-      
-      
-      bool init (const char *em_ior, 
+
+
+      bool init (const char *em_ior,
                  CORBA::ORB_ptr orb
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
@@ -49,7 +49,7 @@ namespace CIAO
       const char * re_launch_plan (const char *plan_uri
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
-      
+
       /**
        * @fn launch_plan
        * @brief Launch a plan, given an IDL deployment plan
@@ -63,30 +63,30 @@ namespace CIAO
       const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
-      
+
       /// Returns the DAM associated with a given plan URI
       ::Deployment::DomainApplicationManager_ptr get_dam (const char *uuid
                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-      
+
       /// Tears down a plan given the UUID
       bool teardown_plan (const char *uuid ACE_ENV_ARG_DECL);
-      
+
       bool teardown_plan (::Deployment::DomainApplicationManager_ptr dam
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-      
+
       void destroy_dam (::Deployment::DomainApplicationManager_ptr dam
                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       void destroy_dam_by_plan (const char * plan_uuid
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-      
+
     private:
       ::CIAO::ExecutionManagerDaemon_var em_;
-      
+
       /// Local map for DAMs, to save expensive UUID lookups.
       Execution_Manager::DAM_Map map_;
     };
-    
+
   }
 }
 
