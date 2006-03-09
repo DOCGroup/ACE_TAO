@@ -2,10 +2,8 @@
 // $Id$
 
 project(RTEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, rtevent, tao_versioning_idl_defaults {
-
   custom_only = 1
-
-  idlflags    += -Wb,stub_export_macro=TAO_RTEventLog_Export -Wb,stub_export_include=orbsvcs/Log/rteventlog_export.h -Wb,skel_export_macro=TAO_RTEventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/rteventlog_skel_export.h
+  idlflags   += -Wb,stub_export_macro=TAO_RTEventLog_Export -Wb,stub_export_include=orbsvcs/Log/rteventlog_export.h -Wb,skel_export_macro=TAO_RTEventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/rteventlog_skel_export.h
 
   IDL_Files {
     RTEventLogAdmin.idl
@@ -15,8 +13,8 @@ project(RTEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, rtevent, tao_versio
 project(RTEventLogAdmin) : orbsvcslib, core, dslogadmin, rtevent {
   sharedname   = TAO_RTEventLogAdmin
   dynamicflags = TAO_RTEVENTLOG_BUILD_DLL
-
-  after += RTEventLogAdmin_IDL
+  tagchecks   += RTEventLog
+  after       += RTEventLogAdmin_IDL
 
   IDL_Files {
   }
@@ -49,6 +47,7 @@ project(RTEventLogAdmin) : orbsvcslib, core, dslogadmin, rtevent {
 project(RTEventLogAdmin_Skel) : orbsvcslib, core, rteventlogadmin, dslogadmin_skel, rtevent_skel, portableserver {
   sharedname   = TAO_RTEventLogAdmin_Skel
   dynamicflags = TAO_RTEVENTLOG_SKEL_BUILD_DLL
+  tagchecks   += RTEventLog
 
   IDL_Files {
   }

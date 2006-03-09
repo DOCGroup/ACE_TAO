@@ -2,10 +2,8 @@
 // $Id$
 
 project(CosProperty_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
-
   custom_only = 1
-
-  idlflags    += -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h
+  idlflags   += -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h
 
   IDL_Files {
     CosProperty.idl
@@ -18,8 +16,8 @@ project(CosProperty_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
 project(CosProperty) : orbsvcslib, core {
   sharedname   = TAO_CosProperty
   dynamicflags = TAO_PROPERTY_BUILD_DLL
-
-  after += CosProperty_IDL
+  tagchecks   += Property
+  after       += CosProperty_IDL
 
   IDL_Files {
   }
@@ -55,6 +53,7 @@ project(CosProperty) : orbsvcslib, core {
 project(CosProperty_Skel) : orbsvcslib, core, property, portableserver {
   sharedname   = TAO_CosProperty_Skel
   dynamicflags = TAO_PROPERTY_SKEL_BUILD_DLL
+  tagchecks   += Property
 
   IDL_Files {
   }
