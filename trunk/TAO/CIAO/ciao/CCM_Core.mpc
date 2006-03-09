@@ -10,7 +10,7 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)/DAnCE
-    
+
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
 
   IDL_Files {
@@ -96,6 +96,11 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
     Packaging_Data.idl
     Target_Data.idl
     Deployment.idl
+    NodeManager.idl
+    NodeApplicationManager.idl
+    DomainApplicationManager.idl
+    ExecutionManager.idl
+    RepositoryManager.idl
     ServerResources.idl
   }
 
@@ -106,6 +111,11 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
     Packaging_DataC.cpp
     Target_DataC.cpp
     DeploymentC.cpp
+    NodeManagerC.cpp
+    NodeApplicationManagerC.cpp
+    DomainApplicationManagerC.cpp
+    ExecutionManagerC.cpp
+    RepositoryManagerC.cpp
     NodeApplication_CallBackC.cpp
     ServerResourcesC.cpp
   }
@@ -136,6 +146,11 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
     Packaging_DataS.cpp
     Target_DataS.cpp
     DeploymentS.cpp
+    RepositoryManagerS.cpp
+    NodeManagerS.cpp
+    NodeApplicationManagerS.cpp
+    DomainApplicationManagerS.cpp
+    ExecutionManagerS.cpp
     NodeApp_CB_Impl.cpp
     NodeApplication_CallBackS.cpp
     ServerResourcesS.cpp

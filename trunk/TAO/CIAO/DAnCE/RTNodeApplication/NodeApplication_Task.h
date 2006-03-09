@@ -36,7 +36,7 @@ namespace CIAO
    * @brief An ACE_Task subclass that manages the RT-ORB therad
    */
   class NodeApplication_Task
-    : public virtual ACE_Task_Base
+    : public ACE_Task_Base
   {
   public:
     // We can add a rt-task configuration facility here.

@@ -16,7 +16,7 @@
 #define CIAO_EXECUTION_MANAGER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "Interfaces/ExecutionManagerS.h"
+#include "Interfaces/ExecutionManagerDaemonS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -77,7 +77,7 @@ namespace CIAO
 
       // Below method is CIAO specific extension, please see the IDL
       // definition for more details.
-      virtual void 
+      virtual void
       destroyManagerByPlan (const char * plan_uuid
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((::CORBA::SystemException,
@@ -123,23 +123,23 @@ namespace CIAO
 
       /// Add shared component information.
       /// This call will be made by DomainApplicationManager.
-      virtual void 
+      virtual void
         add_shared_component (const Component_Binding_Info & binding);
 
       /// Remove shared component
-      virtual void 
+      virtual void
         remove_shared_component (const Component_Binding_Info & binding);
 
       /// If the input component <name> was found in the internal
       /// cached shared component list, and the plan_uuid also matches,
-      /// then this member function returns <true>, otherwise it 
+      /// then this member function returns <true>, otherwise it
       /// returns <false>.
       virtual bool
         is_component_running (const char * name, const char * plan_uuid);
 
     protected:
       /// Return the NodeApplication hosting the given biding
-      virtual Deployment::NodeApplication_ptr 
+      virtual Deployment::NodeApplication_ptr
         find_node_application (const Component_Binding_Info & binding)
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,

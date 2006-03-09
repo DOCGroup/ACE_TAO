@@ -3,8 +3,8 @@
 #ifndef CIAO_SWAPPING_SERVANT_IMPL_T_C
 #define CIAO_SWAPPING_SERVANT_IMPL_T_C
 
-#include "Swapping_Servant_Home_Impl_T.h"
-#include "Dynamic_Component_Servant_T.h"
+#include "ciao/Swapping_Servant_Home_Impl_T.h"
+#include "ciao/Dynamic_Component_Servant_T.h"
 
 namespace CIAO
 {

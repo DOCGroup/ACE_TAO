@@ -1,7 +1,8 @@
 // $Id$
 
 #include "DomainApplicationManager_Impl.h"
-//#include "NodeManager/NodeManagerC.h"
+#include "ExecutionManager/Execution_Manager_Impl.h"
+#include "ciao/NodeApplicationManagerC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"

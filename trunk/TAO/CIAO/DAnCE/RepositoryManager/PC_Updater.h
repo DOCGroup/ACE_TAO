@@ -26,11 +26,9 @@
 #include "ace/Containers_T.h"        //for ACE_Double_Linked_List
 #include "ace/Malloc_Allocator.h"    //for ACE_New_Allocator needed by the doubly link list
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /**
   * @class PC_Updater

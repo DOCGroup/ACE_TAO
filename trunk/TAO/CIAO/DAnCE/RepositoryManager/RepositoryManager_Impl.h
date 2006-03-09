@@ -32,8 +32,7 @@
 //#define ASSEMBLY_INTERFACE_SUPPORT 1
 
 
-#include "RepositoryManagerS.h"
-#include "DeploymentS.h"          //added for the deployment stuff
+#include "RepositoryManagerDaemonS.h"
 
 #include "ace/Hash_Map_Manager.h"      //for the ACE_Hash_Map_Manager
 #include "ace/Null_Mutex.h"          //for ACE_Null_Mutex
@@ -41,30 +40,29 @@
 #include "ace/OS_NS_string.h"        //for ACE_CString
 #include "ace/SString.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 namespace
 {
-///DIRECTORY WHERE THE PACKAGES WILL BE STORED LOCALLY
-const static char* INSTALL_PATH = "RepositoryDir";
+  /// Directory where the packages will be stored locally
+  const static char* INSTALL_PATH = "RepositoryDir";
 
-const static size_t TEMP_LEN = 512;
+  const static size_t TEMP_LEN = 512;
 
-const static char* PC_EXTENSION = ".epc";
+  const static char* PC_EXTENSION = ".epc";
 }
 
-class  CIAO_RepositoryManagerDaemon_i : public virtual POA_CIAO::RepositoryManagerDaemon
+class  CIAO_RepositoryManagerDaemon_i :
+  public virtual POA_CIAO::RepositoryManagerDaemon
 {
 public:
-  //Constructor
+  /// Constructor
   CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
                   const char* server = "http://localhost:5432/");
 
-  //Destructor
+  /// Destructor
   virtual ~CIAO_RepositoryManagerDaemon_i (void);
 
   virtual
@@ -152,34 +150,35 @@ public:
 
   protected:
 
-    ///function to parse and return the PackageConfiguration from a specified package
+    /// Function to parse and return the PackageConfiguration from a specified
+    /// package
     Deployment::PackageConfiguration* retrieve_PC_from_package (char* package);
 
-    ///find out what the name of the PackageConfiguration file is
+    /// Find out what the name of the PackageConfiguration file is
     void find_PC_name (char* package, ACE_CString& pcd_name);
 
-    ///function to parse and return the PackageConfiguration from the already
-    ///extracted descriptor files
+    /// Function to parse and return the PackageConfiguration from the already
+    /// extracted descriptor files
     Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const char* pc_name,
                                     const char* descriptor_dir);
 
 
-    ///function to retvieve a file via HTTP
-    ///stores the file in the passed preallocated ACE_Message_Block
-    ///returns 1 on success
-    ///     0 on error
+    /// Function to retrieve a file via HTTP
+    /// stores the file in the passed preallocated ACE_Message_Block
+    /// @retval 1 success
+    /// @retval 0 error
 
     int HTTP_Get (const char* URL, ACE_Message_Block &mb);
 
-    ///function to extract all necessary files for parsing the PackageConfiguration
-    ///descriptor and populating the idl struct.
-    ///return 1 on success
-    ///       0 on error
+    /// Function to extract all necessary files for parsing the
+    /// PackageConfiguration descriptor and populating the idl struct.
+    /// @retval 1 success
+    /// @retval 0 error
     ///
-    ///NOTE: ACE_CString& pcd_name is an out parameter
+    /// @note ACE_CString& pcd_name is an out parameter
 
     int extract_descriptor_files (char* package,
-                   ACE_CString& pcd_name);
+                                  ACE_CString& pcd_name);
 
 
     ///function to remove the files extracted for parsing the PackageConfiguration
@@ -270,10 +269,10 @@ public:
 
   //a hash map that associates the names of
   //PackageConfigurations with their location
-    PCMap names_;
+  PCMap names_;
 
-  //a hash map that associates the UUIDs of
-  //PackageConfigurations with their location
+  /// a hash map that associates the UUIDs of
+  /// PackageConfigurations with their location
   PCMap uuids_;
 
 #if defined ASSEMBLY_INTERFACE_SUPPORT

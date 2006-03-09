@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Deployment.idl"
+#include "RepositoryManager.idl"
 
 module CIAO
 {

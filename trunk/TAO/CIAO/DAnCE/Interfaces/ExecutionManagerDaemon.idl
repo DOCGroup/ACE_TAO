@@ -1,15 +1,14 @@
 // $Id$
 
 /**
- * @file ExecutionManager.idl
+ * @file ExecutionManagerDaemon.idl
  *
  * @brief Simple interface to control the ExecutionManager. This
  * interface currently provides an additional method called shutdown
  * to terminate the process cleanly.
- *
  */
 
-#include "Deployment.idl"
+#include "ciao/ExecutionManager.idl"
 
 module CIAO
 {

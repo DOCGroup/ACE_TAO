@@ -11,10 +11,9 @@
  * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  **/
 
-#include "RepositoryManagerC.h"
+#include "RepositoryManagerDaemonC.h"
 #include "Options.h"
 
-//#include "Config_Handlers/pcd.hpp"  //for the PackageConfiguration data struct
 #include "ace/OS_NS_fcntl.h"      //for open
 #include "ace/OS_NS_unistd.h"        //for close
 #include "ace/OS_NS_sys_stat.h"        //for filesize and fstat and mkdir
@@ -228,10 +227,10 @@ CORBA::Octet* read_from_disk (
 
   ACE_OS::fstat (handle, &file_info);
 
-  CORBA::Octet* buffer;
+  CORBA::Octet* buffer = 0;
   ACE_NEW_RETURN (buffer, CORBA::Octet[file_info.st_size], 0);
 
-  //read the contents of the file into the buffer
+  // read the contents of the file into the buffer
   if (ACE_OS::read_n (handle, buffer, file_info.st_size) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
@@ -252,7 +251,6 @@ int write_to_disk (
   size_t length
   )
 {
-
   // Open a file handle to the local filesystem
     ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
     if (handle == ACE_INVALID_HANDLE)
@@ -265,7 +263,7 @@ int write_to_disk (
   if (ACE_OS::write (handle, buffer, length) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
-               ACE_TEXT ("[RM::write_to_disk] file write error")),
+                           ACE_TEXT ("[RM::write_to_disk] file write error")),
                            -1);
 
   // Close the file handle
