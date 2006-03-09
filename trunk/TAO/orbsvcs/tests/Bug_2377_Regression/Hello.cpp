@@ -25,7 +25,7 @@ sleep(int millisec)
     ACE_Time_Value tv(millisec / 1000, (millisec % 1000) * 1000);
 
     ACE_OS::sleep ((const ACE_Time_Value &) tv);
-};
+}
 
 class MessageLog
 {
@@ -48,19 +48,19 @@ class MessageLog
             sent[i] = false;
             recv[i] = false;
         }
-    };
+    }
 
     void
     register_message_send(int message_num)
     {
         sent[message_num] = true;
-    };
+    }
 
     void
     register_message_recv(int message_num)
     {
         recv[message_num] = true;
-    };
+    }
 
     bool
     lost_messages()
@@ -78,7 +78,7 @@ class MessageLog
             }
         }
         return lm;
-    };
+    }
 
     void
     report_lost_messages(const ACE_TCHAR *int_format_string)
@@ -94,7 +94,7 @@ class MessageLog
                             i));
             }
         }
-    };
+    }
 };
 
 namespace Test
@@ -108,7 +108,7 @@ namespace Test
         Hello_impl(MessageLog *log)
         : logger(log)
         {
-        };
+        }
 
         void say_hello(CORBA::Short count) throw(CORBA::SystemException)
         {
@@ -117,9 +117,9 @@ namespace Test
             {
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("R")));
             }
-        };
+        }
     };
-};
+}
 
 class OrbRunThread
 : public ACE_Task_Base
@@ -128,12 +128,12 @@ class OrbRunThread
     OrbRunThread(CORBA::ORB_ptr orb)
     : m_orb(CORBA::ORB::_duplicate(orb))
     {
-    };
+    }
     virtual int svc()
     {
         m_orb->run();
         return 1;
-    };
+    }
   private:
     CORBA::ORB_var m_orb;
 };
@@ -147,7 +147,7 @@ class HelloClientThread
       logger(log),
       m_count(0)
     {
-    };
+    }
     virtual int svc()
     {
         while (m_count < NB_HELLO_CALLS)
@@ -182,7 +182,7 @@ class HelloClientThread
             ACE_ENDTRY;
         }
         return 1;
-    };
+    }
   private:
     Test::Hello_var m_hello;
     MessageLog *logger;

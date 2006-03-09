@@ -1,3 +1,9 @@
+Thu Mar  9 10:57:13 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
+
+        * orbsvcs/tests/Bug_2377_Regression/Hello.cpp:
+
+          Removed extra semi-colons.
+
 Wed Mar  8 17:01:00 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
         * orbsvcs/tests/Bug_2377_Regression/Hello.cpp:
