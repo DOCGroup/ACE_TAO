@@ -111,10 +111,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
   be_valuetype *excep_holder = 0;
   be_valuetype *global_excep_holder = be_global->exceptionholder ();
 
-  if (! node->imported ())
-    {
-      excep_holder = this->create_exception_holder (node);
-    }
+  excep_holder = this->create_exception_holder (node);
 
   be_interface *reply_handler = this->create_reply_handler (node,
                                                             excep_holder);
@@ -140,14 +137,6 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                          "visit_interface - "
                          "creating the reply handler failed\n"),
                         -1);
-    }
-
-  // After generating the reply handler for imported nodes, so they
-  // can be looked up as possible parents of a reply handler from
-  // a non-imported node, we can skip the rest of the function.
-  if (node->imported ())
-    {
-      return 0;
     }
 
   // Set the proper strategy.
@@ -703,12 +692,9 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
               this->create_reply_handler_operation (get_operation,
                                                     reply_handler);
 
-              if (!node->imported ())
-                {
-                  this->create_excep_operation (get_operation,
-                                                reply_handler,
-                                                excep_holder);
-                }
+              this->create_excep_operation (get_operation,
+                                            reply_handler,
+                                            excep_holder);
 
               if (!attribute->readonly ())
                 {
@@ -717,12 +703,9 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                   this->create_reply_handler_operation (set_operation,
                                                         reply_handler);
 
-                  if (!node->imported ())
-                    {
-                      this->create_excep_operation (set_operation,
-                                                    reply_handler,
-                                                    excep_holder);
-                    }
+                  this->create_excep_operation (set_operation,
+                                                reply_handler,
+                                                excep_holder);
                 }
             }
           else
@@ -734,12 +717,9 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                   this->create_reply_handler_operation (operation,
                                                         reply_handler);
 
-                  if (!node->imported ())
-                    {
-                      this->create_excep_operation (operation,
-                                                    reply_handler,
-                                                    excep_holder);
-                    }
+                  this->create_excep_operation (operation,
+                                                reply_handler,
+                                                excep_holder);
                 }
             }
         } // end of while loop
