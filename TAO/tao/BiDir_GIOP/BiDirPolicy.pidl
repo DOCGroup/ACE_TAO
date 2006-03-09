@@ -21,7 +21,7 @@
 
 #pragma prefix "omg.org"
 
-#include <Policy.pidl>
+#include <tao/Policy.pidl>
 
 // Self contained module for Bi-directional GIOP policy
 module BiDirPolicy

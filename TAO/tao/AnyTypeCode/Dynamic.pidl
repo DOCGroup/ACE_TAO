@@ -25,8 +25,8 @@
 // File: Dynamic.idl
 // Used primarily for Interceptors
 
-#include "Dynamic_Parameter.pidl"
-#include "StringSeq.pidl"
+#include "tao/AnyTypeCode/Dynamic_Parameter.pidl"
+#include "tao/StringSeq.pidl"
 
 #ifndef _DYNAMIC_IDL_
 #define _DYNAMIC_IDL_
