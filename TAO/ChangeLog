@@ -1,3 +1,22 @@
+Thu Mar  9 15:03:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/CSIIOP.idl:
+	* tao/Domain.pidl:
+	* tao/GIOP.pidl:
+	* tao/IOP.pidl:
+	* tao/IOP_IOR.pidl:
+	* tao/Messaging_PolicyValue.pidl:
+	* tao/PI_Forward.pidl:
+	* tao/Policy.pidl:
+	* tao/PortableInterceptor.pidl:
+	* tao/Services.pidl:
+	* tao/TAO.pidl:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
+
+          Add "tao/" prefix to #includes of *.pidl files found in
+          ${TAO_ROOT}/tao.  Thanks to Thomas Lockhart <Thomas dot
+          Lockhart at jpl dot nasa dot gov> for providing this change.
+
 Thu Mar  9 14:51:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosConcurrency.mpc:
