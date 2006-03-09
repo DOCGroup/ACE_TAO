@@ -1,57 +1,71 @@
+Thu Mar  9 16:04:22 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+
+          Don't bail out on code generation when the node is imported.
+
+          This fixes bug #2429.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          Prevent seg faults when the activator has been fed a duff ImR IOR.
+
+          This fixes bug #2445.
+
 Thu Mar  9 15:37:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/AnyTypeCode/Dynamic.pidl:
-	* tao/AnyTypeCode/Dynamic_Parameter.pidl:
-	* tao/BiDir_GIOP/BiDirPolicy.pidl:
-	* tao/CodecFactory/IOP_Codec.pidl:
-	* tao/DynamicAny/DynamicAny.pidl:
-	* tao/IFR_Client/IFR_Base.pidl:
-	* tao/IFR_Client/IFR_Basic.pidl:
-	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
-	* tao/PI/ClientRequestInfo.pidl:
-	* tao/PI/ORBInitInfo.pidl:
-	* tao/PI/PICurrent.pidl:
-	* tao/PI/PolicyFactory.pidl:
-	* tao/PI/RequestInfo.pidl:
-	* tao/PI_Server/ServerRequestInfo.pidl:
-	* tao/PI_Server/ServerRequestInterceptor.pidl:
-	* tao/PortableServer/IdAssignmentPolicy.pidl:
-	* tao/PortableServer/IdUniquenessPolicy.pidl:
-	* tao/PortableServer/ImplicitActivationPolicy.pidl:
-	* tao/PortableServer/LifespanPolicy.pidl:
-	* tao/PortableServer/PS_Current.pidl:
-	* tao/PortableServer/PS_Forward.pidl:
-	* tao/PortableServer/PortableServer.pidl:
-	* tao/PortableServer/RequestProcessingPolicy.pidl:
-	* tao/PortableServer/ServantLocator.pidl:
-	* tao/PortableServer/ServantRetentionPolicy.pidl:
-	* tao/PortableServer/ThreadPolicy.pidl:
-	* tao/RTCORBA/RTCORBA.pidl:
-	* tao/RTScheduling/RTScheduler_include.pidl:
+        * tao/AnyTypeCode/Dynamic_Parameter.pidl:
+        * tao/BiDir_GIOP/BiDirPolicy.pidl:
+        * tao/CodecFactory/IOP_Codec.pidl:
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Basic.pidl:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+        * tao/PI/ClientRequestInfo.pidl:
+        * tao/PI/ORBInitInfo.pidl:
+        * tao/PI/PICurrent.pidl:
+        * tao/PI/PolicyFactory.pidl:
+        * tao/PI/RequestInfo.pidl:
+        * tao/PI_Server/ServerRequestInfo.pidl:
+        * tao/PI_Server/ServerRequestInterceptor.pidl:
+        * tao/PortableServer/IdAssignmentPolicy.pidl:
+        * tao/PortableServer/IdUniquenessPolicy.pidl:
+        * tao/PortableServer/ImplicitActivationPolicy.pidl:
+        * tao/PortableServer/LifespanPolicy.pidl:
+        * tao/PortableServer/PS_Current.pidl:
+        * tao/PortableServer/PS_Forward.pidl:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/RequestProcessingPolicy.pidl:
+        * tao/PortableServer/ServantLocator.pidl:
+        * tao/PortableServer/ServantRetentionPolicy.pidl:
+        * tao/PortableServer/ThreadPolicy.pidl:
+        * tao/RTCORBA/RTCORBA.pidl:
+        * tao/RTScheduling/RTScheduler_include.pidl:
 
           Add "tao/" prefix to #includes of *.pidl files found in
           ${TAO_ROOT}/tao.
 
 Thu Mar  9 09:18:58 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* COPYING: Updated the date to include 2006.
-	  Thanks to Alan Kierstead <ackierstead at fedex dot com> for
- 	  motivating the fix to this oversight.
-  
+        * COPYING: Updated the date to include 2006.
+          Thanks to Alan Kierstead <ackierstead at fedex dot com> for
+          motivating the fix to this oversight.
+
 Thu Mar  9 15:03:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/CSIIOP.idl:
-	* tao/Domain.pidl:
-	* tao/GIOP.pidl:
-	* tao/IOP.pidl:
-	* tao/IOP_IOR.pidl:
-	* tao/Messaging_PolicyValue.pidl:
-	* tao/PI_Forward.pidl:
-	* tao/Policy.pidl:
-	* tao/PortableInterceptor.pidl:
-	* tao/Services.pidl:
-	* tao/TAO.pidl:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
+        * tao/Domain.pidl:
+        * tao/GIOP.pidl:
+        * tao/IOP.pidl:
+        * tao/IOP_IOR.pidl:
+        * tao/Messaging_PolicyValue.pidl:
+        * tao/PI_Forward.pidl:
+        * tao/Policy.pidl:
+        * tao/PortableInterceptor.pidl:
+        * tao/Services.pidl:
+        * tao/TAO.pidl:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
 
           Add "tao/" prefix to #includes of *.pidl files found in
           ${TAO_ROOT}/tao.  Thanks to Thomas Lockhart <Thomas dot
