@@ -52,7 +52,7 @@
 
 #pragma prefix "omg.org"
 
-#include <Typecode_types.pidl>
+#include <tao/Typecode_types.pidl>
 
 module DynamicAny {
 

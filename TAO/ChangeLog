@@ -1,3 +1,37 @@
+Thu Mar  9 15:37:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/AnyTypeCode/Dynamic.pidl:
+	* tao/AnyTypeCode/Dynamic_Parameter.pidl:
+	* tao/BiDir_GIOP/BiDirPolicy.pidl:
+	* tao/CodecFactory/IOP_Codec.pidl:
+	* tao/DynamicAny/DynamicAny.pidl:
+	* tao/IFR_Client/IFR_Base.pidl:
+	* tao/IFR_Client/IFR_Basic.pidl:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+	* tao/PI/ClientRequestInfo.pidl:
+	* tao/PI/ORBInitInfo.pidl:
+	* tao/PI/PICurrent.pidl:
+	* tao/PI/PolicyFactory.pidl:
+	* tao/PI/RequestInfo.pidl:
+	* tao/PI_Server/ServerRequestInfo.pidl:
+	* tao/PI_Server/ServerRequestInterceptor.pidl:
+	* tao/PortableServer/IdAssignmentPolicy.pidl:
+	* tao/PortableServer/IdUniquenessPolicy.pidl:
+	* tao/PortableServer/ImplicitActivationPolicy.pidl:
+	* tao/PortableServer/LifespanPolicy.pidl:
+	* tao/PortableServer/PS_Current.pidl:
+	* tao/PortableServer/PS_Forward.pidl:
+	* tao/PortableServer/PortableServer.pidl:
+	* tao/PortableServer/RequestProcessingPolicy.pidl:
+	* tao/PortableServer/ServantLocator.pidl:
+	* tao/PortableServer/ServantRetentionPolicy.pidl:
+	* tao/PortableServer/ThreadPolicy.pidl:
+	* tao/RTCORBA/RTCORBA.pidl:
+	* tao/RTScheduling/RTScheduler_include.pidl:
+
+          Add "tao/" prefix to #includes of *.pidl files found in
+          ${TAO_ROOT}/tao.
+
 Thu Mar  9 09:18:58 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* COPYING: Updated the date to include 2006.

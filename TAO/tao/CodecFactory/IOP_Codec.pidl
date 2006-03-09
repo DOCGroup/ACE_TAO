@@ -25,9 +25,9 @@
 #ifndef TAO_IOP_CODEC_PIDL
 #define TAO_IOP_CODEC_PIDL
 
-#include <Typecode_types.pidl>
-#include <OctetSeq.pidl>
-#include <CONV_FRAME.pidl>
+#include <tao/Typecode_types.pidl>
+#include <tao/OctetSeq.pidl>
+#include <tao/CONV_FRAME.pidl>
 
 #pragma prefix "omg.org"
 
