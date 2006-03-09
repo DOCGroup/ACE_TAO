@@ -170,14 +170,14 @@ TAO_Stub::next_profile_retry (void)
 
       // In this case we are falling back from the forwarded IOR stright to the base IOR
       this->reset_profiles_i ();
-      return 1;
+      return true;
     }
   else if (this->next_profile_i ())
     {
-      return 1;
+      return true;
     }
 
-  return 0;
+  return false;
 #if 0
   else
     {
@@ -190,10 +190,10 @@ TAO_Stub::next_profile_retry (void)
       // If the service is loaded and has a profile then try it.
       if (prof)
         {
-          return 1;
+          return true;
         }
       this->reset_profiles_i ();
-      return 0;
+      return false;
     }
 #endif /*If 0 */
 }
