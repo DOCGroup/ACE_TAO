@@ -1,3 +1,88 @@
+Thu Mar 09 08:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Interfaces/ExecutionManagerDaemon.idl:
+        * DAnCE/Interfaces/NodeManagerDaemon.idl:
+          New idl files, these are the same as there are now in the directory
+          but then just renamed to match the interfaces in these files and
+          then don't conflict with the ones I created in ciao.
+
+        * DAnCE/Interfaces/ExecutionManager.idl:
+        * DAnCE/Interfaces/NodeManager.idl:
+          Removed, file names where not correct and now conflict with files in
+          the ciao directory
+
+        * DAnCE/Interfaces/Interfaces.mpc:
+          Updated because of file renames
+
+        * ciao/CCM_Base.idl:
+          Removed old comment
+
+        * ciao/CCM_Component.idl:
+          Forward declare CORBA::IRObject instead of including the IFR_Client
+          idl file
+
+        * ciao/Deployment_Base.idl:
+          Removed not needed include
+
+        * ciao/Dynamic_Component_Activator.h:
+          Reordered includes
+
+        * ciao/Swapping_Servant_Home_Impl_Base.h:
+        * ciao/Upgradeable_Context_Impl_T.h:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
+          Added ciao/ as prefix for the includes
+
+        * ciao/Upgradeable_Context_Impl_T.h:
+          Added private default constructor
+
+        * ciao/Deployment.idl:
+        * ciao/DomainApplicationManager.idl:
+        * ciao/ExecutionManager.idl:
+        * ciao/NodeApplication_Callback.idl:
+        * ciao/NodeApplicationManager.idl:
+        * ciao/NodeManager.idl:
+        * ciao/RepositoryManager.idl:
+        * ciao/CCM_Core.mpc:
+          Splitted Deployment.idl in multiple files so that the linker
+          can decide not to link in a set of object files we don't need.
+          This will reduce footprint for several applications
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+        * DAnCE/ExecutionManager/DAM_Map.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        * DAnCE/NodeManager/Node_Manager.cpp:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.{h.cpp}:
+        * DAnCE/TargetManager/Deployment_Configuration.h:
+          Updated for the idl subsetting of ciao/Deployment.idl. Also add ciao/
+          prefix to several includes and try to cleanup a little.
+
+        * DAnCE/RepositoryManager/RepositoryManager.idl:
+        * DAnCE/RepositoryManager/RepositoryManagerDaemon.idl:
+          Renamed the first file to the second, matches the interface name.
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/PC_Updater.{h,cpp}:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+          Updated because of rename above
+
+        * DAnCE/RTNodeApplication/senv.sh:
+          Removed this file, no need here.
+
+        * DAnCE/RTNodeApplication/NodeApplication_Task.h:
+          No need for virtual inheritance, that consumes more footprint then
+          needed.
+
+        * DAnCE/RTNodeApplication/NodeApplication_Task.cpp:
+          Reordered includes
+
 Wed Mar 08 15:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ServerResources.idl:
