@@ -1798,7 +1798,7 @@ Brad Orner <bradley_p_orner at raytheon dot com>
 Michelangelo Nottoli <m dot nottoli at acsys dot it>
 Peter Bekiesch <peter dot bekiesch at dtmgmbh dot de>
 Martin Kaul <mkaul at leuze dot de>
-Gruetzmacher Lukas <gruetzmacher at ais-dresden dot de>
+Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de>
 Robert Schiele <robert dot schiele at t-online dot de>
 Matthew Grosso <mgrosso at acm dot org>
 Akim Boyko <akim at sitech dot com dot ua>
@@ -2077,6 +2077,7 @@ Tino Riethmueller
 Adam Mitz  <mitza at ociweb dot com>
 Frank Rehberger <frehberger at prismtech dot com>
 Aaron Scamehorn <aaron dot scamehorn at cogcap dot com>
+Alan Kierstead <ackierstead at fedex dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
