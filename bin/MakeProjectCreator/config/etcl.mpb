@@ -2,6 +2,7 @@
 // $Id$
 
 project : taolib {
-  after   += ETCL
-  libs    += TAO_ETCL
+  after     += ETCL
+  libs      += TAO_ETCL
+  tagchecks += Notify
 }
