@@ -1,3 +1,9 @@
+Thu Mar  9 09:18:58 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* COPYING: Updated the date to include 2006.
+	  Thanks to Alan Kierstead <ackierstead at fedex dot com> for
+ 	  motivating the fix to this oversight.
+
 Thu Mar 09 08:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Interfaces/ExecutionManagerDaemon.idl:
