@@ -78,7 +78,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
       locator_ = ImplementationRepository::Locator::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (!CORBA::is_nil (locator_))
+      if (!CORBA::is_nil (locator_.in ()))
         {
           this->registration_token_ =
             locator_->register_activator (name_.c_str (), activator ACE_ENV_ARG_PARAMETER);

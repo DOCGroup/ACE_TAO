@@ -1,3 +1,9 @@
+Fri Mar 10 15:36:08 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          Fixed warning. Thanks to Johnny for the tip off.
+
 Fri Mar 10 14:00:00 UTC 2006  Simon Massey <sma@prismtech.com>
 
         * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
