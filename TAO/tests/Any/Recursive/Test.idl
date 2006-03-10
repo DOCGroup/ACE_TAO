@@ -37,6 +37,24 @@ module Test
 
   // --------------------------
 
+  enum VSort {
+    UNKNOWN_TYPE,
+    RECURSIVE_TYPE,
+    LONG_STYPE
+  };
+
+  union VSortRecursiveUnion;
+  typedef sequence<VSortRecursiveUnion> VSortRecursiveUnionSeq;
+  union VSortRecursiveUnion switch (VSort)
+  {
+  case RECURSIVE_TYPE:
+    VSortRecursiveUnionSeq recursive_unions;
+  case LONG_STYPE:
+    long i;
+  };
+
+  // --------------------------
+
   valuetype IndirectlyRecursiveValuetype;
   typedef sequence<IndirectlyRecursiveValuetype>
     IndirectlyRecursiveValuetypeSeq;
