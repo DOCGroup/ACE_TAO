@@ -35,6 +35,21 @@ module Test
     long i;
   };
 
+  union RecursiveUnionNoDefault;
+  typedef sequence<RecursiveUnionNoDefault> RecursiveUnionSeqNoDefault;
+
+  union RecursiveUnionNoDefault switch (short)
+  {
+  case 0:
+    RecursiveUnionSeqNoDefault recursive_unions;
+  case 1:
+    short a;
+  case 2:
+    RecursiveUnionSeqNoDefault recursive_unions_second;
+  };
+
+  // --------------------------
+
   // --------------------------
 
   enum VSort {

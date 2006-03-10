@@ -197,6 +197,22 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Recursive member case with no default member
+  Test::RecursiveUnionSeqNoDefault seqnodefault;
+  seqnodefault.length (2);
+  seqnodefault[0].a (37);
+  seqnodefault[1].recursive_unions (Test::RecursiveUnionSeqNoDefault ());
+
+  Test::RecursiveUnionNoDefault foonodefault;
+  foonodefault.recursive_unions (seqnodefault);
+
+  the_any <<= foonodefault;
+
+  ::perform_invocation<Test::RecursiveUnionNoDefault> (hello,
+                                                       the_any
+                                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   // Recursive member case with enum .
   Test::VSortRecursiveUnionSeq vsortseq;
   vsortseq.length (2);
