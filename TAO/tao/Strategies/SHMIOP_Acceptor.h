@@ -31,7 +31,7 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Transport_Acceptor.h"
-#include "SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"

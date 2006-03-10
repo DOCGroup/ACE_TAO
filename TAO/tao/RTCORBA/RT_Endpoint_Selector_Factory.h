@@ -18,7 +18,7 @@
 #define RT_ENDPOINT_SELECTOR_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

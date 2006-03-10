@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ShortSeqC.h"
+#include "tao/ShortSeqC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from

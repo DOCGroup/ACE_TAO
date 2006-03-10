@@ -8,18 +8,18 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "Stub.h"
-#include "Profile.h"
-#include "ORB_Core.h"
-#include "Client_Strategy_Factory.h"
-#include "Remote_Object_Proxy_Broker.h"
-#include "Transport_Queueing_Strategies.h"
-#include "debug.h"
-#include "Policy_Manager.h"
-#include "SystemException.h"
+#include "tao/Stub.h"
+#include "tao/Profile.h"
+#include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Remote_Object_Proxy_Broker.h"
+#include "tao/Transport_Queueing_Strategies.h"
+#include "tao/debug.h"
+#include "tao/Policy_Manager.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Stub.i"
+# include "tao/Stub.i"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "LF_Event.h"
-#include "LF_Follower.h"
-#include "Leader_Follower.h"
+#include "tao/LF_Event.h"
+#include "tao/LF_Follower.h"
+#include "tao/Leader_Follower.h"
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)

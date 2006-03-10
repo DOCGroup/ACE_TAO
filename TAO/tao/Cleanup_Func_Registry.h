@@ -83,7 +83,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Cleanup_Func_Registry.inl"
+# include "tao/Cleanup_Func_Registry.inl"
 #endif  /* __ACE_INLINE__ */
 
 

@@ -15,7 +15,7 @@
 #ifndef TAO_UTILS_SERVER_MAIN_T_CPP
 #define TAO_UTILS_SERVER_MAIN_T_CPP
 
-#include "Server_Main.h"
+#include "tao/Utils/Server_Main.h"
 
 #include "tao/ORB.h"
 

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Codeset_Manager.h"
-#include "Codeset_Descriptor_Base.h"
+#include "tao/Codeset_Manager.h"
+#include "tao/Codeset_Descriptor_Base.h"
 
 ACE_RCSID (tao,
            Codeset_Manager,

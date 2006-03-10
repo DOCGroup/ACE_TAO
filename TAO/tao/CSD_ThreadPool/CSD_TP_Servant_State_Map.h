@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CSD_TP_Export.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CSD_TP_Servant_State.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Servant_State.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
@@ -87,7 +87,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "CSD_TP_Servant_State_Map.inl"
+# include "tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

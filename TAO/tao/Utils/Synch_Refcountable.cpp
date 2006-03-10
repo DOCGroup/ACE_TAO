@@ -1,7 +1,7 @@
-#include "Synch_Refcountable.h"
+#include "tao/Utils/Synch_Refcountable.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Synch_Refcountable.inl"
+# include "tao/Utils/Synch_Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

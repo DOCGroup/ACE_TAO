@@ -17,7 +17,7 @@
 #define TAO_RT_ORB_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #include "tao/orbconf.h"
 

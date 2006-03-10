@@ -1,8 +1,8 @@
 // $Id$
 
-#include "CSD_TP_Strategy_Factory.h"
-#include "CSD_TP_Strategy.h"
-#include "CSD_ThreadPool.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
+#include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"

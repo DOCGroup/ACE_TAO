@@ -1,8 +1,8 @@
 // $Id$
 
-#include "CSD_Strategy_Base.h"
-#include "CSD_POA.h"
-#include "CSD_Strategy_Proxy.h"
+#include "tao/CSD_Framework/CSD_Strategy_Base.h"
+#include "tao/CSD_Framework/CSD_POA.h"
+#include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POAManager.h"
 #include "tao/PortableServer/Servant_Base.h"
@@ -13,7 +13,7 @@ ACE_RCSID (CSD_Framework,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "CSD_Strategy_Base.inl"
+# include "tao/CSD_Framework/CSD_Strategy_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

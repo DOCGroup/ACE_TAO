@@ -1,24 +1,24 @@
-#include "Transport_Connector.h"
-#include "Transport.h"
-#include "ORB_Core.h"
-#include "MProfile.h"
-#include "Profile.h"
-#include "Environment.h"
-#include "Thread_Lane_Resources.h"
-#include "debug.h"
-#include "Connect_Strategy.h"
-#include "Client_Strategy_Factory.h"
-#include "Connection_Handler.h"
-#include "Profile_Transport_Resolver.h"
-#include "Wait_Strategy.h"
-#include "SystemException.h"
+#include "tao/Transport_Connector.h"
+#include "tao/Transport.h"
+#include "tao/ORB_Core.h"
+#include "tao/MProfile.h"
+#include "tao/Profile.h"
+#include "tao/Environment.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/debug.h"
+#include "tao/Connect_Strategy.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Connection_Handler.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
 //@@ TAO_CONNECTOR_SPL_INCLUDE_ADD_HOOK
 
 #if !defined (__ACE_INLINE__)
-# include "Transport_Connector.inl"
+# include "tao/Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

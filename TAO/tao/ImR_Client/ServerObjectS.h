@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ServerObjectC.h"
+#include "tao/ImR_Client/ServerObjectC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

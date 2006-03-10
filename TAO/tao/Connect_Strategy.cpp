@@ -1,4 +1,4 @@
-#include "Connect_Strategy.h"
+#include "tao/Connect_Strategy.h"
 
 ACE_RCSID (tao,
            Connect_Strategy,

@@ -1,9 +1,9 @@
-#include "ORB_Table.h"
-#include "ORB_Core.h"
-#include "TAO_Singleton.h"
+#include "tao/ORB_Table.h"
+#include "tao/ORB_Core.h"
+#include "tao/TAO_Singleton.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ORB_Table.inl"
+# include "tao/ORB_Table.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/SString.h"

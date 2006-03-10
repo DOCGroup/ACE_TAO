@@ -1,12 +1,12 @@
-#include "Incoming_Message_Queue.h"
-#include "debug.h"
+#include "tao/Incoming_Message_Queue.h"
+#include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
 
 #if !defined (__ACE_INLINE__)
-# include "Incoming_Message_Queue.inl"
+# include "tao/Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 

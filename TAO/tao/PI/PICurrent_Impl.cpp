@@ -1,4 +1,4 @@
-#include "PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -8,10 +8,10 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "PICurrent_Impl.inl"
+# include "tao/PI/PICurrent_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "PICurrent_Copy_Callback.h"
+#include "tao/PI/PICurrent_Copy_Callback.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/SystemException.h"

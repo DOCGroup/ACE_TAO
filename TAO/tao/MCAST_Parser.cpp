@@ -1,9 +1,9 @@
-#include "MCAST_Parser.h"
-#include "default_ports.h"
-#include "ORB_Core.h"
-#include "ORB.h"
-#include "Environment.h"
-#include "debug.h"
+#include "tao/MCAST_Parser.h"
+#include "tao/default_ports.h"
+#include "tao/ORB_Core.h"
+#include "tao/ORB.h"
+#include "tao/Environment.h"
+#include "tao/debug.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
@@ -11,7 +11,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "MCAST_Parser.i"
+#include "tao/MCAST_Parser.i"
 #endif /* __ACE_INLINE__ */
 
 

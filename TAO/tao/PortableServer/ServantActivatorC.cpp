@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ServantActivatorC.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"

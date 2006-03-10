@@ -1,4 +1,4 @@
-#include "IORInterceptor_Details.h"
+#include "tao/IORInterceptor/IORInterceptor_Details.h"
 
 ACE_RCSID (IORInterceptor,
            IORInterceptor_Details,

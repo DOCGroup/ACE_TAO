@@ -40,7 +40,7 @@
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
-#include "POAManagerC.h"
+#include "tao/PortableServer/POAManagerC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

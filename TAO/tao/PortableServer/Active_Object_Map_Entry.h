@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "PS_ForwardC.h"
+#include "tao/PortableServer/PS_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

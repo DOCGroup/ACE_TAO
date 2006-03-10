@@ -1,5 +1,5 @@
-#include "SCIOP_Acceptor.h"
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Acceptor.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -11,7 +11,7 @@
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "SCIOP_Acceptor.i"
+#include "tao/Strategies/SCIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao,

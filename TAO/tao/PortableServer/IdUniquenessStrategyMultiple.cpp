@@ -1,6 +1,6 @@
 // $Id$
 
-#include "IdUniquenessStrategyMultiple.h"
+#include "tao/PortableServer/IdUniquenessStrategyMultiple.h"
 
 ACE_RCSID (PortableServer,
            Id_Uniqueness_Strategy,

@@ -1,14 +1,14 @@
 // $Id$
 
-#include "Request.h"
+#include "tao/DynamicInterface/Request.h"
 
 ACE_RCSID (DynamicInterface,
            Request,
            "$Id$")
 
-#include "DII_Invocation_Adapter.h"
-#include "DII_Arguments.h"
-#include "Context.h"
+#include "tao/DynamicInterface/DII_Invocation_Adapter.h"
+#include "tao/DynamicInterface/DII_Arguments.h"
+#include "tao/DynamicInterface/Context.h"
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/Object.h"
@@ -19,7 +19,7 @@ ACE_RCSID (DynamicInterface,
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Request.inl"
+# include "tao/DynamicInterface/Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

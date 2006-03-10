@@ -33,8 +33,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "IdUniquenessPolicyC.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/IdUniquenessPolicyC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 
 

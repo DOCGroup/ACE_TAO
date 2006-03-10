@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "Messaging_SyncScopeC.h"
+#include "tao/Messaging_SyncScopeC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

@@ -1,8 +1,8 @@
-#include "Reactive_Connect_Strategy.h"
-#include "Connection_Handler.h"
-#include "ORB_Core.h"
-#include "debug.h"
-#include "Transport.h"
+#include "tao/Reactive_Connect_Strategy.h"
+#include "tao/Connection_Handler.h"
+#include "tao/ORB_Core.h"
+#include "tao/debug.h"
+#include "tao/Transport.h"
 
 #include "ace/Synch_Options.h"
 

@@ -1,9 +1,9 @@
-#include "LF_Connect_Strategy.h"
-#include "Connection_Handler.h"
-#include "LF_Follower.h"
-#include "Leader_Follower.h"
-#include "Transport.h"
-#include "ORB_Core.h"
+#include "tao/LF_Connect_Strategy.h"
+#include "tao/Connection_Handler.h"
+#include "tao/LF_Follower.h"
+#include "tao/Leader_Follower.h"
+#include "tao/Transport.h"
+#include "tao/ORB_Core.h"
 #include "ace/Synch_Options.h"
 
 ACE_RCSID(tao,

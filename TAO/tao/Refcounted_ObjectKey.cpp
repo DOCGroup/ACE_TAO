@@ -1,9 +1,9 @@
 //$Id$
-#include "Refcounted_ObjectKey.h"
+#include "tao/Refcounted_ObjectKey.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Refcounted_ObjectKey.inl"
+#include "tao/Refcounted_ObjectKey.inl"
 #endif /* defined INLINE */
 
 ACE_RCSID(tao,

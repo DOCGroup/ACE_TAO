@@ -14,14 +14,14 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H
 #include /**/ "ace/pre.h"
 
-#include "RequestProcessingStrategyServantManager.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Location.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/PortableServer.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

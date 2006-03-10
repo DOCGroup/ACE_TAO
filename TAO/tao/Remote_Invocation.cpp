@@ -1,14 +1,14 @@
 //$Id$
-#include "Remote_Invocation.h"
-#include "Profile.h"
-#include "Profile_Transport_Resolver.h"
-#include "Stub.h"
-#include "Transport.h"
-#include "Connection_Handler.h"
-#include "operation_details.h"
-#include "ORB_Core.h"
-#include "Protocols_Hooks.h"
-#include "debug.h"
+#include "tao/Remote_Invocation.h"
+#include "tao/Profile.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Stub.h"
+#include "tao/Transport.h"
+#include "tao/Connection_Handler.h"
+#include "tao/operation_details.h"
+#include "tao/ORB_Core.h"
+#include "tao/Protocols_Hooks.h"
+#include "tao/debug.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,

@@ -1,26 +1,26 @@
 // $Id$
 
-#include "Transport.h"
+#include "tao/Transport.h"
 
-#include "LF_Follower.h"
-#include "Leader_Follower.h"
-#include "Client_Strategy_Factory.h"
-#include "Wait_Strategy.h"
-#include "Transport_Mux_Strategy.h"
-#include "Stub.h"
-#include "Transport_Queueing_Strategies.h"
-#include "Connection_Handler.h"
-#include "Pluggable_Messaging.h"
-#include "Synch_Queued_Message.h"
-#include "Asynch_Queued_Message.h"
-#include "Flushing_Strategy.h"
-#include "Thread_Lane_Resources.h"
-#include "Resume_Handle.h"
-#include "Codeset_Manager.h"
-#include "Codeset_Translator_Base.h"
-#include "debug.h"
-#include "CDR.h"
-#include "ORB_Core.h"
+#include "tao/LF_Follower.h"
+#include "tao/Leader_Follower.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/Transport_Mux_Strategy.h"
+#include "tao/Stub.h"
+#include "tao/Transport_Queueing_Strategies.h"
+#include "tao/Connection_Handler.h"
+#include "tao/Pluggable_Messaging.h"
+#include "tao/Synch_Queued_Message.h"
+#include "tao/Asynch_Queued_Message.h"
+#include "tao/Flushing_Strategy.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Resume_Handle.h"
+#include "tao/Codeset_Manager.h"
+#include "tao/Codeset_Translator_Base.h"
+#include "tao/debug.h"
+#include "tao/CDR.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -34,7 +34,7 @@
 //@@ TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
 #if !defined (__ACE_INLINE__)
-# include "Transport.inl"
+# include "tao/Transport.inl"
 #endif /* __ACE_INLINE__ */
 
 

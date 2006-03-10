@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Object_Loader.h"
+#include "tao/Object_Loader.h"
 
 ACE_RCSID (tao,
            Object_Loader,

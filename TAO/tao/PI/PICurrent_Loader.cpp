@@ -11,11 +11,11 @@
  */
 // =================================================================
 
-#include "PICurrent_Loader.h"
+#include "tao/PI/PICurrent_Loader.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PICurrent.h"
+#include "tao/PI/PICurrent.h"
 
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"

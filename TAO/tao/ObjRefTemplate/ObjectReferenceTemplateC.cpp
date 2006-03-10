@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "ObjectReferenceTemplate.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate.h"
 #include "tao/CDR.h"
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
@@ -44,7 +44,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ObjectReferenceTemplateC.inl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

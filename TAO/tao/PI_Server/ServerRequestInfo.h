@@ -27,7 +27,7 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "ServerRequestInfoC.h"
+#include "tao/PI_Server/ServerRequestInfoC.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
 #include "tao/TAO_Server_Request.h"
@@ -302,7 +302,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (__ACE_INLINE__)
-#  include "ServerRequestInfo.inl"
+#  include "tao/PI_Server/ServerRequestInfo.inl"
 # endif  /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

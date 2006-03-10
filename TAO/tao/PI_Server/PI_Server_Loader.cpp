@@ -1,8 +1,8 @@
 
 // $Id$
 
-#include "PI_Server_Loader.h"
-#include "PortableServer_ORBInitializer.h"
+#include "tao/PI_Server/PI_Server_Loader.h"
+#include "tao/PI_Server/PortableServer_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

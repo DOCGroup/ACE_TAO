@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Non_Servant_Upcall.h"
-#include "Object_Adapter.h"
-#include "Root_POA.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Non_Servant_Upcall.inl"
+# include "tao/PortableServer/Non_Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,

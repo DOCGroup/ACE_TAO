@@ -34,7 +34,7 @@
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
-#include "IdUniquenessPolicyA.h"
+#include "tao/PortableServer/IdUniquenessPolicyA.h"
 #include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

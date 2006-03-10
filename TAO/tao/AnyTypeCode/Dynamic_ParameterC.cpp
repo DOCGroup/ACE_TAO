@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "Dynamic_ParameterC.h"
+#include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "DII_Arguments.h"
+#include "tao/DynamicInterface/DII_Arguments.h"
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
@@ -14,7 +14,7 @@ ACE_RCSID (DynamicInterface,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "DII_Arguments.inl"
+# include "tao/DynamicInterface/DII_Arguments.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

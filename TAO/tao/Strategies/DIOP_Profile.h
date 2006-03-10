@@ -27,7 +27,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "DIOP_Endpoint.h"
+#include "tao/Strategies/DIOP_Endpoint.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

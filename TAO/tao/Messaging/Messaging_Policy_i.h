@@ -156,7 +156,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Messaging_Policy_i.i"
+#include "tao/Messaging/Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

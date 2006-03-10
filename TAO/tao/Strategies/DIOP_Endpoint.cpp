@@ -2,11 +2,11 @@
 // $Id$
 
 
-#include "DIOP_Endpoint.h"
+#include "tao/Strategies/DIOP_Endpoint.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "DIOP_Connection_Handler.h"
+#include "tao/Strategies/DIOP_Connection_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
@@ -20,7 +20,7 @@ ACE_RCSID (Strategies,
 
 
 #if !defined (__ACE_INLINE__)
-# include "DIOP_Endpoint.i"
+# include "tao/Strategies/DIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

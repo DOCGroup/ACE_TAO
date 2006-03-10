@@ -1,10 +1,10 @@
 // $Id$
 
-#include "RT_POA.h"
+#include "tao/RTPortableServer/RT_POA.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_Acceptor_Filters.h"
+#include "tao/RTPortableServer/RT_Acceptor_Filters.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -28,7 +28,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RT_POA.i"
+# include "tao/RTPortableServer/RT_POA.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (RTPortableServer,

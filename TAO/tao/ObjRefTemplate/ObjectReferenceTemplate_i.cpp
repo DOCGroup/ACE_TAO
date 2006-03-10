@@ -1,4 +1,4 @@
-#include "ObjectReferenceTemplate_i.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/CORBA_String.h"

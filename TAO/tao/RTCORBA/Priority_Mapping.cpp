@@ -4,7 +4,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "Priority_Mapping.h"
+#include "tao/RTCORBA/Priority_Mapping.h"
 
 ACE_RCSID(RTCORBA,
           Priority_Mapping,

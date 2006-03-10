@@ -21,7 +21,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +45,7 @@ static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */

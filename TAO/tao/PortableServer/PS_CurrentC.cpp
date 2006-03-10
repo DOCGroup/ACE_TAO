@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "PS_CurrentC.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"

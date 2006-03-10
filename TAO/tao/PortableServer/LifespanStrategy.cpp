@@ -9,7 +9,7 @@
  */
 //=============================================================================
 
-#include "LifespanStrategy.h"
+#include "tao/PortableServer/LifespanStrategy.h"
 
 ACE_RCSID (PortableServer,
            LifespanStrategy,

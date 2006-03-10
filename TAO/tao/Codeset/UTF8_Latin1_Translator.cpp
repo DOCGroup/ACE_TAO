@@ -17,7 +17,7 @@
 //    Phil Mesnier <mesnier_p@ociweb.com>
 //
 // ============================================================================
-#include "UTF8_Latin1_Translator.h"
+#include "tao/Codeset/UTF8_Latin1_Translator.h"
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 

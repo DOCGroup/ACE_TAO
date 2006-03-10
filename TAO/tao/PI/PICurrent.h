@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +25,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PICurrentC.h"
+#include "tao/PI/PICurrentC.h"
 
 #include "tao/LocalObject.h"
 #include "ace/Array_Base.h"
@@ -139,7 +139,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "PICurrent.inl"
+# include "tao/PI/PICurrent.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

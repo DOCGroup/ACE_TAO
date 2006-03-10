@@ -1,7 +1,7 @@
 // $Id$
 
-#include "DII_Reply_Dispatcher.h"
-#include "Request.h"
+#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
+#include "tao/DynamicInterface/Request.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

@@ -1,16 +1,16 @@
 //$Id$
 
-#include "Invocation_Adapter.h"
-#include "Profile_Transport_Resolver.h"
-#include "operation_details.h"
-#include "Stub.h"
-#include "ORB_Core.h"
-#include "Synch_Invocation.h"
-#include "debug.h"
-#include "Collocated_Invocation.h"
-#include "Transport.h"
-#include "Transport_Mux_Strategy.h"
-#include "Collocation_Proxy_Broker.h"
+#include "tao/Invocation_Adapter.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/operation_details.h"
+#include "tao/Stub.h"
+#include "tao/ORB_Core.h"
+#include "tao/Synch_Invocation.h"
+#include "tao/debug.h"
+#include "tao/Collocated_Invocation.h"
+#include "tao/Transport.h"
+#include "tao/Transport_Mux_Strategy.h"
+#include "tao/Collocation_Proxy_Broker.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"

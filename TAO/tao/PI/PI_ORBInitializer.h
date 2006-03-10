@@ -19,15 +19,15 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ORBInitializerC.h"
-#include "PolicyFactoryC.h"
+#include "tao/PI/ORBInitializerC.h"
+#include "tao/PI/PolicyFactoryC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

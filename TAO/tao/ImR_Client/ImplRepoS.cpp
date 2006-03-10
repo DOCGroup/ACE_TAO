@@ -33,7 +33,7 @@
 #define _TAO_IDL_ORIG_IMPLREPOS_CPP_
 
 
-#include "ImplRepoS.h"
+#include "tao/ImR_Client/ImplRepoS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"

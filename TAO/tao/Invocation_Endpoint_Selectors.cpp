@@ -4,10 +4,10 @@
 #include "tao/Profile.h"
 #include "tao/ORB_Core.h"
 #include "tao/IIOP_Endpoint.h"
-#include "Base_Transport_Property.h"
-#include "Profile_Transport_Resolver.h"
-#include "ORB_Constants.h"
-#include "SystemException.h"
+#include "tao/Base_Transport_Property.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Invocation_Endpoint_Selectors,

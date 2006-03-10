@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ObjectKey_Table.h"
-#include "ORB_Core.h"
-#include "Refcounted_ObjectKey.h"
+#include "tao/ObjectKey_Table.h"
+#include "tao/ORB_Core.h"
+#include "tao/Refcounted_ObjectKey.h"
 
 ACE_RCSID(tao,
           ObjectKey_Table,

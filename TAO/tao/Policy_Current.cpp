@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Policy_Current.h"
+#include "tao/Policy_Current.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 

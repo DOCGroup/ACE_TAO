@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "DomainC.h"
+#include "tao/DomainC.h"
 #include "tao/CDR.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
@@ -48,7 +48,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "DomainC.inl"
+#include "tao/DomainC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

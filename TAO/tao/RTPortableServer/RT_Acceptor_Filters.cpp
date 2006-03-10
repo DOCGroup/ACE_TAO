@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RT_Acceptor_Filters.h"
+#include "tao/RTPortableServer/RT_Acceptor_Filters.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

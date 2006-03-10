@@ -42,7 +42,7 @@ namespace TAO
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "PortableInterceptorC.h"
+#include "tao/PortableInterceptorC.h"
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -378,7 +378,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "TAO_Server_Request.i"
+# include "tao/TAO_Server_Request.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,4 +1,4 @@
-#include "SCIOP_Endpoint.h"
+#include "tao/Strategies/SCIOP_Endpoint.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -19,7 +19,7 @@ ACE_RCSID (Strategies,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SCIOP_Endpoint.i"
+# include "tao/Strategies/SCIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

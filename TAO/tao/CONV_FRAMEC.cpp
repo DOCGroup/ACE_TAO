@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:288
 
 
-#include "CONV_FRAMEC.h"
+#include "tao/CONV_FRAMEC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from

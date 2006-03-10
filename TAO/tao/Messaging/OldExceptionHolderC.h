@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/Valuetype/ValueFactory.h"
@@ -293,7 +293,7 @@ TAO_Messaging_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Exc
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "OldExceptionHolderC.inl"
+#include "tao/Messaging/OldExceptionHolderC.inl"
 #endif /* defined INLINE */
 
 #endif /* */

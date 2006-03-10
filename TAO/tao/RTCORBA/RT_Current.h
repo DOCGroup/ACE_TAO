@@ -20,7 +20,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #include "tao/LocalObject.h"

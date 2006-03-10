@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ImR_Client.h"
+#include "tao/ImR_Client/ImR_Client.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

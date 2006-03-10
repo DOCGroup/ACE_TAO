@@ -1,22 +1,22 @@
 // $Id$
 
-#include "Synch_Invocation.h"
-#include "Profile_Transport_Resolver.h"
-#include "Profile.h"
-#include "Synch_Reply_Dispatcher.h"
-#include "Transport.h"
-#include "Stub.h"
-#include "Bind_Dispatcher_Guard.h"
-#include "operation_details.h"
-#include "Wait_Strategy.h"
-#include "debug.h"
-#include "ORB_Constants.h"
-#include "Messaging_SyncScopeC.h"
-#include "ORB_Core.h"
-#include "Service_Context.h"
+#include "tao/Synch_Invocation.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Profile.h"
+#include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/Transport.h"
+#include "tao/Stub.h"
+#include "tao/Bind_Dispatcher_Guard.h"
+#include "tao/operation_details.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+#include "tao/Messaging_SyncScopeC.h"
+#include "tao/ORB_Core.h"
+#include "tao/Service_Context.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PortableInterceptorC.h"
+# include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
 #include "ace/Auto_Ptr.h"
@@ -24,7 +24,7 @@
 #include "ace/Countdown_Time.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Synch_Invocation.inl"
+# include "tao/Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
 

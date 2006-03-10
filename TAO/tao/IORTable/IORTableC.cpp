@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "IORTable.h"
+#include "tao/IORTable/IORTable.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

@@ -1,12 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
-#include "UIOP_Factory.h"
+#include "tao/Strategies/UIOP_Factory.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "UIOP_Acceptor.h"
-#include "UIOP_Connector.h"
+#include "tao/Strategies/UIOP_Acceptor.h"
+#include "tao/Strategies/UIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 

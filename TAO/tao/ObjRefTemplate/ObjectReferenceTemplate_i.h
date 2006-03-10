@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Default_ORTC.h"
+#include "tao/ObjRefTemplate/Default_ORTC.h"
 #include "tao/SystemException.h"
 
 #if defined(_MSC_VER)

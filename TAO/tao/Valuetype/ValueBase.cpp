@@ -5,8 +5,8 @@
 #include "tao/AnyTypeCode/Value_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 
-#include "ValueBase.h"
-#include "ValueFactory.h"
+#include "tao/Valuetype/ValueBase.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 #include "tao/CDR.h"
 #include "tao/ORB.h"
@@ -15,7 +15,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ValueBase.inl"
+# include "tao/Valuetype/ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

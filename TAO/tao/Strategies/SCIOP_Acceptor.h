@@ -32,7 +32,7 @@
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 
 #include "tao/Transport_Acceptor.h"
-#include "SCIOP_Connection_Handler.h"
+#include "tao/Strategies/SCIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
 
@@ -225,7 +225,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "SCIOP_Acceptor.i"
+#include "tao/Strategies/SCIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SCIOP == 1 */

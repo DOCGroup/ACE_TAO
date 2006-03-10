@@ -1397,7 +1397,7 @@ TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ORB_Core.i"
+# include "tao/ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

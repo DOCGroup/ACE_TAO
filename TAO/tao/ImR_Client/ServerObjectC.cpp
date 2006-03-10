@@ -33,7 +33,7 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
-#include "ServerObjectC.h"
+#include "tao/ImR_Client/ServerObjectC.h"
 #include "tao/CDR.h"
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
@@ -44,7 +44,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ServerObjectC.inl"
+#include "tao/ImR_Client/ServerObjectC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

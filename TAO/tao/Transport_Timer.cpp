@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Transport_Timer.h"
-#include "Transport.h"
+#include "tao/Transport_Timer.h"
+#include "tao/Transport.h"
 
 ACE_RCSID (tao, 
            Transport_Timer, 

@@ -5,10 +5,10 @@
 #ifndef TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H
 #define TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H
 
-#include "rtscheduler_export.h"
-#include "RTScheduler.h"
+#include "tao/RTScheduling/rtscheduler_export.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "ace/Atomic_Op.h"
-#include "Current.h"
+#include "tao/RTScheduling/Current.h"
 #include "tao/LocalObject.h"
 
 #include "tao/PI/PI.h"

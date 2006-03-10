@@ -1,5 +1,5 @@
-#include "SCIOP_Connector.h"
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Connector.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 

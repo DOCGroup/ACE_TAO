@@ -1,9 +1,9 @@
 // $Id$
 
-#include "LF_Strategy_Null.h"
+#include "tao/Strategies/LF_Strategy_Null.h"
 
 #if !defined (__ACE_INLINE__)
-# include "LF_Strategy_Null.inl"
+# include "tao/Strategies/LF_Strategy_Null.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, LF_Strategy_Null, "$Id$")

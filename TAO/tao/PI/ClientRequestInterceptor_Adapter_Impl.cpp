@@ -1,12 +1,12 @@
-#include "ClientRequestInterceptor_Adapter_Impl.h"
+#include "tao/PI/ClientRequestInterceptor_Adapter_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #if !defined (__ACE_INLINE__)
-#include "ClientRequestInterceptor_Adapter_Impl.inl"
+#include "tao/PI/ClientRequestInterceptor_Adapter_Impl.inl"
 #endif /* defined INLINE */
 
-#include "ClientRequestInfo.h"
+#include "tao/PI/ClientRequestInfo.h"
 
 #include "tao/Invocation_Base.h"
 #include "tao/ORB_Core.h"

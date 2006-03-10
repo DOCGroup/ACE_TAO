@@ -4,8 +4,8 @@
 // All Rights Reserved
 // ORB:		Principal identifier pseudo-objref
 
-#include "Principal.h"
-#include "CDR.h"
+#include "tao/Principal.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Principal.i"

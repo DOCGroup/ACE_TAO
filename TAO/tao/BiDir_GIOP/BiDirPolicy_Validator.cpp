@@ -1,5 +1,5 @@
-#include "BiDirPolicy_Validator.h"
-#include "BiDir_Policy_i.h"
+#include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
+#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"
 

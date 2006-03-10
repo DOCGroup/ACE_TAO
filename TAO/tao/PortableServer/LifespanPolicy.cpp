@@ -1,5 +1,5 @@
-#include "LifespanPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/LifespanPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            LifespanPolicy,

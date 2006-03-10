@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CSD_FW_Export.h"
+#include "tao/CSD_Framework/CSD_FW_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Regular_POA.h"
-#include "CSD_Strategy_Proxy.h"
+#include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -102,7 +102,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-# include "CSD_POA.inl"
+# include "tao/CSD_Framework/CSD_POA.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

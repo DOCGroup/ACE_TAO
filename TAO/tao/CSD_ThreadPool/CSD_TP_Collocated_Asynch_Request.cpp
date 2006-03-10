@@ -1,13 +1,13 @@
 // $Id$
 
-#include "CSD_TP_Collocated_Asynch_Request.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h"
 
 ACE_RCSID (CSD_ThreadPool,
            TP_Collocated_Asynch_Request,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "CSD_TP_Collocated_Asynch_Request.inl"
+# include "tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

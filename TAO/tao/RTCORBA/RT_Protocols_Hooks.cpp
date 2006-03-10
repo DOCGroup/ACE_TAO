@@ -1,10 +1,10 @@
-#include "RT_Protocols_Hooks.h"
+#include "tao/RTCORBA/RT_Protocols_Hooks.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_Policy_i.h"
-#include "Priority_Mapping_Manager.h"
-#include "RT_Stub.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/RT_Stub.h"
 
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"

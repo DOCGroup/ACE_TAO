@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "RTCORBA.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "tao/CDR.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Special_Basic_Arguments.h"

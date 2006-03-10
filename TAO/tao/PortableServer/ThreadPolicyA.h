@@ -33,8 +33,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "ThreadPolicyC.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/ThreadPolicyC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)

@@ -5,7 +5,7 @@
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
-#include "debug.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao,
           Wait_On_LF_No_Upcall,

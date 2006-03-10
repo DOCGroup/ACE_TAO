@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/VisibilityA.h"
 #include "tao/AnyTypeCode/ValueModifierA.h"
 #include "tao/AnyTypeCode/orb_typesA.h"
-#include "IFR_ExtendedC.h"
+#include "tao/IFR_Client/IFR_ExtendedC.h"
 #include "tao/CDR.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Invocation_Adapter.h"
@@ -60,7 +60,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "IFR_ExtendedC.inl"
+#include "tao/IFR_Client/IFR_ExtendedC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

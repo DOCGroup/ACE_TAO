@@ -14,13 +14,13 @@
 #define TAO_PORTABLESERVER_SERVANTRETENTIONPOLICY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ServantRetentionPolicyC.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

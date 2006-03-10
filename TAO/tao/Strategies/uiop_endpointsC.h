@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"

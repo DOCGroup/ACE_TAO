@@ -29,7 +29,7 @@
 # if TAO_HAS_UIOP == 1
 
 #include "tao/Protocol_Factory.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

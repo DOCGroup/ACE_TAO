@@ -10,10 +10,10 @@
  */
 // =================================================================
 
-#include "Codeset.h"
-#include "Codeset_Manager_Factory.h"
-#include "UTF8_Latin1_Factory.h"
-#include "UTF16_BOM_Factory.h"
+#include "tao/Codeset/Codeset.h"
+#include "tao/Codeset/Codeset_Manager_Factory.h"
+#include "tao/Codeset/UTF8_Latin1_Factory.h"
+#include "tao/Codeset/UTF16_BOM_Factory.h"
 
 #include "ace/Dynamic_Service.h"
 

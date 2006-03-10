@@ -11,8 +11,8 @@
  */
 // =================================================================
 
-#include "IORTable.h"
-#include "Table_Adapter.h"
+#include "tao/IORTable/IORTable.h"
+#include "tao/IORTable/Table_Adapter.h"
 
 ACE_RCSID (IORTable, IORTable, "$Id$")
 

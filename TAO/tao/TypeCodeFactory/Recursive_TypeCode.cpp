@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Recursive_TypeCode.h"
+#include "tao/TypeCodeFactory/Recursive_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "Recursive_TypeCode.inl"
+# include "tao/TypeCodeFactory/Recursive_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include "tao/SystemException.h"

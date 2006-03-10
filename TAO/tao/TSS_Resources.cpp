@@ -1,8 +1,8 @@
 // $Id$
 
-#include "TSS_Resources.h"
-#include "GUIResource_Factory.h"
-#include "TAO_Singleton.h"
+#include "tao/TSS_Resources.h"
+#include "tao/GUIResource_Factory.h"
+#include "tao/TAO_Singleton.h"
 
 ACE_RCSID (tao,
            TSS_Resources,

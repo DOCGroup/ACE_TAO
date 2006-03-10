@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IORTable.h"
+#include "tao/IORTable/IORTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

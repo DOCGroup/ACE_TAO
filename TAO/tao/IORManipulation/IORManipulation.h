@@ -23,13 +23,13 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/LocalObject.h"
-#include "IORManip_Loader.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IORC.h"
+#include "tao/IORManipulation/IORC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

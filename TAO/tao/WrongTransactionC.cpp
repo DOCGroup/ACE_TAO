@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "WrongTransactionC.h"
+#include "tao/WrongTransactionC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"

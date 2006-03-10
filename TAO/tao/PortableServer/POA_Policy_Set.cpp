@@ -1,14 +1,14 @@
 // @(#) $Id$
 
-#include "POA_Policy_Set.h"
-#include "POA_Cached_Policies.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/POA_Policy_Set.h"
+#include "tao/PortableServer/POA_Cached_Policies.h"
+#include "tao/PortableServer/PortableServer.h"
 
 #include "tao/Policy_Validator.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "POA_Policy_Set.i"
+# include "tao/PortableServer/POA_Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,

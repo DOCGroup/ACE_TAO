@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "InvalidSlotA.h"
+#include "tao/PI/InvalidSlotA.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"

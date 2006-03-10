@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "IORManip_Loader.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "PICurrentC.h"
+#include "tao/PI/PICurrentC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

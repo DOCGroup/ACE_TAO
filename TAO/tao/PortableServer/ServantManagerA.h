@@ -33,8 +33,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "ServantManagerC.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/ServantManagerC.h"
 
 
 // TAO_IDL - Generated from

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Operation_Table.h"
+#include "tao/PortableServer/Operation_Table.h"
 #include "tao/ORB.h"
 
 ACE_RCSID(PortableServer,

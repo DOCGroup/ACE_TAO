@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #include "tao/Valuetype_Adapter.h"
 

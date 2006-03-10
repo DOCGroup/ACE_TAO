@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CSD_FW_Export.h"
+#include "tao/CSD_Framework/CSD_FW_Export.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Upcall.h"
@@ -28,7 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CSD_FrameworkC.h"
+#include "tao/CSD_Framework/CSD_FrameworkC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -166,7 +166,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "CSD_Strategy_Base.inl"
+# include "tao/CSD_Framework/CSD_Strategy_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

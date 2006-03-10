@@ -14,7 +14,7 @@
 #define TAO_LFU_PURGING_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Connection_Purging_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

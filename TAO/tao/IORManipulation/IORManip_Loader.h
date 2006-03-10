@@ -19,7 +19,7 @@
 #define TAO_IORMANIP_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "ior_manip_export.h"
+#include "tao/IORManipulation/ior_manip_export.h"
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
 
@@ -55,7 +55,7 @@ ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
 ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
 
 #define TAO_IORMANIP_SAFE_INCLUDE
-#include "IORC.h"
+#include "tao/IORManipulation/IORC.h"
 #undef TAO_IORMANIP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

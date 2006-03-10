@@ -1,6 +1,6 @@
-#include "Asynch_Queued_Message.h"
-#include "debug.h"
-#include "ORB_Core.h"
+#include "tao/Asynch_Queued_Message.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"

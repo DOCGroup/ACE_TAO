@@ -1,9 +1,9 @@
 // $Id$
 
 
-#include "Asynch_Timeout_Handler.h"
+#include "tao/Messaging/Asynch_Timeout_Handler.h"
 
-#include "Asynch_Reply_Dispatcher.h"
+#include "tao/Messaging/Asynch_Reply_Dispatcher.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "ace/Reactor.h"
 

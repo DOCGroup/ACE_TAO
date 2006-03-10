@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "LF_Invocation_Event.h"
+#include "tao/LF_Invocation_Event.h"
 
 ACE_RCSID(tao,
           LF_Invocation_Event,

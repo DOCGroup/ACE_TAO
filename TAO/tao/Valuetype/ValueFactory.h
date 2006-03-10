@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Value_VarOut_T.h"
+#include "tao/Valuetype/Value_VarOut_T.h"
 
 #include "tao/Environment.h"
 #include "tao/Basic_Types.h"

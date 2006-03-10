@@ -1,8 +1,8 @@
-#include "PolicyList_Destroyer.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
-# include "PolicyList_Destroyer.inl"
+# include "tao/Utils/PolicyList_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Utils,

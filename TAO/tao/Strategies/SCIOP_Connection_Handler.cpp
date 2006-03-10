@@ -1,4 +1,4 @@
-#include "SCIOP_Connection_Handler.h"
+#include "tao/Strategies/SCIOP_Connection_Handler.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -19,8 +19,8 @@
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "SCIOP_Transport.h"
-#include "SCIOP_Endpoint.h"
+#include "tao/Strategies/SCIOP_Transport.h"
+#include "tao/Strategies/SCIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"

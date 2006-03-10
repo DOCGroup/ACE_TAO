@@ -19,10 +19,10 @@
 //
 // ============================================================================
 
-#include "Marshal.h"
-#include "TypeCode.h"
-#include "Any_Unknown_IDL_Type.h"
-#include "Any.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "tao/debug.h"
 #include "tao/Valuetype_Adapter.h"

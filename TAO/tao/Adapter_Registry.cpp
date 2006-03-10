@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Object.h"
-#include "Stub.h"
-#include "Adapter_Registry.h"
-#include "Adapter.h"
-#include "SystemException.h"
-#include "debug.h"
+#include "tao/Object.h"
+#include "tao/Stub.h"
+#include "tao/Adapter_Registry.h"
+#include "tao/Adapter.h"
+#include "tao/SystemException.h"
+#include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"

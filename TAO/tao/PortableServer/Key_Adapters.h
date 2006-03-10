@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PS_ForwardC.h"
+#include "tao/PortableServer/PS_ForwardC.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Active_Map_Manager_Key;

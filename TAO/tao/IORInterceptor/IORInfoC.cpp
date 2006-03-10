@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "IORInfoC.h"
+#include "tao/IORInterceptor/IORInfoC.h"
 #include "tao/CDR.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"

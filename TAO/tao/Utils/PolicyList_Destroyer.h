@@ -11,7 +11,7 @@
 #ifndef TAO_UTILS_POLICYLIST_DESTROYER_H
 #define TAO_UTILS_POLICYLIST_DESTROYER_H
 #include /**/ "ace/pre.h"
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 
 #include "tao/PolicyC.h"
 
@@ -47,7 +47,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "PolicyList_Destroyer.inl"
+# include "tao/Utils/PolicyList_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

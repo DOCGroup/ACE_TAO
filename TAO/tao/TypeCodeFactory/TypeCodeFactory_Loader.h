@@ -14,7 +14,7 @@
 #define TAO_TYPECODEFACTORY_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "typecodefactory_export.h"
+#include "tao/TypeCodeFactory/typecodefactory_export.h"
 #include "tao/Object_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -58,7 +58,7 @@ ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Loader)
 ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Loader)
 
 #define TAO_TYPECODEFACTORY_SAFE_INCLUDE
-#include "TypeCodeFactoryC.h"
+#include "tao/TypeCodeFactory/TypeCodeFactoryC.h"
 #undef TAO_TYPECODEFACTORY_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

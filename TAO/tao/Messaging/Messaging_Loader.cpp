@@ -1,8 +1,8 @@
 
 // $Id$
 
-#include "Messaging_Loader.h"
-#include "Messaging_ORBInitializer.h"
+#include "tao/Messaging/Messaging_Loader.h"
+#include "tao/Messaging/Messaging_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

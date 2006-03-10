@@ -1,7 +1,7 @@
 // $Id$
 
-#include "RTScheduler.h"
-#include "RTScheduler_Loader.h"
+#include "tao/RTScheduling/RTScheduler.h"
+#include "tao/RTScheduling/RTScheduler_Loader.h"
 
 ACE_RCSID (RTScheduler, RTScheduler, "$Id$")
 

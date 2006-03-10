@@ -3,11 +3,11 @@
 
 // Implementation of Named Value List and NamedValue classes
 
-#include "NVList.h"
-#include "BoundsC.h"
-#include "TypeCode.h"
-#include "Marshal.h"
-#include "Any_Impl.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/BoundsC.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
 
 #include "tao/SystemException.h"
 #include "tao/CORBA_String.h"
@@ -18,7 +18,7 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-# include "NVList.inl"
+# include "tao/AnyTypeCode/NVList.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

@@ -17,14 +17,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #define TAO_MESSAGING_SAFE_INCLUDE
-#include "MessagingC.h"
+#include "tao/Messaging/MessagingC.h"
 #undef TAO_MESSAGING_SAFE_INCLUDE
 
-#include "MessagingA.h"
-#include "TAO_ExtC.h"
+#include "tao/Messaging/MessagingA.h"
+#include "tao/Messaging/TAO_ExtC.h"
 #include "tao/TAOC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -54,7 +54,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-#include "domain_export.h"
+#include "tao/Domain/domain_export.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -485,10 +485,10 @@ namespace POA_CORBA
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "DomainS_T.h"
+#include "tao/Domain/DomainS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "DomainS.inl"
+#include "tao/Domain/DomainS.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

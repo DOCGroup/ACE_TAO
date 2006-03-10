@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "RTPortableServerC.h"
+#include "tao/RTPortableServer/RTPortableServerC.h"
 #include "tao/PortableServer/PortableServer_includeS.h"
 #include "tao/RTCORBA/RTCORBA_includeS.h"
 

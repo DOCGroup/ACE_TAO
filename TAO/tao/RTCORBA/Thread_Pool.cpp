@@ -1,4 +1,4 @@
-#include "Thread_Pool.h"
+#include "tao/RTCORBA/Thread_Pool.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -7,7 +7,7 @@ ACE_RCSID (RTCORBA,
            "$Id$")
 
 #if ! defined (__ACE_INLINE__)
-#include "Thread_Pool.inl"
+#include "tao/RTCORBA/Thread_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Exception.h"

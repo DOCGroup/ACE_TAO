@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ClientRequestInfo.h"
+#include "tao/PI/ClientRequestInfo.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -8,8 +8,8 @@ ACE_RCSID (PI,
            ClientRequestInfo,
            "$Id$")
 
-#include "PICurrent.h"
-#include "RequestInfo_Util.h"
+#include "tao/PI/PICurrent.h"
+#include "tao/PI/RequestInfo_Util.h"
 
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/ExceptionA.h"

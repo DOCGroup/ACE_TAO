@@ -2,7 +2,7 @@
 
 // Implementation of the Dynamic Server Skeleton Interface.
 
-#include "Server_Request.h"
+#include "tao/DynamicInterface/Server_Request.h"
 
 ACE_RCSID (DynamicInterface,
            Server_Request,
@@ -16,7 +16,7 @@ ACE_RCSID (DynamicInterface,
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Server_Request.inl"
+# include "tao/DynamicInterface/Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

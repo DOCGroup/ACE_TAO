@@ -3,9 +3,9 @@
 #include "tao/Muxed_TMS.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
-#include "Transport.h"
-#include "ORB_Core.h"
-#include "Client_Strategy_Factory.h"
+#include "tao/Transport.h"
+#include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
 
 ACE_RCSID (tao,
            Muxed_TMS,

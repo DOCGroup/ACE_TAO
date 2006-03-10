@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CSD_TP_Export.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Export.h"
 #include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"

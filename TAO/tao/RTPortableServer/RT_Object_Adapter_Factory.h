@@ -14,7 +14,7 @@
 #define TAO_RT_OBJECT_ADAPTER_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "rtportableserver_export.h"
+#include "tao/RTPortableServer/rtportableserver_export.h"
 
 #include "tao/Adapter_Factory.h"
 #include "tao/orbconf.h"

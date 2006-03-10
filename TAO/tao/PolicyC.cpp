@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "PolicyC.h"
+#include "tao/PolicyC.h"
 #include "tao/CDR.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
@@ -44,7 +44,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "PolicyC.inl"
+#include "tao/PolicyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

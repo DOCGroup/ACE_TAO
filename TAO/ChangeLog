@@ -1,3 +1,13 @@
+Fri Mar 10 07:09:22 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/...*.cpp:
+        * tao/...*.h:
+        * tao/...*.i:
+        * tao/...*.inl:
+        
+          Add "tao/..." prefix to #includes of *.h, *.i, *.inl, and
+          template *.cpp files found in ${TAO_ROOT}/tao.
+
 Thu Mar  9 16:04:22 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:

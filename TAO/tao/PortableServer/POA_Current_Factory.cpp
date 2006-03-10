@@ -1,7 +1,7 @@
 // $Id$
 
-#include "POA_Current_Factory.h"
-#include "POA_Current.h"
+#include "tao/PortableServer/POA_Current_Factory.h"
+#include "tao/PortableServer/POA_Current.h"
 #include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

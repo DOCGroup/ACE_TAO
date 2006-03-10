@@ -26,7 +26,7 @@
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "ace/CORBA_macros.h"
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

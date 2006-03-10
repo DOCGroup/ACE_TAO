@@ -7,7 +7,7 @@
 #include "tao/PI/PI_PolicyFactory.h"
 #include "tao/PI/ProcessingModePolicyC.h"
 #include "tao/ORB_Core.h"
-#include "ORBInitInfoC.h"
+#include "tao/PI/ORBInitInfoC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

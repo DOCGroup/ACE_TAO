@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "LifespanPolicyC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

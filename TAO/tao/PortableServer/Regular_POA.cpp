@@ -1,4 +1,4 @@
-#include "Regular_POA.h"
+#include "tao/PortableServer/Regular_POA.h"
 
 ACE_RCSID (PortableServer,
            POA,
@@ -6,7 +6,7 @@ ACE_RCSID (PortableServer,
 
 //
 #if !defined (__ACE_INLINE__)
-# include "Regular_POA.inl"
+# include "tao/PortableServer/Regular_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

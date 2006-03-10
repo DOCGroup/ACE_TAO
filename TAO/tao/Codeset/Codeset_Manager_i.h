@@ -25,8 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Set.h"
-#include "codeset_export.h"
-#include "Codeset_Descriptor.h"
+#include "tao/Codeset/codeset_export.h"
+#include "tao/Codeset/Codeset_Descriptor.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

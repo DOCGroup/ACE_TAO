@@ -33,7 +33,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
-#include "InvalidSlotA.h"
+#include "tao/PI/InvalidSlotA.h"
 #include "tao/CDR.h"
 
 

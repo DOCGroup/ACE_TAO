@@ -1,7 +1,7 @@
 //$Id$
-#include "DII_Invocation_Adapter.h"
-#include "DII_Invocation.h"
-#include "DII_Reply_Dispatcher.h"
+#include "tao/DynamicInterface/DII_Invocation_Adapter.h"
+#include "tao/DynamicInterface/DII_Invocation.h"
+#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
@@ -9,7 +9,7 @@
 #include "tao/Transport.h"
 #include "tao/Transport.h"
 #include "tao/Pluggable_Messaging.h"
-#include "Request.h"
+#include "tao/DynamicInterface/Request.h"
 
 #include "ace/os_include/os_errno.h"
 

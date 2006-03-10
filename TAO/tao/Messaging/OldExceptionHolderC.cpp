@@ -29,12 +29,12 @@
 // be\be_codegen.cpp:277
 
 
-#include "OldExceptionHolderC.h"
+#include "tao/Messaging/OldExceptionHolderC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-#include "OldExceptionHolderC.inl"
+#include "tao/Messaging/OldExceptionHolderC.inl"
 #endif /* !defined INLINE */
 
 #if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)

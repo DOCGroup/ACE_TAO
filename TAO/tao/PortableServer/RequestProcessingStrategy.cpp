@@ -8,7 +8,7 @@
  */
 //=============================================================================
 
-#include "RequestProcessingStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingStrategy,

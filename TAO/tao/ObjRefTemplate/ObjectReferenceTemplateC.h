@@ -43,7 +43,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ort_export.h"
+#include "tao/ObjRefTemplate/ort_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/ORB.h"
@@ -435,7 +435,7 @@ TAO_ORT_Export CORBA::Boolean operator>> (
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ObjectReferenceTemplateC.inl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)
