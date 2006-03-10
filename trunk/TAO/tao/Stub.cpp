@@ -315,7 +315,7 @@ TAO_Stub::hash (CORBA::ULong max
 CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
-  if (CORBA::is_nil (other_obj) == true)
+  if (CORBA::is_nil (other_obj))
     return false;
 
   TAO_Profile *other_profile = other_obj->_stubobj ()->profile_in_use_;
