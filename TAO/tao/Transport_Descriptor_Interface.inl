@@ -9,7 +9,7 @@ TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (
   TAO_Endpoint *endpoint,
   CORBA::Boolean flag)
   : endpoint_ (endpoint),
-    bidir_flag_ (0),
+    bidir_flag_ (false),
     endpoint_from_heap_ (flag)
 {
 }
@@ -17,8 +17,8 @@ TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (
 ACE_INLINE
 TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (void)
   : endpoint_ (0),
-    bidir_flag_ (0),
-    endpoint_from_heap_ (0)
+    bidir_flag_ (false),
+    endpoint_from_heap_ (false)
 {
 }
 
