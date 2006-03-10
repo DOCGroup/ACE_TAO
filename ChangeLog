@@ -1,3 +1,8 @@
+Fri Mar 10 14:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Don't run Multicast_Test_IPV6 in ACE_FOR_TAO builds
+
 Fri Mar 10 08:58:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/pkg.m4:
