@@ -109,7 +109,7 @@ namespace TAO
                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        if (_tao_equiv == 0)
+        if (!_tao_equiv)
           {
             return false;
           }
