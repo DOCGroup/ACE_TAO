@@ -1,10 +1,18 @@
+Fri Mar 10 14:00:00 UTC 2006  Simon Massey <sma@prismtech.com>
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+          Remove redundant ACE_PRINT_EXCEPTION when rethrowing
+          CANNOT_PROCEED exceptions, to clean up the scoreboard and
+          stop confusing end users who think an unhandled exception has
+          occured when it hasn't.
+
 Fri Mar 10 11:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/Test.idl:
         * tests/Any/Recursive/client.cpp:
           Also added a test for a recursive union with no default
 
-Fri Mar 10 10:44:29 GMT 2006  Don Sharp <Donald.Sharp@prismtech.com>
+Fri Mar 10 10:44:29 UTC 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
         * orbsvcs/tests/Bug_2377_Regression/Hello.cpp:
 
