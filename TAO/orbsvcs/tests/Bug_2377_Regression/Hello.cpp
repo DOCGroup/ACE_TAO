@@ -4,6 +4,7 @@
 
 #include "HelloS.h"
 
+#include "ace/SString.h"
 #include "ace/Log_Msg.h"
 #include "ace/Task.h"
 #include "ace/Mutex.h"
@@ -257,8 +258,7 @@ static Client_Strategy_Factory "-ORBProfileLock thread -ORBClientConnectionHandl
         {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("   - create MIOP reference\n")));
         }
-        std::string multicast_addr =
-            "corbaloc:miop:1.0@1.0-cdmwftdomain-1/225.1.1.8:5555";
+        ACE_CString multicast_addr("corbaloc:miop:1.0@1.0-cdmwftdomain-1/225.1.1.8:5555");
         CORBA::Object_var miop_ref =
             orb->string_to_object(multicast_addr.c_str());
 
@@ -307,7 +307,7 @@ static Client_Strategy_Factory "-ORBProfileLock thread -ORBClientConnectionHandl
         logger->report_lost_messages(ACE_TEXT ("LOST ==> say_hello() %d\n"));
         exit_code = 1;
     }
-    else
+    else if (exit_code == 0)
     {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<<< %s - no lost messages >>>\n"), argv[0]));
     }
