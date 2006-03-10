@@ -1,24 +1,24 @@
 // $Id$
 
-#include "TAO_Server_Request.h"
-#include "ORB_Core.h"
-#include "Timeprobe.h"
-#include "debug.h"
-#include "Pluggable_Messaging.h"
-#include "GIOP_Utils.h"
-#include "Stub.h"
-#include "operation_details.h"
-#include "Transport.h"
-#include "CDR.h"
-#include "SystemException.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/ORB_Core.h"
+#include "tao/Timeprobe.h"
+#include "tao/debug.h"
+#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Utils.h"
+#include "tao/Stub.h"
+#include "tao/operation_details.h"
+#include "tao/Transport.h"
+#include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "PortableInterceptorC.h"
-#include "ServerRequestInterceptor_Adapter.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/ServerRequestInterceptor_Adapter.h"
 #endif
 
 #if !defined (__ACE_INLINE__)
-# include "TAO_Server_Request.i"
+# include "tao/TAO_Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Request_Dispatcher.h"
-#include "TAO_Server_Request.h"
-#include "ORB_Core.h"
+#include "tao/Request_Dispatcher.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (tao, 
            Request_Dispatcher, 

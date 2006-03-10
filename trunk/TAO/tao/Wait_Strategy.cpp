@@ -7,7 +7,7 @@ ACE_RCSID (tao,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "Wait_Strategy.inl"
+# include "tao/Wait_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -31,7 +31,7 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
-#include "UIOP_Connection_Handler.h"
+#include "tao/Strategies/UIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 

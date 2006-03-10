@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/Messaging/OldExceptionHolderC.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
 

@@ -28,7 +28,7 @@
 #include "ace/Acceptor.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "SHMIOP_Transport.h"
+#include "tao/Strategies/SHMIOP_Transport.h"
 
 // ****************************************************************
 

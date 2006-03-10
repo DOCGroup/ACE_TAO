@@ -44,8 +44,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "rtcorba_export.h"
-#include "rtcorba_typedefs.h"
+#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_typedefs.h"
 #include "tao/ORB.h"
 #include "tao/TimeBaseC.h"
 #include "tao/SystemException.h"

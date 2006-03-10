@@ -1,4 +1,4 @@
-#include "IORInfo.h"
+#include "tao/IORInterceptor/IORInfo.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/PolicyC.h"
@@ -11,7 +11,7 @@ ACE_RCSID (IORInterceptor,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "IORInfo.inl"
+# include "tao/IORInterceptor/IORInfo.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

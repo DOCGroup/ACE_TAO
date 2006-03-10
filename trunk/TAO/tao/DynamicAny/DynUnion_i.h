@@ -17,13 +17,13 @@
 #define TAO_DYNUNION_I_H
 #include /**/ "ace/pre.h"
 
-#include "DynamicAny.h"
+#include "tao/DynamicAny/DynamicAny.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DynCommon.h"
+#include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
 
 #if defined (_MSC_VER)

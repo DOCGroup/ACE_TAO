@@ -423,7 +423,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Profile.i"
+# include "tao/Profile.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

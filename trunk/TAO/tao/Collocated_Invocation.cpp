@@ -1,13 +1,13 @@
-#include "Collocated_Invocation.h"
-#include "Collocation_Proxy_Broker.h"
-#include "ORB_Core.h"
-#include "Request_Dispatcher.h"
-#include "TAO_Server_Request.h"
-#include "Stub.h"
-#include "operation_details.h"
+#include "tao/Collocated_Invocation.h"
+#include "tao/Collocation_Proxy_Broker.h"
+#include "tao/ORB_Core.h"
+#include "tao/Request_Dispatcher.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/Stub.h"
+#include "tao/operation_details.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PortableInterceptorC.h"
+# include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
 ACE_RCSID (tao,

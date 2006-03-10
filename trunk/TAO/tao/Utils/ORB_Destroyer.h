@@ -12,7 +12,7 @@
 #ifndef TAO_UTILS_ORB_DESTROYER_H
 #define TAO_UTILS_ORB_DESTROYER_H
 #include /**/ "ace/pre.h"
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

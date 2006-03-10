@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Messaging_SyncScopeA.h"

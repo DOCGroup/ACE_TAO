@@ -14,7 +14,7 @@
 #define TAO_NULL_PURGING_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

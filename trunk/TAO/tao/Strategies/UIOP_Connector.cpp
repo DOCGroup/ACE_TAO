@@ -1,8 +1,8 @@
-#include "UIOP_Connector.h"
+#include "tao/Strategies/UIOP_Connector.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"

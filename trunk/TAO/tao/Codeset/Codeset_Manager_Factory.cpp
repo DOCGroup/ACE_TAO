@@ -11,9 +11,9 @@
  */
 // =================================================================
 
-#include "Codeset_Manager_Factory.h"
+#include "tao/Codeset/Codeset_Manager_Factory.h"
 #include "ace/Service_Config.h"
-#include "Codeset_Manager_i.h"
+#include "tao/Codeset/Codeset_Manager_i.h"
 
 ACE_RCSID (Codeset, Codeset_Manager_Factory, "$Id$")
 

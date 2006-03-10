@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ServantLocatorC.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:288
 
 
-#include "ULongSeqC.h"
+#include "tao/ULongSeqC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from

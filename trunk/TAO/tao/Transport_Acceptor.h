@@ -158,7 +158,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Transport_Acceptor.inl"
+# include "tao/Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

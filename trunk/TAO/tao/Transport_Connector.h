@@ -23,8 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
-#include "Basic_Types.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -205,7 +205,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Transport_Connector.inl"
+# include "tao/Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

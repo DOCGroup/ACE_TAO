@@ -1,9 +1,9 @@
-#include "SHMIOP_Factory.h"
+#include "tao/Strategies/SHMIOP_Factory.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Acceptor.h"
-#include "SHMIOP_Connector.h"
+#include "tao/Strategies/SHMIOP_Acceptor.h"
+#include "tao/Strategies/SHMIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 

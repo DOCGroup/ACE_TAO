@@ -14,16 +14,16 @@
 #define TAO_SERVANTRETENTIONSTRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "Policy_Strategy.h"
+#include "tao/PortableServer/Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Location.h"
-#include "Servant_Upcall.h"
-#include "ServantRetentionPolicyC.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
+#include "tao/PortableServer/PortableServer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

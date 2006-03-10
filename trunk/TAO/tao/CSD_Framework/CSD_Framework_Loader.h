@@ -16,7 +16,7 @@
 #define TAO_CSD_FRAMEWORK_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "CSD_FW_Export.h"
+#include "tao/CSD_Framework/CSD_FW_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

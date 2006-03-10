@@ -29,7 +29,7 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
-#include "ServantManagerA.h"
+#include "tao/PortableServer/ServantManagerA.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"

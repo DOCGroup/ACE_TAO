@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Exception.h"
-#include "SystemException.h"
-#include "Environment.h"
-#include "ORB_Constants.h"
-#include "CORBA_String.h"
-#include "CDR.h"
-#include "debug.h"
+#include "tao/Exception.h"
+#include "tao/SystemException.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Constants.h"
+#include "tao/CORBA_String.h"
+#include "tao/CDR.h"
+#include "tao/debug.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"

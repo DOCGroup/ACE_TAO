@@ -1,11 +1,11 @@
-#include "Dynamic_Implementation.h"
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
 
 ACE_RCSID (DynamicInterface,
            Dynamic_Implementation,
            "$Id$")
 
 
-#include "Server_Request.h"
+#include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "tao/IFR_Client_Adapter.h"

@@ -1,17 +1,17 @@
 // $Id$
 
-#include "POA_Cached_Policies.h"
-#include "POA_Policy_Set.h"
-#include "IdAssignmentPolicyC.h"
-#include "IdUniquenessPolicyC.h"
-#include "ImplicitActivationPolicyC.h"
-#include "LifespanPolicyC.h"
-#include "RequestProcessingPolicyC.h"
-#include "ServantRetentionPolicyC.h"
-#include "ThreadPolicyC.h"
+#include "tao/PortableServer/POA_Cached_Policies.h"
+#include "tao/PortableServer/POA_Policy_Set.h"
+#include "tao/PortableServer/IdAssignmentPolicyC.h"
+#include "tao/PortableServer/IdUniquenessPolicyC.h"
+#include "tao/PortableServer/ImplicitActivationPolicyC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
+#include "tao/PortableServer/RequestProcessingPolicyC.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
+#include "tao/PortableServer/ThreadPolicyC.h"
 
 #if !defined (__ACE_INLINE__)
-# include "POA_Cached_Policies.i"
+# include "tao/PortableServer/POA_Cached_Policies.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(PortableServer,

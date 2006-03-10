@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#include "Messaging.h"
-#include "Messaging_Loader.h"
+#include "tao/Messaging/Messaging.h"
+#include "tao/Messaging/Messaging_Loader.h"
 
 #include "tao/Exception_Data.h"
 #include "tao/debug.h"

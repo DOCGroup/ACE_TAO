@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "iortable_export.h"
+#include "tao/IORTable/iortable_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"

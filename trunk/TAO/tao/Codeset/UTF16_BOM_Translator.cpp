@@ -12,7 +12,7 @@
 //
 // ============================================================================
 
-#include "UTF16_BOM_Translator.h"
+#include "tao/Codeset/UTF16_BOM_Translator.h"
 #include "ace/OS_Memory.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"

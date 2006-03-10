@@ -15,10 +15,10 @@
 #define TAO_DYNAMICANY_H
 #include /**/ "ace/pre.h"
 
-#include "dynamicany_export.h"
+#include "tao/DynamicAny/dynamicany_export.h"
 
 #define TAO_DYNAMICANY_SAFE_INCLUDE
-#include "DynamicAnyC.h"
+#include "tao/DynamicAny/DynamicAnyC.h"
 #undef TAO_DYNAMICANY_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

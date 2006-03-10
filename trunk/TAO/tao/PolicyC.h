@@ -667,7 +667,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Policy_ptr &);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "PolicyC.inl"
+#include "tao/PolicyC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

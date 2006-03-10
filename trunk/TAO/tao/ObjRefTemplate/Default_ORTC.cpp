@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "Default_ORTC.h"
+#include "tao/ObjRefTemplate/Default_ORTC.h"
 #include "tao/CDR.h"
 #include "tao/Valuetype/ValueFactory.h"
 
@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "Default_ORTC.inl"
+#include "tao/ObjRefTemplate/Default_ORTC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

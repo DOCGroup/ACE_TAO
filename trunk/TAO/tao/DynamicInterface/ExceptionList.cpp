@@ -1,4 +1,4 @@
-#include "ExceptionList.h"
+#include "tao/DynamicInterface/ExceptionList.h"
 
 ACE_RCSID (DynamicInterface,
            ExceptionList,
@@ -9,7 +9,7 @@ ACE_RCSID (DynamicInterface,
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ExceptionList.inl"
+# include "tao/DynamicInterface/ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

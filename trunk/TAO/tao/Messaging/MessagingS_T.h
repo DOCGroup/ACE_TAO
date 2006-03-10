@@ -98,11 +98,11 @@ namespace POA_Messaging
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "MessagingS_T.inl"
+#include "tao/Messaging/MessagingS_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "MessagingS_T.cpp"
+#include "tao/Messaging/MessagingS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

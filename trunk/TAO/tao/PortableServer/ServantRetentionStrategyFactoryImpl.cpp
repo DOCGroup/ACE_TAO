@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ServantRetentionStrategyFactoryImpl.h"
-#include "ServantRetentionStrategy.h"
+#include "tao/PortableServer/ServantRetentionStrategyFactoryImpl.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

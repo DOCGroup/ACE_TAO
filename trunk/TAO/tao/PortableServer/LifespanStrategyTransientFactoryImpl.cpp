@@ -1,8 +1,8 @@
 // $Id$
 
-#include "LifespanStrategyTransientFactoryImpl.h"
+#include "tao/PortableServer/LifespanStrategyTransientFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
-#include "LifespanStrategyTransient.h"
+#include "tao/PortableServer/LifespanStrategyTransient.h"
 
 ACE_RCSID (PortableServer,
            LifespanStrategyFactoryImpl,

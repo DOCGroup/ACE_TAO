@@ -3,7 +3,7 @@
 #ifndef TAO_UTILS_RIR_NARROW_CPP
 #define TAO_UTILS_RIR_NARROW_CPP
 
-#include "RIR_Narrow.h"
+#include "tao/Utils/RIR_Narrow.h"
 #include "tao/SystemException.h"
 #if defined (ACE_HAS_EXCEPTIONS)
   #include <stdexcept>

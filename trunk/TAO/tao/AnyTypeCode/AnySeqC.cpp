@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "AnySeqC.h"
+#include "tao/AnyTypeCode/AnySeqC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

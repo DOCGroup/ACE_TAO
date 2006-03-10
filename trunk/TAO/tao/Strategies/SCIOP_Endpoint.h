@@ -29,7 +29,7 @@
 
 #if TAO_HAS_SCIOP == 1
 #include "tao/Endpoint.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
 #include "tao/IIOP_EndpointsC.h"
@@ -165,7 +165,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "SCIOP_Endpoint.i"
+# include "tao/Strategies/SCIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SCIOP == 1 */

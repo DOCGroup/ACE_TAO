@@ -1,5 +1,5 @@
-#include "ThreadPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/ThreadPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            ThreadPolicy,

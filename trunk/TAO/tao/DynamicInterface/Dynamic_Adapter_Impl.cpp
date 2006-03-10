@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Dynamic_Adapter_Impl.h"
+#include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
 
 ACE_RCSID(DynamicInterface, TAO_Dynamic_Adapter_Impl, "$Id$")
 
-#include "Request.h"
-#include "Server_Request.h"
+#include "tao/DynamicInterface/Request.h"
+#include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Exception.h"
 

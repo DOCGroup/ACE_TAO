@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Value_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
-#include "ObjectReferenceTemplate.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"

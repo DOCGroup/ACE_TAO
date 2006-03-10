@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ServerInterceptorAdapter.h"
+#include "tao/PI_Server/ServerInterceptorAdapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -8,8 +8,8 @@ ACE_RCSID (PortableServer,
            ServerInterceptorAdapter,
            "$Id$")
 
-#include "ServerRequestInfo.h"
-#include "PICurrent_Guard.h"
+#include "tao/PI_Server/ServerRequestInfo.h"
+#include "tao/PI_Server/PICurrent_Guard.h"
 
 #include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/TAO_Server_Request.h"

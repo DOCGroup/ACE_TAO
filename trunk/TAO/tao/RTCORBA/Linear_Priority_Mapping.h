@@ -25,8 +25,8 @@
 
 #include "tao/orbconf.h"
 
-#include "rtcorba_export.h"
-#include "Priority_Mapping.h"
+#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/RTCORBA/Priority_Mapping.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

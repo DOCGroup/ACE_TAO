@@ -1,7 +1,7 @@
 // $Id$
 
-#include "IORInterceptor_Adapter_Impl.h"
-#include "IORInfo.h"
+#include "tao/IORInterceptor/IORInterceptor_Adapter_Impl.h"
+#include "tao/IORInterceptor/IORInfo.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PI/PI.h"

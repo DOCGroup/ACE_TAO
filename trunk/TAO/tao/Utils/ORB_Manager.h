@@ -14,7 +14,7 @@
 #define TAO_ORB_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

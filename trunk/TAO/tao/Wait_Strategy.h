@@ -100,7 +100,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-# include "Wait_Strategy.inl"
+# include "tao/Wait_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

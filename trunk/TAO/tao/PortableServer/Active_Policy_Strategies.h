@@ -99,7 +99,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Active_Policy_Strategies.inl"
+# include "tao/PortableServer/Active_Policy_Strategies.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

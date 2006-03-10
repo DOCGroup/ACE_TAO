@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Flushing_Strategy.h"
+#include "tao/Flushing_Strategy.h"
 
 ACE_RCSID (tao, 
            Flushing_Strategy, 

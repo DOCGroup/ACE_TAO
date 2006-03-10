@@ -33,7 +33,7 @@
 #define _TAO_IDL_ORIG_DOMAINS_CPP_
 
 
-#include "DomainS.h"
+#include "tao/Domain/DomainS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
@@ -69,7 +69,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "DomainS.inl"
+#include "tao/Domain/DomainS.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

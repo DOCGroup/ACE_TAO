@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ort_export.h"
+#include "tao/ObjRefTemplate/ort_export.h"
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
 #include "tao/Versioned_Namespace.h"
 

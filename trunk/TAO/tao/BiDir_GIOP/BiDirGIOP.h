@@ -17,7 +17,7 @@
 #define TAO_BIDIR_GIOP_H
 #include /**/ "ace/pre.h"
 
-#include "bidirgiop_export.h"
+#include "tao/BiDir_GIOP/bidirgiop_export.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -74,7 +74,7 @@ ACE_FACTORY_DECLARE (TAO_BiDirGIOP, TAO_BiDirGIOP_Loader)
 
 
 #define TAO_BIDIRGIOP_SAFE_INCLUDE
-#include "BiDirPolicyC.h"
+#include "tao/BiDir_GIOP/BiDirPolicyC.h"
 #undef TAO_BIDIRGIOP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

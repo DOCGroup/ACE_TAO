@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Queued_Message.h"
+#include "tao/Queued_Message.h"
 
 ACE_RCSID (tao,
            Queued_Message,

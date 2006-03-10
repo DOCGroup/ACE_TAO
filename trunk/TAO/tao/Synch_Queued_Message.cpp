@@ -1,8 +1,8 @@
 // "$Id$"
 
-#include "Synch_Queued_Message.h"
-#include "debug.h"
-#include "ORB_Core.h"
+#include "tao/Synch_Queued_Message.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Malloc_T.h"
 #include "ace/Message_Block.h"

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "RTCORBA.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 #if TAO_HAS_CORBA_MESSAGING == 1
 
-#include "RT_ORB_Loader.h"
+#include "tao/RTCORBA/RT_ORB_Loader.h"
 
 ACE_RCSID (RTCORBA, RTCORBA, "$Id$")
 

@@ -3,7 +3,7 @@
 #ifndef TAO_INTRUSIVE_REF_COUNT_HANDLE_T_CPP
 #define TAO_INTRUSIVE_REF_COUNT_HANDLE_T_CPP
 
-#include "Intrusive_Ref_Count_Handle_T.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Intrusive_Ref_Count_Handle_T.inl"

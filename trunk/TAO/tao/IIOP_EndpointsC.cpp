@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "IIOP_EndpointsC.h"
+#include "tao/IIOP_EndpointsC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/CDR.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
@@ -310,7 +310,7 @@ TAO_Valuetype_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WStringVa
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "StringValueC.inl"
+#include "tao/Valuetype/StringValueC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Transport_Queueing_Strategies.h"
-#include "Buffering_Constraint_Policy.h"
-#include "Stub.h"
-#include "debug.h"
+#include "tao/Transport_Queueing_Strategies.h"
+#include "tao/Buffering_Constraint_Policy.h"
+#include "tao/Stub.h"
+#include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"

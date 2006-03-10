@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IFR_BaseC.h"
+#include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/orb_typesS.h"
 #include "tao/Typecode_typesS.h"
 

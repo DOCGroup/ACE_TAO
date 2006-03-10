@@ -32,10 +32,10 @@
 #endif /* _MSC_VER */
 
 #include "tao/CORBA_methods.h"
-#include "ClientRequestInfoC.h"
-#include "PIForwardRequestC.h"
-#include "PICurrent_Impl.h"
-#include "PICurrent_Copy_Callback.h"
+#include "tao/PI/ClientRequestInfoC.h"
+#include "tao/PI/PIForwardRequestC.h"
+#include "tao/PI/PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Copy_Callback.h"
 #include "tao/ORB_Constants.h"
 #include "tao/LocalObject.h"
 #include "tao/Invocation_Utils.h"

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "NULL_Connection_Purging_Strategy.h"
+#include "tao/Strategies/NULL_Connection_Purging_Strategy.h"
 #include "tao/Transport.h"
 
 ACE_RCSID(tao, NULL_Connection_Purging_Strategy, "$Id$")

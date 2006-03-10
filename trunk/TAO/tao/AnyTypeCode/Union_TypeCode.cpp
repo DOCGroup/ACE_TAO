@@ -3,15 +3,15 @@
 #ifndef TAO_UNION_TYPECODE_CPP
 #define TAO_UNION_TYPECODE_CPP
 
-#include "Union_TypeCode.h"
-#include "TypeCode_Case_Base_T.h"
+#include "tao/AnyTypeCode/Union_TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 
 #ifndef __ACE_INLINE__
-# include "Union_TypeCode.inl"
+# include "tao/AnyTypeCode/Union_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/SystemException.h"
-#include "Any.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Value_Ptr.h"
 

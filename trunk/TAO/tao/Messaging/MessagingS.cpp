@@ -33,7 +33,7 @@
 #define _TAO_IDL_MESSAGINGS_CPP_
 
 
-#include "MessagingS.h"
+#include "tao/Messaging/MessagingS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"

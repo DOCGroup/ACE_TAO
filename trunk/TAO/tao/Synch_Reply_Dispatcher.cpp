@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Synch_Reply_Dispatcher.h"
-#include "ORB_Core.h"
-#include "Pluggable_Messaging_Utils.h"
-#include "debug.h"
+#include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/ORB_Core.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+#include "tao/debug.h"
 
 
 ACE_RCSID (tao,

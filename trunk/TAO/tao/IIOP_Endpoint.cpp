@@ -4,10 +4,10 @@
  */
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 
-#include "IIOP_Endpoint.h"
-#include "IOP_IORC.h"
-#include "debug.h"
-#include "ORB_Core.h"
+#include "tao/IIOP_Endpoint.h"
+#include "tao/IOP_IORC.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"

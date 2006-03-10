@@ -1,9 +1,9 @@
 //$Id$
 // -- PortableServer Include --
-#include "Collocated_Object_Proxy_Broker.h"
-#include "Object_Adapter.h"
-#include "Servant_Upcall.h"
-#include "Servant_Base.h"
+#include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 
 // -- TAO Include --

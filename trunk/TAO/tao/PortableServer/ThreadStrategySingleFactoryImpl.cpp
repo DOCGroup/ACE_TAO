@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ThreadStrategySingleFactoryImpl.h"
-#include "ThreadStrategy.h"
-#include "ThreadStrategySingle.h"
+#include "tao/PortableServer/ThreadStrategySingleFactoryImpl.h"
+#include "tao/PortableServer/ThreadStrategy.h"
+#include "tao/PortableServer/ThreadStrategySingle.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

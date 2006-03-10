@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CSD_Strategy_Repository.h"
+#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/debug.h"
 
 ACE_RCSID (CSD_Framework,

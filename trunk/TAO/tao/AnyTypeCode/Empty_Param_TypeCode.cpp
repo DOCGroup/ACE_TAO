@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Empty_Param_TypeCode.h"
+#include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "Empty_Param_TypeCode.inl"
+# include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "RequestProcessingStrategyDefaultServantFI.h"
-#include "RequestProcessingStrategy.h"
-#include "RequestProcessingStrategyDefaultServant.h"
+#include "tao/PortableServer/RequestProcessingStrategyDefaultServantFI.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

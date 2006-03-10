@@ -11,11 +11,11 @@
  */
 // =================================================================
 
-#include "ClientRequestInterceptor_Factory_Impl.h"
+#include "tao/PI/ClientRequestInterceptor_Factory_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ClientRequestInterceptor_Adapter_Impl.h"
+#include "tao/PI/ClientRequestInterceptor_Adapter_Impl.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"

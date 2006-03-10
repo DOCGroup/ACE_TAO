@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ExceptionA.h"
-#include "Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/ExceptionA.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Constants.h"

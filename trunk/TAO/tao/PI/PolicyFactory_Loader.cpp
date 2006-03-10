@@ -11,8 +11,8 @@
  */
 // =================================================================
 
-#include "PolicyFactory_Loader.h"
-#include "PolicyFactory_Registry.h"
+#include "tao/PI/PolicyFactory_Loader.h"
+#include "tao/PI/PolicyFactory_Registry.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"

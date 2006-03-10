@@ -68,7 +68,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Refcounted_ObjectKey.inl"
+#include "tao/Refcounted_ObjectKey.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

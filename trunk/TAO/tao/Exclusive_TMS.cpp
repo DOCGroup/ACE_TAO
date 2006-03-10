@@ -3,7 +3,7 @@
 #include "tao/Exclusive_TMS.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
-#include "Transport.h"
+#include "tao/Transport.h"
 
 ACE_RCSID (tao,
            Exclusive_TMS,

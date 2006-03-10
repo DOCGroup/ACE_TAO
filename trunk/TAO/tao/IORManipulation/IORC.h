@@ -44,7 +44,7 @@
  #error "You should not include IORC.h directly, use IORManip_Loader.h"
  #endif /* !TAO_IORMANIP_SAFE_INCLUDE */
 
-#include "ior_manip_export.h"
+#include "tao/IORManipulation/ior_manip_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"

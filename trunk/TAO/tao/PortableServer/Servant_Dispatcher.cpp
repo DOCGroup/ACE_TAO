@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Servant_Dispatcher.h"
+#include "tao/PortableServer/Servant_Dispatcher.h"
 
 ACE_RCSID(PortableServer,
           Servant_Dispatcher,

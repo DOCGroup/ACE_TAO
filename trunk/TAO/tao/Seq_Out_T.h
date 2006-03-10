@@ -87,7 +87,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "Seq_Out_T.inl"
+#include "tao/Seq_Out_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

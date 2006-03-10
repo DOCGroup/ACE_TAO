@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "ParameterModeC.h"
+#include "tao/ParameterModeC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

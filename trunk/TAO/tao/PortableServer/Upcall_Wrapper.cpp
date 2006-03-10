@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Upcall_Wrapper.h"
-#include "Upcall_Command.h"
+#include "tao/PortableServer/Upcall_Wrapper.h"
+#include "tao/PortableServer/Upcall_Command.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ServerRequestInterceptor_Adapter.h"

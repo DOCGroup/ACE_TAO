@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "pi_server_export.h"
+#include "tao/PI_Server/pi_server_export.h"
 
 #include "tao/PI_Server/ServerRequestInterceptorC.h"
 

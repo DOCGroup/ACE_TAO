@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 #include "tao/PI/PICurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)

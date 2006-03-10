@@ -4,7 +4,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "Linear_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Priority_Mapping.h"
 #include "tao/debug.h"
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"

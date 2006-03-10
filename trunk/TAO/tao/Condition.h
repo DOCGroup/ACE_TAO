@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbconf.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -112,11 +112,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Condition.inl"
+#include "tao/Condition.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Condition.cpp"
+#include "tao/Condition.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

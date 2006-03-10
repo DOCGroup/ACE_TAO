@@ -1,5 +1,5 @@
 // $Id$
-#include "CSD_ORBInitializer.h"
+#include "tao/CSD_Framework/CSD_ORBInitializer.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -7,7 +7,7 @@ ACE_RCSID (CSD_Framework,
            CSD_ORBInitializer,
            "$Id$")
 
-#include "CSD_Object_Adapter_Factory.h"
+#include "tao/CSD_Framework/CSD_Object_Adapter_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

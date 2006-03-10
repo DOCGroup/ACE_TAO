@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Upcall_Command.h"
+#include "tao/PortableServer/Upcall_Command.h"
 
 
 ACE_RCSID (PortableServer,

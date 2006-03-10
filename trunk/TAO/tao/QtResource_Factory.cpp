@@ -1,7 +1,7 @@
 //$Id$
 
-#include "QtResource_Factory.h"
-#include "debug.h"
+#include "tao/QtResource_Factory.h"
+#include "tao/debug.h"
 #include "ace/QtReactor.h"
 
 ACE_RCSID (TAO_QtResource,

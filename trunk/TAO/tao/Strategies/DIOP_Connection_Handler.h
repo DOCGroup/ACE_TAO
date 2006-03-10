@@ -29,9 +29,9 @@
 
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "DIOP_Transport.h"
+#include "tao/Strategies/DIOP_Transport.h"
 #include "ace/SOCK_Dgram.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

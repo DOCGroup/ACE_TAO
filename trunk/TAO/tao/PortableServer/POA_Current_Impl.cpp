@@ -1,14 +1,14 @@
 // $Id$
 
 // -- PortableServer Include --
-#include "Object_Adapter.h"
-#include "POA_Current_Impl.h"
-#include "Root_POA.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "tao/TSS_Resources.h"
 
 #if !defined (__ACE_INLINE__)
-# include "POA_Current_Impl.inl"
+# include "tao/PortableServer/POA_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,

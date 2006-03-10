@@ -10,7 +10,7 @@
 //
 // ============================================================================
 
-#include "ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 
 #include "tao/PortableServer/POAManagerC.h"
 #include "tao/PortableServer/IdAssignmentPolicyC.h"

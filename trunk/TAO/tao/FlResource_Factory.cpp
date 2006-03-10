@@ -1,7 +1,7 @@
 //$Id$
 
-#include "FlResource_Factory.h"
-#include "debug.h"
+#include "tao/FlResource_Factory.h"
+#include "tao/debug.h"
 #include "ace/FlReactor.h"
 
 ACE_RCSID( TAO_FlResource,

@@ -1,12 +1,12 @@
 // $Id$
 
-#include "RT_ORB.h"
+#include "tao/RTCORBA/RT_ORB.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_Policy_i.h"
-#include "RT_Mutex.h"
-#include "Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
+#include "tao/RTCORBA/RT_Mutex.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/RTCORBA/Thread_Pool.h"

@@ -1,6 +1,6 @@
-#include "BiDir_PolicyFactory.h"
-#include "BiDirGIOP.h"
-#include "BiDir_Policy_i.h"
+#include "tao/BiDir_GIOP/BiDir_PolicyFactory.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/Any.h"

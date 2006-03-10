@@ -4,8 +4,8 @@
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-#include "TAOC.h"
-#include "SystemException.h"
+#include "tao/TAOC.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Buffering_Constraint_Policy,

@@ -1,11 +1,11 @@
 //$Id$
 
-#include "operation_details.h"
-#include "Stub.h"
-#include "ORB_Constants.h"
-#include "Exception_Data.h"
-#include "SystemException.h"
-#include "Argument.h"
+#include "tao/operation_details.h"
+#include "tao/Stub.h"
+#include "tao/ORB_Constants.h"
+#include "tao/Exception_Data.h"
+#include "tao/SystemException.h"
+#include "tao/Argument.h"
 
 #include "ace/OS_NS_string.h"
 

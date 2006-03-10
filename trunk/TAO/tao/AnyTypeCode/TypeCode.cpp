@@ -1,6 +1,6 @@
 // $Id$
 
-#include "TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 
 ACE_RCSID (tao,
            TypeCode,
@@ -8,7 +8,7 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "TypeCode.inl"
+# include "tao/AnyTypeCode/TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "tao/SystemException.h"

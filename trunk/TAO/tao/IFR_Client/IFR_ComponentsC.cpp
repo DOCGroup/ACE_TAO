@@ -30,7 +30,7 @@
 
 
 #include "tao/AnyTypeCode/orb_typesA.h"
-#include "IFR_ComponentsC.h"
+#include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "tao/CDR.h"
 #include "tao/IFR_Client/IFR_ExtendedC.h"
 #include "tao/Invocation_Adapter.h"
@@ -58,7 +58,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "IFR_ComponentsC.inl"
+#include "tao/IFR_Client/IFR_ComponentsC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

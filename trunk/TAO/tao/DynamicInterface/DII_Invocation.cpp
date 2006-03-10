@@ -3,12 +3,12 @@
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 
-#include "DII_Invocation.h"
-#include "Unknown_User_Exception.h"
-#include "DII_Arguments.h"
-#include "ExceptionList.h"
-#include "Request.h"
-#include "DII_Reply_Dispatcher.h"
+#include "tao/DynamicInterface/DII_Invocation.h"
+#include "tao/DynamicInterface/Unknown_User_Exception.h"
+#include "tao/DynamicInterface/DII_Arguments.h"
+#include "tao/DynamicInterface/ExceptionList.h"
+#include "tao/DynamicInterface/Request.h"
+#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
 
 #include "tao/operation_details.h"
 #include "tao/Invocation_Utils.h"

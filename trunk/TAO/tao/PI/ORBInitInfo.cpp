@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ORBInitInfo.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
@@ -11,7 +11,7 @@
 #include "ace/Service_Config.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "PICurrent.h"
+#include "tao/PI/PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 ACE_RCSID (TAO,
@@ -19,7 +19,7 @@ ACE_RCSID (TAO,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ORBInitInfo.inl"
+#include "tao/PI/ORBInitInfo.inl"
 #endif /* defined INLINE */
 
 #include "ace/OS_NS_string.h"

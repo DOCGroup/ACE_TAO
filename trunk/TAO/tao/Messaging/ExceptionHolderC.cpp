@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ExceptionHolderC.h"
+#include "tao/Messaging/ExceptionHolderC.h"
 #include "tao/CDR.h"
 #include "tao/Valuetype/ValueFactory.h"
 #include "tao/ORB_Core.h"
@@ -38,7 +38,7 @@
 #if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 #if !defined (__ACE_INLINE__)
-#include "ExceptionHolderC.inl"
+#include "tao/Messaging/ExceptionHolderC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

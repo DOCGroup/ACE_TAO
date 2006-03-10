@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Policy_Set.h"
-#include "Environment.h"
-#include "SystemException.h"
-#include "debug.h"
+#include "tao/Policy_Set.h"
+#include "tao/Environment.h"
+#include "tao/SystemException.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Policy_Set.i"
+# include "tao/Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
 

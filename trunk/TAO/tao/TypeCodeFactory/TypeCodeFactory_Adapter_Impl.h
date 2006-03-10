@@ -15,7 +15,7 @@
 #define TAO_TYPECODEFACTORY_ADAPTER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "typecodefactory_export.h"
+#include "tao/TypeCodeFactory/typecodefactory_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -19,14 +19,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CORBA_methods.h"
+#include "tao/CORBA_methods.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "OctetSeqC.h"
-#include "Pseudo_VarOut_T.h"
+#include "tao/OctetSeqC.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"

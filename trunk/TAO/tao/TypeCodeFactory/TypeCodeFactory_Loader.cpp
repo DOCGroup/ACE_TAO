@@ -15,8 +15,8 @@
 //
 // =================================================================
 
-#include "TypeCodeFactory_Loader.h"
-#include "TypeCodeFactory_i.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(TypeCodeFactory,

@@ -1,8 +1,8 @@
-#include "RT_ORB_Loader.h"
+#include "tao/RTCORBA/RT_ORB_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_ORBInitializer.h"
+#include "tao/RTCORBA/RT_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

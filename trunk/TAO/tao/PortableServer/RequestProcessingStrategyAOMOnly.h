@@ -14,14 +14,14 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYAOMONLY_H
 #include /**/ "ace/pre.h"
 
-#include "RequestProcessingStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Location.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/PortableServer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

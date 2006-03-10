@@ -1,7 +1,7 @@
 //$Id$
-#include "TkResource_Loader.h"
-#include "ORB_Core.h"
-#include "TkResource_Factory.h"
+#include "tao/TkResource_Loader.h"
+#include "tao/ORB_Core.h"
+#include "tao/TkResource_Factory.h"
 
 ACE_RCSID( TAO_TkResource,
            TkResource_Loader,

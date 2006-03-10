@@ -27,7 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -140,7 +140,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "DIOP_Endpoint.i"
+# include "tao/Strategies/DIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

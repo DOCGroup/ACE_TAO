@@ -16,13 +16,13 @@
 #define TAO_ASYNCH_REPLY_DISPATCHER_H
 #include /**/ "ace/pre.h"
 
-#include "Messaging.h"
+#include "tao/Messaging/Messaging.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Asynch_Timeout_Handler.h"
+#include "tao/Messaging/Asynch_Timeout_Handler.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

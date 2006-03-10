@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "RTPortableServer.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"

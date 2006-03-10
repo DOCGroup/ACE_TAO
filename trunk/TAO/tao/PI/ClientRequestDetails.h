@@ -30,7 +30,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ProcessingModePolicyC.h"
+#include "tao/PI/ProcessingModePolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -74,7 +74,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ClientRequestDetails.inl"
+#include "tao/PI/ClientRequestDetails.inl"
 #endif  /* __ACE_INLINE__ */
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

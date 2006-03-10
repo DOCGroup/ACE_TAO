@@ -1,7 +1,7 @@
 // $Id$
 
-#include "IdAssignmentStrategyFactoryImpl.h"
-#include "IdAssignmentStrategy.h"
+#include "tao/PortableServer/IdAssignmentStrategyFactoryImpl.h"
+#include "tao/PortableServer/IdAssignmentStrategy.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,

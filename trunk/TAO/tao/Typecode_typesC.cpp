@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "Typecode_typesC.h"
+#include "tao/Typecode_typesC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

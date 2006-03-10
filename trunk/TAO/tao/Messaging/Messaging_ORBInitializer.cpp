@@ -1,11 +1,11 @@
 // -*- C++ -*-
 
-#include "Messaging_ORBInitializer.h"
+#include "tao/Messaging/Messaging_ORBInitializer.h"
 
-#include "Messaging_Policy_i.h"
-#include "Connection_Timeout_Policy_i.h"
-#include "Messaging_PolicyFactory.h"
-#include "ExceptionHolder_i.h"
+#include "tao/Messaging/Messaging_Policy_i.h"
+#include "tao/Messaging/Connection_Timeout_Policy_i.h"
+#include "tao/Messaging/Messaging_PolicyFactory.h"
+#include "tao/Messaging/ExceptionHolder_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/Valuetype/ValueFactory.h"

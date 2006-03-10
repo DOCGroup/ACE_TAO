@@ -25,7 +25,7 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "ace/Service_Config.h"
 #include "tao/Protocol_Factory.h"
 

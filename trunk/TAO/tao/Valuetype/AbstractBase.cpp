@@ -1,8 +1,8 @@
 // "$Id$"
 
-#include "AbstractBase.h"
-#include "ValueBase.h"
-#include "ValueFactory.h"
+#include "tao/Valuetype/AbstractBase.h"
+#include "tao/Valuetype/ValueBase.h"
+#include "tao/Valuetype/ValueFactory.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
@@ -10,7 +10,7 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "AbstractBase.inl"
+# include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (Valuetype,

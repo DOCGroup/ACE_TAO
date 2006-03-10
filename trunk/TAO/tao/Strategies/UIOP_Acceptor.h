@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # if TAO_HAS_UIOP == 1
-#include "UIOP_Connection_Handler.h"
+#include "tao/Strategies/UIOP_Connection_Handler.h"
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/Acceptor_Impl.h"

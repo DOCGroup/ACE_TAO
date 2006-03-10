@@ -270,7 +270,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "GIOPC.inl"
+#include "tao/GIOPC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

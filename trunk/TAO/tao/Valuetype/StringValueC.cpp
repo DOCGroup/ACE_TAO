@@ -39,7 +39,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
-#include "StringValueC.h"
+#include "tao/Valuetype/StringValueC.h"
 #include "tao/Valuetype/ValueFactory.h"
 #include "tao/CDR.h"
 
@@ -48,7 +48,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "StringValueC.inl"
+#include "tao/Valuetype/StringValueC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

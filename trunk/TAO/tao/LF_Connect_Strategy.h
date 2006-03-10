@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Connect_Strategy.h"
+#include "tao/Connect_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Adapter.h"
+#include "tao/Adapter.h"
 
 ACE_RCSID (tao,
            Adapter,

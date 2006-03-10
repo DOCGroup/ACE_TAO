@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ServerRequestInfo.h"
+#include "tao/PI_Server/ServerRequestInfo.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -26,7 +26,7 @@ ACE_RCSID (PI_Server,
 #include "ace/OS_NS_string.h"
 
 # if !defined (__ACE_INLINE__)
-#   include "ServerRequestInfo.inl"
+#   include "tao/PI_Server/ServerRequestInfo.inl"
 # endif /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

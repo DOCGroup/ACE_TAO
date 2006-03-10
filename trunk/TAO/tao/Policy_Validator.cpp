@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Policy_Validator.h"
-#include "Environment.h"
-#include "debug.h"
+#include "tao/Policy_Validator.h"
+#include "tao/Environment.h"
+#include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 

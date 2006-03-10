@@ -1,5 +1,5 @@
-#include "ImplicitActivationPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/ImplicitActivationPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            ImplicitActivationPolicy,

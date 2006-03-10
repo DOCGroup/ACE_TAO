@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ForwardRequestC.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"

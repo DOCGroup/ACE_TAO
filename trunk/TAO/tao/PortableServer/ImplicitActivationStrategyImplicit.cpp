@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "ImplicitActivationStrategyImplicit.h"
+#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
 
 ACE_RCSID (PortableServer,
            ImplicitActivationStrategyImplicit,

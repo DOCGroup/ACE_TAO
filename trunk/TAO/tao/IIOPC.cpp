@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:288
 
 
-#include "IIOPC.h"
+#include "tao/IIOPC.h"
 #include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

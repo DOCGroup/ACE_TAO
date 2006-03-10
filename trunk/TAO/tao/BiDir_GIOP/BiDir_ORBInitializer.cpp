@@ -1,8 +1,8 @@
 // $Id$
 
-#include "BiDir_ORBInitializer.h"
-#include "BiDir_PolicyFactory.h"
-#include "BiDirGIOP.h"
+#include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
+#include "tao/BiDir_GIOP/BiDir_PolicyFactory.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 #include "tao/ORB_Constants.h"
 

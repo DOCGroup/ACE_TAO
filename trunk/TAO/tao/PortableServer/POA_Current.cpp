@@ -1,8 +1,8 @@
 // $Id$
 
 // -- PortableServer Include --
-#include "POA_Current.h"
-#include "POA_Current_Impl.h"
+#include "tao/PortableServer/POA_Current.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 // -- TAO Include --
 #include "tao/TSS_Resources.h"

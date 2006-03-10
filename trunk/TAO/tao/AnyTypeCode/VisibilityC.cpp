@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "VisibilityC.h"
+#include "tao/AnyTypeCode/VisibilityC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

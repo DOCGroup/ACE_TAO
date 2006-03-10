@@ -1,7 +1,7 @@
-#include "Cleanup_Func_Registry.h"
+#include "tao/Cleanup_Func_Registry.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Cleanup_Func_Registry.inl"
+# include "tao/Cleanup_Func_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

@@ -9,8 +9,8 @@
 //=============================================================================
 
 
-#include "DynamicAny.h"
-#include "DynAnyFactory.h"
+#include "tao/DynamicAny/DynamicAny.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 
 ACE_RCSID(DynamicAny, DynamicAny, "$Id$")
 

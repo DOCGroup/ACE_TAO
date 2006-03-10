@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "ace/Time_Value.h"

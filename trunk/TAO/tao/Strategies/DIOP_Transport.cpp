@@ -1,12 +1,12 @@
 // $Id$
 
-#include "DIOP_Transport.h"
+#include "tao/Strategies/DIOP_Transport.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "DIOP_Connection_Handler.h"
-#include "DIOP_Acceptor.h"
-#include "DIOP_Profile.h"
+#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "tao/Strategies/DIOP_Acceptor.h"
+#include "tao/Strategies/DIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"

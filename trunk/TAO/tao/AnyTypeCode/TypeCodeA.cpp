@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Struct_TypeCode_Static.h"
-#include "Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 
 ACE_RCSID (tao,

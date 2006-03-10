@@ -40,7 +40,7 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 
-#include "RTCORBA.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

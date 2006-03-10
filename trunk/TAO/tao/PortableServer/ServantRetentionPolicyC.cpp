@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ServantRetentionPolicyC.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

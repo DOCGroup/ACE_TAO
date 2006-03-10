@@ -1,10 +1,10 @@
-#include "CORBALOC_Parser.h"
-#include "ORB_Core.h"
-#include "Stub.h"
-#include "MProfile.h"
-#include "Connector_Registry.h"
-#include "Transport_Connector.h"
-#include "Protocol_Factory.h"
+#include "tao/CORBALOC_Parser.h"
+#include "tao/ORB_Core.h"
+#include "tao/Stub.h"
+#include "tao/MProfile.h"
+#include "tao/Connector_Registry.h"
+#include "tao/Transport_Connector.h"
+#include "tao/Protocol_Factory.h"
 #include "tao/debug.h"
 #include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
@@ -13,7 +13,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
-#include "CORBALOC_Parser.i"
+#include "tao/CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

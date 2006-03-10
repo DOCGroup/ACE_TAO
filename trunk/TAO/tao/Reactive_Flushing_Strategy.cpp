@@ -1,10 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
-#include "Reactive_Flushing_Strategy.h"
-#include "Transport.h"
-#include "ORB_Core.h"
-#include "Queued_Message.h"
+#include "tao/Reactive_Flushing_Strategy.h"
+#include "tao/Transport.h"
+#include "tao/ORB_Core.h"
+#include "tao/Queued_Message.h"
 
 ACE_RCSID (tao, 
            Reactive_Flushing_Strategy, 

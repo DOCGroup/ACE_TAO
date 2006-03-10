@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "CodecFactory_impl.h"
-#include "CDR_Encaps_Codec.h"
+#include "tao/CodecFactory/CodecFactory_impl.h"
+#include "tao/CodecFactory/CDR_Encaps_Codec.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"

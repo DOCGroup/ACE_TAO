@@ -5,11 +5,11 @@
 #define UTF8_LATIN1_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "codeset_export.h"
+#include "tao/Codeset/codeset_export.h"
 #include "ace/Service_Config.h"
-#include "Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
-#include "UTF8_Latin1_Translator.h"
+#include "tao/Codeset/UTF8_Latin1_Translator.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

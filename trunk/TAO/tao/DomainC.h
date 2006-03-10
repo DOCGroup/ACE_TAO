@@ -483,7 +483,7 @@ TAO_Export CORBA::Boolean operator>> (
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "DomainC.inl"
+#include "tao/DomainC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

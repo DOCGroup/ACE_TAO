@@ -19,20 +19,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "UserException.h"
+#include "tao/UserException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orb_typesC.h"
-#include "objectid.h"
-#include "CORBA_methods.h"
-#include "VarOut_T.h"
-#include "Seq_Var_T.h"
-#include "Seq_Out_T.h"
-#include "Sequence_T.h"
-#include "Policy_ForwardC.h"
+#include "tao/orb_typesC.h"
+#include "tao/objectid.h"
+#include "tao/CORBA_methods.h"
+#include "tao/VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/Sequence_T.h"
+#include "tao/Policy_ForwardC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"

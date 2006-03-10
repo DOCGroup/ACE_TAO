@@ -1,17 +1,17 @@
 // $Id$
 
-#include "GIOP_Message_Base.h"
-#include "operation_details.h"
-#include "debug.h"
-#include "ORB_Core.h"
-#include "TAO_Server_Request.h"
-#include "GIOP_Message_Locate_Header.h"
-#include "Transport.h"
-#include "Transport_Mux_Strategy.h"
-#include "LF_Strategy.h"
-#include "Request_Dispatcher.h"
-#include "Codeset_Manager.h"
-#include "SystemException.h"
+#include "tao/GIOP_Message_Base.h"
+#include "tao/operation_details.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/GIOP_Message_Locate_Header.h"
+#include "tao/Transport.h"
+#include "tao/Transport_Mux_Strategy.h"
+#include "tao/LF_Strategy.h"
+#include "tao/Request_Dispatcher.h"
+#include "tao/Codeset_Manager.h"
+#include "tao/SystemException.h"
 
 /*
  * Hook to add additional include files during specializations.

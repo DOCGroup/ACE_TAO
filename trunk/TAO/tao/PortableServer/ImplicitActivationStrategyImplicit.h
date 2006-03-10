@@ -14,13 +14,13 @@
 #define TAO_IMPLICITACTIVATIONSTRATEGYIMPLICIT_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ImplicitActivationStrategy.h"
+#include "tao/PortableServer/ImplicitActivationStrategy.h"
 #include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

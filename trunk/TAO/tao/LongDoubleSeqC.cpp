@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "LongDoubleSeqC.h"
+#include "tao/LongDoubleSeqC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

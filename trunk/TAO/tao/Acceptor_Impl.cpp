@@ -25,13 +25,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Thread_Per_Connection_Handler.h"
-#include "Server_Strategy_Factory.h"
-#include "ORB_Core.h"
-#include "Transport_Cache_Manager.h"
-#include "Thread_Lane_Resources.h"
-#include "Transport.h"
-#include "debug.h"
+#include "tao/Thread_Per_Connection_Handler.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/ORB_Core.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Transport.h"
+#include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

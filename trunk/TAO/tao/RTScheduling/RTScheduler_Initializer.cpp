@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "RTScheduler_Initializer.h"
-#include "Request_Interceptor.h"
+#include "tao/RTScheduling/RTScheduler_Initializer.h"
+#include "tao/RTScheduling/Request_Interceptor.h"
 
 ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 

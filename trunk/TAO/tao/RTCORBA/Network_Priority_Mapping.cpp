@@ -2,7 +2,7 @@
 
 #include "tao/orbconf.h"
 
-#include "Network_Priority_Mapping.h"
+#include "tao/RTCORBA/Network_Priority_Mapping.h"
 
 ACE_RCSID(RTCORBA,
           Network_Priority_Mapping,

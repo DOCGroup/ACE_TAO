@@ -1,11 +1,11 @@
 // $Id$
 
-#include "UIOP_Transport.h"
+#include "tao/Strategies/UIOP_Transport.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "UIOP_Connection_Handler.h"
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Connection_Handler.h"
+#include "tao/Strategies/UIOP_Profile.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"

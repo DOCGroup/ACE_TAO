@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "Messaging_RT_PolicyC.h"
+#include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

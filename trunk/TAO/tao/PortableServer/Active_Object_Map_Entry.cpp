@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Active_Object_Map_Entry.h"
+#include "tao/PortableServer/Active_Object_Map_Entry.h"
 
 ACE_RCSID(PortableServer,
           Active_Object_Map_Entry,

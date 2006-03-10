@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Network_Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #if ! defined (__ACE_INLINE__)
-#include "Network_Priority_Mapping_Manager.i"
+#include "tao/RTCORBA/Network_Priority_Mapping_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (RTCORBA, 

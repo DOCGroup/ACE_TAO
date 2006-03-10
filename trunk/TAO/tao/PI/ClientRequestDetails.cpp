@@ -1,9 +1,9 @@
-#include "ClientRequestDetails.h"
+#include "tao/PI/ClientRequestDetails.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #if !defined (__ACE_INLINE__)
-#include "ClientRequestDetails.inl"
+#include "tao/PI/ClientRequestDetails.inl"
 #endif /* defined INLINE */
 
 ACE_RCSID (PI,

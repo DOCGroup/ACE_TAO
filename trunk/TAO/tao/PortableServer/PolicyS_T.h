@@ -134,11 +134,11 @@ namespace POA_CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "PolicyS_T.inl"
+#include "tao/PortableServer/PolicyS_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "PolicyS_T.cpp"
+#include "tao/PortableServer/PolicyS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

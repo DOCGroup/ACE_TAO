@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Encodable.h"
+#include "tao/Utils/Encodable.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

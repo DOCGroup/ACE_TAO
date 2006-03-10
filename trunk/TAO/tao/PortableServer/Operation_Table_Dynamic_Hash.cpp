@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Operation_Table_Dynamic_Hash.h"
+#include "tao/PortableServer/Operation_Table_Dynamic_Hash.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
 

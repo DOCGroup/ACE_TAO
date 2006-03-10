@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RTCORBA.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 

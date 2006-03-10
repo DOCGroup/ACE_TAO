@@ -1,5 +1,5 @@
-#include "RequestProcessingPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/RequestProcessingPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingPolicy,

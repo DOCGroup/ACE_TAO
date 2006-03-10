@@ -13,7 +13,7 @@
 #ifndef TAO_AMH_RESPONSE_HANDLER_H
 #define TAO_AMH_RESPONSE_HANDLER_H
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #include "tao/Allocator.h"
 #include "tao/Service_Context.h"

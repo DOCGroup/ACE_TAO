@@ -29,7 +29,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Protocol_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

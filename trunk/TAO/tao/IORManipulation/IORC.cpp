@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "IORManip_Loader.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

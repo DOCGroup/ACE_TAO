@@ -1,8 +1,8 @@
-#include "PICurrent_Copy_Callback.h"
+#include "tao/PI/PICurrent_Copy_Callback.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Impl.h"
 
 ACE_RCSID (tao,
            PICurrent_Copy_Callback,

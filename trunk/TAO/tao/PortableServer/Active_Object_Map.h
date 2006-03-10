@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Key_Adapters.h"
+#include "tao/PortableServer/Key_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Base.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "ace/Map_T.h"
 
@@ -618,7 +618,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Active_Object_Map.i"
+# include "tao/PortableServer/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

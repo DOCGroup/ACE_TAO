@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Resource_Factory.h"
-#include "Protocol_Factory.h"
-#include "orbconf.h"
+#include "tao/Resource_Factory.h"
+#include "tao/Protocol_Factory.h"
+#include "tao/orbconf.h"
 
 #include "ace/ACE.h"
 

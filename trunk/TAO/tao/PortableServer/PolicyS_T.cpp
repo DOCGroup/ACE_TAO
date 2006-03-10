@@ -31,10 +31,10 @@
 #ifndef _TAO_IDL_ORIG_POLICYS_T_CPP_
 #define _TAO_IDL_ORIG_POLICYS_T_CPP_
 
-#include "PolicyS_T.h"
+#include "tao/PortableServer/PolicyS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "PolicyS_T.inl"
+#include "tao/PortableServer/PolicyS_T.inl"
 #endif /* !defined INLINE */
 
 

@@ -27,7 +27,7 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;

@@ -14,7 +14,7 @@
 #define TAO_SERVANT_RETENTION_STRATEGY_RETAIN_H
 #include /**/ "ace/pre.h"
 
-#include "ServantRetentionStrategyNonRetain.h"
+#include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

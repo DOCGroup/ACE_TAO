@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "InterceptorC.h"
+#include "tao/PI/InterceptorC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
