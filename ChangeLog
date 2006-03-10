@@ -1,3 +1,10 @@
+Fri Mar 10 08:58:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/pkg.m4:
+
+          Add pkg.m4 from pkg-config 0.20 distribution, so configure
+          script can be regenerated on systems without it installed.
+
 Thu Mar  9 09:18:58 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* COPYING: Updated the date to include 2006.
