@@ -29,7 +29,7 @@
 // be/be_codegen.cpp:292
 
 
-#include "ProcessingModePolicyC.h"
+#include "tao/PI/ProcessingModePolicyC.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "TimeBaseC.h"
+#include "tao/TimeBaseC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

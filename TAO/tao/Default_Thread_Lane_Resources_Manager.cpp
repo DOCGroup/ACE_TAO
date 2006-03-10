@@ -1,10 +1,10 @@
 // $Id$
 
-#include "Default_Thread_Lane_Resources_Manager.h"
-#include "Thread_Lane_Resources.h"
-#include "Exception.h"
-#include "Environment.h"
-#include "ORB_Core.h"
+#include "tao/Default_Thread_Lane_Resources_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Exception.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 
 

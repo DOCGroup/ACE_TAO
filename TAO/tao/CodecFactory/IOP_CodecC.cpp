@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "CodecFactory.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"

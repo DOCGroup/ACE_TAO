@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Messaging.h"
+#include "tao/Messaging/Messaging.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -205,7 +205,7 @@ namespace POA_Messaging
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "MessagingS_T.h"
+#include "tao/Messaging/MessagingS_T.h"
 
 
 #include /**/ "ace/post.h"

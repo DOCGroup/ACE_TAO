@@ -1,11 +1,11 @@
-#include "Messaging_PolicyFactory.h"
+#include "tao/Messaging/Messaging_PolicyFactory.h"
 
 ACE_RCSID (Messaging,
            Messaging_PolicyFactory,
            "$Id$")
 
-#include "Messaging_Policy_i.h"
-#include "Connection_Timeout_Policy_i.h"
+#include "tao/Messaging/Messaging_Policy_i.h"
+#include "tao/Messaging/Connection_Timeout_Policy_i.h"
 
 #include "tao/PolicyC.h"
 #include "tao/Buffering_Constraint_Policy.h"

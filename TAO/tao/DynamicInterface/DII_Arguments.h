@@ -91,7 +91,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "DII_Arguments.inl"
+# include "tao/DynamicInterface/DII_Arguments.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

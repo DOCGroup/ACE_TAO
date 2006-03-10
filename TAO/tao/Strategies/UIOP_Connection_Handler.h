@@ -32,7 +32,7 @@
 #include "ace/Reactor.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Wait_Strategy.h"
-#include "UIOP_Transport.h"
+#include "tao/Strategies/UIOP_Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

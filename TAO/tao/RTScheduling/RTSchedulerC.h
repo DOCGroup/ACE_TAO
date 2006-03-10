@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "rtscheduler_export.h"
+#include "tao/RTScheduling/rtscheduler_export.h"
 
 #include "tao/PI_Server/ServerRequestInfoC.h"
 #include "tao/PI/ClientRequestInfoC.h"

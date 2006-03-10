@@ -1,4 +1,4 @@
-#include "PICurrent.h"
+#include "tao/PI/PICurrent.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -8,10 +8,10 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "PICurrent.inl"
+# include "tao/PI/PICurrent.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Impl.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"

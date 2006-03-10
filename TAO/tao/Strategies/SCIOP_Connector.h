@@ -33,7 +33,7 @@
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
 #include "tao/Connector_Impl.h"
-#include "SCIOP_Connection_Handler.h"
+#include "tao/Strategies/SCIOP_Connection_Handler.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

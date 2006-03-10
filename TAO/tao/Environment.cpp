@@ -1,7 +1,7 @@
-#include "Environment.h"
-#include "ORB_Core.h"
-#include "SystemException.h"
-#include "default_environment.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
+#include "tao/default_environment.h"
 
 #include "ace/OS_NS_string.h"
 

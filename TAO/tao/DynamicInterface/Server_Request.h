@@ -24,7 +24,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Context.h"
+#include "tao/DynamicInterface/Context.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@
 
 // To force execution of the static constructor
 // that registers the dynamic service object.
-#include "Dynamic_Adapter_Impl.h"
+#include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
@@ -177,7 +177,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Server_Request.inl"
+# include "tao/DynamicInterface/Server_Request.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

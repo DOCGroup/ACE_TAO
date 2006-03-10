@@ -1,24 +1,24 @@
 // $Id$
 
-#include "Profile_Transport_Resolver.h"
-#include "Profile.h"
-#include "Stub.h"
-#include "Transport.h"
-#include "Invocation_Endpoint_Selectors.h"
-#include "ORB_Core.h"
-#include "Thread_Lane_Resources.h"
-#include "Transport_Cache_Manager.h"
-#include "Endpoint_Selector_Factory.h"
-#include "Codeset_Manager.h"
-#include "Connector_Registry.h"
-#include "Transport_Connector.h"
-#include "Endpoint.h"
-#include "SystemException.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Profile.h"
+#include "tao/Stub.h"
+#include "tao/Transport.h"
+#include "tao/Invocation_Endpoint_Selectors.h"
+#include "tao/ORB_Core.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Endpoint_Selector_Factory.h"
+#include "tao/Codeset_Manager.h"
+#include "tao/Connector_Registry.h"
+#include "tao/Transport_Connector.h"
+#include "tao/Endpoint.h"
+#include "tao/SystemException.h"
 
 #include "ace/Countdown_Time.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Profile_Transport_Resolver.inl"
+# include "tao/Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

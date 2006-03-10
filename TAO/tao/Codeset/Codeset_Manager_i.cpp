@@ -9,10 +9,10 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
-#include "Codeset_Descriptor.h"
-#include "Codeset_Manager_i.h"
-#include "Codeset_Translator_Factory.h"
-#include "Codeset.h"
+#include "tao/Codeset/Codeset_Descriptor.h"
+#include "tao/Codeset/Codeset_Manager_i.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"

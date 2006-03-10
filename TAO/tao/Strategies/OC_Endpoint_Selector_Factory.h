@@ -19,7 +19,7 @@
 #include /**/ "ace/pre.h"
 
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"

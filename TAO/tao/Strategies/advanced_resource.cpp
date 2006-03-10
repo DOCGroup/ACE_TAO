@@ -1,17 +1,17 @@
 // $Id$
 #include "ace/Service_Config.h"
-#include "advanced_resource.h"
+#include "tao/Strategies/advanced_resource.h"
 
-#include "UIOP_Factory.h"
-#include "SHMIOP_Factory.h"
-#include "DIOP_Factory.h"
-#include "SCIOP_Factory.h"
+#include "tao/Strategies/UIOP_Factory.h"
+#include "tao/Strategies/SHMIOP_Factory.h"
+#include "tao/Strategies/DIOP_Factory.h"
+#include "tao/Strategies/SCIOP_Factory.h"
 
-#include "LFU_Connection_Purging_Strategy.h"
-#include "FIFO_Connection_Purging_Strategy.h"
-#include "NULL_Connection_Purging_Strategy.h"
+#include "tao/Strategies/LFU_Connection_Purging_Strategy.h"
+#include "tao/Strategies/FIFO_Connection_Purging_Strategy.h"
+#include "tao/Strategies/NULL_Connection_Purging_Strategy.h"
 
-#include "LF_Strategy_Null.h"
+#include "tao/Strategies/LF_Strategy_Null.h"
 
 #include "tao/debug.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"

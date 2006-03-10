@@ -17,7 +17,7 @@
 #define TAO_RTSCHEDULER_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "rtscheduler_export.h"
+#include "tao/RTScheduling/rtscheduler_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Active_Object_Map.h"
-#include "Active_Object_Map_Entry.h"
+#include "tao/PortableServer/Active_Object_Map.h"
+#include "tao/PortableServer/Active_Object_Map_Entry.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Active_Object_Map.i"
+# include "tao/PortableServer/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"

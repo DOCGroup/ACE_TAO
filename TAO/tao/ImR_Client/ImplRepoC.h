@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "imr_client_export.h"
+#include "tao/ImR_Client/imr_client_export.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
@@ -1095,7 +1095,7 @@ TAO_IMR_Client_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Implementatio
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ImplRepoC.inl"
+#include "tao/ImR_Client/ImplRepoC.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

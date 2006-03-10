@@ -1,16 +1,16 @@
 // $Id$
 
-#include "CSD_TP_Task.h"
-#include "CSD_TP_Request.h"
-#include "CSD_TP_Dispatchable_Visitor.h"
-#include "CSD_TP_Cancel_Visitor.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Task.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Request.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h"
 
 ACE_RCSID (CSD_ThreadPool,
            TP_Task,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "CSD_TP_Task.inl"
+# include "tao/CSD_ThreadPool/CSD_TP_Task.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

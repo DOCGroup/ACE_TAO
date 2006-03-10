@@ -1,7 +1,7 @@
 // $Id$
 
-#include "OC_Endpoint_Selector_Factory.h"
-#include "Optimized_Connection_Endpoint_Selector.h"
+#include "tao/Strategies/OC_Endpoint_Selector_Factory.h"
+#include "tao/Strategies/Optimized_Connection_Endpoint_Selector.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS.h"

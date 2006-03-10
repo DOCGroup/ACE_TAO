@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "BooleanSeqC.h"
+#include "tao/BooleanSeqC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from

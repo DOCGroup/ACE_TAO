@@ -55,7 +55,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -310,7 +310,7 @@ namespace POA_CORBA
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "PolicyS_T.h"
+#include "tao/PortableServer/PolicyS_T.h"
 
 
 #if defined(_MSC_VER)

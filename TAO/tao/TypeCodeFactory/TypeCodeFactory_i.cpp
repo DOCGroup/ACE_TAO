@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Recursive_TypeCode.h"
-#include "TypeCodeFactory_i.h"
+#include "tao/TypeCodeFactory/Recursive_TypeCode.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

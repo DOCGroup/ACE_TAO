@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtportableserver_export.h"
+#include "tao/RTPortableServer/rtportableserver_export.h"
 
 #include "tao/PortableServer/Regular_POA.h"
 #include "tao/orbconf.h"
@@ -25,7 +25,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
-#include "RTPortableServerC.h"
+#include "tao/RTPortableServer/RTPortableServerC.h"
 #undef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -320,7 +320,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "RT_POA.i"
+# include "tao/RTPortableServer/RT_POA.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

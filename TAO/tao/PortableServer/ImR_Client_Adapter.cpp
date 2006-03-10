@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ImR_Client_Adapter.h"
+#include "tao/PortableServer/ImR_Client_Adapter.h"
 
 ACE_RCSID (tao,
            ImR_Client_Adapter,

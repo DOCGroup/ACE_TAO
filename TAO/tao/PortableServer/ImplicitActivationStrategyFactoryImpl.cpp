@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ImplicitActivationStrategyFactoryImpl.h"
+#include "tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
-#include "ImplicitActivationStrategyImplicit.h"
-#include "ImplicitActivationStrategyExplicit.h"
+#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
+#include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
 
 ACE_RCSID (PortableServer,
            ImplicitActivationStrategyFactoryImpl,

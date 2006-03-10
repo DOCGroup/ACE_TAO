@@ -1,6 +1,6 @@
 //$Id$
-#include "AbstractBase_Invocation_Adapter.h"
-#include "AbstractBase.h"
+#include "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
+#include "tao/Valuetype/AbstractBase.h"
 
 ACE_RCSID (Valuetype,
            AbstractBase_Invocation_Adapter,

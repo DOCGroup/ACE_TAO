@@ -8,7 +8,7 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "Local_Servant_Base.inl"
+# include "tao/PortableServer/Local_Servant_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

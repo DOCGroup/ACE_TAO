@@ -1,14 +1,14 @@
 // $Id$
 
-#include "LocalObject.h"
+#include "tao/LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
-# include "LocalObject.i"
+# include "tao/LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
 
-#include "SystemException.h"
-#include "debug.h"
-#include "ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"

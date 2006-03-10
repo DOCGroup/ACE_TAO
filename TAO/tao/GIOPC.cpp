@@ -29,13 +29,13 @@
 // be\be_codegen.cpp:288
 
 
-#include "GIOPC.h"
+#include "tao/GIOPC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "GIOPC.inl"
+#include "tao/GIOPC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

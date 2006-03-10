@@ -24,7 +24,7 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "ace/Svc_Handler.h"
 #include "ace/MEM_Stream.h"
 #include "tao/Transport.h"

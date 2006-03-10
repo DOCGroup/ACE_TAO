@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
-#include "PICurrentA.h"
+#include "tao/PI/PICurrentA.h"
 #include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

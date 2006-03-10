@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Object_Ref_Table.h"
-#include "ORB.h"
-#include "Environment.h"
-#include "debug.h"
-#include "ORB_Constants.h"
-#include "SystemException.h"
+#include "tao/Object_Ref_Table.h"
+#include "tao/ORB.h"
+#include "tao/Environment.h"
+#include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 

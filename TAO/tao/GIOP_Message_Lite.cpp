@@ -1,17 +1,17 @@
 //$Id$
 
-#include "GIOP_Message_Lite.h"
-#include "debug.h"
-#include "TAOC.h"
-#include "ORB_Core.h"
-#include "operation_details.h"
-#include "TAO_Server_Request.h"
-#include "GIOP_Message_Locate_Header.h"
-#include "LF_Strategy.h"
-#include "Transport.h"
-#include "Transport_Mux_Strategy.h"
-#include "Codeset_Manager.h"
-#include "SystemException.h"
+#include "tao/GIOP_Message_Lite.h"
+#include "tao/debug.h"
+#include "tao/TAOC.h"
+#include "tao/ORB_Core.h"
+#include "tao/operation_details.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/GIOP_Message_Locate_Header.h"
+#include "tao/LF_Strategy.h"
+#include "tao/Transport.h"
+#include "tao/Transport_Mux_Strategy.h"
+#include "tao/Codeset_Manager.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            GIOP_Message_Lite,

@@ -3,10 +3,10 @@
 #ifndef TAO_VALUETYPE_SEQUENCE_T_CPP
 #define TAO_VALUETYPE_SEQUENCE_T_CPP
 
-#include "Sequence_T.h"
+#include "tao/Valuetype/Sequence_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Sequence_T.inl"
+#include "tao/Valuetype/Sequence_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Valuetype,

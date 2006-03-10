@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Unknown_User_Exception.h"
+#include "tao/DynamicInterface/Unknown_User_Exception.h"
 
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Environment.h"

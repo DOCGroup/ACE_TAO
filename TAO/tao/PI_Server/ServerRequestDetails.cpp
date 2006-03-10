@@ -1,9 +1,9 @@
-#include "ServerRequestDetails.h"
+#include "tao/PI_Server/ServerRequestDetails.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #if !defined (__ACE_INLINE__)
-#include "ServerRequestDetails.inl"
+#include "tao/PI_Server/ServerRequestDetails.inl"
 #endif /* defined INLINE */
 
 ACE_RCSID (PI_Server,

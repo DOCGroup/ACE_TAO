@@ -1,5 +1,5 @@
-#include "IdAssignmentPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/IdAssignmentPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            IdAssignmentPolicy,

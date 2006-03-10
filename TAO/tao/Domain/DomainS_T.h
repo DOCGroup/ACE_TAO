@@ -206,11 +206,11 @@ namespace POA_CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "DomainS_T.inl"
+#include "tao/Domain/DomainS_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "DomainS_T.cpp"
+#include "tao/Domain/DomainS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Protocol_Factory.h"
+#include "tao/Protocol_Factory.h"
 
 ACE_RCSID (tao,
            Protocol_Factory,

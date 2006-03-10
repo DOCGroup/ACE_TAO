@@ -36,7 +36,7 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "uiop_endpointsC.h"
+#include "tao/Strategies/uiop_endpointsC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

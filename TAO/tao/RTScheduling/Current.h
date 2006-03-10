@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtscheduler_export.h"
+#include "tao/RTScheduling/rtscheduler_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "RTScheduler.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Task.h"

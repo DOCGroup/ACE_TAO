@@ -22,7 +22,7 @@
 
 #include "tao/CONV_FRAMEC.h"
 #include "tao/Codeset_Translator_Base.h"
-#include "codeset_export.h"
+#include "tao/Codeset/codeset_export.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "True_RefCount_Policy.h"
+#include "tao/AnyTypeCode/True_RefCount_Policy.h"
 
 #ifndef  __ACE_INLINE__
 # include  "True_RefCount_Policy.inl"

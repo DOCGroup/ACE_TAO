@@ -146,7 +146,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "LF_Event.inl"
+# include "tao/LF_Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

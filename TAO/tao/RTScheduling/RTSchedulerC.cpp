@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "RTScheduler.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/Var_Size_Argument_T.h"

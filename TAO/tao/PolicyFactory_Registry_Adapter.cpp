@@ -1,6 +1,6 @@
 // $Id$
 
-#include "PolicyFactory_Registry_Adapter.h"
+#include "tao/PolicyFactory_Registry_Adapter.h"
 
 
 ACE_RCSID (tao,

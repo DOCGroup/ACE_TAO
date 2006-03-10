@@ -1,6 +1,6 @@
-#include "ORBInitializer_Registry_Impl.h"
-#include "ORBInitInfo.h"
-#include "PICurrent.h"
+#include "tao/PI/ORBInitializer_Registry_Impl.h"
+#include "tao/PI/ORBInitInfo.h"
+#include "tao/PI/PICurrent.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Constants.h"

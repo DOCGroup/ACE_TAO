@@ -71,7 +71,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ORB_Core_Auto_Ptr.inl"
+# include "tao/ORB_Core_Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

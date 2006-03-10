@@ -2,7 +2,7 @@
 
 #ifndef TAO_CONDITION_CPP
 #define TAO_CONDITION_CPP
-#include "Condition.h"
+#include "tao/Condition.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)

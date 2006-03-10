@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ThreadStrategySingle.h"
+#include "tao/PortableServer/ThreadStrategySingle.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

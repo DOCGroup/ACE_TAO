@@ -14,14 +14,14 @@
 #define TAO_PORTABLESERVER_IDASSIGNMENTSTRATEGYFACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "StrategyFactory.h"
-#include "IdAssignmentPolicyC.h"
+#include "tao/PortableServer/StrategyFactory.h"
+#include "tao/PortableServer/IdAssignmentPolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

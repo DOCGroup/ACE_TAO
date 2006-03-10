@@ -1,7 +1,7 @@
 // $Id$
 
-#include "IdUniquenessStrategyFactoryImpl.h"
-#include "IdUniquenessStrategy.h"
+#include "tao/PortableServer/IdUniquenessStrategyFactoryImpl.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,

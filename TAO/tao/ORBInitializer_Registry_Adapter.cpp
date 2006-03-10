@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ORBInitializer_Registry_Adapter.h"
+#include "tao/ORBInitializer_Registry_Adapter.h"
 
 ACE_RCSID (tao,
            ORBInitializer_Registry_Adapter,

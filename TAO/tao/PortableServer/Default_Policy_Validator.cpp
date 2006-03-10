@@ -1,10 +1,10 @@
 // $Id$
 
-#include "Default_Policy_Validator.h"
+#include "tao/PortableServer/Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            Default_Policy_Validator,

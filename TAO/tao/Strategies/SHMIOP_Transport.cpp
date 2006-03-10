@@ -1,11 +1,11 @@
 // $Id$
 
-#include "SHMIOP_Transport.h"
+#include "tao/Strategies/SHMIOP_Transport.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Connection_Handler.h"
-#include "SHMIOP_Profile.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Profile.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Queued_Message.h"
+#include "tao/Queued_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

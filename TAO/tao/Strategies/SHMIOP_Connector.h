@@ -30,7 +30,7 @@
 #include "ace/MEM_Connector.h"
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
-#include "SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 

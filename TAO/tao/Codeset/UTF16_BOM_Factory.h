@@ -22,10 +22,10 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
-#include "Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
-#include "UTF16_BOM_Translator.h"
-#include "codeset_export.h"
+#include "tao/Codeset/UTF16_BOM_Translator.h"
+#include "tao/Codeset/codeset_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

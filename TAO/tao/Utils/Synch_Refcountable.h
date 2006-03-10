@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 #include "tao/Versioned_Namespace.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -55,7 +55,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Synch_Refcountable.inl"
+# include "tao/Utils/Synch_Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

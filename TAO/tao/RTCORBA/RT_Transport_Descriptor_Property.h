@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -136,7 +136,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 /*****************************************************************************/
 
 #if defined (__ACE_INLINE__)
-#include "RT_Transport_Descriptor_Property.inl"
+#include "tao/RTCORBA/RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

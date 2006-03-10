@@ -1,7 +1,7 @@
 // $Id$
 
-#include "DynUnion_i.h"
-#include "DynAnyFactory.h"
+#include "tao/DynamicAny/DynUnion_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"

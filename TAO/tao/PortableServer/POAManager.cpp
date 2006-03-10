@@ -1,14 +1,14 @@
 // $Id$
 
-#include "POAManager.h"
-#include "Root_POA.h"
-#include "poa_macros.h"
+#include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/poa_macros.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/IORInterceptor_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-# include "POAManager.i"
+# include "tao/PortableServer/POAManager.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,

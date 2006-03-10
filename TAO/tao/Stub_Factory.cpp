@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Stub_Factory.h"
+#include "tao/Stub_Factory.h"
 
 ACE_RCSID (tao,
            TAO_Stub_Factory,

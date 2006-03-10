@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:288
 
 
-#include "OctetSeqC.h"
+#include "tao/OctetSeqC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:288
 
 
-#include "orb_typesC.h"
+#include "tao/orb_typesC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from

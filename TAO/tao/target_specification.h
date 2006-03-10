@@ -131,7 +131,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "target_specification.i"
+#include "tao/target_specification.i"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

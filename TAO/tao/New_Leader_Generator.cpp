@@ -1,6 +1,6 @@
 // $Id$
 
-#include "New_Leader_Generator.h"
+#include "tao/New_Leader_Generator.h"
 
 
 ACE_RCSID (tao,

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "OC_Endpoint_Selector_Loader.h"
-#include "OC_Endpoint_Selector_Factory.h"
+#include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
+#include "tao/Strategies/OC_Endpoint_Selector_Factory.h"
 
 ACE_RCSID (tao,
            OC_Endpoint_Selector_Loader,

@@ -33,7 +33,7 @@
 #define _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
 
 
-#include "ServerObjectS.h"
+#include "tao/ImR_Client/ServerObjectS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"

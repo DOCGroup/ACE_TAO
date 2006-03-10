@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ImplRepoC.h"
+#include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/ImR_Client/ServerObjectS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

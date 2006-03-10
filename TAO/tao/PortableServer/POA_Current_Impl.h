@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PS_ForwardC.h"
+#include "tao/PortableServer/PS_ForwardC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -178,7 +178,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "POA_Current_Impl.inl"
+# include "tao/PortableServer/POA_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

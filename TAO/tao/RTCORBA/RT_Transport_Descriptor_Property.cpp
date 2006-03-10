@@ -1,11 +1,11 @@
 // $Id$
 
-#include "RT_Transport_Descriptor_Property.h"
+#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 
 #include "ace/OS_Memory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "RT_Transport_Descriptor_Property.inl"
+#include "tao/RTCORBA/RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (RTCORBA,

@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #ifndef ACE_LACKS_PRAGMA_ONCE
 # pragma once

@@ -1,8 +1,8 @@
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "uiop_endpointsC.h"
+#include "tao/Strategies/uiop_endpointsC.h"
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"

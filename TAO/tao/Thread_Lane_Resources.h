@@ -24,7 +24,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
-#include "params.h"
+#include "tao/params.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CSD_Strategy_Proxy.h"
+#include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/debug.h"
 
@@ -10,7 +10,7 @@ ACE_RCSID (CSD_Framework,
 
 
 #if !defined (__ACE_INLINE__)
-# include "CSD_Strategy_Proxy.inl"
+# include "tao/CSD_Framework/CSD_Strategy_Proxy.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

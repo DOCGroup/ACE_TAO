@@ -4,7 +4,7 @@
 #define TAO_ADVANCED_RESOURCE_H
 #include /**/ "ace/pre.h"
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/default_resource.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

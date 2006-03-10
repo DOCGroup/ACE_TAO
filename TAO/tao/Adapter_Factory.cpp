@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Adapter_Factory.h"
+#include "tao/Adapter_Factory.h"
 
 // ****************************************************************
 

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "IdAssignmentPolicyC.h"
+#include "tao/PortableServer/IdAssignmentPolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

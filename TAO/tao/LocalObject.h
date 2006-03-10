@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Object.h"
+#include "tao/Object.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -262,7 +262,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "LocalObject.i"
+# include "tao/LocalObject.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

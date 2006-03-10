@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:293
 
 
-#include "IFR_BasicC.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/CDR.h"
 #include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/AnyTypeCode/orb_typesA.h"
@@ -62,7 +62,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "IFR_BasicC.inl"
+#include "tao/IFR_Client/IFR_BasicC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

@@ -16,14 +16,14 @@
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "poa_macros.h"
-#include "POAManagerC.h"
+#include "tao/PortableServer/poa_macros.h"
+#include "tao/PortableServer/POAManagerC.h"
 
 // Local Object
 #include "tao/LocalObject.h"
@@ -164,7 +164,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "POAManager.i"
+# include "tao/PortableServer/POAManager.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

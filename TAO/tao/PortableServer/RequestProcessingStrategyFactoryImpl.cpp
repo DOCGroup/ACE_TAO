@@ -1,10 +1,10 @@
 // $Id$
 
-#include "RequestProcessingStrategyFactoryImpl.h"
-#include "RequestProcessingStrategyAOMOnly.h"
-#include "RequestProcessingStrategyDefaultServant.h"
-#include "RequestProcessingStrategyServantLocator.h"
-#include "RequestProcessingStrategyServantActivator.h"
+#include "tao/PortableServer/RequestProcessingStrategyFactoryImpl.h"
+#include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
+#include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantLocator.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

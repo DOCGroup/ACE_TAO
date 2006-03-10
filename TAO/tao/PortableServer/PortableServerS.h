@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "PortableServerC.h"
+#include "tao/PortableServer/PortableServerC.h"
 #include "tao/Policy_ForwardS.h"
 #include "tao/OctetSeqS.h"
 #include "tao/orb_typesS.h"

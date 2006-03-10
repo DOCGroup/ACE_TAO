@@ -1,5 +1,5 @@
 //$Id$
-#include "Connection_Timeout_Policy_i.h"
+#include "tao/Messaging/Connection_Timeout_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"

@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

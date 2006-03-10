@@ -1,10 +1,10 @@
 // $Id$
 
-#include "SHMIOP_Endpoint.h"
+#include "tao/Strategies/SHMIOP_Endpoint.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
@@ -17,7 +17,7 @@ ACE_RCSID (Strategies,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SHMIOP_Endpoint.i"
+# include "tao/Strategies/SHMIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

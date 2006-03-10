@@ -16,14 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "codecfactory_export.h"
+#include "tao/CodecFactory/codecfactory_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #define TAO_CODECFACTORY_SAFE_INCLUDE
-#include "IOP_CodecC.h"
+#include "tao/CodecFactory/IOP_CodecC.h"
 #undef TAO_CODECFACTORY_SAFE_INCLUDE
 
 #include "tao/Object_Loader.h"

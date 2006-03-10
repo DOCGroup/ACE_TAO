@@ -17,7 +17,7 @@
 #define TAO_SMARTPROXIES_H
 #include /**/ "ace/pre.h"
 
-#include "smartproxies_export.h"
+#include "tao/SmartProxies/smartproxies_export.h"
 #include "tao/Object.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/LocalObject.h"
@@ -56,7 +56,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Smart_Proxies.inl"
+#include "tao/SmartProxies/Smart_Proxies.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

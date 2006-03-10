@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ORBInitInfoC.h"
+#include "tao/PI/ORBInitInfoC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -328,7 +328,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ORBInitInfo.inl"
+#include "tao/PI/ORBInitInfo.inl"
 #endif  /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

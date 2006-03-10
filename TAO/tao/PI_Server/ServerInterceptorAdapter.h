@@ -29,12 +29,12 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ServerRequestInterceptorC.h"
+#include "tao/PI_Server/ServerRequestInterceptorC.h"
 
 #include "tao/PI/Interceptor_List_T.h"
 #include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/Basic_Types.h"
-#include "ServerRequestDetails.h"
+#include "tao/PI_Server/ServerRequestDetails.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

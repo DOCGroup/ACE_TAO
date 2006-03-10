@@ -1,5 +1,5 @@
-#include "CORBA_String.h"
-#include "Managed_Types.h"
+#include "tao/CORBA_String.h"
+#include "tao/Managed_Types.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"

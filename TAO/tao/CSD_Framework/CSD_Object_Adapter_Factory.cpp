@@ -1,10 +1,10 @@
 // $Id$
 
-#include "CSD_Object_Adapter_Factory.h"
-#include "CSD_Strategy_Repository.h"
-#include "CSD_Object_Adapter.h"
-#include "CSD_ORBInitializer.h"
-#include "CSD_Default_Servant_Dispatcher.h"
+#include "tao/CSD_Framework/CSD_Object_Adapter_Factory.h"
+#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
+#include "tao/CSD_Framework/CSD_Object_Adapter.h"
+#include "tao/CSD_Framework/CSD_ORBInitializer.h"
+#include "tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/Dynamic_Service.h"

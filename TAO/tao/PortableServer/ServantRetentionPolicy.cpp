@@ -1,5 +1,5 @@
-#include "ServantRetentionPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/ServantRetentionPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            ServantRetentionPolicy,

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IORInfoC.h"
+#include "tao/IORInterceptor/IORInfoC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -161,7 +161,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "IORInfo.inl"
+# include "tao/IORInterceptor/IORInfo.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

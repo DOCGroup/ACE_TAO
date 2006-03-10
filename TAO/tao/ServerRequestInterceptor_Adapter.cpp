@@ -1,4 +1,4 @@
-#include "ServerRequestInterceptor_Adapter.h"
+#include "tao/ServerRequestInterceptor_Adapter.h"
 
 ACE_RCSID (tao,
            ServerRequestInterceptorAdapter,

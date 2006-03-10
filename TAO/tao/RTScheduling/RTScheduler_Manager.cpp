@@ -1,9 +1,9 @@
 // $Id$
 
-#include "RTScheduler_Manager.h"
+#include "tao/RTScheduling/RTScheduler_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "RTScheduler_Manager.i"
+#include "tao/RTScheduling/RTScheduler_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(TAO, RT_ORB, "$Id$")

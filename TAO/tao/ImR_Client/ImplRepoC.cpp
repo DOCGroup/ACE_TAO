@@ -38,7 +38,7 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "ImplRepoC.h"
+#include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/CDR.h"
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
@@ -55,7 +55,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ImplRepoC.inl"
+#include "tao/ImR_Client/ImplRepoC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

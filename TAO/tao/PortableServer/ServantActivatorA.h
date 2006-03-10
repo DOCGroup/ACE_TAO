@@ -33,8 +33,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "ServantActivatorC.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/PortableServer/PS_ForwardA.h"
 #include "tao/PortableServer/ServantManagerA.h"
 #include "tao/PortableServer/ForwardRequestA.h"

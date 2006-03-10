@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Default_Protocols_Hooks.h"
+#include "tao/Default_Protocols_Hooks.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (tao,

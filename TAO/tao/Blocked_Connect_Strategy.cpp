@@ -1,5 +1,5 @@
-#include "Blocked_Connect_Strategy.h"
-#include "Connection_Handler.h"
+#include "tao/Blocked_Connect_Strategy.h"
+#include "tao/Connection_Handler.h"
 
 #include "ace/Synch_Options.h"
 

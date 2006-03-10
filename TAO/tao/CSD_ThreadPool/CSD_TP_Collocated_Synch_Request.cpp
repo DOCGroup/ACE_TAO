@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CSD_TP_Collocated_Synch_Request.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h"
 
 ACE_RCSID (CSD_ThreadPool,
            TP_Collocated_Synch_Request,
@@ -9,7 +9,7 @@ ACE_RCSID (CSD_ThreadPool,
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "CSD_TP_Collocated_Synch_Request.inl"
+# include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
 
 // $Id$
 
-#include "RTScheduler_Loader.h"
-#include "RTScheduler_Initializer.h"
+#include "tao/RTScheduling/RTScheduler_Loader.h"
+#include "tao/RTScheduling/RTScheduler_Initializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

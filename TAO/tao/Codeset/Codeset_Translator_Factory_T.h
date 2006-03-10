@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -74,7 +74,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Codeset_Translator_Factory_T.cpp"
+#include "tao/Codeset/Codeset_Translator_Factory_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

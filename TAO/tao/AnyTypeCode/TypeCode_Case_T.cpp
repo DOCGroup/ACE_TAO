@@ -3,7 +3,7 @@
 #ifndef TAO_TYPECODE_CASE_T_CPP
 #define TAO_TYPECODE_CASE_T_CPP
 
-#include "TypeCode_Case_T.h"
+#include "tao/AnyTypeCode/TypeCode_Case_T.h"
 
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"

@@ -1,26 +1,26 @@
 // $Id$
 
-#include "TypeCode_CDR_Extraction.h"
+#include "tao/AnyTypeCode/TypeCode_CDR_Extraction.h"
 
-#include "TypeCode_Constants.h"
-#include "True_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/True_RefCount_Policy.h"
 
-#include "Alias_TypeCode.h"
-#include "Enum_TypeCode.h"
-#include "Fixed_TypeCode.h"
-#include "Objref_TypeCode.h"
-#include "Sequence_TypeCode.h"
-#include "String_TypeCode.h"
-#include "Struct_TypeCode.h"
-#include "Union_TypeCode.h"
-#include "Value_TypeCode.h"
-#include "Any.h"
+#include "tao/AnyTypeCode/Alias_TypeCode.h"
+#include "tao/AnyTypeCode/Enum_TypeCode.h"
+#include "tao/AnyTypeCode/Fixed_TypeCode.h"
+#include "tao/AnyTypeCode/Objref_TypeCode.h"
+#include "tao/AnyTypeCode/Sequence_TypeCode.h"
+#include "tao/AnyTypeCode/String_TypeCode.h"
+#include "tao/AnyTypeCode/Struct_TypeCode.h"
+#include "tao/AnyTypeCode/Union_TypeCode.h"
+#include "tao/AnyTypeCode/Value_TypeCode.h"
+#include "tao/AnyTypeCode/Any.h"
 
-#include "Recursive_Type_TypeCode.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 
-#include "TypeCode_Case_T.h"
-#include "TypeCode_Struct_Field.h"
-#include "TypeCode_Value_Field.h"
+#include "tao/AnyTypeCode/TypeCode_Case_T.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 
 #include "tao/CDR.h"
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Collocation_Proxy_Broker.h"
+#include "tao/Collocation_Proxy_Broker.h"
 
 
 ACE_RCSID (tao,

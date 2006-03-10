@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"

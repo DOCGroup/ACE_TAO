@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ThreadStrategy.h"
+#include "tao/PortableServer/ThreadStrategy.h"
 #include "tao/orbconf.h"
 #include "ace/Service_Config.h"
 

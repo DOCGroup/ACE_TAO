@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // SCIOP_Profile.cpp
 
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -11,7 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/StringSeqC.h"
-#include "sciop_endpointsC.h"
+#include "tao/Strategies/sciop_endpointsC.h"
 
 ACE_RCSID(Strategies,
           SCIOP_Profile,

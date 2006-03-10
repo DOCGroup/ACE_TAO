@@ -1,5 +1,5 @@
 
-#include "PortableServer_PolicyFactory.h"
+#include "tao/PI_Server/PortableServer_PolicyFactory.h"
 
 #include "tao/PortableServer/ThreadPolicy.h"
 #include "tao/PortableServer/LifespanPolicy.h"
@@ -9,7 +9,7 @@
 #include "tao/PortableServer/RequestProcessingPolicy.h"
 #include "tao/PortableServer/ServantRetentionPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "Policy_Creator_T.h"
+#include "tao/PI_Server/Policy_Creator_T.h"
 
 ACE_RCSID (PortableServer,
            PortableServer_PolicyFactory,

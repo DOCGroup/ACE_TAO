@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Pluggable_Messaging.h"
+#include "tao/Pluggable_Messaging.h"
 
 ACE_RCSID (tao,
            Pluggable_Messaging,

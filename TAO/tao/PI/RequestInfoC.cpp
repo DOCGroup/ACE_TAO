@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "RequestInfoC.h"
+#include "tao/PI/RequestInfoC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

@@ -8,8 +8,8 @@
  */
 // =================================================================
 
-#include "CodecFactory.h"
-#include "CodecFactory_impl.h"
+#include "tao/CodecFactory/CodecFactory.h"
+#include "tao/CodecFactory/CodecFactory_impl.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"

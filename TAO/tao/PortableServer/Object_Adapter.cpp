@@ -1,17 +1,17 @@
 // $Id$
 
 // -- PortableServer Include --
-#include "Object_Adapter.h"
-#include "Non_Servant_Upcall.h"
-#include "Servant_Upcall.h"
-#include "Root_POA.h"
-#include "Regular_POA.h"
-#include "Creation_Time.h"
-#include "POA_Guard.h"
-#include "Default_Servant_Dispatcher.h"
-#include "Collocated_Object_Proxy_Broker.h"
-#include "POAManager.h"
-#include "Servant_Base.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Regular_POA.h"
+#include "tao/PortableServer/Creation_Time.h"
+#include "tao/PortableServer/POA_Guard.h"
+#include "tao/PortableServer/Default_Servant_Dispatcher.h"
+#include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
+#include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
@@ -36,16 +36,16 @@
 #include "tao/ServerRequestInterceptor_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Object_Adapter.i"
+# include "tao/PortableServer/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ThreadPolicy.h"
-#include "LifespanPolicy.h"
-#include "IdAssignmentPolicy.h"
-#include "IdUniquenessPolicy.h"
-#include "ImplicitActivationPolicy.h"
-#include "RequestProcessingPolicy.h"
-#include "ServantRetentionPolicy.h"
+#include "tao/PortableServer/ThreadPolicy.h"
+#include "tao/PortableServer/LifespanPolicy.h"
+#include "tao/PortableServer/IdAssignmentPolicy.h"
+#include "tao/PortableServer/IdUniquenessPolicy.h"
+#include "tao/PortableServer/ImplicitActivationPolicy.h"
+#include "tao/PortableServer/RequestProcessingPolicy.h"
+#include "tao/PortableServer/ServantRetentionPolicy.h"
 
 ACE_RCSID (PortableServer,
            Object_Adapter,

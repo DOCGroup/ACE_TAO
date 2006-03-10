@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Block_Flushing_Strategy.h"
-#include "Transport.h"
-#include "Queued_Message.h"
+#include "tao/Block_Flushing_Strategy.h"
+#include "tao/Transport.h"
+#include "tao/Queued_Message.h"
 
 ACE_RCSID(tao, Block_Flushing_Strategy, "$Id$")
 

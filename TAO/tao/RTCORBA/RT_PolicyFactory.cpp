@@ -1,4 +1,4 @@
-#include "RT_PolicyFactory.h"
+#include "tao/RTCORBA/RT_PolicyFactory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -6,7 +6,7 @@ ACE_RCSID (RTCORBA,
            RT_PolicyFactory,
            "$Id$")
 
-#include "RT_Policy_i.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
 
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"

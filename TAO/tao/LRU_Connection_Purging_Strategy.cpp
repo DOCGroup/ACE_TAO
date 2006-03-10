@@ -1,7 +1,7 @@
 // $Id$
 
-#include "LRU_Connection_Purging_Strategy.h"
-#include "Transport.h"
+#include "tao/LRU_Connection_Purging_Strategy.h"
+#include "tao/Transport.h"
 
 ACE_RCSID (tao,
            LRU_Connection_Purging_Strategy,

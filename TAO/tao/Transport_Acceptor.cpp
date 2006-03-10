@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Transport_Acceptor.h"
+#include "tao/Transport_Acceptor.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Transport_Acceptor.inl"
+# include "tao/Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

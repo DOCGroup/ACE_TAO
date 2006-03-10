@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CDR_Encaps_Codec.h"
+#include "tao/CodecFactory/CDR_Encaps_Codec.h"
 
 #include "tao/CDR.h"
 #include "tao/OctetSeqC.h"

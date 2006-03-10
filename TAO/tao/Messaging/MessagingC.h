@@ -44,7 +44,7 @@
 #error "You should not include MessagingC.h directly, use Messaging.h"
 #endif /* !TAO_MESSAGING_SAFE_INCLUDE */
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -245,7 +245,7 @@ TAO_Messaging_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Rep
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "MessagingC.inl"
+#include "tao/Messaging/MessagingC.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

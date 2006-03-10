@@ -29,13 +29,13 @@
 // be\be_codegen.cpp:277
 
 
-#include "Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/CDR.h"
 #include "tao/Object_T.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "MessagingC.inl"
+#include "tao/Messaging/MessagingC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

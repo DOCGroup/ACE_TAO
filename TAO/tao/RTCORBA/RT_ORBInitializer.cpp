@@ -1,4 +1,4 @@
-#include "RT_ORBInitializer.h"
+#include "tao/RTCORBA/RT_ORBInitializer.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -11,21 +11,21 @@ ACE_RCSID (RTCORBA,
 #include "tao/RTCORBA/RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
-#include "RT_Policy_i.h"
-#include "RT_PolicyFactory.h"
-#include "RT_Protocols_Hooks.h"
-#include "Priority_Mapping_Manager.h"
-#include "Network_Priority_Mapping_Manager.h"
-#include "RT_ORB_Loader.h"
-#include "RT_Stub_Factory.h"
-#include "RT_Endpoint_Selector_Factory.h"
-#include "Continuous_Priority_Mapping.h"
-#include "Linear_Priority_Mapping.h"
-#include "Direct_Priority_Mapping.h"
-#include "Linear_Network_Priority_Mapping.h"
-#include "RT_ORB.h"
-#include "RT_Current.h"
-#include "RT_Thread_Lane_Resources_Manager.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
+#include "tao/RTCORBA/RT_PolicyFactory.h"
+#include "tao/RTCORBA/RT_Protocols_Hooks.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/RT_ORB_Loader.h"
+#include "tao/RTCORBA/RT_Stub_Factory.h"
+#include "tao/RTCORBA/RT_Endpoint_Selector_Factory.h"
+#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Priority_Mapping.h"
+#include "tao/RTCORBA/Direct_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Network_Priority_Mapping.h"
+#include "tao/RTCORBA/RT_ORB.h"
+#include "tao/RTCORBA/RT_Current.h"
+#include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"

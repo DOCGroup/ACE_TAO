@@ -1,5 +1,5 @@
-#include "IORManip_Loader.h"
-#include "IORManipulation.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
+#include "tao/IORManipulation/IORManipulation.h"
 
 #include "ace/Log_Msg.h"
 
