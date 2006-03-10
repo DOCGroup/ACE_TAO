@@ -1,3 +1,9 @@
+Fri Mar 10 11:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Any/Recursive/Test.idl:
+        * tests/Any/Recursive/client.cpp:
+          Also added a test for a recursive union with no default
+
 Fri Mar 10 10:44:29 GMT 2006  Don Sharp <Donald.Sharp@prismtech.com>
 
         * orbsvcs/tests/Bug_2377_Regression/Hello.cpp:
