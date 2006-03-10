@@ -196,6 +196,22 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
                                               the_any
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Recursive member case with enum .
+  Test::VSortRecursiveUnionSeq vsortseq;
+  vsortseq.length (2);
+  vsortseq[0].i (37);
+  vsortseq[1].recursive_unions (Test::VSortRecursiveUnionSeq ());
+
+  Test::VSortRecursiveUnion vsort_foo;
+  vsort_foo.recursive_unions (vsortseq);
+
+  the_any <<= vsort_foo;
+
+  ::perform_invocation<Test::RecursiveUnion> (hello,
+                                              the_any
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
