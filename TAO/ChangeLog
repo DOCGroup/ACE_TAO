@@ -1,3 +1,8 @@
+Fri Mar 10 09:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Stub.cpp:
+          Fixed warning in vc6 build
+
 Fri Mar 10 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/client.cpp:
