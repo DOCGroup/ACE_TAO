@@ -1,3 +1,12 @@
+Fri Mar 10 16:01:58 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing the following on behalf of Adam Mitz
+        <mitza at ociweb dot com>.
+
+        * bin/tao_orb_tests.lst:
+
+          Added TAO/tests/CollocationLockup.
+
 Fri Mar 10 14:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
@@ -12,9 +21,9 @@ Fri Mar 10 08:58:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Thu Mar  9 09:18:58 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* COPYING: Updated the date to include 2006.
-	  Thanks to Alan Kierstead <ackierstead at fedex dot com> for
- 	  motivating the fix to this oversight.
+        * COPYING: Updated the date to include 2006.
+          Thanks to Alan Kierstead <ackierstead at fedex dot com> for
+          motivating the fix to this oversight.
 
 Thu Mar  9 15:28:53 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
