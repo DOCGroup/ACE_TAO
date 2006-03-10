@@ -208,9 +208,9 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   the_any <<= vsort_foo;
 
-  ::perform_invocation<Test::RecursiveUnion> (hello,
-                                              the_any
-                                              ACE_ENV_ARG_PARAMETER);
+  ::perform_invocation<Test::VSortRecursiveUnion> (hello,
+                                                   the_any
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
