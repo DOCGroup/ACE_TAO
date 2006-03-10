@@ -1,10 +1,19 @@
+Fri Mar 10 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Any/Recursive/client.cpp:
+        * tests/Any/Recursive/Test.idl:
+          Extended this test with a new test case as described in bug
+          2446. This test now fails again because this added test case
+          uncovers a new bug. Thanks to Tommy Persson
+          <tpe at ida dot liu dot se> for delivering this test case
+
 Fri Mar 10 07:09:22 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/...*.cpp:
         * tao/...*.h:
         * tao/...*.i:
         * tao/...*.inl:
-        
+
           Add "tao/..." prefix to #includes of *.h, *.i, *.inl, and
           template *.cpp files found in ${TAO_ROOT}/tao.
 
