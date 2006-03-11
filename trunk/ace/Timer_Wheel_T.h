@@ -206,11 +206,10 @@ private:
   /// The total number of timers currently scheduled.
   u_int timer_count_;
 
-  // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (
-    ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (
-    void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
+  // = Don't allow these operations for now, don't split into multiple lines
+  // breaks sun compilers
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
