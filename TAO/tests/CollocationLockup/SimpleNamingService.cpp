@@ -30,7 +30,7 @@ public:
   virtual CORBA::Object_ptr
   resolve () ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return CORBA::Object::_duplicate (obj_);
+    return CORBA::Object::_duplicate (obj_.in ());
   }
 
 private:
