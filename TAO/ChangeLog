@@ -1,10 +1,16 @@
+Sat Mar 11 12:16:01 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/CollocationLockup/SimpleNamingService.cpp:
+        
+          Fixed a warning with gcc.
+
 Fri Mar 10 20:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
         * orbsvcs/tests/Bug_2248_Regression/client.cpp:
 
           Removed extra "orbsvcs/" prefix when including orbsvcs
-          headers.  
+          headers.
 
 Fri Mar 10 15:57:32 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
