@@ -15,7 +15,8 @@ Sat Mar 11 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl.>
 
         * ace/Timer_Wheel_T.h:
           Don't split the unimplemented macros over multiple lines, fixes
-          compile problems with the Sun compilers. Thanks to Sven
+          compile problems with the Sun compilers. Thanks to Sven-Uwe
+          Sieler-Hornke
           <sven-uwe dot sieler-hornke at investment-cybernetics dot de>
           for reporting this
 
