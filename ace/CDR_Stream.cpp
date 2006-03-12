@@ -201,7 +201,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
       return (this->good_bit_ = false);
     }
   if (static_cast<ACE_CDR::Short> (major_version_) == 1
-          && static_cast<ACE_CDR::Short> (minor_version_) == 2)
+      && static_cast<ACE_CDR::Short> (minor_version_) == 2)
     {
       ACE_CDR::Octet len =
         static_cast<ACE_CDR::Octet> (ACE_OutputCDR::wchar_maxbytes_);
@@ -210,24 +210,24 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
           if (ACE_OutputCDR::wchar_maxbytes_ == sizeof(ACE_CDR::WChar))
             return
               this->write_octet_array (
-                reinterpret_cast<const ACE_CDR::Octet*> (&x),
-                static_cast<ACE_CDR::ULong> (len));
+                                       reinterpret_cast<const ACE_CDR::Octet*> (&x),
+                                       static_cast<ACE_CDR::ULong> (len));
           else
             if (ACE_OutputCDR::wchar_maxbytes_ == 2)
               {
                 ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
                 return
                   this->write_octet_array (
-                    reinterpret_cast<const ACE_CDR::Octet*> (&sx),
-                    static_cast<ACE_CDR::ULong> (len));
+                                           reinterpret_cast<const ACE_CDR::Octet*> (&sx),
+                                           static_cast<ACE_CDR::ULong> (len));
               }
             else
               {
                 ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
                 return
                   this->write_octet_array (
-                    reinterpret_cast<const ACE_CDR::Octet*> (&ox),
-                    static_cast<ACE_CDR::ULong> (len));
+                                           reinterpret_cast<const ACE_CDR::Octet*> (&ox),
+                                           static_cast<ACE_CDR::ULong> (len));
               }
         }
     }
@@ -324,7 +324,7 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
       }
     else if (this->write_ulong (1))
       return this->write_wchar (0);
-   return (this->good_bit_ = false);
+  return (this->good_bit_ = false);
 }
 
 ACE_CDR::Boolean
