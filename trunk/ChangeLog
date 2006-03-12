@@ -1,3 +1,16 @@
+Sun Mar 12 11:00:08 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Don't postfix ".EXE" onto executables if they already have it and
+          IgnoreExeSubDir is set. Will make this:
+
+          $PERL_SCRIPT = new PerlACE::Process($^X);
+          $PERL_SCRIPT->Arguments("some_perl_script.pl");
+          $PERL_SCRIPT->IgnoreExeSubDir(1);
+
+          ... start working again.
+
 Sat Mar 11 12:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl.>
 
         * ace/Timer_Wheel_T.h:
