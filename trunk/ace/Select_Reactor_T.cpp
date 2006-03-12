@@ -1560,10 +1560,25 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump (void) const
        ++handle_iter_ex_ready)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_ready = %d\n"), h));
 
+  for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.wr_mask_);
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
+       ++handle_iter_su_ready)
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle_suspend = %d\n"), h));
+
+  for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.rd_mask_);
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
+       ++handle_iter_su_ready)
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle_suspend = %d\n"), h));
+
+  for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.ex_mask_);
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
+       ++handle_iter_su_ready)
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_suspend = %d\n"), h));
+
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("restart_ = %d\n"), this->restart_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nrequeue_position_ = %d\n"), this->requeue_position_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ninitialized_ = %d\n"), this->initialized_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nowner_ = %d\n"), this->owner_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("requeue_position_ = %d\n"), this->requeue_position_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("initialized_ = %d\n"), this->initialized_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("owner_ = %d\n"), this->owner_));
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_->dump ();

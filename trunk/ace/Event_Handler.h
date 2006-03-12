@@ -151,10 +151,11 @@ public:
    * take care of resumption of the handler. The application can
    * return a value more than zero and decide to resume the handler
    * themseleves.
+   *
+   * @note This method is only useful for the ACE_TP_Reactor. Sad
+   * that we have to have this method in a class that is supposed to
+   * be used across different components in ACE.
    */
-  // @@ NOTE: This method is only useful for the ACE_TP_Reactor. Sad
-  // that we have to have this method in a class that is supposed to
-  // be used across different componets in ACE.
   virtual int resume_handler (void);
 
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
