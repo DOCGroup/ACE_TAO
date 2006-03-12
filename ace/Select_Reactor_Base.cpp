@@ -446,8 +446,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
   // Call remove_reference() if the removal is complete and reference
   // counting is needed.
-  if (complete_removal &&
-      requires_reference_counting)
+  if (complete_removal && requires_reference_counting)
     {
       event_handler->remove_reference ();
     }
@@ -525,7 +524,7 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("(%t) max_handlep1_ = %d, max_size_ = %d\n"),
+              ACE_LIB_TEXT ("max_handlep1_ = %d, max_size_ = %d\n"),
               this->max_handlep1_, this->max_size_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("[")));
 
@@ -534,7 +533,7 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (event_handler) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (event_handler = %x, event_handler->handle_ = %d)"),
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (event_handler = %x, event_handler->handle_ = %d)\n"),
                 event_handler, event_handler->get_handle ()));
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]")));
