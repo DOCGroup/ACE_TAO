@@ -19,7 +19,7 @@ ACE_OS::select (int width,
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // We must defend against non-conformity!
   timeval copy;
-  timeval *timep;
+  timeval *timep = 0;
 
   if (timeout != 0)
     {
