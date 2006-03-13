@@ -20,6 +20,14 @@
 #include "ace/DLL.h"
 #include "ace/SString.h"
 
+<<<<<<< MonitorController.cpp
+namespace CIAO
+{
+  typedef MonitorBase* (*MonitorFactory) (void);
+
+  /// for the CIAO monitor
+  const char* monitor_lib_name = "ciaomonlib";
+=======
 namespace CIAO
 {
   typedef MonitorBase* (*MonitorFactory) (void);
@@ -33,11 +41,26 @@ namespace CIAO
 
   static const char* factory_func = "createMonitor";
 }
+>>>>>>> 1.7
+
+<<<<<<< MonitorController.cpp
+  // The interval after which update will be sent.
+  // This value will sent by the EM in the later implementation
+  const int interval = 10;
+
+  static const char* factory_func = "createMonitor";
+};
 
 CIAO::MonitorController::MonitorController (CORBA::ORB_ptr orb,
                                             ::Deployment::Domain& domain,
                                             ::Deployment::TargetManager_ptr target
                                             )
+=======
+CIAO::MonitorController::MonitorController (CORBA::ORB_ptr orb,
+                                            ::Deployment::Domain& domain,
+                                            ::Deployment::TargetManager_ptr target
+                                            )
+>>>>>>> 1.7
   : target_facet_i_ (::Deployment::TargetManager::_duplicate (target)),
     terminate_flag_ (0),
     orb_ (orb),
@@ -45,7 +68,11 @@ CIAO::MonitorController::MonitorController (CORBA::ORB_ptr orb,
 {
 }
 
+<<<<<<< MonitorController.cpp
+int CIAO::MonitorController::init()
+=======
 int CIAO::MonitorController::svc (void)
+>>>>>>> 1.7
 {
     ACE_DLL dll;
 
@@ -115,6 +142,45 @@ CIAO::MonitorController::~MonitorController ()
 {
   terminate ();
   wait ();
+}
+
+<<<<<<< MonitorController.cpp
+
+int CIAO::MonitorController::svc (void)
+=======
+void CIAO::MonitorController::terminate ()
+>>>>>>> 1.7
+{
+<<<<<<< MonitorController.cpp
+  init ();
+  if (CIAO::debug_level () > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG , "Terminating Monitor\n"));
+    }
+  return 0;
+=======
+  // make the terminate flag false
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             guard,
+             lock_
+             );
+  ACE_DEBUG ((LM_DEBUG , "WITHIN TERMINATE CALL  ......"));
+  terminate_flag_=1;
+>>>>>>> 1.7
+}
+
+<<<<<<< MonitorController.cpp
+CIAO::MonitorController::~MonitorController ()
+=======
+bool CIAO::MonitorController::terminating ()
+>>>>>>> 1.7
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    guard,
+                    lock_,
+                    0
+                    );
+  return terminate_flag_;
 }
 
 void CIAO::MonitorController::terminate ()
