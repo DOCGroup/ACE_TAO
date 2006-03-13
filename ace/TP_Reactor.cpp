@@ -478,12 +478,14 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
     }
 
   // Suspend the handler so that other threads don't start dispatching
-  // it.
+  // it, if we can't suspend then return directly
   //
   // NOTE: This check was performed in older versions of the
   // TP_Reactor. Looks like it is a waste..
   if (dispatch_info.event_handler_ != this->notify_handler_)
-    this->suspend_i (dispatch_info.handle_);
+    if (this->suspend_i (dispatch_info.handle_) == -1)
+      return 0;
+
 
   int resume_flag =
     dispatch_info.event_handler_->resume_handler ();
