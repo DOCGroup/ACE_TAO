@@ -1,3 +1,10 @@
+Mon Mar 13 22:21:25 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * ace/Process.h:
+          Changed the documentation of ACE_Process::spawn function.It
+          returns 1 if avoid_zombies option is set. does not return the
+          pid.
+
 Mon Mar 13 19:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.cpp:
