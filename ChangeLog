@@ -1,3 +1,8 @@
+Mon Mar 13 13:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TP_Reactor.cpp (handle_socket_events):
+          When suspend_i returns -1 return directly
+
 Mon Mar 13 12:11:52 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * ace/OS_NS_Thread.inl
