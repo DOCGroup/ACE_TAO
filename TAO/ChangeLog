@@ -1,3 +1,9 @@
+Mon Mar 13 10:09:21 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2186_Regression/server.conf:
+
+          Add '-ORBConnectionHandlerCleanup true' to get this test to pass.
+
 Sun Mar 12 10:21:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
