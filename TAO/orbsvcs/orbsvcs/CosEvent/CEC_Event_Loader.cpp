@@ -34,7 +34,14 @@ ACE_RCSID (CosEvent,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void)
+TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void) :
+  attributes_ (0)
+  , factory_ (0)
+  , ec_impl_ (0)
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  , typed_attributes_ (0)
+  , typed_ec_impl_ (0)
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 {
   // Constructor
 }
@@ -149,25 +156,25 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             default:
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Usage: %s "
-                          "-n service_name "
-                          "-o ior_file_name "
-                          "-p pid_file_name "
-                          "-x [disable naming service bind] "
-                          "-r [rebind, no AlreadyBound failures] "
-                          "-t [enable typed event channel] "
-                          "-d [destroy typed event channel on shutdown] "
-                          "\n"),
+                          ACE_TEXT ("Usage: %s ")
+                          ACE_TEXT ("-n service_name ")
+                          ACE_TEXT ("-o ior_file_name ")
+                          ACE_TEXT ("-p pid_file_name ")
+                          ACE_TEXT ("-x [disable naming service bind]")
+                          ACE_TEXT ("-r [rebind, no AlreadyBound failures] ")
+                          ACE_TEXT ("-t [enable typed event channel]")
+                          ACE_TEXT ("-d [destroy typed event channelon shutdown] ")
+                          ACE_TEXT ("\n"),
                           argv[0]));
 #else
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Usage: %s "
-                          "-n service_name "
-                          "-o ior_file_name "
-                          "-p pid_file_name "
-                          "-x [disable naming service bind] "
-                          "-r [rebind, no AlreadyBound failures] "
-                          "\n"),
+                          ACE_TEXT ("Usage: %s ")
+                          ACE_TEXT ("-n service_name ")
+                          ACE_TEXT ("-o ior_file_name ")
+                          ACE_TEXT ("-p pid_file_name ")
+                          ACE_TEXT ("-x [disable naming service bind] ")
+                          ACE_TEXT ("-r [rebind, no AlreadyBound failures] ")
+                          ACE_TEXT ("\n"),
                           argv[0]));
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
               return CORBA::Object::_nil ();
@@ -232,7 +239,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       if (pid_file != 0)
         {
-          FILE *pidf = ACE_OS::fopen (pid_file, "w");
+          FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
@@ -361,7 +368,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                 orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              FILE *iorf = ACE_OS::fopen (ior_file, "w");
+              FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
               if (iorf != 0)
                 {
                   ACE_OS::fprintf (iorf, "%s\n", ior.in ());
@@ -371,7 +378,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           if (pid_file != 0)
             {
-              FILE *pidf = ACE_OS::fopen (pid_file, "w");
+              FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
               if (pidf != 0)
                 {
                   ACE_OS::fprintf (pidf,
@@ -398,7 +405,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               ACE_TRY_CHECK;
 
               this->channel_name_.length (1);
-              this->channel_name_[0].id = CORBA::string_dup (service_name);
+              this->channel_name_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(service_name));
 
               if (use_rebind)
                 {
@@ -441,22 +448,25 @@ TAO_CEC_Event_Loader::fini (void)
   ACE_TRY
     {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-      // Release the resources of the Typed Event Channel
-      this->typed_ec_impl_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if(this->typed_ec_impl_)
+        {
+          // Release the resources of the Typed Event Channel
+          this->typed_ec_impl_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      // Deactivate the Typed EC
-      // This will raise an exception if destroy == 1
-      PortableServer::POA_var t_poa =
-        this->typed_ec_impl_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          // Deactivate the Typed EC
+          // This will raise an exception if destroy == 1
+          PortableServer::POA_var t_poa =
+          this->typed_ec_impl_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      PortableServer::ObjectId_var t_id =
-        t_poa->servant_to_id (this->typed_ec_impl_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          PortableServer::ObjectId_var t_id =
+          t_poa->servant_to_id (this->typed_ec_impl_ ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 #else
       // Release the resources of the Event Channel
       this->ec_impl_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -492,14 +502,13 @@ TAO_CEC_Event_Loader::fini (void)
           ACE_TRY_CHECK_EX (foo);
         }
 
-      // Since we created them, we also have to delete them.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+      // Since we created them, we also have to delete them.
       delete this->typed_attributes_;
       delete this->typed_ec_impl_;
-#else
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
       delete this->attributes_;
       delete this->ec_impl_;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
     }
   ACE_CATCHANY
     {
