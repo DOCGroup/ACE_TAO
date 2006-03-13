@@ -1,3 +1,12 @@
+Mon Mar 13 07:51:10 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* Reverted this change
+  
+          Sun Mar 12 09:10:01 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+	  
+	  Since it was causing runtime failures.  Thanks to Johnny for
+ 	  reporting this.
+
 Mon Mar 13 13:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.cpp (handle_socket_events):
