@@ -80,7 +80,7 @@ Message_Block_Test: !chorus !ACE_FOR_TAO
 Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus !ACE_FOR_TAO
 Message_Queue_Test_Ex: !chorus !ACE_FOR_TAO
-Multicast_Test: !ST !NO_MCAST !nsk
+Multicast_Test: !ST !NO_MCAST !nsk !LynxOS
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
 Naming_Test: !chorus !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO
 Network_Adapters_Test
@@ -161,5 +161,5 @@ SOCK_Dgram_Test
 SOCK_Dgram_Bcast_Test: !ACE_FOR_TAO
 SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk
-Process_Strategy_Test: !chorus !VxWorks !ACE_FOR_TAO
+Process_Strategy_Test: !chorus !VxWorks !LynxOS !ACE_FOR_TAO
 Recursive_Condition_Bug_Test: !ST
