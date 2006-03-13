@@ -199,6 +199,7 @@ public:
 
   /// This is a no-op and no longer does anything.  It's only here for
   /// backwards compatibility.
+  /// @deprecated
   void operator++ (void);
 
   /// Dump the state of an object.
