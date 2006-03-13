@@ -132,8 +132,6 @@
 # define ACE_LACKS_SETDETACH
 # define ACE_LACKS_THREAD_PROCESS_SCOPING
 # define ACE_LACKS_THREAD_STACK_ADDR
-  // This gets around Lynx broken macro calls resulting in "::0"
-# define _POSIX_THREADS_CALLS
 #endif /* ACE_MT_SAFE */
 
 #define ACE_HAS_AIO_CALLS
@@ -188,6 +186,9 @@
   // LynxOS, through 3.0.0, does not support MAP_PRIVATE,
   // so map it to MAP_SHARED.
 # define ACE_MAP_PRIVATE ACE_MAP_SHARED
+
+  // This gets around Lynx broken macro calls resulting in "::0"
+# define _POSIX_THREADS_CALLS
 
 # define ACE_HAS_LYNXOS_BROKEN_MMAP
 # define ACE_HAS_POLL
