@@ -1,3 +1,8 @@
+Mon Mar 13 12:11:52 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * ace/OS_NS_Thread.inl
+          Yank error reported by Abdullah, <abdullah.sowayan@lmco.com> fixed.
+
 Sun Mar 12 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Event_Handler.h:
@@ -14,36 +19,36 @@ Sun Mar 12 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar 12 09:10:01 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/TSS_T.cpp: Changed all calls of the form
+        * ace/TSS_T.cpp: Changed all calls of the form
 
           if (ACE_Thread::getspecific (this->key_, (void **) &tss_adapter) == -1)
 
-	  to
+          to
 
           void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
           if (ACE_Thread::getspecific (this->key_, &temp) == -1)
 
-	  to silence GCC warnings.  Thanks to Lothar for this, as well.
+          to silence GCC warnings.  Thanks to Lothar for this, as well.
 
 Sat Mar 11 09:09:35 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/CDR_Stream.inl: Changed all calls of the form
+        * ace/CDR_Stream.inl: Changed all calls of the form
 
           ACE_OutputCDR::write_float (ACE_CDR::Float x)
-	  {
-	    return this->write_4 (reinterpret_cast<const ACE_CDR::ULong*> (&x));
-	  }
+          {
+            return this->write_4 (reinterpret_cast<const ACE_CDR::ULong*> (&x));
+          }
 
           to
 
           ACE_OutputCDR::write_float (ACE_CDR::Float x)
-	  {
-	    void * tmp = &x;
-	    return this->write_4 (reinterpret_cast<const ACE_CDR::ULong*> (tmp));
-	  }
+          {
+            void * tmp = &x;
+            return this->write_4 (reinterpret_cast<const ACE_CDR::ULong*> (tmp));
+          }
 
           to silence GCC warnings.  Thanks to Lothar Werzinger for
- 	  suggesting this fix.
+          suggesting this fix.
 
 Sun Mar 12 11:00:08 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
