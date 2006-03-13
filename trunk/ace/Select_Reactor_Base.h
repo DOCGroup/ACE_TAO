@@ -483,7 +483,6 @@ protected:
   /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
   ACE_Select_Reactor_Handler_Repository handler_rep_;
 
-
   /// Tracks handles that are ready for dispatch from <select>
   ACE_Select_Reactor_Handle_Set dispatch_set_;
 
