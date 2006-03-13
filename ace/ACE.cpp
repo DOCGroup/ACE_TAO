@@ -622,7 +622,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::recv (handle,
-                        (char *) buf + bytes_transferred,
+                        static_cast <char *> (buf) + bytes_transferred,
                         len - bytes_transferred,
                         flags);
       // Check EOF.
@@ -681,7 +681,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE_OS::recv (handle,
-                        (char *) buf + bytes_transferred,
+                        static_cast <char *> (buf) + bytes_transferred,
                         len - bytes_transferred,
                         flags);
 
@@ -861,7 +861,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE::recv_i (handle,
-                       (char *) buf + bytes_transferred,
+                       static_cast <char *> (buf) + bytes_transferred,
                        len - bytes_transferred);
       // Check EOF.
       if (n == 0)
@@ -919,7 +919,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE::recv_i (handle,
-                       (char *) buf + bytes_transferred,
+                       static_cast <char *> (buf) + bytes_transferred,
                        len - bytes_transferred);
 
       // Check for errors.
@@ -1205,7 +1205,7 @@ ACE::recv_n (ACE_HANDLE handle,
               this_rd_ptr += this_chunk_length;
 
               // Increment iovec counter.
-              iovcnt++;
+              ++iovcnt;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find ACE_IOV_MAX for platforms that do not define it rather
@@ -2014,7 +2014,7 @@ ACE::write_n (ACE_HANDLE handle,
               this_block_ptr += this_chunk_length;
 
               // Increment iovec counter.
-              iovcnt++;
+              ++iovcnt;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find ACE_IOV_MAX for platforms that do not define it rather
@@ -2112,7 +2112,7 @@ ACE::send_n (ACE_HANDLE handle,
               this_block_ptr += this_chunk_length;
 
               // Increment iovec counter.
-              iovcnt++;
+              ++iovcnt;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find ACE_IOV_MAX for platforms that do not define it rather
@@ -2406,7 +2406,7 @@ ACE::format_hexdump (const char *buffer,
             {
               ACE_OS::sprintf (obuf,
                                ACE_LIB_TEXT (" "));
-              obuf++;
+              ++obuf;
             }
           textver[j] = ACE_OS::ace_isprint (c) ? c : '.';
         }
@@ -2434,7 +2434,7 @@ ACE::format_hexdump (const char *buffer,
             {
               ACE_OS::sprintf (obuf,
                                ACE_LIB_TEXT (" "));
-              obuf++;
+              ++obuf;
             }
           textver[i] = ACE_OS::ace_isprint (c) ? c : '.';
         }
