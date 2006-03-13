@@ -2636,6 +2636,8 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 #     ifdef pthread_cancel
         // If it's a macro we can't say "::pthread_cancel"...
         ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cancel (thr_id),
+                                             result),
+                           int, -1);
 #     else
         ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id),
                                              result),
