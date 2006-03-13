@@ -486,7 +486,6 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
     if (this->suspend_i (dispatch_info.handle_) == -1)
       return 0;
 
-
   int resume_flag =
     dispatch_info.event_handler_->resume_handler ();
 
