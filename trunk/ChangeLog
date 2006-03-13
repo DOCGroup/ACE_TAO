@@ -1,9 +1,17 @@
+Mon Mar 13 14:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Handle_Set.h:
+          Doxygen improvements
+
+        * ace/Handle_Set.inl:
+          Use prefix increment instead of postfix
+
 Mon Mar 13 07:51:10 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* Reverted this change
-  
+
           Sun Mar 12 09:10:01 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
-	  
+
 	  Since it was causing runtime failures.  Thanks to Johnny for
  	  reporting this.
 
