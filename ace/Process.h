@@ -456,9 +456,11 @@ public:
   virtual int prepare (ACE_Process_Options &options);
 
   /**
-   * Launch a new process as described by @a options.  Returns the
-   * process id of the newly spawned child on success or -1 on
-   * failure.
+   * Launch a new process as described by @a options. On success,
+   * returns 1 if the option avoid_zombies is set, else returns the
+   * process id of the newly spawned child. Returns -1 on
+   * failure. This will be fixed in the future versions of ACE when
+   * the process id of the child will be returned regardless of the option.
    */
   virtual pid_t spawn (ACE_Process_Options &options);
 
