@@ -1,3 +1,9 @@
+Mon Mar 13 17:20:47 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * ace/os_include/sys/os_time.h:
+
+          Fixed a fuzz build error. 
+
 Mon Mar 13 15:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Token.cpp:
@@ -18,12 +24,12 @@ Mon Mar 13 14:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Mar 13 07:51:10 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* Reverted this change
+        * Reverted this change
 
           Sun Mar 12 09:10:01 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	  Since it was causing runtime failures.  Thanks to Johnny for
- 	  reporting this.
+          Since it was causing runtime failures.  Thanks to Johnny for
+          reporting this.
 
 Mon Mar 13 13:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
