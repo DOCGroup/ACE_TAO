@@ -102,7 +102,7 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 #if defined (ACE_WIN32)
       FD_SET ((SOCKET) handle,
               &this->mask_);
-      this->size_++;
+      ++this->size_;
 #else /* ACE_WIN32 */
 #if defined (ACE_HAS_BIG_FD_SET)
       if (this->size_ == 0)
@@ -114,7 +114,7 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 
       FD_SET (handle,
               &this->mask_);
-      this->size_++;
+      ++this->size_;
 
       if (handle > this->max_handle_)
         this->max_handle_ = handle;
