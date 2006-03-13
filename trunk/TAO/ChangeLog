@@ -1,7 +1,14 @@
+Sun Mar 12 10:21:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+          Fixed invalid deletes when using the typed event channel and fixed
+          some unicode issues. Thanks to Felix Li <fengli at gmail dot com>
+          for providing the patches.
+
 Sat Mar 11 12:16:01 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tests/CollocationLockup/SimpleNamingService.cpp:
-        
+
           Fixed a warning with gcc.
 
 Fri Mar 10 20:00:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
