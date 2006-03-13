@@ -195,8 +195,8 @@ ACE_TSS<TYPE>::ts_get (void) const
   ACE_TSS_Adapter *tss_adapter = 0;
 
   // Get the adapter from thread-specific storage
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  if (ACE_Thread::getspecific (this->key_, &temp) == -1)
+  if (ACE_Thread::getspecific (this->key_,
+                               (void **) &tss_adapter) == -1)
     return 0; // This should not happen!
 
   // Check to see if this is the first time in for this thread.
@@ -204,8 +204,8 @@ ACE_TSS<TYPE>::ts_get (void) const
 #else
   // Get the ts_obj from thread-specific storage.  Note that no locks
   // are required here...
-  void *temp = ts_obj; // Need this temp to keep G++ from complaining.
-  if (ACE_Thread::getspecific (this->key_, &temp) == -1)
+  if (ACE_Thread::getspecific (this->key_,
+                               (void **) &ts_obj) == -1)
     return 0; // This should not happen!
 
   // Check to see if this is the first time in for this thread.
@@ -274,15 +274,15 @@ ACE_TSS<TYPE>::ts_object (void) const
   ACE_TSS_Adapter *tss_adapter = 0;
 
   // Get the tss adapter from thread-specific storage
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  if (ACE_Thread::getspecific (this->key_, &temp) == -1)
+  if (ACE_Thread::getspecific (this->key_,
+                               (void **) &tss_adapter) == -1)
     return 0; // This should not happen!
   else if (tss_adapter != 0)
     // Extract the real TS object.
     ts_obj = (TYPE *) tss_adapter->ts_obj_;
 #else
-  void *temp = ts_obj; // Need this temp to keep G++ from complaining.
-  if (ACE_Thread::getspecific (this->key_, &temp) == -1)
+  if (ACE_Thread::getspecific (this->key_,
+                               (void **) &ts_obj) == -1)
     return 0; // This should not happen!
 #endif /* ACE_HAS_THR_C_DEST */
 
@@ -310,8 +310,8 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
 
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  if (ACE_Thread::getspecific (this->key_, &temp) == -1)
+  if (ACE_Thread::getspecific (this->key_,
+                               (void **) &tss_adapter) == -1)
     return 0; // This should not happen!
 
   if (tss_adapter != 0)
@@ -332,9 +332,8 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
       return ts_obj; // This should not happen!
     }
 #else
-  void *temp = ts_obj; // Need this temp to keep G++ from complaining.
   if (ACE_Thread::getspecific (this->key_,
-                               &temp) == -1)
+                               (void **) &ts_obj) == -1)
     return 0; // This should not happen!
   if (ACE_Thread::setspecific (this->key_,
                                (void *) new_ts_obj) == -1)
@@ -390,12 +389,12 @@ ACE_TSS_Guard<ACE_LOCK>::release (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
-  guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
+  guard = (ACE_Guard<ACE_LOCK> *)tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->release ();
@@ -410,12 +409,12 @@ ACE_TSS_Guard<ACE_LOCK>::remove (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->remove ();
@@ -430,12 +429,12 @@ ACE_TSS_Guard<ACE_LOCK>::~ACE_TSS_Guard (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   // Make sure that this pointer is NULL when we shut down...
@@ -487,12 +486,12 @@ ACE_TSS_Guard<ACE_LOCK>::acquire (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->acquire ();
@@ -507,12 +506,12 @@ ACE_TSS_Guard<ACE_LOCK>::tryacquire (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->tryacquire ();
@@ -552,12 +551,12 @@ ACE_TSS_Write_Guard<ACE_LOCK>::acquire (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->acquire_write ();
@@ -572,12 +571,12 @@ ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->tryacquire_write ();
@@ -640,12 +639,12 @@ ACE_TSS_Read_Guard<ACE_LOCK>::acquire (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->acquire_read ();
@@ -660,12 +659,12 @@ ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire (void)
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = 0;
-  void *temp = tss_adapter; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &tss_adapter);
   guard = (ACE_Guard<ACE_LOCK> *) tss_adapter->ts_obj_;
 #else
-  void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, &temp);
+  ACE_Thread::getspecific (this->key_,
+                           (void **) &guard);
 #endif /* ACE_HAS_THR_C_DEST */
 
   return guard->tryacquire_read ();
