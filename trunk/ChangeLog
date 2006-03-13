@@ -1,3 +1,8 @@
+Mon Mar 13 22:01:23 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Do not run Multicast_Test and Process_Strategy_Test on LynxOS.
+
 Mon Mar 13 21:47:22 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_Thread.inl:
@@ -6,7 +11,7 @@ Mon Mar 13 21:47:22 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
           Do not define _POSIX_THREADS_CALLS under LynxOS 4.0.
-        
+
           Thanks to Abdullah Sowayan <abdullah.sowayan@lmco.com>
           for reporting the problem and providing the initial patch.
 
