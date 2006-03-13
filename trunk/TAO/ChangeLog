@@ -1,3 +1,10 @@
+Mon Mar 13 19:51:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
+
+        * tests/Any/Recursive/client.cpp:
+        * tests/Any/Recursive/Test.idl:
+          Extended this test with a non recursive union with an enum
+          as discriminator, this also fails.
+
 Mon Mar 13 15:06:08 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/CollocationLockup/run_test.pl:
