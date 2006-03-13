@@ -1,3 +1,8 @@
+Mon Mar 13 15:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Token.cpp:
+          Use prefix decrement/increment instead of postfix
+
 Mon Mar 13 14:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.cpp:
