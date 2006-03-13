@@ -1,3 +1,10 @@
+Mon Mar 13 15:06:08 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/CollocationLockup/run_test.pl:
+
+          Attempted to add support for running the important portion of the
+          test on VxWorks.
+
 Mon Mar 13 10:09:21 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2186_Regression/server.conf:
