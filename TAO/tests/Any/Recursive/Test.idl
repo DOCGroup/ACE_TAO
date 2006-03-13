@@ -55,7 +55,8 @@ module Test
   enum VSort {
     UNKNOWN_TYPE,
     RECURSIVE_TYPE,
-    LONG_STYPE
+    LONG_STYPE,
+    BOOL_STYPE
   };
 
   union VSortRecursiveUnion;
@@ -64,6 +65,16 @@ module Test
   {
   case RECURSIVE_TYPE:
     VSortRecursiveUnionSeq recursive_unions;
+  case LONG_STYPE:
+    long i;
+  };
+
+  // --------------------------
+
+  union EnumUnion switch (VSort)
+  {
+  case BOOL_STYPE:
+    boolean a;
   case LONG_STYPE:
     long i;
   };

@@ -168,13 +168,22 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
               "Executing recursive union test\n"));
 
   Test::RecursiveUnion foo;
+  Test::EnumUnion foo_enum;
+  static CORBA::Long const test_long = 238901;
+  CORBA::Any the_any;
+
+  // First simple case, just an union with an enum as discriminator
+  foo_enum.i (test_long);
+  the_any <<= foo_enum;
+
+  ::perform_invocation<Test::EnumUnion> (hello,
+                                         the_any
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Non-recursive member case.
-  static CORBA::Long const test_long = 238901;
-
   foo.i (test_long);
 
-  CORBA::Any the_any;
   the_any <<= foo;
 
   ::perform_invocation<Test::RecursiveUnion> (hello,
