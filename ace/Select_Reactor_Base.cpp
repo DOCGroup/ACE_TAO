@@ -536,7 +536,7 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (event_handler = %x, event_handler->handle_ = %d)\n"),
                 event_handler, event_handler->get_handle ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -587,7 +587,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
   if (this->notify_queue_.is_empty ())
     return 0;
 
-  ACE_Notification_Buffer *temp;
+  ACE_Notification_Buffer *temp = 0;
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> local_queue;
 
   size_t queue_size = this->notify_queue_.size ();
@@ -707,7 +707,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 #endif /* F_SETFD */
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-      ACE_Notification_Buffer *temp;
+      ACE_Notification_Buffer *temp = 0;
 
       ACE_NEW_RETURN (temp,
                       ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
@@ -750,7 +750,7 @@ ACE_Select_Reactor_Notify::close (void)
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   // Free up the dynamically allocated resources.
-  ACE_Notification_Buffer **b;
+  ACE_Notification_Buffer **b = 0;
 
   for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Buffer *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
@@ -803,7 +803,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
     if (free_queue_.dequeue_head (temp) == -1)
       {
         // Grow the queue of available buffers.
-        ACE_Notification_Buffer *temp1;
+        ACE_Notification_Buffer *temp1 = 0;
 
         ACE_NEW_RETURN (temp1,
                         ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
@@ -923,7 +923,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
     // holding the lock while delivering callbacks...
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
-    ACE_Notification_Buffer *temp;
+    ACE_Notification_Buffer *temp = 0;
 
     if (notify_queue_.is_empty ())
       return 0;
