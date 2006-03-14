@@ -1,3 +1,9 @@
+Tue Mar 14 15:50:09 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_Thread.cpp:
+          Removed the :: prefix from pthread calls that are macros
+          on LynxOS.
+
 Tue Mar 14 09:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:

@@ -5392,7 +5392,7 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #       else
     int result;
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setspecific (key, data),
                                          result),
                        int, -1);
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
