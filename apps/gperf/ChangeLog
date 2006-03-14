@@ -1,3 +1,17 @@
+Tue Mar 14 21:08:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * apps/gperf/src/Gen_Perf.cpp
+        * apps/gperf/src/Key_List.cpp
+        * apps/gperf/src/List_Node.cpp
+        * apps/gperf/src/Options.cpp
+          Updated these files to solve the warnings when setting up "VC level 4 warnings"
+          on Windows. These warnings include "unreachable code", "assignment within
+          conditional expression", "conversion from some type to another type, possible
+          loss of data", "local variable may be used without having been initialized" and
+          so on.
+          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for 
+          motivating the fix to these "VC level 4 warnings".
+
 Wed Jan  4 22:55:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
          * ChangeLog:
