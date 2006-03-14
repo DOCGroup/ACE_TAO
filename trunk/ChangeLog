@@ -8,6 +8,8 @@ Tue Mar 14 23:33:27 UTC 2006  Steve Huston  <shuston@riverace.com>
           Thanks to Spencer Vanroekel <Spencer dot Vanroekel at Siemens dot
           com> for the investigations leading to this solution.
 
+        * THANKS: Added  Spencer Vanroekel to the Hall of Fame.
+
 Tue Mar 14 20:58:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * ace/WIN32_Asynch_IO.cpp
