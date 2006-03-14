@@ -1,3 +1,13 @@
+Tue Mar 14 23:33:27 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.inl (recursive_mutex_cond_unlock): Fix this for
+          WinCE. CE doesn't have a RecursionCount, and LockCount is not an
+          indicator of recursion on WinCE; instead, see when it's unlocked
+          by watching the OwnerThread, which will change to something other
+          than the current thread when it's been unlocked "enough" times.
+          Thanks to Spencer Vanroekel <Spencer dot Vanroekel at Siemens dot
+          com> for the investigations leading to this solution.
+
 Tue Mar 14 20:58:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * ace/WIN32_Asynch_IO.cpp
@@ -40,13 +50,13 @@ Tue Mar 14 20:58:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
         * apps/gperf/src/List_Node.cpp
         * apps/gperf/src/Options.cpp
         * protocols/ace/HTBP/HTBP_ID_Requestor.cpp
-          Updated these files to solve the warnings when setting up "VC level 4 warnings"
-          on Windows. These warnings include "unreachable code", "assignment within
-          conditional expression", "conversion from some type to another type, possible
-          loss of data", "local variable may be used without having been initialized" and
-          so on.
-          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for 
-          motivating the fix to these "VC level 4 warnings".
+          Updated these files to solve the warnings when setting up "VC level
+          4 warnings" on Windows. These warnings include "unreachable code",
+          "assignment within conditional expression", "conversion from some
+          type to another type, possible loss of data", "local variable may be
+          used without having been initialized" and so on.
+          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de>
+          for motivating the fix to these "VC level 4 warnings".
 
 Tue Mar 14 15:55:08 UTC 2006  Olli Savia  <ops@iki.fi>
 
