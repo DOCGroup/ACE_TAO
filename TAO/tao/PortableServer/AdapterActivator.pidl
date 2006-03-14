@@ -21,7 +21,7 @@
 #define _PORTABLESERVER_ADAPTER_ACTIVATOR_IDL_
 
 ///FUZZ: disable check_for_include/
-#include <tao/PortableServer/PS_Forward.pidl>
+#include "tao/PortableServer/PS_Forward.pidl"
 
 #pragma prefix "omg.org"
 
