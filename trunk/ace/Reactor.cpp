@@ -328,8 +328,6 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
       else if (result <= 0)
         return result;
     }
-
-  ACE_NOTREACHED (return 0;)
 }
 
 int

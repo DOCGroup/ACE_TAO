@@ -3161,7 +3161,7 @@ void
 ACEXML_Parser::parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACEXML_Char* astring;
+  ACEXML_Char* astring = 0;
   if ((this->parse_token (ACE_TEXT("ncoding")) < 0)
       || this->skip_equal () != 0
       || this->parse_encname (astring) != 0)

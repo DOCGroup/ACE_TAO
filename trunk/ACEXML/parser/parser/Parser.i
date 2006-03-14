@@ -238,7 +238,7 @@ ACEXML_Parser::peek (void)
   ACEXML_Char ch = 0;
   const ACEXML_InputSource* ip = this->current_->getInputSource();
   ACEXML_CharStream* instream = ip->getCharStream();
-  ch = instream->peek ();
+  ch = static_cast<ACEXML_Char> (instream->peek ());
   return (ch > 0 ? ch : 0);
 }
 

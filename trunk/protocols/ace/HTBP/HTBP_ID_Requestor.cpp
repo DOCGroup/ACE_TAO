@@ -65,7 +65,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
       host_ = url_.substr(host_start,port_sep - host_start);
     }
 
-  ACE_INET_Addr remote_addr (port_, host_.c_str());
+  ACE_INET_Addr remote_addr (static_cast<u_short> (port_), host_.c_str());
   ACE_SOCK_Connector con;
   if (con.connect (*cli_stream,
                    remote_addr) == -1)

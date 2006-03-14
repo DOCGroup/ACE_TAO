@@ -494,7 +494,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
   // isalnum, otherwise, it will crash the program.
   if (short_option > 0 &&
       short_option < 256 &&
-      ACE_OS::ace_isalnum (short_option) != 0)
+      ACE_OS::ace_isalnum (static_cast<char> (short_option)) != 0)
 #else
   if (ACE_OS::ace_isalnum (short_option) != 0)
 #endif /* _MSC_VER && _MSC_VER >= 1300 */

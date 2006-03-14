@@ -273,8 +273,6 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
       return buf->size ();
     return -1;
   }
-
-  ACE_NOTREACHED (return 0;)
 }
 
 ssize_t

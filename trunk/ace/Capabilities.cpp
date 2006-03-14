@@ -321,8 +321,8 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 
   int done;
   ACE_TString line;
-
-  while (!(done = (this->getline (fp, line) == -1))
+ 
+  while (0 == (done = (this->getline (fp, line) == -1))
          && is_empty (line.c_str ()))
     continue;
 
@@ -331,7 +331,8 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
       ACE_TString newline;
       ACE_TString description;
 
-      while (!(done = (this->getline (fp, newline) == -1)))
+      done = this->getline (fp, newline) == -1;
+      while (!done)
         if (is_line (newline.c_str ()))
           description += newline;
         else

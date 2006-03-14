@@ -137,7 +137,7 @@ Key_List::special_input (char delimiter)
           delete [] buf;
           buf = temp;
         }
-      buf[i] = c;
+      buf[i] = static_cast<char> (c);
     }
 
   return 0;
@@ -256,7 +256,7 @@ Key_List::read_keys (void)
                                                         delimiter))),
                           -1);
           for (temp = this->head;
-               (buffer = input.read ('\n'))
+               (0 != (buffer = input.read ('\n')))
                  && ACE_OS::strcmp (buffer, "%%");
                temp = temp->next)
             {

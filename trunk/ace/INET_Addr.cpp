@@ -313,7 +313,7 @@ ACE_INET_Addr::set (u_short port_number,
   // IPv6 not supported... insure the family is set to IPv4
   address_family = AF_INET;
   this->set_type (address_family);
-  this->inet_addr_.in4_.sin_family = address_family;
+  this->inet_addr_.in4_.sin_family = static_cast<short> (address_family);
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)

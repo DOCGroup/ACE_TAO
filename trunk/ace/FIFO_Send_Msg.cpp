@@ -60,7 +60,7 @@ ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (void)
 int
 ACE_FIFO_Send_Msg::open (const ACE_TCHAR *fifo_name,
                          int flags,
-                         int perms,
+                         mode_t perms,
                          LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::open");
@@ -69,7 +69,7 @@ ACE_FIFO_Send_Msg::open (const ACE_TCHAR *fifo_name,
 
 ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ACE_TCHAR *fifo_name,
                                       int flags,
-                                      int perms,
+                                      mode_t perms,
                                       LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg");

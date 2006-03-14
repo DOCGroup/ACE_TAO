@@ -88,12 +88,12 @@
       throw EXCEPTION
 
 // Throwing an exception when the function reqires a return value.
-# if defined (WIN32) || defined (__HP_aCC)
+# if defined (__HP_aCC)
 #   define ACEXML_THROW_RETURN(EXCEPTION, RETV) \
       do \
         { \
           throw EXCEPTION; \
-          return RETV; \
+	  return RETV; \
         } while (0)
 # else /* WIN32 */
 #   define ACEXML_THROW_RETURN(EXCEPTION,RETV) \
