@@ -10,6 +10,6 @@
 #define _PORTABLESERVER_INCLUDE_IDL_
 
 ///FUZZ: disable check_for_include/
-#include <tao/PI_Server/ServerRequestInterceptor.pidl>
+#include "tao/PI_Server/ServerRequestInterceptor.pidl"
 
 #endif /* _PORTABLESERVER_INCLUDE_IDL_ */

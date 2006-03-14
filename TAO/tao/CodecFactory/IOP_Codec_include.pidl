@@ -39,6 +39,6 @@
 #define _IOP_CODEC_INCLUDE_IDL_
 
 ///FUZZ: disable check_for_include/
-#include <tao/CodecFactory/IOP_Codec.pidl>
+#include "tao/CodecFactory/IOP_Codec.pidl"
 
 #endif /* _IOP_CODEC_INCLUDE_IDL_ */

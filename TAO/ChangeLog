@@ -1,3 +1,52 @@
+Tue Mar 14 15:25:48 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Domain.pidl:
+	* tao/GIOP.pidl:
+	* tao/IOP.pidl:
+	* tao/IOP_IOR.pidl:
+	* tao/Messaging_PolicyValue.pidl:
+	* tao/PI_Forward.pidl:
+	* tao/Policy.pidl:
+	* tao/PortableInterceptor.pidl:
+	* tao/Services.pidl:
+	* tao/TAO.pidl:
+	* tao/AnyTypeCode/Dynamic_Parameter.pidl:
+	* tao/BiDir_GIOP/BiDirPolicy.pidl:
+	* tao/CodecFactory/IOP_Codec.pidl:
+	* tao/CodecFactory/IOP_Codec_include.pidl:
+	* tao/DynamicAny/DynamicAny.pidl:
+	* tao/IFR_Client/IFR_Base.pidl:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+	* tao/PI/ClientRequestInfo.pidl:
+	* tao/PI/ORBInitInfo.pidl:
+	* tao/PI/PICurrent.pidl:
+	* tao/PI/PolicyFactory.pidl:
+	* tao/PI/RequestInfo.pidl:
+	* tao/PI_Server/PI_Server_include.pidl:
+	* tao/PI_Server/ServerRequestInfo.pidl:
+	* tao/PI_Server/ServerRequestInterceptor.pidl:
+	* tao/PortableServer/AdapterActivator.pidl:
+	* tao/PortableServer/IdAssignmentPolicy.pidl:
+	* tao/PortableServer/IdUniquenessPolicy.pidl:
+	* tao/PortableServer/ImplicitActivationPolicy.pidl:
+	* tao/PortableServer/LifespanPolicy.pidl:
+	* tao/PortableServer/PS_Current.pidl:
+	* tao/PortableServer/PS_Forward.pidl:
+	* tao/PortableServer/PortableServer.pidl:
+	* tao/PortableServer/PortableServer_include.pidl:
+	* tao/PortableServer/RequestProcessingPolicy.pidl:
+	* tao/PortableServer/ServantActivator.pidl:
+	* tao/PortableServer/ServantLocator.pidl:
+	* tao/PortableServer/ServantRetentionPolicy.pidl:
+	* tao/PortableServer/ThreadPolicy.pidl:
+	* tao/RTCORBA/RTCORBA.pidl:
+	* tao/RTPortableServer/RTPortableServer_include.pidl:
+
+          Change #include <tao/...> to #include "tao/..." to avoid fuzz
+          warnings.  At the very least, this makes everyting consistant
+          while we are investigate and decide what #include conventions
+          for <...> vs. "..." to adopt.
+
 Tue Mar 14 06:02:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/...*.cpp:
@@ -7,7 +56,6 @@ Tue Mar 14 06:02:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Add "orbsvcs/..." prefix to #includes of *.h, *.i, *.inl, and
           template *.cpp files found in ${TAO_ROOT}/orbsvcs/orbsvcs.
-
 
 Mon Mar 13 19:51:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
 
