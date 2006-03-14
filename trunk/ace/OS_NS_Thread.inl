@@ -597,9 +597,26 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // need to release the lock one fewer times than this thread has acquired
   // it. Remember how many times, and reacquire it that many more times when
   // the condition is signaled.
+  //
+  // For WinCE, the situation is a bit trickier. CE doesn't have
+  // RecursionCount, and LockCount is not an indicator of recursion on WinCE;
+  // instead, see when it's unlocked by watching the OwnerThread, which will
+  // change to something other than the current thread when it's been
+  // unlocked "enough" times. Note that checking for 0 (unlocked) is not
+  // sufficient. Another thread may acquire the lock between our unlock and
+  // checking the OwnerThread. So grab our thread ID value first, then
+  // compare to it in the loop condition.
+#      if defined (ACE_HAS_WINCE)
+  ACE_thread_t me = ACE_OS::thr_self ();
+#      endif /* ACE_HAS_WINCE */
+
   state.relock_count_ = 0;
   while (m->LockCount > 0
-#      if !defined (ACE_HAS_WINCE)    /* WinCE doesn't have RecursionCount */
+#      if defined (ACE_HAS_WINCE)
+         // Although this is a thread ID, OwnerThread's type is HANDLE.
+         // Not sure if this is a problem, but it appears to work.
+         && m->OwnerThread == (HANDLE)me
+#      else
          && m->RecursionCount > 1
 #      endif
          )
