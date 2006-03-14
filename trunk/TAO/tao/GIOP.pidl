@@ -28,7 +28,7 @@
 #ifndef TAO_GIOP_PIDL
 #define TAO_GIOP_PIDL
 
-#include <tao/IOP_IOR.pidl>
+#include "tao/IOP_IOR.pidl"
 
 #pragma prefix "omg.org"
 

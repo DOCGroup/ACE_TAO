@@ -29,7 +29,7 @@
 #ifndef _DYNAMIC_PARAMETER_IDL_
 #define _DYNAMIC_PARAMETER_IDL_
 
-#include <tao/ParameterMode.pidl>
+#include "tao/ParameterMode.pidl"
 
 module Dynamic
 {
