@@ -1,3 +1,11 @@
+Tue Mar 14 15:55:08 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/Task_T.h:
+          Added a workaround for buggy LynxOS 3.x compiler.
+        
+        * include/makeinclude/platform_lynxos.GNU:
+          Made debug=0 as default for LynxOS 3.x
+        
 Tue Mar 14 15:50:09 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_Thread.cpp:

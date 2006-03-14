@@ -72,6 +72,7 @@ ifeq ($(LYNXOS_MAJOR),3)
   shared_libs_only =
   static_libs_only = 1
   exceptions = 0
+  debug ?= 0
 endif
 
 ifeq ($(shared_libs_only),1)
