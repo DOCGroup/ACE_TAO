@@ -1,3 +1,53 @@
+Tue Mar 14 20:58:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * ace/WIN32_Asynch_IO.cpp
+        * ace/ACE.cpp
+        * ace/Capabilities.cpp
+        * ace/Codecs.cpp
+        * ace/FIFO.cpp
+        * ace/FIFO.h
+        * ace/FIFO_Recv.cpp
+        * ace/FIFO_Recv.h
+        * ace/FIFO_Recv_Msg.cpp
+        * ace/FIFO_Recv_Msg.h
+        * ace/FIFO_Send.cpp
+        * ace/FIFO_Send.h
+        * ace/FIFO_Send_Msg.cpp
+        * ace/FIFO_Send_Msg.h
+        * ace/Get_Opt.cpp
+        * ace/INET_Addr.cpp
+        * ace/MEM_Acceptor.cpp
+        * ace/MEM_IO.cpp
+        * ace/RB_Tree.cpp
+        * ace/Reactor.cpp
+        * ace/SOCK_Dgram_Mcast.cpp
+        * ace/SV_Semaphore_Complex.cpp
+        * ace/SV_Semaphore_Complex.h
+        * ace/SV_Semaphore_Complex.inl
+        * ace/SV_Semaphore_Simple.cpp
+        * ace/SV_Semaphore_Simple.h
+        * ace/SV_Semaphore_Simple.inl
+        * ace/TTY_IO.cpp
+        * ace/UUID.cpp
+        * ACEXML/common/FileCharStream.cpp
+        * ACEXML/common/HttpCharStream.cpp
+        * ACEXML/common/Transcode.cpp
+        * ACEXML/common/XML_Macros.h
+        * ACEXML/parser/parser/Parser.cpp
+        * ACEXML/parser/parser/Parser.i
+        * apps/gperf/src/Gen_Perf.cpp
+        * apps/gperf/src/Key_List.cpp
+        * apps/gperf/src/List_Node.cpp
+        * apps/gperf/src/Options.cpp
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp
+          Updated these files to solve the warnings when setting up "VC level 4 warnings"
+          on Windows. These warnings include "unreachable code", "assignment within
+          conditional expression", "conversion from some type to another type, possible
+          loss of data", "local variable may be used without having been initialized" and
+          so on.
+          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for 
+          motivating the fix to these "VC level 4 warnings".
+
 Tue Mar 14 15:55:08 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/Task_T.h:
