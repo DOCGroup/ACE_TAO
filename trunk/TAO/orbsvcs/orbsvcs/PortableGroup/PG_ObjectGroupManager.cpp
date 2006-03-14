@@ -1,7 +1,7 @@
-#include "PG_ObjectGroupManager.h"
-#include "PG_GenericFactory.h"
-#include "PG_conf.h"
-#include "PG_Operators.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

@@ -15,7 +15,7 @@
 #define TAO_AV_ENDPOINT_STRATEGY_T_H
 #include /**/ "ace/pre.h"
 
-#include "Endpoint_Strategy.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -282,7 +282,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Endpoint_Strategy_T.cpp"
+#include "orbsvcs/AV/Endpoint_Strategy_T.cpp"
 #endif /*ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

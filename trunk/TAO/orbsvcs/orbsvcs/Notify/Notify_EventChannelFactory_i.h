@@ -16,7 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

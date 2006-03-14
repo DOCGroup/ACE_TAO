@@ -3,10 +3,10 @@
 #ifndef TAO_Notify_SEQ_WORKER_T_CPP
 #define TAO_Notify_SEQ_WORKER_T_CPP
 
-#include "Seq_Worker_T.h"
+#include "orbsvcs/Notify/Seq_Worker_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Seq_Worker_T.inl"
+#include "orbsvcs/Notify/Seq_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "FT_ServerORBInitializer.h"
-#include "FT_ServerPolicyFactory.h"
-#include "FT_ServerRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_ServerORBInitializer.h"
+#include "orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h"
+#include "orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h"
 #include "tao/ORB_Constants.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"

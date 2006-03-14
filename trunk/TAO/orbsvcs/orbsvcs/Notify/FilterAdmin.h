@@ -20,10 +20,10 @@
 
 #include "ace/Hash_Map_Manager.h"
 
-#include "ID_Factory.h"
-#include "Event.h"
-#include "notify_serv_export.h"
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/ID_Factory.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Topology_Object.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -109,7 +109,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "FilterAdmin.inl"
+#include "orbsvcs/Notify/FilterAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

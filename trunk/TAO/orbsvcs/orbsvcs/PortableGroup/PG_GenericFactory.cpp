@@ -1,9 +1,9 @@
-#include "PG_GenericFactory.h"
-#include "PG_MemberInfo.h"
-#include "PG_ObjectGroupManager.h"
-#include "PG_PropertyManager.h"
-#include "PG_Property_Utils.h"
-#include "PG_conf.h"
+#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
+#include "orbsvcs/PortableGroup/PG_MemberInfo.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "orbsvcs/PortableGroup/PG_PropertyManager.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
 
 #include "ace/OS_NS_stdio.h"
 

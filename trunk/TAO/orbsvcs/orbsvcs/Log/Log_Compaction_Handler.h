@@ -12,7 +12,7 @@
 #ifndef TAO_TLS_COMPACTION_HANDLER_H
 #define TAO_TLS_COMPACTION_HANDLER_H
 
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

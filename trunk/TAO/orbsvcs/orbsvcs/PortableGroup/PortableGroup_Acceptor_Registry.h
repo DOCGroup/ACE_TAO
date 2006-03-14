@@ -25,7 +25,7 @@
 
 #include "ace/CORBA_macros.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/Resource_Factory.h"

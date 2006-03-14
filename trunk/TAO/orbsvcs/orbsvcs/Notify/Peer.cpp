@@ -1,10 +1,10 @@
 // $Id$
 
-#include "Peer.h"
+#include "orbsvcs/Notify/Peer.h"
 
 ACE_RCSID(Notify, TAO_Notify_Peer, "$Id$")
 
-#include "Proxy.h"
+#include "orbsvcs/Notify/Proxy.h"
 
 #include "tao/debug.h"
 

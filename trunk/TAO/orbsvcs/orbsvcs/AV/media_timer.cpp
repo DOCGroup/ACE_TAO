@@ -37,7 +37,7 @@ static const char rcsid[] =
     "@(#) $Header$";
 */
 
-#include "media_timer.h"
+#include "orbsvcs/AV/media_timer.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdlib.h"

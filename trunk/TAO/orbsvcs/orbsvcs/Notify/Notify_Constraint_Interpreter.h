@@ -23,7 +23,7 @@
 
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/CosNotifyFilterC.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

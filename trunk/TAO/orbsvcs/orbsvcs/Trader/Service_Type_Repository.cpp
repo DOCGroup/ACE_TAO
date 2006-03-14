@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Service_Type_Repository.h"
+#include "orbsvcs/Trader/Service_Type_Repository.h"
 
 #include "ace/Lock_Adapter_T.h"
 

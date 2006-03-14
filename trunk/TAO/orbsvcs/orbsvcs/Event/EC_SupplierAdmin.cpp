@@ -1,9 +1,9 @@
 // $Id$
 
-#include "EC_SupplierAdmin.h"
-#include "EC_ProxyConsumer.h"
-#include "EC_ProxySupplier.h"
-#include "EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_SupplierAdmin.h"
+#include "orbsvcs/Event/EC_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/ESF/ESF_Peer_Workers.h"
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"

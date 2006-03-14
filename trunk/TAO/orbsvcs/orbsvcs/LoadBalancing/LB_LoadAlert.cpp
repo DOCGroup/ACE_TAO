@@ -1,4 +1,4 @@
-#include "LB_LoadAlert.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 
 ACE_RCSID (LoadBalancer,
@@ -6,7 +6,7 @@ ACE_RCSID (LoadBalancer,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "LB_LoadAlert.inl"
+# include "orbsvcs/LoadBalancing/LB_LoadAlert.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

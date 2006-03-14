@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Fill_ACE_QoS.h"
+#include "orbsvcs/AV/Fill_ACE_QoS.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 

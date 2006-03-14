@@ -1,8 +1,8 @@
 // -*- C++ -*-
 
-#include "PG_PropertyManager.h"
-#include "PG_ObjectGroupManager.h"
-#include "PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_PropertyManager.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 
 #include "tao/ORB_Constants.h"
 

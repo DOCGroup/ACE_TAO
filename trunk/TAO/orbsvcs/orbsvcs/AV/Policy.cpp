@@ -1,11 +1,11 @@
 // $Id$
 
-#include "FlowSpec_Entry.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "tao/debug.h"
-#include "Policy.h"
+#include "orbsvcs/AV/Policy.h"
 
 #if !defined(__ACE_INLINE__)
-#include "Policy.i"
+#include "orbsvcs/AV/Policy.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,15 +1,15 @@
 // $Id$
 
-#include "QoSProperties.h"
+#include "orbsvcs/Notify/QoSProperties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "QoSProperties.inl"
+#include "orbsvcs/Notify/QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_QoSProperties, "$Id$")
 
-#include "Property.h"
-#include "Notify_Extensions.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Notify_Extensions.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

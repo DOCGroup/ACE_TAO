@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CEC_MT_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
 
 ACE_RCSID(CosEvent, CEC_MT_Dispatching, "$Id$")
 

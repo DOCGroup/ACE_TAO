@@ -1,6 +1,6 @@
-#include "LB_ORBInitializer.h"
-#include "LB_IORInterceptor.h"
-#include "LB_ServerRequestInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ORBInitializer.h"
+#include "orbsvcs/LoadBalancing/LB_IORInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
 
 #include "orbsvcs/CosLoadBalancingC.h"
 

@@ -26,8 +26,8 @@
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
 #include "ace/Multihomed_INET_Addr.h"
-#include "ConnectionHandler_T.h"
-#include "Fault_Detector_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

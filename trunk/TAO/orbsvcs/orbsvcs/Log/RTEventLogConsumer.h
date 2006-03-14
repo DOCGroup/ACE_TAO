@@ -30,7 +30,7 @@
 #include "orbsvcs/Event/EC_Factory.h"
 #include "orbsvcs/Event/EC_Defaults.h"
 
-#include "rteventlog_serv_export.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

@@ -12,12 +12,12 @@
 #define TAO_NOTIFY_ROUTING_SLIP_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
-#include "Event.h"
-#include "Delivery_Request.h"
-#include "Event_Persistence_Factory.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
+#include "orbsvcs/Notify/Event_Persistence_Factory.h"
 
-#include "Persistent_File_Allocator.h"  // for Persistent_Callback
+#include "orbsvcs/Notify/Persistent_File_Allocator.h"  // for Persistent_Callback
 
 #include <ace/Vector_T.h>
 #include <ace/Malloc_Base.h>  // necessary?

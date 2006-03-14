@@ -1,6 +1,6 @@
 // $Id$
 
-#include "EC_RTCORBA_Dispatching.h"
+#include "orbsvcs/Event/EC_RTCORBA_Dispatching.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 
 ACE_RCSID(Event, EC_RTCORBA_Dispatching, "$Id$")

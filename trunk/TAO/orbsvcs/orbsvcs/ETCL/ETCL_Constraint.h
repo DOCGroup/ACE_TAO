@@ -19,7 +19,7 @@
 #ifndef TAO_ETCL_CONSTRAINT_H
 #define TAO_ETCL_CONSTRAINT_H
 
-#include "etcl_export.h"
+#include "orbsvcs/ETCL/etcl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -425,7 +425,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ETCL_Constraint.inl"
+#include "orbsvcs/ETCL/ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_ETCL_CONSTRAINT_H */

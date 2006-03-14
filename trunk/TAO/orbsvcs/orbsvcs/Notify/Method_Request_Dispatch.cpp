@@ -1,14 +1,14 @@
 // $Id$
 
-#include "Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 
-#include "ProxySupplier.h"
-#include "Consumer.h"
-#include "Admin.h"
-#include "ConsumerAdmin.h"
-#include "EventChannelFactory.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Consumer.h"
+#include "orbsvcs/Notify/Admin.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
 
 #include "tao/debug.h"
 #include "tao/CDR.h"

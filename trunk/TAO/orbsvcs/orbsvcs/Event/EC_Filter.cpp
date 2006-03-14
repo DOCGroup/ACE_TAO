@@ -1,12 +1,12 @@
 // $Id$
 
-#include "EC_Filter.h"
-#include "EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Filter.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
 
 #include "tao/ORB_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Filter.i"
+#include "orbsvcs/Event/EC_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

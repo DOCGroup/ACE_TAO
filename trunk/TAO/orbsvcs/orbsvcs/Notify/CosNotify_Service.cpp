@@ -1,9 +1,9 @@
 // $Id$
 
-#include "CosNotify_Service.h"
-#include "Properties.h"
-#include "Default_Factory.h"
-#include "Builder.h"
+#include "orbsvcs/Notify/CosNotify_Service.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Default_Factory.h"
+#include "orbsvcs/Notify/Builder.h"
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"

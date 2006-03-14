@@ -3,10 +3,10 @@
 #ifndef METRICS_UPCALL_MONITOR_T_CPP
 #define METRICS_UPCALL_MONITOR_T_CPP
 
-#include "Metrics_UpcallMonitor_T.h"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Metrics_UpcallMonitor_T.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

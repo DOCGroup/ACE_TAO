@@ -29,7 +29,7 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/NotifyLogConsumer.h"
 
-#include "notifylog_serv_export.h"
+#include "orbsvcs/Log/notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

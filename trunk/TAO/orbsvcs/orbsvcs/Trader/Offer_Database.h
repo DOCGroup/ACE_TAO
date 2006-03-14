@@ -15,8 +15,8 @@
 #define TAO_OFFER_DATABASE_H
 #include /**/ "ace/pre.h"
 
-#include "Trader.h"
-#include "Offer_Iterators.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Offer_Iterators.h"
 #include "ace/Null_Mutex.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

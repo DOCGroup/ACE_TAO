@@ -16,8 +16,8 @@
 #define TAO_EC_PER_SUPPLIER_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Supplier_Filter.h"
-#include "EC_Supplier_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
 #include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -115,7 +115,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "EC_Per_Supplier_Filter.i"
+#include "orbsvcs/Event/EC_Per_Supplier_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

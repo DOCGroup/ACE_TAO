@@ -3,7 +3,7 @@
 #ifndef TAO_ESF_WORKER_CPP
 #define TAO_ESF_WORKER_CPP
 
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

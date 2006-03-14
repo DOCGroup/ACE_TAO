@@ -15,9 +15,9 @@
 #define TAO_TRADER_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
 
-#include "Constraint_Visitors.h"
-#include "Trader.h"
-#include "Trader_Utils.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 #include "orbsvcs/CosTradingC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

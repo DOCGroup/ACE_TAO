@@ -1,11 +1,11 @@
 // $Id$
 
-#include "CEC_TypedSupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
 
-#include "CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_TypedSupplierAdmin.i"
+#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "UIPMC_Message_Block_Data_Iterator.h"
+#include "orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef BASIC_REPLICATION_STRATEGY_H
 #define BASIC_REPLICATION_STRATEGY_H
-#include "Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

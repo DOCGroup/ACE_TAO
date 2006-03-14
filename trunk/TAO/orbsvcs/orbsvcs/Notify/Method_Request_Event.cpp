@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Method_Request_Event.h"
-#include "Delivery_Request.h"
+#include "orbsvcs/Notify/Method_Request_Event.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
 
 ACE_RCSID (Notify, TAO_Notify_Method_Request_Event_Queueable, "$Id$")
 

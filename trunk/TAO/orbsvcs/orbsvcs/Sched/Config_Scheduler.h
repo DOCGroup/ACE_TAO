@@ -16,7 +16,7 @@
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "sched_export.h"
+#include "orbsvcs/Sched/sched_export.h"
 
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "orbsvcs/Sched/Strategy_Scheduler.h"

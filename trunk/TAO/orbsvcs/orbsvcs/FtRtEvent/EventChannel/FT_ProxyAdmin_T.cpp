@@ -1,7 +1,7 @@
 // $Id$
 
-#include "IOGR_Maker.h"
-#include "Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "ace/Synch_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

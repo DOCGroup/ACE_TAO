@@ -1,6 +1,6 @@
 // $Id$
 
-#include "XML_Saver.h"
+#include "orbsvcs/Notify/XML_Saver.h"
 
 #include "ACEXML/common/XML_Util.h"
 

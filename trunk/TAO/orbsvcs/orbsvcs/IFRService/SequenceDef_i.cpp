@@ -1,8 +1,8 @@
 // $Id$
 
-#include "SequenceDef_i.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/SequenceDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"

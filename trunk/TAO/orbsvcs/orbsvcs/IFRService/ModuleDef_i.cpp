@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ModuleDef_i.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/ModuleDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 #include "ace/SString.h"
 

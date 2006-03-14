@@ -16,7 +16,7 @@
 #define TAO_OFFER_ITERATORS_H
 #include /**/ "ace/pre.h"
 
-#include "Trader_Utils.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

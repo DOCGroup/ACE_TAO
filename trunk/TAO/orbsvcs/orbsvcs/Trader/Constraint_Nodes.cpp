@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Constraint_Nodes.h"
-#include "Constraint_Visitors.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
 
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Managed_Types.h"

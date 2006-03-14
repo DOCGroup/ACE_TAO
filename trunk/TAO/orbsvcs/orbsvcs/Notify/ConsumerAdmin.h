@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #include "orbsvcs/NotifyExtS.h"
 
-#include "Admin.h"
+#include "orbsvcs/Notify/Admin.h"
 class TAO_Notify_ProxySupplier;
 
 #if defined(_MSC_VER)

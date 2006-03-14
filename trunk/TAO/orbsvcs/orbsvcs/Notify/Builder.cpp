@@ -1,5 +1,5 @@
 // $Id$
-#include "Builder.h"
+#include "orbsvcs/Notify/Builder.h"
 
 ACE_RCSID (Notify,
            Builder,
@@ -9,21 +9,21 @@ ACE_RCSID (Notify,
 
 #include "tao/PortableServer/PortableServerC.h"
 
-#include "Factory.h"
-#include "Properties.h"
-#include "POA_Helper.h"
-#include "ID_Factory.h"
-#include "EventChannelFactory.h"
-#include "EventChannel.h"
-#include "SupplierAdmin.h"
-#include "ConsumerAdmin.h"
-#include "Worker_Task.h"
-#include "Reactive_Task.h"
-#include "ThreadPool_Task.h"
-#include "FilterFactory.h"
-#include "Object.h"
-#include "EventType.h"
-#include "Event.h"
+#include "orbsvcs/Notify/Factory.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/POA_Helper.h"
+#include "orbsvcs/Notify/ID_Factory.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
+#include "orbsvcs/Notify/EventChannel.h"
+#include "orbsvcs/Notify/SupplierAdmin.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/Reactive_Task.h"
+#include "orbsvcs/Notify/ThreadPool_Task.h"
+#include "orbsvcs/Notify/FilterFactory.h"
+#include "orbsvcs/Notify/Object.h"
+#include "orbsvcs/Notify/EventType.h"
+#include "orbsvcs/Notify/Event.h"
 #include "Any/AnyEvent.h"
 #include "Any/ProxyPushConsumer.h"
 #include "Any/ProxyPushSupplier.h"
@@ -33,8 +33,8 @@ ACE_RCSID (Notify,
 #include "Structured/StructuredProxyPushSupplier.h"
 #include "Sequence/SequenceProxyPushConsumer.h"
 #include "Sequence/SequenceProxyPushSupplier.h"
-#include "ETCL_FilterFactory.h"
-#include "Container_T.h"
+#include "orbsvcs/Notify/ETCL_FilterFactory.h"
+#include "orbsvcs/Notify/Container_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

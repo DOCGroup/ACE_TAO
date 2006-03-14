@@ -1,11 +1,11 @@
 // $Id$
 
-#include "EC_Timeout_Generator.h"
-#include "EC_Timeout_Filter.h"
+#include "orbsvcs/Event/EC_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_Timeout_Filter.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Timeout_Generator.i"
+#include "orbsvcs/Event/EC_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event, 

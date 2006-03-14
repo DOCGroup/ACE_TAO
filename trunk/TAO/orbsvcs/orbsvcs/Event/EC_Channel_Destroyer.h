@@ -11,7 +11,7 @@
 #define EC_CHANNEL_DESTROYER__H_
 
 #include /**/ "event_serv_export.h"
-#include "EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/Auto_Functor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

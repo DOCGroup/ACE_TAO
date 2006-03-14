@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_ProxyConsumer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

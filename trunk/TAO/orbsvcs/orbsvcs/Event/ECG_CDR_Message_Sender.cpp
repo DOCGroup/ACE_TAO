@@ -1,13 +1,13 @@
 // $Id$
 
-#include "ECG_CDR_Message_Sender.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
 #include "tao/CDR.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_CDR_Message_Sender.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_CDR_Message_Sender, "$Id$")

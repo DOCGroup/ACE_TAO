@@ -1,6 +1,6 @@
 // $Id$
 
-#include "sfp.h"
+#include "orbsvcs/AV/sfp.h"
 #include "tao/debug.h"
 #include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "StructuredPushSupplier.h"
+#include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
 
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushSupplier, "$Id$")
 #include "../Properties.h"

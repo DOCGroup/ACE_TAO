@@ -15,9 +15,9 @@
 #define TAO_PERSISTENT_CONTEXT_INDEX_H
 #include /**/ "ace/pre.h"
 
-#include "Persistent_Entries.h"
-#include "naming_serv_export.h"
-#include "nsconf.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
+#include "orbsvcs/Naming/nsconf.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Malloc_T.h"

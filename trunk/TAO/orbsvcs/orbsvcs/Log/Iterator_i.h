@@ -27,7 +27,7 @@
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

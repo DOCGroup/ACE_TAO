@@ -18,9 +18,9 @@
 #define TAO_EC_GATEWAY_SCHED_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP.h"
 #include "orbsvcs/RtecSchedulerC.h"
-#include "sched_event_export.h"
+#include "orbsvcs/Event/sched_event_export.h"
 
 // ****************************************************************
 

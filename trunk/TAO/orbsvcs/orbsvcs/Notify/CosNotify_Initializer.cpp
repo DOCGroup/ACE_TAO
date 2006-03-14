@@ -1,10 +1,10 @@
 // $Id$
 
-#include "CosNotify_Initializer.h"
+#include "orbsvcs/Notify/CosNotify_Initializer.h"
 
 ACE_RCSID(Notify, TAO_Notify_CosNotify_Initializer, "$Id$")
 
-#include "CosNotify_Service.h"
+#include "orbsvcs/Notify/CosNotify_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

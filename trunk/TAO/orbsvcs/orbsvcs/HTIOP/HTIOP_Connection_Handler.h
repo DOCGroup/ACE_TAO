@@ -14,7 +14,7 @@
 #define HTIOP_CONNECTION_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Transport.h"
+#include "orbsvcs/HTIOP/HTIOP_Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

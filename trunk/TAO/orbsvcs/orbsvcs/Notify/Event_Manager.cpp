@@ -1,14 +1,14 @@
 // $Id$
 
-#include "Event_Manager.h"
+#include "orbsvcs/Notify/Event_Manager.h"
 
 ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 
-#include "ProxyConsumer.h"
-#include "ProxySupplier.h"
-#include "Consumer_Map.h"
-#include "Supplier_Map.h"
-#include "Event_Map_T.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Consumer_Map.h"
+#include "orbsvcs/Notify/Supplier_Map.h"
+#include "orbsvcs/Notify/Event_Map_T.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"

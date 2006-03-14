@@ -1,20 +1,20 @@
 // $Id$
 
-#include "EC_ProxySupplier.h"
-#include "EC_Dispatching.h"
-#include "EC_Filter_Builder.h"
-#include "EC_QOS_Info.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_Scheduling_Strategy.h"
-#include "EC_ConsumerControl.h"
-#include "EC_SupplierAdmin.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
+#include "orbsvcs/Event/EC_ConsumerControl.h"
+#include "orbsvcs/Event/EC_SupplierAdmin.h"
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_ProxySupplier.i"
+#include "orbsvcs/Event/EC_ProxySupplier.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

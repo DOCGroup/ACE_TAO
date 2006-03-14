@@ -1,9 +1,9 @@
 // $Id$
 
-#include "FTEC_ProxySupplier.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h"
 #include "../Utils/activate_with_id.h"
-#include "Request_Context_Repository.h"
-#include "Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushSupplier,

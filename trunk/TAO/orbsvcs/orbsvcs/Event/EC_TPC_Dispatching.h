@@ -16,13 +16,13 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
-#include "EC_Dispatching.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_TPC_Dispatching_Task.h"
+#include "orbsvcs/Event/EC_TPC_Dispatching_Task.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

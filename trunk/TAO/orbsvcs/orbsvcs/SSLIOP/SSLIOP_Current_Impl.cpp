@@ -1,4 +1,4 @@
-#include "SSLIOP_Current_Impl.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
 
 #include "ace/OS_String.h"
 
@@ -9,11 +9,11 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Current_Impl.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "SSLIOP_X509.h"
-#include "SSLIOP_ClientCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
+#include "orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h"
 
 #include "tao/ORB_Constants.h"
 

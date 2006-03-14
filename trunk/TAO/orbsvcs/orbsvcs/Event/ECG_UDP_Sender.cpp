@@ -14,7 +14,7 @@
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_Sender.inl"
+#include "orbsvcs/Event/ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

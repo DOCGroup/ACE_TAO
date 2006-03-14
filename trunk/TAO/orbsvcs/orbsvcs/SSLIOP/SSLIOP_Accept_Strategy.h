@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 
 #include "tao/Acceptor_Impl.h"
 

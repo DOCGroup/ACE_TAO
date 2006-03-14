@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "FinderDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/FinderDef_i.h"
 
 ACE_RCSID (IFRService, 
            FinderDef_i, 

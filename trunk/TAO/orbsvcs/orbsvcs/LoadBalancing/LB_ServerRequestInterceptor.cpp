@@ -1,5 +1,5 @@
-#include "LB_ServerRequestInterceptor.h"
-#include "LB_LoadAlert.h"
+#include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #include "tao/debug.h"
 

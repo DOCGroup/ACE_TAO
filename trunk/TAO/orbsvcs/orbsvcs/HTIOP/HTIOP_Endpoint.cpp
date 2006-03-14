@@ -1,7 +1,7 @@
 // $Id$
 
-#include "HTIOP_Endpoint.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/os_include/os_netdb.h"
 #include "ace/Log_Msg.h"
@@ -15,7 +15,7 @@ ACE_RCSID (HTIOP,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "HTIOP_Endpoint.i"
+# include "orbsvcs/HTIOP/HTIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

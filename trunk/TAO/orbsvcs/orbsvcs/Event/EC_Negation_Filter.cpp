@@ -1,6 +1,6 @@
 // $Id$
 
-#include "EC_Negation_Filter.h"
+#include "orbsvcs/Event/EC_Negation_Filter.h"
 
 ACE_RCSID(Event, EC_Negation_Filter, "$Id$")
 

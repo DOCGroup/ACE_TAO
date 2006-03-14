@@ -26,7 +26,7 @@
 
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Mutex.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 #define PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN 250
 

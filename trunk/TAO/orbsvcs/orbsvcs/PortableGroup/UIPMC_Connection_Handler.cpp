@@ -3,9 +3,9 @@
 // $Id$
 
 
-#include "UIPMC_Connection_Handler.h"
-#include "UIPMC_Transport.h"
-#include "UIPMC_Endpoint.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
+#include "orbsvcs/PortableGroup/UIPMC_Transport.h"
+#include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"

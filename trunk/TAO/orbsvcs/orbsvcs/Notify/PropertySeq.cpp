@@ -1,9 +1,9 @@
 // $Id$
 
-#include "PropertySeq.h"
+#include "orbsvcs/Notify/PropertySeq.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "PropertySeq.inl"
+#include "orbsvcs/Notify/PropertySeq.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_PropertySeq, "$Id$")

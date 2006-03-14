@@ -1,12 +1,12 @@
 // -*- C++ -*-
 
-#include "SSLIOP_EVP_PKEY.h"
+#include "orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h"
 
 #include <openssl/x509.h>
 #include <openssl/rsa.h>
 #include <openssl/dsa.h>
 #include <openssl/dh.h>
-#include "params_dup.h"
+#include "orbsvcs/SSLIOP/params_dup.h"
 
 
 ACE_RCSID (SSLIOP,

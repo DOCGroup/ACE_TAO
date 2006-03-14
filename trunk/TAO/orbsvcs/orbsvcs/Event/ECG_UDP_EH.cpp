@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ECG_UDP_EH.h"
+#include "orbsvcs/Event/ECG_UDP_EH.h"
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_EH.i"
+#include "orbsvcs/Event/ECG_UDP_EH.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_UDP_EH, "$Id$")

@@ -7,11 +7,11 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-#include "Reconnection_Registry.h"
+#include "orbsvcs/Notify/Reconnection_Registry.h"
 
 #include "tao/debug.h"
-#include "Properties.h"
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 #include "ace/Vector_T.h"
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL

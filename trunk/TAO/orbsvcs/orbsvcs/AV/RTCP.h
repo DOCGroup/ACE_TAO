@@ -49,7 +49,7 @@
 #define TAO_AV_RTCP_H
 #include /**/ "ace/pre.h"
 
-#include "RTCP_Channel.h"
+#include "orbsvcs/AV/RTCP_Channel.h"
 
 // FUZZ: disable check_for_math_include
 

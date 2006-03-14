@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "UIPMC_Acceptor.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
@@ -15,7 +15,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
-#include "UIPMC_Acceptor.i"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (PortableGroup,

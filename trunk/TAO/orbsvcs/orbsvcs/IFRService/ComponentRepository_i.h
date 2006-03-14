@@ -21,14 +21,14 @@
 #ifndef TAO_COMPONENTREPOSITORY_I_H
 #define TAO_COMPONENTREPOSITORY_I_H
 
-#include "Repository_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ComponentContainer_i.h"
+#include "orbsvcs/IFRService/ComponentContainer_i.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

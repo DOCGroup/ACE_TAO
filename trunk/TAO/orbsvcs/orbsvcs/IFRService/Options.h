@@ -24,7 +24,7 @@
 
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 #include "tao/Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

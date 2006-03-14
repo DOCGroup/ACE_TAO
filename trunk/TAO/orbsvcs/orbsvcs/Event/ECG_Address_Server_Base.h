@@ -14,7 +14,7 @@
 
 #include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "EC_Lifetime_Utils.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

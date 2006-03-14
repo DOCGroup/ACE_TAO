@@ -1,7 +1,7 @@
 // $Id$
 
-#include "SSLIOP_CredentialsAcquirer.h"
-#include "SSLIOP_OwnCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

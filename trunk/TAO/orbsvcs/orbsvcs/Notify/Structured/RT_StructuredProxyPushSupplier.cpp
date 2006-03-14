@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RT_StructuredProxyPushSupplier.h"
+#include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
 #include "tao/debug.h"
 
 #include "tao/debug.h"

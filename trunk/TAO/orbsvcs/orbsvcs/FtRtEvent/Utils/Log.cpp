@@ -1,8 +1,8 @@
 //$Id$
-#include "Log.h"
+#include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 #if !defined(__ACE_INLINE__)
-#include "Log.inl"
+#include "orbsvcs/FtRtEvent/Utils/Log.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 // Flat File class implementations
 //-----------------------------------------------------------------------------
-#include "Flat_File_Persistence.h"
+#include "orbsvcs/Naming/Flat_File_Persistence.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_stat.h"

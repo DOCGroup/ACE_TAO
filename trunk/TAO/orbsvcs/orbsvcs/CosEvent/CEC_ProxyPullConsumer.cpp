@@ -1,15 +1,15 @@
 // $Id$
 
-#include "CEC_ProxyPullConsumer.h"
-#include "CEC_EventChannel.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_SupplierControl.h"
-#include "CEC_ProxyPullSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_ProxyPullConsumer.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,

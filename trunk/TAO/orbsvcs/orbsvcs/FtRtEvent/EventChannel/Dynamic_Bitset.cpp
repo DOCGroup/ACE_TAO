@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Dynamic_Bitset.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
 #include <assert.h>
 #include <algorithm>
 
 #if !defined (__ACE_INLINE__)
-#include "Dynamic_Bitset.inl"
+#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
 #endif /* __ACE_INLINE__ */
 
 inline unsigned ceil(unsigned numerator, unsigned denominator)

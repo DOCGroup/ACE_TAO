@@ -1,16 +1,16 @@
 // $Id$
 
-#include "EventType.h"
+#include "orbsvcs/Notify/EventType.h"
 
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EventType.inl"
+#include "orbsvcs/Notify/EventType.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 
 ACE_RCSID (Notify,
            TAO_Notify_EventType,

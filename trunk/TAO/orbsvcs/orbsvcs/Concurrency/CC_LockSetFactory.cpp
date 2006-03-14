@@ -9,8 +9,8 @@
 //=============================================================================
 
 
-#include "CC_LockSetFactory.h"
-#include "CC_LockSet.h"
+#include "orbsvcs/Concurrency/CC_LockSetFactory.h"
+#include "orbsvcs/Concurrency/CC_LockSet.h"
 
 ACE_RCSID(Concurrency, CC_LockSetFactory, "$Id$")
 

@@ -13,10 +13,10 @@
 //
 // ============================================================================
 
-#include "Storable.h"
+#include "orbsvcs/Naming/Storable.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Storable.inl"
+#include "orbsvcs/Naming/Storable.inl"
 #endif /* __ACE_INLINE__ */
 
 

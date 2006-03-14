@@ -1,11 +1,11 @@
 //$Id$
-#include "UUID.h"
+#include "orbsvcs/FtRtEvent/Utils/UUID.h"
 
 ACE_RCSID (Utils,
            UUID,
            "$Id$")
 #if !defined(__ACE_INLINE__)
-#include "UUID.inl"
+#include "orbsvcs/FtRtEvent/Utils/UUID.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

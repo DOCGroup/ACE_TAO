@@ -24,8 +24,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "HTIOP_Export.h"
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

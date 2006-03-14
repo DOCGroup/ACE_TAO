@@ -10,7 +10,7 @@
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 // ================================================================
 
-#include "IFR_Service_Loader.h"
+#include "orbsvcs/IFRService/IFR_Service_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 

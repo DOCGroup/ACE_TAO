@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Trader.h"
-#include "Offer_Iterators_T.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Offer_Iterators_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/OS_NS_strings.h"
@@ -9,7 +9,7 @@
 #include "ace/OS_NS_ctype.h"
 
 // The following #include is needed only for the instantiation pragmas.
-#include "Trader_Interfaces.h"
+#include "orbsvcs/Trader/Trader_Interfaces.h"
 
 ACE_RCSID (Trader,
            Trader,
@@ -637,7 +637,7 @@ operator== (const CosTrading::Admin::OctetSeq& left,
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Arg_Shifter.h"
-#include "Trader_T.h"
+#include "orbsvcs/Trader/Trader_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "EC_Reactive_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
 #include "ace/Reactor.h"
 
 ACE_RCSID (Event,

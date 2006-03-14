@@ -143,7 +143,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "EC_Supplier_Filter.i"
+#include "orbsvcs/Event/EC_Supplier_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

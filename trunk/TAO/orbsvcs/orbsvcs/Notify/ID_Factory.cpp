@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ID_Factory.h"
+#include "orbsvcs/Notify/ID_Factory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ID_Factory.inl"
+#include "orbsvcs/Notify/ID_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_ID_Factory, "$Id$")

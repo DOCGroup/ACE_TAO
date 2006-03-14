@@ -209,7 +209,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "FT_Policy_i.inl"
+#include "orbsvcs/FaultTolerance/FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

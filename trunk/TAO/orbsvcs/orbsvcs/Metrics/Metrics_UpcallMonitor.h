@@ -24,9 +24,9 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/MetricsS.h"
 
-#include "Metrics_LocalCache.h"
-#include "Metrics_FrameManager.h"
-#include "Metrics_Utils.h"
+#include "orbsvcs/Metrics/Metrics_LocalCache.h"
+#include "orbsvcs/Metrics/Metrics_FrameManager.h"
+#include "orbsvcs/Metrics/Metrics_Utils.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -229,7 +229,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Metrics_UpcallMonitor.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"

@@ -1,9 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ETCL_Constraint.h"
-#include "ETCL_Constraint_Visitor.h"
-#include "ETCL_y.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
+#include "orbsvcs/ETCL/ETCL_y.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/TypeCode.h"
@@ -13,7 +13,7 @@
 #include "tao/CDR.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ETCL_Constraint.inl"
+#include "orbsvcs/ETCL/ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ETCL,

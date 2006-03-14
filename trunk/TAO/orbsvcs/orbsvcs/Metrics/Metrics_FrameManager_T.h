@@ -262,7 +262,7 @@ protected:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Metrics_FrameManager_T.cpp"
+#include "orbsvcs/Metrics/Metrics_FrameManager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -270,7 +270,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #if defined (__ACE_INLINE__)
-#include "Metrics_FrameManager_T.i"
+#include "orbsvcs/Metrics/Metrics_FrameManager_T.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* METRICS_FRAME_MANAGER_T_H */

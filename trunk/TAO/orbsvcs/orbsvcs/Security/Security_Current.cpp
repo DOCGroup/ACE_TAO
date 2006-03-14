@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "Security_Current.h"
+#include "orbsvcs/Security/Security_Current.h"
 #include "tao/debug.h"
 
 ACE_RCSID (Security,
@@ -8,7 +8,7 @@ ACE_RCSID (Security,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "Security_Current.inl"
+# include "orbsvcs/Security/Security_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

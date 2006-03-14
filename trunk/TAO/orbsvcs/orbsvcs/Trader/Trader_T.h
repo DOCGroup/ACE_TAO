@@ -17,8 +17,8 @@
 #define TAO_TRADER_H
 #include /**/ "ace/pre.h"
 
-#include "Trader.h"
-#include "Offer_Database.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Offer_Database.h"
 #include "ace/Containers.h"
 #include "ace/Lock_Adapter_T.h"
 
@@ -267,7 +267,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Trader_T.cpp"
+#include "orbsvcs/Trader/Trader_T.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined(_MSC_VER)

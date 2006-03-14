@@ -1,5 +1,5 @@
-#include "PG_Property_Utils.h"
-#include "PG_Operators.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
 ACE_RCSID (PortableGroup,
            PG_Property_Utils,

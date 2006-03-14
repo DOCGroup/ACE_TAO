@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/ACE.h"
 
@@ -45,7 +45,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "PG_Location_Hash.inl"
+#include "orbsvcs/PortableGroup/PG_Location_Hash.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

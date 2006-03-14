@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Properties.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Properties.inl"
+#include "orbsvcs/Notify/Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify,

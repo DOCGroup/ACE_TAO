@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "UIPMC_Connection_Handler.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -153,7 +153,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "UIPMC_Acceptor.i"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

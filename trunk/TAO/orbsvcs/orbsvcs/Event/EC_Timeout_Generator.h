@@ -25,7 +25,7 @@
 
 #include /**/ "event_serv_export.h"
 
-#include "EC_Timeout_Filter.h"
+#include "orbsvcs/Event/EC_Timeout_Filter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -93,7 +93,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "EC_Timeout_Generator.i"
+#include "orbsvcs/Event/EC_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

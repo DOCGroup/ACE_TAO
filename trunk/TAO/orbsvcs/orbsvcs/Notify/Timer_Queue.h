@@ -12,9 +12,9 @@
 #define TAO_Notify_TIMER_QUEUE_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
-#include "Timer.h"
+#include "orbsvcs/Notify/Timer.h"
 
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Heap.h"

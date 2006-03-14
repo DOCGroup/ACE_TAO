@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CosEC_ProxyPushConsumer.h"
+#include "orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h"
 
 ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushConsumer, "$Id$")
 
@@ -8,8 +8,8 @@ ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushConsumer, "$Id$")
 #include "../AdminProperties.h"
 #include "../Method_Request_Lookup.h"
 #include "../Worker_Task.h"
-#include "AnyEvent.h"
-#include "PushSupplier.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "orbsvcs/Notify/Any/PushSupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

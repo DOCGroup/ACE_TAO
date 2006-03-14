@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "Entries.h"
+#include "orbsvcs/Naming/Entries.h"
 
 ACE_RCSID(Naming, Entries, "$Id$")
 

@@ -3,7 +3,7 @@
 #ifndef METRICS_LOCAL_CACHE_T_CPP
 #define METRICS_LOCAL_CACHE_T_CPP
 
-#include "Metrics_LocalCache_T.h"
+#include "orbsvcs/Metrics/Metrics_LocalCache_T.h"
 
 #if defined VXWORKS
 #include <cacheLib.h>

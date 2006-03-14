@@ -1,5 +1,5 @@
-#include "SSLIOP_Acceptor.h"
-#include "SSLIOP_Profile.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
-#include "SSLIOP_Acceptor.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 

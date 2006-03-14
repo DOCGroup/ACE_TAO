@@ -1,6 +1,6 @@
 // $Id$
 
-#include "IOR_Multicast.h"
+#include "orbsvcs/IOR_Multicast.h"
 
 #include "tao/debug.h"
 

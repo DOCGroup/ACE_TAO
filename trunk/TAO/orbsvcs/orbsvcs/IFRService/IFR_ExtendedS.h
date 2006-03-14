@@ -34,7 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/IFR_Client/IFR_ExtendedC.h"
-#include "IFR_BasicS.h"
+#include "orbsvcs/IFRService/IFR_BasicS.h"
 #include "tao/AnyTypeCode/VisibilityS.h"
 #include "tao/AnyTypeCode/ValueModifierS.h"
 
@@ -2125,10 +2125,10 @@ namespace POA_CORBA
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "IFR_ExtendedS_T.h"
+#include "orbsvcs/IFRService/IFR_ExtendedS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "IFR_ExtendedS.inl"
+#include "orbsvcs/IFRService/IFR_ExtendedS.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

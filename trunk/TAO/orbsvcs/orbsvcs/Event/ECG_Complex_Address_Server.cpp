@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ECG_Complex_Address_Server.h"
+#include "orbsvcs/Event/ECG_Complex_Address_Server.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_Complex_Address_Server.i"
+#include "orbsvcs/Event/ECG_Complex_Address_Server.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

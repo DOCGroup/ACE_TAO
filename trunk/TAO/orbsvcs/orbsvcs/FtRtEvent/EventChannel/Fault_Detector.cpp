@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Reactor.h"
-#include "Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
 #include "ace/Select_Reactor.h"
 
 ACE_RCSID (EventChannel,

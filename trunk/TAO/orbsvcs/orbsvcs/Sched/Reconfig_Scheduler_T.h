@@ -20,7 +20,7 @@
 
 #include "ace/config-all.h"
 
-#include "Reconfig_Scheduler.h"
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -765,7 +765,7 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Reconfig_Scheduler_T.cpp"
+#include "orbsvcs/Sched/Reconfig_Scheduler_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

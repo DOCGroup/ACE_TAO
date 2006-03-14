@@ -1,10 +1,10 @@
 // $Id$
 
-#include "GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 #include "../Utils/resolve_init.h"
-#include "IOGR_Maker.h"
-#include "Identification_Service.h"
-#include "FTEC_Become_Primary_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
 //#include "../Utils/log_obj_endpoints.h"

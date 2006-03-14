@@ -1,18 +1,18 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ComponentRepository_i.h"
-#include "ModuleDef_i.h"
-#include "ComponentDef_i.h"
-#include "HomeDef_i.h"
-#include "EventDef_i.h"
-#include "FinderDef_i.h"
-#include "FactoryDef_i.h"
-#include "EmitsDef_i.h"
-#include "PublishesDef_i.h"
-#include "ConsumesDef_i.h"
-#include "ProvidesDef_i.h"
-#include "UsesDef_i.h"
+#include "orbsvcs/IFRService/ComponentRepository_i.h"
+#include "orbsvcs/IFRService/ModuleDef_i.h"
+#include "orbsvcs/IFRService/ComponentDef_i.h"
+#include "orbsvcs/IFRService/HomeDef_i.h"
+#include "orbsvcs/IFRService/EventDef_i.h"
+#include "orbsvcs/IFRService/FinderDef_i.h"
+#include "orbsvcs/IFRService/FactoryDef_i.h"
+#include "orbsvcs/IFRService/EmitsDef_i.h"
+#include "orbsvcs/IFRService/PublishesDef_i.h"
+#include "orbsvcs/IFRService/ConsumesDef_i.h"
+#include "orbsvcs/IFRService/ProvidesDef_i.h"
+#include "orbsvcs/IFRService/UsesDef_i.h"
 
 ACE_RCSID (IFRService, 
            ComponentRepository_i, 

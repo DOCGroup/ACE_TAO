@@ -1,16 +1,16 @@
 // $Id$
 
-#include "Consumer.h"
+#include "orbsvcs/Notify/Consumer.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Consumer.inl"
+#include "orbsvcs/Notify/Consumer.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
 
-#include "Timer.h"
-#include "ProxySupplier.h"
-#include "Method_Request_Event.h"
+#include "orbsvcs/Notify/Timer.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Method_Request_Event.h"
 
 #include "orbsvcs/Time_Utilities.h"
 

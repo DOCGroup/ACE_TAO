@@ -11,18 +11,18 @@
 #define TAO_Notify_LOOKUP_METHOD_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "Method_Request_Event.h"
-#include "ProxySupplier.h"
-#include "ProxyConsumer.h"
-#include "Consumer_Map.h"
-#include "Delivery_Request.h"
+#include "orbsvcs/Notify/Method_Request_Event.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/Consumer_Map.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 

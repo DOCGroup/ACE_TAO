@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ForwardCtrlServerInterceptor.h"
-#include "GroupInfoPublisher.h"
-#include "IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"

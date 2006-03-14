@@ -1,11 +1,11 @@
 // $Id$
 
-#include "EC_TPC_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_TPC_ProxyConsumer.h"
 
 ACE_RCSID(Event, EC_TPC_ProxyConsumer, "$Id$")
 
-#include "EC_Event_Channel_Base.h"
-#include "EC_TPC_Dispatching.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_TPC_Dispatching.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

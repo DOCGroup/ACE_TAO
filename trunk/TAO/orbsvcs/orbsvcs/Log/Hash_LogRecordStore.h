@@ -29,7 +29,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 100
 

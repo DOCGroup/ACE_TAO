@@ -1,16 +1,16 @@
 // $Id$
 
-#include "Routing_Slip.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
 
-#include "Delivery_Request.h"
-#include "Worker_Task.h"
-#include "ProxyConsumer.h"
-#include "ProxySupplier.h"
-#include "Event_Persistence_Strategy.h"
-#include "Routing_Slip_Persistence_Manager.h"
-#include "Routing_Slip_Queue.h"
-#include "Method_Request_Lookup.h"
-#include "Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Event_Persistence_Strategy.h"
+#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
+#include "orbsvcs/Notify/Routing_Slip_Queue.h"
+#include "orbsvcs/Notify/Method_Request_Lookup.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"

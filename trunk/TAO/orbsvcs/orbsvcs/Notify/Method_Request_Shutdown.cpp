@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Method_Request_Shutdown.h"
-#include "ThreadPool_Task.h"
+#include "orbsvcs/Notify/Method_Request_Shutdown.h"
+#include "orbsvcs/Notify/ThreadPool_Task.h"
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Shutdown, "$Id$")
 

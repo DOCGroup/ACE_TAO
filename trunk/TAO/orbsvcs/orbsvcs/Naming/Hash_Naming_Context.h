@@ -16,8 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Naming_Context_Interface.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/SString.h"

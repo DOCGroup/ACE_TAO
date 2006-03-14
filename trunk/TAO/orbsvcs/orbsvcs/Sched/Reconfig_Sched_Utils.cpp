@@ -18,8 +18,8 @@
 #ifndef TAO_RECONFIG_SCHED_UTILS_C
 #define TAO_RECONFIG_SCHED_UTILS_C
 
-#include "Reconfig_Sched_Utils_T.h"
-#include "Reconfig_Sched_Utils.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
 
 
 #include "orbsvcs/Time_Utilities.h"

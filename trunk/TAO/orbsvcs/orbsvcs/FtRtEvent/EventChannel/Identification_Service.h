@@ -17,7 +17,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/FTRTC.h"
 #include "orbsvcs/FtRtecEventCommC.h"
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

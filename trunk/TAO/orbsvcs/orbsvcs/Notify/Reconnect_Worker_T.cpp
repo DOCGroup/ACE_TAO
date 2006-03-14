@@ -11,7 +11,7 @@
 #ifndef RECONNECT_WORKER_CPP
 #define RECONNECT_WORKER_CPP
 
-#include "Reconnect_Worker_T.h"
+#include "orbsvcs/Notify/Reconnect_Worker_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

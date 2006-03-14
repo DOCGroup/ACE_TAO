@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Random_File.h"
+#include "orbsvcs/Notify/Random_File.h"
 
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"

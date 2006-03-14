@@ -30,9 +30,9 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #include /**/ "event_serv_export.h"
-#include "ECG_Adapters.h"
-#include "EC_Lifetime_Utils.h"
-#include "EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/ECG_Adapters.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -286,7 +286,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "ECG_Mcast_EH.i"
+#include "orbsvcs/Event/ECG_Mcast_EH.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

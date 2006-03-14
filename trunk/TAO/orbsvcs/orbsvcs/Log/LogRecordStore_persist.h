@@ -31,8 +31,8 @@
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
-#include "log_serv_export.h"
-#include "PersistStore.h"
+#include "orbsvcs/Log/log_serv_export.h"
+#include "orbsvcs/Log/PersistStore.h"
 
 #define PERSISTENT_LOG_FILE_NAME "LOG.DATA"
 
