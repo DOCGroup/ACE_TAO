@@ -1,4 +1,4 @@
-#include "SL3_CredentialsAcquirerFactory.h"
+#include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 
 
 ACE_RCSID (Security,

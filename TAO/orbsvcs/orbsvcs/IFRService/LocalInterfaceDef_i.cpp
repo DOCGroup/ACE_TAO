@@ -1,7 +1,7 @@
 // $Id$
 
-#include "LocalInterfaceDef_i.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/LocalInterfaceDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 ACE_RCSID (IFRService, 
            LocalInterfaceDef_i, 

@@ -1,10 +1,10 @@
 //$Id$
-#include "FT_Policy_i.h"
+#include "orbsvcs/FaultTolerance/FT_Policy_i.h"
 
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-#include "FT_Policy_i.inl"
+#include "orbsvcs/FaultTolerance/FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(FaultTolerance, FT_Policy_i, "$Id$")

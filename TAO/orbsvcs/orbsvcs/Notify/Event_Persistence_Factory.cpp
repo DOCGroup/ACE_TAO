@@ -1,4 +1,4 @@
-#include "Event_Persistence_Factory.h"
+#include "orbsvcs/Notify/Event_Persistence_Factory.h"
 
 ACE_RCSID (Notify,
            Event_Persistence_Factory,

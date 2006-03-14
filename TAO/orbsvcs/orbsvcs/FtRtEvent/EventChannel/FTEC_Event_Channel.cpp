@@ -1,19 +1,19 @@
 // $Id$
 
 #include "ace/Dynamic_Service.h"
-#include "FTEC_Event_Channel.h"
-#include "FTEC_Event_Channel_Impl.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h"
 #include "../Utils/activate_with_id.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/UUID.h"
-#include "Fault_Detector_Loader.h"
-#include "Fault_Detector.h"
-#include "Request_Context_Repository.h"
-#include "Replication_Service.h"
-#include "Identification_Service.h"
-#include "create_persistent_poa.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_Event_Channel,

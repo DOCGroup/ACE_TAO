@@ -1,19 +1,19 @@
 // $Id$
 
-#include "EC_Basic_Factory.h"
-#include "EC_Reactive_Dispatching.h"
-#include "EC_Basic_Filter_Builder.h"
-#include "EC_Trivial_Supplier_Filter.h"
-#include "EC_ConsumerAdmin.h"
-#include "EC_SupplierAdmin.h"
-#include "EC_Default_ProxyConsumer.h"
-#include "EC_Default_ProxySupplier.h"
-#include "EC_ObserverStrategy.h"
-#include "EC_Null_Scheduling.h"
-#include "EC_Reactive_Timeout_Generator.h"
-#include "EC_Reactive_ConsumerControl.h"
-#include "EC_Reactive_SupplierControl.h"
-#include "EC_Event_Channel_Base.h" // @@ MSVC 6 bug
+#include "orbsvcs/Event/EC_Basic_Factory.h"
+#include "orbsvcs/Event/EC_Reactive_Dispatching.h"
+#include "orbsvcs/Event/EC_Basic_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Trivial_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/Event/EC_SupplierAdmin.h"
+#include "orbsvcs/Event/EC_Default_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_Default_ProxySupplier.h"
+#include "orbsvcs/Event/EC_ObserverStrategy.h"
+#include "orbsvcs/Event/EC_Null_Scheduling.h"
+#include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_Reactive_ConsumerControl.h"
+#include "orbsvcs/Event/EC_Reactive_SupplierControl.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h" // @@ MSVC 6 bug
 
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Delayed_Changes.h"

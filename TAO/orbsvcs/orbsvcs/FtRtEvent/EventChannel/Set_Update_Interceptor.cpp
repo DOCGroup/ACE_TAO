@@ -1,9 +1,9 @@
 // $Id$
 
 #include "tao/CDR.h"
-#include "Set_Update_Interceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
-#include "Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 
 ACE_RCSID (EventChannel,
            Set_Update_Intercetpor,

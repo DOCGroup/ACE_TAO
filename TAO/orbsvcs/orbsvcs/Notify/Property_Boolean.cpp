@@ -1,14 +1,14 @@
 // $Id$
 
-#include "Property_Boolean.h"
+#include "orbsvcs/Notify/Property_Boolean.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Property_Boolean.inl"
+#include "orbsvcs/Notify/Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_Property_Boolean, "$Id$")
 
-#include "PropertySeq.h"
+#include "orbsvcs/Notify/PropertySeq.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

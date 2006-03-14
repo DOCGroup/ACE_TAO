@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

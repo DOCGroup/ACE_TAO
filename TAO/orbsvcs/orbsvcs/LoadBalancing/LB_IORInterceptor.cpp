@@ -1,6 +1,6 @@
-#include "LB_IORInterceptor.h"
-#include "LB_ObjectReferenceFactory.h"
-#include "LB_LoadAlert.h"
+#include "orbsvcs/LoadBalancing/LB_IORInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

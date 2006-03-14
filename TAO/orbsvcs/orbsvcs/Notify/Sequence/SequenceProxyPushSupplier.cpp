@@ -1,11 +1,11 @@
 // $Id$
 
-#include "SequenceProxyPushSupplier.h"
+#include "orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h"
 
 ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"
-#include "SequencePushConsumer.h"
+#include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"
 #include "../Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

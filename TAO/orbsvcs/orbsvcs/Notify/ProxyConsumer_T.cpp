@@ -3,10 +3,10 @@
 #ifndef TAO_Notify_PROXYCONSUMER_T_CPP
 #define TAO_Notify_PROXYCONSUMER_T_CPP
 
-#include "ProxyConsumer_T.h"
-#include "SupplierAdmin.h"
+#include "orbsvcs/Notify/ProxyConsumer_T.h"
+#include "orbsvcs/Notify/SupplierAdmin.h"
 
-#include "Event_Manager.h"
+#include "orbsvcs/Notify/Event_Manager.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

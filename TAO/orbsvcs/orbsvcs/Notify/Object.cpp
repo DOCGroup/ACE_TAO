@@ -1,17 +1,17 @@
 // $Id$
 
-#include "Object.h"
-#include "POA_Helper.h"
-#include "Worker_Task.h"
-#include "Properties.h"
-#include "Builder.h"
-#include "ThreadPool_Task.h"
-#include "Reactive_Task.h"
+#include "orbsvcs/Notify/Object.h"
+#include "orbsvcs/Notify/POA_Helper.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/ThreadPool_Task.h"
+#include "orbsvcs/Notify/Reactive_Task.h"
 #include "tao/debug.h"
-#include "Event_Manager.h"
+#include "orbsvcs/Notify/Event_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Object.inl"
+#include "orbsvcs/Notify/Object.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_Object, "$Id$")

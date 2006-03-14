@@ -1,4 +1,4 @@
-#include "SSLIOP_TargetCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h"
 
 
 ACE_RCSID (SSLIOP,

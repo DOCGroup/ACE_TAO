@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ECG_CDR_Message_Receiver.h"
-#include "ECG_CDR_Message_Sender.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
 
 #include "tao/Exception.h"
 
@@ -10,7 +10,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_CDR_Message_Receiver.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

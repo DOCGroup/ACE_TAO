@@ -18,8 +18,8 @@
 #define HTIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Completion_Handler.h"
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -232,7 +232,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "HTIOP_Acceptor.i"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

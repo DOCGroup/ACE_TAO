@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CEC_ConsumerControl.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
 
 ACE_RCSID (CosEvent,
            CEC_ConsumerControl,

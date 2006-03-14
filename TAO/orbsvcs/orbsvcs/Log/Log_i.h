@@ -32,7 +32,7 @@
 #include "orbsvcs/Log/LogRecordStore.h"
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

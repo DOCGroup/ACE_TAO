@@ -21,14 +21,14 @@
 #ifndef TAO_HOMEDEF_I_H
 #define TAO_HOMEDEF_I_H
 
-#include "ExtInterfaceDef_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ExtInterfaceDef_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ComponentsS.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

@@ -1,15 +1,15 @@
 // $Id$
 
-#include "Supplier.h"
+#include "orbsvcs/Notify/Supplier.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Supplier.inl"
+#include "orbsvcs/Notify/Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_Supplier, "$Id$")
 
-#include "ProxyConsumer.h"
-#include "Proxy.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/Proxy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,20 +1,20 @@
 // $Id$
 
-#include "ConsumerAdmin.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
 
 ACE_RCSID (RT_Notify,
            TAO_Notify_ConsumerAdmin,
            "$Id$")
 
-#include "Subscription_Change_Worker.h"
-#include "Proxy.h"
-#include "EventChannel.h"
-#include "Properties.h"
-#include "Factory.h"
-#include "Builder.h"
-#include "Find_Worker_T.h"
-#include "Seq_Worker_T.h"
-#include "ProxySupplier.h"
+#include "orbsvcs/Notify/Subscription_Change_Worker.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/EventChannel.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Factory.h"
+#include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/Find_Worker_T.h"
+#include "orbsvcs/Notify/Seq_Worker_T.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
 
 #include "tao/debug.h"
 

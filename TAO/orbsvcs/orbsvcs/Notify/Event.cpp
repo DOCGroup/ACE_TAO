@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Event.h"
+#include "orbsvcs/Notify/Event.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Event.inl"
+#include "orbsvcs/Notify/Event.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify,

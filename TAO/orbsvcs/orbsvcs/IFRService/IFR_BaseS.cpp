@@ -33,7 +33,7 @@
 #define _TAO_IDL_ORIG_IFR_BASES_CPP_
 
 
-#include "IFR_BaseS.h"
+#include "orbsvcs/IFRService/IFR_BaseS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
@@ -69,7 +69,7 @@
 #include "ace/Malloc_Allocator.h"
 
 #if !defined (__ACE_INLINE__)
-#include "IFR_BaseS.inl"
+#include "orbsvcs/IFRService/IFR_BaseS.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from

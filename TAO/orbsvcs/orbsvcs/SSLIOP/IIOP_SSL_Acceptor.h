@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IIOP_SSL_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

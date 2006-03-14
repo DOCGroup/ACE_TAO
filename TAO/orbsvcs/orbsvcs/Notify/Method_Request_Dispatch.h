@@ -12,17 +12,17 @@
 #define TAO_Notify_DISPATCH_METHOD_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Method_Request.h"
-#include "Refcountable.h"
-#include "Method_Request_Event.h"
-#include "ProxySupplier.h"
-#include "Delivery_Request.h"
+#include "orbsvcs/Notify/Method_Request.h"
+#include "orbsvcs/Notify/Refcountable.h"
+#include "orbsvcs/Notify/Method_Request_Event.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Notify_Constraint_Visitors.h"
+#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/ETCL/ETCL_y.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

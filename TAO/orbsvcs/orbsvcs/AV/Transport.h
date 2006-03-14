@@ -16,8 +16,8 @@
 #include /**/ "ace/pre.h"
 
 
-#include "FlowSpec_Entry.h"
-#include "AV_Core.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/AV_Core.h"
 
 #include "orbsvcs/AV/AV_export.h"
 
@@ -338,7 +338,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Transport.i"
+#include "orbsvcs/AV/Transport.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

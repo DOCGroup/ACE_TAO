@@ -13,7 +13,7 @@
 //   Carlos O'Ryan <coryan@uci.edu>
 // ================================================================
 
-#include "Naming_Loader.h"
+#include "orbsvcs/Naming/Naming_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 

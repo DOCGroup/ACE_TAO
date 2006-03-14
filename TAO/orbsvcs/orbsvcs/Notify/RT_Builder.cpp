@@ -1,14 +1,14 @@
 // $Id$
 
-#include "RT_Builder.h"
+#include "orbsvcs/Notify/RT_Builder.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
-#include "ETCL_FilterFactory.h"
-#include "RT_POA_Helper.h"
-#include "Properties.h"
+#include "orbsvcs/Notify/ETCL_FilterFactory.h"
+#include "orbsvcs/Notify/RT_POA_Helper.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/NotifyExtC.h"
-#include "Object.h"
+#include "orbsvcs/Notify/Object.h"
 
 ACE_RCSID (RT_Notify,
            TAO_Notify_RT_Builder,

@@ -14,7 +14,7 @@
 #define UPDATE_MANAGER_H
 
 #include "ace/Synch_T.h"
-#include "Dynamic_Bitset.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -16,10 +16,10 @@
 
 #include "orbsvcs/AV/AV_export.h"
 
-#include "Policy.h"
-#include "MCast.h"
-#include "AVStreams_i.h"
-#include "UDP.h"
+#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/AV/MCast.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/UDP.h"
 
 #include "orbsvcs/sfpC.h"
 

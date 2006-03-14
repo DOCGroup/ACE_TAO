@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Object_Group_Manipulator.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
 
 #include "orbsvcs/PortableGroupC.h"
 

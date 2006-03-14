@@ -1,14 +1,14 @@
 // $Id$
 
-#include "EC_ProxyConsumer.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_Supplier_Filter.h"
-#include "EC_Supplier_Filter_Builder.h"
+#include "orbsvcs/Event/EC_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_ProxyConsumer.i"
+#include "orbsvcs/Event/EC_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

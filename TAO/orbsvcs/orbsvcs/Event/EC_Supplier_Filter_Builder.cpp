@@ -1,6 +1,6 @@
 // $Id$
 
-#include "EC_Supplier_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
 
 ACE_RCSID(Event, EC_Supplier_Filter_Builder, "$Id$")
 

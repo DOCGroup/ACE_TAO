@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Pulling_Strategy.h"
+#include "orbsvcs/CosEvent/CEC_Pulling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -143,7 +143,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "CEC_Reactive_Pulling_Strategy.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

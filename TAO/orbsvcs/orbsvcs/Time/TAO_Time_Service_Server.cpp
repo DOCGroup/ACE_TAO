@@ -1,6 +1,6 @@
-#include "TAO_UTO.h"
-#include "TAO_TIO.h"
-#include "TAO_Time_Service_Server.h"
+#include "orbsvcs/Time/TAO_UTO.h"
+#include "orbsvcs/Time/TAO_TIO.h"
+#include "orbsvcs/Time/TAO_Time_Service_Server.h"
 #include "ace/OS_NS_sys_time.h"
 #include "orbsvcs/Time_Utilities.h"
 

@@ -3,10 +3,10 @@
 #ifndef TAO_TRADER_INTERFACES_CPP
 #define TAO_TRADER_INTERFACES_CPP
 
-#include "Trader_Interfaces.h"
-#include "Trader_T.h"
+#include "orbsvcs/Trader/Trader_Interfaces.h"
+#include "orbsvcs/Trader/Trader_T.h"
 #include "ace/INET_Addr.h"
-#include "Trader_Constraint_Visitors.h"
+#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 

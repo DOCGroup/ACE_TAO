@@ -3,17 +3,17 @@
 #ifndef TAO_Notify_PROPERTY_T_CPP
 #define TAO_Notify_PROPERTY_T_CPP
 
-#include "Property_T.h"
+#include "orbsvcs/Notify/Property_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Property_T.inl"
+#include "orbsvcs/Notify/Property_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify, 
            TAO_Notify_Property_T, 
            "$Id$")
 
-#include "PropertySeq.h"
+#include "orbsvcs/Notify/PropertySeq.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

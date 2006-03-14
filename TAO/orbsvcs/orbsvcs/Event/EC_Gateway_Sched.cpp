@@ -1,6 +1,6 @@
 // $Id$
 
-#include "EC_Gateway_Sched.h"
+#include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/Time_Utilities.h"
 
 ACE_RCSID (Event, 

@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "LB_RoundRobin.h"
+#include "orbsvcs/LoadBalancing/LB_RoundRobin.h"
 
 #include "orbsvcs/PortableGroup/PG_conf.h"
 

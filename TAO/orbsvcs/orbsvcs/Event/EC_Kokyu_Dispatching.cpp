@@ -1,9 +1,9 @@
 // $Id$
 
-#include "EC_Kokyu_Dispatching.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_ProxySupplier.h"
-#include "EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Kokyu_Dispatching.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/RtecSchedulerC.h"
@@ -15,7 +15,7 @@
 #include "Kokyu/Kokyu.h"
 
 #if     ! defined (__ACE_INLINE__)
-#include "EC_Kokyu_Dispatching.i"
+#include "orbsvcs/Event/EC_Kokyu_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

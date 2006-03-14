@@ -2,17 +2,17 @@
 //
 // $Id$
 
-#include "CEC_TypedEventChannel.h"
-#include "CEC_Dispatching.h"
-#include "CEC_TypedConsumerAdmin.h"
-#include "CEC_TypedSupplierAdmin.h"
-#include "CEC_ConsumerControl.h"
-#include "CEC_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
+#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_TypedEventChannel.i"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.i"
 #endif /* __ACE_INLINE__ */
 
 

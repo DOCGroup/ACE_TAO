@@ -51,7 +51,7 @@ namespace TAO_Notify
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Save_Persist_Worker_T.cpp"
+#include "orbsvcs/Notify/Save_Persist_Worker_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

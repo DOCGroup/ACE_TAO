@@ -31,10 +31,10 @@
 #ifndef _TAO_IDL_ORIG_IFR_EXTENDEDS_T_CPP_
 #define _TAO_IDL_ORIG_IFR_EXTENDEDS_T_CPP_
 
-#include "IFR_ExtendedS_T.h"
+#include "orbsvcs/IFRService/IFR_ExtendedS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "IFR_ExtendedS_T.inl"
+#include "orbsvcs/IFRService/IFR_ExtendedS_T.inl"
 #endif /* !defined INLINE */
 
 

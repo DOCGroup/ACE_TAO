@@ -3,7 +3,7 @@
 #ifndef TAO_ESF_PEER_ADMIN_CPP
 #define TAO_ESF_PEER_ADMIN_CPP
 
-#include "ESF_Peer_Workers.h"
+#include "orbsvcs/ESF/ESF_Peer_Workers.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

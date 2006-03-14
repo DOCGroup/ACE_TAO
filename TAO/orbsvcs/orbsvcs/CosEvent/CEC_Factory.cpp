@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CEC_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Factory.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(CosEvent, CEC_Factory, "$Id$")

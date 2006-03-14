@@ -13,8 +13,8 @@
 #ifndef AMI_PRIMARY_REPLICATION_STRATEGY_H
 #define AMI_PRIMARY_REPLICATION_STRATEGY_H
 
-#include "UpdateableHandler.h"
-#include "Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "ace/Task.h"
 

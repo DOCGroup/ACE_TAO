@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#include "TAO_UTO.h"
-#include "TAO_TIO.h"
+#include "orbsvcs/Time/TAO_UTO.h"
+#include "orbsvcs/Time/TAO_TIO.h"
 #include "ace/OS.h"
 
 

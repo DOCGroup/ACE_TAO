@@ -23,8 +23,8 @@
 #include "tao/ORB.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/IOR_Multicast.h"
-#include "Naming_Context_Interface.h"
-#include "nsconf.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
+#include "orbsvcs/Naming/nsconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

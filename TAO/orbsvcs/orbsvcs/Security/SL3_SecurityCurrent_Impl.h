@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 #include "orbsvcs/SecurityLevel3C.h"
 
 

@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "Persistent_Entries.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

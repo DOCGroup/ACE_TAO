@@ -15,8 +15,8 @@
 #define TAO_AV_PROTOCOL_FACTORY_T_H
 #include /**/ "ace/pre.h"
 
-#include "FlowSpec_Entry.h"
-#include "Policy.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/Policy.h"
 
 #include "ace/Service_Object.h"
 

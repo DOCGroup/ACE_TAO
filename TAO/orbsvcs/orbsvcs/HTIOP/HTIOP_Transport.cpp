@@ -1,10 +1,10 @@
 // $Id$
 
-#include "HTIOP_Transport.h"
+#include "orbsvcs/HTIOP/HTIOP_Transport.h"
 
-#include "HTIOP_Connection_Handler.h"
-#include "HTIOP_Acceptor.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Session.h"
 
 #include "tao/Acceptor_Registry.h"

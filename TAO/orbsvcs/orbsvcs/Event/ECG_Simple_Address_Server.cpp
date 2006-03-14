@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ECG_Simple_Address_Server.h"
+#include "orbsvcs/Event/ECG_Simple_Address_Server.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_Simple_Address_Server.i"
+#include "orbsvcs/Event/ECG_Simple_Address_Server.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

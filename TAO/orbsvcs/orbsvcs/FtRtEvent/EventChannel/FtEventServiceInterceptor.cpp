@@ -2,8 +2,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
-#include "FtEventServiceInterceptor.h"
-#include "Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "../Utils/Log.h"
 

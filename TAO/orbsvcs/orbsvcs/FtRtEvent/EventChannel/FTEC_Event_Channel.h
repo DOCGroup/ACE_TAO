@@ -12,7 +12,7 @@
 #ifndef FTEC_EVENT_CHANNEL_H
 #define FTEC_EVENT_CHANNEL_H
 
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

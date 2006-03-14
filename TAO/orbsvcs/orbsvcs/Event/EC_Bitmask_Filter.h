@@ -17,7 +17,7 @@
 #define TAO_EC_BITMASK_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter.h"
+#include "orbsvcs/Event/EC_Filter.h"
 #include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

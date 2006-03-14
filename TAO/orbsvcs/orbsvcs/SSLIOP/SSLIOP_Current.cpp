@@ -1,4 +1,4 @@
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 #include "tao/debug.h"
 
 
@@ -8,7 +8,7 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Current.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

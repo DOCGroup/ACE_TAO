@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_Out_Endpoint.i"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_UDP_Out_Endpoint, "$Id$")

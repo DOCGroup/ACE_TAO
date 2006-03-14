@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Worker_Task.h"
+#include "orbsvcs/Notify/Worker_Task.h"
 
 ACE_RCSID(Notify, TAO_Notify_Worker_Task, "$Id$")
 

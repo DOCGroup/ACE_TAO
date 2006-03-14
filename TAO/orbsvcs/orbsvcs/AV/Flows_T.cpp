@@ -3,7 +3,7 @@
 #ifndef TAO_AV_FLOWS_T_CPP
 #define TAO_AV_FLOWS_T_CPP
 
-#include "Flows_T.h"
+#include "orbsvcs/AV/Flows_T.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

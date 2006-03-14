@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Identification_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
 #include "../Utils/UUID.h"
 
 ACE_RCSID (EventChannel,

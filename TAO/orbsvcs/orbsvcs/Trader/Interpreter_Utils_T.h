@@ -16,7 +16,7 @@ CORBA::Boolean TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& operand
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Interpreter_Utils_T.cpp"
+#include "orbsvcs/Trader/Interpreter_Utils_T.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"

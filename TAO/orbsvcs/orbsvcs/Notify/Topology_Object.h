@@ -14,8 +14,8 @@
 #define TOPOLOGY_OBJECT_H
 #include /**/ "ace/pre.h"
 
-#include "Object.h"
-#include "Name_Value_Pair.h"
+#include "orbsvcs/Notify/Object.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
 
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
@@ -205,7 +205,7 @@ namespace TAO_Notify
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Topology_Object.inl"
+#include "orbsvcs/Notify/Topology_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

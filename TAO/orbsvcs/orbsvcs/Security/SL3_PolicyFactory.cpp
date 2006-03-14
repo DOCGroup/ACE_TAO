@@ -1,8 +1,8 @@
 // $Id$
 
-#include "SL3_PolicyFactory.h"
-#include "SL3_ContextEstablishmentPolicy.h"
-#include "SL3_ObjectCredentialsPolicy.h"
+#include "orbsvcs/Security/SL3_PolicyFactory.h"
+#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
+#include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
 
 
 ACE_RCSID (Security,

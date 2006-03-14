@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "Security_Current_Impl.h"
+#include "orbsvcs/Security/Security_Current_Impl.h"
 
 ACE_RCSID (Security,
            SL3_Security_Current_Impl,

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "EC_Default_ProxySupplier.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Default_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
 
 #include "ace/Reverse_Lock_T.h"
 

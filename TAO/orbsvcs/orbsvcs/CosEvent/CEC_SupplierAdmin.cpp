@@ -1,13 +1,13 @@
 // $Id$
 
-#include "CEC_SupplierAdmin.h"
-#include "CEC_ProxyPushConsumer.h"
-#include "CEC_ProxyPullConsumer.h"
-#include "CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_SupplierAdmin.i"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,

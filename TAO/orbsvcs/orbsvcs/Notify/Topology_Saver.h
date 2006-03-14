@@ -14,8 +14,8 @@
 #define TOPOLOGY_SAVER_H
 #include /**/ "ace/pre.h"
 
-#include "Topology_Object.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #include "ace/SString.h"
 

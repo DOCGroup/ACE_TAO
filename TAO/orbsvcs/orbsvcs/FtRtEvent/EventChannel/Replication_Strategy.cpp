@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Replication_Strategy.h"
-#include "FTEC_Event_Channel.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 
 ACE_RCSID (EventChannel,
            Replication_Strategy,

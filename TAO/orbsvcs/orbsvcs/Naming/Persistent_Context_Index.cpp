@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Persistent_Context_Index.h"
-#include "Persistent_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Context_Index.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context.h"
 
 #include "tao/debug.h"
 

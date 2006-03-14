@@ -159,7 +159,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Storable.inl"
+#include "orbsvcs/Naming/Storable.inl"
 #endif /* __ACE_INLINE_ */
 
 #endif  /* TAO_NAMING_STORABLE_H */

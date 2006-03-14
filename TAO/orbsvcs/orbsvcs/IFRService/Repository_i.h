@@ -21,8 +21,8 @@
 #ifndef REPOSITORY_I_H
 #define REPOSITORY_I_H
 
-#include "Container_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Container_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +33,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "IFR_macro.h"
+#include "orbsvcs/IFRService/IFR_macro.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/CORBA_String.h"
 

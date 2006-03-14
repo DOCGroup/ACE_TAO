@@ -1,7 +1,7 @@
 // $Id$
 
-#include "EventTypeSeq.h"
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/EventTypeSeq.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9

@@ -1,14 +1,14 @@
 // $Id$
 
-#include "UDP.h"
-#include "AVStreams_i.h"
-#include "MCast.h"
+#include "orbsvcs/AV/UDP.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/MCast.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "UDP.i"
+#include "orbsvcs/AV/UDP.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (AV,

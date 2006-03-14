@@ -12,12 +12,12 @@
 //
 // ============================================================================
 
-#include "Storable_Naming_Context_Activator.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-#include "Naming_Context_Interface.h"
-#include "Storable_Naming_Context.h"
-#include "Storable.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
+#include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Storable.h"
 #include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

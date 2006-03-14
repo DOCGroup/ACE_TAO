@@ -1,7 +1,7 @@
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "UIPMC_Connector.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connector.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

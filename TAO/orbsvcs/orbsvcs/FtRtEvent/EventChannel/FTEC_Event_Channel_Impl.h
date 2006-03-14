@@ -15,9 +15,9 @@
 #include "ace/Synch_T.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "FTEC_Factory.h"
-#include "FTEC_Group_Manager.h"
-#include "IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Factory.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

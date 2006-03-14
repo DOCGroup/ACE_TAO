@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "LB_Random.h"
+#include "orbsvcs/LoadBalancing/LB_Random.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"

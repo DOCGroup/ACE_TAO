@@ -22,7 +22,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "FT_ServerORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
 #include "tao/LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -88,7 +88,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "FT_ServerPolicy_i.inl"
+#include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

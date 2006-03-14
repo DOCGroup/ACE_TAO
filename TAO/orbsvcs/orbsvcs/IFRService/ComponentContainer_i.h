@@ -21,14 +21,14 @@
 #ifndef TAO_COMPONENTCONTAINER_I_H
 #define TAO_COMPONENTCONTAINER_I_H
 
-#include "Container_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Container_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ComponentsS.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

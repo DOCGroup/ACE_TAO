@@ -1,7 +1,7 @@
 // $Id$
 
-#include "FT_Endpoint_Selector_Factory.h"
-#include "FT_Invocation_Endpoint_Selectors.h"
+#include "orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h"
+#include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 

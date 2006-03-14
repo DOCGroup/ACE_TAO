@@ -1,6 +1,6 @@
 // $Id$
 
-#include "IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"
@@ -10,7 +10,7 @@
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 
 ACE_RCSID (EventChannel,
            IOGR_Maker,

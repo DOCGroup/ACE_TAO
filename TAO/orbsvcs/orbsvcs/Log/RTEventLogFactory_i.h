@@ -28,8 +28,8 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
-#include "RTEventLog_i.h"
-#include "rteventlog_serv_export.h"
+#include "orbsvcs/Log/RTEventLog_i.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

@@ -23,7 +23,7 @@
 
 #include "ace/Service_Config.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -18,7 +18,7 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantActivatorC.h"

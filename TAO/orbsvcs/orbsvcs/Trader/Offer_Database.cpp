@@ -3,7 +3,7 @@
 #ifndef TAO_OFFER_DATABASE_CPP
 #define TAO_OFFER_DATABASE_CPP
 
-#include "Offer_Database.h"
+#include "orbsvcs/Trader/Offer_Database.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 

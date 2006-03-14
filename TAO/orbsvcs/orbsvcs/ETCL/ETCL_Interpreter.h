@@ -16,7 +16,7 @@
 #define TAO_ETCL_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "etcl_export.h"
+#include "orbsvcs/ETCL/etcl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

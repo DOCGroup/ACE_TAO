@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "StructuredProxyPushSupplier.h"
+#include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

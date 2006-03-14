@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Dispatching_Task.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching_Task.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

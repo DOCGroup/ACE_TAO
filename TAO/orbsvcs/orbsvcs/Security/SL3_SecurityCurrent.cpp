@@ -1,6 +1,6 @@
 // $Id$
 
-#include "SL3_SecurityCurrent.h"
+#include "orbsvcs/Security/SL3_SecurityCurrent.h"
 
 
 ACE_RCSID (Security,
@@ -9,7 +9,7 @@ ACE_RCSID (Security,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SL3_SecurityCurrent.inl"
+# include "orbsvcs/Security/SL3_SecurityCurrent.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

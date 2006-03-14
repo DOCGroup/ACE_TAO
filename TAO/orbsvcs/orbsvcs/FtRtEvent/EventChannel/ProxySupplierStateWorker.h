@@ -15,7 +15,7 @@
 
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "FTEC_ProxySupplier.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

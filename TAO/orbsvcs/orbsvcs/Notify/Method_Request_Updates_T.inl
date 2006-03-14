@@ -3,7 +3,7 @@
 // $Id$
 
 #include "tao/debug.h"
-#include "Peer.h"
+#include "orbsvcs/Notify/Peer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

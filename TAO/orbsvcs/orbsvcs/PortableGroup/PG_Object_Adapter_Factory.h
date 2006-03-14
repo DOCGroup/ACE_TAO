@@ -14,7 +14,7 @@
 #define TAO_PG_OBJECT_ADAPTER_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #include "tao/PortableServer/Object_Adapter_Factory.h"
 #include "tao/orbconf.h"

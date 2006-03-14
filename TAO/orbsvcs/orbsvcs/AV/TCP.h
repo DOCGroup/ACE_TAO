@@ -15,8 +15,8 @@
 #define TAO_AV_TCP_H
 #include /**/ "ace/pre.h"
 
-#include "Protocol_Factory.h"
-#include "FlowSpec_Entry.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Svc_Handler.h"

@@ -1,9 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
-#include "TAO_Time_Service_Clerk.h"
-#include "TAO_TIO.h"
-#include "TAO_UTO.h"
+#include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
+#include "orbsvcs/Time/TAO_TIO.h"
+#include "orbsvcs/Time/TAO_UTO.h"
 
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_sys_time.h"

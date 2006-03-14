@@ -12,13 +12,13 @@
 #define TAO_Notify_RT_POA_Helper_H
 #include /**/ "ace/pre.h"
 
-#include "rt_notify_export.h"
+#include "orbsvcs/Notify/rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "POA_Helper.h"
+#include "orbsvcs/Notify/POA_Helper.h"
 #include "orbsvcs/NotifyExtC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,17 +1,17 @@
 // $Id$
 
-#include "EC_Sched_Filter.h"
+#include "orbsvcs/Event/EC_Sched_Filter.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "EC_Sched_Filter_Builder.h"
-#include "EC_Type_Filter.h"
-#include "EC_Conjunction_Filter.h"
-#include "EC_Disjunction_Filter.h"
-#include "EC_Timeout_Filter.h"
-#include "EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Sched_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Type_Filter.h"
+#include "orbsvcs/Event/EC_Conjunction_Filter.h"
+#include "orbsvcs/Event/EC_Disjunction_Filter.h"
+#include "orbsvcs/Event/EC_Timeout_Filter.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Sched_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Sched_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Sched_Filter_Builder, "$Id$")

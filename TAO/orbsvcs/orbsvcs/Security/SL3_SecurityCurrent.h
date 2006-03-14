@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SL3_SecurityCurrent_Impl.h"
+#include "orbsvcs/Security/SL3_SecurityCurrent_Impl.h"
 
 #include "orbsvcs/SecurityLevel3C.h"
 
@@ -140,7 +140,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "SL3_SecurityCurrent.inl"
+# include "orbsvcs/Security/SL3_SecurityCurrent.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

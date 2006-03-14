@@ -34,7 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
-#include "IFR_ExtendedS.h"
+#include "orbsvcs/IFRService/IFR_ExtendedS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -5104,10 +5104,10 @@ namespace POA_CORBA
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "IFR_ComponentsS_T.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "IFR_ComponentsS.inl"
+#include "orbsvcs/IFRService/IFR_ComponentsS.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

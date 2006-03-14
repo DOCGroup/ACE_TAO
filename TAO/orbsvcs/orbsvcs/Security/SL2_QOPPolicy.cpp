@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "SL2_QOPPolicy.h"
+#include "orbsvcs/Security/SL2_QOPPolicy.h"
 
 #include "tao/ORB_Constants.h"
 

@@ -3,17 +3,17 @@
 #ifndef TAO_Notify_CONTAINER_T_CPP
 #define TAO_Notify_CONTAINER_T_CPP
 
-#include "Container_T.h"
+#include "orbsvcs/Notify/Container_T.h"
 
-#include "Properties.h"
-#include "Factory.h"
-#include "POA_Helper.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Factory.h"
+#include "orbsvcs/Notify/POA_Helper.h"
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Container_T.inl"
+#include "orbsvcs/Notify/Container_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "SL2_EstablishTrustPolicy.h"
+#include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
 
 #include "tao/ORB_Constants.h"
 

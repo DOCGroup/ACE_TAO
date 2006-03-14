@@ -6,7 +6,7 @@
  * @author Marina Spivak <marina@atdesk.com>
  */
 
-#include "EC_Channel_Destroyer.h"
+#include "orbsvcs/Event/EC_Channel_Destroyer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

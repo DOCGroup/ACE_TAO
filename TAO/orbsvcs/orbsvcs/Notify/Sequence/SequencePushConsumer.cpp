@@ -1,6 +1,6 @@
 // $Id$
 
-#include "SequencePushConsumer.h"
+#include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"
 
 ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 

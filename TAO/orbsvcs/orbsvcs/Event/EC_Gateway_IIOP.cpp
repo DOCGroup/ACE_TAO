@@ -5,8 +5,8 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
 
-#include "EC_Gateway_IIOP_Factory.h"
-#include "ECG_ConsumerEC_Control.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
+#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
 
 #include "ace/Dynamic_Service.h"
 

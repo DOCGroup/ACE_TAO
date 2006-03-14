@@ -1,7 +1,7 @@
 // $Id$
 
-#include "EC_Scheduling_Strategy.h"
-#include "EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
 
 ACE_RCSID(Event, EC_Scheduling_Strategy, "$Id$")
 

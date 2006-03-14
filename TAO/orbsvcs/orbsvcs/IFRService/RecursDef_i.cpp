@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RecursDef_i.h"
+#include "orbsvcs/IFRService/RecursDef_i.h"
 
 
 ACE_RCSID (IFRService,

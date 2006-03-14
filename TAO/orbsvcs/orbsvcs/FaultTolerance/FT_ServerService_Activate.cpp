@@ -1,5 +1,5 @@
-#include "FT_ServerService_Activate.h"
-#include "FT_ServerORBInitializer.h"
+#include "orbsvcs/FaultTolerance/FT_ServerService_Activate.h"
+#include "orbsvcs/FaultTolerance/FT_ServerORBInitializer.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "tao/ORBInitializer_Registry.h"

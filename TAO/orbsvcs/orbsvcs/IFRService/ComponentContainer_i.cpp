@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ComponentContainer_i.h"
-#include "Repository_i.h"
-#include "InterfaceDef_i.h"
-#include "ComponentDef_i.h"
-#include "ValueDef_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/ComponentContainer_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/InterfaceDef_i.h"
+#include "orbsvcs/IFRService/ComponentDef_i.h"
+#include "orbsvcs/IFRService/ValueDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/SString.h"
 
 ACE_RCSID (IFRService, 

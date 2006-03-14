@@ -2,8 +2,8 @@
 
 // $Id$
 
-#include "Repository_i.h"
-#include "ConsumesDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ConsumesDef_i.h"
 
 ACE_RCSID (IFRService, 
            ConsumesDef_i, 

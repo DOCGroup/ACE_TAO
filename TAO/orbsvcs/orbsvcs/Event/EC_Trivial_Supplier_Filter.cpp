@@ -1,12 +1,12 @@
 // $Id$
 
-#include "EC_Trivial_Supplier_Filter.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_ConsumerAdmin.h"
-#include "EC_ProxySupplier.h"
-#include "EC_QOS_Info.h"
-#include "EC_Scheduling_Strategy.h"
-#include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
+#include "orbsvcs/Event/EC_Trivial_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
+#include "orbsvcs/Event/EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
 ACE_RCSID(Event, EC_Trivial_Supplier_Filter, "$Id$")
 

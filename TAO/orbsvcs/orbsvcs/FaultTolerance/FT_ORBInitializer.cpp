@@ -2,10 +2,10 @@
 //
 // $Id$
 
-#include "FT_ORBInitializer.h"
-#include "FT_PolicyFactory.h"
-#include "FT_ClientRequest_Interceptor.h"
-#include "FT_ServerRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_ORBInitializer.h"
+#include "orbsvcs/FaultTolerance/FT_PolicyFactory.h"
+#include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 

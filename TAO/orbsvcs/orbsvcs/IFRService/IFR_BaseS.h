@@ -1246,10 +1246,10 @@ namespace POA_CORBA
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "IFR_BaseS_T.h"
+#include "orbsvcs/IFRService/IFR_BaseS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "IFR_BaseS.inl"
+#include "orbsvcs/IFRService/IFR_BaseS.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

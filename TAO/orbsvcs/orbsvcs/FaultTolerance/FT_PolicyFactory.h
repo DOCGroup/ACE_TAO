@@ -33,7 +33,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "fault_tol_export.h"
+#include "orbsvcs/FaultTolerance/fault_tol_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

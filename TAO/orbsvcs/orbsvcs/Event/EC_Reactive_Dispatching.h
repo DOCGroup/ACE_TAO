@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Dispatching.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
 
 #include /**/ "event_serv_export.h"
 

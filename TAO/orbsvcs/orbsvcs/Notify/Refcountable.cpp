@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Refcountable.h"
+#include "orbsvcs/Notify/Refcountable.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 

@@ -27,7 +27,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;

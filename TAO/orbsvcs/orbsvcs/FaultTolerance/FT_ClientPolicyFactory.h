@@ -31,7 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "FT_ClientORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

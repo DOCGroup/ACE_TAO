@@ -1,14 +1,14 @@
 // $Id$
 
-#include "ProxyPushConsumer.h"
+#include "orbsvcs/Notify/Any/ProxyPushConsumer.h"
 
 ACE_RCSID (Notify, TAO_Notify_ProxyPushConsumer, "$Id$")
 
 #include "tao/debug.h"
 #include "../AdminProperties.h"
 #include "../Properties.h"
-#include "AnyEvent.h"
-#include "PushSupplier.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "orbsvcs/Notify/Any/PushSupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

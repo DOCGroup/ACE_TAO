@@ -1,9 +1,9 @@
 // $Id$
 
-#include "POA_Helper.h"
+#include "orbsvcs/Notify/POA_Helper.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "POA_Helper.inl"
+#include "orbsvcs/Notify/POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")

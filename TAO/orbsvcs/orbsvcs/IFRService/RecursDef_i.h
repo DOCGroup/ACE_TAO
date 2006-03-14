@@ -21,7 +21,7 @@
 #ifndef TAO_RECURSDEF_I_H
 #define TAO_RECURSDEF_I_H
 
-#include "TypedefDef_i.h"
+#include "orbsvcs/IFRService/TypedefDef_i.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdlib.h"
 

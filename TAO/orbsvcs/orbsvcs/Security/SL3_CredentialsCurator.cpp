@@ -1,7 +1,7 @@
 // $Id$
 
-#include "SL3_CredentialsCurator.h"
-#include "SL3_CredentialsAcquirerFactory.h"
+#include "orbsvcs/Security/SL3_CredentialsCurator.h"
+#include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 
 
 ACE_RCSID (Security,

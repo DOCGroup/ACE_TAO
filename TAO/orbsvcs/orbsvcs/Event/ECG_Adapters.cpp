@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ECG_Adapters.h"
+#include "orbsvcs/Event/ECG_Adapters.h"
 
 ACE_RCSID (Event,
            ECG_Adapters,

@@ -10,7 +10,7 @@
  */
 //=============================================================================
 
-#include "RTCosScheduling_ClientScheduler_i.h"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h"
 
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"

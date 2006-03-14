@@ -1,11 +1,11 @@
 // $Id$
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "FTEC_Event_Channel.h"
-#include "FTEC_Factory.h"
-#include "FTEC_ProxySupplier.h"
-#include "FTEC_ProxyConsumer.h"
-#include "FTEC_SupplierAdmin.h"
-#include "FTEC_ConsumerAdmin.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Factory.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h"
 
 ACE_RCSID (EventChannel,
            FTEC_Factory,

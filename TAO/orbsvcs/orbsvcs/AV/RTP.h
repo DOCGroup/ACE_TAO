@@ -137,9 +137,9 @@
 
 #define MAXHDR 24
 
-#include "Policy.h"
-#include "FlowSpec_Entry.h"
-#include "MCast.h"
+#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/MCast.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

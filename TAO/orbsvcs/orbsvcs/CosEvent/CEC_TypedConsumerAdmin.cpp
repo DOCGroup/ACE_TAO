@@ -2,12 +2,12 @@
 //
 // $Id$
 
-#include "CEC_TypedConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
 
-#include "CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_TypedConsumerAdmin.i"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ECG_ConsumerEC_Control.h"
+#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
 
 ACE_RCSID(Event, ECG_ConsumerEventChannelControl, "$Id$")
 

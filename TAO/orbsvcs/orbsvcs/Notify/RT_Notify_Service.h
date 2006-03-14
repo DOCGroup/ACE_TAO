@@ -14,13 +14,13 @@
 #define TAO_Notify_RT_NOTIFY_SERVICE_H
 
 #include /**/ "ace/pre.h"
-#include "rt_notify_export.h"
+#include "orbsvcs/Notify/rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CosNotify_Service.h"
+#include "orbsvcs/Notify/CosNotify_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,11 +1,11 @@
 // $Id$
 
 
-#include "QoS_UDP.h"
+#include "orbsvcs/AV/QoS_UDP.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-#include "UDP.h"
+#include "orbsvcs/AV/UDP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/Fill_ACE_QoS.h"

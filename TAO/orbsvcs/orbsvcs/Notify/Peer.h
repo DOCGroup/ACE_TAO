@@ -12,14 +12,14 @@
 #define TAO_Notify_PEER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
-#include "EventTypeSeq.h"
+#include "orbsvcs/Notify/EventTypeSeq.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

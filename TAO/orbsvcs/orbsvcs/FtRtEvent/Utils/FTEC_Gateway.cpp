@@ -1,7 +1,7 @@
-#include "FTEC_Gateway.h"
-#include "activate_with_id.h"
-#include "UUID.h"
-#include "resolve_init.h"
+#include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
+#include "orbsvcs/FtRtEvent/Utils/activate_with_id.h"
+#include "orbsvcs/FtRtEvent/Utils/UUID.h"
+#include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
 
@@ -10,7 +10,7 @@ ACE_RCSID (Utils,
            "$Id$")
 
 #if !defined(__ACE_INLINE__)
-#include "FTEC_Gateway.inl"
+#include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

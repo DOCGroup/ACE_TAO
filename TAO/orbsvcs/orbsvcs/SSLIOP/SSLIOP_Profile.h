@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Endpoint.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 #include "tao/IIOP_Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

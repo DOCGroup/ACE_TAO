@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 #include "ace/Bound_Ptr.h"
 #include "ace/OS_NS_sys_time.h"
 
-#include "Event.h"
+#include "orbsvcs/Notify/Event.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

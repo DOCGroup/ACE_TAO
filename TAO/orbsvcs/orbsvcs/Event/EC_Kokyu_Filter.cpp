@@ -1,7 +1,7 @@
 // $Id$
 
-#include "EC_Kokyu_Filter.h"
-#include "EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Kokyu_Filter.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(Event, EC_Kokyu_Filter, "$Id$")

@@ -3,8 +3,8 @@
 #ifndef TAO_ESF_PROXY_COLLECTION_CPP
 #define TAO_ESF_PROXY_COLLECTION_CPP
 
-#include "ESF_Proxy_Collection.h"
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

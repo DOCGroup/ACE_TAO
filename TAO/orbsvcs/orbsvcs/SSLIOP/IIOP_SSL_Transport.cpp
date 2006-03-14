@@ -1,6 +1,6 @@
-#include "IIOP_SSL_Transport.h"
-#include "IIOP_SSL_Connection_Handler.h"
-#include "SSLIOP_Util.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Transport.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"

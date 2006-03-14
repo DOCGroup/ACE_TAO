@@ -30,7 +30,7 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
-#include "eventlog_serv_export.h"
+#include "orbsvcs/Log/eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

@@ -66,9 +66,9 @@
 //
 // ========================================================================
 
-#include "ETCL_y.h"
-#include "ETCL_Constraint.h"
-#include "ETCL_Interpreter.h"
+#include "orbsvcs/ETCL/ETCL_y.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_Interpreter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -14,7 +14,7 @@
 #ifndef TAO_ESF_SHUTDOWN_PROXY_H
 #define TAO_ESF_SHUTDOWN_PROXY_H
 
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ESF_Shutdown_Proxy.i"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

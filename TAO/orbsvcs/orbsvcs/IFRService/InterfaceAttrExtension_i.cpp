@@ -1,12 +1,12 @@
 // $Id$
 
-#include "InterfaceAttrExtension_i.h"
-#include "Repository_i.h"
-#include "InterfaceDef_i.h"
-#include "OperationDef_i.h"
-#include "AttributeDef_i.h"
-#include "ExtAttributeDef_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/InterfaceAttrExtension_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/InterfaceDef_i.h"
+#include "orbsvcs/IFRService/OperationDef_i.h"
+#include "orbsvcs/IFRService/AttributeDef_i.h"
+#include "orbsvcs/IFRService/ExtAttributeDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 

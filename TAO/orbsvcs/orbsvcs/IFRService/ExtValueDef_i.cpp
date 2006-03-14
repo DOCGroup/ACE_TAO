@@ -1,10 +1,10 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "ExtValueDef_i.h"
-#include "ExceptionDef_i.h"
-#include "IFR_Service_Utils.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ExtValueDef_i.h"
+#include "orbsvcs/IFRService/ExceptionDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 

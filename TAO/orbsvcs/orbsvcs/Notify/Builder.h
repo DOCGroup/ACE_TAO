@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +23,8 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/NotifyExtC.h"
 
-#include "AdminProperties.h"
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Topology_Object.h"
 
 #include "tao/PortableServer/PortableServer.h"
 

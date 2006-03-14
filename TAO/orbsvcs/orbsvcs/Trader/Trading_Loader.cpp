@@ -14,7 +14,7 @@
 
 //===========================================================================
 
-#include "Trading_Loader.h"
+#include "orbsvcs/Trader/Trading_Loader.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"

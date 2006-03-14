@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Notify_Default_Collection_Factory.h"
+#include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
 
 ACE_RCSID(Notify, Notify_Default_Collection_Factory, "$Id$")
 

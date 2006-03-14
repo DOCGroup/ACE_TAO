@@ -1,7 +1,7 @@
 // $Id$
 
-#include "EC_Dispatching.h"
-#include "EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
 
 ACE_RCSID(Event, EC_Dispatching, "$Id$")
 

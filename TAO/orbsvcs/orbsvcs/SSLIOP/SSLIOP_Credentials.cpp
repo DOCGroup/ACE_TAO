@@ -1,4 +1,4 @@
-#include "SSLIOP_Credentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -11,7 +11,7 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Credentials.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Credentials.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
