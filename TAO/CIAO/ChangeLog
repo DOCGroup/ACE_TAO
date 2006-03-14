@@ -1,4 +1,9 @@
-Tue Mar 14 09:46:25 UTC 2006  Nilabja Roy  <roy_n@dre.vanderbilt.edu>
+Tue Mar 14 10:10:58 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/MonitorController.h:
+          Reverting back to previous version to avoid conflicts
+
+Tue Mar 14 09:46:25 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorController.cpp:
           Reverting back to previous version. Mistakenly added conflicted version.
