@@ -31,7 +31,7 @@ ACE_FIFO::dump (void) const
 }
 
 int
-ACE_FIFO::open (const ACE_TCHAR *r, int flags, int perms,
+ACE_FIFO::open (const ACE_TCHAR *r, int flags, mode_t perms,
                 LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO::open");
@@ -54,7 +54,7 @@ ACE_FIFO::open (const ACE_TCHAR *r, int flags, int perms,
 
 ACE_FIFO::ACE_FIFO (const ACE_TCHAR *fifo_name,
                     int flags,
-                    int perms,
+                    mode_t perms,
                     LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO::ACE_FIFO");

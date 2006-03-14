@@ -710,8 +710,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       this->root_->color (ACE_RB_Tree_Node_Base::BLACK);
       ++current_size_;
       return &this->root_->item ();
-    }
-  return 0;
+    }  
 }
 
 // Inserts a *copy* of the key and the item into the tree: both the

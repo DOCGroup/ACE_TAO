@@ -2810,7 +2810,6 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
           /* NOTREACHED */
         }
     }
-  ACE_NOTREACHED (return 0);
 }
 
 // Make the current process a UNIX daemon.  This is based on Stevens

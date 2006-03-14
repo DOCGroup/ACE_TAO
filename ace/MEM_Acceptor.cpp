@@ -176,7 +176,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // Protocol negociation:
   //   Tell the client side what level of signaling strategy
   //   we support.
-  ACE_INT16 client_signaling =
+  ACE_MEM_IO::Signal_Strategy client_signaling =
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
     this->preferred_strategy_;
 #else

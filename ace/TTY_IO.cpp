@@ -462,9 +462,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Always set limits unless set to negative to use default.
       if (arg->xonlim >= 0)
-        dcb.XonLim  = arg->xonlim;
+        dcb.XonLim  = (WORD)arg->xonlim;
       if (arg->xofflim >= 0)
-        dcb.XoffLim = arg->xofflim;
+        dcb.XoffLim = (WORD)arg->xofflim;
 
       dcb.fAbortOnError = FALSE;
       dcb.fErrorChar = FALSE;

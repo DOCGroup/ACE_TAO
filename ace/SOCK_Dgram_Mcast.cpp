@@ -49,9 +49,8 @@ public:
         ACE_OS::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
       else
         {
-          ACE_TCHAR *pc;
-          if (clip_portnum
-              && (pc = ACE_OS::strrchr (ret_string, ACE_LIB_TEXT (':'))))
+          ACE_TCHAR *pc = ACE_OS::strrchr (ret_string, ACE_LIB_TEXT (':'));
+          if (clip_portnum && pc)
             *pc = ACE_LIB_TEXT ('\0'); // clip port# info.
         }
     }

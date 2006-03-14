@@ -45,7 +45,7 @@ ACE_FIFO_Recv::close (void)
 int
 ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
                      int flags,
-                     int perms,
+                     mode_t perms,
                      int persistent,
                      LPSECURITY_ATTRIBUTES sa)
 {
@@ -70,7 +70,7 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (void)
 
 ACE_FIFO_Recv::ACE_FIFO_Recv (const ACE_TCHAR *fifo_name,
                               int flags,
-                              int perms,
+                              mode_t perms,
                               int persistent,
                               LPSECURITY_ATTRIBUTES sa)
   : aux_handle_ (ACE_INVALID_HANDLE)
