@@ -65,10 +65,10 @@ sembuf ACE_SV_Semaphore_Complex::op_unlock_[1] =
 
 int
 ACE_SV_Semaphore_Complex::open (key_t k,
-                                int create,
+                                short create,
                                 int initial_value,
                                 u_short nsems,
-                                int perms)
+                                mode_t perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::open");
   if (k == IPC_PRIVATE)
@@ -160,10 +160,10 @@ ACE_SV_Semaphore_Complex::open (key_t k,
 
 int
 ACE_SV_Semaphore_Complex::open (const char *name,
-                                int flags,
+                                short flags,
                                 int initial_value,
                                 u_short nsems,
-                                int perms)
+                                mode_t perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::open");
   return this->open (ACE_SV_Semaphore_Simple::name_2_key (name),
@@ -214,10 +214,10 @@ ACE_SV_Semaphore_Complex::close (void)
 }
 
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k,
-                                                    int flags,
+                                                    short flags,
                                                     int initial_value,
                                                     u_short nsems,
-                                                    int perms)
+                                                    mode_t perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
   if (this->open (k, flags, initial_value, nsems, perms) == -1)
@@ -225,10 +225,10 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k,
 }
 
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
-                                                    int flags,
+                                                    short flags,
                                                     int initial_value,
                                                     u_short nsems,
-                                                    int perms)
+                                                    mode_t perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
 

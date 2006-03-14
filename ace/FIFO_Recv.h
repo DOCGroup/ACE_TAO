@@ -43,14 +43,14 @@ public:
   /// Open up a bytestream named pipe for reading.
   ACE_FIFO_Recv (const ACE_TCHAR *rendezvous,
                  int flags = O_CREAT | O_RDONLY,
-                 int perms = ACE_DEFAULT_FILE_PERMS,
+                 mode_t perms = ACE_DEFAULT_FILE_PERMS,
                  int persistent = 1,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a bytestream named pipe for reading.
   int open (const ACE_TCHAR *rendezvous,
             int flags = O_CREAT | O_RDONLY,
-            int perms = ACE_DEFAULT_FILE_PERMS,
+            mode_t perms = ACE_DEFAULT_FILE_PERMS,
             int persistent = 1,
             LPSECURITY_ATTRIBUTES sa = 0);
 

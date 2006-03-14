@@ -130,7 +130,7 @@ ACEXML_FileCharStream::close (void)
 int
 ACEXML_FileCharStream::getchar_i (char& ch)
 {
-  ch = ACE_OS::fgetc (this->infile_);
+  ch = static_cast<char> (ACE_OS::fgetc (this->infile_));
   return (feof(this->infile_) ? -1 : 0);
 }
 
@@ -166,7 +166,7 @@ ACEXML_FileCharStream::peek (void)
   return this->peek_i();
 #else
 
-  ACEXML_Char ch = ACE_OS::fgetc (this->infile_);
+  ACEXML_Char ch = static_cast<ACEXML_Char> (ACE_OS::fgetc (this->infile_));
   ::ungetc (ch, this->infile_);
   return ch;
 #endif /* ACE_USES_WCHAR */

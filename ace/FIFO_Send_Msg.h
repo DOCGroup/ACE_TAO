@@ -46,13 +46,13 @@ public:
   /// Open up a record-oriented named pipe for writing.
   ACE_FIFO_Send_Msg (const ACE_TCHAR *rendezvous,
                      int flags = O_WRONLY,
-                     int perms = ACE_DEFAULT_FILE_PERMS,
+                     mode_t perms = ACE_DEFAULT_FILE_PERMS,
                      LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a record-oriented named pipe for writing.
   int open (const ACE_TCHAR *rendezvous,
             int flags = O_WRONLY,
-            int perms = ACE_DEFAULT_FILE_PERMS,
+            mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Send <buf> of up to <len> bytes.

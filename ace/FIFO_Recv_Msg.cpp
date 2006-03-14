@@ -30,7 +30,7 @@ ACE_FIFO_Recv_Msg::dump (void) const
 int
 ACE_FIFO_Recv_Msg::open (const ACE_TCHAR *fifo_name,
                          int flags,
-                         int perms,
+                         mode_t perms,
                          int persistent,
                          LPSECURITY_ATTRIBUTES sa)
 {
@@ -50,7 +50,7 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (void)
 
 ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const ACE_TCHAR *fifo_name,
                                       int flags,
-                                      int perms,
+                                      mode_t perms,
                                       int persistent,
                                       LPSECURITY_ATTRIBUTES sa)
 {

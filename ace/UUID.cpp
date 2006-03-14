@@ -371,8 +371,8 @@ namespace ACE_Utils
     u_char cseqHAV;
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
-      uuid.clockSeqLow (uuid_state_.clockSequence & 0xFF);
-      cseqHAV = (uuid_state_.clockSequence & 0x3f00) >> 8;
+      uuid.clockSeqLow (static_cast<u_char> (uuid_state_.clockSequence) & 0xFF);
+      cseqHAV = (static_cast<u_char> (uuid_state_.clockSequence) & 0x3f00) >> 8;
       uuid_state_.timestamp = timestamp;
     }
 
@@ -418,7 +418,7 @@ namespace ACE_Utils
     // Account for the clock being set back. Increment the clock /
     // sequence.
     if (timestamp <= timeLast_)
-      uuid_state_.clockSequence = (uuid_state_.clockSequence + 1) & ACE_UUID_CLOCK_SEQ_MASK;
+      uuid_state_.clockSequence = static_cast<u_char> ((uuid_state_.clockSequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
 
     // If the system time ticked since the last UUID was
     // generated. Set / the clock sequence back.
