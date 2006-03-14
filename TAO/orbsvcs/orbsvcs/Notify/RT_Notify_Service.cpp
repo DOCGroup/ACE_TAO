@@ -1,14 +1,14 @@
 // $Id$
 
-#include "RT_Notify_Service.h"
+#include "orbsvcs/Notify/RT_Notify_Service.h"
 
 ACE_RCSID(RT_Notify, TAO_Notify_RT_Notify_Service, "$Id$")
 
 #include "ace/Dynamic_Service.h"
-#include "Properties.h"
-#include "RT_Properties.h"
-#include "RT_Factory.h"
-#include "RT_Builder.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/RT_Properties.h"
+#include "orbsvcs/Notify/RT_Factory.h"
+#include "orbsvcs/Notify/RT_Builder.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

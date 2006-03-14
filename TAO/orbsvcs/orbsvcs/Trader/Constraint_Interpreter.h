@@ -15,9 +15,9 @@
 #define TAO_CONSTRAINT_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "Constraint_Nodes.h"
-#include "Constraint_Visitors.h"
-#include "Interpreter.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Interpreter.h"
 
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"

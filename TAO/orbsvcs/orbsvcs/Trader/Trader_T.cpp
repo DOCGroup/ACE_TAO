@@ -3,8 +3,8 @@
 #ifndef TAO_TRADER_CPP
 #define TAO_TRADER_CPP
 
-#include "Trader_T.h"
-#include "Trader_Interfaces.h"
+#include "orbsvcs/Trader/Trader_T.h"
+#include "orbsvcs/Trader/Trader_Interfaces.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

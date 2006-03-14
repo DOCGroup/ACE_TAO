@@ -3,7 +3,7 @@
 #ifndef TAO_OFFER_ITERATORS_T_CPP
 #define TAO_OFFER_ITERATORS_T_CPP
 
-#include "Offer_Iterators_T.h"
+#include "orbsvcs/Trader/Offer_Iterators_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

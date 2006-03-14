@@ -1,6 +1,6 @@
 // $Id$
 
-#include "create_persistent_poa.h"
+#include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
 
 ACE_RCSID (EventChannel,
            create_persistent_poa,

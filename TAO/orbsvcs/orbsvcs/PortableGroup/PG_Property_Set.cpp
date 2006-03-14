@@ -13,7 +13,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "PG_Property_Set.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -250,7 +250,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 //#define PG_PS_UNIT_TEST
 #ifdef PG_PS_UNIT_TEST
-#include "PG_Properties_Encoder.h"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

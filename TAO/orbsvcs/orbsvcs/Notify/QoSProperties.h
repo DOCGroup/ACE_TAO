@@ -13,16 +13,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PropertySeq.h"
-#include "Property_T.h"
-#include "Property_Boolean.h"
-#include "Property.h"
+#include "orbsvcs/Notify/PropertySeq.h"
+#include "orbsvcs/Notify/Property_T.h"
+#include "orbsvcs/Notify/Property_Boolean.h"
+#include "orbsvcs/Notify/Property.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -112,7 +112,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "QoSProperties.inl"
+#include "orbsvcs/Notify/QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

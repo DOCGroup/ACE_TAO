@@ -1,5 +1,5 @@
-#include "Storable_Naming_Context.h"
-#include "Bindings_Iterator_T.h"
+#include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Bindings_Iterator_T.h"
 
 #include "tao/debug.h"
 
@@ -1458,7 +1458,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "Naming_Service_Container.h"
+#include "orbsvcs/Naming/Naming_Service_Container.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

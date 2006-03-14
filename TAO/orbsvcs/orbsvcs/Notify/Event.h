@@ -14,16 +14,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Refcountable.h"
-#include "Property.h"
-#include "Property_Boolean.h"
-#include "Property_T.h"
+#include "orbsvcs/Notify/Refcountable.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Property_Boolean.h"
+#include "orbsvcs/Notify/Property_T.h"
 
 #include "orbsvcs/Event_ForwarderS.h"
 #include "orbsvcs/CosNotifyFilterC.h"
@@ -131,7 +131,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Event.inl"
+#include "orbsvcs/Notify/Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

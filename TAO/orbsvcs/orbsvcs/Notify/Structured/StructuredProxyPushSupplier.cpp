@@ -1,11 +1,11 @@
 // $Id$
 
-#include "StructuredProxyPushSupplier.h"
+#include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
 
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
 
-#include "StructuredPushConsumer.h"
+#include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
 #include "../Properties.h"
 
 

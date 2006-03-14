@@ -2,8 +2,8 @@
 
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "FTEC_SupplierAdmin.h"
-#include "FTEC_ProxyConsumer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
 #include "tao/Stub.h"
 
 ACE_RCSID (EventChannel,

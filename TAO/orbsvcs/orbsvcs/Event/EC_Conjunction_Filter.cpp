@@ -1,6 +1,6 @@
 // $Id$
 
-#include "EC_Conjunction_Filter.h"
+#include "orbsvcs/Event/EC_Conjunction_Filter.h"
 
 ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
 

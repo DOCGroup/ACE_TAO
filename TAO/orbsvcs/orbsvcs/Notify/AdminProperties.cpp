@@ -1,9 +1,9 @@
 // $Id$
 
-#include "AdminProperties.h"
+#include "orbsvcs/Notify/AdminProperties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "AdminProperties.inl"
+#include "orbsvcs/Notify/AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify,

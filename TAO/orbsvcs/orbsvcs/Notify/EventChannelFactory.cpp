@@ -1,23 +1,23 @@
 // $Id$
 
-#include "EventChannelFactory.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
 
 ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 
-#include "Properties.h"
-#include "Factory.h"
-#include "Builder.h"
-#include "Topology_Saver.h"
-#include "Topology_Loader.h"
-#include "Save_Persist_Worker_T.h"
-#include "Reconnect_Worker_T.h"
-#include "Event_Persistence_Strategy.h"
-#include "Routing_Slip_Persistence_Manager.h"
-#include "EventChannel.h"
-#include "Container_T.h"
-#include "Find_Worker_T.h"
-#include "Seq_Worker_T.h"
-#include "POA_Helper.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Factory.h"
+#include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
+#include "orbsvcs/Notify/Topology_Loader.h"
+#include "orbsvcs/Notify/Save_Persist_Worker_T.h"
+#include "orbsvcs/Notify/Reconnect_Worker_T.h"
+#include "orbsvcs/Notify/Event_Persistence_Strategy.h"
+#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
+#include "orbsvcs/Notify/EventChannel.h"
+#include "orbsvcs/Notify/Container_T.h"
+#include "orbsvcs/Notify/Find_Worker_T.h"
+#include "orbsvcs/Notify/Seq_Worker_T.h"
+#include "orbsvcs/Notify/POA_Helper.h"
 
 #include "ace/Dynamic_Service.h"
 

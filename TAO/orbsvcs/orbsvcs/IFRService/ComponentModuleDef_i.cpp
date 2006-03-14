@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ComponentModuleDef_i.h"
+#include "orbsvcs/IFRService/ComponentModuleDef_i.h"
 
 ACE_RCSID (IFRService, 
            ComponentModuleDef_i, 

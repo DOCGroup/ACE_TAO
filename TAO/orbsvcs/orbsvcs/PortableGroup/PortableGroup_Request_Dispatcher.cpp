@@ -1,8 +1,8 @@
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "PortableGroup_Request_Dispatcher.h"
-#include "PortableGroup_Loader.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Loader.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"

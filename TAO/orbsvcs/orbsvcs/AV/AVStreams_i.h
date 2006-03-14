@@ -15,7 +15,7 @@
 #define AVSTREAMS_I_H
 #include /**/ "ace/pre.h"
 
-#include "AV_Core.h"
+#include "orbsvcs/AV/AV_Core.h"
 
 #include "orbsvcs/AV/AV_export.h"
 #include "orbsvcs/CosPropertyS.h"
@@ -1523,14 +1523,14 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "Transport.h"
+#include "orbsvcs/AV/Transport.h"
 
 #if defined (__ACE_INLINE__)
 #include "tao/debug.h"
-#include "AVStreams_i.i"
+#include "orbsvcs/AV/AVStreams_i.i"
 #endif /* __ACE_INLINE__ */
 
-#include "Flows_T.h"
+#include "orbsvcs/AV/Flows_T.h"
 
 #include /**/ "ace/post.h"
 #endif /* AVSTREAMS_I_H */

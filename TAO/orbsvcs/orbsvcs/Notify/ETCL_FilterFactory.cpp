@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ETCL_FilterFactory.h"
+#include "orbsvcs/Notify/ETCL_FilterFactory.h"
 
 ACE_RCSID(Notify, TAO_Notify_ETCL_FilterFactory, "$Id$")
 
-#include "ETCL_Filter.h"
+#include "orbsvcs/Notify/ETCL_Filter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

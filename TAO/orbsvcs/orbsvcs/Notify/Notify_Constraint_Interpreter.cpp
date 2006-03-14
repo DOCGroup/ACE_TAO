@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Notify_Constraint_Interpreter.h"
-#include "Notify_Constraint_Visitors.h"
+#include "orbsvcs/Notify/Notify_Constraint_Interpreter.h"
+#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 
 ACE_RCSID(Notify, NS_Constraint_Interpreter, "$Id$")
 

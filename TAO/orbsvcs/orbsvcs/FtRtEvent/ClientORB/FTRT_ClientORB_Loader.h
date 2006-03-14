@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ftrt_clientorb_export.h"
+#include "orbsvcs/FtRtEvent/ClientORB/ftrt_clientorb_export.h"
 
 #include "tao/orbconf.h"
 

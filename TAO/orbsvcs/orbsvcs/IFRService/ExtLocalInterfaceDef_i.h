@@ -21,14 +21,14 @@
 #ifndef TAO_EXTLOCALINTERFACEDEF_I_H
 #define TAO_EXTLOCALINTERFACEDEF_I_H
 
-#include "LocalInterfaceDef_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/LocalInterfaceDef_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "InterfaceAttrExtension_i.h"
+#include "orbsvcs/IFRService/InterfaceAttrExtension_i.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

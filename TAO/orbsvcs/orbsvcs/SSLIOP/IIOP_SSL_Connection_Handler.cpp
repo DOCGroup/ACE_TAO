@@ -1,6 +1,6 @@
-#include "IIOP_SSL_Connection_Handler.h"
-#include "IIOP_SSL_Transport.h"
-#include "SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Transport.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -13,7 +13,7 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-#include "IIOP_SSL_Connection_Handler.inl"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)

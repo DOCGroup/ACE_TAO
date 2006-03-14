@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#include "PG_Object_Group_Manipulator.h"
-#include "PG_Utils.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
+#include "orbsvcs/PortableGroup/PG_Utils.h"
 
 #include "tao/debug.h"
 #include <ace/OS_NS_stdio.h>

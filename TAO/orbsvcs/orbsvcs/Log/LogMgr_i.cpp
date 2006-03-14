@@ -1,5 +1,5 @@
-#include "LogMgr_i.h"
-#include "LogActivator.h"
+#include "orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/Log/LogActivator.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"

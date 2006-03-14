@@ -13,7 +13,7 @@
 #ifndef TAO_ESF_PEER_ADMIN_H
 #define TAO_ESF_PEER_ADMIN_H
 
-#include "ESF_Proxy_Admin.h"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

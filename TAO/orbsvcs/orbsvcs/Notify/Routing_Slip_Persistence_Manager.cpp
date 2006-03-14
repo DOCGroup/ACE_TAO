@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Routing_Slip_Persistence_Manager.h"
-#include "Standard_Event_Persistence.h"
-#include "Persistent_File_Allocator.h"
+#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
+#include "orbsvcs/Notify/Standard_Event_Persistence.h"
+#include "orbsvcs/Notify/Persistent_File_Allocator.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "UIPMC_Factory.h"
-#include "UIPMC_Acceptor.h"
-#include "UIPMC_Connector.h"
+#include "orbsvcs/PortableGroup/UIPMC_Factory.h"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connector.h"
 #include "ace/OS_NS_strings.h"
 #include "tao/ORB_Constants.h"
 

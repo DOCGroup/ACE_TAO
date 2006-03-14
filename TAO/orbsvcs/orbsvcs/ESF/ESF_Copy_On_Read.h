@@ -13,7 +13,7 @@
 #ifndef TAO_ESF_COPY_ON_READ_H
 #define TAO_ESF_COPY_ON_READ_H
 
-#include "ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

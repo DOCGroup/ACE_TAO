@@ -35,7 +35,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "sched_export.h"
+#include "orbsvcs/Sched/sched_export.h"
 
 class TAO_RTSched_Export ACE_Scheduler
   // = TITLE

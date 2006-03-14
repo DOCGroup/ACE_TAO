@@ -15,7 +15,7 @@
 #include "orbsvcs/Event/EC_Default_ProxyConsumer.h"
 #include "ace/SString.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

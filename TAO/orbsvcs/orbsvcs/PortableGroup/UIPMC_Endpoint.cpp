@@ -1,6 +1,6 @@
 // $Id$
 
-#include "UIPMC_Endpoint.h"
+#include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
 
 #include "tao/debug.h"
 #include "ace/Guard_T.h"
@@ -15,7 +15,7 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "UIPMC_Endpoint.i"
+# include "orbsvcs/PortableGroup/UIPMC_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

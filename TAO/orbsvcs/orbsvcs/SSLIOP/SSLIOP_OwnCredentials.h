@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Credentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

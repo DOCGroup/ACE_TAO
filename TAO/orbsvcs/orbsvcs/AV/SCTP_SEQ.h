@@ -20,7 +20,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "ace/SOCK_SEQPACK_Connector.h"

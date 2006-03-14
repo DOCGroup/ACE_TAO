@@ -7,7 +7,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-#include "Config_Scheduler.h"
+#include "orbsvcs/Sched/Config_Scheduler.h"
 
 ACE_RCSID(Sched, Config_Scheduler, "$Id$")
 

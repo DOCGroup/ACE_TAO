@@ -3,9 +3,9 @@
 #ifndef TAO_IFR_SERVICE_UTILS_T_CPP
 #define TAO_IFR_SERVICE_UTILS_T_CPP
 
-#include "IFR_Service_Utils_T.h"
-#include "IFR_Service_Utils.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 #include "ace/SString.h"
 

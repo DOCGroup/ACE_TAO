@@ -18,8 +18,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Supplier_Filter.h"
-#include "EC_Supplier_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
 
 #include /**/ "event_serv_export.h"
 

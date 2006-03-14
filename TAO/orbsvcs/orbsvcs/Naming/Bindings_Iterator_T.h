@@ -15,7 +15,7 @@
 #define TAO_BINDINGS_ITERATOR_T_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -134,7 +134,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Bindings_Iterator_T.cpp"
+#include "orbsvcs/Naming/Bindings_Iterator_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

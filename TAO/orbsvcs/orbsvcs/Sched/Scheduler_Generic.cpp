@@ -18,7 +18,7 @@
 
 #include "ace/Sched_Params.h"
 
-#include "Scheduler_Generic.h"
+#include "orbsvcs/Sched/Scheduler_Generic.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Sched, Scheduler_Generic, "$Id$")

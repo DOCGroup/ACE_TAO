@@ -22,13 +22,13 @@
 #define TAO_IROBJECT_I_H
 
 #include "ace/Configuration.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ExtendedS.h"
+#include "orbsvcs/IFRService/IFR_ExtendedS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

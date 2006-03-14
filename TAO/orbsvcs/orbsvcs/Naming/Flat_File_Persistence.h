@@ -13,7 +13,7 @@
 #ifndef TAO_FLAT_FILE_PERSISTENCE_H
 #define TAO_FLAT_FILE_PERSISTENCE_H
 
-#include "Storable.h"
+#include "orbsvcs/Naming/Storable.h"
 #include "ace/OS_NS_stdio.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

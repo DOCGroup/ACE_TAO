@@ -14,10 +14,10 @@
 //
 // ============================================================================
 
-#include "AVStreams_i.h"
-#include "sfp.h"
-#include "MCast.h"
-#include "RTCP.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/sfp.h"
+#include "orbsvcs/AV/MCast.h"
+#include "orbsvcs/AV/RTCP.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -25,7 +25,7 @@
 #include "ace/OS_NS_arpa_inet.h"
 
 #if !defined (__ACE_INLINE__)
-#include "AVStreams_i.i"
+#include "orbsvcs/AV/AVStreams_i.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (AV,

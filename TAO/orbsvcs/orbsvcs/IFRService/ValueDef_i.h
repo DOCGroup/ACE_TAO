@@ -21,9 +21,9 @@
 #ifndef TAO_VALUEDEF_I_H
 #define TAO_VALUEDEF_I_H
 
-#include "Contained_i.h"
-#include "IDLType_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Contained_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

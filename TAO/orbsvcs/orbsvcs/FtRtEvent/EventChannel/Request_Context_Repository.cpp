@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/UUID.h"
 

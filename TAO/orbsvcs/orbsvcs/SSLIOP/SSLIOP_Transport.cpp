@@ -1,7 +1,7 @@
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Transport.h"
-#include "SSLIOP_Profile.h"
-#include "SSLIOP_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
 
 #include "tao/debug.h"
 

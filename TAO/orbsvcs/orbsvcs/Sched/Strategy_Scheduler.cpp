@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "Strategy_Scheduler.h"
+#include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "ace/Sched_Params.h"
 
 ACE_RCSID (Sched,

@@ -15,8 +15,8 @@
 #define TAO_AV_MCAST_H
 #include /**/ "ace/pre.h"
 
-#include "FlowSpec_Entry.h"
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
@@ -110,7 +110,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "MCast.i"
+#include "orbsvcs/AV/MCast.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

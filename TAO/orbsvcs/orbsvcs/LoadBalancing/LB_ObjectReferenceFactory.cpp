@@ -1,4 +1,4 @@
-#include "LB_ObjectReferenceFactory.h"
+#include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
 
 ACE_RCSID (LoadBalancing,
            LB_ObjectReferenceFactory,

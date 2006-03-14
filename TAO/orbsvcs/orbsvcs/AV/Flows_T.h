@@ -15,7 +15,7 @@
 #define TAO_AV_FLOWS_T_H
 #include /**/ "ace/pre.h"
 
-#include "AVStreams_i.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -119,7 +119,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Flows_T.cpp"
+#include "orbsvcs/AV/Flows_T.cpp"
 #endif /*ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Options.h"
+#include "orbsvcs/IFRService/Options.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/Null_Mutex.h"

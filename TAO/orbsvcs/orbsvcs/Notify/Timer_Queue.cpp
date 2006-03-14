@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Timer_Queue.h"
+#include "orbsvcs/Notify/Timer_Queue.h"
 
 ACE_RCSID (Notify, TAO_Notify_Timer_Queue, "$Id$")
 

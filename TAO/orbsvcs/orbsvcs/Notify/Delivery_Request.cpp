@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Delivery_Request.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Delivery_Request.inl"
+#include "orbsvcs/Notify/Delivery_Request.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "Routing_Slip.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"

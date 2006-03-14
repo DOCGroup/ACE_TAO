@@ -13,7 +13,7 @@
 #ifndef TAO_FTEC_BECOME_PRIMARY_LISTENER_H
 #define TAO_FTEC_BECOME_PRIMARY_LISTENER_H
 
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 
 #include "tao/Versioned_Namespace.h"
 

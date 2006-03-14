@@ -1,15 +1,15 @@
 // $Id$
 
-#include "EC_Dispatching_Task.h"
-#include "EC_ProxySupplier.h"
-#include "EC_Defaults.h"
+#include "orbsvcs/Event/EC_Dispatching_Task.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Defaults.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Dispatching_Task.i"
+#include "orbsvcs/Event/EC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

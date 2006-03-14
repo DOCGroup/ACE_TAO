@@ -466,9 +466,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 //
 // ========================================================================
 
-#include "ETCL_Interpreter.h"
-#include "ETCL_Constraint.h"
-#include "ETCL_y.h"
+#include "orbsvcs/ETCL/ETCL_Interpreter.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_y.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

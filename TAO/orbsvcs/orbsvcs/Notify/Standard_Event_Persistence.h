@@ -21,10 +21,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Event_Persistence_Strategy.h"
-#include "Event_Persistence_Factory.h"
-#include "Persistent_File_Allocator.h"
-#include "Routing_Slip_Persistence_Manager.h"
+#include "orbsvcs/Notify/Event_Persistence_Strategy.h"
+#include "orbsvcs/Notify/Event_Persistence_Factory.h"
+#include "orbsvcs/Notify/Persistent_File_Allocator.h"
+#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
 #include <ace/SString.h>
 
 

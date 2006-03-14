@@ -1,6 +1,6 @@
-#include "LB_LoadAverage.h"
-#include "LB_LoadMap.h"
-#include "LB_Random.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAverage.h"
+#include "orbsvcs/LoadBalancing/LB_LoadMap.h"
+#include "orbsvcs/LoadBalancing/LB_Random.h"
 
 #include "orbsvcs/PortableGroup/PG_conf.h"
 
@@ -17,7 +17,7 @@ ACE_RCSID (LoadBalancing,
 
 
 #if !defined (__ACE_INLINE__)
-#include "LB_LoadAverage.inl"
+#include "orbsvcs/LoadBalancing/LB_LoadAverage.inl"
 #endif /* defined INLINE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

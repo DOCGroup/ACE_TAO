@@ -1,8 +1,8 @@
 // $Id$
-#include "Admin.h"
+#include "orbsvcs/Notify/Admin.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Admin.inl"
+#include "orbsvcs/Notify/Admin.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify,
@@ -11,16 +11,16 @@ ACE_RCSID (Notify,
 
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 
-#include "Container_T.h"
-#include "Proxy.h"
-#include "EventChannel.h"
-#include "Topology_Saver.h"
-#include "Save_Persist_Worker_T.h"
-#include "Reconnect_Worker_T.h"
-#include "Consumer_Map.h"
-#include "Supplier_Map.h"
-#include "ConsumerAdmin.h"
-#include "SupplierAdmin.h"
+#include "orbsvcs/Notify/Container_T.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/EventChannel.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
+#include "orbsvcs/Notify/Save_Persist_Worker_T.h"
+#include "orbsvcs/Notify/Reconnect_Worker_T.h"
+#include "orbsvcs/Notify/Consumer_Map.h"
+#include "orbsvcs/Notify/Supplier_Map.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/SupplierAdmin.h"
 
 #include "tao/debug.h"
 

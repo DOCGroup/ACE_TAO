@@ -1,6 +1,6 @@
 // $Id$
-#include "RTCP_Packet.h"
-#include "RTP.h"
+#include "orbsvcs/AV/RTCP_Packet.h"
+#include "orbsvcs/AV/RTP.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

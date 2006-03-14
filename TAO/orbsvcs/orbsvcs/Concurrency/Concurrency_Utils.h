@@ -23,8 +23,8 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosConcurrencyControlC.h"
-#include "CC_LockSetFactory.h"
-#include "concurrency_serv_export.h"
+#include "orbsvcs/Concurrency/CC_LockSetFactory.h"
+#include "orbsvcs/Concurrency/concurrency_serv_export.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

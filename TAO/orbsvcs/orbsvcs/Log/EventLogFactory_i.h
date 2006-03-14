@@ -30,7 +30,7 @@
 #include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
-#include "EventLog_i.h"
+#include "orbsvcs/Log/EventLog_i.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

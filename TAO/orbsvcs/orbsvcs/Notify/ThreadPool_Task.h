@@ -13,11 +13,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
-#include "Timer_Queue.h"
-#include "AdminProperties.h"
-#include "Worker_Task.h"
+#include "orbsvcs/Notify/Timer_Queue.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Worker_Task.h"
 
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"

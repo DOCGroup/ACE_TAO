@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Naming_Client.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 

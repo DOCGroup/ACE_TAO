@@ -1,9 +1,9 @@
 // $Id$
 
-#include "IFR_Service_Utils.h"
-#include "IDLType_i.h"
-#include "Container_i.h"
-#include "Contained_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/Container_i.h"
+#include "orbsvcs/IFRService/Contained_i.h"
 #include "orbsvcs/IFRService/ComponentRepository_i.h"
 #include "orbsvcs/IFRService/Options.h"
 #include "orbsvcs/IFRService/IFR_ComponentsS.h"

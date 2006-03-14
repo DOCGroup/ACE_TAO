@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Naming_Server.h"
-#include "Transient_Naming_Context.h"
-#include "Persistent_Context_Index.h"
-#include "Storable_Naming_Context.h"
-#include "Storable_Naming_Context_Activator.h"
-#include "Flat_File_Persistence.h"
+#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Transient_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Context_Index.h"
+#include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
+#include "orbsvcs/Naming/Flat_File_Persistence.h"
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/debug.h"

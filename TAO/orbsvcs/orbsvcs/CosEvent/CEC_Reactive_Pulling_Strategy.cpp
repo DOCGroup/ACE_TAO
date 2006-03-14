@@ -1,10 +1,10 @@
 // $Id$
 
-#include "CEC_ProxyPullConsumer.h"
-#include "CEC_EventChannel.h"
-#include "CEC_SupplierAdmin.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_Reactive_Pulling_Strategy.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
@@ -17,7 +17,7 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_Reactive_Pulling_Strategy.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(CosEvent, CEC_Reactive_Pulling_Strategy, "$Id$")

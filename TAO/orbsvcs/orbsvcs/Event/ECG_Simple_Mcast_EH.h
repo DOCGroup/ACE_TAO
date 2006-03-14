@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "event_serv_export.h"
-#include "ECG_Adapters.h"
+#include "orbsvcs/Event/ECG_Adapters.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
 

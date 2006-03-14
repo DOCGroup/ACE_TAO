@@ -1,12 +1,12 @@
 // $Id$
 
-#include "FTEC_Group_Manager.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h"
 #include "ace/Synch_T.h"
-#include "Replication_Service.h"
-#include "Fault_Detector.h"
-#include "IOGR_Maker.h"
-#include "GroupInfoPublisher.h"
-#include "Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "../Utils/Log.h"
 #include "tao/CDR.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"

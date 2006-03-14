@@ -17,7 +17,7 @@
 
 #include "orbsvcs/CosNamingS.h"
 
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 #include "ace/Null_Mutex.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

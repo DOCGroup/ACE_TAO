@@ -23,8 +23,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Current.h"
-#include "SSLIOP_Transport.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
 
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
@@ -193,7 +193,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "SSLIOP_Connection_Handler.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i"
 #endif /* __ACE_INLINE__ */
 
 

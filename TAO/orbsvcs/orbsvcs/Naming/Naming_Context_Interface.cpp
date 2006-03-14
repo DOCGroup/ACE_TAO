@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "Naming_Context_Interface.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"

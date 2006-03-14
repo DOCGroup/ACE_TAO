@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -310,7 +310,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "ECG_CDR_Message_Receiver.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

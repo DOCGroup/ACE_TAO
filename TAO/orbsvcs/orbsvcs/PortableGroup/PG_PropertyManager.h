@@ -21,8 +21,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Default_Property_Validator.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
 #include "ace/SString.h"

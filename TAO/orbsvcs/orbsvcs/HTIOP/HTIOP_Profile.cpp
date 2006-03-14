@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "HTIOP_Profile.h"
-#include "htiop_endpointsC.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/htiop_endpointsC.h"
 
 #include "ace/os_include/os_netdb.h"
 

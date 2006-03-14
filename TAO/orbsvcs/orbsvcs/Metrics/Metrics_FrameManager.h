@@ -15,13 +15,13 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
-#include "Metrics_Utils.h"
+#include "orbsvcs/Metrics/Metrics_Utils.h"
 
 #if defined (__ACE_INLINE__)
-#include "Metrics_FrameManager.i"
+#include "orbsvcs/Metrics/Metrics_FrameManager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "Metrics_FrameManager_T.h"
+#include "orbsvcs/Metrics/Metrics_FrameManager_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

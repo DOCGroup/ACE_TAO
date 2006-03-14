@@ -1,4 +1,4 @@
-#include "SSLIOP_Accept_Strategy.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
 
 
 ACE_RCSID (SSLIOP,

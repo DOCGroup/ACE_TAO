@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/Topology_Object.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Topology_Object.inl"
+#include "orbsvcs/Notify/Topology_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 // question: is there a race_conditon with self_changed and children_changed?

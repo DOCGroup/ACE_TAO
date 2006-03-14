@@ -319,7 +319,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Metrics_LocalCache_T.cpp"
+#include "orbsvcs/Metrics/Metrics_LocalCache_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

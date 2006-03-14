@@ -22,7 +22,7 @@
 #define STRATEGY_SCHEDULER_H
 #include /**/ "ace/pre.h"
 
-#include "DynSched.h"
+#include "orbsvcs/Sched/DynSched.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

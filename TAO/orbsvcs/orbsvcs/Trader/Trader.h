@@ -17,7 +17,7 @@
 #define TAO_TRADER_BASE_H
 #include /**/ "ace/pre.h"
 
-#include "Interpreter_Utils.h"
+#include "orbsvcs/Trader/Interpreter_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

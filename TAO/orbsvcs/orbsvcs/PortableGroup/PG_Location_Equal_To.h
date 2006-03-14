@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Operators.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -51,7 +51,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "PG_Location_Equal_To.inl"
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

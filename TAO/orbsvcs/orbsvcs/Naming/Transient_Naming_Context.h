@@ -15,8 +15,8 @@
 #define TAO_TRANSIENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
-#include "Entries.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Entries.h"
 #include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

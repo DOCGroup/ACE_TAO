@@ -16,8 +16,8 @@
 #define TAO_EC_RTCORBA_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_event_export.h"
-#include "EC_Factory.h"
+#include "orbsvcs/Event/rtcorba_event_export.h"
+#include "orbsvcs/Event/EC_Factory.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

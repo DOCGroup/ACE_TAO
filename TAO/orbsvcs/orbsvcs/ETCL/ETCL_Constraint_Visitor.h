@@ -14,7 +14,7 @@
 #ifndef TAO_ETCL_CONSTRAINT_VISITOR_H
 #define TAO_ETCL_CONSTRAINT_VISITOR_H
 
-#include "etcl_export.h"
+#include "orbsvcs/ETCL/etcl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

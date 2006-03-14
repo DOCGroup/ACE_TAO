@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

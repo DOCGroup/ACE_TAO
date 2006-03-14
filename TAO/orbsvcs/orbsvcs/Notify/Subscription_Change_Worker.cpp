@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Subscription_Change_Worker.h"
+#include "orbsvcs/Notify/Subscription_Change_Worker.h"
 
-#include "Proxy.h"
+#include "orbsvcs/Notify/Proxy.h"
 
 ACE_RCSID(Notify, TAO_Subscription_Change_Worker, "$Id$")
 

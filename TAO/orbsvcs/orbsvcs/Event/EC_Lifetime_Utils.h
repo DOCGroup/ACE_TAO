@@ -210,7 +210,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "EC_Lifetime_Utils.i"
+#include "orbsvcs/Event/EC_Lifetime_Utils.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

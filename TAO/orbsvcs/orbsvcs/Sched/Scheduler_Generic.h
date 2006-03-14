@@ -22,7 +22,7 @@
 #define SCHEDULER_INTERNAL_H
 #include /**/ "ace/pre.h"
 
-#include "Scheduler.h"
+#include "orbsvcs/Sched/Scheduler.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"

@@ -6,7 +6,7 @@
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 
-#include "EC_Proxy_Disconnector.h"
+#include "orbsvcs/Event/EC_Proxy_Disconnector.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

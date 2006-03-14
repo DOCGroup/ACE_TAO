@@ -1,10 +1,10 @@
 // $Id$
 
-#include "IRObject_i.h"
-#include "Repository_i.h"
-#include "IDLType_i.h"
-#include "Contained_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IRObject_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/Contained_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"

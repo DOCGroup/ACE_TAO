@@ -15,9 +15,9 @@
 #include /**/ "ace/pre.h"
 #include "ace/Auto_Ptr.h"
 
-#include "Refcountable.h"
+#include "orbsvcs/Notify/Refcountable.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

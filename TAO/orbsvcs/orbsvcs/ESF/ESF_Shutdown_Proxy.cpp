@@ -3,11 +3,11 @@
 #ifndef TAO_ESF_SHUTDOWN_PROXY_CPP
 #define TAO_ESF_SHUTDOWN_PROXY_CPP
 
-#include "ESF_Shutdown_Proxy.h"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 #include "ace/CORBA_macros.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Shutdown_Proxy.i"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

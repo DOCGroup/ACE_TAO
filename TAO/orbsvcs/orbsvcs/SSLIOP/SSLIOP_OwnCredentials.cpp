@@ -1,6 +1,6 @@
 // $Id$
 
-#include "SSLIOP_OwnCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 
 
 ACE_RCSID (SSLIOP,

@@ -15,9 +15,9 @@
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
-#include "Persistent_Entries.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

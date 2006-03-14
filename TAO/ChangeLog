@@ -1,3 +1,14 @@
+Tue Mar 14 06:02:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/...*.cpp:
+        * orbsvcs/orbsvcs/...*.h:
+        * orbsvcs/orbsvcs/...*.i:
+        * orbsvcs/orbsvcs/...*.inl:
+
+          Add "orbsvcs/..." prefix to #includes of *.h, *.i, *.inl, and
+          template *.cpp files found in ${TAO_ROOT}/orbsvcs/orbsvcs.
+
+
 Mon Mar 13 19:51:12 UTC 2006  Johnny Willemsen  <jwilemsen@remedy.nl>
 
         * tests/Any/Recursive/client.cpp:

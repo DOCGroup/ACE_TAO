@@ -1,11 +1,11 @@
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "UIPMC_Transport.h"
-#include "UIPMC_Connection_Handler.h"
-#include "UIPMC_Message_Block_Data_Iterator.h"
-#include "UIPMC_Acceptor.h"
-#include "UIPMC_Wait_Never.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/UIPMC_Transport.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
+#include "orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
+#include "orbsvcs/PortableGroup/UIPMC_Wait_Never.h"
 
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"

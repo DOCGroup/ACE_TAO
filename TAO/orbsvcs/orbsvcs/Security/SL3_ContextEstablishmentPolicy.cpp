@@ -1,6 +1,6 @@
 // $Id$
 
-#include "SL3_ContextEstablishmentPolicy.h"
+#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
 
 
 ACE_RCSID (Security,

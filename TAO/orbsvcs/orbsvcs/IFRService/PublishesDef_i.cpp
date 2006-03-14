@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "PublishesDef_i.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/PublishesDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 ACE_RCSID (IFRService, 
            PublishesDef_i, 

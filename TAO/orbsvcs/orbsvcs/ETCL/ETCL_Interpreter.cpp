@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ETCL_Interpreter.h"
-#include "ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_Interpreter.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 

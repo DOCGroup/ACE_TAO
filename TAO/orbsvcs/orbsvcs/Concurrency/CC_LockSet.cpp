@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "CC_LockSet.h"
+#include "orbsvcs/Concurrency/CC_LockSet.h"
 
 ACE_RCSID (Concurrency,
            CC_LockSet,

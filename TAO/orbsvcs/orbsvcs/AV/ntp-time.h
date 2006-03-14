@@ -38,7 +38,7 @@
 #define TAO_AV_NTP_TIME_H
 #include /**/ "ace/pre.h"
 
-#include "RTCP.h"
+#include "orbsvcs/AV/RTCP.h"
 
 /*
  * convert microseconds to fraction of second * 2^32 (i.e., the lsw of

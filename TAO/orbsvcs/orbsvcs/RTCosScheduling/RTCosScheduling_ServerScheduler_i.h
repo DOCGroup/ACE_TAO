@@ -23,7 +23,7 @@
 #include "ace/SString.h"
 #include <orbsvcs/RTCosSchedulingS.h>
 #include <orbsvcs/RTCosScheduling/RTCosScheduling_export.h>
-#include "RTCosScheduling_PCP_Manager.h"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/LocalObject.h"
@@ -299,7 +299,7 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "RTCosScheduling_ServerScheduler_i.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i"
 #endif /* __ACE_INLINE__ */
 
 

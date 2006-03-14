@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Persistent_File_Allocator.h"
+#include "orbsvcs/Notify/Persistent_File_Allocator.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"

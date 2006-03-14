@@ -1,10 +1,10 @@
 // $Id$
 
-#include "EC_Kokyu_Factory.h"
-#include "EC_Kokyu_Dispatching.h"
-#include "EC_Kokyu_Scheduling.h"
-#include "EC_Kokyu_Filter_Builder.h"
-#include "EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Kokyu_Factory.h"
+#include "orbsvcs/Event/EC_Kokyu_Dispatching.h"
+#include "orbsvcs/Event/EC_Kokyu_Scheduling.h"
+#include "orbsvcs/Event/EC_Kokyu_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Arg_Shifter.h"
@@ -12,7 +12,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Kokyu_Factory.i"
+#include "orbsvcs/Event/EC_Kokyu_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

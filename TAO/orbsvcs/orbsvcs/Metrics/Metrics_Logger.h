@@ -32,7 +32,7 @@
 #include "orbsvcs/MetricsS.h"
 #include "orbsvcs/RtecEventCommS.h"
 
-#include "Metrics_Utils.h"
+#include "orbsvcs/Metrics/Metrics_Utils.h"
 
 #if defined (METRICS_LOGGER_SENDS_EVENTS)
 #include "MetricsC.h"

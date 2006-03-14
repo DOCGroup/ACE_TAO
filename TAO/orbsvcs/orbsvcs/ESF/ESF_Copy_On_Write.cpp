@@ -3,10 +3,10 @@
 #ifndef TAO_ESF_COPY_ON_WRITE_CPP
 #define TAO_ESF_COPY_ON_WRITE_CPP
 
-#include "ESF_Copy_On_Write.h"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Copy_On_Write.i"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.i"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Environment.h"

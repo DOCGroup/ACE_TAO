@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "FT_PolicyFactory.h"
-#include "FT_Policy_i.h"
+#include "orbsvcs/FaultTolerance/FT_PolicyFactory.h"
+#include "orbsvcs/FaultTolerance/FT_Policy_i.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/PolicyC.h"
 

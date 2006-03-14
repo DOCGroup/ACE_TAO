@@ -1,7 +1,7 @@
 // $Id$
 
-#include "FTRT_ClientORB_Initializer.h"
-#include "FTRT_ClientORB_Interceptor.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h"
 
 ACE_RCSID (ClientORB,
            FTRT_ClientORB_Initializer,

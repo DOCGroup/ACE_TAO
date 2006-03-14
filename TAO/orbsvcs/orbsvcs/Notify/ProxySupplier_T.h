@@ -12,14 +12,14 @@
 #define TAO_Notify_PROXYSUPPLIER_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Proxy_T.h"
-#include "ProxySupplier.h"
+#include "orbsvcs/Notify/Proxy_T.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,7 +150,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ProxySupplier_T.cpp"
+#include "orbsvcs/Notify/ProxySupplier_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

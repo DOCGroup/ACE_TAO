@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Replication_Service.h"
-#include "AMI_Replication_Strategy.h"
-#include "Basic_Replication_Strategy.h"
-#include "FTEC_ORBInitializer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h"
 #include "../Utils/Log.h"
 
 #include "tao/ORBInitializer_Registry.h"

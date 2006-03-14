@@ -34,7 +34,7 @@
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
-#include "ssl_endpointsC.h"
+#include "orbsvcs/SSLIOP/ssl_endpointsC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)

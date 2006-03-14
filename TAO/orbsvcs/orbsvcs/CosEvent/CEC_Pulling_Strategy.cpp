@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CEC_Pulling_Strategy.h"
+#include "orbsvcs/CosEvent/CEC_Pulling_Strategy.h"
 
 ACE_RCSID(CosEvent, CEC_Pulling_Strategy, "$Id$")
 

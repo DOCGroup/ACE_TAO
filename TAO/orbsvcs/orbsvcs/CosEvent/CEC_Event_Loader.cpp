@@ -15,7 +15,7 @@
 //
 //===========================================================================
 
-#include "CEC_Event_Loader.h"
+#include "orbsvcs/CosEvent/CEC_Event_Loader.h"
 #include "ace/Dynamic_Service.h"
 
 #include "orbsvcs/CosNamingC.h"

@@ -1,6 +1,6 @@
-#include "Log_Constraint_Interpreter.h"
+#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 
-#include "Log_Constraint_Visitors.h"
+#include "orbsvcs/Log/Log_Constraint_Visitors.h"
 
 ACE_RCSID (Log,
            Log_Constraint_Interpreter,

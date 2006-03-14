@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Offer_Iterators.h"
+#include "orbsvcs/Trader/Offer_Iterators.h"
 
 ACE_RCSID(Trader, Offer_Iterators, "$Id$")
 

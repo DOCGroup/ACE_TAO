@@ -16,14 +16,14 @@
 #define TAO_EC_RTCORBA_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_event_export.h"
-#include "EC_Dispatching.h"
+#include "orbsvcs/Event/rtcorba_event_export.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Dispatching_Task.h"
+#include "orbsvcs/Event/EC_Dispatching_Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

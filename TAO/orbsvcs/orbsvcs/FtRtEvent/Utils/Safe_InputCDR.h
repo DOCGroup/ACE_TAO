@@ -12,7 +12,7 @@
 #define SAFE_INPUTCDR_H
 #include /**/ "ace/pre.h"
 
-#include "ftrtevent_export.h"
+#include "orbsvcs/FtRtEvent/Utils/ftrtevent_export.h"
 #include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -33,7 +33,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "Safe_InputCDR.inl"
+#include "orbsvcs/FtRtEvent/Utils/Safe_InputCDR.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

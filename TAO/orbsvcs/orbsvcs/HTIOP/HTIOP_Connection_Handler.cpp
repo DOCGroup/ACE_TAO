@@ -1,9 +1,9 @@
 // $Id$
 
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
-#include "HTIOP_Transport.h"
-#include "HTIOP_Endpoint.h"
+#include "orbsvcs/HTIOP/HTIOP_Transport.h"
+#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"

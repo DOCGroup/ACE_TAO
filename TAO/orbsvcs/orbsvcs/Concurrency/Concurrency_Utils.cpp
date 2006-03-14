@@ -12,7 +12,7 @@
 #include "ace/streams.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "tao/debug.h"
-#include "Concurrency_Utils.h"
+#include "orbsvcs/Concurrency/Concurrency_Utils.h"
 
 ACE_RCSID (Concurrency,
            Concurrency_Utils,

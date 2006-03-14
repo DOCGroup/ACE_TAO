@@ -10,11 +10,11 @@
  */
 //=============================================================================
 
-#include "PG_Group_Factory.h"
-#include "PG_Property_Utils.h"
-#include "PG_conf.h"
+#include "orbsvcs/PortableGroup/PG_Group_Factory.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
 #include "orbsvcs/PortableGroupC.h"
-#include "PG_Object_Group.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include <orbsvcs/PortableGroup/PG_Utils.h>
 
 ACE_RCSID (PortableGroup,

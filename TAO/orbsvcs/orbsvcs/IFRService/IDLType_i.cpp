@@ -1,6 +1,6 @@
 // $Id$
 
-#include "IDLType_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
 
 ACE_RCSID (IFRService, 
            IDLType_i, 

@@ -1,4 +1,4 @@
-#include "SSLIOP_Util.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
 
 
 ACE_RCSID (SSLIOP,
@@ -6,8 +6,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

@@ -34,8 +34,8 @@
 
 // $Id$
 
-#include "RTP.h"
-#include "RTCP.h"
+#include "orbsvcs/AV/RTP.h"
+#include "orbsvcs/AV/RTCP.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_arpa_inet.h"

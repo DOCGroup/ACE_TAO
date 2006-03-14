@@ -2,14 +2,14 @@
 //
 // $Id$
 
-#include "CEC_TypedProxyPushConsumer.h"
-#include "CEC_TypedEventChannel.h"
-#include "CEC_TypedConsumerAdmin.h"
-#include "CEC_DynamicImplementation.h"
+#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_DynamicImplementation.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_TypedProxyPushConsumer.i"
+#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Reverse_Lock_T.h"

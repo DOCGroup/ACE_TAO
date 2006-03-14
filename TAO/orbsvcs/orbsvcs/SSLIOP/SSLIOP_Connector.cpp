@@ -1,7 +1,7 @@
-#include "SSLIOP_Connector.h"
-#include "SSLIOP_OwnCredentials.h"
-#include "SSLIOP_Profile.h"
-#include "SSLIOP_X509.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
+#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 

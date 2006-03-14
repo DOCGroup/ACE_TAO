@@ -1,10 +1,10 @@
 // $Id$
 
-#include "concrete_classes.h"
-#include "Repository_i.h"
-#include "IDLType_i.h"
-#include "Options.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/concrete_classes.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/Options.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"

@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "HTIOP_Acceptor.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Environment.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
 
@@ -16,7 +16,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "HTIOP_Acceptor.i"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(HTIOP,

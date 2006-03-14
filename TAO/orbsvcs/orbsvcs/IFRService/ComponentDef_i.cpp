@@ -1,14 +1,14 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "ComponentDef_i.h"
-#include "ProvidesDef_i.h"
-#include "UsesDef_i.h"
-#include "EmitsDef_i.h"
-#include "PublishesDef_i.h"
-#include "ConsumesDef_i.h"
-#include "ExtAttributeDef_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ComponentDef_i.h"
+#include "orbsvcs/IFRService/ProvidesDef_i.h"
+#include "orbsvcs/IFRService/UsesDef_i.h"
+#include "orbsvcs/IFRService/EmitsDef_i.h"
+#include "orbsvcs/IFRService/PublishesDef_i.h"
+#include "orbsvcs/IFRService/ConsumesDef_i.h"
+#include "orbsvcs/IFRService/ExtAttributeDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 

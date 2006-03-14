@@ -24,11 +24,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Defaults.h"
+#include "orbsvcs/CosEvent/CEC_Defaults.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
-#include "CEC_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Factory.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/AnyTypeCode/NVList.h"
@@ -381,7 +381,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "CEC_TypedEventChannel.i"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "UnionDef_i.h"
-#include "RecursDef_i.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/UnionDef_i.h"
+#include "orbsvcs/IFRService/RecursDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"

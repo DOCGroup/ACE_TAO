@@ -7952,11 +7952,11 @@ namespace POA_CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "IFR_BasicS_T.inl"
+#include "orbsvcs/IFRService/IFR_BasicS_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "IFR_BasicS_T.cpp"
+#include "orbsvcs/IFRService/IFR_BasicS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

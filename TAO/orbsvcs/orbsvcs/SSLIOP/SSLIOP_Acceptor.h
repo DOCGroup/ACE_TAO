@@ -26,9 +26,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IIOP_SSL_Acceptor.h"
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Accept_Strategy.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
 
 #include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
 #include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
@@ -161,7 +161,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "SSLIOP_Acceptor.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

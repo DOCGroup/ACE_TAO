@@ -1,4 +1,4 @@
-#include "SSLIOP_Invocation_Interceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 

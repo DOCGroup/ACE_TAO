@@ -1,8 +1,8 @@
 // $Id$
 
-#include "PortableGroup_Loader.h"
-#include "PG_Object_Adapter_Factory.h"
-#include "PortableGroup_ORBInitializer.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Loader.h"
+#include "orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h"
+#include "orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"

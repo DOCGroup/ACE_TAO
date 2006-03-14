@@ -14,8 +14,8 @@
 #define XML_TOPOLOGY_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "Topology_Factory.h"
-#include "notify_persist_export.h"
+#include "orbsvcs/Notify/Topology_Factory.h"
+#include "orbsvcs/Notify/notify_persist_export.h"
 
 #include "tao/corba.h"
 #include "ace/SString.h"

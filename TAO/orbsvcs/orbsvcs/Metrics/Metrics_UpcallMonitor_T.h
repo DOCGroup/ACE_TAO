@@ -13,8 +13,8 @@
 
 #endif /* ! VXWORKS */
 
-#include "Metrics_LocalCache.h"
-#include "Metrics_FrameManager.h"
+#include "orbsvcs/Metrics/Metrics_LocalCache.h"
+#include "orbsvcs/Metrics/Metrics_FrameManager.h"
 
 #include "ace/Hash_Map_Manager.h"
 
@@ -149,11 +149,11 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Metrics_UpcallMonitor_T.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Metrics_UpcallMonitor_T.cpp"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

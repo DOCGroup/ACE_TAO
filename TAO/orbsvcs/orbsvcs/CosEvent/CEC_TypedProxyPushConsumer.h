@@ -189,7 +189,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "CEC_TypedProxyPushConsumer.i"
+#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

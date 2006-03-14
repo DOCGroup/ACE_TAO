@@ -62,7 +62,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "EC_QOS_Info.i"
+#include "orbsvcs/Event/EC_QOS_Info.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

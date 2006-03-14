@@ -3,10 +3,10 @@
 #ifndef TAO_EC_LIFETIME_UTILS_T_CPP
 #define TAO_EC_LIFETIME_UTILS_T_CPP
 
-#include "EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Lifetime_Utils_T.i"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

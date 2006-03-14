@@ -65,7 +65,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ESF_Proxy_RefCount_Guard.i"
+#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

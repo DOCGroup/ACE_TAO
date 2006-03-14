@@ -16,12 +16,12 @@
 //
 // ============================================================================
 
-#include "SchedEntry.h"
+#include "orbsvcs/Sched/SchedEntry.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "SchedEntry.i"
+#include "orbsvcs/Sched/SchedEntry.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Sched, SchedEntry, "$Id$")

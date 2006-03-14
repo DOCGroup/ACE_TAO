@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,9 +23,9 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "Peer.h"
-#include "Event.h"
-#include "Timer.h"
+#include "orbsvcs/Notify/Peer.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/Timer.h"
 #include "ace/Event_Handler.h"
 
 
@@ -187,7 +187,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Consumer.inl"
+#include "orbsvcs/Notify/Consumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

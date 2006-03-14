@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Fault_Detector_Loader.h"
-#include "Fault_Detector_T.h"
-#include "FTEC_Fault_Listener.h"
-#include "SCTP_Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ConnectionHandler_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h"
 
 #include "ace/Acceptor.h"
 #include "ace/OS_NS_strings.h"

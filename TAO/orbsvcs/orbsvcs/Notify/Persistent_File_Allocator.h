@@ -23,9 +23,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
-#include "Random_File.h"
-#include "Bit_Vector.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Random_File.h"
+#include "orbsvcs/Notify/Bit_Vector.h"
 #include "ace/Containers_T.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Manager.h"

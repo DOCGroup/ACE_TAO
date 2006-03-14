@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
 
@@ -288,7 +288,7 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Factory)
 
 
 #if defined(__ACE_INLINE__)
-#include "UDP.i"
+#include "orbsvcs/AV/UDP.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -13,13 +13,13 @@
 #define TAO_Notify_EVENTTYPESEQ_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EventType.h"
+#include "orbsvcs/Notify/EventType.h"
 #include "ace/Unbounded_Set.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RT_Factory.h"
+#include "orbsvcs/Notify/RT_Factory.h"
 #include "Structured/RT_StructuredProxyPushSupplier.h"
 
 ACE_RCSID(RT_Notify, TAO_Notify_RT_Factory, "$Id$")

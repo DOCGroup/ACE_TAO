@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Service.h"
+#include "orbsvcs/Notify/Service.h"
 
 ACE_RCSID (Notify,
            TAO_Notify_Service,

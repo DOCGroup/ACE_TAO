@@ -14,8 +14,8 @@
 // ========================================================================
 
 #include "ace/OS_NS_string.h"
-#include "Constraint_Interpreter.h"
-#include "Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Interpreter.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

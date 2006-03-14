@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,9 +25,9 @@
 
 #include "orbsvcs/TimeBaseC.h"
 
-#include "Property.h"
-#include "Property_T.h"
-#include "AdminProperties.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Property_T.h"
+#include "orbsvcs/Notify/AdminProperties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

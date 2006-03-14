@@ -22,7 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 #include "tao/Versioned_Namespace.h"
 #include "ace/FILE.h"
 #include "ace/streams.h"

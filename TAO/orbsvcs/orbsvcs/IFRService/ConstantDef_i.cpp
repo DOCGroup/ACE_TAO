@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ConstantDef_i.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
-#include "IDLType_i.h"
+#include "orbsvcs/IFRService/ConstantDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 

@@ -22,8 +22,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Factory_Map.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Factory_Map.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "tao/PortableServer/PortableServerC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/Null_Mutex.h"

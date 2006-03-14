@@ -1,15 +1,15 @@
 /* -*- C++ -*- $Id$ */
 
-#include "FilterAdmin.h"
+#include "orbsvcs/Notify/FilterAdmin.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "FilterAdmin.inl"
+#include "orbsvcs/Notify/FilterAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, FilterAdmin, "$Id$")
 
-#include "Topology_Saver.h"
-#include "Properties.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "ace/Bound_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

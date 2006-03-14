@@ -3,7 +3,7 @@
 #ifndef HTIOP_CONNECTOR_IMPL_CPP
 #define HTIOP_CONNECTOR_IMPL_CPP
 
-#include "HTIOP_Connector_Impl.h"
+#include "orbsvcs/HTIOP/HTIOP_Connector_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

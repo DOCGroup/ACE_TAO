@@ -1,6 +1,6 @@
 // $Id$
 
-#include "SL3_ObjectCredentialsPolicy.h"
+#include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
 
 
 ACE_RCSID (Security,

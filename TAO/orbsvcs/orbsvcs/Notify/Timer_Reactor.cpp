@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Timer_Reactor.h"
+#include "orbsvcs/Notify/Timer_Reactor.h"
 
 ACE_RCSID (Notify,
 	   Timer_Reactor,
 	   "$Id$")
 
-#include "Properties.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
