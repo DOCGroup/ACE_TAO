@@ -168,4 +168,4 @@ MAX_DOT_GRAPH_HEIGHT  = 1024
 # Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 
-SEARCHENGINE          = NO
+SEARCHENGINE          = YES
