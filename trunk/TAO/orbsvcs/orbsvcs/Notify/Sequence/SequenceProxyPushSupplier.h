@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
-#include "../ProxySupplier_T.h"
+#include "orbsvcs/Notify/ProxySupplier_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

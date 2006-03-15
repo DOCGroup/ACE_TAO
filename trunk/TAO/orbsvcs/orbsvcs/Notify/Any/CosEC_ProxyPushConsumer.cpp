@@ -5,9 +5,9 @@
 ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushConsumer, "$Id$")
 
 #include "tao/debug.h"
-#include "../AdminProperties.h"
-#include "../Method_Request_Lookup.h"
-#include "../Worker_Task.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Method_Request_Lookup.h"
+#include "orbsvcs/Notify/Worker_Task.h"
 #include "orbsvcs/Notify/Any/AnyEvent.h"
 #include "orbsvcs/Notify/Any/PushSupplier.h"
 

@@ -6,7 +6,7 @@ ACE_RCSID (Notify, TAO_Notify_ProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Any/PushConsumer.h"
-#include "../Properties.h"
+#include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -3,8 +3,8 @@
 
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
 
-#include "../Properties.h"
-#include "../Event.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Event.h"
 #include "ace/Bound_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

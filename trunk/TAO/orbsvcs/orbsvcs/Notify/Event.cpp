@@ -14,8 +14,8 @@ ACE_RCSID (Notify,
 #include "tao/CDR.h"
 #include "orbsvcs/CosNotificationC.h"
 // NOTE: unfortunately we must know about derived types to implement unmarshal
-#include "Any/AnyEvent.h"
-#include "Structured/StructuredEvent.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "orbsvcs/Notify/Structured/StructuredEvent.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

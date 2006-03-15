@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 
 #include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
-#include "../Properties.h"
+#include "orbsvcs/Notify/Properties.h"
 
 
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushSupplier, "$Id$")
