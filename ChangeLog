@@ -1,3 +1,10 @@
+Wed Mar 15 15:27:51 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Capabilities.cpp
+        * ace/Codecs.cpp
+          Updated these files to solve the Capabilities_Test & Codecs_Test 
+          tests errors.
+
 Wed Mar 15 12:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
