@@ -145,7 +145,8 @@ public:
       /// The application takes responsibility of resuming the handler
       ACE_APPLICATION_RESUMES_HANDLER
     };
-  /* Called to figure out whether the handler needs to resumed by the
+  /**
+   * Called to figure out whether the handler needs to resumed by the
    * reactor or the application can take care of it. The default
    * value of 0 would be returned which would allow the reactor to
    * take care of resumption of the handler. The application can
