@@ -1,3 +1,8 @@
+Wed Mar 15 11:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Handle_Set.{cpp,inl}:
+          Use prefix increment/decrement instead of postfix
+
 Tue Mar 14 23:33:27 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.inl (recursive_mutex_cond_unlock): Fix this for
@@ -64,10 +69,10 @@ Tue Mar 14 15:55:08 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/Task_T.h:
           Added a workaround for buggy LynxOS 3.x compiler.
-        
+
         * include/makeinclude/platform_lynxos.GNU:
           Made debug=0 as default for LynxOS 3.x
-        
+
 Tue Mar 14 15:50:09 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_Thread.cpp:
