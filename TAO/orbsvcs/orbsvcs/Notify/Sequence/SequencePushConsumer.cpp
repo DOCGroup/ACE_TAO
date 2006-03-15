@@ -6,15 +6,15 @@ ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 
 #include "ace/Reactor.h"
 #include "tao/debug.h"
-#include "../QoSProperties.h"
-#include "../ProxySupplier.h"
-#include "../Worker_Task.h"
-#include "../Consumer.h"
-#include "../Method_Request_Dispatch.h"
-#include "../Method_Request_Event.h"
-#include "../Timer.h"
-#include "../Proxy.h"
-#include "../Properties.h"
+#include "orbsvcs/Notify/QoSProperties.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/Consumer.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Method_Request_Event.h"
+#include "orbsvcs/Notify/Timer.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/Properties.h"
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level

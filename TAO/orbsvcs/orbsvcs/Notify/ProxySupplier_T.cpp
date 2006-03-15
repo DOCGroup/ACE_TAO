@@ -6,8 +6,8 @@
 #include "orbsvcs/Notify/ProxySupplier_T.h"
 
 #include "orbsvcs/Notify/Consumer.h"
-#include "Structured/StructuredEvent.h"
-#include "Any/AnyEvent.h"
+#include "orbsvcs/Notify/Structured/StructuredEvent.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
 
 #include "orbsvcs/Notify/Method_Request_Dispatch.h"
 #include "orbsvcs/Notify/Worker_Task.h"

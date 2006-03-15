@@ -4,8 +4,8 @@
 
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredEvent, "$Id$")
 
-#include "../PropertySeq.h"
-#include "../Consumer.h"
+#include "orbsvcs/Notify/PropertySeq.h"
+#include "orbsvcs/Notify/Consumer.h"
 #include "tao/debug.h"
 #include "tao/corba.h"
 
