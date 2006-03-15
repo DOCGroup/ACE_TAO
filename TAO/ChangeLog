@@ -1,3 +1,9 @@
+Wed Mar 15 10:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2186_Regression/server.conf:
+          Use 1 instead of true for -ORBConnectionHandlerCleanup, true is
+          deprecated
+
 Wed Mar 15 07:48:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Event_Utilities.h:
@@ -81,7 +87,7 @@ Wed Mar 15 07:48:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Add "orbsvcs/..." prefix to #includes of *.h, *.i, *.inl, and
           template *.cpp files found in ${TAO_ROOT}/orbsvcs/orbsvcs.
-        
+
           These instances were missed among the the changes made on:
           Tue Mar 14 06:02:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
