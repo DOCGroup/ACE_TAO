@@ -4,7 +4,7 @@
 
 ACE_RCSID (Notify, TAO_Notify_SequencePushSupplier, "$Id$")
 
-#include "../Properties.h"
+#include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

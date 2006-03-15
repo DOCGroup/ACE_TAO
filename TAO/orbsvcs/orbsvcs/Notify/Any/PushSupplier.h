@@ -13,7 +13,7 @@
 #define TAO_Notify_PUSHSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "../notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,7 +21,7 @@
 
 
 #include "orbsvcs/CosNotifyCommC.h"
-#include "../Supplier.h"
+#include "orbsvcs/Notify/Supplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

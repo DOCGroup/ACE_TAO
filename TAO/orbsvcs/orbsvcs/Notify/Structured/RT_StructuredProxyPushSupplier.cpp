@@ -4,7 +4,7 @@
 #include "tao/debug.h"
 
 #include "tao/debug.h"
-#include "../Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
 
 ACE_RCSID (Notify, TAO_Notify_RT_StructuredProxyPushSupplier, "$Id$")
 

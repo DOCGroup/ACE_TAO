@@ -1,3 +1,52 @@
+Wed Mar 15 21:26:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
+        
+          Add "orbsvcs/..." prefix to #includes of *.h, *.i, *.inl, and
+          template *.cpp files found in ${TAO_ROOT}/orbsvcs/orbsvcs.
+        
+          These instances were missed among the the changes made on:
+          Tue Mar 14 06:02:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+        
+          because they used relative paths.
+
 Wed Mar 15 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Resume_Handle.h:

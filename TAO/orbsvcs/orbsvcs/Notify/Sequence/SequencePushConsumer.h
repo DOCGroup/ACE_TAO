@@ -13,18 +13,18 @@
 #define TAO_Notify_SEQUENCEPUSHCONSUMER_H
 #include /**/ "ace/pre.h"
 
-#include "../notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
-#include "../Event.h"
-#include "../Property.h"
-#include "../Property_T.h"
-#include "../Consumer.h"
-#include "../AdminProperties.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Property_T.h"
+#include "orbsvcs/Notify/Consumer.h"
+#include "orbsvcs/Notify/AdminProperties.h"
 #include "ace/Null_Condition.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

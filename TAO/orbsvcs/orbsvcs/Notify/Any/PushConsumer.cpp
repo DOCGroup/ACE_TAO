@@ -8,8 +8,8 @@ ACE_RCSID (Notify,
 
 #include "ace/Bound_Ptr.h"
 #include "orbsvcs/CosEventCommC.h"
-#include "../Event.h"
-#include "../Properties.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
