@@ -1,3 +1,10 @@
+Wed Mar 15 12:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Set SEARCHENGINE to YES for all doxygen config files, enables
+          the possibility to do searches in the doxygen generated
+          documentation
+
 Wed Mar 15 11:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Handle_Set.{cpp,inl}:
