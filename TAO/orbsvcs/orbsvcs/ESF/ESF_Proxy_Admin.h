@@ -76,7 +76,7 @@ public:
                  ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // @TODO We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
+  // @todo We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
   // the MSVC compiler (v6.0) gets confused when we do so.  So we have
   // to choose for the lesser evil.  The code works because TAO uses
   // pointers to implement the _ptr types, and that is OK because this
