@@ -1,8 +1,16 @@
+Wed Mar 15 16:38:08 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_Thread.inl:
+          Only LynxOS 3.0.x has buggy pthread_cond_timedwait.
+
+        * ace/Reverse_Lock_T.h:
+          Added a workaround for buggy LynxOS 3.x compiler.
+
 Wed Mar 15 15:27:51 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * ace/Capabilities.cpp
         * ace/Codecs.cpp
-          Updated these files to solve the Capabilities_Test & Codecs_Test 
+          Updated these files to solve the Capabilities_Test & Codecs_Test
           tests errors.
 
 Wed Mar 15 12:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
