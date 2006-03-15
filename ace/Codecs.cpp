@@ -157,9 +157,9 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
 
       if (char_count == 4)
         {
-          result[pos++] = static_cast<ACE_Byte> (bits) >> 16;
-          result[pos++] = (static_cast<ACE_Byte> (bits) >> 8) & 0xff;
-          result[pos++] = static_cast<ACE_Byte> (bits) & 0xff;
+          result[pos++] = static_cast<ACE_Byte> (bits >> 16);
+          result[pos++] = static_cast<ACE_Byte> ((bits >> 8) & 0xff);
+          result[pos++] = static_cast<ACE_Byte> (bits & 0xff);
           bits = 0;
           char_count = 0;
         }
@@ -190,11 +190,11 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
           errors++;
           break;
         case 2:
-          result[pos++] = static_cast<ACE_Byte> (bits) >> 10;
+          result[pos++] = static_cast<ACE_Byte> (bits >> 10);
           break;
         case 3:
-          result[pos++] = static_cast<ACE_Byte> (bits) >> 16;
-          result[pos++] = (static_cast<ACE_Byte> (bits) >> 8) & 0xff;
+          result[pos++] = static_cast<ACE_Byte> (bits >> 16);
+          result[pos++] = static_cast<ACE_Byte> ((bits >> 8) & 0xff);
           break;
         }
     }
