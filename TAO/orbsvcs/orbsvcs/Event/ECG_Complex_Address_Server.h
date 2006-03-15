@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "ace/Hash_Map_Manager_T.h"

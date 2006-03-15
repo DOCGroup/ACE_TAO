@@ -23,7 +23,7 @@
 #include "ace/Service_Object.h"
 #include "ace/SString.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "tao/Versioned_Namespace.h"
 
