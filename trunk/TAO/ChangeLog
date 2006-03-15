@@ -1,3 +1,20 @@
+Tue Mar 14 08:12:55 UTC 2006  Ciju John  <john_c@ociweb.com>
+
+        * tao/Connection_Handler.cpp:
+
+          When the client closes its connections, it sends an EOF to the
+          server. The sever reactor gets an event for that handler. It
+          first suspends the handler and then dispatches a thread to
+          handle_input(). Some where down the lane, a read() is done on the
+          handle and automatically the handle is resumed. At this point
+          another thread CAN enter the reactor and since the handle being
+          closed has been resumed, the reactor will add it to its
+          fd_set. As expected the reactor gets an event on that handle and
+          dispatches someone else to handle that event. What this patch
+          does is prevent the closing handler from being resumed. Thus it
+          never does get added to the reactor fd_set and the possibility
+          of getting a nil handler is removed.
+
 Tue Mar 14 15:25:48 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Domain.pidl:
