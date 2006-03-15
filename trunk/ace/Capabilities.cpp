@@ -331,8 +331,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
       ACE_TString newline;
       ACE_TString description;
 
-      done = this->getline (fp, newline) == -1;
-      while (!done)
+      while (0 == (done = (this->getline (fp, newline) == -1)))
         if (is_line (newline.c_str ()))
           description += newline;
         else
