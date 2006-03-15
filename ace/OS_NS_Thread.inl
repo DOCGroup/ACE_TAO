@@ -430,7 +430,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   else
     {
 
-#     if defined (__Lynx__)
+#     if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR == 3) && (ACE_LYNXOS_MINOR == 0)
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what the
       // LynxOS pthread_cond_timedwait expects).  This differs from 1003.4a
@@ -445,7 +445,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       ACE_OSCALL (pthread_cond_timedwait (cv, external_mutex,
                                             (ACE_TIMESPEC_PTR) &ts),
                   int, -1, result);
-#     endif /* __Lynx__ */
+#     endif /* ACE_LYNXOS_MAJOR ... */
     }
 
 #     else
