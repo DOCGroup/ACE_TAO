@@ -1,0 +1,37 @@
+# file      : BuildRules/Recursion.post.rules
+# author    : Boris Kolpackov <boris@kolpackov.net>
+# copyright : Copyright (c) 2002-2003 Boris Kolpackov
+# license   : http://kolpackov.net/license.html
+
+.PHONY: $(target_directory_list) $(target_makefile_list)
+
+_submodules:: $(target_directory_list) $(target_makefile_list)
+
+ifneq ($(strip $(target_directory_list)),)
+$(target_directory_list):
+	$(MAKE) -C $@ -f $(default_makefile_name) $(MAKECMDGOALS)
+endif
+
+ifneq ($(strip $(target_makefile_list)),)
+$(target_makefile_list):
+	$(MAKE) --no-print-directory -f $@ $(MAKECMDGOALS)
+endif
+
+# These rules keep make from trying to use the match-anything rule below to
+# rebuild the makefiles.
+#
+ifneq ($(strip $(default_makefile_name)),)
+$(default_makefile_name) : ;
+endif 
+
+%.mk :: ;
+%.rules :: ;
+
+
+# Anything we don't know how to build will use this rule.  The command is a
+# do-nothing command, but the prerequisites ensure that the appropriate
+# recursive invocations of make will occur.
+#
+% :: $(target_directory_list) $(target_makefile_list) ;
+
+# $Id$
