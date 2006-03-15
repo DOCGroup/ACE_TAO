@@ -1,3 +1,8 @@
+Wed Mar 15 11:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+          Doxygen fix
+
 Wed Mar 15 10:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2186_Regression/server.conf:
