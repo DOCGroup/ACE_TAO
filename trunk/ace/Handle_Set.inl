@@ -134,7 +134,7 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
     {
       FD_CLR ((ACE_SOCKET) handle,
               &this->mask_);
-      this->size_--;
+      --this->size_;
 
 #if !defined (ACE_WIN32)
       if (handle == this->max_handle_)
