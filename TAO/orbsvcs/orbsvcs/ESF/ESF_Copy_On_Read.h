@@ -64,7 +64,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Copy_On_Read.cpp"
+#include "orbsvcs/ESF/ESF_Copy_On_Read.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

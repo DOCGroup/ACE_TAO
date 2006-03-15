@@ -18,7 +18,7 @@
 
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
 #include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

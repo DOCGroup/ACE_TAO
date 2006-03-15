@@ -17,7 +17,7 @@
 #define TAO_ECG_ADAPTERS_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 #include "orbsvcs/RtecUDPAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

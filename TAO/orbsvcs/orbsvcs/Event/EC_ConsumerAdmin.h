@@ -26,7 +26,7 @@
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

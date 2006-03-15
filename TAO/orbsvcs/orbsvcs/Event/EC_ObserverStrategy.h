@@ -32,7 +32,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;

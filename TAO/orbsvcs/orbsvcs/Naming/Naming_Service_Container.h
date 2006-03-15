@@ -223,7 +223,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Naming_Service_Container.cpp"
+#include "orbsvcs/Naming/Naming_Service_Container.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -10,7 +10,7 @@
 #ifndef EC_PROXY_DISCONNECTOR__H_
 #define EC_PROXY_DISCONNECTOR__H_
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 #include "orbsvcs/RtecEventCommC.h"
 #include "ace/Auto_Functor.h"
 

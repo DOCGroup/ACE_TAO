@@ -21,7 +21,7 @@
 
 #include "tao/Basic_Types.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
