@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef ROUNDTRIPCLIENT_CIDL
+#define ROUNDTRIPCLIENT_CIDL
+
+#include "RoundTripClient.idl"
+
+composition session RoundTripClient_Impl
+{
+
+  home executor RoundTripClientHome_Exec
+  {
+    implements Benchmark::RoundTripClientHome;
+    manages RoundTripClient_Exec;
+  };
+
+};
+
+#endif /* ROUNDTRIPCLIENT_CIDL */

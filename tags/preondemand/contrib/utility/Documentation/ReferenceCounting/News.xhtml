@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<!--
+
+file      : Documentation/ReferenceCounting/News.xhtml
+author    : Boris Kolpackov <boris@kolpackov.net>
+copyright : Copyright (c) 2002-2003 Boris Kolpackov
+license   : http://kolpackov.net/license.html
+
+-->
+
+<head>
+
+  <title>Reference Counting Library News</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="copyright" content="&copy; 2001-2003 Boris Kolpackov"/>
+  <meta name="keywords" content="news,C++,reference,counting,smart,pointer"/>
+  <meta name="description" content="Reference Counting Library News"/>
+
+  <link rel="stylesheet" type="text/css" href="../Style/Default.css"/>
+
+</head>
+
+<body>
+
+<h1>1.1.0</h1>
+<ul class="multiline">
+<li>New regression test coverage.</li>
+
+<li>
+<code>
+<a href="SmartPtr.hpp.html">Utility::ReferenceCounting::SmartPtr</a>
+</code>
+: added
+<pre class="cpp-code">
+template&lt;typename Other&gt;
+SmartPtr (SmartPtr&lt;Other&gt; const&amp;)
+</pre>
+and
+<pre class="cpp-code">
+template&lt;typename Other&gt;
+operator= (SmartPtr&lt;Other&gt; const&amp;)
+</pre>
+</li>
+
+<li>
+<code>
+<a href="SmartPtr.hpp.html">Utility::ReferenceCounting::SmartPtr</a>
+</code>
+: added
+<pre class="cpp-code">typedef T Type;</pre>
+in order to provide access to underlying type.
+</li>
+
+<li>
+<code><a href="index.xhtml">Utility::ReferenceCounting</a></code>
+: added
+<pre class="cpp-code">
+template &lt;typename D, typename S&gt;
+D*
+smart_cast (SmartPtr&lt;S&gt; const&amp;)
+</pre>
+to provide more convenient <code>dynamic_cast</code> functionality.
+</li>
+
+<li>
+<code><a href="index.xhtml">Utility::ReferenceCounting</a></code>
+: added
+<pre class="cpp-code">
+template &lt;typename T&gt;
+SmartPtr&lt;T&gt; acquire (T*)
+</pre>
+</li>
+
+<li>
+New
+<code>
+<a href="StrictPtr.hpp.html">Utility::ReferenceCounting::StrictPtr</a>
+</code>
+automatic pointer.
+</li>
+
+</ul>
+
+</body>
+</html>
+<!-- $Id$ -->

@@ -1,0 +1,14 @@
+//
+// $Id$
+//
+#include "Receiver.idl"
+
+interface Sender
+{
+
+  exception Table_Full {};
+
+  /// Receive the Receiver object and return a id for the object.
+  long receiver_object (in Receiver recv)
+    raises (Table_Full);
+};
