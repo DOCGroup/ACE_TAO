@@ -23,7 +23,7 @@
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

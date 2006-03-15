@@ -19,7 +19,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "Event/event_export.h"
+#include "orbsvcs/Event/event_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

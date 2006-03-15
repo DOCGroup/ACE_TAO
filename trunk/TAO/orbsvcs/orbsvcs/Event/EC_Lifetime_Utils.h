@@ -18,7 +18,7 @@
 #define TAO_EC_LIFETIME_UTILS_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"

@@ -25,7 +25,7 @@
 
 #include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
 #include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

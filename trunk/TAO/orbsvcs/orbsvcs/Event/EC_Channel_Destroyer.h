@@ -10,7 +10,7 @@
 #ifndef EC_CHANNEL_DESTROYER__H_
 #define EC_CHANNEL_DESTROYER__H_
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/Auto_Functor.h"
 

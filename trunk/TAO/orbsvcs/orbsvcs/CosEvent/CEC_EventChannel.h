@@ -30,7 +30,7 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 
 #include "orbsvcs/CosEvent/CEC_Defaults.h"
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 #include "ace/Hash_Map_Manager.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
