@@ -1,3 +1,8 @@
+Thu Mar 16 12:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
+          Fixed fuzz error
+
 Thu Mar 16 11:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Persistent_ID/server.cpp:
