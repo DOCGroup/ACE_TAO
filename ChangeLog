@@ -1,3 +1,9 @@
+Thu Mar 16 15:53:55 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * ace/UUID.cpp
+        * protocols/ace/RMCast/Simulator.cpp
+          Updated these files to solve some potential static-cast errors.
+
 Thu Mar 16 13:47:56 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-vxworks6.2.h:
