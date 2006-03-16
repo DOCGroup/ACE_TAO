@@ -146,6 +146,7 @@ COLLABORATION_GRAPH   = NO
 INCLUDE_GRAPH         = NO
 INCLUDED_BY_GRAPH     = NO
 GRAPHICAL_HIERARCHY   = NO
+DOT_MULTI_TARGETS     = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
