@@ -1,17 +1,22 @@
+Thu Mar 16 20:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Use true/false instead of 1/0
+
 Thu Mar 16 12:20:41 MST 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
         * tao/CSD_ThreadPool/CSD_TP_Task.h:
 
-          Typedef'd Thread_Counter as unsigned long and used it for 
+          Typedef'd Thread_Counter as unsigned long and used it for
           the num_threads.
-     
+
         * tao/CSD_ThreadPool/CSD_TP_Strategy.h:
         * tao/CSD_ThreadPool/CSD_TP_Strategy.inl:
-        
+
           Updated data member num_threads_ and set_num_threads() method
           to use the Thread_Counter type for the number of threads.
-                    
+
 Thu Mar 16 15:48:50 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * TAO/TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp
