@@ -1,3 +1,9 @@
+Thu Mar 16 13:47:56 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-vxworks6.2.h:
+
+          In kernel mode, VxWorks 6.2 lacks suseconds_t.
+
 Thu Mar 16 12:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao_DAnCE.doxygen:
