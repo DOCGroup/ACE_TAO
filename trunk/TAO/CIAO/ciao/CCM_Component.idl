@@ -18,6 +18,8 @@
 
 module CORBA
 {
+  typeprefix CORBA "omg.org";
+
   interface IRObject; // forward declerations
 };
 
