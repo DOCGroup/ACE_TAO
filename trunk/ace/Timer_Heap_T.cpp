@@ -615,6 +615,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
     }
 
   this->max_size_ = new_size;
+  // Force rescan of list from beginning for a free slot (I think...)
+  // This fixed Bugzilla #2447.
+  this->timer_ids_min_free_ = this->max_size_;
 }
 
 // Reschedule a periodic timer.  This function must be called with the
