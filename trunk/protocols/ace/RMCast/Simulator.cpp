@@ -21,7 +21,7 @@ namespace ACE_RMCast
     out_->send (m);
     return;
 
-    int r (rand ());
+    /*int r (rand ());
 
     if ((r % 3) == 0) return;
 
@@ -35,6 +35,6 @@ namespace ACE_RMCast
     else
     {
       hold_ = m;
-    }
+    }*/
   }
 }
