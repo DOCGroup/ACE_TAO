@@ -1,3 +1,8 @@
+Thu Mar 16 11:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Persistent_ID/server.cpp:
+          After creating the child poa destroy the policies
+
 Wed Mar 15 21:26:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Notify/Builder.cpp:
@@ -38,13 +43,13 @@ Wed Mar 15 21:26:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
-        
+
           Add "orbsvcs/..." prefix to #includes of *.h, *.i, *.inl, and
           template *.cpp files found in ${TAO_ROOT}/orbsvcs/orbsvcs.
-        
+
           These instances were missed among the the changes made on:
           Tue Mar 14 06:02:15 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
-        
+
           because they used relative paths.
 
 Wed Mar 15 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
