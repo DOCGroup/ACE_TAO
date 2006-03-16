@@ -1,3 +1,8 @@
+Thu Mar 16 16:30:00 UTC 2006  simon massey  <sma@prismtech.com>
+
+        * tests/run_test.lst
+          Add !DISABLE_ToFix_LynxOS_* marks to failing ACE tests
+
 Thu Mar 16 15:53:55 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * ace/UUID.cpp
