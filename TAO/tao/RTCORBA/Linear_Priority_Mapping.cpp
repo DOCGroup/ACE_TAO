@@ -60,11 +60,11 @@ TAO_Linear_Priority_Mapping::to_native (
        / (RTCORBA::maxPriority - RTCORBA::minPriority));
 
   // Now, find the value corresponding to this index.
-  native_priority = this->min_;
+  native_priority = static_cast<RTCORBA::NativePriority> (this->min_);
   for (int i = 2; i <= native_priority_index; ++i)
     {
-      native_priority = ACE_Sched_Params::next_priority (this->policy_,
-                                                         native_priority);
+      native_priority = static_cast<RTCORBA::NativePriority> 
+	(ACE_Sched_Params::next_priority (this->policy_, native_priority));
     }
   return 1;
 
@@ -114,10 +114,9 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   int delta = total - 1;
   if (delta != 0)
     {
-      corba_priority =
-        RTCORBA::minPriority
-        + ((RTCORBA::maxPriority - RTCORBA::minPriority)
-           * (native_priority_index - 1) / delta);
+      corba_priority = static_cast<RTCORBA::Priority> (RTCORBA::minPriority
+          + ((RTCORBA::maxPriority - RTCORBA::minPriority)
+          * (native_priority_index - 1) / delta));
     }
   else
     {

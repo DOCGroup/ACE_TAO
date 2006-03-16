@@ -1840,9 +1840,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong
         {
           return -1;
         }
-    }
-
-  return -1;
+    }  
 }
 
 /* @return -1 error, 0 ok, +1 outstanding fragments */ 

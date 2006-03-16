@@ -425,7 +425,7 @@ TAO_IFR_Server::init_multicast_server (ACE_ENV_SINGLE_ARG_DECL)
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
       if (port_number != 0)
-        port = ACE_OS::atoi (port_number);
+        port = static_cast<u_short> (ACE_OS::atoi (port_number));
     }
 
   // Port wasn't specified on the command-line or in environment -

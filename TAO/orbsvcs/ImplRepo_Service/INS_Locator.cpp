@@ -61,5 +61,4 @@ ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
         CORBA::COMPLETED_NO));
     }
   ACE_ENDTRY;
-  return 0;
 }

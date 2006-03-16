@@ -77,7 +77,6 @@ ImR_Activator_Loader::fini (void)
       return -1;
     }
   ACE_ENDTRY;
-  return -1;
 }
 
 CORBA::Object_ptr
@@ -105,7 +104,6 @@ ImR_Activator_Loader::run (void)
       return -1;
     }
   ACE_ENDTRY;
-  return 0;
 }
 
 ACE_FACTORY_DEFINE (Activator, ImR_Activator_Loader)

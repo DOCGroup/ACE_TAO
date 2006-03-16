@@ -439,8 +439,6 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
         }
       return result;
     }
-  // Should not get here!
-  return -1;
 }
 
 // A supplier is attempting to register its supported_interface.
@@ -505,8 +503,6 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
         }
       return result;
     }
-  // Should not get here!
-  return -1;
 }
 
 // Function creates a NVList and populates it from the parameter information.

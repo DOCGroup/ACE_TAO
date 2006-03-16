@@ -52,7 +52,7 @@ TAO_RT_ORB_Loader::init (int argc,
   while (arg_shifter.is_anything_left ())
     {
       const ACE_TCHAR *current_arg = 0;
-      if ((current_arg = arg_shifter.get_the_parameter
+      if (0 != (current_arg = arg_shifter.get_the_parameter
                   (ACE_TEXT("-ORBPriorityMapping"))))
         {
           const ACE_TCHAR *name = current_arg;
@@ -75,7 +75,7 @@ TAO_RT_ORB_Loader::init (int argc,
                         name));
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                                  (ACE_TEXT("-ORBSchedPolicy"))))
         {
           const ACE_TCHAR *name = current_arg;
@@ -104,7 +104,7 @@ TAO_RT_ORB_Loader::init (int argc,
                         name));
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                                  (ACE_TEXT("-ORBScopePolicy"))))
         {
           const ACE_TCHAR *name = current_arg;
@@ -121,7 +121,7 @@ TAO_RT_ORB_Loader::init (int argc,
                         name));
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                                  (ACE_TEXT("-RTORBNetworkPriorityMapping"))))
         {
           const ACE_TCHAR *name = current_arg;
@@ -131,7 +131,7 @@ TAO_RT_ORB_Loader::init (int argc,
                 TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                                    (ACE_TEXT("-RTORBDynamicThreadIdleTimeout"))))
         {
           const ACE_TCHAR *name = current_arg;

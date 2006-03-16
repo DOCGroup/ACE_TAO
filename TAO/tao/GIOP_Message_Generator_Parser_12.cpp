@@ -266,7 +266,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   request.request_id (req_id);
 
-  CORBA::Octet response_flags;
+  CORBA::Octet response_flags = CORBA::Octet();
   hdr_status = hdr_status && input.read_octet (response_flags);
 
   request.response_expected ((response_flags > 0));

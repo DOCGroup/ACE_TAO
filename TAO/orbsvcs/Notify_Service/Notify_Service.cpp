@@ -313,7 +313,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
   const ACE_TCHAR* current_arg = 0;
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))))
         {
           this->notify_factory_name_.set (ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
@@ -339,7 +339,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"))))
         {
           this->ior_output_file_ = ACE_OS::fopen (current_arg, ACE_TEXT("w"));
           if (this->ior_output_file_ == 0)
@@ -348,7 +348,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
                                current_arg), -1);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
         {
           this->notify_channel_name_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
@@ -360,14 +360,14 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))))
         {
           ACE_DEBUG((LM_DEBUG, "-Notify_TPReactor option is deprecated, use -ORBRunThreads option\n"));
 
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ORBRunThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ORBRunThreads"))))
         {
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();

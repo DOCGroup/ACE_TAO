@@ -253,7 +253,7 @@ TAO_IIOP_Connection_Handler::close_connection (void)
     {
       struct linger lval;
       lval.l_onoff = 1;
-      lval.l_linger = linger;
+      lval.l_linger = (u_short)linger;
 
       if (this->peer ().set_option(SOL_SOCKET,
                                    SO_LINGER,

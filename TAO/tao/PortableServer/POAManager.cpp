@@ -154,7 +154,8 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableInterceptor::AdapterState adapter_state = state;
+  PortableInterceptor::AdapterState adapter_state = 
+    static_cast<PortableInterceptor::AdapterState> (state);
 
   TAO_IORInterceptor_Adapter *ior_adapter =
     this->object_adapter_.orb_core ().ior_interceptor_adapter ();

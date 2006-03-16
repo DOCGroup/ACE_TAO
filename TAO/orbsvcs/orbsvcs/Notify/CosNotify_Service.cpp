@@ -49,7 +49,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
         {
           consumer_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -60,7 +60,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
         {
           supplier_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -71,7 +71,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
         {
           supplier_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -84,7 +84,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
         {
           // Since this option is always added to consumer_threads, we'll
           // deprecate it in favor of that option.

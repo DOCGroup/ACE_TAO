@@ -130,7 +130,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
                             -1);
 
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorLock"))))
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -144,7 +144,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorType"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -186,7 +186,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBInputCDRAllocator"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -208,7 +208,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBAMHResponseHandlerAllocator"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -228,7 +228,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBAMIResponseHandlerAllocator"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -248,7 +248,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorThreadQueue"))))
         {
           if (ACE_OS::strcasecmp (current_arg,

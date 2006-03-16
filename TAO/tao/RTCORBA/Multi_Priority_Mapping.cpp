@@ -92,7 +92,7 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
   if (corba_priority == base_corba_priority_)
   {
      // If this is the highest priority endpoint, then just give it the highest priority corba base priority
-     native_priority = base_native_priority_;
+     native_priority = static_cast<RTCORBA::NativePriority> (base_native_priority_);
   }
   else
   {
@@ -100,11 +100,13 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
      {
         if ( this->min_ < this->max_ )
         {
-           native_priority = ( (corba_priority - base_corba_priority_) / priority_spacing_ ) + base_native_priority_;
+           native_priority = static_cast<RTCORBA::NativePriority> 
+	     (((corba_priority - base_corba_priority_) / priority_spacing_) + base_native_priority_);
         }
         else
         {
-           native_priority = ( (base_corba_priority_ - corba_priority) / priority_spacing_ ) + base_native_priority_;
+           native_priority = static_cast<RTCORBA::NativePriority> 
+	     (((base_corba_priority_ - corba_priority) / priority_spacing_) + base_native_priority_);
         }
      }
      else
@@ -129,9 +131,10 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
         last_priority = this->base_native_priority_;
         for (int current_ndx = 0; current_ndx < priority_ndx; current_ndx++)
         {
-           native_priority = ACE_Sched_Params::previous_priority (this->policy_,
-                                                                  last_priority,
-                                                                  ACE_SCOPE_THREAD);
+           native_priority = static_cast<RTCORBA::NativePriority> 
+	     (ACE_Sched_Params::previous_priority (this->policy_,
+	                                           last_priority,
+                                                   ACE_SCOPE_THREAD));
         }
      }
   }
@@ -160,7 +163,7 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   if (native_priority == base_native_priority_)
   {
      // If this is the highest priority endpoint, then just give it the highest priority corba base priority
-     corba_priority = base_corba_priority_;
+     corba_priority = static_cast<RTCORBA::Priority> (base_corba_priority_);
   }
   else
   {
@@ -168,11 +171,13 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
      {
         if ( this->min_ < this->max_ )
         {
-           corba_priority = ( (native_priority - base_native_priority_) * priority_spacing_ ) + base_corba_priority_;
+           corba_priority = static_cast<RTCORBA::Priority> 
+	     (((native_priority - base_native_priority_) * priority_spacing_) + base_corba_priority_);
         }
         else
         {
-           corba_priority = ( (base_native_priority_ - native_priority) * priority_spacing_ ) + base_corba_priority_;
+           corba_priority = static_cast<RTCORBA::Priority> 
+	     (((base_native_priority_ - native_priority) * priority_spacing_) + base_corba_priority_);
         }
      }
      else
@@ -225,7 +230,8 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
            priority_ndx++;
         }
 
-        corba_priority = base_corba_priority_ - priority_ndx;
+        corba_priority = static_cast<RTCORBA::Priority> 
+	  (base_corba_priority_ - priority_ndx);
      }
   }
 

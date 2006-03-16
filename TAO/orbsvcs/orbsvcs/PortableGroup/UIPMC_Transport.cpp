@@ -268,7 +268,7 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
          current_fragment->iovcnt > 1)
     {
       // Fill in the packet length header field.
-      *packet_length = current_fragment->length;
+      *packet_length = static_cast<CORBA::UShort> (current_fragment->length);
 
       // If this is the last fragment, set the stop message flag.
       if (num_fragments == 1)

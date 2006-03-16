@@ -163,7 +163,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           ACE::debug (1);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT ("-ORBDebugLevel"))))
         {
           TAO_debug_level =
@@ -183,7 +183,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           arg_shifter.consume_arg ();
         }
       // Continue with flags that accept parameters.
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -197,7 +197,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
         {
           // Specify the name of the svc.conf file to be used.
 
@@ -231,7 +231,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add

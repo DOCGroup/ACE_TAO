@@ -365,7 +365,7 @@ ImR_Locator_i::setup_multicast (ACE_Reactor* reactor, const char* ior)
           const char* port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
           if (port_number != 0)
-            port = ACE_OS::atoi (port_number);
+            port = static_cast<CORBA::UShort> (ACE_OS::atoi (port_number));
         }
       if (port == 0)
         port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;

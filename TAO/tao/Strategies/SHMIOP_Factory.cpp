@@ -82,12 +82,12 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
     {
       const ACE_TCHAR *current_arg = 0;
 
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
         {
           this->min_bytes_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFilePrefix"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFilePrefix"))))
         {
           this->mmap_prefix_ = ACE::strnew (current_arg);
           arg_shifter.consume_arg ();
