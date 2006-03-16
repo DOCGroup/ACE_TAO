@@ -1,3 +1,20 @@
+Thu Mar 16 21:54:29 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Heap_T.cpp (grow_heap): Reset timer_ids_min_free_ after
+          growing the heap. Fixes Bugzilla #2447 where timer IDs may be
+          improperly duplicated under certain conditions.
+
+        * tests/Timer_Queue_Test.cpp: Added a new function,
+          test_unique_timer_heap_ids(), as supplied in Bugzilla #2447 to
+          verify the fix.
+
+          Thank you very much to Dan Pozdol <dpozdol at wolve dot com> and
+          Paxton Mason <pmason at wolve dot com> for identifying the bug,
+          its conditions and causes, supplying the test program and supplying
+          the fix!
+
+        * THANKS: Added Dan Pozdol to the Hall of Fame.
+
 Thu Mar 16 16:30:00 UTC 2006  simon massey  <sma@prismtech.com>
 
         * tests/run_test.lst
