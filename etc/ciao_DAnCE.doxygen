@@ -134,17 +134,17 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::addtions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../../../ace \
-                        html/tao/TAO.tag=../../.. \
-                        html/ace/ssl/ACE_SSL.tag=../../../../ace/ssl \
-                        html/tao/portableserver/TAO_PortableServer.tag=../../../portableserver \
-                        html/tao/iortable/TAO_IORTable.tag=../../../iortable \
-                        html/tao/rtcorba/TAO_RTCORBA.tag=../../../rtcorba \
-                        html/tao/security/TAO_Security.tag=../../../security \
-                        html/acexml/ACEXML.tag=../../../../acexml \
-                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../../../rtportableserver \
-                        html/tao/cosnaming/TAO_CosNaming.tag=../../../cosnaming \
-                        html/tao/ifr/TAO_IFR.tag=../../../ifr
+TAGFILES              = html/ace/ACE.tag=../../../ace \
+                        html/tao/TAO.tag=../.. \
+                        html/ace/ssl/ACE_SSL.tag=../../../ace/ssl \
+                        html/tao/portableserver/TAO_PortableServer.tag=../../portableserver \
+                        html/tao/iortable/TAO_IORTable.tag=../../iortable \
+                        html/tao/rtcorba/TAO_RTCORBA.tag=../../rtcorba \
+                        html/tao/security/TAO_Security.tag=../../security \
+                        html/acexml/ACEXML.tag=../../../acexml \
+                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../../rtportableserver \
+                        html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
+                        html/tao/ifr/TAO_IFR.tag=../../ifr
 GENERATE_TAGFILE      = html/tao/ciao/DAnCE.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
