@@ -307,7 +307,11 @@ be_visitor_ccm_pre_proc::gen_provides (be_component *node)
       provides_op->set_defined_in (node);
       provides_op->set_imported (node->imported ());
       provides_op->set_name (op_name);
-      node->be_add_operation (provides_op);
+
+      if (0 == node->be_add_operation (provides_op))
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -509,7 +513,10 @@ be_visitor_ccm_pre_proc::gen_factories (be_home *node,
                             -1);
         }
 
-      xplicit->be_add_operation (*item);
+      if (0 == xplicit->be_add_operation (*item))
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -543,7 +550,10 @@ be_visitor_ccm_pre_proc::gen_finders (be_home *node,
                             -1);
         }
 
-      xplicit->be_add_operation (*item);
+      if (0 == xplicit->be_add_operation (*item))
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -651,7 +661,12 @@ be_visitor_ccm_pre_proc::gen_connect_single (
                                   tail),
                  -1);
   op->be_add_exceptions (connect_single);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -688,7 +703,12 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (
                                   0),
                  -1);
   op->be_add_exceptions (disconnect_single);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -718,7 +738,12 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (
                   -1);
   op->set_name (op_full_name);
   op->set_defined_in (node);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -772,7 +797,12 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (
                                   tail),
                  -1);
   op->be_add_exceptions (connect_multiple);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -820,7 +850,12 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (
                                   0),
                  -1);
   op->be_add_exceptions (disconnect_multiple);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -864,7 +899,12 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (
   op->set_name (op_full_name);
   op->set_defined_in (node);
   op->set_imported (node->imported ());
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -903,7 +943,12 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                   -1);
   arg_id.destroy ();
   push_op->be_add_argument (arg);
-  consumer->be_add_operation (push_op);
+
+  if (0 == consumer->be_add_operation (push_op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -955,7 +1000,12 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_component *node,
                                   0),
                   -1);
   op->be_add_exceptions (subscribe);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1006,7 +1056,12 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
                                   0),
                   -1);
   op->be_add_exceptions (unsubscribe);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1059,7 +1114,12 @@ be_visitor_ccm_pre_proc::gen_emits_connect (
                                   0),
                   -1);
   op->be_add_exceptions (emits_connect);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1102,7 +1162,12 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (
                                   0),
                   -1);
   op->be_add_exceptions (emits_disconnect);
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1139,7 +1204,12 @@ be_visitor_ccm_pre_proc::gen_get_consumer (
   op->set_name (op_name);
   op->set_defined_in (node);
   op->set_imported (node->imported ());
-  node->be_add_operation (op);
+
+  if (0 == node->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1196,7 +1266,12 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-  implicit->be_add_operation (op);
+
+  if (0 == implicit->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1247,7 +1322,12 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-  implicit->be_add_operation (op);
+
+  if (0 == implicit->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1298,7 +1378,12 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-  implicit->be_add_operation (op);
+
+  if (0 == implicit->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -1332,7 +1417,12 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
   op->be_add_argument (arg);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-  implicit->be_add_operation (op);
+
+  if (0 == implicit->be_add_operation (op))
+    {
+      return -1;
+    }
+
   return 0;
 }
 

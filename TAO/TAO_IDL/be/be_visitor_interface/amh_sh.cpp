@@ -377,7 +377,10 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
   // After having generated the operation we insert it into the
   // AMH node interface.
-  amh_node->be_add_operation (operation);
+  if (0 == amh_node->be_add_operation (operation))
+    {
+      return -1;
+    }
 
   return 0;
 }

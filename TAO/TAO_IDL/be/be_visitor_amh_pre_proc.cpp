@@ -83,10 +83,10 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   // interfaces, not because we want to generate code for them, but
   // because the (imported-AMH-) node could be needed to generate a
   // non-imported, AMH node, for example, for a derived interface.
-  
+
   // (JP) Havinq AMH_* nodes inherit directly from AMH_* base classes
   // is also a problem if the base interface is abstract, since at
-  // the moment, no AMH code is generated for such interfaces. It 
+  // the moment, no AMH code is generated for such interfaces. It
   // would be desirable to mimic the AMI design, where all AMI-related
   // classes inherit from a single base class, no matter what the
   // parentage of the IDL interface. Until we solve the problem of
@@ -107,7 +107,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
     this->create_exception_holder (node);
   excep_holder->set_defined_in (node->defined_in ());
   excep_holder->original_interface (node);
-  
+
   AST_Module *module =
     AST_Module::narrow_from_scope (node->defined_in ());
   module->set_has_nested_valuetype ();
@@ -155,7 +155,7 @@ be_visitor_amh_pre_proc::create_response_handler (
     dynamic_cast<UTL_ScopedName*> (node->name ()->copy ());
   Identifier *local_name = amh_name->last_component ();
   local_name->replace_string (class_name.c_str ());
-  
+
   UTL_Scope *s = node->defined_in ();
   idl_global->scopes ().push (s);
 
@@ -175,7 +175,7 @@ be_visitor_amh_pre_proc::create_response_handler (
                                 1,          // local
                                 0),         // non-abstract
                   0);
-                  
+
   idl_global->scopes ().pop ();
 
   response_handler->set_name (amh_name);
@@ -229,7 +229,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                 this->create_response_handler_attribute (attr,
                                                          response_handler,
                                                          exception_holder);
-                                                        
+
               if (status == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -250,7 +250,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                 this->create_response_handler_operation (operation,
                                                          response_handler,
                                                          exception_holder);
-                                                        
+
               if (status == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -319,12 +319,12 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
       delete gos;
       gos = 0;
     }
-    
+
   int status =
     this->create_response_handler_operation (get_operation,
                                              response_handler,
                                              exception_holder);
-                                             
+
   if (status == -1)
     {
       return -1;
@@ -334,7 +334,7 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
     {
       return 0;
     }
-    
+
   // Temporarily generate the set operation.
   be_operation *set_operation = this->generate_set_operation (node);
 
@@ -361,7 +361,7 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
     this->create_response_handler_operation (set_operation,
                                              response_handler,
                                              exception_holder);
-                                             
+
   if (status == -1)
     {
       return -1;
@@ -427,7 +427,11 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
   node_excep->be_add_argument (argument);
 
   node_excep->set_defined_in (response_handler);
-  response_handler->be_add_operation (node_excep);
+
+  if (0 == response_handler->be_add_operation (node_excep))
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -552,7 +556,10 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
   // After having generated the operation we insert it into the
   // response handler interface.
-  response_handler->be_add_operation (operation);
+  if (0 == response_handler->be_add_operation (operation))
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -600,7 +607,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_",
                         "ExceptionHolder");
-                        
+
   UTL_Scope *s = node->defined_in ();
   idl_global->scopes ().push (s);
 
@@ -619,7 +626,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                 0,
                                 0),
                   0);
-                  
+
   idl_global->scopes ().pop ();
 
   excep_holder->set_name (excep_holder_name);
@@ -788,7 +795,10 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   // After having generated the operation we insert it into the
   // exceptionholder valuetype.
-  excep_holder->be_add_operation (operation);
+  if (0 == excep_holder->be_add_operation (operation))
+    {
+      return -1;
+    }
 
   return 0;
 }
