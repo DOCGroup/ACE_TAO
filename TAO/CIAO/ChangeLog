@@ -1,3 +1,10 @@
+Thu Mar 16 16:31:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/CCM_Component.idl:
+
+          Added "omg.org" prefix to the recently added opening of the
+          CORBA module in this file.
+
 Tue Mar 14 10:10:58 UTC 2006  Nilabja Roy  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorController.h:
