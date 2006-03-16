@@ -60,14 +60,14 @@ namespace TAO
     public:
 
       /// Constructor.
-      TP_Strategy(unsigned long num_threads = 1,
+      TP_Strategy(Thread_Counter  num_threads = 1,
                   bool     serialize_servants = true);
 
       /// Virtual Destructor.
       virtual ~TP_Strategy();
 
       /// Set the number of threads in the pool (must be > 0).
-      void set_num_threads(unsigned int num_threads);
+      void set_num_threads(Thread_Counter num_threads);
 
       /// Turn on/off serialization of servants.
       void set_servant_serialization(bool serialize_servants);
@@ -186,7 +186,7 @@ namespace TAO
       TP_Task task_;
 
       /// The number of worker threads to use for the task.
-      unsigned long num_threads_;
+      Thread_Counter num_threads_;
 
       /// The "serialize servants" flag.
       bool serialize_servants_;

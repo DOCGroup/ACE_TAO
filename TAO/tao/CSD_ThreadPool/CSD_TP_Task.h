@@ -35,6 +35,8 @@ namespace TAO
 {
   namespace CSD
   {
+    /// Typedef for the number of threads.
+    typedef unsigned long Thread_Counter;
 
     /**
      * @class TP_Task
@@ -137,7 +139,7 @@ namespace TAO
       bool opened_;
 
       /// The number of currently active worker threads.
-      unsigned num_threads_;
+      Thread_Counter num_threads_;
 
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TP_Queue queue_;
