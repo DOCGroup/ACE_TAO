@@ -371,8 +371,8 @@ namespace ACE_Utils
     u_char cseqHAV;
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
-      uuid.clockSeqLow (static_cast<u_char> (uuid_state_.clockSequence) & 0xFF);
-      cseqHAV = (static_cast<u_char> (uuid_state_.clockSequence) & 0x3f00) >> 8;
+      uuid.clockSeqLow (static_cast<u_char> (uuid_state_.clockSequence & 0xFF));
+      cseqHAV = static_cast<u_char> ((uuid_state_.clockSequence & 0x3f00) >> 8);
       uuid_state_.timestamp = timestamp;
     }
 
