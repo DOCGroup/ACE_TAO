@@ -231,11 +231,12 @@ int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 {
   // Ptr to first buffer.
-  char *buf = (char *) stream.buffer ();
+  char * buf = (char *) stream.buffer ();
+
+  this->set_giop_flags (stream);
 
   // Length of all buffers.
-  size_t total_len =
-    stream.total_length ();
+  size_t const total_len = stream.total_length ();
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -856,34 +857,36 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
                                               TAO_OutputCDR &msg)
 {
   // Reset the message type
-  // Reset the message type
   msg.reset ();
 
   CORBA::Octet header[12] =
-  {
-    // The following works on non-ASCII platforms, such as MVS (which
-    // uses EBCDIC).
-    0x47, // 'G'
-    0x49, // 'I'
-    0x4f, // 'O'
-    0x50  // 'P'
-  };
+    {
+      // The following works on non-ASCII platforms, such as MVS (which
+      // uses EBCDIC).
+      0x47, // 'G'
+      0x49, // 'I'
+      0x4f, // 'O'
+      0x50  // 'P'
+    };
 
   CORBA::Octet major, minor = 0;
+
   msg.get_version (major, minor);
 
   header[4] = major;
   header[5] = minor;
 
-  // We are putting the byte order. But at a later date if we support
-  // fragmentation and when we want to use the other 6 bits in this
-  // octet we can have a virtual function do this for us as the
-  // version info , Bala
-  header[6] = (TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
+  // Set up flags octet, i.e. header[6].
+  this->giop_flags (header, msg); // Flags
 
-  header[7] = CORBA::Octet(type);
+  header[7] = CORBA::Octet (type);  // Message type
 
-  static int header_size = sizeof (header) / sizeof (header[0]);
+  static ACE_CDR::ULong const header_size =
+    sizeof (header) / sizeof (header[0]);
+
+  // Fragmentation should not occur at this point since there are only
+  // 12 bytes in the stream, and fragmentation may only occur when
+  // the stream length >= 16.
   msg.write_octet_array (header, header_size);
 
   return msg.good_bit ();
@@ -2058,6 +2061,26 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
 
   return 0;
 }
-  
+
+void
+TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
+{
+  CORBA::Octet const * const buf = msg.buffer ();
+
+  CORBA::Octet const & major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
+  CORBA::Octet const & minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
+
+  // Flags for the GIOP protocol header "flags" field.
+  CORBA::Octet & flags = buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET];
+
+  // Least significant bit:        Byte order
+  ACE_SET_BITS (flags, TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
+    
+  // Second least significant bit: More fragments
+  //
+  // Only supported in GIOP 1.1 or better.
+  if (!(major <= 1 && minor == 0))
+    ACE_SET_BITS (flags, msg.more_fragments () << 1);
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

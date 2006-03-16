@@ -140,10 +140,23 @@ public:
   static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
   static void throw_skel_exception (int error_num ACE_ENV_ARG_DECL);
 
+  /// Fragment this output CDR stream if necessary.
+  /**
+   * Fragmentation will done through GIOP fragments when the length of
+   * the CDR stream length will exceed the configured threshold.
+   */
+  bool do_stream_fragmentation (void);
+
 private:
-  /// disallow copying...
+
+  // disallow copying...
   TAO_OutputCDR (const TAO_OutputCDR& rhs);
   TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
+
+private:
+
+  //  TAO_Fragmentation_Strategy * fragmentation_strategy_;
+
 };
 
 /**

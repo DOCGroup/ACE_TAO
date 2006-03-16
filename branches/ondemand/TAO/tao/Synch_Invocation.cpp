@@ -91,7 +91,6 @@ namespace TAO
                             ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (

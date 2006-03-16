@@ -1,0 +1,15 @@
+        * tao/GIOP_Fragmentation_Strategy.{h,cpp}:
+        * tao/GIOP_Fragmentation_Strategy.{h,cpp}:
+        * tao/Null_Fragmentation_Strategy.{h,cpp}:
+        * tao/True_Fragmentation_Strategy.{h,cpp}:
+          New files
+
+        * tao/operation_details.cpp:
+          When marshaling the last argument put this information on the
+          cdr_stream
+
+        * tao/GIOP_Message_Base.cpp:
+          Some refactoring
+
+        * tao/CDR.{h,cpp,i}:
+          Call fragment_stream as part of the streaming calls

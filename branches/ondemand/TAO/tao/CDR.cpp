@@ -54,14 +54,14 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               size_t memcpy_tradeoff,
                               ACE_CDR::Octet major_version,
                               ACE_CDR::Octet minor_version)
-  :  ACE_OutputCDR (size,
-                    byte_order,
-                    buffer_allocator,
-                    data_block_allocator,
-                    message_block_allocator,
-                    memcpy_tradeoff,
-                    major_version,
-                    minor_version)
+  : ACE_OutputCDR (size,
+                   byte_order,
+                   buffer_allocator,
+                   data_block_allocator,
+                   message_block_allocator,
+                   memcpy_tradeoff,
+                   major_version,
+                   minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 }
@@ -75,15 +75,15 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                               size_t memcpy_tradeoff,
                               ACE_CDR::Octet major_version,
                               ACE_CDR::Octet minor_version)
-  :  ACE_OutputCDR (data,
-                    size,
-                    byte_order,
-                    buffer_allocator,
-                    data_block_allocator,
-                    message_block_allocator,
-                    memcpy_tradeoff,
-                    major_version,
-                    minor_version)
+  : ACE_OutputCDR (data,
+                   size,
+                   byte_order,
+                   buffer_allocator,
+                   data_block_allocator,
+                   message_block_allocator,
+                   memcpy_tradeoff,
+                   major_version,
+                   minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
 }
@@ -93,11 +93,11 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                               size_t memcpy_tradeoff,
                               ACE_CDR::Octet major_version,
                               ACE_CDR::Octet minor_version)
-  :  ACE_OutputCDR (data,
-                    byte_order,
-                    memcpy_tradeoff,
-                    major_version,
-                    minor_version)
+  : ACE_OutputCDR (data,
+                   byte_order,
+                   memcpy_tradeoff,
+                   major_version,
+                   minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
 }
@@ -112,15 +112,16 @@ TAO_OutputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
       break;
     case EINVAL : // wchar from a GIOP 1.0
       ACE_THROW (CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO));
-      ACE_NOTREACHED(break);
+      ACE_NOTREACHED (break);
 #if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
-      ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO));
-      ACE_NOTREACHED(break);
+      ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
+                                         CORBA::COMPLETED_NO));
+      ACE_NOTREACHED (break);
 #endif
     case EACCES : // wchar but no codeset
-      ACE_THROW(CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
-      ACE_NOTREACHED(break);
+      ACE_THROW (CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
+      ACE_NOTREACHED (break);
     default :
       ACE_THROW (CORBA::MARSHAL ());
     }
@@ -136,18 +137,18 @@ TAO_OutputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
 
     case EINVAL : // wchar from a GIOP 1.0
       ACE_THROW (CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_YES));
-      ACE_NOTREACHED(break);
+      ACE_NOTREACHED (break);
 
     case EACCES : // wchar but no codeset
       ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 23,
                                    CORBA::COMPLETED_YES));
-      ACE_NOTREACHED(break);
+      ACE_NOTREACHED (break);
 
 #if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
       ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
                                          CORBA::COMPLETED_YES));
-      ACE_NOTREACHED(break);
+      ACE_NOTREACHED (break);
 #endif
 
     default :
@@ -156,6 +157,35 @@ TAO_OutputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
     }
 }
 
+bool
+TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
+                                ACE_CDR::ULong pending_length)
+{
+  if (this->fragmentation_strategy_)
+    {
+      // Determine increase in CDR stream length if pending data is
+      // marshaled, taking into account the alignment for the given
+      // data type.
+      ACE_CDR::ULong const total_pending_length =
+        ACE_align_binary (this->total_length (), pending_alignment)
+        + pending_length;
+
+      // Fragmented GIOP messages must always be aligned on an 8-byte
+      // boundary.  Padding will be added if necessary.
+      ACE_CDR::ULong const aligned_length =
+        ACE_align_binary (total_pending_length % ACE_CDR::MAX_ALIGNMENT);
+
+      // this->max_message_size_ must be >= 16 bytes, i.e.:
+      //   12 for GIOP protocol header
+      //  + 4 for GIOP fragment header
+      //  + 4 for padding
+      // since fragments must be aligned on an 8 byte boundary.
+      if (aligned_length > this->max_message_size_)
+        return this->fragmentation_strategy_->fragment ();
+    }
+
+  return true;  // Success.
+}
 
 
 // ****************************************************************

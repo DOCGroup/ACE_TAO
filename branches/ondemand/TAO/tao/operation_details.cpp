@@ -56,8 +56,13 @@ TAO_Operation_Details::corba_exception (const char *id
 bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {
+  CORBA::ULong const last_arg = this->num_args_ - 1;
+
   for (CORBA::ULong i = 0; i != this->num_args_; ++i)
     {
+      if (i == last_arg)
+        cdr.no_pending_data (true);
+
       if (!((*this->args_[i]).marshal (cdr)))
         return false;
     }
