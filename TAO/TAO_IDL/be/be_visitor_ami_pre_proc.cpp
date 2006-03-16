@@ -841,7 +841,10 @@ be_visitor_ami_pre_proc::create_raise_operation (
 
   // After having generated the operation we insert it into the
   // exceptionholder valuetype.
-  excep_holder->be_add_operation (operation);
+  if (0 == excep_holder->be_add_operation (operation))
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -1174,7 +1177,10 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
 
   // After having generated the operation we insert it into the
   // reply handler interface.
-  reply_handler->be_add_operation (operation);
+  if (0 == reply_handler->be_add_operation (operation))
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -1278,7 +1284,10 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
 
   // After having generated the operation we insert it into the
   // reply handler interface.
-  reply_handler->be_add_operation (operation);
+  if (0 == reply_handler->be_add_operation (operation))
+    {
+      return -1;
+    }
 
   return 0;
 }
