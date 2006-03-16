@@ -213,12 +213,12 @@ CORBA::Object::_is_a (const char *type_id
   // XXX if type_id is that of CORBA::Object, "yes, we comply" :-)
 
   if (this->protocol_proxy_ == 0)
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
 
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (type_id,
                          this->_stubobj ()->type_id.in ()) == 0)
-    return 1;
+    return true;
 
   return this->proxy_broker ()->_is_a (this,
                                      type_id
@@ -298,7 +298,7 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj
 {
   if (other_obj == this)
     {
-      return 1;
+      return true;
     }
 
   TAO_OBJECT_IOR_EVALUATE_RETURN;
@@ -306,7 +306,7 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj
   if (this->protocol_proxy_ != 0)
     return this->protocol_proxy_->is_equivalent (other_obj);
 
-  return 0;
+  return false;
 }
 
 // TAO's extensions
@@ -725,17 +725,17 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
    TAO_Stub *stubobj = x->_stubobj ();
 
    if (stubobj == 0)
-     return 0;
+     return false;
 
   // STRING, a type ID hint
   if ((cdr << stubobj->type_id.in ()) == 0)
-    return 0;
+    return false;
 
   const TAO_MProfile& mprofile = stubobj->base_profiles ();
 
   CORBA::ULong profile_count = mprofile.profile_count ();
   if ((cdr << profile_count) == 0)
-    return 0;
+    return false;
 
   // @@ The MProfile should be locked during this iteration, is there
   // anyway to achieve that?
@@ -743,7 +743,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
     {
       const TAO_Profile* p = mprofile.get_profile (i);
       if (p->encode (cdr) == 0)
-        return 0;
+        return false;
     }
   return (CORBA::Boolean) cdr.good_bit ();
 }
