@@ -620,7 +620,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   -1);
   // Timer_Heap without preallocated memory.
   ACE_NEW_RETURN (tq_stack,
-                  Timer_Queue_Stack (new ACE_Timer_Heap (),
+                  Timer_Queue_Stack (new ACE_Timer_Heap,
                                      ACE_TEXT ("ACE_Timer_Heap (non-preallocated)"),
                                      tq_stack),
                   -1);
