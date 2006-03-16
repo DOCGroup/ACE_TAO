@@ -36,8 +36,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Containers_T.h"
 
-#include <iostream>
-
 ACE_RCSID(tests, Timer_Queue_Test, "$Id$")
 
 static void
