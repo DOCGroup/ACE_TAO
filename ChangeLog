@@ -1,3 +1,9 @@
+Thu Mar 16 12:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_DAnCE.doxygen:
+          Fixed incorrect links to the location of the documentation of the
+          other ACE/TAO libraries
+
 Thu Mar 16 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/index.html:
