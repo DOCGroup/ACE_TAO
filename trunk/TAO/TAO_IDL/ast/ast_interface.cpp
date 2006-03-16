@@ -155,10 +155,10 @@ AST_Interface::be_replace_operation (AST_Decl *old_op,
                             new_op);
 }
 
-void
+AST_Operation *
 AST_Interface::be_add_operation (AST_Operation *op)
 {
-  (void) this->fe_add_operation (op);
+  return this->fe_add_operation (op);
 }
 
 // Add an AST_Constant node (a constant declaration) to this scope.

@@ -109,7 +109,7 @@ public:
   ACE_Unbounded_Queue<AST_Interface *> &get_insert_queue (void);
   ACE_Unbounded_Queue<AST_Interface *> &get_del_queue (void);
 
-  void be_add_operation (AST_Operation *);
+  AST_Operation *be_add_operation (AST_Operation *);
 
   void be_replace_operation (AST_Decl *old_op,
                              AST_Decl *new_op);

@@ -1,3 +1,30 @@
+Thu Mar 16 22:20:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_interface.cpp (be_add_operation):
+        * TAO_IDL/include/ast_interface.h (be_add_operation):
+
+          Changed the return type from void to AST_Operation*,
+          the same type that is returned from the implementation's
+          delegation to the private method fe_add_operation. This
+          change allows an error in fe_add_operation (which will
+          return 0 and probably be the result of a name clash) to
+          get propagated up and be reflected in tao_idl's return
+          value.
+
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+
+          Changed usage of be_add_operation() to check the new
+          return type and return -1 if it is null. The IDL
+          compiler formerly would output a 'redefinition'
+          (name clash) diagnostic if a user operation name
+          clashed with an implied operation name of AMI or AMH,
+          and likewise if 2 ports of the same category in a
+          component had the same name. Now the IDL compiler
+          will also indicate failure when it exits.
+
 Thu Mar 16 20:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
