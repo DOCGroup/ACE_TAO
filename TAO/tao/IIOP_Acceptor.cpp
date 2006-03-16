@@ -989,7 +989,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
   CORBA::Octet major;
-  CORBA::Octet minor;
+  CORBA::Octet minor = CORBA::Octet();
 
   // Read the version. We just read it here. We don't*do any*
   // processing.

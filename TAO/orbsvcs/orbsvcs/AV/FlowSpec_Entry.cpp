@@ -381,7 +381,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                 }
             }
 
-          short control_port = ACE_OS::atoi(port_tokenizer[0]) + 1;
+          short control_port = static_cast<short> (ACE_OS::atoi(port_tokenizer[0])) + 1;
           char control_port_str[6];
           sprintf (control_port_str, "%d", control_port);
 

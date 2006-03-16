@@ -168,7 +168,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     return 0;
 
   ACE_NEW_RETURN (proxy,
-                  ACE_INET_Addr(proxy_port,proxy_host.c_str()),
+                  ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
                   0);
 
   session_id.peer_ = htiop_endpoint->object_addr ();

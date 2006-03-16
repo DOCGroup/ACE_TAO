@@ -737,7 +737,8 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
 
   // Read and verify major, minor versions, ignoring UIPMC profiles
   // whose versions we don't understand.
-  CORBA::Octet major, minor;
+  CORBA::Octet major;
+  CORBA::Octet minor = CORBA::Octet();
 
   // Read the version. We just read it here. We don't*do any*
   // processing.

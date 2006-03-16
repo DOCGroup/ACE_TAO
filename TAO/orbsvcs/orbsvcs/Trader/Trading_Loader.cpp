@@ -422,7 +422,7 @@ TAO_Trading_Loader::init_multicast_server (void)
         ACE_OS::getenv ("TradingServicePort");
 
       if (port_number != 0)
-        port = ACE_OS::atoi (port_number);
+        port = static_cast<u_short> (ACE_OS::atoi (port_number));
       else
         port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
     }

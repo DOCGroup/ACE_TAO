@@ -1252,7 +1252,7 @@ cat_octet_seq (const char *object_name,
     {
       char c = objKey[i];
       int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
-      if (ACE_OS::ace_isprint (tmp))
+      if (ACE_OS::ace_isprint (static_cast<ACE_TCHAR> (tmp)))
         ACE_DEBUG ((LM_DEBUG, "%c", c));
       else
         ACE_DEBUG ((LM_DEBUG, "."));
@@ -1465,7 +1465,8 @@ cat_profile_helper (TAO_InputCDR& stream,
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet iiop_version_major, iiop_version_minor;
+  CORBA::Octet iiop_version_major;
+  CORBA::Octet iiop_version_minor = CORBA::Octet();
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1556,7 +1557,8 @@ cat_uiop_profile (TAO_InputCDR& stream)
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet uiop_version_major, uiop_version_minor;
+  CORBA::Octet uiop_version_major;
+  CORBA::Octet uiop_version_minor = CORBA::Octet();
   // It appears that as of April 2002 UIOP version is 1.2
   if (! (str.read_octet (uiop_version_major)
          && uiop_version_major == 1
@@ -1618,7 +1620,8 @@ cat_sciop_profile (TAO_InputCDR& stream)
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet iiop_version_major, iiop_version_minor;
+  CORBA::Octet iiop_version_major;
+  CORBA::Octet iiop_version_minor = CORBA::Octet();
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1718,7 +1721,8 @@ cat_nsk_profile_helper (TAO_InputCDR& stream,
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet iiop_version_major, iiop_version_minor;
+  CORBA::Octet iiop_version_major;
+  CORBA::Octet iiop_version_minor = CORBA::Octet();
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)

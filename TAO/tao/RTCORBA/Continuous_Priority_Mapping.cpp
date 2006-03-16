@@ -47,7 +47,7 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
       current_native_priority = next_native_priority;
     }
 
-  native_priority = current_native_priority;
+  native_priority = static_cast<RTCORBA::NativePriority> (current_native_priority);
   return 1;
 
 #else

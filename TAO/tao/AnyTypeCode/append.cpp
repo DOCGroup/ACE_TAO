@@ -415,13 +415,13 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // Save the discriminator value in a temporary variable...
-  CORBA::Short short_v;
-  CORBA::UShort ushort_v;
-  CORBA::Long long_v;
-  CORBA::ULong ulong_v;
-  CORBA::ULong enum_v;
-  CORBA::Char char_v;
-  CORBA::WChar wchar_v;
+  CORBA::Short short_v = CORBA::Short();
+  CORBA::UShort ushort_v = CORBA::UShort();
+  CORBA::Long long_v = CORBA::Long();
+  CORBA::ULong ulong_v = CORBA::ULong();
+  CORBA::ULong enum_v = CORBA::ULong();
+  CORBA::Char char_v = CORBA::Char();
+  CORBA::WChar wchar_v = CORBA::WChar();
   CORBA::Boolean boolean_v = false;
 
   switch (kind)

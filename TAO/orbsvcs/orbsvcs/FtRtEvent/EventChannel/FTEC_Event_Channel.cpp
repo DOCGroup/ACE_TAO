@@ -212,7 +212,7 @@ TAO_FTEC_Event_Channel::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 RtecEventChannelAdmin::Observer_Handle
-TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr observer
+TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr
                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
@@ -223,11 +223,11 @@ TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr obs
   /// throw an exception for the moment
   ACE_THROW_RETURN(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(), 0);
 
-  return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
+  //return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
+TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle
                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
@@ -238,7 +238,7 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle 
   /// throw an exception for the moment
   ACE_THROW(RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER());
 
-  ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
+  //ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
 }
 
 

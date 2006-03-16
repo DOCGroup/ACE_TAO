@@ -99,7 +99,6 @@ ImR_Locator_Loader::run(void)
       return -1;
     }
   ACE_ENDTRY;
-  return 0;
 }
 
 

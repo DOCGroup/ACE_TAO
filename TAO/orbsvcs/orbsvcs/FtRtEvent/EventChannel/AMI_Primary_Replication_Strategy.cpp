@@ -108,7 +108,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
 {
    ACE_Auto_Event event;
    Update_Manager* manager = 0;
-   bool success;
+   bool success = false;
 
     FTRT::TransactionDepth transaction_depth =
       Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -434,8 +434,6 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       return CORBA::Object::_nil ();
     }
   ACE_ENDTRY;
-
-  return 0;
 }
 
 int

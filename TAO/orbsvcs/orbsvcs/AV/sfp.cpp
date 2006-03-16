@@ -496,7 +496,7 @@ TAO_SFP_Base::start_frame (CORBA::Octet flags,
   frame_header.magic_number [2] = 'F';
   frame_header.magic_number [3] = 'P';
   frame_header.flags = flags;
-  frame_header.message_type = type;
+  frame_header.message_type = static_cast<CORBA::Octet> (type);
   frame_header.message_size = 0;
   if (!(msg << frame_header))
     return 0;
