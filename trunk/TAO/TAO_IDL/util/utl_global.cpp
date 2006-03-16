@@ -1424,8 +1424,7 @@ IDL_GlobalData::check_gperf (void)
 #if defined (ACE_WIN32)
   // No wait or anything in Win32.
   return 0;
-#endif /* ACE_WIN32 */
-
+#else
   // Wait for gperf to complete.
   ACE_exitcode wait_status = 0;
   if (process.wait (&wait_status) == -1)
@@ -1463,6 +1462,7 @@ IDL_GlobalData::check_gperf (void)
           return -1;
         }
     }
+#endif /* ACE_WIN32 */
 }
 
 void

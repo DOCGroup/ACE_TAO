@@ -578,7 +578,7 @@ TAO_GOA::find_group_component (const CORBA::Object_ptr the_ref,
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
   slot = 0;
-  while ((profile = profiles.get_profile (slot)))
+  while (0 != (profile = profiles.get_profile (slot)))
     {
       if (this->find_group_component_in_profile (profile, group) == 0)
         return 0;
@@ -638,7 +638,7 @@ TAO_GOA::create_group_acceptors (CORBA::Object_ptr the_ref,
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
   slot = 0;
-  while ((profile = profiles.get_profile (slot)))
+  while (0 != (profile = profiles.get_profile (slot)))
     {
       if (profile->supports_multicast ())
         {

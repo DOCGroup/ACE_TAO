@@ -288,8 +288,6 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
-  return 0;
 }
 
 int
@@ -384,8 +382,6 @@ TAO_Log_Constraint_Visitor::visit_component_pos (TAO_ETCL_Component_Pos *pos)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
-  return 0;
 }
 
 int
@@ -523,8 +519,6 @@ TAO_Log_Constraint_Visitor::visit_component_array (
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
-  return 0;
 }
 
 int
@@ -598,8 +592,6 @@ TAO_Log_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
-  return 0;
 }
 
 int
@@ -696,8 +688,6 @@ TAO_Log_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
-  return 0;
 }
 
 int
@@ -1293,8 +1283,6 @@ TAO_Log_Constraint_Visitor::union_does_contain (
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-
-  return 0;
 }
 
 CORBA::Boolean

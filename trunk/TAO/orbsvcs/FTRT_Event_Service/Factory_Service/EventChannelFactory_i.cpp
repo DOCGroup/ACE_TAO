@@ -178,7 +178,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   char ior[5000] = {'0'};
   int n = 0;
   int byteRead=0;
-  while ((n = stream.recv(ior+byteRead, 5000-byteRead)))  {
+  while (0 != (n = stream.recv(ior+byteRead, 5000-byteRead)))  {
     byteRead += n;
   }
 

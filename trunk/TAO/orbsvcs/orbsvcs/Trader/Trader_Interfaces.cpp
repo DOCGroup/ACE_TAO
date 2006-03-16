@@ -365,9 +365,9 @@ fill_receptacles (const char* /* type */,
 {
   // BEGIN SPEC
   // The returned offers are passed back in one of two ways (or a
-  // combination of both). ° The "offers" return result conveys a list
+  // combination of both). ?The "offers" return result conveys a list
   // of offers and the "offer_itr" is a reference to an interface at
-  // which offers can be obtained. ° The "how_many" parameter states
+  // which offers can be obtained. ?The "how_many" parameter states
   // how many offers are to be returned via the "offers" result, any
   // remaining offers are available via the iterator interface. If the
   // "how_many" exceeds the number of offers to be returned, then the
@@ -1356,10 +1356,10 @@ TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem (ACE_ENV_SINGLE_ARG_D
   // prefix. The sequence number is four octets long, the unique
   // prefix, also 4 bytes long.
 
-  this->stem_id_[8] = this->sequence_number_ & 0xff;
-  this->stem_id_[9] = (this->sequence_number_ >> 8) & 0xff;
-  this->stem_id_[10] = (this->sequence_number_ >> 16) & 0xff;
-  this->stem_id_[11] = (this->sequence_number_ >> 24) & 0xff;
+  this->stem_id_[8] = static_cast<CORBA::Octet> (this->sequence_number_ & 0xff);
+  this->stem_id_[9] = static_cast<CORBA::Octet> ((this->sequence_number_ >> 8) & 0xff);
+  this->stem_id_[10] = static_cast<CORBA::Octet> ((this->sequence_number_ >> 16) & 0xff);
+  this->stem_id_[11] = static_cast<CORBA::Octet> ((this->sequence_number_ >> 24) & 0xff);
 
   // Increment the sequence number and return a copy of the stem_id.
   this->sequence_number_++;
@@ -1891,7 +1891,7 @@ export_proxy (CosTrading::Lookup_ptr,
 {
   ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
-  return 0;
+  //return 0;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1919,7 +1919,7 @@ describe_proxy (const char *
 {
   ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
-  return 0;
+  //return 0;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

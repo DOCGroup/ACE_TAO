@@ -340,8 +340,6 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
     return -1;
   }
   ACE_ENDTRY;
-
-  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -434,8 +432,6 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
     return -1;
   }
   ACE_ENDTRY;
-
-  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -581,8 +577,6 @@ TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *
     return -1;
   }
   ACE_ENDTRY;
-
-  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -681,8 +675,6 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
     return -1;
   }
   ACE_ENDTRY;
-
-  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -833,8 +825,6 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
     return -1;
   }
   ACE_ENDTRY;
-
-  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -1414,8 +1404,6 @@ TAO_Notify_Constraint_Visitor::union_does_contain (const CORBA::Any *any,
     return 0;
   }
   ACE_ENDTRY;
-
-  ACE_NOTREACHED (return 0);
 }
 
 CORBA::Boolean
