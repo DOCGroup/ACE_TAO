@@ -318,7 +318,7 @@ namespace CIAO
                               bool is_getting_all_connections = true,
                               bool is_search_new_plan = true,
                               Connection_Search_Type t = Internal_Connections
-			                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// This is a helper function to find the connection for a component.
     bool
@@ -326,7 +326,15 @@ namespace CIAO
                                 Deployment::Connections & retv,
                                 bool is_ReDAC,
                                 bool is_search_new_plan
-				                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((Deployment::StartError));
+
+    bool
+    populate_connection_for_binding (
+        const char * instname,
+        const Deployment::PlanConnectionDescription & curr_conn,
+        const Deployment::DeploymentPlan & plan,
+        Deployment::Connections & retv)
       ACE_THROW_SPEC ((Deployment::StartError));
 
     /// Dump connections, a static method
@@ -340,6 +348,25 @@ namespace CIAO
     subtract_connections (const Deployment::Connections & left,
                           const Deployment::Connections & right);
 
+    /**
+     * The first step in finish_launching an application in the
+     * domain-level.  We install all the CIAO_Event_Service objects
+     * as specified in the DeploymentPlan.
+     * Internally, this operation will invoke an operation on each cached
+     * NodeApplication object.
+     */
+    virtual void install_all_es (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
+    /**
+     * Add all CIAO_Event_Service objects into the cached map.
+     */
+    virtual void
+    add_es_to_map (Deployment::ESInstallationInfos * es_infos,
+                   Deployment::CIAO_Event_Services * event_services)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
   protected:
     /// location of the Domainapplication
     CORBA::String_var domainapp_path_;
@@ -393,6 +420,18 @@ namespace CIAO
                                     ACE_Null_Mutex> Chained_Artifacts_Table;
 
     Chained_Artifacts_Table artifact_map_;
+
+    /// Cached information of all the CIAO_Event_Service objects within
+    /// the deployment plan
+    /// Key: the string identifier of the CIAO_Event_Service
+    /// Value: the object reference of the CIAO_Event_Service
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    CIAO::CIAO_Event_Service_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> Event_Service_Table;
+
+    Event_Service_Table es_map_;
 
     /// The deployment information data file.
     const char * deployment_file_;

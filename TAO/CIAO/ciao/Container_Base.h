@@ -9,6 +9,7 @@
  *  Header file for CIAO's container implementations
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Gan Deng <dengg@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -28,7 +29,6 @@
 #include "tao/ORB.h"
 
 #include "ace/Hash_Map_Manager_T.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -118,6 +118,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   protected:
+    /// Reference to the ORB
     CORBA::ORB_var orb_;
 
     /// POA within which all the components in this container will be
@@ -131,6 +132,7 @@ namespace CIAO
      * are distinct from the component.
      */
     PortableServer::POA_var facet_cons_poa_;
+
     PortableServer::POA_var home_servant_poa_;
     Container_Impl *container_impl_;
   private:

@@ -76,10 +76,10 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
   sharedname   =  CIAO_Deployment_stub
   after        += CIAO_DnC_Client
 
-  libs += CIAO_DnC_Client
+  libs += CIAO_DnC_Client CIAO_DnC_Events
 
   // This is necessary for MPC to pull in rules.ciao.GNU
-  includes += $(CIAO_ROOT)/DAnCE
+  includes += $(CIAO_ROOT)/DAnCE $(CIAO_ROOT)
 
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
@@ -127,14 +127,14 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
   after        += Deployment_stub
   sharedname   =  CIAO_Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
-  libs         += CIAO_Deployment_stub CIAO_DnC_Client
+  libs         += CIAO_Deployment_stub CIAO_DnC_Client CIAO_DnC_Events
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
   idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
   idlflags     += -Wb,skel_export_include=Deployment_svnt_export.h
 
   // This is necessary for MPC to pull in rules.ciao.GNU
-  includes += $(CIAO_ROOT)/DAnCE
+  includes += $(CIAO_ROOT)/DAnCE $(CIAO_ROOT)
 
   IDL_Files {
   }
