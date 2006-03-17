@@ -157,7 +157,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // this thread.
   ACE_TP_Token_Guard guard (this->token_);
 
-  int result = guard.acquire_read_token (max_wait_time);
+  int const result = guard.acquire_read_token (max_wait_time);
 
   // If the guard is NOT the owner just return the retval
   if (!guard.is_owner ())
@@ -454,7 +454,7 @@ ACE_TP_Reactor::handle_notify_events (int & /*event_count*/,
         }
     }
 
-  // If we did ssome work, then we just return 1 which will allow us
+  // If we did some work, then we just return 1 which will allow us
   // to get out of here. If we return 0, then we will be asked to do
   // some work ie. dispacth socket events
   return result;
@@ -486,18 +486,9 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
     if (this->suspend_i (dispatch_info.handle_) == -1)
       return 0;
 
-  int resume_flag =
-    dispatch_info.event_handler_->resume_handler ();
-
-  int reference_counting_required =
-    dispatch_info.event_handler_->reference_counting_policy ().value () ==
-    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
   // Call add_reference() if needed.
-  if (reference_counting_required)
-    {
-      dispatch_info.event_handler_->add_reference ();
-    }
+  if (dispatch_info.reference_counting_required_)
+    dispatch_info.event_handler_->add_reference ();
 
   // Release the lock.  Others threads can start waiting.
   guard.release_token ();
@@ -511,17 +502,6 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   // Dispatched an event
   if (this->dispatch_socket_event (dispatch_info) == 0)
     ++result;
-
-  // Resume handler if required.
-  if (dispatch_info.event_handler_ != this->notify_handler_ &&
-      resume_flag == ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
-    this->resume_handler (dispatch_info.handle_);
-
-  // Call remove_reference() if needed.
-  if (reference_counting_required)
-    {
-      dispatch_info.event_handler_->remove_reference ();
-    }
 
   return result;
 }
@@ -558,9 +538,6 @@ ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
 int
 ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
 {
-  // Nothing to dispatch yet
-  event.reset ();
-
   // Check for dispatch in write, except, read. Only catch one, but if
   // one is caught, be sure to clear the handle from each mask in case
   // there is more than one mask set for it. This would cause problems
@@ -634,18 +611,16 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
   return found_io;
 }
 
-
-
 // Dispatches a single event handler
 int
 ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
 {
   ACE_TRACE ("ACE_TP_Reactor::dispatch_socket_event");
 
-  ACE_HANDLE handle = dispatch_info.handle_;
-  ACE_Event_Handler *event_handler = dispatch_info.event_handler_;
-  ACE_Reactor_Mask mask = dispatch_info.mask_;
-  ACE_EH_PTMF callback = dispatch_info.callback_;
+  ACE_HANDLE const handle = dispatch_info.handle_;
+  ACE_Event_Handler * const event_handler = dispatch_info.event_handler_;
+  ACE_Reactor_Mask const mask = dispatch_info.mask_;
+  ACE_EH_PTMF const callback = dispatch_info.callback_;
 
   // Check for removed handlers.
   if (event_handler == 0)
@@ -660,17 +635,42 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
   while (status > 0)
     status = (event_handler->*callback) (handle);
 
-  // If negative, remove from Reactor
+  // Post process socket event
+  return this->post_process_socket_event (dispatch_info, status);
+}
+
+int
+ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
+                                           int status)
+{
+  // Get the reactor token and with this token acquired remove first the
+  // handler and resume it at the same time. This must be atomic, see also
+  // bugzilla 2395. When this is not atomic it can be that we resume the
+  // handle after it is reused by the OS.
+  ACE_TP_Token_Guard guard (this->token_);
+
+  int result = guard.acquire_token ();
+
+  // If the guard is NOT the owner just return the retval
+  if (!guard.is_owner ())
+    return result;
+
   if (status < 0)
     {
-      int retval =
-        this->remove_handler (handle, mask);
-
-      return retval;
+      result =
+        this->remove_handler_i (dispatch_info.handle_, dispatch_info.mask_);
     }
 
-  // assert (status >= 0);
-  return 0;
+  // Resume handler if required.
+  if (dispatch_info.event_handler_ != this->notify_handler_ &&
+      dispatch_info.resume_flag_ == ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
+    this->resume_i (dispatch_info.handle_);
+
+  // Call remove_reference() if needed.
+  if (dispatch_info.reference_counting_required_)
+    dispatch_info.event_handler_->remove_reference ();
+
+  return result;
 }
 
 int
@@ -705,7 +705,7 @@ ACE_TP_Reactor::get_notify_handle (void)
 {
   // Call the notify handler to get a handle on which we would have a
   // notify waiting
-  ACE_HANDLE read_handle =
+  ACE_HANDLE const read_handle =
     this->notify_handler_->notify_handle ();
 
   // Check whether the rd_mask has been set on that handle. If so
@@ -715,17 +715,6 @@ ACE_TP_Reactor::get_notify_handle (void)
     {
       return read_handle;
     }
-    /*if (read_handle != ACE_INVALID_HANDLE)
-    {
-      ACE_Handle_Set_Iterator handle_iter (this->ready_set_.rd_mask_);
-      ACE_HANDLE handle = ACE_INVALID_HANDLE;
-
-      while ((handle = handle_iter ()) == read_handle)
-        {
-          return read_handle;
-        }
-      ACE_UNUSED_ARG (handle);
-      }*/
 
   // None found..
   return ACE_INVALID_HANDLE;

@@ -49,7 +49,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_EH_Dispatch_Info
 {
 public:
-
   ACE_EH_Dispatch_Info (void);
 
   void set (ACE_HANDLE handle,
@@ -57,18 +56,18 @@ public:
             ACE_Reactor_Mask mask,
             ACE_EH_PTMF callback);
 
-  void reset (void);
-
-  int dispatch (void) const;
+  bool dispatch (void) const;
 
   ACE_HANDLE handle_;
   ACE_Event_Handler *event_handler_;
   ACE_Reactor_Mask mask_;
   ACE_EH_PTMF callback_;
-
-  int dispatch_;
+  int resume_flag_;
+  bool reference_counting_required_;
 
 private:
+  bool dispatch_;
+
   // Disallow copying and assignment.
   ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &);
   ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &);
@@ -157,7 +156,9 @@ private:
  * that just got activated, releasing the internal lock (so that some
  * other thread can start waiting in the event loop) and then
  * dispatching the event handler outside the context of the Reactor
- * lock.
+ * lock. After the event handler has been dispatched the event handler is
+ * resumed again. Don't call remove_handler() from the handle_x methods,
+ * instead return -1.
  *
  * This Reactor is best suited for situations when the callbacks to
  * event handlers can take arbitrarily long and/or a number of threads
@@ -349,6 +350,8 @@ private:
 
   /// Clear the @a handle from the read_set
   void clear_handle_read_set (ACE_HANDLE handle);
+
+  int post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,int status);
 
 private:
   /// Deny access since member-wise won't work...
