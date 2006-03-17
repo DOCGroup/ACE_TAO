@@ -1,3 +1,8 @@
+Fri Mar 17 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TP_Reactor.cpp:
+          Fixed variable not used warning
+
 Fri Mar 17 08:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.{h,cpp,inl}:
