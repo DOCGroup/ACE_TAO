@@ -13,7 +13,7 @@ Fri Mar 17 15:50:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 Fri Mar 17 13:38:18 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
-        
+
           New file, containing cidl-related stuff removed from
           ciao_servant_dnc.mpb, which now inherits from the new
           base project. These changes allow CIAO applications
@@ -23,9 +23,9 @@ Fri Mar 17 13:38:18 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           C++ compiler on all the results, or to have separate
           builds for CIDL files (which executes first), then
           IDL files, then generated and hand-written C++ files.
-          
+
         * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
-        
+
           Changes described in the item above.
 
 Fri Mar 17 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
