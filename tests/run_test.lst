@@ -23,7 +23,7 @@ Atomic_Op_Test
 Auto_Event_Test
 Auto_IncDec_Test: !DISABLE_ToFix_LynxOS_PPC
 Barrier_Test: !DISABLE_ToFix_LynxOS_PPC
-Based_Pointer_Test: !STATIC !VxWorks !ACE_FOR_TAO
+Based_Pointer_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !VxWorks !ACE_FOR_TAO
 Basic_Types_Test
 Bound_Ptr_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 Buffer_Stream_Test: !DISABLE_ToFix_LynxOS_PPC
@@ -61,15 +61,15 @@ INET_Addr_Test
 IOStream_Test
 Lazy_Map_Manager_Test
 Log_Msg_Test: !LynxOS !ACE_FOR_TAO
-Logging_Strategy_Test: !STATIC !ST
+Logging_Strategy_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !ST
 Manual_Event_Test: !DISABLE_ToFix_LynxOS_PPC
 MEM_Stream_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !VxWorks !nsk !ACE_FOR_TAO
 MM_Shared_Memory_Test: !chorus !Unicos !VxWorks !nsk !ACE_FOR_TAO
-MT_Reactor_Timer_Test
+MT_Reactor_Timer_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 MT_Reactor_Upcall_Test: !DISABLE_ToFix_LynxOS_PPC !nsk
-MT_Reference_Counted_Event_Handler_Test: !DISABLE_ToFix_LynxOS_PPC
+MT_Reference_Counted_Event_Handler_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 MT_Reference_Counted_Notify_Test: !DISABLE_ToFix_LynxOS_PPC
-MT_SOCK_Test: !DISABLE_ToFix_LynxOS_PPC !chorus
+MT_SOCK_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !chorus
 Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO
 Map_Manager_Test: !ACE_FOR_TAO
 Map_Test: !ACE_FOR_TAO
@@ -122,13 +122,13 @@ SOCK_Send_Recv_Test
 SOCK_Test: !chorus
 SPIPE_Test: !VxWorks !nsk !ACE_FOR_TAO
 SString_Test: !ACE_FOR_TAO
-SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
+SV_Shared_Memory_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC
 Sigset_Ops_Test
 Simple_Message_Block_Test: !chorus
 Svc_Handler_Test: !ACE_FOR_TAO
-TP_Reactor_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
+TP_Reactor_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TSS_Test: !DISABLE_ToFix_LynxOS_PPC
 TSS_Static_Test
 Task_Test: !DISABLE_ToFix_LynxOS_PPC
