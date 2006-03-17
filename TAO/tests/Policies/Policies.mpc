@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(Policies Manipulation): taoexe, portableserver, messaging {
-  exename   = Manipulation
-  requires += corba_messaging
-}
