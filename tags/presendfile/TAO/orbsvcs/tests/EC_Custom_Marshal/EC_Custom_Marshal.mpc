@@ -1,0 +1,39 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): rteventexe, rtsched, naming, iortable, messaging {
+
+  IDL_Files {
+    data.idl
+  }
+
+  custom_only = 1
+}
+
+project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging {
+  avoids  += ace_for_tao
+  exename  = ECM_Supplier
+  Source_Files {
+    ECM_Data.cpp
+    ECM_Supplier.cpp
+    dataS.cpp
+    dataC.cpp
+  }
+
+  after += *IDL
+  IDL_Files {
+  }
+}
+
+project(ECM Consumer): rteventexe, rtsched, naming, iortable, messaging {
+  exename  = ECM_Consumer
+  Source_Files {
+    ECM_Data.cpp
+    ECM_Consumer.cpp
+    dataC.cpp
+  }
+
+  after += *IDL
+  IDL_Files {
+  }
+}
