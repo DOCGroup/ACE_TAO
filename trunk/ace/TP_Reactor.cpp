@@ -617,9 +617,7 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
 {
   ACE_TRACE ("ACE_TP_Reactor::dispatch_socket_event");
 
-  ACE_HANDLE const handle = dispatch_info.handle_;
   ACE_Event_Handler * const event_handler = dispatch_info.event_handler_;
-  ACE_Reactor_Mask const mask = dispatch_info.mask_;
   ACE_EH_PTMF const callback = dispatch_info.callback_;
 
   // Check for removed handlers.
@@ -633,7 +631,7 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
   // handling other things.
   int status = 1;
   while (status > 0)
-    status = (event_handler->*callback) (handle);
+    status = (event_handler->*callback) (dispatch_info.handle_);
 
   // Post process socket event
   return this->post_process_socket_event (dispatch_info, status);
