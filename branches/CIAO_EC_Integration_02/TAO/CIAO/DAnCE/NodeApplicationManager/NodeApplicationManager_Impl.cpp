@@ -2,6 +2,8 @@
 
 #include "NodeApplicationManager_Impl.h"
 #include "ace/Process.h"
+#include "ace/Process_Manager.h"
+#include "ace/Reactor.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Vector_T.h"
 #include "ciao/Container_Base.h"
@@ -759,8 +761,10 @@ create_node_application (const ACE_CString & options
                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Deployment::NodeApplication::_nil());
 
-  ACE_Process node_application;
   ACE_Process_Options p_options;
+  ACE_Process_Manager process_manager;
+
+  process_manager.open (10, ACE_Reactor::instance ());
 
   ACE_TRY
     {
@@ -788,7 +792,7 @@ create_node_application (const ACE_CString & options
 
       p_options.avoid_zombies (1);
 
-      if (node_application.spawn (p_options) == -1)
+      if (process_manager.spawn (p_options) == -1)
         {
           if (CIAO::debug_level () > 1)
             {
@@ -807,8 +811,7 @@ create_node_application (const ACE_CString & options
 
       // wait for nodeApp to pass back its object reference. with a
       // timeout value. using perform_work and stuff.
-
-      int looping = 1;
+      bool looping = true;
 
       ACE_Time_Value timeout (this->spawn_delay_, 0);
 
@@ -821,7 +824,7 @@ create_node_application (const ACE_CString & options
           retval = callback_servant->get_nodeapp_ref ();
 
           if (timeout == ACE_Time_Value::zero || !CORBA::is_nil (retval.in ()))
-            looping = 0;
+            looping = false;
         }
 
       if (CORBA::is_nil (retval.in ()))
