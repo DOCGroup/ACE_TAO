@@ -1,4 +1,57 @@
-        * tao/GIOP_Fragmentation_Strategy.{h,cpp}:
+Fri Mar 17 10:59:02 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resource_Factory.h:
+          Added missing include of Basic_Types and added forward declarations
+
+        * tao/On_Demand_Fragmentation_Strategy.h:
+          Fixed copy constructor/assignment operators
+
+        * tao/CDR.h:
+          Removed do_fragmentation method, there is no implementation, added
+          fragment_stream
+
+        * tao/CDR.i:
+          Fixed typo
+
+        * tao/default_resource.cpp:
+          Added missing includes and updated signature of
+          create_fragmentation_strategy to match header file
+
+Fri Mar 17 07:48:02 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Updated code after update from Ossama Othman
+
+        * tao/On_Demand_Fragmentation_Strategy.{h,cpp}:
+          New files
+
+        * tao/default_resource.{h,cpp}:
+          Added create_fragmentation_strategy
+
+        * tao/GIOP_Fragmentation_Strategy.h:
+          Doxygen improvements
+
+        * tao/Resource_Factory.h:
+          Added pure virtual fragmentation_strategy method
+
+        * tao/ORB_Core.{h,cpp}:
+          Added fragmentation_strategy accessor method
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+          Added TAO_Transport to the constructor arguments
+
+        * tao/GIOP_Message_Base.cpp:
+          Added come comments
+
+        * tao/True_Fragmentation_Strategy.{h,cpp}:
+          Removed again, replaced by On_Demand so far as I can tell
+
+        * tao/tao.mpc:
+          Added new files
+
+Thu Mar 16 07:48:02 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Integrated first set of code from Ossama Othman
+
         * tao/GIOP_Fragmentation_Strategy.{h,cpp}:
         * tao/Null_Fragmentation_Strategy.{h,cpp}:
         * tao/True_Fragmentation_Strategy.{h,cpp}:
