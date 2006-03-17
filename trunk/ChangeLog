@@ -1,3 +1,19 @@
+Fri Mar 17 08:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TP_Reactor.{h,cpp,inl}:
+          Fixed bugzilla #2395. This was about a race condition in the
+          TP_Reactor, when the handle_x method returns -1 the handler
+          is removed and after that we try to resume. Normally this resume
+          is a noop because for the handle there is no event handler anymore.
+          But to resume the handle we need to reacquire the lock on the
+          reactor, in the time between the remove and the reacquire we could
+          have received a new connection for which the handle is used which
+          we already freed and then we can resume this handle but then for
+          a new eventhandler. The fix is to do the remove and resume as atomic
+          operation. Thanks to Bala Natarajan and Steve Huston for reviewing
+          the patches and Kees van Marle for debugging and analyzing this
+          problem.
+
 Thu Mar 16 21:54:29 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Heap_T.cpp (grow_heap): Reset timer_ids_min_free_ after
