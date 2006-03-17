@@ -66,6 +66,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     FILE_Parser.cpp
     FloatSeqC.cpp
     Flushing_Strategy.cpp
+    GIOP_Fragmentation_Strategy.cpp
     GIOP_Message_Base.cpp
     GIOP_Message_Generator_Parser.cpp
     GIOP_Message_Generator_Parser_10.cpp
@@ -127,6 +128,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Muxed_TMS.cpp
     New_Leader_Generator.cpp
     NVList_Adapter.cpp
+    Null_Fragmentation_Strategy.cpp
     Object.cpp
     Object_KeyC.cpp
     Object_Loader.cpp
@@ -135,6 +137,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ObjectIdListC.cpp
     ObjectKey_Table.cpp
     OctetSeqC.cpp
+    On_Demand_Fragmentation_Strategy.cpp
     operation_details.cpp
     ORB.cpp
     ORBInitializer_Registry.cpp

@@ -215,7 +215,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
 
           return -1;
         }
-    } 
+    }
   ACE_CATCHANY
     {
       if (TAO_debug_level > 4)
@@ -303,7 +303,7 @@ TAO_GIOP_Message_Base::message_type (
 
     case TAO_GIOP_LOCATEREPLY:
       return TAO_PLUGGABLE_MESSAGE_LOCATEREPLY;
- 
+
     case TAO_GIOP_REPLY:
       return TAO_PLUGGABLE_MESSAGE_REPLY;
 
@@ -347,10 +347,10 @@ TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
   if (incoming.length () < TAO_GIOP_MESSAGE_HEADER_LEN)
     {
       qd.missing_data_ = TAO_MISSING_DATA_UNDEFINED;
-      
-      return 0; /* incomplete header */ 
+
+      return 0; /* incomplete header */
     }
-  else 
+  else
     {
       TAO_GIOP_Message_State state;
 
@@ -359,23 +359,23 @@ TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
           return -1;
         }
 
-      const size_t message_size = state.message_size (); /* Header + Payload */ 
-  
+      const size_t message_size = state.message_size (); /* Header + Payload */
+
       if (message_size > incoming.length ())
         {
           qd.missing_data_ = message_size - incoming.length ();
         }
-      else 
+      else
         {
           qd.missing_data_ = 0;
         }
 
-      /* init out-parameters */      
+      /* init out-parameters */
       this->init_queued_data (&qd, state);
-      mesg_length  = TAO_GIOP_MESSAGE_HEADER_LEN 
+      mesg_length  = TAO_GIOP_MESSAGE_HEADER_LEN
                    + state.payload_size ();
-      
-      return 1; /* complete header */ 
+
+      return 1; /* complete header */
     }
 }
 
@@ -455,7 +455,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
       qd->missing_data_ = copying_len - incoming.length ();
       copying_len = incoming.length ();
     }
-  else 
+  else
     {
       qd->missing_data_ = 0;
     }
@@ -482,11 +482,11 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
         qd->msg_block_->length ();
 
       // paranoid check
-      if (len >= TAO_GIOP_MESSAGE_HEADER_LEN) 
+      if (len >= TAO_GIOP_MESSAGE_HEADER_LEN)
         {
           // inconsistency - this code should have parsed the header
           // so far
-          return -1;          
+          return -1;
         }
 
       // We know that we would have space for
@@ -497,15 +497,15 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       const size_t n_copy        = ace_min (available, desired);
 
       // paranoid check, but would cause endless looping
-      if (n_copy == 0) 
+      if (n_copy == 0)
         {
-          return -1; 
+          return -1;
         }
 
       if (qd->msg_block_->copy (incoming.rd_ptr (),
-                                n_copy) == -1) 
+                                n_copy) == -1)
         {
-           return -1;          
+           return -1;
         }
 
       // Move the rd_ptr () in the incoming message block..
@@ -514,7 +514,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       // verify sufficient data to parse GIOP header
       if (qd->msg_block_->length () < TAO_GIOP_MESSAGE_HEADER_LEN)
         {
-          return 0; /* continue */  
+          return 0; /* continue */
         }
 
       TAO_GIOP_Message_State state;
@@ -533,7 +533,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       // Now grow the message block so that we can copy the rest of
       // the data, the message_block must be able to hold complete message
        if (ACE_CDR::grow (qd->msg_block_,
-                          state.message_size ()) == -1)  /* GIOP_Header + Payload */ 
+                          state.message_size ()) == -1)  /* GIOP_Header + Payload */
          {
            // on mem-error get rid of context silently, try to avoid
            // system calls that might allocate additional memory
@@ -587,10 +587,10 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
           copy_len = incoming.length ();
         }
 
-      // paranoid check for  endless-event-looping 
-      if (copy_len == 0) 
+      // paranoid check for  endless-event-looping
+      if (copy_len == 0)
         {
-          return -1; 
+          return -1;
         }
 
       // Copy the right amount of data in to the node...
@@ -873,13 +873,16 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
 
   CORBA::Octet major, minor = 0;
 
-  msg.get_version (major, minor);
+  (void) msg.get_version (major, minor);
 
   header[4] = major;
   header[5] = minor;
 
   // Set up flags octet, i.e. header[6].
   this->giop_flags (header, msg); // Flags
+
+  // "flags" octet, i.e. header[6] will be set up later when message
+  // is formatted by the transport.
 
   header[7] = CORBA::Octet (type);  // Message type
 
@@ -1629,7 +1632,7 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 
   if (qd == 0)
     {
-      if (TAO_debug_level > 0) 
+      if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::make_queued_data, ")
@@ -1653,7 +1656,7 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
     {
       TAO_Queued_Data::release (qd);
 
-      if (TAO_debug_level > 0) 
+      if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::make_queued_data, ")
@@ -1688,7 +1691,7 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
       TAO_Queued_Data::release (qd);
       db->release();
 
-      if (TAO_debug_level > 0) 
+      if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::make_queued_data, ")
@@ -1737,7 +1740,7 @@ TAO_GIOP_Message_Base::init_queued_data (
 }
 
 int
-TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const 
+TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const
 {
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
@@ -1794,12 +1797,12 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong
   if (qd->major_version_ >= 1 &&
       (qd->minor_version_ == 0 || qd->minor_version_ == 1))
     {
-      if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REQUEST || 
-          qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REPLY) 
+      if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REQUEST ||
+          qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REPLY)
         {
           IOP::ServiceContextList service_context;
 
-          if ( ! (input_cdr >> service_context && 
+          if ( ! (input_cdr >> service_context &&
                   input_cdr >> request_id) )
             {
               return -1;
@@ -1808,11 +1811,11 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong
           return 0;
         }
       else if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_CANCELREQUEST ||
-               qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST || 
+               qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST ||
                qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
         {
           if ( ! (input_cdr >> request_id) )
-            {          
+            {
               return -1;
             }
 
@@ -1823,19 +1826,19 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong
           return -1;
         }
     }
-  else 
-    { 
-      if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REQUEST  || 
+  else
+    {
+      if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REQUEST  ||
           qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_REPLY    ||
           qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT ||
           qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_CANCELREQUEST ||
-          qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST || 
+          qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST ||
           qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
         {
-          // Dealing with GIOP-1.2, the request-id is located directly behind the GIOP-Header. 
+          // Dealing with GIOP-1.2, the request-id is located directly behind the GIOP-Header.
           // This is true for all message types that might be sent in form of fragments or cancel-requests.
           if ( ! (input_cdr >> request_id) )
-            {          
+            {
               return -1;
             }
 
@@ -1850,8 +1853,8 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong
   return -1;
 }
 
-/* @return -1 error, 0 ok, +1 outstanding fragments */ 
-int 
+/* @return -1 error, 0 ok, +1 outstanding fragments */
+int
 TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_Queued_Data *&msg)
 {
   TAO::Incoming_Message_Stack reverse_stack;
@@ -1861,12 +1864,12 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
 
   //
   // CONSOLIDATE FRAGMENTED MESSAGE
-  // 
+  //
 
   // check for error-condition
-  if (qd == 0) 
+  if (qd == 0)
     {
-      return -1; 
+      return -1;
     }
 
   if (qd->major_version_ == 1 && qd->minor_version_ == 0)
@@ -1883,17 +1886,17 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
       msg = 0;   // no consolidated message available yet
       return 1;  // status: more messages expected.
     }
-      
+
   tail = qd;  // init
-  
+
   // Add the current message block to the end of the chain
   // after adjusting the read pointer to skip the header(s)
   const size_t header_adjustment =
     this->header_length () +
-    this->fragment_header_length (tail->major_version_, 
+    this->fragment_header_length (tail->major_version_,
                                   tail->minor_version_);
 
-  if (tail->msg_block_->length () < header_adjustment) 
+  if (tail->msg_block_->length () < header_adjustment)
     {
       // buffer length not sufficient
       TAO_Queued_Data::release (qd);
@@ -1901,20 +1904,20 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
     }
 
   // duplicate code to speed up both processes, for GIOP-1.1 and GIOP-1.2
-  if (tail->major_version_ == 1 && tail->minor_version_ == 1) 
+  if (tail->major_version_ == 1 && tail->minor_version_ == 1)
     {
       // GIOP-1.1
 
       while (this->fragment_stack_.pop (head) != -1)
         {
           if (head->more_fragments_ &&
-              head->major_version_ == 1 && 
+              head->major_version_ == 1 &&
               head->minor_version_ == 1 &&
-              head->msg_block_->length () >= header_adjustment) 
+              head->msg_block_->length () >= header_adjustment)
             {
               // adjust the read-pointer, skip the fragment header
               tail->msg_block_->rd_ptr(header_adjustment);
-    
+
               head->msg_block_->cont (tail->msg_block_);
 
               tail->msg_block_ = 0;
@@ -1931,7 +1934,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
     }
   else
     {
-      // > GIOP-1.2 
+      // > GIOP-1.2
 
       CORBA::ULong tmp_request_id = 0;
       if (this->parse_request_id (tail, tmp_request_id) == -1)
@@ -1947,7 +1950,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
           int parse_status = 0;
 
           if (head->more_fragments_ &&
-              head->major_version_ >= 1 && 
+              head->major_version_ >= 1 &&
               head->minor_version_ >= 2 &&
               head->msg_block_->length () >= header_adjustment &&
               (parse_status = this->parse_request_id (head, head_request_id)) != -1 &&
@@ -1955,7 +1958,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
             {
               // adjust the read-pointer, skip the fragment header
               tail->msg_block_->rd_ptr(header_adjustment);
-    
+
               head->msg_block_->cont (tail->msg_block_);
 
               tail->msg_block_ = 0;
@@ -1964,7 +1967,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
 
               tail = head;
             }
-          else 
+          else
             {
               if (parse_status == -1)
                 {
@@ -1972,24 +1975,24 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
                   return -1;
                 }
 
-              reverse_stack.push (head); 
+              reverse_stack.push (head);
             }
-        } 
-    } 
+        }
+    }
 
   // restore stack
-  while (reverse_stack.pop (head) != -1) 
+  while (reverse_stack.pop (head) != -1)
     {
       this->fragment_stack_.push (head);
     }
-  
+
   if (tail->consolidate () == -1)
     {
       // memory allocation failed
       TAO_Queued_Data::release (tail);
       return -1;
     }
-  
+
   // set out value
   msg = tail;
 
@@ -1997,16 +2000,16 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_
 }
 
 
-int 
+int
 TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel_request)
 {
-  // We must extract the specific request-id from message-buffer 
+  // We must extract the specific request-id from message-buffer
   // and remove all fragments from stack that match this request-id.
 
   TAO::Incoming_Message_Stack reverse_stack;
 
   CORBA::ULong cancel_request_id;
-  
+
   if (this->parse_request_id (cancel_request, cancel_request_id) == -1)
     {
       return -1;
@@ -2018,15 +2021,15 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
   while (this->fragment_stack_.pop (head) != -1)
     {
       reverse_stack.push (head);
-    }  
+    }
 
   int discard_all_GIOP11_messages = 0; // false
 
   // Now we are able to process message in order they have arrived.
-  // If the cancel_request_id matches to GIOP-1.1 message, all succeeding 
-  // fragments belong to this message and must be discarded. 
-  // Note: GIOP-1.1 fragment header dont have any request-id encoded. If the 
-  // cancel_request_id matches GIOP-1.2 messages, all GIOP-1.2 fragments 
+  // If the cancel_request_id matches to GIOP-1.1 message, all succeeding
+  // fragments belong to this message and must be discarded.
+  // Note: GIOP-1.1 fragment header dont have any request-id encoded. If the
+  // cancel_request_id matches GIOP-1.2 messages, all GIOP-1.2 fragments
   // having encoded the request id will be discarded.
   while (reverse_stack.pop (head) != -1)
     {
@@ -2039,9 +2042,9 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
           cancel_request_id == head_request_id)
         {
           TAO_Queued_Data::release (head);
-  
+
           discard_all_GIOP11_messages = 1; // true
-        } 
+        }
       else if (head->major_version_ == 1 &&
                head->minor_version_ <= 1 &&
                discard_all_GIOP11_messages)
@@ -2055,11 +2058,11 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
         {
           TAO_Queued_Data::release (head);
         }
-      else 
+      else
         {
           this->fragment_stack_.push (head);
         }
-    }  
+    }
 
   return 0;
 }
@@ -2077,7 +2080,7 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
 
   // Least significant bit:        Byte order
   ACE_SET_BITS (flags, TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
-    
+
   // Second least significant bit: More fragments
   //
   // Only supported in GIOP 1.1 or better.
