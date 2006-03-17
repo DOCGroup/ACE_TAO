@@ -1081,6 +1081,51 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
   return strategy;
 }
 
+auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+TAO_Default_Resource_Factory::create_fragmentation_strategy (
+  TAO_Transport * transport,
+  CORBA::ULong max_message_size) const
+{
+  auto_ptr<TAO_GIOP_Fragmentation_Strategy> strategy (0);
+
+  TAO_GIOP_Fragmentation_Strategy * tmp = 0;
+
+  // Minimum GIOP message size is 24 (a multiple of 8):
+  //   12   GIOP Message Header
+  //    4   GIOP Fragment Header (request ID)
+  // +  8   Smallest payload, including padding.
+  //  ---
+  //   24
+  static CORBA::ULong const min_message_size = 24;
+
+  // GIOP fragments are supported in GIOP 1.1 and better, but TAO only
+  // supports them in 1.2 or better since GIOP 1.1 fragments do not
+  // have a fragment message header.
+
+  if (max_message_size < min_message_size
+      || (TAO_DEF_GIOP_MAJOR == 1 && TAO_DEF_GIOP_MINOR < 2))
+    {
+      // No maximum was set by the user.      
+      ACE_NEW_RETURN (tmp,
+                      TAO_Null_Fragmentation_Strategy,
+                      strategy);
+      
+    }
+  else
+    {
+      ACE_NEW_RETURN (tmp,
+                      TAO_On_Demand_Fragmentation_Strategy (transport,
+                                                            max_message_size),
+                      strategy);
+    }
+
+  ACE_AUTO_PTR_RESET (strategy,
+                      tmp,
+                      TAO_GIOP_Fragmentation_Strategy);
+
+  return strategy;
+}
+
 void
 TAO_Default_Resource_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,

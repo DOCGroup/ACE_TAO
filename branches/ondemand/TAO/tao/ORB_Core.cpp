@@ -939,6 +939,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBMaxMessageSize"))))
+        {
+          this->orb_params_.max_message_size (ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+        }
+
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
@@ -2677,6 +2685,15 @@ TAO_ORB_Core::connector_registry (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   return conn;
+}
+
+auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+TAO_ORB_Core::fragmentation_strategy (TAO_Transport * transport) const
+{
+  return
+    this->resource_factory ()->create_fragmentation_strategy (
+      transport,
+      this->orb_params_.max_message_size ());
 }
 
 ACE_Reactor *

@@ -52,12 +52,12 @@ public:
    *       surpass the configured fragmentation threshold when
    *       marshaling the pending set of data.
    *
-   * @arg cdr               Output CDR stream.
-   * @arg pending_alignment Size of alignment boundary for next data
-   *                        to be marshaled (e.g. 4 for a
-   *                        CORBA::ULong).
-   * @arg pending_length    Size of next data to be marshaled (e.g. 2
-   *                        for a CORBA::UShort).
+   * @param cdr               Output CDR stream.
+   * @param pending_alignment Size of alignment boundary for next data
+   *                          to be marshaled (e.g. 4 for a
+   *                          CORBA::ULong).
+   * @param pending_length    Size of next data to be marshaled (e.g. 2
+   *                          for a CORBA::UShort).
    */
   virtual void fragment (TAO_OutputCDR & cdr,
                          ACE_CDR::ULong pending_alignment,

@@ -135,6 +135,9 @@ public:
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   TAO_Resource_Factory::Resource_Usage resource_usage_strategy (void) const;
   virtual TAO_LF_Strategy *create_lf_strategy (void);
+  virtual TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy (
+    TAO_Transport * transport,
+    CORBA::ULong max_message_size) const;
 
   virtual void disable_factory (void);
   virtual bool drop_replies_during_shutdown (void) const;

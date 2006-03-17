@@ -50,6 +50,7 @@ class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 public:
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
+                         TAO_Transport * transport,
                          size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Dtor
@@ -264,6 +265,7 @@ private:
   TAO::Incoming_Message_Stack fragment_stack_;
 
 protected:
+
   /// Buffer used for both the output and input CDR streams, this is
   /// "safe" because we only one of the streams at a time.
   char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
@@ -272,8 +274,8 @@ protected:
   TAO_OutputCDR out_stream_;
 
   /*
-   * Hook in the GIOP_Message class to add data member. This hook used in
-   * speeding up the dispatch within TAO.
+   * Hook in the GIOP_Message class to add data member. This hook is
+   * used in speeding up the dispatch within TAO.
    */
 //@@ GIOP_MESSAGE_BASE_DATA_MEMBER_ADD_HOOK
 

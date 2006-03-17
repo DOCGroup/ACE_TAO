@@ -888,6 +888,10 @@ public:
   /// flush
   TAO::Transport_Queueing_Strategy &default_transport_queueing_strategy (void);
 
+  /// Get outgoing fragmentation strategy.
+  auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+  TAO_ORB_Core::fragmentation_strategy (void) const;
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference
