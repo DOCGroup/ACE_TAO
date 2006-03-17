@@ -198,6 +198,7 @@ project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_c
     Swapping_Servant_Home_Impl_T.cpp
     Dynamic_Component_Servant_T.cpp
     Servant_Impl_T.cpp
+    Servant_Impl_Utils_T.cpp
     Servant_Activator_T.cpp
   }
 }

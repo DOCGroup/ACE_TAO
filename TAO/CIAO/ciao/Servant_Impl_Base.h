@@ -19,11 +19,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Map.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Active_Map_Manager_T.h"
+#include "ace/Thread_Mutex.h"
 
 #include "CCM_EventC.h"
 #include "CIAO_Server_Export.h"
@@ -117,13 +120,6 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
-    virtual ::Components::EventConsumerBase_ptr
-    disconnect_consumer (const char *source_name
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::InvalidName,
-                       Components::NoConnection));
-
     virtual ::Components::ConsumerDescriptions *
     get_named_consumers (const ::Components::NameList & names
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -131,28 +127,16 @@ namespace CIAO
                        Components::InvalidName));
 
     virtual ::Components::EmitterDescriptions *
-    get_all_emitters (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual ::Components::EmitterDescriptions *
-    get_named_emitters (const ::Components::NameList & /* names */
+    get_named_emitters (const ::Components::NameList & names
                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual ::Components::ReceptacleDescriptions *
-    get_named_receptacles (const ::Components::NameList & /* names */
+    get_named_receptacles (const ::Components::NameList & names
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
-
-    virtual ::Components::PublisherDescriptions *
-    get_all_publishers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names
@@ -178,7 +162,9 @@ namespace CIAO
 
   protected:
     void add_facet (const char *port_name,
-                    CORBA::Object_ptr port_ref);
+                    ::CORBA::Object_ptr port_ref
+                    ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     CORBA::Object_ptr lookup_facet (const char *port_name);
 
@@ -187,7 +173,9 @@ namespace CIAO
       );
 
     void add_consumer (const char *port_name,
-                       ::Components::EventConsumerBase_ptr port_ref);
+                       ::Components::EventConsumerBase_ptr port_ref
+                       ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     ::Components::EventConsumerBase_ptr lookup_consumer (
         const char *port_name
@@ -197,19 +185,52 @@ namespace CIAO
         const char *port_name
       );
 
+    /// Called from generated servant class to help with
+    /// get_all_*() methods.
+
+    template<typename T_var>
+    static void describe_simplex_receptacle (
+        const char *port_name,
+        const char *port_type_repo_id,
+        T_var &connection,
+        ::Components::ReceptacleDescriptions_var &descriptions,
+        CORBA::ULong slot
+      );
+
+    template<typename T_var>
+    static void describe_multiplex_receptacle (
+        const char *port_name,
+        const char *port_type_repo_id,
+        ACE_Active_Map_Manager<T_var> &objrefs,
+        ::Components::ReceptacleDescriptions_var &descriptions,
+        CORBA::ULong slot
+      );
+
+    template<typename T_var>
+    static void describe_pub_event_source (
+        const char *port_name,
+        const char *port_type_repo_id,
+        ACE_Active_Map_Manager<T_var> &consumers,
+        ::Components::PublisherDescriptions_var &descriptions,
+        CORBA::ULong slot
+      );
+
+    template<typename T_var>
+    static void describe_emit_event_source (
+        const char *port_name,
+        const char *port_type_repo_id,
+        T_var &consumer_ref,
+        ::Components::EmitterDescriptions_var &descriptions,
+        CORBA::ULong slot
+      );
+
   protected:
-    typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                    ::Components::FacetDescription_var,
-                                    ACE_Hash<const char *>,
-                                    ACE_Equal_To<const char *>,
-                                    ACE_Null_Mutex>
+    typedef ACE_Array_Map<ACE_CString,
+                          ::Components::FacetDescription_var>
        FacetTable;
 
-    typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                    ::Components::ConsumerDescription_var,
-                                    ACE_Hash<const char *>,
-                                    ACE_Equal_To<const char *>,
-                                    ACE_Null_Mutex>
+    typedef ACE_Array_Map<ACE_CString,
+                          ::Components::ConsumerDescription_var>
        ConsumerTable;
 
     FacetTable facet_table_;
@@ -220,8 +241,20 @@ namespace CIAO
   private:
     /// Not allowed to be used
     Servant_Impl_Base (void);
+
+  private:
+    /// For internal locking of table reads and writes.
+    TAO_SYNCH_MUTEX lock_;
   };
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Servant_Impl_Utils_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Servant_Impl_Utils_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

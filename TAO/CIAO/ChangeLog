@@ -1,3 +1,70 @@
+Fri Mar 17 14:23:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/CCM_Core.mpc:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_Base.h
+
+          - Changed port table types from
+            ACE_Hash_Map_Manager_Ex<> to ACE_Array_Map<>,
+            which is more lightweight and makes no
+            allocations if no entries are added to
+            the table.
+
+          - Implemented spec-defined methods
+            get_all_receptacles(), get_all_publishers(),
+            and disconnect_consumer().
+
+        * ciao/Servant_Impl_Utils_T.cpp:
+
+          New file, containing implementations of new
+          static template methods added to class
+          Servant_Impl_Base, which are called in
+          generated code as part of the implementation
+          of the spec-defined methods mentioned above.
+
+        * CCF/CCF/CIDLC/AttributeHeaderEmitters.cpp:
+        * CCF/CCF/CIDLC/AttributeHeaderEmitters.hpp:
+        * CCF/CCF/CIDLC/AttributeSourceEmitters_T.hpp:
+        * CCF/CCF/CIDLC/CompositionEmitter.cpp:
+        * CCF/CCF/CIDLC/CompositionEmitter.hpp:
+        * CCF/CCF/CIDLC/CorbaTypeNameEmitters.cpp:
+        * CCF/CCF/CIDLC/CorbaTypeNameEmitters.hpp:
+        * CCF/CCF/CIDLC/EmitterBase.cpp:
+        * CCF/CCF/CIDLC/EmitterBase.hpp:
+        * CCF/CCF/CIDLC/EmitterContext.cpp:
+        * CCF/CCF/CIDLC/EmitterContext.hpp:
+        * CCF/CCF/CIDLC/InterfaceEmitter.cpp:
+        * CCF/CCF/CIDLC/InterfaceEmitter.hpp:
+        * CCF/CCF/CIDLC/ModuleEmitter.cpp:
+        * CCF/CCF/CIDLC/ModuleEmitter.hpp:
+        * CCF/CCF/CIDLC/OperationHeaderEmitters.cpp:
+        * CCF/CCF/CIDLC/OperationHeaderEmitters.hpp:
+        * CCF/CCF/CIDLC/ParameterEmitter_T.hpp:
+        * CCF/CCF/CIDLC/Upcase.hpp:
+        * CCF/CCF/CIDLC/UtilityTypeNameEmitters.cpp:
+        * CCF/CCF/CIDLC/UtilityTypeNameEmitters.hpp:
+
+          New files, containing common code factored
+          out of the C++ source files below.
+
+        * CCF/CCF/CIDLC/CIDLC.mpc:
+        * CCF/CCF/CIDLC/DescriptorGenerator.cpp:
+        * CCF/CCF/CIDLC/ExecImplHeaderGenerator.cpp:
+        * CCF/CCF/CIDLC/ExecImplSourceGenerator.cpp:
+        * CCF/CCF/CIDLC/ExecutorMappingGenerator.cpp:
+        * CCF/CCF/CIDLC/Literals.cpp:
+        * CCF/CCF/CIDLC/Literals.hpp:
+        * CCF/CCF/CIDLC/ServantHeaderGenerator.cpp:
+        * CCF/CCF/CIDLC/ServantSourceGenerator.cpp:
+
+          - Added new generated code as part of the
+            implementation of the spec-defined methods
+            mentioned above.
+
+          - Added support for attribute exceptions in
+            code optionally generated for the stencil
+            executor implementation classes.
+
 Thu Mar 16 16:31:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/CCM_Component.idl:
