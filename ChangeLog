@@ -1,3 +1,21 @@
+Fri Mar 17 13:38:18 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
+        
+          New file, containing cidl-related stuff removed from
+          ciao_servant_dnc.mpb, which now inherits from the new
+          base project. These changes allow CIAO applications
+          to set up the build either in the existing way, where
+          the servant build executes the CIDL compiler, then the
+          IDL compiler on the resulting *E.idl file, then the
+          C++ compiler on all the results, or to have separate
+          builds for CIDL files (which executes first), then
+          IDL files, then generated and hand-written C++ files.
+          
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        
+          Changes described in the item above.
+
 Fri Mar 17 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.cpp:
