@@ -178,7 +178,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 {
   return
     os.fragment_stream (ACE_CDR::LONG_ALIGN,
-                        sizeof (CORBA::LONG))
+                        sizeof (CORBA::Long))
     && static_cast<ACE_OutputCDR &> (os) << x;
 }
 

@@ -32,7 +32,7 @@ class TAO_Transport;
 /**
  * @class TAO_On_Demand_Fragmenation_Strategy
  *
- * @brief True GIOP message fragmentation strategy.
+ * @brief On Demand GIOP message fragmentation strategy.
  *
  * GIOP message fragmentation strategy that performs fragmentation
  * when the size of the CDR stream will exceed the user configured
@@ -57,8 +57,8 @@ public:
 private:
 
   // Disallow copying and assignment.
-  TAO_True_Fragmentation_Strategy (TAO_True_Fragmentation_Strategy const &);
-  void operator= (TAO_True_Fragmentation_Strategy const &);
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &);
+  void operator= (TAO_On_Demand_Fragmentation_Strategy const &);
 
 private:
 

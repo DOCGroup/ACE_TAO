@@ -145,7 +145,8 @@ public:
    * Fragmentation will done through GIOP fragments when the length of
    * the CDR stream length will exceed the configured threshold.
    */
-  bool do_stream_fragmentation (void);
+  bool fragment_stream (ACE_CDR::ULong pending_alignment,
+                        ACE_CDR::ULong pending_length);
 
 private:
 
@@ -217,7 +218,7 @@ public:
 
   /// Create an input stream from an ACE_Message_Block with an optional lock
   /// used to protect the data.
-  TAO_InputCDR (const ACE_Message_Block *data, 
+  TAO_InputCDR (const ACE_Message_Block *data,
                 ACE_Lock* lock,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,

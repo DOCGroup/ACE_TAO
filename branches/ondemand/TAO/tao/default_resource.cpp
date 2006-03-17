@@ -14,6 +14,8 @@
 #include "tao/Codeset_Descriptor_Base.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/Null_Fragmentation_Strategy.h"
+#include "tao/On_Demand_Fragmentation_Strategy.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -1081,8 +1083,8 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
   return strategy;
 }
 
-auto_ptr<TAO_GIOP_Fragmentation_Strategy>
-TAO_Default_Resource_Factory::create_fragmentation_strategy (
+TAO_GIOP_Fragmentation_Strategy *
+TAO_Default_Resource_Factory::fragmentation_strategy (
   TAO_Transport * transport,
   CORBA::ULong max_message_size) const
 {
@@ -1105,11 +1107,11 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
   if (max_message_size < min_message_size
       || (TAO_DEF_GIOP_MAJOR == 1 && TAO_DEF_GIOP_MINOR < 2))
     {
-      // No maximum was set by the user.      
+      // No maximum was set by the user.
       ACE_NEW_RETURN (tmp,
                       TAO_Null_Fragmentation_Strategy,
                       strategy);
-      
+
     }
   else
     {
