@@ -1,4 +1,11 @@
-Fri Mar 17 15:50:00 UTC 2006  simon massey  <sma@prismtech.com>
+Fri Mar 17 16:35:36 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/Symbol_Versioning.html:
+
+	  New document that describes how to use ACE's versioned namespace
+	  support.  [Bug 2458]
+
+Fri Mar 17 15:50:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/run_test.lst
           Add more !DISABLE_ToFix_LynxOS_* marks to failing tests
