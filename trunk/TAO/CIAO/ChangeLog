@@ -1,3 +1,12 @@
+Sun Mar 19 20:37:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        
+          Removed these files, their former contents are now divided
+          between CorbaTypenameEmitters.{hpp,cpp} and
+          UtilityTypeNameEmitters.{hpp,cpp}.
+
 Fri Mar 17 14:23:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/CCM_Core.mpc:
@@ -22,40 +31,40 @@ Fri Mar 17 14:23:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           generated code as part of the implementation
           of the spec-defined methods mentioned above.
 
-        * CCF/CCF/CIDLC/AttributeHeaderEmitters.cpp:
-        * CCF/CCF/CIDLC/AttributeHeaderEmitters.hpp:
-        * CCF/CCF/CIDLC/AttributeSourceEmitters_T.hpp:
-        * CCF/CCF/CIDLC/CompositionEmitter.cpp:
-        * CCF/CCF/CIDLC/CompositionEmitter.hpp:
-        * CCF/CCF/CIDLC/CorbaTypeNameEmitters.cpp:
-        * CCF/CCF/CIDLC/CorbaTypeNameEmitters.hpp:
-        * CCF/CCF/CIDLC/EmitterBase.cpp:
-        * CCF/CCF/CIDLC/EmitterBase.hpp:
-        * CCF/CCF/CIDLC/EmitterContext.cpp:
-        * CCF/CCF/CIDLC/EmitterContext.hpp:
-        * CCF/CCF/CIDLC/InterfaceEmitter.cpp:
-        * CCF/CCF/CIDLC/InterfaceEmitter.hpp:
-        * CCF/CCF/CIDLC/ModuleEmitter.cpp:
-        * CCF/CCF/CIDLC/ModuleEmitter.hpp:
-        * CCF/CCF/CIDLC/OperationHeaderEmitters.cpp:
-        * CCF/CCF/CIDLC/OperationHeaderEmitters.hpp:
-        * CCF/CCF/CIDLC/ParameterEmitter_T.hpp:
-        * CCF/CCF/CIDLC/Upcase.hpp:
-        * CCF/CCF/CIDLC/UtilityTypeNameEmitters.cpp:
-        * CCF/CCF/CIDLC/UtilityTypeNameEmitters.hpp:
+        * CIDLC/AttributeHeaderEmitters.cpp:
+        * CIDLC/AttributeHeaderEmitters.hpp:
+        * CIDLC/AttributeSourceEmitters_T.hpp:
+        * CIDLC/CompositionEmitter.cpp:
+        * CIDLC/CompositionEmitter.hpp:
+        * CIDLC/CorbaTypeNameEmitters.cpp:
+        * CIDLC/CorbaTypeNameEmitters.hpp:
+        * CIDLC/EmitterBase.cpp:
+        * CIDLC/EmitterBase.hpp:
+        * CIDLC/EmitterContext.cpp:
+        * CIDLC/EmitterContext.hpp:
+        * CIDLC/InterfaceEmitter.cpp:
+        * CIDLC/InterfaceEmitter.hpp:
+        * CIDLC/ModuleEmitter.cpp:
+        * CIDLC/ModuleEmitter.hpp:
+        * CIDLC/OperationHeaderEmitters.cpp:
+        * CIDLC/OperationHeaderEmitters.hpp:
+        * CIDLC/ParameterEmitter_T.hpp:
+        * CIDLC/Upcase.hpp:
+        * CIDLC/UtilityTypeNameEmitters.cpp:
+        * CIDLC/UtilityTypeNameEmitters.hpp:
 
           New files, containing common code factored
           out of the C++ source files below.
 
-        * CCF/CCF/CIDLC/CIDLC.mpc:
-        * CCF/CCF/CIDLC/DescriptorGenerator.cpp:
-        * CCF/CCF/CIDLC/ExecImplHeaderGenerator.cpp:
-        * CCF/CCF/CIDLC/ExecImplSourceGenerator.cpp:
-        * CCF/CCF/CIDLC/ExecutorMappingGenerator.cpp:
-        * CCF/CCF/CIDLC/Literals.cpp:
-        * CCF/CCF/CIDLC/Literals.hpp:
-        * CCF/CCF/CIDLC/ServantHeaderGenerator.cpp:
-        * CCF/CCF/CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/CIDLC.mpc:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
           - Added new generated code as part of the
             implementation of the spec-defined methods
