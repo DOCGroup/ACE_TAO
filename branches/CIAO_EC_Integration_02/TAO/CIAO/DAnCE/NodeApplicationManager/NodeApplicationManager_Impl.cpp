@@ -83,7 +83,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
         this->node_manager_->set_all_facets (comp_name, facets);
       }
 
-    if (CIAO::debug_level () > 9)
+    if (CIAO::debug_level () > 20)
       {
         ACE_DEBUG ((LM_DEBUG,
                   "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
@@ -105,7 +105,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
         this->node_manager_->set_all_consumers (comp_name, consumers);
       }
 
-    if (CIAO::debug_level () > 9)
+    if (CIAO::debug_level () > 20)
       {
         ACE_DEBUG ((LM_DEBUG,
                   "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
@@ -127,7 +127,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       Deployment::Connection & conn = retv[len];
       conn.instanceName = (*iter).ext_id_.c_str ();
       conn.portName = facets[i]->name ();
-      if (CIAO::debug_level () > 9)
+      if (CIAO::debug_level () > 20)
         {
           ACE_DEBUG ((LM_DEBUG,
                     "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
@@ -145,7 +145,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       Deployment::Connection & conn = retv[len];
       conn.instanceName = (*iter).ext_id_.c_str ();
       conn.portName = consumers[i]->name ();
-      if (CIAO::debug_level () > 9)
+      if (CIAO::debug_level () > 20)
         {
           ACE_DEBUG ((LM_DEBUG,
                     "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
