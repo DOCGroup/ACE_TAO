@@ -312,6 +312,11 @@ namespace CIAO
      * of the "providedReference" for the component instances in the
      * child deployment plan as Receiver side.
      * By default, we search in the new plan.
+     *
+     * If <is_getting_all_connections> is false, then we only
+     * search for "new connections" (valid for ReDaC case only).
+     * Otherwise, we will search for both new connections and those
+     * already existing connections.
      */
     Deployment::Connections *
     get_outgoing_connections (const Deployment::DeploymentPlan &plan,

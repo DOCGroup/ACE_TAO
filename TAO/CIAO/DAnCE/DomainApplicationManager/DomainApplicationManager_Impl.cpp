@@ -1136,7 +1136,8 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                   0);
 
   // For each component instance in the child plan ...
-  for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
+  CORBA::ULong number = plan.instance.length ();
+  for (CORBA::ULong i = 0; i < number; ++i)
   {
 
     if (t == Internal_Connections &&
@@ -1171,7 +1172,7 @@ get_outgoing_connections_i (const char * instname,
   else
     tmp_plan = this->old_plan_;
 
-  // Search for all the connections in the plan.
+  // Search for all the bindings in the plan.
   const CORBA::ULong total_length = tmp_plan.connection.length();
   for (CORBA::ULong i = 0; i < total_length; ++i)
     {
@@ -1217,26 +1218,25 @@ populate_connection_for_binding (
                           plan.instance[endpoint.instanceRef].name.in ()) != 0)
         continue;
 
-      // We are only interested in Facet and EventConsumer port kind
-      if (endpoint.kind == Deployment::Facet ||
-          endpoint.kind == Deployment::EventConsumer)
+      // We are only interested when we are the "client" of the endpoint objref
+      if (endpoint.kind == Deployment::EventPublisher ||
+          endpoint.kind == Deployment::EventEmitter ||
+          endpoint.kind == Deployment::SimplexReceptacle ||
+          endpoint.kind == Deployment::MultiplexReceptacle )
         {
-          // Obtain the source index, which is the opposite of the endpoint
-          CORBA::ULong s_index = (i + 1) % 2;
-
-          ACE_CString source_inst =
-            plan.instance[binding.internalEndpoint[s_index]
-              .instanceRef].name.in ();
+          // Obtain the index of the "real" endpoint which has an objref. It
+          // is the opposite side of myself.
+          CORBA::ULong e_index = (i + 1) % 2;
 
           ACE_CString source_port =
-            binding.internalEndpoint[s_index].portName.in ();
+            binding.internalEndpoint[i].portName.in ();
 
           ACE_CString endpoint_inst =
-            plan.instance[binding.internalEndpoint[i]
+            plan.instance[binding.internalEndpoint[e_index]
               .instanceRef].name.in ();
 
           ACE_CString endpoint_port =
-            binding.internalEndpoint[i].portName.in ();
+            binding.internalEndpoint[e_index].portName.in ();
 
           bool found = false;
 
@@ -1254,14 +1254,14 @@ populate_connection_for_binding (
                                   endpoint_port.c_str ()) == 0)
                 {
                   retv.length (len+1);
-                  retv[len].instanceName = source_inst.c_str ();
+                  retv[len].instanceName = instname;
                   retv[len].portName = source_port.c_str ();
                   retv[len].endpointInstanceName = endpoint_inst.c_str ();
                   retv[len].endpointPortName = endpoint_port.c_str ();
 
                   retv[len].endpoint =
                       CORBA::Object::_duplicate(curr_recv_conn.endpoint.in ());
-                  retv[len].kind = binding.internalEndpoint[s_index].kind;
+                  retv[len].kind = binding.internalEndpoint[i].kind;
 
                   ++len;
                   found = true;
