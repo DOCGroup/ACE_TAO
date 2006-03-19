@@ -34,6 +34,12 @@ ACE_String_Base<CHAR>::length (void) const
   return this->len_;
 }
 
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base<CHAR>::empty (void) const
+{
+  return this->len_ == 0;
+}
+
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
 ACE_String_Base<CHAR>::substr (size_t offset,
                                ssize_t length) const
