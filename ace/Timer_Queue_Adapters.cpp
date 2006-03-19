@@ -300,6 +300,9 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
   // Macros to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (thread_handles);
 
+  // Make sure to set this flag in case we were deactivated earlier.
+  this->active_ = 1;
+
   // Make sure that we only allow a single thread to be spawned for
   // our adapter.  Otherwise, too many weird things can happen.
   return ACE_Task_Base::activate (flags, 1, 0, priority, grp_id, task, 0,

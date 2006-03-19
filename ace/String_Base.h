@@ -323,6 +323,9 @@ public:
    */
   size_t length (void) const;
 
+  /// Return @c true if the length of the string is zero.
+  bool empty (void) const;
+
   /**
    * Get a copy of the underlying representation.
    *
