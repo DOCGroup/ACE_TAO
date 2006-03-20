@@ -277,7 +277,7 @@ public:
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The TP reactor has can allow applications to
-  /// resume handles.  So return a +ve value.
+  /// resume handles.  So return a positive value.
   virtual int resumable_handler (void);
 
   /// Called from handle events
