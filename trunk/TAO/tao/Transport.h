@@ -461,8 +461,7 @@ public:
    * valid certificates. There are no pre_connect_hooks () since the
    * transport doesn't exist before a connection establishment. :-)
    *
-   *
-   * @@NOTE: The methods are not made const with a reason.
+   * @note The methods are not made const with a reason.
    */
   virtual bool post_connect_hook (void);
 
@@ -904,7 +903,7 @@ protected:
   /// Global orbcore resource.
   TAO_ORB_Core *orb_core_;
 
-  /// Our entry in the cache. We dont own this. It is here for our
+  /// Our entry in the cache. We don't own this. It is here for our
   /// convenience. We cannot just change things around.
   TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
 
@@ -945,7 +944,7 @@ protected:
   /// Queue of the consolidated, incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
 
-  /// Stack of icoming fragments, consolidated messages
+  /// Stack of incoming fragments, consolidated messages
   /// are going to be enqueued in "incoming_message_queue_"
   TAO::Incoming_Message_Stack incoming_message_stack_;
 
