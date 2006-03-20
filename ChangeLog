@@ -1,3 +1,15 @@
+Mon Mar 20 10:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TP_Reactor.cpp (post_process_socket_event):
+          Before acquiring the token, first check if we really have to do some
+          post processing, if not, then we just don't acquire the token. This
+          fixes the performance drop in the TAO thread pool performance test.
+          Thanks to Kobi Cohen-Arazi <kobi dot cohenarazi at gmail dot com>
+          for noticing this drop in the performance stats.
+
+        * ace/TP_Reactor.h:
+          Small documentation improvement
+
 Sun Mar 19 21:30:39 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ACE-INSTALL.html (href): Rearranged the order of things
@@ -153,7 +165,7 @@ Tue Mar 14 11:22:35 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 	* ace/String_Base.h (ACE_String_Base): Added
 	  an empty() method to be more like STL strings.  Thanks to
  	  Patrick Rabau <pr2345 at gmail dot com> for contributing this.
-  
+
 Tue Mar 14 23:33:27 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.inl (recursive_mutex_cond_unlock): Fix this for
