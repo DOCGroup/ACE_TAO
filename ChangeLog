@@ -1,3 +1,9 @@
+Mon Mar 20 22:53:09 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Makefile.am: Restored hand-inserted settings to allow running
+          the ACE tests during "make check". This needs to be added to the
+          mpc file, but we're discussing how to do this.
+
 Mon Mar 20 08:58:26 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
