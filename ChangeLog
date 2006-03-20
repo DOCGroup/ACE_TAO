@@ -1,3 +1,8 @@
+Mon Mar 20 08:58:26 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ACE-INSTALL.html: Removed all references to egcs, which
+	  is hopelessly out of date..
+
 Mon Mar 20 14:54:23 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/Task_Ex_T.h:
