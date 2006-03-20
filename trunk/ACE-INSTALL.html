@@ -44,7 +44,6 @@ report process</a>.<p>
   </li><li><a href="#guireactor_install">Building and Using GUI Reactors Libraries</a>
   </li><li><a href="#installnotes">Installation Notes</a>
   </li><li><a href="#g++">Compiling ACE with GNU g++</a>
-  </li><li><a href="#egcs">Compiling ACE with egcs</a>
   </li><li><a href="#minimum_build">What Do I Need to Build for TAO?</a>
   </li><li><a href="#resource_requirements">System Resource Requirements</a>
   </li><li><a href="#MPC">General MPC Information</a>
@@ -321,7 +320,7 @@ c       <pre>       ../configure [options]
         <li><code>--enable-quantify</code> (no): Build with support for
           IBM Rational Quantify.</li>
         <li><code>--enable-repo</code> (no): Enable the GNU g++
-          <code>-frepo</code> option. Only useful for pre-3.0 g++ and egcs.</li>
+          <code>-frepo</code> option. Only useful for pre-3.0 g++.</li>
         <li><code>--enable-rtti</code> (yes): Compile with C++ run-time type
           information RTTI support.</li>
         <li><code>--enable-stdcpplib</code> (yes): Build with support for the
@@ -2011,13 +2010,10 @@ libraries.
       information on make flags.</p><p>
 
       If you use g++ on Solaris 7, you might need to rebuild
-      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++ and
-      egcs provide replacements for system header files.  The
+      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++ 
+      provide replacements for system header files.  The
       replacements on older SunOS systems are not compatible with the
-      SunOS 5.7 system headers.  See <a href="http://www.cs.wustl.edu/%7Elevine/Hints.html">David Levine's
-      Hints page</a> for instructions on how to build egcs on a SunOS
-      5.7 host, using a g++ or egcs that was built on an older SunOS
-      host. </p><p>
+      SunOS 5.7 system headers.  <P>
 
       The Sun/C++ compilers until and including 5.4 has several
       problems with templates and we don't test very often with them.
@@ -2095,10 +2091,6 @@ libraries.
       <code>dlopen</code>, you should use <code>RTLD_NOW</code>.  The
       dynamic loader in glibc 2.1 is thread safe.</p><p>
 
-      The ACE <code>Tokens_Test</code> hangs with egcs 1.1b on Linux.
-      It runs properly when built with egcs 1.0.2 and later.  All other
-      ACE tests run properly with these egcs 1.0.2 and later.</p><p>
-
       <strong>NOTE:</strong> The TAO NameService uses IP multicasting
       by default, though it is not required.  IP multicast on Linux
       requires the following:</p><p>
@@ -2121,13 +2113,6 @@ libraries.
             </p><pre>             <code># route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</code>
             </pre><p>
       </p></li></ul>
-
-      <strong>NOTE:</strong> Be careful when installing egcs on RedHat
-      systems.  If you don't remove your old gcc and libg++ RPMs, it's
-      best to install egcs in a different directory than
-      <code>/usr</code>, such as <code>/usr/local</code>, and set your
-      <code>PATH</code> and <code>LD_LIBRARY_PATH</code>
-      accordingly.</p><p>
 
       Some of the ACE tests fail on older, pre-glibc2 Linux platforms,
       such as RedHat 4.2.  The problems are with threads and
@@ -2497,26 +2482,6 @@ libraries.
 If you use the GNU GCC g++ compiler please note the following:
 
 <ul>
-  <li>If you have problems building shared libraries with egcs 1.1 or 1.1.1
-      on SunOS 2.5 or 2.5.1 that look like this:
-      <pre>        /usr/ccs/lib/libgen.a(reg_compile.o): In function `_get_vars_storage':
-        reg_compile.o(.text+0x30): relocation truncated to fit: R_SPARC_GOT13 free
-      </pre>
-      the suggested workaround is to comment out the <code>ACE_HAS_REGEX</code>
-      <code>#define</code> in <code>ace/config-sunos5.5.h</code>.
-      Or better, create an <code>ace/config.h</code> that looks like:
-      <pre>      #ifndef ACE_CONFIG_H
-      // ACE_CONFIG_H is defined by the following #included header.
-
-      #include "ace/config-sunos5.5.h"
-
-      #undef ACE_HAS_REGEX
-
-      #endif /* ACE_CONFIG_H */
-      </pre>
-      We don't know what causes the link problem, though the
-      workaround solves it.<p>
-
   </p></li><li>ACE/TAO needs g++ 2.95.x or better. Older versions are not usable anymore<p>
 
   </p></li><li>Make sure to update your gcc <code>config.status</code>
@@ -2549,126 +2514,6 @@ If you use the GNU GCC g++ compiler please note the following:
   </p></li><li>Make sure that the linker invoked by gcc produces code
       that initializes static objects.  Please see gcc's
       documentation for using <code>collect2</code>.<p>
-
-</p></li></ul>
-
-
-<p></p><hr>
-<h4><a name="egcs">Compiling ACE with egcs</a></h4>
-<ul>
-  <li>ACE transparently supports egcs, for the most part.  Please see
-      <a href="#g++">Compiling ACE with g++</a> in this document.  And,
-      please use the appropriate g++ config and platform files for the OS on
-      which you will use egcs.<p>
-
-  </p></li><li><strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-      The default behavior of the ACE Makefiles is to enable native
-      exception support.  To disable exception handling, add
-      <code>exceptions=0</code> to your <code>make</code> command line
-      invocation, or to your
-      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> file.<p>
-
-  </p></li><li>egcs may have trouble linking some executables, such as the ACE
-      IOStream_Test, if its static libraries are used.  Though
-      <a href="mailto:trose@bridgewatersys.com">Tim Rose</a> reports
-      that egcs 1.1.1 static libraries work just fine on Solaris 2.6
-      with  patches: 105181-12, 105568-13, 105210-19, 105591-05, 105395-04,
-      and 105490-07.<p>
-
-      If you need or want to use egcs' shared libraries, build it
-      with the <code>--enable-shared</code> egcs config option.  The
-      <code>--enable-shared</code> option is <strong>not</strong> an
-      egcs run-time option.  Build egcs in a way similar to the
-      following example:
-      </p><pre><code>
-         $ ./configure --enable-shared
-         $ make bootstrap
-      </code></pre>
-      Be sure to set your <code>LD_LIBRARY_PATH</code> environment
-      variable, if necessary, to pick up those shared libraries.<p>
-
-  </p></li><li>On DEC Alpha, egcs through version 1.03a, at least, may fail
-      to build ACE if debugging (-g) is enabled.  The fix is to
-      edit the egcs gcc/mips-file.c file, at line 976, and change
-      <code>PAGE_SIZE</code> to 8192.  Then rebuild ACE.  Thanks to
-      <a href="mailto:gpai@voicetek.com">Ganesh Pai</a> for this
-      information.<p>
-
-   </p></li><li>Sun OS 5.6 using egcs1.1.2/egcs 2.95 with
-       ld:Software Generation Utilities - Solaris/ELF (3.0)
-       as: WorkShop Compilers 4.X dev 18 Sep 1996<p>
-
-      You could come across weird external symbol linker errors.
-
-      Example:
-
-      </p><pre>      -I/opt/ace/SunOS-1.0 -DACE_HAS_EXCEPTIONS  -o Cached_Accept_Conn_Test
-      .obj/Cached_Accept_Conn_Test.o  -L/opt/ace/SunOS-1.0/ace -L./  -lACE
-      -lsocket -ldl -lgen -lnsl -lposix4 -lthread
-      ld: warning: relocation error: R_SPARC_32: file
-     .obj/Cached_Accept_Conn_Test.o: symbol
-       __t21ACE_Cache_Map_Manager7Zt30ACE_Refcounted_Hash_Recyclable1Z13
-       ACE_INET_AddrZP18Client_Svc_HandlerZt23ACE_Hash_Map_Manager_Ex5Zt
-      30ACE_Refcounted_Hash_Recyclable1Z13ACE_INET_AddrZt8ACE_Pair2ZP18
-      Client_Svc_HandlerZUiZt8ACE_Hash1Zt30...</pre>
-
-      external symbolic relocation against non-allocatable section .stab;
-      cannot be processed at runtime: relocation ignored<p>
-
-      Solution:</p><p>
-
-      Install the "binutils" package from GNU (www.gnu.org); specifically,
-      "as" and "ld".</p><p>
-
-      Conclusion:</p><p>
-
-      Perfect build stats:</p><p>
-
-      OS:
-      Kernel version: SunOS 5.6 Generic 105181-03 December 1999.</p><p>
-
-      compiler:
-      gcc version egcs-2.91.66 19990314 (egcs-1.1.2 release)</p><p>
-
-      loader:
-      GNU ld version 2.9.1 (with BFD 2.9.1)
-      Supported emulations:
-       elf32_sparc</p><p>
-
-      assembler:
-      GNU assembler version 2.9.1 (sparc-sun-solaris2.6), using
-      BFD version 2.9.1</p><p>
-
-      Thanks to <a href="mailto:johng@keck.hawii.edu">John Gathright</a> for providing this
-      information.</p><p>
-
-   </p></li><li>Compiling using the <code>-fsquangle</code> option helps to shorten long
-       symbol names and is a boon to linkers and assemblers which cant
-       grok long names.
-
-       Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a> for trying it
-       out and <a href="mailto:ossama@uci.edu">Ossama Othman</a> for discovering the
-       option with egcs.<p>
-
-       Heres a note on how to go about this (contributed by Skye
-       Sweeney):</p><p>
-
-       1) -fsquangle  the name is a combination of squash and mangle!</p><p>
-
-       2) -fsquangle  compresses the mangled names.</p><p>
-
-       3) All libraries must be compiles with the option. You cannot simply
-       compile modules that have large names with it. This includes system
-       libraries and vendor libraries like RogueWave.</p><p>
-
-       4) The "simple" solution is not to add the option to each makefile,
-       but rather recompile the compiler to have the option on by default.
-       This is done by editing the file `gcc/cp/decl2.c', setting
-       `flag_do_squangling = 1', then rebuilding the compiler and
-       libraries.</p><p>
-
-       5) After many false starts and linking snafus, I can recompile my
-       ACE/TAO/RogueWave/Lex/Yacc 100 Meg application.</p><p>
 
 </p></li></ul>
 
@@ -3035,8 +2880,7 @@ probe            Enable ACE_Timeprobes.
 profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 purify           Purify all executables.
 quantify         Quantify all executables.
-repo             Use GNU template repository (g++ with repo patches and
-                   egcs only).
+repo             Use GNU template repository (g++ with repo patches only).
 rtti             Enable run-time type identification.  On some platforms,
                    it is enabled by default, so this is ignored.
 shared_libs      Build shared libraries. Ignored if static_libs_only is set.
@@ -3121,7 +2965,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Sun Mar 19 21:36:24 CST 2006
+Last modified: Mon Mar 20 08:58:22 CST 2006
 <!-- hhmts end -->
 
 
