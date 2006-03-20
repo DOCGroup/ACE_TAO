@@ -1,3 +1,11 @@
+Mon Mar 20 13:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Made more local variables const, initialize pointer to 0
+
+        * tao/GIOP_Message_Base.h:
+          Documentation fix
+
 Mon Mar 20 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
