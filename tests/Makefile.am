@@ -20,6 +20,9 @@ SUBDIRS = \
 ## Makefile.Test_Output.am
 
 noinst_SCRIPTS = run_test.pl run_test.lst
+dist_check_SCRIPTS = run_test.pl run_test.lst
+TESTS = $(noinst_PROGRAMS)
+TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
 
 noinst_LTLIBRARIES = libTest_Output.la
 
