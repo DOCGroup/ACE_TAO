@@ -1,3 +1,8 @@
+Mon Mar 20 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+          Use prefix decrement instead of postfix
+
 Mon Mar 20 13:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
