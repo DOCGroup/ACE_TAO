@@ -1,3 +1,10 @@
+Sun Mar 19 21:30:39 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ACE-INSTALL.html (href): Rearranged the order of things
+	  so that it explains how to build and install ACE before going
+ 	  into all sorts of details about various platforms and compilers.
+  	  Thanks to Axter <google at axter dot com> for motivating this.
+
 Sat Mar 18 15:20:45 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/Timer_Queue_Adapters.cpp (activate): Set active_ to 1
