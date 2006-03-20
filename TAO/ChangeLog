@@ -1,3 +1,8 @@
+Mon Mar 20 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Made some more local variables const
+
 Mon Mar 20 13:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.h:
