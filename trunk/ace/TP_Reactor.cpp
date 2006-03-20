@@ -641,28 +641,39 @@ int
 ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
                                            int status)
 {
-  // Get the reactor token and with this token acquired remove first the
-  // handler and resume it at the same time. This must be atomic, see also
-  // bugzilla 2395. When this is not atomic it can be that we resume the
-  // handle after it is reused by the OS.
-  ACE_TP_Token_Guard guard (this->token_);
+  int result = 0;
 
-  int result = guard.acquire_token ();
-
-  // If the guard is NOT the owner just return the retval
-  if (!guard.is_owner ())
-    return result;
-
-  if (status < 0)
+  // First check if we really have to post process something, if not, then
+  // we don't acquire the token which saves us a lot of time.
+  if (status < 0 ||
+     (dispatch_info.event_handler_ != this->notify_handler_ &&
+      dispatch_info.resume_flag_ ==
+        ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER))
     {
-      result =
-        this->remove_handler_i (dispatch_info.handle_, dispatch_info.mask_);
-    }
+      // Get the reactor token and with this token acquired remove first the
+      // handler and resume it at the same time. This must be atomic, see also
+      // bugzilla 2395. When this is not atomic it can be that we resume the
+      // handle after it is reused by the OS.
+      ACE_TP_Token_Guard guard (this->token_);
 
-  // Resume handler if required.
-  if (dispatch_info.event_handler_ != this->notify_handler_ &&
-      dispatch_info.resume_flag_ == ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
-    this->resume_i (dispatch_info.handle_);
+      result = guard.acquire_token ();
+
+      // If the guard is NOT the owner just return the retval
+      if (!guard.is_owner ())
+        return result;
+
+      if (status < 0)
+        {
+          result =
+            this->remove_handler_i (dispatch_info.handle_, dispatch_info.mask_);
+        }
+
+      // Resume handler if required.
+      if (dispatch_info.event_handler_ != this->notify_handler_ &&
+          dispatch_info.resume_flag_ ==
+            ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
+        this->resume_i (dispatch_info.handle_);
+    }
 
   // Call remove_reference() if needed.
   if (dispatch_info.reference_counting_required_)
