@@ -1,3 +1,8 @@
+Mon Mar 20 14:54:23 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/Task_Ex_T.h:
+          Added a workaround for buggy LynxOS 3.x compiler.
+
 Mon Mar 20 10:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.cpp (post_process_socket_event):
@@ -12,23 +17,23 @@ Mon Mar 20 10:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar 19 21:30:39 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ACE-INSTALL.html (href): Rearranged the order of things
-	  so that it explains how to build and install ACE before going
- 	  into all sorts of details about various platforms and compilers.
-  	  Thanks to Axter <google at axter dot com> for motivating this.
+        * ACE-INSTALL.html (href): Rearranged the order of things
+          so that it explains how to build and install ACE before going
+          into all sorts of details about various platforms and compilers.
+          Thanks to Axter <google at axter dot com> for motivating this.
 
 Sat Mar 18 15:20:45 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/Timer_Queue_Adapters.cpp (activate): Set active_ to 1
-	  in case we were deactivated.  Thanks to Yauheni Akhotnikau
- 	  <eao197 at intervale dot ru> for reporting this.
+        * ace/Timer_Queue_Adapters.cpp (activate): Set active_ to 1
+          in case we were deactivated.  Thanks to Yauheni Akhotnikau
+          <eao197 at intervale dot ru> for reporting this.
 
 Fri Mar 17 16:35:36 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/Symbol_Versioning.html:
+        * docs/Symbol_Versioning.html:
 
-	  New document that describes how to use ACE's versioned namespace
-	  support.  [Bug 2458]
+          New document that describes how to use ACE's versioned namespace
+          support.  [Bug 2458]
 
 Fri Mar 17 15:50:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
@@ -161,10 +166,10 @@ Wed Mar 15 11:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar 14 11:22:35 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/String_Base.inl (empty),
-	* ace/String_Base.h (ACE_String_Base): Added
-	  an empty() method to be more like STL strings.  Thanks to
- 	  Patrick Rabau <pr2345 at gmail dot com> for contributing this.
+        * ace/String_Base.inl (empty),
+        * ace/String_Base.h (ACE_String_Base): Added
+          an empty() method to be more like STL strings.  Thanks to
+          Patrick Rabau <pr2345 at gmail dot com> for contributing this.
 
 Tue Mar 14 23:33:27 UTC 2006  Steve Huston  <shuston@riverace.com>
 
