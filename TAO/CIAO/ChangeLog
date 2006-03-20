@@ -1,8 +1,22 @@
+Mon Mar 20 22:35:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servant_Impl_Utils_T.cpp:
+
+          - Added 'typename' qualifier when declaring instances
+            of an iterator for a templatized hash map, since gcc
+            reminds us that leaving the compiler to implicitly
+            determine if the scoped name denotes a member or a
+            type is deprecated.
+
+          - Added an #include of Cookies.h, which is need by compilers
+            that don't require the template sourced to be included in
+            the header file.
+
 Sun Mar 19 20:37:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
-        
+
           Removed these files, their former contents are now divided
           between CorbaTypenameEmitters.{hpp,cpp} and
           UtilityTypeNameEmitters.{hpp,cpp}.
