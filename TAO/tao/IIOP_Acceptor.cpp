@@ -1179,7 +1179,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
       // put this one on the end. This technique has the effect of
       // putting them in reverse order, but that doesn't matter, since
       // these arguments are only whole strings.
-      argc--;
+      --argc;
       ACE_CString *temp = argv[i];
       for (int j = i; j <= argc-1; j++)
         argv[j] = argv[j+1];
