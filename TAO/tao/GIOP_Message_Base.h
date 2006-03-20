@@ -41,8 +41,7 @@ class TAO_Queued_Data;
  *
  * This class will hold the specific details common to all the GIOP
  * versions. Some of them which are here may be shifted if things
- * start changing between versions. This class uses the
- * TAO_GIOP_Message_Reactive_Handler to read and parse messages.
+ * start changing between versions.
  */
 
 class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
@@ -88,12 +87,12 @@ public:
   virtual int format_message (TAO_OutputCDR &cdr);
 
   /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message 
-  /// header could not be parsed completely, returns a 1 if the message 
+  /// and initializes attributes of @a qd. Returns 0 if the message
+  /// header could not be parsed completely, returns a 1 if the message
   /// header could be parsed completely and returns -1 on error.
   virtual int parse_next_message (ACE_Message_Block &incoming,
-                                  TAO_Queued_Data &qd,       /* out */ 
-                                  size_t &mesg_length);      /* out */ 
+                                  TAO_Queued_Data &qd,       /* out */
+                                  size_t &mesg_length);      /* out */
 
   /// Extract the details of the next message from the @a incoming
   /// through @a qd. Returns 0 if the message header could not be
@@ -143,7 +142,7 @@ public:
   /// consolidated message, 1 if there are still fragmens outstanding,
   /// in case of error -1 is being returned. In any case @a qd must be
   /// released by method implementation.
-  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd, 
+  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd,
                                               TAO_Queued_Data *&msg);
 
   /// Discard all fragments associated to request-id encoded in
