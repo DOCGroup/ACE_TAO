@@ -42,9 +42,6 @@ namespace CORBA
 
   /**
    * @class LocalObject
-   *
-   * @note NW: It is not clear whether minimum CORBA should support
-   * LocalObject or not.  I think it should.
    */
   class TAO_Export LocalObject : public virtual CORBA::Object
   {

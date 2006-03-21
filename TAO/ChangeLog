@@ -1,3 +1,9 @@
+
+        * tao/LocalObject.h:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.h:
+          Documentation and layout fixes
+
 Mon Mar 20 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
@@ -84,55 +90,55 @@ Thu Mar 16 12:20:41 MST 2006  Yan Dai  <dai_y@ociweb.com>
 
 Thu Mar 16 15:48:50 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
-        * TAO/TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp
-        * TAO/TAO_IDL/util/utl_global.cpp
-        * TAO/orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp
-        * TAO/orbsvcs/ImplRepo_Service/Activator_Loader.cpp
-        * TAO/orbsvcs/ImplRepo_Service/INS_Locator.cpp
-        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp
-        * TAO/orbsvcs/ImplRepo_Service/Locator_Loader.cpp
-        * TAO/orbsvcs/Notify_Service/Notify_Service.cpp
-        * TAO/orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp
-        * TAO/orbsvcs/orbsvcs/AV/RTCP_Packet.cpp
-        * TAO/orbsvcs/orbsvcs/AV/RTP.cpp
-        * TAO/orbsvcs/orbsvcs/AV/sfp.cpp
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp
-        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp
-        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp
-        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp
-        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp
-        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp
-        * TAO/orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
-        * TAO/orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
-        * TAO/orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp
-        * TAO/orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp
-        * TAO/orbsvcs/orbsvcs/PortableGroup/GOA.cpp
-        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp
-        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
-        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp
-        * TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp
-        * TAO/tao/GIOP_Message_Base.cpp
-        * TAO/tao/GIOP_Message_Generator_Parser_10.cpp
-        * TAO/tao/GIOP_Message_Generator_Parser_12.cpp
-        * TAO/tao/GIOP_Message_Lite.cpp
-        * TAO/tao/IIOP_Acceptor.cpp
-        * TAO/tao/IIOP_Connection_Handler.cpp
-        * TAO/tao/ORB_Core.cpp
-        * TAO/tao/TAO_Internal.cpp
-        * TAO/tao/AnyTypeCode/Union_TypeCode.cpp
-        * TAO/tao/AnyTypeCode/append.cpp
-        * TAO/tao/AnyTypeCode/skip.cpp
-        * TAO/tao/PortableServer/POAManager.cpp
-        * TAO/tao/RTCORBA/Continuous_Priority_Mapping.cpp
-        * TAO/tao/RTCORBA/Linear_Priority_Mapping.cpp
-        * TAO/tao/RTCORBA/Multi_Priority_Mapping.cpp
-        * TAO/tao/RTCORBA/RT_ORB_Loader.cpp
-        * TAO/tao/Strategies/DIOP_Acceptor.cpp
-        * TAO/tao/Strategies/SHMIOP_Factory.cpp
-        * TAO/tao/Strategies/advanced_resource.cpp
-        * TAO/utils/catior/catior.cpp
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp
+        * TAO_IDL/util/utl_global.cpp
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp
+        * orbsvcs/ImplRepo_Service/Activator_Loader.cpp
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp
+        * orbsvcs/ImplRepo_Service/Locator_Loader.cpp
+        * orbsvcs/Notify_Service/Notify_Service.cpp
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp
+        * orbsvcs/orbsvcs/AV/RTP.cpp
+        * orbsvcs/orbsvcs/AV/sfp.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp
+        * orbsvcs/orbsvcs/PortableGroup/GOA.cpp
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp
+        * tao/GIOP_Message_Base.cpp
+        * tao/GIOP_Message_Generator_Parser_10.cpp
+        * tao/GIOP_Message_Generator_Parser_12.cpp
+        * tao/GIOP_Message_Lite.cpp
+        * tao/IIOP_Acceptor.cpp
+        * tao/IIOP_Connection_Handler.cpp
+        * tao/ORB_Core.cpp
+        * tao/TAO_Internal.cpp
+        * tao/AnyTypeCode/Union_TypeCode.cpp
+        * tao/AnyTypeCode/append.cpp
+        * tao/AnyTypeCode/skip.cpp
+        * tao/PortableServer/POAManager.cpp
+        * tao/RTCORBA/Continuous_Priority_Mapping.cpp
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp
+        * tao/RTCORBA/RT_ORB_Loader.cpp
+        * tao/Strategies/DIOP_Acceptor.cpp
+        * tao/Strategies/SHMIOP_Factory.cpp
+        * tao/Strategies/advanced_resource.cpp
+        * utils/catior/catior.cpp
           Updated these files to solve the warnings when setting up "VC level
           4 warnings" on Windows. These warnings include "unreachable code",
           "assignment within conditional expression", "conversion from some

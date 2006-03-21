@@ -62,7 +62,7 @@ class TAO_Queued_Data;
 /**
  * @class TAO_Pluggable_Messaging
  *
- * @brief Generic definitions  Messaging class.
+ * @brief Generic definitions Messaging class.
  *
  * This interface tries to define generic methods that could be
  * different messaging protocols
@@ -116,14 +116,14 @@ public:
                      CORBA::Octet minor) = 0;
 
   /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message 
-  /// header could not be parsed completely, returns a 1 if the message 
-  /// header could be parsed completely and returns -1 on error. As the 
+  /// and initializes attributes of @a qd. Returns 0 if the message
+  /// header could not be parsed completely, returns a 1 if the message
+  /// header could be parsed completely and returns -1 on error. As the
   /// parsed data is stored directly in @a qd, no state must be stored
   /// in instance of implementation.
   virtual int parse_next_message (ACE_Message_Block &incoming,
-                                  TAO_Queued_Data &qd,        /* out */ 
-                                  size_t &mesg_length) = 0;   /* out */ 
+                                  TAO_Queued_Data &qd,        /* out */
+                                  size_t &mesg_length) = 0;   /* out */
 
   /// Extract the details of the next message from the @a incoming
   /// through @a qd. Returns 0 if the message header could not be
@@ -132,7 +132,7 @@ public:
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd) = 0;
 
-  /// Check whether the node @a qd needs consolidation from @a incoming, 
+  /// Check whether the node @a qd needs consolidation from @a incoming,
   /// @r 0 on success, -1 on error
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming) = 0;
@@ -172,7 +172,7 @@ public:
 
   /// Accessor for the output CDR stream
   virtual TAO_OutputCDR &out_stream (void) = 0;
-   
+
   /// Consolidate newly received fragment with previously arrived
   /// associated fragments to achieve consolidated message.  All
   /// fragments having been received previously are being managed
@@ -185,7 +185,8 @@ public:
   /// points to consolidated message, 1 if there are still fragmens
   /// outstanding, in case of error -1 is being returned. The
   /// implementation is responsible to release @a qd.
-  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd, TAO_Queued_Data *&con_msg) = 0;
+  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd,
+                                              TAO_Queued_Data *&con_msg) = 0;
 
   /// Discard all fragments associated to request-id encoded in
   /// cancel_request.  Transport implementaion guarantees that this
