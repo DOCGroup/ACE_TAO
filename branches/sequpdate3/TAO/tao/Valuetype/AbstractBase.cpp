@@ -362,7 +362,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
               TAO_Stub *concrete_stubobj = generic_objref->_stubobj ();
 
               CORBA::Boolean stores_orb =
-                ! ::CORBA::is_nil (concrete_stubobj->servant_orb_var ().ptr ());
+                ! ::CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ());
 
               if (stores_orb)
                 {

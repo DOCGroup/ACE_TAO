@@ -39,7 +39,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (client_protocol_policy_base.ptr () == 0)
+  if (client_protocol_policy_base.in () == 0)
     {
       do
         {
@@ -191,10 +191,10 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   CORBA::Short max_priority = 0;
 
   // If the priority model policy is not set.
-  if (priority_model_policy.ptr () == 0)
+  if (priority_model_policy.in () == 0)
     {
       // Bands without priority model do not make sense.
-      if (bands_policy.ptr () != 0)
+      if (bands_policy.in () != 0)
         {
           if (r.inconsistent_policies ())
             {
@@ -251,7 +251,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
             }
 
           // If there are no bands.
-          if (bands_policy.ptr () == 0)
+          if (bands_policy.in () == 0)
             {
 
               // Match the priority of the client thread with the

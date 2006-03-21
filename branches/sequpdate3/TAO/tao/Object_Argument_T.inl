@@ -72,7 +72,7 @@ ACE_INLINE
 S_ptr
 TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::excp (void)
 {
-  return this->x_.ptr ();
+  return this->x_.in ();
 }
 
 template<typename S_ptr, typename S_var, typename Insert_Policy>

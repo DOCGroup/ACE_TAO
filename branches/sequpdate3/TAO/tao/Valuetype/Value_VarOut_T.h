@@ -95,7 +95,6 @@ public:
   TAO_Value_Out_T (const TAO_Value_Out_T<T> &);
 
   TAO_Value_Out_T &operator= (const TAO_Value_Out_T<T> &);
-  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
@@ -104,8 +103,9 @@ public:
   T * operator-> (void);
 
 private:
-  typedef TAO_Value_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
+  /// Assignment from _var not allowed.
+  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -98,7 +98,7 @@ CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PriorityModelPolicy* tmp;
+  TAO_PriorityModelPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -211,7 +211,7 @@ CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ThreadpoolPolicy* tmp;
+  TAO_ThreadpoolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -289,7 +289,7 @@ CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PrivateConnectionPolicy* tmp;
+  TAO_PrivateConnectionPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -393,7 +393,7 @@ CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PriorityBandedConnectionPolicy *tmp;
+  TAO_PriorityBandedConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -489,7 +489,7 @@ RTCORBA::ProtocolList *
 TAO_ServerProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  RTCORBA::ProtocolList *tmp;
+  RTCORBA::ProtocolList *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -510,7 +510,7 @@ CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ServerProtocolPolicy* tmp;
+  TAO_ServerProtocolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -599,7 +599,7 @@ RTCORBA::ProtocolList *
 TAO_ClientProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  RTCORBA::ProtocolList *tmp;
+  RTCORBA::ProtocolList *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -620,7 +620,7 @@ CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ClientProtocolPolicy* tmp;
+  TAO_ClientProtocolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -690,12 +690,12 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
         (this->protocols_[i].protocol_type, in_cdr.orb_core ());
 
       if (is_read_ok
-          && (this->protocols_[i].orb_protocol_properties.ptr () != 0))
+          && (this->protocols_[i].orb_protocol_properties.in () != 0))
         is_read_ok =
           this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
 
       if (is_read_ok
-          && (this->protocols_[i].transport_protocol_properties.ptr () != 0))
+          && (this->protocols_[i].transport_protocol_properties.in () != 0))
         is_read_ok =
           this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
 
@@ -1303,9 +1303,9 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = 1;
-      CORBA::Boolean dont_route = 0;
-      CORBA::Boolean enable_network_priority = 0;
+      CORBA::Boolean keep_alive = true;
+      CORBA::Boolean dont_route = false;
+      CORBA::Boolean enable_network_priority = false;
 
       ACE_NEW_RETURN (property,
                       TAO_TCP_Protocol_Properties (send_buffer_size,
@@ -1322,9 +1322,9 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = 1;
-      CORBA::Boolean dont_route = 0;
-      CORBA::Long preallocate_buffer_size = 0;
+      CORBA::Boolean keep_alive = true;
+      CORBA::Boolean dont_route = false;
+      CORBA::Long preallocate_buffer_size = false;
       const char *mmap_filename = "";
       const char *mmap_lockname = "";
 
@@ -1365,9 +1365,9 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = 1;
-      CORBA::Boolean dont_route = 0;
-      CORBA::Boolean enable_network_priority = 0;
+      CORBA::Boolean keep_alive = true;
+      CORBA::Boolean dont_route = false;
+      CORBA::Boolean enable_network_priority = false;
 
       ACE_NEW_RETURN (property,
                       TAO_StreamControl_Protocol_Properties (send_buffer_size,

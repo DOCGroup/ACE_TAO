@@ -46,7 +46,7 @@ TAO_Objref_Var_T<T>::operator= (
   if (this != &p)
     {
       TAO::Objref_Traits<T>::release (this->ptr_);
-      this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.ptr ());
+      this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.in ());
     }
 
   return *this;
