@@ -46,7 +46,6 @@ public:
   T_elem  operator[] (CORBA::ULong index);
 
 private:
-  typedef TAO_Seq_Out_T<T,T_var> THIS_OUT_TYPE;
   T *& ptr_;
   // Assignment from T_var not allowed.
   void operator= (const T_var &);

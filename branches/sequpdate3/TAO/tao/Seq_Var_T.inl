@@ -96,14 +96,6 @@ TAO_Seq_Var_Base_T<T>::_retn (void)
   return tmp;
 }
 
-template<typename T>
-ACE_INLINE
-T *
-TAO_Seq_Var_Base_T<T>::ptr (void) const
-{
-  return this->ptr_;
-}
-
 // ***************************************************************
 
 template<typename T>
