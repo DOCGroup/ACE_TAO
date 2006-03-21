@@ -242,7 +242,7 @@ protected:
 
 private:
 
-  /// the concrete acceptor, as a pointer to it's base class.
+  /// The concrete acceptor, as a pointer to it's base class.
   BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
