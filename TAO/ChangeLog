@@ -1,3 +1,10 @@
+Tue Mar 21 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Table.h:
+          Removed update_orbs method declaration, there was no implementation,
+          if someone would use this method he would get an unresolved external,
+          so zapped it
+
 Tue Mar 21 13:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.h:
