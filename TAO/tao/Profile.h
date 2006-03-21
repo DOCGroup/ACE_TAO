@@ -249,7 +249,7 @@ protected:
   virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
 
   /**
-   * Helper for <decode>.  Decodes endpoints from a tagged component.
+   * Helper for decode().  Decodes endpoints from a tagged component.
    * Decode only if RTCORBA is enabled.  Furthermore, we may not find
    * TAO_TAG_ENDPOINTS component, e.g., if we are talking to nonRT
    * version of TAO or some other ORB.  This is not an error, and we
