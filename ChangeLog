@@ -1,3 +1,13 @@
+Tue Mar 21 19:06:12 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing on behalf of Adam Mitz <mitza@ociweb.com>.
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          In some cases .EXE was not being added to the end of the
+          executable name.  This change fixes that problem and also changes
+          Spawn() to return -1 on failure instead of exiting.
+
 Tue Mar 21 15:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
@@ -50,8 +60,8 @@ Mon Mar 20 08:58:26 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Mon Mar 20 08:58:26 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ACE-INSTALL.html: Removed all references to egcs, which
-	  is hopelessly out of date..
+        * ACE-INSTALL.html: Removed all references to egcs, which
+          is hopelessly out of date..
 
 Mon Mar 20 14:54:23 UTC 2006  Olli Savia  <ops@iki.fi>
 
