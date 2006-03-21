@@ -4427,6 +4427,41 @@ dnl Check for Unix98 pthreads extensions
 
   ACE_CHECK_HAS_FUNCS(pthread_getaffinity_np pthread_setaffinity_np)
 
+dnl Linux's sched_{set,get}affinity interface has changed three times:
+dnl
+dnl In glibc 2.3.2, it was: 
+dnl
+dnl   int sched_setaffinity(pid_t __pid, 
+dnl                         unsigned int __len, unsigned long * __mask);
+dnl
+dnl In glibc 2.3.3, it was changed to:
+dnl
+dnl   int sched_setaffinity(pid_t __pid, const cpu_set_t* __mask);
+dnl
+dnl And in glibc ?.?.?, it was changed again to:
+dnl
+dnl   int sched_setaffinity(pid_t __pid, size_t __cpusetsize, 
+dnl                         const cpu_set_t* __cpuset);
+dnl
+dnl The following feature tests attempt to determine which (if any)
+dnl version is supported by the system.  A further complication is
+dnl that the C library may support one version, the kernel may not,
+dnl and vice versa.
+dnl
+dnl As of this writing, ACE's ACE_OS::sched_setaffinity() wrapper
+dnl facade implementation only supports the latter two varients.  So
+dnl if the system doesn't define cpu_set_t, we simply avoid checking
+dnl for sched_setaffinity().  No attempt is made to verify C library /
+dnl kernel consistency.
+dnl
+dnl The "right" thing to do is to implement something similar to the
+dnl PLPA (Portable Linux Processor Affinity) Library, converting the
+dnl arguments and invoking the syscall directly (instead of calling
+dnl the C library wrapper).
+dnl
+
+if test "$ac_cv_type_cpu_set_t" = yes; then
+
   ACE_CHECK_HAS_FUNCS(sched_getaffinity)
 if test "$ac_cv_func_sched_getaffinity" = yes; then
 dnl The sched_getaffinity() function varies between linux versions
@@ -4485,6 +4520,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
           ])
 fi dnl test "$ac_cv_func_sched_setaffinity" = yes
 
+fi dnl test "$ac_cv_type_cpu_set_t" = yes
 
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
