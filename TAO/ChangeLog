@@ -1,4 +1,6 @@
+Tue Mar 21 13:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/Profile.h:
         * tao/LocalObject.h:
         * tao/IIOP_Acceptor.h:
         * tao/IIOP_Acceptor.h:
