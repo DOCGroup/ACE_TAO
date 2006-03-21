@@ -1,3 +1,27 @@
+Tue Mar 21 14:29:29 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          If system lacks the cpu_set_t type, skip the feature tests for
+          sched_getaffinity() and sched_setaffinity().  The interface of
+          these system calls have changed three times, and ACE currently
+          only supports the latter two varients.  The supported varients
+          both have arguments of type cpu_set_t.
+
+          On a system with the first varient, the feature tests detects
+          the existance of sched_getaffinity() and sched_setaffinity(),
+          it also detects that it's the not most current varient.  This
+          results in feature test macros being defined for the second
+          varient, which causes a build failure in OS_NS_Thread.cpp.
+
+          By avoiding the feature tests, we avoid defining any processor
+          affinity related feature test macros, and ACE will be compiled
+          as if the system does not support any form of processor
+          affinity.
+
+          See bugzilla issue 2466 for details.
+
+
 Tue Mar 21 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Misc/childbirth_time.cpp:
