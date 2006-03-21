@@ -24,13 +24,6 @@ TAO_Value_Var_T<T>::TAO_Value_Var_T (const T * p)
 {}
 
 template <typename T>
-T *
-TAO_Value_Var_T<T>::ptr (void) const
-{
-  return this->ptr_;
-}
-
-template <typename T>
 TAO_Value_Var_T<T>::TAO_Value_Var_T (const TAO_Value_Var_T<T> & p)
   : TAO_Base_var ()
 {
@@ -172,13 +165,6 @@ TAO_Value_Out_T<T>::operator= (T * p)
 
 template <typename T>
 TAO_Value_Out_T<T>::operator T *& ()
-{
-  return this->ptr_;
-}
-
-template <typename T>
-T *&
-TAO_Value_Out_T<T>::ptr (void)
 {
   return this->ptr_;
 }

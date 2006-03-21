@@ -68,9 +68,6 @@ public:
   T *& out (void);
   T * _retn (void);
 
-  // (TAO extension)
-  T * ptr (void) const;
-
 private:
 
   // Prevent widening assignment.
@@ -102,7 +99,6 @@ public:
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
-  T *& ptr (void);
 
   T * operator-> (void);
 

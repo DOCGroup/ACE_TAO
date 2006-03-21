@@ -4,6 +4,7 @@
         * tao/Objref_VarOut_T.{h,cpp}:
         * tao/Seq_Out_T.{h,inl}:
         * tao/Seq_Var_T.{h,inl}:
+        * tao/Array_VarOut_T.{h,inl}:
           Removed the TAO specific ptr accessor, just use the spec defined
           methods.
 
