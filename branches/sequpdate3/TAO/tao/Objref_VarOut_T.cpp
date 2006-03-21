@@ -18,7 +18,7 @@ TAO_Objref_Var_T<T>::TAO_Objref_Var_T (
     const TAO_Objref_Var_T<T> & p
   )
   : TAO_Base_var (),
-    ptr_ (TAO::Objref_Traits<T>::duplicate (p.ptr ()))
+    ptr_ (TAO::Objref_Traits<T>::duplicate (p.in ()))
 {
 }
 
@@ -157,20 +157,17 @@ TAO_Objref_Out_T<T>::operator= (
 
 template <typename T>
 TAO_Objref_Out_T<T> &
-TAO_Objref_Out_T<T>::operator= (
-    const TAO_Objref_Var_T<T> & p
-  )
-{
-  this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.ptr ());
-  return *this;
-}
-
-template <typename T>
-TAO_Objref_Out_T<T> &
 TAO_Objref_Out_T<T>::operator= (T * p)
 {
   this->ptr_ = p;
   return *this;
+}
+
+template <typename T>
+T *&
+TAO_Objref_Out_T<T>::ptr (void)
+{
+  return this->ptr_;
 }
 
 template <typename T>

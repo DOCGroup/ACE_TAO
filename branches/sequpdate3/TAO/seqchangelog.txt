@@ -7,7 +7,11 @@
         * tao/Array_VarOut_T.{h,inl}:
         * tao/Valuetype/Value_VarOut_T.{h,inl}:
           Removed the TAO specific ptr accessor, just use the spec defined
-          methods.
+          methods. This is only for the _var classes, the _ptr method is in
+          the spec for the _out classes
+
+        * TAO_Objref_Out_T.{h,inl}:
+          Assinging _var to _out is not allowed according to the spec
 
         * tao/Messaging/*:
           Removed old AMI mapping. Fixes partly bugzilla bug 2273, need to

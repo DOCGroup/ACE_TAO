@@ -223,6 +223,14 @@ TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator[] (CORBA::ULong index)
   return this->ptr_[index];
 }
 
+template<typename T, typename T_var, typename T_slice, typename TAG>
+ACE_INLINE
+T_slice *&
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::ptr (void)
+{
+  return this->ptr_;
+}
+
 // *************************************************************
 
 template<typename T, typename T_slice, typename TAG>
@@ -348,6 +356,14 @@ CORBA::Boolean
 TAO_Array_Forany_T<T,T_slice,TAG>::nocopy (void) const
 {
   return this->nocopy_;
+}
+
+template<typename T, typename T_slice, typename TAG>
+ACE_INLINE
+T_slice *
+TAO_Array_Forany_T<T,T_slice,TAG>::ptr (void) const
+{
+  return this->ptr_;
 }
 
 template<typename T, typename T_slice, typename TAG>

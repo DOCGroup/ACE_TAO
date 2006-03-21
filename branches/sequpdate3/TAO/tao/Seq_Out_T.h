@@ -43,6 +43,7 @@ public:
   T * operator-> (void);
 
   T_elem  operator[] (CORBA::ULong index);
+  T *& ptr (void);
 
 private:
   T *& ptr_;

@@ -20,7 +20,7 @@ template <typename T>
 ACE_INLINE
 TAO_Pseudo_Var_T<T>::TAO_Pseudo_Var_T (const TAO_Pseudo_Var_T<T> & p)
   : TAO_Base_var ()
-  , ptr_ (T::_duplicate (p.ptr ()))
+  , ptr_ (T::_duplicate (p.in ()))
 {}
 
 template <typename T>
@@ -141,6 +141,14 @@ TAO_Pseudo_Out_T<T,T_var>::operator= (T * p)
 {
   this->ptr_ = p;
   return *this;
+}
+
+template <typename T, typename T_var>
+ACE_INLINE
+T *&
+TAO_Pseudo_Out_T<T,T_var>::ptr (void)
+{
+  return this->ptr_;
 }
 
 template <typename T, typename T_var>

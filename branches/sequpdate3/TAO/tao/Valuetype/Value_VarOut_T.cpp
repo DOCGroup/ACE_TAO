@@ -170,6 +170,13 @@ TAO_Value_Out_T<T>::operator T *& ()
 }
 
 template <typename T>
+T *&
+TAO_Value_Out_T<T>::ptr (void)
+{
+  return this->ptr_;
+}
+
+template <typename T>
 T *
 TAO_Value_Out_T<T>::operator-> (void)
 {

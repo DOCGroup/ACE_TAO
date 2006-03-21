@@ -99,6 +99,7 @@ public:
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
+  T *& ptr (void);
 
   T * operator-> (void);
 

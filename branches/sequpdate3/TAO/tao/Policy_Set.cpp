@@ -70,7 +70,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
           if (copy->_tao_cached_type () != TAO_CACHED_POLICY_UNCACHED)
             {
               this->cached_policies_[copy->_tao_cached_type ()] =
-                copy.ptr ();
+                copy.in ();
             }
 
           this->policy_list_[i] = copy._retn ();
@@ -126,7 +126,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source
       // Add the "cacheable" policies into the cache.
       if (copy->_tao_cached_type () != TAO_CACHED_POLICY_UNCACHED)
         {
-          this->cached_policies_[copy->_tao_cached_type ()] = copy.ptr ();
+          this->cached_policies_[copy->_tao_cached_type ()] = copy.in ();
         }
 
       this->policy_list_[length] = copy._retn ();
@@ -242,7 +242,7 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
           this->policy_list_[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          this->policy_list_[j] = copy.ptr ();
+          this->policy_list_[j] = copy.in ();
           break;
         }
 
@@ -252,7 +252,7 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
   if (j == length)
     {
       this->policy_list_.length (length + 1);
-      this->policy_list_[j] = copy.ptr ();
+      this->policy_list_[j] = copy.in ();
     }
 
   // If this is a policy that gets accessed on the critical path,
@@ -261,7 +261,7 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
 
   if (cached_policy_type != TAO_CACHED_POLICY_UNCACHED)
     {
-      this->cached_policies_[cached_policy_type] = copy.ptr ();
+      this->cached_policies_[cached_policy_type] = copy.in ();
     }
 
   // Transfer ownership to the policy list.

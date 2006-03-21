@@ -103,17 +103,19 @@ public:
   TAO_Objref_Out_T (const TAO_Objref_Out_T<T> &);
 
   TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &);
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &);
   TAO_Objref_Out_T &operator= (T *);
 
   // Cast operator.
   operator T *& ();
 
+  T *& ptr (void);
   T * operator-> (void);
 
 private:
-  typedef TAO_Objref_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
+
+  /// Assignment from _var not allowed.
+  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

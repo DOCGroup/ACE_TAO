@@ -59,6 +59,8 @@ public:
   _out_type     out (void);
   _retn_type    _retn (void);
 
+   /// TAO extension.
+   _retn_type    ptr (void) const;
 protected:
   T * ptr_;
 };

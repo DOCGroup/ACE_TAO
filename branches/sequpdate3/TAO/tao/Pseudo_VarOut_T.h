@@ -112,6 +112,7 @@ public:
   TAO_Pseudo_Out_T<T,T_var> & operator= (T *);
 
   operator T *& ();
+  T *& ptr (void);
   T * operator-> (void);
 
 private:
