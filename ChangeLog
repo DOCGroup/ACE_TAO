@@ -21,7 +21,6 @@ Tue Mar 21 14:29:29 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
           See bugzilla issue 2466 for details.
 
-
 Tue Mar 21 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Misc/childbirth_time.cpp:
