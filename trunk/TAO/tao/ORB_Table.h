@@ -130,12 +130,6 @@ namespace TAO
     /// orb_id.  (underlying unlocked implementation).
     ::TAO_ORB_Core * find_i (char const * orb_id);
 
-    /// Update our list of orbs
-    /**
-     * @todo Where the implementation for ORB_Table::update_orbs?
-     */
-    void update_orbs (void);
-
   private:
 
     /// Lock used to synchronize access to the internal state.
