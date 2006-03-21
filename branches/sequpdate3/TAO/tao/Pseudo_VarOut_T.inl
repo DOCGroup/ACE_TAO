@@ -98,14 +98,6 @@ TAO_Pseudo_Var_T<T>::_retn (void)
   return val;
 }
 
-template <typename T>
-ACE_INLINE
-T *
-TAO_Pseudo_Var_T<T>::ptr (void) const
-{
-  return this->ptr_;
-}
-
 // *************************************************************
 
 template <typename T, typename T_var>
@@ -154,14 +146,6 @@ TAO_Pseudo_Out_T<T,T_var>::operator= (T * p)
 template <typename T, typename T_var>
 ACE_INLINE
 TAO_Pseudo_Out_T<T,T_var>::operator T *& ()
-{
-  return this->ptr_;
-}
-
-template <typename T, typename T_var>
-ACE_INLINE
-T *&
-TAO_Pseudo_Out_T<T,T_var>::ptr (void)
 {
   return this->ptr_;
 }

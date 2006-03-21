@@ -64,9 +64,6 @@ public:
   _retn_type    _retn (void);
   _retn_arg_type  _retn_arg (void);
 
-  // TAO extension.
-  _retn_type    ptr (void) const;
-
 protected:
   T_slice * ptr_;
 };
@@ -142,7 +139,6 @@ public:
   TAO_Array_Out_T<T,T_var,T_slice,TAG> &operator= (T_slice *);
 
   operator T_slice *& ();
-  T_slice *& ptr (void);
 
   T_slice & operator[] (CORBA::ULong index);
   const T_slice & operator[] (CORBA::ULong index) const;
@@ -187,7 +183,6 @@ public:
   T_slice * inout (void);
   T_slice * &out (void);
   T_slice * _retn (void);
-  T_slice * ptr (void) const;
   CORBA::Boolean nocopy (void) const;
 
   static T_slice * tao_alloc (void);

@@ -58,14 +58,6 @@ TAO_Seq_Out_T<T,T_var>::operator T *& ()
 
 template<typename T, typename T_var>
 ACE_INLINE
-T *&
-TAO_Seq_Out_T<T,T_var>::ptr (void)
-{
-  return this->ptr_;
-}
-
-template<typename T, typename T_var>
-ACE_INLINE
 T *
 TAO_Seq_Out_T<T,T_var>::operator-> (void)
 {

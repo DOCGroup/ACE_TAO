@@ -104,13 +104,6 @@ TAO_Objref_Var_T<T>::_retn (void)
 }
 
 template <typename T>
-T *
-TAO_Objref_Var_T<T>::ptr (void) const
-{
-  return this->ptr_;
-}
-
-template <typename T>
 void
 TAO_Objref_Var_T<T>::free (void)
 {
@@ -182,13 +175,6 @@ TAO_Objref_Out_T<T>::operator= (T * p)
 
 template <typename T>
 TAO_Objref_Out_T<T>::operator T *& ()
-{
-  return this->ptr_;
-}
-
-template <typename T>
-T *&
-TAO_Objref_Out_T<T>::ptr (void)
 {
   return this->ptr_;
 }

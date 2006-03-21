@@ -40,7 +40,6 @@ public:
   TAO_Seq_Out_T &operator= (T *);
 
   operator T *& ();
-  T *& ptr (void);
   T * operator-> (void);
 
   T_elem  operator[] (CORBA::ULong index);

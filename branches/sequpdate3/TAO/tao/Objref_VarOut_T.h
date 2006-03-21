@@ -77,9 +77,6 @@ public:
   _out_type     out (void);
   _retn_type    _retn (void);
 
-  // TAO extension.
-  _retn_type    ptr (void) const;
-
 protected:
   T * ptr_;
   void free (void);
@@ -112,7 +109,6 @@ public:
   // Cast operator.
   operator T *& ();
 
-  T *& ptr (void);
   T * operator-> (void);
 
 private:

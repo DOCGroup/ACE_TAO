@@ -1,6 +1,15 @@
 
+        * tao/VarOut_T.{h,inl}:
+        * tao/Pseudo_VarOut_T.{h,inl}:
+        * tao/Objref_VarOut_T.{h,cpp}:
+        * tao/Seq_Out_T.{h,inl}:
+        * tao/Seq_Var_T.{h,inl}:
+          Removed the TAO specific ptr accessor, just use the spec defined
+          methods.
+
         * tao/Messaging/*:
-          Removed old AMI mapping. Fixes bugzilla bug 2273
+          Removed old AMI mapping. Fixes partly bugzilla bug 2273, need to
+          update the IDL compiler yet
 
         * tao/Exception.h:
           Moved constructors, assignment operator and copy constructor to

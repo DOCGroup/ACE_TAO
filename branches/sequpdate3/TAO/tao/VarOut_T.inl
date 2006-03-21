@@ -24,7 +24,7 @@ TAO_Var_Base_T<T>::~TAO_Var_Base_T (void)
 }
 
 template<typename T>
-ACE_INLINE 
+ACE_INLINE
 const T *
 TAO_Var_Base_T<T>::operator-> (void) const
 {
@@ -32,7 +32,7 @@ TAO_Var_Base_T<T>::operator-> (void) const
 }
 
 template<typename T>
-ACE_INLINE 
+ACE_INLINE
 T *
 TAO_Var_Base_T<T>::operator-> (void)
 {
@@ -48,7 +48,7 @@ TAO_Var_Base_T<T>::operator const T & () const
 
 template<typename T>
 ACE_INLINE
-TAO_Var_Base_T<T>::operator T & () 
+TAO_Var_Base_T<T>::operator T & ()
 {
   return *this->ptr_;
 }
@@ -61,7 +61,7 @@ TAO_Var_Base_T<T>::operator T & () const
 }
 
 template<typename T>
-ACE_INLINE 
+ACE_INLINE
 const T &
 TAO_Var_Base_T<T>::in (void) const
 {
@@ -69,19 +69,11 @@ TAO_Var_Base_T<T>::in (void) const
 }
 
 template<typename T>
-ACE_INLINE 
+ACE_INLINE
 T &
 TAO_Var_Base_T<T>::inout (void)
 {
   return *this->ptr_;
-}
-
-template<typename T>
-ACE_INLINE 
-T *
-TAO_Var_Base_T<T>::ptr (void) const
-{
-  return this->ptr_;
 }
 
 // *************************************************************
@@ -108,7 +100,7 @@ template<typename T>
 ACE_INLINE
 TAO_Fixed_Var_T<T>::TAO_Fixed_Var_T (const T & p)
 {
-  ACE_NEW (this->ptr_, 
+  ACE_NEW (this->ptr_,
            T (p));
 }
 
@@ -124,7 +116,7 @@ TAO_Fixed_Var_T<T>::operator= (T * p)
 
 // Mapping for fixed size.
 template<typename T>
-ACE_INLINE 
+ACE_INLINE
 T &
 TAO_Fixed_Var_T<T>::out (void)
 {
@@ -132,7 +124,7 @@ TAO_Fixed_Var_T<T>::out (void)
 }
 
 template<typename T>
-ACE_INLINE 
+ACE_INLINE
 T
 TAO_Fixed_Var_T<T>::_retn (void)
 {
@@ -243,14 +235,6 @@ TAO_Out_T<T,T_var>::operator= (T * p)
 template<typename T, typename T_var>
 ACE_INLINE
 TAO_Out_T<T,T_var>::operator T *& ()
-{
-  return this->ptr_;
-}
-
-template<typename T, typename T_var>
-ACE_INLINE
-T *&
-TAO_Out_T<T,T_var>::ptr (void)
 {
   return this->ptr_;
 }

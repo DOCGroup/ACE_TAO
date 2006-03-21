@@ -93,14 +93,6 @@ TAO_Array_Var_Base_T<T,T_slice,TAG>::_retn (void)
   return tmp;
 }
 
-template<typename T, typename T_slice, typename TAG>
-ACE_INLINE
-T_slice *
-TAO_Array_Var_Base_T<T,T_slice,TAG>::ptr (void) const
-{
-  return this->ptr_;
-}
-
 // *************************************************************
 
 template<typename T, typename T_slice, typename TAG>
@@ -219,14 +211,6 @@ TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator= (T_slice *p)
 template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator T_slice *& ()
-{
-  return this->ptr_;
-}
-
-template<typename T, typename T_var, typename T_slice, typename TAG>
-ACE_INLINE
-T_slice *&
-TAO_Array_Out_T<T,T_var,T_slice,TAG>::ptr (void)
 {
   return this->ptr_;
 }
@@ -354,14 +338,6 @@ template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 T_slice *
 TAO_Array_Forany_T<T,T_slice,TAG>::_retn (void)
-{
-  return this->ptr_;
-}
-
-template<typename T, typename T_slice, typename TAG>
-ACE_INLINE
-T_slice *
-TAO_Array_Forany_T<T,T_slice,TAG>::ptr (void) const
 {
   return this->ptr_;
 }
