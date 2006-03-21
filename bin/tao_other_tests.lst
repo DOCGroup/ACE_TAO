@@ -48,7 +48,7 @@ TAO/examples/Simple/bank/run_test.pl: !NO_MESSAGING
 TAO/examples/Simple/grid/run_test.pl: !NO_MESSAGING
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING !Win32
 TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING !Win32
-TAO/examples/Quoter/run_test.pl: !MINIMUM !Win32
+TAO/examples/Quoter/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !Win32
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST !NO_DIOP
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !NO_DIOP
@@ -68,7 +68,7 @@ TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM !ACE_FOR_TA
 TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/Bug_1334_Regression/run_test.pl !ACE_FOR_TAO
 TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl: !MINIMUM !NO_IFR
-TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl: !MINIMUM !NO_MESSAGING
+TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl: !LynxOS !MINIMUM !NO_MESSAGING
 TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl: !MINIMUM !NO_IFR
 TAO/orbsvcs/tests/Bug_1437_Regression/run_test.pl: !MINIMUM !NO_MESSAGING
 TAO/orbsvcs/tests/Bug_1630_Regression/run_test.pl: !NO_IFR !MINIMUM
@@ -111,7 +111,7 @@ TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST
-TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM
+TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM !NO_IFR
 TAO/orbsvcs/tests/Log/Basic_Log_Test/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl notify.reactive.conf: IPV6 !ST !NO_MESSAGING !STATIC !MINIMUM !ACE_FOR_TAO
