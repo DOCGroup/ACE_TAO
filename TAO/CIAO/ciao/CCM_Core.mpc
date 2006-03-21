@@ -74,7 +74,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
 // Please don't remove.
 project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
   sharedname   =  CIAO_Deployment_stub
-  after        += CIAO_DnC_Client
+  after        += CIAO_DnC_Client CIAO_DnC_Events
 
   libs += CIAO_DnC_Client CIAO_DnC_Events
 
