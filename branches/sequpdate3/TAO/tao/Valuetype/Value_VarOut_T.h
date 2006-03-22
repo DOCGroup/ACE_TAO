@@ -62,11 +62,16 @@ public:
   operator const T * () const;
   operator T *& ();
 
+  typedef T *  _in_type;
+  typedef T *& _inout_type;
+  typedef T *& _out_type;
+  typedef T *  _retn_type;
+
   // in, inout, out, _retn
-  T * in (void) const;
-  T *& inout (void);
-  T *& out (void);
-  T * _retn (void);
+  _in_type in (void) const;
+  _inout_type inout (void);
+  _out_type out (void);
+  _retn_type _retn (void);
 
 private:
 
@@ -75,9 +80,7 @@ private:
   void operator= (const TAO_Base_var &);
 
 private:
-
   T * ptr_;
-
 };
 
 /**

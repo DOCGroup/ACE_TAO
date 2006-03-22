@@ -90,7 +90,6 @@ public:
 
   typedef       T_slice *  _out_type;
   _out_type     out (void);
-
 };
 
 /**

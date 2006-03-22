@@ -176,7 +176,7 @@ int ST_AMH_Server::start_orb_and_poa (const CORBA::ORB_var &_orb)
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB::_duplicate(_orb.ptr());
+      this->orb_ = CORBA::ORB::_duplicate(_orb.in ());
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -218,7 +218,7 @@ void ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
       Test::Roundtrip_var roundtrip = servant->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::String_var iorstr = this->orb_->object_to_string(roundtrip.ptr());
+      CORBA::String_var iorstr = this->orb_->object_to_string(roundtrip.in ());
       ACE_TRY_CHECK;
 
       (void) this->write_ior_to_file(iorstr);
@@ -324,11 +324,10 @@ ST_AMH_Servant servant(orb.in());
 
   	amh_server.register_servant(&servant);
 
+    CORBA::Object_var object =  orb->string_to_object(ior);
+    ACE_TRY_CHECK;
 
-
-CORBA::Object_var object =  orb->string_to_object(ior);
-	ACE_TRY_CHECK;
-Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow(object.ptr());
+    Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow(object.in ());
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil(roundtrip.in()))
@@ -339,9 +338,8 @@ Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow(object.ptr());
                           1);
       	}
 
-
-ACE_thread_t serverThr;
-ACE_thread_t clientThr;
+    ACE_thread_t serverThr;
+    ACE_thread_t clientThr;
 
     ACE_Thread_Manager::instance()->spawn(start_server,
                                           (void*)&amh_server,
@@ -350,7 +348,7 @@ ACE_thread_t clientThr;
                                           );
 
     ACE_Thread_Manager::instance()->spawn(start_client,
-                                          (void*)roundtrip.ptr(),
+                                          (void*)roundtrip.in (),
                                           THR_NEW_LWP | THR_JOINABLE,
                                           &clientThr
                                           );
