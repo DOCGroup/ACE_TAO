@@ -1,3 +1,18 @@
+Wed Mar 22 18:42:08 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
+
+        * ace/DLL.cpp:
+        * ace/DLL.h:
+        * ace/DLL_Manager.cpp:
+        * ace/DLL_Manager.h:
+        
+	- Changed the signature of the DLL open methods by adding a new parameter called 
+	  'debug_level', with it's default value set to 0.
+	- If this debug_level value is > 9, the ACE_DEBUG messages in DLL open
+	  methods are printed to stdout.
+	- This can be used in CIAO by setting CIAO_DEBUG_LEVEL to > 9, and
+	  sending the debug level to the DLL open method to print the log messages.
+
+
 Wed Mar 22 17:55:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
@@ -520,6 +535,7 @@ Fri Mar 10 08:58:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           Add pkg.m4 from pkg-config 0.20 distribution, so configure
           script can be regenerated on systems without it installed.
 
+>>>>>>> 4.10049
 Thu Mar  9 09:18:58 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
         * COPYING: Updated the date to include 2006.
