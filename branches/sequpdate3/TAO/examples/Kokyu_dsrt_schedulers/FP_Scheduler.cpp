@@ -405,7 +405,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
   RTCORBA::Priority desired_priority;
 
-  if (sc.in () == 0)
+  if (CORBA::is_nil (sc.in ()))
     {
       desired_priority = 0;
     }
@@ -580,7 +580,7 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (sc.in () == 0)
+  if (CORBA::is_nil (sc.in ()))
     {
       desired_priority = 0;
     }

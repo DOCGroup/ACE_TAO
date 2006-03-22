@@ -140,7 +140,7 @@ Checkpoint_i::get_critical_events (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   // The skeleton should not steal our list by decrementing
   // the reference counter.
 
-  CORBA::add_ref (alarms.ptr ());
+  CORBA::add_ref (alarms.in ());
 
   // alarms._retn () would reset and destroy our alarms.
 

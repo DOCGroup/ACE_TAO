@@ -404,7 +404,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   CORBA::Long criticality;
   TimeBase::TimeT deadline,exec_time;
 
-  if (sc.ptr () == 0)
+  if (CORBA::is_nil (sc.in ()))
     {
       //24 hrs from now - infinity
       ACE_Time_Value deadline_tv = ACE_OS::gettimeofday () + ACE_Time_Value (24*60*60,0);
@@ -610,7 +610,7 @@ MUF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   CORBA::Long criticality;
   TimeBase::TimeT deadline,exec_time;
 
-  if (sc.ptr () == 0)
+  if (CORBA::is_nil (sc.ptr ()))
     {
       ACE_DEBUG ((LM_DEBUG, "service context was not filled\n"));
       //24 hrs from now - infinity
