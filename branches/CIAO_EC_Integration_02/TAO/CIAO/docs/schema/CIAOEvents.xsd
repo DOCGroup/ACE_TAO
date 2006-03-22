@@ -31,6 +31,13 @@
 
   <xsd:complexType name="CIAOEventsDef">
     <xsd:sequence>
+      <xsd:element name="eventServiceConfiguration" type="CIAO:EventServiceDescription" minOccurs="1"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="EventServiceDescription">
+    <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="node" type="xsd:string"/>
       <xsd:element name="type" type="CIAO::EventServiceType"/>
