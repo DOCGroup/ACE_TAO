@@ -508,7 +508,7 @@ TAO_Trading_Components_i::register_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Register::_nil ());
-  return this->register_.ptr ();
+  return this->register_.in ();
 }
 
 void
@@ -523,7 +523,7 @@ TAO_Trading_Components_i::link_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Link::_nil ());
-  return this->link_.ptr ();
+  return this->link_.in ();
 }
 
 void
@@ -538,7 +538,7 @@ TAO_Trading_Components_i::proxy_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Proxy::_nil ());
-  return this->proxy_.ptr ();
+  return this->proxy_.in ();
 }
 
 void
@@ -553,7 +553,7 @@ TAO_Trading_Components_i::admin_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Admin::_nil ());
-  return this->admin_.ptr ();
+  return this->admin_.in ();
 }
 
 void
