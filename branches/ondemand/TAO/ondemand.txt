@@ -1,3 +1,8 @@
+Wed Mar 22 13:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.h:
+          Fixed warning of the Intel compiler
+
 Wed Mar 22 01:33:47 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/CDR.cpp:
@@ -37,11 +42,11 @@ Tue Mar 21 15:16:43 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
         * tao/GIOP_Message_Base.cpp (set_giop_flags):
 
           Cast CDR stream buffer to an array of octets.
-        
+
         * tao/GIOP_Message_Base.h (set_giop_flags):
 
           Added missing method declaration.
-        
+
         * tao/Resource_Factory.h (fragmentation_strategy):
         * tao/default_resource.cpp:
         * tao/default_resource.h:
