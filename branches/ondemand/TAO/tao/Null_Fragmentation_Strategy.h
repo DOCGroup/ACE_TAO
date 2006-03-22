@@ -43,10 +43,11 @@ class TAO_Null_Fragmentation_Strategy
 {
 public:
 
+  TAO_Null_Fragmentation_Strategy (void) {}
   virtual ~TAO_Null_Fragmentation_Strategy (void);
-  virtual void fragment (TAO_OutputCDR &,
-                         ACE_CDR::ULong,
-                         ACE_CDR::ULong);
+  virtual int fragment (TAO_OutputCDR &,
+                        ACE_CDR::ULong,
+                        ACE_CDR::ULong);
 
 private:
 

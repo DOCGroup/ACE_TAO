@@ -50,9 +50,9 @@ public:
                                         ACE_CDR::ULong max_message_size);
 
   virtual ~TAO_On_Demand_Fragmentation_Strategy (void);
-  virtual void fragment (TAO_OutputCDR & cdr,
-                         ACE_CDR::ULong pending_alignment,
-                         ACE_CDR::ULong pending_length);
+  virtual int fragment (TAO_OutputCDR & cdr,
+                        ACE_CDR::ULong pending_alignment,
+                        ACE_CDR::ULong pending_length);
 
 private:
 

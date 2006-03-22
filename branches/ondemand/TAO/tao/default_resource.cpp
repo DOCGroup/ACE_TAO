@@ -1083,8 +1083,8 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
   return strategy;
 }
 
-TAO_GIOP_Fragmentation_Strategy *
-TAO_Default_Resource_Factory::fragmentation_strategy (
+auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+TAO_Default_Resource_Factory::create_fragmentation_strategy (
   TAO_Transport * transport,
   CORBA::ULong max_message_size) const
 {

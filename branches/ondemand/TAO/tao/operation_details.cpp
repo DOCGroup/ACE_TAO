@@ -6,6 +6,7 @@
 #include "tao/Exception_Data.h"
 #include "tao/SystemException.h"
 #include "tao/Argument.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -56,16 +57,16 @@ TAO_Operation_Details::corba_exception (const char *id
 bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {
-  CORBA::ULong const last_arg = this->num_args_ - 1;
-
   for (CORBA::ULong i = 0; i != this->num_args_; ++i)
     {
-      if (i == last_arg)
-        cdr.no_pending_data (true);
-
       if (!((*this->args_[i]).marshal (cdr)))
         return false;
     }
+
+  // Nothing else to fragment.  We're also guaranteed to have
+  // data in the CDR stream since the operation was a marshaling
+  // operation, not a fragmentation operation.
+  cdr.more_fragments (false);
 
   return true;
 }

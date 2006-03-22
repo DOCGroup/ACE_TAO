@@ -243,9 +243,9 @@ public:
   virtual TAO_LF_Strategy *create_lf_strategy (void) = 0;
 
   /// Outgoing fragment creation strategy.
-  virtual TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy (
-    TAO_Transport * transport,
-    CORBA::ULong max_message_size) const = 0;
+  virtual auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+    create_fragmentation_strategy (TAO_Transport * transport,
+                                   CORBA::ULong max_message_size) const = 0;
 
   /// Disables the factory.  When a new factory is installed and used,
   /// this function should be called on the previously used (default)

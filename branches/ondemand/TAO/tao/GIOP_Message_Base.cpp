@@ -878,9 +878,6 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
   header[4] = major;
   header[5] = minor;
 
-  // Set up flags octet, i.e. header[6].
-  this->giop_flags (header, msg); // Flags
-
   // "flags" octet, i.e. header[6] will be set up later when message
   // is formatted by the transport.
 
@@ -2070,7 +2067,8 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
 void
 TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
 {
-  CORBA::Octet const * const buf = msg.buffer ();
+  CORBA::Octet * const buf =
+    reinterpret_cast<CORBA::Octet *> (const_cast<char *> (msg.buffer ()));
 
   CORBA::Octet const & major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
   CORBA::Octet const & minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];

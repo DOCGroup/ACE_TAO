@@ -98,6 +98,15 @@ public:
   int cdr_memcpy_tradeoff (void) const;
   void cdr_memcpy_tradeoff (int);
 
+  /**
+   * Maximum size of a GIOP message before outgoing fragmentation
+   * kicks in.
+   */
+  //@{
+  ACE_CDR::ULong max_message_size (void) const;
+  void max_message_size (ACE_CDR::ULong size);
+  //@}
+
   /// The ORB will use the dotted decimal notation for addresses. By
   /// default we use the full ascii names.
   int use_dotted_decimal_addresses (void) const;
@@ -237,6 +246,13 @@ private:
   /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.
   int cdr_memcpy_tradeoff_;
+
+  /// Maximum GIOP message size to be sent over a given transport.
+  /**
+   * Setting a maximum message size will cause outgoing GIOP
+   * fragmentation to be enabled.
+   */
+  ACE_CDR::ULong max_message_size_;
 
   /// For selecting a liteweight version of the GIOP protocol.
   int use_lite_protocol_;

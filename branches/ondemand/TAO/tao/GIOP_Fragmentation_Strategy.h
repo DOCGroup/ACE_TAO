@@ -15,12 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/CDR_Base.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+#include "ace/CDR_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,9 +36,12 @@ class TAO_OutputCDR;
  *
  * GIOP message fragmentation is deferred to a fragmentation strategy
  */
-class TAO_GIOP_Fragmentation_Strategy
+class TAO_Export TAO_GIOP_Fragmentation_Strategy
 {
 public:
+
+  /// Constructor
+  TAO_GIOP_Fragmentation_Strategy (void) {}
 
   /// Destructor.
   virtual ~TAO_GIOP_Fragmentation_Strategy (void);
@@ -58,10 +63,12 @@ public:
    *                          CORBA::ULong).
    * @param pending_length    Size of next data to be marshaled (e.g. 2
    *                          for a CORBA::UShort).
+   *
+   * @return Zero on success.
    */
-  virtual void fragment (TAO_OutputCDR & cdr,
-                         ACE_CDR::ULong pending_alignment,
-                         ACE_CDR::ULong pending_length) = 0;
+  virtual int fragment (TAO_OutputCDR & cdr,
+                        ACE_CDR::ULong pending_alignment,
+                        ACE_CDR::ULong pending_length) = 0;
 
 private:
 

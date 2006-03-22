@@ -25,7 +25,9 @@ static const char *TAO_CDR_Timeprobe_Description[] =
   "OutputCDR::ctor[2] - enter",
   "OutputCDR::ctor[2] - leave",
   "OutputCDR::ctor[3] - enter",
-  "OutputCDR::ctor[3] - leave"
+  "OutputCDR::ctor[3] - leave",
+  "OutputCDR::ctor[4] - enter",
+  "OutputCDR::ctor[4] - leave"
 };
 
 enum
@@ -35,7 +37,9 @@ enum
   TAO_OUTPUT_CDR_CTOR2_ENTER,
   TAO_OUTPUT_CDR_CTOR2_LEAVE,
   TAO_OUTPUT_CDR_CTOR3_ENTER,
-  TAO_OUTPUT_CDR_CTOR3_LEAVE
+  TAO_OUTPUT_CDR_CTOR3_LEAVE,
+  TAO_OUTPUT_CDR_CTOR4_ENTER,
+  TAO_OUTPUT_CDR_CTOR4_LEAVE
 };
 
 // Setup Timeprobes
@@ -62,6 +66,8 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
+  , fragmentation_strategy_ ()
+  , more_fragments_ (false)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 }
@@ -84,8 +90,35 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
+  , fragmentation_strategy_ ()
+  , more_fragments_ (false)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
+}
+
+TAO_OutputCDR::TAO_OutputCDR (char *data,
+                              size_t size,
+                              int byte_order,
+                              ACE_Allocator* buffer_allocator,
+                              ACE_Allocator* data_block_allocator,
+                              ACE_Allocator* message_block_allocator,
+                              size_t memcpy_tradeoff,
+                              auto_ptr<TAO_GIOP_Fragmentation_Strategy> fs,
+                              ACE_CDR::Octet major_version,
+                              ACE_CDR::Octet minor_version)
+  : ACE_OutputCDR (data,
+                   size,
+                   byte_order,
+                   buffer_allocator,
+                   data_block_allocator,
+                   message_block_allocator,
+                   memcpy_tradeoff,
+                   major_version,
+                   minor_version)
+  , fragmentation_strategy_ (fs)
+  , more_fragments_ (false)
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
 }
 
 TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
@@ -98,8 +131,10 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
+  , fragmentation_strategy_ ()
+  , more_fragments_ (false)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
+  ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR4_ENTER);
 }
 
 
@@ -161,27 +196,11 @@ bool
 TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
                                 ACE_CDR::ULong pending_length)
 {
-  if (this->fragmentation_strategy_)
+  if (this->fragmentation_strategy_.get ())
     {
-      // Determine increase in CDR stream length if pending data is
-      // marshaled, taking into account the alignment for the given
-      // data type.
-      ACE_CDR::ULong const total_pending_length =
-        ACE_align_binary (this->total_length (), pending_alignment)
-        + pending_length;
-
-      // Fragmented GIOP messages must always be aligned on an 8-byte
-      // boundary.  Padding will be added if necessary.
-      ACE_CDR::ULong const aligned_length =
-        ACE_align_binary (total_pending_length % ACE_CDR::MAX_ALIGNMENT);
-
-      // this->max_message_size_ must be >= 16 bytes, i.e.:
-      //   12 for GIOP protocol header
-      //  + 4 for GIOP fragment header
-      //  + 4 for padding
-      // since fragments must be aligned on an 8 byte boundary.
-      if (aligned_length > this->max_message_size_)
-        return this->fragmentation_strategy_->fragment ();
+      return this->fragmentation_strategy_->fragment (*this,
+                                                      pending_alignment,
+                                                      pending_length);
     }
 
   return true;  // Success.

@@ -5,6 +5,7 @@
 
 #include "tao/Transport.h"
 #include "tao/CDR.h"
+#include "tao/Pluggable_Messaging.h"
 
 
 TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
@@ -35,7 +36,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
   // have a fragment message header.
   if (major == 1 && minor < 2)
-    return;
+    return -1;
 
   // Determine increase in CDR stream length if pending data is
   // marshaled, taking into account the alignment for the given data
@@ -48,7 +49,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   // always be aligned on an 8-byte boundary.  Padding will be added
   // if necessary.
   ACE_CDR::ULong const aligned_length =
-    ACE_align_binary (total_pending_length % ACE_CDR::MAX_ALIGNMENT);
+    ACE_align_binary (total_pending_length, ACE_CDR::MAX_ALIGNMENT);
 
   // this->max_message_size_ must be >= 24 bytes, i.e.:
   //   12 for GIOP protocol header

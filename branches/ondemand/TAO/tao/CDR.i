@@ -9,6 +9,20 @@ TAO_OutputCDR::~TAO_OutputCDR (void)
 {
 }
 
+ACE_INLINE bool
+TAO_OutputCDR::more_fragments (void) const
+{
+  return this->more_fragments_;
+}
+
+ACE_INLINE void
+TAO_OutputCDR::more_fragments (bool more)
+{
+  this->more_fragments_ = more;
+}
+
+// -------------------------------------------------------------------
+
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const char *buf,
                             size_t bufsiz,

@@ -249,6 +249,14 @@ private:
   /// @return 0 on success, otherwise -1
   int parse_request_id (const TAO_InputCDR &cdr, CORBA::ULong &request_id) const;
 
+  /// Set GIOP message flags in message that has been marshaled into
+  /// the output CDR stream @a msg.
+  /**
+   * @note It is assumed that the GIOP message header is the first
+   *       thing marshaled into the output CDR stream @a msg.
+   */
+  void set_giop_flags (TAO_OutputCDR & msg) const;
+
 private:
   /// Cached ORB_Core pointer...
   TAO_ORB_Core *orb_core_;

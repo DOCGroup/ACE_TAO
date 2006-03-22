@@ -43,17 +43,21 @@
 #define TAO_CDR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CDR_Stream.h"
-
-#include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
+#include "tao/GIOP_Fragmentation_Strategy.h"
+
+#include "ace/CORBA_macros.h"
+#include "ace/CDR_Stream.h"
+#include "ace/Auto_Ptr.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -120,6 +124,20 @@ public:
                  ACE_CDR::Octet minor_version =
                    TAO_DEF_GIOP_MINOR);
 
+  /// Build a CDR stream with an initial buffer, it will *not* remove
+  /// @a data since it did not allocated it, and enable fragmentation
+  /// support.
+  TAO_OutputCDR (char *data,
+                 size_t size,
+                 int byte_order,
+                 ACE_Allocator* buffer_allocator,
+                 ACE_Allocator* data_block_allocator,
+                 ACE_Allocator* message_block_allocator,
+                 size_t memcpy_tradeoff,
+                 auto_ptr<TAO_GIOP_Fragmentation_Strategy> fs,
+                 ACE_CDR::Octet major_version,
+                 ACE_CDR::Octet minor_version);
+
   /// Build a CDR stream with an initial Message_Block chain, it will *not*
   /// remove <data>, since it did not allocate it.
   TAO_OutputCDR (ACE_Message_Block *data,
@@ -148,6 +166,12 @@ public:
   bool fragment_stream (ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length);
 
+  /// Are there more data fragments to come?
+  bool more_fragments (void) const;
+
+  /// Specify whether there are more data fragments to come.
+  void more_fragments (bool more);
+
 private:
 
   // disallow copying...
@@ -156,7 +180,10 @@ private:
 
 private:
 
-  //  TAO_Fragmentation_Strategy * fragmentation_strategy_;
+  auto_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;
+
+  /// Are there more data fragments to come?
+  bool more_fragments_;
 
 };
 
