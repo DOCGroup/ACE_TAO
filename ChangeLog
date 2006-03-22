@@ -1,3 +1,13 @@
+Wed Mar 22 18:42:36 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        From Russell Mora <russell_mora at symantec dot com>
+        * ace/Time_Value.inl:
+
+          With MSVC8 the type of time_t is by default 64-bit unless
+          _USE_32BIT_TIME_T is defined - changed #ifdef to recognise this
+          and also changed other set() methods to use the version that
+          knows how to handle the 64-bit type.
+
 Wed Mar 22 18:42:08 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
 
         * ace/DLL.cpp:
@@ -11,7 +21,6 @@ Wed Mar 22 18:42:08 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
 	  methods are printed to stdout.
 	- This can be used in CIAO by setting CIAO_DEBUG_LEVEL to > 9, and
 	  sending the debug level to the DLL open method to print the log messages.
-
 
 Wed Mar 22 17:55:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
