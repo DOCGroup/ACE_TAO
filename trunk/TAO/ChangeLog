@@ -1,3 +1,8 @@
+Wed Mar 22 17:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Also disable a warning for BDS2006 with Update Pack 2
+
 Wed Mar 22 15:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2417_Regression/run_test.pl:
