@@ -1,3 +1,17 @@
+Wed Mar 22 17:55:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_deployment_dnc.mpb
+
+          Reverted my earlier change 
+          "Tue Mar 21 21:58:17 UTC 2006  Gan Deng 
+          <gan.deng@vanderbilt.edu>". 
+        
+          I will put earlier changes back in later when all the
+          libraries in CIAO to support pub/sub services have
+          been checked in.
+
 Wed Mar 22 16:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-osf1-4.0.h:
