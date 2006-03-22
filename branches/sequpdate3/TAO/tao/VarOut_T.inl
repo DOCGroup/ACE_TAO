@@ -76,6 +76,13 @@ TAO_Var_Base_T<T>::inout (void)
   return *this->ptr_;
 }
 
+template<typename T>
+ACE_INLINE
+T *
+TAO_Var_Base_T<T>::ptr (void) const
+{
+  return this->ptr_;
+}
 // *************************************************************
 
 template<typename T>

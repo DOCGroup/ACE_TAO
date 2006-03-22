@@ -1,4 +1,6 @@
 
+
+
         * tao/VarOut_T.{h,inl}:
         * tao/Pseudo_VarOut_T.{h,inl}:
         * tao/Objref_VarOut_T.{h,cpp}:
@@ -8,7 +10,8 @@
         * tao/Valuetype/Value_VarOut_T.{h,inl}:
           Removed the TAO specific ptr accessor, just use the spec defined
           methods. This is only for the _var classes, the _ptr method is in
-          the spec for the _out classes
+          the spec for the _out classes. This is partly reverted for the types
+          where we do need them in the core TAO code itself.
 
         * TAO_Objref_Out_T.{h,inl}:
           Assinging _var to _out is not allowed according to the spec

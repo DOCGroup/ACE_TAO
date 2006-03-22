@@ -84,21 +84,21 @@ TAO_Value_Var_T<T>::operator-> (void) const
 }
 
 template <typename T>
-_in_type
+T *
 TAO_Value_Var_T<T>::in (void) const
 {
   return this->ptr_;
 }
 
 template <typename T>
-_inout_type
+T *&
 TAO_Value_Var_T<T>::inout (void)
 {
   return this->ptr_;
 }
 
 template <typename T>
-_out_type
+T *&
 TAO_Value_Var_T<T>::out (void)
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
@@ -107,7 +107,7 @@ TAO_Value_Var_T<T>::out (void)
 }
 
 template <typename T>
-_retn_type
+T *
 TAO_Value_Var_T<T>::_retn (void)
 {
   T * tmp = this->ptr_;

@@ -54,6 +54,9 @@ public:
   _in_type      in (void) const;
   _inout_type   inout (void);
 
+  // TAO extension.
+  T * ptr (void) const;
+
 protected:
   T * ptr_;
 };
