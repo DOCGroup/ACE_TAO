@@ -1,3 +1,9 @@
+Wed Mar 22 20:13:22 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * tao/Messaging/Asynch_Invocation.cpp (remote_invocation):
+
+          Added missing GIOP fragmentation support.
+
 Wed Mar 22 13:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.h:
