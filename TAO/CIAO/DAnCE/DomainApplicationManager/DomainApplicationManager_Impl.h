@@ -337,7 +337,23 @@ namespace CIAO
     bool
     populate_connection_for_binding (
         const char * instname,
-        const Deployment::PlanConnectionDescription & curr_conn,
+        const Deployment::PlanConnectionDescription & binding,
+        const Deployment::DeploymentPlan & plan,
+        Deployment::Connections & retv)
+      ACE_THROW_SPEC ((Deployment::StartError));
+
+    bool
+    handle_es_connection (
+        const char * instname,
+        const Deployment::PlanConnectionDescription & binding,
+        const Deployment::DeploymentPlan & plan,
+        Deployment::Connections & retv)
+      ACE_THROW_SPEC ((Deployment::StartError));
+
+    bool
+    handle_direct_connection (
+        const char * instname,
+        const Deployment::PlanConnectionDescription & binding,
         const Deployment::DeploymentPlan & plan,
         Deployment::Connections & retv)
       ACE_THROW_SPEC ((Deployment::StartError));

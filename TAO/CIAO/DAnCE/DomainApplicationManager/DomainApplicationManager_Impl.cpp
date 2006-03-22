@@ -733,7 +733,7 @@ add_es_to_map (Deployment::ESInstallationInfos * es_infos,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
-                            "DomainApplicationManager_Impl::add_to_es_table.\n");
+                            "DomainApplicationManager_Impl::add_es_to_map.\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -1219,7 +1219,113 @@ populate_connection_for_binding (
   // The initial retv might have something inside
   CORBA::ULong len = retv.length ();
 
-  // The modeling tool should make sure there are always 2 ports in a binding
+  const CORBA::ULong binding_len = binding.internalEndpoint.length ();
+
+  if (binding_len == 1)
+    {
+      switch (binding.internalEndpoint[0].kind)
+        {
+          case Deployment::rtecEventPublisher:
+          case Deployment::rtecEventConsumer:
+            return
+              this->handle_es_connection (instname,
+                                          binding,
+                                          plan,
+                                          retv);
+          default:
+            ACE_ERROR ((LM_ERROR,
+                        "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                        "CIAO::DomainApplicationManager_Impl::"
+                        "populate_connection_for_binding -"
+                        "invalid connection specified in deployment plan\n"));
+            return false;
+        }
+    }
+  else if (binding_len == 2)
+    {
+      return this->handle_direct_connection (instname,
+                                             binding,
+                                             plan,
+                                             retv);
+    }
+  else // invalid binding encounted...
+    return false;
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+handle_es_connection (
+     const char * instname,
+     const Deployment::PlanConnectionDescription & binding,
+     const Deployment::DeploymentPlan & plan,
+     Deployment::Connections & retv)
+  ACE_THROW_SPEC ((Deployment::StartError))
+{
+  // The initial retv might have something inside
+  CORBA::ULong len = retv.length ();
+
+  const Deployment::PlanSubcomponentPortEndpoint & endpoint =
+    binding.internalEndpoint[0];
+
+  // If the instance name does NOT match one of the names in the binding
+  if (ACE_OS::strcmp (instname,
+                      plan.instance[endpoint.instanceRef].name.in ()) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_Impl::"
+                  "handle_publisher_es_connection -"
+                  "invalid connection specified in deployment plan\n"));
+      return false;
+    }
+
+  if (binding.externalReference.length () != 1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_Impl::"
+                  "handle_publisher_es_connection -"
+                  "externalReference must have length of 1.\n"));
+      return false;
+    }
+
+  retv[len].instanceName = instname;
+  retv[len].portName = binding.internalEndpoint[0].portName.in ();
+  retv[len].kind = binding.internalEndpoint[0].kind;
+
+  CIAO::CIAO_Event_Service_var es;
+
+  ACE_CString es_id = binding.externalReference[0].location.in ();
+
+  // If we didnt find the objref of the connection ...
+  if (this->es_map_.find (es_id.c_str (), es) != 0)
+    {
+      ACE_CString error ("Creating connections for ");
+      error += instname;
+      error += ": unable to find object reference for connection ";
+      error += binding.name.in ();
+      ACE_THROW_RETURN (Deployment::StartError
+        ("DomainApplicationManager_Impl::create_connections_i",
+                      error.c_str ()),
+                      false);
+    }
+
+  retv[len].event_service = es._retn ();
+  return true;
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+handle_direct_connection (
+     const char * instname,
+     const Deployment::PlanConnectionDescription & binding,
+     const Deployment::DeploymentPlan & plan,
+     Deployment::Connections & retv)
+  ACE_THROW_SPEC ((Deployment::StartError))
+{
+  // The initial retv might have something inside
+  CORBA::ULong len = retv.length ();
+
   const CORBA::ULong binding_len = binding.internalEndpoint.length ();
   for (CORBA::ULong i = 0; i < binding_len; ++i)
     {
