@@ -93,6 +93,14 @@ TAO_Array_Var_Base_T<T,T_slice,TAG>::_retn (void)
   return tmp;
 }
 
+template<typename T, typename T_slice, typename TAG>
+ACE_INLINE
+T_slice *
+TAO_Array_Var_Base_T<T,T_slice,TAG>::ptr (void) const
+{
+  return this->ptr_;
+}
+
 // *************************************************************
 
 template<typename T, typename T_slice, typename TAG>

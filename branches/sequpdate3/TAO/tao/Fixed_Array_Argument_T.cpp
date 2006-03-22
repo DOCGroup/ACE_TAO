@@ -125,7 +125,7 @@ TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::
                         ARRAY_TRAITS::alloc (),
                         0);
   this->x_ = tmp_ptr;
-  S_forany tmp (this->x_.in ());
+  S_forany tmp (this->x_.ptr ());
   return cdr >> tmp;
 }
 
@@ -141,7 +141,7 @@ void
 TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  this->Insert_Policy::any_insert (any, S_forany (this->x_.in ()));
+  this->Insert_Policy::any_insert (any, S_forany (this->x_.ptr ()));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

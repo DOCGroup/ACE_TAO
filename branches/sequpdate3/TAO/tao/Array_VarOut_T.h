@@ -64,6 +64,8 @@ public:
   _retn_type    _retn (void);
   _retn_arg_type  _retn_arg (void);
 
+  // TAO extension.
+  _retn_type    ptr (void) const;
 protected:
   T_slice * ptr_;
 };
