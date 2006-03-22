@@ -149,7 +149,7 @@ query (const char *type,
   ACE_CHECK;
 
   // Try to find the map of offers of desired service type.
-  offer_filter.configure_type (type_struct.in ());
+  offer_filter.configure_type (type_struct.ptr ());
   this->lookup_one_type (type,
                          offer_database,
                          constr_inter,
@@ -337,7 +337,7 @@ lookup_all_subtypes (const char* type,
             {
               // Egads, a subtype! This type has the type passed
               // to query in its list of super_types.
-              offer_filter.configure_type (type_struct.in ());
+              offer_filter.configure_type (type_struct.ptr ());
               this->lookup_one_type (all_types[i],
                                      offer_database,
                                      constr_inter,
@@ -949,7 +949,7 @@ _cxx_export (CORBA::Object_ptr reference,
 
   // Validate that the properties defined for this offer are correct
   // to their types and strength.
-  this->validate_properties (type, type_struct.in (), properties ACE_ENV_ARG_PARAMETER);
+  this->validate_properties (type, type_struct.ptr (), properties ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // CORBA::ULong plength = properties.length ();

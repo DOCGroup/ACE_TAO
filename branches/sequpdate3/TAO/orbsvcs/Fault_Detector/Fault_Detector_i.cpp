@@ -128,7 +128,7 @@ void TAO::Fault_Detector_i::notify()
 {
   CosNotification::StructuredEvent_var vEvent;
   ACE_NEW_NORETURN(vEvent, CosNotification::StructuredEvent );
-  if (vEvent.in() != 0)
+  if (vEvent.ptr() != 0)
   {
     CORBA::ULong length = 2;
     if( this->object_type_ != 0)
