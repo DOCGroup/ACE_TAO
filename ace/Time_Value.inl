@@ -52,7 +52,8 @@ ACE_INLINE void
 ACE_Time_Value::set (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-#if defined (ACE_WIN64)
+#if defined (ACE_WIN64) \
+    || (defined (ACE_WIN32) && !defined (_USE_32BIT_TIME_T))
   // Win64 uses 'long' (32 bit) timeval and 64-bit time_t, so we have
   // to get these back in range.
   if (sec > LONG_MAX)
@@ -92,11 +93,9 @@ ACE_INLINE void
 ACE_Time_Value::set (const timespec_t &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-  this->tv_.tv_sec = tv.tv_sec;
-  // Convert nanoseconds into microseconds.
-  this->tv_.tv_usec = tv.tv_nsec / 1000;
 
-  this->normalize ();
+  this->set (tv.sec,
+             tv.tv_nsec / 1000); // Convert nanoseconds into microseconds.
 }
 
 ACE_INLINE
@@ -129,7 +128,19 @@ ACE_INLINE void
 ACE_Time_Value::sec (time_t sec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
+#if defined (ACE_WIN64) \
+  || (defined (ACE_WIN32) && !defined (_USE_32BIT_TIME_T))
+  // Win64 uses 'long' (32 bit) timeval and 64-bit time_t, so we have
+  // to get these back in range.
+  if (sec > LONG_MAX)
+    this->tv_.tv_sec = LONG_MAX;
+  else if (sec < LONG_MIN)
+    this->tv_.tv_sec = LONG_MIN;
+  else
+    this->tv_.tv_sec = static_cast<long> (sec);
+#else
   this->tv_.tv_sec = sec;
+#endif
 }
 
 // Converts from Time_Value format into milli-seconds format.
