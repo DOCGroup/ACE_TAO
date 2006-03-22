@@ -98,18 +98,20 @@ ACE_DLL::~ACE_DLL (void)
 int
 ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
-               int close_handle_on_destruction)
+               int close_handle_on_destruction,
+	       int debug_level)
 {
   ACE_TRACE ("ACE_DLL::open");
 
-  return open_i (dll_filename, open_mode, close_handle_on_destruction);
+  return open_i (dll_filename, open_mode, close_handle_on_destruction, NULL, debug_level);
 }
 
 int
 ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
                  int open_mode,
                  int close_handle_on_destruction,
-                 ACE_SHLIB_HANDLE handle)
+                 ACE_SHLIB_HANDLE handle,
+		 int debug_level)
 {
   ACE_TRACE ("ACE_DLL::open_i");
 
@@ -142,7 +144,8 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
 
   this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_,
                                                              this->open_mode_,
-                                                             handle);
+                                                             handle,
+							     debug_level);
 
   if (!this->dll_handle_)
     this->error_ = 1;
