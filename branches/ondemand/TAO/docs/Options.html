@@ -326,6 +326,12 @@ current message block contains enough space for it -- the octet
 sequence is copied instead of appended to the CDR stream. </td>
       </tr>
       <tr>
+	<td><code>-ORBMaxMessageSize</code> <em>maxsize</em></td>
+	<td><a name="-ORBMaxMessageSize"></a>Set maximum size of
+	      outgoing GIOP request/reply.  The request or reply
+	      being sent will be fragmented, if necessar.y</td>
+      </tr>
+      <tr>
         <td><code>-ORBCollocation</code> <em>global/per-orb/no</em></td>
         <td><a name="-ORBCollocation"></a>Specifies the use of
 collocation object optimization. If <code>global</code> is specified

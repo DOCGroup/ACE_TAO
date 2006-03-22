@@ -1,3 +1,9 @@
+Tue Mar 21 22:18:45 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/Options.html:
+
+	  Document new "-ORBMaxMessageSize" ORB option.
+
 Tue Mar 21 15:16:43 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/GIOP_Message_Base.cpp (set_giop_flags):
