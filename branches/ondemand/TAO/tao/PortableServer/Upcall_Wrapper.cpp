@@ -293,6 +293,10 @@ TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
           ACE_CHECK;
         }
     }
+
+ // Reply body marshaling completed.  No other fragments to send.
+  cdr.more_fragments (false);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+

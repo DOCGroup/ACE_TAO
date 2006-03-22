@@ -12,7 +12,7 @@ TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
   TAO_Transport * transport,
   CORBA::ULong max_message_size)
   : transport_ (transport)
-  , max_message_size_ (0)
+  , max_message_size_ (max_message_size)
 {
 }
 
@@ -27,6 +27,9 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   ACE_CDR::ULong pending_alignment,
   ACE_CDR::ULong pending_length)
 {
+  if (this->transport_ == 0)
+    return 0;  // No transport.  Can't fragment.
+
   CORBA::Octet major = 0;
   CORBA::Octet minor = 0;
 
@@ -68,11 +71,16 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
       // Send the current CDR stream contents through the transport,
       // making sure to switch on the the GIOP flags "more fragments"
       // bit.
-      return this->send_message_callback_.send (cdr);
+      if (this->transport_->send_message (cdr,
+                                          cdr.stub (),
+                                          cdr.message_semantics (),
+                                          cdr.timeout ()) != 0
 
-      // Now generate a fragment header.
-      this->transport_->messaging_object ()->generate_fragment_header (
-        this->request_id_);
+          // Now generate a fragment header.
+          || this->transport_->messaging_object ()->generate_fragment_header (
+               cdr,
+               cdr.request_id ()) != 0)
+        return -1;
     }
 
   return 0;

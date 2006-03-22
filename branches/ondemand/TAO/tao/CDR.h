@@ -52,16 +52,16 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
-#include "tao/GIOP_Fragmentation_Strategy.h"
 
 #include "ace/CORBA_macros.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
+class TAO_GIOP_Fragmentation_Strategy;
+class TAO_Stub;
 
 namespace CORBA
 {
@@ -134,7 +134,7 @@ public:
                  ACE_Allocator* data_block_allocator,
                  ACE_Allocator* message_block_allocator,
                  size_t memcpy_tradeoff,
-                 auto_ptr<TAO_GIOP_Fragmentation_Strategy> fs,
+                 TAO_GIOP_Fragmentation_Strategy * fs,
                  ACE_CDR::Octet major_version,
                  ACE_CDR::Octet minor_version);
 
@@ -151,6 +151,9 @@ public:
   /// Destructor.
   ~TAO_OutputCDR (void);
 
+  ACE_CDR::Boolean write_octet_array (ACE_CDR::Octet const * x,
+                                      ACE_CDR::ULong length);
+
   // @todo do we want a special method to write an array of
   // strings and wstrings?
 
@@ -158,6 +161,13 @@ public:
   static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
   static void throw_skel_exception (int error_num ACE_ENV_ARG_DECL);
 
+  /**
+   * @name Outgoing GIOP Fragment Related Methods
+   *
+   * These methods are only used when fragmenting outgoing GIOP
+   * requests and replies.
+   */
+  //@{
   /// Fragment this output CDR stream if necessary.
   /**
    * Fragmentation will done through GIOP fragments when the length of
@@ -172,6 +182,25 @@ public:
   /// Specify whether there are more data fragments to come.
   void more_fragments (bool more);
 
+  /// Set fragmented message attributes.
+  void message_attributes (CORBA::ULong request_id,
+                           TAO_Stub * stub,
+                           int message_semantics,
+                           ACE_Time_Value * timeout);
+
+  /// Fragmented message request ID.
+  CORBA::ULong request_id (void) const;
+
+  /// Stub object associated with the request.
+  TAO_Stub * stub (void) const;
+
+  /// Message semantics (twoway, oneway, reply)
+  int message_semantics (void) const;
+
+  /// Maximum time to wait for outgoing message to be sent.
+  ACE_Time_Value * timeout (void) const;
+  //@}
+
 private:
 
   // disallow copying...
@@ -180,10 +209,35 @@ private:
 
 private:
 
-  auto_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;
+  /**
+   * @name Outgoing GIOP Fragment Related Attributes
+   *
+   * These attributes are only used when fragmenting outgoing GIOP
+   * requests and replies.
+   */
+  //@{
+  /// Strategy that sends data currently marshaled into this
+  /// TAO_OutputCDR stream if necessary.
+  TAO_GIOP_Fragmentation_Strategy * const fragmentation_strategy_;
 
   /// Are there more data fragments to come?
   bool more_fragments_;
+
+  /// Request ID for the request currently being marshaled.
+  CORBA::ULong request_id_;
+
+  /// Stub object associated with the request.
+  TAO_Stub * stub_;
+
+  /// Twoway, oneway, reply?
+  /**
+   * @see TAO_Transport
+   */
+  int message_semantics_;
+
+  /// Request/reply send timeout.
+  ACE_Time_Value * timeout_;
+  //@}
 
 };
 

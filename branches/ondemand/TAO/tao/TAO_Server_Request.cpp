@@ -273,6 +273,12 @@ TAO_ServerRequest::init_reply (void)
       reply_params.reply_status_ = this->exception_type_;
     }
 
+
+  this->outgoing_->message_attributes (this->request_id_,
+                                       0,
+                                       TAO_Transport::TAO_REPLY,
+                                       0);
+
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_,
                                            reply_params);
@@ -315,9 +321,16 @@ TAO_ServerRequest::send_no_exception_reply (void)
   // No data anyway.
   reply_params.argument_flag_ = 0;
 
+  this->outgoing_->message_attributes (this->request_id_,
+                                       0,
+                                       TAO_Transport::TAO_REPLY,
+                                       0);
+
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_,
                                            reply_params);
+
+  this->outgoing_->more_fragments (false);
 
   // Send the message.
   int result = this->transport_->send_message (*this->outgoing_,
@@ -344,6 +357,8 @@ TAO_ServerRequest::tao_send_reply (void)
 {
   if (this->collocated ())
     return;  // No transport in the collocated case.
+
+  this->outgoing_->more_fragments (false);
 
   int result = this->transport_->send_message (*this->outgoing_,
                                                0,
@@ -405,6 +420,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                             this->orb_core_->output_cdr_dblock_allocator (),
                             this->orb_core_->output_cdr_msgblock_allocator (),
                             this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                            this->mesg_base_->fragmentation_strategy (),
                             TAO_DEF_GIOP_MAJOR,
                             TAO_DEF_GIOP_MINOR);
 
@@ -419,6 +435,8 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                       ACE_TEXT ("could not make exception reply\n")));
 
         }
+
+      this->outgoing_->more_fragments (false);
 
       // Send the message
       if (this->transport_->send_message (*this->outgoing_,
@@ -466,10 +484,11 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                         this->orb_core_->output_cdr_dblock_allocator (),
                         this->orb_core_->output_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                        this->mesg_base_->fragmentation_strategy (),
                         TAO_DEF_GIOP_MAJOR,
                         TAO_DEF_GIOP_MINOR);
 
-  this->transport_->assign_translators(0,&output);
+  this->transport_->assign_translators (0, &output);
 
   // A copy of the reply parameters
   TAO_Pluggable_Reply_Params_Base reply_params;
@@ -486,6 +505,11 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 
   // Make a default reply status
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
+
+  this->outgoing_->message_attributes (this->request_id_,
+                                       0,
+                                       TAO_Transport::TAO_REPLY,
+                                       0);
 
   // Make the reply message
   if (this->mesg_base_->generate_reply_header (*this->outgoing_,
@@ -506,6 +530,8 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
                 ACE_TEXT ("could not marshal reply\n")));
+
+  this->outgoing_->more_fragments (false);
 
   // Send the message
   if (this->transport_->send_message (*this->outgoing_,

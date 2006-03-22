@@ -29,6 +29,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
                                               size_t /* input_cdr_size */)
   : orb_core_ (orb_core)
   , message_state_ ()
+  , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport))
   , out_stream_ (this->buffer_,
                  sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
@@ -36,7 +37,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                 orb_core->fragmentation_strategy (transport),
+                 fragmentation_strategy_.get (),
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
@@ -225,6 +226,42 @@ TAO_GIOP_Message_Base::generate_reply_header (
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
+                                                 CORBA::ULong request_id)
+{
+  // Get a parser for us
+  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
+
+  CORBA::Octet major, minor;
+
+  cdr.get_version (major, minor);
+
+  // GIOP fragments are supported in GIOP 1.1 and better, but TAO only
+  // supports them in 1.2 or better since GIOP 1.1 fragments do not
+  // have a fragment message header.
+  if (major == 1 && minor < 2)
+    return -1;
+
+  // Get the state information that we need to use
+  this->set_state (major,
+                   minor,
+                   generator_parser);
+
+  // Write the GIOP header first
+  if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, cdr)
+      || !generator_parser->write_fragment_header (cdr, request_id))
+    {
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+
+      return -1;
+    }
 
   return 0;
 }
@@ -648,6 +685,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         this->orb_core_->input_cdr_dblock_allocator (),
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                        this->fragmentation_strategy_.get (),
                         qd->major_version_,
                         qd->minor_version_);
 
@@ -964,6 +1002,11 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           // Send back the reply service context.
           reply_params.service_context_notowned (&request.reply_service_info ());
 
+          output.message_attributes (request_id,
+                                     0,
+                                     TAO_Transport::TAO_REPLY,
+                                     0);
+
           // Make the GIOP header and Reply header
           this->generate_reply_header (output,
                                        reply_params);
@@ -977,6 +1020,8 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
               return -1;
             }
+
+          output.more_fragments (false);
 
           int result = transport->send_message (output,
                                                 0,
@@ -1257,6 +1302,8 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
                                    request.request_id (),
                                    status_info);
 
+  output.more_fragments (false);
+
   // Send the message
   int result = transport->send_message (output,
                                         0,
@@ -1495,6 +1542,8 @@ TAO_GIOP_Message_Base::send_reply_exception (
                                       reply_params,
                                       *x) == -1)
     return -1;
+
+  output.more_fragments (false);
 
   return transport->send_message (output,
                                   0,
@@ -2062,6 +2111,12 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
     }
 
   return 0;
+}
+
+TAO_GIOP_Fragmentation_Strategy *
+TAO_GIOP_Message_Base::fragmentation_strategy (void)
+{
+  return this->fragmentation_strategy_.get ();
 }
 
 void

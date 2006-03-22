@@ -21,6 +21,42 @@ TAO_OutputCDR::more_fragments (bool more)
   this->more_fragments_ = more;
 }
 
+ACE_INLINE void
+TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
+                                   TAO_Stub * stub,
+                                   int message_semantics,
+                                   ACE_Time_Value * timeout)
+{
+  this->request_id_        = request_id;
+  this->stub_              = stub;
+  this->message_semantics_ = message_semantics;
+  this->timeout_           = timeout;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_OutputCDR::request_id (void) const
+{
+  return this->request_id_;
+}
+
+ACE_INLINE TAO_Stub *
+TAO_OutputCDR::stub (void) const
+{
+  return this->stub_;
+}
+
+ACE_INLINE int
+TAO_OutputCDR::message_semantics (void) const
+{
+  return this->message_semantics_;
+}
+
+ACE_INLINE ACE_Time_Value *
+TAO_OutputCDR::timeout (void) const
+{
+  return this->timeout_;
+}
+
 // -------------------------------------------------------------------
 
 ACE_INLINE

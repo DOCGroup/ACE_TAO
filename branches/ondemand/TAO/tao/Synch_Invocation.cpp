@@ -82,6 +82,11 @@ namespace TAO
       {
         TAO_OutputCDR &cdr = this->resolver_.transport ()->out_stream ();
 
+        cdr.message_attributes (this->details_.request_id (),
+                                this->resolver_.stub (),
+                                TAO_Transport::TAO_TWOWAY_REQUEST,
+                                max_wait_time);
+
         this->write_header (tspec,
                             cdr
                             ACE_ENV_ARG_PARAMETER);
@@ -705,6 +710,11 @@ namespace TAO
 
     ACE_TRY
       {
+        cdr.message_attributes (this->details_.request_id (),
+                                this->resolver_.stub (),
+                                TAO_Transport::TAO_ONEWAY_REQUEST,
+                                max_wait_time);
+
         this->write_header (tspec,
                             cdr
                             ACE_ENV_ARG_PARAMETER);

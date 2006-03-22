@@ -166,10 +166,18 @@ TAO_GIOP_Message_Lite::generate_reply_header (
 }
 
 int
+TAO_GIOP_Message_Lite::generate_fragment_header (TAO_OutputCDR & /* cdr */,
+                                                 CORBA::ULong /* request_id */)
+{
+  // GIOP fragmentation is not supported in GIOP lite.
+  return 0;
+}
+
+int
 TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
 {
   // Get the header length
-  const size_t header_len = TAO_GIOP_LITE_HEADER_LEN ;
+  const size_t header_len = TAO_GIOP_LITE_HEADER_LEN;
 
   // Get the message size offset
   const size_t offset = TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET;
@@ -1772,5 +1780,12 @@ TAO_GIOP_Message_Lite::discard_fragmented_message (const TAO_Queued_Data *)
 {
   return 1; // no fragment on stack relating to cancel-request
 }
+
+TAO_GIOP_Fragmentation_Strategy *
+TAO_GIOP_Message_Lite::fragmentation_strategy (void)
+{
+  return 0; // Fragmentation is unsupported in GIOP lite.
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

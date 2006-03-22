@@ -113,6 +113,7 @@ namespace TAO
   {
     this->resolver_.transport ()->clear_translators (0,
                                                      &out_stream);
+
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
                                                                spec,

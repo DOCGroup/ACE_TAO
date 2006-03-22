@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
+#include "tao/GIOP_Fragmentation_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.i"
@@ -66,8 +67,12 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
-  , fragmentation_strategy_ ()
+  , fragmentation_strategy_ (0)
   , more_fragments_ (false)
+  , request_id_ (0)
+  , stub_ (0)
+  , message_semantics_ (-1)
+  , timeout_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 }
@@ -90,8 +95,12 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
-  , fragmentation_strategy_ ()
+  , fragmentation_strategy_ (0)
   , more_fragments_ (false)
+  , request_id_ (0)
+  , stub_ (0)
+  , message_semantics_ (-1)
+  , timeout_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
 }
@@ -103,7 +112,7 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                               ACE_Allocator* data_block_allocator,
                               ACE_Allocator* message_block_allocator,
                               size_t memcpy_tradeoff,
-                              auto_ptr<TAO_GIOP_Fragmentation_Strategy> fs,
+                              TAO_GIOP_Fragmentation_Strategy * fs,
                               ACE_CDR::Octet major_version,
                               ACE_CDR::Octet minor_version)
   : ACE_OutputCDR (data,
@@ -117,6 +126,10 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                    minor_version)
   , fragmentation_strategy_ (fs)
   , more_fragments_ (false)
+  , request_id_ (0)
+  , stub_ (0)
+  , message_semantics_ (-1)
+  , timeout_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
 }
@@ -131,12 +144,15 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
-  , fragmentation_strategy_ ()
+  , fragmentation_strategy_ (0)
   , more_fragments_ (false)
+  , request_id_ (0)
+  , stub_ (0)
+  , message_semantics_ (-1)
+  , timeout_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR4_ENTER);
 }
-
 
 void
 TAO_OutputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
@@ -196,7 +212,7 @@ bool
 TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
                                 ACE_CDR::ULong pending_length)
 {
-  if (this->fragmentation_strategy_.get ())
+  if (this->fragmentation_strategy_)
     {
       return this->fragmentation_strategy_->fragment (*this,
                                                       pending_alignment,

@@ -1104,21 +1104,26 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
   // have a fragment message header.
 
-  if (max_message_size < min_message_size
-      || (TAO_DEF_GIOP_MAJOR == 1 && TAO_DEF_GIOP_MINOR < 2))
-    {
-      // No maximum was set by the user.
-      ACE_NEW_RETURN (tmp,
-                      TAO_Null_Fragmentation_Strategy,
-                      strategy);
 
-    }
-  else
+  if (transport) // No transport.  Cannot fragment.
     {
-      ACE_NEW_RETURN (tmp,
-                      TAO_On_Demand_Fragmentation_Strategy (transport,
-                                                            max_message_size),
-                      strategy);
+      if (max_message_size < min_message_size
+          || (TAO_DEF_GIOP_MAJOR == 1 && TAO_DEF_GIOP_MINOR < 2))
+        {
+          // No maximum was set by the user.
+          ACE_NEW_RETURN (tmp,
+                          TAO_Null_Fragmentation_Strategy,
+                          strategy);
+
+        }
+      else
+        {
+          ACE_NEW_RETURN (tmp,
+                          TAO_On_Demand_Fragmentation_Strategy (
+                            transport,
+                            max_message_size),
+                          strategy);
+        }
     }
 
   ACE_AUTO_PTR_RESET (strategy,

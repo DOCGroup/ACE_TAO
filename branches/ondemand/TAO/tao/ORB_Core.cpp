@@ -36,6 +36,7 @@
 #include "tao/PolicyFactory_Registry_Factory.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/GIOP_Fragmentation_Strategy.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "tao/Policy_Manager.h"

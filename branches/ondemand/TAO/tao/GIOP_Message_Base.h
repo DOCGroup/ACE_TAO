@@ -26,8 +26,12 @@
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Fragmentation_Strategy.h"
 #include "tao/CDR.h"
 #include "tao/Incoming_Message_Stack.h"
+
+#include "ace/Auto_Ptr.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -82,6 +86,9 @@ public:
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params
     );
+
+  virtual int generate_fragment_header (TAO_OutputCDR & cdr,
+                                        CORBA::ULong request_id);
 
   /// Format the message. As we have not written the message length in
   /// the header, we make use of this oppurtunity to insert and format
@@ -153,6 +160,9 @@ public:
   /// consolidate_fragmented_message @return -1 on failure, 0 on
   /// success, 1 no fragment on stack relating to CancelRequest.
   virtual int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
+
+  /// Outgoing GIOP message fragmentation strategy.
+  virtual TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy (void);
 
 protected:
 
@@ -277,6 +287,17 @@ protected:
   /// Buffer used for both the output and input CDR streams, this is
   /// "safe" because we only one of the streams at a time.
   char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
+
+  /**
+   * @name Outgoing GIOP Fragment Related Attributes
+   *
+   * These attributes are only used when fragmenting outgoing GIOP
+   * requests and replies.
+   */
+  //@{
+  /// Strategy that sends data currently marshaled into this
+  /// TAO_OutputCDR stream if necessary.
+  auto_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;

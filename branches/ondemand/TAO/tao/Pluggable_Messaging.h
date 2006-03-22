@@ -45,6 +45,7 @@ class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
 class TAO_Queued_Data;
+class TAO_GIOP_Fragmentation_Strategy;
 
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
@@ -106,6 +107,8 @@ public:
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params) = 0;
 
+  virtual int generate_fragment_header (TAO_OutputCDR & cdr,
+                                        CORBA::ULong request_id) = 0;
 
   /// Format the message in the @a cdr. May not be needed in
   /// general.
@@ -194,6 +197,9 @@ public:
   /// @return -1 on failure, 0 on success, 1 no fragment on stack
   /// relating to CancelRequest.
   virtual int discard_fragmented_message (const TAO_Queued_Data *cancel_request) = 0;
+
+  /// Outgoing GIOP message fragmentation strategy.
+  virtual TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy (void) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

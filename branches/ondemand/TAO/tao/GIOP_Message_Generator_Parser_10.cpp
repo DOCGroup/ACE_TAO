@@ -310,6 +310,16 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
   return 1;
 }
 
+bool
+TAO_GIOP_Message_Generator_Parser_10::write_fragment_header (
+  TAO_OutputCDR & /* cdr */,
+  CORBA::ULong /* request_id */)
+{
+  // GIOP fragments are not supported in GIOP 1.0.
+  return false;
+}
+
+
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
     TAO_ServerRequest &request)

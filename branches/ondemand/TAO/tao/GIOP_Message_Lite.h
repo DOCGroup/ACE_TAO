@@ -80,6 +80,9 @@ public:
       TAO_Pluggable_Reply_Params_Base &params
     );
 
+  virtual int generate_fragment_header (TAO_OutputCDR & cdr,
+                                        CORBA::ULong request_id);
+
   /// Format the message. As we have not written the message length in
   /// the header, we make use of this oppurtunity to insert and format
   /// the message.
@@ -160,6 +163,9 @@ public:
   /// consolidate_fragmented_message @r 0 on success, 1 if no matching
   /// fragment chain exists, -1 on error
   virtual int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
+
+  /// Outgoing GIOP message fragmentation strategy.
+  virtual TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy (void);
 
 private:
 
