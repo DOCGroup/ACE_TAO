@@ -106,7 +106,8 @@ public:
    */
   int open (const ACE_TCHAR *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
-            int close_handle_on_destruction = 1);
+            int close_handle_on_destruction = 1,
+	    int debug_leve = 0);
 
   /// Call to close the DLL object.
   int close (void);
@@ -153,7 +154,8 @@ private:
   int open_i (const ACE_TCHAR *dll_name,
               int open_mode = ACE_DEFAULT_SHLIB_MODE,
               int close_handle_on_destruction = 1,
-              ACE_SHLIB_HANDLE handle = 0);
+              ACE_SHLIB_HANDLE handle = 0,
+	      int debug_level = 0);
 
 
   // Disallow assignment since we don't handle it.

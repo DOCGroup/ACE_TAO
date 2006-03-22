@@ -1,5 +1,4 @@
 // $Id$
-
 #include "ace/DLL_Manager.h"
 
 #include "ace/Log_Msg.h"
@@ -49,7 +48,8 @@ ACE_DLL_Handle::dll_name (void) const
 int
 ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                       int open_mode,
-                      ACE_SHLIB_HANDLE handle)
+                      ACE_SHLIB_HANDLE handle,
+		      int debug_level)
 {
   ACE_TRACE ("ACE_DLL_Handle::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
@@ -63,13 +63,13 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
       // Once dll_name_ has been set, it can't be changed..
       if (ACE_OS::strcmp (this->dll_name_, dll_name) != 0)
         {
-          if (ACE::debug ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("ACE_DLL_Handle::open: error, ")
-                        ACE_LIB_TEXT ("tried to reopen %s with name %s\n"),
-                        this->dll_name_,
-                        dll_name));
-
+          if (ACE::debug () || debug_level > 9)
+	    ACE_ERROR ((LM_ERROR,
+			ACE_LIB_TEXT ("ACE_DLL_Handle::open: error, ")
+			ACE_LIB_TEXT ("tried to reopen %s with name %s\n"),
+			this->dll_name_,
+			dll_name));
+	  
           return -1;
         }
     }
@@ -86,9 +86,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
         this->handle_ = handle;
       else
         {
-          if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL_Handle::open: calling dlopen on ")
-                        ACE_LIB_TEXT ("\"%s\"\n"), dll_name));
+	  if (ACE::debug () || debug_level > 9)
+	    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL_Handle::open: calling dlopen on ")
+			ACE_LIB_TEXT ("\"%s\"\n"), dll_name));
 
           /*
           ** Get the set of names to try loading. We need to do this to
@@ -129,18 +129,24 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           ACE_TString *name = 0;
           while (name_iter.next (name))
             {
-              if (ACE::debug ())
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_LIB_TEXT ("ACE_DLL_Handle::open: Trying to open DLL %s with %s name\n"),
-                            this->dll_name_,
-                            name->c_str ()));
-
+	      if (ACE::debug () || debug_level > 9)
+		ACE_DEBUG ((LM_DEBUG,
+			    ACE_LIB_TEXT ("ACE_DLL_Handle::open: Trying to open DLL %s with %s name\n"),
+			    this->dll_name_,
+			    name->c_str ()));
+	      
               // The ACE_SHLIB_HANDLE object is obtained.
               this->handle_ = ACE_OS::dlopen (name->c_str (),
                                               open_mode);
               if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)   // Good one
                 break;
 
+	      if (ACE::debug () || debug_level > 9)
+		ACE_DEBUG ((LM_DEBUG,
+			    ACE_LIB_TEXT ("ACE_DLL_Handle: opening DLL %s: %s\n"),
+			    this->dll_name_,
+			    this->error ()->c_str ()));
+	      
 #if defined (AIX)
               // AIX often puts the shared library file (most often named
               // shr.o) inside an archive library. If this is an archive
@@ -164,21 +170,22 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
 
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
             {
-              if (ACE::debug ())
-                ACE_ERROR ((LM_ERROR,
-                            ACE_LIB_TEXT ("ACE_DLL_Handle::open: Invalid handle when opening DLL %s: %s\n"),
-                            this->dll_name_,
-                            this->error ()->c_str ()));
-
+	      if (ACE::debug () || debug_level > 9)
+		ACE_ERROR ((LM_ERROR,
+			    ACE_LIB_TEXT ("ACE_DLL_Handle::open: Invalid handle when opening DLL %s: %s\n"),
+			    this->dll_name_,
+			    this->error ()->c_str ()));
+	      
               return -1;
             }
         }
     }
-  if (ACE::debug ())
+
+  if (ACE::debug () || debug_level > 9)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE_DLL_Handle::open: loading %s (%d)\n"),
-                this->dll_name_,
-                this->handle_));
+		ACE_LIB_TEXT ("ACE_DLL_Handle::open: loading %s (%d)\n"),
+		this->dll_name_,
+		this->handle_));
 
   ++this->refcount_;
   return 0;
@@ -478,7 +485,8 @@ ACE_DLL_Manager::~ACE_DLL_Manager (void)
 ACE_DLL_Handle *
 ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
                            int open_mode,
-                           ACE_SHLIB_HANDLE handle)
+                           ACE_SHLIB_HANDLE handle,
+			   int debug_level)
 {
   ACE_TRACE ("ACE_DLL_Manager::open_dll");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
@@ -499,13 +507,13 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
 
   if (dll_handle)
     {
-      if (dll_handle->open (dll_name, open_mode, handle) != 0)
+      if (dll_handle->open (dll_name, open_mode, handle, debug_level) != 0)
         {
           // Don't worry about freeing the memory right now, since
           // the handle_vector_ will be cleaned up automatically
           // later.
 
-          if (ACE::debug ())
+          if (ACE::debug () || debug_level > 9)
             ACE_ERROR ((LM_ERROR,
                         ACE_LIB_TEXT ("ACE_DLL_Manager::open_dll: Could not ")
                         ACE_LIB_TEXT ("open dll %s.\n"),
@@ -514,6 +522,7 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
           return 0;
         }
     }
+
   return dll_handle;
 }
 
