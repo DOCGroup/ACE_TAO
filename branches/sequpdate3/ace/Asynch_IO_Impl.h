@@ -463,12 +463,12 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto <bytes_to_read> will be read and stored in the
-   * <message_block>.  The <accept_handle> will be used for the
-   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * <message_block>.  The @a accept_handle will be used for the
+   * <accept> call.  If (@a accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
-   * <message_block> must be specified. This is because the address of
+   * @a message_block must be specified. This is because the address of
    * the new connection is placed at the end of this buffer.
    */
   virtual int accept (ACE_Message_Block &message_block,
