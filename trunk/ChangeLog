@@ -14,13 +14,13 @@ Wed Mar 22 18:42:08 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
         * ace/DLL.h:
         * ace/DLL_Manager.cpp:
         * ace/DLL_Manager.h:
-        
-	- Changed the signature of the DLL open methods by adding a new parameter called 
-	  'debug_level', with it's default value set to 0.
-	- If this debug_level value is > 9, the ACE_DEBUG messages in DLL open
-	  methods are printed to stdout.
-	- This can be used in CIAO by setting CIAO_DEBUG_LEVEL to > 9, and
-	  sending the debug level to the DLL open method to print the log messages.
+
+        - Changed the signature of the DLL open methods by adding a new parameter called
+          'debug_level', with it's default value set to 0.
+        - If this debug_level value is > 9, the ACE_DEBUG messages in DLL open
+          methods are printed to stdout.
+        - This can be used in CIAO by setting CIAO_DEBUG_LEVEL to > 9, and
+          sending the debug level to the DLL open method to print the log messages.
 
 Wed Mar 22 17:55:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -28,10 +28,10 @@ Wed Mar 22 17:55:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
         * bin/MakeProjectCreator/config/ciao_deployment_dnc.mpb
 
-          Reverted my earlier change 
-          "Tue Mar 21 21:58:17 UTC 2006  Gan Deng 
-          <gan.deng@vanderbilt.edu>". 
-        
+          Reverted my earlier change
+          "Tue Mar 21 21:58:17 UTC 2006  Gan Deng
+          <gan.deng@vanderbilt.edu>".
+
           I will put earlier changes back in later when all the
           libraries in CIAO to support pub/sub services have
           been checked in.
