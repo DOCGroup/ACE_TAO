@@ -322,7 +322,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name () << " (" << bt->name ()
@@ -419,7 +419,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name () << " (" << bt->name ()
@@ -473,12 +473,12 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       << "}" << be_nl << be_nl;
 
   // Get method.
-  *os << "// Retrieve the member." << be_nl
+  *os << "/// Retrieve the member." << be_nl
       << "ACE_INLINE" << be_nl
       << bt->name () << "_ptr " << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_->ptr ();" << be_uidt_nl
+      << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
       << "}";
 
   return 0;
