@@ -1,3 +1,8 @@
+Wed Mar 22 14:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Fixed "control reaches end of non-void function" warning
+
 Tue Mar 21 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Table.h:
