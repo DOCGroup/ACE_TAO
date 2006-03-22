@@ -654,7 +654,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   ACE_UNUSED_ARG (enable_multicast);
 #endif /* ACE_HAS_IP_MULTICAST */
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0  
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
       if (use_round_trip_timeout == 1)
       {
         TimeBase::TimeT roundTripTimeoutVal = round_trip_timeout;
@@ -754,7 +754,7 @@ TAO_Naming_Server::naming_service_ior (void)
 CosNaming::NamingContext_ptr
 TAO_Naming_Server::operator-> (void) const
 {
-  return this->naming_context_.ptr ();
+  return this->naming_context_.in ();
 }
 
 TAO_Naming_Server::~TAO_Naming_Server (void)

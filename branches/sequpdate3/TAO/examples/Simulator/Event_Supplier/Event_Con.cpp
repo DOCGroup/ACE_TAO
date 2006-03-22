@@ -352,19 +352,19 @@ main (int argc, char *argv [])
         RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (ec.ptr() == 0)
+      if (CORBA::is_nil (ec.in())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Not able to get the Event Service reference.\n"),
                           -1);
 
       // Create consumer.
 
-      Demo_Consumer *demo_consumer;
+      Demo_Consumer *demo_consumer = 0;
       ACE_NEW_RETURN (demo_consumer,
                       Demo_Consumer (),
                       -1);
 
-      if (demo_consumer->open_consumer (ec.ptr (),
+      if (demo_consumer->open_consumer (ec.in (),
                                         "demo_consumer") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Someone was feeling introverted.\n"),

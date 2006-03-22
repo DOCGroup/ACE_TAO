@@ -241,7 +241,7 @@ Client::test_get_all_property_names (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       // Iterate thru and print out the names in the iterator, if any.
-      if (iterator_var.ptr () != 0)
+      if (iterator_var.in () != 0)
         {
           // Helper variables to stop the SunCC warnings on on foo.out
           // ().
@@ -554,7 +554,7 @@ Client::test_get_all_properties (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       // Pass thru the iterator.
-      if (iterator.ptr () != 0)
+      if (iterator.in () != 0)
         {
           // Helper variables to avoid warnings with .out () in SunCC.
           CosPropertyService::Property* property_ptr = 0;

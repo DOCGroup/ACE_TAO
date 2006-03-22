@@ -76,7 +76,7 @@ TAO_Service_Type_Exporter::add_all_types (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
               "adding all types to the Repository.\n"));
-  this->add_all_types_to (this->repos_.ptr () ACE_ENV_ARG_PARAMETER);
+  this->add_all_types_to (this->repos_.in () ACE_ENV_ARG_PARAMETER);
   // ACE_CHECK;
 }
 

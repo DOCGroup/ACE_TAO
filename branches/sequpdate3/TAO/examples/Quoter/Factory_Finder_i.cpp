@@ -21,8 +21,8 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Quoter, 
-           Factory_Finder_i, 
+ACE_RCSID (Quoter,
+           Factory_Finder_i,
            "$Id$")
 
 // Constructor
@@ -95,7 +95,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
       ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
 
     // insert the object reference
-    (*factories_ptr)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.ptr());
+    (*factories_ptr)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in());
 
     if (this->debug_level_ > 1)
       ACE_DEBUG ((LM_DEBUG,

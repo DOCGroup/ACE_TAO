@@ -237,7 +237,7 @@ TAO_Support_Attributes_i::type_repos (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::TypeRepository::_nil ());
-  return this->type_repos_.ptr ();
+  return this->type_repos_.in ();
 }
 
 void
@@ -257,7 +257,7 @@ type_repos (CosTrading::TypeRepository_ptr new_value)
 CosTradingRepos::ServiceTypeRepository_ptr
 TAO_Support_Attributes_i::service_type_repos (void) const
 {
-  return this->service_type_repos_.ptr ();
+  return this->service_type_repos_.in ();
 }
 
 
@@ -493,7 +493,7 @@ TAO_Trading_Components_i::lookup_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
                          CosTrading::Lookup::_nil ());
-  return this->lookup_.ptr ();
+  return this->lookup_.in ();
 }
 
 void

@@ -19,8 +19,8 @@
 //    Gary Maxey
 //
 // ============================================================================
-ACE_RCSID (be_visitor_valuebox, 
-           field_ci, 
+ACE_RCSID (be_visitor_valuebox,
+           field_ci,
            "$Id$")
 
 be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
@@ -44,7 +44,7 @@ be_visitor_valuebox_field_ci::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -55,7 +55,7 @@ be_visitor_valuebox_field_ci::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -86,15 +86,15 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_array - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
   char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (bt->node_type () != AST_Decl::NT_typedef)
@@ -106,30 +106,30 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
         {
           be_decl *parent =
                  be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            bt->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            bt->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        bt->full_name ());
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Modifier to set the member." << be_nl;
+  *os << "/// Modifier to set the member." << be_nl;
 
   *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::" << field->local_name ()
@@ -140,7 +140,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
       << ", val);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "// Accessor to retrieve the member." << be_nl;
+  *os << "/// Accessor to retrieve the member." << be_nl;
 
   *os << "ACE_INLINE const " << fname << "_slice *" << be_nl
       << vb_node->name () << "::" << field->local_name ()
@@ -175,7 +175,7 @@ be_visitor_valuebox_field_ci::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -213,7 +213,7 @@ be_visitor_valuebox_field_ci::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -223,17 +223,17 @@ be_visitor_valuebox_field_ci::visit_interface (be_interface *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Modifier to set the member." << be_nl;
-  
+
   *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::" << field->local_name ()
       << " (" << bt->name () << "_ptr val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
-      << " = " << "TAO::Objref_Traits< ::" << bt->name () 
+      << " = " << "TAO::Objref_Traits< ::" << bt->name ()
       << ">::duplicate (val);" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  this->emit_member_get (vb_node, field, bt, "", "_ptr", "const", ".ptr ()");
+  this->emit_member_get (vb_node, field, bt, "", "_ptr", "const", ".in ()");
 
   return 0;
 }
@@ -260,7 +260,7 @@ be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_interface_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -270,17 +270,17 @@ be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Modifier to set the member." << be_nl;
-  
+
   *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::" << field->local_name ()
       << " (" << bt->name () << "_ptr val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
-      << " = " << "TAO::Objref_Traits< ::" << bt->name () 
+      << " = " << "TAO::Objref_Traits< ::" << bt->name ()
       << ">::duplicate (val);" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  this->emit_member_get (vb_node, field, bt, "", "_ptr", "const", ".ptr ()");
+  this->emit_member_get (vb_node, field, bt, "", "_ptr", "const", ".in ()");
 
   return 0;
 }
@@ -335,7 +335,7 @@ be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_predefined_type - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -399,7 +399,7 @@ be_visitor_valuebox_field_ci::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_sequence - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -437,7 +437,7 @@ be_visitor_valuebox_field_ci::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_predefined_type - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -496,7 +496,7 @@ be_visitor_valuebox_field_ci::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_structure - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -523,7 +523,7 @@ be_visitor_valuebox_field_ci::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -553,7 +553,7 @@ be_visitor_valuebox_field_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_field_ci::"
                          "visit_union - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -601,7 +601,7 @@ be_visitor_valuebox_field_ci::emit_member_get (be_decl *vb_node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// Accessor to retrieve the member." << be_nl;
+  *os << "/// Accessor to retrieve the member." << be_nl;
 
   *os << "ACE_INLINE " << const_prefix << field_type->name () << type_suffix
       << be_nl
