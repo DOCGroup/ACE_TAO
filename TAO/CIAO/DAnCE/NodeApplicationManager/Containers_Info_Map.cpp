@@ -92,6 +92,10 @@ namespace CIAO
 
       for (j = 0; j < infoProperty_length; ++j)
         {
+          if (ACE_OS::strcmp (this->plan_.infoProperty[j].name.in (),
+                              "CIAOServerResources") != 0)
+            continue;
+
           CIAO::DAnCE::ServerResource *server_resource_def = 0;
           this->plan_.infoProperty[j].value >>= server_resource_def;
 
@@ -162,12 +166,12 @@ namespace CIAO
         const Deployment::InstanceDeploymentDescription & instance =
           this->plan_.instance[i];
 
-        // If this component instance happens to be in the "shared components 
+        // If this component instance happens to be in the "shared components
         // list", then we ignore it, otherwise we shall install it.
         ACE_CString name (instance.name.in ());
         if (this->is_shared_component (name))
           continue;
-            
+
         if (! this->insert_instance_into_map (instance))
           return false;
       }

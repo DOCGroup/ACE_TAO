@@ -3,6 +3,7 @@
 #include "DomainApplicationManager_Impl.h"
 #include "ExecutionManager/Execution_Manager_Impl.h"
 #include "ciao/NodeApplicationManagerC.h"
+#include "ciao/Deployment_EventsC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
@@ -644,48 +645,60 @@ install_all_es (void)
 {
   ACE_TRY
     {
-      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+      for (CORBA::ULong i = 0; i < this->plan_.infoProperty.length (); ++i)
         {
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+          if (ACE_OS::strcmp (this->plan_.infoProperty[i].name.in (),
+                              "CIAOEvents") != 0)
+            continue;
 
-          if (this->artifact_map_.find (this->node_manager_names_[i],
-                                        entry) != 0)
+          CIAO::DAnCE::EventServiceDeploymentDescriptions_var es = 0;
+          this->plan_.infoProperty[0].value >>= es;
+
+          for (CORBA::ULong j = 0; j < es->length (); ++j)
             {
-              ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::install_all_es -"
-                          "ERROR while finding the node specific plan "
-                          "for the node [%s] \n",
-                          this->node_manager_names_[i].c_str ()));
+              // Construct the ESInstallationInfos data
+              Deployment::ESInstallationInfos_var es_infos;
+              ACE_NEW (es_infos,
+                        Deployment::ESInstallationInfos);
 
-              ACE_CString error
-                 ("Unable to resolve a reference to NodeManager: ");
-              error += this->node_manager_names_[i];
+              es_infos->length (1);
+              (*es_infos)[0].id = es[j].name.in ();
+              (*es_infos)[0].type = CIAO::RTEC;  //only RTEC is supported so far
+              (*es_infos)[0].svcconf = es[j].svc_cfg_file.in ();
 
-              ACE_TRY_THROW
-                (Deployment::StartError
-                   ("DomainApplicationManager_Impl::install_all_es",
-                     error.c_str ()));
+              // Find NA, and then invoke operation on it
+              ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+              if (this->artifact_map_.find (es[j].node.in (),
+                                            entry) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                              "CIAO::DomainApplicationManager_Impl::install_all_es -"
+                              "ERROR while finding the node specific plan "
+                              "for the node [%s] \n",
+                                es[j].node.in ()));
+
+                  ACE_CString error
+                    ("Unable to resolve a reference to NodeManager: ");
+                  error += es[j].node.in ();
+
+                  ACE_TRY_THROW
+                    (Deployment::StartError
+                      ("DomainApplicationManager_Impl::install_all_es",
+                        error.c_str ()));
+                }
+
+              // Invoke install_es () operation on each cached NodeApplication object.
+              ::Deployment::NodeApplication_ptr my_na =
+                  (entry->int_id_).node_application_.in ();
+
+              ::Deployment::CIAO_Event_Services_var event_services =
+                  my_na->install_es (es_infos);
+
+              // Add these returned ES objects into the cached map
+              this->add_es_to_map (es_infos, event_services);
             }
-
-          // Invoke install_es () operation on each cached NodeApplication object.
-          ::Deployment::NodeApplication_ptr my_na =
-              (entry->int_id_).node_application_.in ();
-
-          // @@TODO: Need to populate the node-specific ESInstallationInfos?
-          Deployment::ESInstallationInfos_var es_infos;
-          ACE_NEW (es_infos,
-                   Deployment::ESInstallationInfos);
-
-          es_infos->length (1);
-          (*es_infos)[0].id = "ES_001";
-          (*es_infos)[0].type = CIAO::RTEC;
-
-          ::Deployment::CIAO_Event_Services_var event_services =
-              my_na->install_es (es_infos);
-
-          // Add these returned ES objects into the cached map
-          this->add_es_to_map (es_infos, event_services);
         }
     }
   ACE_CATCHANY

@@ -17,16 +17,6 @@ module CIAO
 {
   module DAnCE
   {
-    /**
-     * @brief A string containing the filename of the svc.conf file.
-     * The current approach of specifying
-     * svc.conf filename directly some harder problems such as
-     * distribution of svc.conf files and the relative/absolute path to
-     * the svc.conf file (the ServerResrouces xml document will have to
-     * assume the svc.conf file will be available at specific location.)
-     */
-    typedef string SvcconfURI;
-
     /// CIAO specific extension to describe pub/sub services in the deployment
     enum EventServiceType
     {
@@ -42,7 +32,7 @@ module CIAO
       string name;
       string node;
       EventServiceType type;
-      SvcconfURI svc_cfg_file;
+      string svc_cfg_file;
     };
 
     typedef sequence < EventServiceDeploymentDescription >

@@ -179,9 +179,6 @@ module Deployment {
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
     Properties infoProperty;
-
-    /// CIAO specific extension
-    EventServiceDeploymentDescriptions es;
   };
 
   enum DomainUpdateKind {
