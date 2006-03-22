@@ -4963,6 +4963,8 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
+      else if (v == "rtecEventPublisher") v_ = rtecEventPublisher_l;
+      else if (v == "rtecEventConsumer") v_ = rtecEventConsumer_l;
       else 
       {
       }
@@ -4980,6 +4982,8 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
+      else if (v == "rtecEventPublisher") v_ = rtecEventPublisher_l;
+      else if (v == "rtecEventConsumer") v_ = rtecEventConsumer_l;
       else 
       {
       }
@@ -4991,6 +4995,8 @@ namespace CIAO
     CCMComponentPortKind const CCMComponentPortKind::EventEmitter (CCMComponentPortKind::EventEmitter_l);
     CCMComponentPortKind const CCMComponentPortKind::EventPublisher (CCMComponentPortKind::EventPublisher_l);
     CCMComponentPortKind const CCMComponentPortKind::EventConsumer (CCMComponentPortKind::EventConsumer_l);
+    CCMComponentPortKind const CCMComponentPortKind::rtecEventPublisher (CCMComponentPortKind::rtecEventPublisher_l);
+    CCMComponentPortKind const CCMComponentPortKind::rtecEventConsumer (CCMComponentPortKind::rtecEventConsumer_l);
 
     // ComponentPortDescription
     //
@@ -12187,6 +12193,8 @@ namespace CIAO
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventEmitter) s = "EventEmitter";
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventPublisher) s = "EventPublisher";
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventConsumer) s = "EventConsumer";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::rtecEventPublisher) s = "rtecEventPublisher";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::rtecEventConsumer) s = "rtecEventConsumer";
         else 
         {
         }
