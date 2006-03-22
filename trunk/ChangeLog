@@ -1,9 +1,15 @@
+Wed Mar 22 15:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_osf1_4.x_g++.GNU:
+          Removed -fno-strict-prototypes from the CCFLAGS, thanks to
+          Karl Schmitt <Karl dot Schmitt at dfs dot de> for reporting this.
+
 Tue Mar 21 21:58:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
         * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
         * bin/MakeProjectCreator/config/ciao_deployment_dnc.mpb
-        
+
           Added a base MPC project to support pub/sub integration
           in CIAO.
 
