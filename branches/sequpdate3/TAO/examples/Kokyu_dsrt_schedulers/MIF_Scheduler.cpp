@@ -388,7 +388,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
   CORBA::Short importance;
 
-  if (CORBA::is_nil (sc.ptr ()))
+  if (sc.ptr () == 0)
     {
       importance = 0;
     }
@@ -569,7 +569,7 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (CORBA::is_nil (sc.ptr ()))
+  if (sc.ptr () == 0)
     {
       importance = 0;
     }
