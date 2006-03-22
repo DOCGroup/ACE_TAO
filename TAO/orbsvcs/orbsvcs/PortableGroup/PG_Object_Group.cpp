@@ -18,14 +18,13 @@
 // unsigned short and it seems that the compiler promotes the unsigned
 // short of an int and this then gives the warning. Just for Borland
 // disabled the warning in this file.
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x581)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
 # pragma option push -w-csu
 # pragma nopushoptwarn
 # pragma nopackwarning
-#endif /* __BORLANDC__ && __BORLANDC__ <= 0x581 */
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x582 */
 
 #define TODO int todo;
-//#define TODO
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -890,8 +889,8 @@ TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Restore original compiler flags.
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x581)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
 # pragma option pop
 # pragma nopushoptwarn
 # pragma nopackwarning
-#endif /* __BORLANDC__ && __BORLANDC__ <= 0x581 */
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x582 */
