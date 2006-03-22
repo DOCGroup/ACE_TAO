@@ -454,7 +454,7 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
     comp_def->describe_ext_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (desc.in () == 0)
+  if (desc.ptr () == 0)
     {
       if (this->debug_)
         {
