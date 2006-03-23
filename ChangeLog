@@ -1,3 +1,14 @@
+Thu Mar 23 12:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          If linkflags are available, generate them into the project
+          file
+
+        * bin/MakeProjectCreator/config/vcl.mpb:
+          Added -aa to the link flags to indicate that we link a
+          windows application. This prevents a dosbox from appearing
+          when we start a vcl windows app.
+
 Thu Mar 23 03:41:18 UTC 2006  Ciju John  <john_c@ociweb.com>
 
         * ace/Time_Value.inl (set):
