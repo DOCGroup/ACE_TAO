@@ -22,6 +22,9 @@ OBJFILES = \
 <%if(libpaths)%>
 
 LFLAGS = \
+<%if(linkflags)%>
+        <%linkflags%> \
+<%endif%>
 <%if(StackReserveSize)%>
         /S:<%StackReserveSize%> \
 <%endif%>
