@@ -94,7 +94,7 @@ ACE_Time_Value::set (const timespec_t &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
 
-  this->set (tv.sec,
+  this->set (tv.tv_sec,
              tv.tv_nsec / 1000); // Convert nanoseconds into microseconds.
 }
 
