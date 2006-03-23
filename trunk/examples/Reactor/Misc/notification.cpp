@@ -291,8 +291,7 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 int
-Thread_Handler::handle_timeout (const ACE_Time_Value &time,
-				const void *)
+Thread_Handler::handle_timeout (const ACE_Time_Value &time, const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) received timeout at (%u, %u), iterations = %d\n",
