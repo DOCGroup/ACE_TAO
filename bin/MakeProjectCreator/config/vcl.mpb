@@ -8,6 +8,7 @@ project {
      use_vcl        = 1
      lit_libs      += rtl vcl
      compile_flags += -tW -tWV
+     linkflags     += -aa
   }
   verbatim(borland,macros) {
     VCL=1
