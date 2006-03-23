@@ -1,4 +1,9 @@
-Wed Mar 22 17:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Mar 22 16:18:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_1495_Regression/run_test.pl:
+          Altered IOR file wait timing to platform constant.
+
+Wed Mar 22 16:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
           Also disable a warning for BDS2006 with Update Pack 2
