@@ -1,5 +1,10 @@
 Thu Mar 23 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * bin/MakeProjectCreator/config/vcl.mpb:
+          Also set specific options for the bds template
+
+Thu Mar 23 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * ace/os_include/os_limits.h:
           Updated documentation why we have a VxWorks specific
           workaround
