@@ -1,3 +1,14 @@
+Thu Mar 23 16:00:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Svc_Conf_Lexer.cpp:
+
+          Fixed two bugs.
+
+          1) Line numbers were not calculated correctly as in most cases the
+             new line characters were thrown away but not counted.
+          2) Strings were not allowed to contain nested quotes.  However,
+             the original lexer allowed this.
+
 Thu Mar 23 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vcl.mpb:
