@@ -115,6 +115,13 @@ TAO_Value_Var_T<T>::_retn (void)
   return tmp;
 }
 
+template <typename T>
+T *
+TAO_Value_Var_T<T>::ptr (void) const
+{
+  return this->ptr_;
+}
+
 // *************************************************************
 
 template <typename T>

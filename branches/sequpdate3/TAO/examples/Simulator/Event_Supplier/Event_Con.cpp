@@ -352,7 +352,7 @@ main (int argc, char *argv [])
         RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (ec.in())
+      if (CORBA::is_nil (ec.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Not able to get the Event Service reference.\n"),
                           -1);

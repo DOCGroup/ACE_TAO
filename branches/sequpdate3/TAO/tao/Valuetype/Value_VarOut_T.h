@@ -73,6 +73,9 @@ public:
   _out_type out (void);
   _retn_type _retn (void);
 
+  // (TAO extension)
+  T * ptr (void) const;
+
 private:
 
   // Prevent widening assignment.
