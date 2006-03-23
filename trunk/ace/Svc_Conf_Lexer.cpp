@@ -273,6 +273,11 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
       while (buffer->index_ < buffer->size_ &&
              isspace (buffer->input_[buffer->index_]))
         {
+          // Make sure that we count all of the new lines
+          if (buffer->input_[buffer->index_] == '\n')
+            {
+              ++param->yylineno;
+            }
           ++buffer->index_;
         }
     }
@@ -295,9 +300,36 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
               }
             break;
           case ACE_STRING:
-            if (c == buffer->string_start_)
+            if (!(c >= ' ' && c <= '~'))
               {
+                // The character at currrent is definitely not part of
+                // the string so we need to move current back one.
+                --current;
+
+                // Get the starting point of our string (skipping the quote)
                 char* source = buffer->input_ + buffer->index_ + 1;
+
+                // Now, we need to move back in the string until we find the
+                // same character that started the string
+                bool string_end_found = false;
+                for(ssize_t i = (current - 1) - buffer->index_; i >= 0; i--)
+                  {
+                    if (source[i] == buffer->string_start_)
+                      {
+                        current = buffer->index_ + i + 1;
+                        string_end_found = true;
+                        break;
+                      }
+                  }
+
+                if (!string_end_found)
+                  {
+                    ace_yyerror (++param->yyerrno,
+                                 param->yylineno,
+                                 "Unable to find the end of the string");
+                    return ACE_NO_STATE;
+                  }
+
                 size_t amount = (current - buffer->index_) - 1;
 #if defined (ACE_USES_WCHAR)
                 ACE_TCHAR target[ACE_YY_CONVERSION_SPACE] = ACE_TEXT ("");
