@@ -149,6 +149,12 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                         add_connection);
                 break;
 
+              case Deployment::rtecEventConsumer:
+                this->handle_es_consumer_connection (
+                        connections[i],
+                        add_connection);
+                break;
+
               default:
                 ACE_DEBUG ((LM_DEBUG,
                             "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -866,6 +872,12 @@ handle_publisher_es_connection (
       // @@@
       // comp->ciao_disconnect_es (connection.portName.in (),
       //                           event_service);
+      ACE_DEBUG ((LM_DEBUG,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::handle_publisher_es_connection: "
+                  "[%s : %s] publisher port disconnected from ciao event service. \n",
+                  connection.instanceName.in (),
+                  connection.portName.in ()));
       event_service->disconnect_event_supplier (sid.c_str ());
     }
 }
@@ -935,6 +947,12 @@ handle_es_consumer_connection (
     }
   else // remove the connection
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
+                  "[%s : %s] consumer port disconnected from ciao event service. \n",
+                  connection.instanceName.in (),
+                  connection.portName.in ()));
       event_service->disconnect_event_consumer (cid.c_str ());
     }
 }
