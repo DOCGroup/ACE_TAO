@@ -1,3 +1,9 @@
+Thu Mar 23 03:41:18 UTC 2006  Ciju John  <john_c@ociweb.com>
+
+        * ace/Time_Value.inl (set):
+
+        timespec_t doesn't have a 'sec' member. Changed it to 'tv_sec'.
+
 Wed Mar 22 18:42:36 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         From Russell Mora <russell_mora at symantec dot com>
