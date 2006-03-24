@@ -31,7 +31,7 @@
 
   <xsd:complexType name="CIAOEventsDef">
     <xsd:sequence>
-      <xsd:element name="eventServiceConfiguration" type="CIAO:EventServiceDescription" minOccurs="1"/>
+      <xsd:element name="eventServiceConfiguration" type="CIAO:EventServiceDescription" minOccurs="1" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
@@ -40,7 +40,7 @@
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="node" type="xsd:string"/>
-      <xsd:element name="type" type="CIAO::EventServiceType"/>
+      <xsd:element name="type" type="CIAO:EventServiceType"/>
       <xsd:element name="svc_cfg_file" type="xsd:string"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
@@ -61,7 +61,7 @@
 
   <xsd:complexType name="Filter">
     <xsd:sequence>
-      <xsd:element name="type" type="CIAO::FilterType"/>     
+      <xsd:element name="type" type="CIAO:FilterType"/>     
 	    <xsd:element name="source" type="xsd:string" minOccurs="1"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
@@ -74,7 +74,7 @@
   <xsd:complexType name="MCastSenderDescription">
     <xsd:sequence>
       <xsd:element name="node" type="xsd:string"/>
-      <xsd:element name="type" type="CIAO::EventServiceType"/>
+      <xsd:element name="type" type="CIAO:EventServiceType"/>
       <xsd:element name="svc_cfg_file" type="xsd:string"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
@@ -83,7 +83,7 @@
   <xsd:complexType name="MCastReceiverDescription">
     <xsd:sequence>
       <xsd:element name="node" type="xsd:string"/>
-      <xsd:element name="type" type="CIAO::EventServiceType"/>
+      <xsd:element name="type" type="CIAO:EventServiceType"/>
       <xsd:element name="svc_cfg_file" type="xsd:string"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
