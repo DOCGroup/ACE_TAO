@@ -411,6 +411,13 @@ Worker::orb (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
+#if 0
+  // ACE_Thread::getprio() fails on systems that do not support thread
+  // priorities.  While we could just treat the failure as benign, I'm
+  // just disabling it altogether.  It doesn't provide much value, and
+  // makes service startup needlessly more verbose.  See bugzilla 2477
+  // for details.
+  
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -422,6 +429,7 @@ Worker::svc (void)
     }
 
   ACE_DEBUG ((LM_DEBUG, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
+#endif
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
