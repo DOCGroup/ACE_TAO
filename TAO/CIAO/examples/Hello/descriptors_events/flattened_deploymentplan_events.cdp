@@ -118,6 +118,21 @@
     </configProperty>
   </instance>
 
+<!--
+  <connection>
+    <name>hello_facet_connection</name>
+    <internalEndpoint>
+      <portName>push_message</portName>
+      <kind>Facet</kind>
+      <instance>Hello-Sender-idd</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>read_message</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Hello-Receiver-idd</instance>
+    </internalEndpoint>
+  </connection>
+
   <connection>
     <name>hello_event_connection</name>
     <internalEndpoint>
@@ -131,6 +146,7 @@
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
   </connection>
+-->
 
   <connection>
     <name>hello_event_ec_publisher_connection</name>
@@ -139,35 +155,21 @@
       <kind>rtecEventPublisher</kind>
       <instance>Hello-Sender-idd</instance>
     </internalEndpoint>
-    <externalEndpoint>
+    <externalReference>
       <location>ES_01</location>
-    </internalEndpoint>
-  </externalEndpoint>
+    </externalReference>
+  </connection>
 
   <connection>
     <name>hello_event_ec_consumer_connection</name>
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>rtecEventConsumer</kind>
-      <instance>Hello-Sender-idd</instance>
-    </internalEndpoint>
-    <externalEndpoint>
-      <location>ES_01</location>
-    </externalEndpoint>
-  </connection>
-
-  <connection>
-    <name>hello_facet_connection</name>
-    <internalEndpoint>
-      <portName>push_message</portName>
-      <kind>Facet</kind>
-      <instance>Hello-Sender-idd</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>read_message</portName>
-      <kind>SimplexReceptacle</kind>
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
+    <externalReference>
+      <location>ES_01</location>
+    </externalReference>
   </connection>
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
@@ -250,7 +252,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>ciao_events-example.ced</string>
+        <string>ciao-events-example.ced</string>
       </value>
     </value>
   </infoProperty>  
