@@ -76,6 +76,7 @@ TAO_Notify_Tests_Worker::command_builder (TAO_Notify_Tests_Command_Builder* cmd_
 int
 TAO_Notify_Tests_Worker::svc (void)
 {
+#if 0
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -87,6 +88,7 @@ TAO_Notify_Tests_Worker::svc (void)
     }
 
   ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d \n", priority));
+#endif
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -129,6 +131,13 @@ TAO_Notify_Tests_ORB_Run_Worker::run_period (ACE_Time_Value run_period)
 int
 TAO_Notify_Tests_ORB_Run_Worker::svc (void)
 {
+#if 0
+  // ACE_Thread::getprio() fails on systems that do not support thread
+  // priorities.  While we could just treat the failure as benign, I'm
+  // just disabling it altogether.  It doesn't provide much value, and
+  // makes service startup needlessly more verbose.  See bugzilla 2477
+  // for details.
+  
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -139,8 +148,8 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
       return -1;
     }
 
-
   ACE_DEBUG ((LM_ERROR, "Activated ORB Run Worker Thread to run the ORB @ priority:%d \n", priority));
+#endif
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
