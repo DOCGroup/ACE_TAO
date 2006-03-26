@@ -367,10 +367,16 @@ dnl @todo Clean up / consolidate these conditionals
      ;;
  esac
 
- dnl Additional flags
+ dnl Warning flags
+ if test "$GCC" = yes; then
+   ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
+ fi
  if test "$GXX" = yes; then
    ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
+ fi
 
+ dnl Additional flags
+ if test "$GXX" = yes; then
    dnl Take advantage of visibility attributes when using g++ 4.0 or
    dnl better.
    if test "$ACE_GXX_MAJOR_VERSION" -ge 4; then
@@ -401,8 +407,46 @@ dnl    if test "$ace_user_enable_repo" = no; then
 dnl      ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
 dnl    fi
  fi
+])
 
- if test "$GCC" = yes; then
-   ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
- fi
+AC_DEFUN([ACE_CHECK_CFLAGS],
+[
+AS_VAR_PUSHDEF([VAR],'ace_cv_cflag_$1')
+AC_MSG_CHECKING([whether $CC supports -$1])
+AC_LANG_SAVE
+AC_LANG([C])
+ace_save_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS -$1"
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[return 0])],[VAR=yes],[VAR=no])
+CFLAGS=$ace_save_CFLAGS
+AC_LANG_RESTORE
+if test $VAR = yes; then
+  AC_MSG_RESULT([yes])
+  $2
+else
+  AC_MSG_RESULT([no])
+  $3
+fi
+AS_VAR_POPDEF([VAR])
+])
+
+AC_DEFUN([ACE_CHECK_CXXFLAGS],
+[
+AS_VAR_PUSHDEF([VAR],'ace_cv_cxxflag_$1')
+AC_MSG_CHECKING([whether $CXX supports -$1])
+AC_LANG_SAVE
+AC_LANG([C++])
+ace_save_CXXFLAGS=$CXXFLAGS
+CXXFLAGS="$CXXFLAGS -$1"
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[return 0])],[VAR=yes],[VAR=no])
+CXXFLAGS=$ace_save_CXXFLAGS
+AC_LANG_RESTORE
+if test $VAR = yes; then
+  AC_MSG_RESULT([yes])
+  $2
+else
+  AC_MSG_RESULT([no])
+  $3
+fi
+AS_VAR_POPDEF([VAR])
 ])

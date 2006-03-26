@@ -1,3 +1,11 @@
+Sun Mar 26 17:29:08 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/compiler.m4:
+
+          Add ACE_CHECK_CFLAGS and ACE_CHECK_CXXFLAGS autoconf macros
+          to verify if c/c++ compiler supports the specified command-
+          line options.
+
 Fri Mar 24 12:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
@@ -19,7 +27,7 @@ Thu Mar 23 16:00:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
           2) Strings were not allowed to contain nested quotes.  However,
              the original lexer allowed this.  Thanks to JR Andreassen
              <janrune@io.com> for reporting this.
-  
+
 Thu Mar 23 14:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vcl.mpb:
