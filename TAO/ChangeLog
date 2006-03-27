@@ -1,3 +1,23 @@
+Wed Mar 22 16:18:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_1482_Regression/run_test.pl:
+        * tests/Bug_2174_Regression/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Client_Protocol/run_test.pl:
+        * tests/RTCORBA/Explicit_Binding/run_test.pl:
+        * tests/RTCORBA/Policy_Combinations/run_test.pl:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+        * tests/RTScheduling/DT_Spawn/run_test.pl:
+        * tests/RTScheduling/Current/run_test.pl:
+        * tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
+        * tests/OBV/Collocated/Forward/run_test.pl:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+          Altered IOR file wait timing to platform constant.
+          Existing time too short for lynxos.
+
 Mon Mar 27 08:13:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * docs/Options.html :

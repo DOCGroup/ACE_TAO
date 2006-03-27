@@ -19,7 +19,7 @@ else {
 
 print STDERR "Starting Current Test\n";
 
-$test = $CL->SpawnWaitKill (10);
+$test = $CL->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
