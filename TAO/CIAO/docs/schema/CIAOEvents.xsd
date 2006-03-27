@@ -42,6 +42,8 @@
       <xsd:element name="node" type="xsd:string"/>
       <xsd:element name="type" type="CIAO:EventServiceType"/>
       <xsd:element name="svc_cfg_file" type="xsd:string"/>
+      
+      <xsd:element name="filter" type="CIAO:FilterType" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
