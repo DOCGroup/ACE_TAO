@@ -23,6 +23,8 @@ module CIAO
 
     void insert_source (in CONNECTION_ID source_id);
 
+    void insert_type (in long event_type);
+
     //void start_logical_and_group (in long size);
 
     //void start_negation ();

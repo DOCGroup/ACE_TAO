@@ -1168,6 +1168,8 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
   return connections._retn ();
 }
 
+
+// Get outgoing connections for particular instance
 bool
 CIAO::DomainApplicationManager_Impl::
 get_outgoing_connections_i (const char * instname,
@@ -1207,6 +1209,8 @@ get_outgoing_connections_i (const char * instname,
   return true;
 }
 
+// Search the current binding to see whether a connection of this
+// component needs to be populated
 bool
 CIAO::DomainApplicationManager_Impl::
 populate_connection_for_binding (
@@ -1268,16 +1272,10 @@ handle_es_connection (
     binding.internalEndpoint[0];
 
   // If the instance name does NOT match one of the names in the binding
+  // Then thsi binding has nothing related to myself (an instance)
   if (ACE_OS::strcmp (instname,
                       plan.instance[endpoint.instanceRef].name.in ()) != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                  "CIAO::DomainApplicationManager_Impl::"
-                  "handle_publisher_es_connection -"
-                  "invalid connection specified in deployment plan\n"));
-      return false;
-    }
+    return false;
 
   if (binding.externalReference.length () != 1)
     {
@@ -1289,15 +1287,19 @@ handle_es_connection (
       return false;
     }
 
+  retv.length (len+1);
   retv[len].instanceName = instname;
-  retv[len].portName = binding.internalEndpoint[0].portName.in ();
-  retv[len].kind = binding.internalEndpoint[0].kind;
-
-  CIAO::CIAO_Event_Service_var es;
+  retv[len].portName = endpoint.portName.in ();
+  retv[len].kind = endpoint.kind;
 
   ACE_CString es_id = binding.externalReference[0].location.in ();
 
+  retv[len].endpointInstanceName = es_id.c_str ();
+  retv[len].endpointPortName = "CIAO_ES";
+
   // If we didnt find the objref of the connection ...
+  CIAO::CIAO_Event_Service_var es;
+
   if (this->es_map_.find (es_id.c_str (), es) != 0)
     {
       ACE_CString error ("Creating connections for ");
@@ -1311,6 +1313,43 @@ handle_es_connection (
     }
 
   retv[len].event_service = es._retn ();
+
+  // One more thing needs to be done if this is a es_consumer connection
+  if (endpoint.kind == Deployment::rtecEventConsumer)
+    {
+      // Now we search in the received connections to get the objRef of event sink
+      bool found = false;
+      const CORBA::ULong all_conn_len = this->all_connections_->length ();
+      for (CORBA::ULong j = 0; j < all_conn_len; ++j)
+        {
+          const Deployment::Connection & curr_recv_conn =
+              this->all_connections_[j];
+
+          // We need to look at the instance name and the port name to confirm.
+          if (ACE_OS::strcmp (curr_recv_conn.instanceName.in (),
+                              instname) == 0 &&
+              ACE_OS::strcmp (curr_recv_conn.portName.in (),
+                              endpoint.portName.in ()) == 0)
+            {
+              retv[len].endpoint =
+                  CORBA::Object::_duplicate(curr_recv_conn.endpoint.in ());
+              found = true;
+            }
+        } // End of searching received connections
+
+      if (!found)
+        {
+          ACE_CString error ("Creating connections for ");
+          error += instname;
+          error += ": unable to find object reference for connection ";
+          error += binding.name.in ();
+          ACE_THROW_RETURN (Deployment::StartError
+            ("DomainApplicationManager_Impl::handle_es_connection",
+                          error.c_str ()),
+                          false);
+        }
+    }
+
   return true;
 }
 
@@ -1816,10 +1855,28 @@ dump_connections (const ::Deployment::Connections & connections)
             ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
             break;
 
+          case Deployment::rtecEventPublisher:
+
+            ACE_DEBUG ((LM_DEBUG, "rtecEventPublisher\n"));
+            break;
+
+          case Deployment::rtecEventConsumer:
+
+            ACE_DEBUG ((LM_DEBUG, "rtecEventConsumer\n"));
+            break;
+
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown port kind.\n"));
-
         }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "endpointInstanceName: %s\n",
+                  connections[i].endpointInstanceName.in ()));
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "endpointPortName: %s\n",
+                 connections[i].endpointPortName.in ()));
+      ACE_DEBUG ((LM_DEBUG, "---------------------\n"));
     }
 }
 

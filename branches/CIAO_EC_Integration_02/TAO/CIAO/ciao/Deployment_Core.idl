@@ -102,8 +102,6 @@ module Deployment
     // A wrapper facade interface to provision different event
     // communication mechanisms, including RTEC, etc.
     CIAO::CIAO_Event_Service event_service;
-
-    CIAO::EventServiceType type;
   };
 
   typedef sequence < Connection > Connections;
