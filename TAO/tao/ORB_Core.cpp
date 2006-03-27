@@ -2202,6 +2202,8 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
+      ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
 #if TAO_HAS_INTERCEPTORS == 1
       if (this->client_request_interceptor_adapter_ != 0)
         {

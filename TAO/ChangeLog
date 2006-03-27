@@ -1,3 +1,11 @@
+Mon Mar 27 10:29:08 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/ORB_Core.cpp (destroy_interceptors):
+
+          Fixed race condition that allowed multiple threads to destroy
+          interceptors concurrently.  Thanks to Iliyan for finding this
+          race condition.
+
 Wed Mar 22 16:18:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_1482_Regression/run_test.pl:
