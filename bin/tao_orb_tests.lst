@@ -26,7 +26,7 @@ TAO/tests/OctetSeq/run_test1.pl: !STATIC
 TAO/tests/OctetSeq/run_test2.pl: !STATIC
 TAO/tests/BiDirectional/run_test.pl: !MINIMUM !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/BiDirectional/run_test_ipv6.pl: IPV6 !MINIMUM !GIOP10 !DISABLE_BIDIR
-TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !VxWorks !MINIMUM !STATIC !GIOP10 !DISABLE_BIDIR
+TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !VxWorks !MINIMUM !STATIC !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl:
@@ -38,7 +38,7 @@ TAO/tests/Bug_1270_Regression/run_test.pl: !Win32 !MINIMUM !DISABLE_ToFix_LynxOS
 TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !ST
 TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST !Win32
 TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32 !IRIX
-TAO/tests/Bug_1482_Regression/run_test.pl: !VxWorks !MINIMUM !ST
+TAO/tests/Bug_1482_Regression/run_test.pl: !VxWorks !MINIMUM !ST !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/Bug_1551_Regression/run_test.pl: !VxWorks !MINIMUM !ST !IRIX
 TAO/tests/Bug_2084_Regression/run_test.pl: !ST
 TAO/tests/Bug_2134_Regression/run_test.pl:
@@ -48,9 +48,9 @@ TAO/tests/Bug_2186_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2201_Regression/run_test.pl:
 TAO/tests/Bug_2234_Regression/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Bug_2289_Regression/run_test.pl:
-TAO/tests/Bug_2319_Regression/run_test.pl: !MINIMUM
+TAO/tests/Bug_2319_Regression/run_test.pl: !MINIMUM !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/Bug_2328_Regression/run_test.pl:
-TAO/tests/Bug_2345_Regression/run_test.pl:
+TAO/tests/Bug_2345_Regression/run_test.pl: !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/Bug_2349_Regression/run_test.pl:
 TAO/tests/Bug_2417_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/Bug_2429_Regression/run_test.pl: !MINIMUM
@@ -60,8 +60,8 @@ TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !IPV6
 TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !VxWorks !MINIMUM !IPV6
-TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !ST !DISABLE_ToFix_LynxOS_PPC
+TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Policies/run_test.pl: !MINIMUM  !ST
@@ -89,7 +89,7 @@ TAO/tests/IPV6/run_test.pl: IPV6
 TAO/tests/AlternateIIOP/run_test.pl:
 TAO/tests/Cache_Growth_Test/run_test.pl:
 TAO/tests/Muxing/run_test.pl: !ST
-TAO/tests/Muxed_GIOP_Versions/run_test.pl: !VxWorks !ST
+TAO/tests/Muxed_GIOP_Versions/run_test.pl: !VxWorks !ST !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/MT_Client/run_test.pl: !ST
 TAO/tests/MT_BiDir/run_test.pl: !ST !MINIMUM !GIOP10 !DISABLE_BIDIR
 TAO/tests/File_IO/run_test.pl: !ST !MINIMUM
