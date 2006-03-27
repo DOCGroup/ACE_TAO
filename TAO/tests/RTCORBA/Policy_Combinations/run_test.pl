@@ -60,7 +60,7 @@ $SV->Spawn ();
 for $file (@iorfiles)
 {
     $file = PerlACE::LocalFile($file);
-    if (PerlACE::waitforfile_timed ($file, 10) == -1)
+    if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1)
     {
         $server = $SV->TimedWait (1);
         if ($server == 2) 
