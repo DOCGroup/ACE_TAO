@@ -1,3 +1,8 @@
+Mon Mar 27 14:16:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Add more !DISABLE_ToFix_LynxOS_* marks to failing tests
+
 Mon Mar 27 07:46:33 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/Acceptor.h: Updated the documentation to clarify that an
