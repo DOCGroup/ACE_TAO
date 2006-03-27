@@ -1,3 +1,38 @@
+Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl:
+        * tao/Connection_Handler.cpp:
+        * tao/Resume_Handle.h:
+        * tao/Resume_Handle.cpp:
+
+          Merged in fixes from OCI 1.4a.
+          Tue Feb 21 16:29:32 UTC 2006  Don Busch  <busch_d@ociweb.com>
+
+           * tao/Connection_Handler.cpp
+           * tao/Resume_Handle.h
+           * tao/Resume_Handle.cpp
+           * orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl
+
+           RT8248 is a race condition involving two threads active in the
+           same connection handler at the same time.  The race is fixed by
+           ensuring that a connection handler that has allowed its handle
+           to be resumed in the Reactor does not return "1" from
+           handle_input. "1" is the Reactor's "call me back immediately"
+           value. Essentially, you can't give up ownership of yourself twice
+          --  you give up owner-
+           ship when you resume the handle, so you can't ask to be called
+           back immediately.  (The SSLIOP handler is the only one that ever
+           returns 1, so that's the only handler in which this
+           manifests itself)
+
+           The additional test (run_test_harsh.pl) is a longer (~5 minute)
+           version of the MT_SSLIOP test that fails without this change,
+           but succeeds with it.
+
+           Also moved the code for Ciju's "connection close" fix of
+           "Fri Dec 16 14:40:54 2005" from the Connection_Handler.cpp
+           to the Resume_Handle.cpp.
+
 Mon Mar 27 10:29:08 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/ORB_Core.cpp (destroy_interceptors):
