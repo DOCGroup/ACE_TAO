@@ -1,3 +1,19 @@
+Mon Mar 27 19:56:51 UTC 2006  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+        * DAnCE/NodeApplication/NodeApplication.cpp (main): Added code to
+          print out commandline options of the NodeApplicaion.  The print
+          out is available for CIAO_DEBUG_LEVEL > 9.
+        
+        * DAnCE/NodeApplication/Configuration_Factory.h:
+        * DAnCE/NodeApplication/Configuration_Factory.cpp: Changed
+          parse_args function to pass "argc" as reference to be consistent
+          with Arg_Shifter's signature.  
+        
+          Double-check the "-o" flag first with exact string comparison
+          before extracting the parameter to avoid mistaking any of the
+          "-ORBxxx" command line flags as the "-o" flag.  Thanks to Sandro
+          Andrade <sandro @dcc.ufba.br> for reporting the bug.
+        
 Mon Mar 20 22:35:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servant_Impl_Utils_T.cpp:
