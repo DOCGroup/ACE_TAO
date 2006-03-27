@@ -3,7 +3,6 @@
 #define DEPLOYMENT_DATA_IDL
 #include "Deployment_Base.idl"
 
-
 module Deployment {
 
   struct ComponentPortDescription {

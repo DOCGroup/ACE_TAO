@@ -4,7 +4,6 @@
 #define CIAO_SERVANT_IMPL_UTILS_T_C
 
 #include "Servant_Impl_Base.h"
-#include "ciao/Cookies.h"
 
 namespace CIAO
 {
@@ -57,9 +56,7 @@ namespace CIAO
 
     CORBA::ULong map_slot = 0UL;
 
-    for (typename ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (
-             objrefs
-           );
+    for (ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (objrefs);
          0 == iter.done ();
          iter.advance (), ++map_slot)
       {
@@ -88,7 +85,7 @@ namespace CIAO
   {
     ::Components::PublisherDescription *elem = 0;
     ACE_NEW (elem,
-             ::OBV_Components::PublisherDescription);
+              ::OBV_Components::PublisherDescription);
     ::Components::PublisherDescription_var safe_elem = elem;
 
     elem->name (port_name);
@@ -96,9 +93,7 @@ namespace CIAO
 
     CORBA::ULong map_slot = 0UL;
 
-    for (typename ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (
-             consumers
-           );
+    for (ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (consumers);
          0 == iter.done ();
          iter.advance (), ++map_slot)
       {

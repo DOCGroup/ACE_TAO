@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*Test) : orbsvcsexe, taoidldefaults, portablegroup, portableserver {
-  exename = uipmc_test
-  Source_Files {
-    Hello.cpp
-  }
-}

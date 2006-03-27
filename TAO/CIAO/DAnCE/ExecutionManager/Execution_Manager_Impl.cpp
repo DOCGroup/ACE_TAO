@@ -146,7 +146,7 @@ namespace CIAO
           ACE_TRY_CHECK;
 
           // What if we still have components running within this plan?
-          // 
+          //
           (void) this->map_.unbind_dam (plan->UUID.in ());
 
           // Where does the POA deactivate happen?
@@ -205,7 +205,7 @@ namespace CIAO
           CORBA::ULong inst_lenth = plan->instance.length ();
           for (CORBA::ULong i = 0; i < inst_lenth; ++i)
             {
-              if (this->is_component_running (plan->instance[i].name.in (), 
+              if (this->is_component_running (plan->instance[i].name.in (),
                                               plan_uuid))
                 return;
             }
@@ -249,7 +249,7 @@ namespace CIAO
       ACE_CHECK;
     }
 
-    void 
+    void
     Execution_Manager_Impl::perform_redeployment (
       const Deployment::DeploymentPlan & plan
       ACE_ENV_ARG_DECL)
@@ -263,7 +263,7 @@ namespace CIAO
                        ::Components::RemoveFailure))
     {
       CIAO_TRACE ("CIAO::Execution_Manager_Impl::perform_redeployment");
-    
+
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) Dynamic Redeployment: "
                   "invoked CIAO::Execution_Manager_Impl::perform_redeployment \n"));
@@ -299,7 +299,7 @@ namespace CIAO
       ACE_CHECK;
     }
 
-    Deployment::DeploymentPlan * 
+    Deployment::DeploymentPlan *
     Execution_Manager_Impl::getPlan (const char * plan_uuid
                                      ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException))
@@ -339,10 +339,10 @@ namespace CIAO
           ::CORBA::SystemException,
           ::Deployment::InvalidConnection))
     {
-      ACE_DEBUG ((LM_ERROR, 
+      ACE_DEBUG ((LM_ERROR,
                   "Execution_Manage::finalizing  global bindings.\n"));
 
-      // Find the NodeApplication hosting the component, and then call 
+      // Find the NodeApplication hosting the component, and then call
       // <finishLaunch> on it
       ACE_TRY
       {
@@ -376,7 +376,7 @@ namespace CIAO
       ACE_ENDTRY;
     }
 
-    Deployment::NodeApplication_ptr 
+    Deployment::NodeApplication_ptr
     Execution_Manager_Impl::
     find_node_application (const Component_Binding_Info & binding)
       ACE_THROW_SPEC ((
@@ -399,7 +399,7 @@ namespace CIAO
 
       // Find the NA based on the NodeName field of the binding
       // This is a CORBA call on the DAM
-      Deployment::NodeApplication_var 
+      Deployment::NodeApplication_var
         node_app = dam->get_node_app (binding.node_.c_str ());
 
       if (CORBA::is_nil (node_app.in ()))
@@ -414,14 +414,14 @@ namespace CIAO
       return node_app._retn ();
     }
 
-    void 
+    void
     Execution_Manager_Impl::
     add_shared_component (const Component_Binding_Info & comp)
     {
       this->shared_components_.insert (comp);
     }
 
-    void 
+    void
     Execution_Manager_Impl::
     remove_shared_component (const Component_Binding_Info & comp)
     {

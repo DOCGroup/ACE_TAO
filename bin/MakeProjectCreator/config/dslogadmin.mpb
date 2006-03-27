@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib {
-  after     += DsLogAdmin
-  libs      += TAO_DsLogAdmin
-  tagchecks += Log
-}

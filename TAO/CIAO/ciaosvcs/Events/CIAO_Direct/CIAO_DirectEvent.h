@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author George Edwards <g.edwards@vanderbilt.edu>
  *  @author Gan Deng <dengg@dre.vanderbilt.edu>
+ *  @author George Edwards <g.edwards@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -31,13 +31,20 @@ namespace CIAO
    *
    * An implementation of EventServiceBase using direct communication.
    */
-  class CIAO_EVENTS_Export DirectEventService :
+  class CIAO_DIRECTEVENT_Export DirectEventService :
     public virtual EventServiceBase
   {
   public:
-
     DirectEventService (CORBA::ORB_ptr orb,
                         PortableServer::POA_ptr poa);
+
+    virtual Supplier_Config_ptr
+    create_supplier_config (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Consumer_Config_ptr
+    create_consumer_config (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
     connect_event_supplier (
@@ -53,8 +60,8 @@ namespace CIAO
         CORBA::SystemException));
 
     virtual void
-    disconnect_event_consumer (
-        const char * connection_id
+    disconnect_event_supplier (
+        const char * consumer_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -62,8 +69,9 @@ namespace CIAO
         Components::InvalidConnection));
 
     virtual void
-    disconnect_event_supplier (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    disconnect_event_consumer (
+        const char * connection_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         Components::InvalidName,
@@ -77,7 +85,6 @@ namespace CIAO
         CORBA::SystemException));
 
   private:
-
     // Reference to the ORB
     CORBA::ORB_var orb_;
 
@@ -89,9 +96,8 @@ namespace CIAO
      *
      * List of consumers.
      */
-    /// @@ George, this is cool! Do you want to use a _var or _ptr?
+    // @@TODO: We need to change the array to set!
     ACE_Array<Components::EventConsumerBase_var> consumer_array_;
-
   };
 
 
@@ -106,9 +112,7 @@ namespace CIAO
   class Direct_Consumer_Config_impl :
     public virtual POA_CIAO::Direct_Consumer_Config
   {
-
   public:
-
     Direct_Consumer_Config_impl (PortableServer::POA_ptr poa);
 
     virtual ~Direct_Consumer_Config_impl (void);
@@ -141,7 +145,6 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
-
     ACE_CString consumer_id_;
 
     ACE_CString supplier_id_;
@@ -184,15 +187,12 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
-
     ACE_CString supplier_id_;
 
     EventServiceType service_type_;
 
     PortableServer::POA_var poa_;
-
   };
-
 }
 
 #include /**/ "ace/post.h"
