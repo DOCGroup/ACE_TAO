@@ -56,7 +56,7 @@ namespace CIAO
     NodeApplication_Options () : use_callback_ (1), rt_support_ (0) {}
 
     // extracting commandline arguments
-    int parse_args (int argc, char *argv[]);
+    int parse_args (int &argc, char *argv[]);
 
     NodeApp_Configurator *create_nodeapp_configurator (void);
 
