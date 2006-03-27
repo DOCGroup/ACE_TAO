@@ -1,8 +1,14 @@
+Mon Mar 27 08:13:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * docs/Options.html :
+        * docs/ORBEndpoint.html :
+          Fixed incorrect ORBInitRef examples.
+
 Fri Mar 24 01:58:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
         * orbsvcs/tests/Notify/lib/Driver.cpp:
-        
+
           Removed logging of ORB worker thread start up, as that fails on
           systems without thread priorities.  See bugzilla issue 2477 for
           details.
