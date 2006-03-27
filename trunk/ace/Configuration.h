@@ -700,8 +700,8 @@ public:
   ACE_Configuration_Section_IntId (void);
 
   /// Named ctor
-  explicit ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
-                                                SUBSECTION_MAP* section_hash_map);
+  ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
+                                   SUBSECTION_MAP* section_hash_map);
 
   /// Copy ctor
   ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
