@@ -1,3 +1,9 @@
+Sun Mar 26 21:40:10 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/TSS_T.cpp: Added patches to silence the type-punning warning
+ 	  from G++ 4.x.  Thanks to Ken Sedgwick for contributing this
+ 	  stuff!
+
 Sun Mar 26 17:29:08 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/compiler.m4:
