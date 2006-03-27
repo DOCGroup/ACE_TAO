@@ -89,11 +89,11 @@ module Components
               InvalidConnection,
               ExceededConnectionLimit);
 
-    //Object
-    //ciao_disconnect_es (in FeatureName publisher_name,
-    //                    in Cookie ck)
-    //  raises (InvalidName,
-    //          InvalidConnection);
+    Object
+    ciao_disconnect_es (in FeatureName publisher_name,
+                        in Cookie ck)
+      raises (InvalidName,
+              InvalidConnection);
 
     void connect_consumer (in FeatureName emitter_name,
                            in EventConsumerBase consumer)

@@ -118,7 +118,7 @@
     </configProperty>
   </instance>
 
-<!--
+
   <connection>
     <name>hello_facet_connection</name>
     <internalEndpoint>
@@ -133,6 +133,7 @@
     </internalEndpoint>
   </connection>
 
+<!--
   <connection>
     <name>hello_event_connection</name>
     <internalEndpoint>

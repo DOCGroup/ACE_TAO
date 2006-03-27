@@ -161,6 +161,8 @@ namespace CIAO
     //@@@
     rt_config->start_disjunction_group (1);
 
+    rt_config->insert_type (ACE_ES_EVENT_ANY);
+
     RtecEventChannelAdmin::ConsumerQOS_var qos =
       rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -225,10 +227,7 @@ namespace CIAO
     events[0].header.source = ACE_ES_EVENT_SOURCE_ANY; //this->source_id_;
     events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
     events[0].data.any_value <<= ev;
-    /**
-     * @@George, a place holder for reliable oneways if we get to
-     * support it.
-     */
+
     this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
@@ -255,6 +254,10 @@ namespace CIAO
   }
 
 
+  //////////////////////////////////////////////////////////////////////
+  ///                 Supplier Servant Implementation
+  //////////////////////////////////////////////////////////////////////
+
   RTEventServiceSupplier_impl::RTEventServiceSupplier_impl (
     PortableServer::POA_ptr poa) :
   poa_ (PortableServer::POA::_duplicate (poa))
@@ -270,6 +273,10 @@ namespace CIAO
     this->poa_->deactivate_object (oid);
     this->_remove_ref ();
   }
+
+  //////////////////////////////////////////////////////////////////////
+  ///                   Consumer Servant Implementation
+  //////////////////////////////////////////////////////////////////////
 
   RTEventServiceConsumer_impl::RTEventServiceConsumer_impl (
     PortableServer::POA_ptr poa,
@@ -309,6 +316,92 @@ namespace CIAO
     this->poa_->deactivate_object (oid);
     this->_remove_ref ();
   }
+
+
+  //////////////////////////////////////////////////////////////////////
+  ///                   Supplier Config Implementation
+  //////////////////////////////////////////////////////////////////////
+
+  RTEvent_Supplier_Config_impl::RTEvent_Supplier_Config_impl (PortableServer::POA_ptr poa) :
+    service_type_ (RTEC),
+    poa_ (PortableServer::POA::_duplicate (poa))
+  {
+  }
+
+  RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl (void)
+  {
+    ACE_DEBUG
+      ((LM_DEBUG, "RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl\n"));
+  }
+
+  void
+  RTEvent_Supplier_Config_impl::supplier_id (
+      const char * supplier_id
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    ACE_DEBUG ((LM_DEBUG, "supplier's id: %s\n", supplier_id));
+
+    this->supplier_id_ = supplier_id;
+
+    ACE_Hash<ACE_CString> hasher;
+    RtecEventComm::EventSourceID source_id =
+      hasher (this->supplier_id_.c_str ());
+
+    ACE_DEBUG ((LM_DEBUG, "supplier's source id: %i\n", source_id));
+
+    this->qos_.insert (source_id,
+                       source_id,
+                       0,
+                       1);
+  }
+
+  CONNECTION_ID
+  RTEvent_Supplier_Config_impl::supplier_id (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    return CORBA::string_dup (this->supplier_id_.c_str ());
+  }
+
+  EventServiceType
+  RTEvent_Supplier_Config_impl::service_type (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    return this->service_type_;
+  }
+
+  RtecEventChannelAdmin::SupplierQOS *
+  RTEvent_Supplier_Config_impl::rt_event_qos (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    RtecEventChannelAdmin::SupplierQOS * supplier_qos = 0;
+    ACE_NEW_RETURN (supplier_qos,
+                    RtecEventChannelAdmin::SupplierQOS (this->qos_.get_SupplierQOS ()),
+                    0);
+    return supplier_qos;
+  }
+
+  void
+  RTEvent_Supplier_Config_impl::destroy (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
+  }
+
+  //////////////////////////////////////////////////////////////////////
+  ///                   Consumer Config Implementation
+  //////////////////////////////////////////////////////////////////////
 
   RTEvent_Consumer_Config_impl::RTEvent_Consumer_Config_impl (PortableServer::POA_ptr poa) :
     service_type_ (RTEC),
@@ -353,9 +446,18 @@ namespace CIAO
     RtecEventComm::EventSourceID int_source_id =
       hasher (source_id);
 
-    this->qos_.insert (int_source_id,
-                       int_source_id,
-                       0);
+    this->qos_.insert_source (int_source_id,
+                              0);
+  }
+
+  void
+  RTEvent_Consumer_Config_impl::insert_type (
+        ::CORBA::Long event_type
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((::CORBA::SystemException))
+  {
+    this->qos_.insert_type (event_type,
+                            0);
   }
 
   void
@@ -366,7 +468,9 @@ namespace CIAO
       CORBA::SystemException))
   {
 
-    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::set_consumer_id\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "RTEvent_Consumer_Config_impl::set_consumer_id:%s\n",
+                consumer_id));
 
     this->consumer_id_ = consumer_id;
   }
@@ -379,7 +483,9 @@ namespace CIAO
       CORBA::SystemException))
   {
 
-    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::set_supplier_id\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "RTEvent_Consumer_Config_impl::set_supplier_id:%s\n",
+                supplier_id));
 
     this->supplier_id_ = supplier_id;
 
@@ -476,80 +582,4 @@ namespace CIAO
     this->poa_->deactivate_object (oid);
     this->_remove_ref ();
   }
-
-  RTEvent_Supplier_Config_impl::RTEvent_Supplier_Config_impl (PortableServer::POA_ptr poa) :
-    service_type_ (RTEC),
-    poa_ (PortableServer::POA::_duplicate (poa))
-  {
-  }
-
-  RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl (void)
-  {
-    ACE_DEBUG
-      ((LM_DEBUG, "RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl\n"));
-  }
-
-  void
-  RTEvent_Supplier_Config_impl::supplier_id (
-      const char * supplier_id
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException))
-  {
-    this->supplier_id_ = supplier_id;
-
-    ACE_Hash<ACE_CString> hasher;
-    RtecEventComm::EventSourceID source_id =
-      hasher (this->supplier_id_.c_str ());
-
-    ACE_DEBUG ((LM_DEBUG, "supplier's source id: %i\n", source_id));
-
-    this->qos_.insert (source_id,
-                       source_id,
-                       0,
-                       1);
-  }
-
-  CONNECTION_ID
-  RTEvent_Supplier_Config_impl::supplier_id (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException))
-  {
-    return CORBA::string_dup (this->supplier_id_.c_str ());
-  }
-
-  EventServiceType
-  RTEvent_Supplier_Config_impl::service_type (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException))
-  {
-    return this->service_type_;
-  }
-
-  RtecEventChannelAdmin::SupplierQOS *
-  RTEvent_Supplier_Config_impl::rt_event_qos (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException))
-  {
-    RtecEventChannelAdmin::SupplierQOS * supplier_qos = 0;
-    ACE_NEW_RETURN (supplier_qos,
-                    RtecEventChannelAdmin::SupplierQOS (this->qos_.get_SupplierQOS ()),
-                    0);
-    return supplier_qos;
-  }
-
-  void
-  RTEvent_Supplier_Config_impl::destroy (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException))
-  {
-    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
-    this->poa_->deactivate_object (oid);
-    this->_remove_ref ();
-  }
-
 }

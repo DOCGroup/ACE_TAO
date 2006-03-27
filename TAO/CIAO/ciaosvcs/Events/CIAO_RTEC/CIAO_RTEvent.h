@@ -232,6 +232,10 @@ namespace CIAO
     virtual void insert_source (const char * source_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual void insert_type (::CORBA::Long event_type
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
     virtual void consumer_id (const char * consumer_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

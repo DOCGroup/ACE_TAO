@@ -587,7 +587,7 @@ handle_facet_receptable_connection (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidConnection))
 {
-  if (CIAO::debug_level () > 6)
+  if (CIAO::debug_level () > 11)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -606,7 +606,10 @@ handle_facet_receptable_connection (
       ACE_TRY_CHECK;
 
       ACE_CString key = (*create_connection_key (connection));
-      ACE_DEBUG ((LM_ERROR, "[BINDING KEY]: %s\n", key.c_str ()));
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_ERROR, "[BINDING KEY]: %s\n", key.c_str ()));
+        }
       this->cookie_map_.rebind (key, cookie);
 
       if (CIAO::debug_level () > 6)
@@ -625,7 +628,10 @@ handle_facet_receptable_connection (
     {
       ACE_CString key = (*create_connection_key (connection));
       ::Components::Cookie_var cookie;
-      ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+        }
       if (this->cookie_map_.find (key, cookie) != 0)
         {
           ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
@@ -676,7 +682,7 @@ handle_emitter_consumer_connection (
       ACE_TRY_THROW (Deployment::InvalidConnection ());
     }
 
-  if (CIAO::debug_level () > 6)
+  if (CIAO::debug_level () > 11)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -754,7 +760,7 @@ handle_publisher_consumer_connection (
       ACE_TRY_THROW (Deployment::InvalidConnection ());
     }
 
-  if (CIAO::debug_level () > 6)
+  if (CIAO::debug_level () > 11)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -774,8 +780,6 @@ handle_publisher_consumer_connection (
 
       ACE_CString key = (*create_connection_key (connection));
       this->cookie_map_.rebind (key, cookie);
-      ACE_DEBUG ((LM_ERROR, "[BINDING KEY]: %s\n", key.c_str ()));
-
       if (CIAO::debug_level () > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -792,7 +796,11 @@ handle_publisher_consumer_connection (
     {
       ACE_CString key = (*create_connection_key (connection));
       ::Components::Cookie_var cookie;
-      ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+        }
       if (this->cookie_map_.find (key, cookie) != 0)
         {
           ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
@@ -829,7 +837,7 @@ handle_publisher_es_connection (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidConnection))
 {
-  if (connection.type != CIAO::RTEC)
+  if (connection.kind != Deployment::rtecEventPublisher)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -855,9 +863,12 @@ handle_publisher_es_connection (
 
   if (add_connection)
     {
-      // Cache the ES into component servant
+      ::Components::Cookie_var cookie =
       comp->ciao_connect_es (connection.portName.in (),
                              event_service);
+
+      ACE_CString key = (*create_connection_key (connection));
+      this->cookie_map_.rebind (key, cookie);
 
       // Create a supplier_config and register it to ES
       CIAO::Supplier_Config_var supplier_config =
@@ -866,19 +877,50 @@ handle_publisher_es_connection (
       supplier_config->supplier_id (sid.c_str ());
       event_service->connect_event_supplier (supplier_config.in ());
       supplier_config->destroy ();
+
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                      "CIAO::NodeApplication_Impl::handle_publisher_es_connection\n"
+                      "[INSTANCE:PORT] : [%s:%s] --> [%s:%s] connected.\n",
+                      connection.instanceName.in (),
+                      connection.portName.in (),
+                      connection.endpointInstanceName.in (),
+                      connection.endpointPortName.in ()));
+        }
     }
   else // remove the connection
     {
-      // @@@
-      // comp->ciao_disconnect_es (connection.portName.in (),
-      //                           event_service);
-      ACE_DEBUG ((LM_DEBUG,
-                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                  "CIAO::NodeApplication_Impl::handle_publisher_es_connection: "
-                  "[%s : %s] publisher port disconnected from ciao event service. \n",
-                  connection.instanceName.in (),
-                  connection.portName.in ()));
+      ACE_CString key = (*create_connection_key (connection));
+      ::Components::Cookie_var cookie;
+
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+        }
+      if (this->cookie_map_.find (key, cookie) != 0)
+        {
+          ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
+          ACE_TRY_THROW (Deployment::InvalidConnection ());
+        }
+
+      comp->ciao_disconnect_es (connection.portName.in (),
+                                cookie.in ());
+      this->cookie_map_.unbind (key);
       event_service->disconnect_event_supplier (sid.c_str ());
+
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                      "CIAO::NodeApplication_Impl::handle_publisher_es_connection\n"
+                      "[INSTANCE:PORT] : [%s:%s] --> [%s:%s] disconnected.\n",
+                      connection.instanceName.in (),
+                      connection.portName.in (),
+                      connection.endpointInstanceName.in (),
+                      connection.endpointPortName.in ()));
+        }
     }
 }
 
@@ -891,7 +933,7 @@ handle_es_consumer_connection (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidConnection))
 {
-  if (connection.type != CIAO::RTEC)
+  if (connection.kind != Deployment::rtecEventConsumer)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -906,17 +948,23 @@ handle_es_consumer_connection (
 
   if (CORBA::is_nil (event_service))
     {
-      ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
+      ACE_DEBUG ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
+                  "NIL event_service\n"));
       ACE_THROW (Deployment::InvalidConnection ());
     }
 
-   // Get consumer object
+  // Get consumer object
   Components::EventConsumerBase_var consumer =
     Components::EventConsumerBase::_narrow (connection.endpoint.in ());
 
   if (CORBA::is_nil (consumer.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG, "Nil consumer port object reference\n"));
+      ACE_DEBUG ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
+                  "Nil consumer port object reference\n"));
       ACE_THROW (Deployment::InvalidConnection ());
     }
 
@@ -937,26 +985,45 @@ handle_es_consumer_connection (
       CIAO::Consumer_Config_var consumer_config =
         event_service->create_consumer_config ();
 
-      //consumer_config->supplier_id ("dummy");
-      consumer_config->supplier_id (sid.c_str ());
+      consumer_config->supplier_id ("Hello-Sender-idd_click_out_publisher");
+      //consumer_config->supplier_id (sid.c_str ());
       consumer_config->consumer_id (cid.c_str ());
       consumer_config->consumer (consumer.in ());
 
       event_service->connect_event_consumer (consumer_config.in ());
       consumer_config->destroy ();
+
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                      "CIAO::NodeApplication_Impl::handle_es_consumer_connection\n"
+                      "[INSTANCE:PORT] : [%s:%s] --> [%s:%s] connected.\n",
+                      connection.endpointInstanceName.in (),
+                      connection.endpointPortName.in (),
+                      connection.instanceName.in (),
+                      connection.portName.in ()));
+        }
     }
   else // remove the connection
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                  "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
-                  "[%s : %s] consumer port disconnected from ciao event service. \n",
-                  connection.instanceName.in (),
-                  connection.portName.in ()));
       event_service->disconnect_event_consumer (cid.c_str ());
+
+      if (CIAO::debug_level () > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                      "CIAO::NodeApplication_Impl::handle_es_consumer_connection\n"
+                      "[INSTANCE:PORT] : [%s:%s] --> [%s:%s] disconnected.\n",
+                      connection.endpointInstanceName.in (),
+                      connection.endpointPortName.in (),
+                      connection.instanceName.in (),
+                      connection.portName.in ()));
+        }
     }
 }
 
+// Below code is not used at this time.
 void
 CIAO::NodeApplication_Impl::build_event_connection (
     const Deployment::Connection & connection,
