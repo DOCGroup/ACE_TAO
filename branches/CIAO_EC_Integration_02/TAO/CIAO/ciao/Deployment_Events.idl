@@ -26,6 +26,19 @@ module CIAO
       RTNOTIFY
     };
 
+    /// Each element in the EventSourceSet denotes a event source id
+    typedef string EventSourceId;
+
+    typedef sequence<EventSourceId> EventSourceSet;
+
+    struct EventFilter
+    {
+      FilterType type;
+      EventSourceSet sources;
+    };
+
+    typedef sequence < EventFilter > EventFilters;
+
     /// CIAO specific extension to describe pub/sub services in the deployment
     struct EventServiceDeploymentDescription
     {
@@ -33,6 +46,8 @@ module CIAO
       string node;
       EventServiceType type;
       string svc_cfg_file;
+
+      EventFilters filters;
     };
 
     typedef sequence < EventServiceDeploymentDescription >
@@ -46,19 +61,6 @@ module CIAO
       LOGICAL_AND,
       NEGATE
     };
-
-    /// Each element in the EventSourceSet denotes a event source id
-    typedef string EventSourceId;
-
-    typedef sequence<EventSourceId> EventSourceSet;
-
-    struct EventFilter
-    {
-      FilterType type;
-      EventSourceSet sources;
-    };
-
-    typedef sequence < EventFilter > EventFilters;
   };
 };
 
