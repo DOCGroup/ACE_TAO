@@ -1,0 +1,26 @@
+// -*- MPC -*-
+// $Id$
+
+project (CIAO_DirectEvent) : orbsvcslib, ciao_events_dnc {
+
+  requires += dummy_label
+  after += CIAO_DnC_Events_Base
+  sharedname  = CIAO_DirectEvent
+  libs += CIAO_DnC_Events_Base
+  idlflags  += -Wb,export_include=CIAO_DIRECTEVENT_Export.h -Wb,export_macro=CIAO_DIRECTEVENT_Export
+  dynamicflags = CIAO_DIRECTEVENT_BUILD_DLL
+
+  IDL_Files {
+    CIAO_DirectEvent.idl
+  }
+
+  Source_Files {
+    CIAO_DirectEventS.cpp
+    CIAO_DirectEventC.cpp
+    CIAO_DirectEvent.cpp
+  }
+
+  Header_Files {
+    CIAO_DirectEvent.h
+  }
+}
