@@ -1,3 +1,8 @@
+Tue Mar 28 13:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Use bool as type, improved constness
+
 Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl:
