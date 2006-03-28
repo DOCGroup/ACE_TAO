@@ -865,8 +865,8 @@ handle_publisher_es_connection (
   if (add_connection)
     {
       ::Components::Cookie_var cookie =
-      comp->ciao_connect_es (connection.portName.in (),
-                             event_service);
+      comp->subscribe (connection.portName.in (),
+                       event_service);
 
       ACE_CString key = (*create_connection_key (connection));
       this->cookie_map_.rebind (key, cookie);
@@ -906,8 +906,8 @@ handle_publisher_es_connection (
           ACE_TRY_THROW (Deployment::InvalidConnection ());
         }
 
-      comp->ciao_disconnect_es (connection.portName.in (),
-                                cookie.in ());
+      comp->unsubscribe (connection.portName.in (),
+                         cookie.in ());
       this->cookie_map_.unbind (key);
       event_service->disconnect_event_supplier (sid.c_str ());
 

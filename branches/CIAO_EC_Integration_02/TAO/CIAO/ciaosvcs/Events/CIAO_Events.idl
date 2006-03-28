@@ -48,7 +48,7 @@ module CIAO
     void insert_type (in long event_type);
   };
 
-  interface CIAO_Event_Service
+  interface CIAO_Event_Service : Components::EventConsumerBase
   {
     Supplier_Config create_supplier_config ();
 
@@ -64,6 +64,6 @@ module CIAO
     void disconnect_event_consumer (in CONNECTION_ID conn_id)
       raises (Components::InvalidConnection);
 
-    void push_event (in Components::EventBase ev);
+    //void push_event (in Components::EventBase ev);
   };
 };

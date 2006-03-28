@@ -5,7 +5,7 @@
 project (CIAO_DnC_Events_Base) : orbsvcslib, ciao_events_dnc {
 
   requires += dummy_label
-  after += CIAO_DnC_Client
+  after += CIAO_DnC_Container
   sharedname  = CIAO_DnC_Events_Base
   idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
   dynamicflags = CIAO_EVENTS_BUILD_DLL
@@ -30,7 +30,7 @@ project (CIAO_DnC_Events_Base) : orbsvcslib, ciao_events_dnc {
 project (CIAO_DnC_Events) : orbsvcslib, ciao_events_dnc {
 
   requires += dummy_label
-  after += CIAO_DnC_Events CIAO_RTEvent CIAO_DirectEvent
+  after += CIAO_DnC_Events_Base CIAO_RTEvent
   sharedname  = CIAO_DnC_Events
   libs	+= CIAO_DnC_Events_Base CIAO_RTEvent CIAO_DirectEvent
   idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
