@@ -215,7 +215,8 @@ namespace CIAO
    * specified as the event service type.
    */
   class RTEvent_Consumer_Config_impl :
-    public virtual POA_CIAO::RTEvent_Consumer_Config
+    public virtual POA_CIAO::RTEvent_Consumer_Config,
+    public virtual Event_Consumer_Config_Base
   {
 
   public:

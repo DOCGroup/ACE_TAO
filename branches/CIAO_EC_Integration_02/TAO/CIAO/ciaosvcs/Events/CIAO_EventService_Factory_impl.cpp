@@ -41,15 +41,6 @@ namespace CIAO
 
     switch (type)
     {
-      case DIRECT:
-        {
-          ACE_NEW_RETURN (event_service,
-                          DirectEventService (this->orb_.in (),
-                                              this->poa_.in ()),
-                          0);
-          break;
-        }
-
       case RTEC:
         {
           ACE_NEW_RETURN (event_service,

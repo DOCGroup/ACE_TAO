@@ -31,6 +31,15 @@ module CIAO
 
     typedef sequence<EventSourceId> EventSourceSet;
 
+    /// Event Filters
+    enum FilterType
+    {
+      CONJUNCTION,
+      DISJUNCTION,
+      LOGICAL_AND,
+      NEGATE
+    };
+
     struct EventFilter
     {
       FilterType type;
@@ -52,15 +61,6 @@ module CIAO
 
     typedef sequence < EventServiceDeploymentDescription >
       EventServiceDeploymentDescriptions;
-
-    /// Event Filters
-    enum FilterType
-    {
-      CONJUNCTION,
-      DISJUNCTION,
-      LOGICAL_AND,
-      NEGATE
-    };
   };
 };
 
