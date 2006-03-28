@@ -1117,9 +1117,9 @@ TAO_Root_POA::add_ior_component_to_profile (
 {
   // Add the given tagged component to all profiles matching the given
   // ProfileId.
-  int found_profile = 0;
+  bool found_profile = false;
 
-  const CORBA::ULong profile_count = mprofile.profile_count ();
+  CORBA::ULong const profile_count = mprofile.profile_count ();
 
   for (CORBA::ULong i = 0; i < profile_count; ++i)
     {
@@ -1131,14 +1131,14 @@ TAO_Root_POA::add_ior_component_to_profile (
                                          ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          found_profile = 1;
+          found_profile = true;
         }
     }
 
   // According to the Portable Interceptor specification, we're
   // supposed to throw a CORBA::BAD_PARAM exception if no profile
   // matched the given ProfileId.
-  if (found_profile == 0)
+  if (found_profile == false)
     ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 29,
                                  CORBA::COMPLETED_NO));
 }
@@ -1502,7 +1502,8 @@ TAO_Root_POA::reference_to_servant_i (CORBA::Object_ptr reference
     }
 
   PortableServer::ObjectId system_id;
-  bool is_generated = this->is_poa_generated (reference, system_id ACE_ENV_ARG_PARAMETER);
+  bool const is_generated =
+    this->is_poa_generated (reference, system_id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!is_generated)
@@ -1547,18 +1548,18 @@ TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
   ACE_CHECK_RETURN (false);
 
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = 0;
-  CORBA::Boolean is_persistent = 0;
-  CORBA::Boolean is_system_id = 0;
+  CORBA::Boolean is_root = false;
+  CORBA::Boolean is_persistent = false;
+  CORBA::Boolean is_system_id = false;
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
-  int result = this->parse_key (key.in (),
-                                poa_system_name,
-                                system_id,
-                                is_root,
-                                is_persistent,
-                                is_system_id,
-                                poa_creation_time);
+  int const result = this->parse_key (key.in (),
+                                      poa_system_name,
+                                      system_id,
+                                      is_root,
+                                      is_persistent,
+                                      is_system_id,
+                                      poa_creation_time);
   if (result != 0 ||
       !this->root () &&
       poa_system_name != this->system_name () ||
@@ -1597,9 +1598,9 @@ TAO_Root_POA::reference_to_id (CORBA::Object_ptr reference
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
   PortableServer::ObjectId system_id;
-  bool is_generated = this->is_poa_generated (reference,
-                                              system_id
-                                              ACE_ENV_ARG_PARAMETER);
+  bool const is_generated = this->is_poa_generated (reference,
+                                                    system_id
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!is_generated)
@@ -1749,11 +1750,11 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   char root_key_type = key_data[starting_at];
   if (root_key_type == TAO_Root_POA::root_key_char ())
     {
-      is_root = 1;
+      is_root = true;
     }
   else if (root_key_type == TAO_Root_POA::non_root_key_char ())
     {
-      is_root = 0;
+      is_root = false;
     }
   else
     {
@@ -1768,11 +1769,11 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   char system_id_key_type = key_data[starting_at];
   if (system_id_key_type == TAO_Root_POA::system_id_key_char ())
     {
-      is_system_id = 1;
+      is_system_id = true;
     }
   else if (system_id_key_type == TAO_Root_POA::user_id_key_char ())
     {
-      is_system_id = 0;
+      is_system_id = false;
     }
   else
     {
@@ -1787,11 +1788,11 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   char persistent_key_type = key_data[starting_at];
   if (persistent_key_type == TAO_Root_POA::persistent_key_char ())
     {
-      is_persistent = 1;
+      is_persistent = true;
     }
   else if (persistent_key_type == TAO_Root_POA::transient_key_char ())
     {
-      is_persistent = 0;
+      is_persistent = false;
     }
   else
     {
@@ -1841,7 +1842,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
       starting_at += sizeof (poa_name_size);
     }
 
-  // Grep the name if there is aname
+  // Grep the name if there is a name
   if (!is_root)
     {
       poa_system_name.replace (poa_name_size,
@@ -1890,9 +1891,9 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
   TAO::ObjectKey *key = 0;
   ACE_NEW_RETURN (key,
                   TAO::ObjectKey (buffer_size,
-                                 buffer_size,
-                                 buffer,
-                                 1),
+                                  buffer_size,
+                                  buffer,
+                                  1),
                   0);
 
   return key;
@@ -1909,7 +1910,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   // used, then we need to add the POA name length field to the object
   // key. Otherwise, the POA name length can be calculated by looking
   // at the remainder after extracting other parts of the key.
-  int add_poa_name_length =
+  bool const add_poa_name_length =
     this->is_persistent () &&
     !this->system_id ();
 
@@ -1931,14 +1932,14 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
 
   // Get the space needed for the lifespan length
   // byte.
-  CORBA::ULong lifespan_key_length =
+  CORBA::ULong const lifespan_key_length =
     this->active_policy_strategies_.lifespan_strategy()->key_length ();
 
-  CORBA::ULong id_assignment_key_length =
+  CORBA::ULong const id_assignment_key_length =
     this->active_policy_strategies_.id_assignment_strategy()->key_type_length ();
 
   // Calculate the space required for the POA id.
-  CORBA::ULong buffer_size =
+  CORBA::ULong const buffer_size =
     prefix_size +
     this->root_key_type_length () +
     id_assignment_key_length +
@@ -1999,7 +2000,6 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
 int
 TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 {
-
 #if defined (POA_NAME_IN_POA_GENERATED_ID)
 
   // Grab the buffer
@@ -2011,7 +2011,6 @@ TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
     ACE_OS::strncmp (id_buffer,
                      this->name_.c_str (),
                      this->name_.length ()) == 0;
-
 #else /* POA_NAME_IN_POA_GENERATED_ID */
 
   ACE_UNUSED_ARG (id);
@@ -2057,9 +2056,9 @@ TAO_Root_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
                                    PortableServer::ObjectId &user_id)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = 0;
-  CORBA::Boolean is_persistent = 0;
-  CORBA::Boolean is_system_id = 0;
+  CORBA::Boolean is_root = false;
+  CORBA::Boolean is_persistent = false;
+  CORBA::Boolean is_system_id = false;
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   return TAO_Root_POA::parse_key (object_key,
@@ -2316,9 +2315,9 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
   // this->tagged_component_id_ is increased, we need to increase the
   // size of this->profile_id_array_ also.
 
-  const CORBA::ULong old_len = this->tagged_component_id_.length ();
+  CORBA::ULong const old_len = this->tagged_component_id_.length ();
 
-  const CORBA::ULong new_len = old_len + 1;
+  CORBA::ULong const new_len = old_len + 1;
 
   this->tagged_component_id_.length (new_len);
   this->tagged_component_id_[old_len] = component;
@@ -2338,7 +2337,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   int error = 0;
 
   // Count the number of endpoints.
-  size_t profile_count =
+  size_t const profile_count =
     acceptor_registry.endpoint_count ();
 
   // Create a profile container and have acceptor registries populate
@@ -2911,25 +2910,25 @@ TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
 {
 }
 
-void 
+void
 TAO_Root_POA::poa_activated_hook ()
 {
 }
 
-void 
+void
 TAO_Root_POA::poa_deactivated_hook ()
 {
 }
 
-void 
-TAO_Root_POA::servant_activated_hook (PortableServer::Servant, 
+void
+TAO_Root_POA::servant_activated_hook (PortableServer::Servant,
                                       const PortableServer::ObjectId&
                                       ACE_ENV_ARG_DECL)
 {
 }
 
-void 
-TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant, 
+void
+TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant,
                                         const PortableServer::ObjectId&
                                         ACE_ENV_ARG_DECL)
 {
