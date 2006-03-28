@@ -17,14 +17,6 @@ module CIAO
   interface RTEvent_Consumer_Config :
     Consumer_Config
   {
-    void start_conjunction_group (in long size);
-
-    void start_disjunction_group (in long size);
-
-    void insert_source (in CONNECTION_ID source_id);
-
-    void insert_type (in long event_type);
-
     //void start_logical_and_group (in long size);
 
     //void start_negation ();

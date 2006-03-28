@@ -76,25 +76,6 @@ module Components
       raises (InvalidName,
               InvalidConnection);
 
-    // CIAO specific operations to connect a component to
-    // CIAO_Event_Service
-    // We have to use generic "Object" interface instead of the
-    // CIAO_Event_Service interface type, since CIAO_Event_Service
-    // relies on EventConsumerBase defined within this file, which
-    // causes circular dependencies. -Gan
-    Cookie ciao_connect_es (in FeatureName publisher_name,
-                            in Object es)
-      raises (InvalidName,
-              AlreadyConnected,
-              InvalidConnection,
-              ExceededConnectionLimit);
-
-    Object
-    ciao_disconnect_es (in FeatureName publisher_name,
-                        in Cookie ck)
-      raises (InvalidName,
-              InvalidConnection);
-
     void connect_consumer (in FeatureName emitter_name,
                            in EventConsumerBase consumer)
       raises (InvalidName,
