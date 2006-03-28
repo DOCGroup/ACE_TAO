@@ -379,17 +379,45 @@ dnl @todo Clean up / consolidate these conditionals
  dnl Take advantage of visibility attributes when using g++ 4.0 or
  dnl better.
  if test "$GXX" = yes; then
-   ACE_CHECK_CXXFLAGS([fvisbility=hidden],
-		      [
-     ACE_CXXFLAGS="$ACE_CXXFLAGS -fvisibility=hidden"
-     AC_DEFINE([ACE_HAS_CUSTOM_EXPORT_MACROS])
-     AC_DEFINE([ACE_Proper_Export_Flag],
-               [__attribute__ ((visibility("default")))])
-		      ])
-   ACE_CHECK_CXXFLAGS([fvisibility-inlines-hidden],
-		      [
-     ACE_CXXFLAGS="$ACE_CXXFLAGS -fvisibility-inlines-hidden"
-		      ])
+   dnl As of this writing, there are symbol visibility issues on some
+   dnl platforms.  The --disable-symbol-visibility option is intended
+   dnl to allow users to explicitly disable symbol visibility support
+   dnl in the cases where it does not work (or does not work properly),
+   dnl but the feature test selects it anyway.
+
+   AC_ARG_ENABLE([symbol-visibility],
+     AS_HELP_STRING([--enable-symbol-visibility],
+		    [build with gcc symbol visibility attributes [[[yes]]]]),
+     [
+      case "${enableval}" in
+       yes)
+	 ace_user_symbol_visibility=yes
+	 ;;
+       no)
+	 ace_user_symbol_visibility=no
+	 ;;
+       *)
+	 AC_MSG_ERROR([bad value ${enableval} for --enable-symbol-visibility])
+	 ;;
+      esac
+     ],
+     [
+      ace_user_enable_symbol_visibility=yes
+     ])
+
+   if test "$ace_user_enable_symbol_visibility" = yes; then
+     ACE_CHECK_CXXFLAGS([fvisibility=hidden],
+			[
+       ACE_CXXFLAGS="$ACE_CXXFLAGS -fvisibility=hidden"
+       AC_DEFINE([ACE_HAS_CUSTOM_EXPORT_MACROS])
+       AC_DEFINE([ACE_Proper_Export_Flag],
+		 [__attribute__ ((visibility("default")))])
+			])
+     ACE_CHECK_CXXFLAGS([fvisibility-inlines-hidden],
+			[
+       ACE_CXXFLAGS="$ACE_CXXFLAGS -fvisibility-inlines-hidden"
+			])
+   fi
  fi
  
  dnl Additional flags
