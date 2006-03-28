@@ -629,6 +629,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   : status_ (0),
     errnum_ (0),
     linenum_ (0),
+    msg_ (0),
     restart_ (1),  // Restart by default...
     ostream_ (0),
     msg_callback_ (0),
@@ -668,6 +669,8 @@ ACE_Log_Msg::ACE_Log_Msg (void)
           this->timestamp_ = 2;
         }
     }
+
+    ACE_NEW_NORETURN (this->msg_, ACE_TCHAR[ACE_MAXLOGMSGLEN+1]);
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -736,6 +739,11 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
       ostream_ = 0;
     }
 #endif
+
+  if (this->msg_)
+    {
+      delete[] this->msg_;
+    }
 }
 
 // Open the sender-side of the message queue.
@@ -1973,7 +1981,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
   // Check that memory was not corrupted, if it corrupted we can't log anything
   // anymore because all our members could be corrupted.
-  if (bp >= this->msg_ + sizeof this->msg_)
+  if (bp >= (this->msg_ + ACE_MAXLOGMSGLEN+1))
     {
       abort_prog = 1;
       ACE_OS::fprintf (stderr,
@@ -2159,9 +2167,9 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   if (this->log_priority_enabled (log_priority) == 0)
     return 0;
 
-  ACE_TCHAR buf[ACE_Log_Record::MAXLOGMSGLEN -
-    ACE_Log_Record::VERBOSE_LEN - 58];
-  // 58 for the HEXDUMP header;
+  ACE_TCHAR* buf;
+  size_t buf_sz = ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58;
+  ACE_NEW_RETURN (buf, ACE_TCHAR[buf_sz], -1);
 
   ACE_TCHAR *msg_buf;
   const size_t text_sz = text ? ACE_OS::strlen(text) : 0;
@@ -2172,7 +2180,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   buf[0] = 0; // in case size = 0
 
   const size_t len = ACE::format_hexdump
-    (buffer, size, buf, sizeof (buf) / sizeof (ACE_TCHAR) - text_sz);
+    (buffer, size, buf, buf_sz / sizeof (ACE_TCHAR) - text_sz);
 
   int sz = 0;
 
@@ -2452,7 +2460,7 @@ void
 ACE_Log_Msg::msg (const ACE_TCHAR *m)
 {
   ACE_OS::strsncpy (this->msg_, m,
-                    (sizeof this->msg_ / sizeof (ACE_TCHAR)));
+                    ((ACE_MAXLOGMSGLEN+1) / sizeof (ACE_TCHAR)));
 }
 
 ACE_Log_Msg_Callback *

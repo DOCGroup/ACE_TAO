@@ -40,7 +40,7 @@ public:
   enum
   {
     /// Maximum size of a logging message.
-    MAXLOGMSGLEN = ACE_MAXLOGMSGLEN,
+    MAXLOGMSGLEN = ACE_MAXLOGMSGLEN+1,
 
     /// Most restrictive alignment.
     ALIGN_WORDB  = 8,
@@ -187,7 +187,7 @@ private:
   ACE_UINT32 pid_;
 
   /// Logging record data
-  ACE_TCHAR msg_data_[MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
+  ACE_TCHAR* msg_data_; // Add one for NUL-terminator.
 
 };
 
