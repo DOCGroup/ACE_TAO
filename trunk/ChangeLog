@@ -1,3 +1,9 @@
+Tue Mar 28 09:04:55 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/OS_NS_sys_resource.inl (setrlimit): Fixed a bug where
+	  "resource" appeared twice in the call to setrlimit().  Thanks to
+ 	  Vincent Joseph <deskamess at yahoo dot com> for reporting this.
+
 Tue Mar 28 14:10:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_orb_tests.lst:

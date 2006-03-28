@@ -79,7 +79,7 @@ ACE_OS::setrlimit (int resource, const struct rlimit *rl)
                                   ), int, -1);
 # else
   ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
-                                  resource,
+                                  rl
                                   ), int, -1);
 #  endif /* ACE_HAS_NONCONST_SETRLIMIT */
 # else /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
