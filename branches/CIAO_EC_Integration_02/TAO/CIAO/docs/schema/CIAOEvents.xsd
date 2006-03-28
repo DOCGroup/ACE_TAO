@@ -31,7 +31,7 @@
 
   <xsd:complexType name="CIAOEventsDef">
     <xsd:sequence>
-      <xsd:element name="eventServiceConfiguration" type="CIAO:EventServiceDescription" minOccurs="1" maxOccurs="unbounded"/>
+      <xsd:element name="eventServiceConfiguration" type="CIAO:EventServiceDescription" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
@@ -42,11 +42,13 @@
       <xsd:element name="node" type="xsd:string"/>
       <xsd:element name="type" type="CIAO:EventServiceType"/>
       <xsd:element name="svc_cfg_file" type="xsd:string"/>
-      
-      <xsd:element name="filter" type="CIAO:FilterType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="filter" type="CIAO:Filter" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
+
+
+
   
 <!-- =============================================================== -->
 <!--                  CIAO Event Filter Description                  -->
@@ -63,8 +65,9 @@
 
   <xsd:complexType name="Filter">
     <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="type" type="CIAO:FilterType"/>     
-	    <xsd:element name="source" type="xsd:string" minOccurs="1"/>
+      <xsd:element name="source" type="xsd:string" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>  

@@ -20,8 +20,8 @@
 #endif
 
 #include "CIAO_Events_Handlers_Export.h"
-#ifndef EVENT_HPP
-#define EVENT_HPP
+#ifndef CIAOEVENTS_HPP
+#define CIAOEVENTS_HPP
 
 // Forward declarations.
 //
@@ -49,7 +49,6 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
       class CIAO_Events_Handlers_Export EventServiceType : public ::XSCRT::Type
       {
         public:
@@ -173,6 +172,21 @@ namespace CIAO
         protected:
         ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > svc_cfg_file_;
 
+        // filter
+        //
+        public:
+        typedef ::std::list< ::CIAO::Config_Handlers::Filter >::iterator filter_iterator;
+        typedef ::std::list< ::CIAO::Config_Handlers::Filter >::const_iterator filter_const_iterator;
+        filter_iterator begin_filter ();
+        filter_iterator end_filter ();
+        filter_const_iterator begin_filter () const;
+        filter_const_iterator end_filter () const;
+        void add_filter (::CIAO::Config_Handlers::Filter const& );
+        size_t count_filter (void) const;
+
+        protected:
+        ::std::list< ::CIAO::Config_Handlers::Filter > filter_;
+
         // id
         //
         public:
@@ -243,6 +257,15 @@ namespace CIAO
         //@@ VC6 anathema
         typedef ::XSCRT::Type Base__;
 
+        // name
+        //
+        public:
+        ::XMLSchema::string< ACE_TCHAR > const& name () const;
+        void name (::XMLSchema::string< ACE_TCHAR > const& );
+
+        protected:
+        ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
+
         // type
         //
         public:
@@ -255,11 +278,17 @@ namespace CIAO
         // source
         //
         public:
-        ::XMLSchema::string< ACE_TCHAR > const& source () const;
-        void source (::XMLSchema::string< ACE_TCHAR > const& );
+        typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
+        typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
+        source_iterator begin_source ();
+        source_iterator end_source ();
+        source_const_iterator begin_source () const;
+        source_const_iterator end_source () const;
+        void add_source (::XMLSchema::string< ACE_TCHAR > const& );
+        size_t count_source (void) const;
 
         protected:
-        ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > source_;
+        ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
 
         // id
         //
@@ -273,8 +302,8 @@ namespace CIAO
         ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
         public:
-        Filter (::CIAO::Config_Handlers::FilterType const& type__,
-                ::XMLSchema::string< ACE_TCHAR > const& source__);
+        Filter (::XMLSchema::string< ACE_TCHAR > const& name__,
+                ::CIAO::Config_Handlers::FilterType const& type__);
 
         Filter (::XSCRT::XML::Element< ACE_TCHAR > const&);
         Filter (Filter const& s);
@@ -499,12 +528,10 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
       CIAO_Events_Handlers_Export
       ::CIAO::Config_Handlers::CIAOEventsDef
       CIAOEvents (xercesc::DOMDocument const*);
-    }
-
+  }
 }
 
 #include "XMLSchema/Traversal.hpp"
@@ -513,7 +540,6 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
       namespace Traversal
       {
         typedef
@@ -616,6 +642,36 @@ namespace CIAO
           svc_cfg_file (Type const&);
 
           virtual void
+          filter (Type&);
+
+          virtual void
+          filter (Type const&);
+
+          virtual void
+          filter_pre (Type&);
+
+          virtual void
+          filter_pre (Type const&);
+
+          virtual void
+          filter_next (Type&);
+
+          virtual void
+          filter_next (Type const&);
+
+          virtual void
+          filter_post (Type&);
+
+          virtual void
+          filter_post (Type const&);
+
+          virtual void
+          filter_none (Type&);
+
+          virtual void
+          filter_none (Type const&);
+
+          virtual void
           id (Type&);
 
           virtual void
@@ -653,6 +709,12 @@ namespace CIAO
           pre (Type const&);
 
           virtual void
+          name (Type&);
+
+          virtual void
+          name (Type const&);
+
+          virtual void
           type (Type&);
 
           virtual void
@@ -663,6 +725,24 @@ namespace CIAO
 
           virtual void
           source (Type const&);
+
+          virtual void
+          source_pre (Type&);
+
+          virtual void
+          source_pre (Type const&);
+
+          virtual void
+          source_next (Type&);
+
+          virtual void
+          source_next (Type const&);
+
+          virtual void
+          source_post (Type&);
+
+          virtual void
+          source_post (Type const&);
 
           virtual void
           id (Type&);
@@ -879,7 +959,6 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
       namespace Writer
       {
         struct EventServiceType : Traversal::EventServiceType,
@@ -1027,6 +1106,39 @@ namespace CIAO
           svc_cfg_file (Type const&);
 
           virtual void
+          filter_pre (Type &o)
+          {
+
+            this->filter_pre (const_cast <Type const &> (o));
+          }
+
+
+          virtual void
+          filter_pre (Type const&);
+
+          virtual void
+          filter_next (Type &o)
+          {
+
+            this->filter_next (const_cast <Type const &> (o));
+          }
+
+
+          virtual void
+          filter_next (Type const&);
+
+          virtual void
+          filter_post (Type &o)
+          {
+
+            this->filter_post (const_cast <Type const &> (o));
+          }
+
+
+          virtual void
+          filter_post (Type const&);
+
+          virtual void
           id (Type &o)
           {
 
@@ -1077,6 +1189,17 @@ namespace CIAO
           traverse (Type const&);
 
           virtual void
+          name (Type &o)
+          {
+
+            this->name (const_cast <Type const &> (o));
+          }
+
+
+          virtual void
+          name (Type const&);
+
+          virtual void
           type (Type &o)
           {
 
@@ -1088,15 +1211,37 @@ namespace CIAO
           type (Type const&);
 
           virtual void
-          source (Type &o)
+          source_pre (Type &o)
           {
 
-            this->source (const_cast <Type const &> (o));
+            this->source_pre (const_cast <Type const &> (o));
           }
 
 
           virtual void
-          source (Type const&);
+          source_pre (Type const&);
+
+          virtual void
+          source_next (Type &o)
+          {
+
+            this->source_next (const_cast <Type const &> (o));
+          }
+
+
+          virtual void
+          source_next (Type const&);
+
+          virtual void
+          source_post (Type &o)
+          {
+
+            this->source_post (const_cast <Type const &> (o));
+          }
+
+
+          virtual void
+          source_post (Type const&);
 
           virtual void
           id (Type &o)
@@ -1348,13 +1493,10 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
-
       CIAO_Events_Handlers_Export
       void
       CIAOEvents (::CIAO::Config_Handlers::CIAOEventsDef const&, xercesc::DOMDocument*);
-    }
-
+  }
 }
 
-#endif // EVENT_HPP
+#endif // CIAOEVENTS_HPP

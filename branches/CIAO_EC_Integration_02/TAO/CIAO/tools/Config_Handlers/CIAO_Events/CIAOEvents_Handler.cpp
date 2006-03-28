@@ -48,10 +48,8 @@ namespace CIAO
       this->idl_esd_.reset ( new ::CIAO::DAnCE::EventServiceDeploymentDescriptions );
 
 
-      CORBA::ULong num (this->idl_esd_->length ());
-
       this->idl_esd_->length (this->esd_->count_eventServiceConfiguration ());
-
+      CORBA::ULong pos_i = 0;
       for (CIAOEventsDef::eventServiceConfiguration_const_iterator i = this->esd_->begin_eventServiceConfiguration ();
            i != this->esd_->end_eventServiceConfiguration ();
            i++)
@@ -83,8 +81,49 @@ namespace CIAO
 
            a_esd.svc_cfg_file = CORBA::string_dup  (i->svc_cfg_file ().c_str ());
 
-           (*this->idl_esd_)[num] = a_esd;
-           num++;
+
+           a_esd.filters.length (i->count_filter ());
+           CORBA::ULong pos_j = 0;
+           for (EventServiceDescription::filter_const_iterator j = i->begin_filter ();
+                j != i->end_filter ();
+                j++)
+           {
+              a_esd.filters[pos_j].name = CORBA::string_dup (j->name ().c_str ());
+              switch (j->type ().integral ())
+              {
+                  case ::CIAO::Config_Handlers::FilterType::CONJUNCTION_l:
+                    a_esd.filters[pos_j].type = CIAO::DAnCE::CONJUNCTION;
+                    break;
+                  case ::CIAO::Config_Handlers::FilterType::DISJUNCTION_l:
+                    a_esd.filters[pos_j].type = CIAO::DAnCE::DISJUNCTION;
+                    break;
+                  case ::CIAO::Config_Handlers::FilterType::LOGICAL_AND_l:
+                    a_esd.filters[pos_j].type = CIAO::DAnCE::LOGICAL_AND;
+                    break;
+                  case ::CIAO::Config_Handlers::FilterType::NEGATE_l:
+                    a_esd.filters[pos_j].type = CIAO::DAnCE::NEGATE;
+                    break;
+                    default:
+                    ACE_ERROR ((LM_ERROR,
+                              "Invalid filter type\n"));
+                  return false;
+               }
+
+               a_esd.filters[pos_j].sources.length (j->count_source ());
+               CORBA::ULong pos_k = 0;
+               for (Filter::source_const_iterator k = j->begin_source ();
+                    k != j->end_source ();
+                    k++)
+               {
+                 a_esd.filters[pos_j].sources[pos_k] = CORBA::string_dup (k->c_str ());
+                 pos_k++;
+
+               }
+               pos_j++;
+            }
+
+           (*this->idl_esd_)[pos_i] = a_esd;
+           pos_i++;
       }
       return true;
     }

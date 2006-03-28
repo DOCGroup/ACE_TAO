@@ -194,6 +194,10 @@ namespace CIAO
         node_->container (this);
         type_->container (this);
         svc_cfg_file_->container (this);
+        {
+          for (filter_const_iterator i (s.filter_.begin ());i != s.filter_.end ();++i) add_filter (*i);
+        }
+
         if (id_.get ()) id_->container (this);
       }
 
@@ -207,6 +211,11 @@ namespace CIAO
         type (s.type ());
 
         svc_cfg_file (s.svc_cfg_file ());
+
+        filter_.clear ();
+        {
+          for (filter_const_iterator i (s.filter_.begin ());i != s.filter_.end ();++i) add_filter (*i);
+        }
 
         if (s.id_.get ()) id (*(s.id_));
         else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
@@ -269,6 +278,44 @@ namespace CIAO
       svc_cfg_file (::XMLSchema::string< ACE_TCHAR > const& e)
       {
         *svc_cfg_file_ = e;
+      }
+
+      // EventServiceDescription
+      //
+      EventServiceDescription::filter_iterator EventServiceDescription::
+      begin_filter ()
+      {
+        return filter_.begin ();
+      }
+
+      EventServiceDescription::filter_iterator EventServiceDescription::
+      end_filter ()
+      {
+        return filter_.end ();
+      }
+
+      EventServiceDescription::filter_const_iterator EventServiceDescription::
+      begin_filter () const
+      {
+        return filter_.begin ();
+      }
+
+      EventServiceDescription::filter_const_iterator EventServiceDescription::
+      end_filter () const
+      {
+        return filter_.end ();
+      }
+
+      void EventServiceDescription::
+      add_filter (::CIAO::Config_Handlers::Filter const& e)
+      {
+        filter_.push_back (e);
+      }
+
+      size_t EventServiceDescription::
+      count_filter(void) const
+      {
+        return filter_.size ();
       }
 
       // EventServiceDescription
@@ -338,38 +385,47 @@ namespace CIAO
       //
 
       Filter::
-      Filter (::CIAO::Config_Handlers::FilterType const& type__,
-              ::XMLSchema::string< ACE_TCHAR > const& source__)
+      Filter (::XMLSchema::string< ACE_TCHAR > const& name__,
+              ::CIAO::Config_Handlers::FilterType const& type__)
       :
       ::XSCRT::Type (),
+      name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
       type_ (new ::CIAO::Config_Handlers::FilterType (type__)),
-      source_ (new ::XMLSchema::string< ACE_TCHAR > (source__)),
       regulator__ ()
       {
+        name_->container (this);
         type_->container (this);
-        source_->container (this);
       }
 
       Filter::
       Filter (::CIAO::Config_Handlers::Filter const& s)
       :
       ::XSCRT::Type (),
+      name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
       type_ (new ::CIAO::Config_Handlers::FilterType (*s.type_)),
-      source_ (new ::XMLSchema::string< ACE_TCHAR > (*s.source_)),
       id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
       regulator__ ()
       {
+        name_->container (this);
         type_->container (this);
-        source_->container (this);
+        {
+          for (source_const_iterator i (s.source_.begin ());i != s.source_.end ();++i) add_source (*i);
+        }
+
         if (id_.get ()) id_->container (this);
       }
 
       ::CIAO::Config_Handlers::Filter& Filter::
       operator= (::CIAO::Config_Handlers::Filter const& s)
       {
+        name (s.name ());
+
         type (s.type ());
 
-        source (s.source ());
+        source_.clear ();
+        {
+          for (source_const_iterator i (s.source_.begin ());i != s.source_.end ();++i) add_source (*i);
+        }
 
         if (s.id_.get ()) id (*(s.id_));
         else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
@@ -377,6 +433,20 @@ namespace CIAO
         return *this;
       }
 
+
+      // Filter
+      //
+      ::XMLSchema::string< ACE_TCHAR > const& Filter::
+      name () const
+      {
+        return *name_;
+      }
+
+      void Filter::
+      name (::XMLSchema::string< ACE_TCHAR > const& e)
+      {
+        *name_ = e;
+      }
 
       // Filter
       //
@@ -394,16 +464,40 @@ namespace CIAO
 
       // Filter
       //
-      ::XMLSchema::string< ACE_TCHAR > const& Filter::
-      source () const
+      Filter::source_iterator Filter::
+      begin_source ()
       {
-        return *source_;
+        return source_.begin ();
+      }
+
+      Filter::source_iterator Filter::
+      end_source ()
+      {
+        return source_.end ();
+      }
+
+      Filter::source_const_iterator Filter::
+      begin_source () const
+      {
+        return source_.begin ();
+      }
+
+      Filter::source_const_iterator Filter::
+      end_source () const
+      {
+        return source_.end ();
       }
 
       void Filter::
-      source (::XMLSchema::string< ACE_TCHAR > const& e)
+      add_source (::XMLSchema::string< ACE_TCHAR > const& e)
       {
-        *source_ = e;
+        source_.push_back (e);
+      }
+
+      size_t Filter::
+      count_source(void) const
+      {
+        return source_.size ();
       }
 
       // Filter
@@ -902,7 +996,6 @@ namespace CIAO
   namespace Config_Handlers
   {
 
-
       // EventServiceType
       //
 
@@ -1022,6 +1115,12 @@ namespace CIAO
             svc_cfg_file_->container (this);
           }
 
+          else if (n == "filter")
+          {
+            ::CIAO::Config_Handlers::Filter t (e);
+            add_filter (t);
+          }
+
           else
           {
           }
@@ -1096,7 +1195,13 @@ namespace CIAO
           ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
           ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-          if (n == "type")
+          if (n == "name")
+          {
+            name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+            name_->container (this);
+          }
+
+          else if (n == "type")
           {
             type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::FilterType > (new ::CIAO::Config_Handlers::FilterType (e));
             type_->container (this);
@@ -1104,8 +1209,8 @@ namespace CIAO
 
           else if (n == "source")
           {
-            source_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-            source_->container (this);
+            ::XMLSchema::string< ACE_TCHAR > t (e);
+            add_source (t);
           }
 
           else
@@ -1335,7 +1440,6 @@ namespace CIAO
   namespace Config_Handlers
   {
 
-
       ::CIAO::Config_Handlers::CIAOEventsDef
       CIAOEvents (xercesc::DOMDocument const* d)
       {
@@ -1361,7 +1465,6 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
 
       namespace
       {
@@ -1503,7 +1606,6 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
 
       namespace Traversal
       {
@@ -1655,6 +1757,7 @@ namespace CIAO
           node (o);
           type (o);
           svc_cfg_file (o);
+          filter (o);
           if (o.id_p ()) id (o);
           else id_none (o);
           post (o);
@@ -1668,6 +1771,7 @@ namespace CIAO
           node (o);
           type (o);
           svc_cfg_file (o);
+          filter (o);
           if (o.id_p ()) id (o);
           else id_none (o);
           post (o);
@@ -1732,6 +1836,90 @@ namespace CIAO
         }
 
         void EventServiceDescription::
+        filter (Type& o)
+        {
+          // VC6 anathema strikes again
+          //
+          EventServiceDescription::Type::filter_iterator b (o.begin_filter()), e (o.end_filter());
+
+          if (b != e)
+          {
+            filter_pre (o);
+            for (; b != e;)
+            {
+              dispatch (*b);
+              if (++b != e) filter_next (o);
+            }
+
+            filter_post (o);
+          }
+
+          else filter_none (o);
+        }
+
+        void EventServiceDescription::
+        filter (Type const& o)
+        {
+          // VC6 anathema strikes again
+          //
+          EventServiceDescription::Type::filter_const_iterator b (o.begin_filter()), e (o.end_filter());
+
+          if (b != e)
+          {
+            filter_pre (o);
+            for (; b != e;)
+            {
+              dispatch (*b);
+              if (++b != e) filter_next (o);
+            }
+
+            filter_post (o);
+          }
+
+          else filter_none (o);
+        }
+
+        void EventServiceDescription::
+        filter_pre (Type&)
+        {
+        }
+
+        void EventServiceDescription::
+        filter_pre (Type const&)
+        {
+        }
+
+        void EventServiceDescription::
+        filter_next (Type&)
+        {
+        }
+
+        void EventServiceDescription::
+        filter_next (Type const&)
+        {
+        }
+
+        void EventServiceDescription::
+        filter_post (Type&)
+        {
+        }
+
+        void EventServiceDescription::
+        filter_post (Type const&)
+        {
+        }
+
+        void EventServiceDescription::
+        filter_none (Type&)
+        {
+        }
+
+        void EventServiceDescription::
+        filter_none (Type const&)
+        {
+        }
+
+        void EventServiceDescription::
         id (Type& o)
         {
           dispatch (o.id ());
@@ -1771,6 +1959,7 @@ namespace CIAO
         traverse (Type& o)
         {
           pre (o);
+          name (o);
           type (o);
           source (o);
           if (o.id_p ()) id (o);
@@ -1782,6 +1971,7 @@ namespace CIAO
         traverse (Type const& o)
         {
           pre (o);
+          name (o);
           type (o);
           source (o);
           if (o.id_p ()) id (o);
@@ -1800,6 +1990,18 @@ namespace CIAO
         }
 
         void Filter::
+        name (Type& o)
+        {
+          dispatch (o.name ());
+        }
+
+        void Filter::
+        name (Type const& o)
+        {
+          dispatch (o.name ());
+        }
+
+        void Filter::
         type (Type& o)
         {
           dispatch (o.type ());
@@ -1814,13 +2016,71 @@ namespace CIAO
         void Filter::
         source (Type& o)
         {
-          dispatch (o.source ());
+          // VC6 anathema strikes again
+          //
+          Filter::Type::source_iterator b (o.begin_source()), e (o.end_source());
+
+          if (b != e)
+          {
+            source_pre (o);
+            for (; b != e;)
+            {
+              dispatch (*b);
+              if (++b != e) source_next (o);
+            }
+
+            source_post (o);
+          }
         }
 
         void Filter::
         source (Type const& o)
         {
-          dispatch (o.source ());
+          // VC6 anathema strikes again
+          //
+          Filter::Type::source_const_iterator b (o.begin_source()), e (o.end_source());
+
+          if (b != e)
+          {
+            source_pre (o);
+            for (; b != e;)
+            {
+              dispatch (*b);
+              if (++b != e) source_next (o);
+            }
+
+            source_post (o);
+          }
+        }
+
+        void Filter::
+        source_pre (Type&)
+        {
+        }
+
+        void Filter::
+        source_pre (Type const&)
+        {
+        }
+
+        void Filter::
+        source_next (Type&)
+        {
+        }
+
+        void Filter::
+        source_next (Type const&)
+        {
+        }
+
+        void Filter::
+        source_post (Type&)
+        {
+        }
+
+        void Filter::
+        source_post (Type const&)
+        {
         }
 
         void Filter::
@@ -2246,7 +2506,6 @@ namespace CIAO
   namespace Config_Handlers
   {
 
-
       namespace Writer
       {
         // EventServiceType
@@ -2391,6 +2650,25 @@ namespace CIAO
         }
 
         void EventServiceDescription::
+        filter_pre (Type const&)
+        {
+          push_ (::XSCRT::XML::Element< ACE_TCHAR > ("filter", top_ ()));
+        }
+
+        void EventServiceDescription::
+        filter_next (Type const& o)
+        {
+          filter_post (o);
+          filter_pre (o);
+        }
+
+        void EventServiceDescription::
+        filter_post (Type const&)
+        {
+          pop_ ();
+        }
+
+        void EventServiceDescription::
         id (Type const& o)
         {
           ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
@@ -2460,6 +2738,14 @@ namespace CIAO
         }
 
         void Filter::
+        name (Type const& o)
+        {
+          push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+          Traversal::Filter::name (o);
+          pop_ ();
+        }
+
+        void Filter::
         type (Type const& o)
         {
           push_ (::XSCRT::XML::Element< ACE_TCHAR > ("type", top_ ()));
@@ -2468,10 +2754,21 @@ namespace CIAO
         }
 
         void Filter::
-        source (Type const& o)
+        source_pre (Type const&)
         {
           push_ (::XSCRT::XML::Element< ACE_TCHAR > ("source", top_ ()));
-          Traversal::Filter::source (o);
+        }
+
+        void Filter::
+        source_next (Type const& o)
+        {
+          source_post (o);
+          source_pre (o);
+        }
+
+        void Filter::
+        source_post (Type const&)
+        {
           pop_ ();
         }
 
@@ -2685,7 +2982,6 @@ namespace CIAO
   namespace Config_Handlers
   {
 
-
       void
       CIAOEvents (::CIAO::Config_Handlers::CIAOEventsDef const& s, xercesc::DOMDocument* d)
       {
@@ -2699,6 +2995,8 @@ namespace CIAO
         virtual ::CIAO::Config_Handlers::Writer::EventServiceDescription,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
         virtual ::CIAO::Config_Handlers::Writer::EventServiceType,
+        virtual ::CIAO::Config_Handlers::Writer::Filter,
+        virtual ::CIAO::Config_Handlers::Writer::FilterType,
         virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
         virtual ::XSCRT::Writer< ACE_TCHAR >
         {
