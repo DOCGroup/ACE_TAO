@@ -12,6 +12,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 ACE_Log_Record::~ACE_Log_Record (void)
 {
+  if (this->msg_data_)
+    delete[] this->msg_data_;
 }
 
 ACE_INLINE void
