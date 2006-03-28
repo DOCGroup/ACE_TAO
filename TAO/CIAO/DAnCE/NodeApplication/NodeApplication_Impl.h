@@ -356,6 +356,16 @@ namespace CIAO
     /// A factory to create CIAO event services
     EventService_Factory_impl es_factory_;
 
+    /// Cache the (NA specific) installation info of all the
+    /// CIAO_Event_Services
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    ::Deployment::ESInstallationInfos_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> ES_Installation_Map;
+    typedef ES_Installation_Map::iterator ES_Installation_Map_Iterator;
+    ES_Installation_Map es_info_map_;
+
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   private:
     /// Default constructor, noop

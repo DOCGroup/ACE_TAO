@@ -659,12 +659,23 @@ install_all_es (void)
               // Construct the ESInstallationInfos data
               Deployment::ESInstallationInfos_var es_infos;
               ACE_NEW (es_infos,
-                        Deployment::ESInstallationInfos);
+                       Deployment::ESInstallationInfos);
 
               es_infos->length (1);
               (*es_infos)[0].id = es[j].name.in ();
               (*es_infos)[0].type = CIAO::RTEC;  //only RTEC is supported so far
               (*es_infos)[0].svcconf = es[j].svc_cfg_file.in ();
+
+              // Populate the "filters" info, in case this CIAO_Event_Service has
+              // one or more filters specified through descriptors
+              for (CORBA::ULong k = 0; k < es[j].filters.length (); ++k)
+                {
+                  CORBA::ULong len = (*es_infos)[0].es_config.length ();
+                  (*es_infos)[0].es_config.length (len + 1);
+                  (*es_infos)[0].es_config[len].name =
+                      CORBA::string_dup ("RtecFilter");
+                  (*es_infos)[0].es_config[len].value <<= es[j].filters;
+                }
 
               // Find NA, and then invoke operation on it
               ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
@@ -1296,6 +1307,9 @@ handle_es_connection (
 
   retv[len].endpointInstanceName = es_id.c_str ();
   retv[len].endpointPortName = "CIAO_ES";
+
+  if (binding.deployRequirement.length () != 0)
+    retv[len].config = binding.deployRequirement[0].property;
 
   // If we didnt find the objref of the connection ...
   CIAO::CIAO_Event_Service_var es;

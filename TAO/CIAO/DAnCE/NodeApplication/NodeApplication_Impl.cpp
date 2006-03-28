@@ -3,6 +3,7 @@
 #include "NodeApplication_Impl.h"
 #include "ace/SString.h"
 #include "Container_Impl.h"
+#include "Deployment_EventsC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
@@ -989,6 +990,26 @@ handle_es_consumer_connection (
       //consumer_config->supplier_id (sid.c_str ());
       consumer_config->consumer_id (cid.c_str ());
       consumer_config->consumer (consumer.in ());
+
+      // Need to setup a filter, if it's specified in the descriptor
+      for (CORBA::ULong i = 0; i < connection.config.length (); ++i)
+        {
+          if (ACE_OS::strcmp (connection.config[i].name.in (),
+                              "RtecFilter") != 0)
+            continue;
+
+          // Extract the filter information
+          CIAO::DAnCE::EventFilter *filter = 0;
+          connection.config[i].value >>=  filter;
+
+          CORBA::ULong size = (*filter).sources.length ();
+          consumer_config->start_disjunction_group (size);
+
+          for (CORBA::ULong j = 0; j < size; ++j)
+            {
+              consumer_config->insert_source ((*filter).sources[j].in ());
+            }
+        }
 
       event_service->connect_event_consumer (consumer_config.in ());
       consumer_config->destroy ();

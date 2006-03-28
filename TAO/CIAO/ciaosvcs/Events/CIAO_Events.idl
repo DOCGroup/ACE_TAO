@@ -38,6 +38,14 @@ module CIAO
   {
     attribute CONNECTION_ID consumer_id;
     attribute Components::EventConsumerBase consumer;
+
+    void start_conjunction_group (in long size);
+
+    void start_disjunction_group (in long size);
+
+    void insert_source (in CONNECTION_ID source_id);
+
+    void insert_type (in long event_type);
   };
 
   interface CIAO_Event_Service

@@ -110,6 +110,31 @@ namespace CIAO
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
   };
+
+  class Event_Consumer_Config_Base :
+    public virtual POA_CIAO::Consumer_Config
+  {
+  public:
+    virtual void start_conjunction_group (
+        ::CORBA::Long size
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
+
+    virtual void start_disjunction_group (
+        ::CORBA::Long size
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
+
+    virtual void insert_source (
+        const char * source_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
+
+    virtual void insert_type (
+        ::CORBA::Long  event_type
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
+  };
 }
 
 #include /**/ "ace/post.h"
