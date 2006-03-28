@@ -1,3 +1,12 @@
+Tue Mar 28 14:51:19 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/compiler.m4:
+
+          Added support for --disable-symbol-visibility flag so users
+          can explicitly disable symbol visibility in the cases where
+          it does not work (or does not work properly) but the feature
+          test selects it anyway.
+
 Tue Mar 28 09:04:55 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/OS_NS_sys_resource.inl (setrlimit): Fixed a bug where
@@ -13,7 +22,7 @@ Mon Mar 27 19:06:52 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * bin/tao_other_tests.lst:
 
-          Added test 
+          Added test
           TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl to
           test fix for bug in Bug 1647.
 
@@ -32,7 +41,7 @@ Mon Mar 27 07:46:33 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 	* ace/Acceptor.h: Updated the documentation to clarify that an
 	  acceptor can only listen on one port at a time.  Thanks to
  	  Mockey Chen <mockey dot chen @ google dot com> for motivating
- 	  this.	  
+ 	  this.
 
 Mon Mar 27 11:08:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
