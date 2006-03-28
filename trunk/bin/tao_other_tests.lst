@@ -66,7 +66,7 @@ TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl -p SCTP_SEQ: !
 TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM !ACE_FOR_TAO
-TAO/orbsvcs/tests/Bug_1334_Regression/run_test.pl !ACE_FOR_TAO
+TAO/orbsvcs/tests/Bug_1334_Regression/run_test.pl: !ACE_FOR_TAO
 TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl: !MINIMUM !NO_IFR
 TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl: !LynxOS !MINIMUM !NO_MESSAGING
 TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl: !MINIMUM !NO_IFR
