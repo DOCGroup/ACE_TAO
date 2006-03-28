@@ -25,25 +25,42 @@ Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
            * tao/Resume_Handle.cpp
            * orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl
 
-           RT8248 is a race condition involving two threads active in the
-           same connection handler at the same time.  The race is fixed by
+           RT8248(Bug 1647) is a race condition involving two threads 
+					 active in the same connection handler at the same time.  
+					 The race is fixed by
            ensuring that a connection handler that has allowed its handle
            to be resumed in the Reactor does not return "1" from
            handle_input. "1" is the Reactor's "call me back immediately"
            value. Essentially, you can't give up ownership of yourself twice
-          --  you give up owner-
-           ship when you resume the handle, so you can't ask to be called
-           back immediately.  (The SSLIOP handler is the only one that ever
-           returns 1, so that's the only handler in which this
-           manifests itself)
+           --  you give up owner-ship when you resume the handle, so you 
+           can't ask to be called back immediately.  (The SSLIOP handler 
+           is the only one that ever returns 1, so that's the only handler 
+           in which this manifests itself)
 
            The additional test (run_test_harsh.pl) is a longer (~5 minute)
            version of the MT_SSLIOP test that fails without this change,
            but succeeds with it.
 
            Also moved the code for Ciju's "connection close" fix of
-           "Fri Dec 16 14:40:54 2005" from the Connection_Handler.cpp
-           to the Resume_Handle.cpp.
+           "Fri Dec 16 14:40:54 2005" (this entry is moved from OCI 1.4a)
+           from the Connection_Handler.cpp to the Resume_Handle.cpp.
+             Fri Dec 16 14:40:54 2005  Ciju John  <john_c@ociweb.com>
+             
+             * tao/Connection_Handler.cpp:
+             
+               When the client closes its connections, it sends an EOF
+               to the server. The sever reactor gets an event for that 
+               handler. It first suspends the handler and then dispatches 
+               a thread to handle_input().Some where down the lane, a read() 
+               is done on the handle and automatically the handle is resumed. 
+               At this point another thread CAN enter the reactor and
+               since the handle being closed has been resumed, the reactor 
+               will add it to its fd_set. As expected the reactor gets an 
+               event on that handle and dispatches someone else to handle 
+               that event.
+               What this patch does is prevent the closing handler from being
+               resumed. Thus it never does get added to the reactor 
+               fd_set and the possibility of getting a nil handler is removed.
 
 Mon Mar 27 10:29:08 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
