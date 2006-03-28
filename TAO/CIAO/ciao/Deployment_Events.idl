@@ -42,6 +42,7 @@ module CIAO
 
     struct EventFilter
     {
+      string name;
       FilterType type;
       EventSourceSet sources;
     };
