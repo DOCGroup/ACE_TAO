@@ -16,6 +16,8 @@
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+#include "ace/OS_Memory.h"
+
 ACE_RCSID(ace, Log_Record, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -118,7 +120,7 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
   ACE_OS::strsncpy (this->msg_data_, data,
-                    (sizeof this->msg_data_ / sizeof (ACE_TCHAR)));
+                    (MAXLOGMSGLEN / sizeof (ACE_TCHAR)));
   this->round_up ();
 }
 
@@ -132,6 +134,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
+  ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
@@ -144,6 +147,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
+  ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 }
 
 void
@@ -151,7 +155,7 @@ ACE_Log_Record::round_up (void)
 {
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
-  size_t len = (sizeof (*this) - sizeof (this->msg_data_))
+  size_t len = (sizeof (*this) - MAXLOGMSGLEN)
     + (sizeof (ACE_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
 
   // Round up to the alignment.
@@ -168,6 +172,7 @@ ACE_Log_Record::ACE_Log_Record (void)
     pid_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
+  ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 }
 
 int
@@ -251,7 +256,9 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
-  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  ACE_TCHAR* verbose_msg;
+  ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+
   int result = this->format_msg (host_name,
                                  verbose_flag,
                                  verbose_msg);
@@ -272,6 +279,8 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
         }
     }
 
+  delete[] verbose_msg;
+
   return result;
 }
 
@@ -282,7 +291,9 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        ACE_OSTREAM_TYPE &s)
 {
-  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  ACE_TCHAR* verbose_msg;
+  ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+
   int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
   if (result == 0)
@@ -291,6 +302,8 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
       s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
       s.flush ();
     }
+
+  delete[] verbose_msg;
 
   return result;
 }

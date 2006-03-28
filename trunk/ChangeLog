@@ -1,3 +1,16 @@
+Tue Mar 28 21:30:01 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Log_Msg.cpp
+        * ace/Log_Msg.h
+        * ace/Log_Record.cpp
+        * ace/Log_Record.h
+        * ace/Log_Record.inl
+          Updated these files to solve the stack overflow problem in ACE_Log_Msg
+          and ACE_Log_Record. Moves buffers that can be large in stack in malloced 
+          memory.
+          Thanks to qwerty <qwerty0987654321 at mail dot ru> for motivating and
+          suggesting the fix to this problem.
+
 Tue Mar 28 18:34:26 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * bin/tao_other_tests.lst:
