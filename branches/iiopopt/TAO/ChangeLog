@@ -22,4 +22,6 @@
           Added TAO_HAS_IIOP. This is default set to 1 but can be overridden
           in the config.h file to 0 meaning we don't support IIOP. This is
           usefull for embedded systems that support one of the other
-          pluggable protocols and don't need IIOP support at all.
+          pluggable protocols and don't need IIOP support at all. With
+          TAO_HAS_IIOP set to 0 not everything will compile, just the
+          core libs itself.
