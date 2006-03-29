@@ -2658,6 +2658,9 @@ switch_type_spec :
           if ($$ == 0)
             {
               idl_global->err ()->lookup_error ($1);
+
+              /* If we don't return here, we'll crash later.*/
+              return 1;
             }
         }
         ;

@@ -1,8 +1,18 @@
+Wed Mar 29 15:24:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy (yyparse):
+        * TAO_IDL/fe/y.tab.cpp (yyparse):
+
+          Added return with error code immediately after outputting
+          a lookup error for an enum type, since further parsing
+          leads to a crash. Thanks to Jules Colding <colding@omesc.com>
+          for reporting the problem and submitting examples IDL files.
+
 Wed Mar 29 03:42:55 UTC 2006  Balachandran Natarajan  <bala_natarajan at symantec dot com>
 
-        * docs/Options.html: 
-        
-          Added documentation for -ORBConnectionHandlerCleanup. 
+        * docs/Options.html:
+
+          Added documentation for -ORBConnectionHandlerCleanup.
 
 Tue Mar 28 23:59:00 UTC 2006  Frank Rehberger <frehberger@prismtech.com>
         * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.{h,cpp}:
@@ -20,19 +30,19 @@ Tue Mar 28 23:59:00 UTC 2006  Frank Rehberger <frehberger@prismtech.com>
           TAO/tao/GIOP_Message_Base.cpp:
           TAO/tao/Invocation_Adapter.cpp:
           Add handling of TAO_GIOP_LOCATION_FORWARD_PERM.
-        * TAO/tao/ORB_Core.{i,h,cpp}: 
+        * TAO/tao/ORB_Core.{i,h,cpp}:
           Add operation is_permanent_forward_condition() which will
           upcalls the operation in Service_Callbacks interface.
         * TAO/tao/Object.cpp:
           Refactor the Object marshaling code into TAO_Stub::marshal()
           operation to encapsulate the TAO_GIOP_LOCATION_FORWARD_PERM
-          case.  
+          case.
         * TAO/tao/Stub.{i,h,cpp}:
           Add operation TAO_Stub::marshal(), and permanent-forward-feature
           to operation add_forward_profiles().
         * TAO/tao/Synch_Invocation.cpp:
           TAO/tao/DynamicInterface/Request.cpp:
-          TAO/tao/TAO_Server_Request.cpp: 
+          TAO/tao/TAO_Server_Request.cpp:
           TAO/tao/Messaging/Asynch_Invocation_Adapter.cpp:
           TAO/tao/Messaging/Asynch_Reply_Dispatcher.cpp:
           Add handling for TAO_GIOP_LOCATION_FORWARD_PERM.
@@ -43,9 +53,9 @@ Tue Mar 28 23:59:00 UTC 2006  Frank Rehberger <frehberger@prismtech.com>
           TAO/tests/Permanent_Forward/StubTest.cpp:
           TAO/tests/Permanent_Forward/README:
           New test, testing TAO_Stub features for permanent-forwarding support
-        
-          These changes add LOCATION_FORWARD_PERM feature, #1777      
-                  
+
+          These changes add LOCATION_FORWARD_PERM feature, #1777
+
 Tue Mar 28 14:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/AMH_Exceptions/run_test.pl:
@@ -73,16 +83,16 @@ Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
            * tao/Resume_Handle.cpp
            * orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl
 
-           RT8248(Bug 1647) is a race condition involving two threads 
-					 active in the same connection handler at the same time.  
-					 The race is fixed by
+           RT8248(Bug 1647) is a race condition involving two threads
+           active in the same connection handler at the same time.
+           The race is fixed by
            ensuring that a connection handler that has allowed its handle
            to be resumed in the Reactor does not return "1" from
            handle_input. "1" is the Reactor's "call me back immediately"
            value. Essentially, you can't give up ownership of yourself twice
-           --  you give up owner-ship when you resume the handle, so you 
-           can't ask to be called back immediately.  (The SSLIOP handler 
-           is the only one that ever returns 1, so that's the only handler 
+           --  you give up owner-ship when you resume the handle, so you
+           can't ask to be called back immediately.  (The SSLIOP handler
+           is the only one that ever returns 1, so that's the only handler
            in which this manifests itself)
 
            The additional test (run_test_harsh.pl) is a longer (~5 minute)
@@ -93,21 +103,21 @@ Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
            "Fri Dec 16 14:40:54 2005" (this entry is moved from OCI 1.4a)
            from the Connection_Handler.cpp to the Resume_Handle.cpp.
              Fri Dec 16 14:40:54 2005  Ciju John  <john_c@ociweb.com>
-             
+
              * tao/Connection_Handler.cpp:
-             
+
                When the client closes its connections, it sends an EOF
-               to the server. The sever reactor gets an event for that 
-               handler. It first suspends the handler and then dispatches 
-               a thread to handle_input().Some where down the lane, a read() 
-               is done on the handle and automatically the handle is resumed. 
+               to the server. The sever reactor gets an event for that
+               handler. It first suspends the handler and then dispatches
+               a thread to handle_input().Some where down the lane, a read()
+               is done on the handle and automatically the handle is resumed.
                At this point another thread CAN enter the reactor and
-               since the handle being closed has been resumed, the reactor 
-               will add it to its fd_set. As expected the reactor gets an 
-               event on that handle and dispatches someone else to handle 
+               since the handle being closed has been resumed, the reactor
+               will add it to its fd_set. As expected the reactor gets an
+               event on that handle and dispatches someone else to handle
                that event.
                What this patch does is prevent the closing handler from being
-               resumed. Thus it never does get added to the reactor 
+               resumed. Thus it never does get added to the reactor
                fd_set and the possibility of getting a nil handler is removed.
 
 Mon Mar 27 10:29:08 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
