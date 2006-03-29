@@ -1,3 +1,9 @@
+Wed Mar 29 17:15:00 UTC 2006  Frank Rehberger  <frehberger@prismtech.com>
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+          TAO/tao/Messaging/Asynch_Invocation_Adapter.cpp:
+          TAO/tao/Invocation_Adapter.cpp:
+          Guard expression with if-else-endif macro for MINIMUM builds.
+        
 Wed Mar 29 15:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:

@@ -175,8 +175,12 @@ namespace TAO
       {
         effective_target = asynch.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
         const CORBA::Boolean permanent_forward =
             (asynch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+        const CORBA::Boolean permanent_forward = false;
+#endif
 
         this->object_forwarded (effective_target,
                                 r.stub (),

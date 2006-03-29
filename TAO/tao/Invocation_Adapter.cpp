@@ -191,8 +191,12 @@ namespace TAO
         effective_target =
             coll_inv.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
         const bool is_permanent_forward =
             (coll_inv.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+        const bool is_permanent_forward = false;
+#endif
 
         (void) this->object_forwarded (effective_target,
                                        stub,
@@ -326,8 +330,12 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
         const bool is_permanent_forward =
             (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+        const bool is_permanent_forward = false;
+#endif
 
         this->object_forwarded (effective_target,
                                 r.stub (),
@@ -361,9 +369,12 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
         const bool is_permanent_forward =
             (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
-
+#else
+        const bool is_permanent_forward = false;
+#endif
         this->object_forwarded (effective_target,
                                 r.stub (),
                                 is_permanent_forward
