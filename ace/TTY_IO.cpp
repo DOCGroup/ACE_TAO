@@ -327,7 +327,8 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
         }
 
-#if defined (TIOCMGET)
+#if defined (TIOCMGET) && !defined (__Lynx__)
+      // This sets serial port under LynxOS to non-functional state
       int status;
       this->ACE_IO_SAP::control (TIOCMGET, &status);
 
@@ -462,9 +463,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Always set limits unless set to negative to use default.
       if (arg->xonlim >= 0)
-        dcb.XonLim  = (WORD)arg->xonlim;
+        dcb.XonLim  = static_cast<WORD>(arg->xonlim);
       if (arg->xofflim >= 0)
-        dcb.XoffLim = (WORD)arg->xofflim;
+        dcb.XoffLim = static_cast<WORD>(arg->xofflim);
 
       dcb.fAbortOnError = FALSE;
       dcb.fErrorChar = FALSE;
