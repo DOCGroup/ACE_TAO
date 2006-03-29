@@ -11,7 +11,7 @@
 #include "tao/Transport.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Collocation_Proxy_Broker.h"
-
+#include "tao/GIOP_Utils.h"
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
@@ -191,8 +191,12 @@ namespace TAO
         effective_target =
             coll_inv.steal_forwarded_reference ();
 
+        const bool is_permanent_forward =
+            (coll_inv.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+
         (void) this->object_forwarded (effective_target,
-                                       stub
+                                       stub,
+                                       is_permanent_forward
                                        ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -322,8 +326,12 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+        const bool is_permanent_forward =
+            (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                is_permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -353,8 +361,12 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+        const bool is_permanent_forward =
+            (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                is_permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -364,7 +376,8 @@ namespace TAO
 
   void
   Invocation_Adapter::object_forwarded (CORBA::Object_var &effective_target,
-                                        TAO_Stub *stub
+                                        TAO_Stub *stub,
+                                        CORBA::Boolean permanent_forward
                                         ACE_ENV_ARG_DECL)
   {
     // The object pointer has to be changed to a TAO_Stub pointer
@@ -381,7 +394,7 @@ namespace TAO
 
 
     // Reset the profile in the stubs
-    stub->add_forward_profiles (stubobj->base_profiles ());
+    stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
 
     if (stub->next_profile () == 0)
       ACE_THROW (CORBA::TRANSIENT (

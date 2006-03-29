@@ -43,6 +43,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , object_proxy_broker_ (the_tao_remote_object_proxy_broker ())
   , base_profiles_ ((CORBA::ULong) 0)
   , forward_profiles_ (0)
+  , forward_profiles_perm_ (0)
   , profile_in_use_ (0)
   , profile_lock_ptr_ (0)
   , profile_success_ (false)
@@ -110,7 +111,8 @@ TAO_Stub::~TAO_Stub (void)
 }
 
 void
-TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
+TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
+                                const CORBA::Boolean permanent_forward)
 {
   // we assume that the profile_in_use_ is being
   // forwarded!  Grab the lock so things don't change.
@@ -118,12 +120,24 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
                      guard,
                      *this->profile_lock_ptr_));
 
+  if (permanent_forward)
+    {
+      // paranoid, reset the bookmark, then clear the forward-stack
+      this->forward_profiles_perm_ = 0;
+
+      this->reset_forward ();
+    }
+
   TAO_MProfile *now_pfiles = this->forward_profiles_;
   if (now_pfiles == 0)
     now_pfiles = &this->base_profiles_;
 
   ACE_NEW (this->forward_profiles_,
            TAO_MProfile (mprofiles));
+
+  if (permanent_forward)
+    // bookmark the new element at bottom of stack
+    this->forward_profiles_perm_ = this->forward_profiles_;
 
   // forwarded profile points to the new IOR (profiles)
   this->profile_in_use_->forward_to (this->forward_profiles_);
@@ -601,6 +615,67 @@ TAO_Stub::transport_queueing_strategy (void)
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   return this->orb_core_->default_transport_queueing_strategy ();
+}
+
+CORBA::Boolean
+TAO_Stub::marshal (TAO_OutputCDR &cdr)
+{
+  // do as many outside of locked else-branch as posssible
+
+  // STRING, a type ID hint
+  if ((cdr << this->type_id.in()) == 0)
+    return 0;
+
+  if ( ! this->forward_profiles_perm_)
+    {
+      const TAO_MProfile& mprofile = this->base_profiles_;
+
+      CORBA::ULong profile_count = mprofile.profile_count ();
+      if ((cdr << profile_count) == 0)
+        return 0;
+
+    // @@ The MProfile should be locked during this iteration, is there
+    // anyway to achieve that?
+    for (CORBA::ULong i = 0; i < profile_count; ++i)
+      {
+        const TAO_Profile* p = mprofile.get_profile (i);
+        if (p->encode (cdr) == 0)
+          return 0;
+      }
+    }
+  else
+    {
+        ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                                guard,
+                                *this->profile_lock_ptr_,
+                                0));
+
+      ACE_ASSERT(this->forward_profiles_ !=0);
+
+      // paranoid - in case of FT the basic_profiles_ would do, too,
+      // but might be dated
+      const TAO_MProfile& mprofile =
+          this->forward_profiles_perm_
+        ? *(this->forward_profiles_perm_)
+        : this->base_profiles_;
+
+      CORBA::ULong profile_count = mprofile.profile_count ();
+      if ((cdr << profile_count) == 0)
+           return 0;
+
+      // @@ The MProfile should be locked during this iteration, is there
+      // anyway to achieve that?
+      for (CORBA::ULong i = 0; i < profile_count; ++i)
+        {
+          const TAO_Profile* p = mprofile.get_profile (i);
+          if (p->encode (cdr) == 0)
+            return 0;
+        }
+
+      // release ACE_Lock
+    }
+
+  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

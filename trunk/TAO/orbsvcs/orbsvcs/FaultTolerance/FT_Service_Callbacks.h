@@ -61,6 +61,13 @@ public:
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
                                 CORBA::ULong m);
 
+
+  /// Verify condition for  permanent forward is given,
+  /// both parameters must provide group attributes.
+  virtual CORBA::Boolean is_permanent_forward_condition
+  (const CORBA::Object_ptr obj,
+   const TAO_Service_Context &service_context) const;
+
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
   virtual TAO::Invocation_Status raise_comm_failure (
@@ -74,7 +81,7 @@ public:
       IOP::ServiceContextList &clist,
       TAO_Profile *profile
       ACE_ENV_ARG_DECL);
-      
+
   static TimeBase::TimeT now (void);
 
 private:

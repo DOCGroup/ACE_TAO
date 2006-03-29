@@ -261,7 +261,14 @@ TAO_ServerRequest::init_reply (void)
   // Forward exception only.
   if (!CORBA::is_nil (this->forward_location_.in ()))
     {
-      reply_params.reply_status_ = TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+      const CORBA::Boolean permanent_forward_condition = 
+        this->orb_core_->is_permanent_forward_condition (this->forward_location_.in (), 
+                                                         this->request_service_context ());
+      
+      reply_params.reply_status_ 
+        = permanent_forward_condition
+        ? TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM
+        : TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
     }
   // Any exception at all.
   else if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION)
@@ -278,7 +285,8 @@ TAO_ServerRequest::init_reply (void)
                                            reply_params);
 
   // Finish the GIOP Reply header, then marshal the exception.
-  if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD)
+  if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD ||
+      reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM)
     {
       // Marshal the forward location pointer.
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();

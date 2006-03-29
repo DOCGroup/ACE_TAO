@@ -110,6 +110,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
       break;
     default:
     case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
       // @@ Michael: Not even the spec mentions this case.
       //             We have to think about this case.
       // Handle the forwarding and return so the stub restarts the
