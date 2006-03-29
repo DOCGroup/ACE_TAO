@@ -3,7 +3,6 @@
 #include "DomainApplicationManager_Impl.h"
 #include "ExecutionManager/Execution_Manager_Impl.h"
 #include "ciao/NodeApplicationManagerC.h"
-#include "ciao/Deployment_EventsC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
@@ -38,7 +37,8 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   //
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb),
-    is_redeployment_ (false)
+    is_redeployment_ (false),
+    esd_ (0)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_NEW_THROW_EX (this->all_connections_,
@@ -49,6 +49,16 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                     Deployment::ComponentPlans (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
+
+  for (CORBA::ULong i = 0; i < this->plan_.infoProperty.length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->plan_.infoProperty[i].name.in (),
+                          "CIAOEvents") != 0)
+        continue;
+
+      this->plan_.infoProperty[0].value >>= this->esd_;
+      break;
+    }
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
@@ -645,71 +655,50 @@ install_all_es (void)
 {
   ACE_TRY
     {
-      for (CORBA::ULong i = 0; i < this->plan_.infoProperty.length (); ++i)
+      for (CORBA::ULong j = 0; j < this->esd_->length (); ++j)
         {
-          if (ACE_OS::strcmp (this->plan_.infoProperty[i].name.in (),
-                              "CIAOEvents") != 0)
-            continue;
+          // Construct the ESInstallationInfos data
+          Deployment::ESInstallationInfos_var es_infos;
+          ACE_NEW (es_infos,
+                    Deployment::ESInstallationInfos);
 
-          CIAO::DAnCE::EventServiceDeploymentDescriptions_var es = 0;
-          this->plan_.infoProperty[0].value >>= es;
+          es_infos->length (1);
+          (*es_infos)[0].id = this->esd_[j].name.in ();
+          (*es_infos)[0].type = CIAO::RTEC;  //only RTEC is supported so far
+          (*es_infos)[0].svcconf = this->esd_[j].svc_cfg_file.in ();
 
-          for (CORBA::ULong j = 0; j < es->length (); ++j)
+          // Find NA, and then invoke operation on it
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+          if (this->artifact_map_.find (this->esd_[j].node.in (),
+                                        entry) != 0)
             {
-              // Construct the ESInstallationInfos data
-              Deployment::ESInstallationInfos_var es_infos;
-              ACE_NEW (es_infos,
-                       Deployment::ESInstallationInfos);
+              ACE_ERROR ((LM_ERROR,
+                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_Impl::install_all_es -"
+                          "ERROR while finding the node specific plan "
+                          "for the node [%s] \n",
+                            this->esd_[j].node.in ()));
 
-              es_infos->length (1);
-              (*es_infos)[0].id = es[j].name.in ();
-              (*es_infos)[0].type = CIAO::RTEC;  //only RTEC is supported so far
-              (*es_infos)[0].svcconf = es[j].svc_cfg_file.in ();
+              ACE_CString error
+                ("Unable to resolve a reference to NodeManager: ");
+              error += this->esd_[j].node.in ();
 
-              // Populate the "filters" info, in case this CIAO_Event_Service has
-              // one or more filters specified through descriptors
-              for (CORBA::ULong k = 0; k < es[j].filters.length (); ++k)
-                {
-                  CORBA::ULong len = (*es_infos)[0].es_config.length ();
-                  (*es_infos)[0].es_config.length (len + 1);
-                  (*es_infos)[0].es_config[len].name =
-                      CORBA::string_dup ("RtecFilter");
-                  (*es_infos)[0].es_config[len].value <<= es[j].filters;
-                }
-
-              // Find NA, and then invoke operation on it
-              ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
-
-              if (this->artifact_map_.find (es[j].node.in (),
-                                            entry) != 0)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                              "CIAO::DomainApplicationManager_Impl::install_all_es -"
-                              "ERROR while finding the node specific plan "
-                              "for the node [%s] \n",
-                                es[j].node.in ()));
-
-                  ACE_CString error
-                    ("Unable to resolve a reference to NodeManager: ");
-                  error += es[j].node.in ();
-
-                  ACE_TRY_THROW
-                    (Deployment::StartError
-                      ("DomainApplicationManager_Impl::install_all_es",
-                        error.c_str ()));
-                }
-
-              // Invoke install_es () operation on each cached NodeApplication object.
-              ::Deployment::NodeApplication_ptr my_na =
-                  (entry->int_id_).node_application_.in ();
-
-              ::Deployment::CIAO_Event_Services_var event_services =
-                  my_na->install_es (es_infos);
-
-              // Add these returned ES objects into the cached map
-              this->add_es_to_map (es_infos, event_services);
+              ACE_TRY_THROW
+                (Deployment::StartError
+                  ("DomainApplicationManager_Impl::install_all_es",
+                    error.c_str ()));
             }
+
+          // Invoke install_es () operation on each cached NodeApplication object.
+          ::Deployment::NodeApplication_ptr my_na =
+              (entry->int_id_).node_application_.in ();
+
+          ::Deployment::CIAO_Event_Services_var event_services =
+              my_na->install_es (es_infos);
+
+          // Add these returned ES objects into the cached map
+          this->add_es_to_map (es_infos, event_services);
         }
     }
   ACE_CATCHANY
@@ -1308,8 +1297,13 @@ handle_es_connection (
   retv[len].endpointInstanceName = es_id.c_str ();
   retv[len].endpointPortName = "CIAO_ES";
 
+  // We need to populate the actual filter and store it into
+  // the <connection.config> field
   if (binding.deployRequirement.length () != 0)
-    retv[len].config = binding.deployRequirement[0].property;
+    {
+      retv[len].config =
+        this->get_connection_QoS_configuration (binding.deployRequirement[0]);
+    }
 
   // If we didnt find the objref of the connection ...
   CIAO::CIAO_Event_Service_var es;
@@ -1946,4 +1940,52 @@ subtract_connections (const Deployment::Connections & left,
           }
     }
   return retv._retn ();
+}
+
+const Deployment::Properties &
+CIAO::DomainApplicationManager_Impl::
+get_connection_QoS_configuration (const Deployment::Requirement & requirement)
+{
+  // Get the name/identifier of the filter associated with
+  // this connection
+  Deployment::Properties_var retv;
+  ACE_NEW_NORETURN (retv, Deployment::Properties);
+
+  CORBA::ULong len = retv->length ();
+
+  for (CORBA::ULong i = 0;
+       i < requirement.property.length ();
+       ++i)
+    {
+      const char *filter_name;
+      if (ACE_OS::strcmp ("EventFilter",
+                          requirement.property[i].name) == 0)
+        {
+
+          if ((requirement.property[i].value >>= filter_name) == false)
+            ACE_ERROR ((LM_ERROR,
+                        "ERROR: DomainApplicationManager_Impl::"
+                        "get_connection_QoS_configuration unable to "
+                        "extract event filter information\n"));
+        }
+
+      // Search for the desired filter
+      for (CORBA::ULong j = 0; j < this->esd_->length (); ++j)
+        {
+          // Populate the "filters" info, in case this CIAO_Event_Service has
+          // one or more filters specified through descriptors
+          for (CORBA::ULong k = 0; k < this->esd_[j].filters.length (); ++k)
+            {
+              if (ACE_OS::strcmp (this->esd_[j].filters[k].name.in (),
+                                  filter_name) == 0)
+                {
+                  retv->length (len + 1);
+                  retv[len].name =  CORBA::string_dup ("EventFilter");
+                  retv[len].value <<= this->esd_[j].filters[k];
+                  break;
+                }
+            }
+        }
+    }
+  return retv.inout ();
 }

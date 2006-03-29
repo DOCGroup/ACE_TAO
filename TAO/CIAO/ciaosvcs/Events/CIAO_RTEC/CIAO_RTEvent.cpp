@@ -12,6 +12,7 @@
 //=============================================================================
 
 #include "CIAO_RTEvent.h"
+#include "ciao/CIAO_common.h"
 
 namespace CIAO
 {
@@ -76,7 +77,10 @@ namespace CIAO
     ACE_CHECK;
     this->type_id_ = this->source_id_;
 
-    ACE_DEBUG ((LM_DEBUG, "connect source id: %i\n", this->source_id_));
+    if (CIAO::debug_level () > 11)
+      {
+        ACE_DEBUG ((LM_DEBUG, "connect source id: %i\n", this->source_id_));
+      }
 
     RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
       this->rt_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -341,15 +345,17 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "supplier's id: %s\n", supplier_id));
+  if (CIAO::debug_level () > 11)
+    {
+      ACE_DEBUG ((LM_DEBUG, "supplier's id: %s\n", supplier_id));
+
+    }
 
     this->supplier_id_ = supplier_id;
 
     ACE_Hash<ACE_CString> hasher;
     RtecEventComm::EventSourceID source_id =
       hasher (this->supplier_id_.c_str ());
-
-    ACE_DEBUG ((LM_DEBUG, "supplier's source id: %i\n", source_id));
 
     this->qos_.insert (source_id,
                        source_id,
