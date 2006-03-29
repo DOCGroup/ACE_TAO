@@ -1,3 +1,11 @@
+Wed Mar 29 04:40:58 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        
+          Added the functionality to honor command line arguments
+          and service configuration file options defined through
+          RT-CCM descriptors.
+
 Mon Mar 27 19:56:51 UTC 2006  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
         * DAnCE/NodeApplication/NodeApplication.cpp (main): Added code to
