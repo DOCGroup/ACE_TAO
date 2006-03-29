@@ -1071,6 +1071,8 @@ CIAO::NodeApplication_Impl::build_event_connection (
       case Deployment::EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
       case Deployment::EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
       case Deployment::EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
+    default:
+      ACE_DEBUG ((LM_DEBUG, "Unknow\n")); break;
     }
 
     const CIAO::CIAO_Event_Service_ptr event_service =

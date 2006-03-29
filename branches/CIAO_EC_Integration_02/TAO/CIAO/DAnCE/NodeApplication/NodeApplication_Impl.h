@@ -30,7 +30,7 @@
 #include "ciao/CIAO_common.h"
 #include "ciao/Object_Set_T.h"
 #include "ciaosvcs/Events/CIAO_EventService_Factory_impl.h"
-#include "ciaosvcs/Events/CIAO_EventsS.h"
+#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventsS.h"
 
 #include "NodeApp_Configurator.h"
 #include "Container_Base.h"
@@ -215,7 +215,7 @@ namespace CIAO
     ::Deployment::NodeApplication_ptr
     get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-    /*------- CIAO helper functions for pub/sub service ------/*
+    /*------- CIAO helper functions for pub/sub service -------
      *
      *--------------------------------------------------------*/
 
