@@ -1,4 +1,23 @@
 
+        * ace/config-osf1-3.2.h:
+          Removed, very old
+
+        * ace/config-tru64.h:
+          Removed include of config-osf1-3.2.h
+
+        * ace/OS_Dirent.cpp:
+        * ace/OS_Memory.{cpp,inl}:
+        * ace/OS_String.{cpp,inl}:
+        * ace/Sync.cpp:
+          Removed these files, where not build for a long time already
+
+        * ace/ace.mpc:
+          Removed files above
+
+        * ace/OS_Memory.h:
+        * ace/OS_String.h:
+          Removed include of inline files
+
         * ace/config-win32-msvc6.h:
         * ace/config-kcc-common.h:
           Removed these files, vc6 and kcc are deprecated
