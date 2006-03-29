@@ -348,6 +348,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
     case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
     case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
     case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       ACE_ERROR ((LM_ERROR,

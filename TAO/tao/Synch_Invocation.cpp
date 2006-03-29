@@ -402,6 +402,36 @@ namespace TAO
       case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
         return this->location_forward (cdr
                                        ACE_ENV_ARG_PARAMETER);
+      case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
+        {
+          // Unmarshal the location forward object and set the
+          // variable this->forward_to_.
+          const Invocation_Status s
+            = this->location_forward (cdr
+                                      ACE_ENV_ARG_PARAMETER);
+          if (s != TAO_INVOKE_FAILURE)
+            {
+              // de-marshalling of permanent object reference was successfull
+              const CORBA::Boolean permanent_forward_condition =
+                this->orb_core ()->is_permanent_forward_condition
+                  (this->forwarded_to_.in (),
+                   this->request_service_context ());
+
+              if (!permanent_forward_condition)
+                {
+                   // permanent condition not given
+                    if (TAO_debug_level > 3)
+                        ACE_DEBUG ((LM_DEBUG,
+                               "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                                "check_reply_status: unexpected LOCATION_FORWARD_PERM reply\n"));
+
+                   ACE_THROW_RETURN (CORBA::INTERNAL (0, CORBA::COMPLETED_NO),
+                                     TAO_INVOKE_FAILURE);
+                }
+            }
+
+          return s;
+        }
       case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
         return this->handle_user_exception (cdr
                                             ACE_ENV_ARG_PARAMETER);

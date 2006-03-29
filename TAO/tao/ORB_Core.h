@@ -888,6 +888,12 @@ public:
   /// flush
   TAO::Transport_Queueing_Strategy &default_transport_queueing_strategy (void);
 
+  /// Verify condition for  permanent forward is given,
+  /// both parameters must provide group attributes.
+  CORBA::Boolean is_permanent_forward_condition
+  (const CORBA::Object_ptr obj,
+   const TAO_Service_Context &service_context);
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference

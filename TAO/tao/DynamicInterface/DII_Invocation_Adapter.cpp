@@ -85,8 +85,12 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+        const CORBA::Boolean permanent_forward =
+            (synch.reply_status() == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM);
+
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }

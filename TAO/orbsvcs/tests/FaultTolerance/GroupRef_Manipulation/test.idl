@@ -24,6 +24,7 @@ module ForwardRequestTest
     void forward_references (in Object obj1,
                              in Object obj2);
 
+    void reset ();
   };
 
 };

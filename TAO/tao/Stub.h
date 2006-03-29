@@ -151,6 +151,8 @@ public:
   /// Obtain a pointer to the forwarded profile set
   const TAO_MProfile *forward_profiles (void) const;
 
+  /// True if permanent location forward occured, in this case the lock must be set and the
+
   // Manage forward and base profiles.
   /**
    * THREAD SAFE.  If forward_profiles is null then this will
@@ -188,9 +190,15 @@ public:
   /**
    * THREAD SAFE.
    * Set the forward_profiles.  This object will assume ownership of
-   * this TAO_MProfile object!!
+   * this TAO_MProfile object!!  if permanent_forward is true,
+   * currently used profiles will be replaced permanently, otherwise
+   * stub may fallback to current profiles later.  The flag
+   * permanent_forward=true is only valid if currently used profile
+   * set represents a GroupObject (IOGR), otherwise this flag will be
+   * ignored.
    */
-  void add_forward_profiles (const TAO_MProfile &mprofiles);
+  void add_forward_profiles (const TAO_MProfile &mprofiles,
+                             const CORBA::Boolean permanent_forward=false);
 
   /**
    * THREAD SAFE
@@ -259,6 +267,10 @@ public:
    * collocation opportunities that are available to the ORB.
    */
   CORBA::Boolean optimize_collocation_objects (void) const;
+
+  // needed to avoid copying forward_profiles for thread safety
+  CORBA::Boolean marshal (TAO_OutputCDR&);
+
 protected:
 
   /// Destructor is to be called only through _decr_refcnt() to
@@ -357,6 +369,10 @@ protected:
   /// The list of forwarding profiles.  This is actually implemented as a
   /// linked list of TAO_MProfile objects.
   TAO_MProfile *forward_profiles_;
+
+  // The bookmark indicating permanent forward occured,
+  // the pointer is used to indentify bottom of stack forward_profiles_
+  TAO_MProfile *forward_profiles_perm_;
 
   /// This is the profile that we are currently sending/receiving with.
   TAO_Profile *profile_in_use_;

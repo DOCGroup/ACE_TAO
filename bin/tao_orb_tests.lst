@@ -236,3 +236,4 @@ TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_big: !ST !VxWorks
 TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl big: !ST !VxWorks
 TAO/tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl: !STATIC !ST !VxWorks
 TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST !VxWorks
+TAO/tests/Permanent_Forward/run_test.pl:
