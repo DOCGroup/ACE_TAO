@@ -183,18 +183,20 @@ namespace TAO
  *
  * We solve the problems as follows
  *
- *  (a) First do a read with the buffer on stack. Query the underlying
- *      messaging object whether the message has any incomplete
- *      portion. If so, we just grow the buffer for the missing size
- *      and read the rest of the message. We free the handle and then
- *      send the message to the higher layers of the ORB for
- *      processing.
+ *   (a) First do a read with the buffer on stack. Query the underlying
+ *       messaging object whether the message has any incomplete
+ *       portion. If so, data will be copied into new buffer being able
+ *       to hold full message and is queued; succeeding events will read
+ *       data from socket and write directly into this buffer.
+ *       Otherwise, if if the message in local buffer is complete, we free
+ *       the handle and then send the message to the higher layers of the
+ *       ORB for processing.
  *
- *   (b) If we block (ie. if we receive a EWOULDBLOCK) while trying to
- *       do the above (ie. trying to read after growing the buffer
- *       size) we put the message in a queue and return back to the
- *       reactor. The reactor would call us back when the handle
- *       becomes read ready.
+ *   (b) If buffer with incomplete message has been enqueued, while trying
+ *       to do the above, the reactor will call us back when the handle
+ *       becomes read ready. The read-operation will copy data directly
+ *       into the enqueued buffer.  If the message has bee read completely
+ *       the message is sent to the higher layers of the ORB for processing. 
  *
  *   (c) If we get multiple messages (possible if the client connected
  *       to the server sends oneways or AMI requests), we parse and
