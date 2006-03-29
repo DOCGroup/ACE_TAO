@@ -1,3 +1,9 @@
+Wed Mar 29 13:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Added entries for -ORBZeroCOpyWrite and -ORBOutputCDRAllocator,
+          detailed documentation has to be added
+
 Tue Jan 10 18:48:24 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following changes introduce sendfile()-based zero copy sends
