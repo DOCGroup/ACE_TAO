@@ -851,7 +851,7 @@ TAO_Transport::drain_queue_i (ACE_Message_Block * raw_data)
 #else
   ACE_UNUSED_ARG (raw_data);
 #endif  /* ACE_HAS_SENDFILE */
-    
+
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
   // sent
@@ -956,7 +956,7 @@ TAO_Transport::cleanup_queue_i ()
        // @@ This is a good point to insert a flag to indicate that a
        //    CloseConnection message was successfully received.
       i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
-		        this->orb_core_->leader_follower ());
+                        this->orb_core_->leader_follower ());
 
       i->remove_from_list (this->head_, this->tail_);
 
@@ -1302,10 +1302,10 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
             }
           return -1;
         }
-      else 
+      else
         {
           // retval == 0
-        
+
           // Processed a message in queue successfully. This
           // thread must return to thread-pool now.
           return 0;
@@ -1314,18 +1314,18 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
 
   TAO_Queued_Data *q_data = 0;
 
-  if (this->incoming_message_stack_.top (q_data) != -1 
+  if (this->incoming_message_stack_.top (q_data) != -1
       && q_data->missing_data_ != TAO_MISSING_DATA_UNDEFINED)
     {
       /* PRE: q_data->missing_data_ > 0 as all QD on stack must be incomplete  */
-      if (this->handle_input_missing_data (rh, max_wait_time, q_data) == -1) 
+      if (this->handle_input_missing_data (rh, max_wait_time, q_data) == -1)
         {
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input, ")
                  ACE_TEXT ("error consolidating incoming message\n"),
-                 this->id ()));          
+                 this->id ()));
             }
           return -1;
         }
@@ -1344,16 +1344,16 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
           return -1;
         }
     }
-  
+
   return 0;
 }
 
-int 
-TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data, 
+int
+TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
                                             TAO_Resume_Handle &rh)
 {
   // paranoid check
-  if (q_data->missing_data_ != 0) 
+  if (q_data->missing_data_ != 0)
     {
       if (TAO_debug_level > 0)
         {
@@ -1365,7 +1365,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
        return -1;
     }
 
-  if (q_data->more_fragments_ || 
+  if (q_data->more_fragments_ ||
       q_data->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
     {
       // consolidate message on top of stack, only for fragmented messages
@@ -1375,7 +1375,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
         {
         case -1: // error
           return -1;
-          
+
         case 0:  // returning consolidated message in q_data
           if (!new_q_data)
             {
@@ -1384,13 +1384,13 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
                   ACE_ERROR ((LM_ERROR,
                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
                      ACE_TEXT ("error, consolidated message is NULL\n"),
-                     this->id ()));           
+                     this->id ()));
                 }
               return -1;
             }
 
 
-          if (this->process_parsed_messages (new_q_data, rh) == -1) 
+          if (this->process_parsed_messages (new_q_data, rh) == -1)
             {
               TAO_Queued_Data::release (new_q_data);
 
@@ -1399,7 +1399,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
                   ACE_ERROR ((LM_ERROR,
                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
                      ACE_TEXT ("error processing consolidated message\n"),
-                     this->id ()));           
+                     this->id ()));
                 }
               return -1;
             }
@@ -1414,7 +1414,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
     }
   else
     {
-      if (this->process_parsed_messages (q_data, rh) == -1) 
+      if (this->process_parsed_messages (q_data, rh) == -1)
         {
           TAO_Queued_Data::release (q_data);
 
@@ -1423,7 +1423,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
               ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
                  ACE_TEXT ("error processing message\n"),
-                 this->id ()));           
+                 this->id ()));
             }
           return -1;
         }
@@ -1431,7 +1431,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
       TAO_Queued_Data::release (q_data);
 
     }
-  
+
   return 0;
 }
 
@@ -1441,12 +1441,12 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
   // consolidate message on top of stack, only for fragmented messages
 
   // paranoid check
-  if (q_data->missing_data_ != 0) 
+  if (q_data->missing_data_ != 0)
     {
        return -1;
     }
 
-  if (q_data->more_fragments_ || 
+  if (q_data->more_fragments_ ||
       q_data->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
     {
       TAO_Queued_Data *new_q_data = 0;
@@ -1464,12 +1464,12 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
                   ACE_ERROR ((LM_ERROR,
                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_enqueue_message, ")
                      ACE_TEXT ("error, consolidated message is NULL\n"),
-                     this->id ()));           
+                     this->id ()));
                 }
               return -1;
             }
 
-          if (this->incoming_message_queue_.enqueue_tail (new_q_data) != 0) 
+          if (this->incoming_message_queue_.enqueue_tail (new_q_data) != 0)
             {
               TAO_Queued_Data::release (new_q_data);
               return -1;
@@ -1482,7 +1482,7 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
     }
   else
     {
-      if (this->incoming_message_queue_.enqueue_tail (q_data) != 0) 
+      if (this->incoming_message_queue_.enqueue_tail (q_data) != 0)
         {
           TAO_Queued_Data::release (q_data);
           return -1;
@@ -1498,7 +1498,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
                                           TAO_Queued_Data *q_data)
 {
   // paranoid check
-  if (q_data == 0) 
+  if (q_data == 0)
     {
       return -1;
     }
@@ -1514,17 +1514,17 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
   const size_t recv_size = q_data->missing_data_;
 
   // make sure the message_block has enough space
-  const size_t message_size =  recv_size 
+  const size_t message_size =  recv_size
                                + q_data->msg_block_->length();
 
-  if (q_data->msg_block_->space() < recv_size) 
+  if (q_data->msg_block_->space() < recv_size)
     {
       if (ACE_CDR::grow (q_data->msg_block_, message_size) == -1)
         {
           return -1;
         }
     }
-  
+
   // Saving the size of the received buffer in case any one needs to
   // get the size of the message thats received in the
   // context. Obviously the value will be changed for each recv call
@@ -1554,10 +1554,10 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
   q_data->msg_block_->wr_ptr(n);
   q_data->missing_data_ -= n;
 
-  if (q_data->missing_data_ == 0) 
+  if (q_data->missing_data_ == 0)
     {
       // paranoid check
-      if (this->incoming_message_stack_.pop (q_data) == -1) 
+      if (this->incoming_message_stack_.pop (q_data) == -1)
         {
           return -1;
         }
@@ -1572,15 +1572,15 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
 }
 
 
-int 
-TAO_Transport::handle_input_parse_extra_messages (ACE_Message_Block &message_block) 
+int
+TAO_Transport::handle_input_parse_extra_messages (ACE_Message_Block &message_block)
 {
 
   // store buffer status of last extraction: -1 parse error, 0
   // incomplete message header in buffer, 1 complete messages header
   // parsed
-  int buf_status = 0; 
-  
+  int buf_status = 0;
+
   TAO_Queued_Data *q_data = 0;     // init
 
   // parse buffer until all messages have been extracted, consolidate
@@ -1591,9 +1591,9 @@ TAO_Transport::handle_input_parse_extra_messages (ACE_Message_Block &message_blo
           (message_block, q_data)) != -1 &&
          q_data != 0) // paranoid check
     {
-      if (q_data->missing_data_ == 0) 
+      if (q_data->missing_data_ == 0)
         {
-          if (this->consolidate_enqueue_message (q_data) == -1) 
+          if (this->consolidate_enqueue_message (q_data) == -1)
             {
               return -1;
             }
@@ -1603,15 +1603,15 @@ TAO_Transport::handle_input_parse_extra_messages (ACE_Message_Block &message_blo
           // can not fail
           this->incoming_message_stack_.push (q_data);
         }
-       
-      q_data = 0; // reset      
+
+      q_data = 0; // reset
     } // while
 
   if (buf_status == -1)
     {
       return -1;
     }
-    
+
   return 0;
 }
 
@@ -1632,9 +1632,9 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   // The buffer on the stack which will be used to hold the input
   // messages, ACE_CDR::MAX_ALIGNMENT compensates the
   // memory-alignment. This improves performance with SUN-Java-ORB-1.4
-  // and higher that sends fragmented requests of size 1024 bytes. 
-  char buf [TAO_MAXBUFSIZE + ACE_CDR::MAX_ALIGNMENT]; 
-                                                      
+  // and higher that sends fragmented requests of size 1024 bytes.
+  char buf [TAO_MAXBUFSIZE + ACE_CDR::MAX_ALIGNMENT];
+
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   (void) ACE_OS::memset (buf,
                          '\0',
@@ -1665,7 +1665,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   TAO_Queued_Data *q_data = 0;
 
   // optimizing access of constants
-  const size_t header_length = 
+  const size_t header_length =
             this->messaging_object ()->header_length ();
 
   // paranoid check
@@ -1679,7 +1679,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       recv_size =
         message_block.space ();
     }
-  else 
+  else
     {
       // Single read optimization has been de-activated. That means
       // that we need to read from transport the GIOP header first
@@ -1687,7 +1687,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // stack for partial messages which needs to be
       // consolidated. Otherwise we are in new cycle, reading complete
       // GIOP header of new incoming message.
-      if (this->incoming_message_stack_.top (q_data) != -1 
+      if (this->incoming_message_stack_.top (q_data) != -1
            && q_data->missing_data_ == TAO_MISSING_DATA_UNDEFINED)
         {
           // There is a partial message on incoming_message_stack_
@@ -1701,7 +1701,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           // message.
           recv_size = header_length;
         }
-      // POST: 0 <= recv_size <= header_length 
+      // POST: 0 <= recv_size <= header_length
     }
   // POST: 0 <= recv_size <= message_block->space ()
 
@@ -1714,7 +1714,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // exceeded. The latter check guarantees that recv_size does not
       // roll-over and keeps in range
       // 0<=recv_size<=message_block->space()
-      if (this->partial_message_->length () <= recv_size && 
+      if (this->partial_message_->length () <= recv_size &&
           message_block.copy (this->partial_message_->rd_ptr (),
                               this->partial_message_->length ()) == 0)
         {
@@ -1727,15 +1727,15 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           return -1;
         }
     }
-  // POST: 0 <= recv_size <= buffer_space 
+  // POST: 0 <= recv_size <= buffer_space
 
-  if (0 >= recv_size) // paranoid: the check above (*) guarantees recv_size>=0 
+  if (0 >= recv_size) // paranoid: the check above (*) guarantees recv_size>=0
     {
       // This event would cause endless looping, trying frequently to
       // read zero bytes from stream.  This might happen, if TAOs
       // protocol implementation is not correct and tries to read data
       // beyond header without "single_read_optimazation" being
-      // activated. 
+      // activated.
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -1778,16 +1778,16 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
   //
   // STACK PROCESSING OR MESSAGE CONSOLIDATION
-  // 
+  //
 
   // PRE: data in buffer is aligned && message_block.length() > 0
 
-  if (this->incoming_message_stack_.top (q_data) != -1 
+  if (this->incoming_message_stack_.top (q_data) != -1
       && q_data->missing_data_ == TAO_MISSING_DATA_UNDEFINED)
     {
-      // 
+      //
       // MESSAGE CONSOLIDATION
-      // 
+      //
 
       // Partial message on incoming_message_stack_ needs to be
       // consolidated.  The message header could not be parsed so far
@@ -1795,8 +1795,8 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // the message destroys the memory alignment of succeeding
       // messages sharing the buffer, for that reason consolidation
       // and stack based processing are mutial exclusive.
-      if (this->messaging_object ()->consolidate_node (q_data, 
-                                                       message_block) == -1) 
+      if (this->messaging_object ()->consolidate_node (q_data,
+                                                       message_block) == -1)
         {
            if (TAO_debug_level > 0)
             {
@@ -1811,20 +1811,20 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // Complete message are to be enqueued and later processed
       if (q_data->missing_data_ == 0)
         {
-          if (this->incoming_message_stack_.pop (q_data) == -1) 
+          if (this->incoming_message_stack_.pop (q_data) == -1)
             {
               return -1;
             }
 
-          if (this->consolidate_enqueue_message (q_data) == -1) 
+          if (this->consolidate_enqueue_message (q_data) == -1)
             {
               return -1;
             }
         }
 
       if (message_block.length () > 0
-          && this->handle_input_parse_extra_messages (message_block) == -1) 
-        { 
+          && this->handle_input_parse_extra_messages (message_block) == -1)
+        {
           return -1;
         }
 
@@ -1832,15 +1832,15 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       if (this->process_queue_head (rh) == -1)
         {
           return -1;
-        }                     
+        }
     }
-  else  
+  else
     {
-      // 
+      //
       // STACK PROCESSING (critical path)
       //
 
-      // Process the first message in buffer on stack 
+      // Process the first message in buffer on stack
 
       // (PRE: first message resides in aligned memory) Make a node of
       // the message-block..
@@ -1850,10 +1850,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
       size_t mesg_length  = 0;
 
-      if (this->messaging_object ()->parse_next_message (message_block, 
-                                                         qd, 
+      if (this->messaging_object ()->parse_next_message (message_block,
+                                                         qd,
                                                          mesg_length) == -1
-          || (qd.missing_data_ == 0 
+          || (qd.missing_data_ == 0
               && mesg_length > message_block.length ()) )
         {
           // extracting message failed
@@ -1866,34 +1866,34 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           qd.more_fragments_   ||
           qd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
         {
-          if (qd.missing_data_ == 0) 
+          if (qd.missing_data_ == 0)
             {
               // Dealing with a fragment
-              TAO_Queued_Data *nqd = 
+              TAO_Queued_Data *nqd =
                 TAO_Queued_Data::duplicate (qd);
-              
-              if (nqd == 0) 
+
+              if (nqd == 0)
                 {
                   return -1;
                 }
 
               // mark the end of message in new buffer
-              char* end_mark = nqd->msg_block_->rd_ptr () 
+              char* end_mark = nqd->msg_block_->rd_ptr ()
                              + mesg_length;
               nqd->msg_block_->wr_ptr (end_mark);
-              
+
               // move the read pointer forward in old buffer
               message_block.rd_ptr (mesg_length);
-              
+
               // enqueue the message
-              if (this->consolidate_enqueue_message (nqd) == -1) 
+              if (this->consolidate_enqueue_message (nqd) == -1)
                 {
                   return -1;
-                }              
+                }
 
               if (message_block.length () > 0
-                  && this->handle_input_parse_extra_messages (message_block) == -1) 
-                { 
+                  && this->handle_input_parse_extra_messages (message_block) == -1)
+                {
                   return -1;
                 }
 
@@ -1901,9 +1901,9 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               if (this->process_queue_head (rh) == -1)
                 {
                   return -1;
-                }                     
+                }
             }
-          else if (qd.missing_data_ != TAO_MISSING_DATA_UNDEFINED)  
+          else if (qd.missing_data_ != TAO_MISSING_DATA_UNDEFINED)
             {
               // Incomplete message, must be the last one in buffer
 
@@ -1918,25 +1918,25 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                       return -1;
                     }
                 }
-              
-              TAO_Queued_Data *nqd = 
-                TAO_Queued_Data::duplicate (qd);              
-              
-              if (nqd == 0) 
+
+              TAO_Queued_Data *nqd =
+                TAO_Queued_Data::duplicate (qd);
+
+              if (nqd == 0)
                 {
                   return -1;
                 }
 
               // move read-pointer to end of buffer
               message_block.rd_ptr (message_block.length());
-              
+
               this->incoming_message_stack_.push (nqd);
-            } 
+            }
         }
-      else 
+      else
         {
           //
-          // critical path 
+          // critical path
           //
 
           // We cant process the message on stack right now. First we
@@ -1944,20 +1944,20 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           // putting them into queue.  When this is done we can return
           // to process this message, and notifying other threads to
           // process the messages in queue.
-        
-          char * end_marker = message_block.rd_ptr () 
+
+          char * end_marker = message_block.rd_ptr ()
                             + mesg_length;
 
-          if (message_block.length () > mesg_length) 
+          if (message_block.length () > mesg_length)
             {
-              // There are more message in data stream to be parsed. 
+              // There are more message in data stream to be parsed.
               // Safe the rd_ptr to restore later.
               char *rd_ptr_stack_mesg = message_block.rd_ptr ();
 
               // Skip parsed message, jump to next message in buffer
               // PRE: mesg_length <= message_block.length ()
               message_block.rd_ptr (mesg_length);
-          
+
               // Extract remaining messages and enqueue them for later
               // heap processing
               if (this->handle_input_parse_extra_messages (message_block) == -1)
@@ -1968,7 +1968,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               // correct the end_marker
               end_marker = message_block.rd_ptr ();
 
-              // Restore rd_ptr 
+              // Restore rd_ptr
               message_block.rd_ptr (rd_ptr_stack_mesg);
             }
 
@@ -2016,19 +2016,19 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
             }
 
           // move the rd_ptr tp position of end_marker
-          message_block.rd_ptr (end_marker);          
+          message_block.rd_ptr (end_marker);
         }
     }
 
-  // Now that all cases have been processed, there might be kept some data 
+  // Now that all cases have been processed, there might be kept some data
   // in buffer that needs to be safed for next "handle_input" invocations.
-   if (message_block.length () > 0) 
+   if (message_block.length () > 0)
      {
        if (this->partial_message_ == 0)
          {
            this->allocate_partial_message_block ();
          }
-       
+
        if (this->partial_message_ != 0 &&
            this->partial_message_->copy (message_block.rd_ptr (),
                                          message_block.length ()) == 0)
@@ -2040,10 +2040,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
            return -1;
          }
      }
-   
+
    return 0;
 }
-  
+
 
 int
 TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
@@ -2115,8 +2115,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       // The associated request might be incomplpete residing
       // fragmented in messaging object. We must make sure the
       // resources allocated by fragments are released.
-     
-      if (this->messaging_object ()->discard_fragmented_message (qd) == -1) 
+
+      if (this->messaging_object ()->discard_fragmented_message (qd) == -1)
         {
           if (TAO_debug_level > 0)
             {
@@ -2373,7 +2373,7 @@ TAO_Transport::allocate_partial_message_block (void)
     {
       // This value must be at least large enough to hold a GIOP message
       // header plus a GIOP fragment header
-      const size_t partial_message_size =   
+      const size_t partial_message_size =
         this->messaging_object ()->header_length ();
        // + this->messaging_object ()->fragment_header_length ();
        // deprecated, conflicts with not-single_read_opt.
