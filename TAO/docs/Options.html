@@ -1408,6 +1408,32 @@ I'm not sure what the affect of AMI on this option is.
         <p>Default for this option is <em>MT</em>. </p>
         </td>
       </tr>
+
+      <tr>
+        <td><code>-ORBConnectionHandlerCleanup</code> <em>0 | 1</em><br>
+        </td>
+	<td><a name="-ORBConnectionHandlerCleanup"></a>Setting this
+        option to <em>1</em> lets the ORB know that connection
+        handlers setup for sending messages need to  be cleaned up
+        when errors occur. This option has an  effect only for
+        <em> -ORBClientConnectionHandler RW </em>. Rest of  the
+        options for <em> -ORBCleintConnectionHandler </em> have been
+        automatically set up for cleaning the connection
+        handlers. Setting the option to <em> 1 </em> has a side
+        effect of registering and unregistering the connection
+        handlers with the Reactor for  every invocation, which has a
+        negative impact on performance. Setting  the option to <em> 0
+        </em> prevents this performance impact but leads  to problems 
+        outlined  
+ <A
+ href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2186">
+ here</A> and  <a
+ href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2224">
+ here</A> 
+        <p>Default for this option is <em>0</em>. </p>
+        </td>
+      </tr>
+
       <tr>
         <td><code>-ORBTransportMuxStrategy</code> <em>EXCLUSIVE | MUXED</em></td>
         <td><a name="ORBTransportMuxStrategy"></a><em>EXCLUSIVE</em>
