@@ -213,10 +213,46 @@ startLaunch (const Deployment::Properties & configProperty,
                                      "Unable to get node level infos"));
         }
 
+      CIAO::DAnCE::ServerResource *server_resource = 0;
+      for (CORBA::ULong k = 0; k < node_info->nodeapp_config.length (); ++k)
+        {
+          if (ACE_OS::strcmp (node_info->nodeapp_config[k].name.in (),
+                              "CIAOServerResources") == 0)
+            {
+              node_info->nodeapp_config[0].value >>= server_resource;
+              break; // Ignore the rest of the NodeApp_Config values
+            }
+        }
+
       // Now spawn the NodeApplication process.
-      // @@TODO: we need to pass arguments to the nodeapplication, ie naming service endpoints, if necessary
+      // @@TODO: we need to pass arguments to the nodeapplication, ie 
+      // naming service endpoints, if necessary
       // (will)
       ACE_CString cmd_option (this->nodeapp_command_op_.in ());
+
+      if (server_resource)
+        {
+          // If command line options are specified through RTCCM descriptors,
+          // then we should honor these command line options as well.
+          for (CORBA::ULong arg_i = 0; 
+               arg_i < (*server_resource).args.length ();
+               ++arg_i)
+            {
+              cmd_option += " "; // space between command line args
+              cmd_option += (*server_resource).args[arg_i].in ();
+            }
+
+          // If service configuration file is specified through RTCCM 
+          // descriptors, then we should honor it as well.
+          if (ACE_OS::strcmp ((*server_resource).svcconf.in (),
+                              "") != 0)
+            {
+              cmd_option += " -ORBSvcConf ";
+              cmd_option += (*server_resource).svcconf.in ();
+            }
+        }
+
+
       Deployment::NodeApplication_var tmp =
         create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
