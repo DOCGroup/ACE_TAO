@@ -1,4 +1,5 @@
 Wed Mar 29 17:15:00 UTC 2006  Frank Rehberger  <frehberger@prismtech.com>
+  
         * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
           TAO/tao/Messaging/Asynch_Invocation_Adapter.cpp:
           TAO/tao/Invocation_Adapter.cpp: 
@@ -28,6 +29,7 @@ Wed Mar 29 03:42:55 UTC 2006  Balachandran Natarajan  <bala_natarajan at symante
           Added documentation for -ORBConnectionHandlerCleanup.
 
 Tue Mar 28 23:59:00 UTC 2006  Frank Rehberger <frehberger@prismtech.com>
+  
         * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.{h,cpp}:
           TAO/tao/Service_Callbacks.{h,cpp}:
           Add operation is_permanent_forward_condition()
@@ -1124,6 +1126,7 @@ Mon Feb 27 18:42:38 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
           I will supply a better fix in x.5.1 after more thorough testing.
 
 Mon Feb 27 17:08:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
+  
         * tao/Transport.cpp:
           Incomplete messages, smaller Header-Length, shall be put
           into intermediate buffer
@@ -1329,6 +1332,7 @@ Wed Feb 22 20:54:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           bugzilla issue #2416.
 
 Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
+  
         * tao/PluggableMessaging.h: Remove abstract operation:
         read_message, missing_data, get_message_data. Add abstract
         operation parse_next_message (), consolidate_fragmented_message,
@@ -1478,6 +1482,7 @@ Wed Feb 22 09:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
           bugzilla bug #2304.
 
 Wed Feb 22 04:45:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
+  
         * tao/ORB_Core.cpp:
           Fixing TAO_ORB_Core_Auto_Ptr assignment
 
