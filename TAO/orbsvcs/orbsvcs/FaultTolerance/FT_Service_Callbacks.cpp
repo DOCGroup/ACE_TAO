@@ -168,6 +168,71 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
   return (CORBA::ULong) group_component.object_group_id % max;
 }
 
+CORBA::Boolean
+TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr obj,
+                                                          const TAO_Service_Context &service_context) const
+{
+  // do as much as possible outside of lock
+  IOP::ServiceContext sc;
+  sc.context_id = IOP::FT_GROUP_VERSION;
+
+  if (service_context.get_context (sc) == 0)
+      return false; /* false */
+
+  IOP::TaggedComponent tc;
+  tc.tag = IOP::TAG_FT_GROUP;
+
+  const TAO_Stub * stub = obj->_stubobj ();
+  // check for forward_profiles, branching to speed up operation on base_profiles
+  if (stub->forward_profiles ())
+    {
+      // set lock, as forward_profiles might be deleted concurrently
+      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                                guard,
+                                *stub->profile_lock (),
+                                0));
+
+      // even now, the forward profiles might have been deleted in the meanwhile
+      const TAO_MProfile &mprofile = stub->forward_profiles()
+          ? *(stub->forward_profiles())
+          : stub->base_profiles();
+
+      if (mprofile.profile_count() == 0)
+        // releasing lock
+        return false;
+
+      // assuming group-attributes are set for all profiles, check
+      // only the first profile
+      const TAO_Tagged_Components &tagged_components =
+              mprofile.get_profile (0)->tagged_components ();
+
+      if (tagged_components.get_component (tc) == 0)
+        // releasing lock
+        return false; /* false */
+
+      return true; /* true */
+
+      // releasing lock
+    }
+  else /* operate on constant basic_profiles */
+    {
+      const TAO_MProfile &mprofile = stub->base_profiles();
+
+      if (mprofile.profile_count() == 0)
+        return false;
+
+      // assuming group-attributes are set for all profiles, check only the first profile
+      const TAO_Tagged_Components &tagged_components =
+              mprofile.get_profile (0)->tagged_components ();
+
+      if (tagged_components.get_component (tc) == 0)
+        return false; /* false */
+
+      return true; /* true */
+    }
+}
+
+
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_comm_failure (
     IOP::ServiceContextList &context_list,

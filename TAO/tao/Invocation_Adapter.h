@@ -235,7 +235,8 @@ namespace TAO
     /// Helper method that takes care of setting the profiles within
     /// the stub object if the target gets forwarded
     void object_forwarded (CORBA::Object_var &effective_target,
-                           TAO_Stub *stub
+                           TAO_Stub *stub,
+                           CORBA::Boolean permanent_forward
                            ACE_ENV_ARG_DECL);
 
     /// Helper method to set the response flags within @a details

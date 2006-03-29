@@ -59,6 +59,13 @@ TAO_Service_Callbacks::hash_ft (TAO_Profile *,
   return 0;
 }
 
+CORBA::Boolean
+TAO_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr,
+                                                       const TAO_Service_Context &) const
+{
+  return false;
+}
+
 TAO::Invocation_Status
 TAO_Service_Callbacks::raise_comm_failure (
     IOP::ServiceContextList &,

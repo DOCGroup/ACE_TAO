@@ -12,6 +12,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/GIOP_Utils.h"
 
 
 ACE_RCSID (Messaging,
@@ -174,8 +175,12 @@ namespace TAO
       {
         effective_target = asynch.steal_forwarded_reference ();
 
+        const CORBA::Boolean permanent_forward =
+            (asynch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }

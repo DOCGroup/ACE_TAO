@@ -727,25 +727,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
    if (stubobj == 0)
      return false;
 
-  // STRING, a type ID hint
-  if ((cdr << stubobj->type_id.in ()) == 0)
-    return false;
-
-  const TAO_MProfile& mprofile = stubobj->base_profiles ();
-
-  CORBA::ULong profile_count = mprofile.profile_count ();
-  if ((cdr << profile_count) == 0)
-    return false;
-
-  // @@ The MProfile should be locked during this iteration, is there
-  // anyway to achieve that?
-  for (CORBA::ULong i = 0; i < profile_count; ++i)
-    {
-      const TAO_Profile* p = mprofile.get_profile (i);
-      if (p->encode (cdr) == 0)
-        return false;
-    }
-  return (CORBA::Boolean) cdr.good_bit ();
+  return (stubobj->marshal (cdr));
 }
 
 /*static*/ void

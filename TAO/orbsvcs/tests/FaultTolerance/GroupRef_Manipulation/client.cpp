@@ -62,6 +62,13 @@ main (int argc, char *argv[])
         ForwardRequestTest::test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Before and after the LOCATION_FORWARD_PERM the marshaled
+      // object reference must differ.
+
+      // Create a stringified/marshaled snapshot of Object reference
+      CORBA::String_var marshaled_obj_snapshot1 =
+          orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -92,6 +99,20 @@ main (int argc, char *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR: Did not forward to new location \n"));
+          ACE_OS::abort ();
+        }
+
+      // One of the request triggerd a LOCATION_FORWARD_PERM, in
+      // consequence the marshaled representation of "server" should
+      // look different now, compare to snapshot1.
+      CORBA::String_var marshaled_obj_snapshot2 =
+          orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+
+      if (strcmp (marshaled_obj_snapshot1, marshaled_obj_snapshot2) == 0)
+        {
+          // Error, before and after the marhaled object references look equal
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR: Marshaled Object reference should differ after LOCATION_FORWARD_PERM\n"));
           ACE_OS::abort ();
         }
 

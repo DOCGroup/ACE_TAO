@@ -27,6 +27,8 @@
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/Object.h"
+#include "tao/Service_Context.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -61,14 +63,14 @@ class TAO_Export TAO_Service_Callbacks
 {
 
 public:
-  
+
   enum Profile_Equivalence
   {
     EQUIVALENT,
     NOT_EQUIVALENT,
     DONT_KNOW
   };
-    
+
 
   /// Dtor
   virtual ~TAO_Service_Callbacks (void);
@@ -97,6 +99,12 @@ public:
   /// Calculate the hash value..
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
                                 CORBA::ULong m);
+
+  // Verify if condition is given for LOCATION_FORWARD_PERM reply
+  virtual CORBA::Boolean is_permanent_forward_condition (const CORBA::Object_ptr obj,
+                                                           const TAO_Service_Context &service_context) const;
+
+
 
   /// Allow the service layer to decide whether the COMM_FAILURE
   /// exception should be thrown or a reinvocation is needed

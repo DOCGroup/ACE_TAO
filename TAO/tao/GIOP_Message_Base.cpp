@@ -949,10 +949,18 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       if (!CORBA::is_nil (forward_to.in ()))
         {
+          const CORBA::Boolean permanent_forward_condition =
+              this->orb_core_->is_permanent_forward_condition
+              (forward_to.in (),
+               request.request_service_context ());
+
           // We should forward to another object...
           TAO_Pluggable_Reply_Params_Base reply_params;
           reply_params.request_id_ = request_id;
-          reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
+          reply_params.reply_status_ =
+              permanent_forward_condition
+              ? TAO_GIOP_LOCATION_FORWARD_PERM
+              : TAO_GIOP_LOCATION_FORWARD;
           reply_params.svc_ctx_.length (0);
 
           // Send back the reply service context.
