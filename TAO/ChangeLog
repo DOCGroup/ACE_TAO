@@ -1,3 +1,9 @@
+Wed Mar 29 03:42:55 UTC 2006  Balachandran Natarajan  <bala_natarajan at symantec dot com>
+
+        * docs/Options.html: 
+        
+          Added documentation for -ORBConnectionHandlerCleanup. 
+
 Tue Mar 28 14:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * tests/AMH_Exceptions/run_test.pl:
@@ -16269,7 +16275,7 @@ Fri Aug 26 23:48:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/default_client.cpp:
         * tao/default_client.h:
 
-          New strategy ORBCOnnectionHandlerCleanup .
+          New strategy ORBConnectionHandlerCleanup .
 
         * tao/Connection_Handler.cpp:
 
