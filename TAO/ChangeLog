@@ -1,3 +1,7 @@
+Wed Mar 29 19:30:00 UTC 2006  Frank Rehberger  <frehberger@prismtech.com>
+        * TAO/tao/Transport.h: Correct the documentation explaining
+          message parsing. This is related to #2313
+
 Wed Mar 29 17:15:00 UTC 2006  Frank Rehberger  <frehberger@prismtech.com>
   
         * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
