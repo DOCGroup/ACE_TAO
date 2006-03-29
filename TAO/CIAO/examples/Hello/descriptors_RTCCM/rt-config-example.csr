@@ -7,12 +7,12 @@
  id="test_server_resource_id">
   
   <cmdline>
-    <arg> -ORBDebugLevel 10 -ORBEndpoint corbaloc://foo/bar</arg>
+    <arg>-r</arg>
   </cmdline>
   
   <svcconf>
     <uri>
-      svcconf.uri
+      RTsvc.conf
     </uri>
   </svcconf>
   
