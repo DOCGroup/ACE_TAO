@@ -1,3 +1,11 @@
+Wed Mar 29 22:33:36 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Changed to #include <sys/types.h> in the <sys/sysctl.h> 
+          feature test, avoiding the autoconf "present but cannot
+          be compiled" warning.
+
 Wed Mar 29 19:26:37 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
