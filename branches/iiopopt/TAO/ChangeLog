@@ -1,3 +1,7 @@
+
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          No need to include IIOP files, just use the base classes
+
         * tao/default_resource.cpp
         * tao/IIOP_Acceptor.cpp
         * tao/IIOP_Acceptor.h
