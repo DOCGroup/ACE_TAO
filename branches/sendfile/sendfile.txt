@@ -1,26 +1,7 @@
-Mon Nov 14 16:23:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+P ace/MMAP_Memory_Pool.h
+U ace/OS_NS_sys_sendfile.cpp
+U ace/OS_NS_sys_sendfile.h
+U ace/OS_NS_sys_sendfile.inl
+P ace/ace.mpc
+P ace/config-linux-common.h
 
-	* ace/MMAP_Memory_Pool.h (ACE_MMAP_Memory_Pool):
-
-	  Added accessor for underlying ACE_Mem_Map object.
-
-	* ace/OS_NS_sys_sendfile.cpp:
-	* ace/OS_NS_sys_sendfile.h:
-	* ace/OS_NS_sys_sendfile.inl:
-
-	  New ACE_OS wrapper for sendfile().
-
-	* ace/config-linux-common.h:
-
-	  Added ACE_HAS_SENDFILE.
-
-	* ace/ace.mpc:
-
-	  Added new OS_NS_sys_sendfile.* files to the list of sources.
-
-
-Local Variables:
-mode: change-log
-add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
-indent-tabs-mode: nil
-End:
