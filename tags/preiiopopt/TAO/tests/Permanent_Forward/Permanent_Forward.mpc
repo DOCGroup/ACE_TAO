@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(*StubTest) : taoexe, iormanip {
+  exename  = StubTest
+}
