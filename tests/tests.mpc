@@ -1299,3 +1299,11 @@ project(Based Pointer Test) : acetest {
     Based_Pointer_Test.cpp
   }
 }
+
+project(Library Unload) {
+  exename = UnloadLibACE
+  Source_Files {
+    Unload_libACE.cpp
+    $(ACE_ROOT)/tests/Main.cpp
+  }
+}
