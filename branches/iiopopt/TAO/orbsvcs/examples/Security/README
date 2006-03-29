@@ -1,0 +1,9 @@
+# $Id$
+
+TAO CORBA Security Service Examples
+===================================
+
+Directory	Description
+---------	-----------
+Send_File	Example that demonstrates use of SSLIOP pluggable protocol
+

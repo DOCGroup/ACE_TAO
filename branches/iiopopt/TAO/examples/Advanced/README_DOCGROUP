@@ -1,0 +1,15 @@
+/**
+
+@page Advanced Examples README File From The DOC GROUP
+
+      Please read the file README  before you read this. Since users
+have been using different versions of the compilers, we at the
+doc_group find it extremely difficult to keep the source from Michi
+and Vinoski's book to compile reliably on all platforms and compiler
+combinations that our users use. If you would like to get it compiling
+reliably (the source from the book relies on the old version of
+iostram) on different versions of iostream libraries, please send us
+the patches and we will be glad to integrate it. We may not have
+resources to work on this.
+
+*/

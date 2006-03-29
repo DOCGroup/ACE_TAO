@@ -1,0 +1,48 @@
+$Id$
+
+Description:
+
+This is a test for collocation when using thread pools and lanes.
+There are multiple servants in this test:
+
+- One servant is in the Root POA which is service by the default
+  thread pool.
+
+- One servant is in a POA with the CLIENT_PROPAGATED policy and is
+  serviced by a thread pool without lanes.  
+
+- Two servants are in a POA with the SERVER_DECLARED policy and is
+  serviced by a thread pool without lanes.  One of the servant is at
+  default priority and the other is at default + 1 priority.
+
+- One servant is in a POA without a priority model policy and is
+  serviced by a thread pool without lanes.
+
+- One servants is in a POA with the CLIENT_PROPAGATED policy and is
+  serviced by a thread pool with lanes.  Depending on the priority of
+  the caller, either one of the lanes processes the request.
+
+- Two servants are in a POA with the SERVER_DECLARED policy and is
+  serviced by a thread pool with lanes.  One of the servant is at
+  default priority and the other is at default + 1 priority.
+
+All servants are put into a global array.  The main thread starts off
+the testing at default priority by calling start() on each servant in
+the array.  The implementation of start() calls method() on each
+servant in the array.  Since the upcalls will be handled by a thread
+pool corresponding to each servant, all pools and lanes ends up
+calling into one another.
+
+The main thread then changes its priority to default + 1 and calls
+start() on each servant in the array.  This makes sure to exercise the
+second lane in the thread pool with lanes and the CLIENT_PROPAGATED
+priority.
+
+The test checks that the correct pool, lane, and priority is being
+used to run the upcall.
+
+The test also converts the objects into strings and back to make sure
+that collocation works as expected for imported objects.
+
+This test has enough asserts to make sure that the correct thread is
+making the upcall.
