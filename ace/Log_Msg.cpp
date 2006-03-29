@@ -670,7 +670,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
         }
     }
 
-    ACE_NEW_NORETURN (this->msg_, ACE_TCHAR[ACE_MAXLOGMSGLEN+1]);
+  ACE_NEW_NORETURN (this->msg_, ACE_TCHAR[ACE_MAXLOGMSGLEN+1]);
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -740,10 +740,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
     }
 #endif
 
-  if (this->msg_)
-    {
-      delete[] this->msg_;
-    }
+  delete[] this->msg_;
 }
 
 // Open the sender-side of the message queue.
@@ -2167,11 +2164,12 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   if (this->log_priority_enabled (log_priority) == 0)
     return 0;
 
-  ACE_TCHAR* buf;
-  size_t buf_sz = ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58;
+  ACE_TCHAR* buf = 0;
+  const size_t buf_sz =
+    ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58;
   ACE_NEW_RETURN (buf, ACE_TCHAR[buf_sz], -1);
 
-  ACE_TCHAR *msg_buf;
+  ACE_TCHAR *msg_buf = 0;
   const size_t text_sz = text ? ACE_OS::strlen(text) : 0;
   ACE_NEW_RETURN (msg_buf,
                   ACE_TCHAR[text_sz + 58],
