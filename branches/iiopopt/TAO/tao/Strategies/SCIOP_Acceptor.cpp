@@ -87,7 +87,7 @@ TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                         CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
@@ -733,7 +733,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
     if (if_addrs[j].get_ip_address () == INADDR_LOOPBACK)
-      lo_cnt++;
+      ++lo_cnt;
 
   // The instantiation for this template is in
   // tao/SCIOP_Connector.cpp.
@@ -797,7 +797,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
         return -1;
 
-      host_cnt++;
+      ++host_cnt;
     }
 
   return 0;
@@ -809,7 +809,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 {
 
   // Make a copy of hostnames string
-  int hostnames_string_length = ACE_OS::strlen(hostnames) + 1;
+  int const hostnames_string_length = ACE_OS::strlen(hostnames) + 1;
   char* hostnames_copy = 0;
   ACE_NEW_RETURN (hostnames_copy,
                   char[hostnames_string_length],
