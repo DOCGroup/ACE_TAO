@@ -201,6 +201,12 @@ public:
   /// Dump the state of an object.
   virtual void dump (void) const;
 
+  /// Get reference to underlying ACE_Mem_Map object.
+  ACE_Mem_Map const & mmap (void) const;
+
+  /// Get reference to underlying ACE_Mem_Map object.
+  ACE_Mem_Map & mmap (void);
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 

@@ -164,6 +164,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     OS_NS_sys_msg.cpp
     OS_NS_sys_resource.cpp
     OS_NS_sys_select.cpp
+    OS_NS_sys_sendfile.cpp
     OS_NS_sys_shm.cpp
     OS_NS_sys_socket.cpp
     OS_NS_sys_stat.cpp
