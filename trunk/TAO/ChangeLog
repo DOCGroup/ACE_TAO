@@ -1,3 +1,8 @@
+Wed Mar 29 15:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
+          Explicit shouldn't be used for a copy constructor
+
 Wed Mar 29 15:24:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy (yyparse):
