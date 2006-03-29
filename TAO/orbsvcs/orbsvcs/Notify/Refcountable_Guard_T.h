@@ -38,7 +38,7 @@ public:
   explicit TAO_Notify_Refcountable_Guard_T (T* t = 0);
 
   /// Copy constructor
-  explicit TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
+  TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
 
   /// Destructor
   ~TAO_Notify_Refcountable_Guard_T ();
