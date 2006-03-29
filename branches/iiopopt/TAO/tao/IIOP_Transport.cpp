@@ -1,4 +1,7 @@
 #include "tao/IIOP_Transport.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOPC.h"
 #include "tao/Acceptor_Registry.h"
@@ -425,3 +428,5 @@ TAO_IIOP_Transport::get_listen_point (
  */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

@@ -19,18 +19,22 @@
 #define TAO_IIOP_ACCEPTOR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Acceptor.h"
+
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Acceptor.h"
-
 #include "tao/Transport_Acceptor.h"
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
+
+#include "ace/SOCK_Acceptor.h"
+#include "ace/Acceptor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -258,6 +262,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(__ACE_INLINE__)
 #include "tao/IIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_IIOP_ACCEPTOR_H */

@@ -3,6 +3,9 @@
  */
 //@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 #include "tao/IIOP_Acceptor.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/debug.h"
@@ -23,7 +26,6 @@
 ACE_RCSID (tao,
            IIOP_Acceptor,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1189,5 +1191,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 //@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END

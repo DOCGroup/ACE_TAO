@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const char *
@@ -31,3 +33,5 @@ TAO_IIOP_Endpoint::is_ipv6_decimal (void) const
 #endif /* ACE_HAS_IPV6 */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

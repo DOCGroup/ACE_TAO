@@ -1,10 +1,11 @@
 #include "tao/IIOP_Lite_Factory.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/IOP_IORC.h"
-
 #include "ace/OS_NS_strings.h"
-
 
 ACE_RCSID (tao,
            IIOP_Factory,
@@ -52,7 +53,7 @@ TAO_IIOP_Lite_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   // We are a Lite factory
-  CORBA::Boolean lite_flag = 1;
+  CORBA::Boolean lite_flag = true;
   ACE_NEW_RETURN (acceptor,
                   TAO_IIOP_Acceptor (lite_flag),
                   0);
@@ -73,7 +74,7 @@ TAO_IIOP_Lite_Protocol_Factory::make_connector (void)
   TAO_Connector *connector = 0;
 
   // We are a Lite factory
-  CORBA::Boolean lite_flag = 1;
+  CORBA::Boolean lite_flag = true;
 
   ACE_NEW_RETURN (connector,
                   TAO_IIOP_Connector (lite_flag),
@@ -98,3 +99,5 @@ ACE_STATIC_SVC_DEFINE (TAO_IIOP_Lite_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_IIOP_Lite_Protocol_Factory)
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

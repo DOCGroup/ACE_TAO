@@ -16,11 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport.h"
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -148,6 +152,8 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 

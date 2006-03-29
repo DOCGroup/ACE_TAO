@@ -1,4 +1,7 @@
 #include "tao/IIOP_Connection_Handler.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/IIOP_Transport.h"
@@ -481,3 +484,6 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
  */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
+

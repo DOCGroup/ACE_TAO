@@ -15,13 +15,17 @@
 #define TAO_IIOP_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Config.h"
+
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Protocol_Factory.h"
+#include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,6 +68,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_IIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Protocol_Factory)
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IIOP_FACTORY_H */
