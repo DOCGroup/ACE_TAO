@@ -1,3 +1,9 @@
+Wed Mar 29 06:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Also expand ACE_ENV_ARG_DECL_NOT_USED and
+          ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+
 Tue Mar 28 21:30:01 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * ace/Log_Msg.cpp
