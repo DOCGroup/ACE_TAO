@@ -8,6 +8,7 @@
 #include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
+#include "Literals.hpp"
 #include "CorbaTypeNameEmitters.hpp"
 #include "UtilityTypeNameEmitters.hpp"
 
