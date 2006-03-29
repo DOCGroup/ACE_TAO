@@ -37,6 +37,7 @@
 #include "Deployment_Configuration.h"
 #include "DomainApplicationManager_Export.h"
 #include "ciao/CIAO_common.h"
+#include "ciao/Deployment_EventsC.h"
 
 namespace CIAO
 {
@@ -388,6 +389,16 @@ namespace CIAO
                    Deployment::CIAO_Event_Services * event_services)
       ACE_THROW_SPEC ((CORBA::SystemException,
                       Deployment::StartError));
+
+    /**
+     * Get the actual event connection QoS properties based on the
+     * deployment requirement. The deployment requirement only specifies
+     * an identifier/reference to the EventServiceDeploymentDescriptions.
+     */
+    virtual const Deployment::Properties &
+    get_connection_QoS_configuration (
+      const Deployment::Requirement & requirement);
+
   protected:
     /// location of the Domainapplication
     CORBA::String_var domainapp_path_;
@@ -471,6 +482,9 @@ namespace CIAO
     /// member function implementations. The reason is because we want
     /// to avoid unnecessary code duplicate. The default value is "false".
     bool is_redeployment_;
+
+    /// Cache the CIAO_Event_Service deployment description
+    CIAO::DAnCE::EventServiceDeploymentDescriptions_var esd_;
   };
 }
 

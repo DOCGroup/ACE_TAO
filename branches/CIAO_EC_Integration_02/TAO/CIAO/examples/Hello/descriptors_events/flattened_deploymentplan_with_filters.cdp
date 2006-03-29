@@ -163,6 +163,24 @@
 
   <connection>
     <name>hello_event_ec_consumer_connection</name>
+    
+    <!-- The position of the below "deployRequirement" element matters -->
+    <deployRequirement>
+      <resourceType>EventFilter</resourceType>
+      <name>my_filter_01</name>
+      <property>
+        <name>EventFilter</name>
+        <value>
+	        <type>
+	          <kind>tk_string</kind>
+	        </type>
+	        <value>
+	          <string>my_filter</string>
+	        </value>
+        </value>	        
+      </property>              
+    </deployRequirement>    
+    
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>rtecEventConsumer</kind>
@@ -171,18 +189,6 @@
     <externalReference>
       <location>ES_01</location>
     </externalReference>
-    <deployRequirement>
-      <name>filter</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>my_filter</string>
-        </value>
-      </value>              
-    </deployRequirement>
-
   </connection>
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->

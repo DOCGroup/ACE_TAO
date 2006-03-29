@@ -550,7 +550,6 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
   for (CORBA::ULong i = 0; i < total_lenth; ++i)
     {
       CIAO_Event_Service_var temp =
-        //es_factory_.create (CIAO::DIRECT);
         es_factory_.create (es_infos[i].type);
 
       CORBA::ULong curr_len = retv->length ();
@@ -574,7 +573,10 @@ create_connection_key (const Deployment::Connection & connection)
   (*retv) += connection.portName.in ();
   (*retv) += connection.endpointInstanceName.in ();
   (*retv) += connection.endpointPortName.in ();
-  ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
+  if (CIAO::debug_level () > 11)
+    {
+      ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
+    }
   return retv;
 }
 
@@ -607,7 +609,7 @@ handle_facet_receptable_connection (
       ACE_TRY_CHECK;
 
       ACE_CString key = (*create_connection_key (connection));
-      if (CIAO::debug_level () > 6)
+      if (CIAO::debug_level () > 10)
         {
           ACE_DEBUG ((LM_ERROR, "[BINDING KEY]: %s\n", key.c_str ()));
         }
@@ -995,7 +997,7 @@ handle_es_consumer_connection (
       for (CORBA::ULong i = 0; i < connection.config.length (); ++i)
         {
           if (ACE_OS::strcmp (connection.config[i].name.in (),
-                              "RtecFilter") != 0)
+                              "EventFilter") != 0)
             continue;
 
           // Extract the filter information

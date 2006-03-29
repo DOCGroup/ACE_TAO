@@ -224,7 +224,7 @@ module Deployment
     string id;
     CIAO::EventServiceType type;
     string svcconf;
-    Properties es_config;
+    //Properties es_config;
   };
 
   /// CIAO specific extension
