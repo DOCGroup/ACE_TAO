@@ -653,11 +653,18 @@ ACE_CHECK_LACKS_HEADERS(sys/socket.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/stat.h)
 
-ACE_CHECK_LACKS_HEADERS(sys/sysctl.h)
+dnl Test for <sys/types.h> out of alphabetical order, since it must
+dnl be (conditionally) #included in other feature tests.
+ACE_CHECK_LACKS_HEADERS(sys/types.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [], 
+[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+])
 
 ACE_CHECK_LACKS_HEADERS(sys/time.h)
-
-ACE_CHECK_LACKS_HEADERS(sys/types.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/uio.h)
 
