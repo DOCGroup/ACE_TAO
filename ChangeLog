@@ -1,3 +1,9 @@
+Wed Mar 29 19:26:37 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Do not try to control DTR under LynxOS. It sets serial port
+          to non-functional state.
+
 Wed Mar 29 14:14:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ACE-INSTALL.html:
