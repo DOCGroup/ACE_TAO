@@ -95,6 +95,10 @@ TAO_IIOP_Transport::sendfile (ACE_Message_Block * data,
                               size_t & bytes_transferred,
                               ACE_Time_Value const * timeout)
 {
+  // @@ We should probably set the TCP_CORK socket option to minimize
+  //    network operations.  It may also be useful to adjust the
+  //    socket send buffer size accordingly.
+
   ssize_t retval = -1;
 
   for (ACE_Message_Block const * message_block = data;

@@ -1,5 +1,9 @@
 Tue Jan 10 18:48:24 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	The following changes introduce sendfile()-based zero copy sends
+	to TAO.  Benefits are generally only realized when sending large
+	blocks of data.
+
 	* tao/IIOP_Transport.cpp:
 	* tao/IIOP_Transport.h:
 	* tao/Transport.cpp:
