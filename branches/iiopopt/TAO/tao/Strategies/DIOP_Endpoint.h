@@ -16,18 +16,19 @@
 #ifndef TAO_DIOP_ENDPOINT_H
 #define TAO_DIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
-#include "tao/Endpoint.h"
 
-
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
+#include "tao/Strategies/strategies_export.h"
+#include "tao/Endpoint.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
-#include "tao/Strategies/strategies_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

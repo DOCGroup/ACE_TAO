@@ -16,7 +16,7 @@
 #define TAO_UIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Endpoint.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +25,7 @@
 # if TAO_HAS_UIOP == 1
 
 #include "tao/Strategies/strategies_export.h"
+#include "tao/Endpoint.h"
 #include "ace/UNIX_Addr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

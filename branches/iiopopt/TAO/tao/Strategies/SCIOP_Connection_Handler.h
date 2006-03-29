@@ -19,9 +19,6 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
-#include "tao/TimeBaseC.h"
-
-#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -32,7 +29,9 @@
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
+#include "tao/TimeBaseC.h"
 
+#include "ace/Reactor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 

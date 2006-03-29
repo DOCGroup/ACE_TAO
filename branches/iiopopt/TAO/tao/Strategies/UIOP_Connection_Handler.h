@@ -24,15 +24,11 @@
 
 #if TAO_HAS_UIOP == 1
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Acceptor.h"
-#include "ace/Reactor.h"
+#include "tao/Strategies/UIOP_Transport.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Strategies/UIOP_Transport.h"
+#include "ace/Acceptor.h"
+#include "ace/Reactor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

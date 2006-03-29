@@ -21,13 +21,14 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
-#include "tao/Profile.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/Strategies/DIOP_Endpoint.h"
+#include "tao/Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
