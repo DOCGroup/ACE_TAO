@@ -4686,6 +4686,9 @@ tao_yyreduce:
           if (tao_yyval.dcval == 0)
             {
               idl_global->err ()->lookup_error (tao_yyvsp[0].idlist);
+
+              /* If we don't return here, we'll crash later.*/
+              return 1;
             }
         }
     break;
