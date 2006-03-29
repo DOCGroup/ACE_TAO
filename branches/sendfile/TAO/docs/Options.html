@@ -436,16 +436,6 @@ preferences over normal I/O, thereby causing priority inversion.</p>
         <p> This option defaults to the compile-time option specified by
         <code>TAO_USES_LOCAL_MEMORY_POOL</code>.</p>
         </td>
-      <tr>
-        <td><code>-ORBOutputCDRAllocator</code> <em>mmap|local_memory_pool</em></td>
-        <td><a name="-ORBOutputCDRAllocator"></a>
-        </td>
-      </tr>
-      <tr>
-        <td><code>-ORBZeroCopyWrite</code> </td>
-        <td><a name="-ORBZeroCopyWrite"></a>
-        </td>
-      </tr>
       </tr>
     </tbody>
   </table>
@@ -1046,6 +1036,16 @@ until all the data is sent.
         want to drop replies, and may want all their requests to be
         processed until ORB::destroy () is called. Setting the value
         of this option to 0 would help with that. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBOutputCDRAllocator</code> <em>mmap|local_memory_pool</em></td>
+        <td><a name="-ORBOutputCDRAllocator"></a>
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBZeroCopyWrite</code> </td>
+        <td><a name="-ORBZeroCopyWrite"></a>
+        </td>
       </tr>
     </tbody>
   </table>

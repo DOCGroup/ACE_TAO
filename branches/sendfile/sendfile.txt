@@ -1,3 +1,11 @@
+Wed Mar 29 13:06:12 2006  Ossama Othman <ossama@dre.vanderbilt.edu>
+
+        * ace/MMAP_Memory_Pool.{h,cpp,inl}:
+          Added new .inl file to implement the new mmap accessors, include
+          this new file in the header and implementation file
+
+Wed Mar 29 08:00:12 2006  Ossama Othman <ossama@dre.vanderbilt.edu>
+
         * ace/OS_NS_sys_sendfile.cpp
         * ace/OS_NS_sys_sendfile.h
         * ace/OS_NS_sys_sendfile.inl

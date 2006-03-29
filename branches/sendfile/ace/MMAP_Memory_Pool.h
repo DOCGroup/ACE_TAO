@@ -301,5 +301,9 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (__ACE_INLINE__)
+#include "ace/MMAP_Memory_Pool.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_MMAP_MEMORY_POOL_H */

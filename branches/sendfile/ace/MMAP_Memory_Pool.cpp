@@ -13,7 +13,13 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-ACE_RCSID(ace, MMAP_Memory_Pool, "$Id$")
+#if !defined (__ACE_INLINE__)
+#include "ace/MMAP_Memory_Pool.inl"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(ace,
+          MMAP_Memory_Pool,
+          "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
