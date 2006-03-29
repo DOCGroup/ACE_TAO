@@ -1,7 +1,14 @@
-P ace/MMAP_Memory_Pool.h
-U ace/OS_NS_sys_sendfile.cpp
-U ace/OS_NS_sys_sendfile.h
-U ace/OS_NS_sys_sendfile.inl
-P ace/ace.mpc
-P ace/config-linux-common.h
+        * ace/OS_NS_sys_sendfile.cpp
+        * ace/OS_NS_sys_sendfile.h
+        * ace/OS_NS_sys_sendfile.inl
+          New sendfile wrapper
+
+        * ace/MMAP_Memory_Pool.h:
+          Added accessors for mmap
+
+        * ace/ace.mpc
+          Added OS_NS_sys_sendfile
+
+        * ace/config-linux-common.h
+          Added ACE_HAS_SENDFILE
 
