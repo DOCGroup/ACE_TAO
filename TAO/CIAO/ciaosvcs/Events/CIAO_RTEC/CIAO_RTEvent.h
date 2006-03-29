@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciaosvcs/Events/CIAO_EventServiceBase.h"
+#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h"
 #include "CIAO_RTEventS.h"
 
 #include "ace/Hash_Map_Manager.h"
@@ -76,7 +76,6 @@ namespace CIAO
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        Components::InvalidName,
         Components::InvalidConnection));
 
     virtual void disconnect_event_consumer (
@@ -84,7 +83,6 @@ namespace CIAO
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        Components::InvalidName,
         Components::InvalidConnection));
 
     virtual void push_event (

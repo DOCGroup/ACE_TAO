@@ -1220,9 +1220,6 @@ populate_connection_for_binding (
      Deployment::Connections & retv)
   ACE_THROW_SPEC ((Deployment::StartError))
 {
-  // The initial retv might have something inside
-  CORBA::ULong len = retv.length ();
-
   const CORBA::ULong binding_len = binding.internalEndpoint.length ();
 
   if (binding_len == 1)

@@ -9,7 +9,7 @@
  * @brief Interfaces for configuring CIAO's RT event channel.
  */
 
-#include "CIAO_Events.idl"
+#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
 #include <orbsvcs/orbsvcs/RtecEventChannelAdmin.idl>
 
 module CIAO

@@ -83,7 +83,6 @@ namespace CIAO
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        Components::InvalidName,
         Components::InvalidConnection)) = 0;
 
     /**
@@ -96,7 +95,6 @@ namespace CIAO
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        Components::InvalidName,
         Components::InvalidConnection)) = 0;
 
     /**

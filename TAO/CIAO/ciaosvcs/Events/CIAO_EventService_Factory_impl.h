@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CIAO_Events_Export.h"
-#include "CIAO_EventServiceBase.h"
+#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h"
 
 namespace CIAO
 {

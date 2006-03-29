@@ -6,7 +6,7 @@ project (CIAO_Events_Handlers) : acelib, ciao_deployment_stub, xerces {
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-  after    += CIAO_XML_Utils
+  after    += CIAO_XML_Utils CIAO_DnC_Events
   libs     += CIAO_XML_Utils
   includes += $(CIAO_ROOT)/ciao
 
@@ -20,7 +20,6 @@ project (CIAO_Events_Handlers) : acelib, ciao_deployment_stub, xerces {
 }
 
 project (CIAO_Events_Handlers_Tests) : ciao_component_dnc, xerces {
-  requires += dummy_label
   exename = test
   after    += CIAO_Events_Handlers
 //  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL

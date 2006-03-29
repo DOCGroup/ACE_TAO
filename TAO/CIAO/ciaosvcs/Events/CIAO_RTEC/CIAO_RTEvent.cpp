@@ -189,9 +189,10 @@ namespace CIAO
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      Components::InvalidName,
       Components::InvalidConnection))
   {
+    ACE_UNUSED_ARG (connection_id);
+
     this->proxy_consumer_->disconnect_push_consumer (
       ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -205,7 +206,6 @@ namespace CIAO
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      Components::InvalidName,
       Components::InvalidConnection))
   {
     RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier;
