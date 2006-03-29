@@ -20,7 +20,12 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
   void const * const buf =
     ACE_OS::mmap (0, count, PROT_READ, MAP_PRIVATE, in_fd, *offset);
 
-  return ACE_OS::write (out_fd, buf, count);
+  ssize_t r = ACE_OS::write (out_fd, buf, count);
+
+  if (r > 0)
+    *offset += static_cast<ACE_LOFF_T> (r);
+
+  return r;
 }
 #endif  /* !ACE_HAS_SENDFILE */
 
