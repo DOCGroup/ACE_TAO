@@ -1,1 +1,35 @@
-Changelog file for sendfile branch
+Tue Jan 10 18:48:24 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/Transport.cpp:
+	* tao/Transport.h:
+
+	  Invoke sendfile() instead of send() if desired by the user, and
+	  if conditions permit.
+
+	* tao/default_resource.cpp:
+	* tao/default_resource.h:
+
+	  Added two new options "-ORBZeroCopyWrite" and
+	  "-ORBOutputCDRAllocator".  The former indirectly controls the
+	  latter.  Provides users with finer grained control over output
+	  CDR buffer allocation and send strategies.
+
+	* tao/MMAP_Allocator.cpp:
+	* tao/MMAP_Allocator.h:
+
+	  New mmap()-based allocator built that utilitizes
+	  ACE_Lite_MMAP_Memory_Pool as its pool implementation.  Only used
+	  when sendfile() support is compiled in.
+
+	* tao/tao.mpc:
+
+	  Added new MMAP_Allocator.{h,cpp} source to the list of sources.
+
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

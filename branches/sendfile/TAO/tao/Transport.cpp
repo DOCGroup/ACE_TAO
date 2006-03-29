@@ -313,6 +313,16 @@ TAO_Transport::register_handler (void)
                               ACE_Event_Handler::READ_MASK);
 }
 
+#ifdef ACE_HAS_SENDFILE
+ssize_t
+TAO_Transport::sendfile (ACE_Message_Block * /* data */,
+                         size_t & /* bytes_transferred */,
+                         ACE_Time_Value const * /* timeout */)
+{
+  return 0;
+}
+#endif  /* ACE_HAS_SENDFILE */
+
 int
 TAO_Transport::generate_locate_request (
     TAO_Target_Specification &spec,
@@ -507,6 +517,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // the message block.
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
+  // Push synch_message on to the back of the queue.
   synch_message.push_back (this->head_, this->tail_);
 
   int n =
@@ -823,8 +834,24 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
 }
 
 int
-TAO_Transport::drain_queue_i (void)
+TAO_Transport::drain_queue_i (ACE_Message_Block * raw_data)
 {
+#ifdef ACE_HAS_SENDFILE
+  size_t bytes_transferred = 0;
+
+  // If we've been given raw data and the queue is empty, perform a
+  // zero-copy write.
+  if (raw_data
+      && this->queue_is_empty_i ()
+      && this->sendfile (raw_data, bytes_transferred) == -1)
+    {
+      return -1;
+    }
+  this->sent_byte_count_ += bytes_transferred;
+#else
+  ACE_UNUSED_ARG (raw_data);
+#endif  /* ACE_HAS_SENDFILE */
+    
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
   // sent
@@ -838,7 +865,7 @@ TAO_Transport::drain_queue_i (void)
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
 
-  // reset the value so that the counting is done for each new send
+  // Reset the value so that the counting is done for each new send
   // call.
   this->sent_byte_count_ = 0;
 

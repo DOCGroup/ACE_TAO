@@ -10,6 +10,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Mux_Strategy.h"
+#include "tao/MMAP_Allocator.h"
+
+#include "ace/OS_NS_sys_sendfile.h"
 
 ACE_RCSID (tao,
            IIOP_Transport,
@@ -85,6 +88,80 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
 
   return retval;
 }
+
+#ifdef ACE_HAS_SENDFILE
+ssize_t
+TAO_IIOP_Transport::sendfile (ACE_Message_Block * data,
+                              size_t & bytes_transferred,
+                              ACE_Time_Value const * timeout)
+{
+  ssize_t retval = -1;
+
+  for (ACE_Message_Block const * message_block = data;
+       message_block != 0;
+       message_block = message_block->cont ())
+    {
+      size_t const mb_length = message_block->length ();
+
+      // Check if this block has any data to be sent.
+      if (mb_length > 0)
+        {
+          // @@ How costly is this dynamic_cast<>.
+          TAO_MMAP_Allocator * const allocator =
+            dynamic_cast<TAO_MMAP_Allocator *> (
+              message_block->data_block ()->allocator_strategy ());
+
+          if (allocator == 0)
+            return 0;  // Can't use sendfile().
+
+          ACE_HANDLE const in_fd = allocator->handle ();
+
+          if (in_fd == ACE_INVALID_HANDLE)
+            return retval;
+
+          ACE_HANDLE const out_fd =
+            this->connection_handler_->peer ().get_handle ();
+
+          ACE_LOFF_T offset =
+            allocator->offset (message_block->rd_ptr ());
+
+          if (timeout)
+            {
+              int val = 0;
+              if (ACE::enter_send_timedwait (out_fd, timeout, val) == -1)
+                return retval;
+              else
+                {
+                  retval =
+                    ACE_OS::sendfile (out_fd, in_fd, &offset, mb_length);
+                  ACE::restore_non_blocking_mode (out_fd, val);
+
+                }
+            }
+          else
+            {
+              retval = ACE_OS::sendfile (out_fd, in_fd, &offset, mb_length);
+            }
+
+          if (retval <= 0)  // Report errors below.
+            break;
+        }
+    }
+
+  if (retval > 0)
+    bytes_transferred = static_cast<size_t> (retval);
+  else if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
+                  ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
+                  this->id (), errno));
+    }
+
+
+  return retval;
+}
+#endif  /* ACE_HAS_SENDFILE */
 
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,

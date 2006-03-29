@@ -396,6 +396,18 @@ public:
                         size_t &bytes_transferred,
                         const ACE_Time_Value *timeout = 0) = 0;
 
+#ifdef ACE_HAS_SENDFILE
+  /// Send data through zero-copy write mechanism.
+  /**
+   * This method sends the message block chain through the platform
+   * sendfile() function to perform a zero-copy write.
+   */
+  virtual ssize_t sendfile (ACE_Message_Block * data,
+                            size_t & bytes_transferred,
+                            ACE_Time_Value const * timeout = 0);
+#endif  /* ACE_HAS_SENDFILE */
+
+
   /// Read len bytes from into buf.
   /**
    * This method serializes on handler_lock_, guaranteeing that only
@@ -756,7 +768,11 @@ private:
   int drain_queue (void);
 
   /// Implement drain_queue() assuming the lock is held
-  int drain_queue_i (void);
+  /**
+   * @note If @a raw_data is non-zero, attempt to send data using
+   *       alternative method (e.g. sendfile()).
+   */
+  int drain_queue_i (ACE_Message_Block * raw_data = 0);
 
   /// This class needs priviledged access to
   /// - queue_is_empty_i()
