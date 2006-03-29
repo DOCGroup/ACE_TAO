@@ -1,3 +1,8 @@
+Wed Mar 29 07:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Initialise pointers with 0, small const changes
+
 Wed Mar 29 06:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
@@ -6,11 +11,8 @@ Wed Mar 29 06:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar 28 21:30:01 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
-        * ace/Log_Msg.cpp
-        * ace/Log_Msg.h
-        * ace/Log_Record.cpp
-        * ace/Log_Record.h
-        * ace/Log_Record.inl
+        * ace/Log_Msg.{h,cpp}
+        * ace/Log_Record.{cpp,h,inl}:
           Updated these files to solve the stack overflow problem in ACE_Log_Msg
           and ACE_Log_Record. Moves buffers that can be large in stack in malloced
           memory.
