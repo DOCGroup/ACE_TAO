@@ -1,4 +1,11 @@
-Wed Mar 29 13:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Mar 29 13:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Replaced all links to cvs.doc.wustl.edu to local files so that in
+          environments where we can't reach the internet we still can see
+          the examples
+
+Wed Mar 29 12:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
           Added entries for -ORBZeroCOpyWrite and -ORBOutputCDRAllocator,
