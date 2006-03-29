@@ -11,7 +11,6 @@
 //=============================================================================
 
 #include "CIAO_EventService_Factory_impl.h"
-#include "ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.h"
 #include "ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h"
 
 namespace CIAO
@@ -42,13 +41,17 @@ namespace CIAO
     switch (type)
     {
       case RTEC:
-        {
-          ACE_NEW_RETURN (event_service,
-                          RTEventService (this->orb_.in (),
-                                          this->poa_.in ()),
+        ACE_NEW_RETURN (event_service,
+                        RTEventService (this->orb_.in (),
+                                        this->poa_.in ()),
+                        0);
+        break;
+
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR, "CIAO::EventService_Factory_impl::"
+                          "create_event_service: unsuppoted type.\n"),
                           0);
-          break;
-        }
+
     }
 
     // Activate the servant
