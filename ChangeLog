@@ -1,3 +1,12 @@
+Wed Mar 29 14:14:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ACE-INSTALL.html:
+        * m4/ace.m4:
+
+          Changed --with-gperf to --enable-gperf to be consistant with the
+          intent of --with-* / --enable-* flags.  Thanks to Vincent Joseph
+          <deskamess at yahoo dot com> for running into this.
+
 Wed Mar 29 13:25:12 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * ace/Log_Msg.cpp:
@@ -10,7 +19,7 @@ Wed Mar 29 13:25:12 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
           achieve the same thing. The ACE tests pass with this edition.
 
         * tests/Unload_libACE.cpp
-        
+
           This source does not use ACE functionality directly.
           It tests that the ACE shared library can be safely loaded,
           (and unloaded), by a non-ACE program exercising the

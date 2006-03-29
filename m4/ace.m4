@@ -460,21 +460,15 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_TK_REACTOR
  ACE_ENABLE_XT_REACTOR
 
- AC_ARG_WITH([gperf],
-  AS_HELP_STRING(--with-gperf,compile the gperf program [[[yes]]]),
+ AC_ARG_ENABLE([gperf],
+  AS_HELP_STRING(--enable-gperf,compile the gperf program [[[yes]]]),
   [
-   case "${withval}" in
+   case "${enableval}" in
     yes)
-      ace_user_with_gperf=yes
-      AC_DEFINE([ACE_HAS_GPERF])
-      AS_IF([test -n "$GPERF"],
-        [
-         AC_MSG_WARN([gperf program already exists])
-         AC_MSG_WARN([existing gperf may be overwritten during installation])
-        ],[])
+      ace_user_enable_gperf=yes
       ;;
     no)
-      ace_user_with_gperf=no
+      ace_user_enable_gperf=no
       ;;
     *)
       AC_MSG_ERROR([bad value ${withval} for --with-gperf])
@@ -482,15 +476,17 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],
   [
-   ace_user_with_gperf=yes
+   ace_user_enable_gperf=yes
+  ])
+ if test "$ace_user_enable_gperf" = yes; then
    AC_DEFINE([ACE_HAS_GPERF])
    AS_IF([test -n "$GPERF"],
     [
      AC_MSG_WARN([gperf program already exists])
      AC_MSG_WARN([existing gperf may be overwritten during installation])
     ],[])
-  ])
- AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
+ fi 
+ AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_enable_gperf = Xyes])
 
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
