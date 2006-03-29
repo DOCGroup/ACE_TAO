@@ -1,3 +1,26 @@
+Wed Mar 29 13:25:12 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * ace/Log_Msg.cpp:
+        * include/makeinclude/platform_lynxos.GNU
+
+          Add code to ensure cleanup in ACE_Log_Msg::close (void).
+          For some systems, e.g. LynxOS, we need to ensure that
+          any registered thread destructor action for this thread
+          is disabled. This is a revision of an earlier attempt to
+          achieve the same thing. The ACE tests pass with this edition.
+
+        * tests/Unload_libACE.cpp
+        
+          This source does not use ACE functionality directly.
+          It tests that the ACE shared library can be safely loaded,
+          (and unloaded), by a non-ACE program exercising the
+          cleanup code above.
+
+        * tests/run_test.lst
+        * tests/tests.mpc
+
+          Build and run the new test
+
 Wed Mar 29 07:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:

@@ -117,6 +117,7 @@ endif
 
 ifeq ($(shared_libs),1)
   CFLAGS  += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
+  CFLAGS  += -DACE_HAS_BROKEN_THREAD_KEYFREE
   SOFLAGS += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
   LIBS    += -ldl
 else
