@@ -8,7 +8,6 @@
  *
  *  SHMIOP specific connector processing
  *
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

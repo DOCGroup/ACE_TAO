@@ -7,9 +7,6 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Connection_Handler.h
- *  @author  Originally by Chris Cleeland
- *  @author  modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 

@@ -9,13 +9,8 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Connector by
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>
- *  @author  Ossama Othman <ossama@uci.edu>
- *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_SCIOP_CONNECTOR_H
 #define TAO_SCIOP_CONNECTOR_H

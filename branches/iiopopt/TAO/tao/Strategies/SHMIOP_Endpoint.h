@@ -8,7 +8,6 @@
  *
  * SHMIOP implementation of PP Framework Endpoint interface.
  *
- *
  * @author Marina Spivak <marina@cs.wustl.edu>
  */
 //==========================================================================

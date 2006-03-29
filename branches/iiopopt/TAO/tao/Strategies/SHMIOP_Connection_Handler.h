@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *  @author Originally by Nanbor Wang <nanbor@cs.wustl.edu> as UIOP_Connect.h
- *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 // ===================================================================
 

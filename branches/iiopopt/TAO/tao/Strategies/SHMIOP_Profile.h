@@ -8,7 +8,6 @@
  *
  *   SHMIOP profile specific processing
  *
- *
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

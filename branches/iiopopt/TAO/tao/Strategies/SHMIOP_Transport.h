@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author Originally by Nanbor Wang <nanbor@cs.wustl.edu>
- *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -84,8 +84,8 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
-  virtual int handle_input (TAO_Resume_Handle &rh, 
-                            ACE_Time_Value *max_wait_time, 
+  virtual int handle_input (TAO_Resume_Handle &rh,
+                            ACE_Time_Value *max_wait_time,
                             int block = 0);
   //@}
 
