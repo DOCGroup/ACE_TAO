@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Deployment_EventServices.idl
+ * @file Deployment_Events.idl
  *
  * @brief A collection of IDL data types for CIAO pub/sub services deployment.
  *
