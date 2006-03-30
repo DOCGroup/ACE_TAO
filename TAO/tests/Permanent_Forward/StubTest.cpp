@@ -13,6 +13,7 @@
 
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
@@ -42,7 +43,7 @@ is_endpoint (TAO_Profile *profile, const char *host, unsigned short port)
     unsigned short   endpoint_port = iiop_endpoint->port();
 
     bool retval =
-      strcmp (endpoint_host, host)==0
+      ACE_OS::strcmp (endpoint_host, host)==0
       && endpoint_port == port;
 
     return retval;
@@ -64,7 +65,7 @@ equal_endpoint (TAO_Profile *profile, TAO_Profile *other)
     unsigned short   other_endpoint_port = other_iiop_endpoint->port();
 
     bool retval =
-      strcmp (endpoint_host, other_endpoint_host)==0
+      ACE_OS::strcmp (endpoint_host, other_endpoint_host)==0
       && endpoint_port == other_endpoint_port;
 
     return retval;
