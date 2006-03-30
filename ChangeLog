@@ -1,15 +1,20 @@
+Thu Mar 30 11:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Run BiDirectional_NestedUpcall also on VxWorks
+
 Thu Mar 30 00:46:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/compiler.m4:
-        
+
           Change the default of --enable-symbol-visibility option from yes
           to no.
 
 Wed Mar 29 22:33:36 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
-          Changed to #include <sys/types.h> in the <sys/sysctl.h> 
+
+          Changed to #include <sys/types.h> in the <sys/sysctl.h>
           feature test, avoiding the autoconf "present but cannot
           be compiled" warning.
 
