@@ -1,3 +1,12 @@
+Thu Mar 30 03:30:00 UTC 2006  Frank Rehberger  <frehberger@prismtech.com>
+        * TAO/tao/Stub.i: add missing call to
+          orb_core->reinitialize_object (this), to optimize for colocal
+          case.
+        
+        * TAO/tests/Permanent_Forward/StubTest.cpp: Removed code at end of
+          test, which caused error messages even if the test run thru all
+          test-cases successfully.  
+        
 Wed Mar 29 19:30:00 UTC 2006  Frank Rehberger  <frehberger@prismtech.com>
         * TAO/tao/Transport.h: Correct the documentation explaining
           message parsing. This is related to #2313
