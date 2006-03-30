@@ -254,7 +254,7 @@ ACE_THR_FUNC_RETURN
 ACE_Event_Handler::read_adapter (void *args)
 {
   ACE_Event_Handler *this_ptr = static_cast<ACE_Event_Handler *> (args);
-  Ace_Reactor *r = this_ptr->reactor ();
+  ACE_Reactor *r = this_ptr->reactor ();
 
   while (this_ptr->handle_input (ACE_STDIN) != -1)
     continue;
