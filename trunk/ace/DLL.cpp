@@ -51,8 +51,7 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
 
 ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
-                  int close_handle_on_destruction,
-                  int debug)
+                  int close_handle_on_destruction)
   : open_mode_ (open_mode),
     dll_name_ (0),
     close_handle_on_destruction_ (close_handle_on_destruction),
@@ -61,7 +60,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL");
 
-  if (this->open (dll_name, this->open_mode_, close_handle_on_destruction, debug) != 0
+  if (this->open (dll_name, this->open_mode_, close_handle_on_destruction) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_DLL::open: error calling open: %s\n"),
@@ -99,20 +98,18 @@ ACE_DLL::~ACE_DLL (void)
 int
 ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
-               int close_handle_on_destruction,
-	       int debug)
+               int close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::open");
 
-  return open_i (dll_filename, open_mode, close_handle_on_destruction, NULL, debug);
+  return open_i (dll_filename, open_mode, close_handle_on_destruction);
 }
 
 int
 ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
                  int open_mode,
                  int close_handle_on_destruction,
-                 ACE_SHLIB_HANDLE handle,
-		 int debug)
+                 ACE_SHLIB_HANDLE handle)
 {
   ACE_TRACE ("ACE_DLL::open_i");
 
@@ -145,8 +142,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
 
   this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_,
                                                              this->open_mode_,
-                                                             handle,
-							     debug);
+                                                             handle);
 
   if (!this->dll_handle_)
     this->error_ = 1;
