@@ -1,3 +1,8 @@
+Thu Mar 30 11:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added BiDirectional_DelayedUpcall
+
 Thu Mar 30 11:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
