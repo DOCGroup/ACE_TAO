@@ -630,6 +630,7 @@ TAO_ORB_Core::serverrequestinterceptor_adapter (void)
   return this->server_request_interceptor_adapter_;
 }
 
+#endif /* TAO_HAS_INTERCEPTORS */
 
 /// Verify condition for  permanent forward is given,
 /// both parameters must provide group attributes.
@@ -648,7 +649,5 @@ TAO_ORB_Core::is_permanent_forward_condition
 
   return permanent_forward_condition;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
