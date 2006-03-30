@@ -3,6 +3,7 @@
 
 project : ciao_deployment_stub, portableserver {
   after += Deployment_svnt
-  libs  += CIAO_Deployment_svnt
+  libs  += CIAO_Deployment_svnt CIAO_DnC_Events
+  includes += $(CIAO_ROOT)/DAnCE/ciao
   idlflags += -I$(CIAO_ROOT)/DAnCE -Sc
 }
