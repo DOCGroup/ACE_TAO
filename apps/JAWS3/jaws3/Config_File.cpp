@@ -263,7 +263,7 @@ void
 JAWS_Config_File_Impl::dump (void)
 {
   JAWS_SYMBOL_TABLE_ITERATOR iter (*this->symbols_);
-  JAWS_SYMBOL_TABLE_ENTRY *entry;
+  JAWS_SYMBOL_TABLE_ENTRY *entry = 0;
 
   while (iter.next (entry))
     {
