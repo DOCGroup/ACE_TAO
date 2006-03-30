@@ -64,7 +64,7 @@ ACEXML_NamespaceSupport::pushContext (void)
                   -1);
 
   // @@ Copy everything from the old context to the new one.
-  ACEXML_NS_CONTEXT_ENTRY *entry;
+  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*temp);
        iter.next (entry) != 0;
@@ -118,7 +118,7 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
 int
 ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry;
+  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
   // The prefix for default namespace (empty string) is included in
   // the return list.
@@ -136,7 +136,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
   if (!uri || *uri == 0)
     return 0;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry;
+  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
@@ -150,7 +150,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
 int
 ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry;
+  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
   // The prefix for default namespace (empty string) is not included
   // in the return list.
@@ -168,7 +168,7 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
   if (!uri)
     return -1;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry;
+  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
