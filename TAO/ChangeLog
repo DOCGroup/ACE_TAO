@@ -1,3 +1,10 @@
+Thu Mar 30 09:58:11 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Permanent_Forward/StubTest.cpp:
+
+          Suppress unused function warnings and make the test more effective
+          when ACE_NDEBUG defined.
+
 Thu Mar 30 06:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitInfo.cpp (codec_factory):
@@ -1157,7 +1164,7 @@ Mon Feb 27 18:42:38 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
           I will supply a better fix in x.5.1 after more thorough testing.
 
 Mon Feb 27 17:08:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
-  
+
         * tao/Transport.cpp:
           Incomplete messages, smaller Header-Length, shall be put
           into intermediate buffer
@@ -1363,7 +1370,7 @@ Wed Feb 22 20:54:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           bugzilla issue #2416.
 
 Wed Feb 22 20:37:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
-  
+
         * tao/PluggableMessaging.h: Remove abstract operation:
         read_message, missing_data, get_message_data. Add abstract
         operation parse_next_message (), consolidate_fragmented_message,
@@ -1513,7 +1520,7 @@ Wed Feb 22 09:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
           bugzilla bug #2304.
 
 Wed Feb 22 04:45:00 UTC 2006 Frank Rehberger <frehberger@prismtech.com>
-  
+
         * tao/ORB_Core.cpp:
           Fixing TAO_ORB_Core_Auto_Ptr assignment
 
