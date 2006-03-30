@@ -34,7 +34,7 @@ public:
       ssize_t n;
 
       while ((n = this->peer ().recv (buf, sizeof buf)) > 0)
-	::write (1, buf, n);
+        ::write (1, buf, n);
 
       return 0;
     }
@@ -66,7 +66,7 @@ public:
       ssize_t n;
 
       while ((n = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0)
-	this->peer ().send (buf, n);
+        this->peer ().send (buf, n);
 
       this->peer ().close ();
       return 0;

@@ -1,3 +1,8 @@
+Thu Mar 30 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/NamespaceSupport.cpp:
+          Fixed value might be unitialized warnings
+
 Tue Mar 14 20:58:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * ACEXML/common/FileCharStream.cpp
@@ -11,7 +16,7 @@ Tue Mar 14 20:58:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
           conditional expression", "conversion from some type to another type, possible
           loss of data", "local variable may be used without having been initialized" and
           so on.
-          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for 
+          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for
           motivating the fix to these "VC level 4 warnings".
 
 Fri Feb 10 23:45:14 UTC 2006  Steve Huston  <shuston@riverace.com>
