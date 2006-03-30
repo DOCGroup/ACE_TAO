@@ -1,3 +1,10 @@
+Thu Mar 30 12:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration.cpp:
+        * ace/Shared_Memory_MM.cpp:
+        * ace/ARGV.cpp:
+          Fixed value might be unitialized warnings
+
 Thu Mar 30 11:27:00 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
