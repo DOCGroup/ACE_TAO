@@ -1,3 +1,8 @@
+Thu Mar 30 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exclusive_TMS.cpp:
+          Fixed incorrect formatted debug statement
+
 Thu Mar 30 11:26:45 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/tao_idl.mpc:
