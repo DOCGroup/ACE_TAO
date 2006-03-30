@@ -256,7 +256,7 @@ ACE_ARGV::create_buf_from_queue (void)
   // Get an iterator over the queue
   ACE_Unbounded_Queue_Iterator<ACE_TCHAR *> iter (this->queue_);
 
-  ACE_TCHAR **arg;
+  ACE_TCHAR **arg = 0;
   ACE_TCHAR *ptr = this->buf_;
   size_t len;
   int more = 0;
