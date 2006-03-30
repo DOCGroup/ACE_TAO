@@ -30,7 +30,7 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS (void)
 CORBA::ULong
 TAO_Exclusive_TMS::request_id (void)
 {
-  this->request_id_generator_++;
+  ++this->request_id_generator_;
 
   // if TAO_Transport::bidirectional_flag_
   //  ==  1 --> originating side
@@ -47,7 +47,7 @@ TAO_Exclusive_TMS::request_id (void)
 
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::request_id - <%d>\n"),
+                ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - <%d>\n"),
                 this->request_id_generator_));
 
   return this->request_id_generator_;
