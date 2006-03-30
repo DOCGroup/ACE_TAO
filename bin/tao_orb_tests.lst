@@ -27,6 +27,7 @@ TAO/tests/OctetSeq/run_test2.pl: !STATIC
 TAO/tests/BiDirectional/run_test.pl: !MINIMUM !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/BiDirectional/run_test_ipv6.pl: IPV6 !MINIMUM !GIOP10 !DISABLE_BIDIR
 TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !STATIC !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC
+TAO/tests/BiDirectional_DelayedUpcall/run_test.pl: !MINIMUM !STATIC !GIOP10 !DISABLE_BIDIR !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl:
