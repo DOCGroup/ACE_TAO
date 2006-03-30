@@ -1,3 +1,10 @@
+Thu Mar 30 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional_DelayedUpcall/*:
+          New test testing bidir where the client makes an invocation to
+          the server, this directly returns, and a second later the
+          server is going to callback on the client.
+
 Thu Mar 30 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/BiDirectional_NestedUpcall/run_test.pl:
