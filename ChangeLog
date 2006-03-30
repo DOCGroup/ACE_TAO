@@ -1,3 +1,13 @@
+Thu Mar 30 11:27:00 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Define variable ACE_CC_PREPROCESSOR to be 'cc' if the SunCC version
+          is 5.4. This fixes bug #2478.
+
+          See also: Thu Mar 30 11:26:45 UTC 2006  Simon McQueen  <sm@prismtech.com>
+          in TAO/ChangeLog.
+
 Thu Mar 30 11:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
