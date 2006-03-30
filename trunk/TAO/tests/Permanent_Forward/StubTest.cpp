@@ -75,13 +75,10 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
   TAO_Stub *stub_copy = obj_copy->_stubobj ();
   TAO_MProfile *copy_mprofile  = &(stub_copy->base_profiles ());
  
-  TAO_Profile *copy_profile  = copy_mprofile->get_profile (0);
-  TAO_Profile *other_profile = other_mprofile->get_profile (0);
-
   if ( copy_mprofile->size() != other_mprofile->size())
     return false;
 
-  for (int i=0; i<copy_mprofile->size(); ++i)
+  for (size_t i=0; i<copy_mprofile->size(); ++i)
     {
       TAO_Profile *copy_profile  = copy_mprofile->get_profile (i);
       TAO_Profile *other_profile = other_mprofile->get_profile (i);
@@ -328,13 +325,8 @@ test_forward (CORBA::ORB_ptr orb)
 int
 main (int argc, char *argv[])
 {
-  // The variable is declared volatile because, some compilers
-  // optimizes this the wrong way. A case is point is the CC compiler
-  // on IRIX.
-  volatile int Status = 0;
-
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
-  ACE_DEBUG ((LM_DEBUG, "Running the IORManipulation Tests.\n"));
+  ACE_DEBUG ((LM_DEBUG, "Running the Stub Tests.\n"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -364,17 +356,7 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  if (Status == 1)
-    {
-      // then exception didn't work!
-      ACE_DEBUG ((LM_ERROR,
-                  "**ERROR: Unable to generate the NotFound exception!\n"));
-      Status = 0;
-    }
-  if (Status == 0)
-    ACE_DEBUG ((LM_DEBUG, "An ERROR occured during the tests!\n"));
-  else
-    ACE_DEBUG ((LM_DEBUG, "IORManipulation Tests Successfully Completed!\n"));
+  ACE_DEBUG ((LM_DEBUG, "Stub Tests Successfully Completed!\n"));
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
 
   return 0;

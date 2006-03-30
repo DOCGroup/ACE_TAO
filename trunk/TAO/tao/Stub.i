@@ -88,47 +88,55 @@ TAO_Stub::next_profile_i (void)
                                     // at bottom of stack
                                     // forward_profiles_
 	{
+      // In case of permanent forward the base_profiles are ingored.
+
 	  pfile_next = this->next_forward_profile ();
 
       if (pfile_next == 0)
-	    {
-		  // reached end of list of permanent forward profiles
-		  // now, reset forward_profiles_perm_
+        {
+          // COND: this->forward_profiles_ == this->forward_profiles_perm_
 
-		  this->forward_profiles_->rewind ();
+          // reached end of list of permanent forward profiles
+          // now, reset forward_profiles_perm_
+
+          this->forward_profiles_->rewind ();
           this->profile_success_ = false;
-
           this->set_profile_in_use_i (this->forward_profiles_->get_next());
-		}
+	    }
 	  else
 		  this->set_profile_in_use_i (pfile_next);
-
-	  return pfile_next;
-	}
-
-  // Now do the common operation
-  if (this->forward_profiles_)
-    {
-      pfile_next = this->next_forward_profile ();
-      if (pfile_next == 0)
-        {
-          // Fall back to base profiles
-          pfile_next = this->base_profiles_.get_next ();
-        }
 
       // We may have been forwarded to / from a collocated situation
       // Check for this and apply / remove optimisation if required.
       this->orb_core_->reinitialize_object (this);
-    }
-  else
-    pfile_next = this->base_profiles_.get_next ();
+                
+	  return pfile_next;
+	}
+  else 
+    {
+      if (this->forward_profiles_) // Now do the common operation
+        {
+          pfile_next = this->next_forward_profile ();
+          if (pfile_next == 0)
+            {
+              // Fall back to base profiles
+              pfile_next = this->base_profiles_.get_next ();
+            }
 
-  if (pfile_next == 0)
-    this->reset_base ();
-  else
-    this->set_profile_in_use_i (pfile_next);
+          // We may have been forwarded to / from a collocated situation
+          // Check for this and apply / remove optimisation if required.
+          this->orb_core_->reinitialize_object (this);
+        }
+      else
+        pfile_next = this->base_profiles_.get_next ();
 
-  return pfile_next;
+      if (pfile_next == 0)
+        this->reset_base ();
+      else
+        this->set_profile_in_use_i (pfile_next);
+
+      return pfile_next;
+   }
 }
 
 ACE_INLINE TAO_Profile *
