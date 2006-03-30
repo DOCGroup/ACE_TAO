@@ -22,10 +22,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
                                       int p)
-  : reference_count_ (1)
-  , priority_ (p)
-  , reactor_ (r)
-  , reference_counting_policy_ (Reference_Counting_Policy::DISABLED)
+  : reference_count_ (1),
+    priority_ (p),
+    reactor_ (r),
+    reference_counting_policy_ (Reference_Counting_Policy::DISABLED)
 {
   // ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
 }
@@ -261,7 +261,7 @@ ACE_Event_Handler::read_adapter (void *args)
 
   this_ptr->handle_close (ACE_STDIN, ACE_Event_Handler::READ_MASK);
   // It's possible for handle_close() to "delete this" so we need to
-  // cache the reactor pointer and use it here. 
+  // cache the reactor pointer and use it here.
   r->notify ();
 
   return 0;
