@@ -1,3 +1,15 @@
+Thu Mar 30 17:04:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
+
+          Modified to support CIAO pub/sub service integration.
+        
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
+        
+          Added this mpb file for pub/sub service integration
+          in CIAO.
+
 Thu Mar 30 15:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
   
         * tests/Unload_libACE.cpp:
