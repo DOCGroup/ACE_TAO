@@ -75,13 +75,10 @@ public:
    *        Set this parameter to 0 for situations where the DLL's lifetime
    *        is controlled in a scope other than that of this ACE_DLL object.
    *        For example, termination by ACE_DLL_Manager via ACE::fini().
-   * @param debug  Instruct open to print out debug information when attempting
-   *        to open the DLL using various naming conventions.
    */
   explicit ACE_DLL (const ACE_TCHAR *dll_name,
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
-                    int close_handle_on_destruction = 1,
-                    int debug = 0);
+                    int close_handle_on_destruction = 1);
 
   /// Copy constructor.
   ACE_DLL (const ACE_DLL &);
@@ -104,15 +101,12 @@ public:
    *        Set this parameter to 0 for situations where the DLL's lifetime
    *        is controlled in a scope other than that of this ACE_DLL object.
    *        For example, termination by ACE_DLL_Manager via ACE::fini().
-   * @param debug  Instruct open to print out debug information when attempting
-   *        to open the DLL using various naming conventions.
    * @retval -1 On failure
    * @retval 0 On success.
    */
   int open (const ACE_TCHAR *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
-            int close_handle_on_destruction = 1,
-	    int debug = 0);
+            int close_handle_on_destruction = 1);
 
   /// Call to close the DLL object.
   int close (void);
@@ -159,8 +153,7 @@ private:
   int open_i (const ACE_TCHAR *dll_name,
               int open_mode = ACE_DEFAULT_SHLIB_MODE,
               int close_handle_on_destruction = 1,
-              ACE_SHLIB_HANDLE handle = 0,
-	      int debug = 0);
+              ACE_SHLIB_HANDLE handle = 0);
 
 
   // Disallow assignment since we don't handle it.
