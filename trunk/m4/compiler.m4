@@ -387,7 +387,7 @@ dnl @todo Clean up / consolidate these conditionals
 
    AC_ARG_ENABLE([symbol-visibility],
      AS_HELP_STRING([--enable-symbol-visibility],
-		    [build with gcc symbol visibility attributes [[[yes]]]]),
+		    [build with gcc symbol visibility attributes [[[no]]]]),
      [
       case "${enableval}" in
        yes)
@@ -402,7 +402,7 @@ dnl @todo Clean up / consolidate these conditionals
       esac
      ],
      [
-      ace_user_enable_symbol_visibility=yes
+      ace_user_enable_symbol_visibility=no
      ])
 
    if test "$ace_user_enable_symbol_visibility" = yes; then
