@@ -79,6 +79,7 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core,
+                                  this,
                                   MIOP_MAX_DGRAM_SIZE));
 
   // Replace the default wait strategy with our own

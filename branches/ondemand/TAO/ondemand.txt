@@ -1,3 +1,10 @@
+Thu Mar 30 13:02:18 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+          Added the missing transport parameter to the TAO_GIOP_Message_Base
+          constructor.
+
 Thu Mar 30 12:41:17 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/CDR.cpp:
