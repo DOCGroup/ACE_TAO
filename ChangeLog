@@ -1,3 +1,7 @@
+Thu Mar 30 15:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+        * tests/Unload_libACE.cpp:
+          Corrected missing file handle.
+
 Thu Mar 30 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:

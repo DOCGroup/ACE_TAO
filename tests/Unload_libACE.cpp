@@ -210,7 +210,7 @@ run_main ( int, char ** )
       fprintf ( logfp, "@LM_DEBUG@ Starting %s test\n", program);
       fprintf ( logfp, "@LM_DEBUG@ %s test not implemented for this platform\n",
                 program);
-      fprintf ( "@LM_DEBUG@ Ending %s test\n", program);
+      fprintf ( logfp, "@LM_DEBUG@ Ending %s test\n", program);
 
       fflush ( logfp );
       fclose ( logfp );
