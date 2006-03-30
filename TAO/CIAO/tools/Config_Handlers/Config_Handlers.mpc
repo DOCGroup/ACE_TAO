@@ -42,7 +42,7 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typeco
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-  libs += CIAO_XML_Utils RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
+  libs += CIAO_XML_Utils CIAO_Events_Handlers RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
 
   Source_Files {
     DP_Handler.cpp
