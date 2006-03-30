@@ -68,6 +68,12 @@ CXX             = CC
 
 CC_VERSION := $(shell $(CXX) -V 2>&1)
 
+### CC 5.4 provides insufficient preprocessor output (at 111715-17 2005/10/13)
+### We need to use cc instead - see bugzilla #2478.
+ifeq (C++ 5.4,$(findstring C++ 5.4,$(CC_VERSION)))
+  ACE_CC_PREPROCESSOR = cc
+endif
+
 ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
   PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
 else
