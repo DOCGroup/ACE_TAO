@@ -140,11 +140,11 @@ TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
 
       if (loader != 0)
         {
-          CORBA::Object_ptr cf =
+          CORBA::Object_var cf =
             loader->create_object (this->orb_core_->orb (), 0, 0 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
 
-          this->codec_factory_ = IOP::CodecFactory::_narrow (cf);
+          this->codec_factory_ = IOP::CodecFactory::_narrow (cf.in ());
         }
     }
 
