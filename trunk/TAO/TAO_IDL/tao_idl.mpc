@@ -27,7 +27,11 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
 
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
-      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+      ifeq ($(ACE_CC_PREPROCESSOR),)
+        CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+      else
+        CPPFLAGS += -DACE_CC_PREPROCESSOR=\\\"$(subst \\,\\,$(ACE_CC_PREPROCESSOR))\\\"
+      endif
     else
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
     endif
