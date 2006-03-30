@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- *  @file CIAO_Event_Service.cpp
+ *  @file CIAO_EventServiceBase.cpp
  *
  *  $Id$
  *

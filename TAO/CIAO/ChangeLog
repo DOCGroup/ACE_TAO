@@ -1,3 +1,17 @@
+Thu Mar 30 18:28:32 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciao/Deployment_Events.idl
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.cpp
+
+          Fixed fuzz errors.
+        
+Thu Mar 30 17:16:17 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_Direct/*
+        
+          Removed all files under this directory since they are
+          no longer used.
+
 Thu Mar 30 17:23:12 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc
