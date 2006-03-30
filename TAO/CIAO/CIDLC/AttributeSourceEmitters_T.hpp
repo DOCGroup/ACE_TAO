@@ -14,6 +14,7 @@
 
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
+using namespace StringLiterals;
 
 template <typename T>
 struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
