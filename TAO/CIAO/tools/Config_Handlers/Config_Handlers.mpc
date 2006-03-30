@@ -36,7 +36,7 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typeco
     override no_hidden_visibility = 1
   }
 
-  after += RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
+  after += CIAO_Events_Handlers RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS

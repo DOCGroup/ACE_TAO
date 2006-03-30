@@ -14,7 +14,11 @@ workspace {
   ../orbsvcs/orbsvcs/Svc_Utils.mpc
   ../orbsvcs/orbsvcs/Security.mpc
   ../orbsvcs/orbsvcs/IFRService.mpc
+  ../orbsvcs/orbsvcs/RTEvent.mpc
+  ../orbsvcs/orbsvcs/RTEvent_Serv.mpc
+  ../orbsvcs/orbsvcs/RTEvent_Skel.mpc
   ciao
   DAnCE
+  ciaosvcs
   tools/Config_Handlers
 }

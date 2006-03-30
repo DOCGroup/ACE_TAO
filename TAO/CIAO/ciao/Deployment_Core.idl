@@ -4,6 +4,7 @@
 #define DEPLOYMENT_CORE_IDL
 
 #include "CCM_Component.idl"
+#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
 
 // *************** Packaging and Deployment ***************
 module Deployment
@@ -97,6 +98,14 @@ module Deployment
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.
     Object endpoint;
+
+    // A wrapper facade interface to provision different event
+    // communication mechanisms, including RTEC, etc.
+    CIAO::CIAO_Event_Service event_service;
+
+    // The properties of this connection, particularly useful
+    // to speicfy QoS properties of pub/sub service connections.
+    Properties config;
   };
 
   typedef sequence < Connection > Connections;
@@ -205,6 +214,21 @@ module Deployment
   };
 
   typedef sequence<Container> Containers;
+  typedef sequence<CIAO::CIAO_Event_Service> CIAO_Event_Services;
+
+  /// CIAO specific extension
+  /// This struct captures the installation information of a particular
+  /// CIAO_Event_Service, as defined in <ciaosvcs/Events/CIAO_Events.idl>
+  struct ESInstallationInfo
+  {
+    string id;
+    CIAO::EventServiceType type;
+    string svcconf;
+    //Properties es_config;
+  };
+
+  /// CIAO specific extension
+  typedef sequence<ESInstallationInfo> ESInstallationInfos;
 
   interface NodeApplication : Application
   {
@@ -227,45 +251,52 @@ module Deployment
               ::Components::InvalidConfiguration,
               ::Components::RemoveFailure);
 
+    /// CIAO specific extension
+    /// This operation will create one or more CIAO_Event_Service objects
+    /// within the NodeApplication, which will be used to mediate the
+    /// communication of CCM events
+    CIAO_Event_Services install_es (in ESInstallationInfos es_infos)
+      raises (InstallationFailure);
+
     /// CIAO specific extensions
     ///@@ We know that Deployment::NodeApplicationManager will be returned,
     ///   however to avoid the size of the shared object of CIAO_Server.
     ///   we return an Object.
     Object get_node_application_manager ();
 
-    /// CIAO specific extensions
+    /// CIAO specific extension
     Container create_container (in ::Deployment::Properties properties)
       raises (::Components::CreateFailure,
               ::Components::InvalidConfiguration);
 
-    /// CIAO specific extensions
+    /// CIAO specific extension
     void remove_container (in Container cref)
       raises (::Components::RemoveFailure);
 
-    /// CIAO specific extensions
+    /// CIAO specific extension
     Containers get_containers ();
 
-    /// CIAO specific extensions
+    /// CIAO specific extension
     /// Remove a component instance from the NodeApplication
     void remove_component (in string inst_name)
       raises (::Components::RemoveFailure);
 
-    /// CIAO specific extensions
+    /// CIAO specific extension
     /// Remove all containers, components and component homes.
     /// Shuts down the ORB of the NodeApplication to terminate the process.
     oneway void remove ();
 
-    /// CIAO specific extensions. This will enforce the component to
+    /// CIAO specific extension. This will enforce the component to
     /// be activated (preactivate, activate, postactivated) before the assembly
     /// is established
     void ciao_preactivate ()
       raises (StartError);
 
-    /// CIAO specific extensions
+    /// CIAO specific extension
     void ciao_postactivate ()
       raises (StartError);
 
-    /// CIAO specific extensions
+    /// CIAO specific extension
     void ciao_passivate ()
       raises (StopError);
   };

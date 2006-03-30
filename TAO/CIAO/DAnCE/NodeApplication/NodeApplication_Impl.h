@@ -20,15 +20,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_CoreS.h"
-#include "ciao/Server_init.h"
-#include "ciao/CIAO_common.h"
-#include "ciao/Object_Set_T.h"
-#include "tao/ORB.h"
 #include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "tao/ORB.h"
+#include "ciao/Deployment_CoreS.h"
+#include "ciao/Server_init.h"
+#include "ciao/CIAO_common.h"
+#include "ciao/Object_Set_T.h"
+#include "ciaosvcs/Events/CIAO_EventService_Factory_impl.h"
+#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventsS.h"
+
 #include "NodeApp_Configurator.h"
 #include "Container_Base.h"
 
@@ -94,7 +97,7 @@ namespace CIAO
      * However the name field stores the name of the port on the local component.
      */
     virtual void
-    finishLaunch (const Deployment::Connections & providedReference,
+    finishLaunch (const Deployment::Connections & connections,
                   CORBA::Boolean start,
                   CORBA::Boolean add_connection
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -152,6 +155,13 @@ namespace CIAO
                        ::Deployment::InstallationFailure,
                        ::Components::InvalidConfiguration));
 
+    /// Install a number of CIAO_Event_Service objects within the NA
+    virtual ::Deployment::CIAO_Event_Services *
+      install_es (const ::Deployment::ESInstallationInfos & es_infos
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Deployment::InstallationFailure));
+
     /// Get the object reference of the NodeApplicationManager.
     /// This might come in handy later.
     virtual ::CORBA::Object_ptr
@@ -205,15 +215,77 @@ namespace CIAO
     ::Deployment::NodeApplication_ptr
     get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
+    /*------- CIAO helper functions for pub/sub service -------
+     *
+     *--------------------------------------------------------*/
+
+    /// Set up a connection using the CIAO_Event_Service, which
+    /// is available as a field in the <Deployment::Connection>
+    /// struct type.
+    /// If <add_or_remove> input parameter is true, then we will
+    /// add the event connection, otherwise we will remove the
+    /// event connection.
+    void build_event_connection (
+        const Deployment::Connection & connection,
+        bool add_or_remove
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                       CORBA::SystemException));
+
   protected:
+    /// If <add_connection> is "false", then we shall "remove"
+    /// the connections, otherwise we will add these connections.
     virtual void
-    finishLaunch_i (const Deployment::Connections & providedReference,
+    finishLaunch_i (const Deployment::Connections & connections,
                     CORBA::Boolean start,
                     CORBA::Boolean add_connection
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError,
                        Deployment::InvalidConnection));
+
+    virtual void
+    handle_facet_receptable_connection (
+        Components::CCMObject_ptr comp,
+        const Deployment::Connection & connection,
+        CORBA::Boolean add_connection)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InvalidConnection));
+
+    virtual void
+    handle_emitter_consumer_connection (
+        Components::CCMObject_ptr comp,
+        const Deployment::Connection & connection,
+        CORBA::Boolean add_connection)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InvalidConnection));
+
+    virtual void
+    handle_publisher_consumer_connection (
+        Components::CCMObject_ptr comp,
+        const Deployment::Connection & connection,
+        CORBA::Boolean add_connection)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InvalidConnection));
+
+    /// Register the publisher to the CIAO event service
+    /// The only fields of <connection> struct used in this method
+    /// are: <type>, <event_service>, <instanceName>, <portName>.
+    virtual void
+    handle_publisher_es_connection (
+        Components::CCMObject_ptr comp,
+        const Deployment::Connection & connection,
+        CORBA::Boolean add_connection)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::InvalidConnection));
+
+    /// Register the consumer to the CIAO event service
+    virtual void
+    handle_es_consumer_connection (
+        const Deployment::Connection & connection,
+        CORBA::Boolean add_connection)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::InvalidConnection));
 
     /// Create and initialize all the containers
     virtual CORBA::Long create_all_containers (
@@ -235,7 +307,8 @@ namespace CIAO
     Component_Container_Map component_container_map_;
 
 
-    /// To store all created Component object as well as their state.
+    /// To store all created Component objects as well as their lifecycle
+    /// states..
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Component_State_Info,
                                     ACE_Hash<ACE_CString>,
@@ -279,6 +352,19 @@ namespace CIAO
 
     /// Cache the object reference (of ourselves).
     ::Deployment::NodeApplication_var objref_;
+
+    /// A factory to create CIAO event services
+    EventService_Factory_impl es_factory_;
+
+    /// Cache the (NA specific) installation info of all the
+    /// CIAO_Event_Services
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    ::Deployment::ESInstallationInfos_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> ES_Installation_Map;
+    typedef ES_Installation_Map::iterator ES_Installation_Map_Iterator;
+    ES_Installation_Map es_info_map_;
 
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   private:

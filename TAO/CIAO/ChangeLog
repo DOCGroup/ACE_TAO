@@ -1,3 +1,90 @@
+Thu Mar 30 16:38:25 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * CIAO_DAnCE.mwc
+        * CIAO_TAO.mwc
+        * CIAO_TAO_DAnCE.mwc
+        
+          Added "ciaosvcs" into the workspace.
+
+        * ciao/CCM_Core.mpc        
+        * ciao/CCM_Event.idl
+        * ciao/Container_Base.cpp
+        * ciao/Container_Base.h
+        * ciao/Deployment_Core.idl
+        * ciao/Deployment_Data.idl
+        * ciao/Deployment_Events.idl
+         
+          Added an "CIAO_DnC_Events" project. Enhanced Deployment_Core.idl
+          to support configuring and deploying pub/sub services.
+        
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * DAnCE/NodeApplication/NodeApplication_Impl.inl
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+
+          Enhanced DAnCE to support pub/sub services integration.
+        
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.cpp
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.h
+        * ciaosvcs/Events/CIAO_Events.idl
+        * ciaosvcs/Events/CIAO_Events.mpc
+        * ciaosvcs/Events/CIAO_Events_Export.h
+        * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.cpp
+        * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.h
+        * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent.idl
+        * ciaosvcs/Events/CIAO_Direct/CIAO_DirectEvent_Export.h
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.cpp
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Export.h
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEVENT_Export.h
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.idl
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc
+        
+          Added CIAO_Event_Service support, which are some reusable
+          libraries and CORBA services that could be configured and
+          installed on demand through the DAnCE toolchain.
+        
+        * docs/schema/Basic_Deployment_Data.xsd
+        * docs/schema/CIAOEvents.xsd
+        * docs/schema/cdp.xsd
+        
+          Enhanced XML schema to capture metadata information for
+          configuring and deploying pub/sub services.
+        
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/ESD_Handler.cpp
+        * tools/Config_Handlers/ESD_Handler.h
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.cpp
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.h
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers_Export.h
+        * tools/Config_Handlers/CIAO_Events/test.cpp
+        
+          Added config handler support to accomodate the above changes.
+        
+        * examples/Hello/descriptors_events/ciao-events-example-with-filters.ced
+        * examples/Hello/descriptors_events/ciao-events-example.ced
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events.cdp
+        * examples/Hello/descriptors_events/flattened_deploymentplan_with_filters.cdp
+        
+          Added several examples to showcase the capability of CIAO
+          pub/sub services.
+        
 Thu Mar 30 14:43:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/AttributeSourceEmitters_T.hpp:

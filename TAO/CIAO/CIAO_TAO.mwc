@@ -15,8 +15,13 @@ workspace {
   ../orbsvcs/orbsvcs/Svc_Utils.mpc
   ../orbsvcs/orbsvcs/Security.mpc
   ../orbsvcs/orbsvcs/IFRService.mpc
+  ../orbsvcs/orbsvcs/RTEvent_Serv.mpc
+  ../orbsvcs/orbsvcs/RTEvent_Skel.mpc
+  ../orbsvcs/orbsvcs/RTEvent.mpc
+
   DAnCE
   ciao
+  ciaosvcs
   tools
   tests
   examples
