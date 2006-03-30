@@ -1,3 +1,15 @@
+Thu Mar 30 20:21:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Valuetype/Sequence_T.h:
+
+          Added include of Value_VarOut_T.h, needed when compiling
+          generated code from an IDL file with a sequence whose
+          valuetype element was declared in an included IDL file, on
+          platforms where template source files are not included in
+          the corresponding header file. Thanks to Dmitriy Kuznetsov
+          <dk3@garant.ru> for sending the example IDL files that
+          uncovered the problem.
+
 Thu Mar 30 19:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.i:
