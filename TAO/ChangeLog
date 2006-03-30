@@ -1,3 +1,14 @@
+Thu Mar 30 11:26:45 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/tao_idl.mpc:
+
+          If variable ACE_CC_PREPROCESSOR is defined add that as a macro
+          definition on the compile line instead of assuming that the value of
+          CXX should be used. This fixes bug #2478.
+
+          See also: Thu Mar 30 11:27:00 UTC 2006  Simon McQueen  <sm@prismtech.com>
+          in ../ChangeLog.
+
 Thu Mar 30 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/BiDirectional_DelayedUpcall/*:
