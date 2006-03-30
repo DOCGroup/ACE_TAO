@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   parse_args (argc, argv);
 
   ACE_SOCK_Dgram sd (ACE_Addr::sap_any);
-  void *cp;
+  void *cp = 0;
   ACE_INET_Addr sa (port_number, host_name);
 
   ACE_Mem_Map mmap (file_name);

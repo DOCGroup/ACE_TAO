@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
   ACE_INET_Addr sa (port_number, host_name);
-  void *cp;
+  void *cp = 0;
   char buf[BUFSIZ];
   int n;
   ACE_SOCK_CODgram dc;
