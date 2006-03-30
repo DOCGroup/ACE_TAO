@@ -231,7 +231,6 @@
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
 
-
   <xsd:simpleType name="CCMComponentPortKind">
     <xsd:restriction base="xsd:NCName">
       <xsd:enumeration value="Facet"/>
@@ -240,6 +239,8 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
+      <xsd:enumeration value="rtecEventPublisher"/>
+      <xsd:enumeration value="rtecEventConsumer"/>      
     </xsd:restriction>
   </xsd:simpleType>
 

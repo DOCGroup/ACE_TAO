@@ -1,0 +1,34 @@
+//$Id$
+
+project (CIAO_Events_Handlers) : acelib, ciao_deployment_stub, xerces {
+  sharedname = CIAO_Events_Handlers
+  dynamicflags   = CIAO_EVENTS_HANDLERS_BUILD_DLL
+  macros   += XML_USE_PTHREADS
+  requires += exceptions
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  after    += CIAO_XML_Utils CIAO_DnC_Events
+  libs     += CIAO_XML_Utils
+  includes += $(CIAO_ROOT)/ciao
+
+  Source_Files {
+        CIAOEvents.cpp
+        CIAOEvents_Handler.cpp
+        }
+
+  Header_Files {
+  }
+}
+
+project (CIAO_Events_Handlers_Tests) : ciao_component_dnc, xerces {
+  exename = test
+  after    += CIAO_Events_Handlers
+//  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
+  macros   += XML_USE_PTHREADS
+  requires += exceptions
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  libs     += CIAO_DnC_Server TAO_IFR_Client CIAO_Events_Handlers CIAO_XML_Utils
+
+  Source_Files {
+    test.cpp
+  }
+}
