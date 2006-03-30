@@ -1,4 +1,9 @@
-Thu Mar 30 11:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Mar 30 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional_NestedUpcall/run_test.pl:
+          Updated for VxWorks
+
+Thu Mar 30 10:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Transport.cpp:
           Fixed incorrect debug statements
