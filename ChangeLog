@@ -1,3 +1,10 @@
+Thu Mar 30 00:46:52 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/compiler.m4:
+        
+          Change the default of --enable-symbol-visibility option from yes
+          to no.
+
 Wed Mar 29 22:33:36 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
