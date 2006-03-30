@@ -55,7 +55,7 @@ int Tree_Example::run ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using find: \n")));
   for (int j = 0; j < 100; j++)
     {
-      DataElement* d;
+      DataElement* d = 0;
       int result = tree_.find (j, d);
       if (result != 0)
         {

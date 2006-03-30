@@ -655,7 +655,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
                          this->lock_,
                          reinterpret_cast<INT_ID*> (0L));
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry = 0;
   int result = this->find_i (k, entry);
   return (result == 0) ? &(entry->item ()) : 0;
 }
