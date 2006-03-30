@@ -376,7 +376,18 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef CRITICAL_SECTION ACE_thread_mutex_t;
+// Although a Windows CRITICAL_SECTION is natively recursive, the details
+// for finding out important information (such as the recursion count)
+// vary between Windows editions (desktop vs. CE) as well as between
+// versions (2000 vs 2003 vs XP vs XP-64). Since we need things like the
+// recursion count to properly implement recursive condition variables,
+// wrap some extra data into the type used as a thread mutex on Windows.
+typedef struct
+{
+  CRITICAL_SECTION cs_;
+  int  recursion_count_;
+  bool is_owned_;
+} ACE_thread_mutex_t; 
 
 typedef struct
 {
@@ -385,7 +396,7 @@ typedef struct
   union
   {
     HANDLE proc_mutex_;
-    CRITICAL_SECTION thr_mutex_;
+    ACE_thread_mutex_t thr_mutex_;
   };
 } ACE_mutex_t;
 

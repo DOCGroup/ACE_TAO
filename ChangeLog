@@ -1,3 +1,21 @@
+Thu Mar 30 18:51:13 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Unload_libACE.cpp: Fixed broken fprintf() call.
+
+        * ace/OS_NS_Thread.h (ACE_thread_mutex_t):
+        * ace/OS_NS_Thread.inl: For Windows, replace CRITICAL_SECTION with a
+          struct including a CRITICAL_SECTION as well as a recursion count.
+          This allows us to properly do recursion in combination with a
+          condition variable across all Windows editions and versions.
+
+        * ace/Recursive_Thread_Mutex.cpp (get_nesting_level): This is now
+          possible for platforms with ACE_HAS_RECURSIVE_THREAD_MUTEX.
+
+          Thanks to Adrian Tulloch <my-ace-sub at reyes-tulloch dot com> for
+          these improvements.
+
+        * THANKS: Added Adrian Tulloch to the Hall of Fame.
+
 Thu Mar 30 17:04:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb
