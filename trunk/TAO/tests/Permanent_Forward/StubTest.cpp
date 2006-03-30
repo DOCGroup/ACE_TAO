@@ -77,7 +77,7 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
   CORBA::String_var str = orb->object_to_string (obj ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  CORBA::Object_var obj_copy = orb->string_to_object (str ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj_copy = orb->string_to_object (str.in () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
   TAO_Stub *stub_copy = obj_copy->_stubobj ();
