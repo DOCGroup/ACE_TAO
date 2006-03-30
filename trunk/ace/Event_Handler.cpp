@@ -254,12 +254,15 @@ ACE_THR_FUNC_RETURN
 ACE_Event_Handler::read_adapter (void *args)
 {
   ACE_Event_Handler *this_ptr = static_cast<ACE_Event_Handler *> (args);
+  Ace_Reactor *r = this_ptr->reactor ();
 
   while (this_ptr->handle_input (ACE_STDIN) != -1)
     continue;
 
   this_ptr->handle_close (ACE_STDIN, ACE_Event_Handler::READ_MASK);
-  this_ptr->reactor ()->notify ();
+  // It's possible for handle_close() to "delete this" so we need to
+  // cache the reactor pointer and use it here. 
+  r->notify ();
 
   return 0;
 }
