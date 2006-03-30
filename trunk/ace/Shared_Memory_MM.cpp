@@ -89,7 +89,7 @@ void *
 ACE_Shared_Memory_MM::malloc (size_t)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::malloc");
-  void *addr;
+  void *addr = 0;
 
   return this->shared_memory_ (addr) == -1 ? 0 : addr;
 }

@@ -1784,7 +1784,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   VALUE_HASH::ITERATOR value_iter = value_hash_map->begin ();
   while (!value_iter.done ())
     {
-      VALUE_HASH::ENTRY* value_entry;
+      VALUE_HASH::ENTRY* value_entry = 0;
       if (!value_iter.next (value_entry))
         return 1;
 
@@ -1844,7 +1844,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
     }
 
   // Get the next entry
-  ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>* entry;
+  ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>* entry = 0;
 
   if (!pKey->value_iter_->next (entry))
     return 1;
@@ -1887,7 +1887,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
     }
 
   // Get the next entry
-  ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int>* entry;
+  ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int>* entry = 0;
   if (!pKey->section_iter_->next (entry))
     return 1;
 
