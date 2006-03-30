@@ -103,7 +103,7 @@ TAO_IIOP_Transport::recv (char *buf,
     {
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv_i, ")
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
     }
@@ -408,7 +408,8 @@ TAO_IIOP_Transport::get_listen_point (
 
           if (TAO_debug_level >= 5)
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO (%P:%t) Listen_Point_List[%d] = <%s:%d>"),
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%s:%d>\n"),
                         len,
                         point.host.in (),
                         point.port));
