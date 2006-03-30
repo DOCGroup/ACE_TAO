@@ -1,3 +1,9 @@
+Thu Mar 30 17:23:12 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers.mpc
+        
+          Added link dependency to CIAO_Events_Handler project.
+
 Thu Mar 30 16:38:25 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * CIAO_DAnCE.mwc
