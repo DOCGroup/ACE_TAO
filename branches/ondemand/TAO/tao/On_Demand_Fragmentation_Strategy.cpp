@@ -6,7 +6,7 @@
 #include "tao/Transport.h"
 #include "tao/CDR.h"
 #include "tao/Pluggable_Messaging.h"
-
+#include "tao/debug.h"
 
 TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
   TAO_Transport * transport,
@@ -61,6 +61,10 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   // since fragments must be aligned on an 8 byte boundary.
   if (aligned_length > this->max_message_size_)
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Sending fragment of size %d\n",
+                    cdr.total_length ()));
+
       // Pad the outgoing fragment if necessary.
       if (cdr.align_write_ptr (ACE_CDR::MAX_ALIGNMENT) != 0)
         return -1;
@@ -74,7 +78,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
       if (this->transport_->send_message (cdr,
                                           cdr.stub (),
                                           cdr.message_semantics (),
-                                          cdr.timeout ()) != 0
+                                          cdr.timeout ()) == -1
 
           // Now generate a fragment header.
           || this->transport_->messaging_object ()->generate_fragment_header (

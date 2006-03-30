@@ -214,9 +214,9 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
 {
   if (this->fragmentation_strategy_)
     {
-      return this->fragmentation_strategy_->fragment (*this,
-                                                      pending_alignment,
-                                                      pending_length);
+      return (this->fragmentation_strategy_->fragment (*this,
+                                                       pending_alignment,
+                                                       pending_length) == 0);
     }
 
   return true;  // Success.

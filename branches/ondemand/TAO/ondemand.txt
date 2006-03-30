@@ -1,3 +1,10 @@
+Thu Mar 30 12:41:17 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/CDR.cpp:
+        * tao/On_Demand_Fragmentation_Strategy.cpp:
+
+          Fixed checks for return values.
+
 Wed Mar 22 20:13:22 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/Messaging/Asynch_Invocation.cpp (remote_invocation):
@@ -32,16 +39,16 @@ Wed Mar 22 01:33:47 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
         * tao/default_resource.cpp:
         * tao/PortableServer/Upcall_Wrapper.cpp:
 
-	  Added remaining code necessary to send fragments through the
-	  underlying transport.
+          Added remaining code necessary to send fragments through the
+          underlying transport.
 
-	  Added missing outgoing GIOP reply fragment support.
+          Added missing outgoing GIOP reply fragment support.
 
 Tue Mar 21 22:18:45 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Document new "-ORBMaxMessageSize" ORB option.
+          Document new "-ORBMaxMessageSize" ORB option.
 
 Tue Mar 21 15:16:43 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
