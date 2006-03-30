@@ -50,6 +50,11 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
+  ACE_NEW_THROW_EX (this->esd_,
+                    CIAO::DAnCE::EventServiceDeploymentDescriptions (),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
   for (CORBA::ULong i = 0; i < this->plan_.infoProperty.length (); ++i)
     {
       if (ACE_OS::strcmp (this->plan_.infoProperty[i].name.in (),
@@ -660,7 +665,7 @@ install_all_es (void)
           // Construct the ESInstallationInfos data
           Deployment::ESInstallationInfos_var es_infos;
           ACE_NEW (es_infos,
-                    Deployment::ESInstallationInfos);
+                   Deployment::ESInstallationInfos);
 
           es_infos->length (1);
           (*es_infos)[0].id = this->esd_[j].name.in ();
@@ -678,7 +683,7 @@ install_all_es (void)
                           "CIAO::DomainApplicationManager_Impl::install_all_es -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
-                            this->esd_[j].node.in ()));
+                           this->esd_[j].node.in ()));
 
               ACE_CString error
                 ("Unable to resolve a reference to NodeManager: ");
