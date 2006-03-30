@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 		       "in local_fifo_client_test\n",
                        rendezvous_fifo),
                       -1);
-  void *cp;
+  void *cp = 0;
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
