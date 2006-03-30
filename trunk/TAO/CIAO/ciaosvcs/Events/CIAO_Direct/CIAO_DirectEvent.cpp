@@ -4,13 +4,40 @@
 
 namespace CIAO
 {
-
   DirectEventService::DirectEventService (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa)
     : orb_ (CORBA::ORB::_duplicate (orb))
     , root_poa_ (PortableServer::POA::_duplicate (poa))
   {
+  }
+
+  Supplier_Config_ptr
+  DirectEventService::create_supplier_config (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    Direct_Supplier_Config_impl * supplier_config = 0;
+    ACE_NEW_RETURN (supplier_config,
+                    Direct_Supplier_Config_impl (this->root_poa_.in ()),
+                    Supplier_Config::_nil ());
+    Direct_Supplier_Config_var return_direct =
+      supplier_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    return return_direct._retn ();
+  }
+
+  Consumer_Config_ptr
+  DirectEventService::create_consumer_config (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    Direct_Consumer_Config_impl * consumer_config = 0;
+    ACE_NEW_RETURN (consumer_config,
+                    Direct_Consumer_Config_impl (this->root_poa_.in ()),
+                    Consumer_Config::_nil ());
+    Direct_Consumer_Config_var return_direct =
+      consumer_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    return return_direct._retn ();
   }
 
   void
@@ -32,13 +59,19 @@ namespace CIAO
       consumer_config->consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
+    //@@@ Needs some reference counting logic here, since we really
+    // don't want an EventConsumerBase object to be cached more
+    // than once. We could use two ACE_Hash_Manager_Maps, one to
+    // cache the object reference, and the other one keeps track of
+    // the reference count of each object.
+
     this->consumer_array_.size (this->consumer_array_.size () + 1);
 
     this->consumer_array_.set (Components::EventConsumerBase::_duplicate (consumer.in ()),
                                this->consumer_array_.size () - 1);
-
   }
 
+  // @@ Need to implement this logic.
   void
   DirectEventService::disconnect_event_consumer (
       const char * connection_id
@@ -48,11 +81,16 @@ namespace CIAO
       Components::InvalidName,
       Components::InvalidConnection))
   {
+    // The connection_id is used to find the event consumer object
+    ACE_DEBUG ((LM_DEBUG,
+      "Direct_Consumer_Config_impl::disconnect_event_consumer() of ID [%s]\n",
+      connection_id));
   }
 
   void
   DirectEventService::disconnect_event_supplier (
-      ACE_ENV_SINGLE_ARG_DECL)
+      const char * connection_id
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       Components::InvalidName,
@@ -220,5 +258,4 @@ namespace CIAO
     this->poa_->deactivate_object (oid);
     this->_remove_ref ();
   }
-
 }

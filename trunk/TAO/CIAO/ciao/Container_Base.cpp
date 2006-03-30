@@ -6,7 +6,6 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
 #include "Servant_Activator.h"
-#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
@@ -14,8 +13,7 @@
 
 namespace CIAO
 {
-
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
   Container::Container (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o)),
@@ -325,7 +323,7 @@ namespace CIAO
             ACE_THROW_RETURN
               (Deployment::UnknownImplId (
                  "Session_Container::ciao_install_home",
-	          exception.c_str ()),
+            exception.c_str ()),
                   Components::CCMHome::_nil ());
           }
 
@@ -626,16 +624,6 @@ namespace CIAO
 
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
-
-    CORBA::String_var str =
-      PortableServer::ObjectId_to_string (oid.in ());
-
-    if (t == Container::Facet_Consumer)
-    {
-      //if (CIAO::debug_level () > 9)
-      //  ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
-      //              str.in ()));
-    }
 
     CORBA::Object_var objref =
       tmp->create_reference_with_id (oid.in (),
