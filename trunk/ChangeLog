@@ -1,9 +1,17 @@
+Thu Mar 30 21:03:27 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Event_Handler.cpp (read_adapter):
+
+          Fixed typo introduced in
+
+          Thu Mar 30 10:24:50 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
 Thu Mar 30 10:24:50 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/Event_Handler.cpp (read_adapter): It was possible for
-	  handle_close() to "delete this" so we need to cache the reactor
- 	  pointer and use it here.  Thanks to Yuan <yuanhp_china at
- 	  hotmail dot com> for this fix.
+        * ace/Event_Handler.cpp (read_adapter): It was possible for
+          handle_close() to "delete this" so we need to cache the reactor
+           pointer and use it here.  Thanks to Yuan <yuanhp_china at
+           hotmail dot com> for this fix.
 
 Thu Mar 30 18:51:13 UTC 2006  Steve Huston  <shuston@riverace.com>
 
@@ -29,14 +37,14 @@ Thu Mar 30 17:04:48 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
 
           Modified to support CIAO pub/sub service integration.
-        
+
         * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
-        
+
           Added this mpb file for pub/sub service integration
           in CIAO.
 
 Thu Mar 30 15:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
-  
+
         * tests/Unload_libACE.cpp:
           Corrected missing file handle.
 
