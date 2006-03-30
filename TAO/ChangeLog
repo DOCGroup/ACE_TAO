@@ -1,3 +1,9 @@
+Thu Mar 30 19:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.i:
+          Moved is_permanent_forward_condition out of TAO_HAS_INTERCEPTORS
+          check
+
 Thu Mar 30 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exclusive_TMS.cpp:
