@@ -1,3 +1,14 @@
+Thu Mar 30 14:43:46 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/AttributeSourceEmitters_T.hpp:
+
+          Added 'using namespace StringLiterals;' to this file. Thanks
+          to Nanbor Wang <nanbor@txcorp.com> for pointing out that
+          this line is also necessary on some platforms, in addition
+          to the change of
+
+          Wed Mar 29 20:29:40 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Wed Mar 29 20:29:40 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/AttributeSourceEmitters_T.hpp:
