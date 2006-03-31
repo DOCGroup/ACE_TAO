@@ -103,6 +103,13 @@
 
 #define ACE_HAS_NONCONST_TEMPNAM
 
+// The Borland compiler can't handle assembly in inline methods or
+// templates (E2211). When we build for pentium optimized and we are inlining
+// then we disable inline assembly
+#if defined (ACE_HAS_PENTIUM) && defined(__ACE_INLINE__)
+# define ACE_LACKS_INLINE_ASSEMBLY
+#endif
+
 #if (__BORLANDC__ >= 0x600)
 # define ACE_LACKS_PTRDIFF_T
 # define ACE_PTRDIFF_T_TYPE std::ptrdiff_t

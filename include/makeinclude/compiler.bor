@@ -9,6 +9,7 @@
 # DEBUG - if defined means building with debug information
 # UNICODE - if defined means building unicode
 # CBX - if defined means building with the new CBuilderX preview compiler
+# CPU_FLAG - if defined the flag for CPU optimization
 #
 # Outputs:
 # ~~~~~~~~
@@ -82,6 +83,12 @@ RC = brcc32
 BCB = $(MAKEDIR)\..
 !endif
 
+!ifdef CPU_FLAG
+CPU_CFLAG = $(CPU_FLAG)
+!else
+CPU_CFLAG =
+!endif
+
 !ifdef DEBUG
 !ifdef CBX
 DEBUG_CFLAGS = -v -y -Od -vi- -k -D_DEBUG -DACE_NO_INLINE=1
@@ -139,7 +146,7 @@ DECORATOR_CFLAGS = -DACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\"$(LIB_DECORATOR)\")
 COMMON_CFLAGS = $(QUIET_CFLAGS) $(DEBUG_CFLAGS) $(THREAD_CFLAGS) \
 	$(STATIC_CFLAGS) $(WARNINGS_CFLAGS) $(DEFINES_CFLAGS) \
 	$(MISC_CFLAGS) $(CODEGUARD_CFLAGS) $(UNICODE_CFLAGS) \
-	$(DECORATOR_CFLAGS) $(PCH_CFLAGS)
+        $(DECORATOR_CFLAGS) $(PCH_CFLAGS) $(CPU_CFLAG)
 
 COMMON_LFLAGS = $(DEBUG_LFLAGS) $(STATIC_LFLAGS) -x -w-dup -Gn -L$(BCB)\lib -L$(BCB)\lib\psdk
 
