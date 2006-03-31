@@ -53,7 +53,12 @@ $CL = new PerlACE::Process ("../Generic_Servant/client");
 
 $status = 0;
 
-$SV->Spawn ();
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile_1, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_1>\n";

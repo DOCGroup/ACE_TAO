@@ -52,7 +52,12 @@ unlink $iorfile_2;
 $SV = new PerlACE::Process ("server", "-f $iorfile $extra_args");
 $CL = new PerlACE::Process ("../Generic_Servant/client");
 
-$SV->Spawn ();
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile_1, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_1>\n";
