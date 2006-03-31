@@ -1,3 +1,10 @@
+Fri Mar 31 11:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl:
+          Check the return value of the spawn of the server and don't try
+          to also run the client on the vxworks target, the server is the
+          side of the test that runs there
+
 Fri Mar 31 11:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Adapter_Activator/run_test.pl:
