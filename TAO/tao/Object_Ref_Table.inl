@@ -14,9 +14,18 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 ACE_INLINE int
 TAO_Object_Ref_Table::register_initial_reference (
   const char *id,
-  CORBA::Object_ptr obj)
+  CORBA::Object_ptr obj,
+  bool rebind)
 {
-  return this->bind (id, obj);
+  if (rebind)
+    {
+      if (this->unbind (id) == -1)
+        return -1;
+      else
+        return this->bind (id, obj);
+    }
+  else
+    return this->bind (id, obj);
 }
 
 ACE_INLINE CORBA::Object_ptr

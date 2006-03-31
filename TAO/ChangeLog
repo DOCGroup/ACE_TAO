@@ -1,3 +1,12 @@
+Fri Mar 31 14:30:24 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* tao/Object_Ref_Table.{h,inl} (register_initial_reference): 
+	  Added a new parameter called "rebind" that defaults to false.
+  	  If this parameter is true then rebind() will be used instead of
+ 	  bind to make it possible to update the initial references
+ 	  dynamically.  Thanks to Bob Ronak <ronak2121 at gmail dot com>
+ 	  for suggesting this.
+  
 Fri Mar 31 17:19:13 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport.cpp:
