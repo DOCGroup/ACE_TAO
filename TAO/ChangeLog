@@ -1,3 +1,16 @@
+Fri Mar 31 11:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/Adapter_Activator/run_test.pl:
+        * examples/POA/Default_Servant/run_test.pl:
+        * examples/POA/Explicit_Activation/run_test.pl:
+        * examples/POA/Loader/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/Reference_Counted_Servant/run_test.pl:
+          Check the return value of the spawn of the server, if this is
+          not equal zero just exit directly. Speeds up the tests when
+          there are no executables build
+
 Fri Mar 31 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Wait_On_Read.cpp:
