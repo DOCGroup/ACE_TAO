@@ -9,8 +9,8 @@
  *  @author James CE Johnson <jcej@lads.com>
  *  @author Jim Crossley <jim@lads.com>
  *
- * This file should not be #included directly by application
- * code. Instead, it should #include "ace/IOStream.h".  That's because
+ * This file should not be included directly by application
+ * code. Instead, it should include "ace/IOStream.h".  That's because
  * we only put some conditional compilations in that file.
  */
 //=============================================================================
