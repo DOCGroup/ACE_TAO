@@ -633,8 +633,20 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   TAO_Flushing_Strategy *flushing_strategy =
     this->orb_core ()->flushing_strategy ();
 
-  (void) flushing_strategy->schedule_output (this);
+  int result = flushing_strategy->schedule_output (this);
 
+  if (result == -1)
+    {
+      if (TAO_debug_level > 5)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Transport[%d]::send_reply_"
+		      "message_i dequeuing msg due to schedule_output "
+		      "failure\n", this->id ()));
+	}
+      msg->remove_from_list (this->head_, this->tail_);
+      msg->destroy ();
+    }
+  
   return 1;
 }
 
@@ -675,6 +687,27 @@ TAO_Transport::schedule_output_i (void)
 {
   ACE_Event_Handler *eh = this->event_handler_i ();
   ACE_Reactor *reactor = eh->reactor ();
+
+  // Check to see if our event handler is still registered with the 
+  // reactor.  It's possible for another thread to have run close_connection()
+  // since we last used the event handler.
+  ACE_Event_Handler *found = reactor->find_handler (eh->get_handle ());
+  if (found != eh) 
+    {
+      if(TAO_debug_level > 3)
+	{
+	  ACE_DEBUG ((LM_DEBUG, 
+		      "TAO (%P|%t) - Transport[%d]::schedule_output_i "
+		      "event handler not found in reactor, returning -1\n",
+		      this->id ()));
+	}
+      if (found)
+	{
+	  found->remove_reference ();
+	}
+      return -1;
+    }
+  found->remove_reference ();
 
   if (TAO_debug_level > 3)
     {
