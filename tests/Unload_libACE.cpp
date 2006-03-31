@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-#if defined (__GNUC__) || defined (__hpux) || defined (__SUNPRO_CC)
+#if (defined (__GNUC__) && ! defined (ACE_VXWORKS)) || defined (__hpux) || defined (__SUNPRO_CC)
 
 #include <errno.h>
 #include <dlfcn.h>
@@ -101,7 +101,7 @@ time_stamp ( char date_and_time[], int date_and_timelen, int format )
 }
 
 int
-run_main ( int, char ** )
+main ( int, char ** )
 {
    char const *const program = "UnloadLibACE";
 
@@ -199,7 +199,7 @@ run_main ( int, char ** )
 }
 #else
 int
-run_main ( int, char ** )
+main ( int, char ** )
 {
    char const *const program = "UnloadLibACE";
 
@@ -217,4 +217,4 @@ run_main ( int, char ** )
    }
    return 0;
 }
-#endif /* (__GNUC__) || (__hpux) || (__SUNPRO_CC) */
+#endif /* (__GNUC__) && ! (ACE_VXWORKS)) || (__hpux) || (__SUNPRO_CC) */

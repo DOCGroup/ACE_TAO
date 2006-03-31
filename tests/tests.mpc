@@ -1304,6 +1304,5 @@ project(Library Unload) {
   exename = UnloadLibACE
   Source_Files {
     Unload_libACE.cpp
-    $(ACE_ROOT)/tests/Main.cpp
   }
 }

@@ -1,3 +1,11 @@
+Fri Mar 31 13:59:04 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * tests/Unload_libACE.cpp:
+          Add guard for ACE_VXWORKS and declare local main().
+
+        * tests/tests.mpc:
+          Remove Main.cpp reference from the Library Unload project.
+
 Fri Mar 31 11:41:54 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.h:
