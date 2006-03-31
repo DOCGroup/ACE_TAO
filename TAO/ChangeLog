@@ -1,3 +1,13 @@
+Fri Mar 31 17:19:13 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Fixes a problem where the server would terminate
+          when the client process is killed.  This was due to one thread 
+          closing a transport while another was still using it.
+          With this change, the transport will check if the handler is 
+          still registered in the reactor before scheduling output.
+
 Fri Mar 31 15:17:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/included.idl:
