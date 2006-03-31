@@ -1,3 +1,20 @@
+Fri Mar 31 10:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_List_T.cpp:
+          Use prefix increment instead of postfix
+
+        * ace/Timer_Hash_T.cpp:
+          Initialise pointer with 0
+
+        * ace/Reactor_Token_T.h:
+          Converted some documentation to doxygen style
+
+        * ace/Log_Record.cpp:
+          Initialise some pointers with 0, made some local variables const.
+
+        * ace/IOStream_T.h:
+          Fixed some doxygen warnings
+
 Fri Mar 31 08:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
