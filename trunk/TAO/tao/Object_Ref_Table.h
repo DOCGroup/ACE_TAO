@@ -70,10 +70,11 @@ public:
    * Register an object reference with the table, and map the given
    * ID to it.
    * @retval 0 Success
-   * @retval -1 Duplicate id
+   * @retval -1 Duplicate id if @c rebind is false
    */
   int register_initial_reference (const char * id,
-                                  CORBA::Object_ptr obj);
+                                  CORBA::Object_ptr obj,
+                                  bool rebind = false);
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
