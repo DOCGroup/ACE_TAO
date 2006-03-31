@@ -55,7 +55,12 @@ $CL1 = new PerlACE::Process ("../Generic_Servant/client",
 $CL2 = new PerlACE::Process ("../Generic_Servant/client",
                              "$extra_args $oneway -i $iterations -k file://$iorfile2 -x"); 
 
-$SV->Spawn ();
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile1, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile1>\n";
