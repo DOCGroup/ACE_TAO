@@ -98,7 +98,12 @@ for ($testid = 1; $testid <= 9; ++$testid)
 
   print STDERR "\n\n==== Starting test variant #$testid\n\n";
 
-  $SV->Spawn ();
+  $server = $SV->Spawn ();
+
+  if ($server != 0) {
+      print STDERR "ERROR: server returned $server\n";
+      exit 1;
+  }
 
   if (PerlACE::waitforfile_timed ($file, 15) == -1) {
       print STDERR "ERROR: cannot find file <$file>\n";
@@ -107,16 +112,9 @@ for ($testid = 1; $testid <= 9; ++$testid)
   }
 
   my $CLIENT;
-  if (PerlACE::is_vxworks_test()) {
-    $CLIENT = new PerlACE::ProcessVX ("PI_ProcMode_Remote_TestClient",
-                                      "-p $client_mode " .
-                                      "-ORBobjrefstyle url");
-  }
-  else {
-    $CLIENT = new PerlACE::Process ("PI_ProcMode_Remote_TestClient",
-                                    "-p $client_mode " .
-                                    "-ORBobjrefstyle url");
-  }
+  $CLIENT = new PerlACE::Process ("PI_ProcMode_Remote_TestClient",
+                                  "-p $client_mode " .
+                                  "-ORBobjrefstyle url");
 
   my $client_status = $CLIENT->SpawnWaitKill (5);
 
