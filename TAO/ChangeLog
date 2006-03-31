@@ -1,3 +1,19 @@
+Fri Mar 31 15:17:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/including.idl:
+
+          Added valuetype IDL example that is declared in one file, which
+          is included in another where the valuetype is used in a sequence.
+          This example tests whether the inclusion of Value_VarOut_T.h
+          occurs soon enough in the translation unit to be seen when the
+          sequence template class is instantiated, and to make sure the
+          change in
+
+          Thu Mar 30 20:21:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          survives when the TAO sequence overhaul is integrated.
+
 Fri Mar 31 11:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl:
