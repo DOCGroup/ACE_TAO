@@ -201,7 +201,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       || ACE_BIT_ENABLED (verbose_flag,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
-      time_t now = this->secs_;
+      time_t const now = this->secs_;
       ACE_TCHAR ctp[26]; // 26 is a magic number...
 
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
@@ -256,7 +256,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
-  ACE_TCHAR* verbose_msg;
+  ACE_TCHAR* verbose_msg = 0;
   ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
   int result = this->format_msg (host_name,
@@ -291,10 +291,10 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        ACE_OSTREAM_TYPE &s)
 {
-  ACE_TCHAR* verbose_msg;
+  ACE_TCHAR* verbose_msg = 0;
   ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
-  int result = this->format_msg (host_name, verbose_flag, verbose_msg);
+  int const result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
   if (result == 0)
     {

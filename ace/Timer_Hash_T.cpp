@@ -711,7 +711,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
 
   int number_of_timers_expired = 0;
 
-  ACE_Timer_Node_T<TYPE> *expired;
+  ACE_Timer_Node_T<TYPE> *expired = 0;
 
   // Go through the table and expire anything that can be expired
 
