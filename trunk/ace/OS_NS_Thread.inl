@@ -593,8 +593,33 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // Windows need special handling since it has recursive mutexes, but
   // does not integrate them into a condition variable.
 #    if defined (ACE_WIN32)
+  // For Windows, the OS takes care of the mutex and its recursion. We just
+  // need to release the lock one fewer times than this thread has acquired
+  // it. Remember how many times, and reacquire it that many more times when
+  // the condition is signaled.
+  //
+  // For WinCE, the situation is a bit trickier. CE doesn't have
+  // RecursionCount, and LockCount is not an indicator of recursion on WinCE;
+  // instead, see when it's unlocked by watching the OwnerThread, which will
+  // change to something other than the current thread when it's been
+  // unlocked "enough" times. Note that checking for 0 (unlocked) is not
+  // sufficient. Another thread may acquire the lock between our unlock and
+  // checking the OwnerThread. So grab our thread ID value first, then
+  // compare to it in the loop condition.
+#      if defined (ACE_HAS_WINCE)
+  ACE_thread_t me = ACE_OS::thr_self ();
+#      endif /* ACE_HAS_WINCE */
+
   state.relock_count_ = 0;
-  while (m->is_owned_ && m->recursion_count_ > 1) 
+  while (m->LockCount > 0
+#      if defined (ACE_HAS_WINCE)
+         // Although this is a thread ID, OwnerThread's type is HANDLE.
+         // Not sure if this is a problem, but it appears to work.
+         && m->OwnerThread == (HANDLE)me
+#      else
+         && m->RecursionCount > 1
+#      endif
+         )
     {
       // This may fail if the current thread doesn't own the mutex. If it
       // does fail, it'll be on the first try, so don't worry about resetting
@@ -3530,9 +3555,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
   ACE_OS_TRACE ("ACE_OS::thread_mutex_destroy");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS)
-  m->is_owned_ = false;
-  m->recursion_count_ = 0;
-  ::DeleteCriticalSection (&(m->cs_)); 
+  ::DeleteCriticalSection (m);
   return 0;
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
@@ -3559,9 +3582,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
-  m->is_owned_ = false;
-  m->recursion_count_ = 0;
-  ::InitializeCriticalSection (&(m->cs_));
+  ::InitializeCriticalSection (m);
   return 0;
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
@@ -3595,9 +3616,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
-  m->is_owned_ = false;
-  m->recursion_count_ = 0;
-  ::InitializeCriticalSection (&(m->cs_));
+  ::InitializeCriticalSection (m);
   return 0;
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
@@ -3626,11 +3645,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_lock");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS)
-  ::EnterCriticalSection (&(m->cs_));
-  // Now we own the critical section, it's safe to modify the mutex's
-  // internal fields.
-  m->is_owned_ = true;
-  m->recursion_count_++; 
+  ::EnterCriticalSection (m);
   return 0;
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
   return ACE_OS::mutex_lock (m);
@@ -3683,13 +3698,9 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS)
 #   if defined (ACE_HAS_WIN32_TRYLOCK)
-  BOOL result = ::TryEnterCriticalSection (&m->cs_);
+  BOOL result = ::TryEnterCriticalSection (m);
   if (result == TRUE)
-    {
-      m->is_owned_ = true;
-      m->recursion_count_++;
-      return 0;
-    }
+    return 0;
   else
     {
       errno = EBUSY;
@@ -3715,10 +3726,7 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
   ACE_OS_TRACE ("ACE_OS::thread_mutex_unlock");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS)
-  m->recursion_count_--;
-  if (0 == m->recursion_count_)
-    m->is_owned_ = false;
-  ::LeaveCriticalSection (&(m->cs_)); 
+  ::LeaveCriticalSection (m);
   return 0;
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
   return ACE_OS::mutex_unlock (m);
