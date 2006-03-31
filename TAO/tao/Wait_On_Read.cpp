@@ -125,7 +125,7 @@ TAO_Wait_On_Read::register_handler (void)
 bool
 TAO_Wait_On_Read::non_blocking (void) const
 {
-  return 0;
+  return false;
 }
 
 bool
