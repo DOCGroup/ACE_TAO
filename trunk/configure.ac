@@ -247,9 +247,6 @@ dnl Platform specific libraries needed for ACE's autoconf tests
 dnl that currently do not have tests themselves.
 dnl Platform specific flags
 case "$host" in
-  *freebsd*)
-    LIBS="$LIBS -lcompat"
-    ;;
   *osf3.2*)
     LIBS="$LIBS -lmach -lsys5 -lcxx -lc"
     ;;
