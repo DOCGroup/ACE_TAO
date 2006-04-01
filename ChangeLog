@@ -1,7 +1,19 @@
+Sat Apr  1 17:14:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/compiler.m4:
+
+          Removed special cases for *freebsd*.  Thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> who sent patches for
+          Debian GNU/kFreeBSD systems (FreeBSD kernel / GNU libc).  The
+          changes added *k*bsd-gnu patterns to override the special cases
+          matched by *freebsd*.  However, further investigation has proved
+          that they were not needed for FreeBSD either.
+
 Fri Mar 31 23:51:48 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
+
           Changed to #include <sys/param.h> in the <sys/sysctl.h>
           feature test, avoiding the autoconf "present but cannot
           be compiled" warning.
