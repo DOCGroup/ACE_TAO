@@ -69,7 +69,7 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->server_inline_;
   delete this->server_template_inline_;
   delete this->anyop_source_;
-#if !defined (linux) && !defined (__QNX__)
+#if !defined (linux) && !defined (__QNX__) && !defined(__GLIBC__)
   // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
 #endif /* ! linux */
@@ -1373,7 +1373,7 @@ TAO_CodeGen::end_anyop_source (void)
 void
 TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 {
-#if !defined (linux) && !defined (__QNX__)
+#if !defined (linux) && !defined (__QNX__) && !defined (__GLIBC__)
   // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
 #endif /* ! linux */
