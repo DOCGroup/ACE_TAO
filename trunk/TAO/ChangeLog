@@ -1,20 +1,29 @@
+Sat Apr  1 18:41:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Crash when deleting this->gperf_input_stream_ occurs on other
+          systems that use glibc (like GNU/kFreeBSD), not just on linux.
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for this fix.
+
 Fri Mar 31 14:30:24 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* tao/Object_Ref_Table.{h,inl} (register_initial_reference): 
+	* tao/Object_Ref_Table.{h,inl} (register_initial_reference):
 	  Added a new parameter called "rebind" that defaults to false.
   	  If this parameter is true then rebind() will be used instead of
  	  bind to make it possible to update the initial references
  	  dynamically.  Thanks to Bob Ronak <ronak2121 at gmail dot com>
  	  for suggesting this.
-  
+
 Fri Mar 31 17:19:13 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport.cpp:
 
           Fixes a problem where the server would terminate
-          when the client process is killed.  This was due to one thread 
+          when the client process is killed.  This was due to one thread
           closing a transport while another was still using it.
-          With this change, the transport will check if the handler is 
+          With this change, the transport will check if the handler is
           still registered in the reactor before scheduling output.
 
 Fri Mar 31 15:17:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
