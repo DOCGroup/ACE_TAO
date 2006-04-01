@@ -177,16 +177,6 @@ dnl @todo Clean up / consolidate these conditionals
      esac
      ;;
    *freebsd*)
-     case "$CXX" in
-       *)
-         if test "$GXX" = yes; then
-           CXXFLAGS="$CXXFLAGS"
-           ACE_CXXFLAGS="$ACE_CXXFLAGS -w -fno-strict-prototypes"
-           DCXXFLAGS=""
-           OCXXFLAGS=""
-         fi
-         ;;
-     esac
      ;;
    *hpux*)
      # In case anything here or in the config depends on OS
