@@ -1,11 +1,18 @@
+Sat Apr  1 18:56:25 UTC 2006  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/README:
+
+          Added a README file explaining the features supported by the TAO
+          Load Balancing service and the future work that is targeted.
+
 Sat Apr  1 18:43:21 UTC 2006  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/README:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/README:
 
           Added README files for the tests checking the application
-          controlled and infrastructure controlled group membership of the
-          TAO Load Balancing service.
+          controlled and infrastructure controlled group membership
+          support of the TAO Load Balancing service.
 
 Sat Apr  1 18:41:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
