@@ -662,6 +662,9 @@ ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [],
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
+#ifndef ACE_LACKS_SYS_PARAM_H
+# include <sys/param.h>
+#endif
 ])
 
 ACE_CHECK_LACKS_HEADERS(sys/time.h)

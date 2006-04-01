@@ -1,3 +1,11 @@
+Fri Mar 31 23:51:48 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Changed to #include <sys/param.h> in the <sys/sysctl.h>
+          feature test, avoiding the autoconf "present but cannot
+          be compiled" warning.
+
 Fri Mar 31 15:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
