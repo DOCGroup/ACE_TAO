@@ -113,8 +113,7 @@ namespace IIOP
 
   typedef
     TAO_Seq_Out_T<
-        ListenPointList,
-        ListenPointList_var
+        ListenPointList
       >
     ListenPointList_out;
 
@@ -131,7 +130,7 @@ namespace IIOP
         CORBA::ULong max,
         CORBA::ULong length,
         ListenPoint* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ListenPointList (const ListenPointList &);
     ~ListenPointList (void);

@@ -270,8 +270,7 @@ namespace PortableInterceptor
 
   typedef
     TAO_Seq_Out_T<
-        ObjectReferenceTemplateSeq,
-        ObjectReferenceTemplateSeq_var
+        ObjectReferenceTemplateSeq
       >
     ObjectReferenceTemplateSeq_out;
 
@@ -289,7 +288,7 @@ namespace PortableInterceptor
         CORBA::ULong max,
         CORBA::ULong length,
         ObjectReferenceTemplate ** buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ObjectReferenceTemplateSeq (const ObjectReferenceTemplateSeq &);
     ~ObjectReferenceTemplateSeq (void);

@@ -85,8 +85,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        LongLongSeq,
-        LongLongSeq_var
+        LongLongSeq
       >
     LongLongSeq_out;
 
@@ -103,7 +102,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::LongLong* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     LongLongSeq (const LongLongSeq &);
     ~LongLongSeq (void);

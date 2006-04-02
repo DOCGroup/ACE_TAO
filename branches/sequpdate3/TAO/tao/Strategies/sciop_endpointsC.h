@@ -117,8 +117,7 @@ typedef
 
 typedef
   TAO_Seq_Out_T<
-      TAO_SCIOPEndpointSequence,
-      TAO_SCIOPEndpointSequence_var
+      TAO_SCIOPEndpointSequence
     >
   TAO_SCIOPEndpointSequence_out;
 
@@ -135,7 +134,7 @@ public:
       CORBA::ULong max,
       CORBA::ULong length,
       TAO_SCIOP_Endpoint_Info* buffer,
-      CORBA::Boolean release = 0
+      CORBA::Boolean release = false
     );
   TAO_SCIOPEndpointSequence (const TAO_SCIOPEndpointSequence &);
   ~TAO_SCIOPEndpointSequence (void);

@@ -503,8 +503,7 @@ namespace RTScheduling
 
     typedef
       TAO_Seq_Out_T<
-          IdType,
-          IdType_var
+          IdType
         >
       IdType_out;
 
@@ -521,7 +520,7 @@ namespace RTScheduling
           CORBA::ULong max,
           CORBA::ULong length,
           CORBA::Octet* buffer,
-          CORBA::Boolean release = 0
+          CORBA::Boolean release = false
         );
       IdType (const IdType &);
       ~IdType (void);
@@ -601,8 +600,7 @@ namespace RTScheduling
 
     typedef
       TAO_Seq_Out_T<
-          NameList,
-          NameList_var
+          NameList
         >
       NameList_out;
 
@@ -617,7 +615,7 @@ namespace RTScheduling
           CORBA::ULong max,
           CORBA::ULong length,
           char ** buffer,
-          CORBA::Boolean release = 0
+          CORBA::Boolean release = false
         );
       NameList (const NameList &);
       ~NameList (void);

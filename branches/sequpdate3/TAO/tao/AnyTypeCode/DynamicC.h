@@ -104,8 +104,7 @@ namespace Dynamic
 
   typedef
     TAO_Seq_Out_T<
-        ParameterList,
-        ParameterList_var
+        ParameterList
       >
     ParameterList_out;
 
@@ -122,7 +121,7 @@ namespace Dynamic
         CORBA::ULong max,
         CORBA::ULong length,
         Parameter* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ParameterList (const ParameterList &);
     ~ParameterList (void);
@@ -158,8 +157,7 @@ namespace Dynamic
 
   typedef
     TAO_Seq_Out_T<
-        ExceptionList,
-        ExceptionList_var
+        ExceptionList
       >
     ExceptionList_out;
 
@@ -177,7 +175,7 @@ namespace Dynamic
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::TypeCode_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExceptionList (const ExceptionList &);
     ~ExceptionList (void);

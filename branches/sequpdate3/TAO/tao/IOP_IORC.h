@@ -131,8 +131,7 @@ namespace IOP
 
   typedef
     TAO_Seq_Out_T<
-        TaggedProfileSeq,
-        TaggedProfileSeq_var
+        TaggedProfileSeq
       >
     TaggedProfileSeq_out;
 
@@ -149,7 +148,7 @@ namespace IOP
         CORBA::ULong max,
         CORBA::ULong length,
         TaggedProfile* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     TaggedProfileSeq (const TaggedProfileSeq &);
     ~TaggedProfileSeq (void);
@@ -243,8 +242,7 @@ namespace IOP
 
   typedef
     TAO_Seq_Out_T<
-        MultipleComponentProfile,
-        MultipleComponentProfile_var
+        MultipleComponentProfile
       >
     MultipleComponentProfile_out;
 
@@ -261,7 +259,7 @@ namespace IOP
         CORBA::ULong max,
         CORBA::ULong length,
         TaggedComponent* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     MultipleComponentProfile (const MultipleComponentProfile &);
     ~MultipleComponentProfile (void);
@@ -289,8 +287,7 @@ namespace IOP
 
   typedef
     TAO_Seq_Out_T<
-        TaggedComponentList,
-        TaggedComponentList_var
+        TaggedComponentList
       >
     TaggedComponentList_out;
 
@@ -307,7 +304,7 @@ namespace IOP
         CORBA::ULong max,
         CORBA::ULong length,
         TaggedComponent* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     TaggedComponentList (const TaggedComponentList &);
     ~TaggedComponentList (void);
@@ -335,8 +332,7 @@ namespace IOP
 
   typedef
     TAO_Seq_Out_T<
-        TaggedComponentSeq,
-        TaggedComponentSeq_var
+        TaggedComponentSeq
       >
     TaggedComponentSeq_out;
 
@@ -353,7 +349,7 @@ namespace IOP
         CORBA::ULong max,
         CORBA::ULong length,
         TaggedComponent* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     TaggedComponentSeq (const TaggedComponentSeq &);
     ~TaggedComponentSeq (void);
@@ -467,8 +463,7 @@ namespace IOP
 
   typedef
     TAO_Seq_Out_T<
-        ServiceContextList,
-        ServiceContextList_var
+        ServiceContextList
       >
     ServiceContextList_out;
 
@@ -485,7 +480,7 @@ namespace IOP
         CORBA::ULong max,
         CORBA::ULong length,
         ServiceContext* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ServiceContextList (const ServiceContextList &);
     ~ServiceContextList (void);

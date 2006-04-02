@@ -117,8 +117,7 @@ typedef
 
 typedef
   TAO_Seq_Out_T<
-      HTIOPEndpointSequence,
-      HTIOPEndpointSequence_var
+      HTIOPEndpointSequence
     >
   HTIOPEndpointSequence_out;
 
@@ -135,7 +134,7 @@ public:
       CORBA::ULong max,
       CORBA::ULong length,
       HTIOP_Endpoint_Info* buffer,
-      CORBA::Boolean release = 0
+      CORBA::Boolean release = false
     );
   HTIOPEndpointSequence (const HTIOPEndpointSequence &);
   ~HTIOPEndpointSequence (void);

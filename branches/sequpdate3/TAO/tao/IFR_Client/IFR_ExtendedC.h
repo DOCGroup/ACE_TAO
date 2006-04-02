@@ -296,8 +296,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ValueMemberSeq,
-        ValueMemberSeq_var
+        ValueMemberSeq
       >
     ValueMemberSeq_out;
 
@@ -314,7 +313,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ValueMember* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ValueMemberSeq (const ValueMemberSeq &);
     ~ValueMemberSeq (void);

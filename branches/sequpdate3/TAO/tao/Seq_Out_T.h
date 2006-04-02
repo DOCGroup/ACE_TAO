@@ -26,17 +26,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Parametrized implementation of _out class for sequences.
  *
  */
-template <typename T, typename T_var>
+template <typename T>
 class TAO_Seq_Out_T
 {
 public:
   typedef typename T::subscript_type T_elem;
+  typedef typename T::_var_type T_var;
 
   TAO_Seq_Out_T (T *&);
   TAO_Seq_Out_T (T_var &);
-  TAO_Seq_Out_T (const TAO_Seq_Out_T<T,T_var> &);
+  TAO_Seq_Out_T (const TAO_Seq_Out_T<T> &);
 
-  TAO_Seq_Out_T &operator= (const TAO_Seq_Out_T<T,T_var> &);
+  TAO_Seq_Out_T &operator= (const TAO_Seq_Out_T<T> &);
   TAO_Seq_Out_T &operator= (T *);
 
   operator T *& ();

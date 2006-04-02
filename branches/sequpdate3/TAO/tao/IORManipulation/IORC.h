@@ -550,8 +550,7 @@ namespace TAO_IOP
 
     typedef
       TAO_Seq_Out_T<
-          IORList,
-          IORList_var
+          IORList
         >
       IORList_out;
 
@@ -569,7 +568,7 @@ namespace TAO_IOP
           CORBA::ULong max,
           CORBA::ULong length,
           CORBA::Object_ptr* buffer,
-          CORBA::Boolean release = 0
+          CORBA::Boolean release = false
         );
       IORList (const IORList &);
       ~IORList (void);

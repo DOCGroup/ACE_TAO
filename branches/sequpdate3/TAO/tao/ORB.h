@@ -98,8 +98,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ORB_ObjectIdList,
-        ORB_ObjectIdList_var
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
 
@@ -247,8 +246,7 @@ namespace CORBA
 
     typedef
       TAO_Seq_Out_T<
-          RequestSeq,
-          RequestSeq_var
+          RequestSeq
         >
       RequestSeq_out;
 

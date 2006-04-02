@@ -118,8 +118,7 @@ namespace TAO
 
   typedef
     TAO_Seq_Out_T<
-        IIOPEndpointSequence,
-        IIOPEndpointSequence_var
+        IIOPEndpointSequence
       >
     IIOPEndpointSequence_out;
 
@@ -136,7 +135,7 @@ namespace TAO
         CORBA::ULong max,
         CORBA::ULong length,
         IIOP_Endpoint_Info* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     IIOPEndpointSequence (const IIOPEndpointSequence &);
     ~IIOPEndpointSequence (void);

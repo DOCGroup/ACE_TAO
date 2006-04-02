@@ -170,7 +170,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   *os << "* buffer, " << be_nl
-      << "::CORBA::Boolean release = 0" << be_uidt_nl
+      << "::CORBA::Boolean release = false" << be_uidt_nl
       << ");" << be_uidt_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
@@ -257,10 +257,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
     *os << be_nl << be_nl
         << "typedef" << be_idt_nl
         << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-        << node->local_name () << "," << be_nl
-        << node->local_name () << "_var";
-
-    *os << be_uidt_nl
+        << node->local_name () << be_uidt_nl
         << ">" << be_uidt_nl
         << node->local_name () << "_out;" << be_uidt;
 }

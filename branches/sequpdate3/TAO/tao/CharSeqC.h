@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        CharSeq,
-        CharSeq_var
+        CharSeq
       >
     CharSeq_out;
 
@@ -94,7 +93,7 @@ namespace CORBA
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         ::CORBA::Char* buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     CharSeq (const CharSeq &);
     ~CharSeq (void);

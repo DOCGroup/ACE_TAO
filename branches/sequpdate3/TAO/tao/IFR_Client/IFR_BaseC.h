@@ -800,8 +800,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        InterfaceDefSeq,
-        InterfaceDefSeq_var
+        InterfaceDefSeq
       >
     InterfaceDefSeq_out;
 
@@ -819,7 +818,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         InterfaceDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     InterfaceDefSeq (const InterfaceDefSeq &);
     ~InterfaceDefSeq (void);
@@ -921,8 +920,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ValueDefSeq,
-        ValueDefSeq_var
+        ValueDefSeq
       >
     ValueDefSeq_out;
 
@@ -940,7 +938,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ValueDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ValueDefSeq (const ValueDefSeq &);
     ~ValueDefSeq (void);
@@ -1019,8 +1017,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        AbstractInterfaceDefSeq,
-        AbstractInterfaceDefSeq_var
+        AbstractInterfaceDefSeq
       >
     AbstractInterfaceDefSeq_out;
 
@@ -1038,7 +1035,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         AbstractInterfaceDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     AbstractInterfaceDefSeq (const AbstractInterfaceDefSeq &);
     ~AbstractInterfaceDefSeq (void);
@@ -1094,8 +1091,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        LocalInterfaceDefSeq,
-        LocalInterfaceDefSeq_var
+        LocalInterfaceDefSeq
       >
     LocalInterfaceDefSeq_out;
 
@@ -1113,7 +1109,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         LocalInterfaceDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     LocalInterfaceDefSeq (const LocalInterfaceDefSeq &);
     ~LocalInterfaceDefSeq (void);
@@ -1169,8 +1165,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExtInterfaceDefSeq,
-        ExtInterfaceDefSeq_var
+        ExtInterfaceDefSeq
       >
     ExtInterfaceDefSeq_out;
 
@@ -1188,7 +1183,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExtInterfaceDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExtInterfaceDefSeq (const ExtInterfaceDefSeq &);
     ~ExtInterfaceDefSeq (void);
@@ -1244,8 +1239,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExtValueDefSeq,
-        ExtValueDefSeq_var
+        ExtValueDefSeq
       >
     ExtValueDefSeq_out;
 
@@ -1263,7 +1257,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExtValueDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExtValueDefSeq (const ExtValueDefSeq &);
     ~ExtValueDefSeq (void);
@@ -1319,8 +1313,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExtAbstractInterfaceDefSeq,
-        ExtAbstractInterfaceDefSeq_var
+        ExtAbstractInterfaceDefSeq
       >
     ExtAbstractInterfaceDefSeq_out;
 
@@ -1338,7 +1331,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExtAbstractInterfaceDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExtAbstractInterfaceDefSeq (const ExtAbstractInterfaceDefSeq &);
     ~ExtAbstractInterfaceDefSeq (void);
@@ -1394,8 +1387,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExtLocalInterfaceDefSeq,
-        ExtLocalInterfaceDefSeq_var
+        ExtLocalInterfaceDefSeq
       >
     ExtLocalInterfaceDefSeq_out;
 
@@ -1413,7 +1405,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExtLocalInterfaceDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExtLocalInterfaceDefSeq (const ExtLocalInterfaceDefSeq &);
     ~ExtLocalInterfaceDefSeq (void);
@@ -1446,8 +1438,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ContainedSeq,
-        ContainedSeq_var
+        ContainedSeq
       >
     ContainedSeq_out;
 
@@ -1465,7 +1456,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         Contained_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ContainedSeq (const ContainedSeq &);
     ~ContainedSeq (void);
@@ -1534,8 +1525,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        StructMemberSeq,
-        StructMemberSeq_var
+        StructMemberSeq
       >
     StructMemberSeq_out;
 
@@ -1552,7 +1542,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         StructMember* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     StructMemberSeq (const StructMemberSeq &);
     ~StructMemberSeq (void);
@@ -1620,8 +1610,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        InitializerSeq,
-        InitializerSeq_var
+        InitializerSeq
       >
     InitializerSeq_out;
 
@@ -1638,7 +1627,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         Initializer* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     InitializerSeq (const InitializerSeq &);
     ~InitializerSeq (void);
@@ -1709,8 +1698,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExcDescriptionSeq,
-        ExcDescriptionSeq_var
+        ExcDescriptionSeq
       >
     ExcDescriptionSeq_out;
 
@@ -1727,7 +1715,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExceptionDescription* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExcDescriptionSeq (const ExcDescriptionSeq &);
     ~ExcDescriptionSeq (void);
@@ -1796,8 +1784,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExtInitializerSeq,
-        ExtInitializerSeq_var
+        ExtInitializerSeq
       >
     ExtInitializerSeq_out;
 
@@ -1814,7 +1801,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExtInitializer* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExtInitializerSeq (const ExtInitializerSeq &);
     ~ExtInitializerSeq (void);
@@ -1884,8 +1871,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        UnionMemberSeq,
-        UnionMemberSeq_var
+        UnionMemberSeq
       >
     UnionMemberSeq_out;
 
@@ -1902,7 +1888,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         UnionMember* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     UnionMemberSeq (const UnionMemberSeq &);
     ~UnionMemberSeq (void);
@@ -1935,8 +1921,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        EnumMemberSeq,
-        EnumMemberSeq_var
+        EnumMemberSeq
       >
     EnumMemberSeq_out;
 
@@ -1951,7 +1936,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         char ** buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     EnumMemberSeq (const EnumMemberSeq &);
     ~EnumMemberSeq (void);
@@ -2093,8 +2078,7 @@ namespace CORBA
 
     typedef
       TAO_Seq_Out_T<
-          DescriptionSeq,
-          DescriptionSeq_var
+          DescriptionSeq
         >
       DescriptionSeq_out;
 
@@ -2111,7 +2095,7 @@ namespace CORBA
           CORBA::ULong max,
           CORBA::ULong length,
           Description* buffer,
-          CORBA::Boolean release = 0
+          CORBA::Boolean release = false
         );
       DescriptionSeq (const DescriptionSeq &);
       ~DescriptionSeq (void);

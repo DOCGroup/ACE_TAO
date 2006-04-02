@@ -88,8 +88,7 @@ namespace CONV_FRAME
 
   typedef
     TAO_Seq_Out_T<
-        CodeSetIdSeq,
-        CodeSetIdSeq_var
+        CodeSetIdSeq
       >
     CodeSetIdSeq_out;
 
@@ -106,7 +105,7 @@ namespace CONV_FRAME
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::ULong* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     CodeSetIdSeq (const CodeSetIdSeq &);
     ~CodeSetIdSeq (void);

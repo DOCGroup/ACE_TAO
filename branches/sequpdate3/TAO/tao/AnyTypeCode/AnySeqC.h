@@ -88,8 +88,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        AnySeq,
-        AnySeq_var
+        AnySeq
       >
     AnySeq_out;
 
@@ -106,7 +105,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Any* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     AnySeq (const AnySeq &);
     ~AnySeq (void);

@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ShortSeq,
-        ShortSeq_var
+        ShortSeq
       >
     ShortSeq_out;
 
@@ -94,7 +93,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Short* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ShortSeq (const ShortSeq &);
     ~ShortSeq (void);

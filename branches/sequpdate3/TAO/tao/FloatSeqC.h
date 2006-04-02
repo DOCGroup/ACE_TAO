@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        FloatSeq,
-        FloatSeq_var
+        FloatSeq
       >
     FloatSeq_out;
 
@@ -94,7 +93,7 @@ namespace CORBA
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         ::CORBA::Float* buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     FloatSeq (const FloatSeq &);
     ~FloatSeq (void);

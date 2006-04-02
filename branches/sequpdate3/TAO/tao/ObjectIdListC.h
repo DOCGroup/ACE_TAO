@@ -92,8 +92,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ORB_ObjectIdList,
-        ORB_ObjectIdList_var
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
 
@@ -108,7 +107,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         char ** buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ORB_ObjectIdList (const ORB_ObjectIdList &);
     ~ORB_ObjectIdList (void);

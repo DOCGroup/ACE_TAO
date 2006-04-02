@@ -186,8 +186,7 @@ namespace RTCORBA
 
   typedef
     TAO_Seq_Out_T<
-        ThreadpoolLanes,
-        ThreadpoolLanes_var
+        ThreadpoolLanes
       >
     ThreadpoolLanes_out;
 
@@ -204,7 +203,7 @@ namespace RTCORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ThreadpoolLane* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ThreadpoolLanes (const ThreadpoolLanes &);
     ~ThreadpoolLanes (void);
@@ -639,8 +638,7 @@ namespace RTCORBA
 
   typedef
     TAO_Seq_Out_T<
-        ProtocolList,
-        ProtocolList_var
+        ProtocolList
       >
     ProtocolList_out;
 
@@ -657,7 +655,7 @@ namespace RTCORBA
         CORBA::ULong max,
         CORBA::ULong length,
         Protocol* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ProtocolList (const ProtocolList &);
     ~ProtocolList (void);
@@ -2101,8 +2099,7 @@ namespace RTCORBA
 
   typedef
     TAO_Seq_Out_T<
-        PriorityBands,
-        PriorityBands_var
+        PriorityBands
       >
     PriorityBands_out;
 
@@ -2119,7 +2116,7 @@ namespace RTCORBA
         CORBA::ULong max,
         CORBA::ULong length,
         PriorityBand* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     PriorityBands (const PriorityBands &);
     ~PriorityBands (void);

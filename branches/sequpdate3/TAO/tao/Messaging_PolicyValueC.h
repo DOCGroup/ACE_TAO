@@ -115,8 +115,7 @@ namespace Messaging
 
   typedef
     TAO_Seq_Out_T<
-        PolicyValueSeq,
-        PolicyValueSeq_var
+        PolicyValueSeq
       >
     PolicyValueSeq_out;
 
@@ -133,7 +132,7 @@ namespace Messaging
         CORBA::ULong max,
         CORBA::ULong length,
         PolicyValue* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     PolicyValueSeq (const PolicyValueSeq &);
     ~PolicyValueSeq (void);

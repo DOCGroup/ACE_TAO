@@ -1,5 +1,58 @@
+Sun Apr  2 18:56:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp
+        * tao/BooleanSeqC.h
+        * tao/CONV_FRAMEC.h
+        * tao/CharSeqC.h
+        * tao/DomainC.h
+        * tao/DoubleSeqC.h
+        * tao/FloatSeqC.h
+        * tao/IIOPC.h
+        * tao/IIOP_EndpointsC.h
+        * tao/IOP_IORC.h
+        * tao/LongDoubleSeqC.h
+        * tao/LongLongSeqC.h
+        * tao/LongSeqC.h
+        * tao/Messaging_PolicyValueC.h
+        * tao/ORB.h
+        * tao/ObjectIdListC.h
+        * tao/Object_KeyC.h
+        * tao/OctetSeqC.h
+        * tao/Policy_ForwardC.h
+        * tao/Seq_Out_T.h
+        * tao/Seq_Out_T.inl
+        * tao/ServicesC.h
+        * tao/ShortSeqC.h
+        * tao/StringSeqC.h
+        * tao/ULongLongSeqC.h
+        * tao/ULongSeqC.h
+        * tao/UShortSeqC.h
+        * tao/WCharSeqC.h
+        * tao/WStringSeqC.h
+        * tao/AnyTypeCode/AnySeqC.h
+        * tao/AnyTypeCode/DynamicC.h
+        * tao/DynamicAny/DynamicAnyC.h
+        * tao/IFR_Client/IFR_BaseC.h
+        * tao/IFR_Client/IFR_BasicC.h
+        * tao/IFR_Client/IFR_ComponentsC.h
+        * tao/IFR_Client/IFR_ExtendedC.h
+        * tao/IORManipulation/IORC.h
+        * tao/ImR_Client/ImplRepoC.h
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h
+        * tao/PortableServer/PortableServerC.h
+        * tao/RTCORBA/RTCORBAC.h
+        * tao/RTScheduling/RTSchedulerC.h
+        * tao/Strategies/sciop_endpointsC.h
+        * tao/Strategies/uiop_endpointsC.h
+          Simplified TAO_Seq_Out_T to just use one template argument. Updated
+          the IDL compiler for this. Also use false for the release argument
+          of generated sequence constructors and add an argument to
+          _tao_encode/_tao_decode when generated in a header file to help
+          doxygen.
 
+Sat Apr  1 18:56:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/VarOut_T.{h,inl}:
         * tao/Pseudo_VarOut_T.{h,inl}:

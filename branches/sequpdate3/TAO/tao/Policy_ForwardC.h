@@ -106,8 +106,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        PolicyList,
-        PolicyList_var
+        PolicyList
       >
     PolicyList_out;
 
@@ -125,7 +124,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         Policy_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     PolicyList (const PolicyList &);
     ~PolicyList (void);
@@ -153,8 +152,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        PolicyTypeSeq,
-        PolicyTypeSeq_var
+        PolicyTypeSeq
       >
     PolicyTypeSeq_out;
 
@@ -171,7 +169,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::ULong* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     PolicyTypeSeq (const PolicyTypeSeq &);
     ~PolicyTypeSeq (void);

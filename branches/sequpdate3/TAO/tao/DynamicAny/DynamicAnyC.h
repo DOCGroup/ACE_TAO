@@ -1164,8 +1164,7 @@ namespace DynamicAny
 
   typedef
     TAO_Seq_Out_T<
-        NameValuePairSeq,
-        NameValuePairSeq_var
+        NameValuePairSeq
       >
     NameValuePairSeq_out;
 
@@ -1182,7 +1181,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         NameValuePair* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     NameValuePairSeq (const NameValuePairSeq &);
     ~NameValuePairSeq (void);
@@ -1238,8 +1237,7 @@ namespace DynamicAny
 
   typedef
     TAO_Seq_Out_T<
-        NameDynAnyPairSeq,
-        NameDynAnyPairSeq_var
+        NameDynAnyPairSeq
       >
     NameDynAnyPairSeq_out;
 
@@ -1256,7 +1254,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         NameDynAnyPair* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     NameDynAnyPairSeq (const NameDynAnyPairSeq &);
     ~NameDynAnyPairSeq (void);
@@ -1617,8 +1615,7 @@ namespace DynamicAny
 
   typedef
     TAO_Seq_Out_T<
-        AnySeq,
-        AnySeq_var
+        AnySeq
       >
     AnySeq_out;
 
@@ -1635,7 +1632,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Any* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     AnySeq (const AnySeq &);
     ~AnySeq (void);
@@ -1661,8 +1658,7 @@ namespace DynamicAny
 
   typedef
     TAO_Seq_Out_T<
-        DynAnySeq,
-        DynAnySeq_var
+        DynAnySeq
       >
     DynAnySeq_out;
 
@@ -1680,7 +1676,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         DynAny_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     DynAnySeq (const DynAnySeq &);
     ~DynAnySeq (void);

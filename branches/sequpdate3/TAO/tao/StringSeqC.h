@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        StringSeq,
-        StringSeq_var
+        StringSeq
       >
     StringSeq_out;
 
@@ -92,7 +91,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         char ** buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     StringSeq (const StringSeq &);
     ~StringSeq (void);

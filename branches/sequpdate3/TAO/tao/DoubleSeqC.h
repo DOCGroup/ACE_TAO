@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        DoubleSeq,
-        DoubleSeq_var
+        DoubleSeq
       >
     DoubleSeq_out;
 
@@ -94,7 +93,7 @@ namespace CORBA
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         ::CORBA::Double* buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     DoubleSeq (const DoubleSeq &);
     ~DoubleSeq (void);

@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        WStringSeq,
-        WStringSeq_var
+        WStringSeq
       >
     WStringSeq_out;
 
@@ -92,7 +91,7 @@ namespace CORBA
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         ::CORBA::WChar ** buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     WStringSeq (const WStringSeq &);
     ~WStringSeq (void);

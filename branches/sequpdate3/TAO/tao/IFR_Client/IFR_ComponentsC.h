@@ -1718,8 +1718,7 @@ namespace CORBA
 
     typedef
       TAO_Seq_Out_T<
-          ProvidesDescriptionSeq,
-          ProvidesDescriptionSeq_var
+          ProvidesDescriptionSeq
         >
       ProvidesDescriptionSeq_out;
 
@@ -1736,7 +1735,7 @@ namespace CORBA
           CORBA::ULong max,
           CORBA::ULong length,
           ProvidesDescription* buffer,
-          CORBA::Boolean release = 0
+          CORBA::Boolean release = false
         );
       ProvidesDescriptionSeq (const ProvidesDescriptionSeq &);
       ~ProvidesDescriptionSeq (void);
@@ -1769,8 +1768,7 @@ namespace CORBA
 
     typedef
       TAO_Seq_Out_T<
-          UsesDescriptionSeq,
-          UsesDescriptionSeq_var
+          UsesDescriptionSeq
         >
       UsesDescriptionSeq_out;
 
@@ -1787,7 +1785,7 @@ namespace CORBA
           CORBA::ULong max,
           CORBA::ULong length,
           UsesDescription* buffer,
-          CORBA::Boolean release = 0
+          CORBA::Boolean release = false
         );
       UsesDescriptionSeq (const UsesDescriptionSeq &);
       ~UsesDescriptionSeq (void);
@@ -1820,8 +1818,7 @@ namespace CORBA
 
     typedef
       TAO_Seq_Out_T<
-          EventPortDescriptionSeq,
-          EventPortDescriptionSeq_var
+          EventPortDescriptionSeq
         >
       EventPortDescriptionSeq_out;
 
@@ -1838,7 +1835,7 @@ namespace CORBA
           CORBA::ULong max,
           CORBA::ULong length,
           EventPortDescription* buffer,
-          CORBA::Boolean release = 0
+          CORBA::Boolean release = false
         );
       EventPortDescriptionSeq (const EventPortDescriptionSeq &);
       ~EventPortDescriptionSeq (void);

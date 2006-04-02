@@ -2229,8 +2229,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExceptionDefSeq,
-        ExceptionDefSeq_var
+        ExceptionDefSeq
       >
     ExceptionDefSeq_out;
 
@@ -2248,7 +2247,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExceptionDef_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExceptionDefSeq (const ExceptionDefSeq &);
     ~ExceptionDefSeq (void);
@@ -2754,8 +2753,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ParDescriptionSeq,
-        ParDescriptionSeq_var
+        ParDescriptionSeq
       >
     ParDescriptionSeq_out;
 
@@ -2772,7 +2770,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ParameterDescription* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ParDescriptionSeq (const ParDescriptionSeq &);
     ~ParDescriptionSeq (void);
@@ -2817,8 +2815,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ContextIdSeq,
-        ContextIdSeq_var
+        ContextIdSeq
       >
     ContextIdSeq_out;
 
@@ -2833,7 +2830,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         char ** buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ContextIdSeq (const ContextIdSeq &);
     ~ContextIdSeq (void);
@@ -3133,8 +3130,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        RepositoryIdSeq,
-        RepositoryIdSeq_var
+        RepositoryIdSeq
       >
     RepositoryIdSeq_out;
 
@@ -3149,7 +3145,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         char ** buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     RepositoryIdSeq (const RepositoryIdSeq &);
     ~RepositoryIdSeq (void);
@@ -3182,8 +3178,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        OpDescriptionSeq,
-        OpDescriptionSeq_var
+        OpDescriptionSeq
       >
     OpDescriptionSeq_out;
 
@@ -3200,7 +3195,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         OperationDescription* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     OpDescriptionSeq (const OpDescriptionSeq &);
     ~OpDescriptionSeq (void);
@@ -3233,8 +3228,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        AttrDescriptionSeq,
-        AttrDescriptionSeq_var
+        AttrDescriptionSeq
       >
     AttrDescriptionSeq_out;
 
@@ -3251,7 +3245,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         AttributeDescription* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     AttrDescriptionSeq (const AttrDescriptionSeq &);
     ~AttrDescriptionSeq (void);
@@ -3284,8 +3278,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ExtAttrDescriptionSeq,
-        ExtAttrDescriptionSeq_var
+        ExtAttrDescriptionSeq
       >
     ExtAttrDescriptionSeq_out;
 
@@ -3302,7 +3295,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ExtAttributeDescription* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExtAttrDescriptionSeq (const ExtAttrDescriptionSeq &);
     ~ExtAttrDescriptionSeq (void);

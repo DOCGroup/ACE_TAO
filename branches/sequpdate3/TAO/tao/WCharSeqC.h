@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        WCharSeq,
-        WCharSeq_var
+        WCharSeq
       >
     WCharSeq_out;
 
@@ -94,7 +93,7 @@ namespace CORBA
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         ::CORBA::WChar* buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     WCharSeq (const WCharSeq &);
     ~WCharSeq (void);

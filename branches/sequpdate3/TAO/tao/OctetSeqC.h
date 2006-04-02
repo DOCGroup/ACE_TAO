@@ -81,8 +81,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        OctetSeq,
-        OctetSeq_var
+        OctetSeq
       >
     OctetSeq_out;
 
@@ -99,7 +98,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Octet* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     OctetSeq (const OctetSeq &);
     ~OctetSeq (void);

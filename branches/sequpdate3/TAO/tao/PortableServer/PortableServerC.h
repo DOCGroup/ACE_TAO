@@ -104,8 +104,7 @@ namespace PortableServer
 
   typedef
     TAO_Seq_Out_T<
-        POAList,
-        POAList_var
+        POAList
       >
     POAList_out;
 
@@ -123,7 +122,7 @@ namespace PortableServer
         CORBA::ULong max,
         CORBA::ULong length,
         POA_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     POAList (const POAList &);
     ~POAList (void);

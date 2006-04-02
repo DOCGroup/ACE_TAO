@@ -337,8 +337,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        DomainManagerList,
-        DomainManager_var
+        DomainManagerList
       >
     DomainManagerList_out;
 
@@ -355,7 +354,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         DomainManager_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     DomainManagerList (const DomainManagerList &);
     ~DomainManagerList (void);

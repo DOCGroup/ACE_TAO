@@ -76,8 +76,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        BooleanSeq,
-        BooleanSeq_var
+        BooleanSeq
       >
     BooleanSeq_out;
 
@@ -94,7 +93,7 @@ namespace CORBA
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         ::CORBA::Boolean* buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     BooleanSeq (const BooleanSeq &);
     ~BooleanSeq (void);

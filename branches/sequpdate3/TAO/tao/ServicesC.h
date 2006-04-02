@@ -109,8 +109,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ServiceOptionSeq,
-        ServiceOptionSeq_var
+        ServiceOptionSeq
       >
     ServiceOptionSeq_out;
 
@@ -127,7 +126,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::ULong* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ServiceOptionSeq (const ServiceOptionSeq &);
     ~ServiceOptionSeq (void);
@@ -190,8 +189,7 @@ namespace CORBA
 
   typedef
     TAO_Seq_Out_T<
-        ServiceDetailSeq,
-        ServiceDetailSeq_var
+        ServiceDetailSeq
       >
     ServiceDetailSeq_out;
 
@@ -208,7 +206,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ServiceDetail* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ServiceDetailSeq (const ServiceDetailSeq &);
     ~ServiceDetailSeq (void);

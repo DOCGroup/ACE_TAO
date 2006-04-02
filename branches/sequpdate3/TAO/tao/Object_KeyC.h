@@ -85,8 +85,7 @@ namespace TAO
 
   typedef
     TAO_Seq_Out_T<
-        ObjectKey,
-        ObjectKey_var
+        ObjectKey
       >
     ObjectKey_out;
 
@@ -103,7 +102,7 @@ namespace TAO
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Octet* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ObjectKey (const ObjectKey &);
     ~ObjectKey (void);

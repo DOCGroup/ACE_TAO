@@ -277,8 +277,7 @@ namespace ImplementationRepository
 
   typedef
     TAO_Seq_Out_T<
-        EnvironmentList,
-        EnvironmentList_var
+        EnvironmentList
       >
     EnvironmentList_out;
 
@@ -295,7 +294,7 @@ namespace ImplementationRepository
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         EnvironmentVariable* buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     EnvironmentList (const EnvironmentList &);
     ~EnvironmentList (void);
@@ -421,8 +420,7 @@ namespace ImplementationRepository
 
   typedef
     TAO_Seq_Out_T<
-        ServerInformationList,
-        ServerInformationList_var
+        ServerInformationList
       >
     ServerInformationList_out;
 
@@ -439,7 +437,7 @@ namespace ImplementationRepository
         ::CORBA::ULong max,
         ::CORBA::ULong length,
         ServerInformation* buffer,
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean release = false
       );
     ServerInformationList (const ServerInformationList &);
     ~ServerInformationList (void);
