@@ -1,3 +1,9 @@
+Sat Apr  1 19:08:28 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/OS_NS_math.inl: Improved the computations for floor() and ceil().  
+	  Thanks to Abdullah Sowayan <abdullah.sowayan@lmco.com> for this
+ 	  patch.
+
 Sat Apr  1 17:14:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
