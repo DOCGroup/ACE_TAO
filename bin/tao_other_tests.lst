@@ -24,8 +24,8 @@ TAO/performance-tests/Sequence_Latency/Thread_Pool/run_test.pl: !ST !Win32 !DISA
 TAO/performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl: !ST !Win32 !DISABLE_ToFix_LynxOS_PPC
 TAO/performance-tests/Sequence_Latency/AMI/run_test.pl: !MINIMUM !ST !Win32 !DISABLE_ToFix_LynxOS_PPC
 TAO/performance-tests/Sequence_Latency/DSI/run_test.pl: !MINIMUM !Win32 !DISABLE_ToFix_LynxOS_PPC
-TAO/performance-tests/Sequence_Latency/DII/run_test.pl: !MINIMUM !Win32
-TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM !Win32
+TAO/performance-tests/Sequence_Latency/DII/run_test.pl: !MINIMUM !Win32 !DISABLE_ToFix_LynxOS_PPC
+TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM !Win32 !DISABLE_ToFix_LynxOS_PPC
 TAO/performance-tests/Throughput/run_test.pl: !Win32
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl: !Win32
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM !Win32
