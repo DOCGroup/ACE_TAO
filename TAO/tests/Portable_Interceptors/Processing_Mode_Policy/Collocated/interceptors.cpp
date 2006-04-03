@@ -57,11 +57,15 @@ Echo_Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  client_interceptor_check_++;
-
   CORBA::String_var op =
     ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Do not count the _is_a calls
+  if (ACE_OS::strcmp (op.in (), "_is_a") != 0)
+    {
+      client_interceptor_check_++;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request\n"));
@@ -95,11 +99,15 @@ Echo_Client_Request_Interceptor::receive_other (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  client_interceptor_check_++;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Do not count the _is_a calls
+  if (ACE_OS::strcmp (op.in (), "_is_a") != 0)
+    {
+      client_interceptor_check_++;
+    }
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other "
               "from \"%s\"\n",
@@ -112,10 +120,15 @@ Echo_Client_Request_Interceptor::receive_reply (
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  client_interceptor_check_++;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Do not count the _is_a calls
+  if (ACE_OS::strcmp (op.in (), "_is_a") != 0)
+    {
+      client_interceptor_check_++;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply "
@@ -166,10 +179,15 @@ Echo_Client_Request_Interceptor::receive_exception (
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  client_interceptor_check_++;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Do not count the _is_a calls
+  if (ACE_OS::strcmp (op.in (), "_is_a") != 0)
+    {
+      client_interceptor_check_++;
+    }
 
   CORBA::String_var exception_id =
     ri->received_exception_id (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -223,10 +241,15 @@ Echo_Server_Request_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ++server_interceptor_check_;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Do not count the _is_a calls
+  if (ACE_OS::strcmp (op.in (), "_is_a") != 0)
+    {
+      ++server_interceptor_check_;
+    }
 
   PortableInterceptor::ObjectId_var test_oid =
     ri->object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -268,10 +291,15 @@ Echo_Server_Request_Interceptor::send_reply (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ++server_interceptor_check_;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Do not count the _is_a calls
+  if (ACE_OS::strcmp (op.in (), "_is_a") != 0)
+    {
+      ++server_interceptor_check_;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"\n",
@@ -324,10 +352,15 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ++server_interceptor_check_;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Do not count the _is_a calls
+  if (ACE_OS::strcmp (op.in (), "_is_a") != 0)
+    {
+      ++server_interceptor_check_;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_exception "
