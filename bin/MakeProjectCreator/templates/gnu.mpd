@@ -379,32 +379,33 @@ include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
 endif
 
 <%foreach(source_files)%>
+<%if(flag_overrides(source_file, buildflags))%>
+$(VDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
+	@$(MKDIR) $(VDIR)<%dirname(source_file)%>
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%flag_overrides(source_file, buildflags)%> $(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
+
+ifneq ($(VSHDIR), $(VDIR))
+$(VSHDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
+	@$(MKDIR) $(VSHDIR)<%dirname(source_file)%>
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%flag_overrides(source_file, buildflags)%> $(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+endif
+
+<%else%>
 <%if(dirname(source_file) && !contains(source_file, \.\./))%>
 <%if(starts_with(source_file, \$) || !ends_with(source_file, \.cpp))%>
-<%if(ends_with(source_file, \.c))%>
 $(VDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
 	@$(MKDIR) $(VDIR)<%dirname(source_file)%>
-	$(COMPILE.c) $(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%>$(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
 ifneq ($(VSHDIR), $(VDIR))
 $(VSHDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
 	@$(MKDIR) $(VSHDIR)<%dirname(source_file)%>
-	$(COMPILE.c) $(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+	<%if(ends_with(source_file, \.c))%>$(COMPILE.c)<%else%>$(COMPILE.cc)<%endif%> <%if(flag_overrides(source_file, buildflags))%><%flag_overrides(source_file, buildflags)%> <%endif%>$(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 endif
-<%else%>
-$(VDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
-	@$(MKDIR) $(VDIR)<%dirname(source_file)%>
-	$(COMPILE.cc) $(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
-	${MVCMD}
 
-ifneq ($(VSHDIR), $(VDIR))
-$(VSHDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
-	@$(MKDIR) $(VSHDIR)<%dirname(source_file)%>
-	$(COMPILE.cc) $(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
-endif
 <%endif%>
-
 <%endif%>
 <%endif%>
 <%endfor%>
