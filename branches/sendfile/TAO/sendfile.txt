@@ -1,7 +1,13 @@
+Mon Apr  3 13:55:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.cpp:
+          Const improvements
+
 Mon Apr  3 12:58:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.cpp:
-          The option ORBZeroCopyWrite has no arguments
+          The option ORBZeroCopyWrite has no arguments, corrected the way we
+          compare the options
 
 Mon Apr  3 12:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
