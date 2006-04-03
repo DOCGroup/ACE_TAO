@@ -7,6 +7,13 @@ The default workspace and project type for ACE_wrappers/bin/mwc.pl and
 ACE_wrappers/bin/mpc.pl is gnuace.  This differs from the default for
 mwc.pl and mpc.pl located in the MPC directory.
 
+GNUACE-specific workspace keywords
+-------------------------------------------
+named_targets   If this is set, the workspace (GNUmakefile) will be
+                generated such that each target can be built via it's
+                project name and directory location does not affect
+                dependencies.
+
 GNUACE-specific aspects of project keywords
 -------------------------------------------
 

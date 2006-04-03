@@ -1,3 +1,18 @@
+Mon Apr  3 12:12:27 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added support for a new workspace based setting that only makes
+          sense to the 'gnuace' project type called 'named_targets'.  If
+          'named_targets' is set, the workspace (GNUmakefile) will be
+          generated such that each target can be built via it's project name
+          and directory location does not affect dependencies.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Support the new source component scoped keyword 'buildflags'.
+
 Mon Apr  3 10:25:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_orb_tests.lst:
@@ -10,9 +25,9 @@ Mon Apr  3 09:38:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
 Sat Apr  1 19:08:28 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/OS_NS_math.inl: Improved the computations for floor() and ceil().  
-	  Thanks to Abdullah Sowayan <abdullah.sowayan@lmco.com> for this
- 	  patch.
+        * ace/OS_NS_math.inl: Improved the computations for floor() and ceil().
+          Thanks to Abdullah Sowayan <abdullah.sowayan@lmco.com> for this
+          patch.
 
 Sat Apr  1 17:14:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
