@@ -1,3 +1,13 @@
+Mon Apr  3 07:59:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO/IDL/be/be_visitor_union/discriminant_ci.cpp
+        * TAO/IDL/be/be_visitor_union/union_ch.cpp
+        * TAO/IDL/be/be_visitor_union/union_cs.cpp
+        * TAO/IDL/be/be_visitor_union_branch/public_ci.cpp
+        * tao/GIOPC.{h,cpp,inl}:
+          Removed arguments from the _reset method on the union generated,
+          these are not used.
+
 Sun Apr  2 18:56:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_exception/exception_ch.cpp

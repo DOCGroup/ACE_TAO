@@ -228,7 +228,7 @@ namespace GIOP
     } u_;
 
     // TAO extension - frees any allocated storage.
-    void _reset (CORBA::Short, CORBA::Boolean /* finalize */);
+    void _reset (void);
   };
 
 #endif /* end #if !defined */

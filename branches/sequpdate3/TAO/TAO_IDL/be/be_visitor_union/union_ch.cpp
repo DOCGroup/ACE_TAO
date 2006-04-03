@@ -46,7 +46,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // the recursive typecode include in the stub source file.
   ACE_Unbounded_Queue<AST_Type *> list;
   (void) node->in_recursion (list);
-        
+
   // Instantiate a visitor context with a copy of our context. This info
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
@@ -180,9 +180,8 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   // The reset method (TAO extension).
   *os << be_nl << be_nl
-      << "// TAO extension - frees any allocated storage." << be_nl;
-  *os << "void _reset (" << bt->nested_type_name (node)
-      << ", ::CORBA::Boolean /* finalize */);";
+      << "/// TAO extension - frees any allocated storage." << be_nl;
+  *os << "void _reset (void);";
 
   *os << be_uidt_nl << "};";
 

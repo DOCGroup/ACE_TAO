@@ -143,7 +143,7 @@ GIOP::TargetAddress::TargetAddress (const ::GIOP::TargetAddress &u)
 GIOP::TargetAddress::~TargetAddress (void)
 {
   // Finalize.
-  this->_reset (this->disc_, 1);
+  this->_reset ();
 }
 
 void GIOP::TargetAddress::_tao_any_destructor (void *_tao_void_pointer)
@@ -161,7 +161,7 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
       return *this;
     }
 
-  this->_reset (u.disc_, 0);
+  this->_reset ();
   this->disc_ = u.disc_;
 
   switch (this->disc_)
@@ -222,7 +222,7 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
 }
 
 // Reset method to reset old values of a union.
-void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
+void GIOP::TargetAddress::_reset (void)
 {
   switch (this->disc_)
   {

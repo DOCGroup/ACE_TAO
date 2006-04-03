@@ -172,25 +172,16 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   // Default label.
   else
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -251,25 +242,16 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   // Default label.
   else
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -329,25 +311,16 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       << "_ptr val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   // Default label.
   else
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -426,25 +399,16 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       << "_ptr val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   // Default label.
   else
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -541,25 +505,16 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
       << " *val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   // Default label.
   else
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -649,25 +604,16 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   *os << " val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   else
   // We have an explicit default case.
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -835,25 +781,16 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   else
   // We have an explicit default case.
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -925,25 +862,16 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   *os << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   else
   // We have an explicit default case.
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -967,25 +895,16 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
     }
 
   *os << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   else
   // We have an explicit default case.
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -1021,25 +940,16 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   *os << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   else
   // We have an explicit default case.
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -1137,32 +1047,23 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // (1) Set from a const.
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name ()
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   else
   // We have an explicit default case.
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
@@ -1309,25 +1210,16 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
+      << "this->_reset ();" << be_nl
+      << "this->disc_ = ";
 
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_label_value (os);
     }
   else
   // We have an explicit default case.
     {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
       ub->gen_default_label_value (os, bu);
     }
 
