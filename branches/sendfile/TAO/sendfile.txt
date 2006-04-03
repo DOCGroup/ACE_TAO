@@ -1,3 +1,11 @@
+Mon Apr  3 12:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * performance-tests/Throughput/run_test.pl:
+          Check the return value of spawn, speedsup the builds when no
+          executable is build
+
 Mon Apr  3 12:40:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Throughput/Receiver.cpp:
