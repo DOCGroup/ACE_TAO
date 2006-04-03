@@ -467,7 +467,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           this->report_option_value_error (ACE_TEXT("-ORBDropRepliesDuringShutdown"),
                                            argv[curarg]);
       }
-    else if (0 != ACE_OS::strcasecmp (argv[curarg],
+    else if (0 == ACE_OS::strcasecmp (argv[curarg],
                                       ACE_TEXT("-ORBOutputCDRAllocator")))
       {
         ++curarg;
@@ -504,7 +504,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
           }
       }
-    else if (0 != ACE_OS::strcasecmp (argv[curarg],
+    else if (0 == ACE_OS::strcasecmp (argv[curarg],
                                       ACE_TEXT("-ORBZeroCopyWrite")))
       {
 #ifdef ACE_HAS_SENDFILE
