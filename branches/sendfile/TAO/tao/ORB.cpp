@@ -1640,7 +1640,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
 
       const size_t total_len = cdr.total_length ();
 
-      char *cp;
+      char *cp = 0;
       ACE_ALLOCATOR_RETURN (cp,
                             CORBA::string_alloc (
                               sizeof ior_prefix
@@ -1894,7 +1894,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str
     this->orb_core_->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  int retv =
+  int const retv =
     conn_reg->make_mprofile (str,
                              mprofile
                              ACE_ENV_ARG_PARAMETER);

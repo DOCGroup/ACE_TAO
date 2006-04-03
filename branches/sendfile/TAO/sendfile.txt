@@ -1,3 +1,8 @@
+Mon Apr  3 15:15:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Const improvements
+
 Mon Apr  3 13:55:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.cpp:
