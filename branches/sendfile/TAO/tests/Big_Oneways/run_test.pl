@@ -38,8 +38,12 @@ $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
 
+$server = $SV->Spawn ();
 
-$SV->Spawn ();
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";

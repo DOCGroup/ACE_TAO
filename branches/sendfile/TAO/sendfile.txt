@@ -1,3 +1,14 @@
+Mon Apr  3 12:40:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Throughput/Receiver.cpp:
+          Prefix increment
+
+        * performance-tests/Throughput/Receiver_Factory.cpp:
+          Initialise pointer with 0
+
+        * performance-tests/Throughput/Throughput.mpc:
+          Simplified
+
 Wed Mar 29 13:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
