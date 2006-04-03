@@ -121,8 +121,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
     ++curarg;
 
-
-
     if (curarg == (argc-1) && this->parser_names_count_ != 0)
       {
         // This is the last loop..
@@ -509,24 +507,12 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (0 != ACE_OS::strcasecmp (argv[curarg],
                                       ACE_TEXT("-ORBZeroCopyWrite")))
       {
-        ++curarg;
-        if (curarg < argc)
-          {
-
-            // Configure appropriate allocator.
-            if (ACE_OS::atoi (argv[curarg]) != 0)
-              {
 #ifdef ACE_HAS_SENDFILE
-                this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
+        this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
 #else
-                ACE_DEBUG ((LM_WARNING,
-                            ACE_TEXT ("Zero copy writes unsupported on this platform")));
+        ACE_DEBUG ((LM_WARNING,
+                    ACE_TEXT ("Zero copy writes unsupported on this platform\n")));
 #endif  /* ACE_HAS_SENDFILE */
-              }
-          }
-        else
-          this->report_option_value_error (ACE_TEXT("-ORBZeroCopyWrite"),
-                                           argv[curarg]);
       }
     else if (ACE_OS::strncmp (argv[curarg],
                               ACE_TEXT ("-ORB"),
