@@ -1,3 +1,8 @@
+Mon Apr  3 18:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Document that with waitstrategy RW you can't use BiDIR GIOP
+
 Mon Apr 03 18:03:29 UTC 2006  Trevor Fields  <fields_t@ociweb.com>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.cpp:
@@ -5,7 +10,7 @@ Mon Apr 03 18:03:29 UTC 2006  Trevor Fields  <fields_t@ociweb.com>
           Change the interceptor to not count any _is_a calls.  The comparison count
           does not include any _is_a calls.  The calls can occur as a full CORBA
           call when the system does not recognize the object is Collocated or
-          collocation is turned off. 
+          collocation is turned off.
 
 Sat Apr  1 18:56:25 UTC 2006  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
