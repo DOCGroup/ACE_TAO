@@ -1387,7 +1387,8 @@ instead of waiting in the Reactor using the Leader/Followers
 pattern. The <em>RW</em> strategy only works when the application
 does not have to worry about new request showing up when waiting for a
 response. Further, this strategy cannot be used with Asynchronous
-Method Invocation (AMI) calls. Therefore, this strategy is appropriate
+Method Invocation (AMI) calls and when using BiDIR GIOP. 
+Therefore, this strategy is appropriate
 only for "pure" synchronous clients. Note that applications that
 require nested upcalls are not "pure" synchronous clients. Also note that this
 strategy will only affect two way calls, since there is no waiting for
