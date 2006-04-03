@@ -1,3 +1,8 @@
+Mon Apr  3 12:58:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.cpp:
+          The option ORBZeroCopyWrite has no arguments
+
 Mon Apr  3 12:46:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/run_test.pl:
