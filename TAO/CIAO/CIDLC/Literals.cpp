@@ -28,7 +28,7 @@ namespace StringLiterals
     "//    http://www.dre.vanderbilt.edu/CIAO"
     "\n\n";
 
-  char const* const STRS[SIZE] =
+  char const* const STRS[LIT_SIZE] =
   {
     // ACE Environment portability macros.
     "ACE_ENV_ARG_DECL_WITH_DEFAULTS",                     // ENV_HDR
