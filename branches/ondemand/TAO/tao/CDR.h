@@ -151,8 +151,8 @@ public:
   /// Destructor.
   ~TAO_OutputCDR (void);
 
-  ACE_CDR::Boolean write_octet_array (ACE_CDR::Octet const * x,
-                                      ACE_CDR::ULong length);
+//  ACE_CDR::Boolean write_octet_array (ACE_CDR::Octet const * x,
+//                                      ACE_CDR::ULong length);
 
   // @todo do we want a special method to write an array of
   // strings and wstrings?

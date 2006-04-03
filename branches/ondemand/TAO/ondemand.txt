@@ -1,3 +1,9 @@
+Mon Apr  3 07:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CDR.h:
+          Commented out write_octet_array decleration, there is no
+          implementation yet.
+
 Thu Mar 30 13:02:18 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
