@@ -10,7 +10,7 @@ ACE_RCSID(Throughput, client, "$Id$")
 const char *ior = "file://test.ior";
 int message_size  = 2048;
 int message_count = 10 * 1024;
-int test_runs   = 6;
+int test_runs   = 7;
 int do_shutdown = 0;
 
 int
