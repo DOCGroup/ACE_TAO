@@ -1,3 +1,12 @@
+Mon Apr  3 23:04:51 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Removed the explicit
+          setting of ACE_TEMPLATES_REQUIRE_SOURCE in CCFLAGS introduced at
+          Wed Feb 22 16:26:43 GMT 2006  Rich Seibel <seibel_r@ociweb.com>.
+          ACE_TEMPLATES_REQUIRE_SOURCE is set (or not) from config-aix-4.x.h
+          depending on what template instantiation options were specified on
+          the command line.
+
 Mon Apr  3 13:45:29 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Basic_Types.inl:
