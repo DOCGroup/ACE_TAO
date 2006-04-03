@@ -1,3 +1,8 @@
+Mon Apr  3 09:38:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Remove PRISM_ONLY tests (again arg!)
+
 Sat Apr  1 19:08:28 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/OS_NS_math.inl: Improved the computations for floor() and ceil().  
