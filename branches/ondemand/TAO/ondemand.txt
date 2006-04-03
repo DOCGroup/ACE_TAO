@@ -1,3 +1,16 @@
+Mon Apr  3 12:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/On_Demand_Fragmentation_Strategy.cpp:
+          Print the debug message after we padded it so that sizes do match
+          in the logs
+
+        * tao/GIOP_Message_Base.cpp:
+          For fragments also retrieve the request/reply id
+
+        * tests/Ondemand_Write:
+          Simple test for ondemand write, needs now inspection of output to
+          check if things work ok
+
 Mon Apr  3 07:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CDR.h:
