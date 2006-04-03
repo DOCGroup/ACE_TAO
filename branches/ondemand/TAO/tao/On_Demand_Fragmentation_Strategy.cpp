@@ -61,16 +61,18 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   // since fragments must be aligned on an 8 byte boundary.
   if (aligned_length > this->max_message_size_)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Sending fragment of size %d\n",
-                    cdr.total_length ()));
-
       // Pad the outgoing fragment if necessary.
       if (cdr.align_write_ptr (ACE_CDR::MAX_ALIGNMENT) != 0)
         return -1;
 
       // More fragments to come.
       cdr.more_fragments (true);
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - On_Demand_Fragmentation_Strategy::fragment, "
+                    "sending fragment of size %d\n",
+                    cdr.total_length ()));
 
       // Send the current CDR stream contents through the transport,
       // making sure to switch on the the GIOP flags "more fragments"

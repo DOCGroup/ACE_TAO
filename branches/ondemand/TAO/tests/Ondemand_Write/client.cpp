@@ -61,7 +61,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      CORBA::String_var test_string = CORBA::string_dup ("1234567890123456789012345678901234567890");
+      CORBA::String_var test_string = CORBA::string_dup ("661234567890123456789012345678901234567890");
       CORBA::String_var the_string =
         hello->get_string (5, test_string.in (), 6, test_string.in ());
       ACE_TRY_CHECK;
