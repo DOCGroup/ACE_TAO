@@ -59,10 +59,10 @@ namespace StringLiterals
     ACE_CR,
     ACE_TH,
     ACE_TR,
-    SIZE
+    LIT_SIZE
   };
 
-  extern char const* const STRS[SIZE];
+  extern char const* const STRS[LIT_SIZE];
 }
 
 #endif  // LITERALS_HPP
