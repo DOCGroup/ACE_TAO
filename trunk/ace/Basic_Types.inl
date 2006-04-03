@@ -421,7 +421,11 @@ ACE_U_LongLong::operator/ (const int n) const
 }
 #endif
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #elif defined (ACE_LACKS_LONGLONG_T)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_U_LongLong::ACE_U_LongLong (const ACE_UINT32 lo, const ACE_UINT32 hi)

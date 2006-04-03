@@ -1,3 +1,10 @@
+Mon Apr  3 13:45:29 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.inl:
+
+          Fixed versioned namespace related errors for configurations that
+          define ACE_LACKS_LONGLONG_T and/or ACE_LACKS_UNSIGNEDLONGLONG_T.
+
 Mon Apr  3 13:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
