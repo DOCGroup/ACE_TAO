@@ -123,9 +123,9 @@ else    # Visual Age 5 and up
       ifeq ($(XLCVERSION),0x0700)
         CCFLAGS += -qflag=w:w
 	ifeq ($(templates),manual)
-	  CCFLAGS    += -qnotempinc -qnotemplateregistry -DACE_TEMPLATES_REQUIRE_SOURCE
+	  CCFLAGS += -qnotempinc -qnotemplateregistry
         else
-          CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE) -DACE_TEMPLATES_REQUIRE_SOURCE
+          CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
         endif
 	# According to documentation, default is -qeh, which is equivalent
 	# to -qeh=v5.  Apparently 6.0 fixed some problems with nested
