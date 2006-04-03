@@ -133,10 +133,10 @@ CORBA::Object::_remove_ref (void)
                mon,
                *this->refcount_lock_);
 
-  this->refcount_--;
+    this->refcount_--;
 
-  if (this->refcount_ != 0)
-    return;
+    if (this->refcount_ != 0)
+      return;
   }
 
   ACE_ASSERT (this->refcount_ == 0);
@@ -733,7 +733,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
 
   const TAO_MProfile& mprofile = stubobj->base_profiles ();
 
-  CORBA::ULong profile_count = mprofile.profile_count ();
+  CORBA::ULong const profile_count = mprofile.profile_count ();
   if ((cdr << profile_count) == 0)
     return false;
 
@@ -751,7 +751,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
 /*static*/ void
 CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 {
-  CORBA::ULong profile_count =
+  CORBA::ULong const profile_count =
     obj->ior_->profiles.length ();
 
   // Assumption is that after calling this method, folks should test
