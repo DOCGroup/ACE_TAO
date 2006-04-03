@@ -15,7 +15,7 @@ Test::Receiver_ptr
 Receiver_Factory::create_receiver (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Receiver *receiver_impl;
+  Receiver *receiver_impl = 0;
   ACE_NEW_THROW_EX (receiver_impl,
                     Receiver,
                     CORBA::NO_MEMORY ());
