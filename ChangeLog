@@ -1,3 +1,13 @@
+Tue Apr  4 15:44:03 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Reverting my change from Mon Apr  3 12:12:27 UTC 2006 and changing
+          the default from directory based building/dependencies to named
+          targets (which is the way that all other make based MPC project
+          types work).  This is being done by request (RT #8510).
+
 Tue Apr  4 15:28:00 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * tests/Unload_libACE.cpp:
