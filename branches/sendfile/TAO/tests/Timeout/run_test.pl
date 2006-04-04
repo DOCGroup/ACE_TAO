@@ -21,8 +21,12 @@ else {
 }
 $CL = new PerlACE::Process ("client", "-ORBDebugLevel 0 -k file://$iorfile -l 2 -h 28");
 
+$server = $SV->Spawn ();
 
-$SV->Spawn ();
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {

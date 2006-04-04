@@ -273,10 +273,10 @@ protected:
 /**
  * @class ACE_Lite_MMAP_Memory_Pool
  *
- * @brief Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.
+ * @brief Make a ``lighter-weight'' memory pool based ACE_Mem_Map.
  *
  * This implementation allows memory to be shared between
- * processes.  However, unlike the <ACE_MMAP_Memory_Pool>
+ * processes.  However, unlike the ACE_MMAP_Memory_Pool
  * the <sync> methods are no-ops, which means that we don't pay
  * for the price of flushing the memory to the backing store on
  * every update.  Naturally, this trades off increased
