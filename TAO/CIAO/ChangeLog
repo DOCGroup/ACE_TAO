@@ -1,9 +1,16 @@
+Tue Apr  4 18:11:37 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.cpp
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.h
+
+          Fixed an warning in WinXP_BCB6_Pro_Dynamic_Debug build
+          by modifying the name of the original "init" method.
+        
 Tue Apr  4 17:27:52 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * tools/Config_Handlers/CIAO_Events/test.cpp
         
-        Fixed an warning.
-
+          Fixed an warning.
 
 Mon Apr  3 20:00:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
