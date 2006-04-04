@@ -1,3 +1,10 @@
+Tue Apr  4 08:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/NVList.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+          Fixed unitialized warnings
+
 Mon Apr  3 18:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
