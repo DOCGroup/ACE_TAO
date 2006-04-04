@@ -1,3 +1,9 @@
+Tue Apr  4 08:36:45 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Permanent_Forward/StubTest.cpp:
+
+          Fixed gcc 2.96 warnings.
+
 Tue Apr  4 08:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/NVList.cpp:
@@ -46,12 +52,12 @@ Sat Apr  1 18:41:04 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Fri Mar 31 14:30:24 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* tao/Object_Ref_Table.{h,inl} (register_initial_reference):
-	  Added a new parameter called "rebind" that defaults to false.
-  	  If this parameter is true then rebind() will be used instead of
- 	  bind to make it possible to update the initial references
- 	  dynamically.  Thanks to Bob Ronak <ronak2121 at gmail dot com>
- 	  for suggesting this.
+        * tao/Object_Ref_Table.{h,inl} (register_initial_reference):
+          Added a new parameter called "rebind" that defaults to false.
+          If this parameter is true then rebind() will be used instead of
+          bind to make it possible to update the initial references
+          dynamically.  Thanks to Bob Ronak <ronak2121 at gmail dot com>
+          for suggesting this.
 
 Fri Mar 31 17:19:13 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
