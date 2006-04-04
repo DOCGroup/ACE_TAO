@@ -103,9 +103,9 @@ class ACE_Allocator;
  * This implementation of a map uses a hash table.  Key hashing
  * is achieved through the HASH_KEY object and key comparison is
  * achieved through the COMPARE_KEYS object.
- * This class uses an <ACE_Allocator> to allocate memory.  The
+ * This class uses an ACE_Allocator to allocate memory.  The
  * user can make this a persistent class by providing an
- * <ACE_Allocator> with a persistable memory pool.
+ * ACE_Allocator with a persistable memory pool.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Map_Manager_Ex

@@ -41,10 +41,10 @@ class ACE_Export ACE_Allocator
 public:
   // = Memory Management
 
-  /// Get pointer to a default <ACE_Allocator>.
+  /// Get pointer to a default ACE_Allocator.
   static ACE_Allocator *instance (void);
 
-  /// Set pointer to a process-wide <ACE_Allocator> and return existing
+  /// Set pointer to a process-wide ACE_Allocator and return existing
   /// pointer.
   static ACE_Allocator *instance (ACE_Allocator *);
 
@@ -119,14 +119,14 @@ public:
   // backing store).
 
   /**
-   * Sync <len> bytes of the memory region to the backing store
-   * starting at <this->base_addr_>.  If <len> == -1 then sync the
+   * Sync @a len bytes of the memory region to the backing store
+   * starting at @c this->base_addr_.  If @a len == -1 then sync the
    * whole region.
    */
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC) = 0;
 
-  /// Sync <len> bytes of the memory region to the backing store
-  /// starting at <addr_>.
+  /// Sync @a len bytes of the memory region to the backing store
+  /// starting at @a addr.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC) = 0;
 
   /**
@@ -151,7 +151,7 @@ private:
   // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!  See the
   // <ACE_Allocator::instance> implementation for explanation.
 
-  /// Pointer to a process-wide <ACE_Allocator> instance.
+  /// Pointer to a process-wide ACE_Allocator instance.
   static ACE_Allocator *allocator_;
 
   /// Must delete the <allocator_> if non-0.
