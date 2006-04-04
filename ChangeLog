@@ -1,3 +1,8 @@
+Tue Apr  4 15:28:00 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * tests/Unload_libACE.cpp:
+          Cope when log file cannot be opened.
+
 Tue Apr  4 15:06:00 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * tests/Unload_libACE.cpp:
