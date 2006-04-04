@@ -1,3 +1,11 @@
+Tue Apr  4 09:22:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.cpp:
+        * tao/orbconf.h:
+          Added TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL which is set to 0 by
+          default, this makes it possible to use sendfile with mmap always
+          just by setting this define to 1
+
 Mon Apr  3 15:15:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
