@@ -188,8 +188,12 @@ main ( int, char ** )
                    time_stamp ( tbuf, BUFSIZ, 'T' ));
          status = 1;
       }
+
       fflush ( stdout );
       fflush ( stderr );
+      fflush ( logfp );
+
+      fclose ( logfp );
    }
    else
    {
@@ -210,9 +214,6 @@ main ( int, char ** )
 
    fflush ( stderr );
    fflush ( stdout );
-   fflush ( logfp );
-
-   fclose ( logfp );
    fclose ( stdout );
    fclose ( stderr );
 
