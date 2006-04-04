@@ -474,7 +474,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name)
-  : memory_pool_ (pool_name),
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name),
     bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
@@ -496,7 +497,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                               const ACE_TCHAR *lock_name,
                                                               const ACE_MEM_POOL_OPTIONS *options)
-  : memory_pool_ (pool_name, options),
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name, options),
     bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
@@ -520,7 +522,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                               const ACE_MEM_POOL_OPTIONS *options,
                                                               ACE_LOCK *lock)
-  : memory_pool_ (pool_name, options),
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name, options),
     lock_ (lock),
     delete_lock_ (0),
     bad_flag_ (0)
@@ -546,7 +549,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                           const ACE_TCHAR *lock_name,
                                                           const void *options)
-  : memory_pool_ (pool_name,
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name,
                   (const ACE_MEM_POOL_OPTIONS *) options),
     bad_flag_ (0)
 {
