@@ -1,3 +1,15 @@
+Tue Apr  4 10:20:36 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * ace/Mem_Map.cpp (open):
+
+          Only copy the filename to the ACE_Mem_Map::filename_ member
+          if the call to open() succeeds.
+
+        * ace/PI_Malloc.h (ACE_Malloc_Header):
+
+          Added missing private and undefined copy constructor.  The
+          corresponding assignment operator was already there.
+
 Wed Mar 29 14:51:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.8.h:
