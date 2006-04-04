@@ -155,9 +155,9 @@ main ( int, char ** )
          handle = dlopen ( buf, RTLD_LAZY );
          if ( handle == NULL )
          {
-	    // is it because of "No such file or directory" ?
-	    if ( errno != ENOENT )
-	    {
+            // is it because of "No such file or directory" ?
+            if ( errno != ENOENT )
+            {
                fprintf ( stderr,
                          "%s@LM_ERROR@ dlopen() returned NULL\n",
                          time_stamp ( tbuf, BUFSIZ, 'T' ));
@@ -165,13 +165,13 @@ main ( int, char ** )
                          "%s@LM_ERROR@ dlerror() says: %s\n",
                          time_stamp ( tbuf, BUFSIZ, 'T' ), dlerror ());
                status = 1;
-	    }
-	    else
-	    {
+            }
+            else
+            {
                printf ( "%s@LM_DEBUG@ dlopen() did not find %s\n",
                         time_stamp ( tbuf, BUFSIZ, 'T' ), buf);
                status = 0;
-	    }
+            }
          }
          else if ( dlclose ( handle ) != 0 )
          {
