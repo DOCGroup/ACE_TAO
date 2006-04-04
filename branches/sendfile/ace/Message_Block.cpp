@@ -965,10 +965,10 @@ ACE_Data_Block::duplicate (void)
     {
       // We need to acquire the lock before incrementing the count.
       ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
-      this->reference_count_++;
+      ++this->reference_count_;
     }
   else
-    this->reference_count_++;
+    ++this->reference_count_;
 
   return this;
 }
@@ -1220,6 +1220,7 @@ ACE_Data_Block::base (char *msg_data,
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE))
     this->allocator_strategy_->free (this->base_);
+
   this->max_size_ = msg_length;
   this->cur_size_ = msg_length;
   this->base_ = msg_data;
