@@ -76,8 +76,7 @@ sub write_comps {
   my($crlf)    = $self->crlf();
   my(%targnum) = ();
   my($pjs)     = $self->get_project_info();
-  my($named)   = (defined $ENV{MPC_GNUACE_NAMED_TARGETS} ||
-                  $self->get_assignment('named_targets'));
+  my($named)   = !defined $ENV{MPC_GNUACE_DIRECTORY_DEPS};
   my(@list)    = $self->number_target_deps($self->get_projects(),
                                            $pjs, \%targnum,
                                            $named ? 0 : 1);
