@@ -36,7 +36,7 @@ public:
   ACE_Module *lower (void) { return this->mod_lower_; }
   void   lower (ACE_Module *l) { this->mod_lower_ = l; }
 
-  int    count (void) { return this->count_; }
+  int    count (void) const { return this->count_; }
   void   count (int c) { this->count_ = c; }
 
 private:
