@@ -1,3 +1,13 @@
+Tue Apr  4 22:03:35 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/examples/ImR/Advanced/TestClient.h:
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+
+          Trying to fix compile error occuring on icc 9.0 build.
+          Replaced std::cout with ACE_DEBUG, std::getline with
+          ACE_Capabilies::getline.
+
 Tue Apr  4 12:30:08 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
