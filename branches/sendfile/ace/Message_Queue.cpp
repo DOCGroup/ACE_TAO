@@ -253,7 +253,7 @@ ACE_Message_Queue_Vx::enqueue_tail_i (ACE_Message_Block *new_item)
   // Don't try to send a composite message!!!!  Only the first
   // block will be sent.
 
-  this->cur_count_++;
+  ++this->cur_count_;
 
   // Always use this method to actually send a message on the queue.
   if (::msgQSend (msgq (),
@@ -428,8 +428,8 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   if (this->state_ != ACE_Message_Queue_Base::DEACTIVATED)
     {
-      size_t msize = new_item->total_size ();
-      size_t mlength = new_item->total_length ();
+      size_t const msize = new_item->total_size ();
+      size_t const mlength = new_item->total_length ();
       // Note - we send ACTIVATED in the 3rd arg to tell the completion
       // routine it's _NOT_ being woken up because of deactivate().
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
@@ -512,7 +512,7 @@ ACE_Message_Queue_NT::deactivate (void)
   ACE_TRACE ("ACE_Message_Queue_NT::deactivate");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  int previous_state = this->state_;
+  int const previous_state = this->state_;
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
     {
       this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
@@ -535,7 +535,7 @@ ACE_Message_Queue_NT::activate (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::activate");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
-  int previous_status = this->state_;
+  int const previous_status = this->state_;
   this->state_ = ACE_Message_Queue_Base::ACTIVATED;
   return previous_status;
 }
@@ -546,7 +546,7 @@ ACE_Message_Queue_NT::pulse (void)
   ACE_TRACE ("ACE_Message_Queue_NT::pulse");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  int previous_state = this->state_;
+  int const previous_state = this->state_;
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
     {
       this->state_ = ACE_Message_Queue_Base::PULSED;
