@@ -1,3 +1,10 @@
+Tue Apr  4 17:27:52 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
+
+        * tools/Config_Handlers/CIAO_Events/test.cpp
+        
+        Fixed an warning.
+
+
 Mon Apr  3 20:00:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/Literals.hpp:
