@@ -1,3 +1,10 @@
+Tue Apr  4 12:30:08 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp:
+
+          Fix old gcc warnings.
+
 Tue Apr  4 09:15:16 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * NEWS:
