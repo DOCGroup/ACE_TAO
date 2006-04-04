@@ -132,7 +132,7 @@ TAO_EC_TPC_Dispatching::shutdown (void)
   MAPTYPE::ITERATOR iter = this->consumer_task_map_.begin ();
   while (! iter.done())
     {
-      MAPTYPE::ENTRY* entry;
+      MAPTYPE::ENTRY* entry = 0;
       if (! iter.next(entry))
         continue;
 
@@ -147,7 +147,7 @@ TAO_EC_TPC_Dispatching::shutdown (void)
   iter = this->consumer_task_map_.begin ();
   while (! iter.done())
     {
-      MAPTYPE::ENTRY* entry;
+      MAPTYPE::ENTRY* entry = 0;
       if (! iter.next(entry))
         continue;
 
