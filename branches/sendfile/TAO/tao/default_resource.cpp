@@ -47,7 +47,11 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , dynamically_allocated_reactor_ (0)
   , options_processed_ (0)
   , factory_disabled_ (0)
+#if TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL == 1
+  , output_cdr_allocator_type_ (MMAP_ALLOCATOR)
+#else
   , output_cdr_allocator_type_ (DEFAULT)
+#endif
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
   , use_local_memory_pool_ (true)
 #else
