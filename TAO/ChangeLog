@@ -1,3 +1,9 @@
+Tue Apr  4 09:15:16 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * NEWS:
+
+          Documented Frank's formidably fabulous forwarding fix.
+
 Tue Apr  4 08:36:45 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tests/Permanent_Forward/StubTest.cpp:
