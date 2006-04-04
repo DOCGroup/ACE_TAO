@@ -1,3 +1,15 @@
+Tue Apr  4 10:36:57 2006  Ossama Othman   <ossama@dre.vanderbilt.edu>
+
+	* tao/MMAP_Allocator.cpp:
+
+	  Explicitly configure the underlying memory pool with the desired
+	  set of options, including a default size and the MAP_SHARED
+	  mmap() flag.  MAP_SHARED must be used instead of MAP_PRIVATE,
+	  for example, since the data written to the mmap()ed buffer must
+	  be reflected in the backing store file, portions of which may be
+	  sent through sendfile().  Addresses a seg fault that occurred
+	  when attempting allocate memory through the backing store.
+
 Tue Apr  4 09:22:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.cpp:
