@@ -55,7 +55,7 @@ TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !Win32 !DISABLE_ToFix_LynxOS_
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM SCTP !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM !ACE_FOR_TAO
-TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
+TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 #TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
 #TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !ACE_FOR_TAO
