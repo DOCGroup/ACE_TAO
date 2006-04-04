@@ -6,6 +6,7 @@
  *
  *  $Id$
  *
+ *  @author Gan Deng <dengg@dre.vanderbilt.edu>
  *  @author George Edwards <g.edwards@vanderbilt.edu>
  */
 //=============================================================================
@@ -68,7 +69,8 @@ namespace CIAO
         );
   }
 
-  void EventService_Factory_impl::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+  void EventService_Factory_impl::initialize (
+    CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   {
     this->orb_ = CORBA::ORB::_duplicate (orb);
     this->poa_ = PortableServer::POA::_duplicate (poa);
@@ -86,4 +88,3 @@ ACE_STATIC_SVC_DEFINE (
 ACE_FACTORY_DEFINE (CIAO_EVENTS, EventService_Factory_impl)
 
 } // namespace CIAO
-

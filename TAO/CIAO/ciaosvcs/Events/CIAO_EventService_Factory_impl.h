@@ -6,6 +6,7 @@
  *
  *  $Id$
  *
+ *  @author Gan Deng <dengg@dre.vanderbilt.edu>
  *  @author George Edwards <g.edwards@vanderbilt.edu>
  */
 //=============================================================================
@@ -39,7 +40,7 @@ namespace CIAO
     /// A factory method which creates an CIAO_Event_Service object
     virtual CIAO_Event_Service_ptr create (EventServiceType type);
 
-    virtual void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+    virtual void initialize (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
     /// Used to force the initialization.
     static int Initializer (void);
