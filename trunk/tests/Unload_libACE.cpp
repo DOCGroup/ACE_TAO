@@ -21,7 +21,19 @@
 
 #include <stdio.h>
 
-#if (defined (__GNUC__) && ! defined (ACE_VXWORKS)) || defined (__hpux) || defined (__SUNPRO_CC)
+#undef UNLOAD_LIBACE_TEST
+
+#if defined (__GNUC__)
+#if !defined (ACE_VXWORKS) && !defined (__MINGW32__) && !defined (__CYGWIN32__)
+#define UNLOAD_LIBACE_TEST 1
+#endif /* !ACE_VXWORKS && !__MINGW32__ && !CYGWIN32 */
+#endif /* __GNUC__ */
+
+#if defined (__hpux) || defined (__SUNPRO_CC)
+#define UNLOAD_LIBACE_TEST 1
+#endif /* (__hpux) || (__SUNPRO_CC) */
+
+#ifdef UNLOAD_LIBACE_TEST
 
 #include <errno.h>
 #include <dlfcn.h>
@@ -143,13 +155,23 @@ main ( int, char ** )
          handle = dlopen ( buf, RTLD_LAZY );
          if ( handle == NULL )
          {
-            fprintf ( stderr,
-                      "%s@LM_ERROR@ dlopen() returned NULL\n",
-                      time_stamp ( tbuf, BUFSIZ, 'T' ));
-            fprintf ( stderr,
-                      "%s@LM_ERROR@ dlerror() says: %s\n",
-                      time_stamp ( tbuf, BUFSIZ, 'T' ), dlerror ());
-            status = 1;
+	    // is it because of "No such file or directory" ?
+	    if ( errno != ENOENT )
+	    {
+               fprintf ( stderr,
+                         "%s@LM_ERROR@ dlopen() returned NULL\n",
+                         time_stamp ( tbuf, BUFSIZ, 'T' ));
+               fprintf ( stderr,
+                         "%s@LM_ERROR@ dlerror() says: %s\n",
+                         time_stamp ( tbuf, BUFSIZ, 'T' ), dlerror ());
+               status = 1;
+	    }
+	    else
+	    {
+               printf ( "%s@LM_DEBUG@ dlopen() did not find %s\n",
+                        time_stamp ( tbuf, BUFSIZ, 'T' ), buf);
+               status = 0;
+	    }
          }
          else if ( dlclose ( handle ) != 0 )
          {
@@ -217,4 +239,4 @@ main ( int, char ** )
    }
    return 0;
 }
-#endif /* (__GNUC__) && ! (ACE_VXWORKS)) || (__hpux) || (__SUNPRO_CC) */
+#endif /* UNLOAD_LIBACE_TEST */
