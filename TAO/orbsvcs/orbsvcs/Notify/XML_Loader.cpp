@@ -34,7 +34,7 @@ namespace {
     {
       const char * name = attrs->getQName (i);
       const char * value = attrs->getValue (i);
-      if (ACE_OS::strcmp (name, 
+      if (ACE_OS::strcmp (name,
                          TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
         id = ACE_OS::atoi (value);
@@ -180,7 +180,7 @@ namespace TAO_Notify
     if (this->live_)
     {
       ACE_ASSERT (object_stack_.size () > 0);
-      Topology_Object* cur;
+      Topology_Object* cur = 0;
       if (object_stack_.top (cur) == 0)
       {
         ACE_DECLARE_NEW_ENV;
