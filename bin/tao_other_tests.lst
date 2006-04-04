@@ -51,7 +51,7 @@ TAO/examples/Quoter/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !Win32
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST !NO_DIOP
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !NO_DIOP
-TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !Win32 !DISABLE_ToFix_LynxOS_x86
+TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !Win32 !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM SCTP !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM !ACE_FOR_TAO
