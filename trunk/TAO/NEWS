@@ -20,13 +20,16 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 
 . (Remedy) Finish and integrate new sequence implementation made by
   Carlos O'Ryan. This also includes a rework of the TAO_String_Managers
-  and CORBA::(W)String implementations. This is ready in the sequenceupdate
+  and CORBA::(W)String implementations. This is ready in the sequenceupdate3
   branch but can't be merged until 1.5.2 because it breaks with vc6.
 
-. (Remedy) Add possibility to set customer allocators to be used by the ORB for
-  marshaling and demarshaling
+. (Remedy/Ossama) Add the ability to use the sendfile API to send out data
+  on the transport
 
-. (OCI) Made TAO compilable when ACE_USES_WCHAR is set
+. (Remedy/Ossama) Add on demand write functionality that writes out
+  GIOP fragments to reduce the memory usage
+
+. (OCI) Make TAO compilable when ACE_USES_WCHAR is set
 
 USER VISIBLE CHANGES BETWEEN TAO-1.5.0 and TAO-1.5.1
 ====================================================
