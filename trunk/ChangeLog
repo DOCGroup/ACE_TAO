@@ -1,3 +1,12 @@
+Tue Apr  4 18:51:41 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Acceptor.cpp (shared_open): If ACE_OS::listen() fails,
+          guard errno before closing the socket to prevent loss of the error
+          value, at least on Windows. Thank you to Aleksandar Vukajlovic
+          <vukajlo at finsoft dot co dot yu> for this fix.
+
+        * THANKS: Added Aleksandar Vukajlovic to the Hall of Fame.
+
 Tue Apr  4 15:44:03 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
