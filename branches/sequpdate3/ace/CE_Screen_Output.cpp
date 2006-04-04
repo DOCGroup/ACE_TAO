@@ -57,9 +57,9 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (ACE_TCHAR* output)
     SendMessage(handler_, EM_REPLACESEL, 0, (LPARAM)output);
 
     if (pFile_ != 0)
-    {
+      {
         fwprintf(pFile_, L"%s", output);
-    }
+      }
 
     return *this;
 }
@@ -68,10 +68,10 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (const ACE_TCHAR* output
 {
     ACE_TCHAR* buffer = ACE_OS::strdup(output);
     if (buffer != 0)
-    {
+      {
         *this << buffer;
         delete buffer;
-    }
+      }
     return *this;
 }
 
