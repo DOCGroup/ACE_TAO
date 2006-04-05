@@ -23,7 +23,7 @@
 
 #undef UNLOAD_LIBACE_TEST
 
-#if defined (__GNUC__) && !defined (ACE_AS_STATIC_LIBS)
+#if defined (__GNUC__)
 #if !defined (ACE_VXWORKS) && !defined (__MINGW32__) && !defined (__CYGWIN32__)
 #define UNLOAD_LIBACE_TEST 1
 #endif /* !ACE_VXWORKS && !__MINGW32__ && !CYGWIN32 */
@@ -32,6 +32,10 @@
 #if defined (__hpux) || defined (__SUNPRO_CC)
 #define UNLOAD_LIBACE_TEST 1
 #endif /* (__hpux) || (__SUNPRO_CC) */
+
+#if defined (ACE_AS_STATIC_LIBS)
+#undef UNLOAD_LIBACE_TEST
+#endif /* ACE_AS_STATIC_LIBS */
 
 #ifdef UNLOAD_LIBACE_TEST
 
