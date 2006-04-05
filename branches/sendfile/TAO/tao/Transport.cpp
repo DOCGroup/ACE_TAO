@@ -478,7 +478,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
                                            ACE_Time_Value *)
 {
-  const size_t total_length = mb->total_length ();
+  size_t const total_length = mb->total_length ();
 
   // We are going to block, so there is no need to clone
   // the message block.
@@ -520,7 +520,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // Push synch_message on to the back of the queue.
   synch_message.push_back (this->head_, this->tail_);
 
-  int n =
+  int const n =
     this->send_synch_message_helper_i (synch_message,
                                        max_wait_time);
 
@@ -611,7 +611,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   synch_message.push_back (this->head_,
                            this->tail_);
 
-  int n =
+  int const n =
     this->send_synch_message_helper_i (synch_message,
                                        max_wait_time);
 
@@ -654,7 +654,7 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
                                             ACE_Time_Value * /*max_wait_time*/)
 {
   // @@todo: Need to send timeouts for writing..
-  int n = this->drain_queue_i ();
+  int const n = this->drain_queue_i ();
 
   if (n == -1)
     {
@@ -749,7 +749,7 @@ int
 TAO_Transport::drain_queue (void)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-  int retval = this->drain_queue_i ();
+  int const retval = this->drain_queue_i ();
 
   if (retval == 1)
     {
@@ -772,7 +772,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
   size_t byte_count = 0;
 
   // ... send the message ...
-  ssize_t retval =
+  ssize_t const retval =
     this->send (iov, iovcnt, byte_count);
 
   if (TAO_debug_level == 5)
@@ -879,7 +879,7 @@ TAO_Transport::drain_queue_i (ACE_Message_Block * raw_data)
       // IOV_MAX elements ...
       if (iovcnt == ACE_IOV_MAX)
         {
-          int retval =
+          int const retval =
             this->drain_queue_helper (iovcnt, iov);
 
           if (TAO_debug_level > 4)
@@ -905,15 +905,15 @@ TAO_Transport::drain_queue_i (ACE_Message_Block * raw_data)
 
   if (iovcnt != 0)
     {
-      int retval = this->drain_queue_helper (iovcnt, iov);
+      int const retval = this->drain_queue_helper (iovcnt, iov);
 
-          if (TAO_debug_level > 4)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
-                 ACE_TEXT ("helper retval = %d\n"),
-                 this->id (), retval));
-            }
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
+              ACE_TEXT ("helper retval = %d\n"),
+              this->id (), retval));
+        }
 
       if (retval != 1)
         {
@@ -1011,7 +1011,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
 
   for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
     {
-      msg_count++;
+      ++msg_count;
       total_bytes += i->message_length ();
     }
 
@@ -1113,7 +1113,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 {
   // Let's figure out if the message should be queued without trying
   // to send first:
-  bool try_sending_first = 1;
+  bool try_sending_first = true;
 
   const bool queue_empty = (this->head_ == 0);
 
@@ -1286,7 +1286,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
     }
 
   // First try to process messages of the head of the incoming queue.
-  int retval = this->process_queue_head (rh);
+  int const retval = this->process_queue_head (rh);
 
   if (retval <= 0)
     {
@@ -1511,10 +1511,10 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
          this->id (), q_data->missing_data_));
     }
 
-  const size_t recv_size = q_data->missing_data_;
+  size_t const recv_size = q_data->missing_data_;
 
   // make sure the message_block has enough space
-  const size_t message_size =  recv_size
+  size_t const message_size =  recv_size
                                + q_data->msg_block_->length();
 
   if (q_data->msg_block_->space() < recv_size)
@@ -1533,7 +1533,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
   this->recv_buffer_size_ = recv_size;
 
   // Read the message into the existing message block on heap
-  const ssize_t n = this->recv (q_data->msg_block_->wr_ptr(),
+  ssize_t const n = this->recv (q_data->msg_block_->wr_ptr(),
                                 recv_size,
                                 max_wait_time);
 
