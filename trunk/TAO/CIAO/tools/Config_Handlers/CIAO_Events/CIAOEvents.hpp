@@ -62,7 +62,7 @@ namespace CIAO
 
         enum Value
         {
-          EC_l,RTEC_l,NOTIFY_l,RTNOTIFY_l,
+          EC_l,RTEC_l,NOTIFY_l,RTNOTIFY_l
         };
 
 
@@ -228,7 +228,7 @@ namespace CIAO
 
         enum Value
         {
-          CONJUNCTION_l,DISJUNCTION_l,LOGICAL_AND_l,NEGATE_l,
+          CONJUNCTION_l,DISJUNCTION_l,LOGICAL_AND_l,NEGATE_l
         };
 
 
