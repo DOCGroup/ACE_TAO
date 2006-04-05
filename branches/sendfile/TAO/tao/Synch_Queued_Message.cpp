@@ -63,7 +63,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
        message_block != 0 && iovcnt < iovcnt_max;
        message_block = message_block->cont ())
     {
-      size_t message_block_length = message_block->length ();
+      size_t const message_block_length = message_block->length ();
 
       // Check if this block has any data to be sent.
       if (message_block_length > 0)
@@ -85,7 +85,7 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
 
   while (this->current_block_ != 0 && byte_count > 0)
     {
-      size_t l = this->current_block_->length ();
+      size_t const l = this->current_block_->length ();
 
       if (byte_count < l)
         {

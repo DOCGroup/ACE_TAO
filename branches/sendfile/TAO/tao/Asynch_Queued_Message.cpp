@@ -87,7 +87,7 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
 {
   this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
 
-  size_t remaining_bytes = this->size_ - this->offset_;
+  size_t const remaining_bytes = this->size_ - this->offset_;
   if (byte_count > remaining_bytes)
     {
       this->offset_ = this->size_;
@@ -113,7 +113,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 
   // Just allocate and copy data that needs to be sent, no point
   // copying the whole buffer.
-  const size_t sz = this->size_ - this->offset_;
+  size_t const sz = this->size_ - this->offset_;
 
   ACE_NEW_RETURN (buf,
                   char[sz],
