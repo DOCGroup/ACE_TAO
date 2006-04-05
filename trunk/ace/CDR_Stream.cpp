@@ -151,7 +151,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       const size_t newsize = ACE_CDR::next_size (minsize);
 
       this->good_bit_ = false;
-      ACE_Message_Block* tmp;
+      ACE_Message_Block* tmp = 0;
       ACE_NEW_RETURN (tmp,
                       ACE_Message_Block (newsize,
                                          ACE_Message_Block::MB_DATA,
