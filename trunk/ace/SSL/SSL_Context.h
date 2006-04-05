@@ -25,6 +25,10 @@
 
 #include "ace/SString.h"
 
+#ifdef ACE_HAS_THREADS
+# include "ace/Synch_Traits.h"
+#endif  /* ACE_HAS_THREADS */
+
 #include <openssl/ssl.h>
 
 
@@ -71,6 +75,10 @@ private:
 class ACE_SSL_Export ACE_SSL_Context
 {
 public:
+
+#ifdef ACE_HAS_THREADS
+  typedef ACE_SYNCH_MUTEX lock_type;
+#endif  /* ACE_HAS_THREADS */
 
   enum {
     INVALID_METHOD = -1,
@@ -237,18 +245,18 @@ public:
   //@{
   /// Seed the underlying random number generator.  This value should
   /// have at least 128 bits of entropy.
-  int random_seed (const char * seed);
+  static int random_seed (const char * seed);
 
   /// Set the Entropy Gathering Daemon (EGD) UNIX domain socket file to
   /// read random seed values from.
-  int egd_file (const char * socket_file);
+  static int egd_file (const char * socket_file);
 
   /**
    * Set the file that contains the random seed value state, and the
    * amount of bytes to read.  "-1" bytes causes the entire file to be
    * read.
    */
-  int seed_file (const char * seed_file, long bytes = -1);
+  static int seed_file (const char * seed_file, long bytes = -1);
   //@}
 
   /// Print SSL error corresponding to the given error code.
@@ -311,6 +319,12 @@ private:
 
   /// count of successful CA load attempts
   int have_ca_;
+
+#ifdef ACE_HAS_THREADS
+  /// Array of mutexes used internally by OpenSSL when the SSL
+  /// application is multithreaded.
+  static lock_type * locks_;
+#endif  /* ACE_HAS_THREADS */
 
 };
 
