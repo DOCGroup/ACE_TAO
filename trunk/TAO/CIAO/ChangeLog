@@ -1,4 +1,12 @@
-Wed Apr  5 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Apr  5 13:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h:
+          Fixed pragma once warning
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
+          Fixed conversion warning
+
+Wed Apr  5 12:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Basic_Deployment_Data.hpp:
           Fixed compile errors
