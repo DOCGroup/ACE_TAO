@@ -1,3 +1,11 @@
+Wed Apr  5 14:58:12 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * tests/Unload_libACE.cpp:
+          Set up a guard for ACE_AS_STATIC_LIBS.
+
+        * tests/tests.mpc:
+          Add an empty Resource_Files section to the Library Unload project.
+
 Wed Apr  5 14:25:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
