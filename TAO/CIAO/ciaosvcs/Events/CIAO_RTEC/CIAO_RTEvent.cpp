@@ -224,7 +224,10 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "-------------CIAO::RTEventService::push_event-----------------\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "------CIAO::RTEventService::push_event------\n"));
+      }
 
     RtecEventComm::EventSet events (1);
     events.length (1);
