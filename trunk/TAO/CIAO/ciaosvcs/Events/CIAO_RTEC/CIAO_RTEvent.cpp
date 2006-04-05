@@ -131,7 +131,7 @@ namespace CIAO
       consumer_config->consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (CORBA::is_nil (consumer))
+    if (CORBA::is_nil (consumer.in ()))
       ACE_DEBUG ((LM_DEBUG, "nil event consumer\n"));
 
     RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
