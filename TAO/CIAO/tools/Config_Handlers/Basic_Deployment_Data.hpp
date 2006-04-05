@@ -3,7 +3,7 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
@@ -12,7 +12,7 @@
 
 // Fixes the VC6 warning 4786.
 #include "vc6-4786.h"
- 
+
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -116,17 +116,17 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l,
+        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l
       };
 
 
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (TCKind const& a, TCKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (TCKind const& a, TCKind const& b);
 
       private:
@@ -146,7 +146,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::TCKind const& kind () const;
       void kind (::CIAO::Config_Handlers::TCKind const& );
@@ -155,7 +155,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > kind_;
 
       // enum
-      // 
+      //
       public:
       bool enum_p () const;
       ::CIAO::Config_Handlers::EnumType const& enum_ () const;
@@ -184,7 +184,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // short
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::short_ >::iterator short_iterator;
       typedef ::std::list< ::XMLSchema::short_ >::const_iterator short_const_iterator;
@@ -199,7 +199,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::short_ > short_;
 
       // long
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::int_ >::iterator long_iterator;
       typedef ::std::list< ::XMLSchema::int_ >::const_iterator long_const_iterator;
@@ -214,7 +214,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::int_ > long_;
 
       // ushort
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedShort >::iterator ushort_iterator;
       typedef ::std::list< ::XMLSchema::unsignedShort >::const_iterator ushort_const_iterator;
@@ -229,7 +229,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedShort > ushort_;
 
       // ulong
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedInt >::iterator ulong_iterator;
       typedef ::std::list< ::XMLSchema::unsignedInt >::const_iterator ulong_const_iterator;
@@ -244,7 +244,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedInt > ulong_;
 
       // float
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::float_ >::iterator float_iterator;
       typedef ::std::list< ::XMLSchema::float_ >::const_iterator float_const_iterator;
@@ -259,7 +259,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::float_ > float_;
 
       // double
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::double_ >::iterator double_iterator;
       typedef ::std::list< ::XMLSchema::double_ >::const_iterator double_const_iterator;
@@ -274,7 +274,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::double_ > double_;
 
       // boolean
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::boolean >::iterator boolean_iterator;
       typedef ::std::list< ::XMLSchema::boolean >::const_iterator boolean_const_iterator;
@@ -289,7 +289,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::boolean > boolean_;
 
       // octet
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedByte >::iterator octet_iterator;
       typedef ::std::list< ::XMLSchema::unsignedByte >::const_iterator octet_const_iterator;
@@ -304,7 +304,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedByte > octet_;
 
       // enum
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator enum_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator enum_const_iterator;
@@ -319,7 +319,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > enum_;
 
       // string
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator string_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator string_const_iterator;
@@ -334,7 +334,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > string_;
 
       // longlong
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::long_ >::iterator longlong_iterator;
       typedef ::std::list< ::XMLSchema::long_ >::const_iterator longlong_const_iterator;
@@ -349,7 +349,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::long_ > longlong_;
 
       // ulonglong
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::unsignedLong >::iterator ulonglong_iterator;
       typedef ::std::list< ::XMLSchema::unsignedLong >::const_iterator ulonglong_const_iterator;
@@ -364,7 +364,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::unsignedLong > ulonglong_;
 
       // longdouble
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::double_ >::iterator longdouble_iterator;
       typedef ::std::list< ::XMLSchema::double_ >::const_iterator longdouble_const_iterator;
@@ -398,7 +398,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -407,7 +407,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -416,7 +416,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // member
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator member_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator member_const_iterator;
@@ -451,7 +451,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -460,7 +460,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > type_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataValue const& value () const;
       void value (::CIAO::Config_Handlers::DataValue const& );
@@ -489,7 +489,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -498,7 +498,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       void value (::CIAO::Config_Handlers::Any const& );
@@ -536,17 +536,17 @@ namespace CIAO
 
       enum Value
       {
-        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l,
+        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l
       };
 
 
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (SatisfierPropertyKind const& a, SatisfierPropertyKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (SatisfierPropertyKind const& a, SatisfierPropertyKind const& b);
 
       private:
@@ -566,7 +566,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -575,7 +575,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind () const;
       void kind (::CIAO::Config_Handlers::SatisfierPropertyKind const& );
@@ -584,7 +584,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierPropertyKind > kind_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       void value (::CIAO::Config_Handlers::Any const& );
@@ -614,7 +614,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -623,7 +623,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // resourceType
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
@@ -638,7 +638,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
@@ -672,7 +672,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -681,7 +681,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -690,7 +690,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // property
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Property const& property () const;
       void property (::CIAO::Config_Handlers::Property const& );
@@ -720,7 +720,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -729,7 +729,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -738,7 +738,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // resourceValue
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
       void resourceValue (::CIAO::Config_Handlers::Any const& );
@@ -768,7 +768,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -777,7 +777,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
@@ -792,7 +792,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // node
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
       void node (::XMLSchema::string< ACE_TCHAR > const& );
@@ -801,7 +801,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > node_;
 
       // location
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
@@ -816,7 +816,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
 
       // execParameter
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
@@ -831,7 +831,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
@@ -846,7 +846,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // deployedResource
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::iterator deployedResource_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
@@ -861,7 +861,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -892,7 +892,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -901,7 +901,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
@@ -916,7 +916,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // artifact
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator artifact_iterator;
       typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator artifact_const_iterator;
@@ -931,7 +931,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > > artifact_;
 
       // execParameter
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
@@ -946,7 +946,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
@@ -961,7 +961,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -999,17 +999,17 @@ namespace CIAO
 
       enum Value
       {
-        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l,
+        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l
       };
 
 
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (ResourceUsageKind const& a, ResourceUsageKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (ResourceUsageKind const& a, ResourceUsageKind const& b);
 
       private:
@@ -1029,7 +1029,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // resourceUsage
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
       void resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& );
@@ -1038,7 +1038,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > resourceUsage_;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1047,7 +1047,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1056,7 +1056,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // resourceValue
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
       void resourceValue (::CIAO::Config_Handlers::Any const& );
@@ -1087,7 +1087,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1096,7 +1096,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // node
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
       void node (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1105,7 +1105,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > node_;
 
       // source
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& source () const;
       void source (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1114,7 +1114,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // implementation
-      // 
+      //
       public:
       ::XMLSchema::IDREF< ACE_TCHAR > const& implementation () const;
       void implementation (::XMLSchema::IDREF< ACE_TCHAR > const& );
@@ -1123,7 +1123,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > implementation_;
 
       // configProperty
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
@@ -1138,7 +1138,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // deployedResource
-      // 
+      //
       public:
       bool deployedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedResource () const;
@@ -1148,7 +1148,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
 
       // deployedSharedResource
-      // 
+      //
       public:
       bool deployedSharedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedSharedResource () const;
@@ -1158,7 +1158,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedSharedResource_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -1202,17 +1202,17 @@ namespace CIAO
 
       enum Value
       {
-        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l,rtecEventPublisher_l,rtecEventConsumer_l,
+        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l,rtecEventPublisher_l,rtecEventConsumer_l
       };
 
 
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator== (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
-      friend bool XSC_XML_Handlers_Export 
+      friend bool XSC_XML_Handlers_Export
       operator!= (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
       private:
@@ -1232,7 +1232,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1241,7 +1241,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // specificType
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& specificType () const;
       void specificType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1250,7 +1250,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > specificType_;
 
       // supportedType
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& supportedType () const;
       void supportedType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1259,7 +1259,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
 
       // provider
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& provider () const;
       void provider (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1268,7 +1268,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > provider_;
 
       // exclusiveProvider
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& exclusiveProvider () const;
       void exclusiveProvider (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1277,7 +1277,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > exclusiveProvider_;
 
       // exclusiveUser
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& exclusiveUser () const;
       void exclusiveUser (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1286,7 +1286,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > exclusiveUser_;
 
       // optional
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& optional () const;
       void optional (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1295,7 +1295,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > optional_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
@@ -1330,7 +1330,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1339,7 +1339,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -1368,7 +1368,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1396,7 +1396,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1405,7 +1405,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
 
       // provider
-      // 
+      //
       public:
       bool provider_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& provider () const;
@@ -1415,7 +1415,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > provider_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
@@ -1424,7 +1424,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > kind_;
 
       // instance
-      // 
+      //
       public:
       ::XMLSchema::IDREF< ACE_TCHAR > const& instance () const;
       void instance (::XMLSchema::IDREF< ACE_TCHAR > const& );
@@ -1454,7 +1454,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // location
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& location () const;
       void location (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1482,7 +1482,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // targetName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& targetName () const;
       void targetName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1491,7 +1491,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > targetName_;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1500,7 +1500,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1509,7 +1509,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // resourceValue
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
       void resourceValue (::CIAO::Config_Handlers::Any const& );
