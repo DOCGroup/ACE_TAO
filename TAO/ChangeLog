@@ -11,9 +11,9 @@ Wed Apr  5 22:39:28 UTC 2006  Adam Mitz  <mitza@ociweb.com>
         * tests/Bug_2494_Regression/test_i.cpp:
 
           Added a regression test for Bugzilla bug #2494.
-        
+
         * tao/Transport.cpp (~Transport):
-        
+
           Added back the ACE_ASSERTS, needed for the regression test above.
           See Bugzilla bug #2494.
 
