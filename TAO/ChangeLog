@@ -1,3 +1,22 @@
+Wed Apr  5 22:39:28 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_2494_Regression/Bug_2494_Regression.mpc:
+        * tests/Bug_2494_Regression/README:
+        * tests/Bug_2494_Regression/client.cpp:
+        * tests/Bug_2494_Regression/run_test.pl:
+        * tests/Bug_2494_Regression/server.cpp:
+        * tests/Bug_2494_Regression/test.idl:
+        * tests/Bug_2494_Regression/test_i.h:
+        * tests/Bug_2494_Regression/test_i.inl:
+        * tests/Bug_2494_Regression/test_i.cpp:
+
+          Added a regression test for Bugzilla bug #2494.
+        
+        * tao/Transport.cpp (~Transport):
+        
+          Added back the ACE_ASSERTS, needed for the regression test above.
+          See Bugzilla bug #2494.
+
 Tue Apr  4 22:03:35 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * orbsvcs/examples/ImR/Advanced/TestClient.h:
@@ -86,11 +105,18 @@ Fri Mar 31 17:19:13 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport.cpp:
 
-          Fixes a problem where the server would terminate
-          when the client process is killed.  This was due to one thread
-          closing a transport while another was still using it.
-          With this change, the transport will check if the handler is
-          still registered in the reactor before scheduling output.
+          See bugzilla bug #2494 for full details.  This fixes a race condition
+          where one thread sends data out of the transport (drain_queue_helper)
+          but then gets scheduled out before reaching the flushing strategy.
+          Meanwhile another thread runs on the same transport and notices that
+          the client has closed the connection.  This thread closes the
+          transport.  The first thread then continues and attempts to register
+          with the reactor to do further output (schedule_output_i), however
+          the connection handler has already been removed from the reactor.
+          This causes problems later on including a memory leak, since a block
+          has been allocated on the tranpsort's queue (in send_reply_message_i)
+          and it will never be deallocated (the transport destructor will run
+          first).
 
 Fri Mar 31 15:17:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
