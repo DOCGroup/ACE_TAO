@@ -182,6 +182,11 @@ TAO_Transport::~TAO_Transport (void)
   // By the time the destructor is reached here all the connection stuff
   // *must* have been cleaned up.
 
+  // The following assert is needed for the test "Bug_2494_Regression".
+  // See the bugzilla bug #2494 for details.
+  ACE_ASSERT (this->head_ == 0);
+  ACE_ASSERT (this->cache_map_entry_ == 0);
+
   /*
    * Hook to add code that cleans up components
    * belong to the concrete protocol implementation.
@@ -646,7 +651,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
       msg->remove_from_list (this->head_, this->tail_);
       msg->destroy ();
     }
-  
+
   return 1;
 }
 
