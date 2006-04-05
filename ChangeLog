@@ -1,3 +1,18 @@
+Mon Apr  5 14:59:37 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.h:
+
+          Addressed access to locks that have already been destroyed by
+          reintroducing some of the original static variable semantics.
+          Some, but not all, of the exception-safety fixes that introduced
+          the order of destruction problem were retained.
+
+          (random_seed, egd_file, seed_file):
+
+          Declared these methods "static" since they do not manipulate
+          internal ACE_SSL_Context members.
+
 Wed Apr  5 14:58:12 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * tests/Unload_libACE.cpp:
