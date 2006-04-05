@@ -15,6 +15,8 @@
 #define CIAO_RTEVENT_H
 #include /**/ "ace/pre.h"
 
+#include "CIAO_RTEVENT_Export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -22,10 +24,10 @@
 #include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h"
 #include "CIAO_RTEventS.h"
 
-#include "ace/Hash_Map_Manager.h"
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "ace/Hash_Map_Manager.h"
 
 namespace CIAO
 {
