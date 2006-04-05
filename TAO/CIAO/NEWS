@@ -67,6 +67,18 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
+====================================================
+
+. Fixed bug in detecting name clashes between names of ports of the same
+  category (facet, event sink, etc.) in the same component.
+  
+. Added support for attribute exceptions in code generated for executor
+  implementation classes.
+  
+. Implemented spec-defined component methods get_all_receptacles(),
+  get_all_publishers(), and disconnect_consumer().
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
 ====================================================
 
