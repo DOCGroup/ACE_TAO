@@ -1,3 +1,8 @@
+Wed Apr  5 18:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+          Fixed compile errors
+
 Wed Apr  5 13:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h:
