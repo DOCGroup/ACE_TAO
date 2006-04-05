@@ -3,6 +3,18 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) VxWorks 6.2 support
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
+====================================================
+
+. Added support for the --enable-fl-reactor configure option to the
+  autoconf build infrastructure to build the ACE_FlReactor library.
+
+. Added support for the --enable-qt-reactor configure option to the
+  autoconf build infrastructure to build the ACE_QtReactor library.
+
+. Added support for the --enable-xt-reactor configure option to the
+  autoconf build infrastructure to build the ACE_XtReactor library.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
 ====================================================
 
