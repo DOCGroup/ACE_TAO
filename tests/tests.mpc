@@ -1305,4 +1305,6 @@ project(Library Unload) {
   Source_Files {
     Unload_libACE.cpp
   }
+  Resource_Files {
+  }
 }
