@@ -643,11 +643,11 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   if (result == -1)
     {
       if (TAO_debug_level > 5)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Transport[%d]::send_reply_"
-		      "message_i dequeuing msg due to schedule_output "
-		      "failure\n", this->id ()));
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Transport[%d]::send_reply_"
+                      "message_i dequeuing msg due to schedule_output "
+                      "failure\n", this->id ()));
+        }
       msg->remove_from_list (this->head_, this->tail_);
       msg->destroy ();
     }
@@ -700,16 +700,16 @@ TAO_Transport::schedule_output_i (void)
   if (found != eh) 
     {
       if(TAO_debug_level > 3)
-	{
-	  ACE_DEBUG ((LM_DEBUG, 
-		      "TAO (%P|%t) - Transport[%d]::schedule_output_i "
-		      "event handler not found in reactor, returning -1\n",
-		      this->id ()));
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, 
+                      "TAO (%P|%t) - Transport[%d]::schedule_output_i "
+                      "event handler not found in reactor, returning -1\n",
+                      this->id ()));
+        }
       if (found)
-	{
-	  found->remove_reference ();
-	}
+        {
+          found->remove_reference ();
+        }
       return -1;
     }
   found->remove_reference ();
@@ -967,7 +967,7 @@ TAO_Transport::cleanup_queue_i ()
        // @@ This is a good point to insert a flag to indicate that a
        //    CloseConnection message was successfully received.
       i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
-		        this->orb_core_->leader_follower ());
+                        this->orb_core_->leader_follower ());
 
       i->remove_from_list (this->head_, this->tail_);
 
