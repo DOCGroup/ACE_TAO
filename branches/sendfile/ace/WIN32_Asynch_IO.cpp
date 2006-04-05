@@ -177,7 +177,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   // @@ This API returns 0 on failure. So, I am returning -1 in that
   //    case. Is that right? (Alex).
 
-  int result = (int) ::CancelIo (this->handle_);
+  int const result = (int) ::CancelIo (this->handle_);
 
   if (result == 0)
     // Couldnt cancel the operations.
@@ -413,7 +413,7 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                   -1);
 
   // Shared read
-  int return_val = this->shared_read (result);
+  int const return_val = this->shared_read (result);
 
   // Upon errors
   if (return_val == -1)
@@ -470,7 +470,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
 
         // Increment iovec counter if there's more to do.
         if (msg_space > 0)
-          iovcnt++;
+          ++iovcnt;
       }
     if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -595,7 +595,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
   ACE_OS::set_errno_to_last_error ();
   switch (errno)
     {
-    case ERROR_IO_PENDING: 
+    case ERROR_IO_PENDING:
       /* FALLTHRU */
     case ERROR_MORE_DATA:
       // The IO will complete proactively: the OVERLAPPED will still

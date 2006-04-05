@@ -378,7 +378,7 @@ ACE_XtReactor::reset_timer_interval
   ACE_TRACE ("ACE_XtReactor::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  int result = ACE_Select_Reactor::timer_queue_->reset_interval
+  int const result = ACE_Select_Reactor::timer_queue_->reset_interval
     (timer_id,
      interval);
 
@@ -400,10 +400,10 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *event_handler,
   ACE_TRACE ("ACE_XtReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  long result = ACE_Select_Reactor::schedule_timer (event_handler,
-                                                    arg,
-                                                    delay,
-                                                    interval);
+  long const result = ACE_Select_Reactor::schedule_timer (event_handler,
+                                                          arg,
+                                                          delay,
+                                                          interval);
   if (result == -1)
     return -1;
   else
