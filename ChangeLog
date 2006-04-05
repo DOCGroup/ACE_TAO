@@ -1,3 +1,9 @@
+Wed Apr  5 11:55:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Add more !DISABLE_ToFix_LynxOS_* marks to failing tests
+
 Tue Apr  4 18:51:41 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Acceptor.cpp (shared_open): If ACE_OS::listen() fails,
@@ -28,7 +34,7 @@ Tue Apr  4 15:06:00 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
           Add guards for __MINGW32__ and __CYGWIN32__.
           Don't error if libACE isn't found.
 
-Mon Apr  4 14:10:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+Tue Apr  4 14:10:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
           Add more !DISABLE_ToFix_LynxOS_* marks to failing tests
