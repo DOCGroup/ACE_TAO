@@ -1,9 +1,5 @@
 Wed Apr  5 19:32:19 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
-        * TAO/CIAO/ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
-        
-          Make debug statement debug_level controlled.
-        
         * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb
         
           Added library dependency to CIAO_Events_DnC, so static
