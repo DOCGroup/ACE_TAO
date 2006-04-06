@@ -1,3 +1,13 @@
+Thu Apr  6 18:18:47 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Strategies/advanced_resource.cpp (input_cdr_buffer_allocator):
+
+          Modified this method to defer to the TAO_Default_Resource_Factory
+          for the input_cdr_buffer_allocator if the allocator type is not
+          TAO_ALLOCATOR_NULL_LOCK.  In the event that the user has chosen
+          not to use the memory pool allocator, they will get the right type
+          of input cdr buffer allocator.
+
 Thu Apr  6 00:33:35 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB_Core.cpp:
