@@ -693,15 +693,15 @@ TAO_Transport::schedule_output_i (void)
   ACE_Event_Handler *eh = this->event_handler_i ();
   ACE_Reactor *reactor = eh->reactor ();
 
-  // Check to see if our event handler is still registered with the 
+  // Check to see if our event handler is still registered with the
   // reactor.  It's possible for another thread to have run close_connection()
   // since we last used the event handler.
   ACE_Event_Handler *found = reactor->find_handler (eh->get_handle ());
-  if (found != eh) 
+  if (found != eh)
     {
       if(TAO_debug_level > 3)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Transport[%d]::schedule_output_i "
                       "event handler not found in reactor, returning -1\n",
                       this->id ()));
