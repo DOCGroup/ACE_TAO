@@ -1,3 +1,9 @@
+Thu Apr  6 09:17:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Connector.cpp:
+          Applied fix of bug 2417, let us see what the results are in the
+          branch build
+
 Thu Apr  6 09:08:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/FindPOA/FindPOA.cpp:
