@@ -20,6 +20,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 . Added support for the --enable-xt-reactor configure option to the
   autoconf build infrastructure to build the ACE_XtReactor library.
 
+. Fixed a bug that would cause timer IDs from ACE_Timer_Heap to be
+  improperly duplicated under certain conditions (Bugzilla #2447).
+
+. Fixed ACE_SSL_Context::private_key(), context(), and dh_params() methods
+  to allow retrying a file load after a failed call.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
 ====================================================
 
