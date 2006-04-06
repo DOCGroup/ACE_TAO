@@ -1,3 +1,10 @@
+Thu Apr  6 14:54:59 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.h
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h
+
+          Some cosmestic changes.
+        
 Thu Apr  6 08:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Component.idl:
