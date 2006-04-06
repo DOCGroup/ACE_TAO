@@ -1,3 +1,11 @@
+Thu Apr  6 06:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-tiger.h:
+          Don't define ACE_SIZEOF_LONG_DOUBLE when it is already set. Can
+          happen when we build for OS X on Intel. Thanks to Ignacio Alvarez
+          <support at xentient dot com> for reporting this. This fixes bugzilla
+          2496.
+
 Wed Apr  5 23:02:50 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
@@ -8,14 +16,14 @@ Wed Apr  5 22:03:52 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
 
-          Modify the project dependency so its built after 
+          Modify the project dependency so its built after
           CIAO_DnC_Container project. This should fix the
           errors on SuSE_FP_Stats build.
-        
+
 Wed Apr  5 19:32:19 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb
-        
+
           Added library dependency to CIAO_Events_DnC, so static
           build could resolve symbols in this library.
 
