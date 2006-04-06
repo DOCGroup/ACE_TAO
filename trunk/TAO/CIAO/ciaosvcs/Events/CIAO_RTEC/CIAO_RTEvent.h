@@ -15,12 +15,13 @@
 #define CIAO_RTEVENT_H
 #include /**/ "ace/pre.h"
 
-#include "CIAO_RTEVENT_Export.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "CIAO_RTEVENT_Export.h"
 #include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h"
 #include "CIAO_RTEventS.h"
 
@@ -308,7 +309,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     //@@ (GD) There should be a place where the deployment tool could
-  //        set up the rt_event_qos properties for Supplier Config.
+    //        set up the rt_event_qos properties for Supplier Config.
 
     RtecEventChannelAdmin::SupplierQOS * rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
