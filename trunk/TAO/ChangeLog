@@ -1,3 +1,13 @@
+Thu Apr  6 00:33:35 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Fixing the usage of the correct dynamic service names, for the
+          case of TAO built with support for dynamic linking. Thanks to
+          Ossama Othman <Ossama_Othman at symantec dot com> for providing
+          the patch.
+
+
 Wed Apr  5 22:39:28 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_2494_Regression/Bug_2494_Regression.mpc:

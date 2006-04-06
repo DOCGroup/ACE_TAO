@@ -1450,7 +1450,7 @@ TAO_ORB_Core::policy_factory_registry_i (void)
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_PolicyFactory_Registry_Factory",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
                                       "TAO_PI",
                                       "_make_PolicyFactory_Loader",
                                       ""));
@@ -2266,7 +2266,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL)
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory_Loader",
                                       "TAO_TypeCodeFactory",
                                       "_make_TAO_TypeCodeFactory_Loader",
                                       ""));
@@ -2287,7 +2287,7 @@ TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory_Loader",
                                       "TAO_CodecFactory",
                                       "_make_TAO_CodecFactory_Loader",
                                       ""));
