@@ -15,13 +15,7 @@
 #define CCM_COMPONENT_IDL
 
 #include "CCM_Event.idl"
-
-module CORBA
-{
-  typeprefix CORBA "omg.org";
-
-  interface IRObject; // forward declerations
-};
+#include "tao/IFR_Client/IFR_Base.pidl"
 
 module Components
 {
