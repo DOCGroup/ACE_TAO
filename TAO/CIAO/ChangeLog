@@ -1,7 +1,15 @@
+Thu Apr  6 08:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Component.idl:
+          Removed the forward declaration of IRObject and just include
+          ciao/CCM_Component.idl. The forward declaration is causing
+          problems with the versioned namespace support, will investigate
+          this later
+
 Wed Apr  5 20:57:32 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * TAO/CIAO/ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
-        
+
           Make debug statement debug_level controlled.
 
 Wed Apr  5 18:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
