@@ -16,6 +16,10 @@ namespace CCF
     class TokenStream
     {
     public:
+      // (JP 06-04-06) Not required by C++ spec, but it
+      // eliminates buggy GCC warnings.
+      virtual ~TokenStream () {}
+
       virtual Token
       next () = 0;
     };
