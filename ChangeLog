@@ -1,3 +1,12 @@
+Thu Apr  6 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Bug_2497_Regression_Test.cpp:
+          Added regression for bug 2497, we have to see what the best fix
+          is. Thanks to Sergey Zubarev <sergant128 at mail dot ru> for
+          providing reporting this.
+
 Thu Apr  6 06:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macosx-tiger.h:
