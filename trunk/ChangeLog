@@ -1,3 +1,9 @@
+Thu Apr  6 19:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread.cpp:
+          Fixed compile problem in single threaded no online build. Thanks
+          to Ossama Othman for reporting this
+
 Thu Apr  6 15:58:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
