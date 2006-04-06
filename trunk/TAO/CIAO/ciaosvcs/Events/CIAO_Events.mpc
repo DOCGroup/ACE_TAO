@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_DnC_Events) : orbsvcslib, ciao_events_dnc {
+project (CIAO_DnC_Events) : orbsvcslib, rtevent_serv, ciao_events_dnc {
 
   after += CIAO_DnC_Events_Base CIAO_RTEvent
   sharedname  = CIAO_DnC_Events
