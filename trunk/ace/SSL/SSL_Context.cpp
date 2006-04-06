@@ -397,7 +397,10 @@ ACE_SSL_Context::private_key (const char *file_name,
   if (::SSL_CTX_use_PrivateKey_file (this->context_,
                                      this->private_key_.file_name (),
                                      this->private_key_.type ()) <= 0)
-    return -1;
+    {
+      this->private_key_ = ACE_SSL_Data_File ();
+      return -1;
+    }
   else
     return this->verify_private_key ();
 }
@@ -424,7 +427,10 @@ ACE_SSL_Context::certificate (const char *file_name,
   if (::SSL_CTX_use_certificate_file (this->context_,
                                       this->certificate_.file_name (),
                                       this->certificate_.type ()) <= 0)
-    return -1;
+    {
+      this->certificate_ = ACE_SSL_Data_File ();
+      return -1;
+    }
   else
     return 0;
 }
@@ -525,30 +531,39 @@ ACE_SSL_Context::dh_params (const char *file_name,
   if (this->dh_params_.type () != -1)
     return 0;
 
+  // For now we only support PEM encodings
+  if (type != SSL_FILETYPE_PEM)
+    return -1;
+
   this->dh_params_ = ACE_SSL_Data_File (file_name, type);
 
   this->check_context ();
 
   {
-    // For now we only support PEM encodings
-    if (this->dh_params_.type () != SSL_FILETYPE_PEM)
-      return -1;
-
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
     DH * ret=0;
     BIO * bio = 0;
 
     if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == NULL)
-      return -1;
+      {
+        this->dh_params_ = ACE_SSL_Data_File ();
+        return -1;
+      }
 
     ret = PEM_read_bio_DHparams (bio, NULL, NULL, NULL);
     BIO_free (bio);
 
     if (ret == 0)
-      return -1;
+      {
+        this->dh_params_ = ACE_SSL_Data_File ();
+        return -1;
+      }
 
-    if(::SSL_CTX_set_tmp_dh (this->context_, ret) < 0)
-      return -1;
+    if (::SSL_CTX_set_tmp_dh (this->context_, ret) < 0)
+      {
+        this->dh_params_ = ACE_SSL_Data_File ();
+        return -1;
+      }
     DH_free (ret);
   }
 
