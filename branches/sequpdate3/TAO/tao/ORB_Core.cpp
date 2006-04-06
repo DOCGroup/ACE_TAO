@@ -2083,72 +2083,58 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (())
 {
-  ACE_TRY
-    {
-      {
-        ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
-        if (this->has_shutdown () != 0)
-          return;
+    if (this->has_shutdown () != 0)
+      return;
 
-        // Check if we are on the right state, i.e. do not accept
-        // shutdowns with the 'wait_for_completion' flag set in the middle
-        // of an upcall (because those deadlock).
-        this->adapter_registry_.check_close (wait_for_completion
-                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+    // Check if we are on the right state, i.e. do not accept
+    // shutdowns with the 'wait_for_completion' flag set in the middle
+    // of an upcall (because those deadlock).
+    this->adapter_registry_.check_close (wait_for_completion
+                                         ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
-        // Set the 'has_shutdown' flag, so any further attempt to shutdown
-        // becomes a noop.
-        this->has_shutdown_ = 1;
+    // Set the 'has_shutdown' flag, so any further attempt to shutdown
+    // becomes a noop.
+    this->has_shutdown_ = 1;
 
-        // need to release the mutex, because some of the shutdown
-        // operations invoke application code, that could (and in practice
-        // does!) callback into ORB Core code.
-      }
+    // need to release the mutex, because some of the shutdown
+    // operations invoke application code, that could (and in practice
+    // does!) callback into ORB Core code.
+  }
 
-      this->adapter_registry_.close (wait_for_completion
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  this->adapter_registry_.close (wait_for_completion
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-      // Shutdown reactor.
-      this->thread_lane_resources_manager ().shutdown_reactor ();
+  // Shutdown reactor.
+  this->thread_lane_resources_manager ().shutdown_reactor ();
 
-      // Cleanup transports that use the RW strategies
-      this->thread_lane_resources_manager ().cleanup_rw_transports ();
+  // Cleanup transports that use the RW strategies
+  this->thread_lane_resources_manager ().cleanup_rw_transports ();
 
-      // Grab the thread manager
-      ACE_Thread_Manager *tm = this->thr_mgr ();
+  // Grab the thread manager
+  ACE_Thread_Manager *tm = this->thr_mgr ();
 
-      // Try to cancel all the threads in the ORB.
-      tm->cancel_all ();
+  // Try to cancel all the threads in the ORB.
+  tm->cancel_all ();
 
-      // If <wait_for_completion> is set, wait for all threads to exit.
-      if (wait_for_completion != 0)
-        tm->wait ();
+  // If <wait_for_completion> is set, wait for all threads to exit.
+  if (wait_for_completion != 0)
+    tm->wait ();
 
-      // Explicitly destroy the object reference table since it
-      // contains references to objects, which themselves may contain
-      // reference to this ORB.
-      this->object_ref_table_.destroy ();
+  // Explicitly destroy the object reference table since it
+  // contains references to objects, which themselves may contain
+  // reference to this ORB.
+  this->object_ref_table_.destroy ();
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-      CORBA::release (this->pi_current_);
-      this->pi_current_ = CORBA::Object::_nil ();
+  CORBA::release (this->pi_current_);
+  this->pi_current_ = CORBA::Object::_nil ();
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    }
-  ACE_CATCHALL
-    {
-      // Do not allow exceptions to escape.. So catch all the
-      // exceptions.
-      // @@ Not sure what to print here for the users..
-
-    }
-  ACE_ENDTRY;
-
-  return;
 }
 
 void

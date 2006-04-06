@@ -1,3 +1,20 @@
+Thu Apr  6 09:08:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/FindPOA/FindPOA.cpp:
+        * tests/Bug_2349_Regression/client.cpp:
+        * tests/Bug_2349_Regression/foo.idl:
+        * tests/Bug_2349_Regression/server.cpp:
+          Improved tests
+
+        * tao/Adapter_Registry.{h,cpp}:
+          Remove the empty throw spec for close and check_close. This way
+          exceptions from lower layers are propagated up.
+
+        * tao/ORB_Core.{h,cpp}:
+          Removed empty throw spec from shutdown, if there are exceptions from
+          a lower layer and as a result we can't shutdown, let the user be
+          aware of it. This fixes bugzilla bug 2349
+
 Mon Apr  3 07:59:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO/IDL/be/be_visitor_union/discriminant_ci.cpp

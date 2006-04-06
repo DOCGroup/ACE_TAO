@@ -567,8 +567,7 @@ public:
 
   /// End the event loop
   void shutdown (CORBA::Boolean wait_for_completion
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+                 ACE_ENV_ARG_DECL);
 
   /// Get the shutdown flag value
   int has_shutdown (void);
