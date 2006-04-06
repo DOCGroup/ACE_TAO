@@ -1,3 +1,14 @@
+Thu Apr  6 15:22:31 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_Events.mpc
+        
+          Fixed linking errors on WinXP_BCB6_Pro_Dynamic_Release build.
+        
+        * examples/Hello/descriptors_shared_components/deploymentplan.cdp
+        * examples/Hello/descriptors_shared_components/deploymentplan_shared_components.cdp
+        
+          Modified to illustrate the shared components scenario.
+
 Thu Apr  6 14:54:59 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_EventService_Factory_impl.h
