@@ -1,3 +1,9 @@
+Thu Apr  6 21:11:24 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_Context.cpp (private_key, context, dh_params): If setting
+          up the new file fails, reset the corresponding
+          ACE_SSL_Data_File member to allow retries to proceed.
+
 Thu Apr  6 19:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread.cpp:
