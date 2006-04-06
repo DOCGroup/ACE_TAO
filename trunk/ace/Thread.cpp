@@ -6,12 +6,11 @@ ACE_RCSID(ace,
           Thread,
           "$Id$")
 
-#if defined (ACE_HAS_THREADS)
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread.inl"
 #endif /* !defined (__ACE_INLINE__) */
 
+#if defined (ACE_HAS_THREADS)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
