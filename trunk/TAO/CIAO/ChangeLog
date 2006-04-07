@@ -9,6 +9,9 @@ Fri Apr  7 04:09:33 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
           purged from the to-be-removed connections list. Added another
           helper method <purge_connections> to accomplish this task.
 
+          Modified to enforce passivation occured on all components 
+          before any connections are removed.
+        
 Fri Apr  7 03:55:46 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp

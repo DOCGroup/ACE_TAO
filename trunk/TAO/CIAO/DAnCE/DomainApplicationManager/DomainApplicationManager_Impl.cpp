@@ -1578,6 +1578,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyApplication");
   ACE_TRY
     {
+      // Passivate all components associated with the plan
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
@@ -1607,6 +1608,14 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               (entry->int_id_).node_application_.in ();
 
           my_na->ciao_passivate ();
+        }
+
+      // Remove all connections associated with the plan
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+        {
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+          this->artifact_map_.find (this->node_manager_names_[i], entry);
 
           Deployment::Connections_var connections =
             this->get_outgoing_connections (
@@ -1643,7 +1652,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
                   // Remove all the connections whose "source" component
                   // is this component instance from the <connections> list
                   this->purge_connections (connections,
-                                           inst_name.c_str ());                                
+                                           inst_name.c_str ());
                 }
             }
 
