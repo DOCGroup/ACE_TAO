@@ -1,3 +1,33 @@
+Fri Apr  7 08:03:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
+
+        * tao/Valuetype_Adapter_Factory.{h,cpp}:
+          New files, value type adapter factory
+
+        * tao/tao.mpc:
+          Added new files
+
+        * tao/Valuetype/Valuetype_Adapter_Factory_Impl.h:
+          Value type adapter factory implementation
+
+        * tao/Valuetype/ValueFactory_Map.{h,cpp}:
+          Map isn't a singleton anymore and guard access with a mutex
+
+        * tao/Valuetype/Valuetype_Adapter_Impl.{h,cpp}:
+          The value type adapter isn't loaded with service configurator
+          anymore, the value type factory is now the one we load on demand
+
+        * tao/ORB.cpp:
+          Updated the value type methods to use the new ORB_Core method
+          to get the valuetype adapter, is the ORB_Core can't get the
+          adapter it will throw already the internal exception
+
+        * tao/ORB_Core.{h,cpp,i}:
+          Get the value type adapter factory with svc conf instead of the
+          adapter itself. Create a unique instance per orb.
+
+          Store the value type factories per orb and made things thread safe.
+          This fixes bugzilla bugs 2352 and 23253.
+
 Thu Apr  6 09:17:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp:
