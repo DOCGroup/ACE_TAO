@@ -22,7 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
+#include "tao/Valuetype/ValueFactory_Map.h"
 
 #include "tao/Valuetype_Adapter.h"
 
@@ -65,18 +66,11 @@ public:
 
   virtual CORBA::ValueFactory vf_map_find (const char *);
 
-  // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+private:
+  TAO_ValueFactory_Map map_;
 };
 
-static int
-TAO_Requires_Valuetype_Initializer =
-  TAO_Valuetype_Adapter_Impl::Initializer ();
-
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-ACE_STATIC_SVC_DECLARE (TAO_Valuetype_Adapter_Impl)
-ACE_FACTORY_DECLARE (TAO_Valuetype, TAO_Valuetype_Adapter_Impl)
 
 #include /**/ "ace/post.h"
 #endif /* TAO_VALUETYPE_ADAPTER_IMPL_H */

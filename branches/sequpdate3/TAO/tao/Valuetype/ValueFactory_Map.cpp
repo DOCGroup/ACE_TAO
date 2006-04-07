@@ -1,5 +1,5 @@
-#include "ValueFactory_Map.h"
-#include "ValueFactory.h"
+#include "tao/Valuetype/ValueFactory_Map.h"
+#include "tao/Valuetype/ValueFactory.h"
 #include "tao/CORBA_String.h"
 #include "tao/TAO_Singleton.h"
 
@@ -7,7 +7,6 @@
 ACE_RCSID (Valuetype,
            ValueFactory_Map,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,21 +35,18 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map (void)
     }
 }
 
-// %! Thread issues
-
 int
 TAO_ValueFactory_Map::rebind (const char *repo_id,
                               CORBA::ValueFactory &factory)
 {
-//  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, map_->mutex(),-1);
-//   --- but must be recursive
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
+
   const char *prev_repo_id = 0;
   CORBA::ValueFactory prev_factory = 0;
-  int ret = 0;
-  ret = this->map_.rebind (CORBA::string_dup (repo_id),
-                           factory,
-                           prev_repo_id,
-                           prev_factory);
+  int const ret = this->map_.rebind (CORBA::string_dup (repo_id),
+                                     factory,
+                                     prev_repo_id,
+                                     prev_factory);
 
   if (ret > -1)   // ok, no error
     {
@@ -70,10 +66,11 @@ int
 TAO_ValueFactory_Map::unbind (const char *repo_id,
                               CORBA::ValueFactory &factory)
 {
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
+
   FACTORY_MAP_MANAGER::ENTRY *prev_entry = 0;
-  int ret = 0;
-  ret = this->map_.find (repo_id,
-                         prev_entry);
+  int ret = this->map_.find (repo_id,
+                             prev_entry);
   if (ret == 0)    // there was a matching factory
     {
       // set factory to the previous factory,
@@ -95,10 +92,10 @@ int
 TAO_ValueFactory_Map::find (const char *repo_id,
                             CORBA::ValueFactory &factory)
 {
-  int ret = 0;
-  ret = this->map_.find (repo_id,
-                         factory);
-  // %! this must be guarded to be atomic  !!!!!!!!!!!!!!!!!!
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
+
+  int const ret = this->map_.find (repo_id,
+                                   factory);
   if (ret > -1)
     {
       factory->_add_ref ();    // The caller gets one reference as gift.
@@ -107,18 +104,5 @@ TAO_ValueFactory_Map::find (const char *repo_id,
   return ret;
 }
 
-TAO_ValueFactory_Map *
-TAO_ValueFactory_Map::instance (void)
-{
-  // Hide the template instantiation to prevent multiple instances
-  // from being created.
-
-  return
-    TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::instance ();
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

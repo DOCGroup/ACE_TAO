@@ -23,7 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/RW_Thread_Mutex.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,18 +77,13 @@ private:
                                   CORBA::ValueFactory,
                                   ACE_Hash<const char *>,
                                   ACE_Equal_To<const char *>,
-                                  TAO_SYNCH_RW_MUTEX>
+                                  ACE_SYNCH_NULL_MUTEX>
           FACTORY_MAP_MANAGER;
   FACTORY_MAP_MANAGER map_;
+
+  /// synchronization of the map
+  TAO_SYNCH_MUTEX mutex_;
 }; /* TAO_ValueFactory_Map */
-
-
-// Currently the ValueFactory_Map is a singleton and not per ORB
-// as in the OMG spec.
-/**
- * @todo Remove this legacy ValueFactory_Map typedef.
- */
-typedef TAO_ValueFactory_Map TAO_VALUEFACTORY_MAP;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

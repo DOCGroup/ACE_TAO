@@ -214,13 +214,6 @@ TAO_ORB_Core::not_default (const char * orb_id)
   table->not_default (orb_id);
 }
 
-/// Return the valuetype adapter
-ACE_INLINE TAO_Valuetype_Adapter *&
-TAO_ORB_Core::valuetype_adapter (void)
-{
-  return this->valuetype_adapter_;
-}
-
 ACE_INLINE void
 TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
 {

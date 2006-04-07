@@ -37,6 +37,9 @@
 #include "ORBInitializer_Registry_Adapter.h"
 #include "Codeset_Manager.h"
 
+#include "tao/Valuetype_Adapter.h"
+#include "tao/Valuetype_Adapter_Factory.h"
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "Policy_Manager.h"
 #include "Policy_Current.h"
@@ -130,7 +133,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
-    valuetype_adapter_name_ ("Valuetype_Adapter"),
+    valuetype_adapter_factory_name_ ("valuetype_Adapter_Factory"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
     poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", "")))
 {
@@ -1372,15 +1375,15 @@ TAO_ORB_Core::iorinterceptor_adapter_factory_name (void)
 }
 
 void
-TAO_ORB_Core::valuetype_adapter_name (const char *name)
+TAO_ORB_Core::valuetype_adapter_factory_name (const char *name)
 {
-  TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_name_ = name;
+  TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_factory_name_ = name;
 }
 
 const char *
-TAO_ORB_Core::valuetype_adapter_name (void)
+TAO_ORB_Core::valuetype_adapter_factory_name (void)
 {
-  return TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_name_.c_str();
+  return TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_factory_name_.c_str();
 }
 
 TAO_Resource_Factory *
@@ -2125,6 +2128,10 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
   // If <wait_for_completion> is set, wait for all threads to exit.
   if (wait_for_completion != 0)
     tm->wait ();
+
+  // Explicitly destroy the valuetype adapter
+  delete this->valuetype_adapter_;
+  this->valuetype_adapter_ = 0;
 
   // Explicitly destroy the object reference table since it
   // contains references to objects, which themselves may contain
@@ -3144,6 +3151,47 @@ TAO_ORB_Core::serverrequestinterceptor_adapter_i (void)
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
+
+TAO_Valuetype_Adapter *
+TAO_ORB_Core::valuetype_adapter (void)
+{
+  if (this->valuetype_adapter_ == 0)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
+
+      if (this->valuetype_adapter_ == 0)
+        {
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              TAO_Valuetype_Adapter_Factory * vt_ap_factory =
+                ACE_Dynamic_Service<TAO_Valuetype_Adapter_Factory>::instance (
+                    TAO_ORB_Core::valuetype_adapter_factory_name ()
+                  );
+
+              if (vt_ap_factory)
+                {
+                  this->valuetype_adapter_ =
+                    vt_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                }
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "Cannot initialize the "
+                                   "valuetype_adapter \n");
+            }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN(0);
+        }
+    }
+
+  return this->valuetype_adapter_;
+}
 
 // ****************************************************************
 

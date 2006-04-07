@@ -1953,38 +1953,24 @@ CORBA::ORB::register_value_factory (const char *repository_id,
                                     CORBA::ValueFactory factory
                                     ACE_ENV_ARG_DECL)
 {
-  // %! guard, and ACE_Null_Mutex in the map
-  // do _add_ref here not in map->rebind
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
 
-  if (this->orb_core ()->valuetype_adapter () == 0)
+  if (vta)
     {
+      int const result = vta->vf_map_rebind (repository_id,
+                                             factory);
 
-     this->orb_core ()->valuetype_adapter () =
-       ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-         );
-
-      if (this->orb_core ()->valuetype_adapter () == 0)
+      if (result == 0)              // No previous factory found
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
+          return 0;
+        }
+
+      if (result == -1)
+        {
+          // Error on bind.
+          ACE_THROW_RETURN (CORBA::MARSHAL (),
                             0);
         }
-    }
-
-  int result =
-    this->orb_core ()->valuetype_adapter ()->vf_map_rebind (repository_id,
-                                                            factory);
-
-  if (result == 0)              // No previous factory found
-    {
-      return 0;
-    }
-
-  if (result == -1)
-    {
-      // Error on bind.
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
     }
 
   return factory;    // previous factory was found
@@ -1994,10 +1980,12 @@ void
 CORBA::ORB::unregister_value_factory (const char *repository_id
                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (this->orb_core ()->valuetype_adapter ())
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
+
+  if (vta)
     {
       // Dont care whther it was successful or not!
-      (void) this->orb_core ()->valuetype_adapter ()->vf_map_unbind (repository_id);
+      (void) vta->vf_map_unbind (repository_id);
     }
 }
 
@@ -2005,21 +1993,14 @@ CORBA::ValueFactory
 CORBA::ORB::lookup_value_factory (const char *repository_id
                                   ACE_ENV_ARG_DECL)
 {
-  if (this->orb_core ()->valuetype_adapter () == 0)
-    {
-      this->orb_core ()->valuetype_adapter () =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
 
-      if (this->orb_core ()->valuetype_adapter () == 0)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            0);
-        }
+  if (vta)
+    {
+      return vta->vf_map_find (repository_id);
     }
 
-  return this->orb_core ()->valuetype_adapter ()->vf_map_find (repository_id);
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -215,6 +215,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UserException.cpp
     UShortSeqC.cpp
     Valuetype_Adapter.cpp
+    Valuetype_Adapter_Factory.cpp
     Wait_On_Leader_Follower.cpp
     Wait_On_LF_No_Upcall.cpp
     Wait_On_Reactor.cpp
@@ -504,6 +505,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UShortSeqC.h
     UShortSeqS.h
     Valuetype_Adapter.h
+    Valuetype_Adapter_Factory.h
     Var_Array_Argument_T.h
     varbase.h
     VarOut_T.h
