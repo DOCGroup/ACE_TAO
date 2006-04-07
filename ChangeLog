@@ -1,3 +1,8 @@
+Fri Apr  7 13:13:06 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * tests/tests.mpc:
+          Add staticflags += ACE_AS_STATIC_LIBS for Library Unload
+
 Fri Apr  7 07:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Token.{h,inl}:
