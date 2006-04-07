@@ -1,3 +1,14 @@
+Fri Apr  7 04:09:33 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        
+          Fixed a bug in detecting External connection and Internal 
+          connections. Earlier when an external component is detected,
+          not *all* connections associated with this components are
+          purged from the to-be-removed connections list. Added another
+          helper method <purge_connections> to accomplish this task.
+
 Fri Apr  7 03:55:46 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
