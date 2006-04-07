@@ -1,3 +1,11 @@
+Fri Apr  7 19:56:03 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
+        
+          Modified to make CIAO_DnC_Events_Base and CIAO_RT_Event
+          libraries explicitly specified in "libs +=" to resolve
+          linking errors in BC compilers.
+
 Fri Apr  7 13:13:06 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
 
         * tests/tests.mpc:
