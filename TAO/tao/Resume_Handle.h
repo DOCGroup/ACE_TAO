@@ -73,12 +73,6 @@ public:
   /// reactor. Else we don't resume the handle.
   void resume_handle (void);
 
-  // Hook method called at the end of a connection handler's
-  // handle_input function.  Might override the handle_input
-  // return value or change the resume_handler's flag_ value.
-  void handle_input_return_value_hook (int& return_value);
-
-
 private:
 
   /// Our ORB Core.
