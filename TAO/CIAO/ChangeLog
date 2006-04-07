@@ -1,3 +1,13 @@
+Fri Apr  7 03:55:46 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+
+          Fixed a bug when redeploying components using the same set
+          of NodeManagers. Earlier when destroying applications or
+          components, internal components and external/shared components
+          are not all unbinded from the map, which causes duplicate
+          instance exception thrown.
+        
 Thu Apr  6 16:01:30 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CompilerElements/TokenStream.hpp:

@@ -657,14 +657,20 @@ destroyApplication (Deployment::Application_ptr app
     {
       ACE_CString name = plan_.instance[i].name.in ();
       if (this->is_shared_component (name))
-        continue;
+        {
+          this->component_map_.unbind (name);
+          continue;
+        }
 
       // If this is not a shared component and is installed within
       // this NAM, then remove it. Otherwise, we do nothing.
       // Ideally, we should ask NM to remove this component for
       // us even if this is not within this NAM.
       if (! this->is_external_component (name))
-        this->nodeapp_->remove_component (name.c_str ());
+        {
+          this->nodeapp_->remove_component (name.c_str ());
+          this->component_map_.unbind (name);
+        }
     }
 
   // Call remove on NodeApplication, if all the components are removed,
