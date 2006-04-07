@@ -370,6 +370,10 @@ namespace CIAO
     subtract_connections (const Deployment::Connections & left,
                           const Deployment::Connections & right);
 
+    void
+    purge_connections (Deployment::Connections_var & connections,
+                       const char * inst);
+                       
     /**
      * The first step in finish_launching an application in the
      * domain-level.  We install all the CIAO_Event_Service objects

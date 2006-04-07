@@ -1633,35 +1633,29 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               if (this->is_shared_component (connections[j].instanceName.in ()))
                 {
                   // ask EM to remove the binding for us
+                  ACE_CString inst_name = connections[j].instanceName.in ();
                   CIAO::Component_Binding_Info *
-                      binding = this->populate_binding_info (
-                        connections[j].instanceName.in ());
+                    binding = this->populate_binding_info (inst_name.c_str ());
 
                   this->execution_manager_->finalize_global_binding (
                     *binding, false);
 
-                  // If this element is the last one in the sequence
-                  if (j == connections->length () - 1)
-                    {
-                      connections->length (connections->length () - 1);
-                      break;
-                    }
-
-                  // otherwise, remove this element from the list
-                  for (CORBA::ULong k = j; k < connections->length (); ++k)
-                    {
-                      connections[k] = connections [k + 1];
-                      connections->length (connections->length () - 1);
-                    }
+                  // Remove all the connections whose "source" component
+                  // is this component instance from the <connections> list
+                  this->purge_connections (connections,
+                                           inst_name.c_str ());                                
                 }
             }
 
-          entry->int_id_.node_application_->finishLaunch
-              (connections.in (),
-               true, // "true" ==> argument not used anymore
-               false // "false" => remove connections
-               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (connections->length () > 0)
+            {
+              entry->int_id_.node_application_->finishLaunch
+                (connections.in (),
+                 true, // "true" ==> start the components
+                 false // "false" => remove connections
+                 ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
 
         }
 
@@ -1942,6 +1936,36 @@ subtract_connections (const Deployment::Connections & left,
           }
     }
   return retv._retn ();
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+purge_connections (Deployment::Connections_var & connections,
+                   const char * inst)
+{
+  CORBA::ULong total_len = connections->length ();
+
+  for (CORBA::ULong i = 0; i < total_len; ++i)
+    {
+      bool found = false;
+
+      // Remove all the connections whose "source" component
+      // name is <inst>
+      if (ACE_OS::strcmp (connections[i].instanceName.in (),
+                          inst) == 0)
+        {
+          found = true;
+
+          for (CORBA::ULong j = i; j < total_len - 1; ++j)
+            {
+              connections[j] = connections[j + 1];
+            }
+          connections->length (total_len - 1);
+        }
+
+      if (found)
+        this->purge_connections (connections, inst);
+    }
 }
 
 const Deployment::Properties &
