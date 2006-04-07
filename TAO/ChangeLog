@@ -1,3 +1,10 @@
+Fri Apr  7 09:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+          Removed include of orbsvcs/Time_Utilities.h, it is not needed and
+          caused errors in some builds because this app wasn't build after
+          the svc_utils anymore
+
 Thu Apr  6 18:18:47 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Strategies/advanced_resource.cpp (input_cdr_buffer_allocator):
@@ -16,7 +23,6 @@ Thu Apr  6 00:33:35 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
           case of TAO built with support for dynamic linking. Thanks to
           Ossama Othman <Ossama_Othman at symantec dot com> for providing
           the patch.
-
 
 Wed Apr  5 22:39:28 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
