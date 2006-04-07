@@ -772,7 +772,7 @@ private:
    * @note If @a raw_data is non-zero, attempt to send data using
    *       alternative method (e.g. sendfile()).
    */
-  int drain_queue_i (ACE_Message_Block * raw_data = 0);
+  int drain_queue_i (const ACE_Message_Block *raw_data = 0);
 
   /// This class needs priviledged access to
   /// - queue_is_empty_i()

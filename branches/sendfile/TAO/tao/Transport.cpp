@@ -247,7 +247,7 @@ TAO_Transport::send_message_shared (TAO_Stub *stub,
                                     const ACE_Message_Block *message_block,
                                     ACE_Time_Value *max_wait_time)
 {
-  int result;
+  int result = 0;
 
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
@@ -487,7 +487,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
   synch_message.push_back (this->head_, this->tail_);
 
-  int n = this->drain_queue_i ();
+  int const n = this->drain_queue_i ();
 
   if (n == -1)
     {
