@@ -2,10 +2,11 @@
 //
 // $Id$
 
-#include "ace/Guard_T.h"
+#include "ace/config-macros.h"
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Guard_T.h"
 #include "ace/Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -44,7 +45,7 @@ ACE_Token::waiters (void)
   ACE_TRACE ("ACE_Token::waiters");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  int ret = this->waiters_;
+  int const ret = this->waiters_;
   return ret;
 }
 
@@ -119,9 +120,9 @@ ACE_Token::ACE_Token_Queue_Entry::wait (ACE_Time_Value *timeout, ACE_Thread_Mute
 {
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
   lock.release ();
-  int retv = (timeout == 0 ?
-              this->cv_.acquire () :
-              this->cv_.acquire (*timeout));
+  int const retv = (timeout == 0 ?
+                    this->cv_.acquire () :
+                    this->cv_.acquire (*timeout));
   lock.acquire ();
   return retv;
 #else
@@ -172,3 +173,4 @@ ACE_Noop_Token::dump (void) const
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+

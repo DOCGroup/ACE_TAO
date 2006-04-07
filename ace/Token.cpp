@@ -4,6 +4,10 @@
 
 ACE_RCSID(ace, Token, "$Id$")
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Token.inl"
+#endif /* __ACE_INLINE__ */
+
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Thread.h"
@@ -13,10 +17,6 @@ ACE_RCSID(ace, Token, "$Id$")
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #endif /* DEBUGGING */
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Token.inl"
-#endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
