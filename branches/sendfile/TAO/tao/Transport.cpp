@@ -315,7 +315,7 @@ TAO_Transport::register_handler (void)
 
 #ifdef ACE_HAS_SENDFILE
 ssize_t
-TAO_Transport::sendfile (ACE_Message_Block * /* data */,
+TAO_Transport::sendfile (ACE_Message_Block const * /* data */,
                          size_t & /* bytes_transferred */,
                          ACE_Time_Value const * /* timeout */)
 {

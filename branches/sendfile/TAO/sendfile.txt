@@ -1,3 +1,9 @@
+Fri Apr  7 13:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.{h,cpp} (sendfile):
+        * tao/IIOP_Transport.{h,cpp} (sendfile):
+           Made message block argument const
+
 Fri Apr  7 12:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{h,cpp}:

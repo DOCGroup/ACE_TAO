@@ -402,9 +402,9 @@ public:
    * This method sends the message block chain through the platform
    * sendfile() function to perform a zero-copy write.
    */
-  virtual ssize_t sendfile (ACE_Message_Block * data,
-                            size_t & bytes_transferred,
-                            ACE_Time_Value const * timeout = 0);
+  virtual ssize_t sendfile (ACE_Message_Block const *data,
+                            size_t &bytes_transferred,
+                            ACE_Time_Value const *timeout = 0);
 #endif  /* ACE_HAS_SENDFILE */
 
 
