@@ -834,7 +834,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
 }
 
 int
-TAO_Transport::drain_queue_i (ACE_Message_Block * raw_data)
+TAO_Transport::drain_queue_i (const ACE_Message_Block *raw_data)
 {
 #ifdef ACE_HAS_SENDFILE
   size_t bytes_transferred = 0;

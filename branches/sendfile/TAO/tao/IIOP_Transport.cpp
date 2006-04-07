@@ -94,9 +94,9 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
 
 #ifdef ACE_HAS_SENDFILE
 ssize_t
-TAO_IIOP_Transport::sendfile (ACE_Message_Block * data,
-                              size_t & bytes_transferred,
-                              ACE_Time_Value const * timeout)
+TAO_IIOP_Transport::sendfile (ACE_Message_Block const *data,
+                              size_t &bytes_transferred,
+                              ACE_Time_Value const *timeout)
 {
   // @@ We should probably set the TCP_CORK socket option to minimize
   //    network operations.  It may also be useful to adjust the

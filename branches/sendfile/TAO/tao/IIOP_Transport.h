@@ -81,7 +81,7 @@ protected:
                         const ACE_Time_Value *timeout = 0);
 
 #ifdef ACE_HAS_SENDFILE
-  virtual ssize_t sendfile (ACE_Message_Block * data,
+  virtual ssize_t sendfile (ACE_Message_Block const * data,
                             size_t & bytes_transferred,
                             ACE_Time_Value const * timeout = 0);
 #endif  /* ACE_HAS_SENDFILE */

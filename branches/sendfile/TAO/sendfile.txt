@@ -1,3 +1,8 @@
+Fri Apr  7 12:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.{h,cpp}:
+          Made the argument of drain_queue_i const
+
 Tue Apr  4 10:36:57 2006  Ossama Othman   <ossama@dre.vanderbilt.edu>
 
 	* tao/MMAP_Allocator.cpp:
