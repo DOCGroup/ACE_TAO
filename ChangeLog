@@ -1,3 +1,9 @@
+Fri Apr  7 07:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Token.{h,inl}:
+          Fixed compile problem in single threaded no online build. Thanks
+          to Ossama Othman for reporting this
+
 Thu Apr  6 21:11:24 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_Context.cpp (private_key, context, dh_params): If setting
