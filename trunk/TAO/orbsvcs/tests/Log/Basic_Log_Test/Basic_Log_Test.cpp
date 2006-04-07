@@ -1,7 +1,5 @@
 #include "Basic_Log_Test.h"
 
-#include "orbsvcs/Time_Utilities.h"
-
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
