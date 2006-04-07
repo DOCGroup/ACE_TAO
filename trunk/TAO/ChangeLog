@@ -1,3 +1,13 @@
+Fri Apr  7 19:54:44 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * tao/Connection_Handler.cpp:
+        * tao/Resume_Handle.h:
+        * tao/Resume_Handle.cpp:
+
+          Back out the changes I put a week ago since they didn't help
+          resovle a race condition.
+          Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
 Fri Apr  7 09:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
