@@ -1,3 +1,12 @@
+Sat Apr  8 18:32:29 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/Shared_Memory_MM.h (ACE_Shared_Memory_MM): 
+	* ace/Shared_Memory_SV.h (ACE_Shared_Memory_SV):
+	  Added comments that underscore that these classes should not be
+ 	  used and instead ACE_Malloc or ACE_Mem_Map should be used.
+  	  Thanks to Qingbo Cai <qingbo dot cai at case dot edu> for motivating these
+	  comments. 
+
 Fri Apr  7 19:56:03 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_events_dnc.mpb
