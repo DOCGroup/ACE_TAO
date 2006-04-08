@@ -2,12 +2,13 @@
 // $Id$
 
 
-project (CIAO_DnC_Events_Base) : orbsvcslib, ciao_events_dnc {
+project (CIAO_DnC_Events_Base) : orbsvcslib {
 
   after += CIAO_DnC_Container
   sharedname  = CIAO_DnC_Events_Base
   idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
   dynamicflags = CIAO_EVENTS_BUILD_DLL
+  libs     += CIAO_DnC_Client CIAO_DnC_Container
 
   IDL_Files {
     CIAO_Events.idl
