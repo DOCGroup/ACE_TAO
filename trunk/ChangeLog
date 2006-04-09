@@ -1,3 +1,10 @@
+Sun Apr  9 12:00:00 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* docs/ACE-bug-process.html: Updated this page to more accurately
+	  reflect how the DOC group handles enhancement requests.  Thanks
+ 	  to David White <david dot white dot 7 at gmail dot com> for
+ 	  motivating this.
+
 Sat Apr  8 18:32:29 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/Shared_Memory_MM.h (ACE_Shared_Memory_MM): 
