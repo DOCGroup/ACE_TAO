@@ -1,23 +1,35 @@
+Mon Apr 10 08:50:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciaosvcs/Events/CIAO_Events.mpc:
+          Removed ciao_events_dnc as base project, we are building
+          this lib right now
+
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+          Use base projects instead of libs
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+          Remvoed ciao_events_dnc
+
 Sat Apr  8 15:39:14 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc
-        
+
           Fixed a linking error in SuSE_CP_Static build.
 
 Fri Apr  7 04:09:33 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
-        
-          Fixed a bug in detecting External connection and Internal 
+
+          Fixed a bug in detecting External connection and Internal
           connections. Earlier when an external component is detected,
           not *all* connections associated with this components are
           purged from the to-be-removed connections list. Added another
           helper method <purge_connections> to accomplish this task.
 
-          Modified to enforce passivation occured on all components 
+          Modified to enforce passivation occured on all components
           before any connections are removed.
-        
+
 Fri Apr  7 03:55:46 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
@@ -27,7 +39,7 @@ Fri Apr  7 03:55:46 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
           components, internal components and external/shared components
           are not all unbinded from the map, which causes duplicate
           instance exception thrown.
-        
+
 Thu Apr  6 16:01:30 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CompilerElements/TokenStream.hpp:
