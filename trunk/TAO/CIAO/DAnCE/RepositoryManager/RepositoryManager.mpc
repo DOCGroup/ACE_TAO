@@ -4,7 +4,7 @@
 //RepositoryManager project: implementation of a repository manager
 //compleint with the D&C spec
 
-project (RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, zzip, zlib {
+project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zzip, zlib {
 
   exename = RepositoryManagerDeamon
   requires += zzip zlib
@@ -31,7 +31,7 @@ project (RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, 
 
 // RMadmin project: a sample client for the RM.
 
-project (RMAdmin) : ciao_component_dnc, ciao_config_handlers {
+project (RMAdmin) : ciao_servant_dnc, ciao_config_handlers {
   exename = RMadmin
   after  += RepositoryManager
 
