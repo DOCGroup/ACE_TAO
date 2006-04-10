@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ValueType/ValueType_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
