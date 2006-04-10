@@ -2,6 +2,7 @@
 // $Id$
 
 project : ciao_deployment_svnt {
+  includes += $(CIAO_ROOT)/DomainApplicationManager
   libs     += DomainApplicationManager
   after    += DomainApplicationManager
 }
