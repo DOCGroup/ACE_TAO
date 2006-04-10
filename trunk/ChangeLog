@@ -1,3 +1,8 @@
+Mon Apr 10 09:36:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_rtevent_dnc.mpb:
+          New base project
+
 Mon Apr 10 09:13:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_events_base_dnc.mpb:
