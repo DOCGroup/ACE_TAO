@@ -1,3 +1,11 @@
+Mon Apr 10 06:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/extra_core.mpb:
+        * tao/tao.mpc:
+          Moved ServerRequestInterceptor_Adapter.cpp and
+          ClientRequestInterceptor_Adapter.cpp from extra_core to tao
+          to fix link errors in vc minimum build
+
 Fri Apr  7 19:54:44 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * tao/Connection_Handler.cpp:
