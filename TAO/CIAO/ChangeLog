@@ -1,7 +1,12 @@
+Mon Apr 10 18:48:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+          Fixed base project
+
 Mon Apr 10 14:29:13 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * TAO/CIAO/ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
-        
+
           Modified to make _narrow to be called at the first step
           when connecting supplier and config. Also modified to
           make debug statements debug_level controlled.
