@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_deployment_svnt {
+  libs     += DomainApplicationManager
+  after    += DomainApplicationManager
+}
