@@ -1,3 +1,10 @@
+Mon Apr 10 10:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/interface.idl:
+          Added some extra test cases which where reported by Hans Bos
+          <hans dot bos at xelion dot nl> as not working with 1.4.4 but
+          they are now working with cvs head.
+
 Mon Apr 10 06:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/extra_core.mpb:
