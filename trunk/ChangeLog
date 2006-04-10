@@ -1,3 +1,12 @@
+Mon Apr 10 18:37:17 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * ace/ace_for_tao.mpc:
+
+          Added Capabilities.cpp into the lib.
+          Required by TAO/orbsvcs/examples/ImR/Advanced to
+          use the getline function. The ace_for_tao lib is
+          increased by 0.1M.
+
 Mon Apr 10 18:04:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
