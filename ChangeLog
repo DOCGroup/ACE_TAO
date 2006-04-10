@@ -1,3 +1,9 @@
+Mon Apr 10 12:28:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+          Added ciao_events_dnc
+
 Mon Apr 10 12:06:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_domainapplicationmanager_dnc.mpb:
