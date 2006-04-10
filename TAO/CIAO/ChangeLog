@@ -1,3 +1,8 @@
+Mon Apr 10 10:00:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO/CIAO/ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+          Removed ciao_container_dnc
+
 Mon Apr 10 09:38:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciaosvcs/Events/CIAO_Events.mpc:
