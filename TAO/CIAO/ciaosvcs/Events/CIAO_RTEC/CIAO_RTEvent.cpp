@@ -70,7 +70,20 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::connect_event_supplier\n"));
+    if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::connect_event_supplier\n"));
+      }
+
+    RTEvent_Supplier_Config_ptr rt_config =
+      RTEvent_Supplier_Config::_narrow (supplier_config
+                                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    if (CORBA::is_nil (rt_config))
+      {
+        ACE_THROW (CORBA::BAD_PARAM ());
+      }
 
     ACE_Hash<ACE_CString> hasher;
     this->source_id_ = hasher (supplier_config->supplier_id (ACE_ENV_SINGLE_ARG_PARAMETER));
@@ -98,16 +111,6 @@ namespace CIAO
       supplier_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    RTEvent_Supplier_Config_ptr rt_config =
-      RTEvent_Supplier_Config::_narrow (supplier_config
-                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    if (CORBA::is_nil (rt_config))
-      {
-        ACE_THROW (CORBA::BAD_PARAM ());
-      }
-
     RtecEventChannelAdmin::SupplierQOS_var qos =
       rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -125,7 +128,20 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::connect_event_consumer\n"));
+    if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::connect_event_consumer\n"));
+      }
+
+    RTEvent_Consumer_Config_ptr rt_config =
+      RTEvent_Consumer_Config::_narrow (consumer_config
+                                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    if (CORBA::is_nil (rt_config))
+      {
+        ACE_THROW (CORBA::BAD_PARAM ());
+      }
 
     Components::EventConsumerBase_var consumer =
       consumer_config->consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -151,16 +167,6 @@ namespace CIAO
     RtecEventComm::PushConsumer_var push_consumer =
       consumer_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
-
-    RTEvent_Consumer_Config_ptr rt_config =
-      RTEvent_Consumer_Config::_narrow (consumer_config
-                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    if (CORBA::is_nil (rt_config))
-      {
-        ACE_THROW (CORBA::BAD_PARAM ());
-      }
 
     //@@@
     rt_config->start_disjunction_group (1);
@@ -245,7 +251,10 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "CIAO::EventService_Factory_impl::create_rt_event_channel\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "CIAO::EventService_Factory_impl::create_rt_event_channel\n"));
+      }
 
     // @@ (GD) Anything else to do to get the svc.conf file options?
     TAO_EC_Default_Factory::init_svcs ();
@@ -297,7 +306,10 @@ namespace CIAO
   RTEventServiceConsumer_impl::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
+      }
 
     for (size_t i = 0; i < events.length (); ++i)
       {
@@ -317,7 +329,10 @@ namespace CIAO
   RTEventServiceConsumer_impl::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::disconnect_push_consumer\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::disconnect_push_consumer\n"));
+      }
 
     PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
     this->poa_->deactivate_object (oid);
@@ -337,8 +352,11 @@ namespace CIAO
 
   RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl (void)
   {
-    ACE_DEBUG
-      ((LM_DEBUG, "RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG
+          ((LM_DEBUG, "RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl\n"));
+      }
   }
 
   void
@@ -476,10 +494,12 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-
-    ACE_DEBUG ((LM_DEBUG,
-                "RTEvent_Consumer_Config_impl::set_consumer_id:%s\n",
-                consumer_id));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "RTEvent_Consumer_Config_impl::set_consumer_id:%s\n",
+                    consumer_id));
+      }
 
     this->consumer_id_ = consumer_id;
   }
@@ -491,10 +511,12 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-
-    ACE_DEBUG ((LM_DEBUG,
-                "RTEvent_Consumer_Config_impl::set_supplier_id:%s\n",
-                supplier_id));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "RTEvent_Consumer_Config_impl::set_supplier_id:%s\n",
+                    supplier_id));
+      }
 
     this->supplier_id_ = supplier_id;
 
@@ -533,8 +555,10 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-
-    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::get_supplier_id\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::get_supplier_id\n"));
+      }
 
     return CORBA::string_dup (this->supplier_id_.c_str ());
   }
@@ -554,7 +578,10 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::get_consumer\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::get_consumer\n"));
+      }
 
     return Components::EventConsumerBase::_duplicate (this->consumer_.in ());
   }
@@ -584,8 +611,11 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG
-      ((LM_DEBUG, "RTEvent_Consumer_Config_impl::destroy\n"));
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG
+          ((LM_DEBUG, "RTEvent_Consumer_Config_impl::destroy\n"));
+      }
 
     PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
     this->poa_->deactivate_object (oid);
