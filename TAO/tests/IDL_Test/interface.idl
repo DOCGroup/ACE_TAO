@@ -171,3 +171,23 @@ module ParamMod
 local interface testlocal
 {
 };
+
+interface A {
+  union U switch(boolean)
+  {
+    case TRUE: A aa;
+  };
+};
+
+module M
+{
+    interface A;
+};
+
+module M
+{
+    interface A;
+
+    interface A {};
+};
+
