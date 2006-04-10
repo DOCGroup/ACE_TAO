@@ -2,7 +2,7 @@
 // $Id$
 
 
-project (CIAO_DnC_Events_Base) : orbsvcslib, ciao_container_dnc, ciao_client_dnc {
+project (CIAO_DnC_Events_Base) : orbsvcslib, ciao_client_dnc {
 
   sharedname  = CIAO_DnC_Events_Base
   idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
