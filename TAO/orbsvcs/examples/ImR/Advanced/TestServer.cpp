@@ -506,7 +506,7 @@ void TestServer::buildObjects()
           corbaloc += key;
 
           // Write out corbaloc
-          iorFile << corbaloc << endl;
+          iorFile << corbaloc.c_str() << endl;
         }
       }
     }

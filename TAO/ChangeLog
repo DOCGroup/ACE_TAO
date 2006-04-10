@@ -1,3 +1,10 @@
+Mon Apr 10 16:21:40 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+
+          Trying to fix another compiler error in ICC 9.0 Windows 
+          64-bit build.
+
 Mon Apr 10 14:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2377_Regression/Hello.cpp:
