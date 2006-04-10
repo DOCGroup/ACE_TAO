@@ -42,7 +42,7 @@ TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32 !IRIX
 TAO/tests/Bug_1482_Regression/run_test.pl: !VxWorks !MINIMUM !ST !DISABLE_ToFix_LynxOS_PPC
 TAO/tests/Bug_1551_Regression/run_test.pl: !VxWorks !MINIMUM !ST !IRIX
 TAO/tests/Bug_2084_Regression/run_test.pl: !ST
-TAO/tests/Bug_2134_Regression/run_test.pl:
+TAO/tests/Bug_2134_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2174_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2183_Regression/run_test.pl:
 TAO/tests/Bug_2186_Regression/run_test.pl: !MINIMUM
