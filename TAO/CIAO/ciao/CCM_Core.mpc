@@ -34,10 +34,8 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client, codecfactory, pi {
-  after += CIAO_DnC_Client
+project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client, codecfactory, pi, ciao_client_dnc {
   sharedname  = CIAO_DnC_Container
-  libs       += CIAO_DnC_Client
   idlflags   += -Wb,export_include=CIAO_Container_Export.h
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
@@ -72,7 +70,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
 
 // Valuetype library must be linked for this project.
 // Please don't remove.
-project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_client_dnc {
+project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ciao_client_dnc {
   sharedname   =  CIAO_Deployment_stub
 
   // This is necessary for MPC to pull in rules.ciao.GNU
@@ -122,11 +120,9 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_client_d
 
 // CIAO_DnC_Client library must be linked for this project.
 // Please don't remove.
-project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_client {
-  after        += Deployment_stub
+project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_client, ciao_deployment_stub, ciao_events_dnc, ciao_client_dnc {
   sharedname   =  CIAO_Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
-  libs         += CIAO_Deployment_stub CIAO_DnC_Client CIAO_DnC_Events
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
   idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
@@ -158,12 +154,10 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
 
 }
 
-project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_client, utils, security {
-  after        += CIAO_DnC_Container Deployment_svnt
+project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_client, utils, security, ciao_container_dnc, ciao_client_dnc, ciao_deployment_svnt {
   includes     += $(CIAO_ROOT)/ciao
   includes     += $(CIAO_ROOT)
   sharedname   =  CIAO_DnC_Server
-  libs         += CIAO_DnC_Client CIAO_DnC_Container CIAO_Deployment_svnt CIAO_Deployment_stub
   idlflags     += -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
   dynamicflags =  CIAO_SERVER_BUILD_DLL
 

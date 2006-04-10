@@ -1,6 +1,18 @@
+Mon Apr 10 11:51:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+          Readded ciao_container_dnc
+
+        * ciao/CCM_Core.mpc:
+          Use more base projects
+
+        * DAnCE/Interfaces/Interfaces.mpc:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+          Use other base projects to get correct build order
+
 Mon Apr 10 10:00:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * TAO/CIAO/ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
           Removed ciao_container_dnc
 
 Mon Apr 10 09:38:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
