@@ -1,6 +1,6 @@
 // $Id$
 
-// generate_component_mpc.pl,v 
+// generate_component_mpc.pl,v
 project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub {
   sharedname = TargetManager_stub
   idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export -Wb,stub_export_include=TargetManager_stub_export.h -Wb,skel_export_macro=TARGETMANAGER_SVNT_Export -Wb,skel_export_include=TargetManager_svnt_export.h
@@ -20,8 +20,8 @@ project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub {
 project(CIAO_TargetManager_svnt) : ciao_servant_dnc {
   after += CIAO_TargetManager_stub
   sharedname  = TargetManager_svnt
-  libs    += TargetManager_stub 
-  
+  libs    += TargetManager_stub
+
   idlflags  +=  -Wb,export_macro=TARGETMANAGER_SVNT_Export -Wb,export_include=TargetManager_svnt_export.h
   dynamicflags = TARGETMANAGER_SVNT_BUILD_DLL
 
@@ -42,18 +42,16 @@ project(CIAO_TargetManager_svnt) : ciao_servant_dnc {
 }
 
 
-project(CIAO_TargetManager_exec) : namingexe, ciao_component_dnc , ciao_config_handlers {
-  after   += CIAO_TargetManager_svnt DomainApplicationManager
+project(CIAO_TargetManager_exec) : ciao_servant_dnc, ciao_config_handlers, ciao_domainapplicationmanager_dnc {
+  after   += CIAO_TargetManager_svnt
   sharedname = TargetManager_exec
-  libs      += TargetManager_stub TargetManager_svnt DomainApplicationManager
-  
-  includes += $(CIAO_ROOT)/DomainApplicationManager
-  
+  libs      += TargetManager_stub TargetManager_svnt
+
   idlflags  +=  -Wb,export_macro=TARGETMANAGER_EXEC_Export -Wb,export_include=TargetManager_exec_export.h
   dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL
 
   Source_Files {
-    DomainDataManager.cpp    
+    DomainDataManager.cpp
     TargetManager_exec.cpp
   }
 
