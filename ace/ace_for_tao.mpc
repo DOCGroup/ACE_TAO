@@ -22,6 +22,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Base_Thread_Adapter.cpp
     Basic_Stats.cpp         // Required by ace/Stats
     Basic_Types.cpp
+    Capabilities.cpp        // Required by TAO/orbsvcs/examples/ImR/Advanced
     CDR_Base.cpp
     CDR_Stream.cpp
     CDR_Size.cpp
