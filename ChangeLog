@@ -1,3 +1,8 @@
+Mon Apr 10 14:34:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Object_Manager_Test.cpp:
+          Fixed compile problem in single threaded no inline build
+
 Mon Apr 10 12:28:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
