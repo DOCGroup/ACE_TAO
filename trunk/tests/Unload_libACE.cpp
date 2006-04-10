@@ -225,8 +225,20 @@ main ( int, char ** )
    return 0;
 }
 #else
+# if defined (WIN32) && defined (ACE_USES_WCHAR)
+// Borrow include list from ace_wchar.h
+# if defined (ACE_HAS_WINCE)
+#   include /**/ <wtypes.h>
+# elif !defined (__BORLANDC__)
+#   include /**/ <wchar.h>
+# endif /* ACE_HAS_WINCE || __BORLANDC__ */
+
+int
+wmain ( int, wchar_t ** )
+#else
 int
 main ( int, char ** )
+#endif /* (WIN32) && (ACE_USES_WCHAR) */
 {
    char const *const program = "UnloadLibACE";
 
