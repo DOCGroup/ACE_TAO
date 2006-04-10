@@ -268,7 +268,7 @@ static Client_Strategy_Factory "-ORBProfileLock thread -ORBClientConnectionHandl
             ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("   - associate MIOP reference with Hello object\n")));
         }
-        rootPOA->associate_reference_with_id(miop_ref.in(), obj_id);
+        rootPOA->associate_reference_with_id(miop_ref.in(), obj_id.in ());
 
         // create Hello reference
         if (TAO_debug_level > 0)
