@@ -1,3 +1,8 @@
+Mon Apr 10 10:27:03 UTC 2006  Don Sharp     <Donald.Sharp@prismtech.com>
+
+        * tests/Unload_libACE.cpp:
+          Set up a guard for WIN32 && ACE_USES_WCHAR.
+
 Mon Apr 10 09:36:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_rtevent_dnc.mpb:
@@ -30,19 +35,19 @@ Mon Apr 10 06:23:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Apr  9 12:00:00 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* docs/ACE-bug-process.html: Updated this page to more accurately
-	  reflect how the DOC group handles enhancement requests.  Thanks
- 	  to David White <david dot white dot 7 at gmail dot com> for
- 	  motivating this.
+        * docs/ACE-bug-process.html: Updated this page to more accurately
+          reflect how the DOC group handles enhancement requests.  Thanks
+          to David White <david dot white dot 7 at gmail dot com> for
+          motivating this.
 
 Sat Apr  8 18:32:29 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/Shared_Memory_MM.h (ACE_Shared_Memory_MM):
-	* ace/Shared_Memory_SV.h (ACE_Shared_Memory_SV):
-	  Added comments that underscore that these classes should not be
- 	  used and instead ACE_Malloc or ACE_Mem_Map should be used.
-  	  Thanks to Qingbo Cai <qingbo dot cai at case dot edu> for motivating these
-	  comments.
+        * ace/Shared_Memory_MM.h (ACE_Shared_Memory_MM):
+        * ace/Shared_Memory_SV.h (ACE_Shared_Memory_SV):
+          Added comments that underscore that these classes should not be
+          used and instead ACE_Malloc or ACE_Mem_Map should be used.
+          Thanks to Qingbo Cai <qingbo dot cai at case dot edu> for motivating these
+          comments.
 
 Fri Apr  7 19:56:03 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
