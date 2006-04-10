@@ -227,17 +227,20 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
           return 0;
         }
 
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
+	  TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
+      if (orb_core == 0)
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            0);
+          orb_core = TAO_ORB_Core_instance ();
+
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_WARNING,
+                          "TAO (%P|%t) WARNING: extracting "
+                          "valuetype using default ORB_Core\n"));
+            }
         }
 
+      TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
       return adapter->stream_to_value (this->cdr_, val);
     }
   ACE_CATCH (CORBA::Exception, ex)
@@ -274,17 +277,20 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
           return 0;
         }
 
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
+	  TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
+      if (orb_core == 0)
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            0);
+          orb_core = TAO_ORB_Core_instance ();
+
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_WARNING,
+                          "TAO (%P|%t) WARNING: extracting "
+                          "valuetype using default ORB_Core\n"));
+            }
         }
 
+      TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
       return adapter->stream_to_abstract_base (this->cdr_,
                                                obj);
     }

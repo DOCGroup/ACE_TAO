@@ -25,6 +25,11 @@ Fri Apr  7 08:03:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
           Get the value type adapter factory with svc conf instead of the
           adapter itself. Create a unique instance per orb.
 
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/skip.cpp:
+          Changed the way we get the valuetype adapter
+
           Store the value type factories per orb and made things thread safe.
           This fixes bugzilla bugs 2352 and 23253.
 

@@ -967,16 +967,20 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
           return TAO::TRAVERSE_STOP;
         }
 
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
+	  TAO_ORB_Core *orb_core = stream->orb_core ();
+      if (orb_core == 0)
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            TAO::TRAVERSE_STOP);
+          orb_core = TAO_ORB_Core_instance ();
+
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_WARNING,
+                          "TAO (%P|%t) WARNING: extracting "
+                          "valuetype using default ORB_Core\n"));
+            }
         }
+
+      TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
 
       if (value_tag == 0) // Null value type pointer.
         {
