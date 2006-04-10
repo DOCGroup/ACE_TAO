@@ -1,6 +1,7 @@
 Mon Apr 10 09:18:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+        * ciaosvcs/Events/CIAO_Events.mpc:
           Use ciao_events_base_dnc as base project
 
 Mon Apr 10 09:15:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
