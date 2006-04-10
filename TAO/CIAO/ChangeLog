@@ -1,3 +1,9 @@
+Mon Apr 10 09:15:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+          For Deployment_Stub use ciao_events_base_dnc and ciao_client_dnc
+          as base projects
+
 Mon Apr 10 08:50:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciaosvcs/Events/CIAO_Events.mpc:

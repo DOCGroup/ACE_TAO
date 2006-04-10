@@ -1,11 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_RTEvent) : rtevent_serv {
+project (CIAO_RTEvent) : rtevent_serv, ciao_events_base_dnc.mpb {
 
-  after += CIAO_DnC_Events_Base
   sharedname  = CIAO_RTEvent
-  libs += CIAO_DnC_Events_Base
   idlflags  += -Wb,export_include=CIAO_RTEVENT_Export.h -Wb,export_macro=CIAO_RTEVENT_Export
   dynamicflags = CIAO_RTEVENT_BUILD_DLL
 
