@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_deployment_svnt {
+project : ciao_domainapplicationmanager_dnc {
   libs     += DomainApplicationManager
   after    += DomainApplicationManager
 }
