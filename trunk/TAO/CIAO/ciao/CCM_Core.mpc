@@ -72,11 +72,8 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
 
 // Valuetype library must be linked for this project.
 // Please don't remove.
-project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
+project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ciao_client_dnc {
   sharedname   =  CIAO_Deployment_stub
-  after        += CIAO_DnC_Client CIAO_DnC_Events
-
-  libs += CIAO_DnC_Client CIAO_DnC_Events
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)/DAnCE $(CIAO_ROOT)
