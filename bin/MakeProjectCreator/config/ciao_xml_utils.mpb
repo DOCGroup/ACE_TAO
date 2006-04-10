@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : xerces {
+project : xerces, exceptions {
   includes += $(CIAO_ROOT)/tools
   after += CIAO_XML_Utils
-  requires += exceptions
   libs += CIAO_XML_Utils
 }

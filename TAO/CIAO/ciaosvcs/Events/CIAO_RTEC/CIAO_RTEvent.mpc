@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_RTEvent) : rtevent_serv, ciao_events_dnc {
+project (CIAO_RTEvent) : rtevent_serv {
 
   after += CIAO_DnC_Events_Base
   sharedname  = CIAO_RTEvent
