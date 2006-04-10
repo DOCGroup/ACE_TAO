@@ -1,11 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_DnC_Events) : orbsvcslib, rtevent_serv, ciao_events_base_dnc {
+project (CIAO_DnC_Events) : orbsvcslib, ciao_rtevent_dnc, ciao_events_base_dnc {
 
-  after += CIAO_RTEvent
   sharedname  = CIAO_DnC_Events
-  libs  += CIAO_RTEvent
   idlflags  += -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
   dynamicflags = CIAO_EVENTS_BUILD_DLL
 
