@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ExecutionManager): ciao_component_dnc, dance_extension_stub {
+project(ExecutionManager): ciao_deployment_stub, dance_extension_stub {
 
   exename = Execution_Manager
 
