@@ -46,14 +46,14 @@ void
 TAO_Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
 {
 #if 0
-  // @@ Calling create_log_reference () here leads to an infinate loop.  
+  // @@ Calling create_log_reference () here leads to an infinate loop.
   // When this is fixed, this can be enabled.
-  this->log_ = 
+  this->log_ =
     logmgr_i_.create_log_reference (this->logid_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif
 
-  this->recordstore_ = 
+  this->recordstore_ =
     logmgr_i_.get_log_record_store (this->logid_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -96,7 +96,7 @@ TAO_Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // if set, activate the compaction handler
-  if (max_record_life != 0) 
+  if (max_record_life != 0)
     {
       this->log_compaction_handler_.schedule ();
     }
@@ -199,10 +199,10 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       notifier_->quality_of_service_value_change (this->log_.in (),
                                                   this->logid_,
-                                                  old_qos,
+                                                  old_qos.in (),
                                                   qos
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -303,7 +303,7 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
 			    CORBA::INTERNAL ());
   ACE_CHECK;
 
-  CORBA::ULongLong old_size = 
+  CORBA::ULongLong old_size =
     this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -324,11 +324,11 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
       CORBA::ULongLong current_size =
 	this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       if (size < current_size)
 	ACE_THROW (DsLogAdmin::InvalidParam ());
     }
-  
+
   this->recordstore_->set_max_size (size ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -343,7 +343,7 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       notifier_->max_log_size_value_change (this->log_.in (),
 					    this->logid_,
 					    old_size,
@@ -454,7 +454,7 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       notifier_->log_full_action_value_change (this->log_.in (),
                                                this->logid_,
                                                old_action,
@@ -462,7 +462,7 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
    }
-  
+
   // @@ The current revision of the specification (formal/03-07-01)
   // doesn't specify the interaction between set_log_full_action() and the
   // capacity alarm thresholds list.  Publicly available documentation
@@ -535,7 +535,7 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       notifier_->administrative_state_change (this->log_.in (),
                                               this->logid_,
                                               state
@@ -598,7 +598,7 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       notifier_->forwarding_state_change (this->log_.in (),
                                           this->logid_,
                                           state
@@ -678,7 +678,7 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       if (interval.start != old_interval.start)
         {
           notifier_->start_time_value_change (this->log_.in (),
@@ -810,15 +810,15 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       notifier_->capacity_alarm_threshold_value_change (this->log_.in (),
                                                         this->logid_,
-                                                        old_threshs,
+                                                        old_threshs.in (),
                                                         threshs
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-  
+
   // @@ The current revision of the specification (formal/03-07-01)
   // doesn't completly describe the behavior of changing the capacity
   // alarm threshold list.  Publicly available documentation I've read
@@ -837,7 +837,7 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
   this->thresholds_ = threshs;
   this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-} 
+}
 
 DsLogAdmin::WeekMask*
 TAO_Log_i::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
@@ -889,7 +889,7 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
 
   this->reset_week_mask (masks ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   if (notifier_)
     {
       // @@ Calling create_log_reference () in the ctor or in ::init()
@@ -901,10 +901,10 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
 						       ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
-	  
+
       notifier_->week_mask_value_change (this->log_.in (),
                                          this->logid_,
-                                         old_masks,
+                                         old_masks.in (),
                                          masks
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
