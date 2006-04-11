@@ -401,7 +401,7 @@
 # define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs || __GNUC__ || ..... */
 
-#if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__KCC) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || defined (__HP_aCC)
+#if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__KCC) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC >= 33200))
 # define ACE_NOTREACHED(a)
 #else  /* __sgi || ghs || ..... */
 # define ACE_NOTREACHED(a) a
