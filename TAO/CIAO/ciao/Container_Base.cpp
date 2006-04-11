@@ -170,14 +170,10 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    CORBA::ULong p_length;
+    CORBA::ULong p_length = 0;
     if (p != 0)
       {
         p_length = p->length ();
-      }
-    else
-      {
-        p_length = 0;
       }
 
     TAO::Utils::PolicyList_Destroyer policies (p_length + 3);
