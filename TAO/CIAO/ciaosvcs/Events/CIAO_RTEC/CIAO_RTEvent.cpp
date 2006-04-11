@@ -261,7 +261,7 @@ namespace CIAO
 
     TAO_EC_Event_Channel_Attributes attributes (this->root_poa_.in (),
                                                 this->root_poa_.in ());
-    TAO_EC_Event_Channel * ec_servant;
+    TAO_EC_Event_Channel * ec_servant = 0;
     ACE_NEW (ec_servant, TAO_EC_Event_Channel (attributes));
     ec_servant->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -313,7 +313,7 @@ namespace CIAO
 
     for (size_t i = 0; i < events.length (); ++i)
       {
-        Components::EventBase * ev;
+        Components::EventBase * ev = 0;
         if (events[i].data.any_value >>= ev)
           {
             ev->_add_ref ();
