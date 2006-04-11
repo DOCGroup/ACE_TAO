@@ -5,12 +5,11 @@ project (CIAO_Events_Handlers) : acelib, ciao_deployment_stub, xerces, exception
   dynamicflags   = CIAO_EVENTS_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-  includes += $(CIAO_ROOT)/ciao
 
   Source_Files {
-        CIAOEvents.cpp
-        CIAOEvents_Handler.cpp
-        }
+    CIAOEvents.cpp
+    CIAOEvents_Handler.cpp
+  }
 
   Header_Files {
   }
@@ -21,6 +20,7 @@ project (CIAO_Events_Handlers_Tests) : ciao_component_dnc, xerces, exceptions, c
   after    += CIAO_Events_Handlers
   macros   += XML_USE_PTHREADS
   includes += $(CIAO_ROOT)/tools/Config_Handlers
+  libs     += CIAO_Events_Handlers
 
   Source_Files {
     test.cpp
