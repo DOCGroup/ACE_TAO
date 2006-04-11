@@ -122,19 +122,18 @@ int transaction::handle_input (ACE_HANDLE)
   delete [] (char*) receive_iovec_.iov_base;
   reset_receive_buffer(receive_iovec_);
   int rc = session_.recv(&receive_iovec_, receive_addr_, 0);
-  if (rc == -1) {
+  if (rc == -1)
+    {
       delete [] (char*) receive_iovec_.iov_base;
       reset_receive_buffer(receive_iovec_);
       if (result_)
-          result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
+        result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
       return SNMP_CLASS_RESOURCE_UNAVAIL;
-  }
+    }
   if (result_)
-  {
-      result_->result(this, rc);
-      return 0;
-  }
-  return rc;
+    result_->result(this, rc);
+
+  return 0;
 }
 
 int transaction::handle_timeout(const ACE_Time_Value &,
