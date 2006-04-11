@@ -205,6 +205,7 @@ TAO::Utils::Servant_Var<T>::_retn (void)
   return rval;
 }
 
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
 template <class X, class Y>
 ACE_INLINE bool
 operator== (typename TAO::Utils::Servant_Var<X> const & x,
@@ -220,5 +221,6 @@ operator!= (typename TAO::Utils::Servant_Var<X> const & x,
 {
   return x.in () != y.in ();
 }
+#endif /* ! ACE_LACKS_MEMBER_TEMPLATES */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
