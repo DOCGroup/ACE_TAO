@@ -1,3 +1,11 @@
+Tue Apr 11 14:10:00 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ASNMP/asnmp/transaction.cpp (handle_input): Return 0 on successful
+          socket read, not the number of bytes. Thanks to Jason Zhang for this
+          fix.
+
+        * THANKS: Added Jason Zhang to the Hall of Fame.
+
 Tue Apr 11 13:12:36 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * ace/Lib_Find.h:
