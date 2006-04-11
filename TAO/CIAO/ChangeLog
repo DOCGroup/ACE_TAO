@@ -1,3 +1,9 @@
+Tue Apr 11 12:22:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc:
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc:
+          Updated base projects to get correct build order
+
 Tue Apr 11 08:43:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
