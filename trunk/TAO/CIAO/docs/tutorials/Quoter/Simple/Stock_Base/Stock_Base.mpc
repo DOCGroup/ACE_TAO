@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Stock_Base"
 
-project(Stock_Base_stub): ciao_client_dnc {
+project(Stock_Base_stub): ciao_component_dnc {
 
   sharedname = Stock_Base_stub
   idlflags += -Wb,stub_export_macro=STOCK_BASE_STUB_Export -Wb,stub_export_include=Stock_Base_stub_export.h -Wb,skel_export_macro=STOCK_BASE_SVNT_Export -Wb,skel_export_include=Stock_Base_svnt_export.h
