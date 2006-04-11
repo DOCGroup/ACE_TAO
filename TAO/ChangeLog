@@ -1,3 +1,11 @@
+Tue Apr 11 13:13:27 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Utils/Servant_Var.h:
+        * tao/Utils/Servant_Var.inl:
+
+          Add ACE_LACKS_MEMBER_TEMPLATES guards around problematic equality
+          operators.
+
 Mon Apr 10 18:42:47 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
