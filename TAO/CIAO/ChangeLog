@@ -1,3 +1,34 @@
+Tue Apr 11 06:54:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Minimum/Minimum_Base/Minimum.mpc:
+        * tests/IDL3/Lookup/lookup_test.mpc:
+        * tests/IDL3/ImpliedIDL/Homes/Homes.mpc:
+        * tests/IDL3/ImpliedIDL/Events/Events.mpc:
+        * tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.mpc:
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc:
+        * tests/IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc:
+        * tests/IDL3/Homes/Inheritance/Inheritance.mpc:
+        * tests/IDL3/Homes/Finder/Finder.mpc:
+        * tests/IDL3/Homes/Factory/Factory.mpc:
+        * tests/IDL3/Homes/Basic/Basic.mpc:
+        * tests/IDL3/Homes/Attributes/HomeAttributes.mpc:
+        * tests/IDL3/Events/Regular/Regular.mpc:
+        * tests/IDL3/Events/Abstract/Abstract.mpc:
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc:
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets.mpc:
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc:
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc:
+        * tests/IDL3/Components/ComplexComponent/Attributes/Attributes.mpc:
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        * tests/Bug_2130_Regression/interfaces/ENW.mpc:
+        * performance-tests/Protocols/common/Protocols.mpc:
+        * examples/Swapping/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Display/HUDisplay.mpc:
+        * examples/BasicSP/BasicSP.mpc:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+          Updated base projects to get correct build order
+
 Tue Apr 11 06:35:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
