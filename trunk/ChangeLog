@@ -1,3 +1,9 @@
+Tue Apr 11 12:41:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb:
+          Added event config handles and add all projects to the after
+          to get the correct build order
+
 Mon Apr 10 18:37:17 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * ace/ace_for_tao.mpc:
