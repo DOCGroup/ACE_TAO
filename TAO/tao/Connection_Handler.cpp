@@ -203,6 +203,7 @@ TAO_Connection_Handler::handle_output_eh (
   return_value = this->transport ()->handle_output ();
 
   this->pos_io_hook (return_value);
+
   if (return_value != 0)
     {
       resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
@@ -272,6 +273,10 @@ TAO_Connection_Handler::handle_input_internal (
   return_value = this->transport ()->handle_input (resume_handle);
 
   this->pos_io_hook (return_value);
+
+  // Bug 1647; might need to change resume_handle's flag or
+  // change handle_input return value.
+  resume_handle.handle_input_return_value_hook(return_value);
 
   if (TAO_debug_level > 6)
     {
