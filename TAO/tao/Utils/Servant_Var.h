@@ -140,6 +140,7 @@ namespace TAO
       T * ptr_;
     };
 
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
     /// Compare two Servant_Vars for equivalence.
     template <class X, class Y>
     bool operator==(Servant_Var<X> const & x,
@@ -149,6 +150,7 @@ namespace TAO
     template <class X, class Y>
     bool operator!=(Servant_Var<X> const & x,
                     Servant_Var<Y> const & y);
+#endif /* ! ACE_LACKS_MEMBER_TEMPLATES */
 
   } // namespace Utils
 } // namespace TAO
