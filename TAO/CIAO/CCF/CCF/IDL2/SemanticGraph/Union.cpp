@@ -142,28 +142,18 @@ namespace CCF
       {
         if (defined ())
         {
-          CompilerElements::Context& ctx (
-            const_cast<CompilerElements::Context&> (context ()));
-
-          if (ctx.count ("union-complete-test"))
-            return true;
-
-          ctx.set ("union-complete-test", true);
-          bool c (true);
-
           for (Scope::NamesIterator i (names_begin ());
-               c && i != names_end ();
+               i != names_end ();
                ++i)
           {
             Member const& m (dynamic_cast<Member&> ((*i)->named ()));
             Type const& t (m.belongs ().type ());
 
             if (!t.complete ())
-              c = false;
+              return false;
           }
 
-          ctx.remove ("union-complete-test");
-          return c;
+          return true;
         }
 
         return false;

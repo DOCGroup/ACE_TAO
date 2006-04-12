@@ -2,4 +2,8 @@
 // $Id$
 
 workspace {
+  ciao
+  tools
+  DAnCE
+  RACE
 }

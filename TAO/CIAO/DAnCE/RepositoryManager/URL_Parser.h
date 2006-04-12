@@ -33,8 +33,6 @@ class URL_Parser
 {
 public:
 
-  friend class ACE_Singleton <URL_Parser, ACE_Null_Mutex>;
-
   /// parses commandline arguments
   bool parse_args (int argc, ACE_TCHAR *argv[]);
 
@@ -55,12 +53,11 @@ public:
   /// turns on verbosity
   int debug_;
 
-  //destructor
-  ~URL_Parser (void);
-
-protected:
   URL_Parser (void);
   // protected constructor, singleton
+
+  //destructor
+  ~URL_Parser (void);
 };
 
 

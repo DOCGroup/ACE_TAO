@@ -67,57 +67,6 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
-USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
-====================================================
-
-. Fixed bug in detecting name clashes between names of ports of the same
-  category (facet, event sink, etc.) in the same component.
-  
-. Added support for attribute exceptions in code generated for executor
-  implementation classes.
-  
-. Implemented spec-defined component methods get_all_receptacles(),
-  get_all_publishers(), and disconnect_consumer().
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
-====================================================
-
-. Changed MPC configuration of Config_Handlers to turn off hidden
-  visibility if applicable when compiling Config_Handlers or projects
-  that use Config_Handlers on linux.This change was to work around symbol
-  visibility inconsistencies in GNU standard C++ library when using g++
-  4.x's symbol visibility features. 
-
-. Enhanced ReDaC service to enforce the correct
-  assembly redeployment and reconfiguration order.
-
-. Some bug fixes in ReDaC about removing components. 
-
-. Fixed NodeApplication to unbind a component with naming service 
-  when removing it from the container. 
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
-======================================================
-
-. Enhanced DAnCE ReDaC service to enforce the correct
-  assembly redeployment and reconfiguration order.
-
-  The order that ReDaC currently enforces:
-
-  (1) Install new components,
-  (2) Set up new connections,
-  (3) Activate new components,
-  (4) Passivate old components,
-  (5) Remove old connections
-  (6) Remove old components.
-
-. Enhanced DAnCE to create hierarchical naming context
-  path through XML descriptors.
-
-. Enhanced DAnCE to maintain a component state map in
-  the component server to manage component life cycle.
-
-. Some bug fixes in DAnCE. 
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================

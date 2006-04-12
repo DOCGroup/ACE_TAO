@@ -16,8 +16,6 @@
 #include "cdp.hpp"
 #include "RT-CCM/SRD_Handler.h"
 #include "RT-CCM/CIAOServerResources.hpp"
-#include "CIAO_Events/CIAOEvents_Handler.h"
-#include "CIAO_Events/CIAOEvents.hpp"
 
 #include "DP_PCD_Handler.h"
   
@@ -95,8 +93,6 @@ namespace CIAO
     bool
     DP_Handler::resolve_plan (DeploymentPlan &xsc_dp)
     {
-      CIAO_TRACE ("DP_Handler::resolve_plan");
-      
       ::Deployment::DeploymentPlan *tmp =
           new Deployment::DeploymentPlan;
 
@@ -139,17 +135,19 @@ namespace CIAO
 
 	  this->idl_dp_->infoProperty.length (len + 1);
           
-
-
-          if (pstart->name () == "CIAOServerResources")
+          if (pstart->name () != "CIAOServerResources")
+            Property_Handler::get_property (*pstart,
+                                            this->idl_dp_->infoProperty [len]);
+          else
             {
               /*
                * Hook for RT-CCM
                */
 
-              ACE_DEBUG ((LM_DEBUG,
-                          "Importing ServerResources...\n"));
 
+	      ACE_DEBUG ((LM_DEBUG,
+                          "Importing ServerResources...\n"));
+              
               // Parse the SR document
               SRD_Handler srd_handler (pstart->value ().value ().begin_string ()->c_str ());
 
@@ -157,30 +155,7 @@ namespace CIAO
               this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
               this->idl_dp_->infoProperty [len].value <<= *(srd_handler.srd_idl ());
             }
-          else if (pstart->name () == "CIAOEvents")
-            {
-              /*
-               * Hook for RT-CCM
-               */
-
-              ACE_DEBUG ((LM_DEBUG,
-                          "Importing CIAOEvents...\n"));
-
-              // Parse the SR document
-              CIAOEvents_Handler event_handler (pstart->value ().value ().begin_string ()->c_str ());
-
-              // Populate the property
-              this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
-              this->idl_dp_->infoProperty [len].value <<= *(event_handler.esd_idl ());
-            }
-          else
-            {
-              Property_Handler::get_property (*pstart,
-                                              this->idl_dp_->infoProperty [len]);
-            }
-
 	}
-
       // Read in the realizes, if present
       if (xsc_dp.realizes_p ())
       {
@@ -206,8 +181,6 @@ namespace CIAO
     bool
     DP_Handler::build_xsc (const ::Deployment::DeploymentPlan &plan)
     {
-      CIAO_TRACE ("DP_Handler::build_xsc");
-      
       size_t len; //Used for checking the length of struct data members
       
       // Read in the label, if present, since minoccurs = 0

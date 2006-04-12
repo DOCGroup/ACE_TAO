@@ -6,6 +6,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
 #include "Servant_Activator.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
@@ -13,7 +14,8 @@
 
 namespace CIAO
 {
-  ////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
 
   Container::Container (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o)),
@@ -51,13 +53,13 @@ namespace CIAO
 
   ///////////////////////////////////////////////////////////////
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long>
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
   Session_Container::serial_number_ (0);
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
                                         Container_Impl *container_impl,
                                         bool static_config_flag,
-                                        const Static_Config_EntryPoints_Maps* maps)
+                                    const Static_Config_EntryPoints_Maps* maps)
   : Container (o, container_impl),
     number_ (0),
     static_config_flag_ (static_config_flag),
@@ -170,10 +172,14 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    CORBA::ULong p_length = 0;
+    CORBA::ULong p_length;
     if (p != 0)
       {
         p_length = p->length ();
+      }
+    else
+      {
+        p_length = 0;
       }
 
     TAO::Utils::PolicyList_Destroyer policies (p_length + 3);
@@ -292,13 +298,13 @@ namespace CIAO
     HomeFactory hcreator = 0;
     ServantFactory screator = 0;
 
-    if (this->static_config_flag_ == false)
+    if (this->static_config_flag_ == 0)
       {
         ACE_DLL executor_dll, servant_dll;
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
           {
-            ACE_CString exception;
+	    ACE_CString exception;
 
             if (exe_dll_name == 0)
               {
@@ -319,7 +325,7 @@ namespace CIAO
             ACE_THROW_RETURN
               (Deployment::UnknownImplId (
                  "Session_Container::ciao_install_home",
-            exception.c_str ()),
+	          exception.c_str ()),
                   Components::CCMHome::_nil ());
           }
 
@@ -620,6 +626,16 @@ namespace CIAO
 
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
+
+    CORBA::String_var str =
+      PortableServer::ObjectId_to_string (oid.in ());
+
+    if (t == Container::Facet_Consumer)
+    {
+      //if (CIAO::debug_level () > 9)
+      //  ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
+      //              str.in ()));
+    }
 
     CORBA::Object_var objref =
       tmp->create_reference_with_id (oid.in (),

@@ -16,7 +16,7 @@ BE_version (void)
 TAO_IDL3_TO_IDL2_BE_Export int
 BE_init (int & /* argc */, char * /* argv */ [])
 {
-  idl_global->pass_orb_idl (true);
+  idl_global->pass_orb_idl (I_TRUE);
   return 0;
 }
 

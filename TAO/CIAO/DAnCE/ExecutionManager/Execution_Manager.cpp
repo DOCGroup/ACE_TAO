@@ -19,8 +19,7 @@ namespace CIAO
     const char *ior_file_name_ = "executionManager.ior";
     const char *init_file_name = "deployment.dat";
 
-    static bool register_with_ns_ = false;
-    static bool write_to_ior_ = false;
+    bool register_with_ns_ = 0;
 
     bool
     parse_args (int argc, char *argv[])
@@ -31,14 +30,13 @@ namespace CIAO
         switch (c)
           {
           case 'o':
-            write_to_ior_ = true;
             ior_file_name_ = get_opts.opt_arg ();
             break;
           case 'i':
             init_file_name = get_opts.opt_arg ();
             break;
           case 'n':
-            register_with_ns_ = true;
+            register_with_ns_ = 1;
             break;
           case '?':  // display help for use of the server.
           default:
@@ -96,11 +94,12 @@ namespace CIAO
         CosNaming::NamingContext::_narrow (naming_context_object.in ());
 
       // Initialize the Naming Sequence
-      CosNaming::Name name (1);
-      name.length (1);
+      CosNaming::Name name (2);
+      name.length (2);
 
       // String dup required for MSVC6
-      name[0].id = CORBA::string_dup ("ExecutionManager");
+      name[0].id = CORBA::string_dup ("CIAO");
+      name[1].id = CORBA::string_dup ("ExecutionManager");
 
       // Register the servant with the Naming Service
       naming_context->bind (name,
@@ -174,8 +173,7 @@ namespace CIAO
                                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
-          
-          if (write_to_ior_)
+          else
             {
               retval =
                 write_ior_file (orb.in (),

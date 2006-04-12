@@ -9,7 +9,7 @@
 #include "Basic_Deployment_Data.hpp"
 #include "cdp.hpp"
 #include "ciao/Deployment_DataC.h"
-#include "ciao/CIAO_common.h"
+
 namespace CIAO
 {
   namespace Config_Handlers
@@ -19,7 +19,6 @@ namespace CIAO
         const DeploymentPlan &src,
         Deployment::PlanConnectionDescriptions& dest)
     {
-      CIAO_TRACE("DP_PCD_Handler::plan_connection_descrs");
       DeploymentPlan::connection_const_iterator cci_e =
         src.end_connection ();
       
@@ -39,9 +38,8 @@ namespace CIAO
     DP_PCD_Handler::plan_connection_descr (
 	const Deployment::PlanConnectionDescription &src)
     {
-      CIAO_TRACE("DP_PCD_Handler::plan_connection_descr");
-      PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
-      return pcd;
+	PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
+	return pcd;
     }
 
     void
@@ -49,7 +47,6 @@ namespace CIAO
         const PlanConnectionDescription &src,
         Deployment::PlanConnectionDescription &dest)
     {
-      CIAO_TRACE("DP_PCD_Handler::plan_connection_descr - reverse");
       dest.name =
         src.name ().c_str ();
 

@@ -15,6 +15,7 @@ namespace PC_Updater_T
     for (CORBA::ULong i = 0; i < size; ++i)
       updater->update (seq[i]);
   }
+
 }
 
 #endif /* PC_Updater_C */
