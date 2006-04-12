@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(bug_1535_regression) : taoserver, utils, minimum_corba {
-  exename = bug_1535_regression
-  Source_Files {
-    bug_1535_regression.cpp
-  }
-}

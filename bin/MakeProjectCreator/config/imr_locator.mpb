@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, minimum_corba {
-  after += ImR_Locator
-  libs  += TAO_ImR_Locator
-}
