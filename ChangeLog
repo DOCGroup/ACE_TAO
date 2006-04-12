@@ -1,3 +1,9 @@
+Wed Apr 12 08:14:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb:
+          Added ciao_rtevent_dnc as base project to fix link errors in the
+          VxWorks static builds
+
 Tue Apr 11 14:10:00 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ASNMP/asnmp/transaction.cpp (handle_input): Return 0 on successful
