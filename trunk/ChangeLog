@@ -1,3 +1,9 @@
+Wed Apr 12 14:48:38 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_component_dnc.mpb
+        
+          Fixes for linking errors in OS X.
+
 Tue Apr 11 20:06:12 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/OS_NS_stdio.inl (rewind): Replaced SetFilePointer() with
