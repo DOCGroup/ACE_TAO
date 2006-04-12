@@ -1,3 +1,9 @@
+Wed Apr 12 21:48:29 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * NEWS:
+
+          Updated with the race condition fix.
+
 Tue Apr 11 16:26:47 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * tao/Connection_Handler.cpp:
