@@ -1,7 +1,0 @@
-// -*- MPC -*-
-//$Id$
-
-project : csd_framework {
-  after += CSD_ThreadPool
-  libs += TAO_CSD_ThreadPool
-}

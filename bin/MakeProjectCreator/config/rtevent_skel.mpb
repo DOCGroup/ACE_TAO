@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, rtevent, portableserver {
-  after     += RTEvent_Skel
-  libs      += TAO_RTEvent_Skel
-}
