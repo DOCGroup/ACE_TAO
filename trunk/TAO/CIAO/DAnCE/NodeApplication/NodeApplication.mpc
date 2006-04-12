@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplication): ciao_server_dnc {
+project(NodeApplication): ciao_server_dnc, ciao_events_dnc {
   after += NoOp_Configurator
   libs  += CIAO_NoOp_Configurator
   exename   = NodeApplication
