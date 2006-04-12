@@ -70,6 +70,24 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
 ====================================================
 
+. Added the support of integrating real-time event service into the
+  CIAO core framework. Enhanced DAnCE to support declaratively configure
+  and deploy real-time event channels to mediate event communication
+  among components.
+  
+. Fixed a bug in detecting External connection and Internal
+  connections when components are shared across different 
+  deployment plans. Earlier when removing connections attached
+  to an external/shared component, not *all* connections 
+  associated with this components are purged from the 
+  to-be-removed connections list. 
+  
+. Fixed a bug when redeploying components using the same set
+  of NodeManagers, the destroy of applications results not
+  all internal components and external/shared components
+  are unbinded from the cached map, which sometimes causes
+  duplicate instance exception thrown.
+
 . Fixed bug in detecting name clashes between names of ports of the same
   category (facet, event sink, etc.) in the same component.
   
