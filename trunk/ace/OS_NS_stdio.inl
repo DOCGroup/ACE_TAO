@@ -972,8 +972,9 @@ ACE_OS::rewind (FILE *fp)
   ACE_OS_TRACE ("ACE_OS::rewind");
   ::rewind (fp);
 #else
-  // In WinCE, "FILE *" is actually a HANDLE.
-  ::SetFilePointer (fp, 0L, 0L, FILE_BEGIN);
+  // This isn't perfect since it doesn't reset EOF, but it's probably
+  // the closest we can get on WINCE. 
+  (void) fseek (fp, 0L, SEEK_SET);
 #endif /* ACE_HAS_WINCE */
 }
 
