@@ -62,7 +62,7 @@ project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
   }
 }
 
-project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
+project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc, ciao_events_dnc, ciao_server_dnc {
   after += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
 
   sharedname = NodeAppTest_RoundTrip_exec

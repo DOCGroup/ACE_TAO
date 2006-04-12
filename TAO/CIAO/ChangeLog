@@ -1,3 +1,14 @@
+Wed Apr 12 14:47:14 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/NodeManager/Monitor.mpc
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
+        * ciaosvcs/Events/CIAO_Events.mpc
+
+        Fixes for linking errors/warnings on OS X builds.
+        
 Tue Apr 11 12:39:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Utils/Utils.mpc:
