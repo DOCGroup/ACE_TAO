@@ -1,0 +1,514 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+  <title>Building a Stock Quoter with TAO - A Tutorial</title>
+<!-- $Id$ -->
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ link="#000fff" vlink="#ff0f0f">
+<h3>Building Stock Quoter system in PICML<br>
+</h3>
+Now we can start modelling the Quoter system using PICML. As we go
+through each step of the modeling processs, you can download the
+exported xml file of the Quoter model from <a href="Model/Quoter.xme">here</a>.
+(Note: In case you don't know, select File-&gt;Import XML from GME to
+convert this file to GME model)<br>
+<br>
+The paradigm of PICML is designed keeping in mind the <a
+ href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-08">OMG Deployment
+&amp; Configuration (D&amp;C) specification (ptc/2003-07-08)</a>, so
+the modeling process is straightforwrd if you are familar
+with the specification. Please go to <a
+ href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/docs/releasenotes/dance.html">DAnCE
+project</a> for more information. <br>
+<br>
+The complete Quoter PICML model, is composed by elements distributed in
+the following eight folders:<br>
+<br>
+<hr>
+<p></p>
+<h3>Table of Contents</h3>
+<ul>
+  <li><a href="#1">ImplementationArtifacts</a></li>
+  <li><a href="#2">ComponentImplementations</a></li>
+  <li><a href="#3">ComponentPackages</a></li>
+  <li><a href="#4">PackageConfiguration</a></li>
+  <li><a href="#5">TopLevelPackage</a></li>
+  <li><a href="#6">Targets</a></li>
+  <li><a href="#7">DeploymentPlan</a></li>
+  <li><a href="#8">ComponentBuild</a></li>
+</ul>
+<p></p>
+<hr>
+In the following steps, we will create the folders and the
+corresponding elements that populates them.<br>
+<a name="1">
+<h3>ImplementationArtifacts (.iad)</h3>
+</a>The models in this folder captures information about the
+dependencies between the application artifacts. We'll start by modeling
+the <em>Stock_Base</em>. These artifacts are common for both <em>Broker</em>
+and <em>Distributor</em>. <br>
+<ol>
+  <li> To create the ImplementationArtifacts folder for this project,
+right-click rootfolder <em>MyQuoter</em>, select <strong>Insert
+Folder-&gt;ImplementationArtifacts</strong> and change the name to
+"ImplementationArtifacts".<br>
+  </li>
+  <li> To create the container artifact for Stock_Base, right-Click <em>ImplementationArtifacts</em>,
+select
+    <strong>Insert Model-&gt;ArtifactContainer</strong>, and name it
+"Stock_Base". Double click it to
+open it in the user area.<br>
+  </li>
+  <li> Now we can populate the Stock_Base container model with the
+implementation artifacts representations for the Stock_Base. From the
+PartBrowser (in the lower left
+portion of GME window), add two &lt;&lt;ImplementationArtifact&gt;&gt;
+and one
+&lt;&lt;ImplementationArtifactReference&gt;&gt;.
+Through the Attribute Browser (in the right lower portion of GME
+window), name the ImplementationArtifacts "Stock_Base_svnt" and
+"Stock_Base_stub" respectively. And name the
+&lt;&lt;ImplementationArtifactReference&gt;&gt;, "Stock_Base_stub"<br>
+  </li>
+  <li> Refer "Stock_Base_stub"
+(&lt;&lt;ImplementationArtifact&gt;&gt;) to "Stock_Base_stub"
+(&lt;&lt;ImplementationArtifactReference&gt;&gt;). To do that, simply
+drag the artifact to the reference, while pressing the CTRL key. <br>
+&nbsp;&nbsp;&nbsp; </li>
+  <li> To create a dependency relationship between the
+"Stock_Base_svnt" and "Stock_Base_stub", select the Connect Mode (<img
+ alt="" src="Icons/AddConnMode.gif" style="width: 20px; height: 17px;">)
+and
+connect "Stock_Base_svnt" (&lt;&lt;ImplementationArtifact&gt;&gt;) to
+"Stock_Base_stub" (&lt;&lt;ImplementationArtifactReference&gt;&gt;).
+This connection is named <em>dependson</em>
+relationship, and indicates that the "Stock_Base_svnt" artifact has a
+dependency on "Stock_Base_stub". Note that this kind of connection is
+only allowed between an artifact to an artifact reference. Directly
+connecting
+two artifacts is simply not allowed by the paradigm.<br>
+  </li>
+</ol>
+<br>
+Now we can start building artifacts for <em>StockBroker</em>. If not
+explicitly
+pointed out, please leave the settings of the component in their
+default state.<br>
+<ol>
+  <li> In <em>ImplementationArtifacts</em> folder, create an
+&lt;&lt;ArtifactContainer&gt;&gt; (<strong>Insert
+Model-&gt;ArtifactContainer</strong>) and name it "Broker";<br>
+  </li>
+  <li> Add the following elements:<br>
+    <ul>
+      <li>&nbsp;Three &lt;&lt;ImplementationArtifact&gt;&gt;. Name
+them: "Broker_svnt", "Broker_stub", "Broker_exec";</li>
+      <li>&nbsp;Four &lt;&lt;ImplementationArtifactReference&gt;&gt;.
+Name them "Stock_Base_stub", "Stock_Base_svnt", "Broker_svnt",
+"Broker_stub" respectively;</li>
+      <li>&nbsp;One &lt;&lt;Property&gt;&gt;. Name it "entryPoint";</li>
+      <ul>
+        <li> Set the value in the Attribute tab to
+"createBrokerHome_exec";</li>
+      </ul>
+      <li>&nbsp;Another &lt;&lt;Property&gt;&gt; named "entryPoint";</li>
+      <ul>
+        <li>&nbsp;&nbsp;value: createBrokerHome_servant;</li>
+      </ul>
+    </ul>
+  </li>
+  <li> Set the references by refering them to their corresponding
+refered element;<br>
+  </li>
+  <li> Switch to Connect Mode and create <em>dependson</em>
+connections according to the following relationships:<br>
+    <ul>
+      <li><em>Broker_stub</em> depends on <em>Stock_Base_stub</em> and
+        <em>Stock_Base_svnt</em>; </li>
+      <li><em>Broker_svnt</em> depends on <em>Broker_stub</em>; </li>
+      <li><em>Broker_exec</em> depends on <em>Broker_svnt</em>; </li>
+    </ul>
+  </li>
+  <li> Still in Connect Mode, create connections between <em>Broker_svnt</em>
+(&lt;&lt;ImplementationArtifact&gt;&gt;) and the <em>entryPoint</em>
+with value
+"createBrokerHome_servant" selecting connection role type
+&lt;&lt;ArtifactExecParameter&gt;&gt;.
+Create connections between Broker_exec and entryPoint with value
+"createBrokerHome_exec" selecting connection role type
+&lt;&lt;ArtifactExecParameter&gt;&gt;.<br>
+    <br>
+&nbsp;&nbsp;&nbsp; The model built should resemble Figure 4.<br>
+    <br>
+  </li>
+</ol>
+<div style="text-align: center;"><a name="1"><img alt=""
+ src="Images/fig4.jpg" style="width: 695px; height: 519px;"><br>
+<br>
+Figure 4.<br>
+<br>
+</a>
+<div style="text-align: left;"><a name="1"> Now you should build the
+Distributor model following the same steps you did for the Broker.<br>
+<br>
+</a>
+<hr><a name="2">
+<h3>ComponentImplementation (.cid)</h3>
+</a>This folder contains the models that describes the relationship of
+component artifacts. In our Quoter model, we will have two
+monolithic component; StockDistributor and StockBroker, and an assembly
+component StockQuoter, which is an assembly of StockDistributor
+and StockBroker. We will first go through a monolithic model
+StockBroker and then we assemble the StockQuoter component. <br>
+<br>
+A monolithic component implementation description should capture the
+information concerning: the interface
+the component realizes; the artifacts it uses, and to which file it
+will output its object reference. In the followint steps, we'll see how
+this information is defined through PICML.<br>
+<ol>
+  <li> Insert a new folder "ComponentImplementation" by selecting <strong>Insert
+Folder-&gt;ComponentImplementations</strong>;<br>
+  </li>
+  <li> In <em>ComponentImplementations</em> create a new model
+Component Implementation Container (<strong>Insert
+Model-&gt;ComponentImplementationContainer</strong>) and name it
+"Broker". Open it;<br>
+  </li>
+  <li> From the PartBrowser, add the following:<br>
+    <ul>
+      <li> A &lt;&lt;MonolithicImplementation&gt;&gt;, name it
+"Broker"; </li>
+      <li> A &lt;&lt;ComponentRef&gt;&gt; name it "ComponentRef" and
+create the reference to <code>Quoter/InterfaceDefinition/Broker/Stock/StockBroker</code>
+(To create the reference, drag the <code>Quoter/InterfaceDefinition/Broker/Stock/StockBroker</code>
+interface definition, from the Model Browser on the right part of the
+window, to the ComponentRef while pressing CTRL key.); </li>
+      <li>Three &lt;&lt;ImplementationArtifactsReference&gt;&gt;, name
+them: "Broker_svnt", "Broker_stub", "Broker_exec" respectively,
+refering to
+        <code>Quoter/ImplementationArtifacts/Broker_svnt</code>,
+        <code>Quoter/ImplementationArtifacts/Broker_stub</code>,
+        <code>Quoter/ImplementationArtifacts/Broker_exec</code>
+respectively; </li>
+      <li> A &lt;&lt;Property&gt;&gt; name it "ComponentIOR":<br>
+        <ul>
+          <li> Set the value to Broker.ior;</li>
+        </ul>
+      </li>
+    </ul>
+    <div style="text-align: left;">
+    <li> Switch to Connect Mode, do the following connections:<br>
+      <ul>
+        <li> Connect <em>Broker</em>
+(&lt;&lt;MonolithicImplementation&gt;&gt;) to <em>ComponentRef</em>;<br>
+        </li>
+        <li> Connect <em>Broker</em> to <em>Broker_svnt</em>, <em>Broker_stub</em>,
+          <em>Broker_exec</em>;<br>
+        </li>
+        <li> Connect <em>Broker</em> to <em>ComponentIOR</em>. Set
+connection Role Type to <em>ConfigProperty</em>;<br>
+        </li>
+      </ul>
+    </li>
+    <li> Finally, double click in <em>ComponentIOR</em>, add a
+&lt;&lt;Datatype&gt;&gt; element named "string". Here's where the <code>Quoter/PredefinedTypes</code>
+could come in. Refer the "string" to <code>Quoter/PredefinedTypes/string</code>.
+This is a very important step, if you forget it, it will result in
+object null error when attempting to run the interpreter.<br>
+    </li>
+    </div>
+  </li>
+</ol>
+<br>
+The implementation model should resemble Figure 5.<br>
+<br>
+<div style="text-align: center;"><img alt="" src="Images/fig5.jpg"
+ style="width: 696px; height: 473px;"><br>
+Figure 5<br>
+<div style="text-align: left;"><br>
+The other monolithic component, StockDistributor should be
+modeled exactly the same way StockBroker was modeled. <br>
+Assembly component is a recursive concept. It provides a boundary for
+the composition of monolithic components and/or
+other assembly components, i.e., it is a virtual component. So,
+modeling an assembly component is different from modeling a
+monolithic component. You don't need to worry about the artifacts or
+interfaces. All you need to do is to assemble the existing components.
+Next, we'll show how to assemble the StockQuoter.<br>
+<ol>
+  <li> Create a &lt;&lt;ArtifactContainer&gt;&gt;, name it
+"StockQuoter", and open it;<br>
+  </li>
+  <li> From the PartBrowser, add a &lt;&lt;ComponentAssembly&gt;&gt;,
+name it "StockQuoter" and open it;<br>
+  </li>
+  <li> Now we will create two instances for StockBroker and
+StockDistributor. To do that, expand the tree in the Browser by
+clicking "+", in <code>Quoter/InterfaceDefinitions/Stock/</code>. Keep
+the "StockQuoter" &lt;&lt;ComponentAssembly&gt;&gt; window opened while
+doing this.
+Then drag <code>Quoter/InterfaceDefinitions/Broker/Stock/StockBroker</code>
+in the
+browser to the "StockQuoter" while pressing ALT key. This operation
+will create an instance of StockBroker for you. Repeat the
+same steps for <code>Quoter/InterfaceDefinitions/Distributor/Stock/StockDistributor</code>.<br>
+  </li>
+  <li> Create an &lt;&lt;PublishConnector&gt;&gt;.<br>
+  </li>
+  <li> Now assemble the components together according to <a
+ href="Images/fig1.jpg">Figure 1</a>, using the connect mode (<img
+ alt="" src="Icons/AddConnMode.gif" style="width: 20px; height: 17px;">)and
+the resulting assembly model should look like Figure 6. Note that to
+create connections between
+StockDistributor.notify_out and StockBroker.notify_in, you will need
+the intermediate connector &lt;&lt;PublishConnector&gt;&gt;. <br>
+  </li>
+</ol>
+<br>
+<div style="text-align: center;"><img alt="" src="Images/fig6.jpg"
+ style="width: 689px; height: 378px;"><br>
+<br>
+Figure 6
+<br>
+</div>
+<hr>
+<a name="3"></a>
+<h3>ComponentPackage (.cpd)</h3>
+<br>
+This folder contains deployable component packages models. The
+component package contains the necessary
+implementation artifacts for a particular application. Here are the
+steps to model the Component Package for <em>StockBroker</em>.<br>
+<ol>
+  <li> Insert a "ComponentPackage" folder in the Quoter root folder,
+and create a &lt;&lt;PackageContainer&gt;&gt;, name it "Broker";<br>
+  </li>
+  <li> From the PartBrowser, add the following:<br>
+    <ul>
+      <li>a &lt;&lt;ComponentPackage&gt;&gt; named "Broker";</li>
+      <li>a &lt;&lt;ComponentImplementationReference&gt;&gt; named
+"Broker";</li>
+      <li>a &lt;&lt;ComponentRef&gt;&gt; named "Broker";</li>
+    </ul>
+  </li>
+  <li> Refer the &lt;&lt;ComponentImplementationReference&gt;&gt; <em>Broker</em>
+to <code>Quoter/ComponentImplementations/Broker</code>. Refer the
+&lt;&lt;ComponentRef&gt;&gt; <em>Broker</em> to <code>Quoter/InterfaceDefinitions/Broker/Stock/StockBroker</code><br>
+  </li>
+  <li> Switch to Connect Mode and create two connections according to
+the following relationship.<br>
+    <ul>
+      <li> &lt;&lt;ComponentImplementationReference&gt;&gt; <em>Broker</em>
+implements &lt;&lt;ComponentPackage&gt;&gt; <em>Broker</em>; </li>
+      <li> &lt;&lt;ComponentPackage&gt;&gt; <em>Broker </em>realizes
+&lt;&lt;ComponentRef&gt;&gt; <em>Broker</em>. </li>
+    </ul>
+    <br>
+    <br>
+&nbsp;&nbsp;&nbsp;&nbsp; The model you created should resemble Figure
+7. <br>
+    <br>
+    <div style="text-align: center;"><img alt="" src="Images/fig7.jpg"
+ style="width: 666px; height: 411px;"><br>
+    <br>
+Figure 7<br>
+    <br>
+    <div style="text-align: left;">
+Now create a ComponentPackage/StockDistributor following the same steps.<br>
+    <br>
+We will also need to create a package for the assembly component
+StockQuoter. Different from the Broker and Distributor packages, the
+Stock Quoter does not need a &gt;&gt;ComponentRef&gt;&gt;
+since this assembly does not have interfaces. To make this model:
+    <ol>
+      <il> Insert a &lt;&lt;ComponentPackage&gt;&gt;, name it
+StockQuoter;
+      <il> Insert a &lt;&lt;ComponentImplementationReference&gt;&gt;; </il></il>
+      <ul>
+        <li> Refer the &lt;&lt;ComponentImplementationReference&gt;&gt;
+to <code>Quoter/ComponentImplementations/StockQuoter/StockQuoter</code>;
+        </li>
+        <li> Name it StockQuoter. </li>
+      </ul>
+    </ol>
+    <br>
+    <br>
+    </div>
+    <div style="text-align: center;"><img alt="" src="Images/fig8.jpg"
+ style="width: 624px; height: 368px;"><br>
+    <br>
+Figure 8<br>
+    <br>
+    </div>
+    </div>
+  </li>
+</ol>
+<hr>
+<div style="text-align: left;"> <a name="4"></a>
+<h3>PackageConfiguration (.pcd)</h3>
+This folder contains just one model capturing specific configuration of
+Component packages. <br>
+<ol>
+  <li> Insert a new folder "PackageConfiguration", and create a
+&lt;&lt;PackageConfigurationContainer&gt;&gt;, name it "Default", click
+to
+open it.<br>
+  </li>
+  <li> Add a &lt;&lt;PackageConfiguration&gt;&gt; named "default" and a
+&lt;&lt;ComponentPackageReference&gt;&gt;, name it "StockQuoter",
+connect "default" to "StockQuoter"<br>
+  </li>
+  <li> Refer "StockQuoter" (&lt;&lt;ComponentPackageReference&gt;&gt;)
+to <code>Quoter/ComponentPackage/StockQuoter</code><br>
+  </li>
+</ol>
+<br>
+<hr>
+<a name="5"></a>
+<h3>ToplevelPackage (.pcd)</h3>
+This folder contains one model capturing information about the
+top-level element that will be fed to
+the application. <br>
+<ol>
+  <li> Insert a new folder "ToplevelPackage", and create a
+&lt;&lt;ToplevelPackageContainer&gt;&gt;, it name it "Default", double
+click to open it.<br>
+  </li>
+  <li> Add a &lt;&lt;ToplevelPackage&gt;&gt; named "ToplevelPackage"
+and a &lt;&lt;PackageConfigurationReference&gt;&gt;, name it "Default",
+connect "ToplevelPackage" to "default" <br>
+  </li>
+  <li> Refer "Default" to <code>Quoter/PackageConfiguration/Default</code><br>
+  </li>
+</ol>
+<br>
+<hr>
+<a name="6"></a>
+<h3>Targets (.cdd)</h3>
+This folder contains domain-specific models capturing information about
+the target
+environment in which component-based application will be deployed. In
+this Quoter example, we can either deploy the two components into ONE
+host, or into TWO different host. We will deploy the Quoter into two
+different host. <br>
+<ol>
+  <li> Insert a new folder "Targets", in this folder, inside a model
+"Domain"; double click to open it.<br>
+  </li>
+  <li> From the PartBrowser, add two &lt;&lt;Node&gt;&gt; named
+"Broker" and "Distributor" respectively.<br>
+  </li>
+</ol>
+<br>
+Now we are ready to deploy our Components to the actual physical
+environment.<br>
+<hr>
+<a name="7"></a>
+<h3>DeploymentPlan (.cdd)</h3>
+This folder contains a plan model that captures information about the
+assignment of component to nodes. <br>
+<ol>
+  <li> Insert a new folder "DeploymentPlan", and insert a model
+&lt;&lt;DeploymentPlan&gt;&gt;; name it "Plan", click to open it<br>
+  </li>
+  <li> From the PartBrowser, add the following:<br>
+    <ul>
+      <li>Two &lt;&lt;CollocationGroup&gt;&gt;</li>
+      <li>Two &lt;&lt;NodeReference&gt;&gt; named "Broker" and
+"Distributor" respectively, refering to <code>Quoter/Targets/Domain/Broker</code>
+and <code>Quoter/Targets/Domain/Distributor<code> respectively</code></code></li>
+      <li>Two &lt;&lt;ComponentRef&gt;&gt; named "StockBroker" and
+"StockDistributor" respectively, refering to <code>Quoter/ComponentImplementations/StockQuoter/StockQuoter/StockBroker</code>
+and
+        <code>Quoter/ComponentImplementations/StockQuoter/StockQuoter/StockDistributor</code>
+respectively. Note that the &lt;&lt;ComponentRef&gt;&gt; in
+DeploymentPlan is not refering to the interface, but rather, the actual
+instance of the implementation.</li>
+    </ul>
+  </li>
+  <li> Switch to Connect Mode, connect one
+&lt;&lt;CollocationGroup&gt;&gt; to &lt;&lt;NodeReference&gt;&gt; <em>Broker</em>,
+connect another
+&lt;&lt;CollocationGroup&gt;&gt; to &lt;&lt;NodeReference&gt;&gt; <em>Distributor</em>.
+Now the model looks like the following.<br>
+    <br>
+    <div style="text-align: center;"><img alt="" src="Images/fig9.jpg"
+ style="width: 641px; height: 440px;"><br>
+    <br>
+Figure 9.<br>
+    <br>
+    </div>
+  </li>
+  <li> Now we need to associate &lt;&lt;ComponentRef&gt;&gt;
+StockBroker to the
+&lt;&lt;CollocationGroup&gt;&gt; running on the
+&lt;&lt;NodeReference&gt;&gt; Broker, and &lt;&lt;ComponentRef&gt;&gt;
+StockDistributor to the &lt;&lt;CollocationGroup&gt;&gt; running on the
+&lt;&lt;NodeReference&gt;&gt; Distributor. To do that, switch the Edit
+Mode Bar to Set Mode (<img alt="" src="Icons/SetMode.gif"
+ style="width: 20px; height: 17px;">), and move
+the cursor to the &lt;&lt;CollocationGroup&gt;&gt; running on
+&lt;&lt;NodeReference&gt;&gt; Distributor, right-click on it. You will
+find the cursor is changed to set mode, and only the
+&lt;&lt;CollocationGroup&gt;&gt; you clicked in is highlighted, as
+shown
+in Figure 10.<br>
+    <br>
+  </li>
+</ol>
+</div>
+<div style="text-align: center;"><img alt="" src="Images/fig10.jpg"
+ style="width: 641px; height: 440px;"><br>
+<br>
+Figure 10.<br>
+<br>
+</div>
+<div style="text-align: left;">&nbsp;Now move your cursor to
+&lt;&lt;ComponentRef&gt;&gt;&nbsp; StockDistributor, and left-click it,
+so that it looks like Figure 11.<br>
+</div>
+<br>
+<div style="text-align: center;"><img alt="" src="Images/fig11.jpg"
+ style="width: 641px; height: 440px;"><br>
+<br>
+Figure 11<br>
+<br>
+</div>
+<div style="text-align: left;">&nbsp;&nbsp; This operation
+associates <em>StockDistributor</em> component to the
+&lt;&lt;CollocationGroup&gt;&gt; running on <em>Distributor</em> node.
+To do the same with
+Broker, just right-click on another &lt;&lt;CollocationGroup&gt;&gt;,
+and left-click on StockBroker &lt;&lt;CollocationGroup&gt;&gt; which is
+highlighted. <br>
+<br>
+<hr>
+<a name="8"></a>
+<h3>ComponentBuild</h3>
+We have finished all the models needed to
+generate the descriptor files for StockQuote. This ComponentBuild
+folder is designed specifically to ease the effort of having to
+hand-code the MPC files project. I won't go into details
+explaining this model. Please see the example for reference.<br>
+</div>
+<br>
+<br>
+After we are done with the modeling, the flattened_deploymentplan
+interpreter that comes along with PICML will help us to generate a
+flattened_deploymentplan.cdp file. Please make sure you generate this
+file to MyQuoter/descriptors.
+<address><span style="font-style: italic;"></span><br>
+<span style="font-style: italic;"></span><br>
+<br>
+<a href="mailto:ming.xiong@vanderbilt.edu">Ming Xiong<br>
+</a></address>
+<!-- Created: Sat Nov 27 15:25:06 CST 1999 --><!-- hhmts start -->
+Last modified:<!-- hhmts end -->
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

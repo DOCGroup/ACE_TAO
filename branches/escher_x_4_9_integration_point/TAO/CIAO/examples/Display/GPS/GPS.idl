@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file GPS.idl
+ *
+ * Definition of the GPS component.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#include "../HUDisplay.idl"
+
+module HUDisplay
+{
+  component GPS
+    {
+      provides position MyLocation;
+      publishes tick Ready;
+      consumes tick Refresh;
+    };
+
+  home GPSHome manages GPS
+  {
+  };
+};
