@@ -7,8 +7,8 @@ Tue Apr 11 16:26:47 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
           Reapply the fix a week ago with a correction.
           Before, I mistakenly put a new operation into a
           wrong place. It should be in the right place now.
-					Thanks to Frank Rehberger for correcting this.
-					Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+          Thanks to Frank Rehberger for correcting this.
+          Mon Mar 27 18:55:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
 Tue Apr 11 13:13:27 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
