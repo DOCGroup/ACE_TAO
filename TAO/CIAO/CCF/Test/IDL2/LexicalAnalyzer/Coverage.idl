@@ -2,7 +2,7 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-// This file is supposed to cover an IDL2 lexical structure and intended 
+// This file is supposed to cover an IDL2 lexical structure and intended
 // for IDL2 lexer regression testing.
 //
 

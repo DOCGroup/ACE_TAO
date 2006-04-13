@@ -12,8 +12,8 @@ namespace CIAO
   {
     bool
     STD_IAD_Handler::impl_artifact_descr (
-      const ImplementationArtifactDescription &desc,
-      ::Deployment::ImplementationArtifactDescription &toconfig)
+                                          const ImplementationArtifactDescription &desc,
+                                          ::Deployment::ImplementationArtifactDescription &toconfig)
     {
       toconfig.label =
         desc.label ().c_str ();
@@ -25,22 +25,22 @@ namespace CIAO
              desc.begin_location ();
            iter != desc.end_location ();
            iter++)
-      {
-        CORBA::ULong len =
-          toconfig.location.length ();
-        toconfig.location.length (len + 1);
-        toconfig.location [len] = (*iter).c_str ();
-      }
+        {
+          CORBA::ULong len =
+            toconfig.location.length ();
+          toconfig.location.length (len + 1);
+          toconfig.location [len] = (*iter).c_str ();
+        }
 
       if (desc.execParameter_p ())
-      {
-        Property p = desc.execParameter ();
-        Deployment::Property idl_p;
-        Property_Handler::get_property (p, idl_p);
-        toconfig.execParameter.length (1);
-        toconfig.execParameter [0] = idl_p;
-      }
-     return true;
+        {
+          Property p = desc.execParameter ();
+          Deployment::Property idl_p;
+          Property_Handler::get_property (p, idl_p);
+          toconfig.execParameter.length (1);
+          toconfig.execParameter [0] = idl_p;
+        }
+      return true;
     }
   }
 }

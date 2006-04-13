@@ -56,13 +56,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           homesvnt_creator_fptr_map.bind (homes_table[i].servant_entrypt_,
                                           homes_table[i].servant_fptr_);
-        }      
+        }
 
       CIAO::Static_NodeManager_Impl *static_node_manager_impl;
       // Create and install the CIAO Daemon servant
-      
+
       ACE_DEBUG ((LM_DEBUG, "creating static_node_manager\n"));
-      
+
       static_node_manager_impl =
         new CIAO::Static_NodeManager_Impl("NodeManager",
                                           orb.in (),
@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                           "", //exe location
                                           "", //exe options
                                           0, //spawn delay
-                                          &static_config_entrypoints_maps);    
+                                          &static_config_entrypoints_maps);
 
       static_node_manager_impl->init ();
 
@@ -98,11 +98,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      str.in ()
                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       // Run the main event loop for the ORB.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

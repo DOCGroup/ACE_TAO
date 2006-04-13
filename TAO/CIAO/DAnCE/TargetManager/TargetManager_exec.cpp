@@ -41,7 +41,8 @@ namespace CIDL_TargetManager_i
             CIAO::TargetManagerImpl::_narrow (object.in ());
     ::Deployment::TargetManager_var target =
             target_impl->provide_targetMgr ();
-    dataManager_.reset (new CIAO::DomainDataManager (orb, target.in ()));
+    //    dataManager_.reset (new CIAO::DomainDataManager (orb, target.in ()));
+    CIAO::DomainDataManager::create (orb, target.in());
   }
 
   TargetManager_exec_i::~TargetManager_exec_i (void)
@@ -55,7 +56,8 @@ namespace CIDL_TargetManager_i
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return  dataManager_->get_initial_domain ();
+    return  CIAO::DomainDataManager::
+      get_data_manager ()->get_initial_domain ();
   }
 
   ::Deployment::Domain *
@@ -63,28 +65,31 @@ namespace CIDL_TargetManager_i
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return dataManager_->get_current_domain ();
+    return CIAO::DomainDataManager::
+      get_data_manager ()->get_current_domain ();
   }
 
   void
   TargetManager_exec_i::commitResources (
-  const ::Deployment::DeploymentPlan & /* plan */
+  const ::Deployment::DeploymentPlan & plan
   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Deployment::ResourceNotAvailable,
   ::Deployment::PlanError))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    return CIAO::DomainDataManager::
+      get_data_manager ()->commitResources (plan);
   }
 
   void
   TargetManager_exec_i::releaseResources (
-  const ::Deployment::DeploymentPlan & /* argname */
+  const ::Deployment::DeploymentPlan &  plan
   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    return CIAO::DomainDataManager::
+      get_data_manager ()->releaseResources (plan);
   }
 
   void
@@ -100,7 +105,8 @@ namespace CIDL_TargetManager_i
     {
       ACE_DEBUG ((LM_DEBUG , ".. Update Domain called ...\n"));
     }
-    dataManager_->update_domain (
+    CIAO::DomainDataManager::
+      get_data_manager ()->update_domain (
                     elements,
                     domainSubset,
                     updateKind
@@ -124,13 +130,14 @@ namespace CIDL_TargetManager_i
 
   ::CORBA::Long
   TargetManagerExt_exec_i::get_pid (
-                                    const char * /* component_uuid */
+                                    const char * component_uuid
                                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
     ACE_DEBUG ((LM_DEBUG, "Get PID :: Skeleton Impl"));
-    return 0;
+    return CIAO::DomainDataManager::
+      get_data_manager ()->get_pid (component_uuid);
   }
 
   ::CIAO::Host_Infos *
@@ -139,8 +146,9 @@ namespace CIDL_TargetManager_i
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
-    ACE_DEBUG ((LM_DEBUG, "Get host cpu :: Skeleton Impl"));
-    return 0;
+    ACE_DEBUG ((LM_DEBUG, "Get host cpu :: Skeleton Impl entering\n"));
+    return CIAO::DomainDataManager::
+      get_data_manager ()->get_cpu_info ();
   }
 
   ::CIAO::Component_Infos *
@@ -151,6 +159,15 @@ namespace CIDL_TargetManager_i
     // Your code here.
     ACE_DEBUG ((LM_DEBUG, "Get component cpu :: Skeleton Impl"));
     return 0;
+  }
+
+  ::CIAO::Host_NodeManager_seq *
+  TargetManagerExt_exec_i::get_all_node_managers
+  (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return CIAO::DomainDataManager::
+      get_data_manager ()->get_node_managers ();
   }
 
   //==================================================================
@@ -198,7 +215,11 @@ namespace CIDL_TargetManager_i
                             ACE_ENV_SINGLE_ARG_DECL_NOT_USED
                             ) ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return new  TargetManagerExt_exec_i ();
+    if (this->exec_ext_object_.in () == 0)
+    {
+      this->exec_ext_object_ = new TargetManagerExt_exec_i();
+    }
+    return this->exec_ext_object_.in ();
   }
 
   // Operations from Components::SessionComponent
@@ -277,6 +298,10 @@ namespace CIDL_TargetManager_i
   ::Components::CCMException))
   {
     // Your code here.
+    ACE_DEBUG ((LM_DEBUG , "TM::ccm_remove , calling LeaveDomain\n"));
+        return CIAO::DomainDataManager::
+          get_data_manager ()->stop_monitors ();
+    ACE_DEBUG ((LM_DEBUG , "TM::ccm_remove , After calling LeaveDomain\n"));
   }
 
 
@@ -322,7 +347,7 @@ namespace CIDL_TargetManager_i
   }
 
   extern "C" TARGETMANAGER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  createTargetManagerHome_Impl (void)
+  create_CIAO_TargetManagerHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
     ::Components::HomeExecutorBase::_nil ();

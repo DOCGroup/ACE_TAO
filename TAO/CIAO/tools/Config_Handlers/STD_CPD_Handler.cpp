@@ -11,8 +11,8 @@ namespace CIAO
   {
     bool
     STD_CPD_Handler::component_package_descr (
-      const ComponentPackageDescription &desc,
-      ::Deployment::ComponentPackageDescription &toconfig)
+                                              const ComponentPackageDescription &desc,
+                                              ::Deployment::ComponentPackageDescription &toconfig)
     {
       toconfig.label =
         desc.label ().c_str ();

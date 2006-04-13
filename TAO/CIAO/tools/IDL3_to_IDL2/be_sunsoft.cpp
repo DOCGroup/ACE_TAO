@@ -13,8 +13,8 @@ ACE_RCSID (be,
            be_sunsoft,
            "$Id$")
 
-TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
-  : TAO_OutStream ()
+  TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
+    : TAO_OutStream ()
 {
 }
 
@@ -34,8 +34,8 @@ TAO_SunSoft_OutStream::print (Identifier *id)
 TAO_OutStream &
 TAO_SunSoft_OutStream::print (UTL_IdList *idl)
 {
-  long first = true;
-  long second = false;
+  long first = I_TRUE;
+  long second = I_FALSE;
   Identifier *id = 0;
 
   for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())
@@ -46,7 +46,7 @@ TAO_SunSoft_OutStream::print (UTL_IdList *idl)
         }
       else if (second)
         {
-          first = second = false;
+          first = second = I_FALSE;
         }
 
       // Print the identifier.
@@ -58,11 +58,11 @@ TAO_SunSoft_OutStream::print (UTL_IdList *idl)
           if (ACE_OS::strcmp (id->get_string (), "") != 0)
             {
               // Does not start with a "".
-              first = false;
+              first = I_FALSE;
             }
           else
             {
-              second = true;
+              second = I_TRUE;
             }
         }
     }
@@ -130,34 +130,34 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           else if (iscntrl (ev->u.cval))
             switch (ev->u.cval)
               {
-                case '\n':
-                  this->TAO_OutStream::print ("'\\n'");
-                  break;
-                case '\t':
-                  this->TAO_OutStream::print ("'\\t'");
-                  break;
-                case '\r':
-                  this->TAO_OutStream::print ("'\\r'");
-                  break;
-                case '\v':
-                  this->TAO_OutStream::print ("'\\v'");
-                  break;
-                case '\f':
-                  this->TAO_OutStream::print ("'\\f'");
-                  break;
-                case '\b':
-                  this->TAO_OutStream::print ("'\\b'");
-                  break;
-                case '\a':
-                  this->TAO_OutStream::print ("'\\a'");
-                  break;
-                case '\?':
-                  this->TAO_OutStream::print ("'?'");
-                  break;
+              case '\n':
+                this->TAO_OutStream::print ("'\\n'");
+                break;
+              case '\t':
+                this->TAO_OutStream::print ("'\\t'");
+                break;
+              case '\r':
+                this->TAO_OutStream::print ("'\\r'");
+                break;
+              case '\v':
+                this->TAO_OutStream::print ("'\\v'");
+                break;
+              case '\f':
+                this->TAO_OutStream::print ("'\\f'");
+                break;
+              case '\b':
+                this->TAO_OutStream::print ("'\\b'");
+                break;
+              case '\a':
+                this->TAO_OutStream::print ("'\\a'");
+                break;
+              case '\?':
+                this->TAO_OutStream::print ("'?'");
+                break;
               default:
                 this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
               }
-           else
+          else
             this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:

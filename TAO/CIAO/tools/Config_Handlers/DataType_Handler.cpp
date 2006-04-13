@@ -17,13 +17,12 @@ namespace CIAO{
     ///This method takes a <CIAO::Config_Handlers::DataType>
     ///and returns the corresponding CORBA::TypeCode.
     void
-    DataType_Handler::data_type (
-                                CORBA::TypeCode_ptr& type,
-                                const DataType& desc)
+    DataType_Handler::data_type (const DataType& desc,
+                                 CORBA::TypeCode_ptr& type)
     {
       CIAO_TRACE("DataType_Handler::data_type");
       TCKind kind (desc.kind ());
-        
+
       switch (kind.integral ())
         {
         case  TCKind::tk_null_l:
@@ -102,7 +101,7 @@ namespace CIAO{
           ACE_ERROR ((LM_ERROR, "Invalid typecode in any\n"));
           throw 1;
         }
-        
+
       //   This case used to be supported...is it not in the schema?
       //    case  TCKind::tk_Object)
       //      type = CORBA::TypeCode::_duplicate (CORBA::_tc_Object);*/
@@ -173,8 +172,8 @@ namespace CIAO{
           ACE_ERROR ((LM_ERROR, "Invalid typecode\n"));
           throw 1;
         }
-        
-        
+
+
     }
 
   }

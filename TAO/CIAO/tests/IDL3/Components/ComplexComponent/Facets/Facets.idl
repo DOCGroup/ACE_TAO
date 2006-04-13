@@ -10,19 +10,19 @@
 
 module Facets
 {
-  interface foo_interface 
+  interface foo_interface
     {
     };
-  
+
   interface bar_interface
     {
     };
-  
+
   component Foo
     {
       provides foo_interface foo;
     };
-  
+
   component Bar : Foo
     {
       provides bar_interface bar;

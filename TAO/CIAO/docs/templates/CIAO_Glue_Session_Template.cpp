@@ -101,7 +101,7 @@ void
   this->ciao_emits_[event name]_consumer_->push_[event name] (ev
                                                               ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
-  
+
 ##  else [event name] belongs to a 'publishes' port
   ACE_Active_Map_Manager<[eventtype]Consumer_var>::iterator
     end = this->ciao_publishes_[event name]_map_.end ();
@@ -469,7 +469,7 @@ CORBA::Object_ptr
   x->type_id ((const char *) "[facet type's repo id]"); //
   x->facet_ref (this->provide_[facet name] (ACE_ENV_SINGLE_ARG_PARAMETER));
   ACE_CHECK_RETURN (0);
-  
+
   collection[i] = x._retn ();
   ++i;
 ##end foreach [facet name] with [facet type]
@@ -1018,7 +1018,7 @@ void
   ::Components::FacetDescriptions_var facets_desc
       = this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   ::Components::ReceptacleDescriptions_var receptacle_desc
       = get_all_receptacles (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -1030,7 +1030,7 @@ void
   ::Components::EmitterDescriptions_var emitter_desc
       = this->get_all_emitters (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   ::Components::PublisherDescriptions_var publisher_desc
       = this->get_all_publishers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);

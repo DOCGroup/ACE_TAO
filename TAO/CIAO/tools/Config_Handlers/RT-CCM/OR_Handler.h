@@ -23,30 +23,30 @@
 
 namespace CIAO
 {
-    namespace Config_Handlers
+  namespace Config_Handlers
+  {
+    class ORBResources;
+
+    /* Class description
+     * @class OR_Handler
+     * @function A brief Handler class for the <ORBResource> member
+     */
+
+    class RT_CCM_Handlers_Export OR_Handler
     {
-	class ORBResources;
+    public:
 
-	/* Class description
-	 * @class OR_Handler
-	 * @function A brief Handler class for the <ORBResource> member
-	 */
+      static bool orb_resources (const ORBResources &src,
+                                 ::CIAO::DAnCE::ORBResources &dest);
 
-	class RT_CCM_Handlers_Export OR_Handler
-	{
-	public:
-          
-          static bool orb_resources (const ORBResources &src,
-                                     ::CIAO::DAnCE::ORBResources &dest);
-          
-          class No_Resource {};
-          
-          static ORBResources orb_resources (const ::CIAO::DAnCE::ORBResources &src)
-            throw (No_Resource);
-          
-          
-	};
-    }
+      class No_Resource {};
+
+      static ORBResources orb_resources (const ::CIAO::DAnCE::ORBResources &src)
+        throw (No_Resource);
+
+
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

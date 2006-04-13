@@ -3,7 +3,7 @@
 #define RACE_COMMON_IDL
 
 module CIAO
-{  
+{
   module RACE
     {
       typedef string RACE_Classification;

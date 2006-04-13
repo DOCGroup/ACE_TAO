@@ -90,14 +90,14 @@ project(Planner_Manager_exec) : ciao_component_dnc {
              Planner_Interface_stub \
              Planner_stub \
              Output_Adapter_Interface_stub
-  
+
   idlflags  +=  -Sc \
                 -Wb,export_macro=PLANNER_MANAGER_EXEC_Export \
                 -Wb,export_include=Planner_Manager_exec_export.h
   dynamicflags   = PLANNER_MANAGER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {

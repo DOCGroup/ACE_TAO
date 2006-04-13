@@ -50,9 +50,8 @@
     <xsd:sequence>
       <xsd:element name="kind" type="Deployment:TCKind"/>
       <xsd:element name="enum" type="Deployment:EnumType" minOccurs="0"/>
-<!--      
+<!--
 @@ not supported now..
-
 
       <xsd:element name="objref" type="Deployment:ObjrefType"/>
       <xsd:element name="boundedString" type="Deployment:BoundedStringType"/>
@@ -66,7 +65,6 @@
 -->
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="DataValue">
     <xsd:choice maxOccurs="unbounded">
@@ -107,18 +105,16 @@
   <xsd:complexType name="Any">
     <xsd:sequence>
       <xsd:element name="type" type="Deployment:DataType"/>
-      <xsd:element name="value" type="Deployment:DataValue"/>      
+      <xsd:element name="value" type="Deployment:DataValue"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="Property">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="value" type="Deployment:Any"/>    
+      <xsd:element name="value" type="Deployment:Any"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
 <!-- End of base definitions. -->
 
@@ -133,15 +129,14 @@
     </xsd:restriction>
   </xsd:simpleType>
 
-
   <xsd:complexType name="SatisfierProperty">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="kind" type="Deployment:SatisfierPropertyKind"/>
-      <xsd:element name="value" type="Deployment:Any"/>      
+      <xsd:element name="dynamic" type="xsd:boolean" />
+      <xsd:element name="value" type="Deployment:Any"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="Resource">
     <xsd:sequence>
@@ -155,10 +150,9 @@
     <xsd:sequence>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:Property"/>      
+      <xsd:element name="property" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
 <!-- Deployment -->
 
@@ -166,10 +160,9 @@
     <xsd:sequence>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="property" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="ArtifactDeploymentDescription">
     <xsd:sequence>
@@ -183,7 +176,6 @@
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
-
 
   <xsd:complexType name="MonolithicDeploymentDescription">
     <xsd:sequence>
@@ -206,16 +198,14 @@
     </xsd:restriction>
   </xsd:simpleType>
 
-
   <xsd:complexType name="InstanceResourceDeploymentDescription">
     <xsd:sequence>
       <xsd:element name="resourceUsage" type="Deployment:ResourceUsageKind"/>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="property" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="InstanceDeploymentDescription">
     <xsd:sequence>
@@ -223,8 +213,7 @@
       <xsd:element name="node" type="xsd:string"/>
       <xsd:element name="source" type="xsd:string"/>
       <xsd:element name="implementation" type="xsd:IDREF"/> <!-- MonolithicDeploymentDescription -->
-      <xsd:element name="configProperty" type="Deployment:Property"
-    minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="deployedResource" type="Deployment:InstanceResourceDeploymentDescription" minOccurs="0"/>
       <xsd:element name="deployedSharedResource" type="Deployment:InstanceResourceDeploymentDescription" minOccurs="0"/>
     </xsd:sequence>
@@ -239,25 +228,22 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
-      <xsd:enumeration value="rtecEventPublisher"/>
-      <xsd:enumeration value="rtecEventConsumer"/>      
     </xsd:restriction>
   </xsd:simpleType>
-
 
   <xsd:complexType name="ComponentPortDescription">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="specificType" type="xsd:string"/>
-      <xsd:element name="supportedType" type="xsd:string"/>
-      <xsd:element name="provider" type="xsd:string"/>
-      <xsd:element name="exclusiveProvider" type="xsd:string"/>
-      <xsd:element name="exclusiveUser" type="xsd:string"/>
-      <xsd:element name="optional" type="xsd:string"/>
+      <!-- @@MAJO:  Hack - specific/supported types should be required. -->
+      <xsd:element name="specificType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="supportedType" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="provider" type="xsd:boolean"/>
+      <xsd:element name="exclusiveProvider" type="xsd:boolean"/>
+      <xsd:element name="exclusiveUser" type="xsd:boolean"/>
+      <xsd:element name="optional" type="xsd:boolean"/>
       <xsd:element name="kind" type="Deployment:CCMComponentPortKind"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="ComponentPropertyDescription">
     <xsd:sequence>
@@ -266,13 +252,11 @@
     </xsd:sequence>
   </xsd:complexType>
 
-
   <xsd:complexType name="ComponentExternalPortEndpoint">
     <xsd:sequence>
-      <xsd:element name="portName" type="xsd:string"/>      
+      <xsd:element name="portName" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="PlanSubcomponentPortEndpoint">
     <xsd:sequence>
@@ -283,23 +267,20 @@
     </xsd:sequence>
   </xsd:complexType>
 
-
   <xsd:complexType name="ExternalReferenceEndpoint">
     <xsd:sequence>
-      <xsd:element name="location" type="xsd:string"/>      
+      <xsd:element name="location" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="ConnectionResourceDeploymentDescription">
     <xsd:sequence>
       <xsd:element name="targetName" type="xsd:string"/>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="property" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="PlanConnectionDescription">
     <xsd:sequence>
@@ -313,71 +294,40 @@
     </xsd:sequence>
   </xsd:complexType>
 
-
   <xsd:complexType name="ImplementationDependency">
     <xsd:sequence>
-      <xsd:element name="requiredType" type="xsd:string"/>     
+      <xsd:element name="requiredType" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 
-
 <!-- Implementation -->
-
 
   <xsd:complexType name="Capability">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="resourceType" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>     
+      <xsd:element name="resourceType" type="xsd:string" maxOccurs="unbounded" />
+      <xsd:element name="property" type="Deployment:SatisfierProperty" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
-
 
   <xsd:complexType name="ImplementationRequirement">
     <xsd:sequence>
-      <xsd:element name="resourceUsage" type="Deployment:ResourceUsageKind"/>
-      <xsd:element name="resourcePort" type="xsd:string"/>
-      <xsd:element name="componentPort" type="xsd:string"/>
+      <xsd:element name="resourceUsage" type="Deployment:ResourceUsageKind" minOccurs="0"/>
+      <xsd:element name="resourcePort" type="xsd:string" minOccurs="0" />
+      <xsd:element name="componentPort" type="xsd:string" minOccurs="0"/>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:Property"/>      
+      <xsd:element name="property" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
-
-
-<!-- Bala commented
-  <xsd:complexType name="MonolithicImplementationDescription">
-    <xsd:sequence>
-      <xsd:element name="execParameter" type="Deployment:Property" minOccurs="0"/>
-      <xsd:element name="primaryArtifact" type="Deployment:NamedImplementationArtifact" maxOccurs="unbounded"/>
-      <xsd:element name="deployRequirement" type="Deployment:ImplementationRequirement" minOccurs="0"/>
-    </xsd:sequence>
-  </xsd:complexType>
--->
-
 
   <xsd:complexType name="ComponentPackageReference">
     <xsd:sequence>
-      <xsd:element name="requiredUUID" type="xsd:string"/>
-      <xsd:element name="requiredName" type="xsd:string"/>
-      <xsd:element name="requiredType" type="xsd:string"/>      
+      <xsd:element name="requiredUUID" type="xsd:string" minOccurs="0" />
+      <xsd:element name="requiredName" type="xsd:string" minOccurs="0" />
+      <xsd:element name="requiredType" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
-
-
-<!-- Bala commented
-  <xsd:complexType name="SubcomponentInstantiationDescription">
-    <xsd:sequence>
-      <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="package" type="Deployment:ComponentPackageDescription"/>
-      <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0"/>
-      <xsd:element name="selectRequirement" type="Deployment:Requirement" minOccurs="0"/>
-      <xsd:element name="reference" type="Deployment:ComponentPackageReference" minOccurs="0"/>
-    </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>
-  </xsd:complexType>
--->
-
 
   <xsd:complexType name="SubcomponentPortEndpoint">
     <xsd:sequence>
@@ -386,13 +336,12 @@
     </xsd:sequence>
   </xsd:complexType>
 
-
   <xsd:complexType name="AssemblyConnectionDescription">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="deployRequirement" type="Deployment:Requirement" minOccurs="0"/>
-      <xsd:element name="externalEndpoint" type="Deployment:ComponentExternalPortEndpoint" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="deployRequirement" type="Deployment:Requirement" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="internalEndpoint" type="Deployment:SubcomponentPortEndpoint" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="externalEndpoint" type="Deployment:ComponentExternalPortEndpoint" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="externalReference" type="Deployment:ExternalReferenceEndpoint" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>

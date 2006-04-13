@@ -1,4 +1,4 @@
-/** 
+/**
  * @file PM_Handler.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
@@ -23,22 +23,22 @@ namespace CIAO
     namespace Config_Handlers
     {
       class PriorityModelPolicyDef;
-      
+
       /**
        * @class PS_Handler
        * @brief Handler class for PriorityModelPolicyDefs
        */
-      
+
       class RT_CCM_Handlers_Export PM_Handler
       {
       public:
         static bool priority_model_pd (const PriorityModelPolicyDef &src,
                                        ::CIAO::DAnCE::PriorityModelPolicyDef &dest);
-        
+
         static PriorityModelPolicyDef priority_model_pd (const ::CIAO::DAnCE::PriorityModelPolicyDef &src);
       };
     }
-  
+
 }
 
 #include /**/ "ace/post.h"

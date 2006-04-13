@@ -46,7 +46,7 @@ namespace regex
     if (e.empty ()) return src;
 
     wchar_t delimiter (e[0]);
-    
+
     std::wstring::size_type first = e.find (delimiter);
     std::wstring::size_type middle = e.find (delimiter, first + 1);
     std::wstring::size_type last = e.find (delimiter, middle + 1);

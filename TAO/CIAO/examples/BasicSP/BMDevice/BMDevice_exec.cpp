@@ -59,15 +59,15 @@ MyImpl::BMDevice_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
 // Operations from Components::SessionComponent
 void
 MyImpl::BMDevice_exec_i::set_session_context (
-    Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL
-  )
+                                              Components::SessionContext_ptr ctx
+                                              ACE_ENV_ARG_DECL
+                                              )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::set_session_context\n"));
     }
 
@@ -97,10 +97,10 @@ MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_activate\n"));
     }
-    
+
 }
 
 void
@@ -117,7 +117,7 @@ MyImpl::BMDevice_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
     }
 }
@@ -129,7 +129,7 @@ MyImpl::BMDevice_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_remove\n"));
     }
 }
@@ -156,7 +156,7 @@ MyImpl::BMDeviceHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   Components::EnterpriseComponent_ptr tmp= 0;
   ACE_NEW_THROW_EX (tmp,
                     MyImpl::BMDevice_exec_i,
-		                CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY ());
 
   return tmp;
 }

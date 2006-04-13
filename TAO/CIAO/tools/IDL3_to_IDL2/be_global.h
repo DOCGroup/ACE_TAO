@@ -27,6 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "idl_bool.h"
+
 class AST_Generator;
 
 // Defines a class containing all back end global data.

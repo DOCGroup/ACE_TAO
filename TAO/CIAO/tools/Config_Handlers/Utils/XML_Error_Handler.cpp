@@ -42,12 +42,18 @@ namespace CIAO
 
       ACE_Auto_Basic_Array_Ptr<char> cleanup_msg (msg);
 
+      char *file =
+        XMLString::transcode (domError.getLocation ()->getURI ());
+
+      ACE_Auto_Basic_Array_Ptr<char> cleanup_file (file);
+
       ACE_DEBUG ((LM_DEBUG,
-                  "%s at line %d and column %d\n", 
+                  "%s at line %d and column %d in file %s\n",
                   msg,
                   domError.getLocation ()->getLineNumber (),
-                  domError.getLocation ()->getColumnNumber ()));
-      
+                  domError.getLocation ()->getColumnNumber (),
+                  file));
+
       return true;
     }
 
