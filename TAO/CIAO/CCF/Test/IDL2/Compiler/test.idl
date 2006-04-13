@@ -22,11 +22,11 @@ module InterfaceTest
   abstract interface AI;
   local interface LI;
   interface I;
-  
+
   abstract interface AI
   {
   };
-  
+
   interface I : AI
   {
   };
@@ -42,7 +42,7 @@ module InterfaceTest
 module MemberTest
 {
   typedef long Id;
-  
+
   struct S
   {
     Id id;
@@ -62,12 +62,12 @@ module ModuleTest
       typedef long L;
     };
   };
-  
+
   module M
   {
     typedef N::L L;
   };
-  
+
   module N
   {
     typedef M::N::L L;
@@ -95,7 +95,7 @@ module Sequence
   typedef sequence<octet> OctetSeq;
 
   typedef OctetSeq RawSeq;
-  
+
   typedef sequence<string> StringSeq, StrSeq;
 };
 
@@ -106,12 +106,12 @@ module Sequence
 module StructTest
 {
   struct S;
-  
+
   struct S
   {
     long m; // Struct cannot be empty.
   };
-  
+
 };
 
 // Typeid
@@ -120,7 +120,7 @@ module StructTest
 module TypeidTest
 {
   interface I;
-  
+
   typeid I "Foo";
   typeprefix TypeidTest "Bar";
 };
@@ -133,7 +133,7 @@ module TypeidTest
 module TypedefTest
 {
   interface I;
-  
+
   typedef I J;
 
   interface I

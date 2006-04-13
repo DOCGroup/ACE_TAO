@@ -39,10 +39,10 @@ test.dat:
                  the RoundTrip component on the location given in test.dat.
   RoundTripClient.cad : A descriptor file for the client component
                         RoundTripClient that uses the interface provided by
-                        RoundTrip. 
+                        RoundTrip.
   Test-IOR.cad: This cad file should be used to for testing a CORBA server
                 with a CIAO client. The IOR of the server should added in
-                this file. 
+                this file.
 
 There are automated perl scripts that can run the tests to generate the
 required results. These are located in the individual component directories
@@ -50,7 +50,7 @@ Round Trip and RoundTripClient. The descriptors directory has the required
 .cad files that specify the component configuration used in the various
 experiments.
 
-To run a simple CORBA component with a normal client: 
+To run a simple CORBA component with a normal client:
   cd descriptors;
   ../Roundtrip/run_test.pl
 
@@ -60,6 +60,6 @@ To run a simple CORBA component with a normal client:
   server. Statistics are printed for RoundTrip latency jitter etc
 
  cd descritors;
- ../RoundTripClient/run_test_ior_cad.pl 
- Script runs a CORBA server and a CIAO component that acts as a client. 
+ ../RoundTripClient/run_test_ior_cad.pl
+ Script runs a CORBA server and a CIAO component that acts as a client.
  Similar statistics are printed.

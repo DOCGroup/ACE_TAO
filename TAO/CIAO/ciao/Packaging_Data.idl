@@ -7,10 +7,39 @@
 
 module Deployment
 {
+  struct ComponentPackageImport {
+    ::CORBA::StringSeq location;
+  };
 
+  typedef sequence < ComponentPackageImport > ComponentPackageImports;
+
+  struct SubcomponentPropertyReference {
+    string propertyName;
+    unsigned long instanceRef;
+  };
+
+  struct SubcomponentPortEndpoint {
+    string portName;
+    unsigned long instanceRef;
+  };
+
+  typedef sequence < SubcomponentPortEndpoint > SubcomponentPortEndpoints;
+
+  typedef sequence < SubcomponentPropertyReference > SubcomponentPropertyReferences;
+
+  struct AssemblyPropertyMapping {
+    string name;
+    string externalName;
+    SubcomponentPropertyReferences delegatesTo;
+  };
+
+  typedef sequence < AssemblyPropertyMapping > AssemblyPropertyMappings;
+
+#ifndef AVOID_IFR_CRASH
   struct NamedImplementationArtifact;
 
   typedef sequence < NamedImplementationArtifact > NamedImplementationArtifacts;
+#endif /* AVOID_IFR_CRASH */
 
   struct ImplementationArtifactDescription {
     string label;
@@ -18,7 +47,9 @@ module Deployment
     ::CORBA::StringSeq location;
     Properties execParameter;
     Requirements deployRequirement;
+#ifndef AVOID_IFR_CRASH
     NamedImplementationArtifacts dependsOn;
+#endif /* AVOID_IFR_CRASH */
     Properties infoProperty;
   };
 
@@ -28,13 +59,17 @@ module Deployment
   };
 
   struct MonolithicImplementationDescription {
-    Properties execParameter;
+    Properties nodeExecParameter;
+    Properties componentExecParameter;
+#ifndef AVOID_IFR_CRASH
     NamedImplementationArtifacts primaryArtifact;
+#endif /* AVOID_IFR_CRASH */
     ImplementationRequirements deployRequirement;
   };
 
   typedef sequence < MonolithicImplementationDescription > MonolithicImplementationDescriptions;
 
+#ifndef AVOID_IFR_CRASH
   struct PackageConfiguration;
 
   typedef sequence < PackageConfiguration > PackageConfigurations;
@@ -42,17 +77,31 @@ module Deployment
   struct ComponentPackageDescription;
 
   typedef sequence < ComponentPackageDescription > ComponentPackageDescriptions;
+#endif /* AVOID_IFR_CRASH */
 
   struct SubcomponentInstantiationDescription {
     string name;
-    ComponentPackageDescriptions package;
-    Properties configProperty;
+#ifndef AVOID_IFR_CRASH
+    ComponentPackageDescriptions basePackage;
+    PackageConfigurations specializedConfig;
+#endif /* AVOID_IFR_CRASH */
     Requirements selectRequirement;
-    ComponentPackageReferences reference;
+    Properties configProperty;
+    ComponentPackageReferences referencedPackage;
+    ComponentPackageImports importedPackage;
   };
 
   typedef sequence < SubcomponentInstantiationDescription > SubcomponentInstantiationDescriptions;
 
+  struct AssemblyConnectionDescription {
+    string name;
+    Requirements deployRequirement;
+    ComponentExternalPortEndpoints externalEndpoint;
+    SubcomponentPortEndpoints internalEndpoint;
+    ExternalReferenceEndpoints externalReference;
+  };
+
+  typedef sequence < AssemblyConnectionDescription > AssemblyConnectionDescriptions;
 
   struct ComponentAssemblyDescription {
     SubcomponentInstantiationDescriptions instance;
@@ -96,8 +145,10 @@ module Deployment
   struct PackageConfiguration {
     string label;
     string UUID;
+#ifndef AVOID_IFR_CRASH
     PackageConfigurations specializedConfig;
     ComponentPackageDescriptions basePackage;
+#endif /* AVOID_IFR_CRASH */
     ComponentPackageReferences reference;
     Requirements selectRequirement;
     Properties configProperty;

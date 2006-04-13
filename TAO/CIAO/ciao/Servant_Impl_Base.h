@@ -186,6 +186,10 @@ namespace CIAO
         const char *port_name
       );
 
+    void add_receptacle (const char *receptacle_name,
+                         CORBA::Object_ptr recept_ref,
+                         ::Components::Cookie * cookie);
+
     void add_consumer (const char *port_name,
                        ::Components::EventConsumerBase_ptr port_ref);
 
@@ -212,8 +216,16 @@ namespace CIAO
                                     ACE_Null_Mutex>
        ConsumerTable;
 
+    typedef ACE_Hash_Map_Manager_Ex<const char *,
+                                    ::Components::ReceptacleDescription_var,
+                                    ACE_Hash<const char *>,
+                                    ACE_Equal_To<const char *>,
+                                    ACE_Null_Mutex>
+       ReceptacleTable;
+
     FacetTable facet_table_;
     ConsumerTable consumer_table_;
+    ReceptacleTable receptacle_table_;
     Components::CCMHome_var home_;
     Home_Servant_Impl_Base *home_servant_;
     Session_Container * container_;

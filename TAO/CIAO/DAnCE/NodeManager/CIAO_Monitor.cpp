@@ -56,15 +56,24 @@ int CIAO::CIAO_Monitor::stop ()
 {
   if (CIAO::debug_level () > 9)
     {
-      ACE_DEBUG ((LM_DEBUG , "Inside the get_current_data"));
+      // ACE_DEBUG ((LM_DEBUG ,
+      //            "CIAO_Monitor::Inside the get_current_data of[%s]\n",
+      //            current_domain_->node[0].name.in ()));
     }
 
-  float current_load;
+  CORBA::Double current_load = 0;
+
+  long user_cpu;
+  long user_cpu_low;
+  long sys_cpu;
+  long idle_time;
 
   // get the load average value from the /proc/loadavg
 
-  FILE *load_file = ACE_OS::fopen ("/proc/loadavg", "r");
-  
+  FILE *load_file = 0;
+
+  load_file = ACE_OS::fopen ("/proc/stat", "r");
+
   if (load_file == 0)
     {
       // load file cannot be opened ..
@@ -72,25 +81,90 @@ int CIAO::CIAO_Monitor::stop ()
     }
   else
     {
-      fscanf (load_file, "%f", &current_load);
+      char buffer [99];
+
+      // read in the cpu label
+      fscanf (load_file, "%s", buffer);
+
+      //read the user_cpu
+      fscanf (load_file, "%ld", &user_cpu);
+
+      //read the user cpu low priority
+      fscanf (load_file, "%ld", &user_cpu_low);
+
+      //read the system cpu
+      fscanf (load_file, "%ld", &sys_cpu);
+
+      //read the cpu in idle time ..
+      fscanf (load_file, "%ld", &idle_time);
+
+
       if (CIAO::debug_level () > 9)
       {
-        ACE_DEBUG ((LM_DEBUG , "Current load is %d\n",current_load));
+        //  ACE_DEBUG ((LM_DEBUG , "Current load is %d\n",current_load));
       }
+
+      ACE_OS::fclose (load_file);
+
+
+   // Calculate the percent CPU
+
+      long current_user_cpu = user_cpu - prev_user_cpu_;
+      long total_cpu_usage = user_cpu + user_cpu_low + sys_cpu +
+        idle_time - prev_user_cpu_ - prev_idle_time_ - prev_sys_cpu_
+        - prev_user_cpu_low_;
+
+      current_load = (current_user_cpu * 100)/total_cpu_usage;
+
+      // Save the current cpu values in the previous variables
+
+      prev_user_cpu_ = user_cpu;
+
+      prev_user_cpu_low_ = user_cpu_low;
+
+      prev_sys_cpu_ = sys_cpu;
+
+      prev_idle_time_ = idle_time;
+
     }
 
-  ACE_OS::fclose (load_file);
 
-    CORBA::Any any;
-    any <<= current_load;
+  CORBA::Any any;
+  any <<= current_load;
 
-    current_domain_->node[0].resource[0].property[0].kind = ::Deployment::Quantity;
-    current_domain_->node[0].resource[0].property[0].value = any;
+  // here insert the util value, in the right position
 
-    if (CIAO::debug_level () > 9)
+  for (unsigned int i = 0;
+       i < current_domain_->node[0].resource.length ();
+       i++)
     {
-      ACE_DEBUG ((LM_DEBUG , "Exiting from the get_current_data function\n"));
+      if (!strcmp (current_domain_->node[0].resource[i].name, "Processor"))
+        {
+          // ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::The Resource found\n"));
+          for (unsigned int j = 0;
+               j < current_domain_->node[0].resource[i].property.length ();
+               j++)
+            {
+              if (!strcmp (
+                           current_domain_
+                           ->node[0].resource[i].property[j].name.in (),
+                           "LoadAverage"))
+                {
+                  //ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::The property found\n"));
+                  current_domain_->node[0].resource[i].property[j].kind =
+                    ::Deployment::Quantity;
+                  current_domain_->node[0].resource[i].property[j].value =
+                    any;
+                }
+            }
+        }
     }
 
-    return current_domain_.get ();
+
+  if (CIAO::debug_level () > 9)
+    {
+      //ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::Exiting from the get_current_data function\n"));
+    }
+
+  return current_domain_.get ();
 }

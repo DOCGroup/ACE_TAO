@@ -8,10 +8,10 @@ project(NodeManager_svnt): ciao_component_dnc, iortable, ifr_client, dance_exten
   libs += NodeManager_stub NodeApplicationManager TargetManager_stub CIAO_NoOp_Configurator
   includes += $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE/Interfaces $(CIAO_ROOT)/DAnCE/TargetManager
   dynamicflags = NODEMANAGER_SVNT_BUILD_DLL
- 
+
   IDL_Files {
   }
- 
+
   Source_Files {
     ../Interfaces/NodeManagerS.cpp
     NodeManager_Impl.cpp

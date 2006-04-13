@@ -6,13 +6,13 @@
 
   <label>Display-DeploymentPlan</label>
   <UUID><!-- @@ fill in --> </UUID>
-  <!-- Exactly one realizes 
+  <!-- Exactly one realizes
        This realizes section may also not be right. -->
   <realizes>
     <label>HUDisplay-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:HUDisplay/RateGen:1.0</supportedType> 
+    <supportedType>IDL:HUDisplay/RateGen:1.0</supportedType>
     <port>
       <name>Pulse</name>
       <specificType>IDL:HUDisplay/TimeOut:1.0</specificType>
@@ -24,21 +24,21 @@
       <kind>EventPublisher</kind>
     </port>
   </realizes>
-  
+
   <implementation id="HUDisplay-RateGen-mdd">
     <name>HUDisplay-RateGen-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
-    
+
     <artifact>HUDisplay-RateGen_stub</artifact>
     <artifact>HUDisplay-RateGen_svnt</artifact>
     <artifact>HUDisplay-RateGen_exec</artifact>
-    
+
     <!--
       <execParameter></execParameter>
       <deployRequirement></deployRequirement>
     -->
   </implementation>
-  
+
   <implementation id="HUDisplay-GPS-mdd">
     <name>HUDisplay-GPS-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
@@ -51,22 +51,22 @@
     -->
   </implementation>
 
-  
-  
-  
+
+
+
   <implementation id="HUDisplay-NavDisplayGUI-mdd">
     <name>HUDisplay-NavDisplayGUI-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
   <artifact>HUDisplay-NavDisplay_stub</artifact>
     <artifact>HUDisplay-NavDisplay_svnt</artifact>
    <artifact>HUDisplay-NavDisplayGUI_exec</artifact>
-    
+
     <!--
       <execParameter></execParameter>
       <deployRequirement></deployRequirement>
     -->
   </implementation>
-  
+
    <instance id="HUDisplay-RateGen-idd">
     <name>HUDisplay-RateGen-idd</name>
     <node>AirFrameDevice</node>
@@ -83,7 +83,7 @@
         </value>
       </value>
     </configProperty>
-  </instance>  
+  </instance>
 
   <instance id="HUDisplay-GPS-idd">
     <name>HUDisplay-GPS-idd</name>
@@ -103,10 +103,10 @@
     </configProperty>
   </instance>
 
- 
-  
 
-  
+
+
+
    <instance id="HUDisplay-NavDisplayGUI-idd">
     <name>HUDisplay-NavDisplayGUI-idd</name>
     <node>AirFrameDevice</node>
@@ -140,7 +140,7 @@
     </internalEndpoint>
   </connection>
 
- 
+
 
   <connection>
     <name>Refresh_Ready</name>
@@ -169,16 +169,16 @@
       <instance>HUDisplay-GPS-idd</instance>
     </internalEndpoint>
   </connection>
-  
+
    <artifact id="HUDisplay-RateGen_stub">
     <name>RateGen_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
     <location>RateGen_stub</location>
-    
+
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-  
+
   <artifact id="HUDisplay-RateGen_svnt">
     <name>RateGen_DnC_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -197,7 +197,7 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-  
+
   <artifact id="HUDisplay-RateGen_exec">
     <name>RateGen_DnC_exec</name>
     <source><!-- @@ Not sure --></source>
@@ -214,19 +214,19 @@
         </value>
       </value>
     </execParameter>
-    
+
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-  
+
   <artifact id="HUDisplay-GPS_stub">
     <name>GPS_DnC_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
     <location>GPS_DnC_stub</location>
-    
+
      <!-- @@ This has dependancies that need to be specified, how? -->
-  </artifact> 
-  
+  </artifact>
+
    <artifact id="HUDisplay-GPS_svnt">
     <name>GPS_DnC_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -245,8 +245,8 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-  
-  
+
+
   <artifact id="HUDisplay-GPS_exec">
     <name>GPS_DnC_exec</name>
     <source><!-- @@ Not sure about this--></source>
@@ -263,21 +263,21 @@
         </value>
       </value>
     </execParameter>
-    
+
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-  
- 
+
+
    <artifact id="HUDisplay-NavDisplay_stub">
     <name>NavDisplay_DnC_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
     <location>NavDisplay_DnC_stub</location>
-    
+
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
 
-  
+
   <artifact id="HUDisplay-NavDisplay_svnt">
     <name>NavDisplay_DnC_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -296,11 +296,11 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
- 
 
-  
-  
-  
+
+
+
+
   <artifact id="HUDisplay-NavDisplayGUI_exec">
     <name>NavDisplayGUI_DnC_exec</name>
     <source><!-- @@ Not sure --></source>
@@ -319,7 +319,7 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-  
-  
- 
-</Deployment:deploymentPlan>  
+
+
+
+</Deployment:deploymentPlan>

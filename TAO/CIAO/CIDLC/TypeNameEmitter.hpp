@@ -79,7 +79,7 @@ public:
   virtual void traverse (SemanticGraph::EventType&);
   virtual void traverse (SemanticGraph::Component&);
   virtual void traverse (SemanticGraph::Home&);
-  
+
 protected:
   TypeNameEmitter (std::ostream&);
 
@@ -380,7 +380,7 @@ class ExtractedTypeDeclEmitter : public TypeNameEmitter
 {
 public:
   ExtractedTypeDeclEmitter (std::ostream&);
-  
+
   virtual void traverse (Boolean&);
   virtual void traverse (Octet&);
   virtual void traverse (Char&);
@@ -420,7 +420,7 @@ class AssignFromExtractedEmitter : public TypeNameEmitter
 {
 public:
   AssignFromExtractedEmitter (std::ostream&);
-  
+
   virtual void traverse (Boolean&);
   virtual void traverse (Octet&);
   virtual void traverse (Char&);
@@ -459,7 +459,7 @@ class SetAttributeDelegationEmitter : public TypeNameEmitter,
 public:
   SetAttributeDelegationEmitter (std::ostream&,
                                  SemanticGraph::ReadWriteAttribute&);
-  
+
   virtual void traverse (Boolean&);
   virtual void traverse (Octet&);
   virtual void traverse (Char&);
@@ -490,13 +490,13 @@ public:
   virtual void traverse (SemanticGraph::EventType&);
   virtual void traverse (SemanticGraph::Component&);
   virtual void traverse (SemanticGraph::Home&);
-  
-private:  
+
+private:
   void emit_delegation (void);
   void emit_error (const char *);
   void open_if_block (void);
   void close_if_block (void);
-  
+
 private:
   SemanticGraph::ReadWriteAttribute& attr_;
   AssignFromExtractedEmitter assign_emitter_;

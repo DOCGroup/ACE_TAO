@@ -421,7 +421,7 @@ namespace XMLSchema
         //std::wcerr << "registering " << container ()
         //           << " as '" << *this
         //           << "' on " << container () << std::endl;
-        NCName<C>::container ()->register_id (id_provider_, 
+        NCName<C>::container ()->register_id (id_provider_,
                                               NCName<C>::container ());
       }
     }

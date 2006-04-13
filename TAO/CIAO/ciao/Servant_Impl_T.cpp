@@ -301,6 +301,10 @@ namespace CIAO
     if (! ::CORBA::is_nil (temp.in ()))
       temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
+    this->pre_activated_ = 0;
+    this->activated_ = 0;
+    this->post_activated_ = 0;
   }
 }
 

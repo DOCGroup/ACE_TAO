@@ -12,7 +12,7 @@ module CIAO
     component Interactive_Input_Adapter : Input_Adapter
     {
     };
-    
+
     home Interactive_Input_Adapter_Home manages Interactive_Input_Adapter
     {
     };

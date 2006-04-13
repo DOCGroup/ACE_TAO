@@ -25,35 +25,32 @@ using namespace std;
 
 namespace
 {
-///name of the file holding the IOR of the RM
+/// Name of the file holding the IOR of the RM
 const char * rm_ior = "RepositoryManagerDeamon.ior";
 
-///default number of worker threads to run in the multi-threaded RM
+/// Default number of worker threads to run in the multi-threaded RM
 unsigned int nthreads = 3;
 }
 
 
-///Class that implements the service routine of the worker threads
-///of the repository manager
-
+/**
+ * @class Worker
+ *
+ * Class that implements the service routine of the worker threads
+ * of the repository manager
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
+  /// ctor
   Worker (CORBA::ORB_ptr orb);
-  // ctor
 
+  /// The thread entry point.
   virtual int svc (void);
-  // The thread entry point.
 
 private:
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 };
 
 

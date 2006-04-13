@@ -89,4 +89,16 @@ namespace CIAO
   {
     return this->container_;
   }
+
+  const char *
+  Context_Impl_Base::_ciao_instance_id (void) const
+  {
+    return this->ciao_instance_id_.in ();
+  }
+
+  void
+  Context_Impl_Base::_ciao_instance_id (const char *instance_id)
+  {
+    this->ciao_instance_id_ = instance_id;
+  }
 }

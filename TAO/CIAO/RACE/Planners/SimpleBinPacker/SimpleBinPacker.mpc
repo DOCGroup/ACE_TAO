@@ -83,16 +83,16 @@ project(SimpleBinPacker_exec) : ciao_component_dnc {
                Planner_Interface_stub \
                Planner_Interface_svnt \
                Planner_stub \
-               Planner_svnt \ 
+               Planner_svnt \
                RACE_common_stub
-  
+
   idlflags  +=  -Sc \
                 -Wb,export_macro=SIMPLEBINPACKER_EXEC_Export \
                 -Wb,export_include=SimpleBinPacker_exec_export.h
   dynamicflags   = SIMPLEBINPACKER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {

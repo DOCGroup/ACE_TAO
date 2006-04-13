@@ -19,10 +19,16 @@ module CIAO
    */
   interface NodeManager : Deployment::NodeManager
   {
-    // Canonical name of this daemon
+    /// Canonical name of this daemon
     readonly attribute string name;
 
-    // Shutdown the daemon process.
+    /// Shutdown the daemon process.
     oneway void shutdown ();
+
+    /// RACE specific extension.
+    /// Modify the priority of a node application process.
+    long set_priority (in string plan_id,
+                       in string cid,
+                       in ::Deployment::Sched_Params nm_params);
   };
 };

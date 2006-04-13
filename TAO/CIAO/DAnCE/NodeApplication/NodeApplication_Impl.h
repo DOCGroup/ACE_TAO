@@ -158,6 +158,16 @@ namespace CIAO
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Components::RemoveFailure));
 
+    virtual void activate_component (const char * name
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Components::RemoveFailure));
+
+    virtual void passivate_component (const char * name
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Components::RemoveFailure));
+
     /// Remove everything inside including all components and homes.
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));

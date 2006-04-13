@@ -76,7 +76,7 @@ void
 CIAO::NodeApplication_Impl::finishLaunch_i (
     const Deployment::Connections & providedReference,
     CORBA::Boolean start,
-    CORBA::Boolean add_connection 
+    CORBA::Boolean add_connection
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
@@ -92,6 +92,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
       for (CORBA::ULong i = 0; i < length; ++i)
         {
           ACE_CString name = providedReference[i].instanceName.in ();
+
           Components::CCMObject_var comp;
 
           if (this->component_objref_map_.find (name, comp) != 0)
@@ -103,6 +104,12 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                           providedReference[i].portName.in (),
                           name.c_str ()));
               ACE_TRY_THROW (Deployment::InvalidConnection ());
+            }
+
+          if (CORBA::is_nil (comp.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
+              throw Deployment::InvalidConnection ();
             }
 
           Components::EventConsumerBase_var consumer;
@@ -128,15 +135,33 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
               if (add_connection)
                 {
-                  ::Components::Cookie_var cookie =
-                    comp->connect (providedReference[i].portName.in (),
-                                   providedReference[i].endpoint.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  try
+                    {
+                      ::Components::Cookie_var cookie =
+                          comp->connect (providedReference[i].portName.in (),
+                                         providedReference[i].endpoint.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
 
-                  ACE_CString key = (*create_connection_key (providedReference[i]));
-                  ACE_DEBUG ((LM_ERROR, "[BINGDING KEY]: %s\n", key.c_str ()));
-                  this->cookie_map_.rebind (key, cookie);
+                      ACE_CString key = (*create_connection_key (providedReference[i]));
+
+                      if (CIAO::debug_level () > 10)
+                        ACE_DEBUG ((LM_ERROR, "[BINGDING KEY]: %s\n", key.c_str ()));
+
+                      this->cookie_map_.rebind (key, cookie);
+                    }
+                  catch (...)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  "CIAO (%P|%t) - NodeApplicationImpl.cpp, "
+                                  "CIAO::NodeApplication_Impl::finishLaunch\n"
+                                  "[INSTANCE:PORT] : [%s:%s] --> [%s:%s] connection FAILED.\n",
+                                  providedReference[i].instanceName.in (),
+                                  providedReference[i].portName.in (),
+                                  providedReference[i].endpointInstanceName.in (),
+                                  providedReference[i].endpointPortName.in ()));
+                      throw;
+                    }
 
                   if (CIAO::debug_level () > 6)
                     {
@@ -154,7 +179,10 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 {
                   ACE_CString key = (*create_connection_key (providedReference[i]));
                   ::Components::Cookie_var cookie;
-                  ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+
+                  if (CIAO::debug_level () > 10)
+                    ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+
                   if (this->cookie_map_.find (key, cookie) != 0)
                     {
                       ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
@@ -178,15 +206,17 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 }
               break;
 
-	        // @@ (GD) A place holder where the Event Channel connections
-	        //         should be set up.
+                // @@ (GD) A place holder where the Event Channel connections
+                //         should be set up.
 
             case Deployment::EventEmitter:
+        ACE_DEBUG ((LM_DEBUG, "NA_I: EventEmitter\n"));
 
               consumer = Components::EventConsumerBase::
                 _narrow (providedReference[i].endpoint.in ()
                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+
+        ACE_DEBUG ((LM_DEBUG, "Narrow compelted\n"));
 
               if (CORBA::is_nil (consumer.in ()))
                 {
@@ -253,10 +283,17 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
             case Deployment::EventPublisher:
 
+        ACE_DEBUG ((LM_DEBUG, "NA_I: EventPublisher - %s:%s\n",
+        providedReference[i].instanceName.in (),
+        providedReference[i].portName.in ()));
+        ACE_DEBUG ((LM_DEBUG, "NA_I: endPoint instance:port %s:%s\n",
+        providedReference[i].endpointInstanceName.in (),
+        providedReference[i].endpointPortName.in ()));
               consumer = Components::EventConsumerBase::
                 _narrow (providedReference[i].endpoint.in ()
                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+
+        ACE_DEBUG ((LM_DEBUG, "NA_I: Narrow completed\n"));
 
               if (CORBA::is_nil (consumer.in ()))
                 {
@@ -290,7 +327,9 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
                   ACE_CString key = (*create_connection_key (providedReference[i]));
                   this->cookie_map_.rebind (key, cookie);
-                  ACE_DEBUG ((LM_ERROR, "[BINGDING KEY]: %s\n", key.c_str ()));
+
+                  if (CIAO::debug_level () > 10)
+                    ACE_DEBUG ((LM_ERROR, "[BINGDING KEY]: %s\n", key.c_str ()));
 
                   if (CIAO::debug_level () > 6)
                     {
@@ -308,7 +347,10 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 {
                   ACE_CString key = (*create_connection_key (providedReference[i]));
                   ::Components::Cookie_var cookie;
-                  ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+
+                  if (CIAO::debug_level () > 9)
+                    ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
+
                   if (this->cookie_map_.find (key, cookie) != 0)
                     {
                       ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
@@ -405,9 +447,12 @@ CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
        iter != end;
        ++iter)
   {
+    ACE_DEBUG ((LM_DEBUG, "passivating %s\n",
+    (*iter).ext_id_.c_str ()));
     ((*iter).int_id_)->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
+  ACE_DEBUG ((LM_DEBUG, "exiting passivate\n"));
 }
 
 Deployment::ComponentInfos *
@@ -488,7 +533,7 @@ CIAO::NodeApplication_Impl::install (
       {
         //Since we know the type ahead of time...narrow is omitted here.
         if (this->component_objref_map_.bind (
-        	  retv[len].component_instance_name.in(),
+                  retv[len].component_instance_name.in(),
               Components::CCMObject::_duplicate (retv[len].
                 component_ref.in ())))
           {
@@ -522,6 +567,9 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Components::RemoveFailure))
 {
+  ACE_DEBUG ((LM_DEBUG, "NA_I: removing component %s\n",
+        inst_name));
+
   // Fetch the container object reference from the componet_container_map
   ::Deployment::Container_var container_ref;
   if (this->component_container_map_.find (inst_name, container_ref) != 0)
@@ -542,23 +590,90 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
 }
 
 void
+CIAO::NodeApplication_Impl::passivate_component (const char * name
+                                                 ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Components::RemoveFailure))
+{
+  Components::CCMObject_var comp;
+
+  if (this->component_objref_map_.find (name, comp) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::passivate_component, "
+                  "invalid instance [%s] \n",
+                   name));
+      ACE_TRY_THROW (Deployment::StartError ());
+    }
+
+  if (CORBA::is_nil (comp.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
+      throw Deployment::StartError ();
+    }
+
+  comp->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+CIAO::NodeApplication_Impl::activate_component (const char * name
+                                                ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Components::RemoveFailure))
+{
+  Components::CCMObject_var comp;
+
+  if (this->component_objref_map_.find (name, comp) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::passivate_component, "
+                  "invalid instance [%s] \n",
+                   name));
+      ACE_TRY_THROW (Deployment::StartError ());
+    }
+
+  if (CORBA::is_nil (comp.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
+      throw Deployment::StartError ();
+    }
+
+  comp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  comp->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  comp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+
+void
 CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If we still have components installed, then do nothing
   if (this->component_objref_map_.current_size () != 0)
-    return;
-
+    {
+      ACE_DEBUG ((LM_DEBUG, "NA: remove:  still have components, doing nothing\n"));
+      return;
+    }
   // For each container, invoke <remove> operation to remove home and components.
   const CORBA::ULong set_size = this->container_set_.size ();
   for (CORBA::ULong i = 0; i < set_size; ++i)
     {
+      ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
       this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   // Remove all containers
   // Maybe we should also deactivate container object reference.
+  ACE_DEBUG ((LM_DEBUG, "NA: remove all\n"));
   this->container_set_.remove_all ();
 
   if (CIAO::debug_level () > 1)
@@ -566,14 +681,17 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 
   //For static deployment, ORB will be shutdown in the Static_NodeManager
   if (this->static_entrypts_maps_ == 0)
-    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+    {
+      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG ((LM_DEBUG, "NA: shutdown\n"));
+    }
 }
 
 
 // Create a container interface, which will be hosted in this NodeApplication.
 ::Deployment::Container_ptr
 CIAO::NodeApplication_Impl::create_container (
-	const ::Deployment::Properties &properties
+        const ::Deployment::Properties &properties
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   ::Components::CreateFailure,
@@ -694,6 +812,9 @@ create_connection_key (const Deployment::Connection & connection)
   (*retv) += connection.portName.in ();
   (*retv) += connection.endpointInstanceName.in ();
   (*retv) += connection.endpointPortName.in ();
-  ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
+
+  if (CIAO::debug_level () > 3)
+    ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
+
   return retv;
 }

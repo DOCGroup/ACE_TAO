@@ -52,7 +52,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Add support for querying for interface types to the
   RepositoryManager.
- 
+
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
@@ -71,7 +71,7 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================
 . RTTI enabled versions of the Xerces library are no longer needed on
-  Windows platforms.  
+  Windows platforms.
 
 . The CIDLC compiler now supports basic preprocessor directives:
   #ifdef, #ifndef, #else, and #endif as well as the -D command-
@@ -79,7 +79,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 
 . The CIDLC compiler now supports incomplete struct and union
   semantics which will appear in CORBA 3.1.
-  
+
 . DAnCE now supports dynamically adding/removing components
   to/from the existing running assembly without shutting down the
   running appliation.  This will allow the application developers to
@@ -101,8 +101,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
      the same physical node.
   6) Install new component instances into another component server
      into a remote host.
-  
-  To see how to use this feature, please see the ReDaC-Usage.html 
+
+  To see how to use this feature, please see the ReDaC-Usage.html
   under the $CIAO_ROOT/examples/Hello/ directory.
 
 . Removed the Old Config Handlers, which have been deprecated for some
@@ -139,10 +139,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 
 . The RepositoryManager has been enhanced to support standards based
   interfaces. A number of techniques have been used to ensure high
-  performance and scalability. 
+  performance and scalability.
 
 . The RepositoryManager can now retrieve packages from remote locations via
-  HTTP. 
+  HTTP.
 
 . The Target Manager is released with this CIAO release. It is an
   infrastructure component which keeps track of resource usage in the
@@ -155,7 +155,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
   new monitors which can monitor different resources in the domain. The
   Target manager is a component thus it needs to be started using a
   deployment plan. It is right now a optional component in the DAnCE
-  tool chain. 
+  tool chain.
 
 . We added a skeleton implementation of the Resource Allocation and
   Control Engine (RACE) which is a middleware framework built atop

@@ -11,7 +11,7 @@
 
   <title>componentizedSender::Receiver Servants</title>
 
-  <idl id="IDL:Protocols/Receiver:1.0" 
+  <idl id="IDL:Protocols/Receiver:1.0"
        homeid="IDL:Protocols/ReceiverHome:1.0">
    <fileinarchive name="Receiver.idl"/>
   </idl>

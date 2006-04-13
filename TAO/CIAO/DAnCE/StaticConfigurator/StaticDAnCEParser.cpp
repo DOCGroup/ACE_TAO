@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   CIAO::Config_Handlers::XML_File_Intf intf (package_url);
-      
+
   ::Deployment::DeploymentPlan_var plan =
       intf.get_plan ();
 
@@ -78,16 +78,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   dummy.length (0);
 
   NodeImplementationInfoHandler handler (plan, dummy);
-  
+
   Deployment::NodeImplementationInfo * node_impl_info =
     handler.node_impl_info ();
-  
+
   if (!node_impl_info)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                   "DAnCE (%P|%t) StaticParser -"
                   "Failed to create Node Implementation Infos!\n"), 1);
-      
+
     }
 
   Deployment::ContainerImplementationInfos& impl_infos = node_impl_info[0].impl_infos;
@@ -123,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "\t\tACE_ENV_ARG_DECL_WITH_DEFAULTS);\n");
         }
     }
-      
+
   ACE_OS::fprintf (fp, "struct HomeAttributes\n");
   ACE_OS::fprintf (fp, "{\n");
   ACE_OS::fprintf (fp, "  ACE_TString component_instance_name_;\n");

@@ -5,6 +5,6 @@
 namespace XMLSchema
 {
   namespace Traversal
-  { 
-  }  
+  {
+  }
 }

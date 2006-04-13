@@ -9,12 +9,12 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
 
-ACE_RCSID (be, 
-           be_sunsoft, 
+ACE_RCSID (be,
+           be_sunsoft,
            "$Id$")
 
-TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
-  : TAO_OutStream ()
+  TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
+    : TAO_OutStream ()
 {
 }
 
@@ -126,39 +126,39 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
             this->TAO_OutStream::print ("%hd", ev->u.cval);
           else if (isprint (ev->u.cval))
-	          this->TAO_OutStream::print ("'%c'", ev->u.cval);
-	        else if (iscntrl (ev->u.cval))
+            this->TAO_OutStream::print ("'%c'", ev->u.cval);
+          else if (iscntrl (ev->u.cval))
             switch (ev->u.cval)
               {
-                case '\n':
-                  this->TAO_OutStream::print ("'\\n'");
-                  break;
-                case '\t':
-                  this->TAO_OutStream::print ("'\\t'");
-                  break;
-                case '\r':
-                  this->TAO_OutStream::print ("'\\r'");
-                  break;
-                case '\v':
-                  this->TAO_OutStream::print ("'\\v'");
-                  break;
-                case '\f':
-                  this->TAO_OutStream::print ("'\\f'");
-                  break;
-                case '\b':
-                  this->TAO_OutStream::print ("'\\b'");
-                  break;
-                case '\a':
-                  this->TAO_OutStream::print ("'\\a'");
-                  break;
-                case '\?':
-                  this->TAO_OutStream::print ("'?'");
-                  break;
+              case '\n':
+                this->TAO_OutStream::print ("'\\n'");
+                break;
+              case '\t':
+                this->TAO_OutStream::print ("'\\t'");
+                break;
+              case '\r':
+                this->TAO_OutStream::print ("'\\r'");
+                break;
+              case '\v':
+                this->TAO_OutStream::print ("'\\v'");
+                break;
+              case '\f':
+                this->TAO_OutStream::print ("'\\f'");
+                break;
+              case '\b':
+                this->TAO_OutStream::print ("'\\b'");
+                break;
+              case '\a':
+                this->TAO_OutStream::print ("'\\a'");
+                break;
+              case '\?':
+                this->TAO_OutStream::print ("'?'");
+                break;
               default:
                 this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
               }
- 	        else
-	          this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
+          else
+            this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:
           this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);

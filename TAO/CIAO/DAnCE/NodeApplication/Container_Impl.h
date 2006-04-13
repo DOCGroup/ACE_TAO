@@ -208,7 +208,7 @@ protected:
                                     ACE_Null_Mutex> CCMComponent_Map;
     typedef CCMComponent_Map::iterator Component_Iterator;
     CCMComponent_Map component_map_;
-    
+
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }

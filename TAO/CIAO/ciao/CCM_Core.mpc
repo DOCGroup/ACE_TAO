@@ -10,7 +10,7 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)/DAnCE
-    
+
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
 
   IDL_Files {

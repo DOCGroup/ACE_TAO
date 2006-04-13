@@ -15,7 +15,7 @@ namespace CCF
     {
       struct Composition;
       struct HomeExecutor;
-      
+
       struct Factory : virtual IDL3::SemanticAction::Factory
       {
         virtual Composition&
