@@ -1,3 +1,13 @@
+Apr Thu 13 03:32:35 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_Events.idl
+        
+          Removed this file.
+        
+        * ciaosvcs/Events/CIAO_Events.mpc
+        
+          Modified to put an empty segment of IDL_Files.
+
 Wed Apr 12 17:51:03 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * NEWS
