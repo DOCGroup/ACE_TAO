@@ -1,0 +1,11 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  ciao
+  DAnCE
+
+  exclude {
+    DAnCE/tests/Config_Handlers
+  }
+}
