@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p HUDisplay NavDisplay"
 
 project(NavDisplay_DnC_stub): ciao_client_dnc {
+  avoids += ace_for_tao
   after += HUDisplay_DnC_stub
   sharedname = NavDisplay_DnC_stub
   idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export -Wb,stub_export_include=NavDisplay_stub_export.h -Wb,skel_export_macro=NAVDISPLAY_SVNT_Export -Wb,skel_export_include=NavDisplay_svnt_export.h
@@ -17,6 +18,7 @@ project(NavDisplay_DnC_stub): ciao_client_dnc {
 }
 
 project(NavDisplay_DnC_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after += HUDisplay_DnC_svnt NavDisplay_DnC_stub
   sharedname  = NavDisplay_DnC_svnt
   libs    += NavDisplay_DnC_stub HUDisplay_DnC_stub HUDisplay_DnC_svnt
@@ -41,6 +43,7 @@ project(NavDisplay_DnC_svnt) : ciao_servant_dnc {
 
 
 project(NavDisplay_DnC_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
   after   += NavDisplay_DnC_svnt
   sharedname = NavDisplay_DnC_exec
   libs      += NavDisplay_DnC_stub NavDisplay_DnC_svnt HUDisplay_DnC_stub HUDisplay_DnC_svnt
