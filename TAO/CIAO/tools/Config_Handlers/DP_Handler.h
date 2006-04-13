@@ -1,11 +1,11 @@
 //==============================================================
 /**
- *  @file  DP_Handler.h
- *
- *  $Id$
- *
- *  @author Bala Natarajan <bala@dre.vanderbilt.edu>
- */
+*  @file  DP_Handler.h
+*
+*  $Id$
+*
+*  @author Bala Natarajan <bala@dre.vanderbilt.edu>
+*/
 //================================================================
 
 #ifndef CIAO_CONFIG_HANDLERS_DP_HANDLER_H
@@ -13,7 +13,9 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
+using std::auto_ptr;
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,67 +24,67 @@
 
 namespace Deployment
 {
-  struct DeploymentPlan ;
+struct DeploymentPlan ;
 }
 
 namespace CIAO
 {
-  namespace Config_Handlers
-  {
-    class DeploymentPlan;
+namespace Config_Handlers
+{
+class DeploymentPlan;
 
-   /*
-    * @class DP_Handler
-    *
-    * @brief Handler for Deployment::DeploymentPlan
-    */
-    class Config_Handlers_Export DP_Handler
-    {
-    public:
-      class NoPlan {};
+/*
+* @class DP_Handler
+*
+* @brief Handler for Deployment::DeploymentPlan
+*/
+class Config_Handlers_Export DP_Handler
+{
+public:
+class NoPlan {};
 
-      /// Use this constructor if you want to use
-      /// the XSC->IDL mapping
-      DP_Handler (DeploymentPlan &dp);
-      
-      /// Use this constructor if you want to use
-      /// the IDL->XSC mapping
-      DP_Handler (const ::Deployment::DeploymentPlan &plan);
-      
-      ~DP_Handler (void)
-        throw ();
-      
-      /// Generates the IDL->XSC mapping.  returns
-      /// null if the method fails or if the class was
-      /// constructed with the wrong source.
-      DeploymentPlan const *xsc (void) const
-        throw (NoPlan);
-      
-      DeploymentPlan *xsc (void)
-        throw (NoPlan);
-      
-      /// Generates the XSC->IDL mapping.  returns null
-      /// if the method fails or the class was constructed
-      ::Deployment::DeploymentPlan const *plan (void) const
-        throw (NoPlan);
+/// Use this constructor if you want to use
+/// the XSC->IDL mapping
+DP_Handler (DeploymentPlan &dp);
 
-      ::Deployment::DeploymentPlan *plan (void)
-        throw (NoPlan);
+/// Use this constructor if you want to use
+/// the IDL->XSC mapping
+DP_Handler (const ::Deployment::DeploymentPlan &plan);
 
-    private:
+~DP_Handler (void)
+throw ();
 
-      bool resolve_plan (DeploymentPlan &dp);
-      
-      bool build_xsc (const ::Deployment::DeploymentPlan &plan);
-      
-    private:
-      auto_ptr< DeploymentPlan > xsc_dp_;
-      
-      auto_ptr< ::Deployment::DeploymentPlan> idl_dp_;
+/// Generates the IDL->XSC mapping.  returns
+/// null if the method fails or if the class was
+/// constructed with the wrong source.
+DeploymentPlan const *xsc (void) const
+throw (NoPlan);
 
-      bool retval_;
-    };
-  }
+DeploymentPlan *xsc (void)
+throw (NoPlan);
+
+/// Generates the XSC->IDL mapping.  returns null
+/// if the method fails or the class was constructed
+::Deployment::DeploymentPlan const *plan (void) const
+throw (NoPlan);
+
+::Deployment::DeploymentPlan *plan (void)
+throw (NoPlan);
+
+private:
+
+bool resolve_plan (DeploymentPlan &dp);
+
+bool build_xsc (const ::Deployment::DeploymentPlan &plan);
+
+private:
+auto_ptr< DeploymentPlan > xsc_dp_;
+
+auto_ptr< ::Deployment::DeploymentPlan> idl_dp_;
+
+bool retval_;
+};
+}
 }
 
 #include /**/ "ace/post.h"

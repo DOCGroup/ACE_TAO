@@ -99,9 +99,16 @@ namespace CIAO
 
     CIAO::Session_Container *_ciao_the_Container (void) const;
 
+    const char *_ciao_instance_id (void) const;
+    void _ciao_instance_id (const char *instance_id);
+    // Accessors for the private member.
+
   protected:
     Components::CCMHome_var home_;
     Session_Container *container_;
+
+  private:
+    CORBA::String_var ciao_instance_id_;
   };
 }
 

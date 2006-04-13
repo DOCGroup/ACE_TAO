@@ -22,7 +22,7 @@ project(Stock_Base_Distributor_svnt) : ciao_servant_dnc {
   after += Stock_Base_svnt Stock_Base_Distributor_stub
   sharedname  = Distributor_svnt
   libs    += Distributor_stub Stock_Base_stub Stock_Base_svnt
-  
+
   idlflags  +=  -Wb,export_macro=DISTRIBUTOR_SVNT_Export -Wb,export_include=Distributor_svnt_export.h
   dynamicflags = DISTRIBUTOR_SVNT_BUILD_DLL
 
@@ -46,16 +46,16 @@ project(Stock_Base_Distributor_exec) : ciao_component_dnc {
   after   += Stock_Base_Distributor_svnt
   sharedname = Distributor_exec
   libs      += Distributor_stub Distributor_svnt Stock_Base_stub Stock_Base_svnt
-  
+
   idlflags  +=  -Wb,export_macro=DISTRIBUTOR_EXEC_Export -Wb,export_include=Distributor_exec_export.h
   dynamicflags   = DISTRIBUTOR_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {
-    
+
     Distributor_exec.cpp
   }
 }

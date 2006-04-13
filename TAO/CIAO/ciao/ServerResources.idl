@@ -1,12 +1,20 @@
 // $Id$
 
-/**
- * @file ServerResources.idl
- *
- * @brief A collection of IDL data types for
- *
- * @author Nanbor Wang
- */
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    ServerResrouces.idl
+//
+// = DESCRIPTION
+//    A collection of IDL data types for
+//
+// = AUTHORS
+//    Nanbor Wang
+//
+// ============================================================================
 
 #if !defined (CIAO_SERVERRESOURCES_IDL)
 #define CIAO_SERVERRESOURCES_IDL

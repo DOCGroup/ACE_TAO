@@ -28,24 +28,18 @@
 #include "ace/Vector_T.h"
 #include "ace/Functor.h"
 #include "ace/OS_NS_string.h"
-#include "ciao/DomainApplicationManagerS.h"
-#include "ciao/Deployment_common.h"
+#include "DeploymentS.h"
 
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 
 #include "Deployment_Configuration.h"
 #include "DomainApplicationManager_Export.h"
+#include "ExecutionManager/Execution_Manager_Impl.h"
 #include "ciao/CIAO_common.h"
-#include "ciao/Deployment_EventsC.h"
 
 namespace CIAO
 {
-  namespace Execution_Manager
-  {
-    class Execution_Manager_Impl;
-  }
-
   /**
    * @class DomainApplicationManager_Impl
    *
@@ -189,6 +183,15 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                       Deployment::StartError));
 
+    virtual void passivate_shared_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
+    virtual void activate_shared_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
+
     /**
      * Starts the application. Raises the StartError exception if
      * starting the application fails.
@@ -313,11 +316,6 @@ namespace CIAO
      * of the "providedReference" for the component instances in the
      * child deployment plan as Receiver side.
      * By default, we search in the new plan.
-     *
-     * If <is_getting_all_connections> is false, then we only
-     * search for "new connections" (valid for ReDaC case only).
-     * Otherwise, we will search for both new connections and those
-     * already existing connections.
      */
     Deployment::Connections *
     get_outgoing_connections (const Deployment::DeploymentPlan &plan,
@@ -335,30 +333,6 @@ namespace CIAO
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((Deployment::StartError));
 
-    bool
-    populate_connection_for_binding (
-        const char * instname,
-        const Deployment::PlanConnectionDescription & binding,
-        const Deployment::DeploymentPlan & plan,
-        Deployment::Connections & retv)
-      ACE_THROW_SPEC ((Deployment::StartError));
-
-    bool
-    handle_es_connection (
-        const char * instname,
-        const Deployment::PlanConnectionDescription & binding,
-        const Deployment::DeploymentPlan & plan,
-        Deployment::Connections & retv)
-      ACE_THROW_SPEC ((Deployment::StartError));
-
-    bool
-    handle_direct_connection (
-        const char * instname,
-        const Deployment::PlanConnectionDescription & binding,
-        const Deployment::DeploymentPlan & plan,
-        Deployment::Connections & retv)
-      ACE_THROW_SPEC ((Deployment::StartError));
-
     /// Dump connections, a static method
     void dump_connections (const ::Deployment::Connections & connections);
 
@@ -373,35 +347,6 @@ namespace CIAO
     void
     purge_connections (Deployment::Connections_var & connections,
                        const char * inst);
-                       
-    /**
-     * The first step in finish_launching an application in the
-     * domain-level.  We install all the CIAO_Event_Service objects
-     * as specified in the DeploymentPlan.
-     * Internally, this operation will invoke an operation on each cached
-     * NodeApplication object.
-     */
-    virtual void install_all_es (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
-
-    /**
-     * Add all CIAO_Event_Service objects into the cached map.
-     */
-    virtual void
-    add_es_to_map (Deployment::ESInstallationInfos * es_infos,
-                   Deployment::CIAO_Event_Services * event_services)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
-
-    /**
-     * Get the actual event connection QoS properties based on the
-     * deployment requirement. The deployment requirement only specifies
-     * an identifier/reference to the EventServiceDeploymentDescriptions.
-     */
-    virtual const Deployment::Properties &
-    get_connection_QoS_configuration (
-      const Deployment::Requirement & requirement);
 
   protected:
     /// location of the Domainapplication
@@ -457,18 +402,6 @@ namespace CIAO
 
     Chained_Artifacts_Table artifact_map_;
 
-    /// Cached information of all the CIAO_Event_Service objects within
-    /// the deployment plan
-    /// Key: the string identifier of the CIAO_Event_Service
-    /// Value: the object reference of the CIAO_Event_Service
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    CIAO::CIAO_Event_Service_var,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> Event_Service_Table;
-
-    Event_Service_Table es_map_;
-
     /// The deployment information data file.
     const char * deployment_file_;
 
@@ -486,9 +419,6 @@ namespace CIAO
     /// member function implementations. The reason is because we want
     /// to avoid unnecessary code duplicate. The default value is "false".
     bool is_redeployment_;
-
-    /// Cache the CIAO_Event_Service deployment description
-    CIAO::DAnCE::EventServiceDeploymentDescriptions_var esd_;
   };
 }
 

@@ -22,7 +22,7 @@ namespace CCF
         end () = 0;
       };
 
-      
+
       struct TypePrefix
       {
         virtual void

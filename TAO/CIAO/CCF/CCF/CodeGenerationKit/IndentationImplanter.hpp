@@ -77,7 +77,7 @@ namespace Indentation
 
     virtual int_type
     put (char_type c) throw (Exception, ExH::System::Exception)
-    {  
+    {
       return buffer_.sputc (c);
     }
 

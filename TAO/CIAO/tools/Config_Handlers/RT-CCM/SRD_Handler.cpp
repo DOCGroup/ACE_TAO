@@ -16,20 +16,20 @@ namespace CIAO
       retval_ (false)
     {
       XML_Helper helper;
-      
-      XERCES_CPP_NAMESPACE::DOMDocument *dom = 
-	helper.create_dom (file);
-      
+
+      XERCES_CPP_NAMESPACE::DOMDocument *dom =
+        helper.create_dom (file);
+
       if (!dom)
-	throw SRD_Handler::NoSRD ();
-      
-      this->srd_.reset (new ServerResourcesDef 
-	(ServerResources (dom)));
-      
+        throw SRD_Handler::NoSRD ();
+
+      this->srd_.reset (new ServerResourcesDef
+                        (ServerResources (dom)));
+
       if (!this->build_srd ())
-	throw NoSRD ();
+        throw NoSRD ();
     }
-    
+
     SRD_Handler::SRD_Handler (ServerResourcesDef *srd):
       idl_srd_(0),
       srd_(srd),
@@ -47,16 +47,16 @@ namespace CIAO
       if(!this->build_xsc())
         throw NoSRD ();
     }
-    
+
     SRD_Handler::~SRD_Handler (void)
     {
     }
-    
+
     bool
     SRD_Handler::build_srd ()
     {
       this->idl_srd_.reset ( new ::CIAO::DAnCE::ServerResource );
-          
+
       if(this->srd_->cmdline_p())
         {
           this->retval_ = CLA_Handler::commandline_arguments(*this->srd_,
@@ -70,12 +70,12 @@ namespace CIAO
 
       this->retval_ = OC_Handler::orb_config (this->srd_->orbConfigs (),
                                               this->idl_srd_->orb_config);
-      
+
       if (this->srd_->id_p ())
         {
           this->idl_srd_->Id = srd_->id ().c_str ();
         }
-      
+
       return this->retval_;
     }
 
@@ -83,11 +83,11 @@ namespace CIAO
     SRD_Handler::build_xsc ()
     {
       size_t len; //For checking the length of src data members
-	    
+
       // Load the ORBConfigs and create the XSC structure for SRD
       this->srd_.reset (new ServerResourcesDef (OC_Handler::orb_config (this->idl_srd_->orb_config)));
-      
-      
+
+
       //Note: Why did we make the CmdlineOptions a separate class instead of a
       //      vector of strings???
 
@@ -107,10 +107,10 @@ namespace CIAO
       ACESvcConf asc;
       asc.uri(curr);
       this->srd_->svcconf (asc);
-      
+
       XMLSchema::string < ACE_TCHAR > id (this->idl_srd_->Id.in ());
       this->srd_->id  (id);
-      
+
       return true;
     }
 
@@ -160,4 +160,4 @@ namespace CIAO
   }
 }
 
-    
+

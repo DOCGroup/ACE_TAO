@@ -2,7 +2,7 @@ $Id$
 
 PRE Condition:
 =============
-This test assumes that there is an appropriate svc.conf file present in 
+This test assumes that there is an appropriate svc.conf file present in
 $CIAO_ROOOT/tools/ComponentServer. Moreover, the Component Server does not
 curerntly expose interfaces to configure multi-threading. Hence, this
 experiment, will produce the desired results *only* when this feature has been
@@ -11,5 +11,5 @@ added in CIAO. Till then, the server will run in single-threaded mode.
 Similarly, the client also requires the svc.conf file that enables
 multi-threading. This file is present in this directory.
 
-The svc.conf file required for this experiment can be obtained from 
+The svc.conf file required for this experiment can be obtained from
 $TAO_ROOT/performance-tests/Latency/Thread_Pool

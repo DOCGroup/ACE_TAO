@@ -28,7 +28,7 @@ namespace CIDL_Receiver_Impl
                 "Receiver - Informed by the Sender \n"));
 
     Hello::ReadMessage_var rev
-      = this->context_->get_connection_read_message 
+      = this->context_->get_connection_read_message
         (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 

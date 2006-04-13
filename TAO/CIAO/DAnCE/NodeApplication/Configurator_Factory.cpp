@@ -8,7 +8,7 @@
 
 
 int
-CIAO::NodeApplication_Options::parse_args (int &argc, char *argv[])
+CIAO::NodeApplication_Options::parse_args (int argc, char *argv[])
 {
   //  ACE_Get_Opt get_opts (argc, argv, "nrk:o:");
   ACE_Arg_Shifter shifter (argc, argv);
@@ -26,14 +26,16 @@ CIAO::NodeApplication_Options::parse_args (int &argc, char *argv[])
         this->rt_support_ = 1;
         shifter.consume_arg ();
       }
-    else if (shifter.cur_arg_strncasecmp ("-o") == 0) 
+    else if (ACE_OS::strncmp (shifter.get_current (),
+                              "-ORB",
+                              ACE_OS::strlen ("-ORB")) == 0)
       {
-        // This double checking is necessary to avoid the Arg_Shifter from
-        // mistaking any -ORBxxx flag as -o flag.
-        if ((parm = shifter.get_the_parameter ("-o")) !=0)
-          {
-            this->ior_output_filename_ = parm;
-          }
+        // Ignore ORB parameter
+        shifter.ignore_arg ();
+      }
+    else if ((parm = shifter.get_the_parameter ("-o")) !=0)
+      {
+        this->ior_output_filename_ = parm;
         shifter.consume_arg ();
       }
     else if ((parm = shifter.get_the_parameter ("-k")) !=0)

@@ -6,12 +6,12 @@ project(BMDisplay_DnC_stub): ciao_client_dnc {
 
   sharedname = BMDisplay_stub
 
-  idlflags += -Wb,stub_export_macro=BMDISPLAY_STUB_Export 
-  idlflags += -Wb,stub_export_include=BMDisplay_stub_export.h 
-  idlflags += -Wb,skel_export_macro=BMDISPLAY_SVNT_Export 
+  idlflags += -Wb,stub_export_macro=BMDISPLAY_STUB_Export
+  idlflags += -Wb,stub_export_include=BMDisplay_stub_export.h
+  idlflags += -Wb,skel_export_macro=BMDISPLAY_SVNT_Export
   idlflags += -Wb,skel_export_include=BMDisplay_svnt_export.h
   dynamicflags   = BMDISPLAY_STUB_BUILD_DLL
- 
+
   libs += BasicSP_stub
 
   IDL_Files {
@@ -32,7 +32,7 @@ project(BMDisplay_DnC_svnt) : ciao_servant_dnc {
 
   libpaths += ..
 
-  idlflags  +=  -Wb,export_macro=BMDISPLAY_SVNT_Export 
+  idlflags  +=  -Wb,export_macro=BMDISPLAY_SVNT_Export
   idlflags += -Wb,export_include=BMDisplay_svnt_export.h
 
   dynamicflags = BMDISPLAY_SVNT_BUILD_DLL
@@ -58,12 +58,12 @@ project(BMDisplay_DnC_exec) : ciao_component_dnc {
 
   sharedname = BMDisplay_exec
 
-  libs      += BMDisplay_stub BMDisplay_svnt 
+  libs      += BMDisplay_stub BMDisplay_svnt
   libs      += BasicSP_stub BasicSP_svnt
 
   libpaths  += ..
 
-  idlflags  += -Wb,export_macro=BMDISPLAY_EXEC_Export 
+  idlflags  += -Wb,export_macro=BMDISPLAY_EXEC_Export
   idlflags  += -Wb,export_include=BMDisplay_exec_export.h
 
   dynamicflags   = BMDISPLAY_EXEC_BUILD_DLL

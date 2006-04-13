@@ -2,7 +2,7 @@
 /**
  * @file Events.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * Tests implied IDL for event types.
  */
 

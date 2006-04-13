@@ -60,7 +60,7 @@ namespace CIAO
 
     /// Removing all objects from the set. Return -1 if error occurred.
     CORBA::Long remove_all (void);
-    
+
     /// Access the underlying T_var array directly.  This is added to
     /// get around a bug in TAO's sequence of object C++ mapping.
     T_var &at (CORBA::ULong index);

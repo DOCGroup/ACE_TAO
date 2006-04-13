@@ -16,7 +16,7 @@
 #define CIAO_EXECUTION_MANAGER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "Interfaces/ExecutionManagerDaemonS.h"
+#include "Interfaces/ExecutionManagerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -120,6 +120,16 @@ namespace CIAO
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
         ::Deployment::InvalidConnection));
+
+    virtual void passivate_shared_components (
+        const Component_Binding_Info & binding)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
+    virtual void activate_shared_components (
+        const Component_Binding_Info & binding)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
 
       /// Add shared component information.
       /// This call will be made by DomainApplicationManager.

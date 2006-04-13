@@ -16,13 +16,13 @@ namespace CIAO
   {
     void
     DP_PCD_Handler::plan_connection_descrs (
-        const DeploymentPlan &src,
-        Deployment::PlanConnectionDescriptions& dest)
+                                            const DeploymentPlan &src,
+                                            Deployment::PlanConnectionDescriptions& dest)
     {
       CIAO_TRACE("DP_PCD_Handler::plan_connection_descrs");
       DeploymentPlan::connection_const_iterator cci_e =
         src.end_connection ();
-      
+
       CORBA::ULong pos = 0;
       dest.length (src.count_connection ());
       for (DeploymentPlan::connection_const_iterator cci_b =
@@ -34,10 +34,10 @@ namespace CIAO
                                                  dest[pos++]);
         }
     }
-    
+
     PlanConnectionDescription
     DP_PCD_Handler::plan_connection_descr (
-	const Deployment::PlanConnectionDescription &src)
+                                           const Deployment::PlanConnectionDescription &src)
     {
       CIAO_TRACE("DP_PCD_Handler::plan_connection_descr");
       PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
@@ -46,8 +46,8 @@ namespace CIAO
 
     void
     DP_PCD_Handler::plan_connection_descr (
-        const PlanConnectionDescription &src,
-        Deployment::PlanConnectionDescription &dest)
+                                           const PlanConnectionDescription &src,
+                                           Deployment::PlanConnectionDescription &dest)
     {
       CIAO_TRACE("DP_PCD_Handler::plan_connection_descr - reverse");
       dest.name =
@@ -77,11 +77,11 @@ namespace CIAO
           CRDD_Handler crddhandler;
 
           toconfig.deployedResource.length (
-            toconfig.deployedResource.length () + 1);
+                                            toconfig.deployedResource.length () + 1);
 
           crddhandler.get_ConnectionResourceDeploymentDescription (
-            toconfig.deployedResource[toconfig.deployedResource.length () - 1],
-            desc.deployedResource ());
+                                                                   toconfig.deployedResource[toconfig.deployedResource.length () - 1],
+                                                                   desc.deployedResource ());
         }
 
       if (desc.deployRequirement_p ())
@@ -94,10 +94,10 @@ namespace CIAO
           //Increase the sequence length and delgate
           //the Requirement to the Req_Handler.
           toconfig.deployRequirement.length (
-            toconfig.deployRequirement.length () + 1);
+                                             toconfig.deployRequirement.length () + 1);
           reqhandler.get_Requirement (
-            toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
-            desc.deployRequirement ());
+                                      toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
+                                      desc.deployRequirement ());
 
 
         }

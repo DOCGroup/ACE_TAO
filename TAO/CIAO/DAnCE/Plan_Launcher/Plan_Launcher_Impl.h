@@ -12,8 +12,8 @@
 #include "Plan_Launcher_Impl_Export.h"
 #include "ciao/DeploymentS.h"
 #include "ciao/CIAO_common.h"
-#include "DAnCE/ExecutionManager/DAM_Map.h"
-#include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
+#include "ExecutionManager/DAM_Map.h"
+#include "Interfaces/ExecutionManagerC.h"
 
 namespace CIAO
 {

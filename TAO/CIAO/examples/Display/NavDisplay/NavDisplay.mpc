@@ -20,7 +20,7 @@ project(NavDisplay_DnC_svnt) : ciao_servant_dnc {
   after += HUDisplay_DnC_svnt NavDisplay_DnC_stub
   sharedname  = NavDisplay_DnC_svnt
   libs    += NavDisplay_DnC_stub HUDisplay_DnC_stub HUDisplay_DnC_svnt
-  
+
   idlflags  +=  -Wb,export_macro=NAVDISPLAY_SVNT_Export -Wb,export_include=NavDisplay_svnt_export.h
   dynamicflags = NAVDISPLAY_SVNT_BUILD_DLL
 

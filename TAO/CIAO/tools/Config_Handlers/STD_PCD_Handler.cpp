@@ -13,8 +13,8 @@ namespace CIAO
 
     bool
     STD_PCD_Handler::package_config (
-      const PackageConfiguration &desc,
-      ::Deployment::PackageConfiguration &toconfig)
+                                     const PackageConfiguration &desc,
+                                     ::Deployment::PackageConfiguration &toconfig)
     {
       toconfig.label =
         desc.label ().c_str ();

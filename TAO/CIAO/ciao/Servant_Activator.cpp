@@ -110,8 +110,10 @@ namespace CIAO
               // We should try avoiding making outbound calls with the
               // lock held. Oh well, let us get some sense of sanity in
               // CIAO to do think about these.
-              ACE_DEBUG ((LM_DEBUG, "Activating Port %s\n",
-                          str.in ()));
+              if (CIAO::debug_level () > 5)
+                ACE_DEBUG ((LM_DEBUG, "Activating Port %s\n",
+                            str.in ()));
+
               return this->pa_[t]->activate (oid
                                              ACE_ENV_ARG_PARAMETER);
             }

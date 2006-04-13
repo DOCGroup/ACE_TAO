@@ -102,7 +102,7 @@ and also the libraries they depends on.
   developing and deploying components. Pleas see
   $CIAO_ROOT/CIDLC/README.html for instructions on how to build and
   use CIDLC.
-  
+
 * Now you can play with the examples:
 
   - $CIAO_ROOT/examples/Hello
