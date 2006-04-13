@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Receiver"
 
 project(HelloB_Receiver_DnC_Upgradeable_stub): ciao_client_dnc {
+  avoids += ace_for_tao
   after += Hello_Base_DnC_Upgradeable_stub
   sharedname = Receiver_DnC_Upgradeable_stub
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export -Wb,stub_export_include=Receiver_stub_export.h -Wb,skel_export_macro=RECEIVER_SVNT_Export -Wb,skel_export_include=Receiver_svnt_export.h
@@ -18,6 +19,7 @@ project(HelloB_Receiver_DnC_Upgradeable_stub): ciao_client_dnc {
 }
 
 project(HelloB_Receiver_DnC_Upgradeable_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after += Hello_Base_DnC_Upgradeable_svnt HelloB_Receiver_DnC_Upgradeable_stub
   sharedname  = Receiver_DnC_Upgradeable_svnt
   libs    += Receiver_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_svnt
@@ -44,6 +46,7 @@ project(HelloB_Receiver_DnC_Upgradeable_svnt) : ciao_servant_dnc {
 
 
 project(HelloB_Receiver_DnC_Upgradeable_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
   after   += HelloB_Receiver_DnC_Upgradeable_svnt
   sharedname = Receiver_DnC_Upgradeable_exec
   libs      += Receiver_DnC_Upgradeable_stub Receiver_DnC_Upgradeable_svnt Hello_Base_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_svnt
