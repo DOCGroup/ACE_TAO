@@ -1,17 +1,32 @@
+Thu Apr 13 19:18:22 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * docs/tutorials/Quoter/Simple/Broker/Broker.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Swapping/Receiver/Receiver.mpc:
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
+        * tests/Minimum/Sender/Sender.mpc:
+
+          Avoids building with ace_for_tao.
+
 Apr Thu 13 03:32:35 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciaosvcs/Events/CIAO_Events.idl
-        
+
           Removed this file.
-        
+
         * ciaosvcs/Events/CIAO_Events.mpc
-        
+
           Modified to put an empty segment of IDL_Files.
 
 Wed Apr 12 17:51:03 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * NEWS
-        
+
           Updated the NEWS file.
 
 Wed Apr 12 14:47:14 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -24,7 +39,7 @@ Wed Apr 12 14:47:14 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciaosvcs/Events/CIAO_Events.mpc
 
         Fixes for linking errors/warnings on OS X builds.
-        
+
 Tue Apr 11 12:39:14 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Utils/Utils.mpc:
