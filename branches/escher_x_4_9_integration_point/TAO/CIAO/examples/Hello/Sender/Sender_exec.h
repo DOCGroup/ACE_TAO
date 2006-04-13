@@ -122,7 +122,7 @@ namespace CIDL_Sender_Impl
     CORBA::Long hertz_;
 
     ::Hello::COLOR_SELECTION color_;
-    
+
     friend class Message_Impl;
   };
 

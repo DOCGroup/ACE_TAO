@@ -8,7 +8,7 @@
 
   <xsd:complexType name="TopLevelPackageDescription">
     <xsd:sequence>
-      <xsd:element name="package" type="Deployment:PackageConfiguration" maxOccurs="unbounded"/>
+      <xsd:element name="basePackage" type="Deployment:PackageConfiguration" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 

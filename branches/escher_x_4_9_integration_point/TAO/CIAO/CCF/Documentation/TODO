@@ -10,7 +10,7 @@ Legend:
 
 ------------------------------------------------------------------------
 
-@@ In operation comma member function is used both for parameters and 
+@@ In operation comma member function is used both for parameters and
    exceptions. As a result one can get unexpected extra commas.
 
 @@ Make CCF buildable with MPC.
@@ -21,7 +21,7 @@ Legend:
 
 @@ Typedef.hpp TypeId.hpp: naming inconsistency.
 
-@@ Need ICE mechanism (search for abort ()) 
+@@ Need ICE mechanism (search for abort ())
 
 @@ Need evolution of semantic action error handling/reporting.
 
@@ -31,17 +31,17 @@ Legend:
 @@+++ Currently character stream is scanned completely before parsing. The
       better approach would be scanning on demand (1).
 
-@@+++ IDL2::Parsing::parse () should be eliminated (or terminated if you 
+@@+++ IDL2::Parsing::parse () should be eliminated (or terminated if you
       like ;-). This item depends on (1).
 
 @@++ 'using namespace' cleanup.
-   
+
 @@ Replace all i++ with ++i.
 
-@@ It seems that SyntaxTree::Node origin in terms of file:line should be 
-   preserved for subsequent diagnostic implemented as separate paths 
+@@ It seems that SyntaxTree::Node origin in terms of file:line should be
+   preserved for subsequent diagnostic implemented as separate paths
    (see repository id generator for example).
- 
+
 @@++++ Diagnostic evolution
 
 @%++ XML indentation buffer

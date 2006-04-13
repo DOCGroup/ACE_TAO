@@ -315,9 +315,9 @@ ReturnTypeNameEmitter::traverse (SemanticGraph::Struct& s)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   os << s.scoped_name ();
-  
+
   if (var_size)
   {
     os << " *";
@@ -330,9 +330,9 @@ ReturnTypeNameEmitter::traverse (SemanticGraph::Union& u)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   os << u.scoped_name ();
-  
+
   if (var_size)
   {
     os << " *";
@@ -1081,7 +1081,7 @@ NullReturnEmitter::traverse (SemanticGraph::Struct& s)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (var_size)
   {
     os << "return 0;";
@@ -1099,7 +1099,7 @@ NullReturnEmitter::traverse (SemanticGraph::Union& u)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (var_size)
   {
     os << "return 0;";
@@ -1300,7 +1300,7 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Struct& s)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (var_size)
   {
     os << STRS[ACE_CR] << " (0);";
@@ -1319,7 +1319,7 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Union& u)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (var_size)
   {
     os << STRS[ACE_CR] << " (0);";
@@ -1518,7 +1518,7 @@ NullRHSEmitter::traverse (SemanticGraph::Struct& s)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (var_size)
   {
     os << "= 0;";
@@ -1535,7 +1535,7 @@ NullRHSEmitter::traverse (SemanticGraph::Union& u)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (var_size)
   {
     os << "= 0;";
@@ -1599,7 +1599,7 @@ void
 ExtractedTypeDeclEmitter::traverse (Boolean&)
 {
   os << "::CORBA::Boolean " << STRS[EXTRACT_TMP] << " = false;"
-     << "::CORBA::Any::to_boolean " << STRS[EXTRACT] 
+     << "::CORBA::Any::to_boolean " << STRS[EXTRACT]
      << " (" << STRS[EXTRACT_TMP] << ");";
 }
 
@@ -1607,7 +1607,7 @@ void
 ExtractedTypeDeclEmitter::traverse (Octet&)
 {
   os << "::CORBA::Octet " << STRS[EXTRACT_TMP] << " = 0;"
-     << "::CORBA::Any::to_octet " << STRS[EXTRACT] 
+     << "::CORBA::Any::to_octet " << STRS[EXTRACT]
      << " (" << STRS[EXTRACT_TMP] << ");";
 }
 
@@ -1615,7 +1615,7 @@ void
 ExtractedTypeDeclEmitter::traverse (Char&)
 {
   os << "::CORBA::Char " << STRS[EXTRACT_TMP] << " = 0;"
-     << "::CORBA::Any::to_char " << STRS[EXTRACT] 
+     << "::CORBA::Any::to_char " << STRS[EXTRACT]
      << " (" << STRS[EXTRACT_TMP] << ");";
 }
 
@@ -1623,7 +1623,7 @@ void
 ExtractedTypeDeclEmitter::traverse (Wchar&)
 {
   os << "::CORBA::WChar " << STRS[EXTRACT_TMP] << " = 0;"
-     << "::CORBA::Any::to_wchar " << STRS[EXTRACT] 
+     << "::CORBA::Any::to_wchar " << STRS[EXTRACT]
      << " (" << STRS[EXTRACT_TMP] << ");";
 }
 
@@ -1654,7 +1654,7 @@ ExtractedTypeDeclEmitter::traverse (UnsignedLong&)
 void
 ExtractedTypeDeclEmitter::traverse (LongLong&)
 {
-  os << "::CORBA::LongLong " << STRS[EXTRACT] 
+  os << "::CORBA::LongLong " << STRS[EXTRACT]
      << " = ACE_CDR_LONGLONG_INITIALIZER;";
 }
 
@@ -1703,7 +1703,7 @@ ExtractedTypeDeclEmitter::traverse (SemanticGraph::BoundedWideString&)
 void
 ExtractedTypeDeclEmitter::traverse (Object&)
 {
-  os << "::CORBA::Object_ptr " << STRS[EXTRACT] 
+  os << "::CORBA::Object_ptr " << STRS[EXTRACT]
      << " = ::CORBA::Object::_nil ();";
 }
 
@@ -1927,12 +1927,12 @@ AssignFromExtractedEmitter::traverse (SemanticGraph::Struct& s)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (!var_size)
   {
     os << "*";
   }
-  
+
   os << STRS[EXTRACT];
 }
 
@@ -1942,12 +1942,12 @@ AssignFromExtractedEmitter::traverse (SemanticGraph::Union& u)
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
   bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
-  
+
   if (!var_size)
   {
     os << "*";
   }
-  
+
   os << STRS[EXTRACT];
 }
 
@@ -2192,16 +2192,16 @@ void
 SetAttributeDelegationEmitter::emit_delegation (void)
 {
   open_if_block ();
-  
+
   Traversal::ReadWriteAttribute::belongs (attr_, extract_belongs_);
 
   os << "descr_value >>= " << STRS[EXTRACT] << ";"
      << "this->" << attr_.name () << " (";
-  
+
   Traversal::ReadWriteAttribute::belongs (attr_, assign_belongs_);
-   
+
   os << ");";
-  
+
   close_if_block ();
 }
 
@@ -2209,13 +2209,13 @@ void
 SetAttributeDelegationEmitter::emit_error (const char *corba_kind)
 {
   open_if_block ();
-  
+
   os << "ACE_ERROR ((" << endl
      << "    LM_ERROR," << endl
      << "    \"Component attributes of " << corba_kind << "\"" << endl
      << "    \"IDL type are not yet supported by CIAO\\n\"" << endl
      << "  ));";
-     
+
   close_if_block ();
 }
 

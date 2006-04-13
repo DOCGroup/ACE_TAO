@@ -7,5 +7,5 @@ CIAO::NodeApplication_Task::NodeApplication_Task (ACE_Thread_Manager &tm,
   : ACE_Task_Base (&tm),
     orb_ (CORBA::ORB::_duplicate (o)),
     options_ (opts)
-{ 
+{
 }

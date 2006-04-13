@@ -318,7 +318,7 @@ namespace CIAO
   protected:
     long number_;
 
-    static ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> serial_number_;
+    static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> serial_number_;
 
     // @@ (OO) Does this really need to be an int?  It appears to be a
     //         boolean value.  Please use bool instead.

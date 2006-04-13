@@ -11,7 +11,7 @@ module CIAO
     component XML_Output_Adapter : Output_Adapter
     {
     };
-    
+
     home XML_Output_Adapter_Home manages XML_Output_Adapter
     {
     };

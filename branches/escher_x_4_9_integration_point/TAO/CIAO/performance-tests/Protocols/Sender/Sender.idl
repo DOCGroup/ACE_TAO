@@ -12,8 +12,8 @@ module Protocols
         THROUGHPUT,
         LATENCY
       };
-    
-    void start (in unsigned long iterations, 
+
+    void start (in unsigned long iterations,
                 in unsigned long invocation_rate,
                 in boolean count_missed_end_deadlines,
                 in boolean do_dump_history,

@@ -11,7 +11,7 @@
     <label>BasicSP-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
+    <supportedType>IDL:BasicSP/EC:1.0</supportedType>
     <port>
       <name>read_message</name>
       <specificType>IDL:Hello/ReadMessage:1.0</specificType>
@@ -23,7 +23,7 @@
       <kind>SimplexReceptacle</kind>
     </port>
   </realizes>
-  
+
   <implementation id="Hello-Sender-mdd">
     <name>Hello-Sender-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
@@ -75,9 +75,9 @@
         <value>
           <string>This is a test message passed in through XML.</string>
         </value>
-      </value> 
+      </value>
     </configProperty>
-        
+
     <!-- This attribute initializes an enumerated value -->
     <configProperty>
       <name>color</name>
@@ -167,7 +167,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Hello-Sender_svnt">
     <name>Sender_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -185,7 +185,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Hello-Receiver_exec">
     <name>Receiver_exec</name>
     <source><!-- @@ Not sure about this--></source>
@@ -203,7 +203,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Hello-Receiver_svnt">
     <name>Receiver_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -221,4 +221,4 @@
       </value>
     </execParameter>
   </artifact>
-</Deployment:deploymentPlan>  
+</Deployment:deploymentPlan>

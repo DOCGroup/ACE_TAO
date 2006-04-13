@@ -3,10 +3,10 @@
 
 project(StaticDAnCEParser): ciao_component_dnc, taoexe, ciao_config_handlers {
   exename   = StaticDAnCEParser
-  requires += exceptions
+  requires += exceptions dummy_label
   includes += ..
   libs     += TAO_IORTable NodeApplicationManager DomainApplicationManager
-  after    += TAO_IORTable NodeApplicationManager DomainApplicationManager NodeManager 
+  after    += TAO_IORTable NodeApplicationManager DomainApplicationManager NodeManager
 
   Source_Files {
     StaticDAnCEParser.cpp

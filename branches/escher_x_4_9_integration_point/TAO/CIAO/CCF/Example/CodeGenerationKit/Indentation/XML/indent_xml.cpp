@@ -17,7 +17,7 @@ main ()
 
   cout << "<?xml version=\"1.0\"?>" << endl;
   cout << "<!DOCTYPE corbacomponent SYSYEM \"corbacomponent.dtd\">" << endl << endl;
-  
+
   cout << "<atag>whatever</atag>" << endl;
 
   cout << "<open>" << endl;

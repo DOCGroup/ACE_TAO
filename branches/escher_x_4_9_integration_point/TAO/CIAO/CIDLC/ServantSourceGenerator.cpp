@@ -24,41 +24,41 @@ namespace
     Context (std::ostream& os,
              string export_macro,
              CommandLine const& cl)
-        : os_ (os),
-          export_macro_ (export_macro),
-          cl_ (cl)
+      : os_ (os),
+        export_macro_ (export_macro),
+        cl_ (cl)
     {
     }
 
-  std::ostream&
-  os ()
-  {
-    return os_;
-  }
+    std::ostream&
+    os ()
+    {
+      return os_;
+    }
 
-  string
-  export_macro ()
-  {
-    return export_macro_;
-  }
+    string
+    export_macro ()
+    {
+      return export_macro_;
+    }
 
-  CommandLine const&
-  cl ()
-  {
-    return cl_;
-  }
+    CommandLine const&
+    cl ()
+    {
+      return cl_;
+    }
 
-  string
-  composition_name ()
-  {
-    return composition_name_;
-  }
+    string
+    composition_name ()
+    {
+      return composition_name_;
+    }
 
-  void
-  composition_name (const string& name)
-  {
-    composition_name_ = name;
-  }
+    void
+    composition_name (const string& name)
+    {
+      composition_name_ = name;
+    }
 
   private:
     std::ostream& os_;
@@ -280,13 +280,13 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");";
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");";
 
-        Traversal::Operation::returns (o, ace_check_returns_);
+          Traversal::Operation::returns (o, ace_check_returns_);
 
-        os << endl;
-      }
+          os << endl;
+        }
     }
 
     virtual void
@@ -439,9 +439,9 @@ namespace
     traverse (Interface& i)
     {
       if (add (i))
-      {
-        Traversal::Interface::traverse (i);
-      }
+        {
+          Traversal::Interface::traverse (i);
+        }
     }
 
   private:
@@ -451,7 +451,7 @@ namespace
   // Generates the set operation of a ReadWriteAttribute.
   template <typename T>
   struct WriteAttributeEmitter : Traversal::ReadWriteAttribute,
-                                 EmitterBase
+    EmitterBase
   {
     WriteAttributeEmitter (Context& c, T& scope, bool swapping)
       : EmitterBase (c),
@@ -520,9 +520,9 @@ namespace
       os << "{";
 
       if (swapping_)
-      {
-        this->gen_swapping_set ();
-      }
+        {
+          this->gen_swapping_set ();
+        }
 
       os << "this->executor_->" << a.name () << " (" << endl
          << a.name () << endl
@@ -550,8 +550,8 @@ namespace
   // Generates operations associated with attributes.
   template <typename T>
   struct AttributeEmitter : Traversal::ReadAttribute,
-                            Traversal::ReadWriteAttribute,
-                            EmitterBase
+            Traversal::ReadWriteAttribute,
+            EmitterBase
   {
     AttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
@@ -640,9 +640,9 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
-      {
-        this->gen_swapping_get (a);
-      }
+        {
+          this->gen_swapping_get (a);
+        }
 
       os << "return this->executor_->" << a.name () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -719,9 +719,9 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
-      {
-        this->gen_swapping_get (a);
-      }
+        {
+          this->gen_swapping_get (a);
+        }
 
       os << "return this->executor_->" << a.name () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -750,7 +750,7 @@ namespace
   // @@@ (JP) Need to support exceptions.
   template <typename T>
   struct ReadOnlyAttributeEmitter : Traversal::ReadAttribute,
-                                    EmitterBase
+            EmitterBase
   {
     ReadOnlyAttributeEmitter (Context& c,
                               T& scope)
@@ -803,9 +803,9 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
-      {
-        this->gen_swapping_get (a);
-      }
+        {
+          this->gen_swapping_get (a);
+        }
 
       os << "return this->executor_->" << a.name () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -1068,13 +1068,13 @@ namespace
       : EmitterBase (c)
     {}
 
-  // Nested classes used by ContextEmitter.
+    // Nested classes used by ContextEmitter.
   private:
     struct ContextPortsEmitter : Traversal::SingleUserData,
-                                 Traversal::MultiUserData,
-                                 Traversal::PublisherData,
-                                 Traversal::EmitterData,
-                                 EmitterBase
+    Traversal::MultiUserData,
+    Traversal::PublisherData,
+    Traversal::EmitterData,
+    EmitterBase
     {
       ContextPortsEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
@@ -1684,14 +1684,14 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
-      {
-        os << "," << endl
-           << "    ug_ctx_svnt_base (h, c, sv)" << endl;
-      }
+        {
+          os << "," << endl
+             << "    ug_ctx_svnt_base (h, c, sv)" << endl;
+        }
       else
-      {
-        os << endl;
-      }
+        {
+          os << endl;
+        }
 
       os << "{"
          << "}";
@@ -1726,54 +1726,54 @@ namespace
 
       // Extra *_Context methods for swapping container.
       if (swapping)
-      {
-        os << "// Operations defined in " << t.scoped_name ().scope_name ()
-           << "::CCM_" << t.name () << "_Context" << endl
-           << "// that enable component swapping in the container"
-           << endl << endl;
-
-        os << STRS[COMP_CD] << " *" << endl
-           << t.name () << "_Context::get_registered_consumers (" << endl
-           << "const char *publisher_name" << endl
-           << STRS[ENV_SRC] << ")" << endl
-           << STRS[EXCP_START] << endl
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IN] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
-           << "{"
-           << "if (publisher_name == 0)" << endl
-           << "{"
-           << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
-           << "}"
-           << STRS[COMP_CD] << " *tmp = 0;"
-           << STRS[COMP_CD] << "_var retval;"
-           << "CORBA::ULong _ciao_index = 0;"
-           << "CORBA::ULong _ciao_size = 0;"
-		       << STRS[ACE_UA] << " (tmp);"
-		       << STRS[ACE_UA] << " (retval);"
-		       << STRS[ACE_UA] << " (_ciao_index);"
-		       << STRS[ACE_UA] << " (_ciao_size);" << endl;
-
-        // Generate IF block for each event sources.
         {
-          Traversal::Component component_emitter;
+          os << "// Operations defined in " << t.scoped_name ().scope_name ()
+             << "::CCM_" << t.name () << "_Context" << endl
+             << "// that enable component swapping in the container"
+             << endl << endl;
 
-          Traversal::Inherits inherits;
-          inherits.node_traverser (component_emitter);
+          os << STRS[COMP_CD] << " *" << endl
+             << t.name () << "_Context::get_registered_consumers (" << endl
+             << "const char *publisher_name" << endl
+             << STRS[ENV_SRC] << ")" << endl
+             << STRS[EXCP_START] << endl
+             << STRS[EXCP_SYS] << "," << endl
+             << STRS[EXCP_IN] << "," << endl
+             << STRS[EXCP_IC] << "))" << endl
+             << "{"
+             << "if (publisher_name == 0)" << endl
+             << "{"
+             << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
+             << "}"
+             << STRS[COMP_CD] << " *tmp = 0;"
+             << STRS[COMP_CD] << "_var retval;"
+             << "CORBA::ULong _ciao_index = 0;"
+             << "CORBA::ULong _ciao_size = 0;"
+             << STRS[ACE_UA] << " (tmp);"
+             << STRS[ACE_UA] << " (retval);"
+             << STRS[ACE_UA] << " (_ciao_index);"
+             << STRS[ACE_UA] << " (_ciao_size);" << endl;
 
-          Traversal::Defines defines;
-          component_emitter.edge_traverser (defines);
-          component_emitter.edge_traverser (inherits);
+          // Generate IF block for each event sources.
+          {
+            Traversal::Component component_emitter;
 
-          SwappableGetConsumersEmitter get_consumers_emitter (ctx);
-          defines.node_traverser (get_consumers_emitter);
+            Traversal::Inherits inherits;
+            inherits.node_traverser (component_emitter);
 
-          component_emitter.traverse (t);
+            Traversal::Defines defines;
+            component_emitter.edge_traverser (defines);
+            component_emitter.edge_traverser (inherits);
+
+            SwappableGetConsumersEmitter get_consumers_emitter (ctx);
+            defines.node_traverser (get_consumers_emitter);
+
+            component_emitter.traverse (t);
+          }
+
+          os << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
+             << "}";
         }
-
-        os << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
-           << "}";
-      }
 
       os << "// CIAO-specific." << endl << endl;
 
@@ -1794,10 +1794,10 @@ namespace
       : EmitterBase (c)
     {}
 
-  // Nested classes used by ServantEmitter.
+    // Nested classes used by ServantEmitter.
   private:
     struct NavigationEmitsEmitter : Traversal::EmitterData,
-                                    EmitterBase
+    EmitterBase
     {
       NavigationEmitsEmitter (Context& c)
         : EmitterBase (c),
@@ -1892,10 +1892,10 @@ namespace
         bool swapping = (swap_option == "upgradeable");
 
         if (swapping)
-        {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << STRS[ACE_CR] << " (0);" << endl;
-        }
+          {
+            os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+               << STRS[ACE_CR] << " (0);" << endl;
+          }
 
         os << "return this->context_->subscribe_" << p.name ()
            << " (" << endl
@@ -1914,10 +1914,10 @@ namespace
            << "{";
 
         if (swapping)
-        {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << STRS[ACE_CR] << " (0);" << endl;
-        }
+          {
+            os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+               << STRS[ACE_CR] << " (0);" << endl;
+          }
 
         os << "return this->context_->subscribe_" << p.name ()
            << "_generic (" << endl
@@ -1938,14 +1938,14 @@ namespace
            << "{";
 
         if (swapping)
-        {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << STRS[ACE_CR] << " (";
+          {
+            os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+               << STRS[ACE_CR] << " (";
 
-          Traversal::PublisherData::belongs (p, belongs_);
+            Traversal::PublisherData::belongs (p, belongs_);
 
-          os << "Consumer::_nil ());" << endl;
-        }
+            os << "Consumer::_nil ());" << endl;
+          }
 
         os << "return this->context_->unsubscribe_"
            << p.name () << " (" << endl
@@ -2103,6 +2103,8 @@ namespace
            << endl
            << "c" << endl
            << STRS[ENV_ARG] << ");" << endl
+           << "this->add_receptacle (\"" << u.name ()
+           << "\", c, 0);" << endl
            << "}";
 
         Traversal::SingleUserData::belongs (u, belongs_);
@@ -2151,10 +2153,14 @@ namespace
            << STRS[EXCP_ECL] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
            << "{"
-           << "return this->context_->connect_" << u.name () << " ("
+           << "::Components::Cookie * cookie = "
+          "this->context_->connect_" << u.name () << " ("
            << endl
            << "c" << endl
            << STRS[ENV_ARG] << ");" << endl
+           << "this->add_receptacle (\"" << u.name ()
+           << "\", c, cookie);" << endl
+           << "return cookie;" << endl
            << "}";
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -2384,14 +2390,14 @@ namespace
         bool swapping = (swap_option == "upgradeable");
 
         if (swapping)
-        {
-          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-             << STRS[ACE_CR] << " (";
+          {
+            os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+               << STRS[ACE_CR] << " (";
 
-          Traversal::ProviderData::belongs (p, belongs_);
+            Traversal::ProviderData::belongs (p, belongs_);
 
-          os << "::_nil ());" << endl;
-        }
+            os << "::_nil ());" << endl;
+          }
 
         os << "if (! ::CORBA::is_nil (this->provide_"
            << p.name () << "_.in ()))" << endl
@@ -2899,7 +2905,7 @@ namespace
 
         os << "return ecb._retn ();" << endl
            << "}";
-     }
+      }
 
     private:
       TypeNameEmitter type_name_emitter_;
@@ -2976,29 +2982,29 @@ namespace
         }
 
         if (gen_factory_)
-        {
-          os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
+          {
+            os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
 
-          Traversal::ConsumerData::belongs (c, belongs_);
+            Traversal::ConsumerData::belongs (c, belongs_);
 
-          os << "_init," << endl;
+            os << "_init," << endl;
 
-          Traversal::ConsumerData::belongs (c, belongs_);
+            Traversal::ConsumerData::belongs (c, belongs_);
 
-          os << ");" << endl;
-        }
+            os << ");" << endl;
+          }
         else
-        {
-          cerr << "    " << endl
-               << "event type ";
+          {
+            cerr << "    " << endl
+                 << "event type ";
 
-          Traversal::ConsumerData::belongs (c, cerr_belongs_);
+            Traversal::ConsumerData::belongs (c, cerr_belongs_);
 
-          cerr << " consumed by " << c.scoped_name () << endl
-               << "has an operation, factory declaration,"
-               << " or private member. "
-               << "ORB registration of default factory not generated" << endl;
-        }
+            cerr << " consumed by " << c.scoped_name () << endl
+                 << "has an operation, factory declaration,"
+                 << " or private member. "
+                 << "ORB registration of default factory not generated" << endl;
+          }
       }
 
     private:
@@ -3163,24 +3169,29 @@ namespace
          << "this->context_," << endl
          << t.name () << "_Context (h, c, this));" << endl;
 
+      os << "// Set the instance id of the component on the context" << endl
+         << endl
+         << "this->context_->_ciao_instance_id (this->ins_name_);" << endl;
+
+
       // Generate the macro to register a value factory for each
       // eventtype consumed.
       if (!ctx.cl ().get_value ("suppress-register-factory", false))
-      {
-        Traversal::Component component_emitter;
+        {
+          Traversal::Component component_emitter;
 
-        Traversal::Inherits inherits;
-        inherits.node_traverser (component_emitter);
+          Traversal::Inherits inherits;
+          inherits.node_traverser (component_emitter);
 
-        Traversal::Defines defines;
-        component_emitter.edge_traverser (defines);
-        component_emitter.edge_traverser (inherits);
+          Traversal::Defines defines;
+          component_emitter.edge_traverser (defines);
+          component_emitter.edge_traverser (inherits);
 
-        RegisterValueFactoryEmitter factory_emitter (ctx);
-        defines.node_traverser (factory_emitter);
+          RegisterValueFactoryEmitter factory_emitter (ctx);
+          defines.node_traverser (factory_emitter);
 
-        component_emitter.traverse (t);
-      }
+          component_emitter.traverse (t);
+        }
 
       os << "ACE_TRY_NEW_ENV" << endl
          << "{"
@@ -3224,10 +3235,10 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK;" << endl;
-      }
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << "ACE_CHECK;" << endl;
+        }
 
       os << "for (CORBA::ULong i = 0; i < descr.length (); ++i)" << endl
          << "{"
@@ -3323,10 +3334,10 @@ namespace
          << "{";
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << STRS[ACE_CR] << " (0);" << endl;
-      }
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << STRS[ACE_CR] << " (0);" << endl;
+        }
 
       os << "// If the component has no receptacles, this will be unused."
          << endl
@@ -3371,10 +3382,10 @@ namespace
          << STRS[ACE_UA] << " (ck);" << endl;
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl;
-      }
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl;
+        }
 
       os << "if (name == 0)" << endl
          << "{"
@@ -3436,10 +3447,10 @@ namespace
          << "{";
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << "ACE_CHECK;" << endl;
-      }
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << "ACE_CHECK;" << endl;
+        }
 
       os << "if (emitter_name == 0)" << endl
          << "{"
@@ -3481,10 +3492,10 @@ namespace
          << "{";
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << STRS[ACE_CR] << " (0);" << endl;
-      }
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << STRS[ACE_CR] << " (0);" << endl;
+        }
 
       os << "// Just in case there are no if blocks" << endl
          << STRS[ACE_UA] << " (subscribe);" << endl
@@ -3527,11 +3538,11 @@ namespace
          << "{";
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << STRS[ACE_CR] << " (" << STRS[COMP_ECB]
-           << "::_nil ());" << endl;
-      }
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << STRS[ACE_CR] << " (" << STRS[COMP_ECB]
+             << "::_nil ());" << endl;
+        }
 
       os << "// Just in case there are no if blocks" << endl
          << STRS[ACE_UA] << " (ck);" << endl
@@ -3591,10 +3602,10 @@ namespace
          << "{";
 
       if (swapping)
-      {
-        os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-           << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl;
-      }
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << STRS[ACE_CR] << " (CORBA::Object::_nil ());" << endl;
+        }
 
       os << "if (name == 0)" << endl
          << "{"
@@ -3602,6 +3613,7 @@ namespace
          << "::CORBA::BAD_PARAM ()," << endl
          << "::CORBA::Object::_nil ());" << endl
          << "}";
+
 
       // Generate an IF block for each facet inside provide_facet().
       {
@@ -3622,6 +3634,7 @@ namespace
 
       os << " return CORBA::Object::_nil ();"
          << "}";
+
       os << "// Supported operations." << endl << endl;
 
       // Generate operations for all supported interfaces.
@@ -3746,7 +3759,7 @@ namespace
       flat_name_manages_.node_traverser (flat_name_emitter_);
     }
 
-  // Nested classes used by this emitter.
+    // Nested classes used by this emitter.
   private:
     struct HomeOpExecReturnEmitter : Traversal::Type
     {
@@ -4067,15 +4080,15 @@ namespace
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
-      {
-        os << ", \"" << ctx.composition_name ();
+        {
+          os << ", \"" << ctx.composition_name ();
 
-        Traversal::Home::manages (t, flat_name_manages_);
+          Traversal::Home::manages (t, flat_name_manages_);
 
-        os << "\", ";
+          os << "\", ";
 
-        Traversal::Home::manages (t, repo_id_manages_);
-      }
+          Traversal::Home::manages (t, repo_id_manages_);
+        }
 
       os << ")" << endl
          << "{"
@@ -4358,9 +4371,9 @@ ServantSourceEmitter::pre (TranslationUnit&)
   string file_name ("");
 
   if (! file_.empty ())
-  {
-    file_name = file_.leaf ();
-  }
+    {
+      file_name = file_.leaf ();
+    }
 
   string file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
                                       "_svnt.h");
@@ -4409,7 +4422,7 @@ ServantSourceEmitter::generate (TranslationUnit& u)
 
   //--
   Traversal::Root root;
-//  includes.node_traverser (region);
+  //  includes.node_traverser (region);
   contains_root.node_traverser (root);
 
   // Layer 3

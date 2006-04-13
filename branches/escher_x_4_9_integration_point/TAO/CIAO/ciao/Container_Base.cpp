@@ -15,7 +15,7 @@
 namespace CIAO
 {
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
   Container::Container (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o)),
@@ -53,18 +53,18 @@ namespace CIAO
 
   ///////////////////////////////////////////////////////////////
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long>
   Session_Container::serial_number_ (0);
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
                                         Container_Impl *container_impl,
                                         bool static_config_flag,
-                                    const Static_Config_EntryPoints_Maps* maps)
-  : Container (o, container_impl),
-    number_ (0),
-    static_config_flag_ (static_config_flag),
-    static_entrypts_maps_ (maps),
-    sa_ (0)
+                                        const Static_Config_EntryPoints_Maps* maps)
+    : Container (o, container_impl),
+      number_ (0),
+      static_config_flag_ (static_config_flag),
+      static_entrypts_maps_ (maps),
+      sa_ (0)
   {
   }
 
@@ -79,6 +79,8 @@ namespace CIAO
                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::init");
+
     char buffer[MAXPATHLEN];
 
     if (name == 0)
@@ -98,7 +100,7 @@ namespace CIAO
     if (CORBA::is_nil (poa_object.in ()))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Unable to initialize the POA.\n"),
+                           " (%P|%t) Unable to initialize the POA.\n"),
                           -1);
       }
 
@@ -137,6 +139,8 @@ namespace CIAO
                                            PortableServer::POA_ptr root
                                            ACE_ENV_ARG_DECL)
   {
+    CIAO_TRACE ("Session_Container::create_component_POA");
+
     // Set up proper poa policies here.  Default policies seems to be
     // fine for session container.  If you add some other default
     // policies here, then you need to "add" more_policies below
@@ -163,11 +167,13 @@ namespace CIAO
 
   void
   Session_Container::create_facet_consumer_POA (
-      const char *name,
-      const CORBA::PolicyList *p,
-      PortableServer::POA_ptr root
-      ACE_ENV_ARG_DECL)
+                                                const char *name,
+                                                const CORBA::PolicyList *p,
+                                                PortableServer::POA_ptr root
+                                                ACE_ENV_ARG_DECL)
   {
+    CIAO_TRACE ("Session_Container::create_facet_consumer_POA");
+
     PortableServer::POAManager_var poa_manager =
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -193,8 +199,8 @@ namespace CIAO
     // Servant Manager Policy
     policies[1] =
       root->create_request_processing_policy
-          (PortableServer::USE_SERVANT_MANAGER
-           ACE_ENV_ARG_PARAMETER);
+      (PortableServer::USE_SERVANT_MANAGER
+       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     // Servant Retention Policy
@@ -220,9 +226,9 @@ namespace CIAO
                       CORBA::NO_MEMORY ());
 
     this->facet_cons_poa_->set_servant_manager (
-        this->sa_
-        ACE_ENV_ARG_PARAMETER
-      );
+                                                this->sa_
+                                                ACE_ENV_ARG_PARAMETER
+                                                );
     ACE_CHECK;
   }
 
@@ -232,6 +238,8 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::install_servant");
+
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
@@ -262,6 +270,7 @@ namespace CIAO
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::install_component");
     PortableServer::ObjectId_var id =
       this->component_poa_->activate_object (p
                                              ACE_ENV_ARG_PARAMETER);
@@ -295,16 +304,18 @@ namespace CIAO
                      Deployment::ImplEntryPointNotFound,
                      Deployment::InstallationFailure))
   {
+    CIAO_TRACE ("Session_Container::ciao_install_home");
+
     HomeFactory hcreator = 0;
     ServantFactory screator = 0;
 
-    if (this->static_config_flag_ == 0)
+    if (this->static_config_flag_ == false)
       {
         ACE_DLL executor_dll, servant_dll;
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
           {
-	    ACE_CString exception;
+            ACE_CString exception;
 
             if (exe_dll_name == 0)
               {
@@ -324,9 +335,9 @@ namespace CIAO
 
             ACE_THROW_RETURN
               (Deployment::UnknownImplId (
-                 "Session_Container::ciao_install_home",
-	          exception.c_str ()),
-                  Components::CCMHome::_nil ());
+                                          "Session_Container::ciao_install_home",
+                                          exception.c_str ()),
+               Components::CCMHome::_nil ());
           }
 
         if (executor_dll.open (exe_dll_name,
@@ -344,8 +355,8 @@ namespace CIAO
 
             ACE_THROW_RETURN
               (Deployment::UnknownImplId
-                 ("Session_Container::ciao_install_home",
-                  error.c_str ()), Components::CCMHome::_nil ());
+               ("Session_Container::ciao_install_home",
+                error.c_str ()), Components::CCMHome::_nil ());
           }
 
         if (servant_dll.open (sv_dll_name,
@@ -362,9 +373,9 @@ namespace CIAO
                         sv_dll_name));
 
             ACE_THROW_RETURN
-               (Deployment::UnknownImplId
-                 ("Session_Container::ciao_install_home",
-                  error.c_str ()), Components::CCMHome::_nil ());
+              (Deployment::UnknownImplId
+               ("Session_Container::ciao_install_home",
+                error.c_str ()), Components::CCMHome::_nil ());
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
@@ -394,8 +405,8 @@ namespace CIAO
 
             ACE_THROW_RETURN
               (Deployment::ImplEntryPointNotFound
-                 ("Session_Container::ciao_install_home",
-                  error.c_str ()), Components::CCMHome::_nil ());
+               ("Session_Container::ciao_install_home",
+                error.c_str ()), Components::CCMHome::_nil ());
           }
 
         // @@ (OO) Please use a static_cast<> here instead of a C-style
@@ -403,7 +414,7 @@ namespace CIAO
         //         way of casting in ACE/TAO/CIAO.
         hcreator = (HomeFactory) executor_dll.symbol (exe_entrypt);
         screator = (ServantFactory) servant_dll.symbol (sv_entrypt);
-    }
+      }
     else
       {
         if (static_entrypts_maps_ == 0
@@ -416,15 +427,15 @@ namespace CIAO
 
         ACE_CString exe_entrypt_str (exe_entrypt);
         static_entrypts_maps_->home_creator_funcptr_map_->find (
-            exe_entrypt_str,
-            hcreator
-          );
+                                                                exe_entrypt_str,
+                                                                hcreator
+                                                                );
 
         ACE_CString sv_entrypt_str (sv_entrypt);
         static_entrypts_maps_->home_servant_creator_funcptr_map_->find (
-            sv_entrypt_str,
-            screator
-          );
+                                                                        sv_entrypt_str,
+                                                                        screator
+                                                                        );
       }
 
     if (hcreator == 0 || screator == 0)
@@ -445,9 +456,9 @@ namespace CIAO
           }
 
         ACE_THROW_RETURN
-           (Deployment::ImplEntryPointNotFound
-              ("SessionContainer::ciao_install_home",
-               error.c_str ()), Components::CCMHome::_nil ());
+          (Deployment::ImplEntryPointNotFound
+           ("SessionContainer::ciao_install_home",
+            error.c_str ()), Components::CCMHome::_nil ());
       }
 
     Components::HomeExecutorBase_var home_executor = hcreator ();
@@ -456,9 +467,9 @@ namespace CIAO
       {
         ACE_THROW_RETURN
           (Deployment::InstallationFailure
-             ("SessionContainer::ciao_install_home",
-              "Executor entrypoint failed to create a home."),
-              Components::CCMHome::_nil ());
+           ("SessionContainer::ciao_install_home",
+            "Executor entrypoint failed to create a home."),
+           Components::CCMHome::_nil ());
       }
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
@@ -471,9 +482,9 @@ namespace CIAO
       {
         ACE_THROW_RETURN
           (Deployment::InstallationFailure
-             ("SessionContainer::ciao_install_home",
-              "Servant entrypoing failed to create a home."),
-              Components::CCMHome::_nil ());
+           ("SessionContainer::ciao_install_home",
+            "Servant entrypoing failed to create a home."),
+           Components::CCMHome::_nil ());
       }
 
     PortableServer::ServantBase_var safe (home_servant);
@@ -497,6 +508,8 @@ namespace CIAO
                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::ciao_uninstall_home");
+
     this->uninstall (homeref,
                      Container::Component
                      ACE_ENV_ARG_PARAMETER);
@@ -509,6 +522,8 @@ namespace CIAO
                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::uninstall");
+
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
@@ -536,6 +551,7 @@ namespace CIAO
                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::uninstall");
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
@@ -549,7 +565,7 @@ namespace CIAO
 
     PortableServer::ObjectId_var oid
       = tmp->servant_to_id (svt
-                                 ACE_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     tmp->deactivate_object (oid.in ()
@@ -563,6 +579,8 @@ namespace CIAO
                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::uninstall_component");
+
     PortableServer::ObjectId_var id =
       this->component_poa_->reference_to_id (objref
                                              ACE_ENV_ARG_PARAMETER);
@@ -577,11 +595,12 @@ namespace CIAO
 
   void
   Session_Container::add_servant_map (
-      PortableServer::ObjectId &,
-      Dynamic_Component_Servant_Base*
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
+                                      PortableServer::ObjectId &,
+                                      Dynamic_Component_Servant_Base*
+                                      ACE_ENV_ARG_DECL_NOT_USED
+                                      )
   {
+    CIAO_TRACE ("Session_Container::add_servant_map");
   }
 
   void
@@ -589,14 +608,16 @@ namespace CIAO
                                        ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::deactivate_facet");
   }
 
   void
   Session_Container::delete_servant_map (
-      PortableServer::ObjectId &
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
+                                         PortableServer::ObjectId &
+                                         ACE_ENV_ARG_DECL_NOT_USED
+                                         )
   {
+    CIAO_TRACE ("Session_Container::delete_servant_map");
   }
 
   CORBA::Object_ptr
@@ -604,6 +625,7 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Session_Container::get_home_objref");
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   }
 
@@ -613,6 +635,8 @@ namespace CIAO
                                          Container::OA_Type t
                                          ACE_ENV_ARG_DECL)
   {
+    CIAO_TRACE ("Session_Container::generate_reference");
+
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
@@ -631,11 +655,11 @@ namespace CIAO
       PortableServer::ObjectId_to_string (oid.in ());
 
     if (t == Container::Facet_Consumer)
-    {
-      //if (CIAO::debug_level () > 9)
-      //  ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
-      //              str.in ()));
-    }
+      {
+        //if (CIAO::debug_level () > 9)
+        //  ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
+        //              str.in ()));
+      }
 
     CORBA::Object_var objref =
       tmp->create_reference_with_id (oid.in (),

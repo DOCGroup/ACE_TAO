@@ -10,7 +10,7 @@
   <xsd:complexType name="Any">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="type" type="Deployment:DataType"/>
-      <xsd:element name="value" type="Deployment:DataValue"/>      
+      <xsd:element name="value" type="Deployment:DataValue"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -28,7 +28,7 @@
       <xsd:element name="alias" type="Deployment:AliasType"/>
       <xsd:element name="struct" type="Deployment:StructType"/>
       <xsd:element name="value" type="Deployment:ValueType"/>
-      <xsd:element name="union" type="Deployment:UnionType"/>      
+      <xsd:element name="union" type="Deployment:UnionType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -58,7 +58,7 @@
       <xsd:element name="discriminator" type="Deployment:DataValue"/>
       <xsd:element name="value" type="Deployment:DataValue"/>
       <xsd:element name="boxedValue" type="Deployment:DataValue"/>
-      <xsd:element name="member" type="Deployment:NamedValue"/>      
+      <xsd:element name="member" type="Deployment:NamedValue"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -70,7 +70,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="typeId" type="xsd:string"/>
-      <xsd:element name="member" type="xsd:string"/>      
+      <xsd:element name="member" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -79,7 +79,7 @@
   <xsd:complexType name="ObjrefType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="typeId" type="xsd:string"/>      
+      <xsd:element name="typeId" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -89,7 +89,7 @@
   <xsd:element name="ObjrefType" type="Deployment:ObjrefType"/>
   <xsd:complexType name="BoundedStringType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="bound" type="xsd:string"/>      
+      <xsd:element name="bound" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -98,7 +98,7 @@
   <xsd:complexType name="FixedType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="digits" type="xsd:string"/>
-      <xsd:element name="scale" type="xsd:string"/>      
+      <xsd:element name="scale" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -107,7 +107,7 @@
   <xsd:complexType name="ArrayType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="length" type="xsd:string"/>
-      <xsd:element name="elementType" type="Deployment:DataType"/>      
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -116,7 +116,7 @@
   <xsd:complexType name="SequenceType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="bound" type="xsd:string"/>
-      <xsd:element name="elementType" type="Deployment:DataType"/>      
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -126,7 +126,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="typeId" type="xsd:string"/>
-      <xsd:element name="elementType" type="Deployment:DataType"/>      
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -136,7 +136,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="typeId" type="xsd:string"/>
-      <xsd:element name="member" type="Deployment:StructMemberType"/>      
+      <xsd:element name="member" type="Deployment:StructMemberType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -145,7 +145,7 @@
   <xsd:complexType name="StructMemberType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="type" type="Deployment:DataType"/>      
+      <xsd:element name="type" type="Deployment:DataType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -157,7 +157,7 @@
       <xsd:element name="typeId" type="xsd:string"/>
       <xsd:element name="modifier" type="xsd:string"/>
       <xsd:element name="baseType" type="Deployment:DataType"/>
-      <xsd:element name="member" type="Deployment:ValueMemberType"/>      
+      <xsd:element name="member" type="Deployment:ValueMemberType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -167,7 +167,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="visibility" type="xsd:string"/>
-      <xsd:element name="type" type="Deployment:DataType"/>      
+      <xsd:element name="type" type="Deployment:DataType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -179,7 +179,7 @@
       <xsd:element name="typeId" type="xsd:string"/>
       <xsd:element name="default" type="Deployment:UnionMemberType"/>
       <xsd:element name="discriminatorType" type="Deployment:DataType"/>
-      <xsd:element name="member" type="Deployment:UnionMemberType"/>      
+      <xsd:element name="member" type="Deployment:UnionMemberType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -189,7 +189,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="type" type="Deployment:DataType"/>
-      <xsd:element name="label" type="Deployment:DataValue"/>      
+      <xsd:element name="label" type="Deployment:DataValue"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -198,7 +198,7 @@
   <xsd:complexType name="NamedValue">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="value" type="Deployment:DataValue"/>      
+      <xsd:element name="value" type="Deployment:DataValue"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -209,7 +209,7 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="connect" type="Deployment:Interconnect"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
+      <xsd:element name="resource" type="Deployment:Resource"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -221,7 +221,7 @@
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="connection" type="Deployment:Bridge"/>
       <xsd:element name="connect" type="Deployment:Node"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
+      <xsd:element name="resource" type="Deployment:Resource"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -233,7 +233,7 @@
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="connection" type="Deployment:Interconnect"/>
       <xsd:element name="sharedResource" type="Deployment:SharedResource"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
+      <xsd:element name="resource" type="Deployment:Resource"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -254,7 +254,7 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="node" type="Deployment:Node"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>      
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -262,13 +262,13 @@
   <xsd:element name="SharedResource" type="Deployment:SharedResource"/>
   <xsd:complexType name="Domain">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="UUID" type="xsd:string"/>  
+      <xsd:element name="UUID" type="xsd:string"/>
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="sharedResource" type="Deployment:SharedResource"/>
       <xsd:element name="node" type="Deployment:Node"/>
       <xsd:element name="interconnect" type="Deployment:Interconnect"/>
       <xsd:element name="bridge" type="Deployment:Bridge"/>
-      <xsd:element name="infoProperty" type="Deployment:Property"/>      
+      <xsd:element name="infoProperty" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -279,7 +279,7 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="source" type="xsd:string"/>
       <xsd:element name="externalName" type="xsd:string"/>
-      <xsd:element name="delegatesTo" type="Deployment:PlanSubcomponentPropertyReference"/>      
+      <xsd:element name="delegatesTo" type="Deployment:PlanSubcomponentPropertyReference"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -288,7 +288,7 @@
   <xsd:complexType name="PlanSubcomponentPropertyReference">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="propertyName" type="xsd:string"/>
-      <xsd:element name="instance" type="Deployment:InstanceDeploymentDescription"/>      
+      <xsd:element name="instance" type="Deployment:InstanceDeploymentDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -299,7 +299,7 @@
       <xsd:element name="portName" type="xsd:string"/>
       <xsd:element name="provider" type="xsd:string"/>
       <xsd:element name="kind" type="Deployment:CCMComponentPortKind"/>
-      <xsd:element name="instance" type="Deployment:InstanceDeploymentDescription"/>      
+      <xsd:element name="instance" type="Deployment:InstanceDeploymentDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -313,7 +313,7 @@
       <xsd:element name="externalEndpoint" type="Deployment:ComponentExternalPortEndpoint"/>
       <xsd:element name="internalEndpoint" type="Deployment:PlanSubcomponentPortEndpoint"/>
       <xsd:element name="externalReference" type="Deployment:ExternalReferenceEndpoint"/>
-      <xsd:element name="deployedResource" type="Deployment:ConnectionResourceDeploymentDescription"/>      
+      <xsd:element name="deployedResource" type="Deployment:ConnectionResourceDeploymentDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -327,7 +327,7 @@
       <xsd:element name="implementation" type="Deployment:MonolithicDeploymentDescription"/>
       <xsd:element name="configProperty" type="Deployment:Property"/>
       <xsd:element name="deployedResource" type="Deployment:InstanceResourceDeploymentDescription"/>
-      <xsd:element name="deployedSharedResource" type="Deployment:InstanceResourceDeploymentDescription"/>      
+      <xsd:element name="deployedSharedResource" type="Deployment:InstanceResourceDeploymentDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -339,7 +339,7 @@
       <xsd:element name="source" type="xsd:string"/>
       <xsd:element name="artifact" type="Deployment:ArtifactDeploymentDescription"/>
       <xsd:element name="execParameter" type="Deployment:Property"/>
-      <xsd:element name="deployRequirement" type="Deployment:Requirement"/>      
+      <xsd:element name="deployRequirement" type="Deployment:Requirement"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -353,7 +353,7 @@
       <xsd:element name="source" type="xsd:string"/>
       <xsd:element name="execParameter" type="Deployment:Property"/>
       <xsd:element name="deployRequirement" type="Deployment:Requirement"/>
-      <xsd:element name="deployedResource" type="Deployment:ResourceDeploymentDescription"/>      
+      <xsd:element name="deployedResource" type="Deployment:ResourceDeploymentDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -372,7 +372,7 @@
       <xsd:element name="externalProperty" type="Deployment:PlanPropertyMapping"/>
       <xsd:element name="dependsOn" type="Deployment:ImplementationDependency"/>
       <xsd:element name="artifact" type="Deployment:ArtifactDeploymentDescription"/>
-      <xsd:element name="infoProperty" type="Deployment:Property"/>      
+      <xsd:element name="infoProperty" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -384,7 +384,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="resourceValue" type="Deployment:Any"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -395,7 +395,7 @@
       <xsd:element name="resourceUsage" type="Deployment:ResourceUsageKind"/>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="resourceValue" type="Deployment:Any"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -406,7 +406,7 @@
       <xsd:element name="targetName" type="xsd:string"/>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="resourceValue" type="Deployment:Any"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -416,7 +416,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>     
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -425,7 +425,7 @@
   <xsd:complexType name="ComponentPropertyDescription">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="type" type="Deployment:DataType"/>      
+      <xsd:element name="type" type="Deployment:DataType"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -440,7 +440,7 @@
       <xsd:element name="exclusiveProvider" type="xsd:string"/>
       <xsd:element name="exclusiveUser" type="xsd:string"/>
       <xsd:element name="optional" type="xsd:string"/>
-      <xsd:element name="kind" type="Deployment:CCMComponentPortKind"/>      
+      <xsd:element name="kind" type="Deployment:CCMComponentPortKind"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -456,7 +456,7 @@
       <xsd:element name="configProperty" type="Deployment:Property"/>
       <xsd:element name="port" type="Deployment:ComponentPortDescription"/>
       <xsd:element name="property" type="Deployment:ComponentPropertyDescription"/>
-      <xsd:element name="infoProperty" type="Deployment:Property"/>      
+      <xsd:element name="infoProperty" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -470,7 +470,7 @@
       <xsd:element name="execParameter" type="Deployment:Property"/>
       <xsd:element name="deployRequirement" type="Deployment:Requirement"/>
       <xsd:element name="dependsOn" type="Deployment:NamedImplementationArtifact"/>
-      <xsd:element name="infoProperty" type="Deployment:Property"/>      
+      <xsd:element name="infoProperty" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -480,7 +480,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="execParameter" type="Deployment:Property"/>
       <xsd:element name="primaryArtifact" type="Deployment:NamedImplementationArtifact"/>
-      <xsd:element name="deployRequirement" type="Deployment:ImplementationRequirement"/>      
+      <xsd:element name="deployRequirement" type="Deployment:ImplementationRequirement"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -490,7 +490,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="externalName" type="xsd:string"/>
-      <xsd:element name="delegatesTo" type="Deployment:SubcomponentPropertyReference"/>      
+      <xsd:element name="delegatesTo" type="Deployment:SubcomponentPropertyReference"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -499,7 +499,7 @@
   <xsd:complexType name="SubcomponentPropertyReference">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="propertyName" type="xsd:string"/>
-      <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription"/>      
+      <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -508,7 +508,7 @@
   <xsd:complexType name="SubcomponentPortEndpoint">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="portName" type="xsd:string"/>
-      <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription"/>      
+      <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -520,7 +520,7 @@
       <xsd:element name="deployRequirement" type="Deployment:Requirement"/>
       <xsd:element name="externalEndpoint" type="Deployment:ComponentExternalPortEndpoint"/>
       <xsd:element name="internalEndpoint" type="Deployment:SubcomponentPortEndpoint"/>
-      <xsd:element name="externalReference" type="Deployment:ExternalReferenceEndpoint"/>      
+      <xsd:element name="externalReference" type="Deployment:ExternalReferenceEndpoint"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -532,7 +532,7 @@
       <xsd:element name="package" type="Deployment:ComponentPackageDescription"/>
       <xsd:element name="configProperty" type="Deployment:Property"/>
       <xsd:element name="selectRequirement" type="Deployment:Requirement"/>
-      <xsd:element name="reference" type="Deployment:ComponentPackageReference"/>      
+      <xsd:element name="reference" type="Deployment:ComponentPackageReference"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -542,7 +542,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription"/>
       <xsd:element name="connection" type="Deployment:AssemblyConnectionDescription"/>
-      <xsd:element name="externalProperty" type="Deployment:AssemblyPropertyMapping"/>      
+      <xsd:element name="externalProperty" type="Deployment:AssemblyPropertyMapping"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -558,7 +558,7 @@
       <xsd:element name="configProperty" type="Deployment:Property"/>
       <xsd:element name="capability" type="Deployment:Capability"/>
       <xsd:element name="dependsOn" type="Deployment:ImplementationDependency"/>
-      <xsd:element name="infoProperty" type="Deployment:Property"/>      
+      <xsd:element name="infoProperty" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -568,7 +568,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="requiredUUID" type="xsd:string"/>
       <xsd:element name="requiredName" type="xsd:string"/>
-      <xsd:element name="requiredType" type="xsd:string"/>      
+      <xsd:element name="requiredType" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -581,7 +581,7 @@
       <xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription"/>
       <xsd:element name="configProperty" type="Deployment:Property"/>
       <xsd:element name="implementation" type="Deployment:PackagedComponentImplementation"/>
-      <xsd:element name="infoProperty" type="Deployment:Property"/>      
+      <xsd:element name="infoProperty" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -595,7 +595,7 @@
       <xsd:element name="basePackage" type="Deployment:ComponentPackageDescription"/>
       <xsd:element name="reference" type="Deployment:ComponentPackageReference"/>
       <xsd:element name="selectRequirement" type="Deployment:Requirement"/>
-      <xsd:element name="configProperty" type="Deployment:Property"/>      
+      <xsd:element name="configProperty" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -604,7 +604,7 @@
   <xsd:complexType name="PackagedComponentImplementation">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="referencedImplementation" type="Deployment:ComponentImplementationDescription"/>      
+      <xsd:element name="referencedImplementation" type="Deployment:ComponentImplementationDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -613,7 +613,7 @@
   <xsd:complexType name="NamedImplementationArtifact">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="referencedArtifact" type="Deployment:ImplementationArtifactDescription"/>      
+      <xsd:element name="referencedArtifact" type="Deployment:ImplementationArtifactDescription"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -626,7 +626,7 @@
       <xsd:element name="componentPort" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:Property"/>      
+      <xsd:element name="property" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -636,7 +636,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>      
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -646,7 +646,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="kind" type="Deployment:SatisfierPropertyKind"/>
-      <xsd:element name="value" type="Deployment:Any"/>      
+      <xsd:element name="value" type="Deployment:Any"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -656,7 +656,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:Property"/>      
+      <xsd:element name="property" type="Deployment:Property"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -665,7 +665,7 @@
   <xsd:complexType name="Property">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="value" type="Deployment:Any"/>    
+      <xsd:element name="value" type="Deployment:Any"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -673,7 +673,7 @@
   <xsd:element name="Property" type="Deployment:Property"/>
   <xsd:complexType name="ExternalReferenceEndpoint">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="location" type="xsd:string"/>      
+      <xsd:element name="location" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -681,7 +681,7 @@
   <xsd:element name="ExternalReferenceEndpoint" type="Deployment:ExternalReferenceEndpoint"/>
   <xsd:complexType name="ComponentExternalPortEndpoint">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="portName" type="xsd:string"/>      
+      <xsd:element name="portName" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -689,7 +689,7 @@
   <xsd:element name="ComponentExternalPortEndpoint" type="Deployment:ComponentExternalPortEndpoint"/>
   <xsd:complexType name="ImplementationDependency">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="requiredType" type="xsd:string"/>     
+      <xsd:element name="requiredType" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
@@ -697,7 +697,7 @@
   <xsd:element name="ImplementationDependency" type="Deployment:ImplementationDependency"/>
   <xsd:complexType name="TopLevelPackageDescription">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="package" type="Deployment:PackageConfiguration"/>      
+      <xsd:element name="package" type="Deployment:PackageConfiguration"/>
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional"/>
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>

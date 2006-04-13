@@ -138,7 +138,7 @@ main (int argc, char *argv[])
         CORBA::string_dup ("NodeAppTest_RoundTrip_2");
       Deployment::ComponentInfos_var comp_info_new =
         node_app->install (node_info ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;      
+      ACE_TRY_CHECK;
 
       assert (comp_info_new->length () == 1); //return 1 component objeref
 

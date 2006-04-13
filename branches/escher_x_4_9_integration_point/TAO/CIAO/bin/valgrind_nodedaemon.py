@@ -8,7 +8,7 @@ from os import system
 from os import environ
 
 def parse_args ():
-    
+
     parser = OptionParser (usage="usage: valgrind_nodemanager [options] <port_number>")
 
     parser.add_option ("-v", "--verbose", dest="verbose", action="store_true",
@@ -38,7 +38,7 @@ def parse_args ():
     parser.add_option ("--lc", dest="leak_check", action="store_true",
                        help="Perform a full leak check",
                        default=False)
-    
+
     return parser.parse_args ()
 
 import os
@@ -47,7 +47,7 @@ def main ():
     (option, args) = parse_args ()
 
     ciao_root = environ['CIAO_ROOT']
-    
+
     # Build the valgrind command
     valgrind_command = "valgrind --tool=" + option.valgrind_tool + ' ' +\
                        option.valgrind_args + ' '
@@ -63,7 +63,7 @@ def main ():
 
     # Build the actual command
     command = ""
-    
+
     if option.node_manager:
         command += valgrind_command
 
@@ -74,7 +74,7 @@ def main ():
         command += "-d 60 -s\"" + valgrind_command
     else:
         command += " -s \""
-    
+
     command += ciao_root + "/DAnCE/NodeApplication/NodeApplication" + '"'
 
     print command
@@ -83,5 +83,5 @@ def main ():
 
 if __name__ == "__main__":
     main ()
-    
-    
+
+

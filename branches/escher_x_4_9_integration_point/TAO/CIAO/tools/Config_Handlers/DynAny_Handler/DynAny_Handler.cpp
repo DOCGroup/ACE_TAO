@@ -10,8 +10,6 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    //    DynAny_Handler * DynAny_Handler::instance_ = 0;
-
     DynAny_Handler::DynAny_Handler (void) :
       orb_ (0),
       daf_ (0)
@@ -34,17 +32,6 @@ namespace CIAO
     DynAny_Handler::~DynAny_Handler (void)
     {
     }
-
-    /*
-    DynAny_Handler *
-    DynAny_Handler::instance (void)
-    {
-      if (instance_ == 0)
-        instance_ = new DynAny_Handler (0, 0);
-
-      return instance_;
-    }
-    */
 
     CORBA::ORB_ptr
     DynAny_Handler::orb ()
@@ -94,25 +81,11 @@ namespace CIAO
         case TCKind::tk_float_l:
           retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_float);
           retval->insert_float (CORBA::Float (*value.begin_float ()));
-          /*
-#ifdef __BORLANDC__
-          CORBA::Float (static_cast < float & > (*value.begin_float_ ())));
-#else
-          CORBA::Float (static_cast < ::XMLSchema::float_ const& > (*value.begin_float_ ())));
-#endif
-          */
           break;
 
         case TCKind::tk_double_l:
           retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_double);
           retval->insert_double (CORBA::Double (*value.begin_double ()));
-          /*
-#ifdef __BORLANDC__
-            CORBA::Double (static_cast < double &> (*value.begin_double_ ())));
-#else
-          CORBA::Double (static_cast < ::XMLSchema::double_ const& > (*value.begin_double_ ())));
-#endif
-          */
           break;
 
         case TCKind::tk_boolean_l:
@@ -146,8 +119,6 @@ namespace CIAO
           break;
 
          case TCKind::tk_longdouble_l:
-//           retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_longdouble);
-//           retval->insert_longdouble (CORBA::LongDouble (*value.begin_longdouble ()));
            break;
 
         case TCKind::tk_wchar_l:
@@ -156,8 +127,6 @@ namespace CIAO
           break;
 
         case TCKind::tk_wstring_l:
-          //          retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_wstring);
-          //retval->insert_wstring (CORBA::WString (*value.begin_string ().c_str ()));
           break;
 
         case TCKind::tk_enum_l:
@@ -190,10 +159,83 @@ namespace CIAO
       return retval._retn ();
     }
 
-          //    Any Any_Handler::get_any (const ::CORBA::Any& src)
-          //   {
-          //ACE_ERROR ((LM_ERROR, "Output of Anys not yet supported."));
-          // }
+    Any
+    DynAny_Handler::extract_from_dynany (const CORBA::Any &any)
+    {
+      DynamicAny::DynAny_var dyn = this->daf_->create_dyn_any (any);
+
+      DataValue val;
+
+      switch (dyn->type ()->kind ())
+        {
+        case CORBA::tk_short:
+          val.add_short (dyn->get_short ());
+          return Any (TCKind::tk_short, val);
+
+        case CORBA::tk_long:
+          val.add_long (dyn->get_long ());
+          return Any (TCKind::tk_long, val);
+
+        case CORBA::tk_ushort:
+          val.add_ushort (dyn->get_ushort ());
+          return Any (TCKind::tk_ushort, val);
+
+        case CORBA::tk_ulong:
+          val.add_ulong (dyn->get_ulong ());
+          return Any (TCKind::tk_ulong, val);
+
+        case CORBA::tk_float:
+          val.add_float (dyn->get_float ());
+          return Any (TCKind::tk_float, val);
+
+        case CORBA::tk_double:
+          val.add_double (dyn->get_double ());
+          return Any (TCKind::tk_double, val);
+
+        case CORBA::tk_boolean:
+          val.add_boolean (dyn->get_boolean ());
+          return Any (TCKind::tk_boolean, val);
+
+        case CORBA::tk_octet:
+          val.add_octet (dyn->get_octet ());
+          return Any (TCKind::tk_octet, val);
+
+        case CORBA::tk_string:
+          val.add_string (dyn->get_string ());
+          return Any (TCKind::tk_string, val);
+
+        case CORBA::tk_longlong:
+          val.add_longlong (dyn->get_longlong ());
+          return Any (TCKind::tk_longlong, val);
+
+        case CORBA::tk_ulonglong:
+          val.add_ulonglong (dyn->get_ulonglong ());
+          return Any (TCKind::tk_ulonglong, val);
+
+        case CORBA::tk_longdouble:
+          //          return Any (TCKind::tk_longdouble);
+          // @@MAJO: Need to add longdouble to schema.
+          //val.add_longdouble (dyn->get_longdouble ());
+
+        case CORBA::tk_wchar:
+          //          return Any (TCKind::tk_wchar);
+          // @@MAJO: Need to add wchar to schema
+          //          val.add_wchar (dyn->get_wchar ());
+        case CORBA::tk_char:
+          // return Any (TCKind::tk_char);
+          // @@MAJO: Need to add char into the schema.
+          //          val.add_char (dyn->get_char ());
+
+        case CORBA::tk_wstring:
+        case CORBA::tk_any:
+        case CORBA::tk_TypeCode:
+        case ::CORBA::tk_null:
+        default:
+          ACE_ERROR ((LM_ERROR, "DynAny_Handler: I have no idea how to perform a referse mapping.\n"));
+          throw 1;
+        }
+
+    }
   }
 }
 #include /**/ "ace/post.h"

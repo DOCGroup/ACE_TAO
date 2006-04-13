@@ -10,22 +10,22 @@
 
 module BasicHomes
 {
-  
+
   interface foo_interface {};
-  
+
   component Foo supports foo_interface {};
-  
+
   home FooHome manages Foo
     {
     };
-  
-  
+
+
   interface bar_interface {};
-  
+
   component Bar supports bar_interface {};
-  
+
   home BarHome supports foo_interface manages Bar
     {
     };
-  
+
 };

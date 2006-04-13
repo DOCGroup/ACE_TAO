@@ -67,7 +67,7 @@ BE_GlobalData::parse_args (long &i, char **av)
   switch (av[i][1])
     {
       // Directory where the generated file is to
-      // be kept. Default is the current directory from which 
+      // be kept. Default is the current directory from which
       // <tao_idl3_to_idl2> is called.
       case 'o':
         if (av[i][2] == '\0')
@@ -120,7 +120,7 @@ BE_GlobalData::generator_init (void)
   AST_Generator *gen = 0;
   ACE_NEW_RETURN (gen,
                   AST_Generator,
-                  0);             
+                  0);
   return gen;
 }
 

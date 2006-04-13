@@ -1,3 +1,7 @@
+Thu Apr 13 13:43:19 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * First cut integration point.
+
 Wed Feb 08 15:53:31 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * CIAO version 0.4.9 released.
@@ -5,19 +9,19 @@ Wed Feb 08 15:53:31 2006  Wallace Zhang  <zhangw@ociweb.com>
 Tue Feb  7 16:10:10 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeManager.mpc
-        
+
           Fixed an ordering problem.
 
 Mon Feb  6 19:13:13 UTC 2006  William Otte    <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-        
+
           Fixed an export problem manifesting in VC8.
-        
+
         * performance-tests/Benchmark/Benchmark.mpc
-        
+
           Added an empty IDL_Files section to the servant to prevent
-          nmake from regenerating from the IDL file. 
+          nmake from regenerating from the IDL file.
 
 Mon Feb  6 13:54:39 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 

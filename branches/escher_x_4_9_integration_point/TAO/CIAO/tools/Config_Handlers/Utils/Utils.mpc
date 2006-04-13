@@ -6,7 +6,7 @@ project (CIAO_XML_Utils) : acelib, xerces {
   dynamicflags  = CIAO_XML_UTILS_BUILD_DLL
   macros       += XML_USE_PTHREADS
   requires     += exceptions
-  
+
   Source_Files {
     XML_Schema_Resolver.cpp
     XML_Error_Handler.cpp

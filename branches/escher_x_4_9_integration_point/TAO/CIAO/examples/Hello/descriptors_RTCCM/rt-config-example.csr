@@ -5,17 +5,17 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.dre.vanderbilt.edu/ServerResources CIAOServerResources.xsd"
  id="test_server_resource_id">
-  
+
   <cmdline>
     <arg> -ORBDebugLevel 10 -ORBEndpoint corbaloc://foo/bar</arg>
   </cmdline>
-  
+
   <svcconf>
     <uri>
       svcconf.uri
     </uri>
   </svcconf>
-  
+
   <orbConfigs>
     <resources>
       <threadpool id="threadpool-1">
@@ -57,7 +57,7 @@
         </band>
       </connectionBands>
     </resources>
-    
+
     <policySet id="test_policy_set_id">
       <priorityModel server_priority="1">
         <priority_model>SERVER_DECLARED</priority_model>
@@ -70,6 +70,6 @@
       </priorityModel>
       <threadpool>threadpool-2</threadpool>
     </policySet>
-    
+
   </orbConfigs>
 </CIAO:ServerResources>

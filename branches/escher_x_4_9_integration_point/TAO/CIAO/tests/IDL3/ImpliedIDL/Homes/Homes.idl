@@ -2,7 +2,7 @@
 /**
  * @file Homes.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * Tests equivalent IDL semantics for Homes
  */
 
@@ -13,7 +13,7 @@ module ImplicitHomes
   component Foo
     {
     };
-  
+
   home FooHome manages Foo
     {
     };

@@ -21,6 +21,7 @@
 
 #include "ciao/Packaging_DataC.h"    //for the PackageConfiguration declaration
 #include "tao/CDR.h"                 //for TAO CDR classes
+#include "ace/Message_Block.h"      //for ACE_Message_Block
 
 //int operator<< (ACE_OutputCDR& cdr, const Deployment::PackageConfiguration& pc);
 //int operator>> (ACE_InputCDR& cdr, Deployment::PackageConfiguration& pc);

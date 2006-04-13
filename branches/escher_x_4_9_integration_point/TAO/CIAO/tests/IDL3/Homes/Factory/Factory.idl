@@ -13,23 +13,23 @@ module FactoryHomes
   exception foo_exception
     {
     };
-  
-  interface foo_interface 
+
+  interface foo_interface
     {
     };
-  
-  component Foo supports foo_interface 
+
+  component Foo supports foo_interface
     {
     };
-  
+
   home FooHome manages Foo
     {
       factory FooFactory (in string foo, in short bar) raises (foo_exception);
     };
-  
+
   eventtype food
     {
     };
-  
+
 
 };

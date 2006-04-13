@@ -7,9 +7,9 @@
 
 namespace CIAO
 {
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
       Upgradeable_Context_Impl (
@@ -21,18 +21,18 @@ namespace CIAO
   {
   }
 
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
        ~Upgradeable_Context_Impl (void)
   {
   }
 
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::deactivate_facet (
@@ -50,9 +50,9 @@ namespace CIAO
     ACE_CHECK;
   }
 
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
@@ -65,17 +65,17 @@ namespace CIAO
       this->container_->the_facet_cons_POA ()->reference_to_id
          (reference ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    
+
     this->update_port_activator (oid.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    
+
     this->deactivate_facet (oid.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @file Containers_Info_Map.h
  * @author Gan Deng <dengg@dre.vanderbilt.edu>
  *
@@ -15,6 +15,10 @@
 
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager.h"
+
+//added for the HTTP support
+#include "ace/Message_Block.h"      //for ACE_Message_Block
+
 #include "ciao/DeploymentC.h"
 #include "ace/SString.h"
 #include "CIAO_NAM_Export.h"
@@ -59,7 +63,7 @@ namespace CIAO
 
     //Deployment::ContainerImplementationInfos_var containers_info_;
 
-    typedef 
+    typedef
     ACE_Hash_Map_Manager_Ex <ACE_CString,
                             Deployment::ContainerImplementationInfo *,
                             ACE_Hash<ACE_CString>,
@@ -74,6 +78,54 @@ namespace CIAO
     /// shared components list, passed in from NodeImplementationInfoHandler
     /// class.
     Deployment::ComponentPlans shared_components_;
+
+    /**-------------------------------------------------------------------
+     * HTTP capability
+     * @author Stoyan Paunov
+     *
+     * Purpose: Adding the HTTP access code which will resove
+     * any references to HTTP URLs
+     */
+  protected:
+
+    //directory in which to download the libraries obtained via HTTP
+    ACE_CString HTTP_DOWNLOAD_PATH;
+
+    /// This function checks if the HTTP_DOWNLOAD_PATH is
+    /// in the library load path
+    void
+    update_loader_path (void);
+
+    /// This function resolves any http location references
+    /// in the name of the implementation artifacts
+    /// It returns true on success and false on failure
+
+    bool
+    resolve_http_reference (const char* location,
+                            ACE_CString &name);
+
+    /// function to retvieve a file via HTTP
+    /// stores the file in the passed preallocated ACE_Message_Block
+    /// returns 1 on success
+    ///         0 on error
+
+    bool
+    retrieve_via_HTTP (const char* URL,
+                       ACE_Message_Block &mb);
+
+    /// function that writes out a file to a specified location on the hand disk
+    /// returns 1 on success
+    ///         0 on already exists and replace == false
+    ///         0 on error
+
+    bool
+    write_to_disk (const char* full_path,
+                   ACE_Message_Block& mb,
+                   bool replace = true);
+
+    /// TODO: Fuction to remove the downloaded library to ensure
+    ///       consisterncy in future runs
+
   };
 }
 

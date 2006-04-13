@@ -7,7 +7,7 @@
  * objects of DAnCE toolchain.
  *
  * @author Gan Deng <dengg@dre.vanderbilt.edu>
- */  
+ */
 
 #ifndef DANCE_COMMON_H
 #define DANCE_COMMON_H
@@ -40,7 +40,7 @@ namespace CIAO
 
     bool operator==(const struct _component_binding & comp)
     {
-      if (this->name_ == comp.name_ && 
+      if (this->name_ == comp.name_ &&
           this->plan_uuid_ == comp.plan_uuid_ &&
           this->node_ == comp.node_)
         return true;

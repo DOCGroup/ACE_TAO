@@ -60,7 +60,7 @@ Subject: [area]: [synopsis]
     THE $ACE_ROOT/include/makeinclude/platform_macros.GNU FILE [if you
     use a link to a platform-specific file, simply state which one
     (unless this isn't used in this case, e.g., with Microsoft Visual
-    C++)]: 
+    C++)]:
 
     CONTENTS OF $ACE_ROOT/bin/MakeProjectCreator/config/default.features
     (used by MPC when you generate your own makefiles):

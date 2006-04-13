@@ -1,11 +1,11 @@
 //================================================
 /**
- *  @file  STD_CID_Handler.h
- *
- *  $Id$
- *
- *  @author Ming Xiong <mxiong@dre.vanderbilt.edu>
- */
+*  @file  STD_CID_Handler.h
+*
+*  $Id$
+*
+*  @author Ming Xiong <mxiong@dre.vanderbilt.edu>
+*/
 //================================================
 
 #ifndef CIAO_CONFIG_HANDLERS_STD_CID_HANDLER_H
@@ -25,54 +25,54 @@
 
 namespace CIAO
 {
-  namespace Config_Handlers
-  {
-    class ComponentImplementationDescription;
+namespace Config_Handlers
+{
+class ComponentImplementationDescription;
 
-    /*
-     * @class STD_CID_Handler
-     *
-     * @brief Handler class for <CCMComponentImplementationDescription> types.
-     *
-     * This class defines handler methods to map values from
-     * XSC objects, parsed from the descriptor files, to the
-     * corresponding CORBA IDL type for the schema element.
-     *
-     */
-    class Config_Handlers_Export STD_CID_Handler
-    {
+/*
+* @class STD_CID_Handler
+*
+* @brief Handler class for <CCMComponentImplementationDescription> types.
+*
+* This class defines handler methods to map values from
+* XSC objects, parsed from the descriptor files, to the
+* corresponding CORBA IDL type for the schema element.
+*
+*/
+class Config_Handlers_Export STD_CID_Handler
+{
 
-    public:
+public:
 
-      STD_CID_Handler (XML_Helper *xml_helper)
-        :xml_helper_ (xml_helper)
-      {
-      }
+STD_CID_Handler (XML_Helper *xml_helper)
+:xml_helper_ (xml_helper)
+{
+}
 
-      /// Maps the values from the XSC object
-      /// <ComponentImplementationDescription> to the CORBA IDL type
-      /// <Deployment::ComponentImplementationDescription>.
-      bool component_impl_descr (
-            const ComponentImplementationDescription &desc,
-            ::Deployment::ComponentImplementationDescription &toconfig);
+/// Maps the values from the XSC object
+/// <ComponentImplementationDescription> to the CORBA IDL type
+/// <Deployment::ComponentImplementationDescription>.
+bool component_impl_descr (
+const ComponentImplementationDescription &desc,
+::Deployment::ComponentImplementationDescription &toconfig);
 
-      static IDREF_Base<CORBA::ULong> IDREF;
+static IDREF_Base<CORBA::ULong> IDREF;
 
 //@@Note: This part has yet to be added in the future
 //    ComponentImplementationDescription
 //    component_port_description (
 //      const Deployment::ComponentImplementationDescription& src);
 
-    private:
-      // disable the default constructor
-      STD_CID_Handler ()
-        :xml_helper_ (0)
-      {
-      }
+private:
+// disable the default constructor
+STD_CID_Handler ()
+:xml_helper_ (0)
+{
+}
 
-      XML_Helper *xml_helper_;
-    };
-  }
+XML_Helper *xml_helper_;
+};
+}
 }
 
 #include /**/ "ace/post.h"

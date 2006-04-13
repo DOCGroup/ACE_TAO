@@ -1,4 +1,4 @@
-// $Id$ 
+// $Id$
 
 project(Benchmark_stub): ciao_client_dnc {
 
@@ -32,7 +32,7 @@ project(Benchmark_svnt) : ciao_component_dnc {
 
 project (*server) : taoserver, strategies,ciao_component_dnc {
   after += Benchmark_svnt
-  libs += Benchmark_svnt Benchmark_stub 
+  libs += Benchmark_svnt Benchmark_stub
 
   Source_Files {
     server.cpp
@@ -40,7 +40,7 @@ project (*server) : taoserver, strategies,ciao_component_dnc {
     BenchmarkEC.cpp
     BenchmarkES.cpp
   }
-  
+
   IDL_Files {
 	BenchmarkE.idl
   }

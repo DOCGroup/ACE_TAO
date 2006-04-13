@@ -13,7 +13,7 @@ module CIAO
     component SimpleBinPacker : Planner
     {
     };
-    
+
     home SimpleBinPacker_Home manages SimpleBinPacker
     {
     };

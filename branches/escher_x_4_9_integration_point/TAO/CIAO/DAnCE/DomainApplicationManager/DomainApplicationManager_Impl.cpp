@@ -618,6 +618,12 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
       this->synchronize_shared_components_with_node_managers ();
     }
+  ACE_CATCH (Deployment::StartError,ex)
+    {
+      ACE_DEBUG ((LM_DEBUG, "DAM_Impl:StartError: %s, %s\n",
+      ex.name.in (),
+      ex.reason.in ()));
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -798,6 +804,12 @@ finishLaunch (CORBA::Boolean start,
       // Establish bindings on external/shared components of this deployment plan.
       this->post_finishLaunch ();
     }
+  ACE_CATCH (Deployment::StartError, ex)
+    {
+      ACE_ERROR ((LM_ERROR, "DAM_Impl::finishLaunch - StartError: %s, %s\n",
+      ex.name.in (),
+      ex.reason.in ()));
+   }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
@@ -1024,7 +1036,7 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                                      connections.inout (),
                                      is_getting_all_connections,
                                      is_search_new_plan
-                                                             ACE_ENV_ARG_PARAMETER))
+             ACE_ENV_ARG_PARAMETER))
       return 0;
   }
   return connections._retn ();
@@ -1093,9 +1105,12 @@ get_outgoing_connections_i (const char * instname,
             ACE_CString port_name =
               curr_conn.internalEndpoint[index].portName.in ();
 
-            ACE_DEBUG ((LM_ERROR, "Looking: %s,%s \n",
-                        name.c_str (),
-                        port_name.c_str ()));
+            if (CIAO::debug_level () > 10)
+              {
+                ACE_DEBUG ((LM_ERROR, "Looking: %s,%s \n",
+                            name.c_str (),
+                            port_name.c_str ()));
+              }
 
             bool found = false;
             // Now we have to search in the received
@@ -1115,7 +1130,6 @@ get_outgoing_connections_i (const char * instname,
                     ACE_OS::strcmp (curr_rev_conn.portName.in (),
                                     port_name.c_str ()) == 0)
                   {
-                    //ACE_DEBUG ((LM_DEBUG, "step5\n"));
                     retv.length (len+1);
                     retv[len].instanceName = instname;
                     retv[len].portName = endpoint.portName.in ();
@@ -1277,6 +1291,10 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyApplication");
   ACE_TRY
     {
+      // Passivate shared components also, which should delegate to EM to handle
+      this->passivate_shared_components ();
+
+      // Passivate all components associated with the plan
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
@@ -1300,17 +1318,31 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
                    ("DomainApplicationManager_Impl::destroyApplication",
                      error.c_str ()));
             }
+    ACE_DEBUG ((LM_DEBUG, "DAM_Impl: Invoking passivate on %s\n",
+          this->node_manager_names_[i].c_str ()));
 
           // Invoke ciao_passivate () operation on each cached NodeApplication object.
           ::Deployment::NodeApplication_ptr my_na =
               (entry->int_id_).node_application_.in ();
 
           my_na->ciao_passivate ();
+        }
+
+
+      // Remove all connections associated with the plan
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+        {
+          ACE_DEBUG ((LM_DEBUG, "DAM:DA Second for loop %s\n",
+          this->node_manager_names_[i].c_str ()));
+
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+          this->artifact_map_.find (this->node_manager_names_[i], entry);
 
           Deployment::Connections_var connections =
             this->get_outgoing_connections (
               (entry->int_id_).child_plan_.in (),
-              true, // yes, get *all* the connections
+              true,  // yes, get *all* the connections
               true,  // yes, we search the current plan
               DomainApplicationManager_Impl::External_Connections
                                             ACE_ENV_ARG_PARAMETER);
@@ -1332,35 +1364,36 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               if (this->is_shared_component (connections[j].instanceName.in ()))
                 {
                   // ask EM to remove the binding for us
+                  ACE_CString inst_name = connections[j].instanceName.in ();
                   CIAO::Component_Binding_Info *
-                      binding = this->populate_binding_info (
-                        connections[j].instanceName.in ());
+                    binding = this->populate_binding_info (inst_name.c_str ());
 
                   this->execution_manager_->finalize_global_binding (
                     *binding, false);
 
-                  // If this element is the last one in the sequence
-                  if (j == connections->length () - 1)
-                    {
-                      connections->length (connections->length () - 1);
-                      break;
-                    }
-
-                  // otherwise, remove this element from the list
-                  for (CORBA::ULong k = j; k < connections->length (); ++k)
-                    {
-                      connections[k] = connections [k + 1];
-                      connections->length (connections->length () - 1);
-                    }
+                  // Remove all the connections whose "source" component
+                  // is this component instance from the <connections> list
+                  this->purge_connections (connections,
+                                           inst_name.c_str ());
                 }
             }
 
-          entry->int_id_.node_application_->finishLaunch
-              (connections.in (),
-               true, // "true" ==> start the components
-               false // "false" => remove connections
-               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (connections->length () > 0)
+            {
+              entry->int_id_.node_application_->finishLaunch
+                (connections.in (),
+                 true, // "true" ==> start the components
+                 false // "false" => remove connections
+                 ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+        }
+
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+        {
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+          this->artifact_map_.find (this->node_manager_names_[i], entry);
 
           // To invoke <destroy> operations on NodeManagers is the way to go.
 
@@ -1377,6 +1410,8 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
       // to clean up all the NodeApplicationManagers associated with this deployment
       // plan (one NodeApplicationManager per Node per plan).
 
+      // We should again activate those shared components
+      this->activate_shared_components ();
     }
   ACE_CATCHANY
     {
@@ -1613,4 +1648,106 @@ subtract_connections (const Deployment::Connections & left,
           }
     }
   return retv._retn ();
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+purge_connections (Deployment::Connections_var & connections,
+                   const char * inst)
+{
+  CORBA::ULong total_len = connections->length ();
+
+  for (CORBA::ULong i = 0; i < total_len; ++i)
+    {
+      bool found = false;
+
+      // Remove all the connections whose "source" component
+      // name is <inst>
+      if (ACE_OS::strcmp (connections[i].instanceName.in (),
+                          inst) == 0)
+        {
+          found = true;
+
+          for (CORBA::ULong j = i; j < total_len - 1; ++j)
+            {
+              connections[j] = connections[j + 1];
+            }
+          connections->length (total_len - 1);
+        }
+
+      if (found)
+        this->purge_connections (connections, inst);
+    }
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+passivate_shared_components (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      // For each "external" component...
+      CORBA::ULong length = this->shared_->length ();
+      for (CORBA::ULong j = 0; j < length; ++j)
+        {
+          // Construct <Component_Binding_Info> struct for the component
+          CIAO::Component_Binding_Info *
+              binding = this->populate_binding_info (
+                this->shared_[j].name.in (),
+                this->shared_[j].plan_uuid.in ());
+
+          // Invoke <finalize_global_binding> on ExecutionManager
+          this->execution_manager_->passivate_shared_components (
+            *binding);
+
+          delete binding;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::passivate_shared_components.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+activate_shared_components (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      // For each "external" component...
+      CORBA::ULong length = this->shared_->length ();
+      for (CORBA::ULong j = 0; j < length; ++j)
+        {
+          // Construct <Component_Binding_Info> struct for the component
+          CIAO::Component_Binding_Info *
+              binding = this->populate_binding_info (
+                this->shared_[j].name.in (),
+                this->shared_[j].plan_uuid.in ());
+
+          // Invoke <finalize_global_binding> on ExecutionManager
+          this->execution_manager_->activate_shared_components (
+            *binding);
+
+          delete binding;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::activate_shared_components.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
 }

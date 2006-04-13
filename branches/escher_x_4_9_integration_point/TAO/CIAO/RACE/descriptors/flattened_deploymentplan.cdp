@@ -10,7 +10,7 @@
     <label>BasicSP-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
+    <supportedType>IDL:BasicSP/EC:1.0</supportedType>
     <port>
       <name>deployment_stage_port</name>
       <specificType>IDL:RACE/deployment_stage:1.0</specificType>
@@ -22,7 +22,7 @@
       <kind>SimplexReceptacle</kind>
     </port>
   </realizes>
-  
+
   <implementation id="RACE-Interactive_Input_Adapter-mdd">
     <name>RACE-Interactive_Input_Adapter-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
@@ -191,7 +191,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="RACE-Interactive_Input_Adapter_svnt">
     <name>Interactive_Input_Adapter_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -228,7 +228,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="RACE-Plan_Analyzer_svnt">
     <name>Plan_Analyzer_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -265,7 +265,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="RACE-Planner_Manager_svnt">
     <name>Planner_Manager_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -302,7 +302,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="RACE-SimpleBinPacker_svnt">
     <name>SimpleBinPacker_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -339,7 +339,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="RACE-XML_Output_Adapter_svnt">
     <name>XML_Output_Adapter_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -358,4 +358,4 @@
     </execParameter>
   </artifact>
 
-</Deployment:deploymentPlan>  
+</Deployment:deploymentPlan>

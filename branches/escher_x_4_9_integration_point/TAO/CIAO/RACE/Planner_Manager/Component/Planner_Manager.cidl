@@ -13,7 +13,7 @@ module CIAO
 {
   module RACE
   {
-    
+
     composition session Planner_Manager_Impl
     {
       home executor Planner_Manager_Home_Exec

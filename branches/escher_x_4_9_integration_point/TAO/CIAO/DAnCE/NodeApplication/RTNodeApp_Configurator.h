@@ -6,7 +6,7 @@
  * @Brief  This file contains the implementation of
  *         the RTNodeApp_Configurator, a concrete NodeApp_Configurator for
  *         setting up real-time support for NodeApplication.
- *         
+ *
  *
  * @author Nanbor Wang <nanbor@exothermic.txcorp.com>
  *========================================================*/
@@ -31,7 +31,7 @@ namespace CIAO
   /**
    * @class RTNodeApp_Configurator
    *
-   * @brief This class implements a concrete NodeApp_Configurator for 
+   * @brief This class implements a concrete NodeApp_Configurator for
    * setting up the NodeApplication process for RT support.
    **/
   class CIAO_RTNA_Configurator_Export RTNodeApp_Configurator :
