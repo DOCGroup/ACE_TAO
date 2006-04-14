@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -22,12 +22,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// #include "ace/Basic_Types.h"
 
 class ACE_Allocator;
 
 /**
- * @class ACE_Obstack_T
+ * @class ACE_Obstack
  *
  * @brief Define a simple "mark and release" memory allocation utility.
  *
@@ -115,8 +115,6 @@ protected:
   /// Pointer to the current Obchunk.
   class ACE_Obchunk *curr_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Obstack_T.inl"

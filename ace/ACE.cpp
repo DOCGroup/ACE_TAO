@@ -23,9 +23,9 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_TLI.h"
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
+#if defined (VXWORKS)
 extern "C" int maxFiles;
-#endif /* ACE_VXWORKS */
+#endif /* VXWORKS */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ACE.inl"
@@ -40,9 +40,6 @@ ACE_RCSID (ace,
            ACE,
            "$Id$")
 
-
-// Open versioned namespace, if enabled by the user.
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -214,7 +211,7 @@ ACE::select (int width,
 #if !defined (ACE_WIN32)
   if (result > 0)
     readfds.sync ((ACE_HANDLE) width);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN64 */
   return result;
 }
 
@@ -353,7 +350,6 @@ ACE::hash_pjw (const char *str)
   return ACE::hash_pjw (str, ACE_OS::strlen (str));
 }
 
-#if defined (ACE_HAS_WCHAR)
 u_long
 ACE::hash_pjw (const wchar_t *str, size_t len)
 {
@@ -383,7 +379,6 @@ ACE::hash_pjw (const wchar_t *str)
 {
   return ACE::hash_pjw (str, ACE_OS::strlen (str));
 }
-#endif /* ACE_HAS_WCHAR */
 
 #if !defined (ACE_HAS_WINCE)
 ACE_TCHAR *
@@ -622,7 +617,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::recv (handle,
-                        static_cast <char *> (buf) + bytes_transferred,
+                        (char *) buf + bytes_transferred,
                         len - bytes_transferred,
                         flags);
       // Check EOF.
@@ -681,7 +676,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE_OS::recv (handle,
-                        static_cast <char *> (buf) + bytes_transferred,
+                        (char *) buf + bytes_transferred,
                         len - bytes_transferred,
                         flags);
 
@@ -861,7 +856,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE::recv_i (handle,
-                       static_cast <char *> (buf) + bytes_transferred,
+                       (char *) buf + bytes_transferred,
                        len - bytes_transferred);
       // Check EOF.
       if (n == 0)
@@ -919,7 +914,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE::recv_i (handle,
-                       static_cast <char *> (buf) + bytes_transferred,
+                       (char *) buf + bytes_transferred,
                        len - bytes_transferred);
 
       // Check for errors.
@@ -1205,7 +1200,7 @@ ACE::recv_n (ACE_HANDLE handle,
               this_rd_ptr += this_chunk_length;
 
               // Increment iovec counter.
-              ++iovcnt;
+              iovcnt++;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find ACE_IOV_MAX for platforms that do not define it rather
@@ -2014,7 +2009,7 @@ ACE::write_n (ACE_HANDLE handle,
               this_block_ptr += this_chunk_length;
 
               // Increment iovec counter.
-              ++iovcnt;
+              iovcnt++;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find ACE_IOV_MAX for platforms that do not define it rather
@@ -2112,7 +2107,7 @@ ACE::send_n (ACE_HANDLE handle,
               this_block_ptr += this_chunk_length;
 
               // Increment iovec counter.
-              ++iovcnt;
+              iovcnt++;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find ACE_IOV_MAX for platforms that do not define it rather
@@ -2406,7 +2401,7 @@ ACE::format_hexdump (const char *buffer,
             {
               ACE_OS::sprintf (obuf,
                                ACE_LIB_TEXT (" "));
-              ++obuf;
+              obuf++;
             }
           textver[j] = ACE_OS::ace_isprint (c) ? c : '.';
         }
@@ -2434,7 +2429,7 @@ ACE::format_hexdump (const char *buffer,
             {
               ACE_OS::sprintf (obuf,
                                ACE_LIB_TEXT (" "));
-              ++obuf;
+              obuf++;
             }
           textver[i] = ACE_OS::ace_isprint (c) ? c : '.';
         }
@@ -2659,7 +2654,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       need_to_check = 1;
       known_failure = 1;
     }
-#elif defined (ACE_VXWORKS)
+#elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);
 
   // Force the check on VxWorks.  The read handle for "h" is not set,
@@ -2810,6 +2805,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
           /* NOTREACHED */
         }
     }
+  ACE_NOTREACHED (return 0);
 }
 
 // Make the current process a UNIX daemon.  This is based on Stevens
@@ -2940,7 +2936,7 @@ ACE::max_handles (void)
 
 #if defined (_SC_OPEN_MAX)
   return ACE_OS::sysconf (_SC_OPEN_MAX);
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
+#elif defined (VXWORKS)
   return maxFiles;
 #elif defined (FD_SETSIZE)
   return FD_SETSIZE;
@@ -3330,7 +3326,6 @@ ACE::strndup (const char *str, size_t n)
   return ACE_OS::strsncpy (s, str, len + 1);
 }
 
-#if defined (ACE_HAS_WCHAR)
 wchar_t *
 ACE::strndup (const wchar_t *str, size_t n)
 {
@@ -3352,7 +3347,6 @@ ACE::strndup (const wchar_t *str, size_t n)
                         0);
   return ACE_OS::strsncpy (s, str, len + 1);
 }
-#endif /* ACE_HAS_WCHAR */
 
 char *
 ACE::strnnew (const char *str, size_t n)
@@ -3375,7 +3369,6 @@ ACE::strnnew (const char *str, size_t n)
   return ACE_OS::strsncpy (s, str, len + 1);
 }
 
-#if defined (ACE_HAS_WCHAR)
 wchar_t *
 ACE::strnnew (const wchar_t *str, size_t n)
 {
@@ -3396,7 +3389,6 @@ ACE::strnnew (const wchar_t *str, size_t n)
                   0);
   return ACE_OS::strsncpy (s, str, len + 1);
 }
-#endif /* ACE_HAS_WCHAR */
 
 const char *
 ACE::strend (const char *s)
@@ -3407,7 +3399,6 @@ ACE::strend (const char *s)
   return s;
 }
 
-#if defined ACE_HAS_WCHAR
 const wchar_t *
 ACE::strend (const wchar_t *s)
 {
@@ -3416,7 +3407,6 @@ ACE::strend (const wchar_t *s)
 
   return s;
 }
-#endif
 
 char *
 ACE::strnew (const char *s)
@@ -3433,7 +3423,6 @@ ACE::strnew (const char *s)
     return ACE_OS::strcpy (t, s);
 }
 
-#if defined (ACE_HAS_WCHAR)
 wchar_t *
 ACE::strnew (const wchar_t *s)
 {
@@ -3448,7 +3437,18 @@ ACE::strnew (const wchar_t *s)
   else
     return ACE_OS::strcpy (t, s);
 }
-#endif /* ACE_HAS_WCHAR */
+
+void
+ACE::strdelete (char *s)
+{
+  delete [] s;
+}
+
+void
+ACE::strdelete (wchar_t *s)
+{
+  delete [] s;
+}
 
 inline static bool equal_char(char a, char b, bool case_sensitive)
 {
@@ -3503,6 +3503,3 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
 
   return *p == '\0';
 }
-
-// Close versioned namespace, if enabled by the user.
-ACE_END_VERSIONED_NAMESPACE_DECL

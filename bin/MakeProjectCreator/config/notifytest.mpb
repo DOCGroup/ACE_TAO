@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: orbsvcsexe, notification, notification_skel, notification_serv, naming, svc_utils, event_serv, ifr_client, dynamicinterface, messaging, pi, codecfactory, valuetype {
+project: orbsvcsexe, notification, notification_skel, notification_serv, naming, svc_utils {
   after    += NotifyTests_Lib
   libs     += TAO_NotifyTests
   includes += $(TAO_ROOT)/orbsvcs/tests/Notify/lib

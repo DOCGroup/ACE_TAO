@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -14,23 +14,15 @@
 #define TOPOLOGY_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #include "ace/config-all.h"
+
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Versioned_Namespace.h"
-#include "ace/CORBA_macros.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace CORBA
-{
-  class Environment;
-}
 
 namespace TAO_Notify
 {
@@ -76,8 +68,6 @@ public:
 };
 
 } // namespace TAO_Notify
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,15 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Operation_Table.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Operation_Table.h"
 
 /**
  * @class TAO_Perfect_Hash_OpTable
@@ -41,6 +39,8 @@ class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable
   : public TAO_Operation_Table
 {
 public:
+  /// Do nothing constructor.
+  TAO_Perfect_Hash_OpTable (void);
 
   /// Do nothing destrctor.
   virtual ~TAO_Perfect_Hash_OpTable (void);
@@ -68,7 +68,6 @@ private:
                                                 unsigned int len) = 0;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPERATION_TABLE_PERFECT_HASH_H */

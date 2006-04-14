@@ -14,8 +14,7 @@ project(*server): taoserver, tao_qtresource  {
   }
 }
 
-project(*client): taoclient, anytypecode, tao_qtresource {
-  after += *server
+project(*client): taoclient, tao_qtresource {
 
   MOC_Files {
     client.h

@@ -3,6 +3,7 @@
 #include "airplane_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/ACE.h"
 
@@ -22,7 +23,7 @@ Airplane_Client_i::Airplane_Client_i (void)
 int
 Airplane_Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "dn:k:");
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -1,18 +1,16 @@
 // $Id$
 
-#include "tao/RTCORBA/RT_Transport_Descriptor.h"
+#include "RT_Transport_Descriptor.h"
 #include "ace/OS_Memory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTCORBA/RT_Transport_Descriptor.inl"
+#include "RT_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor, "$Id$")
 
-#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
+#include "RT_Transport_Descriptor_Property.h"
 #include "tao/Endpoint.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 {
@@ -114,5 +112,3 @@ TAO_RT_Transport_Descriptor::hash (void) const
 {
   return this->endpoint_->hash ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

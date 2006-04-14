@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -38,7 +38,6 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/RTCORBA/Linear_Priority_Mapping.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO {
 
@@ -203,8 +202,6 @@ class TAO_RTCosScheduling_Export RTCosScheduling_ClientScheduler_i :
 };
 
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

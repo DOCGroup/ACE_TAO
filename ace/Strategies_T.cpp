@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_STRATEGIES_T_CPP
 #define ACE_STRATEGIES_T_CPP
 
@@ -22,7 +20,11 @@
 #include "ace/Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_RCSID (ace,
+           Strategies_T,
+           "$Id$")
+
 
 template<class SVC_HANDLER>
 ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy (void)
@@ -1484,7 +1486,5 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Connect_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Accept_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Strategy)
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_STRATEGIES_T_CPP */

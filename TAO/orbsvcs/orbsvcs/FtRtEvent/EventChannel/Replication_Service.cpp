@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
-#include "orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h"
+#include "Replication_Service.h"
+#include "AMI_Replication_Strategy.h"
+#include "Basic_Replication_Strategy.h"
+#include "FTEC_ORBInitializer.h"
 #include "../Utils/Log.h"
 
 #include "tao/ORBInitializer_Registry.h"
@@ -17,7 +17,6 @@ ACE_RCSID (EventChannel,
            Replication_Service,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
 {
@@ -68,11 +67,11 @@ namespace FTRTEC
     Replication_Strategy* strategy;
     if (ami) {
       ACE_NEW_RETURN (strategy, AMI_Replication_Strategy(threads() > 1), -1);
-      TAO_FTRTEC::Log(3, "AMI replication strategy\n");
+      TAO_FTRTEC::Log(3, ACE_TEXT("AMI replication strategy\n"));
     }
     else {
       ACE_NEW_RETURN (strategy, Basic_Replication_Strategy(threads() > 1), -1);
-      TAO_FTRTEC::Log(3, "Basic replication strategy\n");
+      TAO_FTRTEC::Log(3, ACE_TEXT("Basic replication strategy\n"));
     }
 
      ACE_AUTO_PTR_RESET (replication_strategy, strategy, Replication_Strategy);
@@ -108,7 +107,7 @@ namespace FTRTEC
 
   void Replication_Service::become_primary()
   {
-    TAO_FTRTEC::Log(3, "become_primary\n");
+    TAO_FTRTEC::Log(3, ACE_TEXT("become_primary\n"));
 
     Replication_Strategy* strategy =
       replication_strategy->make_primary_strategy();
@@ -170,41 +169,35 @@ namespace FTRTEC
   int  Replication_Service::acquire_read (void)
   {
     int r =  replication_strategy->acquire_read();
-    TAO_FTRTEC::Log(3, "Read Lock acquired %d\n", r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Read Lock acquired %d\n"), r);
     return r;
   }
 
   int  Replication_Service::acquire_write (void)
   {
     int r= replication_strategy->acquire_write();
-    TAO_FTRTEC::Log(3, "Write Lock acqured %d\n", r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Write Lock acqured %d\n"), r);
     return r;
   }
 
   int  Replication_Service::release (void)
   {
     int r= replication_strategy->release();
-    TAO_FTRTEC::Log(3, "Lock Released %d\n", r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Lock Released %d\n"), r);
     return r;
   }
 
   int Replication_Service::threads() const {
     return FTRTEC::threads;
   }
+
+  ACE_FACTORY_DEFINE (TAO_FTRTEC, Replication_Service)
+
+  ACE_STATIC_SVC_DEFINE (Replication_Service,
+    ACE_TEXT ("FTRTEC_Replication"),
+    ACE_SVC_OBJ_T,
+    &ACE_SVC_NAME (Replication_Service),
+    ACE_Service_Type::DELETE_THIS
+    | ACE_Service_Type::DELETE_OBJ,
+    0)
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-ACE_FACTORY_NAMESPACE_DEFINE (
-  TAO_FTRTEC,
-  Replication_Service,
-  FTRTEC::Replication_Service)
-
-ACE_STATIC_SVC_DEFINE (
-  Replication_Service,
-  ACE_TEXT ("FTRTEC_Replication"),
-  ACE_SVC_OBJ_T,
-  &ACE_SVC_NAME (Replication_Service),
-  ACE_Service_Type::DELETE_THIS
-  | ACE_Service_Type::DELETE_OBJ,
-  0)

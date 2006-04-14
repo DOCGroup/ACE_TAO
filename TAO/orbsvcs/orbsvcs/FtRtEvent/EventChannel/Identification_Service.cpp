@@ -1,14 +1,12 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
+#include "Identification_Service.h"
 #include "../Utils/UUID.h"
 
 ACE_RCSID (EventChannel,
            Identification_Service,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {
 
@@ -43,7 +41,7 @@ namespace FTRTEC {
         --argc; ++argv;
         if (argv[0][0] == '-') continue;
         else if (argv[0][0] != '$') {
-          UUID uuid(argv[0]);
+          UUID uuid(ACE_TEXT_TO_CHAR_IN (argv[0]));
           if (!uuid.is_valid())
             ACE_ERROR_RETURN((LM_ERROR, "Invalid Object_ID\n"), -1);
           object_id_.length(16);
@@ -81,20 +79,14 @@ namespace FTRTEC {
   {
     return name_;
   }
+
+  ACE_FACTORY_DEFINE (TAO_FTRTEC, Identification_Service)
+
+  ACE_STATIC_SVC_DEFINE (Identification_Service,
+    ACE_TEXT ("FTRTEC_Identification"),
+    ACE_SVC_OBJ_T,
+    &ACE_SVC_NAME (Identification_Service),
+    ACE_Service_Type::DELETE_THIS
+    | ACE_Service_Type::DELETE_OBJ,
+    0)
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-ACE_FACTORY_NAMESPACE_DEFINE (
-  TAO_FTRTEC,
-  Identification_Service,
-  FTRTEC::Identification_Service)
-
-ACE_STATIC_SVC_DEFINE (
-  Identification_Service,
-  ACE_TEXT ("FTRTEC_Identification"),
-  ACE_SVC_OBJ_T,
-  &ACE_SVC_NAME (Identification_Service),
-  ACE_Service_Type::DELETE_THIS
-  | ACE_Service_Type::DELETE_OBJ,
-  0)

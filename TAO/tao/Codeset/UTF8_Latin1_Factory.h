@@ -5,16 +5,14 @@
 #define UTF8_LATIN1_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "tao/Codeset/codeset_export.h"
+#include "codeset_export.h"
 #include "ace/Service_Config.h"
-#include "tao/Codeset/Codeset_Translator_Factory.h"
+#include "Codeset_Translator_Factory.h"
 
-#include "tao/Codeset/UTF8_Latin1_Translator.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "UTF8_Latin1_Translator.h"
 
 class TAO_Codeset_Export TAO_UTF8_Latin1_Factory
-  : public TAO_Codeset_Translator_Factory
+  : public  TAO_Codeset_Translator_Factory
 {
 public:
   TAO_UTF8_Latin1_Factory ();
@@ -43,8 +41,6 @@ private:
 private:
   TAO_UTF8_Latin1_Translator *translator_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_UTF8_Latin1_Factory)

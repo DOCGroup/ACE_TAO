@@ -1,15 +1,12 @@
 // $Id$
 
-#include "tao/ObjectKey_Table.h"
-#include "tao/ORB_Core.h"
-#include "tao/Refcounted_ObjectKey.h"
+#include "ObjectKey_Table.h"
+#include "ORB_Core.h"
+#include "Refcounted_ObjectKey.h"
 
 ACE_RCSID(tao,
           ObjectKey_Table,
           "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
@@ -31,9 +28,9 @@ TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
           return 1;
         }
       else if (lhs[i] > rhs[i])
-        {
-          return 0;
-        }
+	{
+	  return 0;
+	}
     }
 
   return 0;
@@ -183,4 +180,3 @@ TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

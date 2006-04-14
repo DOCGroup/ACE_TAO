@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 //$Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Event_Handler *
 ACE_Notification_Strategy::event_handler (void)
@@ -27,5 +24,3 @@ ACE_Notification_Strategy::mask (ACE_Reactor_Mask m)
 {
   this->mask_ = m;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

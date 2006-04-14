@@ -16,22 +16,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/RTScheduling/rtscheduler_export.h"
+#include "rtscheduler_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTScheduling/RTScheduler.h"
+#include "RTScheduler.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Current_i;
 class TAO_TSS_Resources;
+
 
 /**
  * @class TAO_DTId_Hash
@@ -83,7 +83,6 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   static ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
   TAO_RTScheduler_Current (void);
-  virtual ~TAO_RTScheduler_Current (void);
 
   void init (TAO_ORB_Core* orb
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -258,7 +257,9 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
                              TAO_RTScheduler_Current_i* prev_current
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  virtual ~TAO_RTScheduler_Current_i (void);
+  virtual ~TAO_RTScheduler_Current_i (void)
+    {
+    };
 
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
@@ -326,7 +327,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   void delete_all_currents (void);
 
   const char* name (void);
-  void name (const char *);
+  void name (char *);
 
   TAO_ORB_Core* orb (void);
 
@@ -363,8 +364,6 @@ public:
           CORBA::Policy_ptr sched_param,
           CORBA::Policy_ptr implicit_sched_param);
 
-  virtual ~DTTask (void);
-
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -383,8 +382,6 @@ public:
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

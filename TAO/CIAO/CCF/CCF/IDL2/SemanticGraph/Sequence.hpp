@@ -5,8 +5,8 @@
 #ifndef CCF_IDL2_SEMANTIC_GRAPH_SEQUENCE_HPP
 #define CCF_IDL2_SEMANTIC_GRAPH_SEQUENCE_HPP
 
+
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
-#include "CCF/IDL2/SemanticGraph/IntExpression.hpp"
 
 namespace CCF
 {
@@ -17,20 +17,13 @@ namespace CCF
       //
       //
       //
-      class Sequence : public virtual Specialization
+      class Sequence : public virtual TypeTemplateSpecialization
       {
       public:
-        Type&
-        type () const
-        {
-          return
-            dynamic_cast<ArgumentsWithType&> (**arguments_begin ()).type ();
-        }
-
         virtual bool
         complete () const
         {
-          return type ().complete ();
+          return specialized ().type ().complete ();
         }
 
         static Introspection::TypeInfo const&
@@ -43,6 +36,8 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
+
+        using TypeTemplateSpecialization::add_edge_right;
       };
 
 
@@ -59,37 +54,6 @@ namespace CCF
         friend class Graph<Node, Edge>;
 
         UnboundedSequence ()
-        {
-          type_info (static_type_info ());
-        }
-      };
-
-
-      //
-      //
-      //
-      class BoundedSequence : public virtual Sequence
-      {
-      public:
-        IntExpression&
-        bound () const
-        {
-          ArgumentsIterator i (arguments_begin ());
-
-          ++i; // Bound is always second to the type.
-
-          return
-            dynamic_cast<IntExpression&> (
-              dynamic_cast<ArgumentsWithValue&> (**i).value ());
-        }
-
-        static Introspection::TypeInfo const&
-        static_type_info ();
-
-      protected:
-        friend class Graph<Node, Edge>;
-
-        BoundedSequence ()
         {
           type_info (static_type_info ());
         }

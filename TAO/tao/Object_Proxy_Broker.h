@@ -30,8 +30,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class InterfaceDef;
@@ -80,8 +78,6 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

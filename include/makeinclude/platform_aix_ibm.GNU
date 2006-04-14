@@ -3,8 +3,8 @@
 # This file is for use with AIX 4.3 and up, using either of the IBM
 # compilers (IBM C/C++ 3.6.6 or Visual Age C++ 5 or 6 batch compiler).
 # If you wish to use the CSet++ compiler, please use platform_aix4_cset++.GNU.
-# Note that as of ACE 5.4, the only supported compilers from IBM are
-# Visual Age C++ 6 and up.
+# Note that as of ACE 6.0, the only supported compiler from IBM will
+# be Visual Age C++ 5 (batch mode only) and up.
 
 debug ?= 1
 distrib ?= 0
@@ -30,7 +30,7 @@ endif
 # from the vacpp compiler newsgroup.
 # It relies on the preprocessor defining __xlC__ to the proper version
 # number of the compiler.
-XLCVERSION := $(shell echo "__xlC__" > ./testxlCvers.cpp;xlC -E ./testxlCvers.cpp | tail -n 1;$(RM) testxlCvers.cpp)
+XLCVERSION := $(shell echo "__xlC__" > ./testxlCvers.cpp;xlC -E ./testxlCvers.cpp | tail -1;$(RM) testxlCvers.cpp)
 #XLCVERSION := $(shell xlC -E ./testAIXCompilerVersion.cpp | tail -1')
 #ACE_AIX_CLEAN := $(shell $(RM) ./testAIXCompilerVersion.cpp)
 
@@ -102,40 +102,24 @@ ifeq ($(XLCVERSION),0x0306)
 # template instances in rules.lib.GNU.
   ibmcxx_build = 1
   rtti = 0
-else    # Visual Age 5 and up
+else    # Visual Age 5 and 6
+  SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
   ifeq ($(XLCVERSION),0x0500)
-    SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
     TEMPINCDIR  = tempinc
-    CCFLAGS    += -qflag=w:w -qonce -qtempinc=$(TEMPINCDIR)
+    CCFLAGS    += -qflag=w:w -qonce -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_PRAGMA
   else
     ifeq ($(XLCVERSION),0x0600)
-      # This is just for the workaround for aio, above. Without it, the
-      # compiler warns that __C99_RESTRICT is reserved. When that workaround
-      # is gone, this ifeq can be removed also. -qflag=w:w is what we want
-      # in the end.
-      CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
+      TEMPINCDIR = tempinc
+      # This is just for the workaround for aio, above. Without it, the compiler
+      # warns that __C99_RESTRICT is reserved. When that workaround is gone, this
+      # ifeq can be removed also. -qflag=w:w is what we want in the end.
       ifeq (502,$(AIX_VERS))
-        CCFLAGS    += -qflag=e:e
+        CCFLAGS    += -qflag=e:e -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
       else
-        CCFLAGS    += -qflag=w:w
+        CCFLAGS    += -qflag=w:w -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
       endif
     else
-      ifeq ($(XLCVERSION),0x0700)
-        CCFLAGS += -qflag=w:w
-	ifeq ($(templates),manual)
-	  CCFLAGS += -qnotempinc -qnotemplateregistry
-        else
-          CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
-        endif
-	# According to documentation, default is -qeh, which is equivalent
-	# to -qeh=v5.  Apparently 6.0 fixed some problems with nested
-	# try-catch blocks.
-	ifeq ($(exceptions),1)
-	  CCFLAGS     += -qeh=v6
-	endif
-      else
-        CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
-      endif
+      CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
     endif
   endif
   DLD         = $(CXX) -qmkshrobj
@@ -145,14 +129,14 @@ else    # Visual Age 5 and up
     CCFLAGS += -q64 -qwarn64
     ARFLAGS := -X64 $(ARFLAGS)
 
-    # This option results in a crash of TAO when building 64bit with
-    # Visual Age 6. No idea why but don't use it when using Visual Age 6.
+    # This option results in a crash of TAO when building 64bit with Visual Age 6. No idea
+    # why but don't use it when using Visual Age 6.
     ifneq ($(XLCVERSION),0x0600)
-     # CCFLAGS += -qstaticinline
+      CCFLAGS += -qstaticinline
     endif
   else
     # Using 32bit the staticinline option works.
-    #CCFLAGS += -qstaticinline
+    CCFLAGS += -qstaticinline
   endif
   CCFLAGS += -qfuncsect
 endif

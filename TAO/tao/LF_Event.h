@@ -15,15 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LF_Follower;
 class TAO_Leader_Follower;
@@ -143,10 +139,8 @@ protected:
   TAO_LF_Follower *follower_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/LF_Event.inl"
+# include "LF_Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

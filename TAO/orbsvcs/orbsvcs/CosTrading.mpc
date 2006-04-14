@@ -1,9 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosTrading_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
+project(CosTrading_IDL) : orbsvcslib, core {
+
   custom_only = 1
-  idlflags   += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
+
+  idlflags += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
 
   IDL_Files {
     CosTrading.idl
@@ -16,8 +18,8 @@ project(CosTrading_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
 project(CosTrading) : orbsvcslib, core {
   sharedname   = TAO_CosTrading
   dynamicflags = TAO_TRADING_BUILD_DLL
-  tagchecks   += Trader
-  after       += CosTrading_IDL
+
+  after += CosTrading_IDL
 
   IDL_Files {
   }
@@ -58,7 +60,6 @@ project(CosTrading) : orbsvcslib, core {
 project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
   sharedname   = TAO_CosTrading_Skel
   dynamicflags = TAO_TRADING_SKEL_BUILD_DLL
-  tagchecks   += Trader
 
   IDL_Files {
   }
@@ -103,7 +104,7 @@ project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
 }
 
 
-project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils, utils, iortable {
+project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils, utils {
   sharedname   = TAO_CosTrading_Serv
   dynamicflags = TAO_TRADING_SERV_BUILD_DLL
   tagchecks   += Trader
@@ -113,12 +114,10 @@ project(CosTrading_Serv) : orbsvcslib, core, trading_skel, dynamicany, svc_utils
   IDL_Files {
   }
 
-  Source_Files {
-    Trader
-  }
-
-  Header_Files {
-    Trader/trading_serv_export.h
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Trader {
+      Trader
+    }
   }
 
   Inline_Files {

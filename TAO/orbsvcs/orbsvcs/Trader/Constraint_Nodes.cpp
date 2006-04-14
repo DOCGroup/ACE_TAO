@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/Trader/Constraint_Nodes.h"
-#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "Constraint_Nodes.h"
+#include "Constraint_Visitors.h"
 
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Managed_Types.h"
@@ -10,8 +10,6 @@
 ACE_RCSID (Trader,
            Constraint_Nodes,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Noop_Constraint::accept (TAO_Constraint_Visitor* visitor)
@@ -927,5 +925,3 @@ TAO_Literal_Constraint::copy (const TAO_Literal_Constraint& lit)
   else
     type_ = TAO_UNKNOWN;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

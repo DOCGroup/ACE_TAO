@@ -2,21 +2,19 @@
 //
 // $Id$
 
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Dispatching.h"
-#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
-#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
+#include "CEC_TypedEventChannel.h"
+#include "CEC_Dispatching.h"
+#include "CEC_TypedConsumerAdmin.h"
+#include "CEC_TypedSupplierAdmin.h"
+#include "CEC_ConsumerControl.h"
+#include "CEC_SupplierControl.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.i"
+#include "CEC_TypedEventChannel.i"
 #endif /* __ACE_INLINE__ */
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_CEC_TypedEventChannel::
@@ -439,6 +437,8 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
         }
       return result;
     }
+  // Should not get here!
+  return -1;
 }
 
 // A supplier is attempting to register its supported_interface.
@@ -503,6 +503,8 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
         }
       return result;
     }
+  // Should not get here!
+  return -1;
 }
 
 // Function creates a NVList and populates it from the parameter information.
@@ -565,4 +567,3 @@ TAO_CEC_TypedEventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

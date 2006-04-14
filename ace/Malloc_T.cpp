@@ -17,8 +17,6 @@
 #include "ace/OS_NS_string.h"
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   : pool_ (0),
@@ -80,8 +78,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
   // addr() call is really not absolutely necessary because of the way
   // ACE_Cached_Mem_Pool_Node's internal structure arranged.
   void *ptr = this->free_list_.remove ()->addr ();
-  if (ptr != 0)
-    ACE_OS::memset (ptr, initial_value, sizeof (T));
+  ACE_OS::memset (ptr, initial_value, sizeof (T));
   return ptr;
 }
 
@@ -153,8 +150,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
   // addr() call is really not absolutely necessary because of the way
   // ACE_Cached_Mem_Pool_Node's internal structure arranged.
   void *ptr = this->free_list_.remove ()->addr ();
-  if (ptr != 0)
-    ACE_OS::memset (ptr, initial_value, chunk_size_);
+  ACE_OS::memset (ptr, initial_value, chunk_size_);
   return ptr;
 }
 
@@ -294,19 +290,17 @@ ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
 
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
-  : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name))
+  : allocator_ (ACE_TEXT_TO_TCHAR_IN (pool_name))
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
 }
 
-#if defined (ACE_HAS_WCHAR)
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const wchar_t *pool_name)
-  : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name))
+  : allocator_ (ACE_TEXT_TO_TCHAR_IN (pool_name))
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
 }
-#endif /* ACE_HAS_WCHAR */
 
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
@@ -1255,6 +1249,4 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::start (void)
   return this->curr_ != 0;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_MALLOC_T_CPP */
+#endif /* ACE_MALLOC_T_C */

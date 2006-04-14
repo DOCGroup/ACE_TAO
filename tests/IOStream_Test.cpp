@@ -189,7 +189,7 @@ client (void *arg = 0)
   // Send a string to the server which it can interpret as a qchar[]
   const char *str = "\"This is a test     string.\"";
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) Client Sending: (%s)\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (str)));
+              ACE_TEXT_TO_TCHAR_IN (str)));
   server << str << endl;
 
   // Allow the server to get the string and echo it to the user. (The
@@ -324,7 +324,7 @@ server (void *arg = 0)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%P|%t) Server Received: (\"%s\")\n"),
-              ACE_TEXT_CHAR_TO_TCHAR ((char *) qbuf)));
+              ACE_TEXT_TO_TCHAR_IN ((char *) qbuf)));
 
   // Give the client time to announce the next test to the user.
   ACE_OS::sleep (2);
@@ -365,7 +365,7 @@ server (void *arg = 0)
         break;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s "),
-                  ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                  ACE_TEXT_TO_TCHAR_IN (buf)));
     }
 
   ACE_DEBUG ((LM_DEBUG,

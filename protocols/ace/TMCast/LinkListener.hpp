@@ -4,7 +4,6 @@
 
 // OS primitives
 #include <ace/OS_NS_string.h>
-#include <ace/OS_NS_stdlib.h>
 #include <ace/Synch.h>
 #include <ace/SOCK_Dgram_Mcast.h>
 #include <ace/Refcounted_Auto_Ptr.h>
@@ -81,7 +80,7 @@ namespace ACE_TMCast
                               this,
                               THR_JOINABLE,
                               &unused,
-                              &thread_) != 0) ACE_OS::abort ();
+                              &thread_) != 0) ::abort ();
     }
 
     ~LinkListener ()
@@ -92,7 +91,7 @@ namespace ACE_TMCast
         control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, 0) != 0) ACE_OS::abort ();
+      if (ACE_OS::thr_join (thread_, 0) != 0) ::abort ();
 
       // cerr << "Link listener is down." << endl;
     }

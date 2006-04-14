@@ -4,7 +4,7 @@
  * @file
  *
  * @brief Specialize the object reference traits so they can be used
- *        in testing.
+ *        in testing. 
  *
  * $Id$
  *
@@ -15,18 +15,18 @@
 #include "testing_counters.hpp"
 #include "object_reference_traits.hpp"
 
-template<typename object_t, typename object_t_var>
+template<typename object_t>
 struct testing_object_reference_traits
-  : public TAO::details::object_reference_traits_base<object_t, object_t_var>
-  , public TAO::details::object_reference_traits_decorator<object_t, object_t_var, testing_object_reference_traits<object_t, object_t_var> >
+  : public TAO::details::object_reference_traits_base<object_t>
+  , public TAO::details::object_reference_traits_decorator<object_t, testing_object_reference_traits<object_t> >
 {
   static call_counter default_initializer_calls;
   static call_counter duplicate_calls;
   static call_counter release_calls;
 
   typedef object_t object_type;
-  typedef object_t_var object_type_var;
-  typedef TAO::details::object_reference_traits<object_t,object_t_var,false> real_traits;
+  typedef typename object_type::_var_type object_type_var;
+  typedef TAO::details::object_reference_traits<object_t,false> real_traits;
 
   static object_type * default_initializer()
   {
@@ -47,29 +47,27 @@ struct testing_object_reference_traits
   }
 };
 
-template<typename object_t,typename object_t_var> call_counter
-testing_object_reference_traits<object_t,object_t_var>::default_initializer_calls;
+template<typename object_t> call_counter
+testing_object_reference_traits<object_t>::default_initializer_calls;
 
-template<typename object_t,typename object_t_var> call_counter
-testing_object_reference_traits<object_t,object_t_var>::duplicate_calls;
+template<typename object_t> call_counter
+testing_object_reference_traits<object_t>::duplicate_calls;
 
-template<typename object_t,typename object_t_var> call_counter
-testing_object_reference_traits<object_t,object_t_var>::release_calls;
+template<typename object_t> call_counter
+testing_object_reference_traits<object_t>::release_calls;
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 namespace details
 {
 
-template<typename object_t, typename object_t_var>
-struct object_reference_traits<object_t,object_t_var,true>
-  : public testing_object_reference_traits<object_t,object_t_var>
+template<typename object_t>
+struct object_reference_traits<object_t,true>
+  : public testing_object_reference_traits<object_t>
 {
 };
 
 } // namespace details
 } // namespace TAO
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_testing_object_reference_traits_hpp

@@ -2,9 +2,6 @@
 //
 // $Id$
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p)
   : p_ (p)
@@ -55,5 +52,3 @@ TAO_ORB_Core_Auto_Ptr::operator *() const
   // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,13 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/Strategies/DIOP_Transport.h"
+#include "DIOP_Transport.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Connection_Handler.h"
-#include "tao/Strategies/DIOP_Acceptor.h"
-#include "tao/Strategies/DIOP_Profile.h"
+#include "DIOP_Connection_Handler.h"
+#include "DIOP_Acceptor.h"
+#include "DIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"
@@ -21,8 +22,6 @@
 #include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (tao, DIOP_Transport, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
@@ -121,7 +120,7 @@ TAO_DIOP_Transport::recv (char *buf,
       ACE_DEBUG ((LM_DEBUG,
                   "TAO_DIOP_Transport::recv_i: received %d bytes from %s:%d %d\n",
                   n,
-                  ACE_TEXT_CHAR_TO_TCHAR (from_addr.get_host_name ()),
+                  ACE_TEXT_TO_TCHAR_IN (from_addr.get_host_name ()),
                   from_addr.get_port_number (),
                   errno));
     }
@@ -167,7 +166,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // The buffer on the stack which will be used to hold the input
   // messages
-  char buf [ACE_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
+  char buf [ACE_MAX_DGRAM_SIZE];
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   (void) ACE_OS::memset (buf,
@@ -212,32 +211,20 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block);
-  size_t mesg_length;
-
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->messaging_object ()->parse_next_message (message_block, 
-                                                     qd,
-                                                     mesg_length) == -1) 
+  if (this->parse_incoming_messages (message_block) == -1)
     return -1;
-
-  if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED)
-    {
-      // parse/marshal error
-      return -1;
-    }
-  
-  if (message_block.length () > mesg_length)
-    {
-      // we read too much data
-      return -1;
-    }
 
   // NOTE: We are not performing any queueing nor any checking for
   // missing data. We are assuming that ALL the data would be got in a
   // single read.
+
+  // Make a node of the message block..
+  TAO_Queued_Data qd (&message_block);
+
+  // Extract the data for the node..
+  this->messaging_object ()->get_message_data (&qd);
 
   // Process the message
   return this->process_parsed_messages (&qd, rh);
@@ -345,10 +332,9 @@ int
 TAO_DIOP_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
 {
-  this->messaging_object_->init (major, minor);
+  this->messaging_object_->init (major,
+                                 minor);
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

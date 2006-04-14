@@ -14,7 +14,7 @@
 #define TAO_PORTABLESERVER_REQUESTPROCESSINGSTRATEGYSERVANTACTIVATORFACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +24,6 @@
 #include "tao/PortableServer/RequestProcessingStrategyFactory.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -44,14 +42,11 @@ namespace TAO
         RequestProcessingStrategy *strategy
         ACE_ENV_ARG_DECL);
     };
+
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
-ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
-
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

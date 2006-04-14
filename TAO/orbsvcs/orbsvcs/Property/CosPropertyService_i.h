@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Property/property_serv_export.h"
+#include "orbsvcs/Property/property_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,11 +33,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
-class TAO_Property_Serv_Export CosProperty_Hash_Key
+class TAO_Property_Export CosProperty_Hash_Key
 {
   // = TITLE
   //     Key for the Hash Table. The EXT_ID of the
@@ -72,7 +70,7 @@ public:
   // Storage pointer.
 };
 
-class TAO_Property_Serv_Export CosProperty_Hash_Value
+class TAO_Property_Export CosProperty_Hash_Value
 {
   // = TITLE
   //     This will be the value part in the Hash_Table. The INT_ID of
@@ -109,7 +107,7 @@ class TAO_PropertySet;
 
 // ============================================================================
 
-class TAO_Property_Serv_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
+class TAO_Property_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySet class objects.
@@ -162,7 +160,7 @@ class TAO_PropertySetDef;
 
 // ============================================================================
 
-class TAO_Property_Serv_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
+class TAO_Property_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySetDef objects.
@@ -208,7 +206,7 @@ private:
 
 // ============================================================================
 
-class TAO_Property_Serv_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
+class TAO_Property_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
 {
   // = TITLE
   //    Gives operations for defining, deleting, enumerating and
@@ -365,7 +363,7 @@ protected:
 
 // ============================================================================
 
-class TAO_Property_Serv_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
+class TAO_Property_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
                                               public virtual TAO_PropertySet
 {
   // = TITLE
@@ -488,7 +486,7 @@ public:
 
 // ============================================================================
 
-class TAO_Property_Serv_Export TAO_PropertyNamesIterator
+class TAO_Property_Export TAO_PropertyNamesIterator
   : public virtual POA_CosPropertyService::PropertyNamesIterator
 {
   // = TITLE
@@ -549,7 +547,7 @@ private:
 
 // ============================================================================
 
-class TAO_Property_Serv_Export TAO_PropertiesIterator
+class TAO_Property_Export TAO_PropertiesIterator
   : public virtual POA_CosPropertyService::PropertiesIterator
 {
   // = TITLE
@@ -609,8 +607,6 @@ private:
   COSPROPERTY_HASH_ITERATOR iterator_;
   // The iterator object.
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

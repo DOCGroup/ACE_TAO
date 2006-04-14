@@ -15,21 +15,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PS_CurrentC.h"
 #include "tao/LocalObject.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -38,10 +36,12 @@ namespace TAO
     class POA_Current_Impl;
 
     class TAO_PortableServer_Export POA_Current
-      : public PortableServer::Current
-      , public TAO_Local_RefCounted_Object
+      : public PortableServer::Current,
+        public TAO_Local_RefCounted_Object
     {
     public:
+      /// Constructor
+      POA_Current (void);
 
       /**
        * Returns the POA on which the current request is being invoked.
@@ -58,19 +58,6 @@ namespace TAO
        * invoked in the context of an upcall.
        */
       PortableServer::ObjectId *get_object_id (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::Current::NoContext));
-
-      /**
-       * This operation returns a locally manufactured reference to the object
-       * in the context of which it is called. If called outside the context
-       * of a POA dispatched operation, a NoContext exception is raised.
-       * @note This reference is not guaranteed to be identical to the original
-       * reference the client used to make the invocation, and calling the
-       * Object::is_equivalent operation to compare the two references may not
-       * necessarily return true.
-       */
-      CORBA::Object_ptr get_reference (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::Current::NoContext));
 
@@ -93,11 +80,13 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__ACE_INLINE__)
+# include "POA_Current.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

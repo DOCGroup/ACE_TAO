@@ -1,4 +1,5 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
+
 
 //=============================================================================
 /**
@@ -6,7 +7,8 @@
  *
  *  $Id$
  *
- *  IIOP profile specific processing.
+ *   IIOP profile specific processing
+ *
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
@@ -25,8 +27,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IIOP_Endpoint.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO IIOP_Profile concrete Profile definitions
 /**
@@ -169,8 +169,5 @@ protected:
   //@@ TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_END
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_IIOP_PROFILE_H */

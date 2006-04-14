@@ -15,7 +15,13 @@
 #ifndef TAO_UTILS_SERVER_MAIN_T_CPP
 #define TAO_UTILS_SERVER_MAIN_T_CPP
 
-#include "tao/Utils/Server_Main.h"
+#include "Server_Main.h"
+
+
+ACE_RCSID (Utils,
+           Server_Main,
+           "$Id$")
+
 
 #include "tao/ORB.h"
 
@@ -23,8 +29,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename SERVANT>
 TAO::Utils::Server_Main<SERVANT>::Server_Main (const char * name)
@@ -129,7 +133,5 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
   ACE_ENDTRY;
   return result;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif //TAO_UTILS_SERVER_MAIN_T_CPP

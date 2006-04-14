@@ -97,7 +97,6 @@ sub Build_All ()
             return if $Status != 0 && !$Ignore_errors;
         }
     }
-    print STDERR "ERROR: No configurations have been build\n" if ($count == 0);
 }
 
 

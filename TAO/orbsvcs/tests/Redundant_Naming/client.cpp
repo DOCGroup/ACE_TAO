@@ -21,6 +21,7 @@
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Simple_Naming,
@@ -83,15 +84,17 @@ My_Test_Object::id (CORBA::Short id ACE_ENV_ARG_DECL_NOT_USED)
 // This function runs the test.
 
 int
-main (int argc, ACE_TCHAR **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int c_breath = 4;
   int c_depth = 4;
   int o_breath = 4;
-  ACE_TCHAR *ns1ref = 0;
-  ACE_TCHAR *ns2ref = 0;
+  char *ns1ref = 0;
+  char *ns2ref = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
+  ACE_Get_Arg_Opt<char> get_opts (convert.get_argc(), convert.get_ASCII_argv(), "b:d:o:p:q:");
   int c;
   int i;
 
@@ -153,7 +156,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_TRY_EX(bl_a)
   {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
 
     // ior's are specified for the name servers through a commandline
     // option or a file.
@@ -161,7 +164,7 @@ main (int argc, ACE_TCHAR **argv)
     // Resolve the first name server
 
     CORBA::Object_var ns1obj = orb->string_to_object (
-                            ACE_TEXT_ALWAYS_CHAR (ns1ref) ACE_ENV_ARG_PARAMETER);
+                            ACE_TEXT_TO_CHAR_IN (ns1ref) ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_a);
 
     if (CORBA::is_nil (ns1obj.in ()))
@@ -177,7 +180,7 @@ main (int argc, ACE_TCHAR **argv)
     // Resolve the second name server
 
     CORBA::Object_var ns2obj = orb->string_to_object (
-                            ACE_TEXT_ALWAYS_CHAR (ns2ref) ACE_ENV_ARG_PARAMETER);
+                            ACE_TEXT_TO_CHAR_IN (ns2ref) ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_a);
 
     if (CORBA::is_nil (ns2obj.in ()))

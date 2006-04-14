@@ -62,7 +62,7 @@ namespace MyImpl
     int done_;
 
     /// The timer id we are waiting.
-    long tid_;
+    int tid_;
 
     EC_exec_i *pulse_callback_;
 

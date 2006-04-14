@@ -12,8 +12,6 @@ ACE_RCSID (ace,
 
 // ****************************************************************
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 int ACE_OutputCDR::wchar_maxbytes_ = sizeof (ACE_CDR::WChar);
 
 ACE_OutputCDR::ACE_OutputCDR (size_t size,
@@ -35,9 +33,7 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
              ACE_Time_Value::max_time,
              data_block_allocator,
              message_block_allocator),
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
      current_alignment_ (0),
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
      current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
@@ -71,9 +67,7 @@ ACE_OutputCDR::ACE_OutputCDR (char *data, size_t size,
              ACE_Time_Value::max_time,
              data_block_allocator,
              message_block_allocator),
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
      current_alignment_ (0),
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
      current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
@@ -94,9 +88,7 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
                               ACE_CDR::Octet major_version,
                               ACE_CDR::Octet minor_version)
   :  start_ (data->data_block ()->duplicate ()),
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
      current_alignment_ (0),
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
      current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
@@ -137,12 +129,8 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       size_t cursize = this->current_->size ();
       if (this->current_->cont () != 0)
         cursize = this->current_->cont ()->size ();
-      size_t minsize = size;
 
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
-      minsize += ACE_CDR::MAX_ALIGNMENT;
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
-
+      size_t minsize = size + ACE_CDR::MAX_ALIGNMENT;
       // Make sure that there is enough room for <minsize> bytes, but
       // also make it bigger than whatever our current size is.
       if (minsize < cursize)
@@ -151,7 +139,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       const size_t newsize = ACE_CDR::next_size (minsize);
 
       this->good_bit_ = false;
-      ACE_Message_Block* tmp = 0;
+      ACE_Message_Block* tmp;
       ACE_NEW_RETURN (tmp,
                       ACE_Message_Block (newsize,
                                          ACE_Message_Block::MB_DATA,
@@ -166,19 +154,17 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
                       -1);
       this->good_bit_ = true;
 
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // The new block must start with the same alignment as the
       // previous block finished.
       ptrdiff_t tmpalign =
         ptrdiff_t(tmp->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
       ptrdiff_t curalign =
         ptrdiff_t(this->current_alignment_) % ACE_CDR::MAX_ALIGNMENT;
-      ptrdiff_t offset = curalign - tmpalign;
+      int offset = curalign - tmpalign;
       if (offset < 0)
         offset += ACE_CDR::MAX_ALIGNMENT;
-      tmp->rd_ptr (static_cast<size_t> (offset));
+      tmp->rd_ptr (offset);
       tmp->wr_ptr (tmp->rd_ptr ());
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
 
       // grow the chain and set the current block.
       tmp->cont (this->current_->cont ());
@@ -201,7 +187,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
       return (this->good_bit_ = false);
     }
   if (static_cast<ACE_CDR::Short> (major_version_) == 1
-      && static_cast<ACE_CDR::Short> (minor_version_) == 2)
+          && static_cast<ACE_CDR::Short> (minor_version_) == 2)
     {
       ACE_CDR::Octet len =
         static_cast<ACE_CDR::Octet> (ACE_OutputCDR::wchar_maxbytes_);
@@ -210,24 +196,24 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
           if (ACE_OutputCDR::wchar_maxbytes_ == sizeof(ACE_CDR::WChar))
             return
               this->write_octet_array (
-                                       reinterpret_cast<const ACE_CDR::Octet*> (&x),
-                                       static_cast<ACE_CDR::ULong> (len));
+                reinterpret_cast<const ACE_CDR::Octet*> (&x),
+                static_cast<ACE_CDR::ULong> (len));
           else
             if (ACE_OutputCDR::wchar_maxbytes_ == 2)
               {
                 ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
                 return
                   this->write_octet_array (
-                                           reinterpret_cast<const ACE_CDR::Octet*> (&sx),
-                                           static_cast<ACE_CDR::ULong> (len));
+                    reinterpret_cast<const ACE_CDR::Octet*> (&sx),
+                    static_cast<ACE_CDR::ULong> (len));
               }
             else
               {
                 ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
                 return
                   this->write_octet_array (
-                                           reinterpret_cast<const ACE_CDR::Octet*> (&ox),
-                                           static_cast<ACE_CDR::ULong> (len));
+                    reinterpret_cast<const ACE_CDR::Octet*> (&ox),
+                    static_cast<ACE_CDR::ULong> (len));
               }
         }
     }
@@ -324,7 +310,7 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
       }
     else if (this->write_ulong (1))
       return this->write_wchar (0);
-  return (this->good_bit_ = false);
+   return (this->good_bit_ = false);
 }
 
 ACE_CDR::Boolean
@@ -361,7 +347,7 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           continue;
         }
 
-      ACE_Message_Block* cont = 0;
+      ACE_Message_Block* cont;
       this->good_bit_ = false;
       ACE_NEW_RETURN (cont,
                       ACE_Message_Block (i->data_block ()->duplicate ()),
@@ -378,10 +364,8 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           this->current_->cont (cont);
           this->current_ = cont;
           this->current_is_writable_ = false;
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
           this->current_alignment_ =
             (this->current_alignment_ + cont->length ()) % ACE_CDR::MAX_ALIGNMENT;
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
         }
       else
         {
@@ -739,14 +723,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     wchar_translator_ (rhs.wchar_translator_)
 
 {
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
   char *incoming_start = ACE_ptr_align_binary (rhs.start_.base (),
                                                ACE_CDR::MAX_ALIGNMENT);
-#else
-  char *incoming_start = rhs.start_.base ();
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
 
   const size_t newpos =
     (rhs.start_.rd_ptr() - incoming_start)  + offset;
@@ -773,14 +753,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     wchar_translator_ (rhs.wchar_translator_)
 
 {
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
   char *incoming_start = ACE_ptr_align_binary (rhs.start_.base (),
                                                ACE_CDR::MAX_ALIGNMENT);
-#else
-  char *incoming_start = rhs.start_.base ();
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
 
   const size_t newpos =
     rhs.start_.rd_ptr() - incoming_start;
@@ -811,12 +787,8 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
     char_translator_ (rhs.char_translator_),
     wchar_translator_ (rhs.wchar_translator_)
 {
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
   char *buf = ACE_ptr_align_binary (rhs.start_.base (),
                                     ACE_CDR::MAX_ALIGNMENT);
-#else
-  char *buf = rhs.start_.base ();
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
 
   size_t rd_offset = rhs.start_.rd_ptr () - buf;
   size_t wr_offset = rhs.start_.wr_ptr () - buf;
@@ -1669,5 +1641,3 @@ operator>> (ACE_InputCDR &is, ACE_CString &x)
   is.read_string (x);
   return is.good_bit ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

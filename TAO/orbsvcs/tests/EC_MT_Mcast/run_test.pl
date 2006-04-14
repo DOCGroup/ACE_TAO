@@ -22,22 +22,10 @@ $T1 = new PerlACE::Process ("MCast",
 $T2 = new PerlACE::Process ("MCast",
                             "-m $mcast_address -ORBSvcConf $svc_conf");
 
-$sp1 = $T1->Spawn ();
+$T1->Spawn ();
+$T2->Spawn ();
 
-if ($sp1 != 0) {
-    print STDERR "ERROR: could not spawn MCast, returned $sp1\n";
-    exit 1;
-}
-
-@sp2 = $T2->Spawn ();
-
-if ($sp2 != 0) {
-    print STDERR "ERROR: could not spawn MCast, returned $sp2\n";
-    $T1->Kill ();
-    exit 1;
-}
-
-$test1 = $T1->WaitKill (300);
+$test1 = $T1->WaitKill (600);
 
 if ($test1 != 0) {
     print STDERR "ERROR: test 1 returned $test1\n";

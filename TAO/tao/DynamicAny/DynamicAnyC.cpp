@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/DynamicAny/DynamicAny.h"
+#include "DynamicAny.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -39,8 +39,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -1880,5 +1878,3 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

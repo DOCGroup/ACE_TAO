@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  * @file ECG_Mcast_EH.h
  *
@@ -29,12 +28,10 @@
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
-#include "orbsvcs/Event/ECG_Adapters.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include /**/ "event_serv_export.h"
+#include "ECG_Adapters.h"
+#include "EC_Lifetime_Utils.h"
+#include "EC_Lifetime_Utils_T.h"
 
 /**
  * @class TAO_ECG_Mcast_EH
@@ -283,10 +280,8 @@ private:
   TAO_EC_Auto_Command<Observer_Disconnect_Command> auto_observer_disconnect_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Mcast_EH.i"
+#include "ECG_Mcast_EH.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

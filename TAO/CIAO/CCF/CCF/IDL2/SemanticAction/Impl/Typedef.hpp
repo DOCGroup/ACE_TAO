@@ -25,22 +25,13 @@ namespace CCF
           begin (IdentifierPtr const& id);
 
           virtual void
-          begin_unbounded_seq (IdentifierPtr const& id);
-
-          virtual void
-          begin_bounded_seq (IdentifierPtr const& id);
+          begin_seq (IdentifierPtr const& id);
 
           virtual void
           begin_bounded_string ();
 
           virtual void
           begin_bounded_wstring ();
-
-          virtual void
-          begin_array ();
-
-          virtual void
-          bound ();
 
           virtual void
           declarator (SimpleIdentifierPtr const& id);
@@ -51,7 +42,6 @@ namespace CCF
         private:
           bool define_;
           SemanticGraph::Type* type_;
-          SemanticGraph::Type* array_type_;
         };
       }
     }

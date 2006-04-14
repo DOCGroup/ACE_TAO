@@ -16,11 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-
 ## Makefile.IDL_Cubit_IDL.am
-
-if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
   cubitC.cpp \
@@ -52,16 +48,9 @@ cubit-stamp: $(srcdir)/cubit.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  cubit.idl
-
-endif !BUILD_ACE_FOR_TAO
-
 ## Makefile.IDL_Cubit_Client.am
 
-if !BUILD_ACE_FOR_TAO
-
-noinst_PROGRAMS += client
+noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -84,11 +73,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
-
 ## Makefile.IDL_Cubit_Collocation.am
-
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += collocation_test
 
@@ -121,11 +106,7 @@ collocation_test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
-
 ## Makefile.IDL_Cubit_Server.am
-
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -157,8 +138,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

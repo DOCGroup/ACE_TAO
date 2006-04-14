@@ -76,8 +76,8 @@ Notify_Structured_Push_Consumer::push_structured_event (
   {
     this->client_.consumer_done (this);
     ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too "
-      "many events received (%d).\n"), this->count_));
+      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
+      ACE_TEXT ("many events received (%d).\n"), this->count_));
   }
 
   ACE_ASSERT(ACE_OS::strcmp(event.header.variable_header[0].name.in(), "Id") == 0);
@@ -131,7 +131,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
     this->client_.consumer_done (this);
   }
 
-  ACE_DEBUG((LM_DEBUG, "received %d\n", id));
+  ACE_DEBUG((LM_DEBUG, "received %d\n", expected, id));
 
   // We should receive mepc + 1, because the first event will be in-transit
   // before our sleep causes the notify to queue events.

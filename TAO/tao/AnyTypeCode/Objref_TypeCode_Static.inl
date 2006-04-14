@@ -2,7 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::Objref (
@@ -14,5 +13,3 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::Objref (
   , attributes_ (id, name)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

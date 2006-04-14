@@ -73,8 +73,8 @@ be_interface::be_interface (UTL_ScopedName *n,
                             long nih,
                             AST_Interface **ih_flat,
                             long nih_flat,
-                            bool local,
-                            bool abstract)
+                            idl_bool local,
+                            idl_bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_interface,
@@ -228,8 +228,8 @@ be_interface::compute_full_skel_name (const char *prefix,
   else
     {
       size_t namelen = ACE_OS::strlen (prefix);
-      long first = true;
-      long second = false;
+      long first = I_TRUE;
+      long second = I_FALSE;
       char *item_name = 0;
 
       // In the first loop compute the total length.
@@ -243,7 +243,7 @@ be_interface::compute_full_skel_name (const char *prefix,
             }
           else if (second)
             {
-              first = second = false;
+              first = second = I_FALSE;
             }
 
           // Print the identifier.
@@ -256,11 +256,11 @@ be_interface::compute_full_skel_name (const char *prefix,
               if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
-                  first = false;
+                  first = I_FALSE;
                 }
               else
                 {
-                  second = true;
+                  second = I_TRUE;
                 }
             }
         }
@@ -268,8 +268,8 @@ be_interface::compute_full_skel_name (const char *prefix,
       ACE_NEW (skelname,
                char [namelen+1]);
       skelname[0] = '\0';
-      first = true;
-      second = false;
+      first = I_TRUE;
+      second = I_FALSE;
       ACE_OS::strcat (skelname, prefix);
 
       for (UTL_IdListActiveIterator j (this->name ());
@@ -282,7 +282,7 @@ be_interface::compute_full_skel_name (const char *prefix,
             }
           else if (second)
             {
-              first = second = false;
+              first = second = I_FALSE;
             }
 
           // Print the identifier.
@@ -294,11 +294,11 @@ be_interface::compute_full_skel_name (const char *prefix,
               if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
-                  first = false;
+                  first = I_FALSE;
                 }
               else
                 {
-                  second = true;
+                  second = I_TRUE;
                 }
             }
         }
@@ -541,7 +541,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_ORB_Core *oc" << be_uidt_nl
           << ")" << be_nl
           << ": ";
-
+          
       bool the_check =
         (this->has_mixed_parentage_
          && !this->is_abstract_
@@ -560,7 +560,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
               << "servant"
               << (the_check ? "" : ", oc") << be_uidt_nl
               << ")" << be_uidt;
-
+              
           if (!the_check)
             {
               *os << "," << be_nl
@@ -577,7 +577,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
             this->traverse_inheritance_graph (
                       be_interface::gen_abstract_init_helper,
                       os,
-                      true
+                      I_TRUE
                     );
 
           if (status == -1)
@@ -591,7 +591,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
         {
           *os << be_idt;
         }
-
+        
       if (the_check && !this->is_abstract_)
         {
           *os << "," << be_uidt_nl;
@@ -771,7 +771,7 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
         {
           // Hack to force the generation of the pure virtual ' = 0'
           // at the end of the operation declaration.
-          d->set_local (true);
+          d->set_local (I_TRUE);
 
           if (d->accept (this->visitor_) == -1)
             {
@@ -781,7 +781,7 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
                                 -1);
             }
 
-          d->set_local (false);
+          d->set_local (I_FALSE);
         }
     }
 
@@ -1294,7 +1294,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
                                         be_interface *ancestor,
                                         AST_Decl *d,
                                         const char *prefix,
-                                        bool /* direct */,
+                                        idl_bool /* direct */,
                                         UTL_ExceptList *list,
                                         TAO_OutStream *os)
 {
@@ -1308,7 +1308,8 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
-      << "int num_args" << env_decl << be_uidt_nl
+      << "int num_args" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")";
 
   be_interface::gen_throw_spec (list, os);
@@ -1319,7 +1320,8 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "servant," << be_nl
       << "args," << be_nl
-      << "num_args" << env_arg << be_uidt_nl
+      << "num_args" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}"<< be_nl;
 
@@ -1349,7 +1351,7 @@ be_interface::analyze_parentage (void)
     }
 
   AST_Decl::NodeType nt = this->node_type ();
-  bool can_be_mixed = nt == AST_Decl::NT_interface
+  idl_bool can_be_mixed = nt == AST_Decl::NT_interface
                           || nt == AST_Decl::NT_component
                           || nt == AST_Decl::NT_home;
 
@@ -1383,7 +1385,7 @@ be_code_emitter_wrapper::emit (be_interface *derived_interface,
 int
 be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                                           TAO_OutStream *os,
-                                          bool abstract_paths_only)
+                                          idl_bool abstract_paths_only)
 {
   // Make sure the queues are empty.
   this->insert_queue.reset ();
@@ -1410,7 +1412,7 @@ int
 be_interface::traverse_inheritance_graph (
     TAO_IDL_Inheritance_Hierarchy_Worker &worker,
     TAO_OutStream *os,
-    bool abstract_paths_only
+    idl_bool abstract_paths_only
   )
 {
   AST_Interface *intf = 0;  // element inside the queue
@@ -1924,7 +1926,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request, " << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_dflts << be_uidt_nl
+                      << "void * servant" << be_nl
+                      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                       << ");" << be_uidt;
                 }
               else
@@ -1937,7 +1940,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_decl << be_uidt_nl
+                      << "void * servant" << be_nl
+                      << "ACE_ENV_ARG_DECL" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -1951,7 +1955,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << env_arg << be_uidt_nl
+                      << "impl" << be_nl
+                      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
@@ -1975,7 +1980,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_dflts << be_uidt_nl
+                      << "void * servant" << be_nl
+                      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                       << ");" << be_uidt;
                 }
               else
@@ -1988,7 +1994,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant" << env_decl << be_uidt_nl
+                      << "void * servant" << be_nl
+                      << "ACE_ENV_ARG_DECL" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2002,7 +2009,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl" << env_arg << be_uidt_nl
+                      << "impl" << be_nl
+                      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
@@ -2020,7 +2028,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << env_dflts << be_uidt_nl
+                          << "void * servant" << be_nl
+                          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                           << ");" << be_uidt;
                     }
                   else
@@ -2034,7 +2043,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant" << env_decl << be_uidt_nl
+                          << "void * servant" << be_nl
+                          << "ACE_ENV_ARG_DECL" << be_uidt_nl
                           << ")" << be_uidt_nl
                           << "{" << be_idt_nl;
 
@@ -2048,7 +2058,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "server_request," << be_nl
                           << "servant_upcall," << be_nl
-                          << "impl" << env_arg << be_uidt_nl
+                          << "impl" << be_nl
+                          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
                           << "}";
                     }
@@ -2101,7 +2112,8 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << d->local_name () << " (" << be_idt << be_idt_nl
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
-              << "int num_args" << env_dflts << be_uidt_nl
+              << "int num_args" << be_nl
+              << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
               << ")";
 
           list = be_operation::narrow_from_decl (d)->exceptions ();
@@ -2123,7 +2135,8 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << "_get_" << d->local_name () << " (" << be_idt << be_idt_nl
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
-              << "int num_args" << env_dflts << be_uidt_nl
+              << "int num_args" << be_nl
+              << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
               << ")";
 
           list = attr->get_get_exceptions ();
@@ -2141,7 +2154,8 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
                   << "_set_" << d->local_name () << " (" << be_idt << be_idt_nl
                   << "TAO_Abstract_ServantBase *servant, " << be_nl
                   << "TAO::Argument ** args," << be_nl
-                  << "int num_args" << env_dflts << be_uidt_nl
+                  << "int num_args" << be_nl
+                  << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                   << ")";
 
               list = attr->get_set_exceptions ();
@@ -2197,7 +2211,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
                                                       ancestor,
                                                       d,
                                                       "",
-                                                      true,
+                                                      I_TRUE,
                                                       op->exceptions (),
                                                       os);
             }
@@ -2218,7 +2232,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
                   ancestor,
                   d,
                   "_get_",
-                  true,
+                  I_TRUE,
                   attr->get_get_exceptions (),
                   os
                 );
@@ -2233,7 +2247,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
                       ancestor,
                       d,
                       "_set_",
-                      true,
+                      I_TRUE,
                       attr->get_set_exceptions (),
                       os
                     );
@@ -2259,7 +2273,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
 
   *os << "," << be_idt_nl;
 
-  bool is_rh_base =
+  idl_bool is_rh_base =
     (ACE_OS::strcmp (base->flat_name (), "Messaging_ReplyHandler") == 0);
 
   if (is_rh_base)
@@ -2463,7 +2477,7 @@ be_interface::session_component_child (void)
 
       AST_Decl *session_component =
         const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn,
-                                                                    true);
+                                                                    I_TRUE);
 
       tail_id.destroy ();
       head_id.destroy ();
@@ -2493,7 +2507,7 @@ be_interface::session_component_child (void)
   return this->session_component_child_;
 }
 
-bool
+idl_bool
 be_interface::is_event_consumer (void)
 {
   return

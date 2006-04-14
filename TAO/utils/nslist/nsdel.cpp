@@ -84,7 +84,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         // make a copy
 
         char buf[BUFSIZ];
-        ACE_OS::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (name));
+        ACE_OS::strcpy (buf, ACE_TEXT_TO_CHAR_IN (name));
         char *bp = &buf[0];
         char *cp = 0;
         int ntoks = 0;

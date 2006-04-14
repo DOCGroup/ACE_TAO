@@ -33,7 +33,7 @@
 #define _TAO_IDL_ORIG_IFR_COMPONENTSS_CPP_
 
 
-#include "orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "IFR_ComponentsS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
@@ -67,13 +67,11 @@
 #include "ace/Malloc_Allocator.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/IFRService/IFR_ComponentsS.inl"
+#include "IFR_ComponentsS.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -14691,4 +14689,3 @@ POA_CORBA::ComponentIR::HomeDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif /* ifndef */
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,8 +2,6 @@
 //
 //$Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE CORBA::Boolean
 TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
   CORBA::Octet incoming_major,
@@ -12,7 +10,7 @@ TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
   CORBA::UShort const version_as_whole_num =
     incoming_major << 8 | incoming_minor;
 
-  CORBA::UShort const max_allowable_version =
+  static CORBA::UShort const max_allowable_version =
     TAO_DEF_GIOP_MAJOR << 8 | TAO_DEF_GIOP_MINOR;
 
   // If it's greater than the max, we know it's not allowed.
@@ -31,5 +29,3 @@ TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

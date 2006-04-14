@@ -39,7 +39,7 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
   int tracing = 1;
   program_name = argv[0];
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("df:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("df:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 		       "in local_fifo_client_test\n",
                        rendezvous_fifo),
                       -1);
-  void *cp = 0;
+  void *cp;
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)

@@ -66,8 +66,6 @@
 // TAO_IDL - Generated from
 // C:\ACElatest\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:58
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Traits specializations.
 namespace TAO
 {
@@ -75,8 +73,6 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // C:\ACElatest\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifndef __ACE_INLINE__
 

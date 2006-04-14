@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,13 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   namespace Portable_Server
   {
-    template <class POLICYTYPE, typename POLICYVALUE>
+    template <class POLICYTYPE, class POLICYVALUE>
     void create_policy (
         POLICYTYPE *& policy,
         POLICYVALUE &value,
@@ -45,8 +43,6 @@ namespace TAO
     }
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

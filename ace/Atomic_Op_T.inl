@@ -4,8 +4,6 @@
 
 #include "ace/Guard_T.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 //
 // ACE_Atomic_Op_Ex inline functions
 //
@@ -279,5 +277,3 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::value_i (void)
 {
   return this->impl_.value_i ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

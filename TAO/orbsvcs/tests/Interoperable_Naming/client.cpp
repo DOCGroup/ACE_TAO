@@ -19,9 +19,12 @@
 // ============================================================================
 
 #include "ncontextext_client_i.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -30,7 +33,7 @@ int main (int argc, char *argv [])
 
       NContextExt_Client_i client;
 
-      if (client.init (argc, argv) != 0)
+      if (client.init (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       result = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);

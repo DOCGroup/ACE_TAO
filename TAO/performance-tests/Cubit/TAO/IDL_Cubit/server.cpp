@@ -1,11 +1,10 @@
 // $Id$
 
 #include "ace/config-all.h"
-
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (VXWORKS)
 # undef ACE_MAIN
 # define ACE_MAIN server
-#endif /* ACE_VXWORKS && !__RTP__ */
+#endif /* VXWORKS */
 
 #include "Cubit_Server.h"
 #include "tao/Timeprobe.h"
@@ -25,7 +24,7 @@ ACE_RCSID(IDL_Cubit, server, "$Id$")
 // This runs the server test.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority = ACE_THR_PRI_FIFO_DEF;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,

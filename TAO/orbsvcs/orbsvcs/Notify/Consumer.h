@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,13 +23,10 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "orbsvcs/Notify/Peer.h"
-#include "orbsvcs/Notify/Event.h"
-#include "orbsvcs/Notify/Timer.h"
+#include "Peer.h"
+#include "Event.h"
+#include "Timer.h"
 #include "ace/Event_Handler.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_Proxy;
@@ -175,6 +172,10 @@ protected:
   /// Timer Id.
   long timer_id_;
 
+// todo find some way to use this rather than Request_Queue
+//  /// The Buffering Strategy
+//  TAO_Notify_Batch_Buffering_Strategy* buffering_strategy_;
+//
   /// The Timer Manager that we use.
   TAO_Notify_Timer::Ptr timer_;
 
@@ -184,10 +185,8 @@ private:
   ACE_Auto_Ptr< Request_Queue > pending_events_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Consumer.inl"
+#include "Consumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

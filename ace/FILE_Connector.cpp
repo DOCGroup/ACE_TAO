@@ -11,8 +11,6 @@
 
 ACE_RCSID(ace, FILE_Connector, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_Connector)
 
 void
@@ -67,7 +65,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
       handle = ACE_OS::mkstemp (filename); // mkstemp() replaces "XXXXXX"
 
       if (handle == ACE_INVALID_HANDLE
-          || new_io.addr_.set (ACE_TEXT_CHAR_TO_TCHAR (filename)) != 0)
+          || new_io.addr_.set (ACE_TEXT_TO_TCHAR_IN (filename)) != 0)
         return -1;
 
       new_io.set_handle (handle);
@@ -86,5 +84,3 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   new_io.set_handle (handle);
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

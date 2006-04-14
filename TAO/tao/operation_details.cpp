@@ -1,11 +1,11 @@
 //$Id$
 
-#include "tao/operation_details.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Constants.h"
-#include "tao/Exception_Data.h"
-#include "tao/SystemException.h"
-#include "tao/Argument.h"
+#include "operation_details.h"
+#include "Stub.h"
+#include "ORB_Constants.h"
+#include "Exception_Data.h"
+#include "SystemException.h"
+#include "Argument.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -16,8 +16,6 @@
 ACE_RCSID (tao,
            operation_details,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception *
 TAO_Operation_Details::corba_exception (const char *id
@@ -77,4 +75,3 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
   return true;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,14 +17,17 @@
 // ============================================================================
 
 #include "server.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(CosPropertyService, server, "$Id$")
 
 // Main program
 
 int
-main (int argc, char ** argv)
+ACE_TMAIN (int argc, ACE_TCHAR ** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
@@ -32,8 +35,7 @@ main (int argc, char ** argv)
       TAO_ORB_Manager m;
 
       // Initialize the ORB.
-      m.init_child_poa (argc,
-                        argv,
+      m.init_child_poa (convert.get_argc(), convert.get_ASCII_argv(),
                         "child_poa"
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

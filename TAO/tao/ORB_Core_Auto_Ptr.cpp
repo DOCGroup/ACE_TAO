@@ -1,15 +1,13 @@
-#include "tao/ORB_Core_Auto_Ptr.h"
-#include "tao/ORB_Core.h"
+#include "ORB_Core_Auto_Ptr.h"
+#include "ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core_Auto_Ptr.inl"
+# include "ORB_Core_Auto_Ptr.inl"
 #endif  /* !__ACE_INLINE */
 
 ACE_RCSID (tao,
            ORB_Core_Auto_Ptr,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr (void)
 {
@@ -29,5 +27,3 @@ TAO_ORB_Core_Auto_Ptr::reset (TAO_ORB_Core *p)
 
   this->p_ = p;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

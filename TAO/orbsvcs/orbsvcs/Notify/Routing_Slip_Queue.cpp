@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/Notify/Routing_Slip_Queue.h"
+#include "Routing_Slip_Queue.h"
 
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
@@ -9,9 +9,6 @@
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -108,5 +105,3 @@ namespace TAO_Notify
     }
   }
 } // namespace
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,11 +2,11 @@
 // $Id$
 
 
-#include "tao/Strategies/DIOP_Endpoint.h"
+#include "DIOP_Endpoint.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
@@ -20,12 +20,10 @@ ACE_RCSID (Strategies,
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/DIOP_Endpoint.i"
+# include "DIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
@@ -245,7 +243,4 @@ TAO_DIOP_Endpoint::object_addr (void) const
     }
   return this->object_addr_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

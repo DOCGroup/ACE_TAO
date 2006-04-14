@@ -19,7 +19,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_REACTOR_BUILD_DLL
+# include "ace/ACE_Reactor_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Reactor_Export ACE_Export
+#endif  /* ACE_REACTOR_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,17 +62,14 @@
 # include "ace/Unbounded_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
-#if defined (ACE_HAS_DEV_POLL)
-struct pollfd;
-#elif defined (ACE_HAS_EVENT_POLL)
-struct epoll_event;
-#endif
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward declarations
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
+
+#if defined (ACE_HAS_DEV_POLL)
+struct pollfd;
+#endif
+
 
 /**
  * @class ACE_Dev_Poll_Event_Tuple
@@ -379,9 +381,8 @@ public:
             ACE_Event_Handler *handler,
             ACE_Reactor_Mask mask);
 
-  /// Remove the binding for @c ACE_HANDLE; optionally decrement the associated
-  /// handler's reference count.
-  int unbind (ACE_HANDLE handle, bool decr_refcnt = true);
+  /// Remove the binding of @c ACE_HANDLE in accordance with the <mask>.
+  int unbind (ACE_HANDLE handle);
 
   /// Remove all the (@c ACE_HANDLE, @c ACE_Event_Handler) tuples.
   int unbind_all (void);
@@ -471,7 +472,7 @@ typedef ACE_Noop_Token ACE_DEV_POLL_TOKEN;
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 typedef ACE_Reactor_Token_T<ACE_DEV_POLL_TOKEN> ACE_Dev_Poll_Reactor_Token;
 
-class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
+class ACE_Reactor_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 {
 public:
 
@@ -842,7 +843,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * ACE_Event_Handler object. Returns the number of notifications
+   * <ACE_Event_Handler> object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
@@ -1178,14 +1179,14 @@ protected:
     /// Constructor that will grab the token for us
     Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
-    /// Destructor. This will release the token if it hasn't been
+    /// Destructor. This will release the token if it hasnt been
     /// released till this point
     ~Token_Guard (void);
 
     /// Release the token ..
     void release_token (void);
 
-    /// Returns whether the thread that created this object owns the
+    /// Returns whether the thread that created this object ownes the
     /// token or not.
     int is_owner (void);
 
@@ -1202,20 +1203,18 @@ protected:
     int acquire (ACE_Time_Value *max_wait = 0);
 
   private:
-
-    Token_Guard (void);
-
-  private:
-
     /// The Reactor token.
     ACE_Dev_Poll_Reactor_Token &token_;
 
     /// Flag that indicate whether the thread that created this object
     /// owns the token or not. A value of 0 indicates that this class
-    /// hasn't got the token (and hence the thread) and a value of 1
+    /// hasnt got the token (and hence the thread) and a value of 1
     /// vice-versa.
     int owner_;
 
+  private:
+
+    ACE_UNIMPLEMENTED_FUNC (Token_Guard (void))
   };
 
 };
@@ -1268,7 +1267,6 @@ private:
 
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Dev_Poll_Reactor.inl"

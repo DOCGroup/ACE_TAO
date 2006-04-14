@@ -6,9 +6,6 @@ ACE_RCSID (Log,
            EventLog_i,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
 				PortableServer::POA_ptr poa,
                                 TAO_LogMgr_i &logmgr_i,
@@ -132,5 +129,3 @@ TAO_EventLog_i::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

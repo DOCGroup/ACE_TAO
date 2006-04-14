@@ -51,6 +51,7 @@ namespace CIAO
     /// Destructor
     virtual ~StandardConfigurator_Impl (void);
 
+
     /// This method will call set_attributes on the component that is
     /// being configured, i.e, the template method from
     /// StandardConfigurator interface.

@@ -1,3 +1,5 @@
+/* -*- C++ -*- */
+
 //=============================================================================
 /**
 *  @file    Reconnect_Worker_T.cpp
@@ -11,13 +13,11 @@
 #ifndef RECONNECT_WORKER_CPP
 #define RECONNECT_WORKER_CPP
 
-#include "orbsvcs/Notify/Reconnect_Worker_T.h"
+#include "Reconnect_Worker_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -35,7 +35,5 @@ namespace TAO_Notify
     ACE_CHECK;
   }
 } // namespace TAO_Notify
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* RECONNECT_WORKER_CPP */

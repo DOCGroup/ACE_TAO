@@ -3,13 +3,15 @@
 #ifndef TAO_ESF_PROXY_ADMIN_CPP
 #define TAO_ESF_PROXY_ADMIN_CPP
 
+
+
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_Admin.i"
+#include "ESF_Proxy_Admin.i"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
+#include "ESF_Shutdown_Proxy.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ESF, ESF_Proxy_Admin, "$Id$")
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
@@ -104,7 +106,5 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     }
   ACE_ENDTRY;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PROXY_ADMIN_CPP */

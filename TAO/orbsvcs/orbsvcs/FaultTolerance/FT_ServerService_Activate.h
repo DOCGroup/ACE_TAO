@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  * @file FT_ServerService_Activate.h
@@ -16,7 +14,7 @@
 #define TAO_FT_SERVERACTIVATE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
+#include "FT_ServerORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +22,6 @@
 
 #include "tao/Services_Activate.h"
 #include "ace/Service_Config.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Service_Callbacks;
 
@@ -37,8 +33,7 @@ class TAO_Service_Callbacks;
  * to the ORB.
  *
  */
-class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate
-: public ACE_Service_Object
+class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate : public ACE_Service_Object
 {
 
 public:
@@ -53,13 +48,11 @@ public:
 
 };
 
-static int
-TAO_FT_Requires_ServerService_Activate = TAO_FT_ServerService_Activate::Initializer ();
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE (TAO_FT_ServerService_Activate)
 ACE_FACTORY_DECLARE (TAO_FT_ServerORB, TAO_FT_ServerService_Activate)
+
+static int
+TAO_FT_Requires_ServerService_Activate = TAO_FT_ServerService_Activate::Initializer ();
 
 #include /**/ "ace/post.h"
 #endif /*TAO_FT_ACTIVATE_H*/

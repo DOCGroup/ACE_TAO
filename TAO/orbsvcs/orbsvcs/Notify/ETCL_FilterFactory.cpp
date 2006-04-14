@@ -1,12 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Notify/ETCL_FilterFactory.h"
+#include "ETCL_FilterFactory.h"
 
 ACE_RCSID(Notify, TAO_Notify_ETCL_FilterFactory, "$Id$")
 
-#include "orbsvcs/Notify/ETCL_Filter.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "ETCL_Filter.h"
 
 TAO_Notify_ETCL_FilterFactory::TAO_Notify_ETCL_FilterFactory (void)
 {
@@ -75,7 +73,5 @@ TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)

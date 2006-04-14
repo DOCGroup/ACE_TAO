@@ -5,8 +5,6 @@
 
 #include "ace/SString.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Compare two addresses for equality.
 
 ACE_INLINE bool
@@ -20,7 +18,7 @@ ACE_FILE_Addr::operator == (const ACE_FILE_Addr &sap) const
 ACE_INLINE bool
 ACE_FILE_Addr::operator != (const ACE_FILE_Addr &sap) const
 {
-  return !((*this) == sap);     // This is lazy, of course... ;-)
+  return !((*this) == sap);	// This is lazy, of course... ;-)
 }
 
 // Return the path name used for the rendezvous point.
@@ -30,5 +28,3 @@ ACE_FILE_Addr::get_path_name (void) const
 {
   return this->filename_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

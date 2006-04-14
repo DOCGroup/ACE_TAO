@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -24,9 +24,11 @@
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"
 
-/****************************************************************/
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+# include "ace/OS_NS_string.h"
+#endif
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+/****************************************************************/
 
 /**
  * @class TAO_String_Manager
@@ -48,9 +50,6 @@ public:
 
   /// copy constructor
   TAO_String_Manager (const TAO_String_Manager &);
-
-  /// constructor from const char* makes a copy.
-  TAO_String_Manager (const char *);
 
   /// destructor
   ~TAO_String_Manager (void);
@@ -202,9 +201,6 @@ public:
   /// copy constructor
   TAO_WString_Manager (const TAO_WString_Manager &);
 
-  /// constructor from const whar* makes a copy.
-  TAO_WString_Manager (const CORBA::WChar *);
-
   /// destructor
   ~TAO_WString_Manager (void);
 
@@ -331,7 +327,43 @@ private:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+// Allows for the implicit conversion of TAO_String_Manager to const char*
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+namespace ACE_OS
+{
+  inline size_t
+  strlen (const TAO_String_Manager& str)
+  {
+    return ACE_OS::strlen( str.in() );
+  }
+  inline int
+  strcmp( const TAO_String_Manager& lhs, const char* rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs );
+  }
+  inline int
+  strcmp( const TAO_String_Manager& lhs, const TAO_String_Manager& rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs.in() );
+  }
+
+  inline size_t
+  strlen( const TAO_WString_Manager& str )
+  {
+    return ACE_OS::strlen( str.in() );
+  }
+  inline int
+  strcmp( const TAO_WString_Manager& lhs, const CORBA::WChar* rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs );
+  }
+  inline int
+  strcmp( const TAO_WString_Manager& lhs, const TAO_WString_Manager& rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs.in() );
+  }
+}
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 #if defined (__ACE_INLINE__)
 #include "tao/Managed_Types.i"

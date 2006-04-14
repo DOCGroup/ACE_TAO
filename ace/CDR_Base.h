@@ -45,7 +45,6 @@
 # include "ace/If_Then_Else.h"
 #endif  /* !_MSC_VER || _MSC_VER >= 1310 */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Message_Block;
 
@@ -182,9 +181,15 @@ public:
                             bool,
                             unsigned char>::result_type Boolean;
 # endif  /* _MSC_VER <= 1310 */
+
+# if !defined (ACE_CDR_WCHAR_OVERRIDE) || defined(ACE_USES_WCHAR)
+#  undef ACE_CDR_WCHAR_OVERRIDE
+#  define ACE_CDR_WCHAR_OVERRIDE wchar_t
+# endif 
+
   typedef unsigned char Octet;
   typedef char Char;
-  typedef ACE_WCHAR_T WChar;
+  typedef ACE_CDR_WCHAR_OVERRIDE WChar;
   typedef ACE_INT16 Short;
   typedef ACE_UINT16 UShort;
   typedef ACE_INT32 Long;
@@ -303,8 +308,6 @@ public:
 #   define ACE_CDR_GIOP_MINOR_VERSION 2
 #endif /* ACE_CDR_GIOP_MINOR_VERSION */
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/CDR_Base.inl"

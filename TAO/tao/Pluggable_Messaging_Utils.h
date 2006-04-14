@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
 
@@ -182,12 +181,10 @@ enum TAO_Pluggable_Message_Exception_Type
   TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
 #include "tao/Pluggable_Messaging_Utils.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_PLUGGABLE_MESSAGING_UTILS_H */
+#endif /*TAO_PLUGGABLE_MESSAGING_UTILS_H*/

@@ -6,12 +6,15 @@
 
 #include "TestC.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
-main(
+ACE_TMAIN(
   int    argc,
-  char** argv)
+  ACE_TCHAR** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   CORBA::Boolean testFailed= 0;
@@ -19,7 +22,7 @@ main(
   ACE_TRY
   {
     CORBA::ORB_var
-       orb= CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER );
+       orb= CORBA::ORB_init( convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER );
     ACE_TRY_CHECK;
     CORBA::Object_var
        object= orb->string_to_object( "file://server.ior" ACE_ENV_ARG_PARAMETER );
@@ -105,13 +108,13 @@ main(
     rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aVS->val.in(), bVS->val.in(), cVS->val.in(), rVS->val.in()) );
-    if ((0 != *aVS->val) && (0 != ACE_OS::strcmp(aVS->val, "1"))) {
+    if ((0 != *aVS->val) && (0 != ACE_OS::strcmp(aVS->val.in(), "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
-    else if ((0 != *bVS->val) && (0 != ACE_OS::strcmp(bVS->val, "2"))) {
+    else if ((0 != *bVS->val) && (0 != ACE_OS::strcmp(bVS->val.in(), "2"))) {
        ACE_DEBUG( (LM_ERROR, "b is wrong\n") ); testFailed= 1;}
-    else if ((0 != *cVS->val) && (0 != ACE_OS::strcmp(cVS->val, "4"))) {
+    else if ((0 != *cVS->val) && (0 != ACE_OS::strcmp(cVS->val.in(), "4"))) {
        ACE_DEBUG( (LM_ERROR, "c is wrong\n") ); testFailed= 1;}
-    else if ((0 != *rVS->val) && (0 != ACE_OS::strcmp(rVS->val, "7"))) {
+    else if ((0 != *rVS->val) && (0 != ACE_OS::strcmp(rVS->val.in(), "7"))) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n") ); testFailed= 1;}
     else
        ACE_DEBUG( (LM_INFO, "OK\n") );
@@ -264,22 +267,22 @@ main(
        cB,
        rB;
     ACE_DEBUG( (LM_INFO, "a is ") );
-    if ((aB= (aA>>= aL)))
+    if (aB= (aA>>= aL))
        ACE_DEBUG( (LM_INFO, "%d", aL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );
     ACE_DEBUG( (LM_INFO, ", b is ") );
-    if ((bB= (bA>>= bL)))
+    if (bB= (bA>>= bL))
        ACE_DEBUG( (LM_INFO, "%d", bL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );
     ACE_DEBUG( (LM_INFO, ", c is ") );
-    if ((cB= (cA>>= cL)))
+    if (cB= (cA>>= cL))
        ACE_DEBUG( (LM_INFO, "%d", cL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );
     ACE_DEBUG( (LM_INFO, ", r is ") );
-    if ((rB= (rA>>= rL)))
+    if (rB= (rA>>= rL))
        ACE_DEBUG( (LM_INFO, "%d", rL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );

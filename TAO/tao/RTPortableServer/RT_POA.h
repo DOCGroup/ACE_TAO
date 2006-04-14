@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    RT_POA.h
@@ -17,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/RTPortableServer/rtportableserver_export.h"
+#include "rtportableserver_export.h"
 
 #include "tao/PortableServer/Regular_POA.h"
 #include "tao/orbconf.h"
@@ -25,7 +24,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
-#include "tao/RTPortableServer/RTPortableServerC.h"
+#include "RTPortableServerC.h"
 #undef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -39,15 +38,13 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Thread_Pool;
 class TAO_Thread_Lane;
 class TAO_PriorityBandedConnectionPolicy;
 
-class TAO_RTPortableServer_Export TAO_RT_POA
-  : public virtual RTPortableServer::POA
-  , public virtual TAO_Regular_POA
+class TAO_RTPortableServer_Export TAO_RT_POA :
+  public virtual RTPortableServer::POA,
+  public virtual TAO_Regular_POA
 {
 public:
 
@@ -313,14 +310,12 @@ protected:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "tao/RTPortableServer/RT_POA.i"
+# include "RT_POA.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

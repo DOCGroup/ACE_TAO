@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  * @file ECG_Adapters.h
  *
@@ -17,7 +16,7 @@
 #define TAO_ECG_ADAPTERS_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecUDPAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,11 +25,7 @@
 
 #include "ace/Refcounted_Auto_Ptr.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK_Dgram;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Handler_Shutdown
@@ -73,7 +68,6 @@ public:
 typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown,
   ACE_Null_Mutex> TAO_ECG_Refcounted_Handler;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_ADAPTERS_H */

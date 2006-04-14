@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "tao/PortableServer/LifespanStrategyTransient.h"
+#include "LifespanStrategyTransient.h"
 
 ACE_RCSID (PortableServer,
            Lifespan_Strategy,
@@ -8,12 +8,10 @@ ACE_RCSID (PortableServer,
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
-#include "tao/PortableServer/POAManager.h"
-#include "tao/PortableServer/Root_POA.h"
+#include "POAManager.h"
+#include "Root_POA.h"
 #include "tao/ORB_Constants.h"
-#include "tao/PortableServer/Creation_Time.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Creation_Time.h"
 
 namespace TAO
 {
@@ -115,4 +113,3 @@ namespace TAO
   } /* namespace Portable_Server */
 } /* namespace TAO */
 
-TAO_END_VERSIONED_NAMESPACE_DECL

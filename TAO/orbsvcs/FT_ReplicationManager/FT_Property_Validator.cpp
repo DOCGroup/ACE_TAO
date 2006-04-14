@@ -8,8 +8,6 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO::FT_Property_Validator::FT_Property_Validator (void)
   : replication_style_ (1),
     membership_style_ (1),
@@ -242,5 +240,3 @@ TAO::FT_Property_Validator::validate_criteria (
       ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

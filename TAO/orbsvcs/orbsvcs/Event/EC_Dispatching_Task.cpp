@@ -1,23 +1,20 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Dispatching_Task.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_Defaults.h"
+#include "EC_Dispatching_Task.h"
+#include "EC_ProxySupplier.h"
+#include "EC_Defaults.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Dispatching_Task.i"
+#include "EC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,
            EC_Dispatching,
            "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)
   : queue_full_action_return_value_ (WAIT_TO_EMPTY)
@@ -29,12 +26,13 @@ TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)
 int
 TAO_EC_Simple_Queue_Full_Action::init_svcs (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Simple_Queue_Full_Action::init_svcs()\n"));
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_EC_Simple_Queue_Full_Action);
 }
 
 int
-TAO_EC_Simple_Queue_Full_Action::init (int argc, char* argv[])
+TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
 {
   // Here we look at the args and set an internal flag indicating whether
   // the default action should be to wait for the queue to not be full
@@ -47,9 +45,9 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, char* argv[])
     if (argc == 0)
       break;
 
-    if (ACE_OS::strcasecmp ("wait", argv[0]) == 0)
+    if (ACE_OS::strcasecmp (ACE_TEXT("wait"), argv[0]) == 0)
       this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
-    else if (ACE_OS::strcasecmp ("discard", argv[0]) == 0)
+    else if (ACE_OS::strcasecmp (ACE_TEXT("discard"), argv[0]) == 0)
       this->queue_full_action_return_value_ = SILENTLY_DISCARD;
 #if 0
     else
@@ -77,8 +75,6 @@ TAO_EC_Simple_Queue_Full_Action::queue_full_action (TAO_EC_Dispatching_Task * /*
   return this->queue_full_action_return_value_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
                        ACE_TEXT (TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME),
                        ACE_SVC_OBJ_T,
@@ -88,7 +84,7 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
 ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_EC_Queue::is_full_i (void)
 {
@@ -105,7 +101,7 @@ TAO_EC_Dispatching_Task::svc (void)
     {
       ACE_TRY_NEW_ENV
         {
-          ACE_Message_Block *mb = 0;
+          ACE_Message_Block *mb;
           if (this->getq (mb) == -1)
             if (ACE_OS::last_error () == ESHUTDOWN)
               return 0;
@@ -174,7 +170,11 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
                                    event,
                                    this->data_block_.duplicate (),
                                    this->allocator_);
+  ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): task %@ queue size before putq: %d\n",
+              this, this->the_queue_.message_count ()));
   this->putq (mb);
+  ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): task %@ queue size after putq: %d\n",
+              this, this->the_queue_.message_count ()));
 }
 
 // ****************************************************************
@@ -207,4 +207,3 @@ TAO_EC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, valuetype, pi, pi_server, interceptors {
+  idlflags += -DCORBA3
 
   Source_Files {
     test_i.cpp
@@ -12,8 +13,8 @@ project(*Server): taoserver, valuetype, pi, pi_server, interceptors {
 }
 
 project(*Client): taoclient, valuetype, pi, pi_server, interceptors {
-  after += *Server
-  
+  idlflags += -DCORBA3
+
   Source_Files {
     testC.cpp
     Client_ORBInitializer.cpp

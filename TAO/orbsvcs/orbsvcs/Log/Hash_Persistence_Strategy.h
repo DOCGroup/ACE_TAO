@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -8,7 +8,7 @@
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  @David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
 
@@ -23,8 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Log/Log_Persistence_Strategy.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Hash_Persistence_Strategy
@@ -51,8 +49,6 @@ public:
 
 private:
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   CEC_ConsumerAdmin.h
@@ -23,11 +23,9 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Admin.h"
 
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
-#include "orbsvcs/CosEvent/event_serv_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "CEC_ProxyPushSupplier.h"
+#include "CEC_ProxyPullSupplier.h"
+#include "event_serv_export.h"
 
 class TAO_CEC_EventChannel;
 
@@ -146,10 +144,8 @@ private:
   CORBA::Any event_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.i"
+#include "CEC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

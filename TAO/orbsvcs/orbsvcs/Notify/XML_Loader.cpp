@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/Notify/XML_Loader.h"
-#include "orbsvcs/Notify/Topology_Object.h"
+#include "XML_Loader.h"
+#include "Topology_Object.h"
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/parser/parser/Parser.h"
@@ -18,34 +18,24 @@
 
 using namespace TAO_Notify;
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace TAO_Notify {
-  extern const char TOPOLOGY_ID_NAME[];
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
   {
     CORBA::Long id = 0;
     for (size_t i = 0; i < attrs->getLength (); ++i)
     {
-      const char * name = attrs->getQName (i);
-      const char * value = attrs->getValue (i);
-      if (ACE_OS::strcmp (name,
-                         TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
+      const ACE_TCHAR * name = attrs->getQName (i);
+      const ACE_TCHAR * value = attrs->getValue (i);
+      if (ACE_OS::strcmp (name, TOPOLOGY_ID_NAME) == 0)
       {
         id = ACE_OS::atoi (value);
       }
-      nvp.push_back (NVP (name, value));
+      nvp.push_back (NVP (ACE_TEXT_TO_CHAR_IN(name),
+                          ACE_TEXT_TO_CHAR_IN(value)));
     }
     return id;
   }
 }
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -81,7 +71,7 @@ namespace TAO_Notify
       ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
       // xml input source will take ownership
 
-      if (fstm->open (this->file_name_.c_str ()) == 0)
+      if (fstm->open (ACE_TEXT_TO_TCHAR_IN(this->file_name_.c_str ())) == 0)
       {
         // InputSource takes ownership
         ACEXML_InputSource input (fstm);
@@ -132,7 +122,7 @@ namespace TAO_Notify
     ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
     // xml input source will take ownership
 
-    if (fstm->open (this->file_name_.c_str ()) == 0)
+    if (fstm->open (ACE_TEXT_TO_TCHAR_IN(this->file_name_.c_str ())) == 0)
     {
       // InputSource takes ownership
       ACEXML_InputSource input (fstm);
@@ -180,7 +170,7 @@ namespace TAO_Notify
     if (this->live_)
     {
       ACE_ASSERT (object_stack_.size () > 0);
-      Topology_Object* cur = 0;
+      Topology_Object* cur;
       if (object_stack_.top (cur) == 0)
       {
         ACE_DECLARE_NEW_ENV;
@@ -194,7 +184,7 @@ namespace TAO_Notify
             name
             ));
 
-          ACE_CString cname (name);
+          ACE_CString cname (ACE_TEXT_TO_CHAR_IN(name));
           Topology_Object* next = cur->load_child (
             cname, id, attrs ACE_ENV_ARG_PARAMETER);
           ACE_ASSERT(next != 0);
@@ -203,7 +193,8 @@ namespace TAO_Notify
         }
         ACE_CATCHANY
         {
-          ACEXML_THROW (ACEXML_SAXException (ACE_ANY_EXCEPTION._info ().c_str ()));
+          ACEXML_THROW (ACEXML_SAXException (ACE_TEXT_TO_TCHAR_IN(
+                            ACE_ANY_EXCEPTION._info ().c_str ())));
         }
         ACE_ENDTRY;
       }
@@ -230,5 +221,3 @@ namespace TAO_Notify
   }
 
 } /* namespace TAO_Notify */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -22,12 +22,10 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
-#include "tao/Codeset/Codeset_Translator_Factory.h"
+#include "Codeset_Translator_Factory.h"
 
-#include "tao/Codeset/UTF16_BOM_Translator.h"
-#include "tao/Codeset/codeset_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "UTF16_BOM_Translator.h"
+#include "codeset_export.h"
 
 class TAO_Codeset_Export TAO_UTF16_BOM_Factory
   : public  TAO_Codeset_Translator_Factory
@@ -61,8 +59,6 @@ private:
   TAO_UTF16_BOM_Translator *translator_;
   bool forceBE_;    // force big endian wchar, warray, & wstring
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF16_BOM_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_UTF16_BOM_Factory)

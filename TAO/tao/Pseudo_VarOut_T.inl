@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <typename T>
 ACE_INLINE
 TAO_Pseudo_Var_T<T>::TAO_Pseudo_Var_T (void)
@@ -173,5 +171,3 @@ TAO_Pseudo_Out_T<T,T_var>::operator-> (void)
 {
   return this->ptr_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

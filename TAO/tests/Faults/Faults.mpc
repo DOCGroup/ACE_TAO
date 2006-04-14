@@ -15,7 +15,6 @@ project(*Server): taoserver, minimum_corba {
 }
 
 project(*Middle): taoexe, portableserver, minimum_corba {
-  after += *Server
   IDL_Files {
     test.idl
   }
@@ -29,7 +28,6 @@ project(*Middle): taoexe, portableserver, minimum_corba {
 }
 
 project(*Client): taoexe, portableserver, minimum_corba {
-  after += *Middle
   IDL_Files {
     test.idl
   }
@@ -56,7 +54,6 @@ project(*Ping): taoexe, portableserver, minimum_corba {
 }
 
 project(*Pong): taoexe, portableserver, minimum_corba {
-  after += *Ping
   IDL_Files {
     ping.idl
   }

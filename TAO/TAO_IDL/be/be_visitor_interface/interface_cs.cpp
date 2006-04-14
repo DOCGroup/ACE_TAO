@@ -96,7 +96,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
-          << "const " << node->name () << "_ptr p," << be_nl
+          << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
@@ -339,8 +339,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_nl << be_nl
           << "void" << be_nl
           << node->full_name () << "::ciao_preactivate ("
-          << be_idt << be_idt
-          << env_sngl_not << be_uidt_nl
+          << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
           << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
           << "                 ::Components::CCMException))" << be_uidt_nl
@@ -348,8 +348,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}" << be_nl << be_nl
           << "void" << be_nl
           << node->full_name () << "::ciao_postactivate ("
-          << be_idt << be_idt
-          << env_sngl_not << be_uidt_nl
+          << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
           << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
           << "                 ::Components::CCMException))" << be_uidt_nl
@@ -359,16 +359,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << "::CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
-      << "const char *value";
+      << "const char *value" << be_nl;
 
   if (node->is_local () || node->is_abstract ())
-    {
-      *os << env_not;
-    }
+    *os << "ACE_ENV_ARG_DECL_NOT_USED";
   else
-    {
-      *os << env_decl;
-    }
+    *os << "ACE_ENV_ARG_DECL";
 
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -434,7 +430,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << "return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a ("
           << be_idt << be_idt_nl
-          << "value" << env_arg << be_uidt_nl
+          << "value" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
 
@@ -527,8 +524,9 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
       *os << "::CORBA::Object_ptr";
     }
 
-  *os << " _tao_objref"
-      << (node->is_local () ? env_not : env_decl)
+  *os << " _tao_objref" << be_nl
+      << "ACE_ENV_ARG_DECL"
+      << (node->is_local () ? "_NOT_USED" : "")
       << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -556,7 +554,8 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "\"" << node->repoID () << "\"," << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << env_arg << be_uidt_nl
+          << "_Factory_function_pointer" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_uidt << be_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
@@ -583,7 +582,8 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "\"" << node->repoID () << "\"," << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << env_arg << be_uidt_nl
+          << "_Factory_function_pointer" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_uidt << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
     }

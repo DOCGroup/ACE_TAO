@@ -453,7 +453,7 @@ int TAO::Object_Group_Creator::fini ()
 int TAO::Object_Group_Creator::write_ior_file (const char * outputFile, const char * ior)
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (outputFile, "w");
+  FILE* out = ACE_OS::fopen (outputFile, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", ior);

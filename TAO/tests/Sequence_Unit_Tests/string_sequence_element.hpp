@@ -13,8 +13,6 @@
 
 #include "tao/Basic_Types.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 namespace details
@@ -119,5 +117,4 @@ private:
 } // namespace details
 } // namespace CORBA
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_string_sequence_element_hpp

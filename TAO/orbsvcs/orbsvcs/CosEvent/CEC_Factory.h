@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   CEC_Factory.h
@@ -16,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,13 +23,7 @@
 
 #include "ace/Service_Object.h"
 
-#include "tao/Versioned_Namespace.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -220,8 +213,6 @@ public:
   virtual void
       destroy_supplier_control (TAO_CEC_SupplierControl*) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_FACTORY_H */

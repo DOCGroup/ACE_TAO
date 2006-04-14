@@ -33,7 +33,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class FTRT_ClientORB_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
@@ -79,8 +78,6 @@ private:
   const char *myname_;
   CORBA::Long transaction_depth_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

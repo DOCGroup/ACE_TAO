@@ -1,11 +1,11 @@
 // $Id$
 
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/ValueDef_i.h"
-#include "orbsvcs/IFRService/AttributeDef_i.h"
-#include "orbsvcs/IFRService/OperationDef_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
+#include "Repository_i.h"
+#include "ValueDef_i.h"
+#include "AttributeDef_i.h"
+#include "OperationDef_i.h"
+#include "IFR_Service_Utils.h"
+#include "IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 
@@ -14,7 +14,6 @@ ACE_RCSID (IFRService,
            ValueDef_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueDef_i::TAO_ValueDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -1853,5 +1852,3 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
                                             holder);
   desc.base_value = holder.fast_rep ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

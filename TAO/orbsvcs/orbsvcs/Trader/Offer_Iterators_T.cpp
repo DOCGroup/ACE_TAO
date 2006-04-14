@@ -1,11 +1,11 @@
 // $Id$
 
-#ifndef TAO_OFFER_ITERATORS_T_CPP
-#define TAO_OFFER_ITERATORS_T_CPP
+#ifndef TAO_OFFER_ITERATORS_T_C
+#define  TAO_OFFER_ITERATORS_T_C
 
-#include "orbsvcs/Trader/Offer_Iterators_T.h"
+#include "Offer_Iterators_T.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(Trader, Offer_Iterators_T, "$Id$")
 
 template <class MAP_LOCK_TYPE>
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
@@ -92,6 +92,4 @@ next_n (CORBA::ULong n,
   return static_cast<CORBA::Boolean> (ret_offers != 0);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_REGISTER_OFFER_ITERATOR_CPP */
+#endif /* TAO_REGISTER_OFFER_ITERATOR_C */

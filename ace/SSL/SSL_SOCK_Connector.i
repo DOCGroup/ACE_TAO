@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// SSL_SOCK_Connector.i
 
 ACE_INLINE
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (void)
@@ -24,5 +23,3 @@ ACE_SSL_SOCK_Connector::dump (void) const
   ACE_TRACE ("ACE_SSL_SOCK_Connector::dump");
   this->connector_.dump ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

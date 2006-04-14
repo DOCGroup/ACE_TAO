@@ -110,10 +110,6 @@ PAGE_NOCACHE  */
 #   define MS_SYNC 0x0
 # endif /* !MS_SYNC */
 
-#if defined (ACE_LACKS_MADVISE_PROTOTYPE)
-  int madvise(caddr_t, size_t, int);
-#endif
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

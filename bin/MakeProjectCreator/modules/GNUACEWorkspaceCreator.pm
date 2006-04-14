@@ -76,10 +76,8 @@ sub write_comps {
   my($crlf)    = $self->crlf();
   my(%targnum) = ();
   my($pjs)     = $self->get_project_info();
-  my($named)   = !defined $ENV{MPC_GNUACE_DIRECTORY_DEPS};
   my(@list)    = $self->number_target_deps($self->get_projects(),
-                                           $pjs, \%targnum,
-                                           $named ? 0 : 1);
+                                           $pjs, \%targnum);
 
   ## Print out some preliminary information
   print $fh $crlf,
@@ -89,7 +87,7 @@ sub write_comps {
             "include \$(ACE_ROOT)/include/makeinclude/macros.GNU$crlf",
             $crlf;
 
-  if ($named) {
+  if (defined $ENV{MPC_GNUACE_NAMED_TARGETS}) {
     $self->write_named_targets($fh, $crlf, \%targnum, \@list);
   }
   else {
@@ -238,8 +236,7 @@ sub write_named_targets {
   ## Print out each target separately
   foreach my $project (@$list) {
     my($dname) = $self->mpc_dirname($project);
-    print $fh $crlf, '.PHONY: ', $$trans{$project},
-              $crlf, $$trans{$project}, ':';
+    print $fh $crlf, $$trans{$project}, ':';
     if (defined $$targnum{$project}) {
       foreach my $number (@{$$targnum{$project}}) {
         print $fh " $$trans{$$list[$number]}";

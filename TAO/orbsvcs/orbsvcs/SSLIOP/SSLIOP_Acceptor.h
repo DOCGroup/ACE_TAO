@@ -26,14 +26,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
+#include "IIOP_SSL_Acceptor.h"
+#include "SSLIOP_Connection_Handler.h"
+#include "SSLIOP_Accept_Strategy.h"
 
 #include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
 #include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -45,7 +43,7 @@ namespace TAO
      *
      * @brief The SSLIOP-specific bridge class for the concrete acceptor.
      */
-    class Acceptor
+    class TAO_SSLIOP_Export Acceptor
       : public IIOP_SSL_Acceptor
     {
     public:
@@ -158,10 +156,8 @@ namespace TAO
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.i"
+#include "SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

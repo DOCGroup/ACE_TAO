@@ -20,8 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class IOGR_Maker
 {
 public:
@@ -69,7 +67,5 @@ private:
   TAO_IOP::TAO_IOR_Manipulation_var iorm_;
   FT::TagFTGroupTaggedComponent ft_tag_component_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

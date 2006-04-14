@@ -28,7 +28,7 @@ class Scavenger_Task : public ACE_Task_Base
 {
 public:
   Scavenger_Task (char const * endpoint,
-                  ACE_Barrier * the_barrier,
+                  ACE_Barrier * barrier,
                   int period_in_usecs);
 
   void stop(void);
@@ -37,7 +37,7 @@ public:
 
 private:
   char const * endpoint_;
-  ACE_Barrier * the_barrier_;
+  ACE_Barrier * barrier_;
   int period_in_usecs_;
   ACE_SYNCH_MUTEX mutex_;
   int stopped_;
@@ -47,7 +47,7 @@ class Measuring_Task : public ACE_Task_Base
 {
 public:
   Measuring_Task (char const * endpoint,
-                  ACE_Barrier *the_barrier,
+                  ACE_Barrier *barrier,
                   int iterations,
                   int period_in_usecs);
 
@@ -57,12 +57,12 @@ public:
 
 private:
   char const * endpoint_;
-  ACE_Barrier * the_barrier_;
+  ACE_Barrier * barrier_;
   int iterations_;
   int period_in_usecs_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RT_Class rt_class;
 
@@ -78,19 +78,19 @@ int main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
   int thread_count = 1 + options.nthreads;
-  ACE_Barrier the_barrier (thread_count);
+  ACE_Barrier barrier (thread_count);
 
   int per_thread_period = options.low_priority_period;
   if (options.global_low_priority_rate)
     per_thread_period = options.low_priority_period * options.nthreads;
 
-  Scavenger_Task lo_task (lo_endpoint, &the_barrier,
+  Scavenger_Task lo_task (lo_endpoint, &barrier,
                           per_thread_period);
   lo_task.activate (rt_class.thr_sched_class () | THR_NEW_LWP | THR_JOINABLE,
                     options.nthreads, 1,
                     rt_class.priority_low ());
 
-  Measuring_Task hi_task (hi_endpoint, &the_barrier,
+  Measuring_Task hi_task (hi_endpoint, &barrier,
                           options.iterations,
                           options.high_priority_period);
   hi_task.activate (rt_class.thr_sched_class () | THR_NEW_LWP | THR_JOINABLE,
@@ -122,10 +122,10 @@ int main (int argc, char *argv[])
 // ****************************************************************
 
 Scavenger_Task::Scavenger_Task(char const * endpoint,
-                               ACE_Barrier * the_barrier,
+                               ACE_Barrier * barrier,
                                int period_in_usecs)
   : endpoint_ (endpoint)
-  , the_barrier_ (the_barrier)
+  , barrier_ (barrier)
   , period_in_usecs_ (period_in_usecs)
   , mutex_ ()
   , stopped_ (0)
@@ -142,7 +142,7 @@ Scavenger_Task::stop(void)
 int
 Scavenger_Task::svc(void)
 {
-  this->the_barrier_->wait ();
+  this->barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting scavenger thread\n"));
 
   ACE_SOCK_Stream stream;
@@ -194,12 +194,12 @@ Scavenger_Task::svc(void)
 // ****************************************************************
 
 Measuring_Task::Measuring_Task (char const * endpoint,
-                                ACE_Barrier * the_barrier,
+                                ACE_Barrier * barrier,
                                 int iterations,
                                 int period_in_usecs)
   : sample_history (iterations)
   , endpoint_(endpoint)
-  , the_barrier_(the_barrier)
+  , barrier_(barrier)
   , iterations_ (iterations)
   , period_in_usecs_ (period_in_usecs)
 {
@@ -208,7 +208,7 @@ Measuring_Task::Measuring_Task (char const * endpoint,
 int
 Measuring_Task::svc ()
 {
-  this->the_barrier_->wait ();
+  this->barrier_->wait ();
 
   ACE_SOCK_Stream stream;
   {
@@ -280,7 +280,7 @@ Measuring_Task::svc ()
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "H:L:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "H:L:");
   int c;
 
   while ((c = get_opts ()) != -1)

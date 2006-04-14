@@ -94,10 +94,10 @@ UTL_IdList::last_component (void)
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  long first = true;
-  long second = false;
+  long first = I_TRUE;
+  long second = I_FALSE;
 
-  for (UTL_IdListActiveIterator (this); !i.is_done (); i.next ())
+  for (UTL_IdListActiveIterator (this); !i.is_done (); i.next ()) 
     {
       if (!first)
         {
@@ -105,20 +105,20 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
         }
       else if (second)
         {
-          first = second = false;
+          first = second = I_FALSE;
         }
 
       i.item ()->dump (o);
 
-      if (first)
+      if (first) 
         {
           if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
             {
-              first = false;
+              first = I_FALSE;
             }
           else
             {
-              second = true;
+              second = I_TRUE;
             }
         }
     }

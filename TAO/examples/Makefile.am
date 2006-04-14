@@ -27,6 +27,7 @@ SUBDIRS = \
         PluggableUDP \
         Quoter \
         RTCORBA \
+        RTScheduling \
         Simple \
         Simulator \
         TypeCode_Creation \

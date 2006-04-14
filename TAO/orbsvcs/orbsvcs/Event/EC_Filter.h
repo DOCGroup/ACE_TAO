@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Filter.h
  *
@@ -19,13 +19,11 @@
 
 #include "orbsvcs/RtecEventCommC.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_QOS_Info;
 
@@ -214,10 +212,8 @@ public:
 
 // ****************************************************************
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Filter.i"
+#include "EC_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

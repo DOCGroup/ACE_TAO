@@ -20,8 +20,6 @@ private:
   int val_;
 };
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template<>
 class ACE_Less_Than<KeyType>
 {
@@ -29,9 +27,6 @@ public:
   int operator() (const KeyType k1, const KeyType k2)
   { return k1 < k2; }
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // Listing 1
 
 #endif /* __RB_TREE_FUNCTORS_H_ */

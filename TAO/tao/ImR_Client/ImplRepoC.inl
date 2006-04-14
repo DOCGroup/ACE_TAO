@@ -26,8 +26,6 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_ci.cpp:70
 
@@ -99,5 +97,3 @@ ImplementationRepository::Administration::Administration (
 }
 
 #endif /* end #if !defined */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

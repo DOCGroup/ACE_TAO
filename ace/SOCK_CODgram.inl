@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// SOCK_CODgram.i
 
 ACE_INLINE
 ACE_SOCK_CODgram::ACE_SOCK_CODgram (void)
@@ -16,4 +15,4 @@ ACE_SOCK_CODgram::~ACE_SOCK_CODgram (void)
   ACE_TRACE ("ACE_SOCK_CODgram::~ACE_SOCK_CODgram");
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+

@@ -14,12 +14,10 @@
 #include "generic_sequence.hpp"
 #include "object_reference_sequence_element.hpp"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 
-template<typename object_t, typename object_t_var>
+template<typename object_t>
 class unbounded_object_reference_sequence
 {
 public:
@@ -27,7 +25,7 @@ public:
   typedef object_type * value_type;
   typedef object_type const * const_value_type;
 
-  typedef details::object_reference_traits<object_type,object_t_var,true> element_traits;
+  typedef details::object_reference_traits<object_type,true> element_traits;
   typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;
 
   typedef details::object_reference_sequence_element<element_traits> element_type;
@@ -101,5 +99,4 @@ private:
 
 } // namespace TAO
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_unbounded_object_reference_sequence_hpp

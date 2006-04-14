@@ -1,14 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
-#include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
-#include "orbsvcs/Time/TAO_TIO.h"
-#include "orbsvcs/Time/TAO_UTO.h"
+#include "TAO_Time_Service_Clerk.h"
+#include "TAO_TIO.h"
+#include "TAO_UTO.h"
 
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_sys_time.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
@@ -177,5 +175,3 @@ TAO_Time_Service_Clerk::inaccuracy (TimeBase::InaccuracyT inaccuracy)
 {
   this->inaccuracy_ = inaccuracy;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

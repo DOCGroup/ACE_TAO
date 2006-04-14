@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Sched_Filter_Builder.h
  *
@@ -17,15 +16,13 @@
 #define TAO_EC_SCHED_FILTER_BUILDER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Filter_Builder.h"
+#include "EC_Filter_Builder.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/sched_event_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "sched_event_export.h"
 
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel_Base;
@@ -79,10 +76,8 @@ private:
   TAO_EC_Event_Channel_Base* event_channel_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Filter_Builder.i"
+#include "EC_Sched_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -70,7 +70,7 @@ Server_Task::svc (void)
 
       if (output_ != 0)
         {
-          FILE *output_file = ACE_OS::fopen (output_, "w");
+          FILE *output_file = ACE_OS::fopen (output_, ACE_TEXT("w"));
 
           if (output_file == 0)
             {

@@ -255,7 +255,7 @@ be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
     {
       return 0;
     }
-
+    
   if (this->create_event_consumer (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -265,16 +265,16 @@ be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
                         -1);
     }
 
-  node->ccm_pre_proc_gen (true);
+  node->ccm_pre_proc_gen (I_TRUE);
   return 0;
 }
 
 int
 be_visitor_ccm_pre_proc::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
-  be_eventtype *fd =
+  be_eventtype *fd = 
     be_eventtype::narrow_from_decl (node->full_definition ());
-
+    
   return this->visit_eventtype (fd);
 }
 
@@ -307,11 +307,7 @@ be_visitor_ccm_pre_proc::gen_provides (be_component *node)
       provides_op->set_defined_in (node);
       provides_op->set_imported (node->imported ());
       provides_op->set_name (op_name);
-
-      if (0 == node->be_add_operation (provides_op))
-        {
-          return -1;
-        }
+      node->be_add_operation (provides_op);
     }
 
   return 0;
@@ -329,7 +325,7 @@ be_visitor_ccm_pre_proc::gen_uses (be_component *node)
     {
       iter.next (pd);
 
-      if (pd->is_multiple == false)
+      if (pd->is_multiple == I_FALSE)
         {
           if (this->gen_connect_single (node, pd) == -1)
             {
@@ -513,10 +509,7 @@ be_visitor_ccm_pre_proc::gen_factories (be_home *node,
                             -1);
         }
 
-      if (0 == xplicit->be_add_operation (*item))
-        {
-          return -1;
-        }
+      xplicit->be_add_operation (*item);
     }
 
   return 0;
@@ -550,10 +543,7 @@ be_visitor_ccm_pre_proc::gen_finders (be_home *node,
                             -1);
         }
 
-      if (0 == xplicit->be_add_operation (*item))
-        {
-          return -1;
-        }
+      xplicit->be_add_operation (*item);
     }
 
   return 0;
@@ -661,12 +651,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (
                                   tail),
                  -1);
   op->be_add_exceptions (connect_single);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -703,12 +688,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (
                                   0),
                  -1);
   op->be_add_exceptions (disconnect_single);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -738,12 +718,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (
                   -1);
   op->set_name (op_full_name);
   op->set_defined_in (node);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -797,12 +772,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (
                                   tail),
                  -1);
   op->be_add_exceptions (connect_multiple);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -850,12 +820,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (
                                   0),
                  -1);
   op->be_add_exceptions (disconnect_multiple);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -884,7 +849,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (
   UTL_ScopedName connections_name (&connections_id,
                                    0);
   AST_Decl *d = node->lookup_by_name (&connections_name,
-                                      true);
+                                      I_TRUE);
   be_typedef *td = be_typedef::narrow_from_decl (d);
   connections_id.destroy ();
 
@@ -899,12 +864,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (
   op->set_name (op_full_name);
   op->set_defined_in (node);
   op->set_imported (node->imported ());
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -922,8 +882,8 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 0,
-                                false,
-                                false),
+                                I_FALSE,
+                                I_FALSE),
                   -1);
   push_op->set_defined_in (consumer);
   push_op->set_imported (node->imported ());
@@ -943,12 +903,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                   -1);
   arg_id.destroy ();
   push_op->be_add_argument (arg);
-
-  if (0 == consumer->be_add_operation (push_op))
-    {
-      return -1;
-    }
-
+  consumer->be_add_operation (push_op);
   return 0;
 }
 
@@ -1000,12 +955,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_component *node,
                                   0),
                   -1);
   op->be_add_exceptions (subscribe);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -1056,12 +1006,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
                                   0),
                   -1);
   op->be_add_exceptions (unsubscribe);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -1114,12 +1059,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (
                                   0),
                   -1);
   op->be_add_exceptions (emits_connect);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -1162,12 +1102,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (
                                   0),
                   -1);
   op->be_add_exceptions (emits_disconnect);
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -1204,12 +1139,7 @@ be_visitor_ccm_pre_proc::gen_get_consumer (
   op->set_name (op_name);
   op->set_defined_in (node);
   op->set_imported (node->imported ());
-
-  if (0 == node->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  node->be_add_operation (op);
   return 0;
 }
 
@@ -1266,12 +1196,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-
-  if (0 == implicit->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  implicit->be_add_operation (op);
   return 0;
 }
 
@@ -1322,12 +1247,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-
-  if (0 == implicit->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  implicit->be_add_operation (op);
   return 0;
 }
 
@@ -1378,12 +1298,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
   op->be_add_exceptions (exceps);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-
-  if (0 == implicit->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  implicit->be_add_operation (op);
   return 0;
 }
 
@@ -1417,12 +1332,7 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
   op->be_add_argument (arg);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
-
-  if (0 == implicit->be_add_operation (op))
-    {
-      return -1;
-    }
-
+  implicit->be_add_operation (op);
   return 0;
 }
 
@@ -1443,7 +1353,7 @@ be_visitor_ccm_pre_proc::lookup_ccmobject (void)
                      &local_name);
   AST_Decl *d =
     idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
-                                                           true);
+                                                           I_TRUE);
 
   if (d == 0)
     {
@@ -1465,7 +1375,7 @@ be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
       UTL_ScopedName cookie_name (&this->module_id_,
                                   &local_name);
       AST_Decl *d = node->lookup_by_name (&cookie_name,
-                                          true);
+                                          I_TRUE);
       local_id.destroy ();
 
       if (d == 0)
@@ -1528,7 +1438,7 @@ be_visitor_ccm_pre_proc::lookup_one_exception (be_component *node,
   UTL_ScopedName scoped_name (&this->module_id_,
                               &local_name);
   AST_Decl *d = node->lookup_by_name (&scoped_name,
-                                      true);
+                                      I_TRUE);
   id.destroy ();
 
   if (d == 0)
@@ -1574,17 +1484,17 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
                             0);
   FE_InterfaceHeader header (consumer_name,
                               &parent_list,
-                              false,
-                              false,
-                              true);
+                              I_FALSE,
+                              I_FALSE,
+                              I_TRUE);
   ACE_NEW_RETURN (event_consumer,
                   be_interface (header.name (),
                                 header.inherits (),
                                 header.n_inherits (),
                                 header.inherits_flat (),
                                 header.n_inherits_flat (),
-                                false,
-                                false),
+                                I_FALSE,
+                                I_FALSE),
                   -1);
   parent_id.destroy ();
 
@@ -1594,7 +1504,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   event_consumer->set_defined_in (s);
   event_consumer->set_imported (node->imported ());
   event_consumer->set_name (consumer_name);
-
+  
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the eventtype's prefix. All this is
   // necessary in case the eventtype's prefix was modified after
@@ -1602,7 +1512,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   // derived event consumer interface should have the same prefix.
   event_consumer->repoID (0);
   event_consumer->prefix (const_cast<char*> (node->prefix ()));
-
+  
   be_type::narrow_from_decl (event_consumer)->gen_fwd_helper_name ();
   m->be_add_interface (event_consumer);
   return this->gen_push_op (node,
@@ -1641,9 +1551,9 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
   UTL_NameList *parent_list = this->compute_inheritance (node);
   FE_InterfaceHeader header (0,
                              parent_list,
-                             false,
-                             false,
-                             true);
+                             I_FALSE,
+                             I_FALSE,
+                             I_TRUE);
   parent_list->destroy ();
   UTL_ScopedName *explicit_name =
   this->create_scoped_name (0,
@@ -1663,8 +1573,8 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                                 header.n_inherits (),
                                 header.inherits_flat (),
                                 header.n_inherits_flat (),
-                                false,
-                                false),
+                                I_FALSE,
+                                I_FALSE),
                   0);
 
   // Back to reality.
@@ -1725,9 +1635,9 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 
   FE_InterfaceHeader header (0,
                              parent_list_ptr,
-                             false,
-                             false,
-                             true);
+                             I_FALSE,
+                             I_FALSE,
+                             I_TRUE);
   parent_id.destroy ();
 
   // We're at global scope here so we need to fool the scope stack
@@ -1742,8 +1652,8 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                                 header.n_inherits (),
                                 header.inherits_flat (),
                                 header.n_inherits_flat (),
-                                false,
-                                false),
+                                I_FALSE,
+                                I_FALSE),
                   0);
 
   // Back to reality.
@@ -1775,9 +1685,9 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                             &tail);
   FE_InterfaceHeader header (0,
                              &parent_list,
-                             false,
-                             false,
-                             true);
+                             I_FALSE,
+                             I_FALSE,
+                             I_TRUE);
 
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
@@ -1791,15 +1701,15 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                                 header.n_inherits (),
                                 header.inherits_flat (),
                                 header.n_inherits_flat (),
-                                false,
-                                false),
+                                I_FALSE,
+                                I_FALSE),
                   0);
 
   // Back to reality.
   idl_global->scopes ().pop ();
-
+  
   // So we can skip typecode generation.
-  retval->home_equiv (true);
+  retval->home_equiv (I_TRUE);
 
   retval->set_name (equiv_name);
   retval->set_defined_in (s);

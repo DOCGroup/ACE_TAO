@@ -17,18 +17,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
+#include "UIPMC_Connection_Handler.h"
 
 #include "tao/Transport_Connector.h"
 #include "ace/Null_Mutex.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -91,8 +89,6 @@ private:
                                      ACE_Null_Mutex >
     SvcHandlerIterator;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

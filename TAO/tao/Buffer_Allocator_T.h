@@ -21,8 +21,6 @@
 
 #include "tao/Allocator.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   /**
@@ -47,8 +45,6 @@ namespace TAO
       alloc_type* allocator_;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Buffer_Allocator_T.cpp"

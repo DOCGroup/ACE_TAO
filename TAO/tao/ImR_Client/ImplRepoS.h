@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ImR_Client/ImplRepoC.h"
+#include "ImplRepoC.h"
 #include "tao/ImR_Client/ServerObjectS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -46,8 +46,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace POA_ImplementationRepository
 {
@@ -720,7 +718,7 @@ namespace POA_ImplementationRepository
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:1072
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */

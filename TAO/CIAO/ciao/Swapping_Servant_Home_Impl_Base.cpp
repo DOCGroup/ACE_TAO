@@ -4,7 +4,12 @@
 
 namespace CIAO
 {
-  Swapping_Home_Servant_Impl_Base::Swapping_Home_Servant_Impl_Base
+  Swapping_Home_Servant_Impl_Base::Swapping_Home_Servant_Impl_Base (void)
+  {
+    ACE_ASSERT (0);
+  }
+
+  Swapping_Home_Servant_Impl_Base::Swapping_Home_Servant_Impl_Base 
     (Swapping_Container * c)
     : container_ (c)
   {

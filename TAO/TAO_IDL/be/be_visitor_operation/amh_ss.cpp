@@ -174,7 +174,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
           }
       }
 
-    *os << env_arg;
+    *os << be_nl << "ACE_ENV_ARG_PARAMETER";
   }
 
   if (this->generate_shared_epilogue (os) == -1)
@@ -202,7 +202,8 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       return -1;
     }
 
-  *os << env_arg;
+  *os << be_nl
+      << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
     {
@@ -281,7 +282,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       }
   }
 
-  *os << env_arg;
+  *os << be_nl << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
     {
@@ -331,7 +332,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl
       << "void * /* context */," << be_nl
-      << "void * _tao_servant" << env_decl << be_uidt_nl
+      << "void * _tao_servant" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
   // Generate the actual code for the skeleton.

@@ -20,8 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   /**
@@ -172,7 +170,7 @@ class TAO_Array_Forany_T
 public:
   TAO_Array_Forany_T (void);
   TAO_Array_Forany_T (T_slice *,
-                      CORBA::Boolean nocopy = false);
+                      CORBA::Boolean nocopy = 0);
   TAO_Array_Forany_T (const TAO_Array_Forany_T<T,T_slice,TAG> &);
   ~TAO_Array_Forany_T (void);
 
@@ -200,10 +198,8 @@ public:
   static T_slice * tao_alloc (void);
 private:
   T_slice * ptr_;
-  CORBA::Boolean nocopy_;
+  const CORBA::Boolean nocopy_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Array_VarOut_T.inl"

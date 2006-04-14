@@ -18,44 +18,44 @@ $status = 0;
   (
    {
     name => "AdminProperties",
-    args => "-ORBSvcConf adminproperties.conf -ORBConnectIPV6Only 1",
+    args => "-ORBSvcConf adminproperties.conf -ORBConnectIPV6Only YES",
    },
    {
     name => "ConnectDisconnect",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
     extra => 300,
    },
    {
     name => "Events",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
    {
     name => "IdAssignment",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
    {
     name => "LifeCycle",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
    {
     name => "Simple",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
    {
     name => "MultiTypes",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
    {
     name => "Filter",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
    {
     name => "Updates",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
    {
     name => "Sequence",
-    args => "-ORBConnectIPV6Only 1",
+    args => "-ORBConnectIPV6Only YES",
    },
   );
 

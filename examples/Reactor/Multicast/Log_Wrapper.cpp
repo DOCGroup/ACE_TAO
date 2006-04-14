@@ -33,7 +33,7 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
 
 #if defined (ACE_LACKS_UTSNAME_T)
   if ((host_info = ACE_OS::gethostbyname
-       (ACE_TEXT_ALWAYS_CHAR(host_data.nodename))) == NULL)
+       (ACE_TEXT_TO_CHAR_IN(host_data.nodename))) == NULL)
 #else
   if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == NULL)
 #endif

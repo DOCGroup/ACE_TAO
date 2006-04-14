@@ -20,7 +20,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,12 +37,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /// RTCORBA ORB initializer.
-class TAO_RT_ORBInitializer
-  : public virtual PortableInterceptor::ORBInitializer
-  , public virtual TAO_Local_RefCounted_Object
+class TAO_RTCORBA_Export TAO_RT_ORBInitializer :
+  public virtual PortableInterceptor::ORBInitializer,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
   /// Priority mapping types
@@ -62,8 +60,7 @@ public:
                          int network_priority_mapping_type,
                          int ace_sched_policy,
                          long sched_policy,
-                         long scope_policy,
-                         ACE_Time_Value const &dynamic_thread_idle_timeout);
+                         long scope_policy);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -89,10 +86,10 @@ private:
   PortableInterceptor::PolicyFactory_var policy_factory_;
 
   /// Priority mapping type.
-  int const priority_mapping_type_;
+  int priority_mapping_type_;
 
   /// Network Priority mapping type.
-  int const network_priority_mapping_type_;
+  int network_priority_mapping_type_;
 
   /// Scheduling policy.
   /**
@@ -102,7 +99,7 @@ private:
    * ACE_Sched_Params::priority_min(). Legal values are ACE_SCHED_RR,
    * ACE_SCHED_FIFO, and ACE_SCHED_OTHER.
    */
-  int const ace_sched_policy_;
+  int ace_sched_policy_;
 
   /// Scheduling policy flag.
   /**
@@ -111,7 +108,7 @@ private:
    * thread creation functions. Legal values are THR_SCHED_RR,
    * THR_SCHED_FIFO, and THR_SCHED_DEFAULT.
    */
-  long const sched_policy_;
+  long sched_policy_;
 
   /// Scheduling scope flag.
   /**
@@ -120,19 +117,9 @@ private:
    * thread creation functions. Legal values are THR_SCOPE_SYSTEM and
    * THR_SCOPE_PROCESS.
    */
-  long const scope_policy_;
+  long scope_policy_;
 
-  /// Dynamic thread idle timeout
-  /**
-   * When using thread pool a certain number of dynamic threads can be created.
-   * By default these threads are created when needed but never end, when this
-   * timeout is specified the threads end themselves at the moment they
-   * have not been serving any requests for the specified amount of time
-   */
-  ACE_Time_Value const dynamic_thread_idle_timeout_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

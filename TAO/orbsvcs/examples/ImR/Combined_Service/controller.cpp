@@ -6,6 +6,7 @@
 #include <ace/streams.h>
 #include <ace/SString.h>
 #include <ace/Log_Msg.h>
+#include "ace/Argv_Type_Converter.h"
 
 using namespace CORBA;
 
@@ -39,13 +40,15 @@ namespace {
   }
 }
 
-int main(int argc, char* argv[]) {
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
+{
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   try {
 
-    ORB_var orb = ORB_init(argc, argv);
+    ORB_var orb = ORB_init(convert.get_argc(), convert.get_ASCII_argv());
 
-    if (! parse_args(argc, argv)) {
+    if (! parse_args(convert.get_argc(), convert.get_ASCII_argv())) {
       showusage();
       return 1;
     }

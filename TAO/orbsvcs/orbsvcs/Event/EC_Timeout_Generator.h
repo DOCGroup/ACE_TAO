@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Timeout_Generator.h
  *
@@ -23,11 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
-#include "orbsvcs/Event/EC_Timeout_Filter.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "EC_Timeout_Filter.h"
 
 class TAO_EC_QOS_Info;
 
@@ -90,10 +87,8 @@ private:
                               const void *act);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Generator.i"
+#include "EC_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

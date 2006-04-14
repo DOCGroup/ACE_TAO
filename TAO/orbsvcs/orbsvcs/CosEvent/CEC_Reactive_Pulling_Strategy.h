@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   CEC_Reactive_Pulling_Strategy.h
@@ -16,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/CEC_Pulling_Strategy.h"
+#include "CEC_Pulling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,9 +27,6 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_ProxyPullConsumer;
 class TAO_CEC_EventChannel;
@@ -140,10 +136,8 @@ private:
   TAO_CEC_SupplierControl *supplier_control_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.i"
+#include "CEC_Reactive_Pulling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

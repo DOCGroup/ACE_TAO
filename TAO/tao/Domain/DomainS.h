@@ -54,7 +54,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-#include "tao/Domain/domain_export.h"
+#include "domain_export.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -63,8 +63,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CORBA
 {
@@ -483,12 +481,10 @@ namespace POA_CORBA
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:995
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#include "tao/Domain/DomainS_T.h"
+#include "DomainS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "tao/Domain/DomainS.inl"
+#include "DomainS.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

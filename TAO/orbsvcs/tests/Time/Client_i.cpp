@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
@@ -248,7 +249,7 @@ Client_i::read_ior (char *filename)
 int
 Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:xk:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "dn:f:xk:");
   int c;
   int result;
 

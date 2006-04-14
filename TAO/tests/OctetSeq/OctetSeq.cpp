@@ -20,6 +20,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "tao/ORB.h"
 #include "tao/CDR.h"
@@ -161,13 +162,15 @@ run (char* buf, size_t bufsize,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -179,7 +182,8 @@ main (int argc, char *argv[])
 
       int quiet = 0;
 
-      ACE_Get_Opt get_opt (argc, argv, "qn:l:h:s:");
+      ACE_Get_Arg_Opt<char> get_opt (convert.get_argc(),
+                                     convert.get_ASCII_argv(), "qn:l:h:s:");
       int opt;
 
       while ((opt = get_opt ()) != EOF)

@@ -15,8 +15,6 @@
 #include "value_traits.hpp"
 #include "generic_sequence.hpp"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 
@@ -25,7 +23,6 @@ class unbounded_value_sequence
 {
 public:
   typedef T value_type;
-  typedef T element_type;
   typedef T const const_value_type;
 
   typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;
@@ -35,7 +32,7 @@ public:
   inline unbounded_value_sequence()
     : impl_()
   {}
-  inline explicit unbounded_value_sequence(CORBA::ULong maximum)
+  inline /* explicit */ unbounded_value_sequence(CORBA::ULong maximum)
     : impl_(maximum)
   {}
   inline unbounded_value_sequence(
@@ -93,6 +90,5 @@ private:
 
 } // namespace TAO
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_unbounded_string_sequence_hpp
 

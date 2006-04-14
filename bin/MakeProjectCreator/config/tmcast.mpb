@@ -2,7 +2,6 @@
 // $Id$
 
 project: acelib, exceptions, threads {
-  avoids   += ace_for_tao
   after    += TMCast
   libs     += ACE_TMCast
   includes += $(ACE_ROOT)/protocols

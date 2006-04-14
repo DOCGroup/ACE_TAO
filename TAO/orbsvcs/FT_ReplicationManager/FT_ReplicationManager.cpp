@@ -69,8 +69,6 @@ ACE_RCSID (FT_ReplicationManager,
 #define TODO
 //#define TODO int todo; // warn on todos
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
@@ -95,7 +93,7 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
 //public
 int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:o:f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "n:o:f:");
   int c;
 
   while ( (c = get_opts ()) != -1)
@@ -208,9 +206,8 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     else
     {
       ACE_ERROR_RETURN ( (LM_ERROR,
-        ACE_TEXT (
-          "%T %n (%P|%t) - "
-          "Could not resolve notifier IOR.\n")),
+        ACE_TEXT ("%T %n (%P|%t) - ")
+        ACE_TEXT ("Could not resolve notifier IOR.\n")),
           -1);
     }
   }
@@ -403,9 +400,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   if (CORBA::is_nil (fault_notifier))
   {
     ACE_ERROR ( (LM_ERROR,
-      ACE_TEXT (
-        "%T %n (%P|%t) - "
-        "Bad Fault Notifier object reference provided.\n")
+      ACE_TEXT ("%T %n (%P|%t) - ")
+      ACE_TEXT ("Bad Fault Notifier object reference provided.\n")
     ));
     ACE_THROW (CORBA::BAD_PARAM (
       CORBA::SystemException::_tao_minor_code (
@@ -437,10 +433,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     if (analyzer == 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT (
-          "%T %n (%P|%t) - "
-          "Error creating FaultAnalyzer.\n"
-          )
+        ACE_TEXT ("%T %n (%P|%t) - ")
+        ACE_TEXT ("Error creating FaultAnalyzer.\n")
       ));
       result = -1;
     }
@@ -457,9 +451,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
-        "Error reinitializing FT_FaultConsumer.\n")
+      ACE_TEXT ("TAO::FT_ReplicationManager::register_fault_notifier_i: ")
+      ACE_TEXT ("Error reinitializing FT_FaultConsumer.\n")
     );
     result = -1;
   }
@@ -468,9 +461,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   if (result != 0)
   {
     ACE_ERROR ( (LM_ERROR,
-      ACE_TEXT (
-        "%T %n (%P|%t) -  "
-        "Could not re-initialize FT_FaultConsumer.\n")
+      ACE_TEXT ("%T %n (%P|%t) -  ")
+      ACE_TEXT ("Could not re-initialize FT_FaultConsumer.\n")
     ));
 
     ACE_THROW (CORBA::INTERNAL (
@@ -1032,8 +1024,8 @@ TAO::FT_ReplicationManager::create_object (
     // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = 0;
-  ACE_NEW_THROW_EX (factory_id_ptr,
+  PortableGroup::GenericFactory::FactoryCreationId_var factory_id = 0;
+  ACE_NEW_THROW_EX (factory_id,
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
@@ -1041,7 +1033,6 @@ TAO::FT_ReplicationManager::create_object (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  PortableGroup::GenericFactory::FactoryCreationId_var factory_id = factory_id_ptr;
   PortableGroup::ObjectGroupId group_id = group->get_object_group_id ();
   factory_id <<= group_id;
   factory_creation_id = factory_id._retn();
@@ -1076,7 +1067,7 @@ TAO::FT_ReplicationManager::delete_object (
 int TAO::FT_ReplicationManager::write_ior ()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, ACE_TEXT("w"));
   if (out)
   {
     CORBA::String_var ior_str = this->orb_->object_to_string (
@@ -1094,4 +1085,69 @@ int TAO::FT_ReplicationManager::write_ior ()
   return result;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

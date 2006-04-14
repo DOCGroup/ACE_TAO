@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE TAO_ORB_Core *
 TAO_ServerRequest::orb_core (void) const
 {
@@ -236,5 +234,3 @@ TAO_ServerRequest::reply_status (void)
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

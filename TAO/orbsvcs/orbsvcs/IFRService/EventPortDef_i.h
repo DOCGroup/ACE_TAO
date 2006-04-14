@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -21,21 +20,19 @@
 #ifndef TAO_EVENTPORTDEF_I_H
 #define TAO_EVENTPORTDEF_I_H
 
-#include "orbsvcs/IFRService/Contained_i.h"
-#include "orbsvcs/IFRService/ifr_service_export.h"
+#include "Contained_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_EventPortDef_i
   : public virtual TAO_Contained_i
@@ -111,8 +108,6 @@ private:
   // Dummy method so we can consolidate derived class methods
   // in this 'abstract' base class.
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

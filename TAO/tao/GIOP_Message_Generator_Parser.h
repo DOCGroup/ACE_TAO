@@ -1,5 +1,5 @@
-// -*- C++ -*-
 
+// -*- C++ -*-
 // ===================================================================
 /**
  *  @file   GIOP_Message_Generator_Parser.h
@@ -21,8 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/SystemException.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Operation_Details;
 class TAO_Target_Specification;
@@ -111,8 +109,5 @@ protected:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
 #endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_H*/

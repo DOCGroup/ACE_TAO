@@ -1,5 +1,4 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -22,8 +21,6 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Sched/sched_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTSched_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Scheduler
 {
@@ -281,8 +278,6 @@ private:
   ACE_Scheduler_Factory::POD_RT_Info* rt_info_;
   // The array of precomputed RT_Info structures.
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_RUNTIME_SCHEDULER_H */

@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // This set of classes is also used by valuetype arguments. If the
 // specialization is done using S * for the parameter, the semantics
 // are the same as for interfaces, so there's no need for another
@@ -159,8 +157,6 @@ namespace TAO
 
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Object_SArgument_T.inl"

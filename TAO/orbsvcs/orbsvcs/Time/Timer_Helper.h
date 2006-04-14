@@ -25,15 +25,13 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
-#include "orbsvcs/Time/time_export.h"
+#include "time_export.h"
 
 #include "orbsvcs/TimeServiceS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Time_Service_Clerk;
 
@@ -72,8 +70,6 @@ protected:
   /// The set of server IORs.
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

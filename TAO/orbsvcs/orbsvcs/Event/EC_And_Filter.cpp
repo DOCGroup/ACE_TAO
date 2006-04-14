@@ -1,13 +1,12 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_And_Filter.h"
+#include "EC_And_Filter.h"
 
 ACE_RCSID(Event, EC_And_Filter, "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_And_Filter::TAO_EC_And_Filter (TAO_EC_Filter* children[],
-                                      size_t n)
+TAO_EC_And_Filter::
+    TAO_EC_And_Filter (TAO_EC_Filter* children[],
+                               size_t n)
   :  children_ (children),
      n_ (n)
 {
@@ -166,5 +165,3 @@ TAO_EC_And_Filter::add_dependencies (
 {
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

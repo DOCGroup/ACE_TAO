@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.time_IDL.am
+## Makefile.time_client.am
 
 BUILT_SOURCES = \
   TimeC.cpp \
@@ -44,14 +44,8 @@ CLEANFILES = \
 TimeC.cpp TimeC.h TimeC.inl TimeS.cpp TimeS.h TimeS.inl TimeS_T.cpp TimeS_T.h TimeS_T.inl: Time-stamp
 
 Time-stamp: $(srcdir)/Time.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Time.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Time.idl
 	@touch $@
-
-
-noinst_HEADERS = \
-  Time.idl
-
-## Makefile.time_client.am
 
 noinst_PROGRAMS = client
 
@@ -66,9 +60,15 @@ client_CPPFLAGS = \
 client_SOURCES = \
   ../Simple_util.cpp \
   TimeC.cpp \
+  TimeS.cpp \
   Time_Client_i.cpp \
   client.cpp \
   ../Simple_util.h \
+  TimeC.h \
+  TimeC.inl \
+  TimeS.h \
+  TimeS_T.h \
+  TimeS_T.inl \
   Time_Client_i.h
 
 client_LDADD = \
@@ -83,6 +83,35 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.time_server.am
+
+BUILT_SOURCES += \
+  TimeC.cpp \
+  TimeC.h \
+  TimeC.inl \
+  TimeS.cpp \
+  TimeS.h \
+  TimeS.inl \
+  TimeS_T.cpp \
+  TimeS_T.h \
+  TimeS_T.inl
+
+CLEANFILES += \
+  Time-stamp \
+  TimeC.cpp \
+  TimeC.h \
+  TimeC.inl \
+  TimeS.cpp \
+  TimeS.h \
+  TimeS.inl \
+  TimeS_T.cpp \
+  TimeS_T.h \
+  TimeS_T.inl
+
+TimeC.cpp TimeC.h TimeC.inl TimeS.cpp TimeS.h TimeS.inl TimeS_T.cpp TimeS_T.h TimeS_T.inl: Time-stamp
+
+Time-stamp: $(srcdir)/Time.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Time.idl
+	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -101,6 +130,11 @@ server_SOURCES = \
   Time_i.cpp \
   server.cpp \
   ../Simple_util.h \
+  TimeC.h \
+  TimeC.inl \
+  TimeS.h \
+  TimeS_T.h \
+  TimeS_T.inl \
   Time_i.h
 
 server_LDADD = \

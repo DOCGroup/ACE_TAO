@@ -25,8 +25,6 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // = Predefined event types.  All application defined types should be
 // relative to ACE_ES_EVENT_UNDEFINED.
 const long ACE_ES_EVENT_ANY = 0;
@@ -76,8 +74,6 @@ const u_long ACE_Scheduler_MAX_SUB_PRIORITY =
 /// This is the minimum sub priority.
 const u_long ACE_Scheduler_MIN_SUB_PRIORITY =
       ACE_Message_Block::MB_NORMAL;
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

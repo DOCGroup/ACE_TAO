@@ -12,8 +12,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_WIN32_Wakeup_Completion
  *
@@ -21,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ACE_Proactor interface to wake up all the threads blocking
  * for completions.
  */
-class ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
+class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
 
 public:
@@ -87,11 +85,11 @@ ACE_WIN32_Proactor::close (void)
         {
           ACE_OVERLAPPED *overlapped = 0;
           u_long bytes_transferred = 0;
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-          ULONG completion_key = 0;
-#else
+#if defined (ACE_WIN64)
           ULONG_PTR completion_key = 0;
-#endif
+#else
+          ULONG completion_key = 0;
+#endif /* ACE_WIN64 */
 
           // Get the next asynchronous operation that completes
           BOOL res = ::GetQueuedCompletionStatus
@@ -122,11 +120,11 @@ int
 ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                      const void *completion_key)
 {
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
-#else
+#if defined (ACE_WIN64)
   ULONG_PTR comp_key (reinterpret_cast<ULONG_PTR> (completion_key));
-#endif
+#else
+  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
+#endif /* ACE_WIN64 */
 
   // No locking is needed here as no state changes.
   ACE_HANDLE cp = ::CreateIoCompletionPort (handle,
@@ -570,11 +568,11 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 {
   ACE_OVERLAPPED *overlapped = 0;
   u_long bytes_transferred = 0;
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-  ULONG completion_key = 0;
+#if defined (ACE_WIN64)
+          ULONG_PTR completion_key = 0;
 #else
-  ULONG_PTR completion_key = 0;
-#endif
+          ULONG completion_key = 0;
+#endif /* ACE_WIN64 */
 
   // Get the next asynchronous operation that completes
   BOOL result = ::GetQueuedCompletionStatus (this->completion_port_,
@@ -687,12 +685,11 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       bytes_transferred = static_cast<DWORD> (result->bytes_transferred ());
       completion_key = result->completion_key();
     }
-
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
-#else
+#if defined (ACE_WIN64)
   ULONG_PTR comp_key (reinterpret_cast<ULONG_PTR> (completion_key));
-#endif
+#else
+  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
+#endif /* ACE_WIN64 */
 
   // Post a completion
   if (::PostQueuedCompletionStatus (this->completion_port_, // completion port
@@ -713,7 +710,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
     }
 
   // If Proactor event is valid, signal it
-  if (handle != ACE_INVALID_HANDLE
+  if (handle != ACE_INVALID_HANDLE 
       && handle != 0)
     ACE_OS::event_signal (&handle);
 
@@ -814,7 +811,5 @@ ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
   if (handler != 0)
     handler->handle_wakeup ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */

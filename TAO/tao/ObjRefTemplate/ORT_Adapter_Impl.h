@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ObjRefTemplate/ort_export.h"
+#include "ort_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,8 +31,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   /**
@@ -40,7 +38,7 @@ namespace TAO
    *
    * @brief Implementation of the TAO::ORT_Adapter
    */
-  class ORT_Adapter_Impl
+  class TAO_ORT_Export ORT_Adapter_Impl
     : public ORT_Adapter
   {
   public:
@@ -108,8 +106,6 @@ namespace TAO
   };
 
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 # pragma warning(pop)

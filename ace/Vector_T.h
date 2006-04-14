@@ -22,12 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /*
  * Default size for an ACE_Vector.
  */
-static const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
+const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
 
 // Forward declaration.
 template <class T, size_t DEFAULT_SIZE> class ACE_Vector_Iterator;
@@ -85,7 +83,7 @@ public:
    *              default ACE allocator is used
    */
   ACE_Vector (const size_t init_size = DEFAULT_SIZE,
-              ACE_Allocator* alloc = 0);
+	      ACE_Allocator* alloc = 0);
 
   /**
    * Destructor.
@@ -130,7 +128,7 @@ public:
    *          initialization clause for this parameter).
    */
   void resize (const size_t new_size,
-               const T& t);
+	       const T& t);
 
   /**
    * Appends a new element to the vector ("push back").  If the
@@ -224,9 +222,9 @@ protected:
  */
 template<class T>
 int compare (const ACE_Vector<T>& v1,
-              const ACE_Vector<T>& v2,
-              const size_t from_ndx,
-              const size_t to_ndx);
+	      const ACE_Vector<T>& v2,
+	      const size_t from_ndx,
+	      const size_t to_ndx);
 
 /**
  * Does a partial comparison of two vectors in the range of
@@ -246,9 +244,9 @@ int compare (const ACE_Vector<T>& v1,
 
 template<class T>
 int partial_compare (const ACE_Vector<T>& v1,
-                      const ACE_Vector<T>& v2,
-                      const size_t from_ndx,
-                      const size_t to_ndx);
+		      const ACE_Vector<T>& v2,
+		      const size_t from_ndx,
+		      const size_t to_ndx);
 #endif /* 0 */
 // ****************************************************************
 
@@ -294,8 +292,6 @@ private:
   /// Reference to the vector we're iterating over.
   ACE_Vector<T, DEFAULT_SIZE> &vector_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Vector_T.inl"

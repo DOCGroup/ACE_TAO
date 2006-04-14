@@ -13,7 +13,7 @@
 #define TAO_Notify_ETCL_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,15 +23,13 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/CosNotifyFilterS.h"
-#include "orbsvcs/Notify/Notify_Constraint_Interpreter.h"
+#include "Notify_Constraint_Interpreter.h"
 #include "ace/Null_Mutex.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ETCL_Filter
@@ -164,8 +162,6 @@ private:
 
   CONSTRAINT_EXPR_LIST constraint_expr_list_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

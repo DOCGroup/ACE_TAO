@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 /**
  *  @file   EC_ProxyConsumer.h
  *
@@ -17,15 +17,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
@@ -227,10 +225,8 @@ private:
   int locked_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ProxyConsumer.i"
+#include "EC_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

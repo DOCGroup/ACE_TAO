@@ -9,7 +9,6 @@ project(*Server): messaging, taoexe, portableserver {
 }
 
 project(*Client): messaging, taoexe, portableserver {
-  after += *Server
   Source_Files {
     testC.cpp
     client.cpp

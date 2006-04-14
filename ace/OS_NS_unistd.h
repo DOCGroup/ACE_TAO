@@ -41,24 +41,19 @@
 extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);
 #endif /* ACE_NEEDS_FTRUNCATE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace ACE_OS
-{
+namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int access (const char *path, int amode);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int access (const wchar_t *path, int amode);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned int alarm (u_int secs);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  long allocation_granularity (void);
+  int allocation_granularity (void);
 
   // used by ARGV::argv_to_string() and ACE_OS::fork_exec()
   extern ACE_Export
@@ -70,19 +65,15 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int chdir (const char *path);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int chdir (const wchar_t *path);
-#endif /* ACE_HAS_WCHAR */
 #endif /* ACE_LACKS_CHDIR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rmdir (const char *path);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int rmdir (const wchar_t *path);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int close (ACE_HANDLE handle);
@@ -144,16 +135,11 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   char *getcwd (char *, size_t);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *getcwd (wchar_t *, size_t);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   gid_t getgid (void);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
-  gid_t getegid (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int getopt (int argc,
@@ -175,19 +161,14 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   uid_t getuid (void);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  uid_t geteuid (void);
-
   // should call gethostname()
   ACE_NAMESPACE_INLINE_FUNCTION
   int hostname (char *name,
                 size_t maxnamelen);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int hostname (wchar_t *name,
                 size_t maxnamelen);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int isatty (int handle);
@@ -261,13 +242,10 @@ namespace ACE_OS
                     size_t bufsiz);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void *sbrk (ptrdiff_t brk);
+  void *sbrk (int brk);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setgid (gid_t);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int setegid (gid_t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setpgid (pid_t pid, pid_t pgid);
@@ -285,19 +263,16 @@ namespace ACE_OS
   int setuid (uid_t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int seteuid (uid_t);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
   int sleep (u_int seconds);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sleep (const ACE_Time_Value &tv);
 
   // used by ARGV::string_to_argv
-  extern ACE_Export
-  int string_to_argv (ACE_TCHAR *buf,
+  template <typename CHAR_TYPE>
+  int string_to_argv (CHAR_TYPE *buf,
                       int &argc,
-                      ACE_TCHAR **&argv,
+                      CHAR_TYPE **&argv,
                       int substitute_env_args = 1);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -316,20 +291,18 @@ namespace ACE_OS
   int truncate (const ACE_TCHAR *filename, off_t length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_long ualarm (u_long usecs,
-                 u_long interval = 0);
+  u_int ualarm (u_int usecs,
+                u_int interval = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_long ualarm (const ACE_Time_Value &tv,
-                 const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  u_int ualarm (const ACE_Time_Value &tv,
+                const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (const char *path);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (const wchar_t *path);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write (ACE_HANDLE handle,
@@ -357,8 +330,6 @@ namespace ACE_OS
 
 } /* namespace ACE_OS */
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
@@ -366,6 +337,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define ACE_INLINE inline
 #   include "ace/OS_NS_unistd.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
+
+#include "ace/OS_NS_unistd_T.inl"
 
 # include /**/ "ace/post.h"
 #endif /* ACE_OS_NS_UNISTD_H */

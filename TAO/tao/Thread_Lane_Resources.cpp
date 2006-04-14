@@ -17,9 +17,6 @@ ACE_RCSID (tao,
 
 #include "ace/Reactor.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_ORB_Core &orb_core,
     TAO_New_Leader_Generator *new_leader_generator
@@ -554,5 +551,3 @@ TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
       (*handler)->transport ()->remove_reference ();
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

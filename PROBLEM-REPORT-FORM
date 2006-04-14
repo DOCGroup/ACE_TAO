@@ -43,7 +43,7 @@
 To: ace-bugs@cs.wustl.edu
 Subject: [area]: [synopsis]
 
-    ACE VERSION: 5.5
+    ACE VERSION: 5.4.7
 
     HOST MACHINE and OPERATING SYSTEM:
         If on Windows based OS's, which version of WINSOCK do you
@@ -88,4 +88,3 @@ transcript if at all possible.  ]
 
     SAMPLE FIX/WORKAROUND:
 [If available ]
-

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/Resource_Factory.h"
-#include "tao/Protocol_Factory.h"
-#include "tao/orbconf.h"
+#include "Resource_Factory.h"
+#include "Protocol_Factory.h"
+#include "orbconf.h"
 
 #include "ace/ACE.h"
 
@@ -12,8 +12,6 @@ ACE_RCSID (tao,
 
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
   : name_ (name),
@@ -88,11 +86,6 @@ TAO_Acceptor_Registry *
 TAO_Resource_Factory::get_acceptor_registry (void)
 {
   return 0;
-}
-
-void
-TAO_Resource_Factory::use_local_memory_pool (bool)
-{
 }
 
 ACE_Allocator *
@@ -223,4 +216,3 @@ TAO_Resource_Factory::load_default_protocols (void)
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -112,11 +112,6 @@ sum_server-stamp: $(srcdir)/sum_server.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  Gateway.idl \
-  ObjectReferenceFactory.idl \
-  sum_server.idl
-
 endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.ORT_Gateway.am

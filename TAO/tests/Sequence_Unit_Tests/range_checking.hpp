@@ -13,15 +13,13 @@
 
 #include "tao/Basic_Types.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 namespace details
 {
 
 /**
- * @struct range_checking
+ * @struct
  *
  * @brief Configurable traits to tradeoff safety vs. performance in
  *        the implementation of TAO sequences.
@@ -91,7 +89,7 @@ namespace details
  * };
  * </PRE>
  *
- *
+ * 
  *
  * @todo There is no control on a per-sequence type basis, only on a
  *       per-underlying type basis, for example, the following two IDL
@@ -141,7 +139,6 @@ struct range_checking
 } // namespace details
 } // namespace TAO
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE)
 #  include TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE
 #endif // TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE

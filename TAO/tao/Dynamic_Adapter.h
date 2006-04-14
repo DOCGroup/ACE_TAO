@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,8 +25,6 @@
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "ace/CORBA_macros.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -110,7 +108,6 @@ public:
                                       ACE_ENV_ARG_DECL) = 0;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_H */

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/Notify/Event.h"
+#include "Event.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Event.inl"
+#include "Event.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify,
@@ -14,10 +14,8 @@ ACE_RCSID (Notify,
 #include "tao/CDR.h"
 #include "orbsvcs/CosNotificationC.h"
 // NOTE: unfortunately we must know about derived types to implement unmarshal
-#include "orbsvcs/Notify/Any/AnyEvent.h"
-#include "orbsvcs/Notify/Structured/StructuredEvent.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Any/AnyEvent.h"
+#include "Structured/StructuredEvent.h"
 
 TAO_Notify_Event::TAO_Notify_Event (void)
 : priority_ (CosNotification::Priority, CosNotification::DefaultPriority)
@@ -81,4 +79,3 @@ TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
   return result;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

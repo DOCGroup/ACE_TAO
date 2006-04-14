@@ -2,8 +2,6 @@
 //
 //$Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 TAO_GIOP_Message_Version::TAO_GIOP_Message_Version (
     const TAO_GIOP_Message_Version &src)
@@ -20,16 +18,20 @@ TAO_GIOP_Message_Version::TAO_GIOP_Message_Version (CORBA::Octet maj,
 {
 }
 
+ACE_INLINE
+TAO_GIOP_Message_Version::~TAO_GIOP_Message_Version (void)
+{
+}
+
 ACE_INLINE TAO_GIOP_Message_Version &
 TAO_GIOP_Message_Version::operator= (
     const TAO_GIOP_Message_Version &src)
 {
-  if (this != &src)
-    {
-      this->major = src.major;
-      this->minor = src.minor;
-    }
+  if (this == &src)
+    return *this;
 
+  this->major = src.major;
+  this->minor = src.minor;
   return *this;
 }
 
@@ -55,5 +57,3 @@ TAO_GIOP_Message_Version::operator!= (
 {
   return !(*this == src);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

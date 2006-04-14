@@ -1,10 +1,8 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Conjunction_Filter.h"
+#include "EC_Conjunction_Filter.h"
 
 ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const int bits_per_word = sizeof(TAO_EC_Conjunction_Filter::Word) * CHAR_BIT;
 
@@ -205,5 +203,3 @@ TAO_EC_Conjunction_Filter::add_dependencies (
 {
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

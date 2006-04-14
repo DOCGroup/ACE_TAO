@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO_CEC_ConsumerAdmin::
@@ -35,5 +31,3 @@ TAO_CEC_Propagate_Event_Pull::TAO_CEC_Propagate_Event_Pull (const CORBA::Any& ev
   :  event_ (event)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

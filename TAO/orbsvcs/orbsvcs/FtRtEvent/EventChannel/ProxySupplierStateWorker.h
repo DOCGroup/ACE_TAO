@@ -15,16 +15,13 @@
 
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h"
+#include "FTEC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class ProxySupplierStateWorker
-  : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
+class ProxySupplierStateWorker : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
   ProxySupplierStateWorker(FtRtecEventChannelAdmin::ProxySupplierStates& states);
@@ -37,7 +34,5 @@ private:
   int index_;
   FtRtecEventChannelAdmin::ProxySupplierStates& supplierStates_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

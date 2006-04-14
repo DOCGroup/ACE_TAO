@@ -25,6 +25,7 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 wchar_t *
 make_wstring (const char *str)
@@ -33,11 +34,11 @@ make_wstring (const char *str)
   if (str == 0)
     return 0;
 
-  size_t len = strlen (str) + 1;
+  int len = strlen (str) + 1;
   wchar_t *wstr = new wchar_t[len];
   ACE_DEBUG ((LM_DEBUG,
               "make_wstring: str = %s\n",str));
-  for (size_t i = 0; i < len; i++)
+  for (int i = 0; i < len; i++)
     {
       char *t = const_cast<char *> (str);
       wstr[i] = static_cast<wchar_t> (*(t + i));
@@ -50,16 +51,18 @@ make_wstring (const char *str)
 // ------------------------------------------------------------
 // Client
 // ------------------------------------------------------------
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   char buf[1000];
   int error_count = 0;
 
   ACE_TRY_NEW_ENV
     {
       // Init the orb
-      CORBA::ORB_var orb= CORBA::ORB_init (argc,
-                                           argv,
+      CORBA::ORB_var orb= CORBA::ORB_init (convert.get_argc(),
+                                           convert.get_ASCII_argv(),
                                            ""
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -71,7 +74,7 @@ int main (int argc, char *argv[])
         }
       else
         {
-          ACE_OS::strcpy (buf, argv[1]);
+          ACE_OS::strcpy (buf, ACE_TEXT_TO_CHAR_IN(argv[1]));
         }
 
       // The first arg should be the IOR
@@ -89,7 +92,7 @@ int main (int argc, char *argv[])
 
       const char *any_string = "Any World";
       CORBA::Any inarg;
-      inarg <<= any_string;
+      inarg <<= CORBA::string_dup (any_string);
       CORBA::Any_var outarg;
 
       // Invoke the call.
@@ -118,15 +121,11 @@ int main (int argc, char *argv[])
         {
           ++error_count;
         }
-#if defined (ACE_HAS_WCHAR)
-      wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_ALWAYS_WCHAR ("Wide String"));
+
+      wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_TO_WCHAR_IN ("Wide String"));
       wchar_t *wide_reply = server->op2 (wide_string);
       ACE_DEBUG ((LM_DEBUG,
                   "sent %W, got %W\n", wide_string, wide_reply));
-
-      ACE_OS::free (wide_string);
-      CORBA::wstring_free (wide_reply);
-#endif /* ACE_HAS_WCHAR */
     }
   ACE_CATCHANY
     {

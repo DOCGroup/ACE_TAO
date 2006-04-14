@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const TAO_Notify_Property_Short&
 TAO_Notify_Event::priority (void) const
@@ -40,4 +36,3 @@ TAO_Notify_Event::queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const
   return this->clone_.get();
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

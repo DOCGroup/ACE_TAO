@@ -1,14 +1,13 @@
 // $Id$
 
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/HomeDef_i.h"
-#include "orbsvcs/IFRService/FactoryDef_i.h"
-#include "orbsvcs/IFRService/FinderDef_i.h"
-#include "orbsvcs/IFRService/ValueDef_i.h"
-#include "orbsvcs/IFRService/ExceptionDef_i.h"
-#include "orbsvcs/IFRService/AttributeDef_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "Repository_i.h"
+#include "HomeDef_i.h"
+#include "FactoryDef_i.h"
+#include "FinderDef_i.h"
+#include "ValueDef_i.h"
+#include "ExceptionDef_i.h"
+#include "AttributeDef_i.h"
+#include "IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 
@@ -17,8 +16,6 @@ ACE_RCSID (IFRService,
            HomeDef_i,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -1054,5 +1051,3 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
 
   ead.mode = impl.mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

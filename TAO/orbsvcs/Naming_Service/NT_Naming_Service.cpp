@@ -11,9 +11,9 @@
 #include "ace/ARGV.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
-#define TAO_REGISTRY_SUBKEY "SOFTWARE\\ACE\\TAO"
-#define TAO_NAMING_SERVICE_OPTS_NAME "TaoNamingServiceOptions"
-#define TAO_SERVICE_PARAM_COUNT "TaoServiceParameterCount"
+#define TAO_REGISTRY_SUBKEY ACE_TEXT("SOFTWARE\\ACE\\TAO")
+#define TAO_NAMING_SERVICE_OPTS_NAME ACE_TEXT("TaoNamingServiceOptions")
+#define TAO_SERVICE_PARAM_COUNT ACE_TEXT("TaoServiceParameterCount")
 
 AutoFinalizer::AutoFinalizer (TAO_NT_Naming_Service &service)
   : service_ (service)
@@ -95,7 +95,7 @@ TAO_NT_Naming_Service::init (int argc,
                              ACE_TCHAR *argv[])
 {
   HKEY hkey = 0;
-  BYTE buf[ACE_DEFAULT_ARGV_BUFSIZ];
+  ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
 
   *buf = '\0';
 
@@ -119,22 +119,22 @@ TAO_NT_Naming_Service::init (int argc,
                             TAO_NAMING_SERVICE_OPTS_NAME,
                             NULL,
                             &type,
-                            buf,
+                            (LPBYTE)buf,
                             &bufSize);
 
   RegCloseKey (hkey);
 
   // Add options to the args list (if any).
 
-  if (ACE_OS::strlen ((char *) buf) > 0)
+  if (ACE_OS::strlen (buf) > 0)
     {
-      ACE_ARGV args ((const char*) buf);
+      ACE_ARGV args (buf);
       // Allocate the internal args list to be one bigger than the
       // args list passed into the function. We use a 'save' list in
       // case we use a 'destructive' args list processor - this way we
       // maintain the correct argv and argc for memory freeing
       // operations in the destructor.
-      argv_save_ = (char **) ACE_OS::malloc (sizeof (char *) * (argc + args.argc ()));
+      argv_save_ = (ACE_TCHAR **) ACE_OS::malloc (sizeof (ACE_TCHAR *) * (argc + args.argc ()));
 
       // Copy the values into the internal args buffer.
       int i;

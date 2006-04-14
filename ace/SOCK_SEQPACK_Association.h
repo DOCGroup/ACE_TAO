@@ -20,16 +20,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
+
+#include "ace/SOCK_IO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_IO.h"
 #include "ace/Multihomed_INET_Addr.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class ACE_Message_Block;
@@ -75,14 +79,14 @@ class ACE_Message_Block;
  * will result in <send> getting called on Win32 platforms, and
  * <write> getting called on non-Win32 platforms.
  */
-class ACE_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
+class ACE_Sockets_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
 {
 public:
   // Initialization and termination methods.
   /// Constructor.
   ACE_SOCK_SEQPACK_Association (void);
 
-  /// Constructor (sets the underlying ACE_HANDLE with <h>).
+  /// Constructor (sets the underlying <ACE_HANDLE> with <h>).
   ACE_SOCK_SEQPACK_Association (ACE_HANDLE h);
 
   /// Destructor.
@@ -190,8 +194,6 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_SEQPACK_Association.inl"

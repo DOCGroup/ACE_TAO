@@ -3,7 +3,6 @@
 // cvs-id    : $Id$
 
 #include "Reassemble.h"
-#include "ace/OS_NS_stdlib.h"
 
 /*
 #include <iostream>
@@ -56,7 +55,7 @@ namespace ACE_RMCast
           //
 
           if (part->num () == 1)
-            ACE_OS::abort ();
+            abort ();
 
 
           Data const* data = static_cast<Data const*> (m->find (Data::id));
@@ -79,7 +78,7 @@ namespace ACE_RMCast
             // Reassembly is complete.
             //
             if (part->total_size () != new_data->size ())
-              ACE_OS::abort ();
+              abort ();
 
             Message_ptr new_msg (new Message ());
 
@@ -102,7 +101,7 @@ namespace ACE_RMCast
         // and forward it up.
         //
         if (map_.find (from, e) != -1)
-          ACE_OS::abort ();
+          abort ();
 
         in_->recv (m);
       }

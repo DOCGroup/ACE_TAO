@@ -16,38 +16,14 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+CLEANFILES =
 noinst_PROGRAMS =
+BUILT_SOURCES =
 
-## Makefile.Load_Balancing_Persistent_IDL.am
+## Makefile.Load_Balancing_Persistent_Balancer.am
 
-BUILT_SOURCES = \
-  IdentityC.cpp \
-  IdentityC.h \
-  IdentityC.inl \
-  IdentityS.cpp \
-  IdentityS.h \
-  IdentityS.inl \
-  IdentityS_T.cpp \
-  IdentityS_T.h \
-  IdentityS_T.inl
-
-CLEANFILES = \
-  Identity-stamp \
-  IdentityC.cpp \
-  IdentityC.h \
-  IdentityC.inl \
-  IdentityS.cpp \
-  IdentityS.h \
-  IdentityS.inl \
-  IdentityS_T.cpp \
-  IdentityS_T.h \
-  IdentityS_T.inl
-
-IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.cpp IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
-
-Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Identity.idl
-	@touch $@
+if !BUILD_MINIMUM_CORBA
+if !BUILD_REPO
 
 BUILT_SOURCES += \
   Load_BalancerC.cpp \
@@ -75,19 +51,8 @@ CLEANFILES += \
 Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.cpp Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
 
 Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Load_Balancer.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
 	@touch $@
-
-
-noinst_HEADERS = \
-  Identity.idl \
-  Load_Balancer.idl
-
-## Makefile.Load_Balancing_Persistent_Balancer.am
-
-if !BUILD_ACE_FOR_TAO
-if !BUILD_MINIMUM_CORBA
-if !BUILD_REPO
 
 noinst_PROGRAMS += load_balancer
 
@@ -102,6 +67,11 @@ load_balancer_SOURCES = \
   Load_BalancerS.cpp \
   Load_Balancer_i.cpp \
   Load_Balancing_Service.cpp \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl \
   Load_Balancer_i.h \
   Load_Balancing_Service.h
 
@@ -116,12 +86,65 @@ load_balancer_LDADD = \
 
 endif !BUILD_REPO
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Load_Balancing_Persistent_Client.am
 
 if !BUILD_MINIMUM_CORBA
 if !BUILD_REPO
+
+BUILT_SOURCES += \
+  IdentityC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.h \
+  IdentityS.inl \
+  IdentityS_T.cpp \
+  IdentityS_T.h \
+  IdentityS_T.inl
+
+CLEANFILES += \
+  Identity-stamp \
+  IdentityC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.h \
+  IdentityS.inl \
+  IdentityS_T.cpp \
+  IdentityS_T.h \
+  IdentityS_T.inl
+
+IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
+
+Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Identity.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  Load_BalancerC.cpp \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS.inl \
+  Load_BalancerS_T.cpp \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
+
+CLEANFILES += \
+  Load_Balancer-stamp \
+  Load_BalancerC.cpp \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS.inl \
+  Load_BalancerS_T.cpp \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
+
+Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
+
+Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
+	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -135,7 +158,17 @@ client_SOURCES = \
   IdentityC.cpp \
   Identity_Client.cpp \
   Load_BalancerC.cpp \
-  Identity_Client.h
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.h \
+  IdentityS_T.h \
+  IdentityS_T.inl \
+  Identity_Client.h \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
@@ -154,6 +187,62 @@ endif !BUILD_MINIMUM_CORBA
 if !BUILD_MINIMUM_CORBA
 if !BUILD_REPO
 
+BUILT_SOURCES += \
+  IdentityC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.cpp \
+  IdentityS.h \
+  IdentityS.inl \
+  IdentityS_T.cpp \
+  IdentityS_T.h \
+  IdentityS_T.inl
+
+CLEANFILES += \
+  Identity-stamp \
+  IdentityC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.cpp \
+  IdentityS.h \
+  IdentityS.inl \
+  IdentityS_T.cpp \
+  IdentityS_T.h \
+  IdentityS_T.inl
+
+IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.cpp IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
+
+Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Identity.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  Load_BalancerC.cpp \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS.inl \
+  Load_BalancerS_T.cpp \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
+
+CLEANFILES += \
+  Load_Balancer-stamp \
+  Load_BalancerC.cpp \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS.inl \
+  Load_BalancerS_T.cpp \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
+
+Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
+
+Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
+	@touch $@
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -168,8 +257,18 @@ server_SOURCES = \
   Identity_Server.cpp \
   Identity_i.cpp \
   Load_BalancerC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.h \
+  IdentityS_T.h \
+  IdentityS_T.inl \
   Identity_Server.h \
-  Identity_i.h
+  Identity_i.h \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \

@@ -20,18 +20,10 @@ SUBDIRS += \
         apps \
         bin \
         netsvcs \
-        protocols 
-
-if BUILD_EXAMPLES
-SUBDIRS += examples
-endif
-
-if BUILD_TESTS
-SUBDIRS += performance-tests
-SUBDIRS += tests
-endif
-
-SUBDIRS += \
+        performance-tests \
+        protocols \
+        examples \
+        tests \
         websvcs \
 	@KOKYU@ \
 	@TAO@
@@ -39,3 +31,4 @@ SUBDIRS += \
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
 AUTOMAKE_OPTIONS = foreign
+

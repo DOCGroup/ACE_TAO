@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,15 +14,12 @@
 #define TAO_TRADER_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Constraint_Visitors.h"
-#include "orbsvcs/Trader/Trader.h"
-#include "orbsvcs/Trader/Trader_Utils.h"
+#include "Constraint_Visitors.h"
+#include "Trader.h"
+#include "Trader_Utils.h"
 #include "orbsvcs/CosTradingC.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
-: public TAO_Constraint_Validator
+class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
 {
  public:
   /**
@@ -56,8 +52,6 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Const
   /// they dyanmic or static.
   TAO_Property_Evaluator prop_eval_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TRADER_CONSTRAINT_VISITOR_H */

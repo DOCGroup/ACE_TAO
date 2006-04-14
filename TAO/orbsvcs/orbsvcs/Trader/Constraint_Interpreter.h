@@ -15,14 +15,12 @@
 #define TAO_CONSTRAINT_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Constraint_Nodes.h"
-#include "orbsvcs/Trader/Constraint_Visitors.h"
-#include "orbsvcs/Trader/Interpreter.h"
+#include "Constraint_Nodes.h"
+#include "Constraint_Visitors.h"
+#include "Interpreter.h"
 
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
@@ -159,8 +157,6 @@ private:
   /// The ordered list of offers.
   Ordered_Offers offers_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CONSTRAINT_INTERPRETER_H */

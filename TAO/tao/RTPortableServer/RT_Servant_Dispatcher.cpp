@@ -1,10 +1,9 @@
-
-#include "tao/RTPortableServer/RT_Servant_Dispatcher.h"
+#include "RT_Servant_Dispatcher.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTPortableServer/RT_POA.h"
-
+#include "RT_POA.h"
+#include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
@@ -16,17 +15,13 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
-#include "tao/RTCORBA/Thread_Pool.h"
-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (RTPortableServer,
            RT_Servant_Dispatcher,
            "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 {
@@ -84,7 +79,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Protocols_Hooks *tph =
     poa.orb_core ().get_protocols_hooks ();
 
-  const char *priority_model = 0;
+  const char *priority_model;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
   // NOT_SPECIFIED PriorityModel processing.
@@ -174,8 +169,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                       ACE_TEXT ("(%P|%t): %s processing using %s ")
                       ACE_TEXT ("original thread CORBA/native priority %d/%d ")
                       ACE_TEXT ("not changed\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                      ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                      ACE_TEXT_TO_TCHAR_IN (priority_model),
+                      ACE_TEXT_TO_TCHAR_IN (thread_pool_id),
                       pre_invoke_state.original_CORBA_priority_,
                       pre_invoke_state.original_native_priority_));
 
@@ -187,8 +182,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                       ACE_TEXT ("(%P|%t): %s processing using %s ")
                       ACE_TEXT ("original thread CORBA/native priority ")
                       ACE_TEXT ("not changed\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                      ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id)));
+                      ACE_TEXT_TO_TCHAR_IN (priority_model),
+                      ACE_TEXT_TO_TCHAR_IN (thread_pool_id)));
 
 #endif /* ACE_HAS_THREADS */
 
@@ -228,8 +223,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("%s processing using %s ")
                           ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                           ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                          ACE_TEXT_TO_TCHAR_IN (priority_model),
+                          ACE_TEXT_TO_TCHAR_IN (thread_pool_id),
                           pre_invoke_state.original_CORBA_priority_,
                           pre_invoke_state.original_native_priority_,
                           target_priority,
@@ -245,8 +240,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("%s processing using %s ")
                           ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                           ACE_TEXT ("is the same as the target priority\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                          ACE_TEXT_TO_TCHAR_IN (priority_model),
+                          ACE_TEXT_TO_TCHAR_IN (thread_pool_id),
                           pre_invoke_state.original_CORBA_priority_,
                           pre_invoke_state.original_native_priority_));
             }
@@ -363,7 +358,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
         {
           // Eat up the exception.
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught: TAO - "
+                               "Exception caught: TAO (%P|%t) - "
                                "Priority_Model_Processing::"
                                "~Priority_Model_Processing");
         }
@@ -398,7 +393,5 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
   return poa;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

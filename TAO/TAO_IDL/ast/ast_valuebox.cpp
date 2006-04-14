@@ -20,7 +20,7 @@ AST_ValueBox::AST_ValueBox (UTL_ScopedName *n,
                             AST_Type       *boxed_type)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_valuebox,
-              n, true),
+              n, I_TRUE),
     AST_Type (AST_Decl::NT_valuebox,
               n),
     AST_ConcreteType (AST_Decl::NT_valuebox, n),

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Policy_Validator.h
@@ -26,8 +24,6 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_Policy_Set;
@@ -113,8 +109,6 @@ private:
   TAO_Policy_Validator *next_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
 
-#endif /* TAO_POLICY_VALIDATOR_H */
+#endif /* TAO_POLICY_VALIDATOR_H_ */

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/DomainC.h"
+#include "DomainC.h"
 #include "tao/CDR.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
@@ -48,13 +48,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/DomainC.inl"
+#include "DomainC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO specific stuff.
 namespace CORBA
@@ -737,5 +735,3 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

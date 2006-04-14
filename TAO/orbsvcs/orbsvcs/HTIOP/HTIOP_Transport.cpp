@@ -1,10 +1,10 @@
 // $Id$
 
-#include "orbsvcs/HTIOP/HTIOP_Transport.h"
+#include "HTIOP_Transport.h"
 
-#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "HTIOP_Connection_Handler.h"
+#include "HTIOP_Acceptor.h"
+#include "HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Session.h"
 
 #include "tao/Acceptor_Registry.h"
@@ -25,8 +25,6 @@
 ACE_RCSID (HTIOP,
            TAO_HTIOP_Transport,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
                                   TAO_ORB_Core *orb_core,
@@ -452,5 +450,3 @@ TAO::HTIOP::Transport::invalidate_event_handler_i (void)
   this->connection_handler_ = 0;
   return eh;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

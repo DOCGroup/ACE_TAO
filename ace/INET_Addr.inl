@@ -7,27 +7,16 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_arpa_inet.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_INET_Addr::reset (void)
 {
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->get_type() == AF_INET)
-    {
-#ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
-      this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
-#endif
-      this->inet_addr_.in4_.sin_family = AF_INET;
-    }
+    this->inet_addr_.in4_.sin_family = AF_INET;
 #if defined (ACE_HAS_IPV6)
   else if (this->get_type() == AF_INET6)
-    {
-#ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
-      this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
-#endif
-      this->inet_addr_.in6_.sin6_family = AF_INET6;
-    }
+    this->inet_addr_.in6_.sin6_family = AF_INET6;
 #endif  /* ACE_HAS_IPV6 */
 }
 
@@ -40,9 +29,8 @@ ACE_INET_Addr::determine_type (void) const
 #  else
   return AF_INET6;
 #  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-#else
-  return AF_INET;
 #endif /* ACE_HAS_IPV6 */
+  return AF_INET;
 }
 
 ACE_INLINE void *
@@ -120,7 +108,6 @@ ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
         && this->get_port_number () < rhs.get_port_number ());
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_INET_Addr::set (u_short port_number,
                     const wchar_t host_name[],
@@ -128,7 +115,7 @@ ACE_INET_Addr::set (u_short port_number,
                     int address_family)
 {
   return this->set (port_number,
-                    ACE_Wide_To_Ascii (host_name).char_rep (),
+                    ACE_TEXT_TO_CHAR_IN (host_name),
                     encode,
                     address_family);
 }
@@ -138,9 +125,9 @@ ACE_INET_Addr::set (const wchar_t port_name[],
                     const wchar_t host_name[],
                     const wchar_t protocol[])
 {
-  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
-                    ACE_Wide_To_Ascii (host_name).char_rep (),
-                    ACE_Wide_To_Ascii (protocol).char_rep ());
+  return this->set (ACE_TEXT_TO_CHAR_IN (port_name),
+                    ACE_TEXT_TO_CHAR_IN (host_name),
+                    ACE_TEXT_TO_CHAR_IN (protocol));
 }
 
 ACE_INLINE int
@@ -148,18 +135,16 @@ ACE_INET_Addr::set (const wchar_t port_name[],
                     ACE_UINT32 ip_addr,
                     const wchar_t protocol[])
 {
-  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
+  return this->set (ACE_TEXT_TO_CHAR_IN (port_name),
                     ip_addr,
-                    ACE_Wide_To_Ascii (protocol).char_rep ());
+                    ACE_TEXT_TO_CHAR_IN (protocol));
 }
 
 ACE_INLINE int
 ACE_INET_Addr::set (const wchar_t addr[])
 {
-  return this->set (ACE_Wide_To_Ascii (addr).char_rep ());
+  return this->set (ACE_TEXT_TO_CHAR_IN (addr));
 }
-
-#endif /* ACE_HAS_WCHAR */
 
 // Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
 ACE_INLINE bool
@@ -217,4 +202,3 @@ ACE_INET_Addr::is_ipv4_compat_ipv6 (void) const
 }
 #endif /* ACE_HAS_IPV6 */
 
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -29,7 +29,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Cleanup_Func_Registry.cpp
     Client_Strategy_Factory.cpp
     ClientRequestInterceptor_Adapter_Factory.cpp
-    ClientRequestInterceptor_Adapter.cpp
     Codeset_Manager.cpp
     Codeset_Manager_Factory_Base.cpp
     Codeset_Translator_Base.cpp
@@ -91,7 +90,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Transport.cpp
     IIOPC.cpp
     Incoming_Message_Queue.cpp
-    Incoming_Message_Stack.cpp
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
@@ -178,7 +176,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resume_Handle.cpp
     Sequence.cpp
     Server_Strategy_Factory.cpp
-    ServerRequestInterceptor_Adapter.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
@@ -347,7 +344,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h
-    Incoming_Message_Stack.h
     Invocation_Adapter.h
     Invocation_Base.h
     Invocation_Endpoint_Selectors.h
@@ -514,7 +510,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     VarOut_T.h
     Var_Size_Argument_T.h
     Version.h
-    Versioned_Namespace.h
     Wait_On_Leader_Follower.h
     Wait_On_LF_No_Upcall.h
     Wait_On_Reactor.h

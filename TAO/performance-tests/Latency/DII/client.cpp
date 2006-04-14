@@ -2,8 +2,7 @@
 
 #include "tao/DynamicInterface/Request.h"
 #include "tao/Strategies/advanced_resource.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TC_Constants_Forward.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -24,7 +23,7 @@ int do_shutdown = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "hxk:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -62,7 +61,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -130,8 +129,7 @@ main (int argc, char *argv[])
             object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::ULongLong start_time = static_cast <CORBA::ULongLong> (start);
-          request->add_in_arg("send_time") <<= start_time;
+          request->add_in_arg("send_time") <<= start;
 
           request->set_return_type (CORBA::_tc_ulonglong);
           request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);

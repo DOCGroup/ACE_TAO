@@ -708,7 +708,7 @@ sub check_for_push_and_pop ()
             close (FILE);
 
             if ($disable == 0 && $push_count != $pop_count) {
-                print_error ("$file: #pragma warning(push)/(pop) mismatch");
+                print_error ("$file:$.: #pragma warning(push)/(pop) mismatch");
             }
         }
         else {
@@ -716,43 +716,6 @@ sub check_for_push_and_pop ()
         }
     }
 }
-
-# This test verifies that the same number of
-# "ACE_VERSIONED_NAMESPACE_BEGIN_DECL" and
-# "ACE_END_VERSIONED_NAMESPACE_DECL" macros are used in a given
-# source file.
-sub check_for_versioned_namespace_begin_end ()
-{
-  print "Running versioned namespace begin/end test\n";
-  foreach $file (@files_cpp, @files_inl, @files_h) {
-    my $begin_count = 0;
-    my $end_count = 0;
-    if (open (FILE, $file)) {
-      print "Looking at file $file\n" if $opt_d;
-      while (<FILE>) {
-        if (/^\s*\w+_BEGIN_VERSIONED_NAMESPACE_DECL/) {
-          ++$begin_count;
-        }
-        if (/^\s*\w+_END_VERSIONED_NAMESPACE_DECL/) {
-          ++$end_count;
-        }
-        if ($begin_count > $end_count and /^\s*#\s*include\s*/) {
-          print_error ("$file:$.: #include directive within Versioned namespace block");
-        }
-      }
-
-      close (FILE);
-
-      if ($begin_count != $end_count) {
-        print_error ("$file: Versioned namespace begin($begin_count)/end($end_count) mismatch");
-      }
-    }
-    else {
-      print STDERR "Error: Could not open $file\n";
-    }
-  }
-}
-
 
 # Check doxygen @file comments
 sub check_for_mismatched_filename ()
@@ -1274,44 +1237,24 @@ sub check_for_non_bool_operators ()
 sub check_for_long_file_names ()
 {
     my $max_filename = 50;
-    my $max_mpc_projectname = $max_filename - 12; ## GNUmakefile.[project_name]
+    my $max_mpc_filename = $max_filename - 20;
     print "Running file names check\n";
 
     foreach $file (@files_cpp, @files_inl, @files_h, @files_html,
                    @files_dsp, @files_dsw, @files_gnu, @files_idl,
                    @files_pl, @files_changelog, @files_makefile,
-                   @files_bor, @files_mpc) {
+                   @files_bor ) {
         if ( length( basename($file) ) >= $max_filename )
         {
-            print_error ("File name $file meets or exceeds $max_filename chars.");
+            print_error ("File name $file exceeds $max_filename chars.");
         }
     }
-    foreach $file (grep(/\.mpc$/, @files_mpc)) {
-      if (open(FH, $file)) {
-        my($blen) = length(basename($file)) - 4; ## .mpc
-        while(<FH>) {
-          if (/project\s*(:.*)\s*{/) {
-            if ($blen >= $max_mpc_projectname) {
-              print_warning ("File name $file meets or exceeds $max_mpc_projectname chars.");
-            }
-          }
-          elsif (/project\s*\(([^\)]+)\)/) {
-            my($name) = $1;
-            if ($name =~ /\*/) {
-              my($length) = length($name) + (($name =~ tr/*//) * $blen);
-              if ($length >= $max_mpc_projectname) {
-                print_warning ("Project name ($name) from $file will meet or exceed $max_mpc_projectname chars when expanded by MPC.");
-              }
-            }
-            else {
-              if (length($name) >= $max_mpc_projectname) {
-                print_warning ("Project name ($name) from $file meets or exceeds $max_mpc_projectname chars.");
-              }
-            }
-          }
+    foreach $file (@files_mpc) {
+        if ( length( basename($file) ) >= $max_mpc_filename )
+        {
+            print_warning ("File name $file exceeds $max_mpc_filename chars.");
         }
-        close(FH);
-      }
+
     }
 }
 
@@ -1368,7 +1311,6 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_tchar
            check_for_pre_and_post
            check_for_push_and_pop
-           check_for_versioned_namespace_begin_end
            check_for_mismatched_filename
            check_for_bad_run_test
            check_for_absolute_ace_wrappers
@@ -1427,7 +1369,6 @@ check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
 check_for_pre_and_post () if ($opt_l >= 4);
 check_for_push_and_pop () if ($opt_l >= 4);
-check_for_versioned_namespace_begin_end () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
 check_for_bad_run_test () if ($opt_l >= 6);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
@@ -1439,7 +1380,6 @@ check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_include () if ($opt_l >= 5);
 check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l > 1 );
-
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 

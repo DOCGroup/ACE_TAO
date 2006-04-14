@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_FILE_Connector
  *
@@ -104,8 +102,6 @@ public:
   typedef ACE_FILE_Addr PEER_ADDR;
   typedef ACE_FILE_IO PEER_STREAM;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FILE_Connector.inl"

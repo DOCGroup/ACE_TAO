@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Priority_Scheduling.h
  *
@@ -17,16 +16,14 @@
 #define TAO_EC_PRIORITY_SCHEDULING_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
+#include "EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/sched_event_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "sched_event_export.h"
 
 /**
  * @class TAO_EC_Priority_Scheduling
@@ -55,8 +52,10 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  TAO_EC_Priority_Scheduling (const TAO_EC_Priority_Scheduling&);
-  TAO_EC_Priority_Scheduling& operator= (const TAO_EC_Priority_Scheduling&);
+  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Priority_Scheduling
+                              (const TAO_EC_Priority_Scheduling&))
+  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Priority_Scheduling& operator=
+                              (const TAO_EC_Priority_Scheduling&))
 
   /// Initialize our RT_Info handle and dependencies
   void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);
@@ -66,10 +65,8 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Priority_Scheduling.i"
+#include "EC_Priority_Scheduling.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

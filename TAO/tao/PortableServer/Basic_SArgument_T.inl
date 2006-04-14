@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template<typename S, typename Insert_Policy>
 ACE_INLINE
 TAO::In_Basic_SArgument_T<S,Insert_Policy>::In_Basic_SArgument_T (void)
@@ -62,4 +60,3 @@ TAO::Ret_Basic_SArgument_T<S,Insert_Policy>::arg (void)
   return this->x_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

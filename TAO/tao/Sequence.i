@@ -1,11 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 // Operations on the unbounded sequence class.
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (void)
@@ -299,5 +295,3 @@ TAO_Unbounded_Sequence<CORBA::Octet>::mb (void) const
   return this->mb_;
 }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

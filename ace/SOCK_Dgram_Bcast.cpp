@@ -15,8 +15,6 @@
 
 ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Bcast)
 
 ACE_Bcast_Node::ACE_Bcast_Node (ACE_INET_Addr &addr,
@@ -146,7 +144,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
   // Get host ip address
   if (host_name)
     {
-      hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
+      hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_TO_CHAR_IN (host_name));
 
       if (hp == 0)
         return -1;
@@ -174,7 +172,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
      There are addresses longer than sizeof (struct sockaddr) eg. IPv6
      or QNX::links. In this case address does not fit into struct ifreq.
      The code below could be applied everywhere, but not every system
-         provides sockaddr.sa_len field.
+	 provides sockaddr.sa_len field.
    */
   for (int nbytes = ifc.ifc_len; nbytes >= (int) sizeof (struct ifreq) &&
         ((ifr->ifr_addr.sa_len > sizeof (struct sockaddr)) ?
@@ -227,8 +225,8 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                          (char *) &flags) == -1)
         {
           ACE_ERROR ((LM_ERROR, "%p [%s]\n",
-                                                 "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)",
-                                                 flags.ifr_name));
+						 "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)",
+						 flags.ifr_name));
           continue;
         }
 
@@ -236,8 +234,8 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                            IFF_UP) == 0)
         {
           ACE_ERROR ((LM_ERROR, "%p [%s]\n",
-                                                 "ACE_SOCK_Dgram_Bcast::mk_broadcast: Network interface is not up",
-                                                 flags.ifr_name));
+						 "ACE_SOCK_Dgram_Bcast::mk_broadcast: Network interface is not up",
+						 flags.ifr_name));
           continue;
         }
 
@@ -252,8 +250,8 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                              SIOCGIFBRDADDR,
                              (char *) &if_req) == -1)
             ACE_ERROR ((LM_ERROR, "%p [%s]\n",
-                                                   "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)",
-                                                   flags.ifr_name));
+						   "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)",
+						   flags.ifr_name));
           else
             {
               ACE_INET_Addr addr (reinterpret_cast <sockaddr_in *>
@@ -376,5 +374,3 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
   return ACE_SOCK_Dgram::send (iov, n, addr, flags);
 }
 #endif /* ACE_HAS_MSG */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

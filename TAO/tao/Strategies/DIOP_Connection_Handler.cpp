@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -16,16 +16,13 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Resume_Handle.h"
 
-#include "tao/Strategies/DIOP_Transport.h"
-#include "tao/Strategies/DIOP_Endpoint.h"
+#include "DIOP_Transport.h"
+#include "DIOP_Endpoint.h"
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(tao, DIOP_Connect, "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_DIOP_SVC_HANDLER (t, 0 , 0),
@@ -157,7 +154,7 @@ TAO_DIOP_Connection_Handler::open (void*)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open -")
                  ACE_TEXT("listening on: <%s:%u>\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
+                 ACE_TEXT_TO_TCHAR_IN (this->local_addr_.get_host_name ()),
                  this->local_addr_.get_port_number ()));
   }
 
@@ -168,7 +165,7 @@ TAO_DIOP_Connection_Handler::open (void*)
     return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-                       this->orb_core ()->leader_follower ());
+		       this->orb_core ()->leader_follower ());
 
   return 0;
 }
@@ -182,7 +179,7 @@ TAO_DIOP_Connection_Handler::open_server (void)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open_server -")
                  ACE_TEXT("listening on %s:%d\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
+                 ACE_TEXT_TO_TCHAR_IN (this->local_addr_.get_host_name ()),
                  this->local_addr_.get_port_number ()
                ));
   }
@@ -300,7 +297,5 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

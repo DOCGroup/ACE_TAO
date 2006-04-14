@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    RT_Stub_Factory.h
@@ -9,6 +7,7 @@
  *   Defines the a factory interface for creating Stubs.
  *   This class creates the default stub, that is used in
  *   plain CORBA.
+ *
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
@@ -24,7 +23,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,8 +32,6 @@
 #include "tao/Stub_Factory.h"
 
 #include "ace/Service_Config.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Stub_Factory
@@ -56,8 +53,6 @@ public:
                                  TAO_ORB_Core *orb_core
                                  ACE_ENV_ARG_DECL);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Stub_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Stub_Factory)

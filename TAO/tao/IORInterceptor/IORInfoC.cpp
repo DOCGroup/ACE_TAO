@@ -26,26 +26,28 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:277
+// be\be_codegen.cpp:291
 
 
-#include "tao/IORInterceptor/IORInfoC.h"
+#include "IORInfoC.h"
 #include "tao/CDR.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+#endif /* __BORLANDC__ */
+
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
 {
 
-#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_)
-#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_
-  
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_
+
   template<>
   class Arg_Traits<PortableInterceptor::ObjectReferenceFactory>
     : public
@@ -54,7 +56,7 @@ namespace TAO
             PortableInterceptor::ObjectReferenceFactory_var,
             PortableInterceptor::ObjectReferenceFactory_out,
             TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>,
-            TAO::Any_Insert_Policy_Noop <PortableInterceptor::ObjectReferenceFactory*>
+            TAO::Any_Insert_Policy_Stream <PortableInterceptor::ObjectReferenceFactory *>
           >
   {
   };
@@ -90,13 +92,13 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::nil (void)
   return PortableInterceptor::IORInfo::_nil ();
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::marshal (
     PortableInterceptor::IORInfo_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return ::CORBA::Object::marshal (p, cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 PortableInterceptor::IORInfo::IORInfo (void)
@@ -107,7 +109,7 @@ PortableInterceptor::IORInfo::~IORInfo (void)
 
 PortableInterceptor::IORInfo_ptr
 PortableInterceptor::IORInfo::_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -118,7 +120,7 @@ PortableInterceptor::IORInfo::_narrow (
 
 PortableInterceptor::IORInfo_ptr
 PortableInterceptor::IORInfo::_unchecked_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -134,7 +136,7 @@ PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -144,7 +146,7 @@ PortableInterceptor::IORInfo::_tao_release (IORInfo_ptr obj)
   CORBA::release (obj);
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 PortableInterceptor::IORInfo::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -178,10 +180,8 @@ const char* PortableInterceptor::IORInfo::_interface_repository_id (void) const
   return "IDL:omg.org/PortableInterceptor/IORInfo:1.0";
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 PortableInterceptor::IORInfo::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

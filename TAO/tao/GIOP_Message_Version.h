@@ -28,8 +28,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ORB_Core;
 
 /**
@@ -54,6 +52,9 @@ public:
   TAO_GIOP_Message_Version (CORBA::Octet maj = TAO_DEF_GIOP_MAJOR,
                             CORBA::Octet min = TAO_DEF_GIOP_MINOR);
 
+  /// Destructor.
+  ~TAO_GIOP_Message_Version (void);
+
   /// Explicitly set the major and minor version.
   void set_version (CORBA::Octet maj, CORBA::Octet min);
 
@@ -64,8 +65,6 @@ public:
   bool operator== (const TAO_GIOP_Message_Version &src);
   bool operator!= (const TAO_GIOP_Message_Version &src);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Version.inl"

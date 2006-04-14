@@ -73,7 +73,7 @@ Criteria_Evaluator::getCriteriaMember (const char *member_name)
        i < criteria_.length();
        i++)
     if (ACE_OS::strcmp (member_name,
-                        criteria_[i].name) == 0)
+                        criteria_[i].name.in()) == 0)
       {
         CORBA::Any_ptr value_ptr;
 

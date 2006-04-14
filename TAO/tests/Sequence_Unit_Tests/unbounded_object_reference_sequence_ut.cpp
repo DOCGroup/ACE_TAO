@@ -21,11 +21,11 @@
 #include <boost/weak_ptr.hpp>
 
 using namespace boost::unit_test_framework;
-using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
+using namespace TAO;
 
 struct Tester
 {
-  typedef unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
+  typedef unbounded_object_reference_sequence<mock_reference> tested_sequence;
   typedef tested_sequence::value_type value_type;
   typedef tested_sequence::const_value_type const_value_type;
 
@@ -505,15 +505,15 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-ACE_Proper_Export_Flag test_suite *
+test_suite *
 init_unit_test_suite(int, char*[])
 {
-  test_suite * ts =
-      BOOST_TEST_SUITE("unbounded object reference sequence unit test");
+  std::auto_ptr<test_suite> ts(
+      BOOST_TEST_SUITE("unbounded object reference sequence unit test"));
 
   boost::shared_ptr<Tester> tester(Tester::allocate());
-  tester->add_all(ts);
+  tester->add_all(ts.get());
 
-  return ts;
+  return ts.release();
 }
 

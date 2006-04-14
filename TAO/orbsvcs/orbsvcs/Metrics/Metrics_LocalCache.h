@@ -24,15 +24,13 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/MetricsC.h"
 
-#include "orbsvcs/Metrics/Metrics_Utils.h"
+#include "Metrics_Utils.h"
 
 #if defined (ACE_METRICS_COLLECTION)
 
 #if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
-#include "orbsvcs/Metrics/Metrics_LocalCache_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Metrics_LocalCache_T.h"
 
 typedef TAO_Metrics_LocalCache<ACE_SYNCH_MUTEX, ACE_New_Allocator>
 TAO_METRICS_CACHE_TYPE;
@@ -99,11 +97,8 @@ PROBE_TYPE, \
 METRICS_LOGGER_REF); \
 } } while (0)
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_LocalCache.i"
+#include "Metrics_LocalCache.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */

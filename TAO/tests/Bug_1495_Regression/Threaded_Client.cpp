@@ -22,6 +22,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Manual_Event.h"
+#include "ace/Argv_Type_Converter.h"
 
 const char *ior_input_file = "file://test.ior";
 const char *ior_output_file = "thr_server.ior";
@@ -29,7 +30,7 @@ const char *ior_output_file = "thr_server.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "i:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,10 +57,12 @@ parse_args (int argc, char *argv[])
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // Parse command line
-  if (parse_args (argc, argv) == -1)
+  if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return -1;
     }
@@ -67,11 +70,10 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      ACE_Argv_Type_Converter main_args_s (argc, argv);
 
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (main_args_s.get_argc (),
-                         main_args_s.get_TCHAR_argv (),
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          "Server_ORB"
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -92,11 +94,9 @@ main (int argc, char *argv[])
       // Wait for the server task to activate.
       me.wait ();
 
-      ACE_Argv_Type_Converter main_args_c (argc, argv);
-
       CORBA::ORB_var corb =
-        CORBA::ORB_init (main_args_c.get_argc (),
-                         main_args_c.get_TCHAR_argv (),
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          "Client_ORB"
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

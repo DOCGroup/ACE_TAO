@@ -28,10 +28,10 @@ class Locator_XMLHandler : public ACEXML_DefaultHandler
 public:
 
   // XML ELEMENT names
-  static const char* ROOT_TAG;
-  static const char* SERVER_INFO_TAG;
-  static const char* ENVIRONMENT_TAG;
-  static const char* ACTIVATOR_INFO_TAG;
+  static const ACE_TCHAR* ROOT_TAG;
+  static const ACE_TCHAR* SERVER_INFO_TAG;
+  static const ACE_TCHAR* ENVIRONMENT_TAG;
+  static const ACE_TCHAR* ACTIVATOR_INFO_TAG;
 
   struct EnvVar {
     ACE_CString name;
@@ -44,7 +44,7 @@ public:
 
   struct Callback {
     virtual ~Callback() {}
-
+ 
     virtual void next_server (const ACE_CString& server_name,
       const ACE_CString& aname, const ACE_CString& startup_cmd,
       const EnvList& env_vars, const ACE_CString& working_dir,

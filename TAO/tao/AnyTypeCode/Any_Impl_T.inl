@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // These three are overridden in generated code where appropriate.
 
@@ -54,4 +51,3 @@ TAO::Any_Impl_T<T>::value (void) const
   return this->value_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,7 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class SystemException;
@@ -36,7 +35,6 @@ namespace SecurityLevel2
 {
   class Credentials;
 }
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Components
 {

@@ -1,10 +1,10 @@
 #ifndef TAO_UTILS_SERVANT_VAR_CPP
 #define TAO_UTILS_SERVANT_VAR_CPP
 
-#include "tao/Utils/Servant_Var.h"
+#include "Servant_Var.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Utils/Servant_Var.inl"
+# include "Servant_Var.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Utils,

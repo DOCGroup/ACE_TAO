@@ -1,8 +1,5 @@
 // -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr&
 TAO_DIOP_Acceptor::address (void) const
@@ -24,5 +21,3 @@ TAO_DIOP_Acceptor::endpoints (void)
 
   return this->addrs_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

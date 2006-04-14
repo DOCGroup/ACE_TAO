@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   Hash_Map_With_Allocator_T.h
@@ -21,8 +20,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Hash_Map_With_Allocator
@@ -56,9 +53,9 @@ public:
                                ACE_Allocator *alloc);
 
   // = The following methods are Proxies to the corresponding methods
-  // in ACE_Hash_Map_Manager.  Each method sets the allocator to
+  // in <ACE_Hash_Map_Manager>.  Each method sets the allocator to
   // the one specified by the invoking entity, and then calls the
-  // corresponding method in ACE_Hash_Map_Manager to do the
+  // corresponding method in <ACE_Hash_Map_Manager> to do the
   // actual work.
 
   int bind (const EXT_ID &,
@@ -82,14 +79,12 @@ public:
             INT_ID &,
             ACE_Allocator *alloc);
 
-  /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
-  int find (const EXT_ID &ext_id,
+  /// Returns 0 if the <ext_id> is in the mapping, otherwise -1.
+  int find (const EXT_ID &,
             ACE_Allocator *alloc);
 
   int close (ACE_Allocator *alloc);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Hash_Map_With_Allocator_T.inl"

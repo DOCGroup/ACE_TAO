@@ -38,9 +38,8 @@
 //
 // For completeness' sake, you should probably put
 //   #define ACE_HAS_STRDUP_EMULATION
-//   #define ACE_HAS_WCSDUP_EMULATION
-// too, so that you guarantee that strdup() and wcsdup() call your 
-// desired mallocator and not the system mallocator.
+// too, so that you guarantee that strdup() calls your desired mallocator
+// and not the system mallocator.
 //
 #if !defined (ACE_MALLOC_FUNC)
 #  define ACE_MALLOC_FUNC ::malloc
@@ -55,15 +54,11 @@
 #  define ACE_REALLOC_FUNC ::realloc
 #endif
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_HAS_OLD_MALLOC)
-typedef char * ACE_MALLOC_T;
+typedef char *ACE_MALLOC_T;
 #else
-typedef void * ACE_MALLOC_T;
+typedef void *ACE_MALLOC_T;
 #endif /* ACE_HAS_OLD_MALLOC */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ============================================================================
 // ACE_NEW macros

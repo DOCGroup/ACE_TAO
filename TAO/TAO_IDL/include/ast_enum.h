@@ -78,8 +78,8 @@ class TAO_IDL_FE_Export AST_Enum : public virtual AST_ConcreteType,
 public:
   AST_Enum (void);
   AST_Enum (UTL_ScopedName *n,
-            bool local,
-            bool abstract);
+            idl_bool local,
+            idl_bool abstract);
 
   virtual ~AST_Enum (void);
 

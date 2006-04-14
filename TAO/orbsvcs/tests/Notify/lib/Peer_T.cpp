@@ -10,6 +10,7 @@ ACE_RCSID (Notify,
            "$Id$")
 
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "Name.h"
 #include "LookupManager.h"
 #include "Options_Parser.h"

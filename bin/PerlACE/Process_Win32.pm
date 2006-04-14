@@ -112,9 +112,7 @@ sub Executable
         $executable = PerlACE::Process::Normalize_Executable_Name ($executable);
     }
     else {
-        if ($executable !~ m/.EXE$/i) {
-            $executable = $executable.".EXE";
-        }
+        $executable = $executable.".EXE";
         $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     }
     
@@ -278,7 +276,7 @@ sub Spawn ()
 
     if ($status != $STILL_ACTIVE) {
         print STDERR "ERROR: Spawn failed for <", $self->CommandLine (), ">\n";
-        return -1;
+        exit $status;
     }
 
     $self->{RUNNING} = 1;

@@ -3,9 +3,11 @@
 #ifndef HTIOP_CONNECTOR_IMPL_CPP
 #define HTIOP_CONNECTOR_IMPL_CPP
 
-#include "orbsvcs/HTIOP/HTIOP_Connector_Impl.h"
+#include "HTIOP_Connector_Impl.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(HTIOP,
+          TAO_HTIOP_Connector_Impl,
+          "$Id$")
 
 template <class SVC_HANDLER>
 TAO::HTIOP::Connect_Creation_Strategy<SVC_HANDLER>::
@@ -57,6 +59,5 @@ activate_svc_handler (SVC_HANDLER *sh,
                                                                       arg);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* HTIOP_CONNECTOR_IMPL_CPP */

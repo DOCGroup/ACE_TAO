@@ -4,11 +4,12 @@
 
 // ****************************************************************
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 CORBA::Object::Object (int)
-  : is_local_ (true),
+  : servant_ (0),
+    proxy_broker_ (0),
+    is_collocated_ (false),
+    is_local_ (true),
     is_evaluated_ (true),
     ior_ (),
     orb_core_ (0),
@@ -79,6 +80,13 @@ CORBA::Object::is_evaluated (void) const
   return this->is_evaluated_;
 }
 
+ACE_INLINE void
+CORBA::Object::set_collocated_servant (TAO_Abstract_ServantBase *b)
+{
+  this->servant_ = b;
+  this->is_collocated_ = 1;
+}
+
 ACE_INLINE TAO_ORB_Core *
 CORBA::Object::orb_core (void) const
 {
@@ -96,5 +104,3 @@ CORBA::Object::ior (void) const
 {
   return this->ior_.in ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

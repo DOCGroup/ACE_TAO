@@ -4,14 +4,14 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "Reactor_Logging_Server_T.h"
+#include "Reactor_Logging_Server.h"
 #include "Logging_Acceptor_Ex.h"
 #include "ace/Log_Msg.h"
 
 typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
         Server_Logging_Daemon;
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Reactor reactor;
   Server_Logging_Daemon *server;

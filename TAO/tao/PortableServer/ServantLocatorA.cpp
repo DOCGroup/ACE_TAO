@@ -30,14 +30,12 @@
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
-#include "tao/PortableServer/ServantLocatorA.h"
+#include "ServantLocatorA.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
@@ -54,7 +52,5 @@ namespace PortableServer
   ::CORBA::TypeCode_ptr const _tc_ServantLocator =
     &_tao_tc_PortableServer_ServantLocator;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

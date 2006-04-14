@@ -34,7 +34,6 @@
 
 #include "ace/SOCK_Stream.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_SSL_SOCK_Stream
@@ -309,8 +308,6 @@ protected:
   ACE_SOCK_Stream stream_;
 
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "SSL_SOCK_Stream.i"

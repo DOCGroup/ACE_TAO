@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   ECG_Mcast_Gateway.h
  *
@@ -12,26 +11,22 @@
 #define TAO_ECG_MCAST_GATEWAY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "ECG_UDP_Sender.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/ECG_Defaults.h"
-#include /**/ "orbsvcs/Event/event_serv_export.h"
-#include "orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "ECG_Defaults.h"
+#include /**/ "event_serv_export.h"
+#include "ECG_UDP_Receiver.h"
+#include "ECG_UDP_Out_Endpoint.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 #include "ace/SString.h"
 #include "ace/os_include/os_stdint.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Event_Handler;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Mcast_Gateway
@@ -277,10 +272,8 @@ private:
   //@}
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Mcast_Gateway.i"
+#include "ECG_Mcast_Gateway.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_ECG_Mcast_Gateway)

@@ -16,7 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_THREADS_BUILD_DLL
+# include "ace/ACE_Threads_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Threads_Export ACE_Export
+#endif  /* ACE_THREADS_BUILD_DLL */
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,9 +34,8 @@
 /// Define to be compatible with the terminology in the POSA2 book!
 #define ACE_Activation_List ACE_Activation_Queue
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Method_Request;
+
 
 /**
  * @class ACE_Activation_Queue
@@ -47,7 +52,7 @@ class ACE_Method_Request;
  *
  * @sa ACE_Method_Request
  */
-class ACE_Export ACE_Activation_Queue
+class ACE_Threads_Export ACE_Activation_Queue
 {
 public:
   // = Initialization and termination methods.
@@ -111,8 +116,7 @@ public:
    *            earlier, however, if queue is closed, deactivated, or when
    *            a signal occurs.
    *
-   * @retval    >0 The number of method requests on the queue after adding
-   *            the specified request.
+   * @retval    0 on success.
    * @retval    -1 if an error occurs; errno contains further information. If
    *            the specified timeout elapses, errno will be @c EWOULDBLOCK.
    */
@@ -140,14 +144,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
-
-  // = Prevent copying and assignment.
-  ACE_Activation_Queue (const ACE_Activation_Queue &);
-  void operator= (const ACE_Activation_Queue &);
-
 protected:
-
   /// Stores the Method_Requests.
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
@@ -155,16 +152,16 @@ protected:
   int delete_queue_;
 
 private:
-
   /// Allocation strategy of the queue.
   ACE_Allocator *allocator_;
 
   /// Allocation strategy of the message blocks.
   ACE_Allocator *data_block_allocator_;
 
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Activation_Queue &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Activation_Queue.inl"
@@ -172,3 +169,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ACTIVATION_QUEUE_H */
+

@@ -1,4 +1,4 @@
-#include "orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h"
+#include "LB_LoadAlert_Handler.h"
 
 #include "tao/debug.h"
 
@@ -7,7 +7,6 @@ ACE_RCSID (LoadBalancing,
            LB_LoadAlert_Handler,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler (void)
 {
@@ -21,7 +20,7 @@ TAO_LB_LoadAlert_Handler::enable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_LB_LoadAlert_Handler::enable_alert_excep (
-    ::Messaging::ExceptionHolder *
+    CosLoadBalancing::AMI_LoadAlertExceptionHolder *
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -39,7 +38,7 @@ TAO_LB_LoadAlert_Handler::disable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_LB_LoadAlert_Handler::disable_alert_excep (
-    ::Messaging::ExceptionHolder *
+    CosLoadBalancing::AMI_LoadAlertExceptionHolder *
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -48,5 +47,3 @@ TAO_LB_LoadAlert_Handler::disable_alert_excep (
                 ACE_TEXT ("Exception caught when invoking ")
                 ACE_TEXT ("LoadAlert::disable_alert()\n")));
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -18,7 +18,6 @@ ACE_RCSID (tao,
            Objref_TypeCode_Static,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::tao_marshal (
@@ -148,4 +147,3 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::name_i (
   return this->attributes_.name ();
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

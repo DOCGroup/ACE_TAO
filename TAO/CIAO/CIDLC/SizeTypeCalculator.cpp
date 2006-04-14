@@ -70,13 +70,9 @@ namespace
     virtual void
     traverse (SemanticGraph::Struct& s)
     {
-      std::string n (s.scoped_name ().str ());
       if (s.context ().count (STRS[VAR_SIZE]))
       {
-        // Never set 'top' to false (except in pre() above),
-        // so a 'true' value will propagate up the scopes.
-        bool r = s.context ().get<bool> (STRS[VAR_SIZE]);
-        if (r) top () = r;
+        top () = s.context ().get<bool> (STRS[VAR_SIZE]);
       }
       else
       {
@@ -87,8 +83,13 @@ namespace
     virtual void
     post (SemanticGraph::Struct& s)
     {
-      // Set our context to the result of nested scope traversal.
-      s.context ().set (STRS[VAR_SIZE], top ());
+      bool r (top ());
+
+      s.context ().set (STRS[VAR_SIZE], r);
+
+      pop ();
+
+      if (r) top () = r;
     }
 
     virtual void
@@ -102,10 +103,7 @@ namespace
     {
       if (u.context ().count (STRS[VAR_SIZE]))
       {
-        // Never set 'top' to false (except in pre() above),
-        // so a 'true' value will propagate up the scopes.
-        bool r = u.context ().get<bool> (STRS[VAR_SIZE]);
-        if (r) top () = r;
+        top () = u.context ().get<bool> (STRS[VAR_SIZE]);
       }
       else
       {
@@ -116,8 +114,13 @@ namespace
     virtual void
     post (SemanticGraph::Union& u)
     {
-      // Set our context to the result of nested scope traversal.
-      u.context ().set (STRS[VAR_SIZE], top ());
+      bool r (top ());
+
+      u.context ().set (STRS[VAR_SIZE], r);
+
+      pop ();
+
+      if (r) top () = r;
     }
 
   private:

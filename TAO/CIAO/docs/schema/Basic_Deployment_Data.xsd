@@ -146,8 +146,8 @@
   <xsd:complexType name="Resource">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="resourceType" type="xsd:string" maxOccurs="unbounded" />
-      <xsd:element name="property" type="Deployment:SatisfierProperty" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="resourceType" type="xsd:string"/>
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -231,6 +231,7 @@
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
 
+
   <xsd:simpleType name="CCMComponentPortKind">
     <xsd:restriction base="xsd:NCName">
       <xsd:enumeration value="Facet"/>
@@ -239,8 +240,6 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
-      <xsd:enumeration value="rtecEventPublisher"/>
-      <xsd:enumeration value="rtecEventConsumer"/>      
     </xsd:restriction>
   </xsd:simpleType>
 

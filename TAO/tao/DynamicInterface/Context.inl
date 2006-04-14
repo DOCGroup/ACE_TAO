@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 void
 CORBA::release (CORBA::Context_ptr x)
@@ -93,5 +91,3 @@ CORBA::ContextList::_duplicate (CORBA::ContextList_ptr x)
 
   return x;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -69,7 +69,7 @@ ServantManager_i::obtain_servant (const char *str,
                        "Bind failed"),
                       0);
   // Now that the dll name is available we open the dll.
-  if (dll->open (dllname_.c_str ()) == -1)
+  if (dll->open (ACE_TEXT_TO_TCHAR_IN(dllname_.c_str ())) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p",
                        dll->error ()),
@@ -80,7 +80,7 @@ ServantManager_i::obtain_servant (const char *str,
 
   // Cannot go from void* to function pointer directly. Cast the void*
   // to long first.
-  void *symbol = dll->symbol (create_symbol_.c_str ());
+  void *symbol = dll->symbol (ACE_TEXT_TO_TCHAR_IN(create_symbol_.c_str ()));
   long function = reinterpret_cast<long> (symbol);
 
   SERVANT_FACTORY servant_creator =
@@ -111,7 +111,7 @@ ServantManager_i::parse_string (const char *s)
 
   ACE_CString str (s);
 
-  ssize_t index = str.find (':');
+  int index = str.find (':');
   // On error, npos is returned.
   if (index == ACE_CString::npos)
     ACE_ERROR ((LM_ERROR,

@@ -2,19 +2,17 @@
 //
 // $Id$
 
-#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
-#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_DynamicImplementation.h"
+#include "CEC_TypedProxyPushConsumer.h"
+#include "CEC_TypedEventChannel.h"
+#include "CEC_TypedConsumerAdmin.h"
+#include "CEC_DynamicImplementation.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.i"
+#include "CEC_TypedProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Reverse_Lock_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
@@ -419,4 +417,3 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
   this->typed_event_channel_->destroy_proxy (this->proxy_);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

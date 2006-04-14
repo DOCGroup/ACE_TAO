@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_RB_TREE_CPP
-#define ACE_RB_TREE_CPP
+#ifndef ACE_RB_TREE_C
+#define ACE_RB_TREE_C
 
 #include "ace/Global_Macros.h"
 #include "ace/RB_Tree.h"
@@ -17,7 +17,9 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (ace,
+           RB_Tree,
+           "$Id$")
 
 // Constructor.
 
@@ -542,12 +544,12 @@ void ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::delete_children_i
     {
       this->delete_children_i (parent->left ());
       this->delete_children_i (parent->right ());
-      ACE_DES_FREE_TEMPLATE2
+      ACE_DES_FREE_TEMPLATE2 
         (parent->left (),
          this->allocator_->free,
          ACE_RB_Tree_Node,
          EXT_ID, INT_ID);
-      ACE_DES_FREE_TEMPLATE2
+      ACE_DES_FREE_TEMPLATE2 
         (parent->right (),
          this->allocator_->free,
          ACE_RB_Tree_Node,
@@ -643,7 +645,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
               // The right subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
 
-              ACE_NEW_MALLOC_RETURN
+              ACE_NEW_MALLOC_RETURN 
                 (tmp,
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
                    (this->allocator_->malloc (sizeof (*tmp)))),
@@ -677,7 +679,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
             {
               // The left subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
-              ACE_NEW_MALLOC_RETURN
+              ACE_NEW_MALLOC_RETURN 
                 (tmp,
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
                    (this->allocator_->malloc (sizeof (*tmp)))),
@@ -701,7 +703,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
     {
       // The tree is empty: insert at the root and color the root
       // black.
-      ACE_NEW_MALLOC_RETURN
+      ACE_NEW_MALLOC_RETURN 
         (this->root_,
          (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
            (this->allocator_->malloc (sizeof (ACE_RB_Tree_Node<EXT_ID, INT_ID>)))),
@@ -710,7 +712,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       this->root_->color (ACE_RB_Tree_Node_Base::BLACK);
       ++current_size_;
       return &this->root_->item ();
-    }  
+    }
+  return 0;
 }
 
 // Inserts a *copy* of the key and the item into the tree: both the
@@ -759,7 +762,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
             {
               // The right subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
-              ACE_NEW_MALLOC_RETURN
+              ACE_NEW_MALLOC_RETURN 
                 (tmp,
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
                    (this->allocator_->malloc (sizeof (*tmp)))),
@@ -793,7 +796,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
             {
               // The left subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
-              ACE_NEW_MALLOC_RETURN
+              ACE_NEW_MALLOC_RETURN 
                 (tmp,
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
                    (this->allocator_->malloc (sizeof (*tmp)))),
@@ -815,7 +818,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
   else
     {
       // The tree is empty: insert at the root and color the root black.
-      ACE_NEW_MALLOC_RETURN
+      ACE_NEW_MALLOC_RETURN 
         (this->root_,
          (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
            (this->allocator_->malloc (sizeof (ACE_RB_Tree_Node<EXT_ID, INT_ID>)))),
@@ -1196,6 +1199,5 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tr
   ACE_TRACE ("ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Reverse_Iterator");
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* !ACE_RB_TREE_CPP */
+#endif /* !defined (ACE_RB_TREE_C) */

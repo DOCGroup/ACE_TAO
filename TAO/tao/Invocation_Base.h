@@ -29,8 +29,6 @@
 #include "tao/ClientRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Service_Context;
 class TAO_Operation_Details;
 class TAO_Stub;
@@ -127,8 +125,7 @@ namespace TAO
                      CORBA::Object_ptr target,
                      TAO_Stub *stub,
                      TAO_Operation_Details &op,
-                     bool response_expected,
-                     bool request_is_remote);
+                     bool response_expected);
 
   protected:
     /// The operation details on which we are operating on.
@@ -190,11 +187,6 @@ namespace TAO
 
     PortableInterceptor::ReplyStatus reply_status (void) const;
 
-    /// Accessor used to determine if the current invocation is part
-    /// of a remote request, and if not, it will be considered to be
-    /// part of a collocated request.
-    bool is_remote_request() const;
-
   protected:
     /// Helper method to invoke send_request interception call to all
     /// the registered interceptors.
@@ -231,19 +223,13 @@ namespace TAO
   private:
     /// Pointer to the caught exception.
     CORBA::Exception *caught_exception_;
-
-    /// Flag used to distinguish a remote invocation versus a collocated
-    /// (thru-poa) invocation.
-    bool is_remote_request_;
 #endif /*TAO_HAS_INTERCEPTORS*/
     //@}
   };
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/Invocation_Base.inl"
+# include "Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

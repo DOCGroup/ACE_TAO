@@ -1,21 +1,19 @@
-#include "tao/Collocated_Invocation.h"
-#include "tao/Collocation_Proxy_Broker.h"
-#include "tao/ORB_Core.h"
-#include "tao/Request_Dispatcher.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/Stub.h"
-#include "tao/operation_details.h"
+#include "Collocated_Invocation.h"
+#include "Collocation_Proxy_Broker.h"
+#include "ORB_Core.h"
+#include "Request_Dispatcher.h"
+#include "TAO_Server_Request.h"
+#include "Stub.h"
+#include "operation_details.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "tao/PortableInterceptorC.h"
+# include "PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
 ACE_RCSID (tao,
            Collocated_Invocation,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -28,8 +26,7 @@ namespace TAO
                        et,
                        stub,
                        detail,
-                       response_expected,
-                       false /* request_is_remote */ )
+                       response_expected)
   {
   }
 
@@ -167,5 +164,3 @@ namespace TAO
   }
 
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

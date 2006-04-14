@@ -13,11 +13,10 @@
 #endif  /* !__ACE_INLINE__ */
 
 
-ACE_RCSID (AnyTypeCode,
+ACE_RCSID (tao,
            Enum_TypeCode_Static,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Enum<char const *,
@@ -87,10 +86,10 @@ TAO::TypeCode::Enum<char const *,
 
   CORBA::ULong const tc_nenumerators =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    return 0;
 
   for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
     {
@@ -100,13 +99,13 @@ TAO::TypeCode::Enum<char const *,
         Traits<char const *>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        return 0;
     }
 
-  return true;
+  return 1;
 }
 
 CORBA::Boolean
@@ -121,12 +120,12 @@ TAO::TypeCode::Enum<char const *,
 
   CORBA::ULong const tc_nenumerators =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    return 0;
 
-  return true;
+  return 1;
 }
 
 CORBA::TypeCode_ptr
@@ -213,5 +212,3 @@ TAO::TypeCode::Enum<char const *,
 
   return Traits<char const *>::get_string (this->enumerators_[index]);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/Default_Thread_Lane_Resources_Manager.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Exception.h"
-#include "tao/Environment.h"
-#include "tao/ORB_Core.h"
+#include "Default_Thread_Lane_Resources_Manager.h"
+#include "Thread_Lane_Resources.h"
+#include "Exception.h"
+#include "Environment.h"
+#include "ORB_Core.h"
 #include "ace/Log_Msg.h"
 
 
@@ -12,13 +12,13 @@ ACE_RCSID (tao,
            Default_Thread_Lane_Resources_Manager,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
-    lane_resources_ (new TAO_Thread_Lane_Resources (orb_core))
+    lane_resources_ (0)
 {
+  // Create the default resources.
+  ACE_NEW (this->lane_resources_,
+           TAO_Thread_Lane_Resources (orb_core));
 }
 
 TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Manager (void)
@@ -30,7 +30,7 @@ TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Ma
 int
 TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_ORB_Parameters * const params =
+  TAO_ORB_Parameters *params =
     this->orb_core_->orb_params ();
 
   TAO_EndpointSet endpoint_set;
@@ -86,13 +86,6 @@ TAO_Default_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mp
   return this->lane_resources_->is_collocated (mprofile);
 }
 
-// -------------------------------------------------------
-
-TAO_Default_Thread_Lane_Resources_Manager_Factory::
-~TAO_Default_Thread_Lane_Resources_Manager_Factory (void)
-{
-}
-
 TAO_Thread_Lane_Resources_Manager *
 TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (TAO_ORB_Core &core)
 {
@@ -105,11 +98,6 @@ TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_
 
   return manager;
 }
-
-// -------------------------------------------------------
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Thread_Lane_Resources_Manager_Factory,
                        ACE_TEXT ("Default_Thread_Lane_Resources_Manager_Factory"),

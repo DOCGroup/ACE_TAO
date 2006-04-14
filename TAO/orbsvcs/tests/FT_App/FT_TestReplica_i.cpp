@@ -451,7 +451,7 @@ void FT_TestReplica_i::request_quit()
 
 void FT_TestReplica_i::store(long counter)
 {
-  FILE * f = ACE_OS::fopen("Persistent.dat", "w");
+  FILE * f = ACE_OS::fopen("Persistent.dat", ACE_TEXT("w"));
   if(f != 0)
   {
     unsigned char* buffer = 0;
@@ -472,7 +472,7 @@ void FT_TestReplica_i::store(long counter)
 long FT_TestReplica_i::load ()
 {
   long counter = 0;
-  FILE * f = ACE_OS::fopen("Persistent.dat","r");
+  FILE * f = ACE_OS::fopen("Persistent.dat",ACE_TEXT("r"));
   if(f != 0)
   {
     unsigned char buffer[sizeof(long)];

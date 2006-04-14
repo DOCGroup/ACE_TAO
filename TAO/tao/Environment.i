@@ -2,9 +2,6 @@
 //
 // $Id$
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::Environment_ptr env)
@@ -45,4 +42,3 @@ CORBA::Environment::_nil (void)
   return static_cast <CORBA::Environment_ptr> (0);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

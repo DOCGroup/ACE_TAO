@@ -69,7 +69,7 @@ private:
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:l:h:w:v:zr");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:n:l:h:w:v:zr");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -128,7 +128,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs();
   RT_Class rt_class;
@@ -217,7 +217,7 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
     thread_count += nthreads;
 #endif
 
-  ACE_Barrier the_barrier (thread_count);
+  ACE_Barrier barrier (thread_count);
 
   ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
   ACE_High_Res_Timer::calibrate ();
@@ -241,7 +241,7 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
           this->poa_.in (),
           this->poa_.in (),
           this->event_channel_.in (),
-          &the_barrier
+          &barrier
           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 #endif
@@ -266,7 +266,7 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
                            ACE_ES_EVENT_UNDEFINED,
                            experiment_id,
                            high_priority_group.supplier (),
-                           &the_barrier);
+                           &barrier);
   {
     // Artificial scope to wait for the high priority task...
     Task_Activator<Send_Task> high_priority_act (this->rt_class_->priority_high (),

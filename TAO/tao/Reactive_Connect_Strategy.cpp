@@ -1,17 +1,14 @@
-#include "tao/Reactive_Connect_Strategy.h"
-#include "tao/Connection_Handler.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-#include "tao/Transport.h"
+#include "Reactive_Connect_Strategy.h"
+#include "Connection_Handler.h"
+#include "ORB_Core.h"
+#include "debug.h"
+#include "Transport.h"
 
 #include "ace/Synch_Options.h"
 
 ACE_RCSID(tao,
           Reactive_Connect_Strategy,
           "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (
     TAO_ORB_Core *orb_core)
@@ -92,6 +89,7 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
   return result;
 }
 
+
 int
 TAO_Reactive_Connect_Strategy::wait (TAO_Transport *t,
                                      ACE_Time_Value *val)
@@ -102,5 +100,3 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Transport *t,
   return this->wait (t->connection_handler (),
                      val);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

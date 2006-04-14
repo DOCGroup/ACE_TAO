@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <typename TypeCodeType, class RefCountPolicy>
 ACE_INLINE
 TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::Sequence (
@@ -23,5 +21,3 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::Sequence (
 {
   // ACE_ASSERT (kind == CORBA::tk_array || kind == CORBA::tk_sequence);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

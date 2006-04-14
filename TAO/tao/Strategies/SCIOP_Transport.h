@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // $Id$
 // ===================================================================
 /**
@@ -25,11 +23,9 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/IIOPC.h"
 #include "ace/SOCK_SEQPACK_Association.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class TAO_SCIOP_Connection_Handler;
@@ -140,8 +136,6 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

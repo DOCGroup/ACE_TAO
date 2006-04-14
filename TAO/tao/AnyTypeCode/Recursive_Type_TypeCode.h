@@ -18,11 +18,9 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Recursive_Thread_Mutex.h"
 #include "tao/Basic_Types.h"
 #include "tao/Typecode_typesC.h"
-#include "ace/Recursive_Thread_Mutex.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -199,8 +197,6 @@ namespace TAO
 
   }  // End namespace TypeCode
 }  // End namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #ifdef __ACE_INLINE__

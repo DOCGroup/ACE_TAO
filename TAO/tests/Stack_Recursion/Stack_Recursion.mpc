@@ -12,7 +12,6 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient, anytypecode {
-  after += *Server
   Source_Files {
     TestC.cpp
     client.cpp

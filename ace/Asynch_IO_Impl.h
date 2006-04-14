@@ -36,8 +36,6 @@
 
 #include "ace/Asynch_IO.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward declaration.
 class ACE_Proactor_Impl;
 
@@ -307,7 +305,7 @@ public:
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
-  * @note In win32 Each data block payload must be at least the size of a system
+  * NOTE: In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   virtual int readv (ACE_Message_Block &message_block,
@@ -396,7 +394,7 @@ public:
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
-  * @note In win32 Each data block payload must be at least the size of a system
+  * NOTE: In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   virtual int writev (ACE_Message_Block &message_block,
@@ -813,8 +811,6 @@ protected:
   /// Do-nothing constructor.
   ACE_Asynch_Write_Dgram_Result_Impl (void);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Asynch_IO_Impl.inl"

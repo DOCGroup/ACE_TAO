@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
 //$Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// -*- C++ -*-
 
 namespace ACE_Utils
 {
@@ -197,5 +194,3 @@ namespace ACE_Utils
 //    return false;
 //  }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

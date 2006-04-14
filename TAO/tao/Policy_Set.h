@@ -26,8 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_Policy_Set
  *
@@ -46,7 +44,6 @@ public:
    */
   TAO_Policy_Set (TAO_Policy_Scope scope);
 
-  /// Copy constructor.
   TAO_Policy_Set (const TAO_Policy_Set &rhs);
 
   /// Destructor
@@ -104,7 +101,7 @@ public:
   CORBA::ULong num_policies (void) const;
 
 private:
-  TAO_Policy_Set & operator= (const TAO_Policy_Set&);
+  ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Set operator=(const TAO_Policy_Set&))
 
   /// Remove and destroy all the policy objects owned by this policy
   /// manager.
@@ -125,7 +122,6 @@ private:
   TAO_Policy_Scope scope_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Policy_Set.i"

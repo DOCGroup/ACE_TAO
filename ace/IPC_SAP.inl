@@ -1,10 +1,11 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
+
+// IPC_SAP.i
 
 #include "ace/OS_NS_stropts.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// Used to return the underlying handle_.
 
 ACE_INLINE
 ACE_IPC_SAP::~ACE_IPC_SAP (void)
@@ -36,5 +37,3 @@ ACE_IPC_SAP::control (int cmd, void *arg) const
   ACE_TRACE ("ACE_IPC_SAP::control");
   return ACE_OS::ioctl (this->handle_, cmd, arg);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

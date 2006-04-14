@@ -1,13 +1,11 @@
 // $Id$
 
-#include "tao/Protocols_Hooks.h"
+#include "Protocols_Hooks.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao,
            Protocols_Hooks,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)
   : send_buffer_size_ (0),
@@ -52,8 +50,8 @@ TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties (void)
 {
 }
 
+/// destructor
 TAO_Protocols_Hooks::~TAO_Protocols_Hooks (void)
 {
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

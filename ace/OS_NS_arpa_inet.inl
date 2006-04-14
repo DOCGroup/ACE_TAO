@@ -5,8 +5,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE unsigned long
 ACE_OS::inet_addr (const char *name)
 {
@@ -121,5 +119,3 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
   ACE_NOTSUP_RETURN(-1);
 #endif  /* ACE_HAS_IPV6 */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

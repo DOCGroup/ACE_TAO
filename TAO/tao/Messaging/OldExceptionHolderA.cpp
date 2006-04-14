@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/Messaging/OldExceptionHolderA.h"
+#include "OldExceptionHolderA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -42,8 +42,6 @@
 
 
 #if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:937
@@ -188,7 +186,5 @@ operator>>= (
 
 
 #endif
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* */

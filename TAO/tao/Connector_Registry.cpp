@@ -20,7 +20,6 @@ ACE_RCSID (tao,
            Connector_Registry,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : connectors_ (0),
@@ -81,7 +80,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
              ACE_ERROR_RETURN ((LM_ERROR,
                                 ACE_TEXT ("TAO (%P|%t) unable to open connector for ")
                                 ACE_TEXT ("<%s>.\n"),
-                                ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
+                                ACE_TEXT_TO_TCHAR_IN((*factory)->protocol_name ().c_str ())),
                                -1);
            }
 
@@ -267,5 +266,3 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
   // against the provided string.
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

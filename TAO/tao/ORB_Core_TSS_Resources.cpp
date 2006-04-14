@@ -2,8 +2,6 @@
 
 #include "tao/ORB_Core_TSS_Resources.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   : event_loop_thread_ (0)
   , client_leader_thread_ (0)
@@ -29,4 +27,4 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
   //   this->orb_core_->tss_cleanup_funcs ()->cleanup (this->ts_objects_);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

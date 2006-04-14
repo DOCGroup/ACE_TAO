@@ -1,13 +1,16 @@
+/* -*- C++ -*- */
 // $Id$
 
-#ifndef ACE_ASYNCH_CONNECTOR_CPP
-#define ACE_ASYNCH_CONNECTOR_CPP
+#ifndef ACE_ASYNCH_CONNECTOR_C
+#define ACE_ASYNCH_CONNECTOR_C
 
 #include "ace/Asynch_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_RCSID(ace, Asynch_Connector, "$Id$")
 
 #if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
 // This only works on platforms that support async I/O.
@@ -18,8 +21,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
 ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
@@ -290,7 +291,5 @@ ACE_Asynch_Connector<HANDLER>::validate_new_connection (int new_value)
   this->validate_new_connection_ = new_value;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
-#endif /* ACE_ASYNCH_CONNECTOR_CPP */
+#endif /* ACE_ASYNCH_CONNECTOR_C */

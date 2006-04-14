@@ -9,8 +9,7 @@ project(*IDL): taoidldefaults {
 }
 
 project(*Receiver): taoserver {
-  avoids += ace_for_tao
-  after  += *IDL
+  after += *IDL
   exename = receiver
   Source_Files {
     receiver.cpp
@@ -34,15 +33,8 @@ project(*Distributor): rt_server {
 }
 
 project(*Sender): rt_client {
-  avoids += ace_for_tao
   after += *IDL
-
-  specific (automake ) {
-    includes += $(srcdir)/../../tests/RTCORBA/Diffserv
-  } else {
-    includes += ../../tests/RTCORBA/Diffserv
-  }
-
+  includes += ../../tests/RTCORBA/Diffserv
   Source_Files {
     sender.cpp
     testC.cpp

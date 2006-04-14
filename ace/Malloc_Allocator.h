@@ -34,8 +34,6 @@
 
 #endif /* ACE_HAS_MALLOC_STATS */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_New_Allocator
  *
@@ -134,8 +132,6 @@ protected:
   /// Pointer to the current offset in the <buffer_>.
   size_t offset_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Malloc_Allocator.inl"

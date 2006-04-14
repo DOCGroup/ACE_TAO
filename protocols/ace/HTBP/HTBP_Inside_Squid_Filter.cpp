@@ -12,9 +12,7 @@
 #include "HTBP_Inside_Squid_Filter.inl"
 #endif
 
-ACE_RCSID(HTBP,ACE_HTBP_Inside_Squid_Filter,"$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(HTBP,ACE_HTBP_Inside_Squid_Filter,"$ID:$")
 
 ssize_t
 ACE::HTBP::Inside_Squid_Filter::send_data_trailer (ACE::HTBP::Channel *ch)
@@ -232,5 +230,3 @@ ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
   errno = ch->consume_error () ? EINVAL : EWOULDBLOCK;
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "HTIOP_Acceptor.h"
+#include "HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Environment.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
 
@@ -16,14 +16,12 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.i"
+#include "HTIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(HTIOP,
           TAO_HTIOP_Acceptor,
           "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
                                 int is_inside)
@@ -452,7 +450,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                       sizeof (char*) * this->endpoint_count_);
 
       ACE::HTBP::ID_Requestor req(ht_env_);
-      this->addrs_[0] = req.get_HTID();
+      this->addrs_[0] = ACE::HTBP::Addr(ACE_TEXT_TO_CHAR_IN(req.get_HTID()));
       return 0;
 
     }
@@ -542,7 +540,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
+                      ACE_TEXT_TO_TCHAR_IN(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -755,8 +753,7 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major;
-  CORBA::Octet minor = CORBA::Octet();
+  CORBA::Octet major, minor;
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -884,5 +881,3 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
     }
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

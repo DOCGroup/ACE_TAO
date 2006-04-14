@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_CEC_Dispatching_Task::
@@ -81,5 +77,3 @@ TAO_CEC_Invoke_Command::TAO_CEC_Invoke_Command (TAO_CEC_ProxyPushSupplier* proxy
   this->proxy_->_incr_refcnt ();
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

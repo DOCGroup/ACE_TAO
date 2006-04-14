@@ -4,8 +4,6 @@
 
 // Detection of flags in the CDR Stream
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_null_ref (CORBA::ULong tag)
 {
@@ -71,5 +69,3 @@ TAO_OBV_GIOP_Flags::is_end_tag (CORBA::ULong tag)
 {
   return (0x80000000L < tag);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

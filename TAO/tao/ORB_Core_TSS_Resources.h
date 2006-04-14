@@ -22,10 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
 #include "ace/Array_Base.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "tao/orbconf.h"
 
 class TAO_ORB_Core;
 
@@ -85,7 +83,7 @@ public:
   TAO_ORB_Core *orb_core_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ORB_CORE_H */

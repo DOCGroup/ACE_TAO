@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,10 +16,9 @@
 
 #ifndef TAO_DII_INVOCATION_H
 #define TAO_DII_INVOCATION_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicInterface/dynamicinterface_export.h"
+#include "dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
@@ -27,8 +26,6 @@
 
 #include "tao/Synch_Invocation.h"
 #include "tao/Messaging/Asynch_Invocation.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DII_Deferred_Reply_Dispatcher;
 
@@ -83,8 +80,8 @@ namespace TAO
   /*
    *
    */
-  class TAO_DynamicInterface_Export DII_Deferred_Invocation
-    : public Asynch_Remote_Invocation
+  class TAO_DynamicInterface_Export DII_Deferred_Invocation :
+    public Asynch_Remote_Invocation
   {
   public:
     friend class DII_Deferred_Invocation_Adapter;
@@ -115,8 +112,5 @@ namespace TAO
   };
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
-#endif /* TAO_DII_INVOCATION_H */
+#endif /* TAO_ASYNCH_INVOCATION_H */

@@ -1,9 +1,4 @@
-// -*- C++ -*-
-//
 //$Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (const TimeBase::TimeT &duration)
   :ACE_NESTED_CLASS (CORBA, Object) ()
@@ -76,5 +71,3 @@ TAO_FT_Heart_Beat_Enabled_Policy::TAO_FT_Heart_Beat_Enabled_Policy (
   , heartbeat_enabled_value_ (rhs.heartbeat_enabled_value_)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

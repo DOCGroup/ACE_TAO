@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/POSIX_Proactor.h"
@@ -26,9 +27,6 @@
 #endif /* sun */
 
 // *********************************************************************
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_POSIX_Wakeup_Completion
  *
@@ -36,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ACE_Proactor interface to wake up all the threads blocking
  * for completions.
  */
-class ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
+class ACE_Export ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
 public:
   /// Constructor.
@@ -508,7 +506,7 @@ ACE_POSIX_Proactor::create_asynch_timer
    int priority,
    int signal_number)
 {
-  ACE_POSIX_Asynch_Timer *implementation;
+  ACE_Asynch_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Timer (handler_proxy,
                                           act,
@@ -626,7 +624,7 @@ ACE_POSIX_Proactor::get_impl_type (void)
  * message block to another <accept>, we update <wr_ptr> and put
  * it in its initial position.
  */
-class ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
+class ACE_Export ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
 {
 public:
   /// Constructor. You need the posix proactor because you need to call
@@ -1319,11 +1317,11 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   // Save operation code in the aiocb
   switch (op)
     {
-    case ACE_POSIX_Proactor::ACE_OPCODE_READ:
+    case ACE_POSIX_Proactor::READ:
       result->aio_lio_opcode = LIO_READ;
       break;
 
-    case ACE_POSIX_Proactor::ACE_OPCODE_WRITE:
+    case ACE_POSIX_Proactor::WRITE:
       result->aio_lio_opcode = LIO_WRITE;
       break;
 
@@ -1700,7 +1698,7 @@ ACE_POSIX_Proactor::Proactor_Type
 ACE_POSIX_SIG_Proactor::get_impl_type (void)
 {
   return PROACTOR_SIG;
-}
+} 
 
 int
 ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)
@@ -2005,7 +2003,8 @@ ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer
    ACE_HANDLE event,
    int priority,
    int signal_number)
-  : ACE_POSIX_Asynch_Result
+  : ACE_Asynch_Result_Impl (),
+    ACE_POSIX_Asynch_Result
      (handler_proxy, act, event, 0, 0, priority, signal_number),
     time_ (tv)
 {
@@ -2058,6 +2057,5 @@ ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
     handler->handle_wakeup ();
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_AIO_CALLS */

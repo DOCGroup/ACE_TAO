@@ -27,7 +27,8 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "tao/PI_Server/ServerRequestInfoC.h"
+#include "pi_server_export.h"
+#include "ServerRequestInfoC.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
 #include "tao/TAO_Server_Request.h"
@@ -38,8 +39,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServerRequest;
 class TAO_Service_Context;
@@ -66,9 +65,9 @@ namespace TAO
    * @note This class is currently not meant to be reference counted
    *       since it is instantiated on the stack.
    */
-  class ServerRequestInfo
-    : public virtual PortableInterceptor::ServerRequestInfo
-    , public virtual CORBA::LocalObject
+  class TAO_PI_Server_Export ServerRequestInfo
+    : public virtual PortableInterceptor::ServerRequestInfo,
+      public virtual CORBA::LocalObject
   {
   public:
 
@@ -299,10 +298,9 @@ namespace TAO
 
 }  // End namespace TAO
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (__ACE_INLINE__)
-#  include "tao/PI_Server/ServerRequestInfo.inl"
+#  include "ServerRequestInfo.inl"
 # endif  /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

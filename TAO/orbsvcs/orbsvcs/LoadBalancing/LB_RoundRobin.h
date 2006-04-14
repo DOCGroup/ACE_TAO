@@ -26,9 +26,6 @@
 
 #include "orbsvcs/CosLoadBalancingS.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_LB_RoundRobin_Strategy
  *
@@ -119,8 +116,6 @@ private:
   TAO_LB_Location_Index_Map location_index_map_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

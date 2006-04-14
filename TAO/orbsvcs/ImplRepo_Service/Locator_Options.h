@@ -51,7 +51,7 @@ public:
   Options ();
 
   /// Parse the command-line arguments and initialize the options.
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   /// This version should only be used when run as an nt service.
   int init_from_registry();
 
@@ -72,7 +72,7 @@ public:
 
   int save_registry_options();
 
-  const char* cmdline(void) const;
+  const ACE_TCHAR* cmdline(void) const;
 
   /// File that contains the activator related information
   /// that the persistent locator has to save.
@@ -96,7 +96,7 @@ public:
 
 private:
   /// Parses and pulls out arguments for the ImR
-  int parse_args (int &argc, char *argv[]);
+  int parse_args (int &argc, ACE_TCHAR *argv[]);
 
   /// Print the usage information.
   void print_usage (void) const;
@@ -127,7 +127,7 @@ private:
 
   /// The amount of time between successive "are you started yet?" pings.
   ACE_Time_Value ping_interval_;
-
+ 
   /// The amount of time to wait for a server to response after starting it.
   ACE_Time_Value startup_timeout_;
 
@@ -138,7 +138,7 @@ private:
   SERVICE_COMMAND service_command_;
 
   /// Our extra command line arguments
-  ACE_CString cmdline_;
+  ACE_TString cmdline_;
 
   /// The persistent XML file name.
   ACE_TString persist_file_name_;

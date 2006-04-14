@@ -1,4 +1,5 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+
 
 //=============================================================================
 /**
@@ -13,7 +14,6 @@
 
 #ifndef TAO_AV_POLICY_H
 #define TAO_AV_POLICY_H
-
 #include /**/ "ace/pre.h"
 
 #include "ace/Addr.h"
@@ -22,13 +22,6 @@
 #include "tao/Sequence_T.h"
 #include "ace/Time_Value.h"
 #include "orbsvcs/AV/AV_export.h"
-
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Message_Block;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct TAO_AV_frame_info
 {
@@ -103,6 +96,7 @@ protected:
 
 typedef TAO_Unbounded_Sequence<TAO_AV_Policy*> TAO_AV_PolicyList;
 
+class ACE_Message_Block;
 class TAO_AV_Protocol_Object;
 class TAO_AV_Transport;
 class TAO_AV_Flow_Handler;
@@ -165,12 +159,8 @@ protected:
   TAO_AV_Flow_Handler *handler_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/AV/Policy.i"
+#include "Policy.i"
 #endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
-
 #endif /* TAO_AV_POLICY_H */

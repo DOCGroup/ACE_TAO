@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class Any;
@@ -71,8 +69,6 @@ namespace TAO
     T * value_;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any_Impl_T.inl"

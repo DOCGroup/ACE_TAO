@@ -4,6 +4,7 @@
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Factory_Service,
            FTRTEC_Factory_Service,
@@ -13,9 +14,9 @@ namespace {
   ACE_CString id, kind, output;
 }
 
-int parse_args(int argc, char* argv[])
+int parse_args(int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:k:o:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("i:k:o:"));
   int opt;
 
   int result = 0;
@@ -24,13 +25,13 @@ int parse_args(int argc, char* argv[])
     switch (opt)
     {
     case 'i':
-      id = get_opt.opt_arg ();
+      id.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg ()));
       break;
     case 'k':
-      kind = get_opt.opt_arg ();
+      kind.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg ()));
       break;
     case 'o':
-      output = get_opt.opt_arg ();
+      output.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg ()));
       break;
     default:
       result = -1;
@@ -52,16 +53,17 @@ int parse_args(int argc, char* argv[])
   return 0;
 }
 
-int main(int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, ""
+    CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), ""
                                          ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (parse_args(argc, argv) == -1)
+    if (parse_args(convert.get_argc(), convert.get_TCHAR_argv()) == -1)
       return -1;
 
     CORBA::Object_var obj =
@@ -125,7 +127,7 @@ int main(int argc, ACE_TCHAR* argv[])
       if (ACE_OS::strcmp(output.c_str(), "") != 0)
       {
         FILE *output_file=
-          ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(output.c_str()),
+          ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(output.c_str()),
           ACE_TEXT("w"));
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,

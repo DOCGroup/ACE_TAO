@@ -8,6 +8,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
+
+using std::string;
 
 TestClient::TestClient(CORBA::ORB_ptr orb, int argc, char* argv[])
 : orb_(CORBA::ORB::_duplicate(orb))
@@ -31,7 +34,7 @@ TestClient::~TestClient()
 
 int TestClient::parseCommands(int argc, char* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "s:t:i:r:x:e:z:");
+  ACE_Get_Arg_Opt<char> get_opts(argc, argv, "s:t:i:r:x:e:z:");
   int c;
   while ((c = get_opts()) != -1)
   {
@@ -116,9 +119,9 @@ void TestClient::pause(int milliseconds)
 
 void TestClient::run()
 {
-  ACE_DEBUG((LM_DEBUG, "Starting Client.\n"));
+  cout << "Starting Client." << endl;
   pause(startupPause_);
-  ACE_DEBUG((LM_DEBUG, "* Client started.\n"));
+  cout << "* Client started." << endl;
 
   buildIORList();
 
@@ -128,21 +131,19 @@ void TestClient::run()
   }
   wait();
 
-  ACE_DEBUG((LM_DEBUG, "* Client ended.\n"));
-
+  cout << "* Client ended." << endl;
 }
 
 // Read in the stringified object references into an array
 // Warning: The file may contain many separate IORs separated by linefeeds.
 void TestClient::buildIORList()
 {
-  FILE* iorFile = ACE_OS::fopen ("imr_test.ior", "r");
-  if ( iorFile == NULL )
-    ACE_ERROR ((LM_ERROR, "Fail to open imr_test.ior\n"));
-
-  ACE_TString ior;
-  while (getline(iorFile, ior) != EOF )
+  ifstream iorFile("imr_test.ior");
+  while (! iorFile.fail())
   {
+    string ior;
+    std::getline(iorFile, ior, '\n');
+ 
     if (ior.length() > 0)
       iors_.push_back(ior);
     else
@@ -155,16 +156,14 @@ int TestClient::svc()
   // Every invocation of svc increates the thread count
   instance_++;
   int threadNum = instance_;
-  size_t vec_size = iors_.size();
-
-  ACE_DEBUG((LM_DEBUG, "* Client Thread started (%d.%d.%d.%d)\n",
-             threadNum, iterations_, vec_size, requestCount_));
+  cout << "* Client Thread started (" << threadNum << "." << iterations_
+    << "." << iors_.size() << "." << requestCount_ << ")" << endl;
 
   int     i           = 0;
   size_t  objIter     = 0;
   int     requestIter = 0;
 
-  ACE_TString currentIOR;
+  string currentIOR;
 
   ACE_OS::srand(ACE_OS::time());
 
@@ -177,7 +176,7 @@ int TestClient::svc()
     for (i = 1; i <= iterations_; i++)
     {
       // For each object reference read from file
-      for (objIter = 1; objIter <= vec_size; objIter++)
+      for (objIter = 1; objIter <= iors_.size(); objIter++)
       {
         requestIter = -1;
         // Get a imr_test_var
@@ -206,8 +205,8 @@ int TestClient::svc()
                 // If these exceptions are expected record the number of instances, otherwise rethrow
                 if (expectHolding_ == true && ex.minor() == TAO_POA_HOLDING)
                 {
-                   ACE_ERROR((LM_ERROR, "Caught expected holding exception with (%d.%d.%d)\n",
-                     threadNum, objIter, requestIter));
+                  cout << "Caught expected holding exception with ("
+                    << threadNum << "." << objIter << "." << requestIter << ") " << endl;
                   holdingCount++;
                 }
                 else
@@ -217,8 +216,8 @@ int TestClient::svc()
                 if (expectNoProfile_ == true
                   && ex.minor() == TAO_INVOCATION_SEND_REQUEST_MINOR_CODE)
                 {
-                   ACE_ERROR((LM_ERROR, "Caught expected holding exception with (%d.%d.%d)\n",
-                     threadNum, objIter, requestIter));
+                  cout << "Caught expected no profile exception with ("
+                    << threadNum << "." << objIter << "." << requestIter << ") " << endl;
                   noProfileCount++;
                 }
                 else
@@ -236,22 +235,22 @@ int TestClient::svc()
     // Report expected exceptions
     if (holdingCount > 0)
     {
-      ACE_DEBUG((LM_DEBUG,"Client thread %d received %d holding error(s).\n",
-                 threadNum, holdingCount));
+      cout << "Client thread " << threadNum << " received "
+        << holdingCount << " holding error(s)." << endl;
     }
 
     if (noProfileCount > 0)
     {
-      ACE_DEBUG((LM_DEBUG,"Client thread %d received %d no profile error(s).\n",
-                 threadNum, noProfileCount));
+      cout << "Client thread " << threadNum << " received "
+        << noProfileCount << " no profile error(s)." << endl;
     }
 
     return 0;
   } // try
   catch (CORBA::Exception& ex)
   {
-    ACE_ERROR((LM_ERROR,"CORBA client error with (%d.%d.%d.%d):%s\n",
-               threadNum, i, objIter, requestIter, currentIOR.c_str()));
+    cerr << "CORBA client error with (" << threadNum << "." << i
+      << "." << objIter << "." << requestIter << "):" << currentIOR.c_str() << endl;
     ACE_PRINT_EXCEPTION(ex, "");
   }
   return 1;

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
+#include "HTIOP_Completion_Handler.h"
 
-#include "orbsvcs/HTIOP/HTIOP_Transport.h"
-#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
+#include "HTIOP_Transport.h"
+#include "HTIOP_Endpoint.h"
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
@@ -20,8 +20,6 @@ ACE_RCSID (HTIOP,
            TAO_HTIOP_Completion_Handler,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Completion_Handler::Completion_Handler (ACE_Thread_Manager *t)
   : COMPLETION_BASE(t,0,0),
@@ -177,5 +175,3 @@ TAO::HTIOP::Completion_Handler::handle_close (ACE_HANDLE,
   delete this;
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

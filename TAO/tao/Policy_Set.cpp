@@ -1,12 +1,12 @@
 // $Id$
 
-#include "tao/Policy_Set.h"
-#include "tao/Environment.h"
-#include "tao/SystemException.h"
-#include "tao/debug.h"
+#include "Policy_Set.h"
+#include "Environment.h"
+#include "SystemException.h"
+#include "debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Policy_Set.i"
+# include "Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
 
@@ -14,15 +14,6 @@ ACE_RCSID (tao,
            Policy_Set,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
-  : scope_ (scope)
-{
-  for (unsigned int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
-    this->cached_policies_[i] = 0;
-}
 
 TAO_Policy_Set::~TAO_Policy_Set (void)
 {
@@ -376,5 +367,3 @@ TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type
 
   return CORBA::Policy::_nil ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

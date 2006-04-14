@@ -1,4 +1,5 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+
 
 // ============================================================================
 /**
@@ -16,13 +17,10 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/AV/AV_Core.h"
+#include "AV_Core.h"
 #include "ace/Addr.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Tokenizer
@@ -348,12 +346,10 @@ public:
   virtual int parse (const char* flowSpec_entry);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#include "orbsvcs/AV/Transport.h"
+#include "Transport.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/AV/FlowSpec_Entry.i"
+#include "FlowSpec_Entry.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

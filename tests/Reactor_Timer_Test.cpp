@@ -104,9 +104,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     {
       int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
                                                                    ACE_Time_Value (count + 1));
-      if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Error resetting timer interval\n")));
+      ACE_ASSERT (result != -1);
     }
   count += (1 + odd);
   return 0;
@@ -129,7 +127,7 @@ test_registering_all_handlers (void)
 {
   ACE_Trace t (ACE_TEXT ("test_registering_all_handler"),
                __LINE__,
-               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
+               ACE_TEXT_TO_TCHAR_IN (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
 
@@ -152,7 +150,7 @@ test_registering_one_handler (void)
 {
   ACE_Trace t (ACE_TEXT ("test_registering_one_handler"),
                __LINE__,
-               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
+               ACE_TEXT_TO_TCHAR_IN (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
 
@@ -177,7 +175,7 @@ test_canceling_odd_timers (void)
 {
   ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"),
                __LINE__,
-               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
+               ACE_TEXT_TO_TCHAR_IN (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
 
@@ -200,9 +198,7 @@ test_canceling_odd_timers (void)
       {
         int result =
           ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
-        if (result == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error cancelling timer\n")));
+        ACE_ASSERT (result != -1);
       }
 
   while (!done)
@@ -214,7 +210,7 @@ test_resetting_timer_intervals (void)
 {
   ACE_Trace t (ACE_TEXT ("test_resetting_timer_intervals"),
                __LINE__,
-               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
+               ACE_TEXT_TO_TCHAR_IN (__FILE__));
   Time_Handler rt;
   long t_id;
 

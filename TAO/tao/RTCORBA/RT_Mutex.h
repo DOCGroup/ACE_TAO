@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   RT_Mutex.h
@@ -24,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
+#include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #include "tao/LocalObject.h"
@@ -37,8 +36,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Mutex
@@ -56,6 +53,11 @@ class TAO_RTCORBA_Export TAO_RT_Mutex
     public TAO_Local_RefCounted_Object
 {
 public:
+  /// Constructor.
+  TAO_RT_Mutex (void);
+
+  /// Destructor.
+  virtual ~TAO_RT_Mutex (void);
 
   /// Acquire the lock.
   virtual void lock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -77,11 +79,6 @@ public:
 
   /// Returns the name of the mutex.
   virtual const char *name (void) const;
-
-protected:
-
-  /// Destructor.
-  virtual ~TAO_RT_Mutex (void);
 
 protected:
   /// Synchronization lock.
@@ -110,8 +107,6 @@ protected:
   ACE_CString name_;
 };
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

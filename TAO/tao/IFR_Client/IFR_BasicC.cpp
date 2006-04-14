@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:293
 
 
-#include "tao/IFR_Client/IFR_BasicC.h"
+#include "IFR_BasicC.h"
 #include "tao/CDR.h"
 #include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/AnyTypeCode/orb_typesA.h"
@@ -62,13 +62,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/IFR_Client/IFR_BasicC.inl"
+#include "IFR_BasicC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -13640,5 +13638,3 @@ CORBA::Boolean operator>> (
     
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

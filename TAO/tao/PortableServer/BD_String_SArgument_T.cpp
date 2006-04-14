@@ -9,7 +9,6 @@
 #include "tao/PortableServer/BD_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
          typename S_var,
@@ -156,7 +155,5 @@ interceptor_value (CORBA::Any *any) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_BD_STRING_SARGUMENT_T_CPP */

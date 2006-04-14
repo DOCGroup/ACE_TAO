@@ -1,4 +1,4 @@
-#include "orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h"
+#include "LB_CPU_Utilization_Monitor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -10,8 +10,6 @@
 ACE_RCSID (LoadBalancing,
            LB_CPU_Utilization_Monitor,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 double calc_cpu_loading (void)
 {
@@ -166,5 +164,3 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 #endif  /* linux || sun */
 
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

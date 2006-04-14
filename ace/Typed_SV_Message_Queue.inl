@@ -1,15 +1,14 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
+
+// Typed_SV_Message_Queue.i
 
 #include "ace/SV_Message_Queue.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <class T> ACE_INLINE int
 ACE_Typed_SV_Message_Queue<T>::open (key_t external_id,
-                                     int create,
-                                     int perms)
+				     int create,
+				     int perms)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::open");
   return this->message_queue_.open (external_id, create, perms);
@@ -26,7 +25,7 @@ ACE_Typed_SV_Message_Queue<T>::close (void)
 
 template <class T> ACE_INLINE int
 ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb,
-                                     int mflags)
+				     int mflags)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::recv");
 
@@ -43,7 +42,7 @@ ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb,
 
 template <class T> ACE_INLINE int
 ACE_Typed_SV_Message_Queue<T>::send (const ACE_Typed_SV_Message<T> &mb,
-                                     int mflags)
+				     int mflags)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::send");
   return
@@ -64,7 +63,7 @@ ACE_Typed_SV_Message_Queue<T>::remove (void)
 
 template <class T> ACE_INLINE int
 ACE_Typed_SV_Message_Queue<T>::control (int option,
-                                        void *arg)
+					void *arg)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::control");
 
@@ -76,5 +75,3 @@ ACE_Typed_SV_Message_Queue<T>::get_id (void) const
 {
   return this->message_queue_.get_id ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

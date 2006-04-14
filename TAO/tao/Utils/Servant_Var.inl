@@ -5,8 +5,6 @@
 #include "tao/Exception.h"
 #include "ace/Swap.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <class T>
 ACE_INLINE T *
 TAO::Utils::Servant_Var<T>::_duplicate (T * p)
@@ -64,16 +62,8 @@ template <class T>
 ACE_INLINE typename TAO::Utils::Servant_Var<T> &
 TAO::Utils::Servant_Var<T>::operator= (T * p)
 {
-  if (this->ptr_ != p)
-    {
-      // This constructor doesn't increase the reference count so we
-      // we must check for self-assignment.  Otherwise the reference
-      // count would be prematurely decremented upon exiting this
-      // scope.
-      TAO::Utils::Servant_Var<T> tmp (p);
-      this->swap (tmp);
-    }
-
+  TAO::Utils::Servant_Var<T> tmp (p);
+  this->swap (tmp);
   return *this;
 }
 
@@ -127,16 +117,8 @@ template <class T> template <class Y>
 ACE_INLINE typename TAO::Utils::Servant_Var<T> &
 TAO::Utils::Servant_Var<T>::operator= (Y * p)
 {
-  if (this->ptr_ != p)
-    {
-      // This constructor doesn't increase the reference count so we
-      // we must check for self-assignment.  Otherwise the reference
-      // count would be prematurely decremented upon exiting this
-      // scope.
-      TAO::Utils::Servant_Var<T> tmp (p);
-      this->swap (tmp);
-    }
-
+  TAO::Utils::Servant_Var<T> tmp (p);
+  this->swap (tmp);
   return *this;
 }
 #endif /* ACE_LACKS_MEMBER_TEMPLATES */
@@ -205,7 +187,6 @@ TAO::Utils::Servant_Var<T>::_retn (void)
   return rval;
 }
 
-#ifndef ACE_LACKS_MEMBER_TEMPLATES
 template <class X, class Y>
 ACE_INLINE bool
 operator== (typename TAO::Utils::Servant_Var<X> const & x,
@@ -221,6 +202,3 @@ operator!= (typename TAO::Utils::Servant_Var<X> const & x,
 {
   return x.in () != y.in ();
 }
-#endif /* ! ACE_LACKS_MEMBER_TEMPLATES */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

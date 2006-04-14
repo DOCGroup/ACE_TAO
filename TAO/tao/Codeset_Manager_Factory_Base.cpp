@@ -1,27 +1,25 @@
 // $Id$
 
-#include "tao/ORB_Core.h"
-#include "tao/Codeset_Manager.h"
-#include "tao/Codeset_Manager_Factory_Base.h"
+#include "ORB_Core.h"
+#include "Codeset_Manager.h"
+#include "Codeset_Manager_Factory_Base.h"
 
 ACE_RCSID (tao,
            Codeset_Manager_Factory_Base,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_Codeset_Manager_Factory_Base::~TAO_Codeset_Manager_Factory_Base (void)
+TAO_Codeset_Manager_Factory_Base::~TAO_Codeset_Manager_Factory_Base ()
 {
 }
 
 int
-TAO_Codeset_Manager_Factory_Base::is_default (void) const
+TAO_Codeset_Manager_Factory_Base::is_default() const
 {
   return 1;
 }
 
 TAO_Codeset_Manager *
-TAO_Codeset_Manager_Factory_Base::create (void)
+TAO_Codeset_Manager_Factory_Base::create ()
 {
   return 0;
 
@@ -33,8 +31,6 @@ TAO_Codeset_Manager_Factory_Base::initialize (void)
   return ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Codeset_Manager_Factory_Base);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 static int
 TAO_Requires_Codeset_Manager_Factory_Base =

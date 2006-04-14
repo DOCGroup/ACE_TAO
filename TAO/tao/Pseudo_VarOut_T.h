@@ -42,8 +42,6 @@
 
 #include "tao/varbase.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_Pseudo_Var_T
  *
@@ -126,8 +124,6 @@ private:
   /// Assignment from _var not allowed.
   TAO_Pseudo_Out_T<T,T_var> & operator= (const T_var &);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Pseudo_VarOut_T.inl"

@@ -635,8 +635,8 @@ Object_Group_i::bind (const Load_Balancer::Member & member
                             this->allocator_) == 0)
     ACE_THROW (Load_Balancer::duplicate_member ());
 
-  size_t id_len = ACE_OS::strlen (member.id) + 1;
-  size_t ref_len = ACE_OS::strlen (member.obj) + 1;
+  size_t id_len = ACE_OS::strlen (member.id.in()) + 1;
+  size_t ref_len = ACE_OS::strlen (member.obj.in()) + 1;
 
   char *mem_alloc = (char *)this->allocator_->malloc (id_len + ref_len);
 
@@ -1000,7 +1000,7 @@ RR_Object_Group::unbind (const char *id
   this->allocator_->free (iter.next ());
   iter.remove ();
 
-  size_t curr_size = this->members_->current_size ();
+  int curr_size = this->members_->current_size ();
 
   // Update <next_> if necessary to reflect the deletion.
   if (position < next_)

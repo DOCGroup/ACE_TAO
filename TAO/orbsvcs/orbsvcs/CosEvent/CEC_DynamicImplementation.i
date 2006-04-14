@@ -1,11 +1,7 @@
-// -*- C++ -*-
-//
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
-TAO_CEC_DynamicImplementationServer::TAO_CEC_DynamicImplementationServer
+TAO_CEC_DynamicImplementationServer::TAO_CEC_DynamicImplementationServer 
         (PortableServer::POA_ptr poa,
          TAO_CEC_TypedProxyPushConsumer *typed_pp_consumer,
          TAO_CEC_TypedEventChannel *typed_event_channel)
@@ -16,4 +12,3 @@ TAO_CEC_DynamicImplementationServer::TAO_CEC_DynamicImplementationServer
 {
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

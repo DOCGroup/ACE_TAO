@@ -15,13 +15,11 @@
 #include "orbsvcs/Event/EC_Default_ProxySupplier.h"
 #include "ace/SString.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "Request_Context_Repository.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_ProxyPushSupplier : public TAO_EC_Default_ProxyPushSupplier
 {
@@ -66,7 +64,5 @@ public:
 private:
   FtRtecEventChannelAdmin::ObjectId_var object_id_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +25,6 @@
 #include "ace/CORBA_macros.h"
 #include "tao/ORB_Constants.h"
 #include "tao/orbconf.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY, class ACE_LOCK> class TAO_Notify_Event_Map_T;
 template <class PROXY> class TAO_ESF_Proxy_Collection;
@@ -82,14 +80,12 @@ protected:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> usage_count_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Event_Map_Entry_T.inl"
+#include "Event_Map_Entry_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/Event_Map_Entry_T.cpp"
+#include "Event_Map_Entry_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

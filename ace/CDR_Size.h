@@ -36,8 +36,6 @@
 
 #include "ace/SStringfwd.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_SizeCDR
  *
@@ -89,7 +87,7 @@ public:
                                   const ACE_CDR::WChar *x);
   //@}
 
-  /// @note the portion written starts at <x> and ends
+  /// Note: the portion written starts at <x> and ends
   ///    at <x + length>.
   /// The length is *NOT* stored into the CDR stream.
   //@{ @name Array write operations
@@ -174,18 +172,15 @@ protected:
   ACE_CDR::Octet minor_version_;
 };
 
+
 // @@ This operator should not be inlined since they force SString.h
 //    to be included in this header.
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const ACE_CString &x);
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
 # include "ace/CDR_Size.inl"
 #else /* __ACE_INLINE__ */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Not used by CORBA or TAO
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
@@ -231,10 +226,7 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const ACE_CDR::WChar* x);
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

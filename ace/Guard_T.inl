@@ -1,10 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/RW_Thread_Mutex.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::acquire (void)
@@ -167,5 +164,3 @@ ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m,
   else
     this->tryacquire_read ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

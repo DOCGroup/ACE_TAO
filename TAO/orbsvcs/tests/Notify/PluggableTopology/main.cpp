@@ -38,11 +38,11 @@ namespace {
     qos[i].name = "Priority";
     qos[i++].value <<= (Short) 1234;
     qos[i].name = "Timeout";
-    qos[i++].value <<= (TimeBase::TimeT) 55555; // 5.5555 ms
+    qos[i++].value <<= (TimeBase::TimeT) 55555;
     qos[i].name = "MaximumBatchSize";
     qos[i++].value <<= (Long) 200;
     qos[i].name = "PacingInterval";
-    qos[i++].value <<= (TimeBase::TimeT) 42000; // 4.2ms
+    qos[i++].value <<= (TimeBase::TimeT) 42000;
     qos[i].name = "StopTimeSupported";
     qos[i++].value <<= Any::from_boolean(0);
     qos.length(i);
@@ -61,7 +61,7 @@ namespace {
   }
   void setUp()
   {
-    ACE_ARGV av;
+    ACE_TARGV<char> av;
     int ac = 0;
     orb = ORB_init(ac, av.argv());
     ACE_ASSERT(! is_nil(orb.in()));
@@ -80,7 +80,7 @@ namespace {
 }
 
 
-int main(int, char**)
+int ACE_TMAIN(int, ACE_TCHAR**)
 {
   try
   {

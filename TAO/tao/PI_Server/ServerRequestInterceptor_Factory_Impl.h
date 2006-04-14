@@ -1,4 +1,5 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+
 
 //=============================================================================
 /**
@@ -16,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI_Server/pi_server_export.h"
+#include "pi_server_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,8 +30,6 @@
 #include "ace/Service_Config.h"
 #include "tao/ServerRequestInterceptor_Adapter_Factory.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   class ServerRequestInterceptor_Adapter;
@@ -42,8 +41,6 @@ class TAO_PI_Server_Export TAO_ServerRequestInterceptor_Adapter_Factory_Impl
 public:
   virtual TAO::ServerRequestInterceptor_Adapter *create (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_PI_Server, TAO_ServerRequestInterceptor_Adapter_Factory_Impl)

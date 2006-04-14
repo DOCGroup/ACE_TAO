@@ -34,6 +34,7 @@
 #include "ace/OS_NS_string.h"
 
 #include "ace/os_include/os_ctype.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Event_Supplier,
            Event_Sup,
@@ -129,7 +130,7 @@ Event_Supplier::load_schedule_data
       FILE *input_file;
 
       int scan_count = 0;
-      input_file = ACE_OS::fopen(this->input_file_name_, "r");
+      input_file = ACE_OS::fopen(this->input_file_name_, ACE_TEXT("r"));
 
       if (input_file)
         {
@@ -381,7 +382,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
 unsigned int
 Event_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "f:m:");
   int opt;
   int temp;
 
@@ -443,15 +444,17 @@ Event_Supplier::get_options (int argc, char *argv [])
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
-      orb_Manager.init (argc,
-                        argv
+      orb_Manager.init (convert.get_argc(),
+                        convert.get_ASCII_argv()
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -460,7 +463,7 @@ main (int argc, char *argv [])
       Event_Supplier *event_Supplier_ptr;
 
       ACE_NEW_RETURN (event_Supplier_ptr,
-                      Event_Supplier(argc, argv),
+                      Event_Supplier(convert.get_argc(), convert.get_ASCII_argv()),
                       -1);
 
       // Initialize everthing

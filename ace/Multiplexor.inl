@@ -1,10 +1,8 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
+// Multiplexor.i
 #if 0
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 Driver::link_from_below (ACE_Module *stream_head)
@@ -89,7 +87,5 @@ ACE_Multiplexor::unlink_from_below (ACE_Module *)
   ACE_TRACE ("ACE_Multiplexor::unlink_from_below");
   return -1;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*  0 */

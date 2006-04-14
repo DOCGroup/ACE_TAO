@@ -24,7 +24,6 @@
 
 #include "orbsvcs/CosLoadBalancingS.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_CPU_Load_Average_Monitor
@@ -95,8 +94,6 @@ private:
   CosLoadBalancing::Location location_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

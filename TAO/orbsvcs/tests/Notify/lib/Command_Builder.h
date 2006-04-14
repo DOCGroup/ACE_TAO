@@ -46,11 +46,11 @@ public:
   ~TAO_Notify_Tests_Command_Builder ();
 
   /// = Service_Object virtual method overloads.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini (void);
 
   /// Register the factory against the name of the factory.
-  void _register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);
+  void _register (ACE_TString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);
 
   /// Execute the <start_command_>.
   void execute (ACE_ENV_SINGLE_ARG_DECL);
@@ -63,7 +63,7 @@ protected:
   TAO_Notify_Tests_Command* last_command_;
 
   /// The factory map.
-  ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX> factory_map_;
+  ACE_Hash_Map_Manager <ACE_TString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX> factory_map_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_NOTIFY_TEST, TAO_Notify_Tests_Command_Builder)

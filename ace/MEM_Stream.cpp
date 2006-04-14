@@ -1,3 +1,4 @@
+// MEM_Stream.cpp
 // $Id$
 
 #include "ace/MEM_Stream.h"
@@ -9,8 +10,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, MEM_Stream, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Stream)
 
@@ -41,7 +40,5 @@ ACE_MEM_Stream::close (void)
   // Close down the socket.
   return ACE_SOCK::close ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

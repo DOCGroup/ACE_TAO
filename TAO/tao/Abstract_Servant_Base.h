@@ -32,8 +32,6 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ServerRequest;
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
@@ -171,7 +169,6 @@ protected:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

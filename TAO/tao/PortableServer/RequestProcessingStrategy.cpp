@@ -5,23 +5,21 @@
  *  @file    RequestProcessingStrategy.cpp
  *
  *  $Id$
+ *
  */
 //=============================================================================
 
-#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "RequestProcessingStrategy.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingStrategy,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategy::RequestProcessingStrategy (void)
+    RequestProcessingStrategy::RequestProcessingStrategy()
       : poa_ (0)
     {
     }
@@ -58,4 +56,3 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -71,7 +71,7 @@ int QueueExample::runStackUnboundedQueue (void)
        !iter.done ();
        iter.advance ())
     {
-      DataElement *elem = 0;
+      DataElement *elem;
       iter.next (elem);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), elem->getData ()));
     }
@@ -97,7 +97,7 @@ int QueueExample::runHeapUnboundedQueue (void)
        !iter.done ();
        iter.advance ())
     {
-      DataElement **elem = 0;
+      DataElement **elem;
       iter.next(elem);
       ACE_DEBUG
         ((LM_DEBUG, ACE_TEXT ("%d:"), (*elem)->getData ()));

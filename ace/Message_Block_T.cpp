@@ -1,7 +1,9 @@
 // $Id$
 
-#ifndef ACE_MESSAGE_BLOCK_T_CPP
-#define ACE_MESSAGE_BLOCK_T_CPP
+#if !defined (ACE_MESSAGE_BLOCK_T_C)
+#define ACE_MESSAGE_BLOCK_T_C
+
+ACE_RCSID(ace, Message_Block_T, "$Id$")
 
 #include "ace/Malloc_Base.h"     /* Need ACE_Allocator */
 
@@ -10,8 +12,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_errno.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class L>
 ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
@@ -46,6 +46,4 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
   return nb;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_MESSAGE_BLOCK_T_CPP */
+#endif /* ACE_MESSAGE_BLOCK_T_C */

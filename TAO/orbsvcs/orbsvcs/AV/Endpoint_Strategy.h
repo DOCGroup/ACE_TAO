@@ -1,4 +1,5 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+
 
 //=============================================================================
 /**
@@ -15,8 +16,7 @@
 #define TAO_AV_ENDPOINT_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "ace/os_include/os_netdb.h"
+#include "AVStreams_i.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -24,12 +24,6 @@
 # pragma warning(push)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Process_Options;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_AV_Endpoint_Strategy
@@ -177,10 +171,8 @@ protected:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // Include the templates here.
-#include "orbsvcs/AV/Endpoint_Strategy_T.h"
+#include "Endpoint_Strategy_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/PI/PICurrentC.h"
+#include "PICurrentC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -39,8 +39,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -180,5 +178,3 @@ PortableInterceptor::Current::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

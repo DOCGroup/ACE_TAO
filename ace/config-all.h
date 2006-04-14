@@ -23,6 +23,23 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// ============================================================================
+// UNICODE macros (to be added later)
+// ============================================================================
+
+// Get the unicode (i.e. ACE_TCHAR) defines
+# include "ace/ace_wchar.h"
+
+# if defined (VXWORKS)
+#   if defined (ghs)
+    // GreenHills 1.8.8 needs the stdarg.h #include before the #include of
+    // vxWorks.h.
+    // Also, be sure that these #includes come _after_ the key_t typedef, and
+    // before the #include of time.h.
+#     include "ace/os_include/os_stdarg.h"
+#   endif /* ghs */
+# endif /* VXWORKS */
+
 // This is used to indicate that a platform doesn't support a
 // particular feature.
 #if defined ACE_HAS_VERBOSE_NOTSUP
@@ -71,6 +88,9 @@
 #  define ACE_OS_TRACE(X) ACE_TRACE_IMPL(X)
 #  include "ace/Trace.h"
 #endif /* ACE_OS_NTRACE */
+
+// Include the string conversion services here for backward compatibility
+#include "ace/String_Conversion_T.h"
 
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.

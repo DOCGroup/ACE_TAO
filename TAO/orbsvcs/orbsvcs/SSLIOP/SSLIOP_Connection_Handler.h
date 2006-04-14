@@ -23,15 +23,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
+#include "SSLIOP_Current.h"
+#include "SSLIOP_Transport.h"
 
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
 
 #include "ace/Reactor.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IIOP_Properties;
 
@@ -189,11 +187,9 @@ namespace TAO
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i"
+#include "SSLIOP_Connection_Handler.i"
 #endif /* __ACE_INLINE__ */
 
 

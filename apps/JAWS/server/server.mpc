@@ -2,11 +2,10 @@
 // $Id$
 
 project(JAWS) : acelib {
-  sharedname   = JAWS
+  sharedname = JAWS
   dynamicflags = ACE_BUILD_SVC_DLL
   requires    += ace_filecache
-  avoids      += uses_wchar
-  avoids      += ace_for_tao
+  avoids += uses_wchar
 
   Source_Files {
     HTTP_Server.cpp
@@ -28,9 +27,9 @@ project(JAWS_server) : aceexe {
   libs  += JAWS
   requires += ace_filecache
   avoids += uses_wchar
-  avoids += ace_for_tao
 
   Source_Files {
     main.cpp
   }
 }
+

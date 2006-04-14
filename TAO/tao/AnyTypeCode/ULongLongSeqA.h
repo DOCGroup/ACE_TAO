@@ -37,8 +37,6 @@
 #include "tao/ULongLongSeqC.h"
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
@@ -62,8 +60,6 @@ TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, const CORBA::ULongLong
 TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, CORBA::ULongLongSeq*); // noncopying version
 TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, CORBA::ULongLongSeq *&); // deprecated
 TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const CORBA::ULongLongSeq *&);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

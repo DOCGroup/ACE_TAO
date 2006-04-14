@@ -11,8 +11,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_syslog.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // NOTE:
 //   The ACE_Log_Msg_UNIX_Syslog class can use the openlog(),
 //   setlogmask(), syslog() and closelog() routines in a thread safe
@@ -43,15 +41,10 @@ ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * logger_key)
   // options LOG_CONS and LOG_PID to be set.  There really should be a
   // logging strategy option to control the syslog log options,
   // however, we'll take the easy way out for now.
-#if defined (ACE_USES_WCHAR)
-  openlog (ACE_TEXT_ALWAYS_CHAR (logger_key),
+  // const_cast?
+  ::openlog (const_cast<char *>(ACE_TEXT_TO_CHAR_IN(logger_key)),
            LOG_CONS|LOG_PID,
            ACE_DEFAULT_SYSLOG_FACILITY);
-#else
-  openlog (const_cast<char *> (logger_key),
-           LOG_CONS|LOG_PID,
-           ACE_DEFAULT_SYSLOG_FACILITY);
-#endif /* ACE_USES_WCHAR */
 
   // Enable logging of all syslog priorities.  If logging of all
   // priorities is not desired, use the ACE_Log_Msg::priority_mask()
@@ -117,12 +110,12 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
             ACE_Log_Record::priority_name(ACE_Log_Priority(log_record.type()));
           syslog (syslog_priority,
                   "%s: %s: %s",
-                  ACE_TEXT_ALWAYS_CHAR (date_and_time),
-                  ACE_TEXT_ALWAYS_CHAR (prio_name),
-                  ACE_TEXT_ALWAYS_CHAR (line));
+                  ACE_TEXT_TO_CHAR_IN (date_and_time),
+                  ACE_TEXT_TO_CHAR_IN (prio_name),
+                  ACE_TEXT_TO_CHAR_IN (line));
         }
       else // No formatting required.
-        syslog (syslog_priority, "%s", ACE_TEXT_ALWAYS_CHAR (line));
+        syslog (syslog_priority, "%s", ACE_TEXT_TO_CHAR_IN (line));
     }
 
   return 0;
@@ -202,6 +195,4 @@ ACE_Log_Msg_UNIX_Syslog::convert_log_mask (int lm_mask)
   return syslog_mask;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* !ACE_LACKS_UNIX_SYSLOG */
+#endif /* !defined (ACE_LACKS_UNIX_SYSLOG) */

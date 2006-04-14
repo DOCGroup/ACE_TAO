@@ -31,10 +31,10 @@
 #ifndef _TAO_IDL_MESSAGINGS_T_CPP_
 #define _TAO_IDL_MESSAGINGS_T_CPP_
 
-#include "tao/Messaging/MessagingS_T.h"
+#include "MessagingS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Messaging/MessagingS_T.inl"
+#include "MessagingS_T.inl"
 #endif /* !defined INLINE */
 
 

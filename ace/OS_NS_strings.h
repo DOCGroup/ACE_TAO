@@ -15,7 +15,7 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_STRINGS_H
-#define ACE_OS_NS_STRINGS_H
+# define ACE_OS_NS_STRINGS_H
 
 # include /**/ "ace/pre.h"
 
@@ -33,32 +33,25 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Time_Value;
 
-namespace ACE_OS
-{
+namespace ACE_OS {
 
   /// Compares two strings (case insensitive const char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   int strcasecmp (const char *s, const char *t);
 
-#if defined (ACE_HAS_WCHAR)
   /// Compares two strings (case insensitive const wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   int strcasecmp (const wchar_t *s, const wchar_t *t);
-#endif /* ACE_HAS_WCHAR */
 
   /// Compares two arrays (case insensitive const char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   int strncasecmp (const char *s, const char *t, size_t len);
 
-#if defined (ACE_HAS_WCHAR)
   /// Compares two arrays (case insensitive const wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   int strncasecmp (const wchar_t *s, const wchar_t *t, size_t len);
-#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_STRCASECMP)
   /// Emulated strcasecmp - Performs a case insensitive comparison of strings.
@@ -71,8 +64,6 @@ namespace ACE_OS
 #endif /* ACE_LACKS_STRCASECMP */
 
 } /* namespace ACE_OS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

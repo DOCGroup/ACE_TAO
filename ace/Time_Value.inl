@@ -2,8 +2,6 @@
 //
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_WIN32) && defined (_WIN32_WCE)
 // Something is a bit brain-damaged here and I'm not sure what... this code
 // compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
@@ -49,29 +47,11 @@ ACE_Time_Value::operator const timeval * () const
 }
 
 ACE_INLINE void
-ACE_Time_Value::set (time_t sec, suseconds_t usec)
+ACE_Time_Value::set (long sec, long usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-#if defined (ACE_WIN64) \
-    || (defined (ACE_WIN32) && !defined (_USE_32BIT_TIME_T))
-  // Win64 uses 'long' (32 bit) timeval and 64-bit time_t, so we have
-  // to get these back in range.
-  if (sec > LONG_MAX)
-    this->tv_.tv_sec = LONG_MAX;
-  else if (sec < LONG_MIN)
-    this->tv_.tv_sec = LONG_MIN;
-  else
-    this->tv_.tv_sec = static_cast<long> (sec);
-#else
   this->tv_.tv_sec = sec;
-#endif
   this->tv_.tv_usec = usec;
-#if __GNUC__
-  if (__builtin_constant_p(sec) &&
-      __builtin_constant_p(usec) &&
-      (sec >= 0 && usec >= 0 && usec < ACE_ONE_SECOND_IN_USECS))
-    return;
-#endif
   this->normalize ();
 }
 
@@ -81,7 +61,7 @@ ACE_Time_Value::set (double d)
   // ACE_OS_TRACE ("ACE_Time_Value::set");
   long l = (long) d;
   this->tv_.tv_sec = l;
-  this->tv_.tv_usec = (suseconds_t) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS + .5);
+  this->tv_.tv_usec = (long) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS + .5);
   this->normalize ();
 }
 
@@ -93,9 +73,17 @@ ACE_INLINE void
 ACE_Time_Value::set (const timespec_t &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
+#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
+  this->tv_.tv_sec = static_cast<long> (tv.tv_sec);
+  // Convert nanoseconds into microseconds.
+  this->tv_.tv_usec = tv.tv_nsec / 1000;
+#else
+  this->tv_.tv_sec = tv.ts_sec;
+  // Convert nanoseconds into microseconds.
+  this->tv_.tv_usec = tv.ts_nsec / 1000;
+#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
 
-  this->set (tv.tv_sec,
-             tv.tv_nsec / 1000); // Convert nanoseconds into microseconds.
+  this->normalize ();
 }
 
 ACE_INLINE
@@ -107,7 +95,7 @@ ACE_Time_Value::ACE_Time_Value (void)
 }
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
+ACE_Time_Value::ACE_Time_Value (long sec, long usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (sec, usec);
@@ -115,7 +103,7 @@ ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
 
 // Returns number of seconds.
 
-ACE_INLINE time_t
+ACE_INLINE long
 ACE_Time_Value::sec (void) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
@@ -125,22 +113,10 @@ ACE_Time_Value::sec (void) const
 // Sets the number of seconds.
 
 ACE_INLINE void
-ACE_Time_Value::sec (time_t sec)
+ACE_Time_Value::sec (long sec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
-#if defined (ACE_WIN64) \
-  || (defined (ACE_WIN32) && !defined (_USE_32BIT_TIME_T))
-  // Win64 uses 'long' (32 bit) timeval and 64-bit time_t, so we have
-  // to get these back in range.
-  if (sec > LONG_MAX)
-    this->tv_.tv_sec = LONG_MAX;
-  else if (sec < LONG_MIN)
-    this->tv_.tv_sec = LONG_MIN;
-  else
-    this->tv_.tv_sec = static_cast<long> (sec);
-#else
   this->tv_.tv_sec = sec;
-#endif
 }
 
 // Converts from Time_Value format into milli-seconds format.
@@ -177,7 +153,7 @@ ACE_Time_Value::msec (long milliseconds)
 
 // Returns number of micro-seconds.
 
-ACE_INLINE suseconds_t
+ACE_INLINE long
 ACE_Time_Value::usec (void) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::usec");
@@ -187,7 +163,7 @@ ACE_Time_Value::usec (void) const
 // Sets the number of micro-seconds.
 
 ACE_INLINE void
-ACE_Time_Value::usec (suseconds_t usec)
+ACE_Time_Value::usec (long usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::usec");
   this->tv_.tv_usec = usec;
@@ -255,9 +231,15 @@ ACE_Time_Value::operator timespec_t () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator timespec_t");
   timespec_t tv;
+#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   tv.tv_sec = this->sec ();
   // Convert microseconds into nanoseconds.
   tv.tv_nsec = this->tv_.tv_usec * 1000;
+#else
+  tv.ts_sec = this->sec ();
+  // Convert microseconds into nanoseconds.
+  tv.ts_nsec = this->tv_.tv_usec * 1000;
+#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return tv;
 }
 
@@ -325,28 +307,12 @@ ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
 }
 
 ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator+= (time_t tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator+=");
-  this->sec (this->sec () + tv);
-  return *this;
-}
-
-ACE_INLINE ACE_Time_Value &
 ACE_Time_Value::operator= (const ACE_Time_Value &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator=");
   this->sec (tv.sec ());
   this->usec (tv.usec ());
-  return *this;
-}
-
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator= (time_t tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator=");
-  this->sec (tv);
-  this->usec (0);
+  // this->normalize ();
   return *this;
 }
 
@@ -359,14 +325,6 @@ ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
   this->sec (this->sec () - tv.sec ());
   this->usec (this->usec () - tv.usec ());
   this->normalize ();
-  return *this;
-}
-
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator-= (time_t tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator-=");
-  this->sec (this->sec () - tv);
   return *this;
 }
 
@@ -399,5 +357,3 @@ operator - (const ACE_Time_Value &tv1,
 #if defined (ACE_WIN32) && defined (_WIN32_WCE)
 }
 #endif
-
-ACE_END_VERSIONED_NAMESPACE_DECL

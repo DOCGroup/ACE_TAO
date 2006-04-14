@@ -11,7 +11,7 @@
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
 int
-DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
+DT_Creator::dt_task_init (ACE_TArg_Shifter<char>& arg_shifter)
 {
   static int dt_index = 0;
   int start_time = 0;
@@ -20,7 +20,7 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
   int importance = 0;
   char *job_name = 0;
   int dist = 0;
-  const ACE_TCHAR* current_arg = 0;
+  const char* current_arg = 0;
   if (arg_shifter.cur_arg_strncasecmp ("-Importance") == 0)
     {
       arg_shifter.consume_arg ();
@@ -70,9 +70,9 @@ DT_Creator::init (int argc, char *argv [])
   active_job_count_ = 0;
   ACE_NEW_RETURN (log, char*[BUFSIZ * 100],-1);
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  const char* current_arg = 0;
 
   dt_count_ = 0;
   poa_count_ = 0;
@@ -587,7 +587,7 @@ DT_Creator::check_ifexit (void)
 
 	    shutdown = 1;
 
-	    FILE* log_file = ACE_OS::fopen (log_file_name_, "w");
+	    FILE* log_file = ACE_OS::fopen (log_file_name_, ACE_TEXT("w"));
 
 	    if (log_file != NULL)
 	      {

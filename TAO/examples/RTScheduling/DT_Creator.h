@@ -28,7 +28,7 @@ class DT_Creator : public ACE_Service_Object
 
   int init (int argc, char *argv []);
 
-  int dt_task_init (ACE_Arg_Shifter& arg_shifter);
+  int dt_task_init (ACE_TArg_Shifter<char>& arg_shifter);
 
   virtual void create_distributable_threads (RTScheduling::Current_ptr  current
 					     ACE_ENV_ARG_DECL_WITH_DEFAULTS);

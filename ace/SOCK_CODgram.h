@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -15,7 +15,13 @@
 #define ACE_SOCK_CODGRAM_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,15 +31,13 @@
 #include "ace/Addr.h"
 #include "ace/INET_Addr.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_SOCK_CODgram
  *
  * @brief Defines the member functions for the ACE_SOCK connected
  * datagram abstraction.
  */
-class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
+class ACE_Sockets_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
 {
 public:
   // = Initialization methods.
@@ -67,8 +71,6 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_CODgram.inl"

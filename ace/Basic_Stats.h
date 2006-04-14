@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /// Collect basic stats about a series of samples
 /**
  * Compute the average and standard deviation (aka jitter) for an
@@ -55,7 +53,10 @@ public:
    * high resolution timer samples are acquired in clock ticks, but often
    * presented in microseconds.
    */
-  void dump_results (const ACE_TCHAR *msg,
+  void dump_results (const char *msg,
+                     ACE_UINT32 scale_factor) const;
+
+  void dump_results (const wchar_t *msg,
                      ACE_UINT32 scale_factor) const;
 
   /// The number of samples
@@ -76,8 +77,6 @@ public:
   /// The sum of all the values
   ACE_UINT64 sum_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Basic_Stats.inl"

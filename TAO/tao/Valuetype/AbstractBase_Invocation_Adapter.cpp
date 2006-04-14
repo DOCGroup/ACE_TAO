@@ -1,12 +1,10 @@
 //$Id$
-#include "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
-#include "tao/Valuetype/AbstractBase.h"
+#include "AbstractBase_Invocation_Adapter.h"
+#include "AbstractBase.h"
 
 ACE_RCSID (Valuetype,
            AbstractBase_Invocation_Adapter,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -30,5 +28,3 @@ namespace TAO
   {
   }
 } // End namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL

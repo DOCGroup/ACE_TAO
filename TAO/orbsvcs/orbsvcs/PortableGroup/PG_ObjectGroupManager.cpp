@@ -1,7 +1,7 @@
-#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
-#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
-#include "orbsvcs/PortableGroup/PG_conf.h"
-#include "orbsvcs/PortableGroup/PG_Operators.h"
+#include "PG_ObjectGroupManager.h"
+#include "PG_GenericFactory.h"
+#include "PG_conf.h"
+#include "PG_Operators.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -13,8 +13,6 @@ ACE_RCSID (PortableGroup,
            PG_ObjectGroupManager,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
   : poa_ (),
@@ -867,5 +865,3 @@ TAO_PG_ObjectGroupManager::generic_factory (
 {
   this->generic_factory_ = generic_factory;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

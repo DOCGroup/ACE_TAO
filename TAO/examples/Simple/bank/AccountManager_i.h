@@ -34,9 +34,7 @@
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Manager;
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 class AccountManager_i : public POA_Bank::AccountManager
 {

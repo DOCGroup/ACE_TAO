@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/Log_Msg.h"
 #include "ace/Map_Manager.h"
 #include "ace/Synch.h"
 #include "DataElement.h"

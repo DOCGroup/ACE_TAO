@@ -1,6 +1,7 @@
 // $Id$
 
 project(*Server): taoserver, valuetype, strategies {
+  exename = server
   // This is just a dummy_label to prevent the test from being compiled
   // in MPC builds
   requires += dummy_label
@@ -19,7 +20,6 @@ project(*Server): taoserver, valuetype, strategies {
 
 project(*Client): taoclient, taoserver, valuetype {
   exename = client
-  after += *Server
   // This is just a dummy_label to prevent the test from being compiled
   // in MPC builds
   requires += dummy_label

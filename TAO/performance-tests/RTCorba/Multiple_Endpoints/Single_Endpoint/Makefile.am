@@ -18,7 +18,6 @@ noinst_PROGRAMS =
 ## Makefile.Single_Endpoint_Client.am
 
 if BUILD_RT_CORBA
-if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
@@ -46,13 +45,11 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 
 ## Makefile.Single_Endpoint_Server.am
 
 if BUILD_RT_CORBA
-if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -81,7 +78,6 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 
 ## Clean up template repositories, etc.

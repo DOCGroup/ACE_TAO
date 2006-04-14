@@ -14,11 +14,11 @@
 
 const char *ior = "file://test.ior";
 int comp_number = 4;
-int counter = 0;
+int count = 0;
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -47,7 +47,7 @@ int parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   std::vector<NodeAppTest::NodeAppTest_RoundTrip_var> comp_list;
   //std::vector<NodeAppTest::NodeAppTest_RoundTrip_var>::const_iterator iter;
@@ -95,8 +95,8 @@ main (int argc, char *argv[])
           Deployment::ComponentImplementationInfo info;
 
           std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << counter;
-          counter = counter + 1;
+          tmp << "NodeAppTest_RoundTrip:" << count;
+          count = count + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
@@ -107,9 +107,7 @@ main (int argc, char *argv[])
           info.servant_dll =
             CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
           info.servant_entrypt =
-            CORBA::string_dup (
-                "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
-              );
+            CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
 
           //Now add the info into the infos
           container_info_1.impl_infos[i] = info;
@@ -143,8 +141,8 @@ main (int argc, char *argv[])
           Deployment::ComponentImplementationInfo info;
 
           std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << counter;
-          counter = counter + 1;
+          tmp << "NodeAppTest_RoundTrip:" << count;
+          count = count + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
@@ -155,9 +153,7 @@ main (int argc, char *argv[])
           info.servant_dll =
             CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
           info.servant_entrypt =
-            CORBA::string_dup (
-                "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
-              );
+            CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
 
           //Now add the info into the infos
           container_info_2.impl_infos[i] = info;

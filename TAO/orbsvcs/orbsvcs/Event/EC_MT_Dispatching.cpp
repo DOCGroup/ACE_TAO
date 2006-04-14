@@ -1,11 +1,8 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_MT_Dispatching.h"
+#include "EC_MT_Dispatching.h"
 
 ACE_RCSID(Event, EC_MT_Dispatching, "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
                                               int thread_creation_flags,
@@ -89,4 +86,3 @@ TAO_EC_MT_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   this->task_.push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

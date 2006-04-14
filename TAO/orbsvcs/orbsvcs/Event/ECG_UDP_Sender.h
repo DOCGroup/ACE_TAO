@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  * @file ECG_UDP_Sender.h
  *
@@ -45,19 +44,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
-#include "orbsvcs/Event/EC_Lifetime_Utils.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
-#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
+#include "EC_Lifetime_Utils.h"
+#include "EC_Lifetime_Utils_T.h"
+#include "ECG_CDR_Message_Sender.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK_Dgram;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ECG_UDP_Out_Endpoint;
 
 /**
@@ -220,10 +214,8 @@ private:
   ECG_Sender_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Sender.inl"
+#include "ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

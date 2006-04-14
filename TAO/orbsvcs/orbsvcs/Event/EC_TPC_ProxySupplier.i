@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern unsigned long EC_TPC_debug_level;
 
@@ -14,4 +10,3 @@ TAO_EC_TPC_ProxyPushSupplier::TAO_EC_TPC_ProxyPushSupplier (TAO_EC_Event_Channel
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) EC_TPC_ProxyPushSupplier::CTOR (%@)\n", this));
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

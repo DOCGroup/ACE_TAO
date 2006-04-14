@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // $Id$
 
 #ifndef METRICS_UTILS_H
@@ -22,13 +20,11 @@
 #include "ace/Singleton.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/MetricsC.h"
-#include "orbsvcs/Metrics/metrics_export.h"
+#include "metrics_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Metrics_Export TAO_Metrics_Utils
 {
@@ -175,10 +171,11 @@ PROBE_TYPE, \
 METRICS_LOGGER_REF); \
 } } while (0)
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_Utils.i"
+#include "Metrics_Utils.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */

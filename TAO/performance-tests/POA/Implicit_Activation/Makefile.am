@@ -16,8 +16,6 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-
 ## Makefile.Implicit_Activation_Idl.am
 
 BUILT_SOURCES = \
@@ -50,14 +48,9 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  Test.idl
-
 ## Makefile.Implicit_Activation_Client.am
 
-if !BUILD_ACE_FOR_TAO
-
-noinst_PROGRAMS += client
+noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -75,11 +68,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
-
 ## Makefile.Implicit_Activation_Collocated.am
-
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += collocated
 
@@ -101,8 +90,6 @@ collocated_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Implicit_Activation_Server.am
 

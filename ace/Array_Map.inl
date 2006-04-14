@@ -2,8 +2,6 @@
 //
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template<typename Key, typename Value, class EqualTo>
 ACE_INLINE
 ACE_Array_Map<Key, Value, EqualTo>::ACE_Array_Map (
@@ -120,5 +118,3 @@ ACE_Array_Map<Key, Value, EqualTo>::operator[] (
   iterator i = (this->insert (value_type (k, data_type ()))).first;
   return (*i).second;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

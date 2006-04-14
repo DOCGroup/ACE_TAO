@@ -58,7 +58,7 @@ print_usage_and_die (void)
 static void
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:h:s:i:e:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("t:h:s:i:e:"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -229,7 +229,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       // Setup a timer for the task
       if (ACE_Reactor::instance ()->schedule_timer (&task,
                                                     (void *)((size_t)i),
-                                                    ACE_Time_Value::zero) == -1)
+                                                    0) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
       for (int i = 0; i < number_of_handles_to_signal; i++)

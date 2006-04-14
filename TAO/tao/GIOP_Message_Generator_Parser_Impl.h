@@ -1,5 +1,5 @@
-// -*- C++ -*-
 
+// -*- C++ -*-
 // ===================================================================
 /**
  *  @file   GIOP_Message_Generator_Parser_Impl.h
@@ -23,8 +23,6 @@
 
 #include "tao/GIOP_Message_Generator_Parser_12.h"
 #include "tao/orbconf.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_GIOP_Message_Generator_Parser_Impl
@@ -55,9 +53,6 @@ public:
   /// Version 1.2 of GIOP
   TAO_GIOP_Message_Generator_Parser_12 tao_giop_12;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser_Impl.inl"

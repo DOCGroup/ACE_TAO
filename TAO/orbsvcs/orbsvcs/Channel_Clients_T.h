@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -27,8 +26,6 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommS.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_PushConsumer_Adapter
@@ -80,8 +77,6 @@ public:
 private:
   TARGET *target_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Channel_Clients_T.i"

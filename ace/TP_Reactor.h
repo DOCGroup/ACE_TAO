@@ -6,19 +6,20 @@
  *
  *  $Id$
  *
- *  The ACE_TP_Reactor (aka, Thread Pool Reactor) uses the
+ *  The <ACE_TP_Reactor> (aka, Thread Pool Reactor) uses the
  *  Leader/Followers pattern to demultiplex events among a pool of
  *  threads.  When using a thread pool reactor, an application
  *  pre-spawns a _fixed_ number of threads.  When these threads
- *  invoke the ACE_TP_Reactor's <handle_events> method, one thread
+ *  invoke the <ACE_TP_Reactor>'s <handle_events> method, one thread
  *  will become the leader and wait for an event.  The other
  *  follower threads will queue up waiting for their turn to become
  *  the leader.  When an event occurs, the leader will pick a
  *  follower to become the leader and go on to handle the event.
- *  The consequence of using ACE_TP_Reactor is the amortization of
+ *  The consequence of using <ACE_TP_Reactor> is the amortization of
  *  the costs used to creating threads.  The context switching cost
  *  will also reduce.  More over, the total resources used by
  *  threads are bounded because there are a fixed number of threads.
+ *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
@@ -38,17 +39,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_EH_Dispatch_Info
  *
  * @brief This structure contains information of the activated event
  * handler.
  */
-class ACE_EH_Dispatch_Info
+class ACE_Export ACE_EH_Dispatch_Info
 {
 public:
+
   ACE_EH_Dispatch_Info (void);
 
   void set (ACE_HANDLE handle,
@@ -56,21 +56,20 @@ public:
             ACE_Reactor_Mask mask,
             ACE_EH_PTMF callback);
 
-  bool dispatch (void) const;
+  void reset (void);
+
+  int dispatch (void) const;
 
   ACE_HANDLE handle_;
   ACE_Event_Handler *event_handler_;
   ACE_Reactor_Mask mask_;
   ACE_EH_PTMF callback_;
-  int resume_flag_;
-  bool reference_counting_required_;
+
+  int dispatch_;
 
 private:
-  bool dispatch_;
-
-  // Disallow copying and assignment.
-  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &);
-  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &))
 };
 
 
@@ -85,7 +84,7 @@ private:
  * and manages the ownership
  */
 
-class ACE_TP_Token_Guard
+class ACE_Export ACE_TP_Token_Guard
 {
 public:
 
@@ -105,24 +104,16 @@ public:
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
-  int acquire_read_token (ACE_Time_Value *max_wait_time = 0);
+  /// @todo Should probably be called acquire_read_token ()
+  int grab_token (ACE_Time_Value *max_wait_time = 0);
 
   /**
    * A helper method that grabs the token for us, after which the
    * thread that owns that can do some actual work. This differs from
-   * acquire_read_token() as it uses acquire () to get the token instead of
+   * grab_token () as it uses acquire () to get the token instead of
    * acquire_read ()
    */
   int acquire_token (ACE_Time_Value *max_wait_time = 0);
-
-private:
-
-  // Disallow default construction.
-  ACE_TP_Token_Guard (void);
-
-  // Disallow copying and assignment.
-  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &);
-  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &);
 
 private:
 
@@ -135,6 +126,9 @@ private:
   /// vice-versa.
   int owner_;
 
+private:
+
+  ACE_UNIMPLEMENTED_FUNC (ACE_TP_Token_Guard (void))
 };
 
 /**
@@ -156,9 +150,7 @@ private:
  * that just got activated, releasing the internal lock (so that some
  * other thread can start waiting in the event loop) and then
  * dispatching the event handler outside the context of the Reactor
- * lock. After the event handler has been dispatched the event handler is
- * resumed again. Don't call remove_handler() from the handle_x methods,
- * instead return -1.
+ * lock.
  *
  * This Reactor is best suited for situations when the callbacks to
  * event handlers can take arbitrarily long and/or a number of threads
@@ -176,24 +168,24 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Initialize ACE_TP_Reactor with the default size.
+  /// Initialize <ACE_TP_Reactor> with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
                   int mask_signals = 1,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
   /**
-   * Initialize the ACE_TP_Reactor to manage
-   * @a max_number_of_handles.  If @a restart is non-0 then the
-   * ACE_Reactor's <handle_events> method will be restarted
+   * Initialize the <ACE_TP_Reactor> to manage
+   * <max_number_of_handles>.  If <restart> is non-0 then the
+   * <ACE_Reactor>'s <handle_events> method will be restarted
    * automatically when <EINTR> occurs.  If <signal_handler> or
    * <timer_queue> are non-0 they are used as the signal handler and
    * timer queue, respectively.
    */
   ACE_TP_Reactor (size_t max_number_of_handles,
                   int restart = 0,
-                  ACE_Sig_Handler *sh = 0,
-                  ACE_Timer_Queue *tq = 0,
+                  ACE_Sig_Handler * = 0,
+                  ACE_Timer_Queue * = 0,
                   int mask_signals = 1,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
@@ -212,7 +204,7 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * Returns the total number of ACE_Event_Handlers that were
+   * Returns the total number of <ACE_Event_Handler>s that were
    * dispatched, 0 if the <max_wait_time> elapsed without dispatching
    * any handlers, or -1 if something goes wrong.
    */
@@ -220,8 +212,7 @@ public:
 
   virtual int handle_events (ACE_Time_Value &max_wait_time);
 
-  /*
-   * @todo The following methods are not supported. Support for
+  /* @todo The following methods are not supported. Support for
    * signals is not available in the TP_Reactor. These methods will be
    * supported once signal handling is supported.
    */
@@ -277,7 +268,7 @@ public:
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The TP reactor has can allow applications to
-  /// resume handles.  So return a positive value.
+  /// resume handles.  So return a +ve value.
   virtual int resumable_handler (void);
 
   /// Called from handle events
@@ -290,7 +281,7 @@ public:
   virtual int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
 
   /// Return the current owner of the thread.
-  virtual int owner (ACE_thread_t *t_id);
+  virtual int owner (ACE_thread_t *);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -306,14 +297,14 @@ protected:
   int dispatch_i (ACE_Time_Value *max_wait_time,
                   ACE_TP_Token_Guard &guard);
 
-  /// Get the event that needs dispatching. It could be either a
+  /// Get the event that needs dispatching.It could be either a
   /// signal, timer, notification handlers or return possibly 1 I/O
   /// handler for dispatching. In the most common use case, this would
   /// return 1 I/O handler for dispatching
   int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
 
   /// Method to handle signals
-  /// @note It is just busted at this point in time.
+  /// NOTE: It is just busted at this point in time.
   int handle_signals (int &event_count,
                       ACE_TP_Token_Guard &g);
 
@@ -348,18 +339,14 @@ private:
   /// associated with <handle> that a particular event has occurred.
   int dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info);
 
-  /// Clear the @a handle from the read_set
+  /// Clear the <handle> from the read_set
   void clear_handle_read_set (ACE_HANDLE handle);
-
-  int post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,int status);
 
 private:
   /// Deny access since member-wise won't work...
   ACE_TP_Reactor (const ACE_TP_Reactor &);
   ACE_TP_Reactor &operator = (const ACE_TP_Reactor &);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.inl"

@@ -1,13 +1,11 @@
 // $Id$
 
-#include "orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h"
+#include "CosEC_ProxyPushSupplier.h"
 
 ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Any/PushConsumer.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "PushConsumer.h"
 
 TAO_Notify_CosEC_ProxyPushSupplier::TAO_Notify_CosEC_ProxyPushSupplier (void)
 {
@@ -61,5 +59,3 @@ TAO_Notify_CosEC_ProxyPushSupplier::get_proxy_type_name (void) const
 {
   return "ec_proxy_push_supplier";
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

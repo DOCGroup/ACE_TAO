@@ -10,6 +10,7 @@
  *   Note that these classes have never been implemented due to lack
  *   of need.
  *
+ *
  *  @author Doug Schmidt
  */
 //=============================================================================
@@ -19,21 +20,17 @@
 #define ACE_MULTIPLEXOR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/Module.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Map_Manager.h"
+
 #if defined (ACE_HAS_THREADS)
 
 #if 0
-
-#include "ace/Module.h"
-#include "ace/Map_Manager.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Driver
  *
@@ -72,8 +69,6 @@ public:
   virtual int unlink_from_above (ACE_Multiplexor &lm);
   virtual int unlink_from_below (ACE_Module *mod);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Multiplexor.inl"

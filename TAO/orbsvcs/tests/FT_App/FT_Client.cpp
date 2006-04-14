@@ -8,6 +8,7 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 class FTClientMain
 {
@@ -171,7 +172,7 @@ FTClientMain::parse_args (int argc, char *argv[])
 
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
-  ACE_Get_Opt get_opts (argc, argv, "c:f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "c:f:");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -181,7 +182,7 @@ FTClientMain::parse_args (int argc, char *argv[])
       case 'c':
       {
         this->inFileName_ = get_opts.opt_arg ();
-        this->inFile_ = ACE_OS::fopen (this->inFileName_, "r");
+        this->inFile_ = ACE_OS::fopen (this->inFileName_, ACE_TEXT("r"));
         if(this->inFile_ && !ferror (this->inFile_))
         {
           ACE_OS::fprintf (stdout, "FT Client: Reading commands from %s\n", this->inFileName_);
@@ -530,7 +531,7 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
   else
   {
     ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** "
-                             ACE_SIZE_T_FORMAT_SPECIFIER
+                             ACE_SIZE_T_FORMAT_SPECIFIER_A
                              "\n", this->replica_pos_);
   }
   return result;
@@ -624,10 +625,12 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   FTClientMain app;
-  int result = app.parse_args(argc, argv);
+  int result = app.parse_args(convert.get_argc(), convert.get_ASCII_argv());
   if (result == 0)
   {
     ACE_TRY_NEW_ENV

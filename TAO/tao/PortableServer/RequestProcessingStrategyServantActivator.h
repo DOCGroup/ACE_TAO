@@ -14,18 +14,16 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYSERVANTACTIVATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
+#include "RequestProcessingStrategyServantManager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Location.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "Servant_Location.h"
+#include "PortableServer.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -96,8 +94,6 @@ namespace TAO
     };
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

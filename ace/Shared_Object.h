@@ -23,8 +23,6 @@
 
 #include "ace/os_include/sys/os_types.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Shared_Object
  *
@@ -47,8 +45,6 @@ public:
 
   virtual ~ACE_Shared_Object (void);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Shared_Object.inl"

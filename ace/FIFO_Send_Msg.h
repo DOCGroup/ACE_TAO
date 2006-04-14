@@ -25,8 +25,6 @@
 #  include "ace/OS_NS_stropts.h"
 #endif /* ACE_HAS_STREAM_PIPES */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward Decls
 class ACE_Str_Buf;
 
@@ -46,13 +44,13 @@ public:
   /// Open up a record-oriented named pipe for writing.
   ACE_FIFO_Send_Msg (const ACE_TCHAR *rendezvous,
                      int flags = O_WRONLY,
-                     mode_t perms = ACE_DEFAULT_FILE_PERMS,
+                     int perms = ACE_DEFAULT_FILE_PERMS,
                      LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a record-oriented named pipe for writing.
   int open (const ACE_TCHAR *rendezvous,
             int flags = O_WRONLY,
-            mode_t perms = ACE_DEFAULT_FILE_PERMS,
+            int perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Send <buf> of up to <len> bytes.
@@ -80,8 +78,6 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO_Send_Msg.inl"

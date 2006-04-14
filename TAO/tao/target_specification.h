@@ -35,7 +35,6 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace IOP
 {
@@ -128,10 +127,8 @@ private:
   CORBA::ULong profile_index_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "tao/target_specification.i"
+#include "target_specification.i"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

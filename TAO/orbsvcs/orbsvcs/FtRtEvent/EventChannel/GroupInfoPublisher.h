@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_FTEC_Become_Primary_Listener;
 
 class GroupInfoPublisherBase
@@ -77,7 +75,4 @@ private:
 };
 
 typedef ACE_Singleton<GroupInfoPublisherBase, ACE_SYNCH_MUTEX> GroupInfoPublisher;
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif

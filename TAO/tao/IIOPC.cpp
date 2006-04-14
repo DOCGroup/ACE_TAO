@@ -29,10 +29,8 @@
 // be\be_codegen.cpp:288
 
 
-#include "tao/IIOPC.h"
+#include "IIOPC.h"
 #include "tao/CDR.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -237,5 +235,3 @@ CORBA::Boolean operator>> (
   return
     (strm >> _tao_aggregate.listen_points);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

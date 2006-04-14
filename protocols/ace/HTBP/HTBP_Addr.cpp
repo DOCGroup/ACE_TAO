@@ -7,10 +7,8 @@ ACE_RCSID (HTBP,
            ACE_HTBP_Addr,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Constructor
-ACE::HTBP::Addr::Addr ()
+  // Constructor
+  ACE::HTBP::Addr::Addr ()
 {
 }
 
@@ -76,7 +74,7 @@ ACE::HTBP::Addr::addr_to_string (ACE_TCHAR buffer[],
   if (size < htid_.length())
     return -1;
   ACE_OS::strncpy (buffer,
-                   ACE_TEXT_CHAR_TO_TCHAR(htid_.c_str()),
+                   ACE_TEXT_TO_TCHAR_IN(htid_.c_str()),
                    size);
   return 0;
 }
@@ -89,5 +87,3 @@ ACE::HTBP::Addr::string_to_addr (const char address[])
     //  this->htid_ = address;
     //  return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

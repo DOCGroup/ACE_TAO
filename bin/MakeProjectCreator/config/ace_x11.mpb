@@ -13,10 +13,4 @@ project {
 	LIBS += $(PLATFORM_X11_LIBS)
 	LDFLAGS += $(PLATFORM_X11_LDFLAGS)
   }
-
-  specific(automake) {
-	compile_flags += $(ACE_X11_CPPFLAGS)
-	linkflags += $(ACE_X11_LDFLAGS)
-	pure_libs += $(ACE_X11_LIBS)
-  }
 }

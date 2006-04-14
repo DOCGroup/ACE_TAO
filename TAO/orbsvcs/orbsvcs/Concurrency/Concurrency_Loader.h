@@ -1,8 +1,6 @@
-// -*- C++ -*-
-
 // $Id$
 
-// ===========================================================================
+// ===========================================================================================
 // FILENAME
 //   Concurrency_Loader.h
 //
@@ -14,7 +12,7 @@
 //   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 //   Priyanka Gontla <pgontla<ece.uci.edu>
 //
-// ===========================================================================
+// ==========================================================================================
 
 #ifndef TAO_CONCURRENCY_LOADER_H
 #define TAO_CONCURRENCY_LOADER_H
@@ -27,9 +25,7 @@
 
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_Concurrency_Serv_Export TAO_Concurrency_Loader : public TAO_Object_Loader
+class TAO_Concurrency_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
 public:
 
@@ -41,7 +37,7 @@ public:
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -50,10 +46,10 @@ public:
   /// This function call initializes the Concurrency Service given a
   /// reference to the ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                   int argc, char *argv[]
-                                   ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException));
-
+                                           int argc,
+                                           ACE_TCHAR* argv []
+                                           ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
  protected:
   /// Instance of the TAO_Concurrency_Server
@@ -61,14 +57,10 @@ public:
 
 private:
 
-  // Disallow copying and assignment.
-  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &);
-  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &);
-
+ACE_UNIMPLEMENTED_FUNC (TAO_Concurrency_Loader (const TAO_Concurrency_Loader &))
+ACE_UNIMPLEMENTED_FUNC (TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &))
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-ACE_FACTORY_DECLARE (TAO_Concurrency_Serv, TAO_Concurrency_Loader)
+ACE_FACTORY_DECLARE (TAO_Concurrency, TAO_Concurrency_Loader)
 
 #endif /* TAO_CONCURRENCY_LOADER_H */

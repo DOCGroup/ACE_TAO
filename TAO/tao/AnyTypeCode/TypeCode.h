@@ -42,8 +42,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
@@ -581,7 +579,6 @@ namespace TAO
   };
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/TypeCode.inl"

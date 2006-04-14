@@ -13,8 +13,6 @@ ACE_RCSID (ace,
            Activation_Queue,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 void
 ACE_Activation_Queue::dump (void) const
 {
@@ -110,5 +108,3 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
 
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

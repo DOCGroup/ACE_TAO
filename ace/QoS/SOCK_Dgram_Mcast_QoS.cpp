@@ -23,7 +23,6 @@ ACE_RCSID (QoS,
            SOCK_Dgram_Mcast_QoS,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)
 
@@ -134,8 +133,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             if (this->subscribe (mcast_addr,
                                  qos_params,
                                  reuse_addr,
-                                 ACE_TEXT_CHAR_TO_TCHAR
-                                   (if_addrs[if_cnt].get_host_addr()),
+                                 ACE_TEXT_TO_TCHAR_IN (if_addrs[if_cnt].get_host_addr()),
                                  protocol_family,
                                  protocol,
                                  protocolinfo) == 0)
@@ -254,5 +252,3 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       return 0;
     }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

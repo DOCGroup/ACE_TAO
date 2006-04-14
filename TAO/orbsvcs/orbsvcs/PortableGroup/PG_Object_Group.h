@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    PG_Object_Group.h
@@ -21,7 +20,7 @@
 #define TAO_PG_OBJECT_GROUP_H_
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -30,16 +29,14 @@
 
 /////////////////////////////////
 // Includes needed by this header
-#include "orbsvcs/PortableGroup/PG_Property_Set.h"
-#include "orbsvcs/PortableGroup/PG_Location_Hash.h"
-#include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"
-#include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
+#include "PG_Property_Set.h"
+#include "PG_Location_Hash.h"
+#include "PG_Location_Equal_To.h"
+#include "PG_Object_Group_Manipulator.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/ACE.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
 // Forward references
@@ -374,8 +371,6 @@ namespace TAO
 
   };
 } // namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

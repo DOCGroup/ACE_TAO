@@ -26,9 +26,7 @@
 
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/Log_Persistence_Strategy.h"
-#include "orbsvcs/Log/log_serv_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "log_serv_export.h"
 
 /**
  * @class TAO_LogMgr_i
@@ -189,8 +187,6 @@ protected:
 private:
   TAO_LogStore*			logstore_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TLS_LOGMGR_I_H */

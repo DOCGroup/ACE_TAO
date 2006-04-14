@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -19,10 +19,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "orbsvcs/Event/event_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
+#include "Event/event_export.h"
 
 typedef void (*TAO_EC_Event_Initializer) (RtecEventComm::Event&);
 
@@ -245,7 +242,6 @@ private:
   TAO_EC_Event_Initializer event_initializer_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Event_Utilities.i"

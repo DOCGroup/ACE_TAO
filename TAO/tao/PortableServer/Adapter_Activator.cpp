@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/Adapter_Activator.h"
+#include "Adapter_Activator.h"
 
 ACE_RCSID (PortableServer,
            Adapter_Activator,
@@ -8,11 +8,9 @@ ACE_RCSID (PortableServer,
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-#include "tao/PortableServer/AdapterActivatorC.h"
-#include "tao/PortableServer/POAManagerC.h"
-#include "tao/PortableServer/PortableServer.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "AdapterActivatorC.h"
+#include "POAManagerC.h"
+#include "PortableServer.h"
 
 namespace TAO
 {
@@ -62,7 +60,5 @@ namespace TAO
     }
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

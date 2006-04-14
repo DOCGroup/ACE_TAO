@@ -56,9 +56,7 @@ namespace CIAO
     : public virtual Components::CCMContext
   {
   public:
-    /// @todo This constructor should be declarated private but it seems
-    /// the compilers want it, have to sort this out in detail.
-    Context_Impl_Base (void);
+    explicit Context_Impl_Base (void);
 
     Context_Impl_Base (Components::CCMHome_ptr home,
                        Session_Container * c);

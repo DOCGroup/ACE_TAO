@@ -1,11 +1,11 @@
 // $Id$
 
-#include "tao/Strategies/UIOP_Connection_Handler.h"
+#include "UIOP_Connection_Handler.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/UIOP_Transport.h"
-#include "tao/Strategies/UIOP_Endpoint.h"
+#include "UIOP_Transport.h"
+#include "UIOP_Endpoint.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -23,7 +23,6 @@ ACE_RCSID (Strategies,
            UIOP_Connection_Handler,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_SVC_HANDLER (t, 0 , 0),
@@ -138,7 +137,7 @@ TAO_UIOP_Connection_Handler::open (void*)
     return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-                       this->orb_core ()->leader_follower ());
+		       this->orb_core ()->leader_follower ());
 
   return 0;
 }
@@ -228,7 +227,5 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
   return cache.cache_idle_transport (&prop,
                                      this->transport ());
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*TAO_HAS_UIOP == 1*/

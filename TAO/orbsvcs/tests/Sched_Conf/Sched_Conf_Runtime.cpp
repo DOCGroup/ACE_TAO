@@ -19,7 +19,7 @@ ACE_RCSID(Sched_Conf, Sched_Conf_Runtime, "$Id$")
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

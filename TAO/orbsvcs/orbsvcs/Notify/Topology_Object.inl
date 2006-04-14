@@ -1,9 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO_Notify
 {
   ACE_INLINE
@@ -23,4 +18,3 @@ namespace TAO_Notify
 
 } // namespace TAO_Notify
 
-TAO_END_VERSIONED_NAMESPACE_DECL

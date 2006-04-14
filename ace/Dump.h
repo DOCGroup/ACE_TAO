@@ -58,8 +58,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Dumpable
  *
@@ -162,8 +160,6 @@ private:
   /// Current size of <object_table_>.
   int current_size_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Include the templates classes at this point.
 #include "ace/Dump_T.h"

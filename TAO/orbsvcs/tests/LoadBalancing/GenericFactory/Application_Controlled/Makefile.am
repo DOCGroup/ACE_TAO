@@ -50,9 +50,6 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  Test.idl
-
 ## Makefile.Application_Controlled_Client.am
 
 if BUILD_AMI

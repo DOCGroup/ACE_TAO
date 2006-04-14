@@ -26,8 +26,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Basic_Stats.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Stats_Value
  *
@@ -81,10 +79,6 @@ public:
   void dump (void) const;
 
 private:
-
-  ACE_Stats_Value (void) {}
-
-private:
   /// The integer portion of the value.
   ACE_UINT32 whole_;
 
@@ -98,6 +92,7 @@ private:
    */
   u_int precision_;
 
+  ACE_UNIMPLEMENTED_FUNC (ACE_Stats_Value (void))
 };
 
 /**
@@ -193,7 +188,7 @@ public:
   /// Print summary statistics to stdout.
   void dump (void) const;
 
-protected:
+private:
   /// Internal indication of whether there has been overflow.  Contains
   /// the errno corresponding to the cause of overflow.
   u_int overflow_;
@@ -243,10 +238,19 @@ public:
   void accumulate (const ACE_Throughput_Stats &throughput);
 
   /// Print down the stats
-  void dump_results (const ACE_TCHAR* msg, ACE_UINT32 scale_factor);
+  void dump_results (const char* msg, ACE_UINT32 scale_factor);
+
+  /// Print down the stats
+  void dump_results (const wchar_t* msg, ACE_UINT32 scale_factor);
 
   /// Dump the average throughput stats.
-  static void dump_throughput (const ACE_TCHAR *msg,
+  static void dump_throughput (const char *msg,
+                               ACE_UINT32 scale_factor,
+                               ACE_UINT64 elapsed_time,
+                               ACE_UINT32 samples_count);
+
+  /// Dump the average throughput stats.
+  static void dump_throughput (const wchar_t *msg,
                                ACE_UINT32 scale_factor,
                                ACE_UINT64 elapsed_time,
                                ACE_UINT32 samples_count);
@@ -267,7 +271,6 @@ private:
 #endif /* 0 */
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Stats.inl"

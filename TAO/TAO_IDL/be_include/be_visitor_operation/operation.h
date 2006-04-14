@@ -74,6 +74,13 @@ public:
                                    const char *exception_arguments);
   // helper that generates code for raising an exception
 
+  virtual int gen_check_exception (be_type *return_type);
+  // helper that generates code for checking for an exception
+
+  virtual int gen_check_interceptor_exception (be_type *);
+  // helper that generates code for checking for an exception within
+  // an interceptor try block.
+
   virtual int gen_stub_operation_body (be_operation *node,
                                        be_type *return_type);
   // Generates the code from opening brace to closing brace for
@@ -95,7 +102,7 @@ public:
 
   void gen_stub_body_arglist (be_operation *node,
                               TAO_OutStream *os,
-                              bool ami = false);
+                              idl_bool ami = I_FALSE);
 
   void gen_arg_template_param_name (AST_Decl *scope,
                                     AST_Type *bt,

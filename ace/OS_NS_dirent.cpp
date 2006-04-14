@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_dirent.h"
@@ -40,8 +41,6 @@ extern "C"
 #    define INVALID_SET_FILE_POINTER ((DWORD)-1)
 #  endif /* INVALID_SET_FILE_POINTER */
 #endif /* ACE_WIN32 */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_OS::closedir_emulation (ACE_DIR *d)
@@ -122,7 +121,7 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 #endif /* WIN32 && ACE_LACKS_OPENDIR */
 }
 
-struct ACE_DIRENT *
+dirent *
 ACE_OS::readdir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
@@ -153,8 +152,8 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
 
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
     {
-      d->dirent_ = (ACE_DIRENT *)
-        ACE_OS::malloc (sizeof (ACE_DIRENT));
+      d->dirent_ = (dirent *)
+        ACE_OS::malloc (sizeof (dirent));
 
       if (d->dirent_ != 0)
         {
@@ -162,7 +161,7 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
             ACE_OS::malloc ((ACE_OS::strlen (d->fdata_.cFileName) + 1)
                             * sizeof (ACE_TCHAR));
           ACE_OS::strcpy (d->dirent_->d_name, d->fdata_.cFileName);
-          d->dirent_->d_reclen = sizeof (ACE_DIRENT);
+          d->dirent_->d_reclen = sizeof (dirent);
         }
 
       return d->dirent_;
@@ -177,10 +176,10 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
 
 int
 ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
-                           ACE_DIRENT **namelist[],
-                           int (*selector) (const ACE_DIRENT *entry),
-                           int (*comparator) (const ACE_DIRENT **f1,
-                                              const ACE_DIRENT **f2))
+                           dirent **namelist[],
+                           int (*selector) (const dirent *entry),
+                           int (*comparator) (const dirent **f1,
+                                              const dirent **f2))
 {
   ACE_DIR *dirp = ACE_OS::opendir (dirname);
 
@@ -190,8 +189,8 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   else if (namelist == 0)
     return -1;
 
-  ACE_DIRENT **vector = 0;
-  ACE_DIRENT *dp = 0;
+  dirent **vector = 0;
+  dirent *dp;
   int arena_size = 0;
 
   int nfiles = 0;
@@ -208,14 +207,14 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
       // If we get here, we have a dirent that the user likes.
       if (nfiles == arena_size)
         {
-          ACE_DIRENT **newv = 0;
+          dirent **newv;
           if (arena_size == 0)
             arena_size = 10;
           else
             arena_size *= 2;
 
-          newv = (ACE_DIRENT **) ACE_OS::realloc (vector,
-                                              arena_size * sizeof (ACE_DIRENT *));
+          newv = (dirent **) ACE_OS::realloc (vector,
+                                              arena_size * sizeof (dirent *));
           if (newv == 0)
             {
               fail = 1;
@@ -225,12 +224,12 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
         }
 
 #if defined (ACE_LACKS_STRUCT_DIR)
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_OS::malloc (sizeof (ACE_DIRENT));
+      dirent *newdp = (dirent *) ACE_OS::malloc (sizeof (dirent));
 #else
       size_t dsize =
-        sizeof (ACE_DIRENT) +
+        sizeof (dirent) +
         ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_OS::malloc (dsize);
+      dirent *newdp = (dirent *) ACE_OS::malloc (dsize);
 #endif /* ACE_LACKS_STRUCT_DIR */
 
       if (newdp == 0)
@@ -257,7 +256,7 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
       ACE_OS::strcpy (newdp->d_name, dp->d_name);
       vector[nfiles++] = newdp;
 #else
-      vector[nfiles++] = (ACE_DIRENT *) ACE_OS::memcpy (newdp, dp, dsize);
+      vector[nfiles++] = (dirent *) ACE_OS::memcpy (newdp, dp, dsize);
 #endif /* ACE_LACKS_STRUCT_DIR */
     }
 
@@ -282,10 +281,8 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   if (comparator)
     ACE_OS::qsort (*namelist,
                    nfiles,
-                   sizeof (ACE_DIRENT *),
+                   sizeof (dirent *),
                    (ACE_SCANDIR_COMPARATOR) comparator);
 
   return nfiles;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

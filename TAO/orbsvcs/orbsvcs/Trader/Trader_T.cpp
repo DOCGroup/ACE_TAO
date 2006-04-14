@@ -1,12 +1,12 @@
 // $Id$
 
-#ifndef TAO_TRADER_CPP
-#define TAO_TRADER_CPP
+#ifndef TAO_TRADER_C
+#define TAO_TRADER_C
 
-#include "orbsvcs/Trader/Trader_T.h"
-#include "orbsvcs/Trader/Trader_Interfaces.h"
+#include "Trader_T.h"
+#include "Trader_Interfaces.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(Trader, Trader_T, "$Id$")
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
@@ -320,6 +320,4 @@ operator () (TAO_DynSequence_i& dyn_any,
   return 1;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_TRADER_CPP */
+#endif /* TAO_TRADER_C */

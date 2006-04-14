@@ -16,20 +16,20 @@ TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Filter_Command::get_name (void)
 {
   return TAO_Notify_Tests_Filter_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Filter_Command::name (void)
 {
   return TAO_Notify_Tests_Name::filter_command;
 }
 
 void
-TAO_Notify_Tests_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Filter_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -183,26 +183,21 @@ TAO_Notify_Tests_Filter_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == CREATE_FACTORY)
     {
       this->handle_create_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == CREATE_FILTER)
     {
       this->handle_create_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == ADD_CONSTRAINT)
     {
       this->handle_add_constraint (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == ADD_FILTER)
     {
       this->handle_add_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == DESTROY)
     {
       this->handle_destroy_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }

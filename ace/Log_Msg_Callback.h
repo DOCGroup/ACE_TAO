@@ -20,8 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Log_Record;
 
 /**
@@ -49,7 +47,7 @@ class ACE_Log_Record;
  *     is spawned because it might have been allocated off of the
  *     stack of the original thread, in which case all hell would
  *     break loose...  Therefore, you'll need to reset these in each
- *     new thread.
+ *     new thread. 
  */
 class ACE_Export ACE_Log_Msg_Callback
 {
@@ -62,8 +60,6 @@ public:
   /// subclass.
   virtual void log (ACE_Log_Record &log_record) = 0;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_CALLBACK_H */

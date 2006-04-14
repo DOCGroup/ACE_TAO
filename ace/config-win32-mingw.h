@@ -81,7 +81,6 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_IOCTL_H
-#define ACE_HAS_NONCONST_WCSDUP
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.
@@ -99,7 +98,8 @@
 #endif
 
 #define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
-#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
+#define ACE_UINT64_FORMAT_SPECIFIER_A "%I64u"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 

@@ -25,7 +25,6 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/tie_si.cpp:96
@@ -3334,4 +3333,3 @@ void POA_CORBA::ValueBoxDef_tie<T>::original_type_def  (
   );
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

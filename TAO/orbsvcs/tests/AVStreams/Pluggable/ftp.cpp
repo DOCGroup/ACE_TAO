@@ -3,6 +3,7 @@
 #include "ftp.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 
 ACE_High_Res_Timer last_frame_sent_time;
@@ -58,11 +59,10 @@ Client::set_protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-Client::parse_args (int argc,
-                    char **argv)
+Client::parse_args (int argc, char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc,argv,"f:l:a:p:r:sd");
+  ACE_Get_Arg_Opt<char> opts (argc,argv,"f:l:a:p:r:sd");
 
   this->use_sfp_ = 0;
 
@@ -183,7 +183,7 @@ Client::init (int argc,
 
   // Open file to read.
   this->fp_ = ACE_OS::fopen (this->filename_,
-                             "r");
+                             ACE_TEXT("r"));
   if (this->fp_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %s\n",
@@ -415,14 +415,15 @@ Client::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+     ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -454,8 +455,7 @@ main (int argc,
 
       // INitialize the Client.
       int result = 0;
-      result = CLIENT::instance ()->init (argc,
-                                          argv
+      result = CLIENT::instance ()->init (convert.get_argc(), convert.get_ASCII_argv()
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

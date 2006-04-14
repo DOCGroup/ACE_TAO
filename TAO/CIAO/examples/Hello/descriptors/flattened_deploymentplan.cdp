@@ -96,26 +96,6 @@
         </value>
       </value> 
     </configProperty>
-    <!-- This attribute initializes an enumerated value -->
-    <configProperty>
-      <name>color</name>
-      <value>
-        <type>
-          <kind>tk_enum</kind>
-          <enum>
-            <name>COLOR_SELECTION</name>
-            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
-            <member>empty</member>
-            <member>white</member>
-            <member>red</member>
-            <member>yellow</member>
-          </enum>
-        </type>
-        <value>
-          <enum>yellow</enum>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <instance id="Hello-Receiver-idd">
@@ -196,7 +176,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Servant</string>
+          <string>createSenderHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -232,7 +212,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Servant</string>
+          <string>createReceiverHome_Servant</string>
         </value>
       </value>
     </execParameter>

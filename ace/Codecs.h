@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Codecs.h
  *
@@ -14,24 +13,17 @@
  *  One: Format of Internet Message Bodies.
  *
  */
-//=============================================================================
 
 #ifndef ACE_CODECS_H
 #define ACE_CODECS_H
-
 #include /**/ "ace/pre.h"
-
-#include "ace/ACE_export.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
  * @class ACE_Base64
@@ -45,6 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Base64
 {
+  friend class ace_dewarn_gplusplus;
 public:
 
   //@{
@@ -84,21 +77,17 @@ public:
 
   //@}
 
-protected:
-
-  // Prevent default construction.
-  ACE_Base64 (void) {}
-
 private:
-
-  // Preventing copying and assignment.
-  ACE_Base64 (ACE_Base64 const &);
-  ACE_Base64 & operator= (ACE_Base64 const &);
 
   /// Initialize the tables for encoding/decoding.
-  static void init (void);
+  static void init();
 
-private:
+  // Prevent construction in any form
+  ACE_UNIMPLEMENTED_FUNC (ACE_Base64 ())
+  ACE_UNIMPLEMENTED_FUNC (ACE_Base64 (const ACE_Base64&))
+
+  /// Symbols which form the Base64 alphabet (Defined as per RFC 2045)
+  static const ACE_Byte alphabet_[];
 
   /// Alphabet used for decoding i.e decoder_[alphabet_[i = 0..63]] = i
   static ACE_Byte decoder_[];
@@ -107,13 +96,16 @@ private:
   /// member_[alphabet_[0..63]] = 1
   static ACE_Byte member_[];
 
+  /// The padding character used in the encoding
+  static const ACE_Byte pad_;
+
   /// Boolean to denote whether initialization is complete
-  static bool init_;
+  static int init_;
+
+  /// Number of columns per line of encoded output (Can have a max value of 76)
+  static int max_columns_;
 
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
 #endif /* ACE_CODECS_H */

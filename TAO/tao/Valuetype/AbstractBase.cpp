@@ -1,8 +1,8 @@
 // "$Id$"
 
-#include "tao/Valuetype/AbstractBase.h"
-#include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/ValueFactory.h"
+#include "AbstractBase.h"
+#include "ValueBase.h"
+#include "ValueFactory.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
@@ -10,14 +10,12 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Valuetype/AbstractBase.inl"
+# include "AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (Valuetype,
            AbstractBase,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ************************************************************
 // These are in CORBA namespace
@@ -427,5 +425,3 @@ CORBA::AbstractBase::equivalent_objref (void)
   return this->equivalent_obj_.in ();
 }
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL

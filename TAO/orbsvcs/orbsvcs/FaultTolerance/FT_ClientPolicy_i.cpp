@@ -1,5 +1,5 @@
 //$Id$
-#include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.h"
+#include "FT_ClientPolicy_i.h"
 
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
@@ -7,12 +7,10 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl"
+#include "FT_ClientPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(FaultTolerance, FT_ClientPolicy_i, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TimeBase::TimeT
 TAO_FT_Request_Duration_Policy::request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -190,4 +188,3 @@ TAO_FT_Heart_Beat_Policy::set_time_value (ACE_Time_Value &time_value,
     }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

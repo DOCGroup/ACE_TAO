@@ -16,19 +16,15 @@
 #define TAO_IIOP_ENDPOINT_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/Endpoint.h"
+#include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Endpoint.h"
 #include "tao/CORBA_String.h"
 #include "tao/IIOP_EndpointsC.h"
-
-#include "ace/INET_Addr.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IIOP_Connection_Handler;
 
@@ -192,7 +188,6 @@ private:
   //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_END
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/IIOP_Endpoint.i"

@@ -76,7 +76,6 @@ testing_string_traits<charT>::not_released_from_const_calls;
 template<typename charT> call_counter
 testing_string_traits<charT>::not_released_from_managed_calls;
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 namespace details
@@ -96,6 +95,5 @@ struct string_traits<CORBA::WChar,true>
 
 } // namespace details
 } // namespace TAO
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_testing_string_traits_hpp

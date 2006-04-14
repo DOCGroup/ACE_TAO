@@ -1,10 +1,10 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "GroupInfoPublisher.h"
 #include "../Utils/resolve_init.h"
-#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
+#include "IOGR_Maker.h"
+#include "Identification_Service.h"
+#include "FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
 //#include "../Utils/log_obj_endpoints.h"
@@ -14,10 +14,9 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()
-  : info_(new Info)
+: info_(new Info)
 {
   info_->primary = false;
 }
@@ -153,7 +152,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
     }
 
     if (!CORBA::is_nil(naming_context_.in())) {
-      TAO_FTRTEC::Log(1, "Registering to the Name Service\n");
+      TAO_FTRTEC::Log(1, ACE_TEXT("Registering to the Name Service\n"));
       ACE_TRY_NEW_ENV {
         naming_context_->rebind(FTRTEC::Identification_Service::instance()->name(),
           info->iogr.in() ACE_ENV_ARG_PARAMETER);
@@ -171,5 +170,3 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex> *ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

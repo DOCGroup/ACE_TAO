@@ -35,8 +35,6 @@
 #define ACE_FILE_STREAM ACE_FILE_IO, ACE_FILE_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_FILE_Info
  *
@@ -128,8 +126,6 @@ protected:
   /// File we are "connected" with...
   ACE_FILE_Addr addr_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FILE.inl"

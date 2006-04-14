@@ -49,8 +49,6 @@ ACE_RCSID(ace, Object_Manager, "$Id$")
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
 #endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Singleton pointer.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
@@ -88,7 +86,7 @@ void *ACE_Object_Manager::preallocated_array[
       preallocated_array[ID] = array_p;\
     }
 # define ACE_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
-    ACE_CLEANUP_DESTROYER_NAME (\
+    ace_cleanup_destroyer (\
       (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], 0);\
     preallocated_object[ID] = 0;
 # define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID, COUNT)\
@@ -113,6 +111,13 @@ public:
 private:
   ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Service_Manager;
 };
+
+// We can't use the ACE_SVC_FACTORY_DECLARE macro here because this
+// needs to be in the ACE_Export context rather than the
+// ACE_Svc_Export context.
+//extern "C" ACE_Export
+//ACE_Service_Object *
+//_make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
 
 ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 {
@@ -876,5 +881,3 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 # pragma instantiate ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>
 # pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

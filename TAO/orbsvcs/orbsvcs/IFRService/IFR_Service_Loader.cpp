@@ -10,15 +10,13 @@
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 // ================================================================
 
-#include "orbsvcs/IFRService/IFR_Service_Loader.h"
+#include "IFR_Service_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (IFR_Service,
            IFR_Service_Loader,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IFR_Service_Loader::TAO_IFR_Service_Loader (void)
 {
@@ -94,7 +92,5 @@ TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_IFRService, TAO_IFR_Service_Loader)

@@ -1,7 +1,7 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// Service_Object.i
 
 ACE_INLINE ACE_Service_Object_Ptr::ACE_Service_Object_Ptr (ACE_Service_Object *so)
   : service_object_ (so)
@@ -62,6 +62,3 @@ ACE_Service_Type::fini_called (void) const
   ACE_TRACE ("ACE_Service_Type::fini_called");
   return this->fini_already_called_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-

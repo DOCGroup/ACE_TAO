@@ -1,3 +1,4 @@
+
 //=============================================================================
 /**
  *  @file    Concurrency_Utils.cpp
@@ -12,13 +13,11 @@
 #include "ace/streams.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "tao/debug.h"
-#include "orbsvcs/Concurrency/Concurrency_Utils.h"
+#include "Concurrency_Utils.h"
 
 ACE_RCSID (Concurrency,
            Concurrency_Utils,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor
 TAO_Concurrency_Server::TAO_Concurrency_Server (void)
@@ -122,5 +121,3 @@ TAO_Concurrency_Server::GetLockSetFactory(void)
 TAO_Concurrency_Server::~TAO_Concurrency_Server (void)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

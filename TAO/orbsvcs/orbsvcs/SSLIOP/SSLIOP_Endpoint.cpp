@@ -1,4 +1,4 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
+#include "SSLIOP_Endpoint.h"
 
 #include "tao/IIOP_Endpoint.h"
 
@@ -14,10 +14,8 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Endpoint.i"
+# include "SSLIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
@@ -379,4 +377,3 @@ TAO_SSLIOP_Synthetic_Endpoint::duplicate (void)
   return endpoint;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

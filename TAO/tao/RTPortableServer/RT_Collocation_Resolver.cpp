@@ -17,8 +17,6 @@ ACE_RCSID(RTPortableServer,
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 CORBA::Boolean
 TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
                                             ACE_ENV_ARG_DECL) const
@@ -26,7 +24,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // Make sure that the servant is in the same ORB that created this
   // object.
   if (!object->_is_collocated ())
-    return false;
+    return 0;
 
   // Get the orb core.
   TAO_ORB_Core *orb_core =
@@ -47,7 +45,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // If the target POA does not have a dedicated thread pool, then all
   // calls to it are collocated.
   if (target_thread_pool == 0)
-    return true;
+    return 1;
 
   /// Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources &tss =
@@ -68,17 +66,17 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // different pool than POA.  Therefore, this object is not
   // collocated.
   if (current_thread_pool != target_thread_pool)
-    return false;
+    return 0;
 
   // If the current thread and the POA are in the default thread pool,
   // then the object is collocated.
   if (current_thread_pool == 0)
-    return true;
+    return 1;
 
   // If the current thread and the POA are in a thread pool without
   // lanes, then the object is collocated.
   if (!current_thread_pool->with_lanes ())
-    return true;
+    return 1;
 
   // Grab the priority model used by the POA.  Note that this cannot
   // be NOT_SPECIFIED because NOT_SPECIFIED is not allowed with thread
@@ -90,28 +88,36 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // because the current thread is of the correct priority :-) and
   // we'll simple use the current thread to run the upcall.
   if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
-    return true;
+    return 1;
 
-  // Find the target servant priority. We are really not interested in the
+  // Locate the target servant.  We are really not interested in the
   // servant itself but in the priority that this servant will run at.
-  CORBA::Short target_priority;
+  // Note that the operation name is bogus: it is not used because the
+  // IMPLICIT_ACTIVATION policy is not allowed with SERVER_DECLARED
+  // policy.  Similarly, since there is no implicit activation, there
+  // is no chance of waiting on a condition variable and hence the
+  // <wait_occurred_restart_call_ignored> can be ignored.
+  int wait_occurred_restart_call_ignored = 0;
 
-  if (-1 == poa->find_servant_priority (servant_upcall.system_id_,
-                                        target_priority
-                                        ACE_ENV_ARG_PARAMETER))
-  {
-    return false;
-  };
+  poa->locate_servant_i ("operation not used",
+                         servant_upcall.system_id_,
+                         servant_upcall,
+                         servant_upcall.current_context_,
+                         wait_occurred_restart_call_ignored
+                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Get the priority that the servant will run at.
+  CORBA::Short target_priority =
+    servant_upcall.priority ();
 
   // If it matches the current thread's priority, then we are
   // collocated.  Otherwise we are not.
   if (target_priority == current_thread_lane->lane_priority ())
-    return true;
+    return 1;
   else
-    return false;
+    return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Collocation_Resolver,
                        ACE_TEXT ("RT_Collocation_Resolver"),

@@ -30,8 +30,7 @@ ACE_RCSID (be,
            be_codegen,
            "$Id$")
 
-
-TAO_CodeGen * tao_cg = 0;
+TAO_IDL_BE_Export TAO_CodeGen *tao_cg = 0;
 
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
@@ -69,7 +68,7 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->server_inline_;
   delete this->server_template_inline_;
   delete this->anyop_source_;
-#if !defined (linux) && !defined (__QNX__) && !defined(__GLIBC__)
+#if !defined (linux) && !defined (__QNX__)
   // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
 #endif /* ! linux */
@@ -107,9 +106,9 @@ TAO_CodeGen::upcase (const char *str)
   // Convert letters in str to upper case.
   for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
     {
-      if (isalpha (str[i]))
+      if (isalpha (str [i]))
         {
-          upcase_str[i] = static_cast<char> (toupper (str[i]));
+          upcase_str[i] = (char) toupper (str[i]);
         }
       else
         {
@@ -244,11 +243,6 @@ TAO_CodeGen::start_client_header (const char *fname)
   *this->client_header_ << "#define TAO_EXPORT_MACRO "
                         << be_global->stub_export_macro ();
 
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->client_header_ << be_global->versioning_begin ();
-
   return 0;
 }
 
@@ -300,10 +294,6 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       *this->client_stubs_ << "\n#endif /* !defined INLINE */";
     }
 
-  // Begin versioned namespace support after all headers have been
-  // included, but before any code is generated.
-  *this->client_stubs_ << be_global->versioning_begin ();
-
   return 0;
 }
 
@@ -336,10 +326,6 @@ TAO_CodeGen::start_client_inline (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_inline_);
-
-  // Begin versioned namespace support after initial headers, if any,
-  // have been included.
-  *this->client_inline_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -443,7 +429,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   if (idl_global->non_local_iface_seen_)
     {
       // Include the Messaging files if AMI is enabled.
-      if (be_global->ami_call_back () == true)
+      if (be_global->ami_call_back () == I_TRUE)
         {
           // Include Messaging skeleton file.
           this->gen_standard_include (this->server_header_,
@@ -477,11 +463,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       *this->server_header_ << "#define TAO_EXPORT_MACRO "
                             << be_global->skel_export_macro ();
     }
-
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->server_header_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -535,11 +516,6 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                                      << be_global->pre_include ()
                                      << "\"";
     }
-
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->server_template_header_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -614,11 +590,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       *this->server_skeletons_ << "#endif /* !defined INLINE */";
     }
 
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->server_skeletons_ << be_global->versioning_begin ();
-
   return 0;
 }
 
@@ -680,11 +651,6 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       << "\"";
   *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
 
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->server_template_skeletons_ << be_global->versioning_begin ();
-
   return 0;
 }
 
@@ -717,10 +683,6 @@ TAO_CodeGen::start_server_inline (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_inline_);
-
-  // Begin versioned namespace support after initial headers, if any, have been
-  // included.
-  *this->server_inline_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -756,11 +718,6 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_template_inline_);
-
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->server_template_inline_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -872,7 +829,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               ACE_CString final_hdr = "tao/AnyTypeCode/";
-              ssize_t pos = work_hdr.rfind ('/');
+              int pos = work_hdr.rfind ('/');
 
               if (pos != ACE_SString::npos)
                 {
@@ -908,11 +865,6 @@ TAO_CodeGen::start_anyop_header (const char *fname)
         }
     }
   *this->anyop_header_ << "\n";
-
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->anyop_header_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -953,11 +905,6 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                        << "\"";
 
   this->gen_typecode_includes (this->anyop_source_);
-
-  // Begin versioned namespace support after initial headers have been
-  // included, but before the inline file and post include
-  // directives.
-  *this->anyop_source_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -1075,6 +1022,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
   return 0;
 }
 
+
 // Get the implementation header stream.
 TAO_OutStream *
 TAO_CodeGen::implementation_skeleton (void)
@@ -1089,25 +1037,21 @@ TAO_CodeGen::end_client_header (void)
   // Generate the <<= and >>= operators here.
 
   *this->client_header_ << be_nl << be_nl << "// TAO_IDL - Generated from"
-                        << be_nl << "// " << __FILE__ << ":" <<
-    __LINE__ << be_nl;
-
-  // End versioned namespace support before remaining include
-  // directives at end of file.
-  *this->client_header_ << be_global->versioning_end ();
+                        << be_nl << "// " << __FILE__ << ":" << __LINE__;
 
   // Only when we generate a client inline file generate the include
   if (be_global->gen_client_inline ())
     {
       // Insert the code to include the inline file.
-      *this->client_header_ << "#if defined (__ACE_INLINE__)\n";
+      *this->client_header_ << "\n\n#if defined (__ACE_INLINE__)\n";
       *this->client_header_ << "#include \""
                             << be_global->be_get_client_inline_fname (1)
                             << "\"\n";
-      *this->client_header_ << "#endif /* defined INLINE */\n\n";
+      *this->client_header_ << "#endif /* defined INLINE */";
     }
 
   // Code to put the last #endif.
+  *this->client_header_ << "\n\n";
 
   if (be_global->post_include () != 0)
     {
@@ -1121,36 +1065,12 @@ TAO_CodeGen::end_client_header (void)
   return 0;
 }
 
-void
-TAO_CodeGen::end_client_inline (void)
-{
-  *this->client_inline_ << "\n";
-
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->client_inline_ << be_global->versioning_end ();
-}
-
-void
-TAO_CodeGen::end_client_stubs (void)
-{
-  *this->client_stubs_ << "\n";
-
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->client_stubs_ << be_global->versioning_end ();
-}
-
 int
 TAO_CodeGen::end_server_header (void)
 {
   *this->server_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
                         << be_nl << "// " << __FILE__ << ":" << __LINE__
                         << be_nl << be_nl;
-
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_header_ << be_global->versioning_end ();
 
   // Insert the template header.
   if (be_global->gen_tie_classes ())
@@ -1185,20 +1105,14 @@ TAO_CodeGen::end_server_header (void)
   return 0;
 }
 
-void
-TAO_CodeGen::end_server_inline (void)
-{
-  *this->server_inline_ << "\n";
-
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_inline_ << be_global->versioning_end ();
-}
-
 int
 TAO_CodeGen::end_implementation_header (const char *fname)
 {
-  char macro_name [NAMEBUFSIZE] = { 0 };
+  static char macro_name [NAMEBUFSIZE];
+
+  ACE_OS::memset (macro_name,
+                  '\0',
+                  NAMEBUFSIZE);
 
   const char *suffix = ACE_OS::strrchr (fname, '.');
 
@@ -1222,7 +1136,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
     {
       if (isalpha (fname [i]))
         {
-          macro_name[i] = static_cast<char> (toupper (fname [i]));
+          macro_name[i] = (char) toupper (fname [i]);
         }
       else if (isdigit (fname [i]))
         {
@@ -1248,14 +1162,10 @@ TAO_CodeGen::end_server_template_header (void)
 {
   *this->server_template_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
                                  << be_nl << "// "
-                                 << __FILE__ << ":" << __LINE__ << "\n";
-
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_template_header_ << be_global->versioning_end ();
+                                 << __FILE__ << ":" << __LINE__;
 
   // Insert the code to include the inline file.
-  *this->server_template_header_ << "#if defined (__ACE_INLINE__)";
+  *this->server_template_header_ << "\n\n#if defined (__ACE_INLINE__)";
   *this->server_template_header_
       << "\n#include \""
       << be_global->be_get_server_template_inline_fname (1)
@@ -1297,11 +1207,7 @@ TAO_CodeGen::end_server_template_header (void)
 int
 TAO_CodeGen::end_server_template_inline (void)
 {
-  *this->server_template_inline_ << "\n";
-
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_template_inline_ << be_global->versioning_end ();
+  *this->server_template_inline_ << "\n\n";
 
   return 0;
 }
@@ -1309,10 +1215,6 @@ TAO_CodeGen::end_server_template_inline (void)
 int
 TAO_CodeGen::end_server_template_skeletons (void)
 {
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_template_skeletons_ << be_global->versioning_end ();
-
   // Code to put the last #endif.
   *this->server_template_skeletons_ << "\n#endif /* ifndef */\n";
 
@@ -1322,10 +1224,6 @@ TAO_CodeGen::end_server_template_skeletons (void)
 int
 TAO_CodeGen::end_server_skeletons (void)
 {
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_skeletons_ << be_global->versioning_end ();
-
   // Code to put the last #endif.
   *this->server_skeletons_ << "\n\n#endif /* ifndef */\n";
 
@@ -1335,11 +1233,6 @@ TAO_CodeGen::end_server_skeletons (void)
 int
 TAO_CodeGen::end_anyop_header (void)
 {
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->anyop_header_ << be_global->versioning_end ();
-
-
   if (be_global->post_include () != 0)
     {
       *this->anyop_header_ << "\n\n#include /**/ \""
@@ -1356,10 +1249,6 @@ TAO_CodeGen::end_anyop_header (void)
 int
 TAO_CodeGen::end_anyop_source (void)
 {
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->anyop_source_ << be_global->versioning_end ();
-
   *this->anyop_source_ << "\n";
 
   return 0;
@@ -1373,7 +1262,7 @@ TAO_CodeGen::end_anyop_source (void)
 void
 TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 {
-#if !defined (linux) && !defined (__QNX__) && !defined (__GLIBC__)
+#if !defined (linux) && !defined (__QNX__)
   // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
 #endif /* ! linux */
@@ -1446,7 +1335,11 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
                                 const char *prefix,
                                 const char *suffix)
 {
-  char macro_name [NAMEBUFSIZE] = { 0 };
+  static char macro_name [NAMEBUFSIZE];
+
+  ACE_OS::memset (macro_name,
+                  '\0',
+                  NAMEBUFSIZE);
 
   const char *extension = ACE_OS::strrchr (fname, '.');
 
@@ -1466,7 +1359,7 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
     {
       if (isalpha (fname [i]))
         {
-          macro_name[i + offset] = static_cast<char> (toupper (fname [i]));
+          macro_name[i + offset] = (char) toupper (fname [i]);
         }
       else if (isdigit (fname [i]))
         {
@@ -1531,7 +1424,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                   "tao/Valuetype/AbstractBase.h");
 
       // Turn on generation of the rest of the Valuetype library includes.
-      idl_global->valuetype_seen_ = true;
+      idl_global->valuetype_seen_ = I_TRUE;
     }
 
   if (idl_global->valuebase_seen_)
@@ -1635,14 +1528,8 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
-  // Generated if (w)string member of struct/union/exception/array/valuetype
-  // has been seen.
-  this->gen_cond_file_include (idl_global->string_member_seen_,
-                               "tao/Managed_Types.h",
-                               this->client_header_);
-
   // Include the Messaging library entry point, if AMI is enabled.
-  if (be_global->ami_call_back () == true)
+  if (be_global->ami_call_back () == I_TRUE)
     {
       // Include Messaging skeleton file.
       this->gen_standard_include (this->client_header_,
@@ -1650,7 +1537,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   // Include the smart proxy base class if smart proxies are enabled.
-  if (be_global->gen_smart_proxies () == true)
+  if (be_global->gen_smart_proxies () == I_TRUE)
     {
       this->gen_standard_include (this->client_header_,
                                   "tao/SmartProxies/Smart_Proxies.h");
@@ -1683,7 +1570,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               ACE_CString final_hdr = "tao/AnyTypeCode/";
-              ssize_t pos = work_hdr.rfind ('/');
+              int pos = work_hdr.rfind ('/');
 
               if (pos != ACE_SString::npos)
                 {
@@ -1720,10 +1607,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // _vars and _outs are typedefs of template class instantiations.
   this->gen_var_file_includes ();
-
-  // Versioned namespace support.
-  this->gen_standard_include (this->client_header_,
-                              "tao/Versioned_Namespace.h");
 }
 
 void
@@ -1782,17 +1665,11 @@ TAO_CodeGen::gen_stub_src_includes (void)
         );
     }
 
-  if (be_global->ami_call_back () == true)
+  if (be_global->ami_call_back () == I_TRUE)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/Asynch_Invocation_Adapter.h");
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Messaging/ExceptionHolder_i.h");
-#endif
-
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
       // If a valuetype has been seen, this will already be in the header file.
       if (!idl_global->valuetype_seen_)
         {
@@ -1807,7 +1684,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
           this->gen_standard_include (this->client_stubs_,
                                       "tao/Valuetype/Valuetype_Adapter_Impl.h");
         }
-#endif
     }
 
   // If valuefactory_seen_ was set, this was generated in the stub header file,
@@ -1868,7 +1744,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "ace/OS_NS_string.h");
     }
 
-  if (be_global->gen_amh_classes () == true)
+  if (be_global->gen_amh_classes () == I_TRUE)
     {
       // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
@@ -1880,8 +1756,7 @@ void
 TAO_CodeGen::gen_skel_src_includes (void)
 {
   // Only non-local interfaces generate anything in the skeleton.
-  if (!(idl_global->non_local_iface_seen_
-        || idl_global->need_skeleton_includes_))
+  if (!idl_global->non_local_iface_seen_)
     {
       return;
     }

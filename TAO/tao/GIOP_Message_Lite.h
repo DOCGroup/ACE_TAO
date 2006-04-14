@@ -27,8 +27,6 @@
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Operation_Details;
 class TAO_Pluggable_Reply_Params;
 class TAO_GIOP_Locate_Request_Header;
@@ -80,19 +78,24 @@ public:
       TAO_Pluggable_Reply_Params_Base &params
     );
 
+  /// Dummy method to ..
+  virtual int read_message (TAO_Transport *transport,
+                            int block = 0,
+                            ACE_Time_Value *max_wait_time = 0);
+
+
   /// Format the message. As we have not written the message length in
   /// the header, we make use of this oppurtunity to insert and format
   /// the message.
   virtual int format_message (TAO_OutputCDR &cdr);
 
-private:
   /// Parse the incoming messages..
   ///
   /// \return -1 There was some error parsing the GIOP header
   /// \return 0  The GIOP header was parsed correctly
   /// \return 1  There was not enough data in the message block to
   ///            parse the header
-  int parse_incoming_messages (ACE_Message_Block &message_block);
+  virtual int parse_incoming_messages (ACE_Message_Block &message_block);
 
   /// Get the message type. The return value would be one of the
   /// following:
@@ -100,29 +103,26 @@ private:
   /// TAO_PLUGGABLE_MESSAGE_REPLY,
   /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_CANCELREQUEST.
   TAO_Pluggable_Message_Type message_type (void) const;
 
-public:
-  /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message 
-  /// header could not be parsed completely, returns a 1 if the message 
-  /// header could be parsed completely and returns -1 on error.
-  virtual int parse_next_message (ACE_Message_Block &incoming,
-                                  TAO_Queued_Data &qd,        /* out */ 
-                                  size_t &mesg_length);      /* out */ 
-     
 
-  /// Extract the details of the next message from the @a incoming
-  /// through @a qd. Returns 0 if the message header could not be
-  /// parsed completely, returns a 1 if the message header could be
-  /// parsed completely and returns -1 on error.
+  /// Calculate the amount of data that is missing in the <incoming>
+  /// message block.
+  virtual ssize_t missing_data (ACE_Message_Block &message_block);
+
+  /* Extract the details of the next message from the @a incoming
+   * through @a qd. Returns 1 if there are more messages and returns a
+   * 0 if there are no more messages in @a incoming.
+   */
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd);
 
   /// Check whether the node @a qd needs consolidation from @a incoming
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming);
+
+  /// Get the details of the message parsed through the <qd>.
+  virtual void get_message_data (TAO_Queued_Data *qd);
 
   /// Process the request message that we have received on the
   /// connection
@@ -141,25 +141,6 @@ public:
       TAO_Pluggable_Reply_Params_Base &params,
       CORBA::Exception &x
     );
-
-  /// Consolidate fragmented message with associated fragments, being
-  /// stored withi this class.  If reliable transport is used (like
-  /// TCP) fragments are partialy ordered on stack, last fragment on
-  /// top. Otherwise If un-reliable transport is used (like UDP)
-  /// fragments may be dis-ordered, and must be ordered before
-  /// consolidation.  @return 0 on success and @a msg points to
-  /// consolidated message, 1 if there are still fragmens outstanding,
-  /// in case of error -1 is being returned. In any case @a qd must be
-  /// released by method implementation.
-  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd,
-                                              TAO_Queued_Data *&msg);
-
-  /// Discard all fragments associated to request-id encoded in
-  /// cancel_request.  This operation will never be called
-  /// concurrently by multiplpe threads nor concurrently to
-  /// consolidate_fragmented_message @r 0 on success, 1 if no matching
-  /// fragment chain exists, -1 on error
-  virtual int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
 
 private:
 
@@ -293,8 +274,6 @@ private:
 
   TAO_OutputCDR cdr_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_LITE_H*/

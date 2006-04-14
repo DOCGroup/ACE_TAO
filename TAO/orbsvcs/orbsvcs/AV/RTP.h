@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 /*-
  * Copyright (c) 1993-1994 The Regents of the University of California.
@@ -137,11 +137,9 @@
 
 #define MAXHDR 24
 
-#include "orbsvcs/AV/Policy.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "orbsvcs/AV/MCast.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Policy.h"
+#include "FlowSpec_Entry.h"
+#include "MCast.h"
 
 //------------------------------------------------------------
 // TAO_AV_RTP
@@ -413,8 +411,6 @@ public:
                                                         TAO_AV_Transport *transport);
   virtual const char*control_flow_factory (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_RTP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_RTP_Flow_Factory)

@@ -32,15 +32,12 @@
 #  include /**/ <stdio.h>
 #endif /* !ACE_LACKS_STDIO_H */
 
-#if defined (ACE_VXWORKS)
+#if defined (VXWORKS)
 // for remove(), rename()
 #  include /**/ <ioLib.h>
 // for remCurIdGet()
 #  include /**/ <remLib.h>
-#  if defined (__RTP__) && (ACE_VXWORKS == 0x620)
-#    define L_cuserid       _PARM_L_cuserid
-#  endif
-#endif /* ACE_VXWORKS */
+#endif /* VXWORKS */
 
 // Undefine "functions" that may be implemented as macros.
 #ifdef fgetc

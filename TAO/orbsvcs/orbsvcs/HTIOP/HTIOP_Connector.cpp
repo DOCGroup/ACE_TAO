@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/HTIOP/HTIOP_Connector.h"
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "HTIOP_Connector.h"
+#include "HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
@@ -22,8 +22,6 @@ ACE_RCSID (HTIOP,
            TAO_HTIOP_Connector,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
   : TAO_Connector (OCI_TAG_HTIOP_PROFILE),
@@ -147,7 +145,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   ACE::HTBP::Session_Id_t session_id;
   ACE_INET_Addr *proxy;
-  ACE_CString proxy_host;
+  ACE_TString proxy_host;
   unsigned proxy_port;
 
   int port_set = this->ht_env_->get_proxy_port(proxy_port);
@@ -156,19 +154,19 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       host_set != 0)
     {
       proxy_port = htiop_endpoint->port();
-      proxy_host = htiop_endpoint->host();
+      proxy_host.set (ACE_TEXT_TO_TCHAR_IN (htiop_endpoint->host()));
     }
   else
     {
       ACE::HTBP::ID_Requestor req(ht_env_);
-      session_id.local_ = req.get_HTID();
+      session_id.local_ = ACE::HTBP::Addr(ACE_TEXT_TO_CHAR_IN(req.get_HTID()));
     }
 
   if (proxy_port == 0)
     return 0;
 
   ACE_NEW_RETURN (proxy,
-                  ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
+                  ACE_INET_Addr(proxy_port,proxy_host.c_str()),
                   0);
 
   session_id.peer_ = htiop_endpoint->object_addr ();
@@ -416,5 +414,3 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   return htiop_endpoint;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

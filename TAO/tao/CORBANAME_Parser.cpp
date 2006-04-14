@@ -1,12 +1,16 @@
 // $Id$
 
-#include "tao/CORBANAME_Parser.h"
-#include "tao/ORB.h"
-#include "tao/Object.h"
-#include "tao/SystemException.h"
-#include "tao/UB_String_Arguments.h"
-#include "tao/Invocation_Adapter.h"
-#include "tao/debug.h"
+#include "CORBANAME_Parser.h"
+#include "ORB.h"
+#include "Object.h"
+#include "SystemException.h"
+#include "UB_String_Arguments.h"
+#include "Invocation_Adapter.h"
+#include "debug.h"
+
+#if !defined(__ACE_INLINE__)
+#include "CORBANAME_Parser.i"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
@@ -17,13 +21,12 @@ ACE_RCSID (tao,
            CORBANAME_Parser,
            "$Id$")
 
-static const char corbaname_prefix[] = "corbaname:";
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CORBANAME_Parser::~TAO_CORBANAME_Parser (void)
 {
 }
+
+static const char corbaname_prefix[] = "corbaname:";
 
 int
 TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
@@ -154,8 +157,6 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
 
   return obj;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
                        ACE_TEXT ("CORBANAME_Parser"),

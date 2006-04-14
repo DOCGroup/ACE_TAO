@@ -16,15 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
+#include "LB_LoadAlert.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
-#include "tao/Versioned_Namespace.h"
+#include "tao/PI/PI.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -33,7 +32,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_ORBInitializer
@@ -99,7 +97,6 @@ private:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -33,15 +33,14 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   CB cb[10];
   long args[10];
-  for (long i = 0; i < 10 ; i++)
+  for (int i = 0; i < 10 ; i++)
     {
-      ACE_Time_Value const timeout (i);
       long timerID =
         Timer::instance ()->schedule
           (&cb[i],
            &args[i],
            timer_queue->gettimeofday () + (ACE_Time_Value)5,
-           timeout);
+           i);
 
       // Set the timerID state variable of the handler.
       cb[i].setID (timerID);

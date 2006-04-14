@@ -1,7 +1,7 @@
 //$Id$
 
-#ifndef ACE_CACHING_STRATEGIES_T_CPP
-#define ACECACHING_STRATEGIES_T_CPP
+#ifndef CACHING_STRATEGIES_T_C
+#define CACHING_STRATEGIES_T_C
 
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Log_Msg.h"
@@ -14,7 +14,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Caching_Strategies_T, "$Id$")
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
 ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::~ACE_Caching_Strategy (void)
@@ -54,6 +54,4 @@ ACE_ALLOC_HOOK_DEFINE(ACE_LFU_Caching_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Caching_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Caching_Strategy)
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_CACHING_STRATEGIES_T_CPP */
+#endif /* CACHING_STRATEGIES_T_C */

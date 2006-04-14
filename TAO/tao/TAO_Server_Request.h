@@ -26,27 +26,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Tagged_Profile.h"
-#include "tao/Service_Context.h"
-#include "tao/Object.h"
+#include "Tagged_Profile.h"
+#include "Service_Context.h"
+#include "Object.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   class PICurrent;
   class PICurrent_Impl;
   class PICurrent_Copy_Callback;
 }
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#include "tao/PortableInterceptorC.h"
-
+#include "PortableInterceptorC.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
@@ -58,14 +50,6 @@ namespace CORBA
   typedef ORB *ORB_ptr;
 
   class Exception;
-}
-
-namespace TAO
-{
-  namespace CSD
-  {
-    class FW_Server_Request_Wrapper;
-  }
 }
 
 class TAO_Operation_Details;
@@ -81,12 +65,6 @@ class TAO_Operation_Details;
 class TAO_Export TAO_ServerRequest
 {
 public:
-  
-  /// Declare FW_Server_Request_Wrapper a friend
-  /// This friendship makes the FW_Server_Request_Wrapper be able to
-  /// clone the TAO_ServerRequest.
-  friend class TAO::CSD::FW_Server_Request_Wrapper;
-
   /// Declare TAO_AMH_Response_Handler a friend
   /**
    * The TAO_AMH_Response_Handler class needs to copy part of the
@@ -341,7 +319,7 @@ private:
   /// Used to pad CDR stream if we have used DSI.
   ptrdiff_t dsi_nvlist_align_;
 
-  TAO_Operation_Details const * operation_details_;
+  TAO_Operation_Details const * const operation_details_;
 
   /**
    * An argument flag to indicate whether there is any data that is
@@ -375,10 +353,8 @@ private:
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/TAO_Server_Request.i"
+# include "TAO_Server_Request.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

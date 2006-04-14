@@ -13,7 +13,7 @@ package ChangeLogEntry;
 use strict;
 use File::Basename;
 
-use FileLocatorFactory;
+use FileLocator;
 
 # ************************************************************
 # Subroutine Section
@@ -83,12 +83,12 @@ sub sortFileList {
 sub create {
   my($self)  = shift;
   my(@dirs)  = @_;
-  my($fl)    = FileLocatorFactory::create();
+  my($fl)    = new FileLocator();
   my($modif,
      $remov,
      $confl,
      $unknown) = $fl->locate(@dirs);
-  my($entry) = scalar(gmtime());
+  my($entry) = scalar(localtime());
 
   if (defined $$confl[0]) {
     $entry = "ERROR: The following files have conflicts:\n";
@@ -99,9 +99,8 @@ sub create {
   else {
     my($prefix) = '        * ';
 
-    ## Correct the timezone (if there is any)
-    my($tz) = 'UTC';
-    $entry =~ s/(:\d\d\s+)(.*)(\d\d\d\d)$/$1$tz $3/;
+    ## Remove the timezone
+    $entry =~ s/(:\d\d\s+)(.*)(\d\d\d\d)$/$1$3/;
 
     ## Add the name and email address
     $entry .= "  $self->{'name'}  <$self->{'email'}>\n\n";

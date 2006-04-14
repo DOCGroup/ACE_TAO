@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -15,7 +15,7 @@
 #define TAO_CONSTRAINT_NODES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Constraint_Tokens.h"
+#include "Constraint_Tokens.h"
 
 #include "tao/Basic_Types.h"
 
@@ -25,8 +25,6 @@
 #pragma warning(push)
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Visitor;
 typedef unsigned short TAO_Expression_Type;
@@ -348,8 +346,6 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
   TAO_Expression_Type type_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

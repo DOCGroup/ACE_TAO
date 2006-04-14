@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file ECG_UDP_Out_Endpoint.h
  *
@@ -14,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,11 +26,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/Atomic_Op.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_UDP_Out_Endpoint
@@ -97,10 +92,8 @@ private:
  */
 typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex> TAO_ECG_Refcounted_Endpoint;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.i"
+#include "ECG_UDP_Out_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

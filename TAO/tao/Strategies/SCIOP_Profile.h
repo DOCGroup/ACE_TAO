@@ -26,9 +26,8 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "tao/Strategies/SCIOP_Endpoint.h"
+#include "SCIOP_Endpoint.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO SCIOP_Profile concrete Profile definitions
 /**
@@ -133,8 +132,6 @@ protected:
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

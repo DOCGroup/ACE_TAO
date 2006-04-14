@@ -1,8 +1,6 @@
 // $Id$
 
-#include "orbsvcs/Notify/Bit_Vector.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Bit_Vector.h"
 
 namespace TAO_Notify
 {
@@ -110,5 +108,3 @@ Bit_Vector::find_first_bit_of(const size_t location, bool set)
 }
 
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

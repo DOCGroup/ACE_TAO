@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file ECG_Simple_Address_Server.h
  *
@@ -14,10 +13,8 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "EC_Lifetime_Utils_T.h"
 #include "ace/INET_Addr.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Simple_Address_Server
@@ -59,10 +56,8 @@ private:
   ACE_INET_Addr addr_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Simple_Address_Server.i"
+#include "ECG_Simple_Address_Server.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

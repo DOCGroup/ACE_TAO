@@ -27,8 +27,6 @@
 
 #include "tao/Basic_Types.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class TypeCode;
@@ -115,18 +113,6 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Short value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::UShort value) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Float value) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Double value) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, CORBA::LongLong value) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, CORBA::ULongLong value) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, CORBA::LongDouble value) = 0;
-
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value) = 0;
@@ -135,8 +121,6 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ANYTYPECODE_ADAPTER */

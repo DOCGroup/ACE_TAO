@@ -1,5 +1,5 @@
-#include "tao/Valuetype/ValueFactory_Map.h"
-#include "tao/Valuetype/ValueFactory.h"
+#include "ValueFactory_Map.h"
+#include "ValueFactory.h"
 #include "tao/CORBA_String.h"
 #include "tao/TAO_Singleton.h"
 
@@ -8,8 +8,6 @@ ACE_RCSID (Valuetype,
            ValueFactory_Map,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueFactory_Map::TAO_ValueFactory_Map (void)
   : map_ (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
@@ -116,8 +114,6 @@ TAO_ValueFactory_Map::instance (void)
   return
     TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::instance ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::singleton_;

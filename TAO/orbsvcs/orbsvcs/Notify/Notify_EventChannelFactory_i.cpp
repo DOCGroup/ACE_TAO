@@ -1,13 +1,11 @@
 // $Id$
 
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
+#include "Notify_EventChannelFactory_i.h"
 
-#include "orbsvcs/Notify/Service.h"
+#include "Service.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Core.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL)
@@ -22,7 +20,7 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
     return notify_factory._retn ();
   }
 
-  TAO_Root_POA *poa = dynamic_cast <TAO_Root_POA*> (default_POA);
+  TAO_Root_POA *poa = dynamic_cast <TAO_Root_POA*>(default_POA);
 
   if (poa == 0)
     return notify_factory._retn ();
@@ -37,5 +35,3 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
 
   return notify_factory._retn ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

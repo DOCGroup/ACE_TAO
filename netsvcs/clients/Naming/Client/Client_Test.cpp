@@ -371,8 +371,8 @@ Client_Test::list_options (void)
                   this->name_options_->nameserver_port ()));
       break;
     default:
-      ACE_ERROR ((LM_ERROR, "ERROR: shouldn't occur!\n"));
-      break;
+      assert (!"shouldn't occur!\n");
+      /* NOTREACHED */
     }
   ACE_DEBUG ((LM_DEBUG,
               "  *** Namespace directory is %s ***\n",
@@ -407,7 +407,7 @@ Client_Test::set_host (const char *hostname, int port)
 
   this->name_options_->context (ACE_Naming_Context::NET_LOCAL);
   // Set Name Options
-  this->name_options_->nameserver_host (ACE_TEXT_CHAR_TO_TCHAR (hostname));
+  this->name_options_->nameserver_host (ACE_TEXT_TO_TCHAR_IN (hostname));
   this->name_options_->nameserver_port (port);
 
   return NAMING_CONTEXT ()->open (ACE_Naming_Context::NET_LOCAL);

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file Swap.inl
  *
@@ -8,8 +6,6 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template<class T> ACE_INLINE void
 ACE_Swap<T>::swap (T &lhs, T& rhs)
 {
@@ -17,5 +13,3 @@ ACE_Swap<T>::swap (T &lhs, T& rhs)
   lhs = rhs;
   rhs = tmp;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -33,8 +33,6 @@
 #include "ace/Atomic_Op.h"
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ORB_Core;
 class TAO_InputCDR;
 
@@ -302,8 +300,6 @@ namespace CORBA
     int incoming_flag_;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/NVList.inl"

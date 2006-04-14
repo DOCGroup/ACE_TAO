@@ -35,10 +35,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Global_Macros.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward declaration.
 class ACE_Proactor;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
 typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> HTTP_SOCK_Acceptor;
@@ -63,13 +61,13 @@ public:
   // Exit hooks
 
 protected:
-  virtual int thread_per_request (HTTP_Handler_Factory &factory);
+  virtual int thread_per_request (void);
   // Thread Per Request implementation
 
   virtual int asynch_thread_pool (void);
   // Asynch Thread Pool implementation
 
-  virtual int synch_thread_pool (HTTP_Handler_Factory &factory);
+  virtual int synch_thread_pool (void);
   // Synch Thread Pool implementation
 
 private:
@@ -80,7 +78,6 @@ private:
   int strategy_;
   int backlog_;
   int throttle_;
-  bool caching_;
   ACE_Thread_Manager tm_;
   HTTP_Acceptor acceptor_;
 };
@@ -91,18 +88,15 @@ class Synch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
   //
   // = DESCRIPTION
   //     Describe this and the others below.
-  //	 NOTE: this class was modified to make caching disabling possible
 {
 public:
   Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
                           ACE_Thread_Manager &tm,
-                          int threads,
-						  HTTP_Handler_Factory &factory);
+                          int threads);
   virtual int svc (void);
 
 private:
   HTTP_Acceptor &acceptor_;
-  HTTP_Handler_Factory &factory_;
 };
 
 class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
@@ -112,13 +106,11 @@ class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = DESCRIPTION
   //     Spawns a new thread for every new incoming connection.  The
   //     handle below is the socket stream of the incoming connection.
-  //	 NOTE: this class was modified to make caching disabling possible
 {
 public:
   Thread_Per_Request_Task (ACE_HANDLE handle,
                            ACE_Thread_Manager &tm,
-                           int &grp_id,
-						   HTTP_Handler_Factory &factory);
+                           int &grp_id);
   virtual int open (void *args = 0);
   virtual int close (u_long);
   virtual int svc (void);
@@ -126,7 +118,6 @@ public:
 private:
   ACE_HANDLE handle_;
   int &grp_id_;
-  HTTP_Handler_Factory &factory_;
 };
 
 // This only works on Win32

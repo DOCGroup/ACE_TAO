@@ -1,11 +1,12 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file Refcountable_Guard_T.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
+ *
+ *
  */
 
 #ifndef TAO_Notify_REFCOUNTABLE_GUARD_T_H
@@ -13,15 +14,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Refcountable_Guard_T
@@ -38,7 +35,7 @@ public:
   explicit TAO_Notify_Refcountable_Guard_T (T* t = 0);
 
   /// Copy constructor
-  TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
+  explicit TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
 
   /// Destructor
   ~TAO_Notify_Refcountable_Guard_T ();
@@ -70,14 +67,12 @@ private:
   T* t_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Refcountable_Guard_T.inl"
+#include "Refcountable_Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/Refcountable_Guard_T.cpp"
+#include "Refcountable_Guard_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

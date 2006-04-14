@@ -50,9 +50,6 @@ Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  Quoter.idl
-
 ## Makefile.Quoter_Event_Service_Client.am
 
 if BUILD_EXCEPTIONS

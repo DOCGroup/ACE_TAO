@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
+#include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,10 +33,9 @@
 #include "ace/Service_Config.h"
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Acceptor;
 class TAO_Connector;
+
 
 namespace TAO
 {
@@ -64,7 +63,7 @@ namespace TAO
 
       // = Service Configurator hooks.
       /// Dynamic linking hook
-      virtual int init (int argc, char* argv[]);
+      virtual int init (int argc, ACE_TCHAR* argv[]);
 
       /// Verify prefix is a match
       virtual int match_prefix (const ACE_CString & prefix);
@@ -121,7 +120,7 @@ namespace TAO
        * mechanism list of the @c CSIIOP::CompoundSecMechList IOR tagged
        * component.
        */
-      // CSIIOP::TLS_SEC_TRANS * csiv2_component_;
+      CSIIOP::TLS_SEC_TRANS * csiv2_component_;
 
     };
   }  // End SSLIOP namespace.
@@ -129,8 +128,6 @@ namespace TAO
 
 // Work around preprocessor tokenization.
 typedef TAO::SSLIOP::Protocol_Factory TAO_SSLIOP_Protocol_Factory;
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)

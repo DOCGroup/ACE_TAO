@@ -24,7 +24,6 @@
 
 #include "tao/Basic_Types.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references.
 class TAO_Priority_Mapping_Manager;
@@ -56,7 +55,6 @@ namespace RTCORBA
   // End TAO-specific typedef
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_RTCORBA_TYPEDEFS_H*/

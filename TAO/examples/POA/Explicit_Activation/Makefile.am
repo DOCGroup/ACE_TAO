@@ -14,8 +14,8 @@ TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
 SUBDIRS = \
-        . \
-        Alt_Resources
+        Alt_Resources \
+        .
 
 
 ## Makefile.POA_Explicit_Activation_Server.am
@@ -29,8 +29,7 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../Generic_Servant \
-  -I../Generic_Servant
+  -I$(srcdir)/../Generic_Servant
 
 server_SOURCES = \
   server.cpp

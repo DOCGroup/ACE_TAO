@@ -13,15 +13,13 @@
 #define TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/rt_notify_export.h"
+#include "../rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "StructuredProxyPushSupplier.h"
 
 /**
  * @class TAO_Notify_RT_StructuredProxyPushSupplier
@@ -56,8 +54,6 @@ private:
   /// Our ref.
   Event_Forwarder::StructuredProxyPushSupplier_var event_forwarder_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H */

@@ -35,8 +35,6 @@
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/Exception.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class Any;
@@ -45,8 +43,6 @@ namespace CORBA
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::Exception &);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Exception *);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/"ace/post.h"
 

@@ -7,15 +7,13 @@
  *
  */
 
-#include "tao/IORTable/IOR_Table_Impl.h"
+#include "IOR_Table_Impl.h"
 #include "ace/Guard_T.h"
 
 ACE_RCSID (IORTable,
            IOR_Table_Impl,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IOR_Table_Impl::TAO_IOR_Table_Impl (void)
 {
@@ -104,5 +102,3 @@ TAO_IOR_Table_Impl::set_locator (
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->locator_ = IORTable::Locator::_duplicate (locator);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -4,17 +4,20 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Examples,
            Consumer,
            "$Id$")
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Consumer consumer;
 
-  return consumer.run (argc, argv);
+  return consumer.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************

@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -81,5 +77,3 @@ namespace TAO
     }
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -14,8 +14,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
   : ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                               ACE_POSIX_Proactor::PROACTOR_SUN),
@@ -317,8 +315,6 @@ ACE_POSIX_Proactor::Proactor_Type
 ACE_SUN_Proactor::get_impl_type (void)
 {
   return PROACTOR_SUN;
-}
-
-ACE_END_VERSIONED_NAMESPACE_DECL
+} 
 
 #endif /* ACE_HAS_AIO_CALLS && sun */

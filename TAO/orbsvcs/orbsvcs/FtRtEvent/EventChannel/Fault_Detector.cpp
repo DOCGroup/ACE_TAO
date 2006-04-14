@@ -1,17 +1,15 @@
 // $Id$
 
 #include "ace/Reactor.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
+#include "Fault_Detector.h"
 #include "ace/Select_Reactor.h"
 
 ACE_RCSID (EventChannel,
            Fault_Detector,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 Fault_Detector::ReactorTask::ReactorTask()
-  : reactor_(new ACE_Select_Reactor, 1)
+: reactor_(new ACE_Select_Reactor, 1)
 {
 }
 
@@ -42,7 +40,7 @@ Fault_Detector* Fault_Detector::instance()
   return detector;
 }
 
-int Fault_Detector::init(int argc, char** argv)
+int Fault_Detector::init(int argc, ACE_TCHAR** argv)
 {
   detector = this;
   if (this->parse_conf(argc, argv)==0 &&
@@ -67,9 +65,7 @@ void Fault_Detector::set_listener(TAO_FTEC_Fault_Listener* listener)
   listener_ = listener;
 }
 
-int Fault_Detector::parse_conf(int , char** )
+int Fault_Detector::parse_conf(int , ACE_TCHAR** )
 {
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

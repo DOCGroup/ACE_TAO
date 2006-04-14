@@ -1,10 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 //$Id$
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   ACE_INLINE int
@@ -153,5 +148,3 @@ namespace TAO
     return this->cache_map_;
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

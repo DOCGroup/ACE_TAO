@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -16,14 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/PS_ForwardC.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "PS_ForwardC.h"
 
 /**
  * @struct TAO_Active_Object_Map_Entry
@@ -57,8 +56,6 @@ struct TAO_Active_Object_Map_Entry
   /// Priority of this servant.
   CORBA::Short priority_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

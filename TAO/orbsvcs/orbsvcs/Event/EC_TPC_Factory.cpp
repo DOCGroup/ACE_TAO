@@ -1,10 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_TPC_Factory.h"
+#include "EC_TPC_Factory.h"
 
-#include "orbsvcs/Event/EC_TPC_Dispatching.h"
-#include "orbsvcs/Event/EC_TPC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_TPC_ProxyConsumer.h"
+#include "EC_TPC_Dispatching.h"
+#include "EC_TPC_ProxySupplier.h"
+#include "EC_TPC_ProxyConsumer.h"
 
 #include "tao/ORB_Core.h"
 
@@ -13,8 +13,6 @@
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Event, EC_TPC_Factory, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 unsigned long EC_TPC_debug_level;
 
@@ -36,15 +34,15 @@ TAO_EC_TPC_Factory::init_svcs (void)
 }
 
 int
-TAO_EC_TPC_Factory::init (int argc, char* argv[])
+TAO_EC_TPC_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-ECDispatching") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -60,7 +58,7 @@ TAO_EC_TPC_Factory::init (int argc, char* argv[])
               arg_shifter.consume_arg ();
             }
         }
-      if (ACE_OS::strcasecmp (arg, "-ECTPCDebug") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECTPCDebug")) == 0)
         {
           arg_shifter.consume_arg ();
           ++EC_TPC_debug_level;
@@ -108,7 +106,6 @@ TAO_EC_TPC_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
   return new TAO_EC_TPC_ProxyPushConsumer (ec);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

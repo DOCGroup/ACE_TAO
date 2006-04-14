@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 CORBA::LocalObject_ptr
 CORBA::LocalObject::_duplicate (CORBA::LocalObject_ptr obj)
@@ -51,5 +49,3 @@ TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
   : refcount_ (1)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,7 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
          typename S_slice,
@@ -116,4 +115,3 @@ TAO::Ret_Var_Array_SArgument_T<S_slice,
   return this->x_.out ();
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

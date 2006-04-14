@@ -13,21 +13,19 @@
 #define TAO_Notify_SEQUENCEPUSHCONSUMER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
-#include "orbsvcs/Notify/Event.h"
-#include "orbsvcs/Notify/Property.h"
-#include "orbsvcs/Notify/Property_T.h"
-#include "orbsvcs/Notify/Consumer.h"
-#include "orbsvcs/Notify/AdminProperties.h"
+#include "../Event.h"
+#include "../Property.h"
+#include "../Property_T.h"
+#include "../Consumer.h"
+#include "../AdminProperties.h"
 #include "ace/Null_Condition.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_QoSProperties;
@@ -71,7 +69,7 @@ public:
   virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual bool get_ior (ACE_CString & iorstr) const;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
@@ -87,8 +85,6 @@ private:
   /// TAO_Notify_Destroy_Callback methods.
   virtual void release (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_SEQUENCEPUSHCONSUMER_H */

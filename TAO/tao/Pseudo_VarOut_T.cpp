@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_PSEUDO_VAROUT_T_CPP
-#define TAO_PSEUDO_VAROUT_T_CPP
+#ifndef TAO_PSEUDO_VAROUT_T_C
+#define TAO_PSEUDO_VAROUT_T_C
 
 #include "tao/Pseudo_VarOut_T.h"
 
@@ -9,7 +9,9 @@
 #include "tao/Pseudo_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Pseudo_VarOut_T,
+           "$Id$")
 
 template <typename T>
 TAO_Pseudo_Var_T<T> &
@@ -23,7 +25,4 @@ TAO_Pseudo_Var_T<T>::operator= (const TAO_Pseudo_Var_T<T> & p)
 
   return *this;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_PSEUDO_VAROUT_T_CPP */
+#endif /* TAO_PSEUDO_VAROUT_T_C */

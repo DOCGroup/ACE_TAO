@@ -128,7 +128,7 @@ int StackExample::runUnboundedStack (void)
   ACE_Unbounded_Stack_Iterator<DataElement*> iter (ustack);
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      DataElement** elem = 0;
+      DataElement** elem;
       iter.next (elem);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"),
                   (*elem)->getData ()));

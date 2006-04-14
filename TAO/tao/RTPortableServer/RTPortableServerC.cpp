@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/RTPortableServer/RTPortableServer.h"
+#include "RTPortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
@@ -40,8 +40,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -193,5 +191,3 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

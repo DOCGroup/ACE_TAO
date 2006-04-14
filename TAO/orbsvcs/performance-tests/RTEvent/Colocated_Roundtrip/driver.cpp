@@ -32,7 +32,7 @@
 
 ACE_RCSID(TAO_PERF_RTEC_Colocated_Roundtrip, driver, "$Id$")
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const CORBA::Long experiment_id = 1;
 
@@ -130,7 +130,7 @@ int main (int argc, char *argv[])
 
       int thread_count = 1 + options.nthreads;
 
-      ACE_Barrier the_barrier (thread_count);
+      ACE_Barrier barrier (thread_count);
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
@@ -186,7 +186,7 @@ int main (int argc, char *argv[])
           ec_poa.in (),
           ec_poa.in (),
           ec.in (),
-          &the_barrier
+          &barrier
           ACE_ENV_ARG_PARAMETER);
 
       if (options.high_priority_is_last)
@@ -203,7 +203,7 @@ int main (int argc, char *argv[])
                                ACE_ES_EVENT_UNDEFINED,
                                experiment_id,
                                high_priority_group.supplier (),
-                               &the_barrier);
+                               &barrier);
       high_priority_task.thr_mgr (&my_thread_manager);
       {
         // Artificial scope to wait for the high priority task...

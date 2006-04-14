@@ -11,13 +11,11 @@
  */
 // =================================================================
 
-#include "tao/Codeset/Codeset_Manager_Factory.h"
+#include "Codeset_Manager_Factory.h"
 #include "ace/Service_Config.h"
-#include "tao/Codeset/Codeset_Manager_i.h"
+#include "Codeset_Manager_i.h"
 
 ACE_RCSID (Codeset, Codeset_Manager_Factory, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory ()
 {
@@ -38,8 +36,6 @@ TAO_Codeset_Manager_Factory::create ()
 
   return csm;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_Codeset_Manager_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Codeset_Manager_Factory,

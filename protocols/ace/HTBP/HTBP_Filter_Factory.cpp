@@ -11,8 +11,6 @@
 
 ACE_RCSID (ACE_HTBP_Filter_Factory, HTBP, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE::HTBP::Filter_Factory::Filter_Factory ()
 {
 }
@@ -41,8 +39,6 @@ ACE::HTBP::Filter_Factory::init (int /* argc */,
   return 0;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (ACE_HTBP_Filter_Factory,
                        ACE_TEXT ("Filter_Factory"),
                        ACE_SVC_OBJ_T,
@@ -59,4 +55,3 @@ template class ACE_Dynamic_Service<ACE::HTBP::Filter_Factory>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Dynamic_Service<ACE::HTBP::Filter_Factory>
 #endif
-

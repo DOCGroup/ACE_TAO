@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    BiDirPolicy_Validator.h
@@ -18,14 +16,13 @@
 #define TAO_BIDIR_POLICY_VALIDATOR_H_
 
 #include /**/ "ace/pre.h"
-#include "tao/BiDir_GIOP/bidirgiop_export.h"
+#include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/Policy_Validator.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Policy_Set;
 class TAO_ORB_Core;
@@ -36,6 +33,7 @@ class TAO_ORB_Core;
  * @brief Policy Validator for BiDir GIOP class
  *
  */
+
 class TAO_BiDirGIOP_Export TAO_BiDirPolicy_Validator : public TAO_Policy_Validator
 {
 public:
@@ -50,9 +48,9 @@ public:
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
 
-};
+private:
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+};
 
 #include /**/ "ace/post.h"
 #endif /* TAO_BIDIR_POLICY_VALIDATOR_H_ */

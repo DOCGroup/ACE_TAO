@@ -479,7 +479,7 @@ namespace CCF
       //
       //
       class Belongs;
-      class ArgumentsWithType;
+      class Specialized;
 
       //@@ I can make an alias Classifies for Belongs?
       //
@@ -510,7 +510,7 @@ namespace CCF
         }
 
         void
-        add_edge_left (ArgumentsWithType&)
+        add_edge_right (Specialized&)
         {
         }
 
@@ -602,33 +602,15 @@ namespace CCF
       };
 
 
+      //@@ Maybe rename it to just Specialization
       //
-      //
-      class Arguments;
-      class ArgumentsWithType;
-      class ArgumentsWithValue;
-
-      class Specialization: public virtual Type
+      class TypeTemplateSpecialization : public virtual Type
       {
-        typedef
-        std::vector<Arguments*>
-        Arguments_;
-
       public:
-        typedef
-        Arguments_::const_iterator
-        ArgumentsIterator;
-
-        ArgumentsIterator
-        arguments_begin () const
+        Specialized&
+        specialized () const
         {
-          return arguments_.begin ();
-        }
-
-        ArgumentsIterator
-        arguments_end () const
-        {
-          return arguments_.end ();
+          return *specialized_;
         }
 
         static Introspection::TypeInfo const&
@@ -637,35 +619,34 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Specialization ()
+        TypeTemplateSpecialization ()
         {
           type_info (static_type_info ());
         }
 
         void
-        add_edge_right (ArgumentsWithType& e);
-
-        void
-        add_edge_right (ArgumentsWithValue& e);
+        add_edge_left (Specialized& e)
+        {
+          specialized_ = &e;
+        }
 
       private:
-        Arguments_ arguments_;
+        Specialized* specialized_;
       };
 
-
-      class Arguments: public virtual Edge
+      class Specialized : public virtual Edge
       {
       public:
-        Specialization&
+        TypeTemplateSpecialization&
         specialization () const
         {
           return *specialization_;
         }
 
-        Node&
-        argument () const
+        Type&
+        type () const
         {
-          return *argument_;
+          return *type_;
         }
 
         static Introspection::TypeInfo const&
@@ -674,77 +655,28 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Arguments ()
+        Specialized ()
         {
           type_info (static_type_info ());
         }
 
         void
-        set_left_node (Node& n)
-        {
-          argument_ = &n;
-        }
-
-        void
-        set_right_node (Specialization& n)
+        set_left_node (TypeTemplateSpecialization& n)
         {
           specialization_ = &n;
         }
 
+        void
+        set_right_node (Type& n)
+        {
+          type_ = &n;
+        }
+
       private:
-        Specialization* specialization_;
-        Node* argument_;
+        TypeTemplateSpecialization* specialization_;
+        Type* type_;
       };
 
-      class ArgumentsWithType: public virtual Arguments
-      {
-      public:
-        Type&
-        type () const
-        {
-          return dynamic_cast<Type&> (argument ());
-        }
-
-        static Introspection::TypeInfo const&
-        static_type_info ();
-
-      protected:
-        friend class Graph<Node, Edge>;
-
-        ArgumentsWithType ()
-        {
-          type_info (static_type_info ());
-        }
-
-        void
-        set_left_node (Type& n)
-        {
-          Arguments::set_left_node (n);
-        }
-      };
-
-      class Expression;
-
-      class ArgumentsWithValue: public virtual Arguments
-      {
-      public:
-        Expression&
-        value () const;
-
-        static Introspection::TypeInfo const&
-        static_type_info ();
-
-      protected:
-        friend class Graph<Node, Edge>;
-
-        ArgumentsWithValue ()
-        {
-          type_info (static_type_info ());
-        }
-
-        void
-        set_left_node (Expression& n);
-      };
 
       //
       //
@@ -882,11 +814,6 @@ namespace CCF
 
         void
         add_edge_left (Initializes&)
-        {
-        }
-
-        void
-        add_edge_left (ArgumentsWithValue&)
         {
         }
       };

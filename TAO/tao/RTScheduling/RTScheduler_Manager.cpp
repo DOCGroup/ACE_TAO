@@ -1,14 +1,12 @@
 // $Id$
 
-#include "tao/RTScheduling/RTScheduler_Manager.h"
+#include "RTScheduler_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTScheduling/RTScheduler_Manager.i"
+#include "RTScheduler_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(TAO, RT_ORB, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (void)
 {
@@ -43,4 +41,3 @@ TAO_RTScheduler_Manager::_interface_repository_id (void) const
   return "IDL:RTScheduler_Manager:1.0";
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

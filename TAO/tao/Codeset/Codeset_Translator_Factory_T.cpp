@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -18,11 +19,9 @@
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_CPP
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_CPP
 
-#include "tao/Codeset/Codeset_Translator_Factory_T.h"
+#include "Codeset_Translator_Factory_T.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class NCS_TO_TCS>
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::TAO_Codeset_Translator_Factory_T () :
@@ -86,7 +85,5 @@ TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::assign (TAO_OutputCDR *cdr) const
       this->assign_i(cdr,this->translator_);
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_CODESET_TRANSLATOR_FACTORY_T_CPP */

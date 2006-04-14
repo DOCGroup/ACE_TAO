@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Event_Channel.h
  *
@@ -20,13 +19,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "EC_Event_Channel_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Event_Channel
@@ -54,8 +51,6 @@ public:
                         TAO_EC_Factory* factory = 0,
                         int own_factory = 0);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

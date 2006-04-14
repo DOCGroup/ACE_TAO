@@ -39,18 +39,14 @@
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
-#if defined (THREAD_CANCELLED)
+#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
+#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
 
 // This is already done in orbconf.h. But this file is totally
 // decoupled from its contents that we have to do this here. Including
@@ -146,15 +142,11 @@ namespace CORBA
      */
     void _tao_print_exception (const char *info,
                                FILE *f = stdout) const;
-
-#if defined (ACE_USES_WCHAR)
-    /// ACE_WCHAR_T version of _tao_print_exception.
     /**
      * @note This method is TAO-specific.
      */
-    void _tao_print_exception (const ACE_WCHAR_T *info,
+    void _tao_print_exception (const wchar_t *info,
                                FILE *f = stdout) const;
-#endif  // ACE_USES_WCHAR
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
@@ -234,8 +226,6 @@ public:
   /// Create a CORBA::SystemException given the interface repository ID.
   static CORBA::SystemException *create_system_exception (const char *id);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Exception.i"

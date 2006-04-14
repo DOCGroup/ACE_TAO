@@ -23,15 +23,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+//////////////////////////////////
+// Classes declared in this header
+namespace TAO
+{
+  class  FT_FaultDetectorFactory_i;
+}
+
 /////////////////////////////////
 // Includes needed by this header
 #include <ace/Vector_T.h>
 #include <orbsvcs/FT_FaultDetectorFactoryS.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <ace/Thread_Manager.h>
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
 // Forward references
@@ -339,8 +343,6 @@ namespace TAO
     int quit_requested_;
   };
 }   // namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* FT_FAULTDETECTORFACTORY_I_H_  */

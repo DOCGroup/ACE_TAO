@@ -117,7 +117,7 @@ Server::format (void)
 
 int
 Server::init (int argc,
-              char **argv)
+             char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -211,7 +211,7 @@ Server::run (void)
 int
 Server::parse_args (int argc,char **argv)
 {
-  ACE_Get_Opt opts (argc,argv,"f:p:");
+  ACE_Get_Arg_Opt<char> opts (argc,argv,"f:p:");
 
   int c;
   while ((c = opts ()) != -1)
@@ -219,7 +219,7 @@ Server::parse_args (int argc,char **argv)
       switch (c)
         {
         case 'f':
-          this->fp_ = ACE_OS::fopen (opts.opt_arg (),"w");
+          this->fp_ = ACE_OS::fopen (opts.opt_arg (),ACE_TEXT("w"));
           if (this->fp_ != 0)
             {
               ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
@@ -243,12 +243,12 @@ Server::file (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+     ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv);
+  CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
@@ -274,7 +274,7 @@ main (int argc,
   ACE_CHECK_RETURN (-1);
 
   int result = 0;
-  result = FTP_SERVER::instance ()->init (argc,argv);
+  result = FTP_SERVER::instance ()->init (convert.get_argc(), convert.get_ASCII_argv());
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
   result = FTP_SERVER::instance ()->run ();

@@ -15,18 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Environment.h"
-#include "tao/default_environment.h"
-
 #include "ace/CORBA_macros.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Environment.h"
+#include "default_environment.h"
 
 namespace PortableInterceptor
 {
@@ -40,8 +37,6 @@ namespace PortableInterceptor
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

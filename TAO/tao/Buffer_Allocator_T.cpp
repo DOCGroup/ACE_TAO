@@ -6,9 +6,6 @@
 #include "tao/Buffer_Allocator_T.h"
 #include "ace/Global_Macros.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   template <typename handler_type, typename alloc_type>
@@ -39,7 +36,5 @@ namespace TAO
                     handler_type);
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_BUFFER_ALLOCATOR_T_CPP */

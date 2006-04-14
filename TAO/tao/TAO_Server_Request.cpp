@@ -1,24 +1,24 @@
 // $Id$
 
-#include "tao/TAO_Server_Request.h"
-#include "tao/ORB_Core.h"
-#include "tao/Timeprobe.h"
-#include "tao/debug.h"
-#include "tao/Pluggable_Messaging.h"
-#include "tao/GIOP_Utils.h"
-#include "tao/Stub.h"
-#include "tao/operation_details.h"
-#include "tao/Transport.h"
-#include "tao/CDR.h"
-#include "tao/SystemException.h"
+#include "TAO_Server_Request.h"
+#include "ORB_Core.h"
+#include "Timeprobe.h"
+#include "debug.h"
+#include "Pluggable_Messaging.h"
+#include "GIOP_Utils.h"
+#include "Stub.h"
+#include "operation_details.h"
+#include "Transport.h"
+#include "CDR.h"
+#include "SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/PortableInterceptorC.h"
-#include "tao/ServerRequestInterceptor_Adapter.h"
+#include "PortableInterceptorC.h"
+#include "ServerRequestInterceptor_Adapter.h"
 #endif
 
 #if !defined (__ACE_INLINE__)
-# include "tao/TAO_Server_Request.i"
+# include "TAO_Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
@@ -45,8 +45,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
                                   TAO_SERVER_REQUEST_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                                       TAO_InputCDR &input,
@@ -261,14 +259,7 @@ TAO_ServerRequest::init_reply (void)
   // Forward exception only.
   if (!CORBA::is_nil (this->forward_location_.in ()))
     {
-      const CORBA::Boolean permanent_forward_condition = 
-        this->orb_core_->is_permanent_forward_condition (this->forward_location_.in (), 
-                                                         this->request_service_context ());
-      
-      reply_params.reply_status_ 
-        = permanent_forward_condition
-        ? TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM
-        : TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+      reply_params.reply_status_ = TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
     }
   // Any exception at all.
   else if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION)
@@ -285,8 +276,7 @@ TAO_ServerRequest::init_reply (void)
                                            reply_params);
 
   // Finish the GIOP Reply header, then marshal the exception.
-  if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD ||
-      reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM)
+  if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD)
     {
       // Marshal the forward location pointer.
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();
@@ -572,6 +562,4 @@ TAO_ServerRequest::pi_current_copy_callback (void)
   return this->pi_current_copy_callback_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_HAS_INTERCEPTORS */
+#endif /*TAO_HAS_INTERCEPTORS*/

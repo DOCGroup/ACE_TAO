@@ -6,8 +6,6 @@ ACE_RCSID (Log,
            EventLogConsumer,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i *log)
 : log_ (log)
 {  
@@ -97,4 +95,4 @@ TAO_Event_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

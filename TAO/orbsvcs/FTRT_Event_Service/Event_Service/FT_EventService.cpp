@@ -143,7 +143,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   if (n_threads)
     this->num_threads_ = ACE_OS::atoi(n_threads);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("d:jn:ps:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("d:jn:ps:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

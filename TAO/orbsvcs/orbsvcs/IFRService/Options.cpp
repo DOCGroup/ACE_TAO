@@ -1,13 +1,12 @@
 // $Id$
 
-#include "orbsvcs/IFRService/Options.h"
+#include "Options.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
+// Default Constructor
 Options::Options ()
   : ior_output_file_ (ACE_OS::strdup ("if_repo.ior")),
     persistent_ (0),
@@ -27,7 +26,7 @@ Options::~Options ()
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:pb:lm:r");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:pb:lm:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -118,5 +117,3 @@ Options::support_multicast_discovery (void) const
 {
   return this->support_multicast_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

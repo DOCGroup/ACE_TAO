@@ -12,8 +12,8 @@
 
 int Logging_Event_Handler::open () {
 
-  static const char LOGFILE_SUFFIX[] = ".log";
-  char filename[MAXHOSTNAMELEN + sizeof (LOGFILE_SUFFIX)];
+  static const ACE_TCHAR LOGFILE_SUFFIX[] = ACE_TEXT(".log");
+  ACE_TCHAR filename[MAXHOSTNAMELEN + sizeof (LOGFILE_SUFFIX)];
   ACE_INET_Addr logging_peer_addr;
 
   logging_handler_.peer ().get_remote_addr (logging_peer_addr);

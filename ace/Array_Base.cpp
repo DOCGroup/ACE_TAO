@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_ARRAY_BASE_CPP
-#define ACE_ARRAY_BASE_CPP
+#ifndef ACE_ARRAY_BASE_C
+#define ACE_ARRAY_BASE_C
 
 #include "ace/Array_Base.h"
 
@@ -21,9 +21,13 @@
 
 #include "ace/os_include/os_errno.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (ace,
+	   Array_Base,
+	   "$Id$")
+
 
 // Dynamically initialize an array.
+
 template <class T>
 ACE_Array_Base<T>::ACE_Array_Base (size_t size,
                                    ACE_Allocator *alloc)
@@ -206,6 +210,4 @@ ACE_Array_Iterator<T>::next (T *&item)
     }
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_ARRAY_BASE_CPP */
+#endif /* ACE_ARRAY_BASE_C */

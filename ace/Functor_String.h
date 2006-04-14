@@ -11,6 +11,7 @@
  *   could be placed in Functor.h. But we don't want to couple string
  *   types to the rest of ACE+TAO. Hence they are placed in a seperate
  *   file.
+ *
  */
 //==========================================================================
 #ifndef ACE_FUNCTOR_STRING_H
@@ -25,8 +26,6 @@
 
 #include "ace/ACE_export.h"
 #include "ace/SStringfwd.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////////////////////////////////
 // STL-style Functor Classes and Template Specializations //
@@ -83,9 +82,6 @@ public:
                    const ACE_CString &rhs) const;
 };
 
-
-#if defined (ACE_USES_WCHAR)
-
 /**
  * @class ACE_Equal_To<ACE_WString>
  *
@@ -128,10 +124,6 @@ public:
   int operator () (const ACE_WString &lhs,
                    const ACE_WString &rhs) const;
 };
-
-#endif /*ACE_USES_WCHAR*/
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor_String.inl"

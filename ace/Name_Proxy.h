@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -33,8 +33,6 @@
 #include "ace/Synch_Options.h"
 #include "ace/Name_Request_Reply.h"
 #include "ace/Event_Handler.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Name_Proxy
@@ -94,8 +92,6 @@ private:
   ACE_Name_Proxy (const ACE_Name_Proxy &);
   ACE_Name_Proxy &operator= (const ACE_Name_Proxy &);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NAME_PROXY_H */

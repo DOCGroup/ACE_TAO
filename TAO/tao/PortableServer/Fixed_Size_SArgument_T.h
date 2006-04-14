@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_FIXED_SIZE_SARGUMENT_T_H
 #define TAO_FIXED_SIZE_SARGUMENT_T_H
 
@@ -22,8 +23,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -216,7 +215,6 @@ namespace TAO
 
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Fixed_Size_SArgument_T.inl"

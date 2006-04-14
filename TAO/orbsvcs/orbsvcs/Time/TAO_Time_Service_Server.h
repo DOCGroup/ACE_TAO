@@ -19,9 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "orbsvcs/Time/time_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "time_export.h"
 
 /**
  * @class TAO_Time_Service_Server
@@ -80,8 +78,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TIME_SERVICE_SERVER_H */

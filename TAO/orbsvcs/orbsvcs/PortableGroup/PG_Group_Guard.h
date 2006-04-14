@@ -22,15 +22,16 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/PG_Factory_Set.h"
+#include "PG_Factory_Set.h"
 
 #include "tao/PortableServer/PortableServerC.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_PG_GenericFactory;
 class TAO_PG_ObjectGroupManager;
+
+
 
 /**
  * @class TAO_PG_Group_Guard
@@ -86,7 +87,6 @@ private:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

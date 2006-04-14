@@ -81,8 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-#include "ace/Log_Msg.h"
-
 ACE_RCSID (util,
            utl_err,
            "$Id$")
@@ -223,12 +221,12 @@ error_string (UTL_Error::ErrorCode c)
 static void
 idl_error_header (UTL_Error::ErrorCode c,
                   long lineno,
-                  ACE_CString s)
+                  UTL_String *s)
 {
   ACE_ERROR ((LM_ERROR,
               "%s: \"%s\", line %d: %s",
               idl_global->prog_name (),
-              s.c_str (),
+              s->get_string (),
               lineno == -1 ? idl_global->lineno () : lineno,
               error_string (c)));
 }
@@ -626,7 +624,7 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
 {
   idl_error_header (EIDL_SYNTAX_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "%s\n",
               parse_state_to_error_message (ps)));
@@ -638,7 +636,7 @@ UTL_Error::error0 (UTL_Error::ErrorCode c)
 {
   idl_error_header (c,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
@@ -650,7 +648,7 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
 {
   idl_error_header (c,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -664,7 +662,7 @@ UTL_Error::error2 (UTL_Error::ErrorCode c,
 {
   idl_error_header (c,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               ", "));
@@ -682,7 +680,7 @@ UTL_Error::error3 (UTL_Error::ErrorCode c,
 {
   idl_error_header (c,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               ", "));
@@ -702,7 +700,7 @@ UTL_Error::warning0 (UTL_Error::ErrorCode c)
     {
       idl_error_header (c,
                         idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
+                        idl_global->filename ());
       ACE_ERROR ((LM_ERROR,
                   "\n"));
     }
@@ -716,7 +714,7 @@ UTL_Error::warning1 (UTL_Error::ErrorCode c,
     {
       idl_error_header (c,
                         idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
+                        idl_global->filename ());
       d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
       ACE_ERROR ((LM_ERROR,
                   "\n"));
@@ -732,7 +730,7 @@ UTL_Error::warning2 (UTL_Error::ErrorCode c,
     {
       idl_error_header (c,
                         idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
+                        idl_global->filename ());
       d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
       ACE_ERROR ((LM_ERROR,
                   ", "));
@@ -752,7 +750,7 @@ UTL_Error::warning3 (UTL_Error::ErrorCode c,
     {
       idl_error_header (c,
                         idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
+                        idl_global->filename ());
       d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
       ACE_ERROR ((LM_ERROR,
                   ", "));
@@ -772,7 +770,7 @@ UTL_Error::coercion_error (AST_Expression *v,
 {
   idl_error_header (EIDL_COERCION_FAILURE,
                     v->line (),
-                    v->file_name ()->get_string ());
+                    v->file_name ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " to %s\n",
@@ -786,7 +784,7 @@ UTL_Error::lookup_error (UTL_ScopedName *n)
 {
   idl_error_header (EIDL_LOOKUP_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   n->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -799,7 +797,7 @@ UTL_Error::version_number_error (char *n)
 {
   idl_error_header (EIDL_ILLEGAL_VERSION,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "%s\n",
               n));
@@ -812,7 +810,7 @@ UTL_Error::version_reset_error (void)
 {
   idl_error_header (EIDL_VERSION_RESET,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
@@ -825,7 +823,7 @@ UTL_Error::id_reset_error (const char *o,
 {
   idl_error_header (EIDL_ID_RESET,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "%s, %s\n",
               o,
@@ -860,7 +858,7 @@ UTL_Error::inheritance_error (UTL_ScopedName *n,
 {
   idl_error_header (EIDL_CANT_INHERIT,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   n->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               " attempts to inherit from "));
@@ -897,7 +895,7 @@ UTL_Error::supports_error (UTL_ScopedName *n,
 {
   idl_error_header (EIDL_CANT_SUPPORT,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " attempts to support "));
@@ -913,7 +911,7 @@ UTL_Error::derived_supports_error (UTL_ScopedName *n)
 {
   idl_error_header (EIDL_CANT_SUPPORT,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "derived component or home "));
   n->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -929,7 +927,7 @@ UTL_Error::abstract_inheritance_error (UTL_ScopedName *v,
 {
   idl_error_header (EIDL_CANT_INHERIT,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               " abstract valuetype "));
   v->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -948,7 +946,7 @@ UTL_Error::abstract_support_error (UTL_ScopedName *v,
 {
   idl_error_header (EIDL_CANT_SUPPORT,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               " valuetype "));
   v->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -967,7 +965,7 @@ UTL_Error::unconstrained_interface_expected (UTL_ScopedName *c,
 {
   idl_error_header (EIDL_CANT_SUPPORT,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               " component or home "));
   c->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -985,7 +983,7 @@ UTL_Error::concrete_supported_inheritance_error (UTL_ScopedName *v,
 {
   idl_error_header (EIDL_CANT_SUPPORT,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               " valuetype "));
   v->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1005,7 +1003,7 @@ UTL_Error::eval_error (AST_Expression *v)
 {
   idl_error_header (EIDL_EVAL_ERROR,
                     v->line (),
-                    v->file_name ()->get_string ());
+                    v->file_name ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1018,7 +1016,7 @@ UTL_Error::incompatible_type_error (AST_Expression *v)
 {
   idl_error_header (EIDL_INCOMPATIBLE_TYPE,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1052,7 +1050,7 @@ UTL_Error::interface_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_INTERFACE_EXPECTED,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1067,7 +1065,7 @@ UTL_Error::valuetype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_VALUETYPE_EXPECTED,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1082,7 +1080,7 @@ UTL_Error::concrete_valuetype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_CONCRETE_VT_EXPECTED,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1098,7 +1096,7 @@ UTL_Error::abstract_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_ABSTRACT_EXPECTED,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1114,7 +1112,7 @@ UTL_Error::eventtype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_EVENTTYPE_EXPECTED,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1129,7 +1127,7 @@ UTL_Error::primary_key_error (AST_Decl *d)
 {
   idl_error_header (EIDL_PRIMARY_KEY_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "primary key "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1188,7 +1186,7 @@ UTL_Error::redef_error (char *b,
 {
   idl_error_header (EIDL_REDEF,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "\"%s\" and \"%s\"\n",
               b,
@@ -1203,7 +1201,7 @@ UTL_Error::name_case_error (char *b,
 {
   idl_error_header (EIDL_NAME_CASE_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "\"%s\" and \"%s\"\n",
               b,
@@ -1219,7 +1217,7 @@ UTL_Error::name_case_warning (char *b,
     {
       idl_error_header (EIDL_NAME_CASE_WARNING,
                         idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
+                        idl_global->filename ());
       ACE_ERROR ((LM_ERROR,
                   "\"%s\" and \"%s\"\n",
                   b,
@@ -1232,7 +1230,7 @@ UTL_Error::idl_keyword_error (char *n)
 {
   idl_error_header (EIDL_KEYWORD_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "\"%s\"\n",
               n));
@@ -1246,7 +1244,7 @@ UTL_Error::idl_keyword_warning (char *n)
     {
       idl_error_header (EIDL_KEYWORD_WARNING,
                         idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
+                        idl_global->filename ());
       ACE_ERROR ((LM_ERROR,
                   "\"%s\"\n",
                   n));
@@ -1296,7 +1294,7 @@ UTL_Error::fwd_decl_lookup (AST_Interface *d,
 {
   idl_error_header (EIDL_FWD_DECL_LOOKUP,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "trying to look up "));
   n->dump (*ACE_DEFAULT_LOG_STREAM);;
@@ -1331,7 +1329,7 @@ UTL_Error::not_a_type (AST_Decl *d)
 {
   idl_error_header (EIDL_NOT_A_TYPE,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   if (d == 0 || d->name () == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1353,7 +1351,7 @@ UTL_Error::back_end (long lineno,
 {
   idl_error_header (EIDL_BACK_END,
                     lineno,
-                    s->get_string ());
+                    s);
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
@@ -1364,7 +1362,7 @@ UTL_Error::illegal_infix (void)
 {
   idl_error_header (EIDL_ILLEGAL_INFIX,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);

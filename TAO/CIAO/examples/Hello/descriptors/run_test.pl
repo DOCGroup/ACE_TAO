@@ -18,7 +18,7 @@ $daemons = 2;
 @ports = ( 60001, 60002 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
+$dat_file = "TestNodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
@@ -74,7 +74,7 @@ sub run_node_daemons {
       $node_app = "$DAnCE/NodeApplication/NodeApplication";
 
       $d_cmd = "$DAnCE/NodeManager/NodeManager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -d 30";
+      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();
@@ -98,7 +98,7 @@ delete_ior_files ();
 
 # Invoke naming service
 
-$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:60003 -o ns.ior");
+$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -o $nsior");
 
 $NS->Spawn ();
 
@@ -110,9 +110,6 @@ if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
     $NS->Kill ();
     exit 1;
 }
-
-# Set up NamingService environment
-$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
 
 # Invoke node daemons.
 print "Invoking node daemons\n";

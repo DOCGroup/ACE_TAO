@@ -105,17 +105,17 @@ foreach my $test_lst (@file_list) {
         }
 
         chdir ($ACE_ROOT."/$directory")
-            || print STDERR "ERROR: Cannot chdir to $ACE_ROOT/$directory" || next;
+            || die "Error: Cannot chdir to $ACE_ROOT/$directory";
 
         if ($program =~ /(.*?) (.*)/) {
             if (! -e $1) {
-                print STDERR "ERROR: $directory.$1 does not exist\n";
+                print STDERR "Error: $directory.$1 does not exist\n";
                 next;
               }
           }
         else {
             if (! -e $program) {
-                print STDERR "ERROR: $directory.$program does not exist\n";
+                print STDERR "Error: $directory.$program does not exist\n";
                 next;
               }
           }

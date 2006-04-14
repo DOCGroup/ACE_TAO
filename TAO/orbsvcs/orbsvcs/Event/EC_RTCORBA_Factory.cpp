@@ -1,13 +1,11 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_RTCORBA_Dispatching.h"
-#include "orbsvcs/Event/EC_RTCORBA_Factory.h"
+#include "EC_RTCORBA_Dispatching.h"
+#include "EC_RTCORBA_Factory.h"
 
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 ACE_RCSID(Event, EC_RTCORBA_Factory, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Factory::
     TAO_EC_RTCORBA_Factory (TAO_EC_Factory *body,
@@ -23,7 +21,7 @@ TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory (void)
 
 
 int
-TAO_EC_RTCORBA_Factory::init (int argc, char* argv[])
+TAO_EC_RTCORBA_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   return this->body_->init (argc, argv);
 }
@@ -273,4 +271,3 @@ TAO_EC_RTCORBA_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
   this->body_->destroy_supplier_control (x);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

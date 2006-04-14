@@ -1,11 +1,13 @@
 // $Id$
 
-module Test
+module TAO
 {
-  interface Hang
-  {
-    void send_stuff (in string foo,
-                     in boolean flag);
-  };
+  module Test
+    {
+      interface Hang
+        {
+          void send_stuff (in string foo,
+                           in boolean flag);
+        };
+    };
 };
-

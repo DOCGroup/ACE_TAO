@@ -3,6 +3,7 @@
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "PushSupplier.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
@@ -22,10 +23,10 @@ CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 
 RtecEventChannelAdmin::EventChannel_ptr
-get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
+get_event_channel(int argc, char** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("hi:nt:?"));
+    ACE_Get_Arg_Opt<char> get_opt (argc, argv, "hi:nt:?");
     int opt;
     int use_gateway = 1;
 
@@ -92,17 +93,19 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 }
 
 
-int main(int argc, ACE_TCHAR** argv)
+int ACE_TMAIN(int argc, ACE_TCHAR** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    orb = CORBA::ORB_init(argc, argv, ""
+    orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), ""
                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
 
     RtecEventChannelAdmin::EventChannel_var channel
-      = get_event_channel(argc, argv ACE_ENV_ARG_PARAMETER);
+      = get_event_channel(convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
 

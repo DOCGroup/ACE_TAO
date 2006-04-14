@@ -4,8 +4,6 @@
 
 #include "tao/SystemException.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE TAO_Policy_Validator &
 TAO_Object_Adapter::validator (void)
 {
@@ -167,4 +165,3 @@ TAO_Object_Adapter::non_servant_upcall_in_progress (void) const
   return this->non_servant_upcall_in_progress_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

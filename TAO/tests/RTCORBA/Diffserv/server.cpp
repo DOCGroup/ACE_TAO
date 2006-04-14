@@ -3,6 +3,7 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
@@ -52,7 +53,7 @@ static RTCORBA::Priority corba_priority = RTCORBA::minPriority;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -97,26 +98,28 @@ create_object (PortableServer::POA_ptr poa,
     orb->object_to_string (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  FILE *output_file= ACE_OS::fopen (filename, "w");
+  FILE *output_file= ACE_OS::fopen (filename, ACE_TEXT("w"));
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var object;
 
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return -1;
 
       // RootPOA.

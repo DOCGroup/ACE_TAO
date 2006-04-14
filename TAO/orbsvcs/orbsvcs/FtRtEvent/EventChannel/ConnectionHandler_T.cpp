@@ -1,7 +1,5 @@
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <ACE_PEER_STREAM_1>
 int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 {
@@ -93,4 +91,3 @@ int ConnectionDetectHandler<ACE_PEER_STREAM_2>::close (u_long )
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -5,7 +5,6 @@
 // single-threaded concurrent server.  This server program can be
 // driven by the oneway test mode of SSL-client.cpp.
 
-#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
@@ -170,7 +169,7 @@ handle_connections (ACE_SSL_SOCK_Acceptor &peer_acceptor,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   u_short port = ACE_DEFAULT_SERVER_PORT + 1;
 
@@ -204,7 +203,7 @@ main (int, char *[])
 }
 #else
 #include "ace/OS_NS_stdio.h"
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

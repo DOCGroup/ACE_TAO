@@ -1,16 +1,14 @@
 // $Id$
 
-#include "orbsvcs/Notify/Reactive_Task.h"
+#include "Reactive_Task.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Reactive_Task.inl"
+#include "Reactive_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_Reactive_Task, "$Id$")
 
-#include "orbsvcs/Notify/Timer_Reactor.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Timer_Reactor.h"
 
 TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task (void)
   :timer_ (0)
@@ -55,5 +53,3 @@ TAO_Notify_Reactive_Task::timer (void)
 {
   return this->timer_.get();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

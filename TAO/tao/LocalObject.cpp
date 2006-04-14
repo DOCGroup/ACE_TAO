@@ -1,14 +1,16 @@
+// -*- C++ -*-
+//
 // $Id$
 
-#include "tao/LocalObject.h"
+#include "LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LocalObject.i"
+# include "LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
 
-#include "tao/SystemException.h"
-#include "tao/debug.h"
-#include "tao/ORB_Constants.h"
+#include "SystemException.h"
+#include "debug.h"
+#include "ORB_Constants.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
@@ -16,8 +18,6 @@
 ACE_RCSID (tao,
            LocalObject,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::LocalObject::~LocalObject (void)
 {
@@ -42,12 +42,12 @@ CORBA::ULong
 CORBA::LocalObject::_hash (CORBA::ULong maximum
                            ACE_ENV_ARG_DECL_NOT_USED)
 {
-  // Note that we reinterpret_cast to an "ptrdiff_t" instead of
+  // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large
   // enough to hold an address to avoid compile-time warnings on some
   // 64-bit platforms.
 
-  CORBA::ULong const hash =
+  const CORBA::ULong hash =
     static_cast<CORBA::ULong> (reinterpret_cast<ptrdiff_t> (this));
 
   return hash % maximum;
@@ -64,7 +64,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj
                                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (())
 {
-  return (other_obj == this) ? true : false;
+  return (other_obj == this) ? 1 : 0;
 }
 
 // TAO's extensions
@@ -90,7 +90,7 @@ CORBA::Boolean
 CORBA::LocalObject::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Always return false.
-  return false;
+  return 0;
 }
 
 void
@@ -205,7 +205,7 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
-                    false);
+                    0);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -219,10 +219,6 @@ CORBA::LocalObject::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // ****************************************************************
-
-TAO_Local_RefCounted_Object::~TAO_Local_RefCounted_Object (void)
-{
-}
 
 void
 TAO_Local_RefCounted_Object::_add_ref (void)
@@ -239,4 +235,3 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
     delete this;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

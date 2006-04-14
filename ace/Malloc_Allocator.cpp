@@ -1,5 +1,16 @@
 // $Id$
 
+// FILENAME
+//   Malloc_Allocator.cpp
+//
+// AUTHOR
+//   Priyanka Gontla <pgontla@uci.edu>
+//
+// ==========================================================================
+
+#if !defined (ACE_MALLOC_ALLOCATOR_CPP)
+#define ACE_MALLOC_ALLOCATOR_CPP
+
 #include "ace/Malloc_Allocator.h"
 #include "ace/Object_Manager.h"
 
@@ -13,8 +24,6 @@
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace, Malloc_Allocator, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Allocator *
 ACE_Allocator::instance (void)
@@ -358,4 +367,4 @@ ACE_Static_Allocator_Base::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+#endif /* ACE_MALLOC_ALLOCATOR_CPP */

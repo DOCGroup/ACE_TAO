@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -15,12 +15,11 @@
 #define TAO_AV_PROTOCOL_FACTORY_T_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "orbsvcs/AV/Policy.h"
+#include "FlowSpec_Entry.h"
+#include "Policy.h"
 
 #include "ace/Service_Object.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_AV_Protocol_Object
@@ -96,8 +95,6 @@ public:
   virtual const char *control_flow_factory (void);
   int ref_count;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_PROTOCOL_FACTORY_T_H */

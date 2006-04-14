@@ -251,7 +251,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 int
 ACEXML_HttpCharStream::send_request (void)
 {
-  char* path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
+  char* path = ACE::strnew (ACE_TEXT_TO_CHAR_IN (this->url_addr_->get_path_name()));
   ACE_Auto_Basic_Array_Ptr<char> path_ptr (path);
   size_t commandsize = ACE_OS::strlen (path)
                        + ACE_OS::strlen (this->url_addr_->get_host_name ())
@@ -321,7 +321,7 @@ ACEXML_HttpCharStream::determine_encoding (void)
   char input[4] = {0, 0, 0, 0};
   int i = 0;
   for (; i < 4 && input[i] != (char)-1; ++i)
-    input[i] = static_cast<char> (this->stream_->peek_char(i));
+    input[i] = this->stream_->peek_char(i);
   if (i < 4)
     return -1;
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
@@ -382,7 +382,7 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
     return -1;
   len = len * sizeof (ACEXML_Char);
   char* temp = const_cast<char*> (this->stream_->recv (len));
-  str = ACE_TEXT_CHAR_TO_TCHAR (temp);
+  ACE_OS::string_copy( str, temp, len );
   if (str == 0)
     return -1;
   return static_cast<int> (len);

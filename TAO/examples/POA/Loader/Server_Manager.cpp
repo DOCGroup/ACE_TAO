@@ -22,7 +22,7 @@ int
 Server_i::parse_args (int argc,
                       char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -67,9 +67,9 @@ Server_i::write_iors_to_file (const char *first_ior,
                    ior_output_file_);
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1,
-                                       "w");
+                                       ACE_TEXT("w"));
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2,
-                                       "w");
+                                       ACE_TEXT("w"));
   if (output_file_1 == 0
       || output_file_2 == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -113,8 +113,7 @@ Server_i::init (int argc, char **argv)
   ACE_TRY
     {
       // Initialize the ORB.
-      orb_ = CORBA::ORB_init (argc,
-                              argv,
+      orb_ = CORBA::ORB_init (argc, argv,
                               0
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

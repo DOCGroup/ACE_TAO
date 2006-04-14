@@ -1,8 +1,5 @@
 // -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr&
 TAO_IIOP_Acceptor::address (void) const
@@ -36,5 +33,3 @@ TAO_IIOP_Acceptor::set_default_address (const ACE_INET_Addr& addr)
 {
   this->default_address_.set (addr);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

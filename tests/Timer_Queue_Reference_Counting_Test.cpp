@@ -550,7 +550,7 @@ static int test_simple = 1;
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:l:m:n:o:z:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("a:b:c:d:l:m:n:o:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)

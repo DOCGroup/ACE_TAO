@@ -1,13 +1,10 @@
-// -*- C++ -*-
-//
-// $Id$
+/* -*- C++ -*- */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+// $Id$
 
 //----------------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
 //----------------------------------------------------------------------
-
 ACE_INLINE
 ACE_SOCK_Dgram_Mcast_QoS *
 TAO_AV_UDP_QoS_Flow_Handler::get_socket (void)
@@ -77,5 +74,3 @@ TAO_AV_UDP_QoS_Flow_Handler::av_core (void)
 {
   return this->av_core_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

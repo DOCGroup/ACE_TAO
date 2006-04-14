@@ -13,22 +13,12 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 
 unlink $iorfile;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
-}
+$SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL = new PerlACE::Process ("client", "-i file://$iorfile");
 
 print STDERR "\nrunning Smart Proxy test consisting of the client and the server\n\n";
 
-$svr = $SV->Spawn ();
-
-if ($svr != 0) {
-   print STDERR "ERROR: server returned $svr\n";
-   exit 1;
-}
+$SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {

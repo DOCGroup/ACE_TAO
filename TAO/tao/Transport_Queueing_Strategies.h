@@ -27,13 +27,8 @@
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Time_Value;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Stub;
+class ACE_Time_Value;
 
 namespace TAO
 {
@@ -177,8 +172,6 @@ namespace TAO
   #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

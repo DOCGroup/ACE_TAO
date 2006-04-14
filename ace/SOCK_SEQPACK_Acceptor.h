@@ -18,16 +18,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
+
+#include "ace/SOCK_SEQPACK_Association.h"
+#include "ace/Multihomed_INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_SEQPACK_Association.h"
-#include "ace/Multihomed_INET_Addr.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
@@ -42,7 +46,7 @@ class ACE_Time_Value;
  * Therefore, by inheriting from <ACE_SOCK>, <ACE_SOCK_SEQPACK_Acceptor>
  * gets its very own socket.
  */
-class ACE_Export ACE_SOCK_SEQPACK_Acceptor : public ACE_SOCK
+class ACE_Sockets_Export ACE_SOCK_SEQPACK_Acceptor : public ACE_SOCK
 {
 public:
   // = Initialization and termination methods.
@@ -178,8 +182,6 @@ private:
   /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_SEQPACK_Acceptor.inl"

@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Explicitly destroy the mutex.
 ACE_INLINE int
@@ -73,5 +70,3 @@ ACE_RW_Process_Mutex::lock (void) const
 // ACE_TRACE ("ACE_RW_Process_Mutex::lock");
   return this->lock_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
