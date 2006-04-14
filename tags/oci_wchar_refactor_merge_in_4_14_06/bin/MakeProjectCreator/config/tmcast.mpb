@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project: acelib, exceptions, threads {
+  after    += TMCast
+  libs     += ACE_TMCast
+  includes += $(ACE_ROOT)/protocols
+}

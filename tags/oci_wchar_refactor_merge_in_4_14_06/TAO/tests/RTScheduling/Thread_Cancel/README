@@ -1,0 +1,59 @@
+//$Id$
+
+Case
+----
+
+This test illustrates the DT cancel mechanism when the DT's are local
+(ie. DT's do not span multiple nodes). Four DT's are created. Each DT
+has 3 nested scheduling segments. A reference to each DT is
+stored. These references are then used to cancel teh corresponding
+DT. When the DT is cancelled it throws the CORBA::THREAD_CANCELLED
+exception.
+
+To Run
+------
+
+./test
+
+Typical Output
+--------------
+
+Scheduling Segments for DT 1 :
+Scheduling Segment Name - Harry
+Scheduling Segment Name - Potter
+Scheduling Segment Name - Chamber of Secrets
+Scheduling Segments for DT 2 :
+Waiting for Threads to Activate...
+Scheduling Segment Name - Harry
+Scheduling Segment Name - Potter
+Scheduling Segment Name - Chamber of Secrets
+Scheduling Segments for DT 3 :
+Scheduling Segment Name - Harry
+Scheduling Segment Name - Potter
+Scheduling Segment Name - Chamber of Secrets
+Scheduling Segments for DT 4 :
+Scheduling Segment Name - Harry
+Scheduling Segment Name - Potter
+Scheduling Segment Name - Chamber of Secrets
+Threads Activated
+Cancelling Threads.....
+Distributable Thread - 2 is cancelled
+Distributable Thread - 1 is cancelled
+Distributable Thread - 3 is cancelled
+Distributable Thread - 4 is cancelled
+(7245|1026) EXCEPTION, Caught exception:
+system exception, ID 'IDL:omg.org/CORBA/THREAD_CANCELLED:1.0'
+TAO exception, minor code = 0 (unknown location; unspecified errno), completed = NO
+
+(7245|3076) EXCEPTION, Caught exception:
+system exception, ID 'IDL:omg.org/CORBA/THREAD_CANCELLED:1.0'
+TAO exception, minor code = 0 (unknown location; unspecified errno), completed = NO
+
+(7245|4101) EXCEPTION, Caught exception:
+system exception, ID 'IDL:omg.org/CORBA/THREAD_CANCELLED:1.0'
+TAO exception, minor code = 0 (unknown location; unspecified errno), completed = NO
+
+(7245|2051) EXCEPTION, Caught exception:
+system exception, ID 'IDL:omg.org/CORBA/THREAD_CANCELLED:1.0'
+TAO exception, minor code = 0 (unknown location; unspecified errno), completed = NO
+

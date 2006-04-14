@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, amh, strategies {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): taoexe, amh, portableserver, strategies {
+  Source_Files {
+    client.cpp
+  }
+}
