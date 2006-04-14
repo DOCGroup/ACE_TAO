@@ -1,3 +1,9 @@
+Fri Apr 14 15:01:51 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * orbsvcs/tests/Notify/MT_Dispatching/MT_Dispatching.mpc:
+
+          Avoids building with ace_for_tao.
+
 Wed Apr 12 21:48:29 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * NEWS:
