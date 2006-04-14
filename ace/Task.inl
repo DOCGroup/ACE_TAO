@@ -23,7 +23,11 @@ ACE_INLINE size_t
 ACE_Task_Base::thr_count (void) const
 {
   ACE_TRACE ("ACE_Task_Base::thr_count");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, const_cast <ACE_Thread_Mutex&>(this->lock_), 0));
+  ACE_MT
+    (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                       ace_mon,
+                       const_cast <ACE_Recursive_Thread_Mutex&>(this->lock_),
+                       0));
 
   return this->thr_count_;
 }
@@ -34,7 +38,7 @@ ACE_INLINE void
 ACE_Task_Base::thr_count_dec (void)
 {
   ACE_TRACE ("ACE_Task_Base::thr_count_dec");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_));
 
   this->thr_count_--;
 }
@@ -58,7 +62,11 @@ ACE_INLINE int
 ACE_Task_Base::grp_id (void) const
 {
   ACE_TRACE ("ACE_Task_Base::grp_id");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, const_cast <ACE_Thread_Mutex&>(this->lock_), -1));
+  ACE_MT
+    (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                       ace_mon,
+                       const_cast <ACE_Recursive_Thread_Mutex&>(this->lock_),
+                       -1));
   return this->grp_id_;
 }
 
@@ -68,7 +76,7 @@ ACE_INLINE void
 ACE_Task_Base::grp_id (int identifier)
 {
   ACE_TRACE ("ACE_Task_Base::grp_id");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_));
 
   // Cache the group id in the task and then set it in the
   // Thread_Manager, if there is one.

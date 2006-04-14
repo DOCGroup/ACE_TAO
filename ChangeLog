@@ -1,3 +1,35 @@
+Fri Apr 14 15:53:21 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Updated to reflect the changes and fixes below.
+
+        * ace/Task.{h inl cpp}: Change ACE_Task::lock_ from ACE_Thread_Mutex
+          to ACE_Recursive_Thread_Mutex, and hold lock_ across call to
+          ACE_Task::close() in ACE_Task_Base::cleanup(). This guards against
+          multiple threads in close() seeing a 0 thr_count() and acting on it.
+          Thanks to Howard Finer <hfiner at sonusnet dot com> for this fix.
+          Fixes Bugzilla #2339.
+
+        * ace/SOCK_Stream.h: Explain more about how the *_n methods work and
+          how to use the timeout and bytes_transferred arguments.
+
+        * examples/Threads/task_three.cpp: Change name of the file static
+          ACE_Thread_Mutex from lock_ to Lock to avoid clashing with the
+          ACE_Task-inherited member lock_.
+
+        * ace/SSL/SSL_Asynch_Stream.{h cpp}: Changes that allow
+          ACE_SSL_Asynch_Stream objects to be instantiated; required adding
+          an implementation of the pure virtual implementation() method
+          inherited from ACE_Asynch_Operation.
+          Also moved the declaration of the ACE_SSL_Asynch_Read_Stream_Result,
+          ACE_SSL_Asynch_Write_Stream_Result, and ACE_SSL_Asynch_Result classes
+          from the .cpp file to the .h file so applications can see them.
+          Also corrected and enhanced a lot of the documentation.
+
+        * tests/SSL/tests.mpc:
+        * tests/SSL/Makefile.am:
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp: Added a new test that at least
+          tests building an application to use ACE_SSL_Asynch_Stream.
+
 Fri Apr 14 14:57:12 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/msvc_static_compile.pl:
