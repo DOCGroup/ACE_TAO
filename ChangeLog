@@ -1,14 +1,24 @@
+Fri Apr 14 14:57:12 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/msvc_static_compile.pl:
+
+          Added a work-around for devenv using the solution file to build
+          additional projects even when the .vcproj is specified.  This only
+          happens when using the -CORE option to this script.  First, all
+          .sln files are temporarily renamed and then named back when the
+          build is done or a SIGINT or SIGTERM is detected.
+
 Wed Apr 12 14:48:38 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_component_dnc.mpb
-        
+
           Fixes for linking errors in OS X.
 
 Tue Apr 11 20:06:12 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/OS_NS_stdio.inl (rewind): Replaced SetFilePointer() with
-	  fseek() on WinCE since it works better.  Thanks to Andrey
- 	  Nechypurenko for reporting this.
+        * ace/OS_NS_stdio.inl (rewind): Replaced SetFilePointer() with
+          fseek() on WinCE since it works better.  Thanks to Andrey
+          Nechypurenko for reporting this.
 
 Wed Apr 12 08:14:00 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
