@@ -1,0 +1,20 @@
+// -*- MPC -*-
+//
+// $Id$
+
+project(*Server): taoserver, valuetype {
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, valuetype, typecodefactory, ifr_client {
+
+  Source_Files {
+    TestC.cpp
+    NonRecursiveC.cpp
+    client.cpp
+  }
+}
+

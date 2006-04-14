@@ -1,0 +1,5 @@
+workspace {
+  ../ace
+  ../apps/gperf
+  TAO_IDL
+} 

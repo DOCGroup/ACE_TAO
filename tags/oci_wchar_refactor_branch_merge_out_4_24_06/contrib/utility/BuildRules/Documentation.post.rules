@@ -1,0 +1,35 @@
+# file      : BuildRules/Documentation.post.rules
+# author    : Boris Kolpackov <boris@kolpackov.net>
+# copyright : Copyright (c) 2002-2003 Boris Kolpackov
+# license   : http://kolpackov.net/license.html
+
+#
+# Note: normally you wouldn't want to change anything below.
+#
+
+#
+# Pattern rules catalog.
+# {
+
+# Defined pattern rule to build .hpp.html from .hpp
+%.html : %
+	$(DOC) $(DOC_FLAGS) -o $@ $<
+
+# }
+
+# The following rule will inhibit treatment of documentation as
+# default target.
+.PHONY : all
+all: ;@:
+
+.PHONY : documentation
+documentation : $(patsubst %,%.html,$(doc_translation_units))
+
+# Defines a phony target to clean all what's been generated
+.PHONY : clean
+clean :
+	-rm -f $(patsubst %,%.html,$(doc_translation_units))
+
+# The following catch-all rule will skip unknown targets
+%:: ;@:
+# $Id$
