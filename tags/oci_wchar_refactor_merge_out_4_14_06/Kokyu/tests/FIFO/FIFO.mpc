@@ -1,0 +1,6 @@
+//  -*- MPC -*-
+// $Id$
+
+project: kokyu {
+  exename = FIFO
+}

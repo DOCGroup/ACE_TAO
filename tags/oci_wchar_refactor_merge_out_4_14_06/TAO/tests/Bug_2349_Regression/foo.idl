@@ -1,0 +1,6 @@
+// $Id$
+
+interface foo
+{
+  oneway void shutdown ();
+};
