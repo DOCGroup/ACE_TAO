@@ -26,6 +26,17 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 . Fixed ACE_SSL_Context::private_key(), context(), and dh_params() methods
   to allow retrying a file load after a failed call.
 
+. Fixed ACE_SSL_Asynch_Stream so it can be instantiated; also moved the
+  declarations for ACE_SSL_Asynch_Read_Stream_Result,
+  ACE_SSL_Asynch_Write_Stream_Result, and ACE_SSL_Asynch_Result classes
+  to the ace/SSL/SSL_Asynch_Stream.h file so applications can see them.
+
+. The ACE_Task class's internal lock_ member was changed from an
+  ACE_Thread_Mutex to ACE_Recursive_Thread_Mutex. Additionally, the lock
+  is now held by ACE across the call to a task's close() hook when a thread
+  is shutting down to prevent a race condition where multiple threads may
+  think they are the last thread (Bugzilla #2339).
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
 ====================================================
 
