@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -l .. -p Benchmark -i -c RoundTrip"
 
 project(RoundTrip_stub): ciao_client_dnc {
+  avoids += ace_for_tao
   after += Benchmark_stub
   sharedname = RoundTrip_stub
 
@@ -24,6 +25,7 @@ project(RoundTrip_stub): ciao_client_dnc {
 }
 
 project(RoundTrip_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after += Benchmark_svnt RoundTrip_stub
   sharedname  = RoundTrip_svnt
 
@@ -53,6 +55,7 @@ project(RoundTrip_svnt) : ciao_servant_dnc {
 
 
 project(RoundTrip_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
   after += RoundTrip_svnt
   sharedname = RoundTrip_exec
 
@@ -77,6 +80,7 @@ project(RoundTrip_exec) : ciao_component_dnc {
 
 
 project (RoundTrip_client) : ciao_client_dnc, valuetype, strategies{
+  avoids += ace_for_tao
   exename = client
   after += RoundTrip_stub
   libs += RoundTrip_stub Benchmark_stub
