@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p HUDisplay GPS"
 
 project(GPS_DnC_stub): ciao_client_dnc {
+  avoids += ace_for_tao
   after += HUDisplay_DnC_stub
   sharedname = GPS_DnC_stub
   idlflags += -Wb,stub_export_macro=GPS_STUB_Export -Wb,stub_export_include=GPS_stub_export.h -Wb,skel_export_macro=GPS_SVNT_Export -Wb,skel_export_include=GPS_svnt_export.h
@@ -19,6 +20,7 @@ project(GPS_DnC_stub): ciao_client_dnc {
 }
 
 project(GPS_DnC_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after += GPS_DnC_svnt GPS_DnC_stub HUDisplay_DnC_svnt
   sharedname  = GPS_DnC_svnt
   libs    += GPS_DnC_stub HUDisplay_DnC_stub HUDisplay_DnC_svnt
@@ -43,6 +45,7 @@ project(GPS_DnC_svnt) : ciao_servant_dnc {
 
 
 project(GPS_DnC_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
   after   += GPS_DnC_svnt
   sharedname = GPS_DnC_exec
   libs      += GPS_DnC_stub GPS_DnC_svnt HUDisplay_DnC_stub HUDisplay_DnC_svnt
