@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p HUDisplay RateGen"
 
 project(RateGen_DnC_stub): ciao_client_dnc {
+  avoids += ace_for_tao
   after += HUDisplay_DnC_stub
   sharedname = RateGen_DnC_stub
   idlflags += -Wb,stub_export_macro=RATEGEN_STUB_Export -Wb,stub_export_include=RateGen_stub_export.h -Wb,skel_export_macro=RATEGEN_SVNT_Export -Wb,skel_export_include=RateGen_svnt_export.h
@@ -17,6 +18,7 @@ project(RateGen_DnC_stub): ciao_client_dnc {
 }
 
 project(RateGen_DnC_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after += HUDisplay_DnC_svnt RateGen_DnC_stub
   sharedname  = RateGen_DnC_svnt
   libs    += RateGen_DnC_stub HUDisplay_DnC_stub HUDisplay_DnC_svnt
@@ -41,6 +43,7 @@ project(RateGen_DnC_svnt) : ciao_servant_dnc {
 
 
 project(RateGen_DnC_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
   after   += RateGen_DnC_svnt
   sharedname = RateGen_DnC_exec
   libs      += RateGen_DnC_stub RateGen_DnC_svnt HUDisplay_DnC_stub HUDisplay_DnC_svnt
@@ -60,19 +63,20 @@ project(RateGen_DnC_exec) : ciao_component_dnc {
 
 
 
-   project (RateGen_DnC_controller) : ciao_client_dnc, valuetype {
-   exename = controller
-   after += RateGen_DnC_stub
-  libs += RateGen_DnC_stub HUDisplay_DnC_stub
-   libpaths += ..
+project (RateGen_DnC_controller) : ciao_client_dnc, valuetype {
+  avoids += ace_for_tao
+    exename = controller
+    after += RateGen_DnC_stub
+    libs += RateGen_DnC_stub HUDisplay_DnC_stub
+    libpaths += ..
 
-   IDL_Files {
-			        }
+    IDL_Files {
+    }
 
   Source_Files {
-      controller.cpp
-        }
+    controller.cpp
+  }
 }
-					
+
 
 

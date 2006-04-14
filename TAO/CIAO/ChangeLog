@@ -1,3 +1,17 @@
+Fri Apr 14 14:50:47 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Display/RateGen/RateGen.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        * tests/Minimum/Receiver/Receiver.mpc:
+
+          Avoids building with ace_for_tao.
+
 Thu Apr 13 19:18:22 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * docs/tutorials/Quoter/Simple/Broker/Broker.mpc:

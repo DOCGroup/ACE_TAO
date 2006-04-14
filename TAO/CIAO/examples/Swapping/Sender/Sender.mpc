@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Sender"
 
 project(HelloB_Sender_DnC_Upgradeable_stub): ciao_client_dnc {
+  avoids += ace_for_tao
   after += Hello_Base_DnC_Upgradeable_stub
   sharedname = Sender_DnC_Upgradeable_stub
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export -Wb,stub_export_include=Sender_stub_export.h -Wb,skel_export_macro=SENDER_SVNT_Export -Wb,skel_export_include=Sender_svnt_export.h
@@ -19,6 +20,7 @@ project(HelloB_Sender_DnC_Upgradeable_stub): ciao_client_dnc {
 }
 
 project(HelloB_Sender_DnC_Upgradeable_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after += Hello_Base_DnC_Upgradeable_svnt \
            HelloB_Sender_DnC_Upgradeable_stub
   sharedname  = Sender_DnC_Upgradeable_svnt
@@ -46,6 +48,7 @@ project(HelloB_Sender_DnC_Upgradeable_svnt) : ciao_servant_dnc {
 }
 
 project(HelloB_Sender_DnC_Upgradeable_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
   after   += HelloB_Sender_DnC_Upgradeable_svnt
   sharedname = Sender_DnC_Upgradeable_exec
   libs      += Sender_DnC_Upgradeable_stub Sender_DnC_Upgradeable_svnt Hello_Base_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_svnt
@@ -62,6 +65,7 @@ project(HelloB_Sender_DnC_Upgradeable_exec) : ciao_component_dnc {
 }
 
 project(HelloB_Sender_DnC_Upgradeable_exec_1) : ciao_component_dnc {
+  avoids += ace_for_tao
   after   += HelloB_Sender_DnC_Upgradeable_svnt \
              HelloB_Sender_DnC_Upgradeable_exec
   sharedname = Sender_DnC_Upgradeable_exec_1
@@ -82,6 +86,7 @@ project(HelloB_Sender_DnC_Upgradeable_exec_1) : ciao_component_dnc {
 }
 
 project(HelloB_Sender_DnC_Upgradeable_exec_2) : ciao_component_dnc {
+  avoids += ace_for_tao
   after   += HelloB_Sender_DnC_Upgradeable_svnt \
              HelloB_Sender_DnC_Upgradeable_exec
   sharedname = Sender_DnC_Upgradeable_exec_2
@@ -102,6 +107,7 @@ project(HelloB_Sender_DnC_Upgradeable_exec_2) : ciao_component_dnc {
 }
 
 project (Hello_DnC_Upgradeable_Starter) : ciao_client_dnc, valuetype{
+  avoids += ace_for_tao
   exename = Upgradeable_starter
   after += HelloB_Sender_DnC_Upgradeable_stub
   libs += Sender_DnC_Upgradeable_stub Hello_Base_DnC_Upgradeable_stub

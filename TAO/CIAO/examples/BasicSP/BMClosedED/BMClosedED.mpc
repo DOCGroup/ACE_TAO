@@ -3,6 +3,7 @@
 // This file has been manually modified to add a second component implementation.
 
 project(BMClosedED_DnC_stub): ciao_client_dnc {
+  avoids += ace_for_tao
   after += BasicSP_DnC_stub
   sharedname = BMClosedED_stub
 
@@ -25,6 +26,7 @@ project(BMClosedED_DnC_stub): ciao_client_dnc {
 }
 
 project(BMClosedED_DnC_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after += BasicSP_DnC_svnt BMClosedED_DnC_stub
 
   sharedname = BMClosedED_svnt
@@ -56,6 +58,7 @@ project(BMClosedED_DnC_svnt) : ciao_servant_dnc {
 
 
 project(BMClosedED_DnC_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
   after      += BMClosedED_DnC_svnt
 
   sharedname = BMClosedED_exec
