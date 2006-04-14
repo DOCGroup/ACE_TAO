@@ -8,25 +8,9 @@ ACE_RCSID (ACE_SSL,
 #if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 
 #if defined (ACE_WIN32)
-
-# define A_RESULT     ACE_WIN32_Asynch_Result
-# define ARS_RESULT   ACE_WIN32_Asynch_Read_Stream_Result
-# define AWS_RESULT   ACE_WIN32_Asynch_Write_Stream_Result
-
-# define ERR_CANCELED ERROR_OPERATION_ABORTED
-
 # include "ace/WIN32_Proactor.h"
-
 #else
-
-# define A_RESULT     ACE_POSIX_Asynch_Result
-# define ARS_RESULT   ACE_POSIX_Asynch_Read_Stream_Result
-# define AWS_RESULT   ACE_POSIX_Asynch_Write_Stream_Result
-
-# define ERR_CANCELED ECANCELED
-
 # include "ace/POSIX_Proactor.h"
-
 #endif  /* ACE_WIN32 */
 
 #include "ace/OS_NS_string.h"
@@ -35,28 +19,6 @@ ACE_RCSID (ACE_SSL,
 #include <openssl/err.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// ************************************************************
-//  SSL Asynchronous Write Result
-// ************************************************************
-
-class ACE_SSL_Asynch_Write_Stream_Result
-  : public AWS_RESULT
-{
-  /// Factory class will have special permissions.
-  friend class ACE_SSL_Asynch_Stream;
-
-protected:
-
-  ACE_SSL_Asynch_Write_Stream_Result (ACE_Handler &handler,
-                                      ACE_HANDLE handle,
-                                      ACE_Message_Block &message_block,
-                                      size_t bytes_to_read,
-                                      const void* act,
-                                      ACE_HANDLE event,
-                                      int priority,
-                                      int signal_number);
-};
 
 ACE_SSL_Asynch_Write_Stream_Result::ACE_SSL_Asynch_Write_Stream_Result
   (ACE_Handler &       handler,
@@ -80,29 +42,6 @@ ACE_SSL_Asynch_Write_Stream_Result::ACE_SSL_Asynch_Write_Stream_Result
 {
 }
 
-// ************************************************************
-//  SSL Asynchronous Read Result
-// ************************************************************
-class ACE_SSL_Asynch_Read_Stream_Result
-  : public ARS_RESULT
-{
-  /// Factory class will have special permissions.
-  friend class ACE_SSL_Asynch_Stream;
-
-protected:
-
-  ACE_SSL_Asynch_Read_Stream_Result (ACE_Handler &handler,
-                                     ACE_HANDLE handle,
-                                     ACE_Message_Block &message_block,
-                                     size_t bytes_to_read,
-                                     const void* act,
-                                     ACE_HANDLE event,
-                                     int priority,
-                                     int signal_number);
-};
-
-
-
 ACE_SSL_Asynch_Read_Stream_Result::ACE_SSL_Asynch_Read_Stream_Result
   (ACE_Handler &        handler,
    ACE_HANDLE           handle,
@@ -125,23 +64,7 @@ ACE_SSL_Asynch_Read_Stream_Result::ACE_SSL_Asynch_Read_Stream_Result
 {
 }
 
-
-// ************************************************************
-//   Faked Result. It is used for close notification
-// ************************************************************
-class ACE_SSL_Asynch_Result : public A_RESULT
-{
-public:
-    ACE_SSL_Asynch_Result (ACE_Handler & handler);
-
-    void complete (size_t bytes_transferred,
-                   int    success,
-                   const  void * completion_key,
-                   u_long error);
-};
-
-ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result
-  (ACE_Handler & handler)
+ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result (ACE_Handler & handler)
   : A_RESULT (handler.proxy (),
               0,          // act,
               ACE_INVALID_HANDLE,
@@ -163,7 +86,7 @@ ACE_SSL_Asynch_Result::complete (size_t /* bytes_transferred */,
 }
 
 // ************************************************************
-//  ACE_SSL_Asynch_Stream Constructor / Desctructor
+//  ACE_SSL_Asynch_Stream Constructor / Destructor
 // ************************************************************
 ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Asynch_Stream::Stream_Type s_type,
@@ -383,13 +306,6 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
   return 0;
 }
 
-void
-ACE_SSL_Asynch_Stream::open (ACE_HANDLE new_handle,
-                             ACE_Message_Block &block)
-{
-  ACE_Service_Handler::open (new_handle,
-                             block);
-}
 
 // ************************************************************
 //  Asynch_Operation interface

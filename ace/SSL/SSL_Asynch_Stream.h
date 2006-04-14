@@ -29,13 +29,101 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 
+/*
+ * This facility doesn't follow the normal ACE asynch I/O support classes'
+ * interface/implementation arrangement. It's not needed because rather than
+ * branching off to platform-specific APIs, all platforms use the OpenSSL
+ * API. Thus, you can think of this class as the implementation class (for
+ * OpenSSL) and there's no separate interface class.
+ * Also, since both read and write operations are defined in one I/O
+ * factory, there's no single Result class defined as there is for
+ * ACE_Asynch_Read_Stream, et al. There are separate result classes defined
+ * for read and write operations.
+ */
+
+#if defined (ACE_WIN32)
+#  include "ace/WIN32_Asynch_IO.h"
+typedef ACE_WIN32_Asynch_Result              A_RESULT;
+typedef ACE_WIN32_Asynch_Read_Stream_Result  ARS_RESULT;
+typedef ACE_WIN32_Asynch_Write_Stream_Result AWS_RESULT;
+
+# define ERR_CANCELED ERROR_OPERATION_ABORTED
+
+#else
+#  include "ace/POSIX_Asynch_IO.h"
+typedef ACE_POSIX_Asynch_Result              A_RESULT;
+typedef ACE_POSIX_Asynch_Read_Stream_Result  ARS_RESULT;
+typedef ACE_POSIX_Asynch_Write_Stream_Result AWS_RESULT;
+
+# define ERR_CANCELED ECANCELED
+
+#endif  /* ACE_WIN32 */
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Forward declarations
-class ACE_SSL_Asynch_Result;
-class ACE_SSL_Asynch_Read_Stream_Result;
-class ACE_SSL_Asynch_Write_Stream_Result;
+class ACE_SSL_Asynch_Stream;     // Forward decl for use in result class def.
+
+/**
+ * @class ACE_SSL_Asynch_Read_Stream_Result
+ *
+ * Result class that communicates result of read operations initiated on
+ * an ACE_SSL_Asynch_Stream object.
+ */
+class ACE_SSL_Asynch_Read_Stream_Result : public ARS_RESULT
+{
+  /// Factory class will have special permissions.
+  friend class ACE_SSL_Asynch_Stream;
+
+protected:
+  ACE_SSL_Asynch_Read_Stream_Result (ACE_Handler &handler,
+                                     ACE_HANDLE handle,
+                                     ACE_Message_Block &message_block,
+                                     size_t bytes_to_read,
+                                     const void* act,
+                                     ACE_HANDLE event,
+                                     int priority,
+                                     int signal_number);
+};
+
+/**
+ * @class ACE_SSL_Asynch_Write_Stream_Result
+ *
+ * Result class that communicates result of write operations initiated on
+ * an ACE_SSL_Asynch_Stream object.
+ */
+class ACE_SSL_Asynch_Write_Stream_Result : public AWS_RESULT
+{
+  /// Factory class will have special permissions.
+  friend class ACE_SSL_Asynch_Stream;
+
+protected:
+  ACE_SSL_Asynch_Write_Stream_Result (ACE_Handler &handler,
+                                      ACE_HANDLE handle,
+                                      ACE_Message_Block &message_block,
+                                      size_t bytes_to_read,
+                                      const void* act,
+                                      ACE_HANDLE event,
+                                      int priority,
+                                      int signal_number);
+};
+
+
+/**
+ * @class ACE_SSL_Asynch_Result
+ *
+ * Result class that is used internally for socket close notifications.
+ */
+class ACE_SSL_Asynch_Result : public A_RESULT
+{
+public:
+    ACE_SSL_Asynch_Result (ACE_Handler &handler);
+
+    void complete (size_t bytes_transferred,
+                   int    success,
+                   const  void * completion_key,
+                   u_long error);
+};
 
 
 // Only provide forward declarations to prevent possible abuse of the
@@ -45,19 +133,17 @@ struct ACE_SSL_Asynch_Stream_Accessor;
 /**
  * @class ACE_SSL_Asynch_Stream
  *
- * @brief This class is a factory for starting off asynchronous reads
- * on a stream. This class forwards all methods to its
- * implementation class.
- * @par
- * Once open() is called, multiple asynchronous read()s can
- * started using this class.  An ACE_SSL_Asynch_Stream::Result
- * will be passed back to the @param handler when the asynchronous
- * reads completes through the ACE_Handler::handle_read_stream
- * callback.
+ * @brief This class is a factory for initiating asynchronous reads
+ * and writes on an SSL stream.
+ *
+ * Once open() is called, multiple asynchronous read and write operations
+ * can be started using this class.  The handler object (derived from
+ * ACE_Handler) specified in open() will receive completion events for the
+ * operations initiated via this class.
  */
 class ACE_SSL_Export ACE_SSL_Asynch_Stream
   : public ACE_Asynch_Operation,
-    public ACE_Service_Handler
+    public ACE_Handler
 {
 public:
 
@@ -79,13 +165,15 @@ public:
       ST_SERVER = 0x0002
     };
 
-  /// The constructor.
+  /// Constructor.
   /**
-   * @param context Pointer to @c ACE_SSL_Context instance containing
-   *                the OpenSSL @c SSL data structure to be associated
-   *                with this @c ACE_SSL_SOCK_Stream.  The @c SSL data
-   *                structure will be copied to make it at least
-   *                logically independent of the supplied @a context.
+   * @arg context  Pointer to an ACE_SSL_Context instance containing
+   *               the OpenSSL information to be associated with this
+   *               ACE_SSL_Asynch_Stream.  The needed SSL data will be
+   *               copied before return. Therefore, this object can be
+   *               reused, modified, or deleted upon return. If a 0 pointer
+   *               is passed, the ACE_SSL_Context::instance() method will
+   *               be called to get access to a singleton.
    */
   ACE_SSL_Asynch_Stream (Stream_Type s_type = ST_SERVER,
                          ACE_SSL_Context * context = 0);
@@ -93,28 +181,92 @@ public:
   /// Destructor
   virtual ~ACE_SSL_Asynch_Stream (void);
 
-  int cancel(void);
+  int cancel (void);
 
   int close (void);
 
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.
+   *
+   * @arg handler The ACE_Handler that will be called to handle completions
+   *              for operations initiated using this factory.
+   * @arg handle  The handle that future read/write operations will use.
+   *
+   * @retval 0    for success.
+   * @retval -1   for failure; consult @c errno for further information.
+   */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
             const void *completion_key = 0,
             ACE_Proactor *proactor = 0);
 
-  /// NOTE: This method has been specifically put in place so that
-  /// compilers like the borland doesnt get confused between the above
-  /// open () call with the one in the ACE_Service_Handler, from which
-  /// this class is derived from..
-  void open (ACE_HANDLE new_handle,
-             ACE_Message_Block &message_block);
-
+  /**
+   * Initiates an asynchronous read. If the operation is successfully
+   * initiated, the handle_read_stream() method will be called on the
+   * ACE_Handler object passed to open() when the operation completes.
+   * Data is read into the specified ACE_Message_Block beginning at its
+   * write pointer; the block's write pointer is updated to reflect any
+   * added data when the operation completes.
+   *
+   * @arg message_block      The specified ACE_Message_Block will receive any
+   *                         data that is read. Data will be read into the
+   *                         block beginning at the block's write pointer.
+   * @arg num_bytes_to_read  The maximum number of bytes to read. The actual
+   *                         amount read may be less.
+   * @arg act                ACT which is passed to the completion handler in
+   *                         the result object.
+   * @arg priority           Specifies the operation priority. This has an
+   *                         affect on POSIX only. Works like @i nice in Unix.
+   *                         Negative values are not allowed. 0 means priority
+   *                         of the operation same as the process priority.
+   *                         1 means priority of the operation is one less than
+   *                         process, and so forth. This parameter has no
+   *                         affect on Win32.
+   * @arg signal_number      The POSIX4 real-time signal number to be used
+   *                         for the operation. signal_number ranges from
+   *                         ACE_SIGRTMIN to ACE_SIGRTMAX. This argument is
+   *                         unused on non-POSIX4 systems.
+   *
+   * @retval 0    for success.
+   * @retval -1   for failure; consult @c errno for further information.
+   */
   int read (ACE_Message_Block &message_block,
             size_t num_bytes_to_read,
             const void *act = 0,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
+  /**
+   * Initiates an asynchronous write. If the operation is successfully
+   * initiated, the handle_write_stream() method will be called on the
+   * ACE_Handler object passed to open() when the operation completes.
+   * Data is taken from the specified ACE_Message_Block beginning at its
+   * read pointer; the block's read pointer is updated to reflect any
+   * data successfully sent when the operation completes.
+   *
+   * @arg message_block      The specified ACE_Message_Block is the source of
+   *                         data that is written. Data will be taken from the
+   *                         block beginning at the block's read pointer.
+   * @arg bytes_to_write     The maximum number of bytes to write. The actual
+   *                         amount written may be less.
+   * @arg act                ACT which is passed to the completion handler in
+   *                         the result object.
+   * @arg priority           Specifies the operation priority. This has an
+   *                         affect on POSIX only. Works like @i nice in Unix.
+   *                         Negative values are not allowed. 0 means priority
+   *                         of the operation same as the process priority.
+   *                         1 means priority of the operation is one less than
+   *                         process, and so forth. This parameter has no
+   *                         affect on Win32.
+   * @arg signal_number      The POSIX4 real-time signal number to be used
+   *                         for the operation. signal_number ranges from
+   *                         ACE_SIGRTMIN to ACE_SIGRTMAX. This argument is
+   *                         unused on non-POSIX4 systems.
+   *
+   * @retval 0    for success.
+   * @retval -1   for failure; consult @c errno for further information.
+   */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
              const void *act = 0,
@@ -122,8 +274,11 @@ public:
              int signal_number = ACE_SIGRTMIN);
 
 protected:
+  /// Virtual from ACE_Asynch_Operation. Since this class is essentially an
+  /// implementation class, simply return 0.
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const { return 0; }
 
-  /// virtual from ACE_Service_Handler
+  /// virtual from ACE_Handler
 
   /// This method is called when BIO write request is completed. It
   /// processes the IO completion and calls do_SSL_state_machine().
