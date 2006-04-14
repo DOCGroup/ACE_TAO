@@ -10,7 +10,6 @@
 # include "tao/AnyTypeCode/Fixed_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class RefCountPolicy>
 bool
@@ -108,6 +107,5 @@ TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i (
   return this->scale_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_FIXED_TYPECODE_CPP */

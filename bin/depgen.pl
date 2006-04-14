@@ -108,8 +108,7 @@ sub usageAndExit {
         "Usage: $base [-D<MACRO>[=VALUE]] [-I<include dir>] [-A] " .
         "[-R <VARNAME>]\n" .
         "       " . (" " x length($base)) .
-        " [-e <file>] [-f <output file>] [-i] [-t <type>] [-n]\n" .
-        "       " . (" " x length($base)) . " <files...>\n" .
+        " [-e <file>] [-f <output file>] [-t <type>] [-n] <files...>\n" .
         "\n" .
         "-D   This option sets a macro to an optional value.\n" .
         "-I   The -I option adds an include directory.\n" .
@@ -120,7 +119,6 @@ sub usageAndExit {
         "itself.\n" .
         "-f   Specifies the output file.  This file will be edited if it " .
         "already\n     exists.\n" .
-        "-i   Do not print an error if no source files are provided.\n" .
         "-n   Do not include inline files (ending in .i or .inl) in the " .
         "dependencies.\n" .
         "-t   Use specified type (";
@@ -171,7 +169,7 @@ my(@ipaths)   = ();
 my(%replace)  = ();
 my(%exclude)  = ();
 my($output)   = '-';
-my($needsrc)  = 1;
+
 
 if (defined $ENV{ACE_ROOT} && !defined $ENV{TAO_ROOT}) {
   $ENV{TAO_ROOT} = "$ENV{ACE_ROOT}/TAO";
@@ -223,9 +221,6 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       usageAndExit($base, 'Invalid use of -f');
     }
   }
-  elsif ($arg eq '-i') {
-    $needsrc = undef;
-  }
   elsif ($arg eq '-n') {
     $noinline = 1;
   }
@@ -252,9 +247,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 }
 
 if (!defined $files[0]) {
-  if ($needsrc) {
-    usageAndExit($base, 'No files specified');
-  }
+  usageAndExit($base, 'No files specified');
 }
 
 my($editor) = new DependencyEditor();

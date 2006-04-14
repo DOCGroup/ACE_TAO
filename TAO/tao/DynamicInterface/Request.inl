@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 void
 CORBA::release (CORBA::Request_ptr x)
@@ -198,5 +196,3 @@ CORBA::Request::response_received (void)
 
   return this->response_received_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

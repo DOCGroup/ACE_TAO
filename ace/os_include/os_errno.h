@@ -29,9 +29,9 @@
 #endif /* !ACE_LACKS_ERRNO_H */
 
 // Needed for VxWorks to pickup errnoSet()
-#if defined (ACE_VXWORKS)
+#if defined (VXWORKS)
 #include /**/ <errnoLib.h>
-#endif /* ACE_VXWORKS */
+#endif /* VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

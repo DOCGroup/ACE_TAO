@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_VAR_ARRAY_ARGUMENT_T_CPP
-#define TAO_VAR_ARRAY_ARGUMENT_T_CPP
+#ifndef TAO_VAR_ARRAY_ARGUMENT_T_C
+#define TAO_VAR_ARRAY_ARGUMENT_T_C
 
 #include "tao/Var_Array_Argument_T.h"
 
@@ -9,7 +9,9 @@
 #include "tao/Var_Array_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Var_Array_Argument_T,
+           "$Id$")
 
 template<typename S,
          typename S_slice,
@@ -160,6 +162,4 @@ interceptor_value (CORBA::Any *any) const
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_VAR_ARRAY_ARGUMENT_T_CPP */
+#endif /* TAO_VAR_ARRAY_ARGUMENT_T_C */

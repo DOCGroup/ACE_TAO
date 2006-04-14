@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/Operation_Table_Dynamic_Hash.h"
+#include "Operation_Table_Dynamic_Hash.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
 
@@ -28,8 +28,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
                                   TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // constructor
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
@@ -130,4 +128,3 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
   return retval;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

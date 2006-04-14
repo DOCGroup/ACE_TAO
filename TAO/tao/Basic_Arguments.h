@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,8 +24,6 @@
 
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -66,7 +64,7 @@ namespace TAO
 
   template<>
   class TAO_Export Arg_Traits<CORBA::UShort>
-    : public Basic_Arg_Traits_T<CORBA::UShort, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::UShort> >
+    : public Basic_Arg_Traits_T<CORBA::UShort, TAO::Any_Insert_Policy_Stream <CORBA::UShort> >
   {
   };
 
@@ -78,38 +76,36 @@ namespace TAO
 
   template<>
   class TAO_Export Arg_Traits<CORBA::Float>
-    : public Basic_Arg_Traits_T<CORBA::Float, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Float> >
+    : public Basic_Arg_Traits_T<CORBA::Float, TAO::Any_Insert_Policy_Stream <CORBA::Float> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::Double>
-    : public Basic_Arg_Traits_T<CORBA::Double, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Double> >
+    : public Basic_Arg_Traits_T<CORBA::Double, TAO::Any_Insert_Policy_Stream <CORBA::Double> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::LongLong>
-    : public Basic_Arg_Traits_T<CORBA::LongLong, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::LongLong> >
+    : public Basic_Arg_Traits_T<CORBA::LongLong, TAO::Any_Insert_Policy_Stream <CORBA::LongLong> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::ULongLong>
     : public Basic_Arg_Traits_T<CORBA::ULongLong,
-                                TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::ULongLong> >
+                                TAO::Any_Insert_Policy_Stream <CORBA::ULongLong> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::LongDouble>
     : public Basic_Arg_Traits_T<CORBA::LongDouble,
-                                TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::LongDouble> >
+                                TAO::Any_Insert_Policy_Stream <CORBA::LongDouble> >
   {
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

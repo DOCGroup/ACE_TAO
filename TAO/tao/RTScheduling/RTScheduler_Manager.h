@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   RTScheduler_Manager.h
@@ -14,10 +13,9 @@
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H
 #define TAO_PRIORITY_MAPPING_MANAGER_H
 
-#include "tao/RTScheduling/RTScheduler.h"
+#include "RTScheduler.h"
 #include "tao/LocalObject.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
@@ -134,10 +132,8 @@ private:
   TAO_RTScheduler_Manager_ptr &ptr_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "tao/RTScheduling/RTScheduler_Manager.i"
+#include "RTScheduler_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PRIORITY_MAPPING_MANAGER_H */

@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig {
+project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache, pkgconfig {
   avoids       = ace_for_tao
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
@@ -24,9 +24,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Active_Map_Manager.cpp
     Addr.cpp
     Arg_Shifter.cpp
-    ARGV.cpp
     Argv_Type_Converter.cpp
-    Assert.cpp
     Asynch_IO.cpp
     Asynch_IO_Impl.cpp
     Asynch_Pseudo_Task.cpp
@@ -58,8 +56,8 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Connection_Recycling_Strategy.cpp
     Container_Instantiations.cpp
     Containers.cpp
-    Copy_Disabled.cpp
     Countdown_Time.cpp
+    Copy_Disabled.cpp
     Date_Time.cpp
     DEV.cpp
     DEV_Addr.cpp
@@ -90,6 +88,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     gethrtime.cpp
     Handle_Ops.cpp
     Handle_Set.cpp
+    Hash_Map_Manager.cpp
     Hashable.cpp
     High_Res_Timer.cpp
     ICMP_Socket.cpp
@@ -388,7 +387,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Exception_Macros.h
     Global_Macros.h
     Guard_T.h
-    Hash_Map_Manager.h
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
@@ -425,17 +423,14 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Synch_Traits.h
     TSS_T.h
     Timer_Queuefwd.h
-    Truncate.h
     UPIPE_Addr.h
     Value_Ptr.h
     Version.h
-    Versioned_Namespace.h
     ace_wchar.h
     config-WinCE.h
     config-all.h
     config-borland-common.h
     config-lite.h
-    config-macros.h
     config-minimal.h
     config-win32-borland.h
     config-win32-common.h

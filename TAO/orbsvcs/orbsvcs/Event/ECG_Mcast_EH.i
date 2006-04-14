@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_Mcast_EH::
@@ -59,5 +56,3 @@ Observer_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 //***************************************************************************
-
-TAO_END_VERSIONED_NAMESPACE_DECL

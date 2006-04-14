@@ -22,6 +22,7 @@
 
 #include "TAO_IFR_BE_Export.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
+#include "idl_bool.h"
 #include "tao/ORB.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
@@ -51,8 +52,8 @@ public:
 
   // Data accessors.
 
-  bool removing (void) const;
-  void removing (bool value);
+  idl_bool removing (void) const;
+  void removing (idl_bool value);
 
   CORBA::ORB_ptr orb (void) const;
   void orb (CORBA::ORB_ptr orb);
@@ -73,11 +74,11 @@ public:
   const char *filename (void) const;
   void filename (char *fname);
 
-  bool enable_locking (void) const;
-  void enable_locking (bool value);
+  idl_bool enable_locking (void) const;
+  void enable_locking (idl_bool value);
 
-  bool do_included_files (void) const;
-  void do_included_files (bool val);
+  idl_bool do_included_files (void) const;
+  void do_included_files (idl_bool val);
 
   ACE_CString orb_args (void) const;
   void orb_args (const ACE_CString& args);
@@ -102,7 +103,7 @@ public:
   // Create an AST node generator.
 
 private:
-  bool removing_;
+  idl_bool removing_;
   // Are we removing IR objects from the repository?
 
   CORBA::ORB_var orb_;
@@ -124,10 +125,10 @@ private:
   char *filename_;
   // Name of the IDL file we are processing.
 
-  bool enable_locking_;
+  idl_bool enable_locking_;
   // Option to lock at the IDL file level.
 
-  bool do_included_files_;
+  idl_bool do_included_files_;
   // Option to process included IDL files.
 
   ACE_CString orb_args_;

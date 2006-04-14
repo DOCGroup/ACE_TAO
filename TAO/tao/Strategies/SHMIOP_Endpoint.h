@@ -25,13 +25,12 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 #include "tao/CORBA_String.h"
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/MEM_Addr.h"
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SHMIOP_Endpoint
@@ -136,10 +135,8 @@ private:
   TAO_SHMIOP_Endpoint *next_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/Strategies/SHMIOP_Endpoint.i"
+# include "SHMIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

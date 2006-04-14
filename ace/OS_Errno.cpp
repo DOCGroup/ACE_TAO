@@ -20,8 +20,6 @@ ACE_RCSID(ace, OS_Errno, "$Id$")
 
 #include "ace/OS_Memory.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_CE_Errno *ACE_CE_Errno::instance_ = 0;
 DWORD ACE_CE_Errno::errno_key_ = 0xffffffff;
 
@@ -40,7 +38,5 @@ ACE_CE_Errno::fini ()
   delete ACE_CE_Errno::instance_;
   ACE_CE_Errno::instance_ = 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */

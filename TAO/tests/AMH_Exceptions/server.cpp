@@ -3,6 +3,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "TestS.h"
+#include "ace/Argv_Type_Converter.h"
 
 /***************************/
 /*** Servant Declaration ***/
@@ -209,7 +210,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 {
   // If the ior_output_file exists, output the ior to it
   FILE *output_file= ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
-                                    "w");
+                                    ACE_TEXT("w"));
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -225,9 +226,12 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ST_AMH_Server amh_server (&argc, argv);
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  int& argc2 = convert.get_argc(); 
+  ST_AMH_Server amh_server (&argc2, convert.get_ASCII_argv());
 
   amh_server.start_orb_and_poa ();
 

@@ -48,9 +48,6 @@ PP_Test-stamp: $(srcdir)/PP_Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  PP_Test.idl
-
 ## Makefile.Pluggable_Client.am
 
 noinst_PROGRAMS = client

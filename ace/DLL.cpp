@@ -11,8 +11,6 @@
 
 ACE_RCSID(ace, DLL, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
@@ -136,7 +134,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
 
   if (!this->dll_name_)
     this->dll_name_ = ACE::strnew (dll_filename);
-
+  
   this->open_mode_ = open_mode;
   this->close_handle_on_destruction_ = close_handle_on_destruction;
 
@@ -240,5 +238,3 @@ ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
 
   return this->open_i (temp, 1, close_handle_on_destruction, handle);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

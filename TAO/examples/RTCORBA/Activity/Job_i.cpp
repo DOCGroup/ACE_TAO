@@ -23,7 +23,7 @@ Job_i::poa (void)
 }
 
 int
-Job_i::init (ACE_Arg_Shifter& arg_shifter)
+Job_i::init (ACE_TArg_Shifter<char>& arg_shifter)
 {
   job_name_ = arg_shifter.get_current (); // Read the name of the Job
   arg_shifter.consume_arg ();

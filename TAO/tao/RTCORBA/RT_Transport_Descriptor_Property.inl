@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_RT_Transport_Descriptor_Property::TAO_RT_Transport_Descriptor_Property (void)
@@ -53,5 +49,3 @@ TAO_RT_Transport_Descriptor_Banded_Connection_Property::init (CORBA::Short low_p
   this->low_priority_ = low_priority;
   this->high_priority_ = high_priority;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

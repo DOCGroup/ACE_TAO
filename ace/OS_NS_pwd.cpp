@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_pwd.h"

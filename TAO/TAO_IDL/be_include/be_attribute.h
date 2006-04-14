@@ -36,11 +36,11 @@ public:
   be_attribute (void);
   // Default constructor.
 
-  be_attribute (bool ro,
+  be_attribute (idl_bool ro,
                 AST_Type *ft,
                 UTL_ScopedName *n,
-                bool local,
-                bool abstract);
+                idl_bool local,
+                idl_bool abstract);
   // Constructor.
 
   // Visiting.

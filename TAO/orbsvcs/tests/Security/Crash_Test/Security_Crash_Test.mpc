@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): taoexe, portableserver, ssliop, pi_server, codecfactory, interceptors {
+project(*server): taoexe, portableserver, ssliop {
   after += *idl
   Source_Files {
     server.cpp
@@ -20,7 +20,7 @@ project(*server): taoexe, portableserver, ssliop, pi_server, codecfactory, inter
   }
 }
 
-project(*client): taoexe, portableserver, ssliop, pi_server, codecfactory, interceptors {
+project(*client): taoexe, portableserver, ssliop {
   after += *idl
   Source_Files {
     client.cpp

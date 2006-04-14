@@ -1,10 +1,8 @@
-// -*- C++ -*-
-
+// $Id$
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   CEC_TypedEvent.h
- *
- *  $Id$
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  */
@@ -14,7 +12,7 @@
 #define TAO_CEC_TYPEDEVENT_H_
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -25,9 +23,6 @@
 #include "tao/CORBA_methods.h"
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_CEC_TypedEvent
  *
@@ -58,10 +53,8 @@ private:
   CORBA::String_var operation_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedEvent.i"
+#include "CEC_TypedEvent.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

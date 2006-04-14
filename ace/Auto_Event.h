@@ -24,8 +24,6 @@
 
 #include "ace/Event.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Auto_Event
  *
@@ -39,19 +37,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Auto_Event : public ACE_Event
 {
 public:
-  /// Constructor which will create auto event
+  /// constructor which will create auto event
   ACE_Auto_Event (int initial_state = 0,
                   int type = USYNC_THREAD,
                   const char *name = 0,
                   void *arg = 0);
 
-#if defined (ACE_HAS_WCHAR)
-  /// Constructor which will create auto event (wchar_t version)
+  /// constructor which will create auto event (wchar_t version)
   ACE_Auto_Event (int initial_state,
                   int type,
                   const wchar_t *name,
                   void *arg = 0);
-#endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
   ~ACE_Auto_Event (void);
@@ -62,8 +58,6 @@ public:
   /// Declare the dynamic allocation hooks
   ACE_ALLOC_HOOK_DECLARE;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_Event.inl"

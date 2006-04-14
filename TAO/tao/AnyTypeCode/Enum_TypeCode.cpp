@@ -15,7 +15,6 @@
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 bool
@@ -90,10 +89,10 @@ TAO::TypeCode::Enum<StringType,
 
   CORBA::ULong const tc_nenumerators =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    return 0;
 
   for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
     {
@@ -103,13 +102,13 @@ TAO::TypeCode::Enum<StringType,
         Traits<StringType>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        return 0;
     }
 
-  return true;
+  return 1;
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
@@ -125,12 +124,12 @@ TAO::TypeCode::Enum<StringType,
 
   CORBA::ULong const tc_nenumerators =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    return 0;
 
-  return true;
+  return 1;
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
@@ -218,7 +217,5 @@ TAO::TypeCode::Enum<StringType,
 
   return Traits<StringType>::get_string (this->enumerators_[index]);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_ENUM_TYPECODE_CPP */

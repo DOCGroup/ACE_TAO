@@ -19,8 +19,6 @@ ACE_RCSID (ace,
 #  include "ace/streams.h"
 # endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 void
 ACE_U_LongLong::output (FILE *file) const
 {
@@ -133,7 +131,6 @@ operator<< (ostream& os, const ACE_U_LongLong& ll)
 }
 # endif
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LACKS_LONGLONG_T */
 

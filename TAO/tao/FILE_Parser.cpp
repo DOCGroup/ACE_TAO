@@ -1,11 +1,15 @@
 // $Id$
 
-#include "tao/FILE_Parser.h"
+#include "FILE_Parser.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 
 #include "ace/Read_Buffer.h"
+
+#if !defined(__ACE_INLINE__)
+#include "FILE_Parser.i"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
@@ -18,14 +22,11 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-static const char file_prefix[] = "file:";
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_FILE_Parser::~TAO_FILE_Parser (void)
 {
 }
 
+static const char file_prefix[] = "file:";
 
 int
 TAO_FILE_Parser::match_prefix (const char *ior_string) const
@@ -46,7 +47,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
   const char *filename =
     ior + sizeof (::file_prefix)+1;
 
-  FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (filename),
+  FILE* file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN (filename),
                               ACE_TEXT("r"));
 
   if (file == 0)
@@ -77,8 +78,6 @@ TAO_FILE_Parser::parse_string (const char *ior,
 
   return object;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
                        ACE_TEXT ("FILE_Parser"),

@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_EC_Event_Channel_Attributes::
@@ -202,5 +198,3 @@ TAO_EC_Event_Channel_Base::destroyed (void)
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return (this->status_ == EC_S_DESTROYED);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

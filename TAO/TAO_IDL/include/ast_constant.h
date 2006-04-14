@@ -102,8 +102,8 @@ public:
   AST_Expression::ExprType et (void);
 
   // Accessors for the private member.
-  bool ifr_added (void);
-  void ifr_added (bool val);
+  idl_bool ifr_added (void);
+  void ifr_added (idl_bool val);
 
   const char *exprtype_to_string (void);
   // Returns the appropriate type.
@@ -134,7 +134,7 @@ protected:
   AST_Expression::ExprType pd_et;
   // Its expression type.
 
-  bool ifr_added_;
+  idl_bool ifr_added_;
   // Has this node been added to the IFR?
 };
 

@@ -15,15 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
@@ -66,18 +62,12 @@ public:
   /// Allow the users of this class to change the underlying flag.
   void set_flag (TAO_Handle_Resume_Flag fl);
 
-  /// Assignment operator
+  /// Equal to operator..
   TAO_Resume_Handle &operator= (const TAO_Resume_Handle &rhs);
 
   /// Resume the handle in the reactor only if the ORB uses a TP
-  /// reactor. Else we don't resume the handle.
+  /// reactor. Else we dont resume the handle.
   void resume_handle (void);
-
-  // Hook method called at the end of a connection handler's
-  // handle_input function.  Might override the handle_input
-  // return value or change the resume_handler's flag_ value.
-  void handle_input_return_value_hook (int& return_value);
-
 
 private:
 
@@ -92,10 +82,8 @@ private:
   TAO_Handle_Resume_Flag flag_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/Resume_Handle.inl"
+# include "Resume_Handle.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

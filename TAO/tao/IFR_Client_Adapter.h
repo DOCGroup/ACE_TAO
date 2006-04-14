@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,8 +26,6 @@
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 
@@ -97,8 +95,6 @@ public:
              ) = 0;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IFR_CLIENT_ADAPTER_H */

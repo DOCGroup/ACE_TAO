@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/HTIOP/HTIOP_Export.h"
+#include "HTIOP_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
@@ -61,8 +61,6 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_type.cpp:258
@@ -181,8 +179,6 @@ HTIOP_Export CORBA::Boolean operator>> (
   );
 
 #endif /* _TAO_CDR_OP_HTIOPEndpointSequence_H_ */
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

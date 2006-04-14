@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
+#include "IOGR_Maker.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"
@@ -10,15 +10,14 @@
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "GroupInfoPublisher.h"
 
 ACE_RCSID (EventChannel,
            IOGR_Maker,
            "$Id$")
 
-static IOGR_Maker* maker;
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+static IOGR_Maker* maker;
 
 IOGR_Maker::IOGR_Maker()
 {
@@ -266,4 +265,3 @@ IOGR_Maker::set_tag_components(
 
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

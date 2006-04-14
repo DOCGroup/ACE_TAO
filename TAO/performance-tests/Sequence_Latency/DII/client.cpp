@@ -2,8 +2,7 @@
 
 #include "tao/DynamicInterface/Request.h"
 #include "tao/Strategies/advanced_resource.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TC_Constants_Forward.h"
 
 #include "TestC.h"
 
@@ -30,7 +29,7 @@ const char *data_type = "octet";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "t:s:hxk:i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "t:s:hxk:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -98,14 +97,13 @@ test_octet_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   for (int i = 0; i < niterations; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
-      Test::Timestamp start_time = static_cast <Test::Timestamp> (start);
 
       CORBA::Request_var request =
         object->_request ("test_octet_method" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       request->add_in_arg("octet_load") <<= ol;
-      request->add_in_arg("send_time") <<= start_time;
+	  request->add_in_arg("send_time") <<= start;
 
       request->set_return_type (CORBA::_tc_ulonglong);
       request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -155,7 +153,7 @@ test_long_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
       ACE_CHECK;
 
       request->add_in_arg("long_load") <<= ll;
-      request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
+	  request->add_in_arg("send_time") <<= start;
 
       request->set_return_type (CORBA::_tc_ulonglong);
       request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -205,7 +203,7 @@ test_short_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
       ACE_CHECK;
 
       request->add_in_arg("short_load") <<= sl;
-      request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
+	  request->add_in_arg("send_time") <<= start;
 
       request->set_return_type (CORBA::_tc_ulonglong);
       request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -255,7 +253,7 @@ test_char_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
       ACE_CHECK;
 
       request->add_in_arg("char_load") <<= cl;
-      request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
+	  request->add_in_arg("send_time") <<= start;
 
       request->set_return_type (CORBA::_tc_ulonglong);
       request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -305,7 +303,7 @@ test_double_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
       ACE_CHECK;
 
       request->add_in_arg("double_load") <<= dl;
-      request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
+	  request->add_in_arg("send_time") <<= start;
 
       request->set_return_type (CORBA::_tc_ulonglong);
       request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -355,7 +353,7 @@ test_longlong_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
       ACE_CHECK;
 
       request->add_in_arg("longlong_load") <<= ll;
-      request->add_in_arg("send_time") <<= static_cast <Test::Timestamp> (start);
+	  request->add_in_arg("send_time") <<= start;
 
       request->set_return_type (CORBA::_tc_ulonglong);
       request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -391,7 +389,7 @@ test_longlong_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 // The main() function starts here
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -442,8 +440,8 @@ main (int argc, char *argv[])
             object->_request ("test_octet_method" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          Test::Timestamp dummy = 0;
-          request->add_in_arg("octet_load") <<= oc;
+          CORBA::ULongLong dummy = 0;
+		  request->add_in_arg("octet_load") <<= oc;
           request->add_in_arg("send_time") <<= dummy;
 
           request->set_return_type (CORBA::_tc_ulonglong);

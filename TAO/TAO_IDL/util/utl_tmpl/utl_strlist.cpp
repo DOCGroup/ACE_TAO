@@ -93,10 +93,10 @@ UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
 {
   char *s = 0;;
   UTL_StrlistActiveIterator *i = new UTL_StrlistActiveIterator (this);
-  long first = true;
-  long second = false;
+  long first = I_TRUE;
+  long second = I_FALSE;
 
-  for (UTL_StrlistActiveIterator (this); !i.is_done(); i.next ())
+  for (UTL_StrlistActiveIterator (this); !i.is_done(); i.next ()) 
     {
       if (!first)
         {
@@ -104,21 +104,21 @@ UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
         }
       else if (second)
         {
-          first = second = false;
+          first = second = I_FALSE;
         }
 
       s = i.item ()->get_string ();
       o << s;
 
-      if (first)
+      if (first) 
         {
           if (ACE_OS::strcmp (s, "::") != 0)
             {
-              first = false;
+              first = I_FALSE;
             }
           else
             {
-              second = true;
+              second = I_TRUE;
             }
         }
     }

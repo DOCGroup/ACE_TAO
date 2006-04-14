@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Lock_Adapter
  *
@@ -104,8 +102,6 @@ private:
   /// the lock
   int delete_lock_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Lock_Adapter_T.inl"

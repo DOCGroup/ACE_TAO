@@ -15,7 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_THREADS_BUILD_DLL
+# include "ace/ACE_Threads_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Threads_Export ACE_Export
+#endif  /* ACE_THREADS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +29,6 @@
 #include "ace/Handle_Set.h"
 #include "ace/Global_Macros.h"
 #include "ace/os_include/sys/os_types.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
 class ACE_Time_Value;
@@ -49,7 +52,7 @@ class ACE_Time_Value;
  * then, the <spawn> is using the <execvp> which searches for the
  * program file in the PATH variable.
  */
-class ACE_Export ACE_Process_Options
+class ACE_Threads_Export ACE_Process_Options
 {
 public:
   enum
@@ -128,10 +131,8 @@ public:
   /// be <= MAXPATHLEN.
   void working_directory (const char *wd);
 
-#if defined (ACE_HAS_WCHAR)
   /// wchar_t version of working_directory
   void working_directory (const wchar_t *wd);
-#endif /* ACE_HAS_WCHAR */
 
   /**
    * Set the command-line arguments.  @a format can use any printf
@@ -144,10 +145,10 @@ public:
    */
   int command_line (const ACE_TCHAR *format, ...);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE)
   /// Anti-TChar version of command_line ()
   int command_line (const ACE_ANTI_TCHAR *format, ...);
-#endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
+#endif /* !ACE_HAS_WINCE */
 
   /// Same as above in argv format.  @a argv must be null terminated.
   int command_line (const ACE_TCHAR * const argv[]);
@@ -437,7 +438,7 @@ protected:
  * then, the <spawn> is using the <execvp> which searches for the
  * program file in the PATH variable.
  */
-class ACE_Export ACE_Process
+class ACE_Threads_Export ACE_Process
 {
 public:
   friend class ACE_Process_Manager;
@@ -456,11 +457,9 @@ public:
   virtual int prepare (ACE_Process_Options &options);
 
   /**
-   * Launch a new process as described by @a options. On success,
-   * returns 1 if the option avoid_zombies is set, else returns the
-   * process id of the newly spawned child. Returns -1 on
-   * failure. This will be fixed in the future versions of ACE when
-   * the process id of the child will be returned regardless of the option.
+   * Launch a new process as described by @a options.  Returns the
+   * process id of the newly spawned child on success or -1 on
+   * failure.
    */
   virtual pid_t spawn (ACE_Process_Options &options);
 
@@ -497,7 +496,7 @@ public:
    * If <status> != 0, it points to an integer where the function
    * stores the child's exit status.
    *
-   * @note On UNIX platforms this function uses <ualarm>, i.e., it
+   * NOTE: on UNIX platforms this function uses <ualarm>, i.e., it
    * overwrites any existing alarm.  In addition, it steals all
    * <SIGCHLD>s during the timeout period, which will break another
    * <ACE_Process_Manager> in the same process that's expecting
@@ -549,12 +548,6 @@ public:
   PROCESS_INFORMATION process_info (void);
 #endif /* ACE_WIN32 */
 
-private:
-
-  // Disallow copying and assignment since we don't support this (yet).
-  ACE_Process (const ACE_Process &);
-  void operator= (const ACE_Process &);
-
 protected:
   /// Set this process' <exit_code_>.  ACE_Process_Manager uses this
   /// method to set the <exit_code_> after successfully waiting for
@@ -574,6 +567,9 @@ protected:
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
 
+  // = Disallow copying and assignment since we don't support this (yet).
+  ACE_UNIMPLEMENTED_FUNC (ACE_Process (const ACE_Process &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Process &))
 };
 
 
@@ -586,21 +582,21 @@ protected:
  * @arg unmanage() method that deletes the instance.
  * This class is only valid for use as a dynamically-allocated object!
  */
-class ACE_Export ACE_Managed_Process : public ACE_Process
+class ACE_Threads_Export ACE_Managed_Process : public ACE_Process
 {
 public:
+  ACE_Managed_Process ();
 
   /// Cleanup by deleting @c this.
   virtual void unmanage (void);
 
-protected:
-
+private:
   /// Make sure that we're allocated dynamically!
   virtual ~ACE_Managed_Process (void);
 
+  /// Keep G++ happy...
+  friend class ace_dewarn_gplusplus;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Process.inl"

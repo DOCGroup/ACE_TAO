@@ -14,19 +14,16 @@
 #define TAO_PROTOCOL_FACTORY_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/TAO_Export.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-
-#include "ace/Service_Object.h"
 #include "ace/SStringfwd.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "TAO_Export.h"
+#include "Basic_Types.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -71,13 +68,9 @@ public:
   virtual int requires_explicit_endpoint (void) const = 0;
 
 private:
-
   /// IOP protocol tag.
-  CORBA::ULong const tag_;
-
+  CORBA::ULong tag_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

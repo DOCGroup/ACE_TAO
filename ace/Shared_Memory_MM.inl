@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// Shared_Memory_MM.i
 
 // Return the name of file that is mapped (if any).
 
@@ -38,5 +37,3 @@ ACE_Shared_Memory_MM::open (const ACE_TCHAR *file_name,
   return shared_memory_.map (file_name, len, flags, mode,
                              prot, share, addr, pos);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -2,7 +2,6 @@
 #ifndef IDREF_BASE_CPP
 #define IDREF_BASE_CPP
 
-#include "ciao/CIAO_common.h"
 #include "IDREF_Base.h"
 #include <iostream>
 
@@ -21,8 +20,6 @@ namespace CIAO
     IDREF_Base<T>::bind_ref (ACE_CString& id, T value)
       throw (Config_Error)
     {
-      CIAO_TRACE("IDREF_Base<T>::bind_ref");
-      
       int retval =
         idref_map_.bind (id, value);
 
@@ -38,8 +35,6 @@ namespace CIAO
     IDREF_Base<T>::find_ref (const ACE_CString& id, T& val)
       throw (Config_Error)
     {
-      CIAO_TRACE("IDREF_Base<T>::find_ref(C_String, T)");
-      
       int retval =
         idref_map_.find (id, val);
 
@@ -53,8 +48,6 @@ namespace CIAO
     IDREF_Base<T>::find_ref (const T& value, ACE_CString& id)
       throw (Config_Error)
     {
-      CIAO_TRACE("IDREF_Base<T>::find_ref (T, CString)");
-      
       int retval =
         pos_map_.find (value, id);
 
@@ -67,8 +60,6 @@ namespace CIAO
     bool
     IDREF_Base<T>::unbind_refs (void)
     {
-      CIAO_TRACE("IDREF_Base<T>::unbind_refs");
-      
       int retval =
         idref_map_.unbind_all ();
  

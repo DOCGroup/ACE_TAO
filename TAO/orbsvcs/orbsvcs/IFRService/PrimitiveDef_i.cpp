@@ -1,13 +1,12 @@
+/* -*- C++ -*- */
 // $Id$
 
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/PrimitiveDef_i.h"
+#include "Repository_i.h"
+#include "PrimitiveDef_i.h"
 
 ACE_RCSID (IFRService, 
            PrimitiveDef_i, 
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PrimitiveDef_i::TAO_PrimitiveDef_i (
     TAO_Repository_i *repo
@@ -139,4 +138,3 @@ TAO_PrimitiveDef_i::kind_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return static_cast<CORBA::PrimitiveKind> (pkind);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

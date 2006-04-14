@@ -5,24 +5,22 @@
 #ifndef TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H
 #define TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H
 
-#include "tao/RTScheduling/rtscheduler_export.h"
-#include "tao/RTScheduling/RTScheduler.h"
+#include "rtscheduler_export.h"
+#include "RTScheduler.h"
 #include "ace/Atomic_Op.h"
-#include "tao/RTScheduling/Current.h"
-#include "tao/LocalObject.h"
+#include "Current.h"
 
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
-class TAO_RTScheduler_Export Client_Interceptor:
-  public PortableInterceptor::ClientRequestInterceptor,
-  public TAO_Local_RefCounted_Object
+class TAO_RTScheduler_Export Client_Interceptor :
+  public PortableInterceptor::ClientRequestInterceptor
 {
 public:
+
+  Client_Interceptor (void);
 
   //  Client_Interceptor (RTScheduling::Current_ptr current);
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
@@ -59,8 +57,7 @@ public:
 };
 
 class TAO_RTScheduler_Export Server_Interceptor :
-  public PortableInterceptor::ServerRequestInterceptor,
-  public TAO_Local_RefCounted_Object
+  public PortableInterceptor::ServerRequestInterceptor
 {
 
 public:
@@ -102,7 +99,5 @@ public:
   TAO_RTScheduler_Current_var current_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H */

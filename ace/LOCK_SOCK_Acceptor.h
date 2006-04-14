@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,8 +19,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_LOCK_SOCK_Acceptor
@@ -52,8 +49,6 @@ protected:
   /// Type of locking mechanism.
   ACE_LOCK lock_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/LOCK_SOCK_Acceptor.cpp"

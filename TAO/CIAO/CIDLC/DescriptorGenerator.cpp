@@ -285,9 +285,9 @@ namespace
              << "</publishes>" << endl;
         }
 
-        struct FullTypeNameEmitter : Traversal::Type, EmitterBase
+        struct TypeNameEmitter : Traversal::Type, EmitterBase
         {
-          FullTypeNameEmitter (fs::ofstream& ofs)
+          TypeNameEmitter (fs::ofstream& ofs)
             : EmitterBase (ofs)
           {}
 
@@ -301,7 +301,7 @@ namespace
         };
 
       private:
-        FullTypeNameEmitter type_name_emitter_;
+        TypeNameEmitter type_name_emitter_;
         unsigned long facettag_;
         Traversal::Belongs belongs_;
       };

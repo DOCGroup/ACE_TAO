@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 // ===================================================================
 /**
@@ -32,9 +32,7 @@
 #include "ace/Reactor.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Strategies/UIOP_Transport.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "UIOP_Transport.h"
 
 // Forward Decls
 class TAO_Pluggable_Messaging;
@@ -88,6 +86,7 @@ public:
                               const void *act = 0);
   //@}
 
+
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
@@ -100,8 +99,6 @@ protected:
   virtual int release_os_resources (void);
   //@}
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_UIOP == 1 */
 

@@ -1,4 +1,5 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+
 
 //=============================================================================
 /**
@@ -11,13 +12,13 @@
  */
 //=============================================================================
 
+
+
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_H
 #define TAO_AV_ENDPOINT_STRATEGY_T_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Endpoint_Strategy.h"
 
 /**
  * @class TAO_AV_Endpoint_Reactive_Strategy
@@ -279,10 +280,8 @@ public:
   virtual ~TAO_AV_Child_Process_B (void);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/AV/Endpoint_Strategy_T.cpp"
+#include "Endpoint_Strategy_T.cpp"
 #endif /*ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

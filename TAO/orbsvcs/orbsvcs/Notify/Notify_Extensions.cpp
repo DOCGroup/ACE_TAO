@@ -1,12 +1,8 @@
 // $Id$
 
-#include "orbsvcs/Notify/Notify_Extensions.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Notify_Extensions.h"
 
 namespace TAO_Notify_Extensions
 {
-  const char BlockingPolicy[] = "BlockingPolicy";
+  const char *const BlockingPolicy =  "BlockingPolicy";
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

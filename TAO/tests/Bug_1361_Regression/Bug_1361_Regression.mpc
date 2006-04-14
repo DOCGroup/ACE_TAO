@@ -11,7 +11,6 @@ project(*Server): taoserver, messaging {
 }
 
 project(*Client): taoclient, messaging {
-  after += *Server
   Source_Files {
     Echo.cpp
     ORB_Task.cpp
@@ -20,7 +19,6 @@ project(*Client): taoclient, messaging {
 }
 
 project(*Shutdown): taoexe, messaging {
-  after += *Client
   Source_Files {
     shutdown.cpp
   }

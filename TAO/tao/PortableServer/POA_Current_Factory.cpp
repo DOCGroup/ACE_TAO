@@ -1,10 +1,12 @@
 // $Id$
 
-#include "tao/PortableServer/POA_Current_Factory.h"
-#include "tao/PortableServer/POA_Current.h"
+#include "POA_Current_Factory.h"
+#include "POA_Current.h"
 #include "tao/ORB_Core.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+TAO_POA_Current_Factory::TAO_POA_Current_Factory (void)
+{
+}
 
 CORBA::Object_ptr
 TAO_POA_Current_Factory::create_object (CORBA::ORB_ptr,
@@ -19,8 +21,6 @@ TAO_POA_Current_Factory::create_object (CORBA::ORB_ptr,
                   0);
   return adapter;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_POA_Current_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_POA_Current_Factory,

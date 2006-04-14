@@ -29,8 +29,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward declarations
 class TAO_Profile;
 namespace CORBA
@@ -241,8 +239,6 @@ private:
   /// Index plus 1 of last valid entry!  May be < size_.
   TAO_PHandle last_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/MProfile.i"

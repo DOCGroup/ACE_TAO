@@ -1,8 +1,8 @@
 // $Id$
 
-#include "orbsvcs/IFRService/SequenceDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "SequenceDef_i.h"
+#include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -12,7 +12,6 @@ ACE_RCSID (IFRService,
            SequenceDef_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SequenceDef_i::TAO_SequenceDef_i (
     TAO_Repository_i *repo
@@ -265,5 +264,3 @@ TAO_SequenceDef_i::destroy_element_type (
       break;
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

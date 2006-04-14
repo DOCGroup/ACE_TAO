@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   ECG_Reconnect_ConsumerEC_Control.h
  *
@@ -14,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
+#include "ECG_ConsumerEC_Control.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +23,6 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ECG_Reconnect_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP;
@@ -139,8 +136,6 @@ private:
   long timer_id_;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

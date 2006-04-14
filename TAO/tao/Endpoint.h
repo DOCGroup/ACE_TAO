@@ -27,8 +27,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /*
  * Includes and forward decls for specializing TAO's
  * endpoint implementation.
@@ -125,7 +123,7 @@ protected:
 
   /// IOP tag, identifying the protocol for which this endpoint
   /// contains addressing info.
-  CORBA::ULong const tag_;
+  CORBA::ULong tag_;
 
   /**
    * CORBA priority of the acceptor this Endpoint is representing.
@@ -137,8 +135,8 @@ protected:
 private:
 
   /// Endpoints should not be copied.
-  TAO_Endpoint (const TAO_Endpoint&);
-  void operator= (const TAO_Endpoint&);
+  ACE_UNIMPLEMENTED_FUNC (TAO_Endpoint (const TAO_Endpoint&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Endpoint&))
 
   /*
    * Addition of private members from derived class.
@@ -148,8 +146,6 @@ private:
 };
 
 //@@ TAO_ENDPOINT_SPL_EXTERN_ADD_HOOK
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Endpoint.i"

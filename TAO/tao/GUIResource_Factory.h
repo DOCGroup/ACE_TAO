@@ -13,25 +13,18 @@
 
 #ifndef TAO_GUI_RESOURCE_FACTORY_H
 #define TAO_GUI_RESOURCE_FACTORY_H
-
 #include /**/ "ace/pre.h"
-
+#include "ace/Thread_Mutex.h"
 #include "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-
-#include "ace/Thread_Mutex.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+//forwards
 class ACE_Reactor_Impl;
 class ACE_Reactor;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -93,8 +86,5 @@ namespace TAO
   };
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
-#endif  /* TAO_GUI_RESOURCE_FACTORY_H */
+#endif /*TAO_GUI_RESOURCE_FACTORY_H*/

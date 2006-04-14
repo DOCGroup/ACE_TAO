@@ -23,9 +23,6 @@
 #include "ace/Service_Object.h"
 
 #include "tao/TAO_Export.h"
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Thread_Lane_Resources;
@@ -107,13 +104,11 @@ public:
   virtual ~TAO_Thread_Lane_Resources_Manager_Factory (void);
 
   /// Factory method.
-  virtual TAO_Thread_Lane_Resources_Manager *
+  virtual
+  TAO_Thread_Lane_Resources_Manager *
   create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

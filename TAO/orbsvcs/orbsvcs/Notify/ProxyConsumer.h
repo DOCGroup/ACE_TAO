@@ -1,11 +1,12 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file ProxyConsumer.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
+ *
+ *
  */
 
 #ifndef TAO_Notify_PROXYCONSUMER_H
@@ -13,10 +14,10 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
-#include "orbsvcs/Notify/Event.h"
-#include "orbsvcs/Notify/Proxy.h"
-#include "orbsvcs/Notify/SupplierAdmin.h"
+#include "notify_serv_export.h"
+#include "Event.h"
+#include "Proxy.h"
+#include "SupplierAdmin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,8 +27,6 @@
 
 #include "ace/Auto_Ptr.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Notify_Supplier;
 
 /**
@@ -36,8 +35,7 @@ class TAO_Notify_Supplier;
  * @brief Base class for all types of ProxyConsumer implementations.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer
-  : public virtual TAO_Notify_Proxy
+class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer : public virtual TAO_Notify_Proxy
 {
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> Ptr;
@@ -95,10 +93,8 @@ private:
   virtual TAO_Notify_Peer* peer (void);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/ProxyConsumer.inl"
+#include "ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

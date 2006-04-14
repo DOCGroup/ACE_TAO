@@ -32,8 +32,6 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/default_environment.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ORB_Core;
 
 namespace CORBA
@@ -149,8 +147,6 @@ namespace CORBA
     Environment *previous_;
   };
 } // End CORBA namespace
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)

@@ -21,7 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# include "ace/os_include/os_time.h"
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
+# include "ace/os_include/sys/os_time.h"
+#endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
@@ -29,15 +31,31 @@
 #define ACE_ONE_SECOND_IN_USECS 1000000L
 #define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
-// needed for ACE_UINT64
-#include "ace/Basic_Types.h"
-
 // This forward declaration is needed by the set() and FILETIME() functions
 #if defined (ACE_LACKS_LONGLONG_T)
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_U_LongLong;
-ACE_END_VERSIONED_NAMESPACE_DECL
 #endif  /* ACE_LACKS_LONGLONG_T */
+
+# if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
+// Definition per POSIX.
+typedef struct timespec
+{
+  /// Seconds
+  time_t tv_sec;
+  /// Nanoseconds
+  long tv_nsec;
+} timespec_t;
+# elif defined (ACE_HAS_BROKEN_POSIX_TIME)
+// OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
+#   include /**/ <sys/timers.h>
+# endif /* !ACE_HAS_POSIX_TIME */
+
+# if defined(ACE_LACKS_TIMESPEC_T)
+typedef struct timespec timespec_t;
+# endif /* ACE_LACKS_TIMESPEC_T */
+
+// needed for ACE_UINT64
+#include "ace/Basic_Types.h"
 
 // -------------------------------------------------------------------
 
@@ -60,9 +78,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 //    - Steve Huston, 23-Aug-2004
 extern "C++" {
 #endif
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Time_Value
 {
 public:
@@ -86,23 +101,23 @@ public:
   ACE_Time_Value (void);
 
   /// Constructor.
-  explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);
+  ACE_Time_Value (long sec, long usec = 0);
 
   // = Methods for converting to/from various time formats.
 
   /// Construct the ACE_Time_Value from a timeval.
-  explicit ACE_Time_Value (const struct timeval &t);
+  ACE_Time_Value (const struct timeval &t);
 
   /// Construct the ACE_Time_Value object from a timespec_t.
-  explicit ACE_Time_Value (const timespec_t &t);
+  ACE_Time_Value (const timespec_t &t);
 
 # if defined (ACE_WIN32)
   /// Construct the ACE_Time_Value object from a Win32 FILETIME
-  explicit ACE_Time_Value (const FILETIME &ft);
+  ACE_Time_Value (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-  /// Initializes the ACE_Time_Value from seconds and useconds.
-  void set (time_t sec, suseconds_t usec);
+  /// Initializes the ACE_Time_Value from two longs.
+  void set (long sec, long usec);
 
   /// Initializes the ACE_Time_Value from a double, which is assumed to be
   /// in second format, with any remainder treated as microseconds.
@@ -176,10 +191,10 @@ public:
    * @note The semantics of this method differs from the msec()
    *       method.
    */
-  time_t sec (void) const;
+  long sec (void) const;
 
   /// Set seconds.
-  void sec (time_t sec);
+  void sec (long sec);
 
   /// Get microseconds.
   /**
@@ -188,10 +203,10 @@ public:
    * @note The semantics of this method differs from the msec()
    *       method.
    */
-  suseconds_t usec (void) const;
+  long usec (void) const;
 
   /// Set microseconds.
-  void usec (suseconds_t usec);
+  void usec (long usec);
 
 #if !defined (ACE_LACKS_LONGLONG_T)
   /**
@@ -207,23 +222,14 @@ public:
   /// Add @a tv to this.
   ACE_Time_Value &operator += (const ACE_Time_Value &tv);
 
-  /// Add @a tv to this.
-  ACE_Time_Value &operator += (time_t tv);
-
   /// Assign @ tv to this
   ACE_Time_Value &operator = (const ACE_Time_Value &tv);
-
-  /// Assign @ tv to this
-  ACE_Time_Value &operator = (time_t tv);
 
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
 
-  /// Substract @a tv to this.
-  ACE_Time_Value &operator -= (time_t tv);
+    /** \brief Multiply the time value by the @a d factor.
 
-  /**
-    \brief Multiply the time value by the @a d factor.
     \note The result of the operator is valid for results from range
     < (ACE_INT32_MIN, -999999), (ACE_INT32_MAX, 999999) >. Result
     outside this range are saturated to a limit.
@@ -260,11 +266,11 @@ public:
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
   friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
+					       const ACE_Time_Value &tv2);
 
   /// Subtracts two ACE_Time_Value objects, returns the difference.
   friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
+					       const ACE_Time_Value &tv2);
 
   /// True if @a tv1 < @a tv2.
   friend ACE_Export bool operator < (const ACE_Time_Value &tv1,
@@ -293,10 +299,10 @@ public:
   //@{
   /// Multiplies the time value by @a d
   friend ACE_Export ACE_Time_Value operator * (double d,
-                                               const ACE_Time_Value &tv);
+					       const ACE_Time_Value &tv);
 
   friend ACE_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
-                                               double d);
+                                                  double d);
   //@}
 
   /// Dump is a no-op.
@@ -325,8 +331,6 @@ private:
   timeval tv_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
@@ -336,13 +340,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif
 
 #if defined (__MINGW32__)
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // The MingW linker has problems with the exported statics
 // zero and max_time with these two statics the linker will be able to
 // resolve the static exported symbols.
 static const ACE_Time_Value& __zero_time = ACE_Time_Value::zero;
 static const ACE_Time_Value& __max_time = ACE_Time_Value::max_time;
-ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* __MINGW32__ */
 
 #include /**/ "ace/post.h"

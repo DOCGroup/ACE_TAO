@@ -3,11 +3,11 @@
 
 // Implementation of Named Value List and NamedValue classes
 
-#include "tao/AnyTypeCode/NVList.h"
-#include "tao/AnyTypeCode/BoundsC.h"
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/Marshal.h"
-#include "tao/AnyTypeCode/Any_Impl.h"
+#include "NVList.h"
+#include "BoundsC.h"
+#include "TypeCode.h"
+#include "Marshal.h"
+#include "Any_Impl.h"
 
 #include "tao/SystemException.h"
 #include "tao/CORBA_String.h"
@@ -18,14 +18,12 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/NVList.inl"
+# include "NVList.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            NVList,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object
 
@@ -82,7 +80,7 @@ CORBA::NVList::~NVList (void)
 
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      CORBA::NamedValue_ptr *nv = 0;
+      CORBA::NamedValue_ptr *nv;
       (void) iter.next (nv);
       delete *nv;
     }
@@ -362,7 +360,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("NVList::_tao_encode - parameter <%s>\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (arg)));
+                          ACE_TEXT_TO_TCHAR_IN (arg)));
             }
           CORBA::TypeCode_ptr tc = nv->value ()->_tao_get_typecode ();
           (void) TAO_Marshal_Object::perform_append (tc,
@@ -415,7 +413,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item = 0;
+      CORBA::NamedValue_ptr *item;
       (void) i.next (item);
 
       CORBA::NamedValue_ptr nv = *item;
@@ -433,7 +431,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode - %s\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (nv->name ()? nv->name () : "(no name given)" )));
+                      ACE_TEXT_TO_TCHAR_IN (nv->name ()? nv->name () : "(no name given)" )));
         }
 
       CORBA::Any_ptr any = nv->value ();
@@ -498,4 +496,3 @@ CORBA::NVList::_lazy_has_arguments (void) const
     }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

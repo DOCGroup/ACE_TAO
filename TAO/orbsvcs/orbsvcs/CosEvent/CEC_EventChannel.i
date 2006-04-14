@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_CEC_EventChannel_Attributes::
@@ -201,5 +197,3 @@ TAO_CEC_EventChannel::get_servant_retry_map (void)
 {
   return this->retry_map_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

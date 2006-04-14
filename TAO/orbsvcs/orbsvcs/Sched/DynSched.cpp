@@ -16,19 +16,17 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Sched/DynSched.h"
+#include "DynSched.h"
 #include "ace/Basic_Types.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Null_Mutex.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Sched/DynSched.i"
+#include "DynSched.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Sched, DynSched, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
 // Helper functions //
@@ -450,7 +448,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
 
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("unrecognized dependency type %d for %s\n"),
-                  d.dependency_type, ACE_TEXT_CHAR_TO_TCHAR(rt_info->entry_point.in ())));
+                  d.dependency_type, ACE_TEXT_TO_TCHAR_IN(rt_info->entry_point.in ())));
       return -1;
   }
 
@@ -458,7 +456,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
               ACE_TEXT("Sched (%t) adding %s dependency to caller: %s\n"),
               (const ACE_TCHAR *) ((d.dependency_type == RtecBase::TWO_WAY_CALL)
                               ? ACE_TEXT("TWO_WAY") : ACE_TEXT("ONE_WAY")),
-              ACE_TEXT_CHAR_TO_TCHAR(temp_info->entry_point.in ())));
+              ACE_TEXT_TO_TCHAR_IN(temp_info->entry_point.in ())));
 
   RtecScheduler::Dependency_Set& set = temp_info->dependencies;
   int l = set.length();
@@ -1555,7 +1553,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
              (LM_DEBUG,
               ACE_TEXT("Warning: an operation identified by ")
               ACE_TEXT("\"%s\" has unresolved remote dependencies.\n"),
-              ACE_TEXT_CHAR_TO_TCHAR((const char*)task_entries_ [i].rt_info ()->entry_point)));
+              ACE_TEXT_TO_TCHAR_IN((const char*)task_entries_ [i].rt_info ()->entry_point)));
 
           // Record entry point in list of unresolved remote dependencies
           ACE_OS::sprintf (string_buffer, "// %s\n",
@@ -1572,7 +1570,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
               ACE_TEXT("Error: operation \"%s\" does not specify a period or\n")
               ACE_TEXT("visible threads, and is not called by any other operation.\n")
               ACE_TEXT("Are there backwards dependencies.\n"),
-              ACE_TEXT_CHAR_TO_TCHAR((const char*)task_entries_ [i].rt_info ()->entry_point)));
+              ACE_TEXT_TO_TCHAR_IN((const char*)task_entries_ [i].rt_info ()->entry_point)));
 
           result = ST_UNRESOLVED_LOCAL_DEPENDENCIES;
 
@@ -1657,8 +1655,8 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
       // indicate the two tasks are in (the same) dependency cycle
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("Tasks \"%s\" and \"%s\" are part of a call cycle.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR((*calling_entry_link)->caller ().rt_info ()->entry_point.in ()),
-                  ACE_TEXT_CHAR_TO_TCHAR(entry.rt_info ()->entry_point.in ())));
+                  ACE_TEXT_TO_TCHAR_IN((*calling_entry_link)->caller ().rt_info ()->entry_point.in ()),
+                  ACE_TEXT_TO_TCHAR_IN(entry.rt_info ()->entry_point.in ())));
 
       // set return status, ignore status returned by recursive call:
       // we already know there are cycles in the dependencies
@@ -1931,7 +1929,7 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_dispatch_priorities (file);
@@ -1942,7 +1940,7 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
                 ACE_TEXT("Could not open schedule file (\"%s\")"),
-                ACE_TEXT_CHAR_TO_TCHAR(filename)));
+                ACE_TEXT_TO_TCHAR_IN(filename)));
   }
 
   return status;
@@ -2026,7 +2024,7 @@ ACE_DynScheduler::output_dispatch_timeline (const char *filename)
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_dispatch_timeline (file);
@@ -2151,7 +2149,7 @@ ACE_DynScheduler::output_preemption_timeline (const char *filename)
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_preemption_timeline (file);
@@ -2162,7 +2160,7 @@ ACE_DynScheduler::output_preemption_timeline (const char *filename)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
                 ACE_TEXT("Cannot open timeline file (\"%s\")\n"),
-                ACE_TEXT_CHAR_TO_TCHAR(filename)));
+                ACE_TEXT_TO_TCHAR_IN(filename)));
   }
 
   return status;
@@ -2241,7 +2239,7 @@ ACE_DynScheduler::output_viewer_timeline (const char *filename)
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_dispatch_timeline (file);
@@ -2370,7 +2368,7 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
   if (status == SUCCEEDED)
   {
     // open the file
-    file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
+    file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(filename), ACE_TEXT("w"));
     if (! file)
     {
       status = UNABLE_TO_OPEN_SCHEDULE_FILE;
@@ -2419,5 +2417,3 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
   return status;
 }
   // this prints the entire set of timeline outputs to the specified file
-
-TAO_END_VERSIONED_NAMESPACE_DECL

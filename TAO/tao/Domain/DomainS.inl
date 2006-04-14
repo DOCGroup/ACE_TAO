@@ -25,7 +25,6 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 void
@@ -155,4 +154,3 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::destroy (
     );
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

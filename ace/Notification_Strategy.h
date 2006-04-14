@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   Notification_Strategy.h
@@ -18,8 +17,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class ACE_Reactor;
@@ -67,7 +64,6 @@ protected:
   ACE_Reactor_Mask mask_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Notification_Strategy.inl"

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -14,7 +14,12 @@
 #define ACE_PRIORITY_REACTOR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_REACTOR_BUILD_DLL
+# include "ace/ACE_Reactor_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Reactor_Export ACE_Export
+#endif  /* ACE_REACTOR_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +27,6 @@
 
 #include "ace/Select_Reactor.h"
 #include "ace/Unbounded_Queue.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Priority_Reactor
@@ -34,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * Select_Reactor by taking advantage of the priority method on
  * ACE_Event_Handler.
  */
-class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
+class ACE_Reactor_Export ACE_Priority_Reactor : public ACE_Select_Reactor
 {
 public:
   // = Initialization and termination methods.
@@ -92,8 +95,6 @@ private:
   ACE_Priority_Reactor (const ACE_Priority_Reactor &);
   ACE_Priority_Reactor &operator = (const ACE_Priority_Reactor &);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_PRIORITY_REACTOR_H */

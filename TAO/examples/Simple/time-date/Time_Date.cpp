@@ -135,7 +135,7 @@ DLL_ORB::fini (void)
 int
 Time_Date_Servant::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dn:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "dn:o:");
   int c = 0;
 
   this->orb_ = "ORB";
@@ -147,7 +147,7 @@ Time_Date_Servant::parse_args (int argc, char *argv[])
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",

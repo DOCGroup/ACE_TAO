@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO_CEC_SupplierAdmin::
@@ -19,5 +15,3 @@ TAO_CEC_SupplierAdmin::
 {
   this->pull_admin_.for_each (worker ACE_ENV_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

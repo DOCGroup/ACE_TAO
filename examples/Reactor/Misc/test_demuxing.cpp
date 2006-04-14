@@ -151,7 +151,7 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       ACE_Reactor::end_event_loop ();
       break;
     default:
-      ACE_ERROR_RETURN ((LM_ERROR, "invalid signal"), -1);
+      ACE_ASSERT (!"invalid signal");
       break;
       /* NOTREACHED */
     }

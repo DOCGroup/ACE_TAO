@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 //=============================================================================
 /**
  * @file Auto_Functor.h
@@ -21,8 +20,6 @@
 
 #include "ace/Auto_Functor.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   namespace Utils
@@ -32,8 +29,6 @@ namespace TAO
 
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AUTO_FUNCTOR_H*/

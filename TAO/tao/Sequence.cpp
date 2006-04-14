@@ -1,12 +1,12 @@
 // $Id$
 
-#include "tao/Sequence.h"
+#include "Sequence.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence.i"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/SystemException.h"
+#include "SystemException.h"
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 # include "ace/Message_Block.h"
@@ -22,8 +22,6 @@ ACE_RCSID (tao,
            Sequence,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // *************************************************************
 // Operations for class TAO_Base_Sequence
@@ -66,7 +64,7 @@ TAO_Base_Sequence::check_bounds (char const * filename,
       ACE_ERROR ((LM_ERROR,
                   "Access error in TAO_Base_Sequence file=%s, line=%u, "
                   "idx=%u, max=%u\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (filename),
+                  ACE_TEXT_TO_TCHAR_IN (filename),
                   lineno,
                   tao_idx,
                   tao_max));
@@ -1112,5 +1110,3 @@ operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> & lhs,
 {
   return !(lhs == rhs);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

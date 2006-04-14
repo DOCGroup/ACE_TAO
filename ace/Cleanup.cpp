@@ -1,18 +1,15 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/Cleanup.h"
 
-ACE_RCSID (ace,
-           Cleanup,
-           "$Id$")
+ACE_RCSID(ace, Cleanup, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Cleanup.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #include "ace/OS_Memory.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Cleanup::cleanup (void *)
@@ -28,7 +25,7 @@ ACE_Cleanup::~ACE_Cleanup (void)
 /*****************************************************************************/
 
 extern "C" void
-ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
+ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
 {
   object->cleanup (param);
 }
@@ -166,7 +163,7 @@ ACE_OS_Exit_Info::find (void *object)
 }
 
 void
-ACE_OS_Exit_Info::call_hooks (void)
+ACE_OS_Exit_Info::call_hooks ()
 {
   // Call all registered cleanup hooks, in reverse order of
   // registration.
@@ -175,12 +172,10 @@ ACE_OS_Exit_Info::call_hooks (void)
        iter = iter->next_)
     {
       ACE_Cleanup_Info &info = iter->cleanup_info_;
-      if (info.cleanup_hook_ == reinterpret_cast<ACE_CLEANUP_FUNC> (
-            ACE_CLEANUP_DESTROYER_NAME))
+      if (info.cleanup_hook_ == reinterpret_cast<ACE_CLEANUP_FUNC> (ace_cleanup_destroyer))
         // The object is an ACE_Cleanup.
-        ACE_CLEANUP_DESTROYER_NAME (
-          reinterpret_cast<ACE_Cleanup *> (info.object_),
-          info.param_);
+        ace_cleanup_destroyer (reinterpret_cast<ACE_Cleanup *> (info.object_),
+                               info.param_);
       else if (info.object_ == &ace_exit_hook_marker)
         // The hook is an ACE_EXIT_HOOK.
         (* reinterpret_cast<ACE_EXIT_HOOK> (info.cleanup_hook_)) ();
@@ -188,5 +183,3 @@ ACE_OS_Exit_Info::call_hooks (void)
         (*info.cleanup_hook_) (info.object_, info.param_);
     }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

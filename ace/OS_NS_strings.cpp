@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_strings.h"
@@ -11,8 +12,6 @@ ACE_RCSID(ace, OS_NS_strings, "$Id$")
 #if defined (ACE_LACKS_STRCASECMP)
 #  include "ace/OS_NS_ctype.h"
 #endif /* ACE_LACKS_STRCASECMP */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_STRCASECMP)
 int
@@ -80,5 +79,3 @@ ACE_OS::strncasecmp_emulation (const char *s,
     return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_tolower (*scan2);
 }
 #endif /* ACE_LACKS_STRCASECMP */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

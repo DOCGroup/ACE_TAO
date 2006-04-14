@@ -34,7 +34,7 @@ TAO_Notify_Tests_Activation_Manager::~TAO_Notify_Tests_Activation_Manager ()
 }
 
 int
-TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name)
+TAO_Notify_Tests_Activation_Manager::ior_output_file (const char *file_name)
 {
   this->ior_output_file_ = ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
@@ -45,7 +45,7 @@ TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name
 }
 
 int
-TAO_Notify_Tests_Activation_Manager::ior_input_file (const ACE_TCHAR *file_name)
+TAO_Notify_Tests_Activation_Manager::ior_input_file (const char *file_name)
 {
   this->ior_input_file_ = file_name;
   return 0;
@@ -204,7 +204,7 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
       if (sup_iter.next (sup_entry) != 0)
         {
           supplier = sup_entry->int_id_;
-          supplier->dump_stats (msg, dump_samples);
+          supplier->dump_stats (ACE_TEXT_TO_TCHAR_IN(msg), dump_samples);
         }
     }
 
@@ -219,7 +219,7 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
       if (cons_iter.next (cons_entry) != 0)
         {
           consumer = cons_entry->int_id_;
-          consumer->dump_stats (msg, dump_samples);
+          consumer->dump_stats (ACE_TEXT_TO_TCHAR_IN(msg), dump_samples);
         }
     }
 }

@@ -25,9 +25,7 @@
 #include "../orbsvcs/Notify/CosNotify_Initializer.h"
 #include "ace/SString.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
@@ -87,7 +85,7 @@ class TAO_Notify_Service_Driver
   // CosNotifyChannelAdmin::EventChannelFactory_var obj;
   //
 protected:
-  int init_ORB (int& argc, ACE_TCHAR *argv []
+  int init_ORB (int& argc, char *argv []
                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
 

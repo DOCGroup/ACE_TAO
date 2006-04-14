@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#include "orbsvcs/Time/TAO_UTO.h"
-#include "orbsvcs/Time/TAO_TIO.h"
+#include "TAO_UTO.h"
+#include "TAO_TIO.h"
 #include "ace/OS.h"
 
 
@@ -10,8 +10,6 @@ ACE_RCSID (Time,
            TAO_UTO,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
@@ -242,5 +240,3 @@ TAO_UTO::interval (ACE_ENV_SINGLE_ARG_DECL)
 
   return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

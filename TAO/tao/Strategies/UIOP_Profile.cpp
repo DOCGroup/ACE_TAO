@@ -1,8 +1,8 @@
-#include "tao/Strategies/UIOP_Profile.h"
+#include "UIOP_Profile.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/uiop_endpointsC.h"
+#include "uiop_endpointsC.h"
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
@@ -19,8 +19,6 @@ ACE_RCSID (Strategies,
            "$Id$")
 
 static const char prefix_[] = "uiop";
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
 
@@ -448,7 +446,5 @@ TAO_UIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_UIOP == 1 */

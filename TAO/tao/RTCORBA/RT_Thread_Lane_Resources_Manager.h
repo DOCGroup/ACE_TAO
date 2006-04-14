@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    RT_Thread_Lane_Resources_Manager.h
@@ -25,9 +23,6 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "ace/Service_Config.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Thread_Pool_Manager;
 
@@ -104,8 +99,6 @@ public:
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core);
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Thread_Lane_Resources_Manager_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Thread_Lane_Resources_Manager_Factory)

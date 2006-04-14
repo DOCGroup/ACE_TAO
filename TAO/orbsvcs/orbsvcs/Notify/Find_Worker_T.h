@@ -13,7 +13,7 @@
 #define TAO_Notify_FIND_WORKER_T_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,10 +21,8 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "orbsvcs/Notify/Container_T.h"
-#include "orbsvcs/Notify/Object.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Container_T.h"
+#include "Object.h"
 
 /**
  * @class TAO_Notify_Find_Worker_T
@@ -59,14 +57,12 @@ protected:
   TYPE* result_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Find_Worker_T.inl"
+#include "Find_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/Find_Worker_T.cpp"
+#include "Find_Worker_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

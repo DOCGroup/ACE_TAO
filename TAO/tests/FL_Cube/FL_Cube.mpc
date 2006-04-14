@@ -8,7 +8,6 @@ project(*client) : taoclient, portableserver, tao_flresource {
 }
 
 project(*server) : taoserver, tao_flresource {
-  after += *client
   source_files {
     server.cpp
     test_i.cpp

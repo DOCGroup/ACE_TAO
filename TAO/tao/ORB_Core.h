@@ -38,16 +38,6 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "ace/Array_Map.h"
 
-#include "ace/Thread_Manager.h"
-#include "ace/Lock_Adapter_T.h"
-#include "ace/TSS_T.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Data_Block;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if TAO_HAS_INTERCEPTORS == 1
 
 namespace TAO
@@ -57,6 +47,13 @@ namespace TAO
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
+
+#include "ace/Thread_Manager.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/TSS_T.h"
+
+// Forward declarations
+class ACE_Data_Block;
 
 class TAO_Adapter;
 class TAO_Acceptor;
@@ -614,11 +611,6 @@ public:
   CORBA::Long initialize_object (TAO_Stub *the_stub,
                                  CORBA::Object_ptr obj);
 
-  /// Reinitialise a stub after the effective profile has changed.
-  /// This will happen after a location forward has been received
-  /// or if a location forward supplied new target subsequently fails.
-  CORBA::Long reinitialize_object (TAO_Stub *stub);
-
   /// Return ORBid string.
   const char *orbid (void) const;
 
@@ -796,18 +788,6 @@ public:
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
-  /// Register a client request interceptor with policies.
-  void add_interceptor (
-    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL);
-
-  /// Register a server request interceptor with policies.
-  void add_interceptor (
-    PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL);
-
   /// Get the Client Request Interceptor adapter.
   /// Will not create a new one if not available yet.
   TAO::ClientRequestInterceptor_Adapter *clientrequestinterceptor_adapter (void);
@@ -888,12 +868,6 @@ public:
   /// flush
   TAO::Transport_Queueing_Strategy &default_transport_queueing_strategy (void);
 
-  /// Verify condition for  permanent forward is given,
-  /// both parameters must provide group attributes.
-  CORBA::Boolean is_permanent_forward_condition
-  (const CORBA::Object_ptr obj,
-   const TAO_Service_Context &service_context);
-
 protected:
 
   /// Destructor is protected since the ORB Core is a reference
@@ -967,10 +941,6 @@ protected:
   /// this ORB core.
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_i (void);
 
-  /// Common code from ::initialize_object and ::reinitialize_object
-  CORBA::Long initialize_object_i (TAO_Stub *the_stub,
-                                   const TAO_MProfile& mprofile);
-
 private:
 
   /// The ORB Core should not be copied.
@@ -997,8 +967,6 @@ private:
   //@}
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  bool use_local_memory_pool_;
 
 protected:
 
@@ -1400,10 +1368,8 @@ TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
 
 // ****************************************************************
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
+# include "ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

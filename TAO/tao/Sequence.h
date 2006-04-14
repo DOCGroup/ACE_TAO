@@ -25,16 +25,12 @@
 #include "tao/orbconf.h"
 #include "tao/default_environment.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Message_Block;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class Object;
 }
+
+class ACE_Message_Block;
 
 /**
  * @class TAO_Base_Sequence
@@ -660,8 +656,6 @@ TAO_Export bool operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
                             const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
 // ****************************************************************
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @brief Safe assertions without including Log_Msg.h

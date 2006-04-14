@@ -120,7 +120,7 @@
 
 
   <connection>
-    <name>hello_event_connection</name>
+    <name>hell_event_connection</name>
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>
@@ -178,7 +178,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Servant</string>
+          <string>createSenderHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -214,7 +214,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Servant</string>
+          <string>createReceiverHome_Servant</string>
         </value>
       </value>
     </execParameter>

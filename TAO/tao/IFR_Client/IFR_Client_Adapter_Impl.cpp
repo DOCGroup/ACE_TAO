@@ -1,7 +1,7 @@
 // $Id$
 
-#include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
-#include "tao/IFR_Client/IFR_BasicC.h"
+#include "IFR_Client_Adapter_Impl.h"
+#include "IFR_ExtendedC.h"
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -14,8 +14,6 @@
 ACE_RCSID (IFR_Client,
            IFR_Client_Adapter_Impl,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -215,8 +213,6 @@ TAO_IFR_Client_Adapter_Impl::Initializer (void)
 
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IFR_Client_Adapter_Impl);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_IFR_Client_Adapter_Impl,

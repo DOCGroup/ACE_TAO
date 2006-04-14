@@ -2,6 +2,7 @@
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 static FILE *output_file = 0;
 // File handle of the file into which received data is written.
@@ -143,12 +144,10 @@ Receiver::init (int,
 
 int
 parse_args (int argc,
-            char **argv)
+           char **argv)
 {
   // Parse the command line arguments
-  ACE_Get_Opt opts (argc,
-                    argv,
-                    "f:");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "f:");
 
   int c;
   while ((c = opts ()) != -1)
@@ -169,16 +168,17 @@ parse_args (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+     ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -208,15 +208,14 @@ main (int argc,
       ACE_TRY_CHECK;
 
       int result =
-        parse_args (argc,
-                    argv);
+        parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       if (result == -1)
         return -1;
 
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
+                                   ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
@@ -229,8 +228,7 @@ main (int argc,
 
       Receiver receiver;
       result =
-        receiver.init (argc,
-                       argv
+        receiver.init (convert.get_argc(), convert.get_ASCII_argv()
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

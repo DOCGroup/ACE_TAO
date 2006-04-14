@@ -1,14 +1,12 @@
 //$Id$
-#include "orbsvcs/FtRtEvent/Utils/UUID.h"
+#include "UUID.h"
 
 ACE_RCSID (Utils,
            UUID,
            "$Id$")
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/FtRtEvent/Utils/UUID.inl"
+#include "UUID.inl"
 #endif /* __ACE_INLINE__ */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static union
 {
@@ -163,5 +161,3 @@ UUID::create (unsigned char *buffer)
 
   memcpy(buffer + 10, &node, 6);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

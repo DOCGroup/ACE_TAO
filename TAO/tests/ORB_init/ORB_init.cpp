@@ -6,6 +6,7 @@
 #include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (ORB_init,
            ORB_init,
@@ -19,8 +20,10 @@ static const char IOR[] =
 "IOR:010000001600000049444c3a43756269745f466163746f72793a312e30000000010000000000000090000000010102cd14000000616e647572696c2e6563652e7563692e6564750057fecdcd2d00000014010f004e5550000000130000000001000000006368696c645f706f61000000000001000000666163746f7279cdcdcd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000004f41540400000001cd0000";
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CORBA::ORB_var orb;
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -31,7 +34,7 @@ main (int argc, char *argv[])
       CORBA::ORB_ptr my_orb = CORBA::ORB::_nil();
 
       {
-        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), orbid ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         my_orb = orb.in ();
@@ -48,7 +51,7 @@ main (int argc, char *argv[])
       // used in that scope.
       // -------------------------------------------------------------
 
-      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), orbid ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This isn't portable, but TAO implements an ORB_ptr as a
@@ -86,7 +89,7 @@ main (int argc, char *argv[])
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), orbid ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This isn't portable, but TAO implements an ORB_ptr as a
@@ -131,11 +134,11 @@ main (int argc, char *argv[])
       // clean-up.
       // -------------------------------------------------------------
       CORBA::ORB_var orb2 =
-        CORBA::ORB_init (argc, argv, "ORB number 2" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "ORB number 2" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb3 =
-        CORBA::ORB_init (argc, argv, "ORB number 3" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "ORB number 3" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // -------------------------------------------------------------

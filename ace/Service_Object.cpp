@@ -12,10 +12,8 @@
 #include "ace/config-all.h"
 
 ACE_RCSID (ace,
-           Service_Object,
-           "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+	   Service_Object,
+	   "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
@@ -126,5 +124,3 @@ ACE_Service_Type::name (const ACE_TCHAR *n)
   delete [] const_cast <ACE_TCHAR *> (this->name_);
   this->name_ = ACE::strnew (n);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

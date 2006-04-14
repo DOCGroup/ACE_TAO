@@ -38,8 +38,6 @@
 #  endif /* ACE_DEFAULT_SEM_KEY */
 #endif /* ACE_WIN32 */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_SV_Semaphore_Simple
  *
@@ -60,46 +58,43 @@ public:
   // = Initialization and termination methods.
   ACE_SV_Semaphore_Simple (void);
   ACE_SV_Semaphore_Simple (key_t key,
-                           short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+                           int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
                            u_short nsems = 1,
-                           mode_t perms = ACE_DEFAULT_FILE_PERMS);
+                           int perms = ACE_DEFAULT_FILE_PERMS);
   ACE_SV_Semaphore_Simple (const char *name,
-                           short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+                           int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
                            u_short nsems = 1,
-                           mode_t perms = ACE_DEFAULT_FILE_PERMS);
-#if defined (ACE_HAS_WCHAR)
+                           int perms = ACE_DEFAULT_FILE_PERMS);
+
   ACE_SV_Semaphore_Simple (const wchar_t *name,
-                           short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+                           int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
                            u_short nsems = 1,
-                           mode_t perms = ACE_DEFAULT_FILE_PERMS);
-#endif /* ACE_HAS_WCHAR */
+                           int perms = ACE_DEFAULT_FILE_PERMS);
 
   ~ACE_SV_Semaphore_Simple (void);
 
   int open (const char *name,
-            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
-            mode_t perms = ACE_DEFAULT_FILE_PERMS);
+            int perms = ACE_DEFAULT_FILE_PERMS);
 
-#if defined (ACE_HAS_WCHAR)
   int open (const wchar_t *name,
-            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
-            mode_t perms = ACE_DEFAULT_FILE_PERMS);
-#endif /* ACE_HAS_WCHAR */
+            int perms = ACE_DEFAULT_FILE_PERMS);
 
   /// Open or create one or more SV_Semaphores.  We return 0 if all is
   /// OK, else -1.
   int open (key_t key,
-            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
-            mode_t perms = ACE_DEFAULT_FILE_PERMS);
+            int perms = ACE_DEFAULT_FILE_PERMS);
 
   /// Close a ACE_SV_Semaphore, marking it as invalid for subsequent
   /// operations...
@@ -120,31 +115,31 @@ public:
    * decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
    * DOWN operation.
    */
-  int acquire (u_short n = 0, short flags = 0) const;
+  int acquire (u_short n = 0, int flags = 0) const;
 
   /// Acquire a semaphore for reading.
-  int acquire_read (u_short n = 0, short flags = 0) const;
+  int acquire_read (u_short n = 0, int flags = 0) const;
 
   /// Acquire a semaphore for writing
-  int acquire_write (u_short n = 0, short flags = 0) const;
+  int acquire_write (u_short n = 0, int flags = 0) const;
 
   /// Non-blocking version of <acquire>.
-  int tryacquire (u_short n = 0, short flags = 0) const;
+  int tryacquire (u_short n = 0, int flags = 0) const;
 
   /// Try to acquire the semaphore for reading.
-  int tryacquire_read (u_short n = 0, short flags = 0) const;
+  int tryacquire_read (u_short n = 0, int flags = 0) const;
 
   /// Try to acquire the semaphore for writing.
-  int tryacquire_write (u_short n = 0, short flags = 0) const;
+  int tryacquire_write (u_short n = 0, int flags = 0) const;
 
   /// Increment ACE_SV_Semaphore by one. Dijkstra's V operation,
   /// Tannenbaums UP operation.
-  int release (u_short n = 0, short flags = 0) const;
+  int release (u_short n = 0, int flags = 0) const;
 
   // = Semaphore operation methods.
   /// General ACE_SV_Semaphore operation. Increment or decrement by a
   /// specific amount (positive or negative; amount can`t be zero).
-  int op (short val, u_short semnum = 0, short flags = SEM_UNDO) const;
+  int op (int val, u_short semnum = 0, int flags = SEM_UNDO) const;
 
   /// General ACE_SV_Semaphore operation on an array of SV_Semaphores.
   int op (sembuf op_vec[], u_short nsems) const;
@@ -185,8 +180,6 @@ protected:
             int i = -1);
   key_t name_2_key (const char *name);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Semaphore_Simple.inl"

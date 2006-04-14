@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Default_Policy_Validator.h
@@ -18,15 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Policy_Validator.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator
   : public TAO_Policy_Validator
@@ -61,8 +57,6 @@ protected:
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_POLICY_VALIDATOR_H_ */

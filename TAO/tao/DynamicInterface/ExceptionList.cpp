@@ -1,4 +1,4 @@
-#include "tao/DynamicInterface/ExceptionList.h"
+#include "ExceptionList.h"
 
 ACE_RCSID (DynamicInterface,
            ExceptionList,
@@ -9,10 +9,9 @@ ACE_RCSID (DynamicInterface,
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/ExceptionList.inl"
+# include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
                                      CORBA::TypeCode_ptr *tc_list)
@@ -105,4 +104,4 @@ CORBA::ExceptionList::_decr_refcnt (void)
     }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

@@ -4,6 +4,7 @@
 
 #include "ReplicationManagerFaultConsumerAdapter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 #include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
 // FUZZ: disable check_for_streams_include
@@ -38,7 +39,7 @@ size_t ReplicationManagerFaultConsumerAdapter::notifications () const
 int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, char * argv[])
 {
   int optionError = 0;
-  ACE_Get_Opt get_opts (argc, argv, "o:r:d:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:r:d:n:");
   int c;
   while ((c = get_opts ()) != -1)
   {
@@ -335,7 +336,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     // Signal that we are ready to go.
     if (result == 0 && this->readyFile_ != 0)
     {
-	  FILE* ready = ACE_OS::fopen (this->readyFile_, "w");
+	  FILE* ready = ACE_OS::fopen (this->readyFile_, ACE_TEXT("w"));
 	  if (ready)
 	  {
 		ACE_OS::fprintf (ready, "ready\n");

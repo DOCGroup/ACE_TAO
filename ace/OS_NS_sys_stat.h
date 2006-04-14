@@ -34,16 +34,13 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__) && !defined(__IBMCPP__)
       typedef struct _stat ACE_stat;
 # else
       typedef struct stat ACE_stat;
 # endif /* ACE_WIN32 */
 
-namespace ACE_OS
-{
+namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE creat (const ACE_TCHAR *filename,
@@ -53,10 +50,11 @@ namespace ACE_OS
 
   // non-standard
   ACE_NAMESPACE_INLINE_FUNCTION
-  off_t filesize (ACE_HANDLE handle);
+  long filesize (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  off_t filesize (const ACE_TCHAR *handle);
+  long filesize (const ACE_TCHAR *handle);
+
 
   //@}
 
@@ -68,21 +66,17 @@ namespace ACE_OS
   int lstat (const char *,
              ACE_stat *);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int lstat (const wchar_t *,
              ACE_stat *);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mkdir (const char *path,
              mode_t mode = ACE_DEFAULT_DIR_PERMS);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int mkdir (const wchar_t *path,
              mode_t mode = ACE_DEFAULT_DIR_PERMS);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mkfifo (const ACE_TCHAR *file,
@@ -91,17 +85,13 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int stat (const char *file, ACE_stat *);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int stat (const wchar_t *file, ACE_stat *);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   mode_t umask (mode_t cmask);
 
 } /* namespace ACE_OS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -1,11 +1,12 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file Worker_Task.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
+ *
+ *
  */
 
 #ifndef TAO_Notify_WORKER_TASK_H
@@ -13,16 +14,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Method_Request.h"
-#include "orbsvcs/Notify/Refcountable.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Method_Request.h"
+#include "Refcountable.h"
 
 class TAO_Notify_AdminProperties;
 class TAO_Notify_QoSProperties;
@@ -64,8 +63,6 @@ protected:
   /// Destructor
   virtual ~TAO_Notify_Worker_Task ();
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_WORKER_TASK_H */

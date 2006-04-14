@@ -1,15 +1,13 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Filter_Builder.h"
-#include "orbsvcs/Event/EC_Filter.h"
+#include "EC_Filter_Builder.h"
+#include "EC_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Filter_Builder.i"
+#include "EC_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Filter_Builder, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Filter_Builder::~TAO_EC_Filter_Builder (void)
 {
@@ -29,5 +27,3 @@ TAO_EC_Null_Filter_Builder::build (
 {
   return new TAO_EC_Null_Filter;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -14,8 +14,6 @@
 
 ACE_RCSID(ace, IPC_SAP, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 
 void
@@ -59,7 +57,7 @@ ACE_IPC_SAP::enable (int value) const
       {
         // nonblocking argument (1)
         // blocking:            (0)
-        int nonblock = 1;
+        u_long nonblock = 1;
         return ACE_OS::ioctl (this->handle_,
                               FIONBIO,
                               &nonblock);
@@ -131,7 +129,7 @@ ACE_IPC_SAP::disable (int value) const
       // nonblocking argument (1)
       // blocking:            (0)
       {
-        int nonblock = 0;
+        u_long nonblock = 0;
         return ACE_OS::ioctl (this->handle_,
                               FIONBIO,
                               &nonblock);
@@ -189,5 +187,3 @@ ACE_IPC_SAP::disable (int value) const
 #endif /* ! ACE_WIN32 && ! VXWORKS */
   /* NOTREACHED */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -16,10 +16,7 @@
 #include "JobS.h"
 #include "activity_export.h"
 #include "ace/SString.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Arg_Shifter;
-ACE_END_VERSIONED_NAMESPACE_DECL
+#include "ace/Arg_Shifter.h"
 
 /**
  * @class Job_i
@@ -34,7 +31,7 @@ class activity_Export Job_i : public POA_Job
   Job_i (void);
 
   /// Init the state of this object.
-  int init (ACE_Arg_Shifter& arg_shifter);
+  int init (ACE_TArg_Shifter<char>& arg_shifter);
 
   /// = Accessors
   const ACE_CString& name (void);

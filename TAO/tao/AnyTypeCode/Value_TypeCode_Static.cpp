@@ -18,7 +18,6 @@ ACE_RCSID (tao,
            Value_TypeCode_Static,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Value<char const *,
@@ -116,29 +115,29 @@ TAO::TypeCode::Value<char const *,
 
   CORBA::ValueModifier const tc_type_modifier =
     tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_type_modifier != this->type_modifier_)
-    return false;
+    return 0;
 
   CORBA::TypeCode_var rhs_concrete_base_type =
     tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   CORBA::Boolean const equal_concrete_base_types =
     this->equal (rhs_concrete_base_type.in ()
                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (!equal_concrete_base_types)
-    return false;
+    return 0;
 
   CORBA::ULong const tc_nfields =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_nfields != this->nfields_)
-    return false;
+    return 0;
 
   for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
@@ -149,37 +148,37 @@ TAO::TypeCode::Value<char const *,
       CORBA::Visibility const rhs_visibility =
         tc->member_visibility (i
                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       if (lhs_visibility != rhs_visibility)
-        return false;
+        return 0;
 
       char const * const lhs_name =
         Traits<char const *>::get_string (lhs_field.name);;
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        return 0;
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<char const *>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       CORBA::Boolean const equal_members =
         lhs_tc->equal (rhs_tc.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       if (!equal_members)
-        return false;
+        return 0;
     }
 
-  return true;
+  return 1;
 }
 
 CORBA::Boolean
@@ -193,32 +192,32 @@ TAO::TypeCode::Value<char const *,
 {
   CORBA::ValueModifier const tc_type_modifier =
     tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_type_modifier != this->type_modifier_)
-    return false;
+    return 0;
 
   CORBA::TypeCode_var rhs_concrete_base_type =
     tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   CORBA::Boolean const equivalent_concrete_base_types =
     this->equivalent (rhs_concrete_base_type.in ()
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (!equivalent_concrete_base_types)
-    return false;
+    return 0;
 
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
 
   CORBA::ULong const tc_nfields =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  ACE_CHECK_RETURN (0);
 
   if (tc_nfields != this->nfields_)
-    return false;
+    return 0;
 
   for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
@@ -231,28 +230,28 @@ TAO::TypeCode::Value<char const *,
       CORBA::Visibility const rhs_visibility =
         tc->member_visibility (i
                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       if (lhs_visibility != rhs_visibility)
-        return false;
+        return 0;
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<char const *>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       CORBA::Boolean const equiv_types =
         lhs_tc->equivalent (rhs_tc.in ()
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_CHECK_RETURN (0);
 
       if (!equiv_types)
-        return false;
+        return 0;
     }
 
-  return true;
+  return 1;
 }
 
 CORBA::TypeCode_ptr
@@ -421,5 +420,3 @@ TAO::TypeCode::Value<char const *,
     CORBA::TypeCode::_duplicate (
       Traits<char const *>::get_typecode (this->concrete_base_));
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

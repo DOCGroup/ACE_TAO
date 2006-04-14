@@ -29,8 +29,6 @@
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_ci.cpp:70
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if !defined (_CORBA_IROBJECT___CI_)
 #define _CORBA_IROBJECT___CI_
 
@@ -207,5 +205,3 @@ CORBA::TypedefDef::TypedefDef (
 }
 
 #endif /* end #if !defined */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

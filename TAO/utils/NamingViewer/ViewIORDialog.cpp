@@ -69,12 +69,12 @@ void ViewIORDialog::OnApply()
   UpdateData();
   try
   {
-    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
+    m_Object = m_pORB->string_to_object(ACE_TEXT_TO_CHAR_IN (m_IOR));
     DecodeIOR();
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
+    MessageBox(ACE_TEXT_TO_TCHAR_IN (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 

@@ -33,10 +33,7 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace ACE_OS
-{
+namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t readv (ACE_HANDLE handle,
@@ -65,8 +62,6 @@ namespace ACE_OS
 #endif /* ACE_LACKS_WRITEV */
 
 } /* namespace ACE_OS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

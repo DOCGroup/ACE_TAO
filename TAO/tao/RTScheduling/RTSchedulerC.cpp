@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/RTScheduling/RTScheduler.h"
+#include "RTScheduler.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/Var_Size_Argument_T.h"
@@ -41,8 +41,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -944,5 +942,3 @@ RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -9,8 +9,6 @@ ACE_RCSID (AnyTypeCode,
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/SystemException.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 void
 TAO_NVList_Adapter_Impl::create_list (
       CORBA::Long count,
@@ -70,8 +68,6 @@ TAO_NVList_Adapter_Impl::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_NVList_Adapter_Impl);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DEFINE (TAO_NVList_Adapter_Impl,
                        ACE_TEXT ("TAO_NVList_Adapter"),
                        ACE_SVC_OBJ_T,
@@ -79,3 +75,5 @@ ACE_STATIC_SVC_DEFINE (TAO_NVList_Adapter_Impl,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_AnyTypeCode, TAO_NVList_Adapter_Impl)
+
+

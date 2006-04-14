@@ -6,11 +6,8 @@
 #include "ace/Auto_Event.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Auto_Event,
-           "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Auto_Event, "$Id$")
 
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,
                                 int type,
@@ -19,12 +16,11 @@ ACE_Auto_Event::ACE_Auto_Event (int initial_state,
   : ACE_Event (0,
                initial_state,
                type,
-               ACE_TEXT_CHAR_TO_TCHAR (name),
+               ACE_TEXT_TO_TCHAR_IN (name),
                arg)
 {
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,
                                 int type,
                                 const wchar_t *name,
@@ -32,11 +28,10 @@ ACE_Auto_Event::ACE_Auto_Event (int initial_state,
   : ACE_Event (0,
                initial_state,
                type,
-               ACE_TEXT_WCHAR_TO_TCHAR (name),
+               ACE_TEXT_TO_TCHAR_IN (name),
                arg)
 {
 }
-#endif /* ACE_HAS_WCHAR */
 
 void
 ACE_Auto_Event::dump (void) const
@@ -45,5 +40,3 @@ ACE_Auto_Event::dump (void) const
   ACE_Event::dump ();
 #endif /* ACE_HAS_DUMP */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

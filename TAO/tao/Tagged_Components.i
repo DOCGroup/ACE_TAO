@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 TAO_Tagged_Components::TAO_Tagged_Components (void)
   :  orb_type_ (0),
@@ -78,5 +76,3 @@ TAO_Tagged_Components::components (void)
 {
   return this->components_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

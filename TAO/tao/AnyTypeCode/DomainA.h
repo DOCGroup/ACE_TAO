@@ -58,8 +58,6 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:62
 
@@ -118,8 +116,6 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const COR
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

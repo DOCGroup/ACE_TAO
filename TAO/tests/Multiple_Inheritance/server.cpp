@@ -5,6 +5,7 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Multiple_Inheritance, server, "$Id$")
 
@@ -20,7 +21,7 @@ Multiple_Inheritance_i::Multiple_Inheritance_i (void)
 int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -44,8 +45,10 @@ parse_args (int argc, char **argv)
 
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Multiple_Inheritance_i servant;
   TAO_ORB_Manager orb_manager;
 
@@ -53,13 +56,12 @@ main (int argc, char **argv)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      orb_manager.init_child_poa (argc,
-                                  argv,
+      orb_manager.init_child_poa (convert.get_argc(), convert.get_ASCII_argv(),
                                   "child_poa"
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return -1;
 
       CORBA::String_var ior =
@@ -74,7 +76,7 @@ main (int argc, char **argv)
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+          FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",

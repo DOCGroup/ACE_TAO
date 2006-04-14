@@ -24,8 +24,6 @@
 
 #include "ace/Event.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Manual_Event
  *
@@ -45,13 +43,11 @@ public:
                     const char *name = 0,
                     void *arg = 0);
 
-#if defined (ACE_HAS_WCHAR)
   /// constructor which will create manual event (wchar_t version)
   ACE_Manual_Event (int initial_state,
                     int type,
                     const wchar_t *name,
                     void *arg = 0);
-#endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
   ~ACE_Manual_Event (void);
@@ -62,8 +58,6 @@ public:
   /// Declare the dynamic allocation hooks
   ACE_ALLOC_HOOK_DECLARE;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Manual_Event.inl"

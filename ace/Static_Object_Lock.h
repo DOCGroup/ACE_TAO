@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -24,8 +24,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Recursive_Thread_Mutex;
 
 /**
@@ -49,14 +47,10 @@ public:
   static void cleanup_lock (void);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_HAS_THREADS */
 
 // hack to get around errors while compiling using split-cpp
 #if defined (ACE_HAS_THREADS)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_IS_SPLITTING)
 typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> ACE_Static_Object_Lock_Type;
@@ -69,8 +63,6 @@ static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
 #  endif /* __GNUC__ */
 
 # endif /* ACE_IS_SPLITTING */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */
 

@@ -1,11 +1,10 @@
-#include "orbsvcs/PortableGroup/PG_MemberInfo.h"
-#include "orbsvcs/PortableGroup/PG_Operators.h"
+#include "PG_MemberInfo.h"
+#include "PG_Operators.h"
 
 ACE_RCSID (PortableGroup,
            PG_MemberInfo,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO_PG_MemberInfo::operator== (const TAO_PG_MemberInfo & rhs)
@@ -14,5 +13,3 @@ TAO_PG_MemberInfo::operator== (const TAO_PG_MemberInfo & rhs)
   // important.
   return location == rhs.location;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -13,8 +13,8 @@
 // ============================================================================
 
 
-#ifndef NS_CONTAINER_CPP
-#define NS_CONTAINER_CPP
+#ifndef NS_CONTAINER_C
+#define NS_CONTAINER_C
 
 #include "ace/Malloc_Base.h"
 
@@ -22,9 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Naming/Naming_Service_Container.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Naming_Service_Container.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_NS_Node)
 
@@ -369,6 +367,7 @@ ACE_Unbounded_List_Iterator<T>::operator!= (const ACE_Unbounded_List_Iterator<T>
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator!=");
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
 }
+/* -*- C++ -*- */
 
 // ---
 
@@ -386,7 +385,5 @@ ACE_Unbounded_List<T>::is_full (void) const
   return 0; // We should implement a "node of last resort for this..."
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
-
-#endif /* NS_CONTAINERS_T_CPP */
+#endif /* NS_CONTAINERS_T_C */

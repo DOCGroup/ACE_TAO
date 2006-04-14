@@ -23,14 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 struct iovec;
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
 class ACE_Allocator;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ORB_Core;
 
 /**
@@ -218,8 +212,6 @@ private:
   TAO_Queued_Message *next_;
   TAO_Queued_Message *prev_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

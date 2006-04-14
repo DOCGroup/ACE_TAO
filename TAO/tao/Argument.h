@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *  @author Jeff Parsons
- *  @author Carlos O'Ryan
+ *  @authors Jeff Parsons and Carlos O'Ryan
  */
 //=============================================================================
 
@@ -26,8 +25,6 @@
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
 #include "tao/ParameterModeC.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -125,8 +122,6 @@ namespace TAO
 #endif
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -20,7 +20,6 @@ noinst_PROGRAMS =
 
 ## Makefile.DSI_Idl.am
 
-if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
@@ -53,15 +52,10 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  Test.idl
-
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.DSI_Sequence_Client.am
 
-if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
@@ -84,12 +78,10 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.DSI_Sequence_Server.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -119,7 +111,6 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

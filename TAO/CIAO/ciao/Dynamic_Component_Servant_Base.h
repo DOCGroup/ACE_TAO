@@ -31,10 +31,9 @@ namespace CIAO
   class CIAO_SERVER_Export Dynamic_Component_Servant_Base
   {
   public:
-    /// @todo Not to be used, no idea why this should be public, have to check this
-    Dynamic_Component_Servant_Base (void);
+    explicit Dynamic_Component_Servant_Base (void);
 
-    explicit Dynamic_Component_Servant_Base (Session_Container *c);
+    Dynamic_Component_Servant_Base (Session_Container *c);
 
     virtual ~Dynamic_Component_Servant_Base (void);
 

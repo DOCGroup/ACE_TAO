@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class EC,class P,class I> ACE_INLINE void
 TAO_ESF_Proxy_Admin<EC,P,I>::
@@ -29,4 +25,3 @@ TAO_ESF_RefCountedRef<C>::~TAO_ESF_RefCountedRef ()
     }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, core, naming_serv, imr_client {
+project : orbsvcsexe, core, naming_serv {
   exename  = Naming_Service
   Source_Files {
     Naming_Server.cpp

@@ -24,8 +24,6 @@
 #include "ace/Functor_T.h"
 #include "ace/Log_Msg.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Hash_Map_Entry
  *
@@ -310,8 +308,8 @@ public:
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the <ACE_Atomic_Op> with an
    * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>, or if you need to
-   * guard the state of an iterator.
-   * @note The right name would be <lock>, but HP/C++ will choke on that!
+   * guard the state of an iterator.  NOTE: the right name would be
+   * <lock>, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
 
@@ -417,8 +415,8 @@ protected:
   int unbind_i (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry);
 
   /**
-   * Resize the map.  Must be called with locks held.
-   * @note This method should never be called more than once or else all the
+   * Resize the map.  Must be called with locks held.  Note, that this
+   * method should never be called more than once or else all the
    * hashing will get screwed up as the size will change.
    */
   int create_buckets (size_t size);
@@ -466,19 +464,12 @@ private:
   /// Total size of the hash table.
   size_t total_size_;
 
-  /// Current number of entries in the table
-  /// @note That this can be larger than <total_size_> due to the
-  /// bucket chaining).
+  /// Current number of entries in the table (note that this can be
+  /// larger than <total_size_> due to the bucket chaining).
   size_t cur_size_;
 
   // = Disallow these operations.
-  // Hack alert... Sun C++ 5.4 can't hack explicit templates with this
-  // in place. Please remove this when taking out explicit templates.
-#if !(defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x540) && \
-      defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
-#endif /* __SUNPRO_CC <= 0x540 && !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
   ACE_UNIMPLEMENTED_FUNC (ACE_Hash_Map_Manager_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
 };
 
@@ -619,7 +610,7 @@ protected:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -665,7 +656,7 @@ public:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -713,7 +704,7 @@ public:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  *
  * Note that a creation method for this new iterator cannot be added
@@ -784,7 +775,7 @@ protected:
  * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -942,8 +933,6 @@ public:
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
   operator= (const ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 // Include ace/Hash_Map_Manager_T.i on all platforms excluding SunCC.

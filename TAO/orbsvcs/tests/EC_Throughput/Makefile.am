@@ -58,7 +58,6 @@ endif BUILD_CORBA_MESSAGING
 ## Makefile.ECT_Supplier.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += ECT_Supplier
 
@@ -94,13 +93,11 @@ ECT_Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.ECT_Throughput.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += ECT_Throughput
 
@@ -139,7 +136,6 @@ ECT_Throughput_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

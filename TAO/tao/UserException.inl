@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 CORBA::UserException::UserException (void)
 {
@@ -34,5 +32,3 @@ CORBA::UserException::_downcast (CORBA::Exception const * exception)
 {
   return dynamic_cast<const CORBA::UserException *> (exception);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
@@ -55,5 +51,3 @@ TAO_EC_Default_Factory::orb_id (void) const
 {
   return this->orbid_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

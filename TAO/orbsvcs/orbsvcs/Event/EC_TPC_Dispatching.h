@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_TPC_Dispatching.h
  *
@@ -14,17 +13,14 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
 
-#include "orbsvcs/Event/EC_Dispatching.h"
+#include "EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_TPC_Dispatching_Task.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "EC_TPC_Dispatching_Task.h"
 
 class TAO_EC_Event_Channel_Base;
 
@@ -78,8 +74,6 @@ private:
   TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;  // @@ who will release?
                                 // @@ check to see how the factory gets released...
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_TPC_DISPATCHING_H */

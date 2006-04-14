@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -21,9 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_THREADS)
+#include "ace/SPIPE_Stream.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+#if defined (ACE_HAS_THREADS)
 
 /**
  * @class ACE_UPIPE_Connector
@@ -102,14 +102,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
 #include "ace/UPIPE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */
-
 #include /**/ "ace/post.h"
-
 #endif /* ACE_UPIPE_CONNECTOR_H */

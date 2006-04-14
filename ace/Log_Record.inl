@@ -1,5 +1,4 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/Global_Macros.h"
@@ -7,13 +6,9 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_string.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 ACE_Log_Record::~ACE_Log_Record (void)
 {
-  if (this->msg_data_)
-    delete[] this->msg_data_;
 }
 
 ACE_INLINE void
@@ -113,5 +108,3 @@ ACE_Log_Record::msg_data_len (void) const
   ACE_TRACE ("ACE_Log_Record::msg_data_len");
   return ACE_OS::strlen (this->msg_data_) + 1;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -155,6 +155,7 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
         TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -163,9 +164,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         package_pre (Type &o)
         {
@@ -174,9 +178,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         package_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         package_next (Type &o)
         {
@@ -185,9 +192,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         package_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         package_post (Type &o)
         {
@@ -196,6 +206,7 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         package_post (Type const&);
 

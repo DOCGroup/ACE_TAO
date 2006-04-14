@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -18,8 +18,8 @@
 #define HTIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
-#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+#include "HTIOP_Completion_Handler.h"
+#include "HTIOP_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,6 @@
 
 #include "ace/SOCK_Acceptor.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
   namespace HTBP
@@ -42,9 +41,6 @@ namespace ACE
     class Environment;
   }
 }
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -229,10 +225,8 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.i"
+#include "HTIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

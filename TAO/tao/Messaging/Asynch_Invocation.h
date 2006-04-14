@@ -25,15 +25,9 @@
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Time_Value;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Operation_Details;
 class TAO_InputCDR;
+class ACE_Time_Value;
 class TAO_Asynch_Reply_Dispatcher_Base;
 
 namespace CORBA
@@ -68,7 +62,6 @@ namespace TAO
   };
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_MESSAGING_ASYNCH_INVOCATION_H*/

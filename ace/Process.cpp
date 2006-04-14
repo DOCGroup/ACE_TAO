@@ -31,7 +31,6 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 #endif /* ACE_WIN32 */
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Process::ACE_Process (void)
   :
@@ -350,8 +349,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         // releasing any of the converted string memory since this
         // process will either exec() or exit() shortly.
 # if defined (ACE_USES_WCHAR)
-        ACE_Wide_To_Ascii n_procname (options.process_name ());
-        const char *procname = n_procname.char_rep ();
+        ACE::String_Conversion::Convert_In< char, wchar_t  > n_procname (options.process_name ());
+        const char *procname = n_procname.c_str ();
 
         wchar_t * const *wargv = options.command_line_argv ();
         size_t vcount, i;
@@ -359,8 +358,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
           ;
         char **procargv = new char *[vcount + 1];  // Need 0 at the end
         procargv[vcount] = 0;
+
         for (i = 0; i < vcount; ++i)
-          procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+          procargv[i] = ACE_TEXT_TO_CHAR_OUT (wargv[i]); // memory allocated!
 
         wargv = options.env_argv ();
         for (vcount = 0; wargv[vcount] != 0; ++vcount)
@@ -368,7 +368,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         char **procenv = new char *[vcount + 1];  // Need 0 at the end
         procenv[vcount] = 0;
         for (i = 0; i < vcount; ++i)
-          procenv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+          procenv[i] = ACE_TEXT_TO_CHAR_OUT (wargv[i]); // memory allocated!
 # else
         const char *procname = options.process_name ();
         char *const *procargv = options.command_line_argv ();
@@ -963,7 +963,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
   return 0;
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE)
 /**
  * @note Not available on Windows CE because it doesn't have a char version of
  * vsprintf.
@@ -989,14 +989,14 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
   va_end (argp);
 
   ACE_OS::strcpy (this->command_line_buf_,
-                  ACE_TEXT_ANTI_TO_TCHAR (anti_clb));
+                  ACE_TEXT_TO_TCHAR_IN (anti_clb));
 
   delete [] anti_clb;
 
   command_line_argv_calculated_ = 0;
   return 0;
 }
-#endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
+#endif /* !ACE_HAS_WINCE */
 
 ACE_TCHAR *
 ACE_Process_Options::env_buf (void)
@@ -1111,6 +1111,10 @@ ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
   return 1;
 }
 
+ACE_Managed_Process::ACE_Managed_Process (void)
+{
+}
+
 ACE_Managed_Process::~ACE_Managed_Process (void)
 {
 }
@@ -1120,5 +1124,3 @@ ACE_Managed_Process::unmanage (void)
 {
   delete this;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

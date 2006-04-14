@@ -3,14 +3,14 @@
 #ifndef METRICS_UPCALL_MONITOR_CPP
 #define METRICS_UPCALL_MONITOR_CPP
 
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor.h"
+#include "Metrics_UpcallMonitor.h"
 
 #if defined (ACE_METRICS_COLLECTION)
 
 #if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor.i"
+#include "Metrics_UpcallMonitor.i"
 #endif /* __ACE_INLINE__ */
 
 #else

@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Sample_History::sample (ACE_UINT64 value)
@@ -22,5 +18,3 @@ ACE_Sample_History::get_sample (size_t i) const
 
   return this->samples_[i];
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

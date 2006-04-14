@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IFR_Client/IFR_BaseC.h"
+#include "IFR_BaseC.h"
 #include "tao/orb_typesS.h"
 #include "tao/Typecode_typesS.h"
 
@@ -56,8 +56,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CORBA
 {
@@ -1249,8 +1247,6 @@ namespace POA_CORBA
 // be\be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

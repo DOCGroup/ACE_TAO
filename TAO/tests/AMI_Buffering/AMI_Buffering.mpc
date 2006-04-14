@@ -9,7 +9,6 @@ project(*Server): taoserver, ami {
 }
 
 project(*Client): taoserver, ami {
-  after += *Server
   exename = client
   Source_Files {
     Client_Task.cpp
@@ -19,7 +18,6 @@ project(*Client): taoserver, ami {
 }
 
 project(*Admin): taoserver, ami {
-  after += *Client
   exename = admin
   Source_Files {
     AMI_Buffering_Admin.cpp

@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const TAO_Notify_Property_Long&
 TAO_Notify_AdminProperties::max_global_queue_length (void) const
@@ -81,5 +77,3 @@ TAO_Notify_AdminProperties::suppliers (void)
 {
   return this->suppliers_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

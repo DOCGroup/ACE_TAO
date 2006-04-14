@@ -100,8 +100,6 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
       << be_nl << be_nl;
 
-  *os << be_global->core_versioning_begin () << be_nl;
-
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
@@ -253,8 +251,6 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
   *os << "return false;" << be_uidt_nl
       << "}";
-
-  *os << be_global->core_versioning_end () << be_nl;
 
   *os << be_nl << be_nl
       << "#endif /* _TAO_CDR_OP_"

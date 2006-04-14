@@ -26,17 +26,19 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:277
+// be\be_codegen.cpp:291
 
 
-#include "tao/PI/RequestInfoC.h"
+#include "RequestInfoC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+#endif /* __BORLANDC__ */
+
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -71,13 +73,13 @@ TAO::Objref_Traits<PortableInterceptor::RequestInfo>::nil (void)
   return PortableInterceptor::RequestInfo::_nil ();
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::RequestInfo>::marshal (
     PortableInterceptor::RequestInfo_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return ::CORBA::Object::marshal (p, cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 PortableInterceptor::RequestInfo::RequestInfo (void)
@@ -86,9 +88,17 @@ PortableInterceptor::RequestInfo::RequestInfo (void)
 PortableInterceptor::RequestInfo::~RequestInfo (void)
 {}
 
+void 
+PortableInterceptor::RequestInfo::_tao_any_destructor (void *_tao_void_pointer)
+{
+  RequestInfo *_tao_tmp_pointer =
+    static_cast<RequestInfo *> (_tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
+
 PortableInterceptor::RequestInfo_ptr
 PortableInterceptor::RequestInfo::_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -99,7 +109,7 @@ PortableInterceptor::RequestInfo::_narrow (
 
 PortableInterceptor::RequestInfo_ptr
 PortableInterceptor::RequestInfo::_unchecked_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -125,7 +135,7 @@ PortableInterceptor::RequestInfo::_tao_release (RequestInfo_ptr obj)
   CORBA::release (obj);
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 PortableInterceptor::RequestInfo::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -159,10 +169,8 @@ const char* PortableInterceptor::RequestInfo::_interface_repository_id (void) co
   return "IDL:omg.org/PortableInterceptor/RequestInfo:1.0";
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 PortableInterceptor::RequestInfo::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

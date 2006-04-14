@@ -16,12 +16,7 @@ unlink $iorfile;
 $SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL = new PerlACE::Process ("client", "-k $iorfile");
 
-$server = $SV->Spawn ();
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    exit 1;
-}
+$SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";

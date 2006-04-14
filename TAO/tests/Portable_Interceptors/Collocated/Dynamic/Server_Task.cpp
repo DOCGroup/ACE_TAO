@@ -76,7 +76,7 @@ Server_Task::svc (void)
       // If the ior_output_file exists, output the ior to it
       if (output_ != 0)
         {
-          FILE *output_file= ACE_OS::fopen (this->output_, "w");
+          FILE *output_file= ACE_OS::fopen (this->output_, ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
@@ -95,6 +95,9 @@ Server_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->sorb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
    }
  ACE_CATCHANY

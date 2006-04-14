@@ -15,13 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_Event.h"
+#include "LF_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LF_CH_Event
@@ -106,8 +104,6 @@ private:
   /// The previous state that the LF_CH_Event was in
   int prev_state_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

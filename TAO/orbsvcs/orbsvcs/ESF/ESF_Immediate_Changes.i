@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
@@ -44,5 +40,3 @@ TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 
   this->collection_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

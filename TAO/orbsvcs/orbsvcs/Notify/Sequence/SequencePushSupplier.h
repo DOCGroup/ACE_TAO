@@ -13,16 +13,14 @@
 #define TAO_Notify_SEQUENCEPUSHSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/Notify/Supplier.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "../Supplier.h"
 
 class TAO_Notify_ProxyConsumer;
 
@@ -48,14 +46,12 @@ public:
   virtual void release (void);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual bool get_ior (ACE_CString & iorstr) const;
 
 protected:
   /// The Supplier
   CosNotifyComm::SequencePushSupplier_var push_supplier_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_SEQUENCEPUSHSUPPLIER_H */

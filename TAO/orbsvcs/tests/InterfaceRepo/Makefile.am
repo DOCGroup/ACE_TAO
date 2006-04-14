@@ -11,7 +11,6 @@
 SUBDIRS = \
         Application_Test \
         IDL3_Test \
-        IFR_Inheritance_Test \
         IFR_Test \
         Latency_Test \
         Persistence_Test

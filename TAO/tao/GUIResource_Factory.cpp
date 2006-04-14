@@ -3,16 +3,14 @@
 #include "ace/Reactor.h"
 #include "tao/debug.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
-  GUIResource_Factory::GUIResource_Factory (void)
-    : dynamically_allocated_reactor_ (0)
+  GUIResource_Factory::GUIResource_Factory ():
+    dynamically_allocated_reactor_ (0)
   {
   }
 
-  GUIResource_Factory::~GUIResource_Factory (void)
+  GUIResource_Factory::~GUIResource_Factory ()
   {
   }
 
@@ -55,5 +53,3 @@ namespace TAO
       delete reactor;
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

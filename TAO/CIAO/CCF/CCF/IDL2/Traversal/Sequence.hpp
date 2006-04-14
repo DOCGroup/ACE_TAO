@@ -24,37 +24,10 @@ namespace CCF
         pre (Type&);
 
         virtual void
-        arguments_with_type (Type&, EdgeDispatcherBase&);
+        specialized (Type&, EdgeDispatcherBase&);
 
         virtual void
-        arguments_with_type (Type&);
-
-        virtual void
-        name (Type&);
-
-        virtual void
-        post (Type&);
-      };
-
-      struct BoundedSequence : Node<SemanticGraph::BoundedSequence>
-      {
-        virtual void
-        traverse (Type&);
-
-        virtual void
-        pre (Type&);
-
-        virtual void
-        arguments_with_type (Type&, EdgeDispatcherBase&);
-
-        virtual void
-        arguments_with_type (Type&);
-
-        virtual void
-        arguments_with_value (Type&, EdgeDispatcherBase&);
-
-        virtual void
-        arguments_with_value (Type&);
+        specialized (Type&);
 
         virtual void
         name (Type&);

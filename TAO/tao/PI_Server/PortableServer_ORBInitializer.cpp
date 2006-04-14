@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
-#include "tao/PI_Server/PortableServer_ORBInitializer.h"
-#include "tao/PI_Server/PortableServer_PolicyFactory.h"
+#include "PortableServer_ORBInitializer.h"
+#include "PortableServer_PolicyFactory.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -12,21 +12,16 @@ ACE_RCSID (PI_Server,
            PortableServer_ORBInitializer,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 void
-TAO_PortableServer_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+TAO_PortableServer_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr
+                                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-TAO_PortableServer_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+TAO_PortableServer_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
@@ -35,9 +30,8 @@ TAO_PortableServer_ORBInitializer::post_init (
 }
 
 void
-TAO_PortableServer_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+TAO_PortableServer_ORBInitializer::register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
+                                                              ACE_ENV_ARG_DECL)
 {
   // Register the PortableServer policy factories.
   PortableInterceptor::PolicyFactory_ptr tmp;
@@ -55,7 +49,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all PortableServer related policy
   // types since a single policy factory is used to create each of the
   // different types of PortableServer policies.
-  static CORBA::PolicyType const type[] = {
+  CORBA::PolicyType type[] = {
 #if (TAO_HAS_MINIMUM_POA == 0)
     PortableServer::THREAD_POLICY_ID,
     PortableServer::IMPLICIT_ACTIVATION_POLICY_ID,
@@ -67,10 +61,10 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
     PortableServer::ID_ASSIGNMENT_POLICY_ID
   };
 
-  CORBA::PolicyType const * end =
+  const CORBA::PolicyType *end =
     type + sizeof (type) / sizeof (type[0]);
 
-  for (CORBA::PolicyType const *i = type;
+  for (CORBA::PolicyType *i = type;
        i != end;
        ++i)
     {
@@ -103,5 +97,3 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

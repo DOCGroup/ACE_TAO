@@ -1,4 +1,5 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+
 
 //=============================================================================
 /**
@@ -21,11 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/MMAP_Memory_Pool.h"
+#include "ace/Memory_Pool.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_System_Time
@@ -71,7 +70,7 @@ public:
   int sync_local_system_time (ACE_System_Time::Sync_Mode mode);
 
 private:
-  typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
+  typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
   typedef ACE_Allocator_Adapter<MALLOC> ALLOCATOR;
 
   /// Our allocator (used for obtaining system time from shared memory).
@@ -83,8 +82,6 @@ private:
   /// Pointer to delta time kept in shared memory.
   long *delta_time_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SYSTEM_TIME_H */

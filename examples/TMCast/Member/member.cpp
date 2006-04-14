@@ -32,7 +32,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     ACE_INET_Addr address (argv[3]);
 
-    ACE_TMCast::Group group (address, ACE_TEXT_ALWAYS_CHAR (argv[2]));
+    ACE_TMCast::Group group (address, ACE_TEXT_TO_CHAR_IN (argv[2]));
 
     if (receiver)
     {

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,8 +19,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Thread_Manager;
 
@@ -87,8 +84,6 @@ private:
   /// Keeps track of the exit status for the thread.
   ACE_THR_FUNC_RETURN status_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

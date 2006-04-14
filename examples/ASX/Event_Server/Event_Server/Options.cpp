@@ -108,7 +108,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:bdH:i:L:l:M:ns:t:T:v"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("c:bdH:i:L:l:M:ns:t:T:v"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -172,7 +172,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 		   "\t[-s supplier port]\n"
 		   "\t[-t number of threads]\n"
 		   "\t[-v] (verbose) \n",
-		   ACE_TEXT_ALWAYS_CHAR (argv[0]));
+		   ACE_TEXT_TO_CHAR_IN (argv[0]));
 	::exit (1);
 	/* NOTREACHED */
 	break;
@@ -181,17 +181,17 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   // This is a major hack to get the size_t format spec to be a narrow
   // char, same as the other strings for printf() here. It only works
   // because this is the end of the source file. It makes the
-  // ACE_SIZE_T_FORMAT_SPECIFIER not use ACE_LIB_TEXT, effectively.
-#undef ACE_LIB_TEXT
-#define ACE_LIB_TEXT(A) A
+  // ACE_SIZE_T_FORMAT_SPECIFIER not use ACE_TEXT, effectively.
+#undef ACE_TEXT
+#define ACE_TEXT(A) A
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = thread count\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = low water mark\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = high water mark\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = message_size\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = initial queue length\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = total iterations\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = thread count\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = low water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = high water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = message_size\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = initial queue length\n"
 	      "%8d = THR_BOUND\n"
 	      "%8d = THR_NEW_LWP\n",
 	      ACE_Thread::getconcurrency (),

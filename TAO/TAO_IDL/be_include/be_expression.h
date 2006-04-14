@@ -42,7 +42,8 @@ public:
 
   be_expression (long l);
 
-  be_expression (bool b);
+  be_expression (long l,
+                 AST_Expression::ExprType t);
 
   be_expression (idl_uns_long l,
                  AST_Expression::ExprType t);

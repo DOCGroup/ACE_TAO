@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 //$Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Marshal_Object::TAO_Marshal_Object (void)
@@ -79,5 +75,3 @@ TAO_Marshal_Value::TAO_Marshal_Value (void)
   : nested_processing_ (0)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

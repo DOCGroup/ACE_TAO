@@ -24,10 +24,7 @@
 #include "ace/Stats.h"
 #include "ace/Task.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_EC_Event_Channel_Attributes;
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 class TAO_Module_Factory;
 class EC_Consumer;
 class EC_Supplier;

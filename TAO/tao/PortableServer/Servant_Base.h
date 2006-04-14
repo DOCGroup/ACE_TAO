@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,17 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PS_ForwardC.h"
-#include "tao/Abstract_Servant_Base.h"
+#include "PS_ForwardC.h"
 #include "ace/Atomic_Op.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "tao/Abstract_Servant_Base.h"
 
 class TAO_Operation_Table;
 
@@ -219,10 +217,8 @@ private:
   TAO_ServantBase *ptr_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Servant_Base.i"
+# include "Servant_Base.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

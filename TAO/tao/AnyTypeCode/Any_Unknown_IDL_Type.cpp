@@ -15,8 +15,6 @@ ACE_RCSID (tao,
            Any_Unknown_IDL_Type,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Auto_Ptr<ACE_Lock> TAO::Unknown_IDL_Type::lock_(new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
@@ -67,16 +65,16 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 
       if (status != TAO::TRAVERSE_CONTINUE)
         {
-          return false;
+          return 0;
         }
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
-      return false;
+      return 0;
     }
   ACE_ENDTRY;
 
-  return true;
+  return 1;
 }
 
 const void *
@@ -295,5 +293,3 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

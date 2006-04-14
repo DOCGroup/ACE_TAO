@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_DLList_Node::ACE_DLList_Node (void)
@@ -22,4 +19,7 @@ ACE_DLList_Node::ACE_DLList_Node (void *&i,
 {
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+ACE_INLINE
+ACE_DLList_Node::~ACE_DLList_Node (void)
+{
+}

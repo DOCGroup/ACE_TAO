@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Reactive_SupplierControl.h
  *
@@ -18,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_SupplierControl.h"
+#include "EC_SupplierControl.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 
@@ -30,8 +29,6 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -155,10 +152,8 @@ private:
   TAO_EC_SupplierControl *control_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Reactive_SupplierControl.i"
+#include "EC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

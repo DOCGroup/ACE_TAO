@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -34,8 +34,6 @@
 #include "ace/Asynch_Pseudo_Task.h"
 #include "ace/Auto_Event.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward declarations.
 class ACE_WIN32_Asynch_Result;
 class ACE_WIN32_Proactor_Timer_Handler;
@@ -67,7 +65,7 @@ public:
   /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems.
   virtual int register_handle (ACE_HANDLE handle,
-                               const void *completion_key);
+			       const void *completion_key);
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -237,7 +235,7 @@ protected:
 
   /// Called when object is removed from the ACE_Reactor.
   virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+			    ACE_Reactor_Mask close_mask);
 
   /**
    * Dispatch a single set of events.  If @a milli_seconds elapses
@@ -249,9 +247,9 @@ protected:
   /// Protect against structured exceptions caused by user code when
   /// dispatching handles.
   void application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
-                                  size_t bytes_transferred,
-                                  const void *completion_key,
-                                  u_long error);
+				  size_t bytes_transferred,
+				  const void *completion_key,
+				  u_long error);
 
   /**
    * Post @a how_many completions to the completion port so that all
@@ -293,7 +291,7 @@ protected:
  * called, the <handler>'s handle_timeout method will be
  * called.
  */
-class ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
+class ACE_Export ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
 {
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
@@ -317,8 +315,6 @@ protected:
   /// Time value requested by caller
   ACE_Time_Value time_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
 #include /**/ "ace/post.h"

@@ -158,7 +158,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   this->op_name (bu,
                  os); 
   
-  *os << "::" << ub->local_name () << " (const " << fname
+  *os << "::" << ub->local_name () << " (" << fname
       << " val)" << be_nl
       << "{" << be_idt_nl;
   *os << fname << "_copy ("
@@ -595,17 +595,14 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu, os);
-  
-  AST_PredefinedType::PredefinedType pt = node->pt ();
-  bool is_object = (pt == AST_PredefinedType::PT_object
-                    || pt == AST_PredefinedType::PT_pseudo);
 
-  // IN parameter semantics call for 'const' qualifier except
-  // for interface types, which here are Object and TypeCode.
   *os << "::" << ub->local_name ()
-      << " (" << (is_object ? "" : "const ") << bt->name ();
+      << " (" << bt->name ();
 
-  if (is_object)
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
+  if (pt == AST_PredefinedType::PT_pseudo
+      || pt == AST_PredefinedType::PT_object)
     {
       *os << "_ptr";
     }

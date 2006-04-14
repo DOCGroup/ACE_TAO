@@ -35,6 +35,11 @@
 #include "ace/Sock_Connect.h"
 #include "ace/Default_Constants.h"
 
+// Forward declarations.
+class ACE_Time_Value;
+class ACE_Message_Block;
+class ACE_Handle_Set;
+
 #if defined (CYGWIN32)
 // Include math.h. math.h defines a macro log2 that conflicts with ACE::log2()
 // which seems to only cause a problem on cygwin.  Insuring that math.h is
@@ -54,13 +59,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-// Open versioned namespace, if enabled by the user.
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Forward declarations.
-class ACE_Time_Value;
-class ACE_Message_Block;
-class ACE_Handle_Set;
 
 /**
  * @namespace ACE
@@ -100,7 +98,7 @@ namespace ACE
   /// Check if error indicates the process being out of handles (file
   /// descriptors).
   extern ACE_Export int out_of_handles (int error);
-
+ 
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
   extern ACE_Export bool wild_match(const char* s, const char* pattern, bool case_sensitive = true);
@@ -417,7 +415,7 @@ namespace ACE
   extern ACE_Export char *strnew (const char *s);
 
   /// Delete the memory allocated by @c strnew.
-  ACE_NAMESPACE_INLINE_FUNCTION void strdelete (char *s);
+  extern ACE_Export void strdelete (char *s);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.
@@ -427,18 +425,15 @@ namespace ACE
   /// @c ACE_OS::malloc to allocate the new string.
   extern ACE_Export char *strnnew (const char *str, size_t n);
 
-#if defined (ACE_HAS_WCHAR)
   extern ACE_Export const wchar_t *strend (const wchar_t *s);
 
   extern ACE_Export wchar_t *strnew (const wchar_t *s);
 
-  ACE_NAMESPACE_INLINE_FUNCTION void strdelete (wchar_t *s);
+  extern ACE_Export void strdelete (wchar_t *s);
 
   extern ACE_Export wchar_t *strndup (const wchar_t *str, size_t n);
 
   extern ACE_Export wchar_t *strnnew (const wchar_t *str, size_t n);
-
-#endif /* ACE_HAS_WCHAR */
 
   /**
    * On Windows, determines if a specified pathname ends with ".exe"
@@ -497,10 +492,7 @@ namespace ACE
    * if @a avoid_zombies == 0 call @c ACE_OS::fork directly, else
    * create an orphan process that's inherited by the init process;
    * init cleans up when the orphan process terminates so we don't
-   * create zombies.  Returns -1 on failure and either the child PID
-   * on success if @a avoid_zombies == 0 or 1 on success if @a
-   * avoid_zombies != 0 (this latter behavior is a known bug that
-   * needs to be fixed).
+   * create zombies.
    */
   extern ACE_Export pid_t fork (
     const ACE_TCHAR *program_name = ACE_LIB_TEXT ("<unknown>"),
@@ -536,13 +528,11 @@ namespace ACE
   /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const char *str, size_t len);
 
-#if defined (ACE_HAS_WCHAR)
   /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const wchar_t *str);
 
   /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const wchar_t *str, size_t len);
-#endif /* ACE_HAS_WCHAR */
 
   /// Computes CRC-CCITT for the string.
   extern ACE_Export ACE_UINT16 crc_ccitt(const char *str);
@@ -632,7 +622,7 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION u_long log2 (u_long num);
 
   /// Hex conversion utility.
-  ACE_NAMESPACE_INLINE_FUNCTION ACE_TCHAR nibble2hex (u_int n);
+  ACE_NAMESPACE_INLINE_FUNCTION char nibble2hex (u_int n);
 
   /// Convert a hex character to its byte representation.
   ACE_NAMESPACE_INLINE_FUNCTION u_char hex2byte (ACE_TCHAR c);
@@ -825,9 +815,6 @@ namespace ACE
                                        size_t *bytes_transferred);
 
 }
-
-// Close versioned namespace, if enabled by the user.
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ACE.inl"

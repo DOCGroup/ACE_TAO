@@ -76,7 +76,13 @@ public:
 
 private:
   /// Internal stack structure to hold namespace context.
-  ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*> stack_;
+  struct NS_Node_T {
+    ACEXML_NS_CONTEXT *item_;
+    struct NS_Node_T *next_;
+  };
+
+  /// Anchor point for head of stack.
+  NS_Node_T *head_;
 };
 
 /**

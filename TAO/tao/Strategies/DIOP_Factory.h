@@ -27,15 +27,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "tao/Strategies/strategies_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "strategies_export.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_Strategies_Export TAO_DIOP_Protocol_Factory
-  : public TAO_Protocol_Factory
+class TAO_Strategies_Export TAO_DIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
   /// Constructor.
@@ -75,8 +72,6 @@ private:
   int major_;
   int minor_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_DIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_DIOP_Protocol_Factory)

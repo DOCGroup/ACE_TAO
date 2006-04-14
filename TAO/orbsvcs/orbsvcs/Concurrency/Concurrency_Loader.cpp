@@ -13,30 +13,33 @@
 //   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 // ================================================================
 
-#include "orbsvcs/Concurrency/Concurrency_Loader.h"
+#include "Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Concurrency, Concurrency_Loader, "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Concurrency_Loader::TAO_Concurrency_Loader (void)
 {
+  // Constructor
 }
 
 TAO_Concurrency_Loader::~TAO_Concurrency_Loader (void)
 {
+  // Destructor
 }
 
 int
-TAO_Concurrency_Loader::init (int argc, char *argv[])
+TAO_Concurrency_Loader::init (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This function call initializes the Concurrency Service
@@ -64,7 +67,7 @@ TAO_Concurrency_Loader::fini (void)
 CORBA::Object_ptr
 TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
                                        int /* argc */,
-                                       char * /* argv */ []
+                                       ACE_TCHAR * /* argv */ []
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -83,6 +86,4 @@ TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
   return this->concurrency_server_.init (orb, poa.in ());
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-ACE_FACTORY_DEFINE (TAO_Concurrency_Serv, TAO_Concurrency_Loader)
+ACE_FACTORY_DEFINE (TAO_Concurrency, TAO_Concurrency_Loader)

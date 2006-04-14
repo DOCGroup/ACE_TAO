@@ -62,7 +62,7 @@ int
 LB_server::write_ior_to_file (const char *ior)
 {
   FILE *output_file =
-    ACE_OS::fopen ("obj.ior", "w");
+    ACE_OS::fopen ("obj.ior", ACE_TEXT("w"));
 
   if (output_file == 0)
     {

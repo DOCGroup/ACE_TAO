@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 #include "Sequence.h"
@@ -71,7 +72,7 @@ Sequence::init (int argc,
                   "Options: event count = %d \n"
                   "supplier batch size = %d \n"
                   "consumer batch size = %d \n"
-                  "pacing = %d secs \n"
+                  "pacing = %d \n"
                   , event_count_
                   , supplier_batch_size_
                   , consumer_batch_size_
@@ -124,7 +125,7 @@ Sequence::init (int argc,
   properties[0].name = CORBA::string_dup (CosNotification::MaximumBatchSize);
   properties[0].value <<= (CORBA::Long) this->consumer_batch_size_;
   properties[1].name = CORBA::string_dup (CosNotification::PacingInterval);
-  properties[1].value <<= (TimeBase::TimeT) (this->pacing_ * 1000 * 10000);
+  properties[1].value <<= (TimeBase::TimeT) this->pacing_;
   properties[2].name = CORBA::string_dup (CosNotification::OrderPolicy);
   properties[2].value <<= this->order_policy_;
 
@@ -147,10 +148,9 @@ Sequence::init (int argc,
 }
 
 int
-Sequence::parse_args (int argc,
-                         char *argv[])
+Sequence::parse_args (int argc, char *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc,
+    ACE_TArg_Shifter< char > arg_shifter (argc,
                                  argv);
     const char *current_arg = 0;
 
@@ -180,9 +180,9 @@ Sequence::parse_args (int argc,
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Pacing"))) // in seconds
+      else if ((current_arg = arg_shifter.get_the_parameter ("-Pacing")))
         {
-          this->pacing_ = (TimeBase::TimeT) ACE_OS::atoi (current_arg);
+          this->pacing_ = (TimeBase::TimeT) ACE_OS::atoi (current_arg); // pacing
 
           arg_shifter.consume_arg ();
         }
@@ -354,19 +354,20 @@ Sequence::check_results (void)
 /***************************************************************************/
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Sequence events;
 
-  if (events.parse_args (argc, argv) == -1)
+  if (events.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return 1;
     }
 
   ACE_TRY_NEW_ENV
     {
-      events.init (argc,
-                   argv
+      events.init (convert.get_argc(), convert.get_ASCII_argv()
                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

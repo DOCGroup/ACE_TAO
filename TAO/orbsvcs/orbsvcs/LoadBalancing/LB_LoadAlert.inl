@@ -3,8 +3,6 @@
 // $Id$
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE CORBA::Boolean
 TAO_LB_LoadAlert::alerted (void) const
 {
@@ -12,5 +10,3 @@ TAO_LB_LoadAlert::alerted (void) const
 
   return this->alerted_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

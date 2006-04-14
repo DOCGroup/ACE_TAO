@@ -20,13 +20,13 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
-using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
+using namespace TAO::details;
 
 using namespace boost::unit_test_framework;
 
 struct Tester
 {
-  typedef object_reference_traits<mock_reference,mock_reference_var,true> tested_element_traits;
+  typedef object_reference_traits<mock_reference,true> tested_element_traits;
   typedef object_reference_sequence_element<tested_element_traits> tested_element;
   typedef mock_reference * reference_type;
   typedef tested_element_traits::object_type_var reference_var;
@@ -58,7 +58,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(1), r);
       BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
-
+    
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -94,7 +94,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(2), r);
       BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
-
+    
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -131,7 +131,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(1), r);
       BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
-
+    
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -168,7 +168,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(2), r);
       BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
-
+    
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -207,7 +207,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(3), r);
       BOOST_CHECK_MESSAGE(mr.expect(3), mr);
     }
-
+    
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -242,7 +242,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(1), r);
       BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
-
+    
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -279,7 +279,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(2), r);
       BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
-
+    
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -327,16 +327,16 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-ACE_Proper_Export_Flag test_suite *
+test_suite *
 init_unit_test_suite(int, char*[])
 {
-  test_suite * ts =
-      BOOST_TEST_SUITE("object reference sequence element unit test");
+  std::auto_ptr<test_suite> ts(
+      BOOST_TEST_SUITE("object reference sequence element unit test"));
 
   boost::shared_ptr<Tester > mock_reference_tester(
       Tester::allocate());
-  mock_reference_tester->add_all(ts);
+  mock_reference_tester->add_all(ts.get());
 
-  return ts;
+  return ts.release();
 }
 

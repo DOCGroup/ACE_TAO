@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //$Id$
 #ifndef TAO_ThreadAction_H
 #define TAO_ThreadAction_H
@@ -8,9 +6,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTScheduling/RTSchedulerC.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "RTSchedulerC.h"
 
 class TAO_RTScheduler_Export TAO_ThreadAction: 
 public RTScheduling::ThreadAction,
@@ -22,7 +18,5 @@ public RTScheduling::ThreadAction,
 		   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*TAO_ThreadAction_H*/

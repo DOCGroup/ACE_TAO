@@ -2,7 +2,6 @@
 
 #include "JAWS/Parse_Headers.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Log_Msg.h"
 
 #define ACCESSOR(T,C,x) \
 T C :: x (void) const { return this-> x##_; }\

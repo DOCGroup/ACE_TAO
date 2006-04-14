@@ -728,16 +728,17 @@ Client::test_get_property_value (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       Client client;
 
-      if (client.init (argc,
-                       argv
+      if (client.init (convert.get_argc(), convert.get_ASCII_argv()
                        ACE_ENV_ARG_PARAMETER) == -1)
         return 1;
       ACE_TRY_CHECK;

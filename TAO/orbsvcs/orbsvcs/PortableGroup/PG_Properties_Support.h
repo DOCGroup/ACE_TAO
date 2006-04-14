@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Properties_Support.h
@@ -18,10 +17,8 @@
 #ifndef TAO_PG_PROPERTIES_SUPPORT_H
 #define TAO_PG_PROPERTIES_SUPPORT_H
 
-#include "orbsvcs/PortableGroup/PG_Property_Set.h"
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "PG_Property_Set.h"
+#include "portablegroup_export.h"
 
 namespace TAO
 {
@@ -208,7 +205,5 @@ namespace TAO
     Properties_Map properties_map_;
   };
 } //namespace TAO_PG
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // TAO_PG_PROPERTIES_SUPPORT_H

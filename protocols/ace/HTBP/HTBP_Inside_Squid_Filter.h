@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -20,8 +20,6 @@
 
 #include "HTBP_Export.h"
 #include "HTBP_Filter.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -80,8 +78,6 @@ namespace ACE
     };
   }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Inside_Squid_Filter.inl"

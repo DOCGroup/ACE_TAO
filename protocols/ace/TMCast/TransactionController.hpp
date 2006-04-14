@@ -3,7 +3,6 @@
 // cvs-id    : $Id$
 
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
 #include "ace/Synch.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 
@@ -353,7 +352,7 @@ namespace ACE_TMCast
           // cerr << "Expecting Send but received " << typeid (*m).name ()
           //      << endl;
 
-          ACE_OS::abort ();
+          ::abort ();
         }
 
         current_.id++;

@@ -1,11 +1,10 @@
 // $Id$
 
-#include "tao/Object.h"
-#include "tao/Stub.h"
-#include "tao/Adapter_Registry.h"
-#include "tao/Adapter.h"
-#include "tao/SystemException.h"
-#include "tao/debug.h"
+#include "Object.h"
+#include "Adapter_Registry.h"
+#include "Adapter.h"
+#include "SystemException.h"
+#include "debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -13,8 +12,6 @@
 ACE_RCSID (tao,
            Adapter_Registry,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)
   : orb_core_ (oc),
@@ -53,7 +50,7 @@ TAO_Adapter_Registry::close (int wait_for_completion
       if (TAO_debug_level > 3)
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception in TAO_Adapter_Registry::close ()");
+                               "Exception in TAO_Adapter_Registry::close () \n");
         }
       return;
     }
@@ -163,38 +160,22 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
         this->adapters_[i]->create_collocated_object (stub,
                                                       mprofile);
       if (x != 0)
-        {
-          if (!stub->collocated_servant ())
-            {
-              // This adapter created an object but it was not able to locate
-              // a servant so we need to give the rest of the adapters a chance to
-              // initialise the stub and find a servant or forward us or whatever.
-              for (CORBA::Long go_on = 1; go_on && i != this->adapters_count_; ++i)
-                {
-                  // initialize_collocated_object only returns 0 if it has completely
-                  // initialised the object.
-                  go_on = this->adapters_[i]->initialize_collocated_object (stub);
-                }
-            }
-          return x;
-        }
+        return x;
     }
   return 0;
 }
 
 CORBA::Long
-TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub)
+TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub,
+                                                    CORBA::Object_ptr obj)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
       int retval =
-        this->adapters_[i]->initialize_collocated_object (stub);
-      if (retval == 0)
-        {
-          // initialize_collocated_object only returns 0 if it has completely
-          // initialised the object. We can return early.
-          return retval;
-        }
+        this->adapters_[i]->initialize_collocated_object (stub,
+                                                          obj);
+      if (retval != 0)
+        return retval;
     }
   return 0;
 }
@@ -212,4 +193,3 @@ TAO_Adapter_Registry::find_adapter (const char *name) const
 
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

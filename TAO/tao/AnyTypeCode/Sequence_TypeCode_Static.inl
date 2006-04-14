@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
                         TAO::Null_RefCount_Policy>::Sequence (
@@ -16,5 +14,3 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   , length_ (length)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

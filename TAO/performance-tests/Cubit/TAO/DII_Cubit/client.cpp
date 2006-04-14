@@ -20,7 +20,7 @@
 
 #include "tao/DynamicInterface/Request.h"
 #include "tao/debug.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/TC_Constants_Forward.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
@@ -261,7 +261,7 @@ DII_Cubit_Client::init (int argc, char **argv)
 int
 DII_Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt opts (argc_, argv_, "dn:i:f:x");
+  ACE_Get_Arg_Opt<char> opts (argc_, argv_, "dn:i:f:x");
   int c;
   int result;
 
@@ -849,7 +849,7 @@ DII_Cubit_Client::run (void)
 
 // Start the test.
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   DII_Cubit_Client cubit_client;
 

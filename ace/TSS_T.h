@@ -37,8 +37,6 @@
 
 #include "ace/Thread_Mutex.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_TSS
  *
@@ -51,7 +49,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * shield applications from the details of accessing
  * thread-specific storage.
  *
- * @note For maximal portability, <TYPE> cannot be a built-in type,
+ * NOTE: For maximal portability, <TYPE> cannot be a built-in type,
  * but instead should be a user-defined class (some compilers will
  * allow a built-in type, others won't).  See template class
  * ACE_TSS_Type_Adapter, below, for adapting built-in types to work
@@ -172,8 +170,6 @@ private:
   /// The wrapped value.
   TYPE value_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/TSS_T.inl"

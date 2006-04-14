@@ -22,7 +22,7 @@
 #define TAO_BE_VISITOR_SCOPE_H
 
 #include "be_visitor_decl.h"
-
+#include "idl_bool.h"
 
 class be_visitor_scope : public be_visitor_decl
 {
@@ -57,10 +57,10 @@ public:
   virtual int next_elem (be_decl *elem, be_decl *&);
   // get the successor to elem
 
-  virtual bool last_node (be_decl *bd);
+  virtual idl_bool last_node (be_decl *bd);
   // Is bd the last node in the scope
 
-  bool last_inout_or_out_node (be_decl *bd);
+  idl_bool last_inout_or_out_node (be_decl *bd);
   // Is bd the last inout or out in the scope
 
 protected:

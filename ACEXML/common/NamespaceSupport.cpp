@@ -15,6 +15,7 @@ static const ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
 ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack (void)
+  : head_ (0)
 {
 }
 
@@ -26,54 +27,31 @@ ACEXML_Namespace_Context_Stack::~ACEXML_Namespace_Context_Stack (void)
 int
 ACEXML_Namespace_Context_Stack::push (ACEXML_NS_CONTEXT *nsc)
 {
-  return (this->stack_.push (nsc) < 0);
+  struct NS_Node_T *temp = 0;
+  ACE_NEW_RETURN (temp, NS_Node_T, -1);
+
+  temp->item_ = nsc;
+  temp->next_ = this->head_;
+
+  this->head_ = temp;
+  return 0;
 }
 
 ACEXML_NS_CONTEXT *
 ACEXML_Namespace_Context_Stack::pop (void)
 {
-  if (this->stack_.size() <= 0)
-    return 0;
-
-  ACEXML_NS_CONTEXT* temp = 0;
-  int retval = this->stack_.pop (temp);
-  if (retval != 0)
+  if (this->head_ != 0)
     {
-      ACE_ERROR ((LM_ERROR, "Unable to pop Namespace context from stack\n"));
-      return 0;
+      struct NS_Node_T *temp = this->head_;
+      this->head_ = temp->next_;
+
+      ACEXML_NS_CONTEXT* retv = temp->item_;
+      delete temp;
+      return retv;
     }
-  return temp;
-}
-
-int
-ACEXML_NamespaceSupport::popContext (void)
-{
-  delete this->effective_context_;
-
-  if ((this->effective_context_ = this->ns_stack_.pop ()) == 0)
-    return -1;
   return 0;
 }
 
-int
-ACEXML_NamespaceSupport::pushContext (void)
-{
-  ACEXML_NS_CONTEXT *temp = this->effective_context_;
-  ACE_NEW_RETURN (this->effective_context_,
-                  ACEXML_NS_CONTEXT (),
-                  -1);
-
-  // @@ Copy everything from the old context to the new one.
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
-
-  for (ACEXML_NS_CONTEXT_ITER iter (*temp);
-       iter.next (entry) != 0;
-       iter.advance ())
-    this->effective_context_->bind (entry->ext_id_,
-                                    entry->int_id_);
-  this->ns_stack_.push (temp);
-  return 0;
-}
 
 ACEXML_NamespaceSupport::ACEXML_NamespaceSupport (void)
   : ns_stack_ (),
@@ -118,7 +96,7 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
 int
 ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry;
 
   // The prefix for default namespace (empty string) is included in
   // the return list.
@@ -136,7 +114,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
   if (!uri || *uri == 0)
     return 0;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
@@ -150,7 +128,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
 int
 ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry;
 
   // The prefix for default namespace (empty string) is not included
   // in the return list.
@@ -168,7 +146,7 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
   if (!uri)
     return -1;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
@@ -197,6 +175,37 @@ ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
 }
 
 int
+ACEXML_NamespaceSupport::popContext (void)
+{
+  delete this->effective_context_;
+
+  if ((this->effective_context_ = this->ns_stack_.pop ()) == 0)
+    return -1;
+  return 0;
+}
+
+int
+ACEXML_NamespaceSupport::pushContext (void)
+{
+  ACEXML_NS_CONTEXT *temp = this->effective_context_;
+  ACE_NEW_RETURN (this->effective_context_,
+                  ACEXML_NS_CONTEXT (),
+                  -1);
+
+  // @@ Copy everything from the old context to the new one.
+  ACEXML_NS_CONTEXT_ENTRY *entry;
+
+  for (ACEXML_NS_CONTEXT_ITER iter (*temp);
+       iter.next (entry) != 0;
+       iter.advance ())
+    this->effective_context_->bind (entry->ext_id_,
+                                    entry->int_id_);
+  this->ns_stack_.push (temp);
+  return 0;
+}
+
+
+int
 ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
                                       const ACEXML_Char *&uri,
                                       const ACEXML_Char *&name,
@@ -211,7 +220,7 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
         break;
       }
 
-  ACEXML_String prefix (ACE_TEXT(""),0,0);
+  ACEXML_String prefix;
   if (len == -1)
       name = qName;
   else
@@ -254,8 +263,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String, ACEXML_String, AC
 template class ACE_Unbounded_Queue<const ACEXML_Char *>;
 template class ACE_Unbounded_Queue_Iterator<const ACEXML_Char *>;
 template class ACE_Node<const ACEXML_Char *>;
-template class ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*>;
-template class ACE_Node<ACEXML_NS_CONTEXT*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<ACEXML_String, ACEXML_String>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>
@@ -265,6 +272,4 @@ template class ACE_Node<ACEXML_NS_CONTEXT*>;
 #pragma instantiate ACE_Unbounded_Queue<const ACEXML_Char *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<const ACEXML_Char *>
 #pragma instantiate ACE_Node<const ACEXML_Char *>
-#pragma instantiate ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*>
-#pragma instantiate ACE_Node<ACEXML_NS_CONTEXT*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

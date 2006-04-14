@@ -48,9 +48,6 @@ corbaname-stamp: $(srcdir)/corbaname.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  corbaname.idl
-
 ## Makefile.ior_corbaname_client.am
 
 noinst_PROGRAMS = client

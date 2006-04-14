@@ -10,8 +10,6 @@ ACE_RCSID (ace, ATM_Stream, "$Id$")
 #include "ace/ATM_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE (ACE_ATM_Stream)
 
 char*
@@ -284,7 +282,5 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   return (-1);
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_ATM */

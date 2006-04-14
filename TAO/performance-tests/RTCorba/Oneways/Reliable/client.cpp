@@ -279,7 +279,7 @@ oneway_payload_test (Test_ptr server
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ps:k:i:t:l:m:w:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "ps:k:i:t:l:m:w:x");
   int error = 0;
   int c;
 
@@ -421,7 +421,7 @@ set_rt_mode (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = set_rt_mode ();
   if (result != 0)

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -21,9 +21,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_IO_SAP
@@ -85,8 +82,6 @@ private:
   /// Cache the process ID.
   static pid_t pid_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/IO_SAP.inl"

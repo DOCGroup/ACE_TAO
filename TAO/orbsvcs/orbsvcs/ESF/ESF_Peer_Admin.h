@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   ESF_Peer_Admin.h
  *
@@ -13,13 +12,11 @@
 #ifndef TAO_ESF_PEER_ADMIN_H
 #define TAO_ESF_PEER_ADMIN_H
 
-#include "orbsvcs/ESF/ESF_Proxy_Admin.h"
+#include "ESF_Proxy_Admin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ESF_Peer_Admin
@@ -95,10 +92,8 @@ public:
 
 // ****************************************************************
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Peer_Admin.cpp"
+#include "ESF_Peer_Admin.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

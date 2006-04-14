@@ -18,7 +18,6 @@ noinst_PROGRAMS =
 ## Makefile.RtEC_IIOPGateway.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Gateway
 
@@ -49,7 +48,6 @@ Gateway_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RtEC_IIOPGateway_Consumer.am
@@ -89,7 +87,6 @@ endif BUILD_CORBA_MESSAGING
 ## Makefile.RtEC_IIOPGateway_EC.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += EC
 
@@ -120,7 +117,6 @@ EC_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RtEC_IIOPGateway_Supplier.am

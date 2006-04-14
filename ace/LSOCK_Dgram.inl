@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// LSOCK_Dgram.i
 
 ACE_INLINE void
 ACE_LSOCK_Dgram::set_handle (ACE_HANDLE h)
@@ -19,4 +18,3 @@ ACE_LSOCK_Dgram::get_handle (void) const
   return this->ACE_SOCK_Dgram::get_handle ();
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

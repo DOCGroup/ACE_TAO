@@ -11,14 +11,12 @@
 //=============================================================================
 #ifndef BASIC_REPLICATION_STRATEGY_H
 #define BASIC_REPLICATION_STRATEGY_H
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
+#include "Replication_Strategy.h"
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class  Basic_Replication_Strategy
@@ -53,7 +51,5 @@ private:
   FTRT::SequenceNumber sequence_num_;
   ACE_SYNCH_RECURSIVE_MUTEX* mutex_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

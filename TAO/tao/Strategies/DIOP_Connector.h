@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,13 +22,11 @@
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
 #include "tao/Transport_Connector.h"
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Endpoint;
 class TAO_DIOP_Endpoint;
@@ -114,8 +112,6 @@ private:
                                      ACE_Equal_To < ACE_INET_Addr >,
                                      ACE_Null_Mutex > SvcHandlerIterator;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

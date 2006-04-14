@@ -24,17 +24,10 @@
 
 #include "tao/SystemException.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace PortableInterceptor
 {
   class Interceptor;
   typedef Interceptor *Interceptor_ptr;
-}
-
-namespace CORBA
-{
-  class PolicyList;
 }
 
 namespace TAO
@@ -47,19 +40,14 @@ namespace TAO
    * Template for the various portable interceptor lists used
    * internally by TAO.
    */
-  template <typename InterceptorType, typename DetailsType>
+  template <typename InterceptorType>
   class Interceptor_List
   {
   public:
     /// Define the traits for the underlying portable interceptor array.
     typedef typename InterceptorType::_var_type InterceptorType_var_type;
     typedef typename InterceptorType::_ptr_type InterceptorType_ptr_type;
-
-    struct RegisteredInterceptor
-    {
-      InterceptorType_var_type interceptor_;
-      DetailsType              details_;
-    };
+    typedef ACE_Array_Base<InterceptorType_var_type> TYPE;
 
     /// Constructor.
     Interceptor_List (void);
@@ -68,16 +56,7 @@ namespace TAO
       InterceptorType_ptr_type i
       ACE_ENV_ARG_DECL);
 
-    /// Register an interceptor with policies.
-    void add_interceptor (InterceptorType_ptr_type i,
-                          const CORBA::PolicyList& policies
-                          ACE_ENV_ARG_DECL);
-
     void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
-
-    /// Return the registered interceptor in sequence element @a index.
-    RegisteredInterceptor& registered_interceptor (
-      size_t index);
 
     /// Return the interceptor in sequence element @a index.
     InterceptorType_ptr_type interceptor (size_t index);
@@ -85,18 +64,14 @@ namespace TAO
     size_t size (void);
 
   private:
-
-    typedef ACE_Array_Base<RegisteredInterceptor > RegisteredArray;
-
     /// Dynamic array of registered interceptors.
-    RegisteredArray interceptors_;
+    TYPE interceptors_;
+
   };
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/PI/Interceptor_List_T.cpp"
+#include "Interceptor_List_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,19 +1,22 @@
 /* -*-C++-*- */
+// $Id$
 #ifndef ENTTRAPS_
 #define ENTTRAPS_
-//=============================================================================
-/**
- *  @file     enttraps.h
- *
- *  $Id$
- *
- * constants for Enterprise Traps
- *
- *
- *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//     enttraps.cpp
+//
+// = DESCRIPTION
+//   constants for Enterprise Traps
+//
+// = AUTHOR
+//   Peter E Mellquist
+//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -33,61 +36,46 @@
 #include "asnmp/asn1.h"                       // ASN.1 header file
 
 //--------------[ well known trap ids ]-----------------------------------
-/**
- * @class snmpTrapsOid
- *
- * @brief Defines the member functions for the snmpTrapsOid base class
- * to implement the traps defined in RFC 1215
- */
-class ASNMP_Export snmpTrapsOid : public Oid
+class ASNMP_Export snmpTrapsOid: public Oid
+  // = TITLE
+  //     Defines the member functions for the snmpTrapsOid base class
+  //     to implement the traps defined in RFC 1215
 {
    public:
    snmpTrapsOid (void):Oid("1.3.6.1.6.3.1.1.5"){}
    SnmpSyntax& operator=( SnmpSyntax &val){ return Oid::operator=(val); }
 };
 
-/**
- * @class snmpTrapEnterpriseOid
- *
- * @brief Defines the default Enterprise Oid for this software package
- */
-class ASNMP_Export snmpTrapEnterpriseOid : public Oid
+class ASNMP_Export snmpTrapEnterpriseOid: public Oid
+  // = TITLE
+  //     Defines the default Enterprise Oid for this software package
 {
    public:
    snmpTrapEnterpriseOid(void): Oid("1.3.6.1.6.3.1.1.4.3.0") { }
    SnmpSyntax& operator=( SnmpSyntax &val){ return Oid::operator=(val); }
 };
 
-/**
- * @class coldStartOid
- *
- * @brief Defines the RFC 1215 agent cold start generic trap  (system reboot)
- */
-class ASNMP_Export coldStartOid : public snmpTrapsOid
+class ASNMP_Export coldStartOid: public snmpTrapsOid
+  // = TITLE
+  //     Defines the RFC 1215 agent cold start generic trap  (system reboot)
 {
    public:
    coldStartOid( void){*this+=".1";}
    SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
-/**
- * @class warmStartOid
- *
- * @brief Defines the RFC 1215 agent warm start generic trap  (agent reboot)
- */
-class ASNMP_Export warmStartOid : public snmpTrapsOid
+class ASNMP_Export warmStartOid: public snmpTrapsOid
+  // = TITLE
+  //     Defines the RFC 1215 agent warm start generic trap  (agent reboot)
 {
    public:
    warmStartOid( void){*this+=".2";}
    SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
-/**
- * @class linkDownOid
- *
- * @brief Defines the RFC 1215 interface (link) down trap
- */
-class ASNMP_Export linkDownOid : public snmpTrapsOid
+class ASNMP_Export linkDownOid: public snmpTrapsOid
+  // = TITLE
+  //     Defines the RFC 1215 interface (link) down trap
 {
    public:
    linkDownOid( void){*this+=".3";}
@@ -96,36 +84,27 @@ class ASNMP_Export linkDownOid : public snmpTrapsOid
 
 
 // SMI LinkUp Oid
-/**
- * @class linkUpOid
- *
- * @brief Defines the RFC 1215 interface (link) up trap
- */
-class ASNMP_Export linkUpOid : public snmpTrapsOid
+class ASNMP_Export linkUpOid: public snmpTrapsOid
+  // = TITLE
+  //     Defines the RFC 1215 interface (link) up trap
 {
    public:
    linkUpOid( void){*this+=".4";}
    SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
-/**
- * @class authenticationFailureOid
- *
- * @brief Defines the RFC 1215 device/agent invalid access trap
- */
-class ASNMP_Export authenticationFailureOid : public snmpTrapsOid
+class ASNMP_Export authenticationFailureOid: public snmpTrapsOid
+  // = TITLE
+  //     Defines the RFC 1215 device/agent invalid access trap
 {
    public:
    authenticationFailureOid( void){*this+=".5";}
    SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
-/**
- * @class egpNeighborLossOid
- *
- * @brief Defines the RFC 1215 Exterior Gateway Protocol neighbor loss trap
- */
-class ASNMP_Export egpNeighborLossOid : public snmpTrapsOid
+class ASNMP_Export egpNeighborLossOid: public snmpTrapsOid
+  // = TITLE
+  //     Defines the RFC 1215 Exterior Gateway Protocol neighbor loss trap
 {
    public:
    egpNeighborLossOid( void){*this+=".6";}

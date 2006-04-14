@@ -1,6 +1,8 @@
-// $Id$
-
 #include "ace/Service_Manager.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Service_Manager.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
@@ -16,7 +18,6 @@ ACE_RCSID (ace,
            Service_Manager,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Manager)
 
@@ -37,11 +38,6 @@ ACE_Service_Manager::ACE_Service_Manager (void)
     signum_ (SIGHUP)
 {
   ACE_TRACE ("ACE_Service_Manager::ACE_Service_Manager");
-}
-
-ACE_Service_Manager::~ACE_Service_Manager (void)
-{
-  ACE_TRACE ("ACE_Service_Manager::~ACE_Service_Manager");
 }
 
 int
@@ -96,7 +92,7 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
-  ACE_Get_Opt getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
      switch (c)
@@ -233,8 +229,8 @@ ACE_Service_Manager::reconfigure_services (void)
   // the rug" out from underneath the existing services in a
   // problematic way.
   ACE_Service_Config::reconfig_occurred ((sig_atomic_t) 1);
-  return static_cast<int> (this->client_stream_.send_n ("done\n",
-                                                        sizeof ("done\n")));
+  return this->client_stream_.send_n ("done\n",
+                                      sizeof ("done\n"));
 }
 
 // isolate the request-processing code
@@ -301,7 +297,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("accepted from host %s at port %d\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (sa.get_host_name ()),
+                  ACE_TEXT_TO_TCHAR_IN (sa.get_host_name ()),
                   sa.get_port_number ()));
     }
 
@@ -380,5 +376,3 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
                 ACE_LIB_TEXT ("close")));
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

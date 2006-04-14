@@ -1,19 +1,22 @@
 #include "LB_server.h"
 #include "Basic.h"
 #include "Simple.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Manage_object_group,
            server,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       const char *location1 = "MyLocation 1";
 
-      LB_server lb_server (argc, argv);
+      LB_server lb_server (convert.get_argc(), convert.get_ASCII_argv());
 
       if (lb_server.start_orb_and_poa () == -1)
         return 1;

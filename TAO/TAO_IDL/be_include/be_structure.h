@@ -38,8 +38,8 @@ public:
   // Default constructor.
 
   be_structure (UTL_ScopedName *n,
-                bool local,
-                bool abstract);
+                idl_bool local,
+                idl_bool abstract);
   // Constructor.
 
   virtual void redefine (AST_Structure *from);

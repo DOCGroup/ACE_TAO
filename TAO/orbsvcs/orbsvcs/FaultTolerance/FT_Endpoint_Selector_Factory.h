@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ *
  */
 //=============================================================================
 #ifndef TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
@@ -14,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +26,6 @@
 #include "tao/orbconf.h"
 
 #include "ace/Service_Config.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FT_Invocation_Endpoint_Selector;
 /**
@@ -64,8 +63,6 @@ private:
   /// Mutex to prevent multiple initializations
   TAO_SYNCH_MUTEX mutex_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 //extern TAO_FT_ClientORB_Export ACE_Static_Svc_Descriptor ace_svc_desc_TAO_FT_Endpoint_Selector_Factory;
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FT_ClientORB, TAO_FT_Endpoint_Selector_Factory)

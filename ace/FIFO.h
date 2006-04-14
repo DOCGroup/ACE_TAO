@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //==========================================================================
 /**
@@ -24,8 +24,6 @@
 #include "ace/IPC_SAP.h"
 #include "ace/os_include/os_limits.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_FIFO
  *
@@ -41,7 +39,7 @@ class ACE_Export ACE_FIFO : public ACE_IPC_SAP
 public:
   /// Open up the named pipe on the <rendezvous> in accordance with the
   /// flags.
-  int open (const ACE_TCHAR *rendezvous, int flags, mode_t perms,
+  int open (const ACE_TCHAR *rendezvous, int flags, int perms,
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Close down the ACE_FIFO without removing the rendezvous point.
@@ -67,15 +65,13 @@ protected:
 
   /// Open up the named pipe on the <rendezvous> in accordance with the
   /// flags.
-  ACE_FIFO (const ACE_TCHAR *rendezvous, int flags, mode_t perms,
+  ACE_FIFO (const ACE_TCHAR *rendezvous, int flags, int perms,
             LPSECURITY_ATTRIBUTES sa = 0);
 
 private:
   /// Rendezvous point in the file system.
   ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO.inl"

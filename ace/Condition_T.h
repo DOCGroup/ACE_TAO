@@ -14,7 +14,6 @@
 
 #ifndef ACE_CONDITION_T_H
 #define ACE_CONDITION_T_H
-
 #include /**/ "ace/pre.h"
 
 #include "ace/OS_NS_Thread.h"
@@ -25,8 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
@@ -158,8 +155,6 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Condition_T.inl"

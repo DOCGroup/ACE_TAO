@@ -1,9 +1,9 @@
 // $Id$
 
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
-#include "tao/Valuetype/AbstractBase.h"
-#include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/ValueFactory_Map.h"
+#include "Valuetype_Adapter_Impl.h"
+#include "AbstractBase.h"
+#include "ValueBase.h"
+#include "ValueFactory_Map.h"
 
 #include "tao/ORB_Core.h"
 
@@ -12,7 +12,11 @@ ACE_RCSID (Valuetype,
            Valuetype_Adapter_Impl,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Valuetype_Adapter_Impl::TAO_Valuetype_Adapter_Impl (void)
+{
+
+}
 
 TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)
 {
@@ -91,8 +95,6 @@ TAO_Valuetype_Adapter_Impl::Initializer (void)
         ace_svc_desc_TAO_Valuetype_Adapter_Impl
       );
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_Valuetype_Adapter_Impl,

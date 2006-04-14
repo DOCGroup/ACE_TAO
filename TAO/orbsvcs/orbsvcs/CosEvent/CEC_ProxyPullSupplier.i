@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
 TAO_CEC_ProxyPullSupplier::is_connected_i (void) const
@@ -39,5 +35,3 @@ TAO_CEC_ProxyPullSupplier::consumer (CosEventComm::PullConsumer_ptr consumer)
 
   this->consumer_i (consumer);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

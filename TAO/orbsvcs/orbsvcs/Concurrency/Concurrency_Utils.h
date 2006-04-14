@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -23,11 +23,8 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosConcurrencyControlC.h"
-#include "orbsvcs/Concurrency/CC_LockSetFactory.h"
-#include "orbsvcs/Concurrency/concurrency_serv_export.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "CC_LockSetFactory.h"
+#include "concurrency_export.h"
 
 /**
  * @class TAO_Concurrency_Server
@@ -38,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class takes an orb and Poa reference and activates the
  * concurrency service lock set factory object under them.
  */
-class TAO_Concurrency_Serv_Export TAO_Concurrency_Server
+class TAO_Concurrency_Export TAO_Concurrency_Server
 {
 public:
   // = Initialization and termination methods.
@@ -70,8 +67,6 @@ private:
   /// The POA which the lock set factory servant was registered.
   PortableServer::POA_var poa_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* _CONCURRENCY_SERVER_H */

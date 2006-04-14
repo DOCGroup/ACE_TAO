@@ -1,13 +1,13 @@
-#include "tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h"
+#include "RT_Invocation_Endpoint_Selectors.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RT_Policy_i.h"
-#include "tao/RTCORBA/RT_Stub.h"
-#include "tao/RTCORBA/RT_Transport_Descriptor.h"
-#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
-#include "tao/RTCORBA/RT_Endpoint_Utils.h"
-#include "tao/RTCORBA/RT_Protocols_Hooks.h"
+#include "RT_Policy_i.h"
+#include "RT_Stub.h"
+#include "RT_Transport_Descriptor.h"
+#include "RT_Transport_Descriptor_Property.h"
+#include "RT_Endpoint_Utils.h"
+#include "RT_Protocols_Hooks.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
@@ -21,8 +21,6 @@
 ACE_RCSID (RTCORBA,
            RT_Invocation_Endpoint_Selectors,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
@@ -374,7 +372,5 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

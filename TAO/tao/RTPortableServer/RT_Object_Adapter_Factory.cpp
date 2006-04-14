@@ -1,21 +1,22 @@
 // $Id$
 
-#include "tao/RTPortableServer/RT_Object_Adapter_Factory.h"
+#include "RT_Object_Adapter_Factory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"
-#include "tao/RTPortableServer/RT_Servant_Dispatcher.h"
-#include "tao/RTPortableServer/RT_Policy_Validator.h"
-#include "tao/RTPortableServer/RT_Collocation_Resolver.h"
+#include "RT_Servant_Dispatcher.h"
+#include "RT_Policy_Validator.h"
+#include "RT_Collocation_Resolver.h"
 
 ACE_RCSID (RTPortableServer,
            RT_Object_Adapter_Factory,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+TAO_RT_Object_Adapter_Factory::TAO_RT_Object_Adapter_Factory (void)
+{
+}
 
 TAO_Adapter*
 TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
@@ -52,8 +53,6 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
 
   return object_adapter;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_RTPortableServer, TAO_RT_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_RT_Object_Adapter_Factory,

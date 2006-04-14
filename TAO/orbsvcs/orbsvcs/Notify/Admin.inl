@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Notify_EventChannel *
@@ -50,5 +46,3 @@ TAO_Notify_Admin::proxy_container()
   ACE_ASSERT( proxy_container_.get() != 0 );
   return *proxy_container_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

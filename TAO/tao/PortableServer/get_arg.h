@@ -31,7 +31,6 @@
 
 #include "tao/operation_details.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -80,7 +79,7 @@ namespace TAO
                 size_t i)
     {
       return
-        (details != 0 && details->args () != 0)
+        details
         ? static_cast<typename TAO::Arg_Traits<T>::in_arg_val *> (
             details->args ()[i])->arg ()
         : static_cast<typename TAO::SArg_Traits<T>::in_arg_val *> (
@@ -135,8 +134,6 @@ namespace TAO
 
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

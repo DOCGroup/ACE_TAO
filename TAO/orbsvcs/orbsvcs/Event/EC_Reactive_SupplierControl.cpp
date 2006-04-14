@@ -1,10 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_SupplierAdmin.h"
-#include "orbsvcs/Event/EC_Reactive_SupplierControl.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h" // @@ MSVC 6 bug
+#include "EC_SupplierAdmin.h"
+#include "EC_Reactive_SupplierControl.h"
+#include "EC_Event_Channel_Base.h"
+#include "EC_ProxyConsumer.h"
+#include "EC_ProxySupplier.h" // @@ MSVC 6 bug
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
@@ -12,12 +12,10 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Reactive_SupplierControl.i"
+#include "EC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Reactive_SupplierControl, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Reactive_SupplierControl::
      TAO_EC_Reactive_SupplierControl (const ACE_Time_Value &rate,
@@ -262,5 +260,3 @@ TAO_EC_Ping_Supplier::work (TAO_EC_ProxyPushConsumer *consumer
     }
   ACE_ENDTRY;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

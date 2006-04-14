@@ -1,10 +1,7 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::msgctl (int msqid, int cmd, struct msqid_ds *val)
@@ -74,5 +71,3 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SYSV_IPC */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

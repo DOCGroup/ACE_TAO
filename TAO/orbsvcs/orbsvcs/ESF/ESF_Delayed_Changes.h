@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 /**
  *  @file   ESF_Delayed_Changes.h
  *
@@ -12,26 +12,24 @@
 #ifndef TAO_ESF_DELAYED_CHANGES_H
 #define TAO_ESF_DELAYED_CHANGES_H
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "ESF_Proxy_Collection.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Busy_Lock.h"
+#include "ESF_Busy_Lock.h"
 
 #include "ace/Containers.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Command_Base;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target,class Object> class TAO_ESF_Connected_Command;
 template<class Target,class Object> class TAO_ESF_Disconnected_Command;
 template<class Target,class Object> class TAO_ESF_Reconnected_Command;
 template<class Target> class TAO_ESF_Shutdown_Command;
+
+class ACE_Command_Base;
 
 /**
  * @class TAO_ESF_Delayed_Changes
@@ -143,14 +141,12 @@ private:
 
 // ****************************************************************
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Delayed_Changes.i"
+#include "ESF_Delayed_Changes.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Delayed_Changes.cpp"
+#include "ESF_Delayed_Changes.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Noop_Key_Generator
  *
@@ -1592,8 +1590,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager_Adapter (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &))
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Map_T.inl"

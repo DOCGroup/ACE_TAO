@@ -1,3 +1,4 @@
+// SPIPE_Addr.cpp
 // $Id$
 
 #include "ace/SPIPE_Addr.h"
@@ -10,8 +11,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE_Addr, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Addr)
 
@@ -30,8 +29,8 @@ ACE_SPIPE_Addr::set_addr (void *addr, int len)
 
   this->ACE_Addr::base_set (AF_SPIPE, len);
   ACE_OS::memcpy ((void *) &this->SPIPE_addr_,
-                  (void *) addr,
-                  len);
+		  (void *) addr,
+		  len);
 }
 
 // Return the address.
@@ -50,7 +49,7 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (void)
 {
   (void) ACE_OS::memset ((void *) &this->SPIPE_addr_,
                          0,
-                         sizeof this->SPIPE_addr_);
+			 sizeof this->SPIPE_addr_);
 }
 
 int
@@ -96,8 +95,8 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
 
 int
 ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
-                     gid_t gid,
-                     uid_t uid)
+		     gid_t gid,
+		     uid_t uid)
 {
   int len = sizeof (this->SPIPE_addr_.uid_);
   len += sizeof (this->SPIPE_addr_.gid_);
@@ -157,11 +156,9 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
 // Create a ACE_Addr from a ACE_SPIPE pathname.
 
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_TCHAR *addr,
-                                gid_t gid,
-                                uid_t uid)
+				gid_t gid,
+				uid_t uid)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
   this->set (addr, gid, uid);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

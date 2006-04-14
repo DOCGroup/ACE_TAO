@@ -8,6 +8,7 @@
  *
  *  Implements the Factory for NotifyLog Objects.
  *
+ *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
@@ -28,15 +29,13 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
-#include "orbsvcs/Log/RTEventLog_i.h"
-#include "orbsvcs/Log/rteventlog_serv_export.h"
+#include "RTEventLog_i.h"
+#include "rteventlog_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTEventLog_i;
 class TAO_RTEventLogNotification;
@@ -46,7 +45,7 @@ class TAO_RTEventLogNotification;
  *
  * @brief The TAO_RTEventLogFactory is a factory that is used to create RTEventLogs which are event-aware.
  */
-class TAO_RTEventLog_Serv_Export TAO_RTEventLogFactory_i :
+class TAO_RTEventLog_Export TAO_RTEventLogFactory_i :
   public POA_RTEventLogAdmin::EventLogFactory,
   public TAO_LogMgr_i
 {
@@ -130,8 +129,6 @@ protected:
   /// The ConsumerAdmin that the EventLogFactory supports.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

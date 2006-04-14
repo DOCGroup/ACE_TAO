@@ -1,8 +1,8 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// Message_Block_T.i
+
 
 template<class ACE_LOCK> ACE_INLINE
 ACE_Locked_Data_Block<ACE_LOCK>::ACE_Locked_Data_Block (void)
@@ -27,5 +27,3 @@ ACE_Locked_Data_Block (size_t size,
                     data_block_allocator)
 {
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

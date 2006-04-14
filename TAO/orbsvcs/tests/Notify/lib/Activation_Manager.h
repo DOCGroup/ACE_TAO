@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "Task_Callback.h"
@@ -27,9 +26,7 @@
 #include "Periodic_Consumer.h"
 #include "Activation_ManagerS.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Activation_Manager
@@ -91,10 +88,10 @@ public:
   void dump_stats (int dump_samples);
 
   // Returns 0 if the file could be opened for write.
-  int ior_output_file (const ACE_TCHAR *file_name);
+  int ior_output_file (const char *file_name);
 
   // Returns 1 if the file could be opened for read.
-  int ior_input_file (const ACE_TCHAR *file_name);
+  int ior_input_file (const char *file_name);
 
   void write_ior (ACE_ENV_SINGLE_ARG_DECL);
   void wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL);

@@ -6,16 +6,16 @@
 // question when using compilers like g++ 3.4.x.
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
-#include "orbsvcs/CosEvent/CEC_Dispatching.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
+#include "CEC_ProxyPushSupplier.h"
+#include "CEC_Dispatching.h"
+#include "CEC_EventChannel.h"
+#include "CEC_ConsumerControl.h"
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 #include "tao/debug.h"
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "orbsvcs/CosEvent/CEC_TypedEvent.h"
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "CEC_TypedEvent.h"
+#include "CEC_TypedEventChannel.h"
 #include "tao/DynamicInterface/Request.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -23,14 +23,12 @@
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.i"
+#include "CEC_ProxyPushSupplier.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_ProxyPushSupplier,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
@@ -922,5 +920,3 @@ TAO_CEC_ProxyPushSupplier::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

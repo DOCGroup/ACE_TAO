@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_ARRAY_VAROUT_T_CPP
-#define TAO_ARRAY_VAROUT_T_CPP
+#ifndef TAO_ARRAY_VAROUT_T_C
+#define TAO_ARRAY_VAROUT_T_C
 
 #include "tao/Array_VarOut_T.h"
 
@@ -9,8 +9,9 @@
 #include "tao/Array_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Array_VarOut_T,
+           "$Id$")
 
 template<typename T, typename T_slice, typename TAG>
 TAO_FixedArray_Var_T<T,T_slice,TAG> &
@@ -90,6 +91,4 @@ TAO_Array_Forany_T<T,T_slice,TAG>::_tao_any_destructor (
   TAO::Array_Traits<T,T_slice,TAG>::free (tmp);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_ARRAY_VAROUT_T_CPP */
+#endif /* TAO_ARRAY_VAROUT_T_C */

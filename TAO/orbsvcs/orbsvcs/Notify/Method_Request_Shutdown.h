@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file Method_Request_Shutdown.h
  *
@@ -14,15 +13,13 @@
 #define TAO_Notify_METHOD_REQUEST_SHUTDOWN_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Method_Request.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Method_Request.h"
 
 class TAO_Notify_ThreadPool_Task;
 
@@ -51,8 +48,6 @@ private:
   // Task to shutdown
   TAO_Notify_ThreadPool_Task* task_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_SHUTDOWN_H */

@@ -1,10 +1,10 @@
-#include "tao/RTCORBA/RT_Protocols_Hooks.h"
+#include "RT_Protocols_Hooks.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RT_Policy_i.h"
-#include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "tao/RTCORBA/RT_Stub.h"
+#include "RT_Policy_i.h"
+#include "Priority_Mapping_Manager.h"
+#include "RT_Stub.h"
 
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
@@ -26,14 +26,10 @@ ACE_RCSID (RTCORBA,
            RT_Protocols_Hooks,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks (void)
-  : orb_core_ (0)
-  , current_ ()
 {
 }
-
 
 TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks (void)
 {
@@ -814,8 +810,6 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_TEXT ("RT_Protocols_Hooks"),

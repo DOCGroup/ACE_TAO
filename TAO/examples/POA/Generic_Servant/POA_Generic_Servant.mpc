@@ -9,9 +9,8 @@ project(*lib): taolib_with_idl, portableserver, minimum_corba {
 }
 
 project(*client): taoexe, portableserver, minimum_corba {
-  avoids += ace_for_tao
-  after  += *lib
-  libs   += Generic_Servant
+  after += *lib
+  libs += Generic_Servant
   idl_files {
   }
   Source_Files {

@@ -1,14 +1,17 @@
 // $Id$
 
 #include "airplane_server_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (ImplRepo,
            airplane_server,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Airplane_Server_i server;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tPaper Airplane Server\n\n"));
@@ -16,7 +19,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int retval = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int retval = server.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)

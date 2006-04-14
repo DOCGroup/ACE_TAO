@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_ANY_IMPL_T_CPP
-#define TAO_ANY_IMPL_T_CPP
+#ifndef TAO_ANY_IMPL_T_C
+#define TAO_ANY_IMPL_T_C
 
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -19,7 +19,9 @@
 # include "tao/AnyTypeCode/Any_Impl_T.inl"
 #endif /* ! __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Any_Impl_T,
+           "$Id$")
 
 template<typename T>
 TAO::Any_Impl_T<T>::Any_Impl_T (_tao_destructor destructor,
@@ -69,7 +71,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 
       if (_tao_equiv == 0)
         {
-          return false;
+          return 0;
         }
 
       TAO::Any_Impl *impl = any.impl ();
@@ -81,11 +83,11 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 
           if (narrow_impl == 0)
             {
-              return false;
+              return 0;
             }
 
           _tao_elem = (T *) narrow_impl->value_;
-          return true;
+          return 1;
         }
 
       TAO::Any_Impl_T<T> *replacement = 0;
@@ -93,7 +95,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                       TAO::Any_Impl_T<T> (destructor,
                                           any_tc,
                                           0),
-                      false);
+                      0);
 
       auto_ptr<TAO::Any_Impl_T<T> > replacement_safety (replacement);
 
@@ -105,7 +107,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
       // shared by another Any. This copies the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean const good_decode =
+      CORBA::Boolean good_decode =
         replacement->demarshal_value (for_reading);
 
       if (good_decode)
@@ -113,7 +115,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
           _tao_elem = const_cast<T *> (replacement->value_);
           const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
-          return true;
+          return 1;
         }
 
       // Duplicated by Any_Impl base class constructor.
@@ -152,6 +154,4 @@ TAO::Any_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
     }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_ANY_IMPL_T_CPP */
+#endif /* TAO_ANY_IMPL_T_C */

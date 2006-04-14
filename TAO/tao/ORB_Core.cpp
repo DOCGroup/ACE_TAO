@@ -1,45 +1,45 @@
 // $Id$
 
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "tao/ORB_Table.h"
-#include "tao/TAO_Internal.h"
-#include "tao/default_server.h"
-#include "tao/Profile.h"
-#include "tao/Stub.h"
-#include "tao/LF_Follower.h"
-#include "tao/Leader_Follower.h"
-#include "tao/LF_Event_Loop_Thread_Helper.h"
-#include "tao/Connector_Registry.h"
-#include "tao/Transport_Queueing_Strategies.h"
-#include "tao/Object_Loader.h"
-#include "tao/ObjectIdListC.h"
-#include "tao/BiDir_Adapter.h"
-#include "tao/Collocation_Resolver.h"
-#include "tao/Flushing_Strategy.h"
-#include "tao/Request_Dispatcher.h"
-#include "tao/Stub_Factory.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Thread_Lane_Resources_Manager.h"
-#include "tao/TSS_Resources.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/IORInterceptor_Adapter.h"
-#include "tao/IORInterceptor_Adapter_Factory.h"
-#include "tao/debug.h"
-#include "tao/TAOC.h"
-#include "tao/Endpoint_Selector_Factory.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Adapter_Factory.h"
-#include "tao/Adapter.h"
-#include "tao/GUIResource_Factory.h"
-#include "tao/PolicyFactory_Registry_Adapter.h"
-#include "tao/PolicyFactory_Registry_Factory.h"
-#include "tao/ORBInitializer_Registry_Adapter.h"
-#include "tao/Codeset_Manager.h"
+#include "ORB_Core.h"
+#include "ORB_Core_TSS_Resources.h"
+#include "ORB_Table.h"
+#include "TAO_Internal.h"
+#include "default_server.h"
+#include "Profile.h"
+#include "Stub.h"
+#include "LF_Follower.h"
+#include "Leader_Follower.h"
+#include "LF_Event_Loop_Thread_Helper.h"
+#include "Connector_Registry.h"
+#include "Transport_Queueing_Strategies.h"
+#include "Object_Loader.h"
+#include "ObjectIdListC.h"
+#include "BiDir_Adapter.h"
+#include "Collocation_Resolver.h"
+#include "Flushing_Strategy.h"
+#include "Request_Dispatcher.h"
+#include "Stub_Factory.h"
+#include "Thread_Lane_Resources.h"
+#include "Thread_Lane_Resources_Manager.h"
+#include "TSS_Resources.h"
+#include "Protocols_Hooks.h"
+#include "IORInterceptor_Adapter.h"
+#include "IORInterceptor_Adapter_Factory.h"
+#include "debug.h"
+#include "TAOC.h"
+#include "Endpoint_Selector_Factory.h"
+#include "Client_Strategy_Factory.h"
+#include "Adapter_Factory.h"
+#include "Adapter.h"
+#include "GUIResource_Factory.h"
+#include "PolicyFactory_Registry_Adapter.h"
+#include "PolicyFactory_Registry_Factory.h"
+#include "ORBInitializer_Registry_Adapter.h"
+#include "Codeset_Manager.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-#include "tao/Policy_Manager.h"
-#include "tao/Policy_Current.h"
+#include "Policy_Manager.h"
+#include "Policy_Current.h"
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #include "ace/Reactor.h"
@@ -68,14 +68,12 @@
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
+# include "ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            ORB_Core,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -132,7 +130,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_name_ ("Valuetype_Adapter"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", "")))
+    poa_factory_directive_ (ACE_TEXT_TO_CHAR_IN (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", "")))
 {
 }
 
@@ -140,11 +138,6 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
-#if TAO_USE_LOCAL_MEMORY_POOL == 1
-    use_local_memory_pool_ (true),
-#else
-    use_local_memory_pool_ (false),
-#endif
     lock_ (),
     thread_lane_resources_manager_ (0),
     collocation_resolver_ (0),
@@ -331,9 +324,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // Use TCP_NODELAY.
   int nodelay = 1;
 
-  // Use SO_KEEPALIVE (default 0).
-  int so_keepalive = 0;
-
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded
   //    protocol to use a character representation for the numeric
@@ -390,7 +380,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       ////////////////////////////////////////////////////////////////
       // begin with the 'parameterless' flags                       //
       ////////////////////////////////////////////////////////////////
-      if (0 != (current_arg = arg_shifter.get_the_parameter
+      if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBDottedDecimalAddresses"))))
         {
           // Use dotted decimal addresses
@@ -400,7 +390,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNoServerSideNameLookups"))))
         {
           // Don't look up the host name for incoming connections
@@ -409,7 +399,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNameServicePort"))))
         {
           // Specify the port number for the NameService.
@@ -419,7 +409,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBMulticastDiscoveryEndpoint"))))
         {
           // Specify mcast address:port@network_interface for the
@@ -428,11 +418,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // If there is a '@' also, it means that the network
           // interface name is specified.
           this->orb_params ()->mcast_discovery_endpoint (
-            ACE_TEXT_ALWAYS_CHAR(current_arg));
+            ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNodelay"))))
         {
           // Use TCP_NODELAY or not.
@@ -441,16 +431,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBKeepalive"))))
-        {
-          // Use SO_KEEPALIVE or not.
-          so_keepalive =
-            ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBTradingServicePort"))))
         {
           // Specify the port number for the TradingService.
@@ -459,7 +440,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBImplRepoServicePort"))))
         {
           // Specify the multicast port number for the Implementation
@@ -468,7 +449,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBRcvSock"))))
         {
           // @@ All protocol implementation may not use sockets, so
@@ -481,7 +462,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBSndSock"))))
         {
           // @@ All protocol implementation may not use sockets, so
@@ -493,7 +474,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBObjRefStyle"))))
         {
           // Specifies the style of printed objrefs: URL or IOR
@@ -523,7 +504,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBCollocationStrategy"))))
         {
           // Specify which collocation policy we want to use.
@@ -535,7 +516,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBCollocation"))))
         {
           // Specify whether we want to optimize against collocation
@@ -567,11 +548,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferredInterfaces"))))
         {
           if (this->orb_params ()->preferred_interfaces (
-                ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
+                ACE_TEXT_TO_CHAR_IN (current_arg)) == false)
             ACE_THROW_RETURN (CORBA::INTERNAL (
                                   CORBA::SystemException::_tao_minor_code (
                                     TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -581,14 +562,15 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBEnforcePreferredInterfaces"))))
         {
-          int enforce_pref_interfaces = ACE_OS::atoi (current_arg);
-          if (enforce_pref_interfaces)
-            this->orb_params ()->enforce_pref_interfaces (false);
-          else
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_TEXT("YES")) == 0)
             this->orb_params ()->enforce_pref_interfaces (true);
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("NO")) == 0)
+            this->orb_params ()->enforce_pref_interfaces (false);
 
           arg_shifter.consume_arg ();
         }
@@ -596,10 +578,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferIPV6Interfaces"))))
         {
-          int prefer_ipv6_interfaces = ACE_OS::atoi (current_arg);
-          if (prefer_ipv6_interfaces)
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_TEXT("YES")) == 0)
             this->orb_params ()->prefer_ipv6_interfaces (true);
-          else
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("NO")) == 0)
             this->orb_params ()->prefer_ipv6_interfaces (false);
 
           arg_shifter.consume_arg ();
@@ -607,16 +590,17 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBConnectIPV6Only"))))
         {
-          int connect_ipv6_only = ACE_OS::atoi (current_arg);
-          if (connect_ipv6_only)
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_TEXT("YES")) == 0)
             this->orb_params ()->connect_ipv6_only (true);
-          else
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("NO")) == 0)
             this->orb_params ()->connect_ipv6_only (false);
 
           arg_shifter.consume_arg ();
         }
 #endif /* ACE_HAS_IPV6 */
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBCDRTradeoff"))))
         {
           cdr_tradeoff = ACE_OS::atoi (current_arg);
@@ -627,7 +611,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       // A new <ObjectID>:<IOR> mapping has been specified. This will be
       // used by the resolve_initial_references ().
 
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBInitRef"))))
         {
           const ACE_TCHAR *pos = ACE_OS::strchr (current_arg, '=');
@@ -644,9 +628,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                   CORBA::COMPLETED_NO),
                                 -1);
             }
-          ACE_CString object_id (ACE_TEXT_ALWAYS_CHAR(current_arg),
+          ACE_CString object_id (ACE_TEXT_TO_CHAR_IN(current_arg),
                                  pos - current_arg);
-          ACE_CString IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
+          ACE_CString IOR (ACE_TEXT_TO_CHAR_IN(pos + 1));
           if (!this->init_ref_map_.insert (
                  std::make_pair (InitRefMap::key_type (object_id),
                                  InitRefMap::data_type (IOR))).second)
@@ -664,22 +648,22 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
             }
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBDefaultInitRef"))))
         {
           // Set the list of prefixes from -ORBDefaultInitRef.
-          this->orb_params ()->default_init_ref (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->orb_params ()->default_init_ref (ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBStdProfileComponents"))))
         {
           std_profile_components =
             ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBResources"))))
         {
           ACE_DEBUG ((LM_WARNING,
@@ -688,7 +672,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBLogFile"))))
         {
           // redirect all ACE_DEBUG and ACE_ERROR output to a file
@@ -727,7 +711,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (-1);
 
-          output_stream->open (ACE_TEXT_ALWAYS_CHAR (file_name), ios::out | ios::app);
+          output_stream->open (ACE_TEXT_TO_CHAR_IN (file_name), ios::out | ios::app);
 
           if (!output_stream->bad ())
             {
@@ -740,7 +724,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBVerboseLogging"))))
         {
           unsigned long verbose_logging = ACE_OS::atoi (current_arg);
@@ -765,7 +749,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           (ACE_LOG_MSG->*flagop)(value);
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBUseIMR"))))
         {
           // Use IR or not.
@@ -773,14 +757,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBIMREndpointsInIOR"))))
         {
           this->imr_endpoints_in_ior_ = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBid"))))
         {
           // The ORBid is actually set in ORB_init(), and then passed
@@ -799,24 +783,24 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBServerId"))))
         {
           // The this->server_id_ is to uniquely identify a server to
           // an IMR.
           // Fill in later.
-          this->server_id_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->server_id_.set(ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                (ACE_TEXT("-ORBLingerTimeout"))))
         {
           linger = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBEndpoint"))))
         {
           // Each "endpoint" is of the form:
@@ -839,13 +823,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // All endpoint strings should be of the above form(s).
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+                                     ACE_TEXT_TO_CHAR_IN (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBListenEndpoints"))))
         {
           // This option is similar to the -ORBEndPoint option. May be
@@ -854,16 +838,16 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // used.
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+                                     ACE_TEXT_TO_CHAR_IN (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           arg_shifter.consume_arg ();
         }
-      else if ((0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBLaneEndpoint")))) ||
-               (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBLaneListenEndpoints")))))
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBLaneEndpoint"))) ||
+               (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBLaneListenEndpoints"))))
         {
           // This option is similar to the -ORBEndPoint option but
           // specifies endpoints for each lane.
@@ -871,13 +855,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           if (arg_shifter.is_option_next ())
             return -1;
 
-          ACE_CString lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
+          ACE_CString lane (ACE_TEXT_TO_CHAR_IN (current_arg));
           arg_shifter.consume_arg ();
 
           if(arg_shifter.is_option_next ())
             return -1;
 
-          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ()));
+          ACE_CString endpoints (ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ()));
           arg_shifter.consume_arg ();
 
           this->set_endpoint_helper (lane,
@@ -885,7 +869,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNoProprietaryActivation"))))
         {
           // This option can be used to set to not use any proprietary
@@ -898,7 +882,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), -1);
         }
-       else if (0 != (current_arg = arg_shifter.get_the_parameter
+       else if ((current_arg = arg_shifter.get_the_parameter
                  (ACE_TEXT("-ORBUseSharedProfile"))))
          {
            this->orb_params ()->shared_profile
@@ -906,14 +890,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
            arg_shifter.consume_arg ();
          }
-       else if (0 != (current_arg = arg_shifter.get_the_parameter
+       else if ((current_arg = arg_shifter.get_the_parameter
                  (ACE_TEXT("-ORBNegotiateCodesets"))))
          {
            negotiate_codesets =
              (ACE_OS::atoi (current_arg));
            arg_shifter.consume_arg ();
          }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBSingleReadOptimization"))))
         {
           this->orb_params ()->single_read_optimization
@@ -921,21 +905,24 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBDisableRTCollocation"))))
         {
-          int disable_rt_collocation = ACE_OS::atoi (current_arg);
-          if (disable_rt_collocation)
-            this->orb_params ()->disable_rt_collocation_resolver (true);
+          const ACE_TCHAR *popt = current_arg;
+          if (ACE_OS::strcasecmp (popt, ACE_TEXT("NO")) == 0)
+            {
+              this->orb_params ()->disable_rt_collocation_resolver (false);
+            }
+          else if (ACE_OS::strcasecmp (popt, ACE_TEXT("YES")) == 0)
+            {
+              this->orb_params ()->disable_rt_collocation_resolver (true);
+            }
           else
-            this->orb_params ()->disable_rt_collocation_resolver (false);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBUseLocalMemoryPool"))))
-        {
-          this->use_local_memory_pool_ = (0 != ACE_OS::atoi (current_arg));
+            {
+              // Should we print an error mesg?? Probably we
+              // should. We will look into this after 1.4 and make all
+              // the options consistent.
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -1033,10 +1020,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                           CORBA::COMPLETED_NO),
                         -1);
     }
-
-  // Set whether or not to use the local memory pool for the cdr allocators.
-
-  trf->use_local_memory_pool (this->use_local_memory_pool_);
 
   // @@ ????
   // Make sure the reactor is initialized...
@@ -1145,7 +1128,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                              || dotted_decimal_addresses);
   this->orb_params ()->linger (linger);
   this->orb_params ()->nodelay (nodelay);
-  this->orb_params ()->sock_keepalive (so_keepalive);
   if (rcv_sock_size >= 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size >= 0)
@@ -1162,7 +1144,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   else
     if  (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) ORB_Core: ")
+                    ACE_TEXT("(%P|%t) ORB_Core: ")
                     ACE_TEXT("Codeset Manager not available\n")));
 
   // Set up the pluggable protocol infrastructure.  First get a
@@ -1254,7 +1236,7 @@ TAO_ORB_Core::fini (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Destroying ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orbid_)));
+                  ACE_TEXT_TO_TCHAR_IN (this->orbid_)));
     }
 
   // Finalize lane resources.
@@ -1450,7 +1432,7 @@ TAO_ORB_Core::policy_factory_registry_i (void)
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_PolicyFactory_Registry_Factory",
                                       "TAO_PI",
                                       "_make_PolicyFactory_Loader",
                                       ""));
@@ -1665,7 +1647,7 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
       if (factory == 0)
         {
           ACE_Service_Config::process_directive (
-           ACE_TEXT_CHAR_TO_TCHAR (
+           ACE_TEXT_TO_TCHAR_IN (
              static_resources->poa_factory_directive_.c_str()));
           factory =
             ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
@@ -1804,91 +1786,54 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
 
   // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
   // but we are stuck in platforms without exceptions!
-  TAO_ORB_Core_Auto_Ptr collocated_orb_core;
-  CORBA::Object_ptr x = 0;
-
+  CORBA::Object_ptr x;
   {
-    // Lock the ORB_Table against concurrent modification while we
-    // iterate through the ORBs.
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
-                      TAO::ORB_Table::instance()->lock_,
+                      this->lock_,
                       CORBA::Object::_nil ());
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
     TAO::ORB_Table::iterator const end = table->end ();
     for (TAO::ORB_Table::iterator i = table->begin (); i != end; ++i)
       {
-        ::TAO_ORB_Core * const other_core = (*i).second.core ();
+        TAO_ORB_Core * const other_core = (*i).second.core ();
 
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
           {
-            other_core->_incr_refcnt();
-             TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-             collocated_orb_core = tmp_auto_ptr;
-            break;
+            TAO_Adapter_Registry *ar =
+              other_core->adapter_registry ();
+
+            return ar->create_collocated_object (stub,
+                                                 mprofile);
           }
       }
   }
 
-  if (collocated_orb_core.get ())
-    {
-      TAO_Adapter_Registry *ar =
-        collocated_orb_core.get ()->adapter_registry ();
-
-      x = ar->create_collocated_object (stub,
-                                        mprofile);
-    }
-
-
-  if (!x)
-    {
-      // The constructor sets the proxy broker as the
-      // Remote one.
-      ACE_NEW_RETURN (x,
-                      CORBA::Object (stub, 0),
-                      0);
-    }
-
+  // The constructor sets the proxy broker as the
+  // Remote one.
+  ACE_NEW_RETURN (x,
+                  CORBA::Object (stub, 0),
+                  0);
   return x;
 }
 
 CORBA::Long
 TAO_ORB_Core::initialize_object (TAO_Stub *stub,
-                                 CORBA::Object_ptr)
+                                 CORBA::Object_ptr obj)
 {
   // @@ What about forwarding.  With this approach we are never forwarded
   //    when we use collocation!
   const TAO_MProfile &mprofile =
     stub->base_profiles ();
-
-  return initialize_object_i (stub,
-                              mprofile);
-}
-
-CORBA::Long
-TAO_ORB_Core::reinitialize_object (TAO_Stub *stub)
-{
-  return initialize_object_i (stub, stub->forward_profiles ()
-                                    ? *(stub->forward_profiles ())
-                                    : stub->base_profiles ());
-}
-
-CORBA::Long
-TAO_ORB_Core::initialize_object_i (TAO_Stub *stub,
-                                   const TAO_MProfile &mprofile)
-
-{
-  CORBA::Long retval = 0;
-  TAO_ORB_Core_Auto_Ptr collocated_orb_core;
-
   {
-    // Lock the ORB_Table against concurrent modification while we
-    // iterate through the ORBs.
+    // @@ Ossama: maybe we need another lock for the table, to
+    //    reduce contention on the Static_Object_Lock below, if so
+    //    then we need to use that lock in the ORB_init() function.
     ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                               guard,
-                              TAO::ORB_Table::instance()->lock_,
+                              this->lock_,
                               0));
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
@@ -1900,23 +1845,16 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub,
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
           {
-            other_core->_incr_refcnt ();
-            TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-            collocated_orb_core = tmp_auto_ptr;
-            break;
+            TAO_Adapter_Registry * const ar =
+              other_core->adapter_registry ();
+
+            return ar->initialize_collocated_object (stub,
+                                                     obj);
           }
       }
   }
 
-  if (collocated_orb_core.get ())
-    {
-      TAO_Adapter_Registry *ar =
-        collocated_orb_core.get ()->adapter_registry ();
-
-      retval = ar->initialize_collocated_object (stub);
-    }
-
-  return retval;
+  return 0;
 }
 
 CORBA::Boolean
@@ -2136,7 +2074,6 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
 
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::release (this->pi_current_);
-      this->pi_current_ = CORBA::Object::_nil ();
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
   ACE_CATCHALL
@@ -2202,8 +2139,6 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
-
 #if TAO_HAS_INTERCEPTORS == 1
       if (this->client_request_interceptor_adapter_ != 0)
         {
@@ -2266,7 +2201,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL)
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory_Loader",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory",
                                       "TAO_TypeCodeFactory",
                                       "_make_TAO_TypeCodeFactory_Loader",
                                       ""));
@@ -2287,7 +2222,7 @@ TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory_Loader",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
                                       "TAO_CodecFactory",
                                       "_make_TAO_CodecFactory_Loader",
                                       ""));
@@ -2445,7 +2380,7 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t)\n")
                   ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(endpoints.c_str ())));
+                  ACE_TEXT_TO_TCHAR_IN(endpoints.c_str ())));
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                            CORBA::SystemException::_tao_minor_code (
                               TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -2770,14 +2705,6 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
   TAO_ORB_Core_Static_Resources::instance ()-> sync_scope_hook_ = hook;
 }
 
-int
-TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
-                                    size_t &slot_id)
-{
-  return this->tss_cleanup_funcs_.register_cleanup_function (cleanup,
-                                                             slot_id);
-}
-
 void
 TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
                                  bool &has_timeout,
@@ -2994,7 +2921,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
           ACE_CATCHANY
             {
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "Cannot initialize the "
+                                   "(%P|%t) Cannot initialize the "
                                    "ior_interceptor_adapter \n");
             }
           ACE_ENDTRY;
@@ -3057,6 +2984,7 @@ TAO_ORB_Core::clientrequestinterceptor_adapter_i (void)
   return this->client_request_interceptor_adapter_;
 }
 
+
 void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ServerRequestInterceptor_ptr interceptor
@@ -3066,58 +2994,6 @@ TAO_ORB_Core::add_interceptor (
     {
       this->server_request_interceptor_adapter_->add_interceptor (interceptor
                                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("ERROR: ORB Core unable to find the ")
-                  ACE_TEXT ("Server Request Interceptor Adapter Factory instance")));
-
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-}
-
-void
-TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-   const CORBA::PolicyList& policies
-   ACE_ENV_ARG_DECL)
-{
-  if (this->clientrequestinterceptor_adapter_i ())
-    {
-      this->client_request_interceptor_adapter_->add_interceptor (
-        interceptor,
-        policies
-        ACE_ENV_ARG_PARAMETER);
-
-      ACE_CHECK;
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("ERROR: ORB Core unable to find the ")
-                  ACE_TEXT ("Client Request Interceptor Adapter Factory instance")));
-
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-}
-
-void
-TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-   const CORBA::PolicyList& policies
-   ACE_ENV_ARG_DECL)
-{
-  if (this->serverrequestinterceptor_adapter_i ())
-    {
-      this->server_request_interceptor_adapter_->add_interceptor (
-        interceptor,
-        policies
-        ACE_ENV_ARG_PARAMETER);
-
       ACE_CHECK;
     }
   else
@@ -3245,4 +3121,3 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
   return TAO::TAO_CS_REMOTE_STRATEGY;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

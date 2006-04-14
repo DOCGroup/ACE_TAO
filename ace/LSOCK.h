@@ -16,7 +16,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,15 +31,13 @@
 
 #include "ace/SOCK.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_LSOCK
  *
  * @brief Create a Local ACE_SOCK, which is used for passing file
  * descriptors.
  */
-class ACE_Export ACE_LSOCK
+class ACE_Sockets_Export ACE_LSOCK
 {
 public:
 #if defined (ACE_HAS_MSG)
@@ -72,8 +75,6 @@ private:
   /// An auxiliary handle used to avoid virtual base classes...
   ACE_HANDLE aux_handle_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/LSOCK.inl"

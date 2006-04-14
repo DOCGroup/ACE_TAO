@@ -11,8 +11,4 @@ ACE_RCSID (tao,
            debug,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Export unsigned int TAO_debug_level = 0;
-
-TAO_END_VERSIONED_NAMESPACE_DECL

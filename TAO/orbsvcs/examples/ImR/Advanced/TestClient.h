@@ -5,9 +5,8 @@
 
 #include <vector>
 #include <string>
-#include "ace/Capabilities.h"
 
-class TestClient : public ACE_Task_Base, public ACE_Capabilities
+class TestClient : public ACE_Task_Base
 {
 public:
   TestClient(CORBA::ORB_ptr orb, int argc, char* argv[]);
@@ -23,7 +22,7 @@ private:
   virtual int svc();
 
   CORBA::ORB_var     orb_;
-  std::vector<ACE_TString> iors_;
+  std::vector<std::string> iors_;
 
   char               pauseType_;
   int                startupPause_;

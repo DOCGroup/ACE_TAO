@@ -23,9 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/DsLogAdminC.h"
-#include "orbsvcs/Log/log_serv_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "log_serv_export.h"
 
 class TAO_LogRecordStore;
 
@@ -100,8 +98,6 @@ protected:
 
 private:
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

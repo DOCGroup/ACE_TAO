@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -13,7 +13,6 @@
 
 #ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H
-
 #include /**/ "ace/pre.h"
 
 #include "ace/INET_Addr.h"
@@ -29,8 +28,6 @@
 #include "ace/Token_Request_Reply.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Remote_Token_Proxy
@@ -309,8 +306,6 @@ private:
   void operator= (const ACE_TSS_Connection &);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
@@ -318,5 +313,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* ACE_REMOTE_TOKEN_H */

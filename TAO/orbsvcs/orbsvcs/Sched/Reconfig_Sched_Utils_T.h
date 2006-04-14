@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -20,14 +19,12 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
+#include "Reconfig_Sched_Utils.h"
 #include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////
 // Reconfig Sched Entry Visitor classes //
@@ -476,10 +473,8 @@ protected:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp"
+#include "Reconfig_Sched_Utils_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/PortableGroup/Portable_Group_Map.h"
+#include "Portable_Group_Map.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
@@ -9,7 +9,6 @@ ACE_RCSID (PortableGroup,
            Portable_Group_Map,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.
 TAO_Portable_Group_Map::TAO_Portable_Group_Map ()
@@ -172,9 +171,7 @@ TAO_GroupId_Equal_To::operator () (
   const PortableGroup::TagGroupTaggedComponent *rhs) const
 {
   return
-    ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0
+    ACE_OS::strcmp (lhs->group_domain_id.in(), rhs->group_domain_id.in()) == 0
     && lhs->object_group_id == rhs->object_group_id
     && lhs->object_group_ref_version == rhs->object_group_ref_version;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

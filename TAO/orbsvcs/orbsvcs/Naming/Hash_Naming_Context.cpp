@@ -13,16 +13,14 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Naming/Hash_Naming_Context.h"
-#include "orbsvcs/Naming/nsconf.h"
+#include "Hash_Naming_Context.h"
+#include "nsconf.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (Naming,
            Hash_Naming_Context,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // -------------------------------------------------
 
@@ -156,6 +154,9 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::bind(), Caught CORBA::TIMEOUT exception");
+          // throw a CannotProceed exception back to the client
+          //
           ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
                          (context.in (), simple_name));
         }
@@ -219,6 +220,9 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::rebind(), Caught CORBA::TIMEOUT exception");
+          // throw a CannotProceed exception back to the client
+          //
           ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
                          (context.in (), simple_name));
         }
@@ -288,6 +292,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::bind_context (), Caught CORBA::TIMEOUT exception");
           ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
                          (context.in (), simple_name));
         }
@@ -351,6 +356,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::rebind_context (), Caught CORBA::TIMEOUT exception");
           ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
                          (context.in (), simple_name));
         }
@@ -467,6 +473,9 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
             }
           ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
             {
+              ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::resolve (), Caught CORBA::TIMEOUT exception");
+              // throw a CannotProceed exception back to the client
+              //
               ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
                              (context.in (), rest_of_name));
             }
@@ -518,6 +527,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n
         }
       ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
         {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::unbind (), Caught CORBA::TIMEOUT exception");
           ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
                          (context.in (), simple_name));
         }
@@ -676,5 +686,3 @@ TAO_Hash_Naming_Context::interface (void)
 {
   return this->interface_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

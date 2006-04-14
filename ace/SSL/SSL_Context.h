@@ -7,7 +7,6 @@
  *  $Id$
  *
  *  @author Carlos O'Ryan <coryan@ece.uci.edu>
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -26,13 +25,28 @@
 #include "ace/SString.h"
 
 #ifdef ACE_HAS_THREADS
-# include "ace/Synch_Traits.h"
+# include "ace/OS_NS_Thread.h"
 #endif  /* ACE_HAS_THREADS */
 
 #include <openssl/ssl.h>
 
+#ifdef ACE_HAS_THREADS
+extern "C"
+{
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  /// Mutex locking/unlocking callback for OpenSSL multithread
+  /// support.
+  void ACE_SSL_locking_callback (int mode,
+                                 int type,
+                                 const char * file,
+                                 int line);
+
+  /// Return the current thread ID.  OpenSSL uses this on platforms
+  /// that need it.
+  unsigned long ACE_SSL_thread_id (void);
+}
+#endif  /* ACE_HAS_THREADS */
+
 
 class ACE_SSL_Export ACE_SSL_Data_File
 {
@@ -74,11 +88,9 @@ private:
  */
 class ACE_SSL_Export ACE_SSL_Context
 {
-public:
+  friend void ACE_SSL_locking_callback (int, int, const char *, int);
 
-#ifdef ACE_HAS_THREADS
-  typedef ACE_SYNCH_MUTEX lock_type;
-#endif  /* ACE_HAS_THREADS */
+public:
 
   enum {
     INVALID_METHOD = -1,
@@ -245,18 +257,18 @@ public:
   //@{
   /// Seed the underlying random number generator.  This value should
   /// have at least 128 bits of entropy.
-  static int random_seed (const char * seed);
+  int random_seed (const char * seed);
 
   /// Set the Entropy Gathering Daemon (EGD) UNIX domain socket file to
   /// read random seed values from.
-  static int egd_file (const char * socket_file);
+  int egd_file (const char * socket_file);
 
   /**
    * Set the file that contains the random seed value state, and the
    * amount of bytes to read.  "-1" bytes causes the entire file to be
    * read.
    */
-  static int seed_file (const char * seed_file, long bytes = -1);
+  int seed_file (const char * seed_file, long bytes = -1);
   //@}
 
   /// Print SSL error corresponding to the given error code.
@@ -295,13 +307,18 @@ private:
   void ssl_library_init ();
   void ssl_library_fini ();
 
-  // = Prevent assignment and copy initialization.
+  // = Prevent assignment and initialization.
   //@{
-  ACE_SSL_Context (const ACE_SSL_Context &);
-  ACE_SSL_Context & operator= (const ACE_SSL_Context &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_Context &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_Context (const ACE_SSL_Context &))
   //@}
 
 private:
+  // @@ Carlos, I protected this variable with an ACE_GUARD, just like
+  //    what we do for the orb_init_count_ variable in
+  //    tao/ORB.cpp.   The code isn't pretty but it should suffice
+  //    until the SSL context is stored in a Singleton.
+  //       -Ossama
 
   /// The SSL_CTX structure
   SSL_CTX *context_;
@@ -320,15 +337,22 @@ private:
   /// count of successful CA load attempts
   int have_ca_;
 
+  /// Reference count of the number of times the ACE_SSL_Context was
+  /// initialized.
+  static int library_init_count_;
+
+  // @@ This should also be done with a singleton, otherwise it is not
+  //    thread safe and/or portable to some weird platforms...
+
 #ifdef ACE_HAS_THREADS
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
-  static lock_type * locks_;
-#endif  /* ACE_HAS_THREADS */
+  static ACE_mutex_t * lock_;
+
+  // @@ This should also be managed by a singleton.
+#endif
 
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "SSL_Context.inl"

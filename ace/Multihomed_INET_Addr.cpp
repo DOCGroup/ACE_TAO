@@ -13,8 +13,6 @@ ACE_RCSID (ace,
            Multihomed_INET_Addr,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)
 
 // Default constructor
@@ -55,7 +53,7 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
       if (ret) {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("Invalid INET addr (%s:%u) will be ignored\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (secondary_host_names[i]), port_number));
+                    ACE_TEXT_TO_TCHAR_IN (secondary_host_names[i]), port_number));
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
@@ -66,7 +64,6 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
   return;
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
                                                    const wchar_t host_name[],
                                                    int encode,
@@ -91,7 +88,7 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
       if (ret) {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("Invalid INET addr (%s:%u) will be ignored\n"),
-                    ACE_TEXT_WCHAR_TO_TCHAR (secondary_host_names[i]), port_number));
+                    ACE_TEXT_TO_TCHAR_IN (secondary_host_names[i]), port_number));
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
@@ -101,7 +98,6 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
 
   return;
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
                                                    ACE_UINT32 primary_ip_addr,
@@ -162,7 +158,6 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
   return ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 }
 
-#if defined (ACE_HAS_WCHAR)
 //
 // WCHAR version of ::set
 //
@@ -189,7 +184,6 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 
   return ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 }
-#endif /* ACE_HAS_WCHAR */
 
 int
 ACE_Multihomed_INET_Addr::set (u_short port_number,
@@ -305,6 +299,4 @@ template class ACE_Array<ACE_INET_Addr>;
 #pragma instantiate ACE_Array_Base<ACE_INET_Addr>
 #pragma instantiate ACE_Array<ACE_INET_Addr>
 
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
+#endif /*ACE_HAS_TEMPLATE_INSTANTIATION*/

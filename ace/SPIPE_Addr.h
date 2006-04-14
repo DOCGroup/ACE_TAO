@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 //==========================================================================
 /**
  *  @file    SPIPE_Addr.h
@@ -25,8 +24,6 @@
 #include "ace/Addr.h"
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_dirent.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_SPIPE_Addr
@@ -111,8 +108,6 @@ private:
   } SPIPE_addr_;
   // Contents of an SPIPE address.
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SPIPE_Addr.inl"

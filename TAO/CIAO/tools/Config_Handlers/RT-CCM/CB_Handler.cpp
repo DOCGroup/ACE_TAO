@@ -25,7 +25,6 @@ namespace CIAO
         {
           dest.bands[num].low = static_cast <ACE_INT32> ((i->low ()));
           dest.bands[num].high = static_cast < ACE_INT32 > (i->high ());
-          num++;
         }
       
       if (src.id_p ())

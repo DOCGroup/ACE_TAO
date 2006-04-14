@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::Principal_ptr principal)
@@ -61,4 +59,3 @@ CORBA::Principal::_nil (void)
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

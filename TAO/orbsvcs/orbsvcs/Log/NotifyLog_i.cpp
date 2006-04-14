@@ -9,8 +9,6 @@ ACE_RCSID (Log,
 #define CA_FILTER "threshold > 10"
 #define TCL_GRAMMAR "TCL"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
 				  PortableServer::POA_ptr poa,
                                   TAO_LogMgr_i &logmgr_i,
@@ -189,12 +187,13 @@ TAO_NotifyLog_i::get_filter (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NotifyLog_i::set_filter (CosNotifyFilter::Filter_ptr /* filter */
-                             ACE_ENV_ARG_DECL)
+TAO_NotifyLog_i::set_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
+  ACE_UNUSED_ARG (filter);
+
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 
   //TODO: need to add impl
@@ -325,25 +324,30 @@ TAO_NotifyLog_i::get_qos (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NotifyLog_i::set_qos (const CosNotification::QoSProperties& /* qos */
-                          ACE_ENV_ARG_DECL)
+TAO_NotifyLog_i::set_qos (const CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CosNotification::UnsupportedQoS,
       CORBA::SystemException
     ))
 {
+  ACE_UNUSED_ARG (qos);
+
   ACE_THROW (CORBA::NO_IMPLEMENT ());
   //TODO: need to add later
 }
 
 void
-TAO_NotifyLog_i::validate_qos (
-    const CosNotification::QoSProperties& /* required_qos */,
-    CosNotification::NamedPropertyRangeSeq_out /* available_qos */
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CosNotification::UnsupportedQoS,
-                   CORBA::SystemException))
+TAO_NotifyLog_i::validate_qos (const CosNotification::QoSProperties& required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CosNotification::UnsupportedQoS,
+      CORBA::SystemException
+    ))
 {
+  ACE_UNUSED_ARG (required_qos);
+
+  ACE_UNUSED_ARG (available_qos);
+
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 
   //TODO: need to add later
@@ -368,5 +372,3 @@ TAO_NotifyLog_i::for_suppliers (
 {
   return this->event_channel_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

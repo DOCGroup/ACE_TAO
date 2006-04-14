@@ -1,6 +1,13 @@
 // $Id$
 
+#include "ace/Thread.h"
 #include "ace/Token.h"
+#include "ace/Log_Msg.h"
+
+#if defined (DEBUGGING)
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+#endif /* DEBUGGING */
 
 ACE_RCSID(ace, Token, "$Id$")
 
@@ -10,17 +17,8 @@ ACE_RCSID(ace, Token, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Thread.h"
-#include "ace/Log_Msg.h"
-
-#if defined (DEBUGGING)
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
-#endif /* DEBUGGING */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Token)
+
 
 void
 ACE_Token::dump (void) const
@@ -211,7 +209,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   // Check if it is us.
   if (ACE_OS::thr_equal (thr_id, this->owner_))
     {
-      ++this->nesting_level_;
+      this->nesting_level_++;
       return 0;
     }
 
@@ -237,7 +235,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
                                              thr_id,
                                              this->attributes_);
   queue->insert_entry (my_entry, this->queueing_strategy_);
-  ++this->waiters_;
+  this->waiters_++;
 
   // Execute appropriate <sleep_hook> callback.  (@@ should these
   // methods return a success/failure status, and if so, what should
@@ -246,13 +244,13 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   if (sleep_hook_func)
     {
       (*sleep_hook_func) (arg);
-      ++ret;
+      ret++;
     }
   else
     {
       // Execute virtual method.
       this->sleep_hook ();
-      ++ret;
+      ret++;
     }
 
   int timed_out = 0;
@@ -292,7 +290,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   while (!ACE_OS::thr_equal (thr_id, this->owner_));
 
   // Do this always and irrespective of the result of wait().
-  --this->waiters_;
+  this->waiters_--;
   queue->remove_entry (&my_entry);
 
 #if defined (DEBUGGING)
@@ -392,7 +390,7 @@ ACE_Token::renew (int requeue_position,
                                     // otherwise use the queueing strategy, which might also
                                     // happen to be 0.
                                     requeue_position == 0 ? 0 : this->queueing_strategy_);
-  ++this->waiters_;
+  this->waiters_++;
 
   // Remember nesting level...
   int save_nesting_level_ = this->nesting_level_;
@@ -440,7 +438,7 @@ ACE_Token::renew (int requeue_position,
   while (!ACE_OS::thr_equal (my_entry.thread_id_, this->owner_));
 
   // Do this always and irrespective of the result of wait().
-  --this->waiters_;
+  this->waiters_--;
   this_threads_queue->remove_entry (&my_entry);
 
 #if defined (DEBUGGING)
@@ -546,6 +544,8 @@ ACE_Token::wakeup_next_waiter (void)
   this->owner_ = queue->head_->thread_id_;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_HAS_THREADS */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

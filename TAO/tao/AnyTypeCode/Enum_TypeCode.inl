@@ -2,7 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           class EnumeratorArrayType,
@@ -20,5 +19,3 @@ TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::Enum (
   , enumerators_ (enumerators)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

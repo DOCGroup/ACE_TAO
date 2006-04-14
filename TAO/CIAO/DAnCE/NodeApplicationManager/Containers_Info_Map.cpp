@@ -6,16 +6,14 @@
 namespace CIAO
 {
   Containers_Info_Map::
-  Containers_Info_Map (const Deployment::DeploymentPlan & plan,
-          const Deployment::ComponentPlans & shared_components)
+  Containers_Info_Map (const Deployment::DeploymentPlan & plan)
     : map_ (CIAO_DEFAULT_MAP_SIZE),
-      plan_ (plan),
-      shared_components_ (shared_components)
+      plan_ (plan)
   {
     this->initialize_map ();
     this->build_map ();
   }
-
+  
   Deployment::ContainerImplementationInfos *
   Containers_Info_Map::containers_info (void)
   {
@@ -23,7 +21,7 @@ namespace CIAO
     // and return the corresponding sequence
     Deployment::ContainerImplementationInfos_var retv;
 
-    ACE_NEW_RETURN (retv,
+    ACE_NEW_RETURN (retv, 
                     Deployment::ContainerImplementationInfos,
                     0);
 
@@ -41,7 +39,7 @@ namespace CIAO
       }
     return retv._retn ();
   }
-
+  
   void
   Containers_Info_Map::
   initialize_map (void)
@@ -51,107 +49,82 @@ namespace CIAO
     // Iterate over the instance list and look at the policy set id of each
     // component instance. For each policy set, we create a separate container
     // to host all the components with such policy set.
-    // NOTE: all the component instances without policies are specified should
-    // be hosted in the same container, and in our map the key is an empty string ""
     for (CORBA::ULong i = 0; i < instance_len; ++i)
       {
-        CORBA::String_var my_resource_id ("");
-        const char *my_policy_set_id = "";
+        const char * my_resource_id = "";
+        const char * my_policy_set_id = "";
 
         if (this->plan_.instance[i].deployedResource.length () != 0)
           {
-            my_resource_id =
+            my_resource_id = 
               this->plan_.instance[i].deployedResource[0].resourceName.in ();
 
             this->plan_.instance[i].deployedResource[0].resourceValue >>=
               my_policy_set_id;
           }
 
-        // If we find a existing policy_set_id, then do nothing.
+        // If we find a different policy_set_id, then we bind it.
         if (this->map_.find (my_policy_set_id) == 0)
           continue;
-        if (ACE_OS::strcmp (my_policy_set_id, "") == 0)
+        else if (ACE_OS::strcmp (my_policy_set_id, "") == 0)
           {
-            // no policy set id has been specified
+            // empty policy_set_id
             Deployment::ContainerImplementationInfo * info;
             ACE_NEW (info, Deployment::ContainerImplementationInfo);
             this->map_.bind (my_policy_set_id, info);
             continue;
           }
         else
+          {
+            Deployment::ContainerImplementationInfo * info;
+            ACE_NEW (info, Deployment::ContainerImplementationInfo);
 
-    {
-      Deployment::ContainerImplementationInfo * info;
-      ACE_NEW (info, Deployment::ContainerImplementationInfo);
-
-      // Fetch the actual policy_set_def from the infoProperty
-      // Ugly due to the IDL data structure definition! :(
-      CORBA::ULong j;
-      CORBA::ULong infoProperty_length = this->plan_.infoProperty.length ();
-      bool found = false;
-
-      for (j = 0; j < infoProperty_length; ++j)
-        {
-          if (ACE_OS::strcmp (this->plan_.infoProperty[j].name.in (),
-                              "CIAOServerResources") != 0)
-            continue;
-
-          CIAO::DAnCE::ServerResource *server_resource_def = 0;
-          this->plan_.infoProperty[j].value >>= server_resource_def;
-
-          if (ACE_OS::strcmp ((*server_resource_def).Id,
-                              my_resource_id.in ()) == 0)
-            {
-              // Iterate over the policy_sets
-              CORBA::ULong k;
-              CORBA::ULong policy_sets_length =
-                (*server_resource_def).orb_config.policy_set.length ();
-              for (k = 0; k < policy_sets_length; ++k)
-                {
-                  ACE_DEBUG ((LM_DEBUG, "Looking for policy set id: %s\n", my_policy_set_id));
-                  ACE_DEBUG ((LM_DEBUG, "Compare against policy set id: %s\n\n",
-                              (*server_resource_def).orb_config.policy_set[k].Id.in ()));
-
-                  if (ACE_OS::strcmp (my_policy_set_id,
+            // Fetch the actual policy_set_def from the infoProperty
+            // Ugly due to the IDL data structure definition! :(
+            CORBA::ULong j;
+            for (j = 0; 
+                  j < this->plan_.infoProperty.length (); 
+                  ++j)
+              {
+                CIAO::DAnCE::ServerResource *server_resource_def = 0;
+                this->plan_.infoProperty[j].value >>= server_resource_def;
+                if (ACE_OS::strcmp ((*server_resource_def).Id, 
+                                    my_resource_id) == 0)
+                  {
+                    // Iterate over the policy_sets
+                    CORBA::ULong k;
+                    for (k = 0;
+                          k < (*server_resource_def).orb_config.policy_set.length ();
+                          ++k)
+                      {
+                        if (ACE_OS::strcmp (my_policy_set_id,
                           (*server_resource_def).orb_config.policy_set[k].Id) == 0)
-                    {
-                      // Foud the target policy set def
-                      info->container_config.length (1);
-                      info->container_config[0].name =
-                        CORBA::string_dup ("ContainerPolicySet");
-                      info->container_config[0].value <<=
-                        my_policy_set_id;
-                        // (*server_resource_def).orb_config.policy_set[k];
+                          {
+                            // Foud the target policy set def
+                            info->container_config.length (1);
+                            info->container_config[0].name = 
+                              CORBA::string_dup ("ContainerPolicySet");
+                            info->container_config[0].value <<= 
+                              (*server_resource_def).orb_config.policy_set[k];
+                          }
+                      }
+                    if (k == (*server_resource_def).orb_config.policy_set.length ())
+                      {
+                        // No Server Resource Def found?
+                        ACE_DEBUG ((LM_DEBUG, "No matching policy set def found!\n"));
+                      }
+                  }
+              } // end of for loop for fetching policy_set_def
 
-                      ACE_DEBUG ((LM_DEBUG, "Found matching rt policy set*****\n\n"));
-                      found = true;
-                      break;
-                    }
-                }
-              if (k == policy_sets_length)
-                {
-                  // No Server Resource Def found?
-                  ACE_DEBUG ((LM_DEBUG,
-                      "No matching policy set def found in resource def: %s!\n",
-                      my_resource_id.in ()));
-                }
-            }
-
-          // if we successfully found the policy_set_id
-          if (found)
-            break;
-        } // end of for loop for fetching policy_set_def
-
-      if (j == this->plan_.infoProperty.length ())
-        {
-          // No Server Resource Def found?! Inconsistent descriptor files.
-          ACE_DEBUG ((LM_ERROR, "(%P|%t) Descriptor error: "
-              "No matching server resource def found for component: %s!\n",
-              this->plan_.instance[i].name.in ()));
-        }
-      else
-        this->map_.bind (my_policy_set_id, info);
-    }
+            if (j == this->plan_.infoProperty.length ()) 
+              {
+                // No Server Resource Def found?! Inconsistent descriptor files.
+                ACE_DEBUG ((LM_ERROR, "(%P|%t) Descriptor error: "
+                  "No matching server resrouce def found for component: %s!\n",
+                  this->plan_.instance[i].name.in ()));
+              }
+            this->map_.bind (my_policy_set_id, info);
+          }
       }
   }
 
@@ -165,12 +138,6 @@ namespace CIAO
       {
         const Deployment::InstanceDeploymentDescription & instance =
           this->plan_.instance[i];
-
-        // If this component instance happens to be in the "shared components
-        // list", then we ignore it, otherwise we shall install it.
-        ACE_CString name (instance.name.in ());
-        if (this->is_shared_component (name))
-          continue;
 
         if (! this->insert_instance_into_map (instance))
           return false;
@@ -192,13 +159,13 @@ namespace CIAO
       }
 
     // Find the ContainerImplementationInfo entry from the map
-    MAP::ENTRY *entry = 0;
+    MAP::ENTRY *entry;
     if (this->map_.find (policy_set_id, entry) != 0)
       return false; //should never happen
     else
       {
         this->insert_instance_into_container (
-                instance,
+                instance, 
                 entry->int_id_->impl_infos);
       }
 
@@ -232,7 +199,7 @@ namespace CIAO
     bool svnt_found = false;
     bool exec_found = false;
 
-    // For svnt/exec artifacts
+    // For svnt artifact
     for (CORBA::ULong j = 0; j < artifact_num; ++j)
       {
         const Deployment::ArtifactDeploymentDescription & arti =
@@ -245,13 +212,9 @@ namespace CIAO
         //         the modeling tool should make sure of
         //         uniqueness, i.e., one component implementation
         //         should have only 1 _svnt and 1 _exec libs.
-        if ((pos  = tmp.find ("_stub")) != ACE_CString::npos ||
-            (pos  = tmp.find ("_Stub")) != ACE_CString::npos)
-          continue; // We ignore _stub artifact since it's not used.
-
         if (!svnt_found &&
                 ((pos  = tmp.find ("_svnt")) != ACE_CString::npos ||
-                 (pos  = tmp.find ("_Svnt")) != ACE_CString::npos))
+                (pos  = tmp.find ("_Svnt")) != ACE_CString::npos))
           {
             if (arti.location.length() < 1 )
               {
@@ -262,20 +225,20 @@ namespace CIAO
             svnt_found = true;
             // Copy the servant dll/so name.
             // @@ Note: I ignore all the other locations except the first one.
-            impl_infos[i].servant_dll =
+            impl_infos[i].servant_dll = 
               CORBA::string_dup (arti.location[0].in ());
 
             // Get the entry point.
-            const CORBA::ULong prop_length = arti.execParameter.length ();
+		        const CORBA::ULong prop_length = arti.execParameter.length ();
 
             for (CORBA::ULong prop_num = 0;
-                 prop_num < prop_length;
-                 ++prop_num)
+                prop_num < prop_length;
+                ++prop_num)
               {
                 ACE_CString name (arti.execParameter[prop_num].name.in ());
                 if (name == ACE_CString ("entryPoint"))
                   {
-                    const char * entry = 0;
+                    const char * entry;
                     (arti.execParameter[prop_num].value) >>= entry;
                     impl_infos[i].servant_entrypt = CORBA::string_dup (entry);
                   }
@@ -285,15 +248,13 @@ namespace CIAO
                     ACE_DEBUG ((LM_DEBUG, "We only support entrypoint at this point in CIAO.\n"));
                   }
               }
-
-            continue; // continue for the next artifact
           }
 
         // As one can see, code is duplicated here. I will come back for this later.
         // For exec artifact
         if (!exec_found &&
                 ((pos  = tmp.find ("_exec")) != ACE_CString::npos ||
-                 (pos  = tmp.find ("_Exec")) != ACE_CString::npos))
+                (pos  = tmp.find ("_Exec")) != ACE_CString::npos))
           {
             if (arti.location.length() < 1 )
               {
@@ -302,22 +263,22 @@ namespace CIAO
               }
 
             exec_found = true;
-            // Copy the servant dll/so name.
+            // Cpoy the servant dll/so name.
             // @@ Note: I ignore all the other locations except the first one.
             exec_found = true;
-            impl_infos[i].executor_dll =
+            impl_infos[i].executor_dll = 
               CORBA::string_dup (arti.location[0].in ());
 
             // Get the entry point.
             const CORBA::ULong prop_length = arti.execParameter.length ();
             for (CORBA::ULong prop_num = 0;
-                 prop_num < prop_length;
-                 ++prop_num)
+                prop_num < prop_length;
+                ++prop_num)
               {
                 ACE_CString name (arti.execParameter[prop_num].name.in ());
                 if (name == ACE_CString ("entryPoint"))
                   {
-                    const char * entry = 0;
+                    const char * entry;
                     (arti.execParameter[prop_num].value) >>= entry;
                     impl_infos[i].executor_entrypt = CORBA::string_dup (entry);
                   }
@@ -334,18 +295,4 @@ namespace CIAO
       }
     return true;
   }
-}
-
-bool
-CIAO::Containers_Info_Map::
-is_shared_component (ACE_CString & name)
-{
-  for (CORBA::ULong i = 0; i < this->shared_components_.length (); ++i)
-    {
-      if (ACE_OS::strcmp (this->shared_components_[i].name.in (),
-                          name.c_str ()) == 0)
-        return true;
-    }
-
-  return false;
 }

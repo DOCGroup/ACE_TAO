@@ -22,15 +22,10 @@
 
 #include "tao/SystemException.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Time_Value;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;
 class TAO_InputCDR;
+class ACE_Time_Value;
 class TAO_Bind_Dispatcher_Guard;
 
 namespace TAO
@@ -205,7 +200,6 @@ namespace TAO
 
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Synch_Invocation.inl"

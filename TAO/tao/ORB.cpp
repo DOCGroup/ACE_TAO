@@ -1,37 +1,37 @@
 // "$Id$"
 
-#include "tao/ORB.h"
+#include "ORB.h"
 
 ACE_RCSID (tao,
            ORB,
            "$Id$")
 
-#include "tao/ORB_Table.h"
-#include "tao/Connector_Registry.h"
-#include "tao/IOR_Parser.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "tao/TAO_Internal.h"
-#include "tao/Dynamic_Adapter.h"
-#include "tao/Profile.h"
-#include "tao/default_ports.h"
-#include "tao/ORBInitializer_Registry_Adapter.h"
-#include "tao/PolicyFactory_Registry_Adapter.h"
-#include "tao/NVList_Adapter.h"
-#include "tao/TAO_Singleton_Manager.h"
-#include "tao/Policy_Current.h"
-#include "tao/Policy_Manager.h"
-#include "tao/Valuetype_Adapter.h"
-#include "tao/IFR_Client_Adapter.h"
-#include "tao/TypeCodeFactory_Adapter.h"
-#include "tao/debug.h"
-#include "tao/CDR.h"
-#include "tao/SystemException.h"
-#include "tao/default_environment.h"
+#include "ORB_Table.h"
+#include "Connector_Registry.h"
+#include "IOR_Parser.h"
+#include "Stub.h"
+#include "ORB_Core.h"
+#include "ORB_Core_TSS_Resources.h"
+#include "TAO_Internal.h"
+#include "Dynamic_Adapter.h"
+#include "Profile.h"
+#include "default_ports.h"
+#include "ORBInitializer_Registry_Adapter.h"
+#include "PolicyFactory_Registry_Adapter.h"
+#include "NVList_Adapter.h"
+#include "TAO_Singleton_Manager.h"
+#include "Policy_Current.h"
+#include "Policy_Manager.h"
+#include "Valuetype_Adapter.h"
+#include "IFR_Client_Adapter.h"
+#include "TypeCodeFactory_Adapter.h"
+#include "debug.h"
+#include "CDR.h"
+#include "SystemException.h"
+#include "default_environment.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB.i"
+# include "ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"
@@ -51,6 +51,7 @@ void TAO_unexpected_exception_handler (void)
 }
 #endif  /* ACE_HAS_EXCEPTIONS */
 
+
 static const char ior_prefix[] = "IOR:";
 
 // = Static initialization.
@@ -62,8 +63,6 @@ namespace
 }
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ORB::InvalidName::InvalidName (void)
   : CORBA::UserException ("IDL:omg.org/CORBA/ORB/InvalidName:1.0",
@@ -188,7 +187,7 @@ CORBA::ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orb_core ()->orbid ())));
+                  ACE_TEXT_TO_TCHAR_IN (this->orb_core ()->orbid ())));
     }
 
   this->orb_core ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1452,7 +1451,7 @@ CORBA::ORB_init (int &argc,
               if (arg_shifter.is_parameter_next ())
                 {
                   orbid_string =
-                    ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ());
+                    ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ());
                   arg_shifter.consume_arg ();
                 }
             }
@@ -1464,9 +1463,9 @@ CORBA::ORB_init (int &argc,
               // but we should skip an optional space...
               if (current_arg[orbid_len] == ' ')
                 orbid_string =
-                  ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len + 1);
+                  ACE_TEXT_TO_CHAR_IN (current_arg + orbid_len + 1);
               else
-                orbid_string = ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len);
+                orbid_string = ACE_TEXT_TO_CHAR_IN (current_arg + orbid_len);
             }
           else
             arg_shifter.ignore_arg ();
@@ -1562,7 +1561,7 @@ CORBA::ORB_init (int &argc,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (orbid_string.c_str ())));
+                  ACE_TEXT_TO_TCHAR_IN (orbid_string.c_str ())));
     }
 
   // Before returning remember to store the ORB into the table...
@@ -2022,4 +2021,3 @@ CORBA::ORB::lookup_value_factory (const char *repository_id
   return this->orb_core ()->valuetype_adapter ()->vf_map_find (repository_id);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

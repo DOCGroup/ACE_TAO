@@ -8,7 +8,6 @@
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
 
-#include "tao/orbconf.h"
 #include "ace/OS.h"
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
@@ -83,8 +82,6 @@
 
 /* Size of default input buffer. */
 #define YY_BUF_SIZE 16384
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 
@@ -408,8 +405,6 @@ char *yytext;
 
 #define INITIAL 0
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // $Id$
 // ========================================================================
 //
@@ -424,11 +419,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 //
 // ========================================================================
 
-#include "orbsvcs/Trader/Constraint_Interpreter.h"
-#include "orbsvcs/Trader/Constraint_Nodes.h"
-#include "orbsvcs/Trader/Constraint_Tokens.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Constraint_Interpreter.h"
+#include "Constraint_Nodes.h"
+#include "Constraint_Tokens.h"
 
 static TAO_Literal_Constraint* extract_string(const char*);
 
@@ -494,8 +487,6 @@ static int yy_top_state YY_PROTO(( void ));
 #define YY_NO_POP_STATE 1
 #define YY_NO_TOP_STATE 1
 #endif
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef YY_MALLOC_DECL
 YY_MALLOC_DECL
@@ -587,8 +578,6 @@ YY_MALLOC_DECL
 
 #define YY_RULE_SETUP \
 	YY_USER_ACTION
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 YY_DECL
 	{
@@ -802,7 +791,7 @@ YY_RULE_SETUP
 
 { 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint(true);
+		    new TAO_Literal_Constraint((CORBA::Boolean) 1);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 	ACE_NOTREACHED (YY_BREAK)
@@ -811,7 +800,7 @@ YY_RULE_SETUP
 
 { 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint(false);
+		    new TAO_Literal_Constraint((CORBA::Boolean) 0);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 	ACE_NOTREACHED (YY_BREAK)
@@ -1786,5 +1775,3 @@ yywrap (void)
 {
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

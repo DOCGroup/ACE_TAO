@@ -1104,8 +1104,8 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   if (this->open (1, 0, 1) != 0)
   {
      ACE_ERROR ((LM_ERROR,
-                 ACE_LIB_TEXT ("(%t) %p\n"),
-                 ACE_LIB_TEXT ("Connector::open failed")));
+                 ACE_TEXT ("(%t) %p\n"),
+                 ACE_TEXT ("Connector::open failed")));
      return rc;
   }
 
@@ -1843,7 +1843,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   if (argc == 1) // no arguments , so one button test
     return 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("x:t:o:n:p:d:h:c:v:ub"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("x:t:o:n:p:d:h:c:v:ub"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -1970,18 +1970,18 @@ run_main (int argc, ACE_TCHAR *argv[])
 template class ACE_Asynch_Acceptor<Server>;
 template class ACE_Asynch_Connector<Client>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op<ACE_Thread_Mutex, size_t>;
+template class ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>;
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, size_t>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, unsigned long>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Asynch_Acceptor<Server>
 #pragma instantiate ACE_Asynch_Connector<Client>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, size_t>
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, size_t>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, unsigned long>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

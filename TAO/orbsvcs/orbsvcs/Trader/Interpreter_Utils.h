@@ -22,8 +22,6 @@
 
 #include "orbsvcs/Trader/trading_serv_export.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
 /**
@@ -87,8 +85,6 @@ public:
   // Return the sequence element type for the sequence whose typecode
   // is <code>.
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

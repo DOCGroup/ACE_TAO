@@ -25,9 +25,20 @@
 #include "ace/Log_Priority.h"
 #include "ace/os_include/os_limits.h"
 
-// The ACE_ASSERT macro used to be defined here, include ace/Assert.h
-// for backwards compatibility.
-#include "ace/Assert.h"
+// The following ASSERT macro is courtesy of Alexandre Karev
+// <akg@na47sun05.cern.ch>.
+#if defined (ACE_NDEBUG)
+#define ACE_ASSERT(x)
+#elif !defined (ACE_ASSERT)
+#define ACE_ASSERT(X) \
+  do { if(!(X)) { \
+  int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+  ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+  ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), \
+               ace___->msg_ostream (), ace___->msg_callback ()); \
+  ace___->log (LM_ERROR, ACE_LIB_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), ACE_TEXT_TO_TCHAR_IN (#X), -1); \
+  } } while (0)
+#endif  /* ACE_NDEBUG */
 
 #if defined (ACE_NLOGGING)
 #define ACE_HEX_DUMP(X) do {} while (0)
@@ -101,8 +112,6 @@
 #if defined (THREAD)
 # undef THREAD
 #endif /* THREAD */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Log_Msg_Callback;
 class ACE_Log_Msg_Backend;
@@ -338,7 +347,7 @@ public:
    * allow "chaining". Note that as opposed to ACE_Log_Msg_Callback,
    * ACE_Log_Msg_Backend is a per-process entity.
    *
-   * @note Be aware that because of the current architecture there is
+   * Note: Be aware that because of the current architecture there is
    * no guarantee that open (), reset () and close () will be called
    * on a backend object.
    *
@@ -379,19 +388,19 @@ public:
   // because the *semantics* have changed (the objects are no longer
   // TSS).
   /// Get TSS exception action.
-  /// @note The action is no longer TSS, they are global!
+  /// NOTE: The action is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
 
   /// Set TSS exception action.
-  /// @note The action is no longer TSS, they are global!
+  /// NOTE: The action is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
 
   /// Get TSS exception handler.
-  /// @note The handler is no longer TSS, they are global!
+  /// NOTE: The handler is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
 
   /// Set TSS exception handler.
-  /// @note The handler is no longer TSS, they are global!
+  /// NOTE: The handler is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
 
@@ -425,7 +434,6 @@ public:
                             const char *,
                             ...);
 
-#if defined (ACE_USES_WCHAR)
   // We are not using ACE_TCHAR for this since ACE_HEX_DUMP
   // doesn't take in a ACE_TCHAR.  log_hexdump takes in a char
   // string, so this must be able to take in a char string even
@@ -434,7 +442,6 @@ public:
   int log_priority_enabled (ACE_Log_Priority log_priority,
                             const wchar_t *,
                             ...);
-#endif /* ACE_USES_WCHAR */
 
   /// Optimize reading of the pid (avoids a system call if the value is
   /// cached...).
@@ -504,15 +511,13 @@ public:
    *  - 'W': print a wide character string
    *  - 'x': print as a hex number
    *  - 'X': print as a hex number
-   *  - 'z': print an ACE_OS::WChar character
-   *  - 'Z': print an ACE_OS::WChar character string
+   *  - 'z': print an wchar_t character
+   *  - 'Z': print an wchar_t character string
    *  - '%': print out a single percent sign, '%'
    */
-  ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
+  ssize_t log (ACE_Log_Priority priority, const char *format, ...);
 
-#if defined (ACE_HAS_WCHAR)
-  ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
-#endif /* ACE_HAS_WCHAR */
+  ssize_t log (ACE_Log_Priority priority, const wchar_t *format, ...);
 
   /**
    * An alternative logging mechanism that makes it possible to
@@ -580,7 +585,7 @@ private:
   /// The log message, which resides in thread-specific storage.  Note
   /// that only the current log message is stored here -- it will be
   /// overwritten by the subsequent call to log().
-  ACE_TCHAR* msg_; // Add one for NUL-terminator.
+  ACE_TCHAR msg_[ACE_MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
@@ -692,8 +697,6 @@ private:
   ACE_Log_Msg (const ACE_Log_Msg &);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION)
@@ -703,25 +706,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  else
 #   define LOCAL_EXTERN_PREFIX
 #  endif /* ACE_HAS_THR_C_DEST */
-
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-
-# define ACE_TSS_CLEANUP_NAME ACE_PREPROC_CONCATENATE(ACE_,ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _TSS_cleanup))
-
-#else
-
-# define ACE_TSS_CLEANUP_NAME ACE_TSS_cleanup
-
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
-
-
 LOCAL_EXTERN_PREFIX
 void
-ACE_TSS_CLEANUP_NAME (void *ptr);
+ACE_TSS_cleanup (void *ptr);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
 

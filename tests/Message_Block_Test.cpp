@@ -101,11 +101,9 @@ Worker_Task::svc (void)
 
   for (int count = 0; ; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb;
 
-      int dequeue_results = this->msg_queue ()->dequeue_head (mb);
-
-      ACE_ASSERT (dequeue_results != -1);
+      ACE_ASSERT (this->msg_queue ()->dequeue_head (mb) != -1);
 
       size_t length = mb->length ();
 
@@ -115,16 +113,13 @@ Worker_Task::svc (void)
       // contents (i.e., the Data_Block portion), it just makes a copy
       // of the header and reference counts the data.
       if (this->next () != 0)
-        {
-          int duplicate_result = this->put_next (mb->duplicate ());
-        ACE_ASSERT (duplicate_result != -1);
-        }
+        ACE_ASSERT (this->put_next (mb->duplicate ()) != -1);
 
       // If there's no next() Task to send to, then we'll consume the
       // message here.
       else if (length > 0)
         {
-          int current_count = ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (mb->rd_ptr ()));
+          int current_count = ACE_OS::atoi (ACE_TEXT_TO_TCHAR_IN (mb->rd_ptr ()));
           int i;
 
           ACE_ASSERT (count == current_count);
@@ -148,13 +143,10 @@ Worker_Task::svc (void)
               // threads.
               dup->msg_priority (ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
 
-              int enqueue_prio_result =
-                   this->msg_queue ()->enqueue_prio
+              ACE_ASSERT (this->msg_queue ()->enqueue_prio
                           (dup,
                            // Don't block indefinitely if we flow control...
-                           (ACE_Time_Value *) &ACE_Time_Value::zero);
-
-              ACE_ASSERT (enqueue_prio_result != -1);
+                           (ACE_Time_Value *) &ACE_Time_Value::zero) != -1);
             }
 
           ACE_DEBUG ((LM_DEBUG,
@@ -164,9 +156,8 @@ Worker_Task::svc (void)
           // Dequeue the same <current_count> duplicates.
           for (i = current_count; i > 0; i--)
             {
-              int deqresult = this->msg_queue ()->dequeue_head (dup);
-              ACE_ASSERT (deqresult != -1);
-              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (dup->rd_ptr ())));
+              ACE_ASSERT (this->msg_queue ()->dequeue_head (dup) != -1);
+              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_TO_TCHAR_IN (dup->rd_ptr ())));
               ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
               ACE_ASSERT (dup->msg_priority () == ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
               dup->release ();

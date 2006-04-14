@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  POA
+ *   POA
+ *
  *
  *  @author  Irfan Pyarali
  */
@@ -16,7 +17,7 @@
 #define TAO_POA_POLICY_SET_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,15 +25,13 @@
 
 #include "tao/Policy_Set.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Policy_Validator;
 
 class TAO_PortableServer_Export TAO_POA_Policy_Set
 {
 public:
 
-  TAO_POA_Policy_Set (void);
+  TAO_POA_Policy_Set ();
 
   TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs);
 
@@ -73,10 +72,8 @@ protected:
   TAO_Policy_Set impl_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Policy_Set.i"
+# include "POA_Policy_Set.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

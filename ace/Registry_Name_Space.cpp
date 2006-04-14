@@ -7,8 +7,6 @@ ACE_RCSID(ace, Registry_Name_Space, "$Id$")
 #if (defined (ACE_WIN32) && defined (UNICODE))
 // This only works on Win32 platforms when UNICODE is turned on
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Registry_Name_Space::ACE_Registry_Name_Space (void)
 {
 }
@@ -82,7 +80,7 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
 #else
   return this->context_.bind (name.char_rep(),
                               object);
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_USES_WCHAR */
 }
 
 
@@ -288,6 +286,5 @@ ACE_Registry_Name_Space::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && UNICODE */

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -31,8 +31,6 @@
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_IIOP_Acceptor
@@ -242,7 +240,7 @@ protected:
 
 private:
 
-  /// The concrete acceptor, as a pointer to it's base class.
+  /// the concrete acceptor, as a pointer to it's base class.
   BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
@@ -252,8 +250,6 @@ private:
 
   //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_END
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "tao/IIOP_Acceptor.i"

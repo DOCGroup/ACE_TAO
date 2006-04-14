@@ -6,8 +6,6 @@ ACE_RCSID (HTBP,
        	   ACE_HTBP_Environment,
 	   "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE::HTBP::Environment::Environment (ACE_Configuration *config,
                                      int using_registry,
                                      const ACE_TCHAR *persistent_file)
@@ -197,5 +195,3 @@ ACE::HTBP::Environment::export_config (const ACE_TCHAR *filename)
 {
   return this->imp_exp_->export_config (filename);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

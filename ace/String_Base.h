@@ -24,8 +24,6 @@
 
 #include "ace/Global_Macros.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Allocator;
 
 /**
@@ -38,7 +36,7 @@ class ACE_Allocator;
  * ACE_Allocator with a persistable memory pool.  This class is
  * optimized for efficiency, so it doesn't provide any internal
  * locking.
- * @note If an instance of this class is constructed from or
+ * NOTE: if an instance of this class is constructed from or
  * assigned an empty string (with first element of '\0'), then it
  * is not allocated new space.  Instead, its internal
  * representation is set equal to a global empty string.
@@ -154,14 +152,6 @@ public:
    * @return The character at index @a slot
    */
   CHAR & operator[] (size_t slot);
-
-  /**
-   *  Assignment operator (does copy memory).
-   *
-   *  @param s Input null-terminated CHAR string to assign to this object.
-   *  @return Return a copy of the this string.
-   */
-  ACE_String_Base < CHAR > &operator = (const CHAR * s);
 
   /**
    *  Assignment operator (does copy memory).
@@ -322,9 +312,6 @@ public:
    *  @return Length of stored string
    */
   size_t length (void) const;
-
-  /// Return @c true if the length of the string is zero.
-  bool empty (void) const;
 
   /**
    * Get a copy of the underlying representation.
@@ -526,8 +513,6 @@ template < class CHAR >
 template < class CHAR >
   ACE_String_Base < CHAR > operator + (const CHAR c,
                                        const ACE_String_Base < CHAR > &t);
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/String_Base.inl"

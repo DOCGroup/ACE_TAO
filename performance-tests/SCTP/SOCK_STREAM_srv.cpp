@@ -244,7 +244,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // check that valid options were specified
   if (optsMgr._error) {
-    ACE_OS::fprintf (stderr, "ERROR: %s\n", ACE_TEXT_ALWAYS_CHAR (optsMgr._error_message));
+    ACE_OS::fprintf (stderr, "ERROR: %s\n", ACE_TEXT_TO_CHAR_IN (optsMgr._error_message));
     return 1;
   }
 

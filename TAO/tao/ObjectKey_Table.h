@@ -23,9 +23,6 @@
 #include "ace/Null_Mutex.h"
 
 #include "tao/Object_KeyC.h"
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
 class TAO_ORB_Core;
@@ -138,8 +135,6 @@ namespace TAO
     TABLE table_;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

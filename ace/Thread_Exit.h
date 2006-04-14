@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,8 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Thread_Control.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Thread_Exit
@@ -104,8 +101,6 @@ private:
   ACE_Thread_Exit *instance_;
 
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_THREAD_EXIT_H */

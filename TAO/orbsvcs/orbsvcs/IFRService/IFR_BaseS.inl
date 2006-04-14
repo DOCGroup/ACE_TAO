@@ -25,7 +25,6 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 void
@@ -404,5 +403,3 @@ POA_CORBA::TypedefDef::_get_type_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

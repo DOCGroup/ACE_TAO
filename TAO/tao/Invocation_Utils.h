@@ -21,10 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   enum Invocation_Status
@@ -70,8 +66,6 @@ namespace TAO
     TAO_DII_DEFERRED_INVOCATION
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_INVOCATION_UTILS_H */

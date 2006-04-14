@@ -15,8 +15,6 @@ ACE_RCSID (ace,
 #include "ace/Log_Msg.h"
 #include "ace/os_include/sys/os_socket.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Note: this object requires static construction and destruction.
 /* static */
 const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
@@ -68,5 +66,3 @@ ACE_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

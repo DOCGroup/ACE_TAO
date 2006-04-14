@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /*
@@ -8,7 +8,7 @@
  *
  *  Interface for the TAO CodeSet Manager.
  *
- *  @author  Mahesh Vedantam <mahesh@ociweb.com>
+ *  @author  Mahesh Vedantam <mahesh#ociweb.com>
  */
 //=============================================================================
 
@@ -17,18 +17,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Versioned_Namespace.h"
-
-#include "ace/Service_Object.h"
-#include "ace/Service_Config.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Manager;
 
@@ -39,7 +34,7 @@ class TAO_Codeset_Manager;
  *
  * @description The base also provides a default implementation which
  * instantiates nothing. This default impl is replaced by the actual
- * implementation if libTAO_Codeset is loaded.
+ * implementation is libTAO_Codeset is loaded.
  *
  */
 
@@ -62,8 +57,6 @@ public:
   /// Static initializer ensures the factory is loaded
   static int initialize (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Codeset_Manager_Factory_Base)
 ACE_FACTORY_DECLARE (TAO, TAO_Codeset_Manager_Factory_Base)

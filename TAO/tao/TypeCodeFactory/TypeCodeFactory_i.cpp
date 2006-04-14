@@ -1,7 +1,7 @@
 // $Id$
 
-#include "tao/TypeCodeFactory/Recursive_TypeCode.h"
-#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
+#include "Recursive_TypeCode.h"
+#include "TypeCodeFactory_i.h"
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -44,7 +44,6 @@ ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TCF
 {
@@ -204,7 +203,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, we have to adjust
           // the 'length' we encode - a member gets encoded only once.
-          if (ACE_OS::strcmp (member_name, members[i - 1].name) == 0)
+          if (ACE_OS::strcmp (member_name, members[i - 1].name.in()) == 0)
             {
               CORBA::Boolean const equiv =
                 member.type.in ()->equivalent (members[i - 1].type.in ()
@@ -333,8 +332,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, skip it - a member
           // goes into the TypeCode only once.
-          if (ACE_OS::strcmp (member.name,
-                              members[index - 1].name) == 0)
+          if (ACE_OS::strcmp (member.name.in(),
+                              members[index - 1].name.in()) == 0)
             {
               continue;
             }
@@ -2098,5 +2097,3 @@ TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind,
   return tc;
 }
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL

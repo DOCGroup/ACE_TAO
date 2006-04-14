@@ -26,7 +26,7 @@
 #ifndef TAO_IOP_IOR_PIDL
 #define TAO_IOP_IOR_PIDL
 
-#include "tao/OctetSeq.pidl"
+#include <OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 

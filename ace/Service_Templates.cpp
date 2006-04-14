@@ -1,19 +1,9 @@
 // $Id$
 
-#include "ace/config-lite.h"
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
-    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#  include "ace/Service_Templates.h"
-#  include "ace/SString.h"
-
-#endif
+#include "ace/Service_Templates.h"
+#include "ace/SString.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template class ACE_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
@@ -52,13 +42,7 @@ template class ACE_Thru_Task<ACE_SYNCH>;
   template class ACE_Task<ACE_NULL_SYNCH>;
   template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_THREADS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #pragma instantiate ACE_Node<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
@@ -96,8 +80,4 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
   #pragma instantiate ACE_Task<ACE_NULL_SYNCH>
   #pragma instantiate ACE_Thru_Task<ACE_NULL_SYNCH>
 #endif /* ACE_HAS_THREADS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

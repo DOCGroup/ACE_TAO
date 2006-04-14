@@ -33,8 +33,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
-#include "tao/PortableServer/ServantRetentionPolicyC.h"
+#include "portableserver_export.h"
+#include "ServantRetentionPolicyC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 
 
@@ -42,8 +42,6 @@
 // be\be_visitor_module/module_ch.cpp:59
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -68,8 +66,6 @@ namespace PortableServer
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantRetentionPolicyValue);
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantRetentionPolicyValue &);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 

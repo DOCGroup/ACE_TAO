@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Priority_Dispatching.h
  *
@@ -17,18 +16,16 @@
 #define TAO_EC_PRIORITY_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Dispatching.h"
+#include "EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/sched_event_export.h"
+#include "sched_event_export.h"
 
 #include "ace/Thread_Manager.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Dispatching_Task;
 class TAO_EC_Event_Channel_Base;
@@ -83,8 +80,6 @@ private:
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_PRIORITY_DISPATCHING_H */

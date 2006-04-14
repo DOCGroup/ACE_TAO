@@ -17,6 +17,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 Load_Balancing_Service::Load_Balancing_Service (void)
   : ior_output_file_ (0)
@@ -26,7 +27,7 @@ Load_Balancing_Service::Load_Balancing_Service (void)
 int
 Load_Balancing_Service::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,7 +38,7 @@ Load_Balancing_Service::parse_args (int argc, char *argv[])
         break;
       case 'o': // outputs object ior to the specified file.
         this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.opt_arg (), "w");
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -174,12 +175,13 @@ Load_Balancing_Service::~Load_Balancing_Service (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   int result = 0;
   Load_Balancing_Service factory;
 
-  if (factory.init (argc, argv) == -1)
+  if (factory.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return 1;
 
   ACE_DECLARE_NEW_CORBA_ENV;

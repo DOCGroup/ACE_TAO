@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
 TAO_Notify_Proxy::updates_off (void)
@@ -36,5 +32,3 @@ TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
 
   return val;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

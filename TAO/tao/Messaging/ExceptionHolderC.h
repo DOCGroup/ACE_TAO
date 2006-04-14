@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Messaging/messaging_export.h"
+#include "messaging_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/ORB.h"
@@ -60,8 +60,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace Messaging
 {
@@ -283,10 +281,8 @@ TAO_Messaging_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Exc
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "tao/Messaging/ExceptionHolderC.inl"
+#include "ExceptionHolderC.inl"
 #endif /* defined INLINE */
 
 #endif

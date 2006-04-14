@@ -7,12 +7,9 @@
 
 ACE_RCSID(ace, Reactor_Notification_Strategy, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_Reactor_Notification_Strategy::ACE_Reactor_Notification_Strategy (
-  ACE_Reactor *reactor,
-  ACE_Event_Handler *eh,
-  ACE_Reactor_Mask mask)
+ACE_Reactor_Notification_Strategy::ACE_Reactor_Notification_Strategy (ACE_Reactor *reactor,
+                                                                      ACE_Event_Handler *eh,
+                                                                      ACE_Reactor_Mask mask)
   : ACE_Notification_Strategy (eh, mask),
     reactor_ (reactor)
 {
@@ -34,5 +31,3 @@ ACE_Reactor_Notification_Strategy::notify (ACE_Event_Handler *eh,
 {
   return this->reactor_->notify (eh, mask);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

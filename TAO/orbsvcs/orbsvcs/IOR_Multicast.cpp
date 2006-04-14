@@ -1,17 +1,14 @@
 // $Id$
 
-#include "orbsvcs/IOR_Multicast.h"
+#include "IOR_Multicast.h"
 
 #include "tao/debug.h"
 
 #include "ace/SOCK_Connector.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID (orbsvcs,
            IOR_Multicast,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
 TAO_IOR_Multicast::get_handle (void) const
@@ -125,7 +122,7 @@ TAO_IOR_Multicast::common_init (const char *ior,
     {
       if (this->mcast_dgram_.subscribe (this->mcast_addr_,
                                         1,
-                                        ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
+                                        ACE_TEXT_TO_TCHAR_IN(this->mcast_nic_.c_str())) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "subscribe"),-1);
     }
   else
@@ -318,4 +315,4 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

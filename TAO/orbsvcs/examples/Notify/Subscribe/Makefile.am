@@ -18,9 +18,9 @@ TAO_ROOT = $(top_srcdir)
 
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS = Subscribe
+noinst_PROGRAMS = main
 
-Subscribe_CPPFLAGS = \
+main_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -29,12 +29,12 @@ Subscribe_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
-Subscribe_SOURCES = \
+main_SOURCES = \
   Subscribe.cpp \
   main.cpp \
   Subscribe.h
 
-Subscribe_LDADD = \
+main_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \

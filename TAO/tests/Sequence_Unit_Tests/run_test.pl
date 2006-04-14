@@ -17,15 +17,9 @@ my @tests = qw(unbounded_value_sequence_ut
                unbounded_string_sequence_ut
                bounded_string_sequence_ut
                testing_allocation_traits_ut
-               unbounded_octet_sequence_ut
-               unbounded_octet_sequence_no_copy_ut
                object_reference_sequence_element_ut
                unbounded_object_reference_sequence_ut
-               unbounded_fwd_object_reference_sequence_ut
                bounded_object_reference_sequence_ut
-               bounded_sequence_cdr_ut
-               unbounded_sequence_cdr_ut
-               Unbounded_Octet
                Unbounded_Simple_Types
                Bounded_Simple_Types
                Unbounded_String
@@ -63,7 +57,7 @@ foreach my $process (@tests) {
     $final_result = 1;
     next;
   }
-  $result = $P->WaitKill(10);
+  $result = $P->WaitKill(30);
   if ($result != 0) {
     print "FAILED\n";
     $final_result = 1;

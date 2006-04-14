@@ -4,13 +4,12 @@
  * This IDL file is used to combine the NodeApplication
  * interface with the NodeApplicationManager interface.
  *
- * NodeApplicationManager will be spawn NodeApplication.
+ * NodeApplicationManager will be spwan NodeApplication.
  * The call back object will be used to get the objectref of
  * NodeApplication.
  */
 
 #include "Deployment.idl"
-#include "NodeApplicationManager.idl"
 
 module CIAO
 {

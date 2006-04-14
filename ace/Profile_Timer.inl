@@ -1,5 +1,4 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/OS_NS_sys_time.h"
@@ -9,9 +8,8 @@
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
 #  if defined (ACE_HAS_PRUSAGE_T)
-#    include "ace/OS_NS_stropts.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+#    include "ace/OS_NS_stropts.h"
 
 ACE_INLINE int
 ACE_Profile_Timer::start (void)
@@ -31,13 +29,7 @@ ACE_Profile_Timer::stop (void)
                     PIOCUSAGE,
                     &this->end_usage_);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #  elif defined (ACE_HAS_GETRUSAGE)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE int
 ACE_Profile_Timer::start (void)
 {
@@ -60,13 +52,9 @@ ACE_Profile_Timer::stop (void)
   return 0;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #  endif /* ACE_HAS_PRUSAGE_T */
 
 #elif defined (ACE_WIN32)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Profile_Timer::~ACE_Profile_Timer (void)
@@ -97,11 +85,7 @@ ACE_Profile_Timer::stop (void)
   return 0;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #else
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Profile_Timer::start (void)
@@ -123,7 +107,5 @@ ACE_INLINE
 ACE_Profile_Timer::~ACE_Profile_Timer (void)
 {
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */

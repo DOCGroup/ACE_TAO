@@ -238,12 +238,11 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
 
   if (test_timers)
     {
-      ACE_Time_Value const one_second (1);
       long timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
-                                 one_second,
-                                 one_second);
+                                 1,
+                                 1);
       ACE_ASSERT (timer_id != -1);
 
       result =
@@ -255,15 +254,14 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
       timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
-                                 one_second,
-                                 one_second);
+                                 1,
+                                 1);
       ACE_ASSERT (timer_id != -1);
 
-      ACE_Time_Value const two_second (2);
       timer_id =
         reactor->schedule_timer (handler,
                                  two_second_timeout,
-                                 two_second);
+                                 2);
       ACE_ASSERT (result != -1);
 
       events += 3;
@@ -281,7 +279,6 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
 {
   int events = 0;
   int result = 0;
-  ACE_Time_Value const one_second (1);
 
   if (test_find)
     {
@@ -361,8 +358,8 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       long timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
-                                 one_second,
-                                 one_second);
+                                 1,
+                                 1);
       ACE_ASSERT (timer_id != -1);
 
       result =
@@ -382,15 +379,14 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       long timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
-                                 one_second,
-                                 one_second);
+                                 1,
+                                 1);
       ACE_ASSERT (timer_id != -1);
 
-      ACE_Time_Value const two_second (2);
       timer_id =
         reactor->schedule_timer (handler,
                                  two_second_timeout,
-                                 two_second);
+                                 2);
       ACE_ASSERT (result != -1);
 
       events += 3;
@@ -564,7 +560,6 @@ simple_event_handler (ACE_Reactor *reactor)
 {
   int events = 0;
   int result = 0;
-  ACE_Time_Value const one_second (1);
 
   if (test_find)
     {
@@ -646,8 +641,8 @@ simple_event_handler (ACE_Reactor *reactor)
       long timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
-                                 one_second,
-                                 one_second);
+                                 1,
+                                 1);
       ACE_ASSERT (timer_id != -1);
 
       result =
@@ -666,15 +661,14 @@ simple_event_handler (ACE_Reactor *reactor)
       long timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
-                                 one_second,
-                                 one_second);
+                                 1,
+                                 1);
       ACE_ASSERT (timer_id != -1);
 
-      ACE_Time_Value const two_second (2);
       timer_id =
         reactor->schedule_timer (handler,
                                  two_second_timeout,
-                                 two_second);
+                                 2);
       ACE_ASSERT (result != -1);
 
       events += 3;
@@ -890,7 +884,7 @@ test<REACTOR_IMPLEMENTATION>::test (void)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:h:i:k:l:m:z:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:h:i:k:l:m:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)

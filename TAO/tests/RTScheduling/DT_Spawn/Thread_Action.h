@@ -5,12 +5,11 @@
 #include "tao/RTScheduling/RTScheduler.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-#include "ace/SString.h"
 
 class Data
 {
  public:
-  ACE_CString data;
+  char* data;
   RTScheduling::Current_var current;
 };
 
@@ -41,7 +40,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
   Data* tmp = (Data*) data;
   ACE_DEBUG ((LM_DEBUG,
 	      "Test_Thread_Action::do %s\n",
-	      tmp->data.c_str ()));
+	      tmp->data));
 
   size_t count = 0;
   ACE_OS::memcpy (&count,
@@ -52,7 +51,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
 	      "The spawned DT Guid is %d\n",
 	      count));
   
-  RTScheduling::Current::NameList_var segment_name_list = 
+  RTScheduling::Current::NameList* segment_name_list = 
     tmp->current->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -64,6 +63,6 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "%s\n",
-		  (*segment_name_list) [i].in ()));
+		  CORBA::string_dup ((*segment_name_list) [i])));
     }
 }

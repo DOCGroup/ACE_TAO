@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // A hash define for the regular two way operation.
 #define TAO_TWOWAY_RESPONSE_FLAG 255
 
@@ -235,8 +233,6 @@ const CORBA::ULong TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE  = (0x15U << 7);
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 //@}
 //@}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
@@ -11,7 +8,7 @@ ACE_Object_Manager::at_exit (ACE_Cleanup *object,
 {
   return ACE_Object_Manager::instance ()->at_exit_i (
     object,
-    (ACE_CLEANUP_FUNC) ACE_CLEANUP_DESTROYER_NAME,
+    (ACE_CLEANUP_FUNC) ace_cleanup_destroyer,
     param);
 }
 
@@ -36,5 +33,3 @@ ACE_Object_Manager::default_mask (void)
   return
     *reinterpret_cast<ACE_Sig_Set *> (ACE_OS_Object_Manager::default_mask ());
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

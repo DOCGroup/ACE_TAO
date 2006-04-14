@@ -1,23 +1,21 @@
-#include "tao/LocateRequest_Invocation_Adapter.h"
-#include "tao/Profile_Transport_Resolver.h"
-#include "tao/operation_details.h"
-#include "tao/LocateRequest_Invocation.h"
-#include "tao/Transport.h"
-#include "tao/Transport_Mux_Strategy.h"
-#include "tao/ORB_Core.h"
+#include "LocateRequest_Invocation_Adapter.h"
+#include "Profile_Transport_Resolver.h"
+#include "operation_details.h"
+#include "LocateRequest_Invocation.h"
+#include "Transport.h"
+#include "Transport_Mux_Strategy.h"
+#include "ORB_Core.h"
 
 ACE_RCSID (tao,
            LocateRequest_Invocation_Adapter,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   LocateRequest_Invocation_Adapter::LocateRequest_Invocation_Adapter (
-    CORBA::Object *target)
+      CORBA::Object *target)
     : target_ (target)
-    , list_ (0)
+      , list_ (0)
   {
   }
 
@@ -113,5 +111,3 @@ namespace TAO
     return has_timeout;
   }
 } // End namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL

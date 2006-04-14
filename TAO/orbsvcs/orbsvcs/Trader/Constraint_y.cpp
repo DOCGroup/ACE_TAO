@@ -14,10 +14,8 @@
 // ========================================================================
 
 #include "ace/OS_NS_string.h"
-#include "orbsvcs/Trader/Constraint_Interpreter.h"
-#include "orbsvcs/Trader/Constraint_Nodes.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Constraint_Interpreter.h"
+#include "Constraint_Nodes.h"
 
 //#define YYDEBUG 1
 # define TAO_GT 257
@@ -897,4 +895,3 @@ case 37:
 	goto yystack;		/* reset registers in driver code */
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

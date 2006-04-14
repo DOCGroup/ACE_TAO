@@ -2,7 +2,6 @@
 // $Id$
 
 project : orbsvcslib {
-  after     += DsLogAdmin
-  libs      += TAO_DsLogAdmin
-  tagchecks += Log
+  after      += DsLogAdmin
+  libs       += TAO_DsLogAdmin
 }

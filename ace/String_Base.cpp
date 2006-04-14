@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_STRING_BASE_CPP
 #define ACE_STRING_BASE_CPP
 
@@ -13,7 +11,11 @@
 #include "ace/String_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_RCSID (ace,
+           String_Base,
+           "$Id$")
+
 
 ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
 
@@ -292,16 +294,6 @@ ACE_String_Base<CHAR>::clear (int release)
 
 // Assignment operator (does copy memory).
 template <class CHAR> ACE_String_Base<CHAR> &
-ACE_String_Base<CHAR>::operator= (const CHAR *s)
-{
-  ACE_TRACE ("ACE_String_Base<CHAR>::operator=");
-  if (s != 0)
-    this->set (s, 1);
-  return *this;
-}
-
-// Assignment operator (does copy memory).
-template <class CHAR> ACE_String_Base<CHAR> &
 ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator=");
@@ -361,10 +353,10 @@ template <class CHAR> int
 ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::compare");
-
+ 
   if (this->rep_ == s.rep_)
     return 0;
-
+ 
   // Pick smaller of the two lengths and perform the comparison.
   size_t smaller_length = ace_min (this->len_, s.len_);
 
@@ -485,7 +477,7 @@ ACE_String_Base<CHAR>::operator+= (const CHAR* s)
   size_t slen = 0;
   if (s != 0)
     slen = ACE_OS::strlen (s);
-  return this->append (s, slen);
+  return this->append(s, slen);
 }
 
 template <class CHAR> ACE_String_Base<CHAR> &
@@ -503,6 +495,5 @@ ACE_String_Base<CHAR>::operator+= (const CHAR c)
   return this->append(&c, slen);
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_STRING_BASE_CPP */

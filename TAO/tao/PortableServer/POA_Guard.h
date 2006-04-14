@@ -1,29 +1,27 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
  *  @file    POA_Guard.h
  *
  *  $Id$
+ *
  */
 //=============================================================================
 
 #ifndef TAO_POA_GUARD_H
 #define TAO_POA_GUARD_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Environment.h"
 #include "ace/Guard_T.h"
 #include "ace/CORBA_macros.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "tao/Environment.h"
 
 class TAO_Root_POA;
 
@@ -51,8 +49,5 @@ namespace TAO
   } /* namespace Portable_Server */
 } /* namespace TAO */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
 #endif /* TAO_POA_GUARD_H */

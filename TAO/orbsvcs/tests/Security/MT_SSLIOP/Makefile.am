@@ -50,13 +50,9 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  test.idl
-
 ## Makefile.MT_SSLIOP_Security_Client.am
 
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -85,13 +81,11 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.MT_SSLIOP_Security_Server.am
 
 if BUILD_SSL
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -125,7 +119,6 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Clean up template repositories, etc.

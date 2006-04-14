@@ -21,10 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class UIPMC_Message_Block_Data_Iterator
  *
@@ -63,8 +59,6 @@ private:
   State state_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_MESSAGE_BLOCK_DATA_ITERATOR_H */

@@ -16,15 +16,12 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
+#include "ace/CORBA_macros.h"
 
 #ifndef ACE_LACKS_PRAGMA_ONCE
 # pragma once
 #endif /* !ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-#include "ace/CORBA_macros.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -60,7 +57,6 @@ namespace TAO
 
 }  // End namespace TAO
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

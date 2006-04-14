@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 // Since this is only included in Handle_Gobbler.h, these should be
@@ -8,8 +6,6 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 inline void
 ACE_Handle_Gobbler::close_remaining_handles (void)
@@ -93,5 +89,3 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
 
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

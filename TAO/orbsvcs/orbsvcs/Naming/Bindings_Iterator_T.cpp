@@ -3,20 +3,17 @@
 #ifndef TAO_BINDINGS_ITERATOR_T_CPP
 #define TAO_BINDINGS_ITERATOR_T_CPP
 
-#include "orbsvcs/Naming/Bindings_Iterator_T.h"
+#include "Bindings_Iterator_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <class ITERATOR, class TABLE_ENTRY>
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
-  TAO_Hash_Naming_Context *context,
-  ITERATOR *hash_iter,
-  PortableServer::POA_ptr poa,
-  TAO_SYNCH_RECURSIVE_MUTEX &lock)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
+                                                                     ITERATOR *hash_iter,
+                                                                     PortableServer::POA_ptr poa,
+                                                                     TAO_SYNCH_RECURSIVE_MUTEX &lock)
   : destroyed_ (0),
     context_ (context),
     hash_iter_ (hash_iter),
@@ -39,16 +36,14 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator (void)
 
 // Return the Default POA of this Servant
 template <class ITERATOR, class TABLE_ENTRY> PortableServer::POA_ptr
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::_default_POA (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*env*/)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
-    CosNaming::Binding_out b
-    ACE_ENV_ARG_DECL)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (CosNaming::Binding_out b
+                                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNaming::Binding *binding;
@@ -104,10 +99,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
 }
 
 template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
-    CORBA::ULong how_many,
-    CosNaming::BindingList_out bl
-    ACE_ENV_ARG_DECL)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (CORBA::ULong how_many,
+                                                      CosNaming::BindingList_out bl
+                                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We perform an allocation before obtaining the lock so that an out
@@ -200,9 +194,8 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 template <class ITERATOR, class TABLE_ENTRY> int
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (
-  TABLE_ENTRY *hash_entry,
-  CosNaming::Binding &b)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (TABLE_ENTRY *hash_entry,
+                                                                CosNaming::Binding &b)
 {
   b.binding_type = hash_entry->int_id_.type_;
   b.binding_name.length (1);
@@ -226,7 +219,5 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (
     }
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_BINDINGS_ITERATOR_T_CPP */

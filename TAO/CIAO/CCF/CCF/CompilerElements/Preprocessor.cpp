@@ -178,34 +178,23 @@ namespace CCF
         {
         }
 
-        PreprocessorImpl (TokenStream<char>& is, Symbols const& symbols)
+        PreprocessorImpl (TokenStream<char>& is)
             : loc_ ("C"),
               state_ (State::preprocessing),
               ln_ (1),
               is_ (is),
-              dsa_ (copy_),
-              symbols_ (symbols),
-              balance_ (0),
-              skip_balance_ (0)
+              dsa_ (copy_)
         {
         }
 
         virtual Token
         next ()
         {
-          while (true)
-          {
-            if (line_.empty ())
-              scan_line ();
+          if (line_.empty ()) scan_line ();
 
-            Token t (line_.front ());
-            line_.pop_front ();
-
-            if (skip_balance_ != 0 && t != Token::eos)
-              continue;
-
-            return t;
-          }
+          Token t (line_.front ());
+          line_.pop_front ();
+          return t;
         }
 
       private:
@@ -310,15 +299,7 @@ namespace CCF
             }
           }
 
-          if (eos)
-          {
-            if (balance_ > 0)
-            {
-              cerr << "missing endif directive at the end of file" << endl;
-            }
-
-            line_.push_back (Token::eos);
-          }
+          if (eos) line_.push_back (Token::eos);
         }
 
 
@@ -331,8 +312,7 @@ namespace CCF
 
           if (std::isalpha<char> (t, loc_))
           {
-            for (;std::isalpha<char> (t, loc_); t = ls_get ())
-              lexeme += t;
+            for (;std::isalpha<char> (t, loc_); t = ls_get ()) lexeme += t;
 
             ls_ret (t);
           }
@@ -342,91 +322,11 @@ namespace CCF
           if (lexeme == "include")
           {
             scan_include ();
-            return;
           }
-          else if (lexeme == "if")
+          else
           {
-            ++balance_;
-          }
-          else if (lexeme == "ifdef" || lexeme == "ifndef")
-          {
-            ++balance_;
-
-            string symbol;
-            Token t (ls_get_ns ());
-
-
-            if (is_first_id_char (t))
-            {
-              for (;is_id_char (t); t = ls_get ())
-                symbol += t;
-              ls_ret (t);
-            }
-
-            if (!symbol.empty ())
-            {
-              //cerr << "symbol " << symbol << endl;
-
-              if (skip_balance_ == 0) // Unless we are already skipping.
-              {
-                bool defined (symbols_.find (symbol) != symbols_.end ());
-
-                if ((!defined && lexeme == "ifdef") ||
-                    (defined && lexeme == "ifndef"))
-                  skip_balance_ = balance_;
-              }
-            }
-            else
-            {
-              cerr << t.line () << ": no symbol specified for " << lexeme
-                   << " directive" << endl;
-              throw EOS (); //@@ tmp
-            }
-          }
-          else if (lexeme == "elif" || lexeme == "else")
-          {
-            // For now we treat elif just like else.
+            // Ingnore any other directive.
             //
-            if (skip_balance_ == balance_)
-              skip_balance_ = 0;
-            else if (skip_balance_ == 0) // Unless we are already skipping.
-              skip_balance_ = balance_;  // Start skipping now.
-          }
-          else if (lexeme == "endif")
-          {
-            if (skip_balance_ == balance_)
-              skip_balance_ = 0;
-
-            if (balance_ > 0)
-              --balance_;
-            else
-            {
-              cerr << t.line () << ": extraneous endif directive" << endl;
-              throw EOS (); //@@ tmp
-            }
-          }
-          else if (lexeme == "error")
-          {
-            if (skip_balance_ == 0)
-            {
-              string msg;
-              Token t (ls_get_ns ());
-
-              if (t != '\n')
-              {
-                for (;t != '\n'; t = ls_get ())
-                  msg += t;
-                ls_ret (t);
-              }
-
-              cerr << t.line () << ": error: " << msg << endl;
-              throw EOS (); //@@ tmp
-            }
-          }
-
-          // By default we replace this directive with a newline.
-          //
-          {
             Token t ('\n', line_.front ().line ());
             line_.clear ();
             line_.push_back (t);
@@ -884,18 +784,6 @@ namespace CCF
           return t == ' ' || t == '\t';
         }
 
-        bool
-        is_first_id_char (Token const& t)
-        {
-          return std::isalpha<char> (t, loc_) || t == '_';
-        }
-
-        bool
-        is_id_char (Token const& t)
-        {
-          return std::isalnum<char> (t, loc_) || t == '_';
-        }
-
       private:
         struct State
         {
@@ -922,12 +810,6 @@ namespace CCF
         std::deque<Token> copy_;
         DequeStreamAdapter dsa_;
         std::deque<Token> ls_buffer_;
-
-        Symbols symbols_;
-        unsigned long balance_;      // Current #if*/#endif balance.
-        unsigned long skip_balance_; // #if*/#endif balance at which we began
-                                     // skipping. 0 indicates no skipping.
-
       };
 
 
@@ -940,8 +822,8 @@ namespace CCF
       }
 
       Preprocessor::
-      Preprocessor (TokenStream<char>& is, Symbols const& symbols)
-          : impl_ (new PreprocessorImpl (is, symbols))
+      Preprocessor (TokenStream<char>& is)
+          : impl_ (new PreprocessorImpl (is))
       {
       }
 

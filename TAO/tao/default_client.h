@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,8 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Client_Strategy_Factory.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Default_Client_Strategy_Factory
@@ -116,8 +114,6 @@ private:
   /// Cleanupoptions for RW strategy
   bool use_cleanup_options_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Client_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Client_Strategy_Factory)

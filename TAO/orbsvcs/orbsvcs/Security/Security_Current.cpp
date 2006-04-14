@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "orbsvcs/Security/Security_Current.h"
+#include "Security_Current.h"
 #include "tao/debug.h"
 
 ACE_RCSID (Security,
@@ -8,10 +8,8 @@ ACE_RCSID (Security,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/Security/Security_Current.inl"
+# include "Security_Current.inl"
 #endif /* __ACE_INLINE__ */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Security_Current::TAO_Security_Current (size_t tss_slot,
                                             const char *orb_id)
@@ -93,5 +91,3 @@ TAO_Security_Current::init (void)
 
   return result;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

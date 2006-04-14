@@ -48,9 +48,6 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  Test.idl
-
 ## Makefile.Memory_IORsize_Client.am
 
 noinst_PROGRAMS = client

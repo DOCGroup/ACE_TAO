@@ -25,12 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
 #include "ace/Cleanup.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Singleton
@@ -121,8 +117,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Singleton (const TAO_TSS_Singleton<TYPE,ACE_LOCK> &))
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/TAO_Singleton.inl"

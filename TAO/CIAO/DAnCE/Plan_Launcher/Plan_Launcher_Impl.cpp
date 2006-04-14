@@ -91,7 +91,7 @@ namespace CIAO
       
       return this->launch_plan (plan.in ());
     }
-
+    
     const char * 
     Plan_Launcher_i::launch_plan (const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
@@ -126,7 +126,7 @@ namespace CIAO
       
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: start Launch application...\n"));
+                    "CIAO_PlanLauncher: start Launch application..."));
       
       // Dont not start the Application immediately since it vialtes
       // the semantics of component activation sequence
@@ -142,8 +142,8 @@ namespace CIAO
           // Call finish Launch to complete the connections
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: finish Launch application...\n"));
-          dam->finishLaunch (start, false); // is_ReDAC by default is <false>
+                        "CIAO_PlanLauncher: finish Launch application..."));
+          dam->finishLaunch (start);
       
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG, "[success]\n"));
@@ -151,7 +151,7 @@ namespace CIAO
           // Call start to activate components
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: start activating components...\n"));
+                        "CIAO_PlanLauncher: start activating components..."));
           dam->start ();
       
           if (CIAO::debug_level ())
@@ -164,6 +164,8 @@ namespace CIAO
       
           map_.bind_dam_reference (plan.UUID.in (),
                                    Deployment::DomainApplicationManager::_duplicate (dam.in ()));
+
+
         }
       ACE_CATCH (Deployment::ResourceNotAvailable, ex)
         {
@@ -228,114 +230,49 @@ namespace CIAO
     bool
     Plan_Launcher_i::teardown_plan (const char *uuid)
     {
-      // Since people could always run another instance of the Plan_Launcher
-      // executable to tear down a plan, so we could NOT rely on the local
-      // DAM_Map to fetch DAM obj reference. Instead, we make a remote call
-      // on ExecutionManager to fetch it.
-      ACE_TRY 
-        {
-          ::Deployment::DomainApplicationManager_var dapp_mgr =
-            this->em_->getManager (uuid);
-
-            dapp_mgr->destroyApplication ();
-            if (CIAO::debug_level ())
-              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-
-            // Note that we should ask the DAM to tell EM whether the DAM should
-            // be destroyed
-            this->destroy_dam_by_plan (uuid);
-        }
-      ACE_CATCHANY
-        {
-          ACE_DEBUG ((LM_ERROR, "Unable to find DomainApplicationManager "
-                                "for plan with uuid: %s\n", uuid));
-          return false;
-        }
-      ACE_ENDTRY;
-
+      if (!this->map_.is_plan_available (uuid))
+        return false;
+      
+      ::Deployment::DomainApplicationManager_var dapp_mgr 
+          (this->map_.fetch_dam_reference (uuid));
+      
+      
+      this->map_.unbind_dam (uuid);
+      
       return true;
     }
     
     bool 
     Plan_Launcher_i::teardown_plan (::Deployment::DomainApplicationManager_ptr dam
-                                    ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: destroy the application.....\n"));
-
+                    "CIAO_PlanLauncher: destroy the application....."));
       dam->destroyApplication ();
       
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-      this->destroy_dam (dam);
+      this->destroy_dam (dam);      
       
       return true;
     }
     
     void 
     Plan_Launcher_i::destroy_dam (::Deployment::DomainApplicationManager_ptr dam
-                                  ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: destroy the manager.....\n"));
+                    "CIAO_PlanLauncher: destroy the manager....."));
 
       this->em_->destroyManager (dam);
 
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG, "[success]\n"));
     }
-
-    void 
-    Plan_Launcher_i::destroy_dam_by_plan (const char* plan_uuid
-                                          ACE_ENV_ARG_DECL)
-    {
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: destroy the manager.....\n"));
-
-      this->em_->destroyManagerByPlan (plan_uuid);
-
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-    }
-
-    const char * 
-    Plan_Launcher_i::re_launch_plan (const char *plan_uri ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
-    {
-      CIAO::Config_Handlers::XML_File_Intf intf (plan_uri);
-      
-      ::Deployment::DeploymentPlan_var plan =
-          intf.get_plan ();
-      
-      return this->re_launch_plan (plan.in ());
-    }
-
-    const char * 
-    Plan_Launcher_i::re_launch_plan (const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
-    {
-          
-      if (CORBA::is_nil (this->em_.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, 
-                      ACE_TEXT ("CIAO::Plan_Launcher_i: ")
-                      ACE_TEXT ("re_launch_plan called witn an uninitialized EM.\n")));            
-          return 0;
-        }
-      
-      this->em_->perform_redeployment (plan);
-      
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: new plan redeployed ...\n"));
-
-      std::string * retv = new std::string (plan.UUID.in ());
-      
-      return (*retv).c_str (); 
-    }
+    
   }
+  
 }

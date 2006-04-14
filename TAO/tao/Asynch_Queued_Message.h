@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_Asynch_Queued_Message
  *
@@ -98,8 +96,6 @@ private:
   /// The buffer containing the complete message.
   char *buffer_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_ASYNCH_QUEUED_MESSAGE_H */

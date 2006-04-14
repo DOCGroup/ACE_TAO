@@ -2,7 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::SSLIOP::State_Guard::State_Guard (
@@ -25,5 +24,3 @@ TAO::SSLIOP::State_Guard::~State_Guard (void)
   this->handler_->teardown_ssl_state (this->previous_current_impl_,
                                       this->setup_done_);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -14,9 +14,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Notification_Strategy.h"
-#include "ace/Truncate.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Message_Queue)
@@ -848,7 +845,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
   // and <release> their memory.
   for (this->tail_ = 0; this->head_ != 0; )
     {
-      ++number_flushed;
+      number_flushed++;
 
       size_t mb_bytes = 0;
       size_t mb_length = 0;
@@ -857,7 +854,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
       // Subtract off all of the bytes associated with this message.
       this->cur_bytes_ -= mb_bytes;
       this->cur_length_ -= mb_length;
-      --this->cur_count_;
+      this->cur_count_--;
 
       ACE_Message_Block *temp = this->head_;
       this->head_ = this->head_->next ();
@@ -978,48 +975,35 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
   if (new_item == 0)
     return -1;
 
-  // Update the queued size and length, taking into account any chained
-  // blocks (total_size_and_length() counts all continuation blocks).
-  // Keep count of how many blocks we're adding and, if there is a chain of
-  // blocks, find the end in seq_tail and be sure they're properly
-  // back-connected along the way.
-  ACE_Message_Block *seq_tail = new_item;
-  ++this->cur_count_;
-  new_item->total_size_and_length (this->cur_bytes_,
-                                   this->cur_length_);
-  while (seq_tail->next () != 0)
-    {
-      seq_tail->next ()->prev (seq_tail);
-      seq_tail = seq_tail->next ();
-      ++this->cur_count_;
-      seq_tail->total_size_and_length (this->cur_bytes_,
-                                       this->cur_length_);
-    }
-
   // List was empty, so build a new one.
   if (this->tail_ == 0)
     {
       this->head_ = new_item;
-      this->tail_ = seq_tail;
-      // seq_tail->next (0);   This is a condition of the while() loop above.
+      this->tail_ = new_item;
+      new_item->next (0);
       new_item->prev (0);
     }
   // Link at the end.
   else
     {
-      // seq_tail->next (0);   This is a condition of the while() loop above.
+      new_item->next (0);
       this->tail_->next (new_item);
       new_item->prev (this->tail_);
-      this->tail_ = seq_tail;
+      this->tail_ = new_item;
     }
+
+  // Make sure to count all the bytes in a composite message!!!
+  new_item->total_size_and_length (this->cur_bytes_,
+                                   this->cur_length_);
+  this->cur_count_++;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
   else
-    return ACE_Utils::Truncate (this->cur_count_);
+    return this->cur_count_;
 }
 
-// Actually put the node(s) at the head (no locking)
+// Actually put the node at the head (no locking)
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
@@ -1029,38 +1013,25 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
   if (new_item == 0)
     return -1;
 
-  // Update the queued size and length, taking into account any chained
-  // blocks (total_size_and_length() counts all continuation blocks).
-  // Keep count of how many blocks we're adding and, if there is a chain of
-  // blocks, find the end in seq_tail and be sure they're properly
-  // back-connected along the way.
-  ACE_Message_Block *seq_tail = new_item;
-  ++this->cur_count_;
-  new_item->total_size_and_length (this->cur_bytes_,
-                                   this->cur_length_);
-  while (seq_tail->next () != 0)
-    {
-      seq_tail->next ()->prev (seq_tail);
-      seq_tail = seq_tail->next ();
-      ++this->cur_count_;
-      seq_tail->total_size_and_length (this->cur_bytes_,
-                                       this->cur_length_);
-    }
-
   new_item->prev (0);
-  seq_tail->next (this->head_);
+  new_item->next (this->head_);
 
   if (this->head_ != 0)
-    this->head_->prev (seq_tail);
+    this->head_->prev (new_item);
   else
-    this->tail_ = seq_tail;
+    this->tail_ = new_item;
 
   this->head_ = new_item;
+
+  // Make sure to count all the bytes in a composite message!!!
+  new_item->total_size_and_length (this->cur_bytes_,
+                                   this->cur_length_);
+  this->cur_count_++;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
   else
-    return ACE_Utils::Truncate (this->cur_count_);
+    return this->cur_count_;
 }
 
 // Actually put the node at its proper position relative to its
@@ -1073,12 +1044,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
 
   if (new_item == 0)
     return -1;
-
-  // Since this method uses enqueue_head_i() and enqueue_tail_i() for
-  // special situations, and this method doesn't support enqueueing
-  // chains of blocks off the 'next' pointer, make sure the new_item's
-  // next pointer is 0.
-  new_item->next (0);
 
   if (this->head_ == 0)
     // Check for simple case of an empty queue, where all we need to
@@ -1126,12 +1091,12 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
   // Make sure to count all the bytes in a composite message!!!
   new_item->total_size_and_length (this->cur_bytes_,
                                    this->cur_length_);
-  ++this->cur_count_;
+  this->cur_count_++;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
   else
-    return ACE_Utils::Truncate (this->cur_count_);
+    return this->cur_count_;
 }
 
 // Actually put the node at its proper position relative to its
@@ -1145,12 +1110,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline_i (ACE_Message_Block *new_ite
 
   if (new_item == 0)
     return -1;
-
-  // Since this method uses enqueue_head_i() and enqueue_tail_i() for
-  // special situations, and this method doesn't support enqueueing
-  // chains of blocks off the 'next' pointer, make sure the new_item's
-  // next pointer is 0.
-  new_item->next (0);
 
   if (this->head_ == 0)
     // Check for simple case of an empty queue, where all we need to
@@ -1193,7 +1152,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline_i (ACE_Message_Block *new_ite
   // Make sure to count all the bytes in a composite message!!!
   new_item->total_size_and_length (this->cur_bytes_,
                                    this->cur_length_);
-  ++this->cur_count_;
+  this->cur_count_++;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
@@ -1232,7 +1191,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  --this->cur_count_;
+  this->cur_count_--;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1247,7 +1206,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
       && this->signal_enqueue_waiters () == -1)
     return -1;
   else
-    return ACE_Utils::Truncate (this->cur_count_);
+    return this->cur_count_;
 }
 
 // Get the earliest (i.e., FIFO) ACE_Message_Block with the lowest
@@ -1308,7 +1267,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  --this->cur_count_;
+  this->cur_count_--;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1323,7 +1282,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
       && this->signal_enqueue_waiters () == -1)
     return -1;
   else
-    return ACE_Utils::Truncate (this->cur_count_);
+    return this->cur_count_;
 }
 
 // Actually get the last ACE_Message_Block (no locking, so must be
@@ -1357,7 +1316,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i (ACE_Message_Block *&dequeued)
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  --this->cur_count_;
+  this->cur_count_--;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1372,7 +1331,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i (ACE_Message_Block *&dequeued)
       && this->signal_enqueue_waiters () == -1)
     return -1;
   else
-    return ACE_Utils::Truncate (this->cur_count_);
+    return this->cur_count_;
 }
 
 // Actually get the ACE_Message_Block with the lowest deadline time
@@ -1426,7 +1385,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeu
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  --this->cur_count_;
+  this->cur_count_--;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1468,7 +1427,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
     return -1;
 
   first_item = this->head_;
-  return ACE_Utils::Truncate (this->cur_count_);
+  return this->cur_count_;
 }
 
 template <ACE_SYNCH_DECL> int
@@ -1910,7 +1869,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
        temp1 != 0;
        temp1 = temp1->next ())
     {
-      --this->cur_count_;
+      this->cur_count_--;
 
       size_t mb_bytes = 0;
       size_t mb_length = 0;
@@ -2130,7 +2089,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
                                    mb_length);
   this->cur_bytes_ += mb_bytes;
   this->cur_length_ += mb_length;
-  ++this->cur_count_;
+  this->cur_count_++;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
@@ -2319,7 +2278,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  --this->cur_count_;
+  this->cur_count_--;
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
@@ -2704,7 +2663,4 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_NT_message_queue (size_t max_th
 
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 #endif /* defined (VXWORKS) */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* !ACE_MESSAGE_QUEUE_T_CPP */

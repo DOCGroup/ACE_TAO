@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -37,8 +37,6 @@
 #  include "ace/Timer_Heap.h"
 #  include "ace/Timer_Wheel.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward declarations.
 class ACE_Proactor_Impl;
 class ACE_Proactor_Timer_Handler;
@@ -46,7 +44,7 @@ class ACE_Proactor_Timer_Handler;
 /**
  * @class ACE_Proactor_Handle_Timeout_Upcall
  *
- * @brief Functor for ACE_Timer_Queue.
+ * @brief Functor for <ACE_Timer_Queue>.
  *
  * This class implements the functor required by the Timer
  * Queue to call <handle_timeout> on ACE_Handlers.
@@ -240,7 +238,7 @@ public:
   static int reset_event_loop (void);
 
   /**
-   * The singleton proactor is used by the ACE_Service_Config.
+   * The singleton proactor is used by the <ACE_Service_Config>.
    * Therefore, we must check for the reconfiguration request and
    * handle it after handling an event.
    */
@@ -635,8 +633,6 @@ private:
   ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #  if defined (__ACE_INLINE__)
 #    include "ace/Proactor.inl"
 #  endif /* __ACE_INLINE__ */
@@ -646,8 +642,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  include "ace/os_include/os_stddef.h"
 #  include "ace/os_include/os_signal.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Time_Value;
 
 class ACE_Export ACE_Proactor
@@ -656,7 +650,6 @@ public:
   class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
-  virtual ~ACE_Proactor (void) {}
   virtual int handle_events (void) { return -1; }
   virtual int handle_events (ACE_Time_Value &) { return -1; }
 
@@ -681,8 +674,6 @@ public:
   /// Placeholder to enable compilation on non-Win32 platforms
   static sig_atomic_t event_loop_done (void);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
 

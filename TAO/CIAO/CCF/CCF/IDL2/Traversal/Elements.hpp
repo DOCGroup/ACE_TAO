@@ -356,32 +356,15 @@ namespace CCF
       };
 
 
-      struct Arguments : Edge<SemanticGraph::Arguments>
+      struct Specialized : Edge<SemanticGraph::Specialized>
       {
         virtual void
-        traverse (Type& a)
+        traverse (Type& e)
         {
-          node_traverser ().traverse (a.argument ());
+          node_traverser ().traverse (e.type ());
         }
       };
 
-      struct ArgumentsWithType : Edge<SemanticGraph::ArgumentsWithType>
-      {
-        virtual void
-        traverse (Type& a)
-        {
-          node_traverser ().traverse (a.type ());
-        }
-      };
-
-      struct ArgumentsWithValue : Edge<SemanticGraph::ArgumentsWithValue>
-      {
-        virtual void
-        traverse (Type& a)
-        {
-          node_traverser ().traverse (a.value ());
-        }
-      };
 
       struct Inherits : Edge<SemanticGraph::Inherits>
       {

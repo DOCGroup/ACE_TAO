@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # if TAO_HAS_UIOP == 1
-#include "tao/Strategies/UIOP_Connection_Handler.h"
+#include "UIOP_Connection_Handler.h"
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/Acceptor_Impl.h"
@@ -33,8 +33,6 @@
 
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UIOP_Acceptor
@@ -136,8 +134,6 @@ private:
   /// Should we use GIOP lite??
   const bool lite_flag_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 # endif /* TAO_HAS_UIOP == 1 */
 

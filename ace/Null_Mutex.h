@@ -27,9 +27,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_Memory.h"
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Time_Value;
 
 /**
@@ -122,8 +119,8 @@ class ACE_Guard;
 /**
  * @class ACE_Guard<ACE_Null_Mutex>
  *
- * @brief Template specialization of ACE_Guard for the
- * ACE_Null_Mutex.
+ * @brief Template specialization of <ACE_Guard> for the
+ * <ACE_Null_Mutex>.
  *
  * This specialization is useful since it helps to speedup
  * performance of the "Null_Mutex" considerably.
@@ -149,11 +146,9 @@ public:
   void dump (void) const {}
 
 private:
-
-  // Disallow copying and assignment.
-  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &);
-  void operator= (const ACE_Guard<ACE_Null_Mutex> &);
-
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard<ACE_Null_Mutex> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &))
 };
 
 template <class ACE_LOCK>
@@ -219,8 +214,6 @@ public:
     return p;
   }
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NULL_MUTEX_H */

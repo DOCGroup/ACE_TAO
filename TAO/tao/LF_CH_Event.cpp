@@ -1,10 +1,8 @@
-#include "tao/LF_CH_Event.h"
+#include "LF_CH_Event.h"
 
 ACE_RCSID(tao,
           LF_Invocation_Event,
           "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_CH_Event::TAO_LF_CH_Event (void)
   : TAO_LF_Event (),
@@ -96,10 +94,9 @@ TAO_LF_CH_Event::set_state (int new_state)
     }
 }
 
+
 int
 TAO_LF_CH_Event::is_state_final (void)
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

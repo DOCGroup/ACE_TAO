@@ -5,7 +5,7 @@
 #include "ace/Remote_Name_Space.h"
 #include "ace/Local_Name_Space_T.h"
 #include "ace/Registry_Name_Space.h"
-#include "ace/MMAP_Memory_Pool.h"
+#include "ace/Memory_Pool.h"
 #include "ace/RW_Process_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -16,12 +16,24 @@
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Make life easier later on...
 
 typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LOCAL_NAME_SPACE;
 typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LITE_LOCAL_NAME_SPACE;
+
+// The following Factory is used by the ACE_Service_Config and
+// svc.conf file to dynamically initialize the state of the Name
+// Server client.
+
+ACE_FACTORY_DEFINE (ACE, ACE_Naming_Context)
+ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
+                       ACE_LIB_TEXT ("ACE_Naming_Context"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (ACE_Naming_Context),
+                       ACE_Service_Type::DELETE_THIS |
+                       ACE_Service_Type::DELETE_OBJ,
+                       0)
+ACE_STATIC_SVC_REQUIRE (ACE_Naming_Context)
 
 // The ACE_Naming_Context static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.
@@ -600,7 +612,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
   // clean it up in the destructor).
   this->database (this->process_name ());
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("b:c:dh:l:P:p:s:T:vr"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_LIB_TEXT ("b:c:dh:l:P:p:s:T:vr"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -691,19 +703,3 @@ template class ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_M
 #pragma instantiate ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >
 #pragma instantiate ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-// The following Factory is used by the ACE_Service_Config and
-// svc.conf file to dynamically initialize the state of the Name
-// Server client.
-
-ACE_FACTORY_DEFINE (ACE, ACE_Naming_Context)
-ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
-                       ACE_LIB_TEXT ("ACE_Naming_Context"),
-                       ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (ACE_Naming_Context),
-                       ACE_Service_Type::DELETE_THIS |
-                       ACE_Service_Type::DELETE_OBJ,
-                       0)
-ACE_STATIC_SVC_REQUIRE (ACE_Naming_Context)

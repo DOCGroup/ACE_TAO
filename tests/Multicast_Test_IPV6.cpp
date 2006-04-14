@@ -160,64 +160,64 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
   int retval = 0;
   int help = 0;
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT (":?"), 1, 1);
+  ACE_Get_Arg_Opt<ACE_TCHAR>  getopt (argc, argv, ACE_TEXT (":?"), 1, 1);
 
   if (getopt.long_option (ACE_TEXT ("GroupStart"),
                           'g',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add GroupStart option.\n")),
                       1);
 
   if (getopt.long_option (ACE_TEXT ("Groups"),
                           'n',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Groups option.\n")), 1);
 
   if (getopt.long_option (ACE_TEXT ("Debug"),
                           'd',
-                          ACE_Get_Opt::NO_ARG) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::NO_ARG) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Debug option.\n")), 1);
 
   if (getopt.long_option (ACE_TEXT ("Role"),
                           'r',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Role option.\n")), 1);
 
   if (getopt.long_option (ACE_TEXT ("SDM_options"),
                           'm',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Multicast_Options option.\n")),
                       1);
 
   if (getopt.long_option (ACE_TEXT ("Iterations"),
                           'i',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add iterations option.\n")),
                       1);
 
   if (getopt.long_option (ACE_TEXT ("TTL"),
                           't',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add TTL option.\n")),
                       1);
 
   if (getopt.long_option (ACE_TEXT ("Wait"),
                           'w',
-                          ACE_Get_Opt::ARG_REQUIRED) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add wait option.\n")),
                       1);
 
   if (getopt.long_option (ACE_TEXT ("help"),
                           'h',
-                          ACE_Get_Opt::NO_ARG) != 0)
+                          ACE_Get_Arg_Opt<ACE_TCHAR> ::NO_ARG) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add help option.\n")),
                       1);

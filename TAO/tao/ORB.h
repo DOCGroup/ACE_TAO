@@ -19,25 +19,23 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/UserException.h"
+#include "UserException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orb_typesC.h"
-#include "tao/objectid.h"
-#include "tao/CORBA_methods.h"
-#include "tao/VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#include "tao/Sequence_T.h"
-#include "tao/Policy_ForwardC.h"
+#include "orb_typesC.h"
+#include "objectid.h"
+#include "CORBA_methods.h"
+#include "VarOut_T.h"
+#include "Seq_Var_T.h"
+#include "Seq_Out_T.h"
+#include "Sequence_T.h"
+#include "Policy_ForwardC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef enum
 {
@@ -483,9 +481,9 @@ namespace CORBA
      * appropriate @c ACE_Time_Value as described in run().
      **/
     void perform_work (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value &tv
+    void perform_work (ACE_Time_Value &
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value *tv
+    void perform_work (ACE_Time_Value *
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /**
@@ -672,7 +670,6 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"

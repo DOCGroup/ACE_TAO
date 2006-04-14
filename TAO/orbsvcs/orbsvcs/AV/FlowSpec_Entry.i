@@ -1,10 +1,10 @@
 // -*- C++ -*-
-//
+
 // $Id$
 
-#include "ace/OS_NS_strings.h"
+// FlowSpec_Entry.i
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "ace/OS_NS_strings.h"
 
 ACE_INLINE
 int
@@ -343,5 +343,3 @@ TAO_FlowSpec_Entry::role (TAO_FlowSpec_Entry::Role role)
 {
   this->role_ = role;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

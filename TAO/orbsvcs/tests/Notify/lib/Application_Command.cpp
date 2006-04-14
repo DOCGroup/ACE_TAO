@@ -20,20 +20,20 @@ TAO_Notify_Tests_Application_Command::~TAO_Notify_Tests_Application_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Application_Command::get_name (void)
 {
   return TAO_Notify_Tests_Application_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Application_Command::name (void)
 {
   return TAO_Notify_Tests_Name::application_command;
 }
 
 void
-TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Application_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -105,7 +105,6 @@ TAO_Notify_Tests_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
 
   /// Activate the root POA.
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
 
   TAO_Notify_Tests_Priority_Mapping* mapping = new TAO_Notify_Tests_Priority_Mapping ();
 
@@ -189,36 +188,29 @@ TAO_Notify_Tests_Application_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == INIT)
     {
       this->handle_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == RUN)
     {
       this->handle_run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == WAIT_FOR_EVENTS)
     {
       this->handle_wait_for_completion (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == SHUTDOWN)
     {
       this->handle_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == DUMP_STATE)
     {
       this->handle_dump_stats (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == SIGNAL_PEER)
     {
       this->handle_signal_peer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == WAIT_TO_START)
     {
       this->handle_wait_to_start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }

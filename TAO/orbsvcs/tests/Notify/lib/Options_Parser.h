@@ -19,11 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/CosNotificationC.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Arg_Shifter;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Options_Parser
@@ -41,10 +39,10 @@ public:
   ~TAO_Notify_Tests_Options_Parser ();
 
   /// Populates <qos> with options apecified in <arg_shifter>
-  void execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter);
+  void execute (CosNotification::QoSProperties& qos, ACE_TArg_Shifter< char >& arg_shifter);
 
   /// Populates <added> and <removed> with options apecified in <arg_shifter>
-  void execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter);
+  void execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_TArg_Shifter< char >& arg_shifter);
 };
 
 #include /**/ "ace/post.h"

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_ConsumerControl.h
  *
@@ -19,15 +18,11 @@
 #include /**/ "ace/pre.h"
 #include "ace/CORBA_macros.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/orbconf.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
@@ -67,16 +62,14 @@ public:
    * reclaim all the resources attached to that object.
    */
   virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL);
+                                   ACE_ENV_ARG_DECL_NOT_USED);
 
   /// Some system exception was raised while trying to contact the
   /// consumer
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
                                  CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL);
+                                 ACE_ENV_ARG_DECL_NOT_USED);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

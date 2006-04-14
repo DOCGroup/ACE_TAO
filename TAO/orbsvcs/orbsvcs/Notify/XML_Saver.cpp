@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/Notify/XML_Saver.h"
+#include "XML_Saver.h"
 
 #include "ACEXML/common/XML_Util.h"
 
@@ -8,12 +8,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO_Notify
 {
-  extern const char TOPOLOGY_ID_NAME[];
-
   XML_Saver::XML_Saver(bool timestamp)
     : output_ (0)
     , close_out_ (false)
@@ -131,7 +127,7 @@ namespace TAO_Notify
 #ifdef ACE_LACKS_LONGLONG_T
         nowus.as_string(nowusstr);
 #else
-        ACE_OS::sprintf(nowusstr, ACE_UINT64_FORMAT_SPECIFIER, nowus);
+        ACE_OS::sprintf(nowusstr, ACE_UINT64_FORMAT_SPECIFIER_A, nowus);
 #endif /* ACE_LACKS_LONGLONG_T */
 
         attrs.push_back(NVP("version", "1.0"));
@@ -173,10 +169,10 @@ namespace TAO_Notify
     }
 
     const size_t BUF_SIZE = 512;
-    ACE_CString tmp(BUF_SIZE);
+    ACE_TString tmp(BUF_SIZE);
     for (size_t idx = 0; idx < attrs.size(); idx++)
     {
-      ACEXML_escape_string(attrs[idx].value, tmp);
+      ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(attrs[idx].value.fast_rep()), tmp);
       ACE_OS::fprintf (out, "%s%s%s%s%s", " ",
         attrs[idx].name.c_str (), "=\"", tmp.c_str(), "\"");
     }
@@ -185,11 +181,11 @@ namespace TAO_Notify
     return true;
   }
 
-  void XML_Saver::end_object (CORBA::Long /* id */,
-                              const ACE_CString& type
-                              ACE_ENV_ARG_DECL_NOT_USED)
+  void XML_Saver::end_object (CORBA::Long id,
+    const ACE_CString& type ACE_ENV_ARG_DECL_NOT_USED)
   {
     ACE_ASSERT(this->output_ != 0);
+    ACE_UNUSED_ARG (id);
     FILE *out = this->output_;
     if (this->indent_.length() >= 2)
     {
@@ -199,5 +195,3 @@ namespace TAO_Notify
                      type.c_str(), ">\n");
   }
 } /* namespace TAO_Notify */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,8 +27,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
 class TAO_Root_POA;
@@ -54,8 +52,7 @@ namespace TAO
      *
      * @brief This class finds out the POA and the servant to perform an
      * upcall.  It can only be instantiated without the object
-     * adapter's lock held. For each upcall a new instance of this
-     * class is created.
+     * adapter's lock held.
      */
     class TAO_PortableServer_Export Servant_Upcall
     {
@@ -92,7 +89,7 @@ namespace TAO
       };
 
       /// Constructor.
-      explicit Servant_Upcall (TAO_ORB_Core *orb_core);
+      Servant_Upcall (TAO_ORB_Core *orb_core);
 
       /// Destructor.
       ~Servant_Upcall (void);
@@ -235,14 +232,12 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Servant_Upcall.inl"
+# include "Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

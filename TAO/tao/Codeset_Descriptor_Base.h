@@ -21,10 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /*
  * TAO_Codeset_Descriptor_Base describes the necessary interface for
  * Objects within libTAO to be able to supply information to the codeset
@@ -33,16 +29,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class also serves as a default implementation when codeset support
  * is not linked in.
  */
+
+
 class TAO_Export TAO_Codeset_Descriptor_Base
 {
 public:
-  virtual ~TAO_Codeset_Descriptor_Base (void);
+  virtual  ~TAO_Codeset_Descriptor_Base ();
 
   virtual void ncs (const ACE_TCHAR *name) = 0;
   virtual void add_translator (const ACE_TCHAR *name) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/config-lite.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 
 #if (ACE_NTRACE != 1)
@@ -142,7 +140,7 @@ JAWS_Server::parse_args (int argc, char *argv[])
   int c;
   int t = 0;
 
-  ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:r:");
+  ACE_Get_Arg_Opt<char> getopt (argc, argv, "t" "p:c:d:n:m:f:r:");
   while ((c = getopt ()) != -1)
     switch (c)
       {

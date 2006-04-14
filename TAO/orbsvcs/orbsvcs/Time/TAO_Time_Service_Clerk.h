@@ -21,11 +21,8 @@
 #include "ace/Reactor.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "orbsvcs/Time/Timer_Helper.h"
-#include "orbsvcs/Time/time_export.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Timer_Helper.h"
+#include "time_export.h"
 
 /**
  * @class TAO_Time_Service_Clerk
@@ -134,8 +131,6 @@ private:
    */
   Timer_Helper helper_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TIME_SERVICE_CLERK_H */

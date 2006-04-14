@@ -27,13 +27,8 @@
 #include "tao/Basic_Types.h"
 
 // Forward declarations.
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
 class ACE_Reactor;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ORB_Core;
 class TAO_MProfile;
 class TAO_Endpoint;
@@ -144,7 +139,7 @@ public:
 
 private:
   /// IOP protocol tag.
-  CORBA::ULong const tag_;
+  CORBA::ULong tag_;
 
   /*
    * Hook to add data members from concrete acceptor implementations onto
@@ -155,10 +150,8 @@ private:
 
 //@@ TAO_ACCEPTOR_SPL_EXTERN_ADD_HOOK
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/Transport_Acceptor.inl"
+# include "Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

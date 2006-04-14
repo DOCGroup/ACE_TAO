@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 // @METRICS@
@@ -15,7 +13,6 @@
 #   define METRICS_USES_OP_CANCELLATION
 # endif /* ! METRICS_USES_OP_CANCELLATION */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////
 // Class TAO_Metrics_UpcallMonitor //
@@ -375,7 +372,5 @@ TAO_Metrics_ReportingUpcallMonitor::report_aggregate_QoS (
 
   logger->log_aggregate_QoS (qos_set, interval);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* METRICS_UPCALL_MONITOR_I */

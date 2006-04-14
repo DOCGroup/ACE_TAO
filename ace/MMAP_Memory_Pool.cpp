@@ -15,8 +15,6 @@
 
 ACE_RCSID(ace, MMAP_Memory_Pool, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)
 
 void
@@ -532,5 +530,3 @@ ACE_Lite_MMAP_Memory_Pool::sync (void *, size_t, int)
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::sync");
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

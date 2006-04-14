@@ -1,3 +1,4 @@
+// DEV_IO.cpp
 // $Id$
 
 #include "ace/DEV_IO.h"
@@ -8,9 +9,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, DEV_IO, "$Id$")
-
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_IO)
 
@@ -127,5 +125,3 @@ ACE_DEV_IO::recv (size_t n, ...) const
   va_end (argp);
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

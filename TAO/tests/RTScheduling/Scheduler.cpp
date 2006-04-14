@@ -3,16 +3,17 @@
 #include "Scheduler.h"
 #include "tao/ORB.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
 TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
-  CORBA::Object_var current_obj =
+  CORBA::Object_ptr current_obj =
     orb->resolve_initial_references ("RTScheduler_Current"
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  current_ = RTScheduling::Current::_narrow (current_obj.in ()
+  current_ = RTScheduling::Current::_narrow (current_obj
                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -145,14 +146,23 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  IOP::ServiceContext_var serv_cxt;
+  IOP::ServiceContext* serv_cxt = 0;
 
   ACE_TRY
     {
       serv_cxt = request_info->get_request_service_context (Server_Interceptor::SchedulingInfo
                                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Invalid Service Context\n"));
+    }
+  ACE_ENDTRY;
 
+  if (serv_cxt != 0)
+    {
       size_t gu_id;
       ACE_OS::memcpy (&gu_id,
                       serv_cxt->context_data.get_buffer (),
@@ -173,12 +183,6 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
       guid_out.ptr () = guid;
     }
-  ACE_CATCHANY
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Invalid Service Context\n"));
-    }
-  ACE_ENDTRY;
 }
 
 void

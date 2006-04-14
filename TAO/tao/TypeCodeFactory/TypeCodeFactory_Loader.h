@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,7 +14,7 @@
 #define TAO_TYPECODEFACTORY_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/TypeCodeFactory/typecodefactory_export.h"
+#include "typecodefactory_export.h"
 #include "tao/Object_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -22,8 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_TypeCodeFactory_Loader
@@ -49,16 +47,14 @@ public:
   static int Initializer (void);
 };
 
-static int
-TAO_Requires_TCF_Initializer = TAO_TypeCodeFactory_Loader::Initializer ();
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Loader)
 ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Loader)
 
+static int
+TAO_Requires_TCF_Initializer = TAO_TypeCodeFactory_Loader::Initializer ();
+
 #define TAO_TYPECODEFACTORY_SAFE_INCLUDE
-#include "tao/TypeCodeFactory/TypeCodeFactoryC.h"
+#include "TypeCodeFactoryC.h"
 #undef TAO_TYPECODEFACTORY_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

@@ -4,6 +4,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Synch.h"
 #include "ace/OS.h"
 #include "ace/Dynamic_Service.h"
@@ -332,9 +333,9 @@ Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
 int
 Notify_Throughput::parse_args(int argc, char *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc, argv);
+    ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
-    const ACE_TCHAR* current_arg = 0;
+    const char* current_arg = 0;
     while (arg_shifter.is_anything_left ())
     {
       if (arg_shifter.cur_arg_strncasecmp ("-collocated_ec") == 0)
@@ -589,20 +590,22 @@ Notify_Throughput::dump_results (void)
 /***************************************************************************/
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_High_Res_Timer::calibrate ();
 
   Notify_Throughput events;
 
-  if (events.parse_args (argc, argv) == -1)
+  if (events.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return 1;
     }
 
   ACE_TRY_NEW_ENV
     {
-      events.init (argc, argv
+      events.init (convert.get_argc(), convert.get_ASCII_argv()
                       ACE_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 

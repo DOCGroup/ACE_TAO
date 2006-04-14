@@ -13,8 +13,6 @@ ACE_RCSID (ace,
            Dirent_Selector,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Construction/Destruction
 
 ACE_Dirent_Selector::ACE_Dirent_Selector (void)
@@ -31,9 +29,9 @@ ACE_Dirent_Selector::~ACE_Dirent_Selector (void)
 
 int
 ACE_Dirent_Selector::open (const ACE_TCHAR *dir,
-                           int (*sel)(const ACE_DIRENT *d),
-                           int (*cmp) (const ACE_DIRENT **d1,
-                                       const ACE_DIRENT **d2))
+                           int (*sel)(const dirent *d),
+                           int (*cmp) (const dirent **d1,
+                                       const dirent **d2))
 {
   n_ = ACE_OS::scandir (dir, &this->namelist_, sel, cmp);
   return n_;
@@ -56,5 +54,3 @@ ACE_Dirent_Selector::close (void)
   this->namelist_ = 0;
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

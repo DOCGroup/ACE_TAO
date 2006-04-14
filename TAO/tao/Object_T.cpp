@@ -1,13 +1,14 @@
 // $Id$
-
-#ifndef TAO_OBJECT_T_CPP
-#define TAO_OBJECT_T_CPP
+#ifndef TAO_OBJECT_T_C
+#define TAO_OBJECT_T_C
 
 #include "tao/Object_T.h"
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Object_T,
+           "$Id$")
 
 namespace TAO
 {
@@ -87,7 +88,7 @@ namespace TAO
       {
         return proxy;
       }
-
+      
     TAO_Stub* stub = obj->_stubobj ();
 
     if (stub == 0)
@@ -131,6 +132,4 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_OBJECT_T_CPP */
+#endif /* TAO_OBJECT_T_C */

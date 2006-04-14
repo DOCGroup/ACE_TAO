@@ -21,6 +21,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(BiDir_Multiple_ORB, destroy, "$Id$")
 
@@ -107,16 +108,18 @@ test_with_bidir_poa (int argc,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
 
   for (int i=0; i<10; i++)
   {
-    result = test_with_bidir_poa (argc, argv, "poa_1", 1);
+    result = test_with_bidir_poa (convert.get_argc(), convert.get_ASCII_argv(), "poa_1", 1);
     ACE_ASSERT (result == 0);
 
-    result = test_with_bidir_poa (argc, argv, "poa_2", 1);
+    result = test_with_bidir_poa (convert.get_argc(), convert.get_ASCII_argv(), "poa_2", 1);
     ACE_ASSERT (result == 0);
   }
   ACE_DEBUG ((LM_DEBUG, "Completed OK\n"));

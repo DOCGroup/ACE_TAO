@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template<typename S_ptr, typename Insert_Policy>
 ACE_INLINE
 TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::In_Object_Argument_T (S_ptr x)
@@ -83,4 +81,3 @@ TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::retn (void)
   return this->x_._retn ();
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/AnyTypeCode/DynamicC.h"
+#include "DynamicC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)
@@ -38,8 +38,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -303,5 +301,3 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_CPP_ */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

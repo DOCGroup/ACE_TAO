@@ -19,13 +19,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 /**
  * @class ACE_Connection_Recycling_Strategy
  *
  * @brief Defines the interface for a connection recycler.
  */
+
 class ACE_Export ACE_Connection_Recycling_Strategy
 {
 public:
@@ -54,10 +56,12 @@ public:
   virtual int cleanup_hint (const void *recycling_act,
                             void **act_holder = 0) = 0;
 
+protected:
+  /// Default ctor.
+  ACE_Connection_Recycling_Strategy (void);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 #include /**/ "ace/post.h"
-
 #endif /*ACE_CONNECTION_RECYCLING_STRATEGY*/

@@ -1,14 +1,14 @@
 // $Id$
 
-#include "tao/DynamicInterface/Request.h"
+#include "Request.h"
 
 ACE_RCSID (DynamicInterface,
            Request,
            "$Id$")
 
-#include "tao/DynamicInterface/DII_Invocation_Adapter.h"
-#include "tao/DynamicInterface/DII_Arguments.h"
-#include "tao/DynamicInterface/Context.h"
+#include "DII_Invocation_Adapter.h"
+#include "DII_Arguments.h"
+#include "Context.h"
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/Object.h"
@@ -19,11 +19,9 @@ ACE_RCSID (DynamicInterface,
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/Request.inl"
+# include "Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object.
 
@@ -348,7 +346,6 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
     case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
     case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
     case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
-    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       ACE_ERROR ((LM_ERROR,
@@ -356,4 +353,3 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

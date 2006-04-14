@@ -14,16 +14,14 @@
 #define TAO_PORTABLESERVER_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Policy_Strategy.h"
+#include "Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/LifespanPolicyC.h"
+#include "LifespanPolicyC.h"
 #include "tao/Object_KeyC.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -82,8 +80,6 @@ namespace TAO
 
   } /* namespace Portable_Server */
 } /* namespace TAO */
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_LIFESPANPOLICY_H */

@@ -244,7 +244,7 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
 
   *os << be_uidt_nl << "}";
 
-  node->cli_stub_serializer_op_gen (true);
+  node->cli_stub_serializer_op_gen (I_TRUE);
   return 0;
 }
 

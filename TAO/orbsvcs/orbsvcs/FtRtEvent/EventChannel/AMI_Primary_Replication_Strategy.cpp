@@ -1,13 +1,13 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"
+#include "AMI_Primary_Replication_Strategy.h"
 #include "ace/Synch_T.h"
-#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
-#include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
+#include "GroupInfoPublisher.h"
+#include "Request_Context_Repository.h"
+#include "create_persistent_poa.h"
+#include "Update_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h"
+#include "ObjectGroupManagerHandler.h"
 #include "tao/Utils/Implicit_Deactivator.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/ScopeGuard.h"
@@ -17,11 +17,8 @@ ACE_RCSID (EventChannel,
            AMI_Primary_Replication_Strategy,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy(bool mt)
-  : handler_(this),
-    mutex_ (mt ? new ACE_SYNCH_RW_MUTEX : 0)
+: handler_(this), mutex_(mt ? new ACE_SYNCH_RW_MUTEX : 0)
 {
 }
 
@@ -107,8 +104,8 @@ AMI_Primary_Replication_Strategy::replicate_request(
   ACE_ENV_ARG_DECL)
 {
    ACE_Auto_Event event;
-   Update_Manager* manager = 0;
-   bool success = false;
+   Update_Manager* manager;
+   bool success;
 
     FTRT::TransactionDepth transaction_depth =
       Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -120,7 +117,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
    size_t num_backups = backups.length();
 
    if ((size_t)transaction_depth > num_backups) {
-     TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
+     TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
      ACE_THROW(FTRT::TransactionDepthTooHigh());
    }
 
@@ -167,7 +164,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
        }
        ACE_ENDTRY;
      }
-     TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
+     TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
      ACE_THROW(FTRT::TransactionDepthTooHigh());
    }
 
@@ -218,5 +215,3 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
 
   event.wait();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

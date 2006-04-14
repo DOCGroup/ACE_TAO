@@ -15,16 +15,12 @@ ACE_RCSID (tao,
 
 #include "ace/os_include/os_netdb.h"
 
-static const char the_prefix[] = "iiop";
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
   TAO_Endpoint *tmp = 0;
-
+                                                                                              
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != 0;
        next = tmp)
@@ -35,6 +31,8 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 }
 
 //@@ TAO_PROFILE_SPL_COPY_HOOK_START
+
+static const char prefix_[] = "iiop";
 
 const char TAO_IIOP_Profile::object_key_delimiter_ = '/';
 
@@ -372,85 +370,64 @@ TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
 char *
 TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  // corbaloc:iiop:1.2@host:port,iiop:1.2@host:port,.../key
-
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->ref_object_key_->object_key ());
 
-  size_t buflen = (
-       8 /* "corbaloc" */ +
-       1 /* colon separator */ +
-       1 /* object key separator */ +
-       ACE_OS::strlen (key.in ()));
-  size_t pfx_len = (
-       ACE_OS::strlen (::the_prefix) /* "iiop" */ +
-       1 /* colon separator */);
-
- const TAO_IIOP_Endpoint *endp = 0;
- for (endp = &this->endpoint_; endp != 0; endp = endp->next_)
-   {
-      buflen += (
-          pfx_len +
-          1 /* major version */ +
-          1 /* decimal point */ +
-          1 /* minor version */ +
-          1 /* `@' character */ +
-          ACE_OS::strlen (endp->host ()) +
-          1 /* colon separator */ +
-          5 /* port number */ +
-          1 /* comma */);
+  size_t buflen = (8 /* "corbaloc" */ +
+                   1 /* colon separator */ +
+                   ACE_OS::strlen (::prefix_) +
+                   1 /* colon separator */ +
+                   1 /* major version */ +
+                   1 /* decimal point */ +
+                   1 /* minor version */ +
+                   1 /* `@' character */ +
+                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   1 /* colon separator */ +
+                   5 /* port number */ +
+                   1 /* object key separator */ +
+                   ACE_OS::strlen (key.in ()));
 #if defined (ACE_HAS_IPV6)
-      if (endp->is_ipv6_decimal_)
-        buflen += 2; // room for '[' and ']'
+  if (this->endpoint_.is_ipv6_decimal_)
+    buflen += 2; // room for '[' and ']'
 #endif /* ACE_HAS_IPV6 */
-   }
-
-  static const char digits [] = "0123456789";
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  ACE_OS::strcpy(buf, "corbaloc:");
-
-  for (endp = &this->endpoint_; endp != 0; endp = endp->next_)
-    {
-      if(&this->endpoint_ != endp)
-      ACE_OS::strcat(buf, ",");
+  static const char digits [] = "0123456789";
 
 #if defined (ACE_HAS_IPV6)
-      if (endp->is_ipv6_decimal_)
+  if (this->endpoint_.is_ipv6_decimal_)
+    {
+      // Don't publish scopeid if included.
+      ACE_CString tmp(this->endpoint_.host ());
+      ssize_t pos = tmp.find('%');
+      if (pos != ACE_CString::npos)
         {
-          // Don't publish scopeid if included.
-          ACE_CString tmp(endp->host ());
-          ssize_t pos = tmp.find('%');
-          if (pos != ACE_CString::npos)
-            {
-              tmp = tmp.substr(0, pos + 1);
-              tmp[pos] = '\0';
-            }
-          ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
-                  "%s:%c.%c@[%s]:%d",
-                  ::the_prefix,
-                  digits [this->version_.major],
-                  digits [this->version_.minor],
-                  tmp.c_str (),
-                  endp->port () );
+          tmp = tmp.substr(0, pos + 1);
+          tmp[pos] = '\0';
         }
-      else
-#endif
-      ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
-              "%s:%c.%c@%s:%d",
-              ::the_prefix,
-              digits [this->version_.major],
-              digits [this->version_.minor],
-              endp->host (),
-              endp->port () );
-
-  }
-  ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
-          "%c%s",
-          this->object_key_delimiter_,
-          key.in ());
+      ACE_OS::sprintf (buf,
+                       "corbaloc:%s:%c.%c@[%s]:%d%c%s",
+                       ::prefix_,
+                       digits [this->version_.major],
+                       digits [this->version_.minor],
+                       tmp.c_str (),
+                       this->endpoint_.port (),
+                       this->object_key_delimiter_,
+                       key.in ());
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
+  ACE_OS::sprintf (buf,
+                   "corbaloc:%s:%c.%c@%s:%d%c%s",
+                   ::prefix_,
+                   digits [this->version_.major],
+                   digits [this->version_.minor],
+                   this->endpoint_.host (),
+                   this->endpoint_.port (),
+                   this->object_key_delimiter_,
+                   key.in ());
 
   return buf;
 }
@@ -458,7 +435,7 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 const char *
 TAO_IIOP_Profile::prefix (void)
 {
-  return ::the_prefix;
+  return ::prefix_;
 }
 
 void
@@ -550,7 +527,7 @@ TAO_IIOP_Profile::encode_alternate_endpoints (void)
       else
 #endif /* ACE_HAS_IPV6 */
       if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-                || (out_cdr << endpoint->host () == 0)
+	        || (out_cdr << endpoint->host () == 0)
           || (out_cdr << endpoint->port () == 0))
         return -1;
 
@@ -564,7 +541,7 @@ TAO_IIOP_Profile::encode_alternate_endpoints (void)
         tagged_component.component_data.get_buffer ();
 
       for (const ACE_Message_Block *iterator = out_cdr.begin ();
-                 iterator != 0;
+	         iterator != 0;
            iterator = iterator->cont ())
         {
           size_t i_length = iterator->length ();
@@ -746,5 +723,3 @@ TAO_IIOP_Profile::decode_endpoints (void)
   return 0;
 }
 //@@ TAO_PROFILE_SPL_COPY_HOOK_END
-
-TAO_END_VERSIONED_NAMESPACE_DECL

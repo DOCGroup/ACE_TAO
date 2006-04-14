@@ -29,8 +29,8 @@ class Thread_Handler : public ACE_Event_Handler
   //   thread exits it notifies the ACE_Reactor in the main thread
   //   using the ACE_Reactor's notification mechanism.
 public:
-  Thread_Handler (long delay,
-                  long interval,
+  Thread_Handler (int delay,
+                  int interval,
                   size_t n_threads,
                   size_t max_iterations);
   // Constructor.
@@ -109,9 +109,8 @@ Thread_Handler::~Thread_Handler (void)
   ACE_Reactor::instance ()->cancel_timer (this);
 }
 
-Thread_Handler::Thread_Handler (
-        long delay,
-        long interval,
+Thread_Handler::Thread_Handler (int delay,
+				int interval,
 				size_t n_threads,
         size_t max_iterations)
     : iterations_ (max_iterations)
@@ -291,7 +290,8 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 int
-Thread_Handler::handle_timeout (const ACE_Time_Value &time, const void *)
+Thread_Handler::handle_timeout (const ACE_Time_Value &time,
+				const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) received timeout at (%u, %u), iterations = %d\n",
@@ -377,7 +377,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
 		     "threads must be supported to run this application\n"), -1);

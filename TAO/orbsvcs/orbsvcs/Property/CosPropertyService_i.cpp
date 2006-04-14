@@ -19,8 +19,6 @@
 
 ACE_RCSID(Property, CosPropertyService_i, "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // = Methods to deal with ACE_Hash_Map_Manager.
 
 CosProperty_Hash_Key::CosProperty_Hash_Key (void)
@@ -45,8 +43,8 @@ CosProperty_Hash_Key::CosProperty_Hash_Key (const CosProperty_Hash_Key &src)
 bool
 CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &hash_key) const
 {
-  return (ACE_OS::strcmp (this->pname_,
-                          hash_key.pname_) == 0);
+  return (ACE_OS::strcmp (this->pname_.in(),
+                          hash_key.pname_.in()) == 0);
 }
 
 u_long
@@ -1884,5 +1882,3 @@ TAO_PropertiesIterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

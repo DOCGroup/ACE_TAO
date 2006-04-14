@@ -164,7 +164,7 @@ TestServer::~TestServer()
 //
 int TestServer::parseCommands(int argc, char* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
+  ACE_Get_Arg_Opt<char> get_opts(argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
   int c;
   while ((c = get_opts()) != -1)
   {
@@ -279,8 +279,9 @@ bool TestServer::verifyEnvironment() const
   string currentDir = getWorkingPath();
   if (expectedDir_.empty() == false && currentDir != expectedDir_)
   {
-    ACE_DEBUG((LM_DEBUG, "Error: directory paths (%s,%s) do not match.\n",
-               currentDir.c_str(), expectedDir_.c_str()));
+    cout << "Error: directory paths ("
+      << currentDir << ", " << expectedDir_
+      << ") do not match." << endl;
     err |= true;
   }
 
@@ -290,14 +291,16 @@ bool TestServer::verifyEnvironment() const
     const char* realValue = ACE_OS::getenv(expectedEnv_[i].first.c_str()) ;
     if (realValue == NULL)
     {
-      ACE_DEBUG((LM_DEBUG, "Error, env variable '%s' not found\n",
-                 expectedEnv_[i].first.c_str()));
+      cout << "Error: env variable '"
+        << expectedEnv_[i].first
+        << "' not found." << endl;
       err |= true;
     }
     else if (expectedEnv_[i].second != realValue)
     {
-      ACE_DEBUG((LM_DEBUG, "Error, env variable '%s' values (%s,%s) do not match.\n",
-                 expectedEnv_[i].first.c_str(), realValue, expectedEnv_[i].second.c_str()));
+      cout << "Error: env variable '" << expectedEnv_[i].first << "' values ("
+        << realValue << ", " << expectedEnv_[i].second
+        << ") do not match." << endl;
       err |= true;
     }
   }
@@ -340,8 +343,7 @@ void TestServer::run()
   if (registerWithManager() == false)
     return;
 
-  ACE_DEBUG((LM_DEBUG, "* Server (%d.%d) started.\n",
-             serverID_, serverInstanceID_));
+  cout << "* Server (" << serverID_ << "." << serverInstanceID_ << ") started." << endl;
 
   if (useIORTable_ == true)
   {
@@ -370,13 +372,13 @@ void TestServer::run()
 
   if (orb_->orb_core()->has_shutdown() != 0)
   {
-    ACE_DEBUG((LM_DEBUG, "* Server (%d.%d) ended.\n",
-               serverID_, serverInstanceID_));
+    cout << "* Server (" << serverID_ << "."
+      << serverInstanceID_ << ") ended." << endl;
   }
   else
   {
-    ACE_DEBUG((LM_DEBUG, "* Server (%d.%d) self terminated.\n",
-               serverID_, serverInstanceID_));
+    cout << "* Server (" << serverID_ << "."
+      << serverInstanceID_ << ") self terminated." << endl;
   }
 }
 
@@ -408,7 +410,7 @@ bool TestServer::registerWithManager()
       int diff = manager->endRetry();
       if (diff != 0)
       {
-        ACE_DEBUG((LM_DEBUG, "* Server Error: Not all retry attempts were made.\n"));
+        cout << "* Server Error: Not all retry attempts were made." << endl;
       }
       return false;
     }
@@ -417,8 +419,8 @@ bool TestServer::registerWithManager()
       serverInstanceID_  = manager->registerServer();
       if (serverInstanceID_ == -1)
       {
-        ACE_DEBUG((LM_DEBUG, "* Server (%d,%d) could not register.\n",
-                   serverID_, serverInstanceID_));
+        cout << "* Server (" << serverID_ << "."
+          << serverInstanceID_ << ") could not register." << endl;
         return false;
       }
     }
@@ -452,7 +454,7 @@ void TestServer::buildObjects()
       poaName = poaStream.str();
     }
 
-    ACE_DEBUG((LM_DEBUG, "* Creating POA: %s\n", poaName.c_str()));
+    cout << "* Creating POA:  " <<  poaName << endl;
 
     PortableServer::POA_var sub_poa = root_->create_POA(poaName.c_str(), mgr_.in(), policies);
 
@@ -467,7 +469,7 @@ void TestServer::buildObjects()
         objStream << "OBJ_" << serverID_ << "_" << (i + 1) << "_" << (j + 1);
         objName = objStream.str();
       }
-      ACE_DEBUG((LM_DEBUG, "* Activating Obj: %s\n", objName.c_str()));
+      cout << "* Activating Obj:  " << objName << endl;
 
       PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId(objName.c_str());
       sub_poa->activate_object_with_id(oid.in(), servant_.get());
@@ -506,7 +508,7 @@ void TestServer::buildObjects()
           corbaloc += key;
 
           // Write out corbaloc
-          iorFile << corbaloc.c_str() << endl;
+          iorFile << corbaloc << endl;
         }
       }
     }

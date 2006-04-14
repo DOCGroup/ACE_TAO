@@ -29,19 +29,17 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/Messaging/Messaging.h"
+#include "Messaging.h"
 #include "tao/CDR.h"
 #include "tao/Object_T.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Messaging/MessagingC.inl"
+#include "MessagingC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -239,5 +237,3 @@ Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
     
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

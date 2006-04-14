@@ -24,16 +24,11 @@
 
 #include "tao/Resource_Factory.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Reactor_Impl;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;
 class TAO_LF_Strategy;
 class TAO_Codeset_Descriptor_Base;
+class ACE_Reactor_Impl;
 
 /**
  * @class TAO_Default_Resource_Factory
@@ -108,7 +103,6 @@ public:
   virtual void reclaim_reactor (ACE_Reactor *);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
-  virtual void use_local_memory_pool (bool);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
@@ -213,10 +207,6 @@ protected:
   /// were processed before (or later).
   int factory_disabled_;
 
-  /// This flag is used to determine whether the cdr allocators
-  /// should use the local memory pool or not.
-  bool use_local_memory_pool_;
-
 private:
   void init_codeset_descriptors (void);
 
@@ -256,8 +246,6 @@ private:
   /// shutdown.
   bool drop_replies_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Resource_Factory)

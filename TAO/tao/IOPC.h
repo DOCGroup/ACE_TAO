@@ -56,8 +56,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61
 
@@ -68,8 +66,6 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1062
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -15,7 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,14 +30,12 @@
 #include "ace/os_include/sys/os_ipc.h"
 #include "ace/Default_Constants.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_SV_Shared_Memory
  *
  * @brief This is a wrapper for System V shared memory.
  */
-class ACE_Export ACE_SV_Shared_Memory
+class ACE_Memory_Export ACE_SV_Shared_Memory
 {
 public:
   enum
@@ -110,8 +113,6 @@ protected:
   /// Round up to an appropriate page size.
   size_t round_up (size_t len);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Shared_Memory.inl"

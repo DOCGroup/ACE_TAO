@@ -90,8 +90,8 @@ public:
   AST_Operation (AST_Type *return_type,
                  Flags flags,
                  UTL_ScopedName *n,
-                 bool local,
-                 bool abstract);
+                 idl_bool local,
+                 idl_bool abstract);
 
   // Destructor.
   virtual ~AST_Operation (void);

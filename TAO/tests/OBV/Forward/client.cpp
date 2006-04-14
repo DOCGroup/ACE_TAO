@@ -6,6 +6,7 @@
 #include "TreeNodeC.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Forward, client, "$Id$")
 
@@ -14,7 +15,7 @@ const char *ior = "file://test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -80,15 +81,17 @@ dump_tree (TreeController *tc)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // All factories are kindly provided by
@@ -151,14 +154,14 @@ main (int argc, char *argv[])
       // Now build simple graph (tree in our case).
 
       TreeController_var tc;
-      ACE_NEW_RETURN (tc.inout (),
+      ACE_NEW_RETURN (tc,
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn.inout (),
+        ACE_NEW_RETURN (sn,
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -167,7 +170,7 @@ main (int argc, char *argv[])
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy.inout (),
+          ACE_NEW_RETURN (dummy,
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
@@ -177,7 +180,7 @@ main (int argc, char *argv[])
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy.inout (),
+          ACE_NEW_RETURN (dummy,
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));

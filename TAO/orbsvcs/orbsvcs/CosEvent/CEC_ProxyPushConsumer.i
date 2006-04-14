@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
 TAO_CEC_ProxyPushConsumer::is_connected_i (void) const
@@ -46,5 +42,3 @@ TAO_CEC_ProxyPushConsumer_Guard::locked (void) const
 {
   return this->locked_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

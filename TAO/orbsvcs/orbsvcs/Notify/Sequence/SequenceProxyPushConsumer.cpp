@@ -1,16 +1,14 @@
 // $Id$
 
-#include "orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h"
+#include "SequenceProxyPushConsumer.h"
 
 ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushConsumer, "$Id$")
 
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Sequence/SequencePushSupplier.h"
-#include "orbsvcs/Notify/AdminProperties.h"
-#include "orbsvcs/Notify/Structured/StructuredEvent.h"
-#include "orbsvcs/Notify/Properties.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "SequencePushSupplier.h"
+#include "../AdminProperties.h"
+#include "../Structured/StructuredEvent.h"
+#include "../Properties.h"
 
 TAO_Notify_SequenceProxyPushConsumer::TAO_Notify_SequenceProxyPushConsumer (void)
 :pacing_interval_ (CosNotification::PacingInterval)
@@ -24,6 +22,7 @@ TAO_Notify_SequenceProxyPushConsumer::~TAO_Notify_SequenceProxyPushConsumer ()
 void
 TAO_Notify_SequenceProxyPushConsumer::release (void)
 {
+
   delete this;
   //@@ inform factory
 }
@@ -107,20 +106,17 @@ TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& att
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
-  if (attrs.load("PeerIOR", ior))
+  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
   {
     CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
     {
-      CosNotifyComm::SequencePushSupplier_var ps = CosNotifyComm::SequencePushSupplier::_nil();
-      if ( ior.length() > 0 )
-      {
-        CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        ps = CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
+      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CosNotifyComm::SequencePushSupplier_var ps =
+        CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
       // minor hack: suppress generating subscription updates during reload.
       bool save_updates = this->updates_off_;
       this->updates_off_ = true;
@@ -136,4 +132,3 @@ TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& att
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

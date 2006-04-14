@@ -8,14 +8,13 @@
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-// ===================================================================
+// =========================
 
 #ifndef TAO_CODESET_TRANSLATOR_BASE_H
 #define TAO_CODESET_TRANSLATOR_BASE_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/TAO_Export.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,17 +22,14 @@
 
 #include "tao/CONV_FRAMEC.h"
 #include "tao/Codeset_Translator_Base.h"
-#include "ace/Service_Object.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Char_Codeset_Translator;
-class ACE_WChar_Codeset_Translator;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "TAO_Export.h"
 
 class TAO_InputCDR;
 class TAO_OutputCDR;
+
+class ACE_Char_Codeset_Translator;
+class ACE_WChar_Codeset_Translator;
+
 
 // ****************************************************************
 
@@ -72,8 +68,5 @@ public:
   virtual void assign (TAO_OutputCDR *) const = 0;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Codeset_Translator_Base */

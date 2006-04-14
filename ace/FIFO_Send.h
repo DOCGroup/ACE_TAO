@@ -25,8 +25,6 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Default_Constants.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_FIFO_Send
  *
@@ -42,13 +40,13 @@ public:
   /// Open up a bytestream named pipe for writing.
   ACE_FIFO_Send (const ACE_TCHAR *rendezvous,
                  int flags = O_WRONLY,
-                 mode_t perms = ACE_DEFAULT_FILE_PERMS,
+                 int perms = ACE_DEFAULT_FILE_PERMS,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a bytestream named pipe for writing.
   int open (const ACE_TCHAR *rendezvous,
             int flags = O_WRONLY,
-            mode_t perms = ACE_DEFAULT_FILE_PERMS,
+            int perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Send <buf> of up to <len> bytes.
@@ -63,8 +61,6 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO_Send.inl"

@@ -77,7 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
 #include "ace/os_include/sys/os_types.h"
-#include "ace/SString.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
@@ -96,13 +95,13 @@ class TAO_IDL_FE_Export COMMON_Base
 {
 public:
 
-  COMMON_Base (bool local = false,
-               bool abstract = false);
+  COMMON_Base (idl_bool local = I_FALSE,
+               idl_bool abstract = I_FALSE);
 
   virtual ~COMMON_Base (void) {}
 
-  virtual bool is_local (void);
-  virtual bool is_abstract (void);
+  virtual idl_bool is_local (void);
+  virtual idl_bool is_abstract (void);
 
   // A no-op, overridden in the child classes.
   virtual void destroy (void);
@@ -111,8 +110,8 @@ public:
   DEF_NARROW_METHODS0(COMMON_Base);
 
 protected:
-  bool is_local_;
-  bool is_abstract_;
+  idl_bool is_local_;
+  idl_bool is_abstract_;
 };
 
 class TAO_IDL_FE_Export AST_Decl : public virtual COMMON_Base
@@ -164,17 +163,17 @@ public:
 
   AST_Decl (NodeType type,
             UTL_ScopedName *n,
-            bool anonymous = false);
+            idl_bool anonymous = I_FALSE);
 
   virtual ~AST_Decl (void);
 
   // Data Accessors.
 
-  bool imported (void);
-  void set_imported (bool is_it);
+  idl_bool imported (void);
+  void set_imported (idl_bool is_it);
 
-  bool in_main_file (void);
-  void set_in_main_file (bool is_it);
+  idl_bool in_main_file (void);
+  void set_in_main_file (idl_bool is_it);
 
   UTL_Scope *defined_in (void);
   void set_defined_in (UTL_Scope *);
@@ -184,8 +183,8 @@ public:
   long line (void);
   void set_line (long l);
 
-  ACE_CString file_name (void);
-  void set_file_name (ACE_CString s);
+  UTL_String *file_name (void);
+  void set_file_name (UTL_String *s);
 
   UTL_ScopedName *name (void);
 
@@ -221,12 +220,12 @@ public:
   void version (char *value);
   // Accessors for the version_ member.
 
-  bool anonymous (void) const;
-  void anonymous (bool val);
+  idl_bool anonymous (void) const;
+  void anonymous (idl_bool val);
   // Accessors for the anonymous_ member.
 
-  bool typeid_set (void) const;
-  void typeid_set (bool val);
+  idl_bool typeid_set (void) const;
+  void typeid_set (idl_bool val);
   // Accessors for the typeid_set_ member.
 
   void set_id_with_typeid (char *value);
@@ -245,8 +244,8 @@ public:
   Identifier *original_local_name (void);
   void original_local_name (Identifier *);
 
-  bool added (void);
-  void set_added (bool is_it);
+  idl_bool added (void);
+  void set_added (idl_bool is_it);
 
   // Narrowing.
   DEF_NARROW_METHODS0(AST_Decl);
@@ -264,12 +263,12 @@ public:
   // Other operations
 
   // Return TRUE if "this" has "s" as an ancestor.
-  bool has_ancestor (AST_Decl *s);
+  idl_bool has_ancestor (AST_Decl *s);
 
   // Return TRUE if "this" is a child of "s".
-  bool is_child (AST_Decl *s);
+  idl_bool is_child (AST_Decl *s);
 
-  bool is_nested (void);
+  idl_bool is_nested (void);
   // Determines if we are inside of a nested scope or not.
 
   UTL_ScopedName *last_referenced_as (void) const;
@@ -311,10 +310,10 @@ protected:
 private:
   // Data
 
-  bool pd_imported;
+  idl_bool pd_imported;
   // Imported?
 
-  bool pd_in_main_file;
+  idl_bool pd_in_main_file;
   // Defined in main file?
 
   UTL_Scope *pd_defined_in;
@@ -326,7 +325,7 @@ private:
   long pd_line;
   // Line defined in.
 
-  ACE_CString pd_file_name;
+  UTL_String *pd_file_name;
   // What file defined in.
 
   UTL_ScopedName *pd_name;
@@ -337,7 +336,7 @@ private:
   Identifier *pd_original_local_name;
   // _cxx_ removed if any.
 
-  bool pd_added;
+  idl_bool pd_added;
   // Already added.
 
   char *full_name_;
@@ -349,10 +348,10 @@ private:
   char *version_;
   // Set by #pragma version.
 
-  bool anonymous_;
+  idl_bool anonymous_;
   // Are we an anonymous (no repo ID) type?
 
-  bool typeid_set_;
+  idl_bool typeid_set_;
   // Has our repo id been set by a typeId declaration?
 
   UTL_ScopedName *last_referenced_as_;

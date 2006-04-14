@@ -1,4 +1,4 @@
-#include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
+#include "LB_ObjectReferenceFactory.h"
 
 ACE_RCSID (LoadBalancing,
            LB_ObjectReferenceFactory,
@@ -11,8 +11,6 @@ ACE_RCSID (LoadBalancing,
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The number of different object groups to support.
 #ifndef TAO_LB_ORF_GROUP_TABLE_SIZE
@@ -255,5 +253,3 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (const char * repository_id,
   return 0;
 }
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL

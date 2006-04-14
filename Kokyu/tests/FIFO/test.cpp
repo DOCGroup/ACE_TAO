@@ -149,7 +149,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'p':
-        sched_policy_str = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        sched_policy_str = ACE_TEXT_TO_CHAR_IN(get_opts.opt_arg ());
         break;
 
       case '?':

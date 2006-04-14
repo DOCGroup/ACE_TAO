@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 /**
  *  @file ECG_CDR_Message_Receiver.h
  *
@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "ECG_UDP_Out_Endpoint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +25,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_CDR_Processor
@@ -307,10 +305,8 @@ private:
   size_t min_purge_count_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_CDR_Message_Receiver.i"
+#include "ECG_CDR_Message_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

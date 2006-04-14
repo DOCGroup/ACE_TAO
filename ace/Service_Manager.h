@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -24,13 +24,11 @@
 #include "ace/INET_Addr.h"
 #include "ace/Service_Object.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Service_Manager
  *
  * @brief Provide a standard ACE service for managing all the services
- * configured in an ACE_Service_Repository.
+ * configured in an <ACE_Service_Repository>.
  *
  * This implementation is simple and just handles each client
  * request one at a time.  There are currently 3 types of requests:
@@ -114,7 +112,9 @@ protected:
   static u_short DEFAULT_PORT_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+#if defined (__ACE_INLINE__)
+#include "ace/Service_Manager.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* _SERVICE_MANAGER_H */

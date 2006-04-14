@@ -1,13 +1,11 @@
 // -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Any_Unknown_IDL_Type.h
  *
  *  $Id$
  *
- *  @author Carlos O'Ryan
- *  @author Jeff Parsons
+ *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================
 
@@ -25,12 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -73,8 +67,6 @@ namespace TAO
     mutable TAO_InputCDR cdr_;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

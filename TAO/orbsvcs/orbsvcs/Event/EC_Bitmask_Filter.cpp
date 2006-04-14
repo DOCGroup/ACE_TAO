@@ -1,14 +1,13 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Bitmask_Filter.h"
+#include "EC_Bitmask_Filter.h"
 
 ACE_RCSID(Event, EC_Bitmask_Filter, "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_Bitmask_Filter::TAO_EC_Bitmask_Filter (CORBA::ULong source_mask,
-					      CORBA::ULong type_mask,
-					      TAO_EC_Filter* child)
+TAO_EC_Bitmask_Filter::
+    TAO_EC_Bitmask_Filter (CORBA::ULong source_mask,
+                           CORBA::ULong type_mask,
+                           TAO_EC_Filter* child)
   :  source_mask_ (source_mask),
      type_mask_ (type_mask),
      child_ (child)
@@ -118,5 +117,3 @@ TAO_EC_Bitmask_Filter::add_dependencies (
 {
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

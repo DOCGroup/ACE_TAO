@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 //
 // ============================================================================
@@ -19,7 +18,7 @@
 #ifndef TAO_ETCL_CONSTRAINT_H
 #define TAO_ETCL_CONSTRAINT_H
 
-#include "orbsvcs/ETCL/etcl_export.h"
+#include "etcl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,8 +27,6 @@
 #include "ace/SString.h"
 
 #include "tao/Basic_Types.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef unsigned short TAO_Literal_Type;
 #define TAO_UNKNOWN 999
@@ -422,10 +419,8 @@ private:
   TAO_ETCL_Constraint *subexpr_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ETCL/ETCL_Constraint.inl"
+#include "ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_ETCL_CONSTRAINT_H */

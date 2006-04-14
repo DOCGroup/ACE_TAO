@@ -17,22 +17,22 @@ public:
                            const char *full_name)
       throw (CORBA::SystemException);
 
-  void get_price_and_names_excep (::Messaging::ExceptionHolder *)
+  void get_price_and_names_excep (Quoter::AMI_Single_Query_StockExceptionHolder *)
     throw (CORBA::SystemException);
 
   void get_symbol(const char *)
     throw (CORBA::SystemException);
-  void get_symbol_excep (::Messaging::ExceptionHolder *)
+  void get_symbol_excep (Quoter::AMI_StockExceptionHolder *)
     throw (CORBA::SystemException);
 
   void get_full_name (const char *)
     throw (CORBA::SystemException);
-  void get_full_name_excep (::Messaging::ExceptionHolder *)
+  void get_full_name_excep (Quoter::AMI_StockExceptionHolder *)
     throw (CORBA::SystemException);
 
   void price (double)
     throw (CORBA::SystemException);
-  void price_excep (::Messaging::ExceptionHolder *)
+  void price_excep (Quoter::AMI_StockExceptionHolder *)
     throw (CORBA::SystemException);
 
 private:

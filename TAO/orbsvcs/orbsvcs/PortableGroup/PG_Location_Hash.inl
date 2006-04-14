@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE CORBA::ULong
 TAO_PG_Location_Hash::operator() (
   const PortableGroup::Location &location) const
@@ -21,5 +19,3 @@ TAO_PG_Location_Hash::operator() (
 
   return hash;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

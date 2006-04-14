@@ -103,7 +103,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
           << ";";
     }
 
-  node->cli_stub_gen (true);
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }
 

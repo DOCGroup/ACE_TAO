@@ -78,7 +78,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Node valuetype inherits from other valuetypes (OMG 20.17.9)
   // (ordinary (not abstract) interfaces ignored).
 
-  *os << be_idt_nl << ": " << be_idt;
+  *os << be_idt_nl <<": " << be_idt;
 
   long i;  // loop index
   be_valuetype *inherited = 0;
@@ -134,13 +134,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   **      2.3) Make the destructor public (instead of protected)
   **      2.4) Generate a private CORBA::Exception* field.
   **      2.5) Generate the tao_marshal and tao_unmarshal methods as
-  **           non-abstract.
+  **           non-abstarct.
   **      2.6) Generate the right throw spec for the AMH ExceptionHolders
   ************************************************************************/
 
   /****************************************************************/
   // 1) Find out if the ValueType is an AMH_*ExceptionHolder
-  bool is_an_amh_exception_holder = this->is_amh_exception_holder (node);
+  idl_bool is_an_amh_exception_holder = this->is_amh_exception_holder (node);
 
   if (is_an_amh_exception_holder)
     {
@@ -151,7 +151,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
       *os << "public virtual ::CORBA::DefaultValueRefCountBase";
     }
-  else if (node->node_type () == AST_Decl::NT_eventtype)
+
+  if (node->node_type () == AST_Decl::NT_eventtype)
     {
       if (inherits_eventtype == 0)
         {
@@ -165,6 +166,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
   else if (n_inherits == 0)
     {
+      if (is_an_amh_exception_holder)
+        {
+          *os << "," << be_nl;
+        }
+
       *os << "public virtual ::CORBA::ValueBase";
     }
 
@@ -228,8 +234,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     node->traverse_supports_list_graphs (
         be_visitor_valuetype_ch::gen_supported_ops,
         os,
-        false,
-        true
+        I_FALSE,
+        I_TRUE
       );
 
   if (status == -1)
@@ -259,7 +265,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // instantiate us.
   *os << be_uidt_nl << be_nl << "protected:" << be_idt_nl
       << node->local_name ()
-      << " (void);" << be_nl;
+      << " (void);" << be_nl << be_nl;
 
   if (!is_an_amh_exception_holder)
     {
@@ -373,7 +379,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
         }
     }
 
-  node->cli_hdr_gen (true);
+  node->cli_hdr_gen (I_TRUE);
 
   return 0;
 }
@@ -476,8 +482,7 @@ be_visitor_valuetype_ch::begin_public (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_uidt_nl << be_nl << "public:"
-      << be_idt;
+  *os << "public:" << be_idt_nl;
 }
 
 void
@@ -485,8 +490,7 @@ be_visitor_valuetype_ch::begin_private (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_uidt_nl << be_nl << "protected:"
-      << be_idt;
+  *os << be_uidt_nl << be_nl << "protected:" << be_idt;
 }
 
 int

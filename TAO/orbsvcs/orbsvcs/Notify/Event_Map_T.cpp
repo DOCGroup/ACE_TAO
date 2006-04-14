@@ -1,19 +1,19 @@
 // $Id$
 
-#ifndef TAO_Notify_EVENT_MAP_T_CPP
-#define TAO_Notify_EVENT_MAP_T_CPP
+#ifndef TAO_Notify_EVENT_MAP_T_C
+#define TAO_Notify_EVENT_MAP_T_C
 
-#include "orbsvcs/Notify/Event_Map_T.h"
+#include "Event_Map_T.h"
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
-#include "orbsvcs/Notify/Event_Map_Entry_T.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/Factory.h"
+#include "Event_Map_Entry_T.h"
+#include "Properties.h"
+#include "Factory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Event_Map_T.inl"
+#include "Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(Notify, TAO_Notify_Event_Map_T, "$Id$")
 
 template <class PROXY, class ACE_LOCK>
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::TAO_Notify_Event_Map_T (void)
@@ -161,6 +161,4 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_Notify_EVENT_MAP_T_CPP */
+#endif /* TAO_Notify_EVENT_MAP_T_C */

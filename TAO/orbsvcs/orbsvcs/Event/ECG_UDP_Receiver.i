@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_UDP_Receiver_Disconnect_Command::
@@ -102,5 +98,3 @@ TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
   this->addr_server_->get_addr (header, addr
                                 ACE_ENV_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

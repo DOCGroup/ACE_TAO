@@ -117,7 +117,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
                   "",
                   bl[i].binding_name[0].id.in ()));
 
-      if (ACE_OS::strlen (bl[i].binding_name[0].kind) > 0)
+      if (ACE_OS::strlen (bl[i].binding_name[0].kind.in()) > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "(%s)",
                     bl[i].binding_name[0].kind.in ()));

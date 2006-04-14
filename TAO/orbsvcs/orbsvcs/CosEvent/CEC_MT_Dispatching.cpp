@@ -1,13 +1,8 @@
 // $Id$
 
-#include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
+#include "CEC_MT_Dispatching.h"
 
 ACE_RCSID(CosEvent, CEC_MT_Dispatching, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
 
 TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
                                                 int thread_creation_flags,
@@ -104,5 +99,3 @@ TAO_CEC_MT_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
   this->task_.invoke (proxy, typed_event ACE_ENV_ARG_PARAMETER);
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/Key_Adapters.h"
+#include "Key_Adapters.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -10,9 +10,7 @@ ACE_RCSID (PortableServer,
            Key_Adapters,
            "$Id$")
 
-///////////////////////////////////////////////////////////////////////////////
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+////////////////////////////////////////////////////////////////////////////////
 
 TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator (void)
   : counter_ (0)
@@ -148,5 +146,4 @@ TAO_Preserve_Original_Key_Adapter::decode (const PortableServer::ObjectId &modif
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
+////////////////////////////////////////////////////////////////////////////////

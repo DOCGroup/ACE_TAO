@@ -22,10 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 class INS_Locator;
 
 // Gets a request from a client and depending on the POA name,

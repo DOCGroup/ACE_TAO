@@ -1,4 +1,4 @@
-// $Id$
+// @(#) $Id$
 
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "tao/AnyTypeCode/SystemExceptionA.h"
@@ -6,11 +6,9 @@
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID (AnyTypeCode,
+ACE_RCSID (tao,
            TAO_AnyTypeCode_Adapter,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define STANDARD_EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \
@@ -92,42 +90,6 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Short va
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::UShort value)
-{
-  (*any) <<= value;
-}
-
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Float value)
-{
-  (*any) <<= value;
-}
-
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Double value)
-{
-  (*any) <<= value;
-}
-
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::LongLong value)
-{
-  (*any) <<= value;
-}
-
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::ULongLong value)
-{
-  (*any) <<= value;
-}
-
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::LongDouble value)
-{
-  (*any) <<= value;
-}
-
-void
 TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy)
 {
   (*any) <<= policy;
@@ -177,7 +139,6 @@ TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
       );
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   TAO_AnyTypeCode_Adapter_Impl,

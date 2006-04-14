@@ -1,11 +1,12 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file Property_T.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
+ *
+ *
  */
 
 #ifndef TAO_Notify_PROPERTY_T_H
@@ -13,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +23,6 @@
 #include "ace/SString.h"
 
 #include "orbsvcs/CosNotificationC.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_PropertySeq;
 
@@ -152,14 +151,12 @@ protected:
   CORBA::Boolean valid_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Property_T.inl"
+#include "Property_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/Property_T.cpp"
+#include "Property_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

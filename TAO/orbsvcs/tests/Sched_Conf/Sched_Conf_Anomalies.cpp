@@ -22,9 +22,9 @@ const char* format_string = "{%-12s, %d, %d, %d, %d, %8d, "
                             "static_cast<RtecScheduler::Info_Type_t> (%d)}\n";
 
 int
-parse_args (int argc, char *argv [])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "n:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -49,7 +49,7 @@ parse_args (int argc, char *argv [])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) != 0)
   {

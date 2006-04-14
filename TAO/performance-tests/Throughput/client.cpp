@@ -16,7 +16,7 @@ int do_shutdown = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:b:i:n:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:b:i:n:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -59,7 +59,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

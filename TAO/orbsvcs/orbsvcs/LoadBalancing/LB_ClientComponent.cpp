@@ -1,5 +1,5 @@
-#include "orbsvcs/LoadBalancing/LB_ClientComponent.h"
-#include "orbsvcs/LoadBalancing/LB_ClientORBInitializer.h"
+#include "LB_ClientComponent.h"
+#include "LB_ClientORBInitializer.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -7,8 +7,6 @@
 ACE_RCSID (LoadBalancing,
            LB_ClientComponent,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_LB_ClientComponent::init (int /* argc */, ACE_TCHAR * /* argv */[])
@@ -57,7 +55,6 @@ TAO_LB_ClientComponent::register_orb_initializer (void)
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_LB_ClientComponent,
                        ACE_TEXT ("LB_ClientComponent"),

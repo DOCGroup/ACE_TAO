@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <typename StringType,
           typename TypeCodeType,
           class CaseArrayType,
@@ -55,5 +53,3 @@ TAO::TypeCode::Union<StringType,
   , cases_ ()
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

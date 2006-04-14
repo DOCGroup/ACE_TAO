@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,8 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IOR_Parser.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_DLL_Parser
@@ -52,7 +49,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Such an application could be written as follows:
  *
- * int main (int argc, char* argv)
+ * int ACE_TMAIN (int argc, char* argv)
  * {
  *   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
  *
@@ -74,9 +71,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * loaded without any modifications to the application code.
  *
  */
-class TAO_DLL_Parser : public TAO_IOR_Parser
+class TAO_Export TAO_DLL_Parser : public TAO_IOR_Parser
 {
 public:
+  /// Constructor
+  TAO_DLL_Parser (void);
 
   /// The destructor
   virtual ~TAO_DLL_Parser (void);
@@ -90,7 +89,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+#if defined (__ACE_INLINE__)
+# include "DLL_Parser.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_Parser)

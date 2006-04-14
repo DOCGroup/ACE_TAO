@@ -16,8 +16,6 @@ ACE_RCSID (ace,
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager_Base.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // = Static initialization.
 
 // Keeps track of how far to indent per trace call.
@@ -133,5 +131,3 @@ ACE_Trace::~ACE_Trace (void)
         }
     }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

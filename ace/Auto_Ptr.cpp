@@ -1,7 +1,8 @@
+// Auto_Ptr.cpp
 // $Id$
 
-#ifndef ACE_AUTO_PTR_CPP
-#define ACE_AUTO_PTR_CPP
+#if !defined (ACE_AUTO_PTR_C)
+#define ACE_AUTO_PTR_C
 
 #include "ace/Auto_Ptr.h"
 
@@ -11,12 +12,9 @@
 
 ACE_RCSID(ace, Auto_Ptr, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Ptr)
-ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Array_Ptr)
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Array_Ptr)
 
 #if defined (__MINGW32__)
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
@@ -29,4 +27,4 @@ template alloc;
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY != 0 */
 #endif /* __MINGW32__ */
 
-#endif /* ACE_AUTO_PTR_CPP */
+#endif /* ACE_AUTO_PTR_C */

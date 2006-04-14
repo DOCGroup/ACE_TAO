@@ -13,8 +13,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Message_Queue_Base::~ACE_Message_Queue_Base (void)
 {
 }
@@ -371,8 +369,9 @@ ACE_Message_Queue_Vx::wait_not_empty_cond (ACE_Guard<ACE_Null_Mutex> &mon,
 #if ! defined (ACE_NEEDS_FUNC_DEFINITIONS)
 int
 ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
-                                         ACE_Time_Value *)
+                                         ACE_Time_Value *tv)
 {
+  ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
 }
 #endif /* ! ACE_NEEDS_FUNC_DEFINITIONS */
@@ -432,11 +431,11 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
       size_t mlength = new_item->total_length ();
       // Note - we send ACTIVATED in the 3rd arg to tell the completion
       // routine it's _NOT_ being woken up because of deactivate().
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-      DWORD state_to_post;
-#else
+#if defined (ACE_WIN64)
       ULONG_PTR state_to_post;
-#endif
+#else
+      DWORD state_to_post;
+#endif /* ACE_WIN64 */
       state_to_post = ACE_Message_Queue_Base::ACTIVATED;
       if (::PostQueuedCompletionStatus (this->completion_port_,
                                         static_cast<DWORD> (msize),
@@ -446,7 +445,7 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
           // Update the states once I succeed.
           this->cur_bytes_ += msize;
           this->cur_length_ += mlength;
-          return ACE_Utils::Truncate (++this->cur_count_);
+          return ++this->cur_count_;
         }
     }
   else
@@ -475,11 +474,11 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
       ++this->cur_thrs_;        // Increase the waiting thread count.
   }
 
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-  DWORD queue_state;
-#else
+#if defined (ACE_WIN64)
   ULONG_PTR queue_state;
-#endif
+#else
+  DWORD queue_state;
+#endif /* ACE_WIN64 */
   DWORD msize;
   // Get a message from the completion port.
   int retv = ::GetQueuedCompletionStatus (this->completion_port_,
@@ -497,7 +496,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
             --this->cur_count_;
             this->cur_bytes_ -= msize;
             this->cur_length_ -= first_item->total_length ();
-            return ACE_Utils::Truncate (this->cur_count_);
+            return this->cur_count_;
           }
         else                    // Woken up by deactivate () or pulse ().
             errno = ESHUTDOWN;
@@ -606,5 +605,3 @@ ACE_Message_Queue_NT::dump (void) const
 }
 
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

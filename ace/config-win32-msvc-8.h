@@ -32,7 +32,13 @@
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #endif
 
+// Win64 SDK compiler claims std::auto_ptr<>::reset not available.
+#if defined (_WIN64) || defined (WIN64)
+#define ACE_AUTO_PTR_LACKS_RESET
+#endif
+
 #define ACE_HAS_TYPENAME_KEYWORD
+#define ACE_HAS_USING_KEYWORD
 
 #define ACE_HAS_ITOA
 
@@ -44,13 +50,15 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
-#define ACE_HAS_EXCEPTIONS
-#define ACE_HAS_NEW_NOTHROW
-
+//#if defined (_WIN32_WCE) && (_WIN32_WCE < 0x500)
+//#  define ACE_LACKS_RTTI
+//#else
+#  define ACE_HAS_EXCEPTIONS
 // Windows Mobile 5 doesn't do sig_atomic_t, but maybe future versions will.
 #  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x501)
 #    define ACE_HAS_SIG_ATOMIC_T
 #  endif /* !Win CE 5.0 or less */
+//#endif /* _WIN32_WCE && _WIN32_WCE < 500 */
 
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME
@@ -65,7 +73,8 @@
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 #define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
-#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
+#define ACE_UINT64_FORMAT_SPECIFIER_A "%I64u"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
 
 // Platform provides ACE_TLI function prototypes.
 // For Win32, this is not really true, but saves a lot of hassle!

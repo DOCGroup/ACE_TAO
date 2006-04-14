@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  Dispatch the reply appropriately.
+ *   Dispatch the reply appropriately.
+ *
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
@@ -25,8 +26,6 @@
 
 #include "tao/LF_Invocation_Event.h"
 #include "tao/CDR.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
 
@@ -87,8 +86,6 @@ private:
   /// demarshalled by the stubs
   TAO_InputCDR reply_cdr_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_SINGLETON_CPP
-#define ACE_SINGLETON_CPP
+#ifndef ACE_SINGLETON_C
+#define ACE_SINGLETON_C
 
 #include "ace/Singleton.h"
 
@@ -21,9 +21,6 @@
 ACE_RCSID (ace,
            Singleton,
            "$Id$")
-
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
@@ -526,9 +523,7 @@ ACE_DLL_Singleton_Adapter_T<TYPE>::dll_name (void)
 {
   // @todo make this a constant somewhere (or it there already is one
   // then use it.
-  return ACE_TEXT("ACE");
+  return ACE_LIB_TEXT("ACE");
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_SINGLETON_CPP */
+#endif /* ACE_SINGLETON_C */

@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "tao/RTScheduling/RTScheduler_Initializer.h"
-#include "tao/RTScheduling/Request_Interceptor.h"
+#include "RTScheduler_Initializer.h"
+#include "Request_Interceptor.h"
 
 ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
@@ -17,10 +17,6 @@ ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 #include "tao/debug.h"
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-static TAO_RTScheduler_Current_var current_cleanup;
 
 void
  TAO_RTScheduler_ORB_Initializer::pre_init (
@@ -67,18 +63,18 @@ void
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  current_cleanup = this->current_;
-
   this->current_->init (tao_info->orb_core ()
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var current_obj = RTScheduling::Current::_narrow (this->current_
+  CORBA::Object_ptr current_obj = RTScheduling::Current::_narrow (this->current_
                                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  CORBA::Object_var safe_current = current_obj;
+
   info->register_initial_reference ("RTScheduler_Current",
-                                    current_obj.in ()
+                                    current_obj
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -135,6 +131,8 @@ void
                                     manager
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+
 }
 
 void
@@ -155,12 +153,12 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
     ACE_DEBUG ((LM_DEBUG,
                 "In post_init\n"));
 
-  CORBA::Object_var rt_current_obj = info->resolve_initial_references ("RTCurrent"
+  CORBA::Object_ptr rt_current_obj = info->resolve_initial_references ("RTCurrent"
                                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 
-  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj.in ()
+  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj
                                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -174,5 +172,3 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
 
   this->current_->rt_current (rt_current.in ());
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

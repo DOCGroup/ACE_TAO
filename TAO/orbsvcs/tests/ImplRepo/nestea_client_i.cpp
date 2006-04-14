@@ -3,6 +3,7 @@
 #include "nestea_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/ACE.h"
 
@@ -22,7 +23,7 @@ Nestea_Client_i::Nestea_Client_i (void)
 int
 Nestea_Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dsn:k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "dsn:k:");
   int c;
 
   while ((c = get_opts ()) != -1)

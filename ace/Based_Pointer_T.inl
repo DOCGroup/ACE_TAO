@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #define ACE_COMPUTE_BASED_POINTER(P) (((char *) (P) - (P)->base_offset_) + (P)->target_)
 #include "ace/Global_Macros.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class CONCRETE> ACE_INLINE CONCRETE *
 ACE_Based_Pointer<CONCRETE>::operator->(void)
@@ -135,5 +132,3 @@ ACE_Based_Pointer<CONCRETE>::operator= (const ACE_Based_Pointer<CONCRETE> &rhs)
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::operator=");
   *this = rhs.addr ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

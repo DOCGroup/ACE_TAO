@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file CEC_Event_Loader.h
  *
@@ -19,17 +17,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "CEC_EventChannel.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "CEC_TypedEventChannel.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #include "orbsvcs/CosNamingC.h"
 
 #include "ace/Service_Config.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Event_Loader
@@ -98,12 +94,9 @@ protected:
   CosNaming::Name channel_name_;
 
 private:
-  // Disallow copying and assignment.
-  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &);
-  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &);
+  ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &))
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_Event_Serv, TAO_CEC_Event_Loader)
 

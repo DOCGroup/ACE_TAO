@@ -29,14 +29,12 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/Messaging/Messaging_No_ImplC.h"
+#include "Messaging_No_ImplC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -1490,5 +1488,3 @@ Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
     (strm >> _tao_aggregate.min) &&
     (strm >> _tao_aggregate.max);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

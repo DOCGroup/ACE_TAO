@@ -44,8 +44,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_CDR_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
@@ -231,11 +229,3 @@ TAO_InputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
 
     }
 }
-
-ACE_Message_Block::Message_Flags
-TAO_InputCDR::clr_mb_flags( ACE_Message_Block::Message_Flags less_flags )
-{
-  return start_.clr_self_flags( less_flags );
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL

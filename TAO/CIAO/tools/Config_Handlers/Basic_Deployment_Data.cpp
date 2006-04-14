@@ -141,55 +141,81 @@ namespace CIAO
     regulator__ ()
     {
       {
-        for (short_const_iterator i (s.short_.begin ());i != s.short_.end ();++i) add_short (*i);
+        for (short_const_iterator i (s.short_.begin ());
+        i != s.short_.end ();
+        ++i) add_short (*i);
       }
 
       {
-        for (long_const_iterator i (s.long_.begin ());i != s.long_.end ();++i) add_long (*i);
+        for (long_const_iterator i (s.long_.begin ());
+        i != s.long_.end ();
+        ++i) add_long (*i);
       }
 
       {
-        for (ushort_const_iterator i (s.ushort_.begin ());i != s.ushort_.end ();++i) add_ushort (*i);
+        for (ushort_const_iterator i (s.ushort_.begin ());
+        i != s.ushort_.end ();
+        ++i) add_ushort (*i);
       }
 
       {
-        for (ulong_const_iterator i (s.ulong_.begin ());i != s.ulong_.end ();++i) add_ulong (*i);
+        for (ulong_const_iterator i (s.ulong_.begin ());
+        i != s.ulong_.end ();
+        ++i) add_ulong (*i);
       }
 
       {
-        for (float_const_iterator i (s.float_.begin ());i != s.float_.end ();++i) add_float (*i);
+        for (float_const_iterator i (s.float_.begin ());
+        i != s.float_.end ();
+        ++i) add_float (*i);
       }
 
       {
-        for (double_const_iterator i (s.double_.begin ());i != s.double_.end ();++i) add_double (*i);
+        for (double_const_iterator i (s.double_.begin ());
+        i != s.double_.end ();
+        ++i) add_double (*i);
       }
 
       {
-        for (boolean_const_iterator i (s.boolean_.begin ());i != s.boolean_.end ();++i) add_boolean (*i);
+        for (boolean_const_iterator i (s.boolean_.begin ());
+        i != s.boolean_.end ();
+        ++i) add_boolean (*i);
       }
 
       {
-        for (octet_const_iterator i (s.octet_.begin ());i != s.octet_.end ();++i) add_octet (*i);
+        for (octet_const_iterator i (s.octet_.begin ());
+        i != s.octet_.end ();
+        ++i) add_octet (*i);
       }
 
       {
-        for (enum_const_iterator i (s.enum_.begin ());i != s.enum_.end ();++i) add_enum (*i);
+        for (enum_const_iterator i (s.enum_.begin ());
+        i != s.enum_.end ();
+        ++i) add_enum (*i);
       }
 
       {
-        for (string_const_iterator i (s.string_.begin ());i != s.string_.end ();++i) add_string (*i);
+        for (string_const_iterator i (s.string_.begin ());
+        i != s.string_.end ();
+        ++i) add_string (*i);
       }
 
       {
-        for (longlong_const_iterator i (s.longlong_.begin ());i != s.longlong_.end ();++i) add_longlong (*i);
+        for (longlong_const_iterator i (s.longlong_.begin ());
+        i != s.longlong_.end ();
+        ++i) add_longlong (*i);
       }
 
       {
-        for (ulonglong_const_iterator i (s.ulonglong_.begin ());i != s.ulonglong_.end ();++i) add_ulonglong (*i);
+        for (ulonglong_const_iterator i (s.ulonglong_.begin ());
+        i != s.ulonglong_.end ();
+        ++i) add_ulonglong (*i);
       }
 
       {
-        for (longdouble_const_iterator i (s.longdouble_.begin ());i != s.longdouble_.end ();++i) add_longdouble (*i);
+        for (longdouble_const_iterator i (s.longdouble_.begin ());
+        i != s.longdouble_.end ();
+        ++i) add_longdouble (*i);
       }
     }
 
@@ -198,67 +224,93 @@ namespace CIAO
     {
       short_.clear ();
       {
-        for (short_const_iterator i (s.short_.begin ());i != s.short_.end ();++i) add_short (*i);
+        for (short_const_iterator i (s.short_.begin ());
+        i != s.short_.end ();
+        ++i) add_short (*i);
       }
 
       long_.clear ();
       {
-        for (long_const_iterator i (s.long_.begin ());i != s.long_.end ();++i) add_long (*i);
+        for (long_const_iterator i (s.long_.begin ());
+        i != s.long_.end ();
+        ++i) add_long (*i);
       }
 
       ushort_.clear ();
       {
-        for (ushort_const_iterator i (s.ushort_.begin ());i != s.ushort_.end ();++i) add_ushort (*i);
+        for (ushort_const_iterator i (s.ushort_.begin ());
+        i != s.ushort_.end ();
+        ++i) add_ushort (*i);
       }
 
       ulong_.clear ();
       {
-        for (ulong_const_iterator i (s.ulong_.begin ());i != s.ulong_.end ();++i) add_ulong (*i);
+        for (ulong_const_iterator i (s.ulong_.begin ());
+        i != s.ulong_.end ();
+        ++i) add_ulong (*i);
       }
 
       float_.clear ();
       {
-        for (float_const_iterator i (s.float_.begin ());i != s.float_.end ();++i) add_float (*i);
+        for (float_const_iterator i (s.float_.begin ());
+        i != s.float_.end ();
+        ++i) add_float (*i);
       }
 
       double_.clear ();
       {
-        for (double_const_iterator i (s.double_.begin ());i != s.double_.end ();++i) add_double (*i);
+        for (double_const_iterator i (s.double_.begin ());
+        i != s.double_.end ();
+        ++i) add_double (*i);
       }
 
       boolean_.clear ();
       {
-        for (boolean_const_iterator i (s.boolean_.begin ());i != s.boolean_.end ();++i) add_boolean (*i);
+        for (boolean_const_iterator i (s.boolean_.begin ());
+        i != s.boolean_.end ();
+        ++i) add_boolean (*i);
       }
 
       octet_.clear ();
       {
-        for (octet_const_iterator i (s.octet_.begin ());i != s.octet_.end ();++i) add_octet (*i);
+        for (octet_const_iterator i (s.octet_.begin ());
+        i != s.octet_.end ();
+        ++i) add_octet (*i);
       }
 
       enum_.clear ();
       {
-        for (enum_const_iterator i (s.enum_.begin ());i != s.enum_.end ();++i) add_enum (*i);
+        for (enum_const_iterator i (s.enum_.begin ());
+        i != s.enum_.end ();
+        ++i) add_enum (*i);
       }
 
       string_.clear ();
       {
-        for (string_const_iterator i (s.string_.begin ());i != s.string_.end ();++i) add_string (*i);
+        for (string_const_iterator i (s.string_.begin ());
+        i != s.string_.end ();
+        ++i) add_string (*i);
       }
 
       longlong_.clear ();
       {
-        for (longlong_const_iterator i (s.longlong_.begin ());i != s.longlong_.end ();++i) add_longlong (*i);
+        for (longlong_const_iterator i (s.longlong_.begin ());
+        i != s.longlong_.end ();
+        ++i) add_longlong (*i);
       }
 
       ulonglong_.clear ();
       {
-        for (ulonglong_const_iterator i (s.ulonglong_.begin ());i != s.ulonglong_.end ();++i) add_ulonglong (*i);
+        for (ulonglong_const_iterator i (s.ulonglong_.begin ());
+        i != s.ulonglong_.end ();
+        ++i) add_ulonglong (*i);
       }
 
       longdouble_.clear ();
       {
-        for (longdouble_const_iterator i (s.longdouble_.begin ());i != s.longdouble_.end ();++i) add_longdouble (*i);
+        for (longdouble_const_iterator i (s.longdouble_.begin ());
+        i != s.longdouble_.end ();
+        ++i) add_longdouble (*i);
       }
 
       return *this;
@@ -765,7 +817,7 @@ namespace CIAO
 
     EnumType::
     EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
-              ::XMLSchema::string< ACE_TCHAR > const& typeId__)
+    ::XMLSchema::string< ACE_TCHAR > const& typeId__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -787,7 +839,9 @@ namespace CIAO
       name_->container (this);
       typeId_->container (this);
       {
-        for (member_const_iterator i (s.member_.begin ());i != s.member_.end ();++i) add_member (*i);
+        for (member_const_iterator i (s.member_.begin ());
+        i != s.member_.end ();
+        ++i) add_member (*i);
       }
     }
 
@@ -800,7 +854,9 @@ namespace CIAO
 
       member_.clear ();
       {
-        for (member_const_iterator i (s.member_.begin ());i != s.member_.end ();++i) add_member (*i);
+        for (member_const_iterator i (s.member_.begin ());
+        i != s.member_.end ();
+        ++i) add_member (*i);
       }
 
       return *this;
@@ -879,7 +935,7 @@ namespace CIAO
 
     Any::
     Any (::CIAO::Config_Handlers::DataType const& type__,
-         ::CIAO::Config_Handlers::DataValue const& value__)
+    ::CIAO::Config_Handlers::DataValue const& value__)
     : 
     ::XSCRT::Type (), 
     type_ (new ::CIAO::Config_Handlers::DataType (type__)),
@@ -947,7 +1003,7 @@ namespace CIAO
 
     Property::
     Property (::XMLSchema::string< ACE_TCHAR > const& name__,
-              ::CIAO::Config_Handlers::Any const& value__)
+    ::CIAO::Config_Handlers::Any const& value__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -1042,8 +1098,8 @@ namespace CIAO
 
     SatisfierProperty::
     SatisfierProperty (::XMLSchema::string< ACE_TCHAR > const& name__,
-                       ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
-                       ::CIAO::Config_Handlers::Any const& value__)
+    ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
+    ::CIAO::Config_Handlers::Any const& value__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -1130,13 +1186,19 @@ namespace CIAO
     // 
 
     Resource::
-    Resource (::XMLSchema::string< ACE_TCHAR > const& name__)
+    Resource (::XMLSchema::string< ACE_TCHAR > const& name__,
+    ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
+    resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (resourceType__)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
+      resourceType_->container (this);
+      property_->container (this);
     }
 
     Resource::
@@ -1144,16 +1206,13 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
+    resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (*s.resourceType_)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (*s.property_)),
     regulator__ ()
     {
       name_->container (this);
-      {
-        for (resourceType_const_iterator i (s.resourceType_.begin ());i != s.resourceType_.end ();++i) add_resourceType (*i);
-      }
-
-      {
-        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
-      }
+      resourceType_->container (this);
+      property_->container (this);
     }
 
     ::CIAO::Config_Handlers::Resource& Resource::
@@ -1161,15 +1220,9 @@ namespace CIAO
     {
       name (s.name ());
 
-      resourceType_.clear ();
-      {
-        for (resourceType_const_iterator i (s.resourceType_.begin ());i != s.resourceType_.end ();++i) add_resourceType (*i);
-      }
+      resourceType (s.resourceType ());
 
-      property_.clear ();
-      {
-        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
-      }
+      property (s.property ());
 
       return *this;
     }
@@ -1191,78 +1244,30 @@ namespace CIAO
 
     // Resource
     // 
-    Resource::resourceType_iterator Resource::
-    begin_resourceType ()
+    ::XMLSchema::string< ACE_TCHAR > const& Resource::
+    resourceType () const
     {
-      return resourceType_.begin ();
-    }
-
-    Resource::resourceType_iterator Resource::
-    end_resourceType ()
-    {
-      return resourceType_.end ();
-    }
-
-    Resource::resourceType_const_iterator Resource::
-    begin_resourceType () const
-    {
-      return resourceType_.begin ();
-    }
-
-    Resource::resourceType_const_iterator Resource::
-    end_resourceType () const
-    {
-      return resourceType_.end ();
+      return *resourceType_;
     }
 
     void Resource::
-    add_resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
+    resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      resourceType_.push_back (e);
-    }
-
-    size_t Resource::
-    count_resourceType(void) const
-    {
-      return resourceType_.size ();
+      *resourceType_ = e;
     }
 
     // Resource
     // 
-    Resource::property_iterator Resource::
-    begin_property ()
+    ::CIAO::Config_Handlers::SatisfierProperty const& Resource::
+    property () const
     {
-      return property_.begin ();
-    }
-
-    Resource::property_iterator Resource::
-    end_property ()
-    {
-      return property_.end ();
-    }
-
-    Resource::property_const_iterator Resource::
-    begin_property () const
-    {
-      return property_.begin ();
-    }
-
-    Resource::property_const_iterator Resource::
-    end_property () const
-    {
-      return property_.end ();
+      return *property_;
     }
 
     void Resource::
-    add_property (::CIAO::Config_Handlers::SatisfierProperty const& e)
+    property (::CIAO::Config_Handlers::SatisfierProperty const& e)
     {
-      property_.push_back (e);
-    }
-
-    size_t Resource::
-    count_property(void) const
-    {
-      return property_.size ();
+      *property_ = e;
     }
 
 
@@ -1271,8 +1276,8 @@ namespace CIAO
 
     Requirement::
     Requirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-                 ::XMLSchema::string< ACE_TCHAR > const& name__,
-                 ::CIAO::Config_Handlers::Property const& property__)
+    ::XMLSchema::string< ACE_TCHAR > const& name__,
+    ::CIAO::Config_Handlers::Property const& property__)
     : 
     ::XSCRT::Type (), 
     resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (resourceType__)),
@@ -1360,8 +1365,8 @@ namespace CIAO
 
     ResourceDeploymentDescription::
     ResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& requirementName__,
-                                   ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
-                                   ::CIAO::Config_Handlers::Any const& resourceValue__)
+    ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     : 
     ::XSCRT::Type (), 
     requirementName_ (new ::XMLSchema::string< ACE_TCHAR > (requirementName__)),
@@ -1449,7 +1454,7 @@ namespace CIAO
 
     ArtifactDeploymentDescription::
     ArtifactDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-                                   ::XMLSchema::string< ACE_TCHAR > const& node__)
+    ::XMLSchema::string< ACE_TCHAR > const& node__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -1471,24 +1476,34 @@ namespace CIAO
     {
       name_->container (this);
       {
-        for (source_const_iterator i (s.source_.begin ());i != s.source_.end ();++i) add_source (*i);
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
       }
 
       node_->container (this);
       {
-        for (location_const_iterator i (s.location_.begin ());i != s.location_.end ();++i) add_location (*i);
+        for (location_const_iterator i (s.location_.begin ());
+        i != s.location_.end ();
+        ++i) add_location (*i);
       }
 
       {
-        for (execParameter_const_iterator i (s.execParameter_.begin ());i != s.execParameter_.end ();++i) add_execParameter (*i);
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
       }
 
       {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
       }
 
       {
-        for (deployedResource_const_iterator i (s.deployedResource_.begin ());i != s.deployedResource_.end ();++i) add_deployedResource (*i);
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
       }
 
       if (id_.get ()) id_->container (this);
@@ -1501,29 +1516,39 @@ namespace CIAO
 
       source_.clear ();
       {
-        for (source_const_iterator i (s.source_.begin ());i != s.source_.end ();++i) add_source (*i);
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
       }
 
       node (s.node ());
 
       location_.clear ();
       {
-        for (location_const_iterator i (s.location_.begin ());i != s.location_.end ();++i) add_location (*i);
+        for (location_const_iterator i (s.location_.begin ());
+        i != s.location_.end ();
+        ++i) add_location (*i);
       }
 
       execParameter_.clear ();
       {
-        for (execParameter_const_iterator i (s.execParameter_.begin ());i != s.execParameter_.end ();++i) add_execParameter (*i);
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
       }
 
       deployRequirement_.clear ();
       {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
       }
 
       deployedResource_.clear ();
       {
-        for (deployedResource_const_iterator i (s.deployedResource_.begin ());i != s.deployedResource_.end ();++i) add_deployedResource (*i);
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
       }
 
       if (s.id_.get ()) id (*(s.id_));
@@ -1810,19 +1835,27 @@ namespace CIAO
     {
       name_->container (this);
       {
-        for (source_const_iterator i (s.source_.begin ());i != s.source_.end ();++i) add_source (*i);
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
       }
 
       {
-        for (artifact_const_iterator i (s.artifact_.begin ());i != s.artifact_.end ();++i) add_artifact (*i);
+        for (artifact_const_iterator i (s.artifact_.begin ());
+        i != s.artifact_.end ();
+        ++i) add_artifact (*i);
       }
 
       {
-        for (execParameter_const_iterator i (s.execParameter_.begin ());i != s.execParameter_.end ();++i) add_execParameter (*i);
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
       }
 
       {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
       }
 
       if (id_.get ()) id_->container (this);
@@ -1835,22 +1868,30 @@ namespace CIAO
 
       source_.clear ();
       {
-        for (source_const_iterator i (s.source_.begin ());i != s.source_.end ();++i) add_source (*i);
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
       }
 
       artifact_.clear ();
       {
-        for (artifact_const_iterator i (s.artifact_.begin ());i != s.artifact_.end ();++i) add_artifact (*i);
+        for (artifact_const_iterator i (s.artifact_.begin ());
+        i != s.artifact_.end ();
+        ++i) add_artifact (*i);
       }
 
       execParameter_.clear ();
       {
-        for (execParameter_const_iterator i (s.execParameter_.begin ());i != s.execParameter_.end ();++i) add_execParameter (*i);
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
       }
 
       deployRequirement_.clear ();
       {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
       }
 
       if (s.id_.get ()) id (*(s.id_));
@@ -2094,9 +2135,9 @@ namespace CIAO
 
     InstanceResourceDeploymentDescription::
     InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
-                                           ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
-                                           ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
-                                           ::CIAO::Config_Handlers::Any const& resourceValue__)
+    ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
+    ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     : 
     ::XSCRT::Type (), 
     resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (resourceUsage__)),
@@ -2204,9 +2245,9 @@ namespace CIAO
 
     InstanceDeploymentDescription::
     InstanceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-                                   ::XMLSchema::string< ACE_TCHAR > const& node__,
-                                   ::XMLSchema::string< ACE_TCHAR > const& source__,
-                                   ::XMLSchema::IDREF< ACE_TCHAR > const& implementation__)
+    ::XMLSchema::string< ACE_TCHAR > const& node__,
+    ::XMLSchema::string< ACE_TCHAR > const& source__,
+    ::XMLSchema::IDREF< ACE_TCHAR > const& implementation__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -2239,7 +2280,9 @@ namespace CIAO
       source_->container (this);
       implementation_->container (this);
       {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
+        for (configProperty_const_iterator i (s.configProperty_.begin ());
+        i != s.configProperty_.end ();
+        ++i) add_configProperty (*i);
       }
 
       if (deployedResource_.get ()) deployedResource_->container (this);
@@ -2260,7 +2303,9 @@ namespace CIAO
 
       configProperty_.clear ();
       {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
+        for (configProperty_const_iterator i (s.configProperty_.begin ());
+        i != s.configProperty_.end ();
+        ++i) add_configProperty (*i);
       }
 
       if (s.deployedResource_.get ()) deployedResource (*(s.deployedResource_));
@@ -2496,13 +2541,13 @@ namespace CIAO
 
     ComponentPortDescription::
     ComponentPortDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-                              ::XMLSchema::string< ACE_TCHAR > const& specificType__,
-                              ::XMLSchema::string< ACE_TCHAR > const& supportedType__,
-                              ::XMLSchema::string< ACE_TCHAR > const& provider__,
-                              ::XMLSchema::string< ACE_TCHAR > const& exclusiveProvider__,
-                              ::XMLSchema::string< ACE_TCHAR > const& exclusiveUser__,
-                              ::XMLSchema::string< ACE_TCHAR > const& optional__,
-                              ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__)
+    ::XMLSchema::string< ACE_TCHAR > const& specificType__,
+    ::XMLSchema::string< ACE_TCHAR > const& supportedType__,
+    ::XMLSchema::string< ACE_TCHAR > const& provider__,
+    ::XMLSchema::string< ACE_TCHAR > const& exclusiveProvider__,
+    ::XMLSchema::string< ACE_TCHAR > const& exclusiveUser__,
+    ::XMLSchema::string< ACE_TCHAR > const& optional__,
+    ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -2690,7 +2735,7 @@ namespace CIAO
 
     ComponentPropertyDescription::
     ComponentPropertyDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-                                  ::CIAO::Config_Handlers::DataType const& type__)
+    ::CIAO::Config_Handlers::DataType const& type__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -2805,8 +2850,8 @@ namespace CIAO
 
     PlanSubcomponentPortEndpoint::
     PlanSubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
-                                  ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
-                                  ::XMLSchema::IDREF< ACE_TCHAR > const& instance__)
+    ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
+    ::XMLSchema::IDREF< ACE_TCHAR > const& instance__)
     : 
     ::XSCRT::Type (), 
     portName_ (new ::XMLSchema::string< ACE_TCHAR > (portName__)),
@@ -2975,9 +3020,9 @@ namespace CIAO
 
     ConnectionResourceDeploymentDescription::
     ConnectionResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& targetName__,
-                                             ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
-                                             ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
-                                             ::CIAO::Config_Handlers::Any const& resourceValue__)
+    ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
+    ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     : 
     ::XSCRT::Type (), 
     targetName_ (new ::XMLSchema::string< ACE_TCHAR > (targetName__)),
@@ -3104,23 +3149,33 @@ namespace CIAO
       name_->container (this);
       if (source_.get ()) source_->container (this);
       {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
       }
 
       {
-        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());i != s.externalEndpoint_.end ();++i) add_externalEndpoint (*i);
+        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
+        i != s.externalEndpoint_.end ();
+        ++i) add_externalEndpoint (*i);
       }
 
       {
-        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());i != s.internalEndpoint_.end ();++i) add_internalEndpoint (*i);
+        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
+        i != s.internalEndpoint_.end ();
+        ++i) add_internalEndpoint (*i);
       }
 
       {
-        for (externalReference_const_iterator i (s.externalReference_.begin ());i != s.externalReference_.end ();++i) add_externalReference (*i);
+        for (externalReference_const_iterator i (s.externalReference_.begin ());
+        i != s.externalReference_.end ();
+        ++i) add_externalReference (*i);
       }
 
       {
-        for (deployedResource_const_iterator i (s.deployedResource_.begin ());i != s.deployedResource_.end ();++i) add_deployedResource (*i);
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
       }
     }
 
@@ -3134,27 +3189,37 @@ namespace CIAO
 
       deployRequirement_.clear ();
       {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
       }
 
       externalEndpoint_.clear ();
       {
-        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());i != s.externalEndpoint_.end ();++i) add_externalEndpoint (*i);
+        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
+        i != s.externalEndpoint_.end ();
+        ++i) add_externalEndpoint (*i);
       }
 
       internalEndpoint_.clear ();
       {
-        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());i != s.internalEndpoint_.end ();++i) add_internalEndpoint (*i);
+        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
+        i != s.internalEndpoint_.end ();
+        ++i) add_internalEndpoint (*i);
       }
 
       externalReference_.clear ();
       {
-        for (externalReference_const_iterator i (s.externalReference_.begin ());i != s.externalReference_.end ();++i) add_externalReference (*i);
+        for (externalReference_const_iterator i (s.externalReference_.begin ());
+        i != s.externalReference_.end ();
+        ++i) add_externalReference (*i);
       }
 
       deployedResource_.clear ();
       {
-        for (deployedResource_const_iterator i (s.deployedResource_.begin ());i != s.deployedResource_.end ();++i) add_deployedResource (*i);
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
       }
 
       return *this;
@@ -3447,8 +3512,8 @@ namespace CIAO
 
     Capability::
     Capability (::XMLSchema::string< ACE_TCHAR > const& name__,
-                ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-                ::CIAO::Config_Handlers::SatisfierProperty const& property__)
+    ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -3536,11 +3601,11 @@ namespace CIAO
 
     ImplementationRequirement::
     ImplementationRequirement (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
-                               ::XMLSchema::string< ACE_TCHAR > const& resourcePort__,
-                               ::XMLSchema::string< ACE_TCHAR > const& componentPort__,
-                               ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-                               ::XMLSchema::string< ACE_TCHAR > const& name__,
-                               ::CIAO::Config_Handlers::Property const& property__)
+    ::XMLSchema::string< ACE_TCHAR > const& resourcePort__,
+    ::XMLSchema::string< ACE_TCHAR > const& componentPort__,
+    ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
+    ::XMLSchema::string< ACE_TCHAR > const& name__,
+    ::CIAO::Config_Handlers::Property const& property__)
     : 
     ::XSCRT::Type (), 
     resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (resourceUsage__)),
@@ -3688,8 +3753,8 @@ namespace CIAO
 
     ComponentPackageReference::
     ComponentPackageReference (::XMLSchema::string< ACE_TCHAR > const& requiredUUID__,
-                               ::XMLSchema::string< ACE_TCHAR > const& requiredName__,
-                               ::XMLSchema::string< ACE_TCHAR > const& requiredType__)
+    ::XMLSchema::string< ACE_TCHAR > const& requiredName__,
+    ::XMLSchema::string< ACE_TCHAR > const& requiredType__)
     : 
     ::XSCRT::Type (), 
     requiredUUID_ (new ::XMLSchema::string< ACE_TCHAR > (requiredUUID__)),
@@ -3777,7 +3842,7 @@ namespace CIAO
 
     SubcomponentPortEndpoint::
     SubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
-                              ::XMLSchema::IDREF< ACE_TCHAR > const& instance__)
+    ::XMLSchema::IDREF< ACE_TCHAR > const& instance__)
     : 
     ::XSCRT::Type (), 
     portName_ (new ::XMLSchema::string< ACE_TCHAR > (portName__)),
@@ -3864,15 +3929,21 @@ namespace CIAO
       name_->container (this);
       if (deployRequirement_.get ()) deployRequirement_->container (this);
       {
-        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());i != s.externalEndpoint_.end ();++i) add_externalEndpoint (*i);
+        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
+        i != s.externalEndpoint_.end ();
+        ++i) add_externalEndpoint (*i);
       }
 
       {
-        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());i != s.internalEndpoint_.end ();++i) add_internalEndpoint (*i);
+        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
+        i != s.internalEndpoint_.end ();
+        ++i) add_internalEndpoint (*i);
       }
 
       {
-        for (externalReference_const_iterator i (s.externalReference_.begin ());i != s.externalReference_.end ();++i) add_externalReference (*i);
+        for (externalReference_const_iterator i (s.externalReference_.begin ());
+        i != s.externalReference_.end ();
+        ++i) add_externalReference (*i);
       }
     }
 
@@ -3886,17 +3957,23 @@ namespace CIAO
 
       externalEndpoint_.clear ();
       {
-        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());i != s.externalEndpoint_.end ();++i) add_externalEndpoint (*i);
+        for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
+        i != s.externalEndpoint_.end ();
+        ++i) add_externalEndpoint (*i);
       }
 
       internalEndpoint_.clear ();
       {
-        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());i != s.internalEndpoint_.end ();++i) add_internalEndpoint (*i);
+        for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
+        i != s.internalEndpoint_.end ();
+        ++i) add_internalEndpoint (*i);
       }
 
       externalReference_.clear ();
       {
-        for (externalReference_const_iterator i (s.externalReference_.begin ());i != s.externalReference_.end ();++i) add_externalReference (*i);
+        for (externalReference_const_iterator i (s.externalReference_.begin ());
+        i != s.externalReference_.end ();
+        ++i) add_externalReference (*i);
       }
 
       return *this;
@@ -4546,14 +4623,14 @@ namespace CIAO
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          add_resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
-          add_property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          property_->container (this);
         }
 
         else 
@@ -4963,8 +5040,6 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
-      else if (v == "rtecEventPublisher") v_ = rtecEventPublisher_l;
-      else if (v == "rtecEventConsumer") v_ = rtecEventConsumer_l;
       else 
       {
       }
@@ -4982,8 +5057,6 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
-      else if (v == "rtecEventPublisher") v_ = rtecEventPublisher_l;
-      else if (v == "rtecEventConsumer") v_ = rtecEventConsumer_l;
       else 
       {
       }
@@ -4995,8 +5068,6 @@ namespace CIAO
     CCMComponentPortKind const CCMComponentPortKind::EventEmitter (CCMComponentPortKind::EventEmitter_l);
     CCMComponentPortKind const CCMComponentPortKind::EventPublisher (CCMComponentPortKind::EventPublisher_l);
     CCMComponentPortKind const CCMComponentPortKind::EventConsumer (CCMComponentPortKind::EventConsumer_l);
-    CCMComponentPortKind const CCMComponentPortKind::rtecEventPublisher (CCMComponentPortKind::rtecEventPublisher_l);
-    CCMComponentPortKind const CCMComponentPortKind::rtecEventConsumer (CCMComponentPortKind::rtecEventConsumer_l);
 
     // ComponentPortDescription
     //
@@ -6147,7 +6218,9 @@ namespace CIAO
         if (b != e)
         {
           short_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) short_next (o);
@@ -6169,7 +6242,9 @@ namespace CIAO
         if (b != e)
         {
           short_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) short_next (o);
@@ -6231,7 +6306,9 @@ namespace CIAO
         if (b != e)
         {
           long_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) long_next (o);
@@ -6253,7 +6330,9 @@ namespace CIAO
         if (b != e)
         {
           long_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) long_next (o);
@@ -6315,7 +6394,9 @@ namespace CIAO
         if (b != e)
         {
           ushort_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) ushort_next (o);
@@ -6337,7 +6418,9 @@ namespace CIAO
         if (b != e)
         {
           ushort_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) ushort_next (o);
@@ -6399,7 +6482,9 @@ namespace CIAO
         if (b != e)
         {
           ulong_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) ulong_next (o);
@@ -6421,7 +6506,9 @@ namespace CIAO
         if (b != e)
         {
           ulong_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) ulong_next (o);
@@ -6483,7 +6570,9 @@ namespace CIAO
         if (b != e)
         {
           float_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) float_next (o);
@@ -6505,7 +6594,9 @@ namespace CIAO
         if (b != e)
         {
           float_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) float_next (o);
@@ -6567,7 +6658,9 @@ namespace CIAO
         if (b != e)
         {
           double_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) double_next (o);
@@ -6589,7 +6682,9 @@ namespace CIAO
         if (b != e)
         {
           double_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) double_next (o);
@@ -6651,7 +6746,9 @@ namespace CIAO
         if (b != e)
         {
           boolean_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) boolean_next (o);
@@ -6673,7 +6770,9 @@ namespace CIAO
         if (b != e)
         {
           boolean_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) boolean_next (o);
@@ -6735,7 +6834,9 @@ namespace CIAO
         if (b != e)
         {
           octet_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) octet_next (o);
@@ -6757,7 +6858,9 @@ namespace CIAO
         if (b != e)
         {
           octet_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) octet_next (o);
@@ -6819,7 +6922,9 @@ namespace CIAO
         if (b != e)
         {
           enum_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) enum_next (o);
@@ -6841,7 +6946,9 @@ namespace CIAO
         if (b != e)
         {
           enum_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) enum_next (o);
@@ -6903,7 +7010,9 @@ namespace CIAO
         if (b != e)
         {
           string_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) string_next (o);
@@ -6925,7 +7034,9 @@ namespace CIAO
         if (b != e)
         {
           string_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) string_next (o);
@@ -6987,7 +7098,9 @@ namespace CIAO
         if (b != e)
         {
           longlong_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) longlong_next (o);
@@ -7009,7 +7122,9 @@ namespace CIAO
         if (b != e)
         {
           longlong_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) longlong_next (o);
@@ -7071,7 +7186,9 @@ namespace CIAO
         if (b != e)
         {
           ulonglong_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) ulonglong_next (o);
@@ -7093,7 +7210,9 @@ namespace CIAO
         if (b != e)
         {
           ulonglong_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) ulonglong_next (o);
@@ -7155,7 +7274,9 @@ namespace CIAO
         if (b != e)
         {
           longdouble_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) longdouble_next (o);
@@ -7177,7 +7298,9 @@ namespace CIAO
         if (b != e)
         {
           longdouble_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) longdouble_next (o);
@@ -7307,7 +7430,9 @@ namespace CIAO
         if (b != e)
         {
           member_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) member_next (o);
@@ -7327,7 +7452,9 @@ namespace CIAO
         if (b != e)
         {
           member_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) member_next (o);
@@ -7638,155 +7765,25 @@ namespace CIAO
       void Resource::
       resourceType (Type& o)
       {
-        // VC6 anathema strikes again
-        //
-        Resource::Type::resourceType_iterator b (o.begin_resourceType()), e (o.end_resourceType());
-
-        if (b != e)
-        {
-          resourceType_pre (o);
-          for (; b != e;)
-          {
-            dispatch (*b);
-            if (++b != e) resourceType_next (o);
-          }
-
-          resourceType_post (o);
-        }
+        dispatch (o.resourceType ());
       }
 
       void Resource::
       resourceType (Type const& o)
       {
-        // VC6 anathema strikes again
-        //
-        Resource::Type::resourceType_const_iterator b (o.begin_resourceType()), e (o.end_resourceType());
-
-        if (b != e)
-        {
-          resourceType_pre (o);
-          for (; b != e;)
-          {
-            dispatch (*b);
-            if (++b != e) resourceType_next (o);
-          }
-
-          resourceType_post (o);
-        }
-      }
-
-      void Resource::
-      resourceType_pre (Type&)
-      {
-      }
-
-      void Resource::
-      resourceType_pre (Type const&)
-      {
-      }
-
-      void Resource::
-      resourceType_next (Type&)
-      {
-      }
-
-      void Resource::
-      resourceType_next (Type const&)
-      {
-      }
-
-      void Resource::
-      resourceType_post (Type&)
-      {
-      }
-
-      void Resource::
-      resourceType_post (Type const&)
-      {
+        dispatch (o.resourceType ());
       }
 
       void Resource::
       property (Type& o)
       {
-        // VC6 anathema strikes again
-        //
-        Resource::Type::property_iterator b (o.begin_property()), e (o.end_property());
-
-        if (b != e)
-        {
-          property_pre (o);
-          for (; b != e;)
-          {
-            dispatch (*b);
-            if (++b != e) property_next (o);
-          }
-
-          property_post (o);
-        }
-
-        else property_none (o);
+        dispatch (o.property ());
       }
 
       void Resource::
       property (Type const& o)
       {
-        // VC6 anathema strikes again
-        //
-        Resource::Type::property_const_iterator b (o.begin_property()), e (o.end_property());
-
-        if (b != e)
-        {
-          property_pre (o);
-          for (; b != e;)
-          {
-            dispatch (*b);
-            if (++b != e) property_next (o);
-          }
-
-          property_post (o);
-        }
-
-        else property_none (o);
-      }
-
-      void Resource::
-      property_pre (Type&)
-      {
-      }
-
-      void Resource::
-      property_pre (Type const&)
-      {
-      }
-
-      void Resource::
-      property_next (Type&)
-      {
-      }
-
-      void Resource::
-      property_next (Type const&)
-      {
-      }
-
-      void Resource::
-      property_post (Type&)
-      {
-      }
-
-      void Resource::
-      property_post (Type const&)
-      {
-      }
-
-      void Resource::
-      property_none (Type&)
-      {
-      }
-
-      void Resource::
-      property_none (Type const&)
-      {
+        dispatch (o.property ());
       }
 
       void Resource::
@@ -8027,7 +8024,9 @@ namespace CIAO
         if (b != e)
         {
           source_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) source_next (o);
@@ -8047,7 +8046,9 @@ namespace CIAO
         if (b != e)
         {
           source_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) source_next (o);
@@ -8109,7 +8110,9 @@ namespace CIAO
         if (b != e)
         {
           location_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) location_next (o);
@@ -8129,7 +8132,9 @@ namespace CIAO
         if (b != e)
         {
           location_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) location_next (o);
@@ -8179,7 +8184,9 @@ namespace CIAO
         if (b != e)
         {
           execParameter_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) execParameter_next (o);
@@ -8201,7 +8208,9 @@ namespace CIAO
         if (b != e)
         {
           execParameter_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) execParameter_next (o);
@@ -8263,7 +8272,9 @@ namespace CIAO
         if (b != e)
         {
           deployRequirement_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployRequirement_next (o);
@@ -8285,7 +8296,9 @@ namespace CIAO
         if (b != e)
         {
           deployRequirement_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployRequirement_next (o);
@@ -8347,7 +8360,9 @@ namespace CIAO
         if (b != e)
         {
           deployedResource_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployedResource_next (o);
@@ -8369,7 +8384,9 @@ namespace CIAO
         if (b != e)
         {
           deployedResource_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployedResource_next (o);
@@ -8517,7 +8534,9 @@ namespace CIAO
         if (b != e)
         {
           source_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) source_next (o);
@@ -8537,7 +8556,9 @@ namespace CIAO
         if (b != e)
         {
           source_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) source_next (o);
@@ -8587,7 +8608,9 @@ namespace CIAO
         if (b != e)
         {
           artifact_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) artifact_next (o);
@@ -8607,7 +8630,9 @@ namespace CIAO
         if (b != e)
         {
           artifact_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) artifact_next (o);
@@ -8657,7 +8682,9 @@ namespace CIAO
         if (b != e)
         {
           execParameter_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) execParameter_next (o);
@@ -8679,7 +8706,9 @@ namespace CIAO
         if (b != e)
         {
           execParameter_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) execParameter_next (o);
@@ -8741,7 +8770,9 @@ namespace CIAO
         if (b != e)
         {
           deployRequirement_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployRequirement_next (o);
@@ -8763,7 +8794,9 @@ namespace CIAO
         if (b != e)
         {
           deployRequirement_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployRequirement_next (o);
@@ -9049,7 +9082,9 @@ namespace CIAO
         if (b != e)
         {
           configProperty_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) configProperty_next (o);
@@ -9071,7 +9106,9 @@ namespace CIAO
         if (b != e)
         {
           configProperty_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) configProperty_next (o);
@@ -9807,7 +9844,9 @@ namespace CIAO
         if (b != e)
         {
           deployRequirement_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployRequirement_next (o);
@@ -9829,7 +9868,9 @@ namespace CIAO
         if (b != e)
         {
           deployRequirement_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployRequirement_next (o);
@@ -9891,7 +9932,9 @@ namespace CIAO
         if (b != e)
         {
           externalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalEndpoint_next (o);
@@ -9913,7 +9956,9 @@ namespace CIAO
         if (b != e)
         {
           externalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalEndpoint_next (o);
@@ -9975,7 +10020,9 @@ namespace CIAO
         if (b != e)
         {
           internalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) internalEndpoint_next (o);
@@ -9997,7 +10044,9 @@ namespace CIAO
         if (b != e)
         {
           internalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) internalEndpoint_next (o);
@@ -10059,7 +10108,9 @@ namespace CIAO
         if (b != e)
         {
           externalReference_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalReference_next (o);
@@ -10081,7 +10132,9 @@ namespace CIAO
         if (b != e)
         {
           externalReference_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalReference_next (o);
@@ -10143,7 +10196,9 @@ namespace CIAO
         if (b != e)
         {
           deployedResource_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployedResource_next (o);
@@ -10165,7 +10220,9 @@ namespace CIAO
         if (b != e)
         {
           deployedResource_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) deployedResource_next (o);
@@ -10711,7 +10768,9 @@ namespace CIAO
         if (b != e)
         {
           externalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalEndpoint_next (o);
@@ -10733,7 +10792,9 @@ namespace CIAO
         if (b != e)
         {
           externalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalEndpoint_next (o);
@@ -10795,7 +10856,9 @@ namespace CIAO
         if (b != e)
         {
           internalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) internalEndpoint_next (o);
@@ -10817,7 +10880,9 @@ namespace CIAO
         if (b != e)
         {
           internalEndpoint_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) internalEndpoint_next (o);
@@ -10879,7 +10944,9 @@ namespace CIAO
         if (b != e)
         {
           externalReference_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalReference_next (o);
@@ -10901,7 +10968,9 @@ namespace CIAO
         if (b != e)
         {
           externalReference_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) externalReference_next (o);
@@ -11595,40 +11664,18 @@ namespace CIAO
       }
 
       void Resource::
-      resourceType_pre (Type const&)
+      resourceType (Type const& o)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resourceType", top_ ()));
-      }
-
-      void Resource::
-      resourceType_next (Type const& o)
-      {
-        resourceType_post (o);
-        resourceType_pre (o);
-      }
-
-      void Resource::
-      resourceType_post (Type const&)
-      {
+        Traversal::Resource::resourceType (o);
         pop_ ();
       }
 
       void Resource::
-      property_pre (Type const&)
+      property (Type const& o)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("property", top_ ()));
-      }
-
-      void Resource::
-      property_next (Type const& o)
-      {
-        property_post (o);
-        property_pre (o);
-      }
-
-      void Resource::
-      property_post (Type const&)
-      {
+        Traversal::Resource::property (o);
         pop_ ();
       }
 
@@ -12193,8 +12240,6 @@ namespace CIAO
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventEmitter) s = "EventEmitter";
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventPublisher) s = "EventPublisher";
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventConsumer) s = "EventConsumer";
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::rtecEventPublisher) s = "rtecEventPublisher";
-        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::rtecEventConsumer) s = "rtecEventConsumer";
         else 
         {
         }

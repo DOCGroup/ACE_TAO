@@ -12,7 +12,6 @@ project(*Test): taolib_with_idl, portableserver {
 }
 
 project(*Driver): taoexe, portableserver {
-  after += *Test
   Source_Files {
     TestC.cpp
     driver.cpp

@@ -33,8 +33,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_LB_ObjectReferenceFactory
  *
@@ -166,8 +164,6 @@ private:
   CORBA::Boolean * registered_members_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (_MSC_VER)

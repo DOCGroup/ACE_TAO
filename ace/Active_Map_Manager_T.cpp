@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_ACTIVE_MAP_MANAGER_T_CPP
-#define ACE_ACTIVE_MAP_MANAGER_T_CPP
+#ifndef ACE_ACTIVE_MAP_MANAGER_T_C
+#define ACE_ACTIVE_MAP_MANAGER_T_C
 
 #include "ace/Active_Map_Manager_T.h"
 
@@ -13,10 +13,8 @@
 #include "ace/Active_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Active_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Active_Map_Manager)
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_ACTIVE_MAP_MANAGER_T_CPP */
+#endif /* ACE_ACTIVE_MAP_MANAGER_T_C */

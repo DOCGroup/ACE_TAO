@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+// This may look like C, but it's really -*- C++ -*-
 //=============================================================================
 /**
  *  @file    CDR.h
@@ -54,8 +53,6 @@
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
@@ -277,8 +274,6 @@ public:
   /// Accessor
   TAO_ORB_Core *orb_core (void) const;
 
-  ACE_Message_Block::Message_Flags
-    clr_mb_flags( ACE_Message_Block::Message_Flags less_flags );
 
   // = TAO specific methods.
   static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
@@ -289,13 +284,9 @@ private:
   TAO_ORB_Core* orb_core_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
 # include "tao/CDR.i"
 #else
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // CDR output operators for CORBA types
 
@@ -346,9 +337,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* __ACE_INLINE */
 
 #include /**/ "ace/post.h"

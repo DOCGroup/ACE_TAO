@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 
 #include "ace/OS_NS_sys_mman.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Mutex::acquire_read (void)
@@ -171,5 +168,3 @@ ACE_Mutex::remove (void)
 #endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -15,7 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +29,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/Containers_T.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Multihomed_INET_Addr
@@ -32,7 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Extends ACE_INET_Addr with support for multi-homed
  * addresses.
  */
-class ACE_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
+class ACE_Sockets_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
 {
 public:
   // = Initialization methods.
@@ -81,7 +85,6 @@ public:
                            const ACE_UINT32 *secondary_ip_addrs = 0,
                            size_t size = 0);
 
-#if defined (ACE_HAS_WCHAR)
     /**
      * WCHAR versions of the methods that take char's as arguments.
      */
@@ -97,8 +100,6 @@ public:
            int address_family = AF_UNSPEC,
            const wchar_t *(secondary_host_names[]) = 0,
            size_t size = 0);
-
-#endif /* ACE_HAS_WCHAR */
 
   /// Use compiler-generated copy constructor.
 
@@ -186,8 +187,6 @@ public:
 private:
   ACE_Array<ACE_INET_Addr> secondaries_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #  include "ace/Multihomed_INET_Addr.inl"

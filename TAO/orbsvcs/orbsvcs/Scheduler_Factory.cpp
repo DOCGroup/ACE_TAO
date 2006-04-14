@@ -17,8 +17,6 @@ ACE_RCSID(orbsvcs,
           Scheduler_Factory,
           "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Initialize static class members.
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
 ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
@@ -352,7 +350,7 @@ int ACE_Scheduler_Factory::dump_schedule
   FILE* file = stdout;
   if (file_name != 0)
     {
-      file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(file_name), ACE_TEXT("w"));
+      file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(file_name), ACE_TEXT("w"));
       if (file == 0)
           return -1;
     }
@@ -791,5 +789,3 @@ ACE_Scheduler_Factory::set_preemption_priority
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex> *ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

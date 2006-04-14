@@ -20,7 +20,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
+#include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #include "tao/LocalObject.h"
@@ -34,8 +34,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_RT_Current
  *
@@ -44,8 +42,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * Allows setting/getting the priority of the current thread.
  */
 class TAO_RTCORBA_Export TAO_RT_Current
-  : public RTCORBA::Current
-  , public TAO_Local_RefCounted_Object
+  : public RTCORBA::Current,
+    public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -68,11 +66,9 @@ protected:
 private:
 
   /// ORB Core that owns us.
-  TAO_ORB_Core * const orb_core_;
+  TAO_ORB_Core *orb_core_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

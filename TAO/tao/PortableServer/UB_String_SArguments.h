@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *  @author Jeff Parsons
- *  @author Carlos O'Ryan
+ *  @authors Jeff Parsons and Carlos O'Ryan
  */
 //=============================================================================
 
@@ -24,8 +23,6 @@
 
 #include "tao/PortableServer/UB_String_SArgument_T.h"
 #include "tao/PortableServer/SArg_Traits_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -51,8 +48,6 @@ namespace TAO
   {
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

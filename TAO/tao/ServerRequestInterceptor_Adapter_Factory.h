@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,9 +23,6 @@
 
 #include "tao/SystemException.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   class ServerRequestInterceptor_Adapter;
@@ -44,8 +41,6 @@ public:
 
   virtual TAO::ServerRequestInterceptor_Adapter * create (void) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

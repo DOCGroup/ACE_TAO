@@ -1,13 +1,11 @@
+// -*- C++ -*-
 // $Id$
 
-#include "tao/Queued_Message.h"
+#include "Queued_Message.h"
 
 ACE_RCSID (tao,
            Queued_Message,
            "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Queued_Message::TAO_Queued_Message (TAO_ORB_Core *oc,
                                         ACE_Allocator *alloc,
@@ -99,5 +97,3 @@ TAO_Queued_Message::push_front (TAO_Queued_Message *&head,
   this->prev_ = 0;
   head = this;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

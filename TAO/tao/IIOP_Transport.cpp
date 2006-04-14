@@ -1,21 +1,19 @@
-#include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Acceptor.h"
-#include "tao/IIOPC.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/operation_details.h"
-#include "tao/Wait_Strategy.h"
-#include "tao/debug.h"
-#include "tao/GIOP_Message_Base.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/ORB_Core.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Transport_Mux_Strategy.h"
+#include "IIOP_Transport.h"
+#include "IIOP_Acceptor.h"
+#include "IIOPC.h"
+#include "Acceptor_Registry.h"
+#include "operation_details.h"
+#include "Wait_Strategy.h"
+#include "debug.h"
+#include "GIOP_Message_Base.h"
+#include "Protocols_Hooks.h"
+#include "ORB_Core.h"
+#include "Thread_Lane_Resources.h"
+#include "Transport_Mux_Strategy.h"
 
 ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
@@ -103,7 +101,7 @@ TAO_IIOP_Transport::recv (char *buf,
     {
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv_i, ")
                   ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
     }
@@ -364,8 +362,8 @@ TAO_IIOP_Transport::get_listen_point (
 
   // Get the hostname for the local address
   if (iiop_acceptor->hostname (this->orb_core_,
-                               local_addr,
-                               local_interface.out ()) == -1)
+                                      local_addr,
+                                      local_interface.out ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
@@ -375,7 +373,7 @@ TAO_IIOP_Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
   // If this is an IPv6 decimal linklocal address containing a scopeid than
   // remove the scopeid from the information being sent.
-  const char *cp_scope = 0;
+  const char *cp_scope;
   if (local_addr.get_type () == PF_INET6 &&
         (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != 0)
     {
@@ -408,8 +406,7 @@ TAO_IIOP_Transport::get_listen_point (
 
           if (TAO_debug_level >= 5)
           {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%s:%d>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO (%P:%t) Listen_Point_List[%d] = <%s:%d>"),
                         len,
                         point.host.in (),
                         point.port));
@@ -424,5 +421,3 @@ TAO_IIOP_Transport::get_listen_point (
 /*
  * End of copy hook.
  */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

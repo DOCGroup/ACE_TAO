@@ -1,3 +1,4 @@
+// IO_SAP.cpp
 // $Id$
 
 #include "ace/IO_SAP.h"
@@ -13,8 +14,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, IO_SAP, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_IO_SAP)
 
@@ -138,5 +137,3 @@ ACE_IO_SAP::disable (int value) const
     }
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

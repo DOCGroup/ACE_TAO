@@ -1,6 +1,6 @@
-// $Id$
+//$Id$
 
-#include "tao/PolicyFactory_Registry_Adapter.h"
+#include "PolicyFactory_Registry_Adapter.h"
 
 
 ACE_RCSID (tao,
@@ -8,10 +8,9 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO::PolicyFactory_Registry_Adapter::~PolicyFactory_Registry_Adapter (void)
+namespace TAO
 {
+  PolicyFactory_Registry_Adapter::~PolicyFactory_Registry_Adapter (void)
+  {
+  }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

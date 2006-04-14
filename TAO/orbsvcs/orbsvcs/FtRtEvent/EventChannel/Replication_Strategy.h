@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTEC {
   struct ManagerInfo;
@@ -62,15 +61,13 @@ public:
                           CORBA::ULong object_group_ref_version
                           ACE_ENV_ARG_DECL)=0;
 
-  virtual Replication_Strategy* make_primary_strategy();
+    virtual Replication_Strategy* make_primary_strategy();
 
   virtual int  acquire_read (void)=0;
   virtual int  acquire_write (void)=0;
   virtual int  release (void)=0;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 

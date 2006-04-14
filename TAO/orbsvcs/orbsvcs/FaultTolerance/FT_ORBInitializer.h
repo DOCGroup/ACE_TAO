@@ -22,7 +22,7 @@
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-#include "orbsvcs/FaultTolerance/fault_tol_export.h"
+#include "fault_tol_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -31,12 +31,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /// RTCORBA ORB initializer.
-class TAO_FT_ORBInitializer
-  : public virtual PortableInterceptor::ORBInitializer
-  , public virtual TAO_Local_RefCounted_Object
+class TAO_FT_Export TAO_FT_ORBInitializer :
+  public virtual PortableInterceptor::ORBInitializer,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
 
@@ -67,8 +65,6 @@ private:
          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

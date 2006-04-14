@@ -15,6 +15,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(EC_Examples, Service, "$Id$")
 
@@ -25,8 +26,10 @@ int parse_args (int argc, char *argv[]);
 typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_EC_Default_Factory::init_svcs ();
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -34,10 +37,10 @@ main (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Usage: Service [-o IOR_file_name]\n"));
@@ -383,7 +386,7 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "c");
   int c;
 
   while ((c = get_opts ()) != -1)

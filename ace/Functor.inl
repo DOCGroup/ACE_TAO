@@ -1,5 +1,4 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -8,7 +7,7 @@
 //    ace
 //
 // = FILENAME
-//    Functor.inl
+//    Functor.i
 //
 // = DESCRIPTION
 //    Inlinable method definitions for non-templatized classes
@@ -33,8 +32,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
 //////////////////////////////////////////////////////////////
@@ -56,13 +53,13 @@ ACE_Hash<char>::operator () (char t) const
   return t;
 }
 
-#if defined (ACE_HAS_WCHAR) && ! defined (ACE_LACKS_NATIVE_WCHAR_T)
+#if !defined (ACE_LACKS_BUILTIN_WCHAR_T)
 ACE_INLINE unsigned long
 ACE_Hash<wchar_t>::operator () (wchar_t t) const
 {
   return t;
 }
-#endif /* ACE_HAS_WCHAR && ! ACE_LACKS_NATIVE_WCHAR_T */
+#endif /* ACE_LACKS_BUILTIN_WCHAR_T */
 
 ACE_INLINE unsigned long
 ACE_Hash<signed char>::operator () (signed char t) const
@@ -76,7 +73,6 @@ ACE_Hash<unsigned char>::operator () (unsigned char t) const
   return t;
 }
 
-#if 0
 ACE_INLINE unsigned long
 ACE_Hash<ACE_INT16>::operator () (ACE_INT16 t) const
 {
@@ -110,64 +106,7 @@ ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
   return static_cast<unsigned long> (t);
 #endif /* ACE_SIZEOF_LONG */
 }
-#endif
 
-ACE_INLINE unsigned long
-ACE_Hash<short>::operator () (short t) const
-{
-  return static_cast<unsigned long> (t);
-}
-
-ACE_INLINE unsigned long
-ACE_Hash<unsigned short>::operator () (unsigned short t) const
-{
-  return static_cast<unsigned long> (t);
-}
-
-ACE_INLINE unsigned long
-ACE_Hash<int>::operator () (int t) const
-{
-  return static_cast<unsigned long> (t);
-}
-
-ACE_INLINE unsigned long
-ACE_Hash<unsigned int>::operator () (unsigned int t) const
-{
-  return static_cast<unsigned long> (t);
-}
-
-ACE_INLINE unsigned long
-ACE_Hash<long>::operator () (long t) const
-{
-  return static_cast<unsigned long> (t);
-}
-
-ACE_INLINE unsigned long
-ACE_Hash<unsigned long>::operator () (unsigned long t) const
-{
-  return t;
-}
-
-// This #if needs to match the one in Functor.h
-#if !defined (ACE_LACKS_LONGLONG_T) && (ACE_SIZEOF_LONG < 8)
-ACE_INLINE unsigned long
-ACE_Hash<ACE_INT64>::operator () (ACE_INT64 t) const
-{
-  return static_cast<unsigned long> (t);
-}
-#endif /* !ACE_LACKS_LONGLONG_T && ACE_SIZEOF_LONG < 8 */
-
-#if (ACE_SIZEOF_LONG < 8)
-ACE_INLINE unsigned long
-ACE_Hash<ACE_UINT64>::operator () (const ACE_UINT64 &t) const
-{
-#if (ACE_SIZEOF_LONG == 4)
-  return ACE_U64_TO_U32 (t);
-#else
-  return static_cast<unsigned long> (t);
-#endif /* ACE_SIZEOF_LONG */
-}
-#endif /* !ACE_LACKS_UNSIGNEDLONGLONG_T */
 
 ACE_INLINE unsigned long
 ACE_Hash<const char *>::operator () (const char *t) const
@@ -243,9 +182,6 @@ ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-
-#if defined (ACE_HAS_WCHAR)
-
 ACE_INLINE unsigned long
 ACE_Hash<const wchar_t *>::operator () (const wchar_t *t) const
 {
@@ -284,6 +220,3 @@ ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) c
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-#endif  // ACE_HAS_WCHAR
-
-ACE_END_VERSIONED_NAMESPACE_DECL

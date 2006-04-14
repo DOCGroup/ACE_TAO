@@ -31,7 +31,7 @@ public:
 
   // spawns a thread to run an internal orb which has activated
   // a single DynServer servant.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, char *argv[]);
 
   // Allows the service configurator to shutdown the orb
   virtual int fini (void);

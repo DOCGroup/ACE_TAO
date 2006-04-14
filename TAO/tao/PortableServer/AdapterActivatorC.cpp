@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/PortableServer/AdapterActivatorC.h"
+#include "AdapterActivatorC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -37,8 +37,6 @@
 // be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -166,7 +164,5 @@ PortableServer::AdapterActivator::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

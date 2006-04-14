@@ -1,3 +1,5 @@
+/* -*- C++ -*- */
+
 //=============================================================================
 /**
 *  @file    Save_Persist_Worker_T.cpp
@@ -17,14 +19,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO_Notify
 {
   template<class TOPOOBJ>
-  Save_Persist_Worker<TOPOOBJ>::Save_Persist_Worker(Topology_Saver& saver,
-                                                    bool want_all_children)
-    : saver_ (saver)
+  Save_Persist_Worker<TOPOOBJ>::Save_Persist_Worker(
+        Topology_Saver& saver,
+        bool want_all_children)
+    : saver_(saver)
     , want_all_children_ (want_all_children)
   {
   }
@@ -41,7 +42,5 @@ namespace TAO_Notify
     }
   }
 } // namespace TAO_Notify
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* SAVE_PERSIST_WORKER_CPP */

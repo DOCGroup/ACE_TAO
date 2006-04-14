@@ -1,10 +1,11 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
  *  @file    Adapter_Activator.h
  *
  *  $Id$
+ *
  */
 //=============================================================================
 
@@ -12,17 +13,15 @@
 #define TAO_ADAPTER_ACTIVATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/AdapterActivatorC.h"
+#include "AdapterActivatorC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -55,8 +54,6 @@ namespace TAO
     };
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

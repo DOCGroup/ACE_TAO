@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,8 +24,6 @@
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
 #include "tao/PortableServer/portableserver_export.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class Any;
@@ -47,8 +45,6 @@ namespace TAO
   {
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

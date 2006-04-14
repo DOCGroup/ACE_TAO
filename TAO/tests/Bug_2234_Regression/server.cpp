@@ -18,6 +18,7 @@
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PortableServer/Root_POA.h"
+#include "ace/Argv_Type_Converter.h"
 
 CORBA::ORB_ptr orb;
 
@@ -676,8 +677,10 @@ private:
   AnInterceptor *interceptor_;
 };
 
-int main( int argc, char *argv[] )
+int ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
   {
     ACE_DEBUG( (LM_INFO, "Server start\n") );
@@ -690,7 +693,7 @@ int main( int argc, char *argv[] )
       initialiser= initialiser_p;
     PortableInterceptor::register_orb_initializer( initialiser.in() );
 
-    orb= CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER );
+    orb= CORBA::ORB_init( convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER );
     ACE_TRY_CHECK;
     CORBA::Object_var
       Object = orb->resolve_initial_references( "RootPOA" ACE_ENV_ARG_PARAMETER );

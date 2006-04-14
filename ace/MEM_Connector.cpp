@@ -11,8 +11,6 @@ ACE_RCSID(ace, MEM_Connector, "$Id$")
 #include "ace/MEM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Connector)
 
 void
@@ -73,9 +71,9 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                        ACE_LIB_TEXT ("(%P|%t) MEM_Connector can't connect ")
                        ACE_LIB_TEXT ("to %s:%d which is not a local endpoint ")
                        ACE_LIB_TEXT ("(local address is %s:%d)\n"),
-                       ACE_TEXT_CHAR_TO_TCHAR (remote_sap.get_host_name ()),
+                       ACE_TEXT_TO_TCHAR_IN (remote_sap.get_host_name ()),
                        remote_sap.get_port_number (),
-                       ACE_TEXT_CHAR_TO_TCHAR (this->address_.get_host_name ()),
+                       ACE_TEXT_TO_TCHAR_IN (this->address_.get_host_name ()),
                        this->address_.get_port_number ()),
                       -1);
   else
@@ -143,7 +141,5 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

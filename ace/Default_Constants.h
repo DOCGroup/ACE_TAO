@@ -51,7 +51,8 @@
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_CHUNK */
 
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_NAME)
-#define ACE_DEFAULT_PAGEFILE_POOL_NAME ACE_LIB_TEXT ("Default_ACE_Pagefile_Memory_Pool")
+#define ACE_DEFAULT_PAGEFILE_POOL_NAME_A "Default_ACE_Pagefile_Memory_Pool"
+#define ACE_DEFAULT_PAGEFILE_POOL_NAME ACE_LIB_TEXT (ACE_DEFAULT_PAGEFILE_POOL_NAME_A)
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_NAME */
 
 #if !defined (ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY)
@@ -73,10 +74,6 @@
 # if !defined (ACE_DEFAULT_BACKLOG)
 #   define ACE_DEFAULT_BACKLOG 5
 # endif /* ACE_DEFAULT_BACKLOG */
-
-# if !defined (ACE_DEFAULT_ASYNCH_BACKLOG)
-#   define ACE_DEFAULT_ASYNCH_BACKLOG 5
-# endif /* ACE_DEFAULT_ASYNCH_BACKLOG */
 
 # if !defined (ACE_DEFAULT_THREADS)
 #   define ACE_DEFAULT_THREADS 1
@@ -124,7 +121,8 @@
 # endif /* ACE_DEFAULT_MAX_SOCKET_BUFSIZ */
 
 # if !defined (ACE_DEFAULT_SERVER_PORT_STR)
-#   define ACE_DEFAULT_SERVER_PORT_STR ACE_LIB_TEXT("20002")
+#   define ACE_DEFAULT_SERVER_PORT_STR_A "20002"
+#   define ACE_DEFAULT_SERVER_PORT_STR ACE_LIB_TEXT(ACE_DEFAULT_SERVER_PORT_STR_A)
 # endif /* ACE_DEFAULT_SERVER_PORT_STR */
 
 // Used for the Service_Directory test
@@ -199,9 +197,11 @@
 // Used by the FIFO tests and the Client_Logging_Handler netsvc.
 # if !defined (ACE_DEFAULT_RENDEZVOUS)
 #   if defined (ACE_HAS_STREAM_PIPES)
-#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT("/tmp/fifo.ace")
+#     define ACE_DEFAULT_RENDEZVOUS_A "/tmp/fifo.ace"
+#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT(ACE_DEFAULT_RENDEZVOUS_A)
 #   else
-#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT("localhost:20010")
+#     define ACE_DEFAULT_RENDEZVOUS_A "localhost:20010"
+#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT(ACE_DEFAULT_RENDEZVOUS_A)
 #   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
@@ -213,23 +213,27 @@
 # if !defined (ACE_DEFAULT_LOGGER_KEY)
 
 #     if defined (ACE_HAS_STREAM_PIPES)
-#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
+#       define ACE_DEFAULT_LOGGER_KEY_A "/tmp/server_daemon"
+#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT (ACE_DEFAULT_LOGGER_KEY_A)
 #     else
-#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("localhost:20012")
+#       define ACE_DEFAULT_LOGGER_KEY_A "localhost:20012"
+#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT (ACE_DEFAULT_LOGGER_KEY_A)
 #     endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
 // The way to specify the local host for loopback IP. This is usually
 // "localhost" but it may need changing on some platforms.
 # if !defined (ACE_LOCALHOST)
-#   define ACE_LOCALHOST ACE_LIB_TEXT ("localhost")
+#   define ACE_LOCALHOST_A "localhost"
+#   define ACE_LOCALHOST ACE_LIB_TEXT (ACE_LOCALHOST_A)
 # endif
 
 // This specification for an IPv6 localhost should work on all platforms
 // supporting IPv6
 # if defined (ACE_HAS_IPV6)
 #   if !defined (ACE_IPV6_LOCALHOST)
-#     define ACE_IPV6_LOCALHOST ACE_LIB_TEXT ("::1")
+#     define ACE_IPV6_LOCALHOST_A "::1"
+#     define ACE_IPV6_LOCALHOST ACE_LIB_TEXT (ACE_IPV6_LOCALHOST_A)
 #   endif /* ACE_IPV6_LOCALHOST*/
 #endif /* ACE_HAS_IPV6 */
 
@@ -237,14 +241,17 @@
 // supporting IPv6
 # if defined (ACE_HAS_IPV6)
 #   if !defined (ACE_IPV6_ANY)
-#     define ACE_IPV6_ANY ACE_LIB_TEXT ("::")
+#     define ACE_IPV6_ANY_A "::"
+#     define ACE_IPV6_ANY ACE_LIB_TEXT (ACE_IPV6_ANY_A)
 #   endif /* ACE_IPV6_ANY*/
 #endif /* ACE_HAS_IPV6 */
 
 # if !defined (ACE_DEFAULT_SERVER_HOST)
 #   if defined (ACE_HAS_IPV6)
+#     define ACE_DEFAULT_SERVER_HOST_A ACE_IPV6_LOCALHOST_A
 #     define ACE_DEFAULT_SERVER_HOST ACE_IPV6_LOCALHOST
 #   else /*ACE_HAS_IPV6*/
+#     define ACE_DEFAULT_SERVER_HOST_A ACE_LOCALHOST_A
 #     define ACE_DEFAULT_SERVER_HOST ACE_LOCALHOST
 #   endif /*ACE_HAS_IPV6*/
 # endif /* ACE_DEFAULT_SERVER_HOST */
@@ -431,10 +438,8 @@
 #endif /* ACE_WIN32 */
 
 // Define the Wide character and normal versions of some of the string macros
-#if defined (ACE_HAS_WCHAR)
 #  define ACE_DIRECTORY_SEPARATOR_STR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_STR_A)
 #  define ACE_DIRECTORY_SEPARATOR_CHAR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_CHAR_A)
-#endif /* ACE_HAS_WCHAR */
 
 #define ACE_DIRECTORY_SEPARATOR_STR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
 #define ACE_DIRECTORY_SEPARATOR_CHAR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
@@ -447,7 +452,7 @@
 #  define ACE_MAX_DEFAULT_PORT 65535
 #endif /* ACE_MAX_DEFAULT_PORT */
 
-// Default number of ACE_Event_Handlers supported by
+// Default number of <ACE_Event_Handler>s supported by
 // <ACE_Timer_Heap>.
 # if !defined (ACE_DEFAULT_TIMERS)
 #   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
@@ -467,10 +472,8 @@
 #endif /* ACE_WIN32 */
 
 // Define the Wide character and normal versions of some of the string macros
-#if defined (ACE_HAS_WCHAR)
 #  define ACE_PLATFORM_W ACE_TEXT_WIDE(ACE_PLATFORM_A)
 #  define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX_A)
-#endif /* ACE_HAS_WCHAR */
 
 #define ACE_PLATFORM ACE_LIB_TEXT (ACE_PLATFORM_A)
 #define ACE_PLATFORM_EXE_SUFFIX ACE_LIB_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
@@ -486,7 +489,8 @@
 #  endif /* __MINGW32__ */
 #else /* !ACE_WIN32 */
 #  if !defined (ACE_LD_SEARCH_PATH)
-#    define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
+#    define ACE_LD_SEARCH_PATH_A "LD_LIBRARY_PATH"
+#    define ACE_LD_SEARCH_PATH ACE_LIB_TEXT (ACE_LD_SEARCH_PATH_A)
 #  endif /* ACE_LD_SEARCH_PATH */
 #  if !defined (ACE_LD_SEARCH_PATH_SEPARATOR_STR)
 #    define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
@@ -505,9 +509,11 @@
 // Used for dynamic linking
 #   if !defined (ACE_DEFAULT_SVC_CONF)
 #     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
+#       define ACE_DEFAULT_SVC_CONF_A ".\\svc.conf"
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (ACE_DEFAULT_SVC_CONF_A)
 #     else
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf.xml")
+#       define ACE_DEFAULT_SVC_CONF_A ".\\svc.conf.xml"
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (ACE_DEFAULT_SVC_CONF_A)
 #     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 #endif /* ACE_WIN32 */
@@ -515,14 +521,17 @@
  // Used for dynamic linking.
 #if !defined (ACE_DEFAULT_SVC_CONF)
 #  if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
+#    define ACE_DEFAULT_SVC_CONF_A "./svc.conf"
+#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (ACE_DEFAULT_SVC_CONF_A)
 #  else
-#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf.xml")
+#    define ACE_DEFAULT_SVC_CONF_A "./svc.conf.xml"
+#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (ACE_DEFAULT_SVC_CONF_A)
 #  endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #endif /* ACE_DEFAULT_SVC_CONF */
 
 #if !defined (ACE_LOGGER_KEY)
-#  define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
+#  define ACE_LOGGER_KEY_A "/tmp/server_daemon"
+#  define ACE_LOGGER_KEY ACE_LIB_TEXT (ACE_LOGGER_KEY_A)
 #endif /* ACE_LOGGER_KEY */
 
 // Theses defines are used by the ACE Name Server.
@@ -542,16 +551,12 @@
 #  else /* ACE_WIN32 */
 #    define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
 #  endif /* ACE_WIN32 */
-#  if defined (ACE_HAS_WCHAR)
 #    define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
-#  endif /* ACE_HAS_WCHAR */
 #    define ACE_DEFAULT_NAMESPACE_DIR ACE_LIB_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
 #endif /* ACE_LEGACY_MODE */
 
-#if defined (ACE_HAS_WCHAR)
 #  define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
 #  define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
-#endif /* ACE_HAS_WCHAR */
 
 #define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
 #define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)

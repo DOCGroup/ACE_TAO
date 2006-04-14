@@ -30,11 +30,9 @@
 #include "ace/MEM_Connector.h"
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
-#include "tao/Strategies/SHMIOP_Connection_Handler.h"
+#include "SHMIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SHMIOP_Endpoint;
 
@@ -128,8 +126,6 @@ private:
   /// Are we using GIOP lite?
   CORBA::Boolean lite_flag_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

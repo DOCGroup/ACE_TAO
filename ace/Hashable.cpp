@@ -12,8 +12,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Hashable::~ACE_Hashable (void)
 {
 }
@@ -28,9 +26,7 @@ ACE_Hashable::hash (void) const
   // relative to the simple comparison.
 
   if (this->hash_value_ == 0)
-    this->hash_value_ = this->hash_i ();
+    (const_cast <ACE_Hashable *> (this))->hash_value_ = this->hash_i ();
 
   return this->hash_value_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,9 +1,9 @@
-#include "tao/Strategies/UIOP_Lite_Factory.h"
+#include "UIOP_Lite_Factory.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/UIOP_Acceptor.h"
-#include "tao/Strategies/UIOP_Connector.h"
+#include "UIOP_Acceptor.h"
+#include "UIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -17,8 +17,6 @@ ACE_RCSID (Strategies,
 
 
 static const char prefix_[] = "uiop";
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Lite_Protocol_Factory::TAO_UIOP_Lite_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_UIOP_PROFILE),
@@ -90,8 +88,6 @@ TAO_UIOP_Lite_Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_UIOP_Lite_Protocol_Factory,
                        ACE_TEXT ("UIOP_Lite_Factory"),

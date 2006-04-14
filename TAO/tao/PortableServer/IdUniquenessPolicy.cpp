@@ -1,11 +1,9 @@
-#include "tao/PortableServer/IdUniquenessPolicy.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "IdUniquenessPolicy.h"
+#include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
            IdUniquenessPolicy,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -64,4 +62,3 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

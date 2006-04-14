@@ -1,26 +1,32 @@
+// -*- C++ -*-
 //$Id$
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/ORB_Core.h"
 #include "tao/IIOP_Endpoint.h"
-#include "tao/Base_Transport_Property.h"
-#include "tao/Profile_Transport_Resolver.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
+#include "Base_Transport_Property.h"
+#include "Profile_Transport_Resolver.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
 
 ACE_RCSID (tao,
            Invocation_Endpoint_Selectors,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+TAO_Invocation_Endpoint_Selector::TAO_Invocation_Endpoint_Selector (void)
+{
+}
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
 {
 }
 
 // ****************************************************************
+
+TAO_Default_Endpoint_Selector::TAO_Default_Endpoint_Selector (void)
+{
+}
 
 TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 {
@@ -160,5 +166,3 @@ TAO_Default_Endpoint_Selector::select_endpoint (
   ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

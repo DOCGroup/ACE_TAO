@@ -13,13 +13,9 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-
 ## Makefile.AVS_Simple_Two_Stage_Recv.am
 
-if !BUILD_ACE_FOR_TAO
-
-noinst_PROGRAMS += receiver
+noinst_PROGRAMS = receiver
 
 receiver_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -38,20 +34,14 @@ receiver_SOURCES = \
 
 receiver_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
-
 ## Makefile.AVS_Simple_Two_Stage_Send.am
-
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += sender
 
@@ -70,16 +60,12 @@ sender_SOURCES = \
 
 sender_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -39,27 +39,39 @@ namespace CIAO
       if (UUID_.get ()) UUID_->container (this);
       if (realizes_.get ()) realizes_->container (this);
       {
-        for (implementation_const_iterator i (s.implementation_.begin ());i != s.implementation_.end ();++i) add_implementation (*i);
+        for (implementation_const_iterator i (s.implementation_.begin ());
+        i != s.implementation_.end ();
+        ++i) add_implementation (*i);
       }
 
       {
-        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
+        for (instance_const_iterator i (s.instance_.begin ());
+        i != s.instance_.end ();
+        ++i) add_instance (*i);
       }
 
       {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
+        for (connection_const_iterator i (s.connection_.begin ());
+        i != s.connection_.end ();
+        ++i) add_connection (*i);
       }
 
       {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
+        for (dependsOn_const_iterator i (s.dependsOn_.begin ());
+        i != s.dependsOn_.end ();
+        ++i) add_dependsOn (*i);
       }
 
       {
-        for (artifact_const_iterator i (s.artifact_.begin ());i != s.artifact_.end ();++i) add_artifact (*i);
+        for (artifact_const_iterator i (s.artifact_.begin ());
+        i != s.artifact_.end ();
+        ++i) add_artifact (*i);
       }
 
       {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
+        i != s.infoProperty_.end ();
+        ++i) add_infoProperty (*i);
       }
     }
 
@@ -77,32 +89,44 @@ namespace CIAO
 
       implementation_.clear ();
       {
-        for (implementation_const_iterator i (s.implementation_.begin ());i != s.implementation_.end ();++i) add_implementation (*i);
+        for (implementation_const_iterator i (s.implementation_.begin ());
+        i != s.implementation_.end ();
+        ++i) add_implementation (*i);
       }
 
       instance_.clear ();
       {
-        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
+        for (instance_const_iterator i (s.instance_.begin ());
+        i != s.instance_.end ();
+        ++i) add_instance (*i);
       }
 
       connection_.clear ();
       {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
+        for (connection_const_iterator i (s.connection_.begin ());
+        i != s.connection_.end ();
+        ++i) add_connection (*i);
       }
 
       dependsOn_.clear ();
       {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
+        for (dependsOn_const_iterator i (s.dependsOn_.begin ());
+        i != s.dependsOn_.end ();
+        ++i) add_dependsOn (*i);
       }
 
       artifact_.clear ();
       {
-        for (artifact_const_iterator i (s.artifact_.begin ());i != s.artifact_.end ();++i) add_artifact (*i);
+        for (artifact_const_iterator i (s.artifact_.begin ());
+        i != s.artifact_.end ();
+        ++i) add_artifact (*i);
       }
 
       infoProperty_.clear ();
       {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
+        i != s.infoProperty_.end ();
+        ++i) add_infoProperty (*i);
       }
 
       return *this;
@@ -675,7 +699,9 @@ namespace CIAO
         if (b != e)
         {
           implementation_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) implementation_next (o);
@@ -695,7 +721,9 @@ namespace CIAO
         if (b != e)
         {
           implementation_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) implementation_next (o);
@@ -745,7 +773,9 @@ namespace CIAO
         if (b != e)
         {
           instance_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) instance_next (o);
@@ -767,7 +797,9 @@ namespace CIAO
         if (b != e)
         {
           instance_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) instance_next (o);
@@ -829,7 +861,9 @@ namespace CIAO
         if (b != e)
         {
           connection_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) connection_next (o);
@@ -851,7 +885,9 @@ namespace CIAO
         if (b != e)
         {
           connection_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) connection_next (o);
@@ -913,7 +949,9 @@ namespace CIAO
         if (b != e)
         {
           dependsOn_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) dependsOn_next (o);
@@ -935,7 +973,9 @@ namespace CIAO
         if (b != e)
         {
           dependsOn_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) dependsOn_next (o);
@@ -997,7 +1037,9 @@ namespace CIAO
         if (b != e)
         {
           artifact_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) artifact_next (o);
@@ -1019,7 +1061,9 @@ namespace CIAO
         if (b != e)
         {
           artifact_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) artifact_next (o);
@@ -1081,7 +1125,9 @@ namespace CIAO
         if (b != e)
         {
           infoProperty_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) infoProperty_next (o);
@@ -1103,7 +1149,9 @@ namespace CIAO
         if (b != e)
         {
           infoProperty_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) infoProperty_next (o);

@@ -25,12 +25,10 @@
 
 #include "ace/CORBA_macros.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/Resource_Factory.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 
@@ -99,19 +97,23 @@ protected:
             Entry *&entry);
 
 private:
-
   // The acceptor registry should not be copied.
-  TAO_PortableGroup_Acceptor_Registry (
-    const TAO_PortableGroup_Acceptor_Registry&);
-  void operator= (const TAO_PortableGroup_Acceptor_Registry&);
+  ACE_UNIMPLEMENTED_FUNC (TAO_PortableGroup_Acceptor_Registry (
+                              const TAO_PortableGroup_Acceptor_Registry&
+                            ))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (
+                              const TAO_PortableGroup_Acceptor_Registry&
+                            ))
 
 private:
   /// List of acceptors that are currently open.
   Acceptor_Registry registry_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+//#if defined(__ACE_INLINE__)
+//#include "tao/PortableGroup_Acceptor_Registry.i"
+//#endif /* __ACE_INLINE__ */
+
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_PORTABLEGROUP_ACCEPTOR_REGISTRY_H */

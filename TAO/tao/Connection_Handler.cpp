@@ -1,11 +1,11 @@
 //$Id$
 
-#include "tao/Connection_Handler.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-#include "tao/Resume_Handle.h"
-#include "tao/Transport.h"
-#include "tao/Wait_Strategy.h"
+#include "Connection_Handler.h"
+#include "ORB_Core.h"
+#include "debug.h"
+#include "Resume_Handle.h"
+#include "Transport.h"
+#include "Wait_Strategy.h"
 
 #include "ace/SOCK.h"
 #include "ace/Reactor.h"
@@ -20,8 +20,6 @@
 ACE_RCSID (tao,
            Connection_Handler,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core)
@@ -203,7 +201,6 @@ TAO_Connection_Handler::handle_output_eh (
   return_value = this->transport ()->handle_output ();
 
   this->pos_io_hook (return_value);
-
   if (return_value != 0)
     {
       resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
@@ -274,10 +271,6 @@ TAO_Connection_Handler::handle_input_internal (
 
   this->pos_io_hook (return_value);
 
-  // Bug 1647; might need to change resume_handle's flag or
-  // change handle_input return value.
-  resume_handle.handle_input_return_value_hook(return_value);
-
   if (TAO_debug_level > 6)
     {
       ACE_HANDLE handle = eh->get_handle ();
@@ -287,8 +280,6 @@ TAO_Connection_Handler::handle_input_internal (
                   t_id, handle, h, return_value));
     }
 
-  if (return_value == -1)
-    resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
   return return_value;
 }
 
@@ -430,5 +421,3 @@ TAO_Connection_Handler::close_handler (void)
 }
 
 //@@ CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK
-
-TAO_END_VERSIONED_NAMESPACE_DECL

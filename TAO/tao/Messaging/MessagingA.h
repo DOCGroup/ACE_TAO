@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Messaging/messaging_export.h"
+#include "messaging_export.h"
 #include "tao/Messaging/MessagingC.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyA.h"
 #include "tao/Messaging/Messaging_RT_PolicyA.h"
@@ -46,8 +46,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace Messaging
 {
@@ -83,8 +81,6 @@ TAO_Messaging_Export void operator<<= (::CORBA::Any &, Messaging::ReplyHandler_p
 TAO_Messaging_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Messaging::ReplyHandler_ptr &);
 
 #endif
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

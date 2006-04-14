@@ -207,7 +207,7 @@ int AC_Output_Handler::svc () {
     }
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
-         >= ACE_Time_Value(FLUSH_TIMEOUT))) {
+         >= FLUSH_TIMEOUT)) {
       if (send (chunk, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
     }
@@ -388,13 +388,13 @@ int AC_Client_Logging_Daemon::init
   ACE_TCHAR sld_host[MAXHOSTNAMELEN];
   ACE_OS::strcpy (sld_host, ACE_LOCALHOST);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:r:s:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("p:r:s:"), 0);
   get_opt.long_option (ACE_TEXT ("client_port"), 'p',
-                       ACE_Get_Opt::ARG_REQUIRED);
+                       ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
   get_opt.long_option (ACE_TEXT ("server_port"), 'r',
-                       ACE_Get_Opt::ARG_REQUIRED);
+                       ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
   get_opt.long_option (ACE_TEXT ("server_name"), 's',
-                       ACE_Get_Opt::ARG_REQUIRED);
+                       ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
 
   for (int c; (c = get_opt ()) != -1;)
     switch (c) {

@@ -196,7 +196,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   if (!node->is_local ())
     {
-      *os << "TAO_OutputCDR &cdr" << env_decl << be_uidt_nl
+      *os << "TAO_OutputCDR &cdr" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
           << ") const" << be_uidt_nl
           << "{" << be_idt_nl
           << "if (cdr << *this)" << be_idt_nl
@@ -217,7 +218,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
   else
     {
-      *os << "TAO_OutputCDR &" << env_decl << be_uidt_nl
+      *os << "TAO_OutputCDR &" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
           << ") const" << be_uidt_nl
           << "{" << be_idt_nl;
 
@@ -238,7 +240,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   if (!node->is_local ())
     {
-      *os << "TAO_InputCDR &cdr" << env_decl << be_uidt_nl
+      *os << "TAO_InputCDR &cdr" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "if (cdr >> *this)" << be_idt_nl
@@ -259,7 +262,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
   else
     {
-      *os << "TAO_InputCDR &" << env_decl << be_uidt_nl
+      *os << "TAO_InputCDR &" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl;
 
@@ -356,6 +360,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
     }
 
-  node->cli_stub_gen (true);
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }

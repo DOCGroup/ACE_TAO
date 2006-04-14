@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   ESF_Proxy_RB_Tree.h
  *
@@ -18,8 +17,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/RB_Tree.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Iterator class for a ACE_ESF_RB_Tree
 template<class PROXY>
@@ -97,14 +94,12 @@ private:
   Implementation impl_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.i"
+#include "ESF_Proxy_RB_Tree.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp"
+#include "ESF_Proxy_RB_Tree.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

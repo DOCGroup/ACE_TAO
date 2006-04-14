@@ -1,9 +1,8 @@
 // Dump_T.cpp
-//
 // $Id$
 
-#ifndef ACE_DUMP_T_CPP
-#define ACE_DUMP_T_CPP
+#ifndef ACE_DUMP_T_C
+#define ACE_DUMP_T_C
 
 #include "ace/Dump_T.h"
 #include "ace/Global_Macros.h"
@@ -13,7 +12,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Dump_T, "$Id$")
 
 template <class Concrete>
 ACE_Dumpable_Adapter<Concrete>::~ACE_Dumpable_Adapter (void)
@@ -43,6 +42,4 @@ ACE_Dumpable_Adapter<Concrete>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_DUMP_T_CPP */
+#endif /* ACE_DUMP_T_C */

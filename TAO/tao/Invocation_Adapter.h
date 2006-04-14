@@ -29,14 +29,10 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Time_Value;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Operation_Details;
 class TAO_Stub;
+class ACE_Time_Value;
+
 
 namespace  CORBA
 {
@@ -235,8 +231,7 @@ namespace TAO
     /// Helper method that takes care of setting the profiles within
     /// the stub object if the target gets forwarded
     void object_forwarded (CORBA::Object_var &effective_target,
-                           TAO_Stub *stub,
-                           CORBA::Boolean permanent_forward
+                           TAO_Stub *stub
                            ACE_ENV_ARG_DECL);
 
     /// Helper method to set the response flags within @a details
@@ -283,7 +278,6 @@ namespace TAO
   };
 } // End namespace TAO
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"

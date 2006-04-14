@@ -95,8 +95,8 @@ sub edit {
       }
     }
     else {
-      $error = "Either there are no modified/removed files files or " .
-               "there is a revision\ncontrol system problem.";
+      $error = "Unable to generate a list of modified files\n" .
+               'Could this be a cvs problem?';
     }
   }
   else {

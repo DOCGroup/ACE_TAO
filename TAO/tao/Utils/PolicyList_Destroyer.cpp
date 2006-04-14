@@ -1,15 +1,13 @@
-#include "tao/Utils/PolicyList_Destroyer.h"
+#include "PolicyList_Destroyer.h"
 #include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Utils/PolicyList_Destroyer.inl"
+# include "PolicyList_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Utils,
            PolicyList_Deactivator,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
   ACE_THROW_SPEC (())
@@ -37,5 +35,3 @@ TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
       (*this)[i] = CORBA::Policy::_nil();
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

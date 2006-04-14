@@ -2,8 +2,6 @@
 //
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <class SVC_HANDLER> ACE_INLINE
 ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy (SVC_HANDLER *sh,
                                                              ACE_Thread_Manager *tm)
@@ -226,5 +224,3 @@ ACE_Refcounted_Hash_Recyclable<T>::operator!= (const ACE_Refcounted_Hash_Recycla
 {
   return !this->operator== (rhs);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

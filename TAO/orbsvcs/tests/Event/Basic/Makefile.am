@@ -18,7 +18,6 @@ noinst_PROGRAMS =
 ## Makefile.Event_Basic_Atomic_Reconnect.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Atomic_Reconnect
 
@@ -52,13 +51,11 @@ Atomic_Reconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_BCast.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += BCast
 
@@ -92,13 +89,11 @@ BCast_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Bitmask.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Bitmask
 
@@ -140,13 +135,11 @@ Bitmask_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Complex.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Complex
 
@@ -188,13 +181,11 @@ Complex_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Control.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Control
 
@@ -228,13 +219,11 @@ Control_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Disconnect.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Disconnect
 
@@ -276,13 +265,11 @@ Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Gateway.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Gateway
 
@@ -324,13 +311,11 @@ Gateway_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_MT_Disconnect.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += MT_Disconnect
 
@@ -364,13 +349,11 @@ MT_Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Negation.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Negation
 
@@ -412,13 +395,11 @@ Negation_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Observer.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Observer
 
@@ -452,13 +433,11 @@ Observer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Random.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Random
 
@@ -492,13 +471,11 @@ Random_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Reconnect.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Reconnect
 
@@ -532,13 +509,11 @@ Reconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Shutdown.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Shutdown
 
@@ -572,13 +547,11 @@ Shutdown_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Timeout.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Timeout
 
@@ -620,13 +593,11 @@ Timeout_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Basic_Wildcard.am
 
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Wildcard
 
@@ -668,7 +639,6 @@ Wildcard_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

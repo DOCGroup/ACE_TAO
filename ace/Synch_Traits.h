@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward decl
 class ACE_Null_Mutex;
 class ACE_Null_Condition;
@@ -145,8 +143,6 @@ public:
 #else /* ACE_HAS_THREADS */
 #define ACE_SYNCH ACE_NULL_SYNCH
 #endif /* ACE_HAS_THREADS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SYNCH_TRAITS_H */

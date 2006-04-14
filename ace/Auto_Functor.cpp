@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_AUTO_FUNCTOR_CPP
 #define ACE_AUTO_FUNCTOR_CPP
 
@@ -9,7 +7,7 @@
 # include "ace/Auto_Functor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Auto_Functor, "$Id$")
 
 template<typename X, typename Functor>
 ACE_Utils::Auto_Functor<X,Functor>::~Auto_Functor()
@@ -36,7 +34,5 @@ ACE_Utils::Auto_Functor<X,Functor>::reset(X * p, Functor f)
   reset(p);
   f_ = f;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*ACE_AUTO_FUNCTOR_CPP*/

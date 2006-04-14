@@ -3,6 +3,7 @@
 #include "RedGreen_Test.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
@@ -29,7 +30,7 @@ int
 RedGreen_Test::parse_args (int argc,
                            char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
     const char *current_arg = 0;
 
@@ -77,36 +78,13 @@ RedGreen_Test::~RedGreen_Test ()
 {
   if (!CORBA::is_nil (ec_.in ()))
     {
-      // Even though we still have a reference, there's no guarantee
-      // the EC is still around.  So, trap exceptions.
-      ACE_TRY_NEW_ENV
-        {
-          this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCH (CORBA::COMM_FAILURE, ex)
-        {
-          // Silently swallow this b/c this could mean the EC is gone
-          // or that the network is hosed.  Either way, we're not waiting
-          // around to figure out the problem.  Report the incident to the
-          // log and be done with it.
-          ACE_DEBUG ((LM_INFO,
-                      "INFO: Got a COMM_FAILURE exception while trying to \n"
-                      "      invoke `destroy()' on the Event Channel in the \n"
-                      "      RedGreen destructor.  This is likely not a problem.\n"));
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                              "in RedGreen destructor; swallowing.\n");
-        }
-      ACE_ENDTRY;
+      this->ec_->destroy ();
     }
 }
 
 void
 RedGreen_Test::init (int argc,
-                     char *argv []
+                     char *argv[]
                      ACE_ENV_ARG_DECL)
 {
   this->init_ORB (argc,
@@ -169,11 +147,10 @@ RedGreen_Test::done (void)
 
 void
 RedGreen_Test::init_ORB (int argc,
-                         char *argv []
+                         char *argv[]
                          ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

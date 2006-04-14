@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 // ============================================================================
 /**
@@ -11,7 +11,7 @@
  *  to write events to the Log.
  *
  *  @author Rob Ruff <rruff@scires.com>
- *  @author D A Hanvey <d.hanvey@qub.ac.uk>
+ *  @D A Hanvey <d.hanvey@qub.ac.uk>
  */
 // ============================================================================
 
@@ -32,14 +32,12 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/Log/EventLogConsumer.h"
 
-#include "orbsvcs/Log/eventlog_serv_export.h"
+#include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_EventLog_i;
@@ -126,8 +124,6 @@ private:
 
   PortableServer::POA_var	poa_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

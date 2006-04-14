@@ -29,17 +29,15 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/Messaging/OldExceptionHolderC.h"
+#include "OldExceptionHolderC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Messaging/OldExceptionHolderC.inl"
+#include "OldExceptionHolderC.inl"
 #endif /* !defined INLINE */
 
 #if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -338,7 +336,5 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
     (strm >> _pd_marshaled_exception)
   );
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* */

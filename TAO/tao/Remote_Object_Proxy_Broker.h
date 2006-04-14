@@ -26,8 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   /**
@@ -72,8 +70,6 @@ namespace TAO
 // -----------------------------------------------------
 
 TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

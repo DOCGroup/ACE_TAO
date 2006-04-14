@@ -15,26 +15,17 @@
 #define TAO_RESOURCE_FACTORY_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/TAO_Export.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-#include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "tao/TAO_Export.h"
 
 class TAO_Protocol_Factory;
 class TAO_Acceptor_Registry;
@@ -44,6 +35,8 @@ class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
 class TAO_Codeset_Manager;
+
+class ACE_Lock;
 
 // ****************************************************************
 
@@ -69,10 +62,9 @@ public:
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Protocol_Item (const TAO_Protocol_Item&);
-  void operator= (const TAO_Protocol_Item&);
+  // Prohibited
+  ACE_UNIMPLEMENTED_FUNC (TAO_Protocol_Item (const TAO_Protocol_Item&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Protocol_Item&))
 
 private:
   /// Protocol factory name.
@@ -152,9 +144,6 @@ public:
 
   /// Return a connector to be utilized.
   virtual TAO_Connector_Registry *get_connector_registry (void);
-
-  /// Return the Allocator's memory pool type
-  virtual void use_local_memory_pool (bool);
 
   /// @name Access the input CDR allocators.
   //@{
@@ -263,8 +252,6 @@ protected:
   virtual int load_default_protocols (void);
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

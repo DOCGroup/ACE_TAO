@@ -13,11 +13,10 @@ package BorlandProjectCreator;
 use strict;
 
 use ProjectCreator;
-use WinProjectBase;
 use File::Basename;
 
 use vars qw(@ISA);
-@ISA = qw(WinProjectBase ProjectCreator);
+@ISA = qw(ProjectCreator);
 
 # ************************************************************
 # Subroutine Section

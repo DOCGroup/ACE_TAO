@@ -11,7 +11,6 @@ ACE_RCSID (ace,
            Shared_Memory_MM,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_MM)
 
@@ -89,7 +88,7 @@ void *
 ACE_Shared_Memory_MM::malloc (size_t)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::malloc");
-  void *addr = 0;
+  void *addr;
 
   return this->shared_memory_ (addr) == -1 ? 0 : addr;
 }
@@ -107,5 +106,3 @@ ACE_Shared_Memory_MM::free (void *p)
   ACE_TRACE ("ACE_Shared_Memory_MM::free");
   return p != 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

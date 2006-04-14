@@ -5,6 +5,7 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 
 #include "tao/ORB_Core.h"
@@ -23,9 +24,9 @@
 // ******************************************************************
 // Data Section
 // ******************************************************************
-const int PER_BATCH = 16;
+
 static TAO_Notify_Tests_SequencePushSupplier* supplier_1 = 0;
-static int num_batches = 6;  // 6 sets of 16
+static int max_events = 6;  // 6 sets of 16
 static const char* ior_output_file = "supplier.ior";
 
 // ******************************************************************
@@ -83,14 +84,14 @@ public:
 int
 Supplier_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:e:d");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:e:d");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
   {
     case 'e':
-      num_batches = ACE_OS::atoi (get_opts.optarg);
+      max_events = ACE_OS::atoi (get_opts.optarg);
       break;
 
     case 'o':
@@ -134,7 +135,6 @@ SendEvents (int id ACE_ENV_ARG_DECL)
   CosNotification::EventBatch events;
 
   CosNotification::StructuredEvent event;
-
   event.header.fixed_header.event_type.domain_name =
     CORBA::string_dup ("Orbix 2000 Demos");
   event.header.fixed_header.event_type.type_name =
@@ -142,44 +142,65 @@ SendEvents (int id ACE_ENV_ARG_DECL)
 
   event.header.fixed_header.event_name = CORBA::string_dup ("test event");
 
+
   event.header.variable_header.length (2);
   event.header.variable_header[0].name =
     CORBA::string_dup (CosNotification::Priority);
+  event.header.variable_header[0].value <<= (CORBA::Short)
+    (id > max_events / 2 ?
+    -id : id);
   event.header.variable_header[1].name =
     CORBA::string_dup (CosNotification::Timeout);
-
+  event.header.variable_header[1].value <<= (TimeBase::TimeT)
+    ((max_events - id) * 60);
   event.filterable_data.length (3);
   event.filterable_data[0].name = CORBA::string_dup ("objectId");
+  event.filterable_data[0].value <<= (CORBA::Long)0xdad;
+
   event.filterable_data[1].name = CORBA::string_dup ("type");
+  event.filterable_data[1].value <<= types[id % 3];
+
   event.filterable_data[2].name = CORBA::string_dup ("enum");
+  event.filterable_data[2].value <<= (CORBA::Long)
+    (id > max_events / 2 ?
+    -id : id);
 
-  events.length (PER_BATCH);
+  events.length (16);
+  events[0] = event;
 
-  for (int z = 0; z < PER_BATCH; ++z)
+  CosNotification::StructuredEvent revents[15];
+  for (int z = 0; z < 15; z++)
   {
-    event.header.variable_header[0].value <<= (CORBA::Short)
-      (id > num_batches / 2 ?
+    revents[z].header.fixed_header.event_type.domain_name =
+      CORBA::string_dup ("Orbix 2000 Demos");
+    revents[z].header.fixed_header.event_type.type_name =
+      CORBA::string_dup ("Extra Events");
+
+    revents[z].header.fixed_header.event_name = CORBA::string_dup ("test revents[z]");
+
+    revents[z].header.variable_header.length (1);
+    revents[z].header.variable_header[0].name =
+      CORBA::string_dup (CosNotification::Priority);
+    revents[z].header.variable_header[0].value <<= (CORBA::Short)
+      (id > max_events / 2 ?
       -id : id);
 
-    event.filterable_data[0].value <<= (CORBA::Long)z;
-    event.filterable_data[1].value <<= types[2 - (id % 3)];
-    event.filterable_data[2].value <<= (CORBA::Long)
-      (id > num_batches / 2 ?
+    revents[z].filterable_data.length (3);
+    revents[z].filterable_data[0].name = CORBA::string_dup ("objectId");
+    revents[z].filterable_data[0].value <<= (CORBA::Long)z;
+
+    revents[z].filterable_data[1].name = CORBA::string_dup ("type");
+    revents[z].filterable_data[1].value <<= types[2 - (id % 3)];
+
+    revents[z].filterable_data[2].name = CORBA::string_dup ("enum");
+    revents[z].filterable_data[2].value <<= (CORBA::Long)
+      (id > max_events / 2 ?
       -id : id);
-
-    events[z] = event;
+    events[z + 1] = revents[z];
   }
 
-  ACE_TRY_NEW_ENV
-  {
-    supplier_1->send_events (events ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCH (CORBA::Exception, e)
-  {
-    ACE_PRINT_EXCEPTION (e, "Error: Supplier exception: ");
-  }
-  ACE_ENDTRY;
+  supplier_1->send_events (events ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 static void
@@ -204,14 +225,16 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_Auto_Ptr< sig_i > sig_impl;
   int status = 0;
   ACE_TRY_NEW_ENV
   {
     Supplier_Client client;
-    status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    status = client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (status == 0)
@@ -233,7 +256,7 @@ int main (int argc, char* argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
       {
-        FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+        FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
           "Cannot open output file for "
@@ -253,18 +276,16 @@ int main (int argc, char* argv[])
 
         sig_impl->wait_for_startup();
 
-        ACE_DEBUG((LM_DEBUG, " 1 supplier sending %d batches of %d events...\n", num_batches, PER_BATCH));
-        for (int i = 0; i < num_batches; ++i)
+        ACE_DEBUG((LM_DEBUG, " 1 supplier sending %d events...\n", max_events));
+        for (int i = 0; i < max_events; ++i)
         {
           ACE_DEBUG((LM_DEBUG, "+"));
           SendEvents (i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-        ACE_DEBUG((LM_DEBUG, "\nSupplier waiting for consumer...\n"));
+        ACE_DEBUG((LM_DEBUG, "\nSupplier sent %d events.\n", max_events));
 
         sig_impl->wait_for_completion();
-
-        ACE_DEBUG((LM_DEBUG, "\nSupplier done.\n"));
 
         ACE_OS::unlink (ior_output_file);
 

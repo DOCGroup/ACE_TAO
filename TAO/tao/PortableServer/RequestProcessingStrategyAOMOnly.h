@@ -14,26 +14,19 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYAOMONLY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "RequestProcessingStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Location.h"
-#include "tao/PortableServer/PortableServer.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Servant_Location.h"
+#include "PortableServer.h"
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    /**
-     * @class RequestProcessingStrategyAOMOnly
-     *
-     * Request Processing Strategy which only uses the Active Object Map (AOM)
-     */
     class RequestProcessingStrategyAOMOnly
       : public RequestProcessingStrategy
     {
@@ -114,8 +107,6 @@ namespace TAO
     };
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_REQUESTPROCESSINGSTRATEGYAOMONLY_H */

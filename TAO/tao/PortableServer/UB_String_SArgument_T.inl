@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S, typename S_var>
 ACE_INLINE
@@ -62,4 +58,3 @@ TAO::Ret_UB_String_SArgument_T<S,S_var>::arg (void)
   return this->x_.out ();
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

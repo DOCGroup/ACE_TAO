@@ -16,7 +16,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,9 +32,6 @@
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Sbrk_Memory_Pool_Options
  *
@@ -38,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This should be a nested class, but that breaks too many
  * compilers.
  */
-class ACE_Export ACE_Sbrk_Memory_Pool_Options
+class ACE_Memory_Export ACE_Sbrk_Memory_Pool_Options
 {
 };
 
@@ -47,7 +49,7 @@ class ACE_Export ACE_Sbrk_Memory_Pool_Options
  *
  * @brief Make a memory pool that is based on <sbrk(2)>.
  */
-class ACE_Export ACE_Sbrk_Memory_Pool
+class ACE_Memory_Export ACE_Sbrk_Memory_Pool
 {
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
@@ -109,9 +111,6 @@ protected:
   /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* !ACE_LACKS_SBRK */
 
 #include /**/ "ace/post.h"

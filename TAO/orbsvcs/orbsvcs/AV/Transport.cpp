@@ -1,17 +1,17 @@
 // $Id$
 
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/sfp.h"
-#include "orbsvcs/AV/MCast.h"
-#include "orbsvcs/AV/RTCP.h"
-#include "orbsvcs/AV/RTP.h"
-#include "orbsvcs/AV/UDP.h"
-#include "orbsvcs/AV/TCP.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "orbsvcs/AV/AV_Core.h"
+#include "AVStreams_i.h"
+#include "sfp.h"
+#include "MCast.h"
+#include "RTCP.h"
+#include "RTP.h"
+#include "UDP.h"
+#include "TCP.h"
+#include "FlowSpec_Entry.h"
+#include "AV_Core.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
-#include "orbsvcs/AV/QoS_UDP.h"
+#include "QoS_UDP.h"
 #endif /* defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS) */
 
 #include "tao/debug.h"
@@ -19,11 +19,8 @@
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/Transport.i"
+#include "Transport.i"
 #endif /* __ACE_INLINE__ */
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
@@ -678,5 +675,3 @@ TAO_AV_Transport_Factory::make_connector (void)
 {
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

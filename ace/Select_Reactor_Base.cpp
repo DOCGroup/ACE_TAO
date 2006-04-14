@@ -19,8 +19,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_WIN32)
 #define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
 #define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)
@@ -446,7 +444,8 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
   // Call remove_reference() if the removal is complete and reference
   // counting is needed.
-  if (complete_removal && requires_reference_counting)
+  if (complete_removal &&
+      requires_reference_counting)
     {
       event_handler->remove_reference ();
     }
@@ -524,7 +523,7 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("max_handlep1_ = %d, max_size_ = %d\n"),
+              ACE_LIB_TEXT ("(%t) max_handlep1_ = %d, max_size_ = %d\n"),
               this->max_handlep1_, this->max_size_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("[")));
 
@@ -533,10 +532,10 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (event_handler) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (event_handler = %x, event_handler->handle_ = %d)\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (event_handler = %x, event_handler->handle_ = %d)"),
                 event_handler, event_handler->get_handle ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -587,7 +586,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
   if (this->notify_queue_.is_empty ())
     return 0;
 
-  ACE_Notification_Buffer *temp = 0;
+  ACE_Notification_Buffer *temp;
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> local_queue;
 
   size_t queue_size = this->notify_queue_.size ();
@@ -707,7 +706,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 #endif /* F_SETFD */
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-      ACE_Notification_Buffer *temp = 0;
+      ACE_Notification_Buffer *temp;
 
       ACE_NEW_RETURN (temp,
                       ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
@@ -750,7 +749,7 @@ ACE_Select_Reactor_Notify::close (void)
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   // Free up the dynamically allocated resources.
-  ACE_Notification_Buffer **b = 0;
+  ACE_Notification_Buffer **b;
 
   for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Buffer *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
@@ -803,7 +802,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
     if (free_queue_.dequeue_head (temp) == -1)
       {
         // Grow the queue of available buffers.
-        ACE_Notification_Buffer *temp1 = 0;
+        ACE_Notification_Buffer *temp1;
 
         ACE_NEW_RETURN (temp1,
                         ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
@@ -923,7 +922,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
     // holding the lock while delivering callbacks...
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
-    ACE_Notification_Buffer *temp = 0;
+    ACE_Notification_Buffer *temp;
 
     if (notify_queue_.is_empty ())
       return 0;
@@ -940,7 +939,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
                         -1);
 
     bool write_next_buffer = false;
-    ACE_Notification_Buffer ** next = 0;
+    ACE_Notification_Buffer ** next;
 
     if(!this->notify_queue_.is_empty())
       {
@@ -1269,5 +1268,3 @@ template class ACE_Node <ACE_Notification_Buffer *>;
 #pragma instantiate ACE_Node <ACE_Notification_Buffer *>
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -24,9 +24,7 @@
 #include "Command.h"
 //#include "../../../orbsvcs/Notify/CosNotify_Initializer.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_EventChannel_Command
@@ -44,14 +42,14 @@ public:
   virtual ~TAO_Notify_Tests_EventChannel_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  virtual void init (ACE_TArg_Shifter< char >& arg_shifter);
 
   /// Execute the command.
   virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Name of object
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const ACE_TCHAR* get_name (void);
+  static const ACE_TCHAR* name (void);
 
 protected:
   ///= Data Members

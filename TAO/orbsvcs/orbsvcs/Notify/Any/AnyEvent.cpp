@@ -1,10 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "AnyEvent.h"
 
 ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
 
-#include "orbsvcs/Notify/Consumer.h"
+#include "../Consumer.h"
 
 #include "tao/corba.h"
 #include "tao/debug.h"
@@ -13,8 +13,6 @@ ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventType TAO_Notify_AnyEvent_No_Copy::event_type_;
 
@@ -94,7 +92,7 @@ TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSuppli
 void
 TAO_Notify_AnyEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 {
-  const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
+  static const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
   cdr.write_octet (ANY_CODE);
   cdr << (*this->event_);
 }
@@ -124,7 +122,7 @@ TAO_Notify_AnyEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
 }
 
 
-/*****************************************************************************/
+/*****************************************************************************************************/
 
 TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
   : TAO_Notify_AnyEvent_No_Copy (event)
@@ -136,5 +134,3 @@ TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
 TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

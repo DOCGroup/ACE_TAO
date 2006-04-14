@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// QoS_Session_Impl.i
 
 #if defined (ACE_HAS_RAPI)
 
@@ -225,5 +224,3 @@ ACE_GQoS_Session::version (void)
 {
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

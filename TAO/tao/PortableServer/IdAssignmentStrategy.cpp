@@ -1,21 +1,17 @@
 // $Id$
 
-#include "tao/PortableServer/IdAssignmentStrategy.h"
+#include "IdAssignmentStrategy.h"
 
 ACE_RCSID (PortableServer,
            IdAssignmentStrategy,
            "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Portable_Server
   {
     void
-    IdAssignmentStrategy::strategy_init (TAO_Root_POA * /*poa*/
-					 ACE_ENV_ARG_DECL_NOT_USED)
+    IdAssignmentStrategy::strategy_init (TAO_Root_POA * /*poa*/ ACE_ENV_ARG_DECL_NOT_USED)
     {
     }
 
@@ -43,4 +39,3 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

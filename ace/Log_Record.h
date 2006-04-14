@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -29,8 +29,6 @@
 #include "ace/Basic_Types.h"
 #include "ace/iosfwd.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Time_Value;
 
 /// Defines the structure of an ACE logging record.
@@ -40,7 +38,7 @@ public:
   enum
   {
     /// Maximum size of a logging message.
-    MAXLOGMSGLEN = ACE_MAXLOGMSGLEN+1,
+    MAXLOGMSGLEN = ACE_MAXLOGMSGLEN,
 
     /// Most restrictive alignment.
     ALIGN_WORDB  = 8,
@@ -56,6 +54,8 @@ public:
 
   // = Initialization
   /**
+   * Create a <Log_Record> and set its priority, time stamp, and
+   * process id.
    * Create a <Log_Record> and set its priority, time stamp, and
    * process id.
    */
@@ -140,7 +140,7 @@ public:
   ACE_Time_Value time_stamp (void) const;
 
   /// Set the time stamp of the <Log_Record>.
-  void time_stamp (const ACE_Time_Value &ts);
+  void time_stamp (const ACE_Time_Value &);
 
   /// Get the process id of the <Log_Record>.
   long pid (void) const;
@@ -187,11 +187,11 @@ private:
   ACE_UINT32 pid_;
 
   /// Logging record data
-  ACE_TCHAR* msg_data_; // Add one for NUL-terminator.
+  ACE_TCHAR msg_data_[MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
 
+  /// Symbolic names for the <ACE_Log_Priority> enums.
+  static const ACE_TCHAR *priority_names_[];
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Log_Record.inl"

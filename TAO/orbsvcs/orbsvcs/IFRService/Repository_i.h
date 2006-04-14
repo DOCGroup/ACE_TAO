@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -21,8 +20,8 @@
 #ifndef REPOSITORY_I_H
 #define REPOSITORY_I_H
 
-#include "orbsvcs/IFRService/Container_i.h"
-#include "orbsvcs/IFRService/ifr_service_export.h"
+#include "Container_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,11 +32,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "orbsvcs/IFRService/IFR_macro.h"
+#include "IFR_macro.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/CORBA_String.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class IFR_Servant_Factory;
 
@@ -365,7 +362,7 @@ protected:
 #undef GEN_IR_OBJECT
 
 private:
-  static const char * TAO_IFR_primitive_kinds[];
+  static const char *TAO_IFR_primitive_kinds[];
   // Set of strings corresponding to the CORBA::PrimitiveKind
   // enum values.
 
@@ -376,8 +373,6 @@ private:
   // Return the number of entries in the CORBA::PrimitiveKind enum.
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,3 +1,4 @@
+// This may look like C, but it's really
 // -*- C++ -*-
 
 //=============================================================================
@@ -22,14 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Utils/utils_export.h"
-#include "tao/Versioned_Namespace.h"
+#include "utils_export.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Synch_Refcountable
@@ -52,10 +48,9 @@ protected:
   ACE_Lock *refcount_lock_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Utils/Synch_Refcountable.inl"
+# include "Synch_Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -66,6 +66,6 @@ be_visitor_component_ci::visit_component (be_component *node)
       << "}" ;
 
   os->gen_endif ();
-  node->cli_inline_gen (true);
+  node->cli_inline_gen (I_TRUE);
   return 0;
 }

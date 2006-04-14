@@ -29,14 +29,12 @@
 #include "tao/Exception.h"
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
-#if defined (THREAD_CANCELLED)
+#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
+#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
 
 // This is already done in orbconf.h. But this file is totally
 // decoupled from its contents that we have to do this here. Including
@@ -238,7 +236,6 @@ namespace CORBA
 
 } // End CORBA namespace
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/SystemException.inl"

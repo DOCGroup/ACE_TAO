@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IORTable/IORTable.h"
+#include "IORTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,9 +32,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_IOR_Table_Impl
+class TAO_IORTable_Export TAO_IOR_Table_Impl
   : public virtual IORTable::Table,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -107,8 +105,6 @@ private:
   /// Synchronization
   TAO_SYNCH_MUTEX lock_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,12 +1,12 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h"
+#include "FTEC_Group_Manager.h"
 #include "ace/Synch_T.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
-#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
-#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "Replication_Service.h"
+#include "Fault_Detector.h"
+#include "IOGR_Maker.h"
+#include "GroupInfoPublisher.h"
+#include "Replication_Service.h"
 #include "../Utils/Log.h"
 #include "tao/CDR.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
@@ -15,7 +15,6 @@ ACE_RCSID (EventChannel,
            TAO_FTEC_Group_Manager,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int find_by_location(const FTRT::ManagerInfoList& list,
                 const FTRT::Location & location)
@@ -77,7 +76,7 @@ void TAO_FTEC_Group_Manager::create_group (
     CORBA::ULong object_group_ref_version
     ACE_ENV_ARG_DECL)
 {
-  TAO_FTRTEC::Log(1, "create_group\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("create_group\n"));
 
   impl_->info_list = info_list;
   impl_->my_position = find_by_location(info_list,
@@ -117,7 +116,7 @@ void TAO_FTEC_Group_Manager::join_group (
     const FTRT::ManagerInfo & info
     ACE_ENV_ARG_DECL)
 {
-  TAO_FTRTEC::Log(1, "join group\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("join group\n"));
   if (impl_->my_position == 0) {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
@@ -131,7 +130,7 @@ void TAO_FTEC_Group_Manager::add_member (
     CORBA::ULong object_group_ref_version
     ACE_ENV_ARG_DECL)
 {
-  TAO_FTRTEC::Log(1, "add_member location = <%s>\n",
+  TAO_FTRTEC::Log(1, ACE_TEXT("add_member location = <%s>\n"),
     (const char*)info.the_location[0].id);
 
   auto_ptr<TAO_FTEC_Group_Manager_Impl> new_impl(new TAO_FTEC_Group_Manager_Impl);
@@ -238,14 +237,14 @@ void TAO_FTEC_Group_Manager::add_member (
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
     }
 
-    TAO_FTRTEC::Log(2, "Setting state\n");
+    TAO_FTRTEC::Log(2, ACE_TEXT("Setting state\n"));
     info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     info.ior->create_group(new_impl->info_list,
                            object_group_ref_version
                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    TAO_FTRTEC::Log(2, "After create_group\n");
+    TAO_FTRTEC::Log(2, ACE_TEXT("After create_group\n"));
   }
 
   // commit the changes
@@ -269,7 +268,7 @@ void TAO_FTEC_Group_Manager::replica_crashed (
     const FTRT::Location & location
     ACE_ENV_ARG_DECL)
 {
-  TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::replica_crashed\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("TAO_FTEC_Group_Manager::replica_crashed\n"));
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
     remove_member(location, IOGR_Maker::instance()->get_ref_version()+1
@@ -319,14 +318,14 @@ void TAO_FTEC_Group_Manager::remove_member (
     ACE_ENDTRY;
   }
 
-  TAO_FTRTEC::Log(3, "my_position = %d, crashed_pos = %d\n", impl_->my_position, crashed_pos);
+  TAO_FTRTEC::Log(3, ACE_TEXT("my_position = %d, crashed_pos = %d\n"), impl_->my_position, crashed_pos);
   if (impl_->my_position == crashed_pos && impl_->my_position > 0)
     Fault_Detector::instance()->connect(impl_->info_list[impl_->my_position-1].the_location);
 }
 
 void TAO_FTEC_Group_Manager::connection_closed()
 {
-  TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::connection_closed\n");
+  TAO_FTRTEC::Log(1, ACE_TEXT("TAO_FTEC_Group_Manager::connection_closed\n"));
   ACE_ASSERT(impl_->my_position > 0);
 
   // do not use referere here, because the the value pointed by the pointer to
@@ -375,4 +374,4 @@ void TAO_FTEC_Group_Manager::connection_closed()
 
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

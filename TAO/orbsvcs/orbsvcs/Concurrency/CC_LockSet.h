@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -45,7 +45,7 @@
 #include "ace/Unbounded_Queue.h"
 
 #include "orbsvcs/CosConcurrencyControlS.h"
-#include "orbsvcs/Concurrency/concurrency_serv_export.h"
+#include "concurrency_export.h"
 
 #if defined (lock_held)
 #undef lock_held
@@ -55,8 +55,6 @@
 /// way to set this constant dynamically because the nuber of lock
 /// modes are not stated as part of the IDL.
 #define NUMBER_OF_LOCK_MODES 5
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Enummeration representing the lock modes. The incoming request is
 /// always converted to this representation. There are two reasons for
@@ -75,7 +73,7 @@ typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
  * detailed descriptions apart from the comments in this file At
  * present the lock set is not really a set, but only one lock.
  */
-class TAO_Concurrency_Serv_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
+class TAO_Concurrency_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
 {
 public:
 
@@ -183,7 +181,7 @@ private:
 
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
-  static CORBA::Boolean const compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
+  static CORBA::Boolean compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
 
   /// Lock to ensure that race conditions does not occur.
   TAO_SYNCH_MUTEX mlock_;
@@ -191,8 +189,6 @@ private:
   /// Queue to hold the requested locks not yet granted.
   ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

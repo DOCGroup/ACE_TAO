@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -20,8 +20,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO_Notify
 {
   /**
@@ -39,10 +37,8 @@ namespace TAO_Notify
   };
 } // namespace TAO_Notify
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/Reconnect_Worker_T.cpp"
+#include "Reconnect_Worker_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

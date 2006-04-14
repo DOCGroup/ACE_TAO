@@ -19,8 +19,8 @@ public:
   // Default constructor.
 
   be_exception (UTL_ScopedName *n,
-                bool local,
-                bool abstract);
+                idl_bool local,
+                idl_bool abstract);
   // Constructor.
 
   virtual void destroy (void);

@@ -13,8 +13,6 @@ ACE_RCSID(HTBP,
           ACE_HTBP_ID_Requestor,
           "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_TString ACE::HTBP::ID_Requestor::htid_;
 ACE_SYNCH_MUTEX ACE::HTBP::ID_Requestor::htid_lock_;
 
@@ -65,7 +63,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
       host_ = url_.substr(host_start,port_sep - host_start);
     }
 
-  ACE_INET_Addr remote_addr (static_cast<u_short> (port_), host_.c_str());
+  ACE_INET_Addr remote_addr (port_, host_.c_str());
   ACE_SOCK_Connector con;
   if (con.connect (*cli_stream,
                    remote_addr) == -1)
@@ -83,7 +81,7 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
   char *buffer;
   ACE_NEW_RETURN (buffer, char[this->url_.length()+16],-1);
   ACE_OS::sprintf (buffer,"GET %s HTTP/1.0\n\n",
-                   ACE_TEXT_ALWAYS_CHAR(url_.c_str()));
+                   ACE_TEXT_TO_CHAR_IN(url_.c_str()));
   int result = cli_stream->send_n (buffer,ACE_OS::strlen(buffer));
   delete [] buffer;
   if (result == -1)
@@ -114,7 +112,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
       ACE_Utils::UUID_Generator gen;
       ACE_Utils::UUID *uuid = gen.generateUUID ();
       const ACE_CString *uuidstr = uuid->to_string();
-      ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR (uuidstr->c_str());
+      ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_TO_TCHAR_IN (uuidstr->c_str());
       delete uuid;
       return ACE::HTBP::ID_Requestor::htid_.rep();
     }
@@ -130,10 +128,8 @@ ACE::HTBP::ID_Requestor::get_HTID ()
         start = 0;
       else
         start++;
-      ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR(answer.substr (start).c_str());
+      ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_TO_TCHAR_IN(answer.substr (start).c_str());
       htid = ACE::HTBP::ID_Requestor::htid_.rep();
     }
   return htid;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

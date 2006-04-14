@@ -8,7 +8,6 @@ project(*client) : taoexe, portableserver, amh {
 }
 
 project(*server) : taoserver, amh, strategies {
-  after += *client
   source_files {
     server.cpp
   }

@@ -28,8 +28,6 @@
 #include "tao/Pseudo_VarOut_T.h"
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ORB_Core;
 class TAO_ServerRequest;
 
@@ -60,8 +58,6 @@ public:
                          CORBA::Object_out forward_to
                          ACE_ENV_ARG_DECL);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

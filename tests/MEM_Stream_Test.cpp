@@ -308,8 +308,8 @@ test_reactive (const ACE_TCHAR *prog,
                   ACE_TEXT ("Reactor::run_event_loop timeout\n")));
       status = 1;
     }
-  else
-    ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
+
+  ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->wait () == -1)
@@ -403,11 +403,11 @@ test_concurrent (const ACE_TCHAR *prog,
     ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
 #if defined (_TEST_USES_THREADS)
-  if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+  // We need to call this method if we use the
+  // ACE_Thread_Strategy<Echo_Handler>.
+  ACE_Thread_Manager::instance ()->wait ();
 #else
-  if (ACE_Process_Manager::instance ()->wait () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+  ACE_Process_Manager::instance ()->wait ();
 #endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)
@@ -469,7 +469,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf(lognm, ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
       ACE_START_TEST (lognm);
 
-      ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:rm"));
+      ACE_Get_Arg_Opt<ACE_TCHAR>  opts (argc, argv, ACE_TEXT ("p:rm"));
       int opt, iport, status;
       ACE_MEM_IO::Signal_Strategy model = ACE_MEM_IO::Reactive;
 

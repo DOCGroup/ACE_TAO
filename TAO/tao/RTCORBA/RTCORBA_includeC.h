@@ -40,7 +40,7 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 
-#include "tao/RTCORBA/RTCORBA.h"
+#include "RTCORBA.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -66,8 +66,6 @@
 // TAO_IDL - Generated from
 // .\be\be_visitor_traits.cpp:50
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Traits specializations.
 namespace TAO
 {
@@ -75,8 +73,6 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // w:\ace_wrappers\tao\tao_idl\be\be_visitor_root/cdr_op.cpp:48
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifndef __ACE_INLINE__
 

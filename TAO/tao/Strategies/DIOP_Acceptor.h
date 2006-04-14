@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,12 +27,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Transport_Acceptor.h"
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 
 #include "tao/GIOP_Message_Version.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO DIOP_Acceptor concrete call defination
 
@@ -178,10 +176,8 @@ private:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(__ACE_INLINE__)
-#include "tao/Strategies/DIOP_Acceptor.i"
+#include "DIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

@@ -17,8 +17,6 @@
 #include "Constraint_Interpreter.h"           
 #include "Constraint_Nodes.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 //#define YYDEBUG 1
 %}
 
@@ -135,5 +133,4 @@ factor:		TAO_LPAREN bool_or TAO_RPAREN
 
 %%
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 //extern int yydebug = 1;

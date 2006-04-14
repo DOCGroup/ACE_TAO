@@ -5,6 +5,7 @@
 #define TAO_AV_FTP_H
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Flows_T.h"

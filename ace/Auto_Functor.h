@@ -20,8 +20,6 @@
 
 #include "ace/Global_Macros.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace ACE_Utils
 {
 /**
@@ -129,9 +127,7 @@ private:
   Functor f_;
 };
 
-} // namespace ACE_Utils
-
-ACE_END_VERSIONED_NAMESPACE_DECL
+} // namespace TAO
 
 #if defined(__ACE_INLINE__)
 # include "ace/Auto_Functor.inl"

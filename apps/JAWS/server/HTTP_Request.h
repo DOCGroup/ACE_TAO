@@ -18,6 +18,8 @@
 #ifndef HTTP_REQUEST_H
 #define HTTP_REQUEST_H
 
+class ACE_Message_Block;
+
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -25,10 +27,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Parse_Headers.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Message_Block;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 class HTTP_Request
   // = TITLE

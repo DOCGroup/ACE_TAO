@@ -3,24 +3,27 @@
 #include "Thread_Task.h"
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
-main (int argc, char* argv [])
+ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
                                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
                                                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -28,9 +31,10 @@ main (int argc, char* argv [])
 
       manager->rtscheduler (&scheduler);
 
-      Thread_Task task (orb.in ());
+      Thread_Task task;
 
-      task.activate_task (4);
+      task.activate_task (orb.in (),
+                          4);
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE>
 ACE_INLINE
@@ -19,5 +16,3 @@ ACE_Cleanup_Adapter<TYPE>::object (void)
 {
   return this->object_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

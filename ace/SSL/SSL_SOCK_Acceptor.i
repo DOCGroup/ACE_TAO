@@ -2,7 +2,6 @@
 //
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (void)
@@ -81,5 +80,3 @@ ACE_SSL_SOCK_Acceptor::close (void)
 
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

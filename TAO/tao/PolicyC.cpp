@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/PolicyC.h"
+#include "PolicyC.h"
 #include "tao/CDR.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
@@ -44,13 +44,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PolicyC.inl"
+#include "PolicyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO specific stuff.
 namespace CORBA
@@ -1040,5 +1038,3 @@ CORBA::Boolean operator>> (
 
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

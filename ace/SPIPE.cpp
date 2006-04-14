@@ -10,8 +10,6 @@
 
 ACE_RCSID(ace, SPIPE, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE)
 
 // This is the do-nothing constructor.
@@ -78,5 +76,3 @@ ACE_SPIPE::set_duplex_handle (ACE_HANDLE handle)
   this->duplex_pipe_handle_ = handle;
 }
 #endif /* ACE_HAS_STREAM_PIPES */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

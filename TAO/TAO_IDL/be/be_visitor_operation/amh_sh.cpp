@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           amh_sh,
+ACE_RCSID (be_visitor_operation, 
+           amh_sh, 
            "$Id$")
 
 // ******************************************************
@@ -83,8 +83,9 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
         }
     }
 
-  *os << env_decl << be_uidt_nl
-      << ")" << be_uidt_nl;
+  *os << be_nl
+      << "ACE_ENV_ARG_DECL"
+      << be_uidt_nl << ")" << be_uidt_nl;
 
   if (be_global->use_raw_throw ())
     {
@@ -107,7 +108,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
     }
 
   *os << " = 0;";
-
+  
   return 0;
 }
 
@@ -119,10 +120,11 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 
   if (!be_global->exception_support ())
     {
-      *os << env_decl;
+      *os << be_nl
+          << "ACE_ENV_ARG_DECL";
     }
 
-  *os << be_uidt_nl
+  *os << be_uidt_nl 
       << ")" << be_uidt_nl
       << "ACE_THROW_SPEC (( ::CORBA::SystemException)) = 0;" << be_nl;
 
@@ -148,7 +150,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 
   if (!be_global->exception_support ())
     {
-      *os << env_decl;
+      *os << be_nl << "ACE_ENV_ARG_DECL";
     }
 
   *os << be_uidt_nl << ")" << be_uidt_nl
@@ -172,7 +174,8 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_req," << be_nl
       << "void *_tao_obj," << be_nl
-      << "void *_tao_servant_upcall" << env_decl << be_uidt_nl
+      << "void *_tao_servant_upcall" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // We need the interface node in which this operation was defined. However,

@@ -4,8 +4,6 @@
 
 #include "ace/OS_NS_string.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_nil (void)
@@ -54,5 +52,3 @@ CORBA::AbstractBase::_is_local (void) const
 {
   return this->is_local_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,8 +31,6 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
   : acceptors_ (0),
     size_ (0)
@@ -164,7 +162,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Invalid endpoint ")
                           ACE_TEXT ("specification: <%s>.\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
+                          ACE_TEXT_TO_TCHAR_IN (iop.c_str ())));
             }
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
@@ -253,7 +251,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Invalid endpoint ")
                           ACE_TEXT ("specification: <%s>.\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
+                          ACE_TEXT_TO_TCHAR_IN (iop.c_str ())));
             }
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
@@ -392,7 +390,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                           LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) unable to create ")
                           ACE_TEXT ("an acceptor for <%s>\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR ((*i)->protocol_name ().c_str ())
+                          ACE_TEXT_TO_TCHAR_IN ((*i)->protocol_name ().c_str ())
                         ));
                     }
 
@@ -433,7 +431,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                               LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) unable to create ")
                               ACE_TEXT ("an acceptor for <%s>\n"),
-                              ACE_TEXT_CHAR_TO_TCHAR ((*i)->protocol_name ().c_str ())
+                              ACE_TEXT_TO_TCHAR_IN ((*i)->protocol_name ().c_str ())
                             ));
                         }
 
@@ -562,7 +560,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
               LM_ERROR,
               ACE_TEXT ("TAO (%P|%t) unable to create ")
               ACE_TEXT ("an acceptor for <%s>\n"),
-              ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ())
+              ACE_TEXT_TO_TCHAR_IN ((*factory)->protocol_name ().c_str ())
             ));
         }
 
@@ -603,7 +601,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
               LM_ERROR,
               ACE_TEXT ("TAO (%P|%t) unable to open ")
               ACE_TEXT ("default acceptor for <%s>%p\n"),
-              ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ()),
+              ACE_TEXT_TO_TCHAR_IN ((*factory)->protocol_name ().c_str ()),
               ACE_TEXT ("")
             ));
         }
@@ -764,7 +762,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                   LM_ERROR,
                                   ACE_TEXT ("TAO (%P|%t) unable to create ")
                                   ACE_TEXT ("an acceptor for <%s>\n"),
-                                  ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ())
+                                  ACE_TEXT_TO_TCHAR_IN ((*factory)->protocol_name ().c_str ())
                                 ));
                             }
 
@@ -858,7 +856,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                               ACE_TEXT ("TAO (%P|%t) ")
                               ACE_TEXT ("unable to open acceptor ")
                               ACE_TEXT ("for <%s>%p\n"),
-                              ACE_TEXT_CHAR_TO_TCHAR (address.c_str ()),
+                              ACE_TEXT_TO_TCHAR_IN (address.c_str ()),
                               ACE_TEXT ("")));
                 }
 
@@ -880,7 +878,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) unable to create ")
                           ACE_TEXT ("an acceptor for <%s>.\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (address.c_str ())));
+                          ACE_TEXT_TO_TCHAR_IN (address.c_str ())));
             }
 
           ACE_THROW_RETURN (CORBA::NO_MEMORY (
@@ -895,5 +893,3 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

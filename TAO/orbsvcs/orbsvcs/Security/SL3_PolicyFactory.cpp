@@ -1,16 +1,14 @@
 // $Id$
 
-#include "orbsvcs/Security/SL3_PolicyFactory.h"
-#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
-#include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
+#include "SL3_PolicyFactory.h"
+#include "SL3_ContextEstablishmentPolicy.h"
+#include "SL3_ObjectCredentialsPolicy.h"
 
 
 ACE_RCSID (Security,
            SL3_PolicyFactory,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
@@ -59,5 +57,3 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
 
   return policy;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

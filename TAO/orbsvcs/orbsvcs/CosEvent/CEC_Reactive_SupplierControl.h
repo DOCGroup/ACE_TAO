@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
+#include "CEC_SupplierControl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,8 +30,6 @@
 #include "tao/ORB.h"
 
 #include "ace/Event_Handler.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Reactive_SupplierControl;
@@ -218,10 +216,8 @@ private:
   TAO_CEC_SupplierControl *control_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.i"
+#include "CEC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

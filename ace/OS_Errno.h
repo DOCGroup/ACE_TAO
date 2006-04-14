@@ -22,8 +22,6 @@
 
 #include "ace/OS_NS_errno.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Errno_Guard
  *
@@ -82,8 +80,6 @@ private:
 #endif /* ACE_MT_SAFE */
   int error_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Inlining this class on debug builds with gcc on Solaris can cause
 // deadlocks during static initialization.

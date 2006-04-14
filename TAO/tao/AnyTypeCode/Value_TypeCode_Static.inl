@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
@@ -26,5 +24,3 @@ TAO::TypeCode::Value<char const *,
   , fields_ (fields)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

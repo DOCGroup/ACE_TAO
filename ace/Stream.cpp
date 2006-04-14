@@ -1,8 +1,8 @@
 // Stream.cpp
 // $Id$
 
-#ifndef ACE_STREAM_CPP
-#define ACE_STREAM_CPP
+#ifndef ACE_STREAM_C
+#define ACE_STREAM_C
 
 //#include "ace/Module.h"
 #include "ace/Stream.h"
@@ -18,7 +18,7 @@
 #include "ace/Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Stream, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream)
 
@@ -614,6 +614,4 @@ ACE_Stream_Iterator<ACE_SYNCH_USE>::ACE_Stream_Iterator (const ACE_Stream<ACE_SY
   ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_USE>::ACE_Stream_Iterator");
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_STREAM_CPP */
+#endif /* ACE_STREAM_C */

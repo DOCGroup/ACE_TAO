@@ -7,7 +7,6 @@
 
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 
-#include "CCF/IDL2/SemanticGraph/Array.hpp"
 #include "CCF/IDL2/SemanticGraph/Attribute.hpp"
 #include "CCF/IDL2/SemanticGraph/Enum.hpp"
 #include "CCF/IDL2/SemanticGraph/Exception.hpp"
@@ -21,7 +20,6 @@
 #include "CCF/IDL2/SemanticGraph/IntExpression.hpp"
 #include "CCF/IDL2/SemanticGraph/Operation.hpp"
 #include "CCF/IDL2/SemanticGraph/Sequence.hpp"
-#include "CCF/IDL2/SemanticGraph/String.hpp"
 #include "CCF/IDL2/SemanticGraph/Struct.hpp"
 #include "CCF/IDL2/SemanticGraph/Translation.hpp"
 #include "CCF/IDL2/SemanticGraph/TypeId.hpp"

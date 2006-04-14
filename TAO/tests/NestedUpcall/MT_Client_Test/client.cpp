@@ -25,6 +25,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(MT_Client_Test, client, "$Id$")
 
@@ -87,7 +88,7 @@ MT_Client::read_ior (char *filename)
 int
 MT_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:g:h:i:n:s:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "df:g:h:i:n:s:");
   int c;
   int result;
 
@@ -285,15 +286,16 @@ MT_Client::init (int argc, char **argv,
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       TAO_ORB_Manager orb_manager;
 
-      int r = orb_manager.init (argc,
-                                argv
+      int r = orb_manager.init (convert.get_argc(), convert.get_ASCII_argv()
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -308,15 +310,15 @@ main (int argc, char **argv)
       int threads = 1;
 
       for (i = 0; i < argc; i++)
-        if (ACE_OS::strcmp (argv[i], "-n") == 0)
+        if (ACE_OS::strcmp (argv[i], ACE_TEXT("-n")) == 0)
           threads = ACE_OS::atoi(argv[i + 1]);
 
       // create a separate server thread
       ACE_Thread_Manager server_thr_mgr;
       // starting the server thread
       MT_Server_Task *server = new MT_Server_Task (&server_thr_mgr,
-                                                   argc,
-                                                   argv,
+                                                   convert.get_argc(),
+                                                   convert.get_ASCII_argv(),
                                                    &orb_manager);
       if (server->activate () != 0)
         {
@@ -331,7 +333,7 @@ main (int argc, char **argv)
       MT_Client_Task **clients = new MT_Client_Task*[threads];
 
       for (i = 0; i < threads; i++)
-        clients[i] = new MT_Client_Task (argc, argv, i);
+        clients[i] = new MT_Client_Task (convert.get_argc(), convert.get_ASCII_argv(), i);
 
       for (i = 0; i < threads; i++)
         if (clients[i]->activate () != 0)

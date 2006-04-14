@@ -25,8 +25,8 @@ documentation and/or software.
 
 /* $Id$ */
 
-#include "orbsvcs/AV/global.h"
-#include "orbsvcs/AV/md5.h"
+#include "global.h"
+#include "md5.h"
 
 /* Constants for MD5Transform routine.
  */

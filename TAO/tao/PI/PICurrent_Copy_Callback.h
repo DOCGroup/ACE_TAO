@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI/pi_export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,9 +24,6 @@
 #include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -52,15 +49,12 @@ namespace TAO
     ~PICurrent_Copy_Callback (void);
 
     /// Perform the copy.
-    void execute (void);
+    int execute (void);
 
     /// Set the source and destination PICurrent_Impl objects.
     void src_and_dst (PICurrent_Impl * src, PICurrent_Impl * dst);
 
   private:
-    /// Disallow copying and assignment.
-    PICurrent_Copy_Callback (const PICurrent_Copy_Callback &);
-    PICurrent_Copy_Callback &operator= (const PICurrent_Copy_Callback &);
 
     /// Source PICurrent from which copies will be made.
     PICurrent_Impl * src_;
@@ -70,8 +64,6 @@ namespace TAO
 
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+#include "HTIOP_Connection_Handler.h"
 
 #include "tao/Transport_Connector.h"
 
@@ -32,7 +32,7 @@
 #include "ace/Connector.h"
 #include "ace/OS.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE
 {
   namespace HTBP
@@ -40,11 +40,8 @@ namespace ACE
     class Environment;
   }
 }
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -130,8 +127,5 @@ namespace TAO
     };
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
 #endif  /* HTIOP_CONNECTOR_H */

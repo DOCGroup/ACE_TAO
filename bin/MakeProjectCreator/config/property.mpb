@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib {
+project : portableserver {
   after     += CosProperty
   libs      += TAO_CosProperty
   tagchecks += Property

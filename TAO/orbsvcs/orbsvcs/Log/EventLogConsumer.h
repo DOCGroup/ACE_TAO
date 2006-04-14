@@ -30,14 +30,12 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
-#include "orbsvcs/Log/eventlog_serv_export.h"
+#include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_EventLog_i;
@@ -91,8 +89,6 @@ private:
   /// and whose events are to be logged.
   TAO_EventLog_i *log_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,3 +1,4 @@
+// FIFO_Send.cpp
 // $Id$
 
 #include "ace/FIFO_Send.h"
@@ -8,8 +9,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FIFO_Send, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Send)
 
@@ -30,7 +29,7 @@ ACE_FIFO_Send::ACE_FIFO_Send (void)
 int
 ACE_FIFO_Send::open (const ACE_TCHAR *rendezvous_name,
                      int flags,
-                     mode_t perms,
+                     int perms,
                      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Send::open");
@@ -42,7 +41,7 @@ ACE_FIFO_Send::open (const ACE_TCHAR *rendezvous_name,
 
 ACE_FIFO_Send::ACE_FIFO_Send (const ACE_TCHAR *fifo_name,
                               int flags,
-                              mode_t perms,
+                              int perms,
                               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Send::ACE_FIFO_Send");
@@ -54,5 +53,3 @@ ACE_FIFO_Send::ACE_FIFO_Send (const ACE_TCHAR *fifo_name,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_FIFO_Send::ACE_FIFO_Send")));
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

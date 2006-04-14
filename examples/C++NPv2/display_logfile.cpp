@@ -24,13 +24,12 @@ class Logrec_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
   Logrec_Module (const ACE_TCHAR *name)
-  {
-    this->open (name,
-		&task_, // Initialize writer-side task.
-		0,      // Ignore reader-side task.
-		0,
-		ACE_Module<ACE_SYNCH>::M_DELETE_READER);
-  }
+    : ACE_Module<ACE_SYNCH>
+                    (name,
+                     &task_, // Initialize writer-side task.
+                     0,      // Ignore reader-side task.
+                     0,
+                     ACE_Module<ACE_SYNCH>::M_DELETE_READER) {}
 private:
   TASK task_;
 };
@@ -195,14 +194,13 @@ class Logrec_Reader_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
   Logrec_Reader_Module (const ACE_TString &filename)
-    : task_ (filename)
-  {
-    this->open (ACE_TEXT ("Logrec Reader"),
-                &task_, // Initialize writer-side.
-                0,      // Ignore reader-side.
-                0,
-                ACE_Module<ACE_SYNCH>::M_DELETE_READER);
-  }
+    : ACE_Module<ACE_SYNCH>
+                    (ACE_TEXT ("Logrec Reader"),
+                     &task_, // Initialize writer-side.
+                     0,      // Ignore reader-side.
+                     0,
+                     ACE_Module<ACE_SYNCH>::M_DELETE_READER),
+      task_ (filename) {}
 private:
   Logrec_Reader task_;
 };
@@ -277,7 +275,7 @@ public:
     char timestamp[26]; // Max size of ctime_r() string.
     time_t time_secs (secs);
     ACE_OS::ctime_r (&time_secs, timestamp_t, sizeof timestamp_t);
-    ACE_OS::strcpy (timestamp, ACE_TEXT_ALWAYS_CHAR (timestamp_t));
+    ACE_OS::strcpy (timestamp, ACE_TEXT_TO_CHAR_IN (timestamp_t));
     mblk->size (26); // Max size of ctime_r() string.
     mblk->reset ();
     timestamp[19] = '\0'; // NUL-terminate after the time.

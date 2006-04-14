@@ -26,6 +26,7 @@ class Notify_Sequence_Push_Consumer : public TAO_Notify_Tests_SequencePushConsum
 {
 public:
   Notify_Sequence_Push_Consumer (const char* name,
+                                 CORBA::Short policy,
                                  unsigned int low,
                                  unsigned int high,
                                  Notify_Test_Client& client);
@@ -42,6 +43,7 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_CString name_;
+  CORBA::Short discard_policy_;
   unsigned int low_;
   unsigned int high_;
   unsigned int count_;

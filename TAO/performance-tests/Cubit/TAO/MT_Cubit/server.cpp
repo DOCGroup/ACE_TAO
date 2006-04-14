@@ -17,11 +17,10 @@
 // ============================================================================
 
 #include "ace/config-all.h"
-
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (VXWORKS)
 # undef ACE_MAIN
 # define ACE_MAIN server
-#endif /* ACE_VXWORKS && !__RTP__ */
+#endif /* VXWORKS */
 
 #include "server.h"
 #include "ace/Sched_Params.h"
@@ -370,7 +369,7 @@ Server::start_servants (void)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result;
 

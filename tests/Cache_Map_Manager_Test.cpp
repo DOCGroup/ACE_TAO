@@ -475,7 +475,7 @@ test_caching_strategy_type (void)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:i:r:f:p:d"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("c:i:r:f:p:d"));
 
   int cc;
   while ((cc = get_opt ()) != -1)

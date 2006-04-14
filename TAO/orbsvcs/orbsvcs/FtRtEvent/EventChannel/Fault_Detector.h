@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_FTEC_Fault_Listener;
 
 class Fault_Detector
@@ -58,7 +56,5 @@ protected:
   ReactorTask reactor_task_;
   TAO_FTEC_Fault_Listener* listener_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif //FAULT_DETECTOR_H

@@ -16,9 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-
-## Makefile.SimplePerformance_IDL.am
+## Makefile.SimplePerformance_Client.am
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -46,18 +44,10 @@ CLEANFILES = \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sp -Sd $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sp -Sd $(srcdir)/test.idl
 	@touch $@
 
-
-noinst_HEADERS = \
-  test.idl
-
-## Makefile.SimplePerformance_Client.am
-
-if !BUILD_ACE_FOR_TAO
-
-noinst_PROGRAMS += client
+noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -68,7 +58,12 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   testC.cpp \
-  test_i.h
+  testS.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS_T.h \
+  testS_T.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
@@ -77,11 +72,36 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
-
 ## Makefile.SimplePerformance_Server.am
 
-if !BUILD_ACE_FOR_TAO
+BUILT_SOURCES += \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+CLEANFILES += \
+  test-stamp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+
+test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sp -Sd $(srcdir)/test.idl
+	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -96,6 +116,11 @@ server_SOURCES = \
   testC.cpp \
   testS.cpp \
   test_i.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS_T.h \
+  testS_T.inl \
   test_i.h
 
 server_LDADD = \
@@ -104,8 +129,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

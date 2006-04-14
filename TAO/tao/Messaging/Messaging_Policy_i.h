@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -23,8 +23,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 /*
@@ -35,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  This policy controls the total (round-trip) timeout time for a
  *  request.
  */
-class TAO_RelativeRoundtripTimeoutPolicy
+class TAO_Messaging_Export TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
     public TAO_Local_RefCounted_Object
 {
@@ -153,10 +151,8 @@ private:
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "tao/Messaging/Messaging_Policy_i.i"
+#include "Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

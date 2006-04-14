@@ -1,4 +1,4 @@
-#include "tao/Strategies/SCIOP_Connection_Handler.h"
+#include "SCIOP_Connection_Handler.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -19,8 +19,8 @@
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/Strategies/SCIOP_Transport.h"
-#include "tao/Strategies/SCIOP_Endpoint.h"
+#include "SCIOP_Transport.h"
+#include "SCIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
@@ -31,8 +31,6 @@
 ACE_RCSID (tao,
            SCIOP_Connection_Handler,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SCIOP_SVC_HANDLER (t, 0 , 0),
@@ -205,7 +203,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
     return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-                       this->orb_core ()->leader_follower ());
+		       this->orb_core ()->leader_follower ());
 
   return 0;
 }
@@ -317,7 +315,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) Listening port [%d] on [%s]\n"),
                       listen_point.port,
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
+                      ACE_TEXT_TO_TCHAR_IN(listen_point.host.in ())));
         }
 
       // Construct an  SCIOP_Endpoint object
@@ -384,7 +382,5 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

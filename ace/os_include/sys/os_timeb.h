@@ -36,7 +36,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x560)
+#if defined (__BORLANDC__)
 #  define _ftime ftime
 #  define _timeb timeb
 #endif /* __BORLANDC__ */

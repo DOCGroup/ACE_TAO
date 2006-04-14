@@ -29,8 +29,6 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<Object> Object_var;
@@ -95,7 +93,8 @@ public:
 
   /// Initialize a collocated object using the given stub and object
   /// pointer for lazily evaluated object references.
-  CORBA::Long initialize_collocated_object (TAO_Stub *);
+  CORBA::Long initialize_collocated_object (TAO_Stub *,
+                                            CORBA::Object_ptr o);
 
   /// Fetch the adapter named @a name
   TAO_Adapter *find_adapter (const char *name) const;
@@ -113,8 +112,6 @@ private:
   TAO_Adapter **adapters_;
   //@}
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

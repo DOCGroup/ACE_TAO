@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -15,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_CH_Event.h"
+#include "LF_CH_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,16 +24,11 @@
 
 #include "tao/Basic_Types.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class TAO_ORB_Core;
+class TAO_Transport;
 class ACE_SOCK;
 class ACE_Lock;
 class ACE_Event_Handler;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_ORB_Core;
-class TAO_Transport;
 
 /*
  * Hook to specialize the connection handler with the
@@ -178,7 +174,7 @@ protected:
 
 private:
   /// Pointer to the TAO_ORB_Core
-  TAO_ORB_Core * const orb_core_;
+  TAO_ORB_Core *orb_core_;
 
   /// Transport object reference
   TAO_Transport* transport_;
@@ -197,8 +193,6 @@ private:
 };
 
 //@@ CONNECTION_HANDLER_SPL_EXTERN_ADD_HOOK
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"

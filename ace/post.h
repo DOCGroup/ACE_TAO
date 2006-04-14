@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -9,8 +9,10 @@
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  *
  *  This file restores the original alignment rules.
+ *
  */
 //=============================================================================
+
 
 // No header guard
 #if defined (_MSC_VER)

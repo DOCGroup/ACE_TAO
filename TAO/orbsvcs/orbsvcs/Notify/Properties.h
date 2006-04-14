@@ -1,11 +1,12 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file Properties.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
+ *
+ *
  */
 
 #ifndef TAO_Notify_PROPERTIES_H
@@ -13,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,8 +27,6 @@
 #include "tao/TAO_Singleton.h"
 #include "tao/ORB.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Notify_Factory;
 class TAO_Notify_Builder;
 
@@ -39,6 +38,8 @@ class TAO_Notify_Builder;
  */
 class TAO_Notify_Serv_Export TAO_Notify_Properties
 {
+  friend class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
+
 public:
   /// Constuctor
   TAO_Notify_Properties (void);
@@ -144,10 +145,8 @@ TAO_NOTIFY_SERV_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYN
 
 typedef TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX> TAO_Notify_PROPERTIES;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Properties.inl"
+#include "Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

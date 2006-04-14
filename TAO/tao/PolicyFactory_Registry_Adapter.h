@@ -21,12 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-
 #include "ace/CORBA_macros.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Basic_Types.h"
 
 //-- Forward Declarations--
 namespace CORBA
@@ -86,8 +82,6 @@ namespace TAO
     virtual bool factory_exists (CORBA::PolicyType & type) const = 0;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

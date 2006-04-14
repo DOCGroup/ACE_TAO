@@ -23,7 +23,6 @@
 # undef ACE_LACKS_STRUCT_DIR
 #endif
 
-// Changed ACE_TEXT to ACE_LIB_TEXT in the following line
 # define ACE_CC_NAME ACE_LIB_TEXT ("Digital Mars")
 # define ACE_CC_MAJOR_VERSION (1)
 # define ACE_CC_MINOR_VERSION (8)
@@ -60,13 +59,14 @@
 # define ACE_HAS_TYPENAME_KEYWORD 1
 //# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 # define ACE_HAS_USER_MODE_MASKS 1
+# define ACE_HAS_USING_KEYWORD 1
 //# define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 # define ACE_LACKS_NATIVE_STRPTIME 1
+//# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE 1
 //# define ACE_LACKS_PRAGMA_ONCE 1
 //# define ACE_NEW_THROWS_EXCEPTIONS 1
 # define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_TEMPLATES_REQUIRE_SOURCE 1
-// Changed ACE_TEXT to ACE_LIB_TEXT in the following two lines
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_HAS_STRBUF_T
 #define ACE_HAS_3_PARAM_WCSTOK
@@ -94,7 +94,6 @@
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_ACE_IOSTREAM
-#define ACE_HAS_NONCONST_TEMPNAM
 
 // Typedefs which we expect DMC to do, but they don't do that
 typedef long o_uid_t;

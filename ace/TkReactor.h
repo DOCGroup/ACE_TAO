@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    TkReactor.h
@@ -24,8 +23,6 @@
 #include "ace/ACE_TkReactor_export.h"
 #include "ace/Select_Reactor.h"
 #include /**/ <tk.h>
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_TkReactorID
@@ -129,8 +126,6 @@ private:
   ACE_TkReactor (const ACE_TkReactor &);
   ACE_TkReactor &operator = (const ACE_TkReactor &);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TK_REACTOR_H */
