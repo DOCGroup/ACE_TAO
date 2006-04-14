@@ -2,6 +2,7 @@
 // $Id$
 
 project(*idl): taoidldefaults {
+  avoids += ace_for_tao
   IDL_Files {
     go.idl
   }
@@ -9,6 +10,7 @@ project(*idl): taoidldefaults {
 }
 
 project(*Ntf Struct Supp): notifytest {
+  avoids += ace_for_tao
   exename = Structured_Supplier
 
   after += *idl
@@ -22,6 +24,7 @@ project(*Ntf Struct Supp): notifytest {
 }
 
 project(*Ntf Struct Cons): notifytest {
+  avoids += ace_for_tao
   exename = Structured_Consumer
 
   after += *idl
