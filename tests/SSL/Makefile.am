@@ -31,6 +31,21 @@ Thread_Pool_Reactor_SSL_Test_SOURCES = \
 Thread_Pool_Reactor_SSL_Test_LDADD = \
  $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/tests/libTest_Output.la $(top_builddir)/ace/libACE.la @ACE_TLS_LDFLAGS@ @ACE_TLS_LIBS@
 
+noinst_PROGRAMS += SSL_Asynch_Stream_Test
+
+SSL_Asynch_Stream_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  @ACE_TLS_CPPFLAGS@ \
+  -DACE_HAS_SSL=1
+
+SSL_Asynch_Stream_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  SSL_Asynch_Stream_Test.cpp
+
+SSL_Asynch_Stream_Test_LDADD = \
+ $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/tests/libTest_Output.la $(top_builddir)/ace/libACE.la @ACE_TLS_LDFLAGS@ @ACE_TLS_LIBS@
+
 endif BUILD_SSL
 
 ## Clean up template repositories, etc.
