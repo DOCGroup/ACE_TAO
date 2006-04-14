@@ -48,9 +48,6 @@ demux_test-stamp: $(srcdir)/demux_test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  demux_test.idl
-
 ## Makefile.Demux_Poa_Client.am
 
 noinst_PROGRAMS = client

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  * @file Metrics_Cache_T.h
@@ -11,8 +9,8 @@
 //=============================================================================
 
 
-#ifndef ACE_METRICS_CACHE_T_H
-#define ACE_METRICS_CACHE_T_H
+#ifndef METRICS_CACHE_T_H
+#define METRICS_CACHE_T_H
 
 #include "ace/config-all.h"
 
@@ -31,8 +29,6 @@
 #define METRICS_MAX_TIMEPROBE_TABLE_SIZE 256 * 256
 #define METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE METRICS_MIN_TIMEPROBE_TABLE_SIZE
 #define METRICS_DEFAULT_TIMEPROBE_COUNT 6
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Metrics_Timeprobe
@@ -224,8 +220,6 @@ private:
   void operator = (const ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR> &);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
 #include "ace/Metrics_Cache_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -240,4 +234,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* defined (ACE_COMPILE_TIMEPROBES) */
 
-#endif /* ACE_METRICS_CACHE_T_H */
+#endif /* METRICS_CACHE_T_H */

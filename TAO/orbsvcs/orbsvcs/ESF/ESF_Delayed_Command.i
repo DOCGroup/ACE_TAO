@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target, class Object>
 TAO_ESF_Connected_Command<Target,Object>::
@@ -43,5 +39,3 @@ TAO_ESF_Shutdown_Command<Target>::
   : target_ (target)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

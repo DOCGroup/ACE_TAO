@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Services_Activate.h
@@ -8,6 +6,7 @@
  *
  * This is a generic interface that would be used to activate
  * the services that are loaded through the svc.conf file
+ *
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
@@ -24,8 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/SystemException.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Service_Callbacks;
@@ -56,8 +53,6 @@ public:
   virtual TAO_Service_Callbacks* activate_services (TAO_ORB_Core *orb)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

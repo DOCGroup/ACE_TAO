@@ -15,8 +15,6 @@
 
 ACE_RCSID(ace, FILE, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE)
 
 void
@@ -147,5 +145,3 @@ ACE_FILE::unlink (void)
 
   return ACE_OS::unlink (this->addr_.get_path_name ());
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

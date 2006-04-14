@@ -1,12 +1,12 @@
 // $Id$
 
-#include "orbsvcs/Notify/Delivery_Request.h"
+#include "Delivery_Request.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Delivery_Request.inl"
+#include "Delivery_Request.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Routing_Slip.h"
+#include "Routing_Slip.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"
@@ -15,8 +15,6 @@
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -100,4 +98,3 @@ Delivery_Request::routing_slip () const
 
 } // namespace
 
-TAO_END_VERSIONED_NAMESPACE_DECL

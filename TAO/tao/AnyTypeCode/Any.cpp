@@ -25,8 +25,6 @@ ACE_RCSID (tao,
            Any,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 using namespace TAO;
 
 CORBA::Any::Any (void)
@@ -275,7 +273,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 
   if ((cdr >> tc.out ()) == 0)
     {
-      return false;
+      return 0;
     }
 
   ACE_TRY_NEW_ENV
@@ -283,7 +281,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc.in ()),
-                      false);
+                      0);
 
       any.replace (impl);
       impl->_tao_decode (cdr
@@ -292,11 +290,11 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
-      return false;
+      return 0;
     }
   ACE_ENDTRY;
 
-  return true;
+  return 1;
 }
 
 // =======================================================================
@@ -357,7 +355,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_string s)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 {
-  if (ws.bound_ > 0 && ws.val_ != 0 && ACE_OS::wslen (ws.val_) > ws.bound_)
+  if (ws.bound_ > 0 && ws.val_ != 0 && ACE_OS::strlen (ws.val_) > ws.bound_)
     {
       return;
     }
@@ -768,8 +766,8 @@ namespace TAO
     ) const
   {
     _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
+    return 1;
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

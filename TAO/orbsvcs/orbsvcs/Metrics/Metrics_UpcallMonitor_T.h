@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // $Id$
 
 #ifndef METRICS_UPCALL_MONITOR_T_H
@@ -13,8 +11,8 @@
 
 #endif /* ! VXWORKS */
 
-#include "orbsvcs/Metrics/Metrics_LocalCache.h"
-#include "orbsvcs/Metrics/Metrics_FrameManager.h"
+#include "Metrics_LocalCache.h"
+#include "Metrics_FrameManager.h"
 
 #include "ace/Hash_Map_Manager.h"
 
@@ -23,9 +21,6 @@
 #include "orbsvcs/MetricsS.h"
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 class TAO_Metrics_UpcallMonitorAdapter
@@ -146,19 +141,17 @@ protected:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp"
+#include "Metrics_UpcallMonitor_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Metrics_UpcallMonitor_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+#if defined (__ACE_INLINE__)
+#include "Metrics_UpcallMonitor_T.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* METRICS_UPCALL_MONITOR_T_H */
 

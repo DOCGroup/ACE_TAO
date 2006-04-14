@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Thread_Lane &
@@ -43,14 +39,35 @@ ACE_INLINE
 CORBA::ULong
 TAO_Thread_Lane::static_threads (void) const
 {
-  return this->static_threads_number_;
+  return this->static_threads_;
 }
 
 ACE_INLINE
 CORBA::ULong
 TAO_Thread_Lane::dynamic_threads (void) const
 {
-  return this->dynamic_threads_number_;
+  return this->dynamic_threads_;
+}
+
+ACE_INLINE
+CORBA::ULong
+TAO_Thread_Lane::current_threads (void) const
+{
+  return this->current_threads_;
+}
+
+ACE_INLINE
+void
+TAO_Thread_Lane::current_threads (CORBA::ULong current_threads)
+{
+  this->current_threads_ = current_threads;
+}
+
+ACE_INLINE
+TAO_Thread_Pool_Threads &
+TAO_Thread_Lane::threads (void)
+{
+  return this->threads_;
 }
 
 ACE_INLINE
@@ -58,13 +75,6 @@ TAO_Thread_Lane_Resources &
 TAO_Thread_Lane::resources (void)
 {
   return this->resources_;
-}
-
-ACE_INLINE
-ACE_Time_Value const &
-TAO_Thread_Lane::dynamic_thread_idle_timeout (void) const
-{
-  return this->dynamic_thread_idle_timeout_;
 }
 
 ACE_INLINE
@@ -137,4 +147,5 @@ TAO_Thread_Pool::number_of_lanes (void) const
   return this->number_of_lanes_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
+

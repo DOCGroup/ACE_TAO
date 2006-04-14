@@ -26,8 +26,6 @@
 #include "orbsvcs/FT_NotifierC.h"
 #include "FT_ReplicationManagerLib_export.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 
@@ -161,8 +159,6 @@ namespace TAO
   };
 
 } // namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

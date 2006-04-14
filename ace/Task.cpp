@@ -13,8 +13,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
   : thr_count_ (0),
     thr_mgr_ (thr_man),
@@ -274,5 +272,3 @@ ACE_Task_Base::svc_run (void *args)
 #endif
   return status;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

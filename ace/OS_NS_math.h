@@ -32,10 +32,7 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace ACE_OS
-{
+namespace ACE_OS {
 
   /// This method computes the largest integral value not greater than x.
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -45,9 +42,8 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   double ceil (double x);
 
-} /* namespace ACE_OS */
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+} /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -32,7 +32,6 @@
 #include <iterator>
 #include <functional>
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Array_Map
@@ -112,7 +111,7 @@ public:
   typedef std::reverse_iterator<iterator, value_type> reverse_iterator;
   typedef std::reverse_iterator<const_iterator,
                                 value_type const>     const_reverse_iterator;
-#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x580 \
+#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x570 \
       && defined (_RWSTD_NO_CLASS_PARTIAL_SPEC)
   typedef std::reverse_iterator<iterator,
                                 std::input_iterator_tag,
@@ -300,8 +299,6 @@ bool operator<  (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
                  ACE_Array_Map<Key, Value, EqualTo> const & rhs);
 
 // --------------------------------------------------------------
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "ace/Array_Map.inl"

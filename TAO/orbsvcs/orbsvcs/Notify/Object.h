@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file Object.h
  *
@@ -15,24 +14,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/QoSProperties.h"
-#include "orbsvcs/Notify/AdminProperties.h"
-#include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Refcountable.h"
-#include "orbsvcs/Notify/Name_Value_Pair.h"
-#include "orbsvcs/Notify/Event_Manager.h"
+#include "QoSProperties.h"
+#include "AdminProperties.h"
+#include "Worker_Task.h"
+#include "Refcountable.h"
+#include "Name_Value_Pair.h"
+#include "Event_Manager.h"
 
 #include "orbsvcs/NotifyExtC.h"
 
 #include "tao/PortableServer/Servant_Base.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_POA_Helper;
 class TAO_Notify_Timer;
@@ -174,18 +171,14 @@ private:
   /// Shutdown the current poa.
   void destroy_poa (void);
 
-protected:
-
-  /// The mutex to serialize access to state variables.
-  TAO_SYNCH_MUTEX lock_;
-
-private:
+  ///= Private data members.
 
   /// The POA in which the object is activated.
   TAO_Notify_POA_Helper* poa_;
 
   /// The POA in which the proxys are activated.
   TAO_Notify_POA_Helper* proxy_poa_;
+
   bool own_proxy_poa_;
 
   /// The POA in which the object's children are activated.
@@ -210,10 +203,8 @@ private:
   bool shutdown_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Object.inl"
+#include "Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

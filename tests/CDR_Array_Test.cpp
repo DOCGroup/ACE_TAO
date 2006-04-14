@@ -897,7 +897,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE::minor_version(),
               ACE::beta_version()));
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d:f:q:w:h:c:t:n:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("d:f:q:w:h:c:t:n:"));
   int dtotal = 0;
   int ftotal = 0;
   int qtotal = 0;

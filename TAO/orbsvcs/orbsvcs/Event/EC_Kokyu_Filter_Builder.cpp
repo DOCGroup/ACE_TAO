@@ -1,17 +1,17 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Kokyu_Filter.h"
+#include "EC_Kokyu_Filter.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/EC_Kokyu_Filter_Builder.h"
-#include "orbsvcs/Event/EC_Type_Filter.h"
-#include "orbsvcs/Event/EC_Conjunction_Filter.h"
-#include "orbsvcs/Event/EC_Disjunction_Filter.h"
-#include "orbsvcs/Event/EC_Timeout_Filter.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "EC_Kokyu_Filter_Builder.h"
+#include "EC_Type_Filter.h"
+#include "EC_Conjunction_Filter.h"
+#include "EC_Disjunction_Filter.h"
+#include "EC_Timeout_Filter.h"
+#include "EC_Event_Channel_Base.h"
 #include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Kokyu_Filter_Builder.i"
+#include "EC_Kokyu_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,
@@ -34,8 +34,6 @@ const char* designator (long dsgn)
 
   return "---";
 }
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Filter_Builder::~TAO_EC_Kokyu_Filter_Builder (void)
 {
@@ -509,5 +507,3 @@ TAO_EC_Kokyu_Filter_Builder::
     }
   return i - 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

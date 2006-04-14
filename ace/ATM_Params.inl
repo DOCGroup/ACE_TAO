@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// ATM_Params.i
 
 ACE_INLINE void
 ACE_ATM_Params::dump (void) const
@@ -97,7 +96,7 @@ ACE_ATM_Params::set_type (int type)
 }
 
 ACE_INLINE
-ACE_Protocol_Info*
+ACE_Protocol_Info* 
 ACE_ATM_Params::get_protocol_info( void )
 {
   ACE_TRACE ("ACE_ATM_Params::get_protocol_info");
@@ -105,7 +104,7 @@ ACE_ATM_Params::get_protocol_info( void )
 }
 
 ACE_INLINE
-void
+void 
 ACE_ATM_Params::set_protocol_info( ACE_Protocol_Info *protocol_info )
 {
   ACE_TRACE ("ACE_ATM_Params::set_protocol_info");
@@ -113,7 +112,7 @@ ACE_ATM_Params::set_protocol_info( ACE_Protocol_Info *protocol_info )
 }
 
 ACE_INLINE
-ACE_SOCK_GROUP
+ACE_SOCK_GROUP 
 ACE_ATM_Params::get_sock_group( void )
 {
   ACE_TRACE ("ACE_ATM_Params::get_sock_group");
@@ -121,7 +120,7 @@ ACE_ATM_Params::get_sock_group( void )
 }
 
 ACE_INLINE
-void
+void 
 ACE_ATM_Params::set_sock_group( ACE_SOCK_GROUP g )
 {
   ACE_TRACE ("ACE_ATM_Params::set_sock_group");
@@ -129,7 +128,7 @@ ACE_ATM_Params::set_sock_group( ACE_SOCK_GROUP g )
 }
 
 ACE_INLINE
-u_long
+u_long 
 ACE_ATM_Params::get_flags( void )
 {
   ACE_TRACE ("ACE_ATM_Params::get_flags");
@@ -137,7 +136,7 @@ ACE_ATM_Params::get_flags( void )
 }
 
 ACE_INLINE
-void
+void 
 ACE_ATM_Params::set_flags( u_long flags)
 {
   ACE_TRACE ("ACE_ATM_Params::set_flags");
@@ -232,4 +231,3 @@ ACE_ATM_Params::set_oflag (int oflag)
   oflag_ = oflag;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

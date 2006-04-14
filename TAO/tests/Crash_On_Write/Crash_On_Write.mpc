@@ -11,7 +11,6 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient {
-  after += *Server
   Source_Files {
     TestC.cpp
     client.cpp

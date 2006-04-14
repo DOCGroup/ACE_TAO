@@ -50,12 +50,8 @@ go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  go.idl
-
 ## Makefile.Seq_Multi_Filter_Ntf_Seq_Cons.am
 
-if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Sequence_Consumer
@@ -73,18 +69,13 @@ Sequence_Consumer_CPPFLAGS = \
 Sequence_Consumer_SOURCES = \
   Notify_Sequence_Push_Consumer.cpp \
   Sequence_Consumer.cpp \
+  common.cpp \
   goC.cpp \
-  Notify_Sequence_Push_Consumer.h
+  Notify_Sequence_Push_Consumer.h \
+  common.h
 
 Sequence_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -100,11 +91,9 @@ Sequence_Consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
-endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Seq_Multi_Filter_Ntf_Seq_Supp.am
 
-if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Sequence_Supplier
@@ -123,17 +112,11 @@ Sequence_Supplier_SOURCES = \
   Sequence_Supplier.cpp \
   goC.cpp \
   goS.cpp \
-  Notify_Sequence_Push_Consumer.h
+  Notify_Sequence_Push_Consumer.h \
+  common.h
 
 Sequence_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -149,7 +132,6 @@ Sequence_Supplier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
-endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

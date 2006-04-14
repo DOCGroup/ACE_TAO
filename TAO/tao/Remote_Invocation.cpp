@@ -1,20 +1,18 @@
 //$Id$
-#include "tao/Remote_Invocation.h"
-#include "tao/Profile.h"
-#include "tao/Profile_Transport_Resolver.h"
-#include "tao/Stub.h"
-#include "tao/Transport.h"
-#include "tao/Connection_Handler.h"
-#include "tao/operation_details.h"
-#include "tao/ORB_Core.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/debug.h"
+#include "Remote_Invocation.h"
+#include "Profile.h"
+#include "Profile_Transport_Resolver.h"
+#include "Stub.h"
+#include "Transport.h"
+#include "Connection_Handler.h"
+#include "operation_details.h"
+#include "ORB_Core.h"
+#include "Protocols_Hooks.h"
+#include "debug.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -27,8 +25,7 @@ namespace TAO
                        resolver.object (),
                        resolver.stub (),
                        detail,
-                       response_expected,
-                       true /* request_is_remote */ )
+                       response_expected)
     , resolver_ (resolver)
   {
   }
@@ -203,5 +200,3 @@ namespace TAO
     return TAO_INVOKE_SUCCESS;
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -38,9 +38,7 @@
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
 #else  /* ! __GNUG__ && ! __KCC && !__DECCXX */
-#  ifdef __cplusplus  /* Let it slide for C compilers. */
-#   error unsupported compiler in ace/config-rtems.h
-#  endif  /* __cplusplus */
+# error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 
 // Completely common part :-)
@@ -135,8 +133,6 @@ ACE_HAS_SEND_TIMEDWAIT
 ACE_HAS_SENDTO_TIMEDWAIT
 ACE_HAS_IP_MULTICAST
 ACE_HAS_NONCONST_SELECT_TIMEVAL
-ACE_HAS_WCHAR_TYPEDEFS_CHAR
-ACE_HAS_WCHAR_TYPEDEFS_USHORT
 ACE_HAS_SIGNAL_SAFE_OS_CALLS
 ACE_HAS_SIZET_SOCKET_LEN
 ACE_HAS_SOCKADDR_MSG_NAME

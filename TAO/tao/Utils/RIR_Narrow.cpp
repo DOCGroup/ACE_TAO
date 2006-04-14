@@ -1,15 +1,15 @@
-// $Id$
-
 #ifndef TAO_UTILS_RIR_NARROW_CPP
 #define TAO_UTILS_RIR_NARROW_CPP
 
-#include "tao/Utils/RIR_Narrow.h"
+#include "RIR_Narrow.h"
 #include "tao/SystemException.h"
 #if defined (ACE_HAS_EXCEPTIONS)
   #include <stdexcept>
 #endif
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (Utils,
+           RIR_Narror,
+           "$Id$")
 
 template<class T> typename TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow (CORBA::ORB_ptr orb,
@@ -54,7 +54,5 @@ TAO::Utils::RIR_Narrow<T>::narrow_object (CORBA::Object_ptr object
   }
   return narrowed_object._retn ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*TAO_UTILS_RIR_NARROW_CPP*/

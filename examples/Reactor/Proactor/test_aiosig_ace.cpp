@@ -346,7 +346,7 @@ null_handler (int signal_number,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (test_aio_calls () == 0)
     printf ("RT SIG test successful:\n"

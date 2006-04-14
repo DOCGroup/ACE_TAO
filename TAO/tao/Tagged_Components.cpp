@@ -13,9 +13,6 @@ ACE_RCSID (tao,
            Tagged_Components,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 void
 TAO_Tagged_Components::set_orb_type (CORBA::ULong orb_type)
 {
@@ -341,4 +338,3 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
   return 1;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

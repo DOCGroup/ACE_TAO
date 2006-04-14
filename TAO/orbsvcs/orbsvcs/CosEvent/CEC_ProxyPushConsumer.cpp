@@ -1,21 +1,19 @@
 // $Id$
 
-#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
+#include "CEC_ProxyPushConsumer.h"
+#include "CEC_EventChannel.h"
+#include "CEC_ConsumerAdmin.h"
+#include "CEC_ProxyPushSupplier.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.i"
+#include "CEC_ProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_ProxyPushConsumer,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
@@ -365,4 +363,3 @@ TAO_CEC_ProxyPushConsumer_Guard::
   this->event_channel_->destroy_proxy (this->proxy_);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

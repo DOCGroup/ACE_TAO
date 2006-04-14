@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   Bindings_Iterator_T.h
@@ -15,10 +14,7 @@
 #define TAO_BINDINGS_ITERATOR_T_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Naming/Hash_Naming_Context.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Hash_Naming_Context.h"
 
 /**
  * @class TAO_Bindings_Iterator
@@ -131,10 +127,8 @@ private:
   PortableServer::POA_var poa_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Naming/Bindings_Iterator_T.cpp"
+#include "Bindings_Iterator_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

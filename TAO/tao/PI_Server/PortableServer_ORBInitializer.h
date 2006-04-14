@@ -15,19 +15,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI/PI.h"
+#include "pi_server_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /// PortableServer ORB initializer.
-class TAO_PortableServer_ORBInitializer
+class TAO_PI_Server_Export TAO_PortableServer_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -57,8 +55,6 @@ private:
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
                                   ACE_ENV_ARG_DECL);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

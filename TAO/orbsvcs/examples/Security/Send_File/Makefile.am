@@ -48,9 +48,6 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  test.idl
-
 ## Makefile.Security_Send_File_Client.am
 
 noinst_PROGRAMS = client

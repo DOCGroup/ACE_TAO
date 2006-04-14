@@ -1,27 +1,26 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file ProxySupplier_T.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
+ *
+ *
  */
 
 #ifndef TAO_Notify_PROXYSUPPLIER_T_H
 #define TAO_Notify_PROXYSUPPLIER_T_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Proxy_T.h"
-#include "orbsvcs/Notify/ProxySupplier.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Proxy_T.h"
+#include "ProxySupplier.h"
 
 /**
  * @class TAO_Notify_ProxySupplier_T
@@ -147,10 +146,8 @@ protected:
   ));
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/ProxySupplier_T.cpp"
+#include "ProxySupplier_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

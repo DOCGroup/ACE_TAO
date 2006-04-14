@@ -28,7 +28,7 @@
 
 // Use all available T1248 thread aware wrapper functions for providing
 // non-blocking I/O.
-// [@note this causes a significant performance degradation]
+// [Note: this causes a significant performance degradation]
 //#define ACE_TANDEM_T1248_PTHREADS_ALL_IO_WRAPPERS
 
 
@@ -241,7 +241,8 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_HRTIME_T_IS_BASIC_TYPE
 
 // printf format specifiers for 64 bit integers
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
+# define ACE_UINT64_FORMAT_SPECIFIER_A "%Ld"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
 
 //=========================================================================
@@ -314,6 +315,9 @@ extern int cma_sigwait  (sigset_t *);
 
 // Platform lacks malloc.h
 #define ACE_LACKS_MALLOC_H
+
+// <time.h> doesn't automatically #include /**/ <sys/time.h>
+#define ACE_LACKS_SYSTIME_H
 
 // Platform lacks the siginfo.h include file
 #define ACE_LACKS_SIGINFO_H
@@ -398,6 +402,9 @@ extern int cma_sigwait  (sigset_t *);
 // Platform lacks "signed char" type (broken!)
 // Following will not be needed if use standard c library (G06.20 and later)
 #define ACE_LACKS_SIGNED_CHAR
+
+// Compiler supports the new using keyword for C++ namespaces.
+#define ACE_HAS_USING_KEYWORD
 
 //=========================================================================
 // Build options

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "Endpoint_Strategy.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -22,8 +22,6 @@
 #include "ace/Process_Semaphore.h"
 
 ACE_RCSID(AV, Endpoint_Strategy, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Strategy
@@ -107,11 +105,11 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                       -1);
 
   // Create a unique semaphore name, using my hostname, and pid.
-  char sem_str [BUFSIZ];
+  ACE_TCHAR sem_str [BUFSIZ];
 
   // create a unique semaphore name
   ACE_OS::sprintf (sem_str,
-                   "%s:%s:%ld",
+                   ACE_TEXT("%s:%s:%ld"),
                    "TAO_AV_Process_Semaphore",
                    this->host_,
                    static_cast<long int> (this->pid_));
@@ -431,5 +429,3 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL
   ACE_CHECK_RETURN (-1);
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

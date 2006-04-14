@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -9,9 +9,6 @@
  *  @author Matt Murphy <murphym@cs.uri.edu>
  */
 //=============================================================================
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Equal_To< COS_SCHEDULING_OBJECT_NAME_KEY >::operator () (
@@ -35,5 +32,3 @@ TAO::CosSchedulingInvocation_Hash_key::operator () (
 {
   return static_cast<u_long> (key);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_sema_t &
 ACE_Semaphore::lock (void) const
@@ -115,5 +112,3 @@ ACE_Semaphore::tryacquire_write_upgrade (void)
 {
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

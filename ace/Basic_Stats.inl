@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Basic_Stats::ACE_Basic_Stats (void)
@@ -49,5 +45,3 @@ ACE_Basic_Stats::sample (ACE_UINT64 value)
 
   this->sum_ += value;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

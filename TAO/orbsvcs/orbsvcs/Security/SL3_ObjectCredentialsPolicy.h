@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -30,9 +31,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   namespace SL3
@@ -48,7 +46,7 @@ namespace TAO
      * POA will have the credentials contained within this Policy
      * associated with them.
      */
-    class ObjectCredentialsPolicy
+    class TAO_Security_Export ObjectCredentialsPolicy
       : public virtual SecurityLevel3::ObjectCredentialsPolicy,
         public virtual TAO_Local_RefCounted_Object
     {
@@ -99,7 +97,6 @@ namespace TAO
 
 }  // End TAO namespace
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -25,11 +25,14 @@ Peer_Handler_i::request (CORBA::Long retval
 
 void
 Peer_Handler_i::request_excep (
-    ::Messaging::ExceptionHolder *
-    ACE_ENV_ARG_DECL_NOT_USED)
+    AMI_PeerExceptionHolder * excep_holder
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (excep_holder);
+  ACE_ENV_ARG_NOT_USED;
 }
+
 
 void
 Peer_Handler_i::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

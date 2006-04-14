@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 /**
  * @file Recursive_Thread_Mutex.cpp
  *
@@ -19,8 +20,6 @@
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Recursive_Thread_Mutex, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 
@@ -92,11 +91,8 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
   // Nothing inside of a CRITICAL_SECTION object should ever be
   // accessed directly.  It is documented to change at any time.
-# if defined (ACE_WIN64) && !defined(_M_AMD64)
-  // Things are different on Windows XP 64-bit. However, as of Feb 2006
-  // Windows XP 64-bit edition on Intel EM64T w/ VC8, LockCount is
-  // decremented at first acquire and then doesn't change. RecursionCount,
-  // however, works the same as Win32, below.
+# if defined (ACE_WIN64)
+  // Things are different on Windows XP 64-bit
   return this->lock_.LockCount + 1;
 # elif defined (ACE_WIN32)
   // This is really a Win32-ism...
@@ -145,7 +141,5 @@ ACE_Recursive_Thread_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

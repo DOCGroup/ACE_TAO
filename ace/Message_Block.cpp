@@ -16,8 +16,6 @@ ACE_RCSID (ace,
            Message_Block,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE (ACE_Message_Block)
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -584,14 +582,10 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
                         mb.message_block_allocator_) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("ACE_Message_Block")));
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
+
       // Align ourselves
       char *start = ACE_ptr_align_binary (this->base (),
                                           align);
-#else
-      char *start = this->base ();
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
-
       // Set our rd & wr pointers
       this->rd_ptr (start);
       this->wr_ptr (start);
@@ -615,25 +609,17 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("ACE_Message_Block")));
 
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Align ourselves
       char *start = ACE_ptr_align_binary (this->base (),
                                           align);
-#else
-      char *start = this->base ();
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
-
       // Set our rd & wr pointers
       this->rd_ptr (start);
       this->wr_ptr (start);
 
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Get the alignment offset of the incoming ACE_Message_Block
       start = ACE_ptr_align_binary (mb.base (),
                                     align);
-#else
-      start = mb.base ();
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
+
 
       // Actual offset for the incoming message block assuming that it
       // is also aligned to the same "align" byte
@@ -648,9 +634,6 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
       // to do what it wants
 
     }
-#if defined (ACE_LACKS_CDR_ALIGNMENT)
-  ACE_UNUSED_ARG (align);
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
 }
 
 int
@@ -1382,5 +1365,3 @@ template class ACE_Guard <ACE_Lock>;
 // #pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
 // #pragma instantiate ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

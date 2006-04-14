@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // $Id$
 
 // ===========================================================================
@@ -60,7 +58,7 @@ public:
   // This function call initializes the Trading Service given a reference to the
   // ORB and the command line parameters.
 
-protected:
+ protected:
 
   int init_multicast_server (void);
   // Enable the Trading Service to answer multicast requests for its
@@ -103,11 +101,9 @@ protected:
   CORBA::Boolean dumpior_;
   // Flag indication whether to dump the ior to standard output
 
-private:
-
-  // Disallow copying and assignment.
-  TAO_Trading_Loader (const TAO_Trading_Loader &);
-  TAO_Trading_Loader &operator= (const TAO_Trading_Loader &);
+ private:
+   ACE_UNIMPLEMENTED_FUNC (TAO_Trading_Loader (const TAO_Trading_Loader &))
+   ACE_UNIMPLEMENTED_FUNC (TAO_Trading_Loader &operator= (const TAO_Trading_Loader &))
 
 };
 

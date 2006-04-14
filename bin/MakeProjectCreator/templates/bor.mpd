@@ -22,9 +22,6 @@ OBJFILES = \
 <%if(libpaths)%>
 
 LFLAGS = \
-<%if(linkflags)%>
-        <%linkflags%> \
-<%endif%>
 <%if(StackReserveSize)%>
         /S:<%StackReserveSize%> \
 <%endif%>
@@ -57,14 +54,6 @@ RESDIR = <%rcdir%>
 <%if(resource_files)%>
 
 RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%basenoextension(resource_file)%>.res<%endfor%>
-
-<%if(includes)%>
-RC_FLAGS = \
-<%foreach(includes)%>
-        -i"<%include%>"<%fornotlast(" \\")%>
-<%endfor%>
-<%endif%>
-
 <%endif%>
 
 !ifdef STATIC
@@ -90,9 +79,6 @@ CFLAGS = \
 # For example, any place that uses ACE_LIB_TEXT().
 #	-D<%pch_define%> \
 <%endfor%>
-<%endif%>
-<%if(compile_flags)%>
-        <%compile_flags%> \
 <%endif%>
 <%foreach(macros)%>
 	-D<%macro%> \

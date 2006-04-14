@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Reactive_Timeout_Generator.h
  *
@@ -18,13 +17,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Timeout_Generator.h"
+#include "EC_Timeout_Generator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Reactive_Timeout_Generator
@@ -62,8 +59,6 @@ private:
   /// An adapter to receive the timeout events.
   TAO_EC_Timeout_Adapter event_handler_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

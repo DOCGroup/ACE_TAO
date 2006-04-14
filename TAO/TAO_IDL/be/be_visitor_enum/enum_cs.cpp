@@ -65,6 +65,6 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
         }
     }
 
-  node->cli_stub_gen (true);
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }

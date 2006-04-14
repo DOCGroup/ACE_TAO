@@ -24,13 +24,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "SSLIOP_Connection_Handler.h"
 
 #include "tao/Acceptor_Impl.h"
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -91,7 +90,6 @@ namespace TAO
   }  // End SSLIOP namespace
 }  // End TAO namespace
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

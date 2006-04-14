@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   ECG_ConsumerEC_Control.h
  *
@@ -21,9 +20,7 @@
 
 #include "tao/Basic_Types.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include /**/ "event_serv_export.h"
 
 class TAO_EC_Gateway_IIOP;
 class TAO_EC_ProxyPushSupplier;
@@ -75,8 +72,6 @@ public:
                                  CORBA::SystemException &
                                  ACE_ENV_ARG_DECL_NOT_USED);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

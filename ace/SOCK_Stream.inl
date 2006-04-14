@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/SOCK_Stream.h"
 #include "ace/OS_NS_sys_socket.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_SOCK_Stream::ACE_SOCK_Stream (void)
@@ -173,5 +170,3 @@ ACE_SOCK_Stream::recv_urg (void *ptr,
                     MSG_OOB,
                     timeout);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

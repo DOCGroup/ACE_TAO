@@ -16,7 +16,7 @@
 #include "ace/os_include/os_ctype.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Profile.i"
+#include "Profile.i"
 #endif /* __ACE_INLINE__ */
 
 
@@ -26,9 +26,6 @@ ACE_RCSID (tao,
 
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
                           const TAO::ObjectKey &obj_key,
@@ -88,7 +85,7 @@ CORBA::ULong
 TAO_Profile::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (ACE_Lock, guard, *this->refcount_lock_, 0);
-  return ++this->refcount_;
+  return this->refcount_++;
 }
 
 CORBA::ULong
@@ -96,7 +93,7 @@ TAO_Profile::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, mon, *this->refcount_lock_, 0);
-    --this->refcount_;
+    this->refcount_--;
 
     if (this->refcount_ != 0)
       {
@@ -951,5 +948,3 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 
   return (CORBA::Boolean) cdr.good_bit ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

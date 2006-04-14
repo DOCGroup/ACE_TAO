@@ -20,8 +20,6 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/SystemException.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class TypeCode;
@@ -83,8 +81,6 @@ namespace CORBA
 #undef TAO_SYSTEM_EXCEPTION
 
 } // End CORBA namespace
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,8 +22,6 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -77,8 +75,6 @@ public:
 
   virtual CORBA::ValueFactory vf_map_find (const char *) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_VALUETYPE_ADAPTER_H */

@@ -34,8 +34,6 @@
 # define ACE_SSL_SOCK_STREAM ACE_SSL_SOCK_Stream, ACE_INET_Addr
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_SSL_SOCK
  *
@@ -51,6 +49,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK : public ACE_SOCK
 {
 public:
+
+  /// Default destructor.
+  ~ACE_SSL_SOCK (void);
 
   /**
    * Override ACE_SOCK base class implementations with these SSL
@@ -78,17 +79,7 @@ protected:
   /// from being defined.
   ACE_SSL_SOCK (void);
 
-  /// Destructor
-  /**
-   * Not a virtual destructor.  Protected destructor to prevent
-   * operator delete() from being called through a base class
-   * ACE_SSL_SOCK pointer/reference.
-   */
-  ~ACE_SSL_SOCK (void);
-
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "SSL_SOCK.i"

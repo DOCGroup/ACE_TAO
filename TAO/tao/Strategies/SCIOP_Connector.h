@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // $Id$
 //=============================================================================
 /**
@@ -30,14 +28,12 @@
 
 #if TAO_HAS_SCIOP == 1
 
+class TAO_SCIOP_Endpoint;
+
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
 #include "tao/Connector_Impl.h"
-#include "tao/Strategies/SCIOP_Connection_Handler.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_SCIOP_Endpoint;
+#include "SCIOP_Connection_Handler.h"
 
 // ****************************************************************
 
@@ -128,8 +124,6 @@ private:
   /// The connector initiating connection requests for SCIOP.
   TAO_SCIOP_BASE_CONNECTOR base_connector_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

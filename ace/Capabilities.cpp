@@ -16,7 +16,6 @@ ACE_RCSID (ace,
 
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_CapEntry::~ACE_CapEntry (void)
 {
@@ -103,11 +102,11 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 void
 ACE_Capabilities::resetcaps (void)
 {
-  for (CAPABILITIES_MAP::ITERATOR iter (this->caps_);
+  for (MAP::ITERATOR iter (this->caps_);
        !iter.done ();
        iter.advance ())
     {
-      CAPABILITIES_MAP::ENTRY *entry = 0;
+      MAP::ENTRY *entry = 0;
       iter.next (entry);
       delete entry->int_id_;
     }
@@ -321,8 +320,8 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 
   int done;
   ACE_TString line;
- 
-  while (0 == (done = (this->getline (fp, line) == -1))
+
+  while (!(done = (this->getline (fp, line) == -1))
          && is_empty (line.c_str ()))
     continue;
 
@@ -331,7 +330,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
       ACE_TString newline;
       ACE_TString description;
 
-      while (0 == (done = (this->getline (fp, newline) == -1)))
+      while (!(done = (this->getline (fp, newline) == -1)))
         if (is_line (newline.c_str ()))
           description += newline;
         else
@@ -365,5 +364,3 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Ha
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,21 +1,19 @@
 // $Id$
 
 // -- PortableServer Include --
-#include "tao/PortableServer/Object_Adapter.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Root_POA.h"
+#include "Object_Adapter.h"
+#include "POA_Current_Impl.h"
+#include "Root_POA.h"
 
 #include "tao/TSS_Resources.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Current_Impl.inl"
+# include "POA_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,
            POA_Current_IMpl,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -86,12 +84,6 @@ namespace TAO
       return objid;
     }
 
-    CORBA::Object_ptr
-    POA_Current_Impl::get_reference (void)
-    {
-      return this->poa_->id_to_reference (this->object_id_);
-    }
-
     PortableServer::Servant
     POA_Current_Impl::get_servant (void)
     {
@@ -107,4 +99,3 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

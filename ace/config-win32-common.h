@@ -232,23 +232,12 @@
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
 #define ACE_LACKS_SETSID
-#define ACE_LACKS_SETEGID
-#define ACE_LACKS_SETUID
-#define ACE_LACKS_SETEUID
-#define ACE_LACKS_GETGID
-#define ACE_LACKS_GETEGID
-#define ACE_LACKS_GETUID
-#define ACE_LACKS_GETEUID
-#define ACE_LACKS_SETGID
 
 /* LACKS miscellaneous */
-#define ACE_LACKS_ALARM
 #define ACE_LACKS_ARPA_INET_H
 #define ACE_LACKS_DUP2
 #define ACE_LACKS_FORK
 #define ACE_LACKS_GETHOSTENT
-#define ACE_LACKS_GETOPT
-#define ACE_LACKS_KILL
 #define ACE_LACKS_INET_ATON
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MKFIFO
@@ -258,22 +247,16 @@
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_SBRK
-#define ACE_LACKS_SCHED_H
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SIGACTION
 #define ACE_LACKS_SIGSET
 #define ACE_LACKS_SOCKETPAIR
-#define ACE_LACKS_SUSECONDS_T
-#define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_SYS_PARAM_H
-#define ACE_LACKS_SYS_SYSCTL_H
-#define ACE_LACKS_SYSCONF
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_LACKS_UTSNAME_T
-#define ACE_LACKS_UNAME
 #define ACE_LACKS_WAIT
 
 #define ACE_HAS_SNPRINTF
@@ -295,6 +278,13 @@
 #define ACE_UINT64_TYPE		unsigned long long
 #endif
 
+// ACE WChar support
+#define ACE_SIZEOF_WCHAR 2
+#define ACE_WCHAR_MAX    0xFFFF
+#if !defined(_NATIVE_WCHAR_T_DEFINED)
+#  define ACE_LACKS_BUILTIN_WCHAR_T
+#endif
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -302,12 +292,6 @@
 // is controlled in compiler configs since it's a compiler switch.
 // Additionally, if the user selected use of wide chars (by setting either
 // ACE_USES_WCHAR or UNICODE) make sure both are enabled.
-#define ACE_HAS_WCHAR
-#if defined (ACE_USES_WCHAR)
-#  ifndef UNICODE
-#    define UNICODE
-#  endif
-#endif /* ACE_USES_WCHAR */
 #if defined (UNICODE) && !defined (ACE_USES_WCHAR)
 #  define ACE_USES_WCHAR
 #endif /* UNICODE && !ACE_USES_WCHAR */

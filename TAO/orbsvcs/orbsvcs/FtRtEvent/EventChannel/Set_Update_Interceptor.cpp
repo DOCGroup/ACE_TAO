@@ -1,17 +1,16 @@
 // $Id$
 
 #include "tao/CDR.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
+#include "Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "Request_Context_Repository.h"
 
 ACE_RCSID (EventChannel,
            Set_Update_Intercetpor,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_Set_Update_Interceptor::TAO_Set_Update_Interceptor ()
+TAO_Set_Update_Interceptor::
+TAO_Set_Update_Interceptor ()
 : myname_ ("TAO_Set_Update_Interceptor")
 {
 }
@@ -141,28 +140,28 @@ TAO_Set_Update_Interceptor::send_request (
 
 void
 TAO_Set_Update_Interceptor::receive_reply (
-  PortableInterceptor::ClientRequestInfo_ptr
+  PortableInterceptor::ClientRequestInfo_ptr ri
   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG(ri);
 }
 
 void
 TAO_Set_Update_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+                                       PortableInterceptor::ClientRequestInfo_ptr
+                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       ACE_THROW_SPEC ((CORBA::SystemException,
+                                       PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 TAO_Set_Update_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ClientRequestInfo_ptr ri
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  PortableInterceptor::ForwardRequest))
 {
+  ACE_UNUSED_ARG(ri);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

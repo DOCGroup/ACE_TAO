@@ -9,8 +9,6 @@
 
 ACE_RCSID(ace, File_Lock, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 
 void
@@ -69,4 +67,14 @@ ACE_File_Lock::~ACE_File_Lock (void)
   this->remove (this->unlink_in_destructor_);
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+// These are instantiated both with and without ACE_HAS_THREADS.
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+// template class ACE_Guard<ACE_File_Lock>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// #pragma instantiate ACE_Guard<ACE_File_Lock>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

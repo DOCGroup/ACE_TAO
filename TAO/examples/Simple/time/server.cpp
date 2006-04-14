@@ -1,12 +1,14 @@
 // $Id$
 #include "../Simple_util.h"
 #include "Time_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 // This is the main driver program for the time and date server.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Server<Time_i> server;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -17,8 +19,8 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       if (server.init ("Time",
-                       argc,
-                       argv
+                       convert.get_argc(),
+                       convert.get_ASCII_argv()
                        ACE_ENV_ARG_PARAMETER) == -1)
         return 1;
       else

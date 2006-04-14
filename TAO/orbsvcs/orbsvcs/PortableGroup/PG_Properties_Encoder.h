@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Properties_Encoder.h
@@ -22,12 +21,10 @@
 
 #include "orbsvcs/PortableGroupS.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #include "ace/Vector_T.h"
 #include "ace/SString.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
@@ -92,10 +89,8 @@ namespace TAO_PG
 
 } //namespace TAO_PG
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/PortableGroup/PG_Properties_Encoder.inl"
+#include "PG_Properties_Encoder.inl"
 #endif /* __ACE_INLINE__ */
 #include /**/ "ace/post.h"
 #endif // TAO_PG_PROPERTIES_ENCODER_H

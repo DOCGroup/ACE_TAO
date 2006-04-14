@@ -13,9 +13,7 @@
 #include "HTBP_Session.inl"
 #endif
 
-ACE_RCSID(HTBP,HTBP_Session,"$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(HTBP,ACE_HTBP_Session," $")
 
 ACE::HTBP::Session::Session_Map ACE::HTBP::Session::session_map_;
 ACE_UINT32 ACE::HTBP::Session::last_session_id_ = 0;
@@ -46,7 +44,7 @@ ACE::HTBP::Session::remove_session (ACE::HTBP::Session *s)
 int
 ACE::HTBP::Session::find_session (const ACE::HTBP::Session_Id_t &sid, ACE::HTBP::Session *&out)
 {
-  ACE::HTBP::Session::Map_Entry *e = 0;
+  ACE::HTBP::Session::Map_Entry *e;
   if (session_map_.find (sid,e) == -1)
     {
       out = 0;
@@ -70,7 +68,7 @@ ACE::HTBP::Session::Session (void)
 {
   ACE::HTBP::ID_Requestor req;
   ACE_TCHAR * htid = req.get_HTID();
-  session_id_.local_ = ACE_TEXT_ALWAYS_CHAR(htid);
+  session_id_.local_ = ACE_TEXT_TO_CHAR_IN(htid);
   delete[] htid;
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
@@ -301,5 +299,3 @@ template class ACE_Equal_To<ACE::HTBP::Session_Id_t>;
 
 #pragma instantiate ACE_Equal_To<ACE::HTBP::Session_Id_t>
 #endif
-
-ACE_END_VERSIONED_NAMESPACE_DECL

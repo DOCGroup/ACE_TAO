@@ -10,9 +10,6 @@ ACE_RCSID (ace,
            Handle_Ops,
            "$Id$")
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_HANDLE
 ACE::handle_timed_open (ACE_Time_Value *timeout,
                         const ACE_TCHAR *name,
@@ -46,5 +43,3 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
   else
     return ACE_OS::open (name, flags, perms, sa);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

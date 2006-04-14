@@ -9,7 +9,7 @@
  *  @author  Patrick J. Lardieri <plardier@atl.lmco.com>
  *  @author  Gaurav Naik, Lockheed Martin ATL
  *  @author  based on SOCK_STREAM_Connector
- *            by Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
+ *            by Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *
  */
 //=============================================================================
@@ -19,7 +19,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/Multihomed_INET_Addr.h"
@@ -27,8 +32,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class ACE_Time_Value;
@@ -48,7 +51,7 @@ class ACE_Time_Value;
  * this is that @c ACE_SOCK_SEQPACK_Connector objects do not store state so
  * they can be used reentrantly in multithreaded programs.
  */
-class ACE_Export ACE_SOCK_SEQPACK_Connector
+class ACE_Sockets_Export ACE_SOCK_SEQPACK_Connector
 {
 public:
   // = Initialization and termination methods.
@@ -319,8 +322,6 @@ protected:
                              const ACE_Time_Value *timeout,
                              int result);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_SEQPACK_Connector.inl"

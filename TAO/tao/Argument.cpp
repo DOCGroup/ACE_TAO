@@ -3,8 +3,6 @@
 
 #include "tao/Argument.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO::Argument::~Argument (void)
 {
 }
@@ -54,4 +52,4 @@ TAO::RetArgument::mode (void) const
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

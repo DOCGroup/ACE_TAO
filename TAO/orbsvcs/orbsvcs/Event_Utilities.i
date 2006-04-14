@@ -1,8 +1,6 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_ConsumerQOS_Factory::insert (RtecEventComm::EventSourceID source,
@@ -148,5 +146,3 @@ ACE_SupplierQOS_Factory::operator const RtecEventChannelAdmin::SupplierQOS& (voi
 {
   return qos_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

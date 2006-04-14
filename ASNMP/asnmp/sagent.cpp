@@ -55,7 +55,7 @@ int sagent::handle_input(ACE_HANDLE fd)
   const ACE_INET_Addr &ta = tr.get_from_addr();
   ACE_TCHAR buf_tmp[MAXHOSTNAMELEN + 1];
   ta.addr_to_string (buf_tmp, MAXHOSTNAMELEN);
-  UdpAddress ra (ACE_TEXT_ALWAYS_CHAR (buf_tmp));
+  UdpAddress ra (ACE_TEXT_TO_CHAR_IN (buf_tmp));
   tgt_.set_address(ra);
 
 

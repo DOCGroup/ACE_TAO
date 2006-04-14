@@ -115,7 +115,7 @@ ServerRequestInterceptor::receive_request (
 
   // Make sure the name of the RootPOA is the first in the AdapterName
   // sequence.
-  ACE_ASSERT (ACE_OS::strcmp ("RootPOA", name[(CORBA::ULong) 0]) == 0);
+  ACE_ASSERT (ACE_OS::strcmp ("RootPOA", name[(CORBA::ULong) 0].in()) == 0);
 
   CORBA::String_var orb_id = ri->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;

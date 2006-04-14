@@ -5,8 +5,6 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)
 {
@@ -123,7 +121,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
             {
               // number type
               ACE_TCHAR* endptr = 0;
-              unsigned long value = ACE_OS::strtoul (end + 6, &endptr, 16);
+              u_int value = ACE_OS::strtoul (end + 6, &endptr, 16);
               if (config_.set_integer_value (section, name, value))
                 {
                   ACE_OS::fclose (in);
@@ -646,5 +644,3 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 
   return cp;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

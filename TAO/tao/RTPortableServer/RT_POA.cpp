@@ -1,10 +1,10 @@
-// $Id$
+// @(#) $Id$
 
-#include "tao/RTPortableServer/RT_POA.h"
+#include "RT_POA.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTPortableServer/RT_Acceptor_Filters.h"
+#include "RT_Acceptor_Filters.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -28,14 +28,12 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/RTPortableServer/RT_POA.i"
+# include "RT_POA.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (RTPortableServer,
            RT_POA,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                         TAO_POA_Manager &poa_manager,
@@ -80,7 +78,7 @@ TAO_RT_POA::new_POA (const String &name,
                      TAO_Object_Adapter *object_adapter
                      ACE_ENV_ARG_DECL)
 {
-  TAO_RT_POA *poa = 0;
+  TAO_RT_POA *poa;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
@@ -952,7 +950,5 @@ TAO_RT_POA::id (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->TAO_Regular_POA::id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

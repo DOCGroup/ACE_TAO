@@ -37,33 +37,31 @@
 #include /**/ <dce/rpc.h>
 #endif /* ACE_HAS_DCE_CODESET_REGISTRY */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Codeset_Registry
 {
 public:
 
-  /// Based on a locale string, find the registry value and optional codeset
-  /// collection. This wraps the dce_cs_loc_to_rgy function, or emulates it.
+  // based on a locale string, find the registry value and optional codeset
+  // collection. This wraps the dce_cs_loc_to_rgy function, or emulates it.
   static int locale_to_registry (const ACE_CString &locale,
                                  ACE_CDR::ULong &codeset_id,
                                  ACE_CDR::UShort * = 0,
                                  ACE_CDR::UShort ** = 0);
 
-  /// Based on a registry value, find the locale string and optional codeset
-  /// collection.  This wraps the dce_cs_rgy_to_loc function, or emulates it.
+  // based on a registry value, find the locale string and optional codeset
+  // collection.  This wraps the dce_cs_rgy_to_loc function, or emulates it.
   static int registry_to_locale (ACE_CDR::ULong codeset_id,
                                  ACE_CString &locale,
                                  ACE_CDR::UShort * = 0,
                                  ACE_CDR::UShort ** = 0);
 
-  /// Tell if two codesets are compatible. This wraps the
-  /// rpc_cs_char_set_compat_check function.
+  // tell if two codesets are compatible. This wraps the
+  //rpc_cs_char_set_compat_check function.
   static int is_compatible (ACE_CDR::ULong codeset_id,
                             ACE_CDR::ULong other);
 
-  /// Return the max number of bytes required to represent a single character.
-  /// This wraps the rpc_rgy_get_max_bytes function.
+  // return the max number of bytes required to represent a single character.
+  // This wraps the rpc_rgy_get_max_bytes function.
   static ACE_CDR::Short get_max_bytes (ACE_CDR::ULong codeset_id);
 
   enum {max_charsets_ = 5};
@@ -78,8 +76,8 @@ protected:
   } registry_entry;
 
 private:
-  static size_t const num_registry_entries_;
-  static registry_entry const registry_db_[];
+  static size_t num_registry_entries_;
+  static registry_entry registry_db_[];
 
   static int locale_to_registry_i (const ACE_CString &locale,
                                    ACE_CDR::ULong &codeset_id,
@@ -93,8 +91,6 @@ private:
                               ACE_CDR::ULong other);
   static ACE_CDR::Short get_max_bytes_i (ACE_CDR::ULong codeset_id);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Codeset_Registry.inl"

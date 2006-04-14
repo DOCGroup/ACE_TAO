@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Per_Supplier_Filter.h
  *
@@ -16,15 +16,13 @@
 #define TAO_EC_PER_SUPPLIER_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Supplier_Filter.h"
-#include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include "EC_Supplier_Filter.h"
+#include "EC_Supplier_Filter_Builder.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY> class TAO_ESF_Proxy_Collection;
 class TAO_EC_Event_Channel_Base;
@@ -112,10 +110,8 @@ private:
   TAO_EC_Event_Channel_Base* event_channel_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Per_Supplier_Filter.i"
+#include "EC_Per_Supplier_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

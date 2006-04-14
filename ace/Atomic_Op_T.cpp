@@ -1,5 +1,5 @@
-#ifndef ACE_ATOMIC_OP_T_CPP
-#define ACE_ATOMIC_OP_T_CPP
+#ifndef ACE_ATOMIC_OP_T_C
+#define ACE_ATOMIC_OP_T_C
 
 #include "ace/Atomic_Op_T.h"
 #include "ace/Log_Msg.h"
@@ -12,7 +12,6 @@
 #include "ace/Atomic_Op_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op_Ex)
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op)
@@ -72,6 +71,4 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c)
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_ATOMIC_OP_T_CPP */
+#endif /* ACE_ATOMIC_OP_T_C */

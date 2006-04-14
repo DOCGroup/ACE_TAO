@@ -4,13 +4,9 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-Thread_Task::Thread_Task (CORBA::ORB_ptr orb)
- : orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
 int
-Thread_Task::activate_task (int thr_count)
+Thread_Task::activate_task (CORBA::ORB_ptr orb,
+                            int thr_count)
 {
 
   ACE_TRY_NEW_ENV
@@ -25,11 +21,13 @@ Thread_Task::activate_task (int thr_count)
 
       active_thread_count_ = thr_count;
 
-      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
+      this->orb_ = CORBA::ORB::_duplicate (orb);
+
+      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
 									      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->current_ = RTScheduling::Current::_narrow (current_obj.in ()
+      this->current_ = RTScheduling::Current::_narrow (current_obj
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -138,7 +136,7 @@ Thread_Task::svc (void)
       ACE_TRY_CHECK;
 
 
-      RTScheduling::Current::NameList_var segment_name_list =
+      RTScheduling::Current::NameList* segment_name_list =
         this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

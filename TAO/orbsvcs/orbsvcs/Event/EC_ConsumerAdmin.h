@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_ConsumerAdmin.h
  *
@@ -18,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,12 +25,11 @@
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include /**/ "event_serv_export.h"
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
+
 
 /**
  * @class TAO_EC_ConsumerAdmin
@@ -73,8 +71,6 @@ private:
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

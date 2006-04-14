@@ -1,24 +1,24 @@
 // $Id$
 
-#include "tao/TAO_Internal.h"
-#include "tao/default_server.h"
-#include "tao/default_client.h"
-#include "tao/default_resource.h"
-#include "tao/IIOP_Factory.h"
-#include "tao/MCAST_Parser.h"
-#include "tao/CORBANAME_Parser.h"
-#include "tao/CORBALOC_Parser.h"
-#include "tao/FILE_Parser.h"
-#include "tao/DLL_Parser.h"
-#include "tao/ORB_Core.h"
-#include "tao/Adapter_Factory.h"
-#include "tao/Default_Stub_Factory.h"
-#include "tao/Default_Endpoint_Selector_Factory.h"
-#include "tao/Default_Protocols_Hooks.h"
-#include "tao/Default_Thread_Lane_Resources_Manager.h"
-#include "tao/Default_Collocation_Resolver.h"
-#include "tao/debug.h"
-#include "tao/StringSeqC.h"
+#include "TAO_Internal.h"
+#include "default_server.h"
+#include "default_client.h"
+#include "default_resource.h"
+#include "IIOP_Factory.h"
+#include "MCAST_Parser.h"
+#include "CORBANAME_Parser.h"
+#include "CORBALOC_Parser.h"
+#include "FILE_Parser.h"
+#include "DLL_Parser.h"
+#include "ORB_Core.h"
+#include "Adapter_Factory.h"
+#include "Default_Stub_Factory.h"
+#include "Default_Endpoint_Selector_Factory.h"
+#include "Default_Protocols_Hooks.h"
+#include "Default_Thread_Lane_Resources_Manager.h"
+#include "Default_Collocation_Resolver.h"
+#include "debug.h"
+#include "StringSeqC.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -87,8 +87,6 @@ namespace
     TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
 }
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 int
 TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 {
@@ -102,7 +100,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 
   if (argc > 0 && argv != 0)
     {
-      argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+      argv0 = ACE_TEXT_TO_CHAR_OUT (argv[0]);
     }
 
   CORBA::ULong len = 0;
@@ -163,7 +161,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           ACE::debug (1);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT ("-ORBDebugLevel"))))
         {
           TAO_debug_level =
@@ -183,7 +181,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           arg_shifter.consume_arg ();
         }
       // Continue with flags that accept parameters.
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -193,11 +191,11 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           // configuration information rather than using a svc.conf
           // file.  Pass the "-S" to the service configurator.
           svc_config_argv[len] = CORBA::string_dup ("-S");
-          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
         {
           // Specify the name of the svc.conf file to be used.
 
@@ -227,17 +225,17 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
           svc_config_argv[len] = CORBA::string_dup ("-f");
-          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
           svc_config_argv[len] = CORBA::string_dup ("-k");
-          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -279,8 +277,6 @@ TAO::ORB::default_svc_conf_entries (char const * rf_args,
   server_strategy_factory_args = ssf_args;
   client_strategy_factory_args = csf_args;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // -----------------------------------------------------
 namespace
@@ -421,23 +417,22 @@ namespace
     if (resource_factory_args != 0)
       {
         ACE_Service_Config::process_directive (
-          ACE_TEXT_CHAR_TO_TCHAR (resource_factory_args));
+          ACE_TEXT_TO_TCHAR_IN (resource_factory_args));
       }
 
     if (client_strategy_factory_args != 0)
       {
         ACE_Service_Config::process_directive (
-          ACE_TEXT_CHAR_TO_TCHAR (client_strategy_factory_args));
+          ACE_TEXT_TO_TCHAR_IN (client_strategy_factory_args));
       }
 
     if (server_strategy_factory_args != 0)
       {
         ACE_Service_Config::process_directive (
-          ACE_TEXT_CHAR_TO_TCHAR (server_strategy_factory_args));
+          ACE_TEXT_TO_TCHAR_IN (server_strategy_factory_args));
       }
 
     return result;
   }
 }
 
-// TAO_BEGIN_VERSIONED_NAMESPACE_DECL -- ended prior to anonymous namespace.

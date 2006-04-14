@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE void
 TAO::SSLIOP::Current::tss_slot (size_t slot)
 {
@@ -36,5 +34,3 @@ TAO::SSLIOP::Current::implementation (void)
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -27,11 +27,8 @@
 
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
 #include "orbsvcs/DsLogAdminC.h"
-#include "ace/Null_Mutex.h"
 
-#include "orbsvcs/Log/log_serv_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "log_serv_export.h"
 
 class TAO_ETCL_Constraint;
 class TAO_ETCL_Literal_Constraint;
@@ -48,7 +45,7 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
 public:
 
   /// Constructor.
-  TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRecord &rec);
+  TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord &rec);
 
   /**
    * Returns 1 if the offer satisfies the constraint
@@ -103,13 +100,10 @@ private:
                                     CORBA::TCKind tc_kind);
 
 private:
-  /// Size of property_lookup_ hash map.
-  /// TODO: define inline once VC6 support is deprecated.
-  static const size_t property_lookup_size_;
 
   typedef ACE_Hash_Map_Manager <ACE_CString,
-                                CORBA::Any,
-                                ACE_Null_Mutex> HASH_MAP;
+                                CORBA::Any_var,
+                                TAO_SYNCH_MUTEX> HASH_MAP;
 
   typedef HASH_MAP::ENTRY HASH_ENTRY;
 
@@ -122,9 +116,10 @@ private:
   /// Holder for a value found in property_lookup_ or for a
   /// nested type within that value.
   CORBA::Any_var current_member_;
-};
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+  /// Local LogRecord.
+  DsLogAdmin::LogRecord &rec_;
+};
 
 #include /**/ "ace/post.h"
 #endif /* TAO_LOG_CONSTRAINT_VISITORS_H */

@@ -2,7 +2,6 @@
 // $Id$
 
 project(*client) : aceexe, qos {
-  avoids += ace_for_tao
   exename = client
   requires += qos
   Source_Files {

@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_RT_Transport_Descriptor::TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
@@ -20,5 +16,3 @@ TAO_RT_Transport_Descriptor::insert (TAO_RT_Transport_Descriptor_Property *descr
 
   this->property_list_ = descriptor_property;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

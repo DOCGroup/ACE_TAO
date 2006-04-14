@@ -26,7 +26,6 @@
 #include "HTBP_Filter.h"
 #include "HTBP_Notifier.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -269,8 +268,6 @@ namespace ACE
     };
   }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Channel.inl"

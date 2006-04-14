@@ -1,13 +1,11 @@
 // $Id$
-#include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
+#include "StructuredPushConsumer.h"
 
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
 
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/Event.h"
+#include "../Properties.h"
+#include "../Event.h"
 #include "ace/Bound_Ptr.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredPushConsumer::TAO_Notify_StructuredPushConsumer (TAO_Notify_ProxySupplier* proxy)
   :TAO_Notify_Consumer (proxy)
@@ -19,15 +17,9 @@ TAO_Notify_StructuredPushConsumer::~TAO_Notify_StructuredPushConsumer ()
 }
 
 void
-TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
+TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL_NOT_USED)
 {
-  // Initialize only once
-  ACE_ASSERT( CORBA::is_nil (this->push_consumer_.in()) );
-
-  if (CORBA::is_nil (push_consumer))
-  {
-    ACE_THROW (CORBA::BAD_PARAM());
-  }
+  ACE_ASSERT (push_consumer != 0 && this->push_consumer_.in() == 0);
 
   this->push_consumer_ = CosNotifyComm::StructuredPushConsumer::_duplicate (push_consumer);
 
@@ -78,24 +70,23 @@ TAO_Notify_StructuredPushConsumer::reconnect_from_consumer (TAO_Notify_Consumer*
   this->schedule_timer(false);
 }
 
-ACE_CString
-TAO_Notify_StructuredPushConsumer::get_ior (void) const
+bool
+TAO_Notify_StructuredPushConsumer::get_ior (ACE_CString & iorstr) const
 {
-  ACE_CString result;
+  bool result = false;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
   {
     CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    result = static_cast<const char*> (ior.in ());
+    iorstr = static_cast<const char *> (ior.in ());
+    result = true;
   }
   ACE_CATCHANY
   {
-    result.fast_clear();
+    ACE_ASSERT(0);
   }
   ACE_ENDTRY;
   return result;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

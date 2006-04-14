@@ -11,8 +11,6 @@ ACE_RCSID (tao,
            Wait_On_Leader_Follower,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
 {
@@ -70,5 +68,3 @@ TAO_Wait_On_Leader_Follower::can_process_upcalls (void) const
 {
   return true;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

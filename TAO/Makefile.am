@@ -12,26 +12,14 @@
 AUTOMAKE_OPTIONS = foreign
 
 ACLOCAL = @ACLOCAL@
-ACLOCAL_AMFLAGS = -I m4 -I ../m4
+ACLOCAL_AMFLAGS = -I ../m4
 
 SUBDIRS = \
         TAO_IDL \
         tao \
 	orbsvcs \
-        docs
-
-if BUILD_EXAMPLES
-SUBDIRS += \
-	examples
-endif
-
-if BUILD_TESTS
-SUBDIRS += \
+        docs \
 	performance-tests \
-	interop-tests
-endif
-
-SUBDIRS += \
 	utils
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
@@ -41,6 +29,8 @@ EXTRA_DIST =  \
   COPYING.sun \
   LICENSE.sun \
   README.sun
+
+DISTCLEANFILES = tao-config tao-config.1
 
 ## release:
 ##         $(MAKE) dist distdir=$(PACKAGE)$(VERSION)

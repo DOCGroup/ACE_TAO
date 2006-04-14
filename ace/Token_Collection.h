@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -34,8 +34,6 @@
 
 #include "ace/Local_Tokens.h"
 #include "ace/Null_Mutex.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Token_Collection
@@ -231,13 +229,11 @@ protected:
   virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Token_Collection.inl"
 #endif /* __ACE_INLINE__ */
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_COLLECTION_H */

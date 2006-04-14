@@ -10,7 +10,6 @@
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Proactor.h"
 #include "ace/Signal.h"
-#include "ace/Auto_Ptr.h"
 
 #include "IO.h"
 #include "HTTP_Server.h"
@@ -47,9 +46,8 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
   this->threads_ = 0;
   this->backlog_ = 0;
   this->throttle_ = 0;
-  this->caching_ = true;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:c:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:"));
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -99,12 +97,6 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
       case 'b':
 	this->backlog_ = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
-	  case 'c':
-		  if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NO_CACHE")) == 0)
-			  this->caching_ = false;
-		  else
-			  this->caching_ = true;
-		  break;
       default:
 	break;
       }
@@ -138,22 +130,6 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
   // Parse arguments which sets the initial state.
   this->parse_args (argc, argv);
 
-  //If the IO strategy is synchronous (SYNCH case), then choose a handler 
-  //factory based on the desired caching scheme
-  HTTP_Handler_Factory *f = 0;
-
-  if (this->strategy_ != (JAWS::JAWS_POOL | JAWS::JAWS_ASYNCH))
-	  if (this->caching_)
-		  ACE_NEW_RETURN (f, Synch_HTTP_Handler_Factory (), -1);
-	  else
-		  ACE_NEW_RETURN (f, No_Cache_Synch_HTTP_Handler_Factory (), -1);
-
-  //NOTE: At this point f better not be a NULL pointer,
-  //so please do not change the ACE_NEW_RETURN macros unless
-  //you know what you are doing
-  ACE_Auto_Ptr<HTTP_Handler_Factory> factory (f);
-
-
   // Choose what concurrency strategy to run.
   switch (this->strategy_)
     {
@@ -161,11 +137,11 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
       return this->asynch_thread_pool ();
 
     case (JAWS::JAWS_PER_REQUEST | JAWS::JAWS_SYNCH) :
-      return this->thread_per_request (*factory.get ());
+      return this->thread_per_request ();
 
     case (JAWS::JAWS_POOL | JAWS::JAWS_SYNCH) :
     default:
-      return this->synch_thread_pool (*factory.get ());
+      return this->synch_thread_pool ();
     }
 
   ACE_NOTREACHED (return 0);
@@ -180,7 +156,7 @@ HTTP_Server::fini (void)
 
 
 int
-HTTP_Server::synch_thread_pool (HTTP_Handler_Factory &factory)
+HTTP_Server::synch_thread_pool (void)
 {
   // Main thread opens the acceptor
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
@@ -189,7 +165,7 @@ HTTP_Server::synch_thread_pool (HTTP_Handler_Factory &factory)
                        ACE_TEXT ("HTTP_Acceptor::open")), -1);
 
   // Create a pool of threads to handle incoming connections.
-  Synch_Thread_Pool_Task t (this->acceptor_, this->tm_, this->threads_, factory);
+  Synch_Thread_Pool_Task t (this->acceptor_, this->tm_, this->threads_);
 
   this->tm_.wait ();
   return 0;
@@ -197,11 +173,9 @@ HTTP_Server::synch_thread_pool (HTTP_Handler_Factory &factory)
 
 Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
                                                 ACE_Thread_Manager &tm,
-                                                int threads,
-												HTTP_Handler_Factory &factory)
+                                                int threads)
   : ACE_Task<ACE_NULL_SYNCH> (&tm),
-    acceptor_ (acceptor),
-	factory_ (factory)
+    acceptor_ (acceptor)
 {
   if (this->activate (THR_DETACHED | THR_NEW_LWP, threads) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -212,7 +186,7 @@ int
 Synch_Thread_Pool_Task::svc (void)
 {
   // Creates a factory of HTTP_Handlers binding to synchronous I/O strategy
-  //Synch_HTTP_Handler_Factory factory;
+  Synch_HTTP_Handler_Factory factory;
 
   for (;;)
     {
@@ -229,7 +203,7 @@ Synch_Thread_Pool_Task::svc (void)
                       -1);
 
       // Create an HTTP Handler to handle this request
-      HTTP_Handler *handler = this->factory_.create_http_handler ();
+      HTTP_Handler *handler = factory.create_http_handler ();
       handler->open (stream.get_handle (), *mb);
       // Handler is destroyed when the I/O puts the Handler into the
       // done state.
@@ -243,7 +217,7 @@ Synch_Thread_Pool_Task::svc (void)
 }
 
 int
-HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
+HTTP_Server::thread_per_request (void)
 {
   int grp_id = -1;
 
@@ -270,8 +244,7 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
       // Pass grp_id as a constructor param instead of into open.
       ACE_NEW_RETURN (t, Thread_Per_Request_Task (stream.get_handle (),
                                                   this->tm_,
-                                                  grp_id,
-												  factory),
+                                                  grp_id),
                       -1);
 
 
@@ -294,13 +267,11 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
 }
 
 Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
-												  ACE_Thread_Manager &tm,
-                                                  int &grp_id,
-												  HTTP_Handler_Factory &factory)
+						  ACE_Thread_Manager &tm,
+                                                  int &grp_id)
   : ACE_Task<ACE_NULL_SYNCH> (&tm),
     handle_ (handle),
-    grp_id_ (grp_id),
-	factory_ (factory)
+    grp_id_ (grp_id)
 {
 }
 
@@ -332,8 +303,8 @@ Thread_Per_Request_Task::svc (void)
   ACE_Message_Block *mb;
   ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                   -1);
-  //Synch_HTTP_Handler_Factory factory;
-  HTTP_Handler *handler = this->factory_.create_http_handler ();
+  Synch_HTTP_Handler_Factory factory;
+  HTTP_Handler *handler = factory.create_http_handler ();
   handler->open (this->handle_, *mb);
   mb->release ();
   return 0;

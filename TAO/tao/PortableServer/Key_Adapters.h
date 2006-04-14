@@ -15,21 +15,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PS_ForwardC.h"
+#include "PS_ForwardC.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Active_Map_Manager_Key;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @class TAO_Incremental_Key_Generator
@@ -120,9 +116,7 @@ public:
               PortableServer::ObjectId &original_key);
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
-TAO_END_VERSIONED_NAMESPACE_DECL
+////////////////////////////////////////////////////////////////////////////////
 
 #include /**/ "ace/post.h"
 

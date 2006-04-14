@@ -15,8 +15,6 @@
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Framework_Component::~ACE_Framework_Component (void)
 {
   ACE_TRACE ("ACE_Framework_Component::~ACE_Framework_Component");
@@ -276,5 +274,3 @@ ACE_Framework_Repository::ACE_Framework_Repository (int size)
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Framework_Repository")));
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,19 +1,22 @@
 /* -*-C++-*- */
+// $Id$
 #ifndef TIMETICKS_
 #define TIMETICKS_
-//=============================================================================
-/**
- *  @file     timetick.h
- *
- *  $Id$
- *
- * Class definition for SMI Timeticks class.
- *
- *
- *  @author Michael R. MacFaden <mrm@cisco.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//     timetick.h
+//
+// = DESCRIPTION
+//   Class definition for SMI Timeticks class.
+//
+// = AUTHOR
+//    Michael R. MacFaden <mrm@cisco.com>
+//
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -39,47 +42,44 @@
 // integers but is recognized as a distinct SMI type. TimeTicks
 // objects may be get or set into Vb objects.
 //
-/**
- * @class TimeTicks
- *
- * @brief Define RFC1155 TimeTicks Data object
- */
-class ASNMP_Export TimeTicks : public SnmpUInt32
+class ASNMP_Export TimeTicks: public SnmpUInt32
+  // = TITLE
+  //      Define RFC1155 TimeTicks Data object
 
 {
 
   public:
      TimeTicks( const unsigned long i = 0);
 
-     /// copy constructor
      TimeTicks( const TimeTicks &t);
+     // copy constructor
 
-     /// destructor
      ~TimeTicks();
+     // destructor
 
-     /// syntax type
      SmiUINT32 get_syntax();
+     // syntax type
 
-     /// get a printable ASCII value
      const char *to_string();
+     // get a printable ASCII value
 
-     /// create a new instance of this Value
      SnmpSyntax *clone() const;
+     // create a new instance of this Value
 
-     /// copy an instance of this Value
      SnmpSyntax& operator=(SnmpSyntax &val);
+     // copy an instance of this Value
 
-     /// overloaded assignment
      TimeTicks& operator=( const TimeTicks &uli);
+     // overloaded assignment
 
-     /// overloaded assignment
      TimeTicks& operator=( const unsigned long int i);
+     // overloaded assignment
 
-     /// otherwise, behave like an unsigned long
      operator unsigned long();
+     // otherwise, behave like an unsigned long
 
   protected:
-    /// for storing printed form
     char output_buffer[TICKOUTBUF];
+    // for storing printed form
 };
 #endif // TIMETICKS_

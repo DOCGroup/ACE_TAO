@@ -25,11 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Set.h"
-#include "tao/Codeset/codeset_export.h"
-#include "tao/Codeset/Codeset_Descriptor.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "codeset_export.h"
+#include "Codeset_Descriptor.h"
 
 class TAO_Profile;
 class TAO_Transport;
@@ -132,8 +129,6 @@ private:
   TAO_Codeset_Translator_Base * get_translator_i (TAO_Codeset_Descriptor&,
                                                   CONV_FRAME::CodeSetId);
 
-  void get_ncs (CONV_FRAME::CodeSetId &ncsc, CONV_FRAME::CodeSetId& ncsw);
-
   // The CodeSetComponentInfo struct contains all of the information
   // regarding the code sets this application recognizes. This is
   // where the native code set for both char and wchar are stored.
@@ -143,7 +138,6 @@ private:
   TAO_Codeset_Descriptor wchar_descriptor_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

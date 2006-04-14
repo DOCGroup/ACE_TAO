@@ -355,7 +355,7 @@ run_event_loop (u_short port)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   u_short port = ACE_DEFAULT_SERVER_PORT;
 

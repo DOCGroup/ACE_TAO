@@ -1,8 +1,8 @@
+// Typed_SV_Message.cpp
 // $Id$
 
-#ifndef ACE_TYPED_SV_MESSAGE_CPP
-#define ACE_TYPED_SV_MESSAGE_CPP
-
+#ifndef ACE_TYPED_SV_MESSAGE_C
+#define ACE_TYPED_SV_MESSAGE_C
 #include "ace/Typed_SV_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -13,7 +13,7 @@
 #include "ace/Typed_SV_Message.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Typed_SV_Message, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Typed_SV_Message)
 
@@ -25,6 +25,4 @@ ACE_Typed_SV_Message<T>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_TYPED_SV_MESSAGE_CPP */
+#endif /* ACE_TYPED_SV_MESSAGE_C */

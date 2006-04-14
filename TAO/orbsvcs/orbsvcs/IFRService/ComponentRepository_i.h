@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -21,17 +20,14 @@
 #ifndef TAO_COMPONENTREPOSITORY_I_H
 #define TAO_COMPONENTREPOSITORY_I_H
 
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/ifr_service_export.h"
+#include "Repository_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/IFRService/ComponentContainer_i.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "ComponentContainer_i.h"
 
 class TAO_ModuleDef_i;
 class TAO_ComponentDef_i;
@@ -119,8 +115,6 @@ protected:
 #undef GEN_IR_OBJECT
   // Servants for each IR Object type, created at startup.
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

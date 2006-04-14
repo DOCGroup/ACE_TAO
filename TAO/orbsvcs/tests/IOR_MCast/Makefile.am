@@ -48,9 +48,6 @@ MCast-stamp: $(srcdir)/MCast.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  MCast.idl
-
 ## Makefile.IOR_MCast_Client.am
 
 noinst_PROGRAMS = client

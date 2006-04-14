@@ -26,7 +26,6 @@
 
 #include "ace/Array_Base.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PG_Factory_Node
@@ -51,7 +50,6 @@ struct TAO_PG_Factory_Node
 
 typedef ACE_Array_Base<TAO_PG_Factory_Node> TAO_PG_Factory_Set;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

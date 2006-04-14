@@ -298,6 +298,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
         }
     }
 
-  node->cli_stub_gen (true);
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }

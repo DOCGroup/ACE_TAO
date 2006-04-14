@@ -1,13 +1,10 @@
 // $Id$
 
-#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
+#include "CEC_ConsumerControl.h"
 
 ACE_RCSID (CosEvent,
            CEC_ConsumerControl,
            "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_ConsumerControl::TAO_CEC_ConsumerControl (void)
 {
@@ -58,5 +55,3 @@ void
 TAO_CEC_ConsumerControl::successful_transmission (PortableServer::ServantBase*)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

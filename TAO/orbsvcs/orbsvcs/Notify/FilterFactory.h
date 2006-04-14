@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +23,6 @@
 #include "ace/Service_Object.h"
 
 #include "tao/PortableServer/PortableServer.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_FilterFactory
@@ -41,8 +39,6 @@ public:
       PortableServer::POA_var& filter_poa 
       ACE_ENV_ARG_DECL) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

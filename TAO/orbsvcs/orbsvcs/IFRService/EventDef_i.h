@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -21,8 +20,8 @@
 #ifndef TAO_EVENTDEF_I_H
 #define TAO_EVENTDEF_I_H
 
-#include "orbsvcs/IFRService/ExtValueDef_i.h"
-#include "orbsvcs/IFRService/ifr_service_export.h"
+#include "ExtValueDef_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,8 +31,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_EventDef_i : public virtual TAO_ExtValueDef_i
 {
@@ -93,10 +90,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_EVENTDEF_I_H */
+
+
+

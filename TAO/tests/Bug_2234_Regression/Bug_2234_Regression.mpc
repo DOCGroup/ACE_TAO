@@ -14,7 +14,6 @@ project (*client) : taoclient,anytypecode {
 }
 
 project (*server) : taoserver,pi_server {
-  after += *client
    IDL_Files {
       Test.idl
    }

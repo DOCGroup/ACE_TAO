@@ -1,34 +1,22 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file   Storable.h
  *
  *  $Id$
  *
- *  @author Bruce Trask <trask_b@ociweb.com>
- *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
+ *  @author Bruce Trask <trask_b@ociweb.com> Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
 //=============================================================================
 
 
-#ifndef TAO_NAMING_STORABLE_H
-#define TAO_NAMING_STORABLE_H
+#ifndef STORABLE_H
+#define STORABLE_H
 
-#include "ace/config-all.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Versioned_Namespace.h"
 #include "ace/SString.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-static const int szInt =  sizeof(int);
-static const int szChar = sizeof(char);
-static const int szBool = sizeof(int);
+const int szInt =  sizeof(int);
+const int szChar = sizeof(char);
+const int szBool = sizeof(int);
 
 class TAO_NS_Persistence_Header
 {
@@ -156,10 +144,8 @@ public:
                                            const ACE_TCHAR * mode) = 0;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Naming/Storable.inl"
+#include "Storable.inl"
 #endif /* __ACE_INLINE_ */
 
-#endif  /* TAO_NAMING_STORABLE_H */
+#endif

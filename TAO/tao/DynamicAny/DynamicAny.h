@@ -1,4 +1,5 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+
 
 //=============================================================================
 /**
@@ -15,10 +16,10 @@
 #define TAO_DYNAMICANY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicAny/dynamicany_export.h"
+#include "dynamicany_export.h"
 
 #define TAO_DYNAMICANY_SAFE_INCLUDE
-#include "tao/DynamicAny/DynamicAnyC.h"
+#include "DynamicAnyC.h"
 #undef TAO_DYNAMICANY_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -27,8 +28,6 @@
 
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DynamicAny_Export TAO_DynamicAny_Loader : public TAO_Object_Loader
 {
@@ -47,13 +46,11 @@ public:
   static int Initializer (void);
 };
 
-static int
-TAO_Requires_DynamicAny_Initializer = TAO_DynamicAny_Loader::Initializer ();
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 ACE_STATIC_SVC_DECLARE (TAO_DynamicAny_Loader)
 ACE_FACTORY_DECLARE (TAO_DynamicAny, TAO_DynamicAny_Loader)
+
+static int
+TAO_Requires_DynamicAny_Initializer = TAO_DynamicAny_Loader::Initializer ();
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNAMICANY_H */

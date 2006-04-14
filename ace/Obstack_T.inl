@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class CHAR> ACE_INLINE size_t
 ACE_Obstack_T<CHAR>::length () const
@@ -33,5 +29,3 @@ ACE_Obstack_T<CHAR>::freeze (void)
   this->curr_->block_ = this->curr_->cur_;
   return retv;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

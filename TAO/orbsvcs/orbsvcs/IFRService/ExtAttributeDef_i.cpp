@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/IFRService/ExtAttributeDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/ExceptionDef_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "ExtAttributeDef_i.h"
+#include "Repository_i.h"
+#include "ExceptionDef_i.h"
+#include "IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
@@ -12,8 +12,6 @@ ACE_RCSID (IFRService,
            ExtAttributeDef_i,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -311,5 +309,3 @@ TAO_ExtAttributeDef_i::exceptions (const char *sub_section,
                                                 path);
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

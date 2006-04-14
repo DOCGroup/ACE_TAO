@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -14,15 +14,13 @@
 #define TAO_DEFAULT_SERVANT_DISPATCHER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Dispatcher.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Servant_Dispatcher.h"
 
 /**
  * @class TAO_Default_Servant_Dispatcher
@@ -70,8 +68,6 @@ public:
         TAO_Object_Adapter *object_adapter
         ACE_ENV_ARG_DECL);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_SERVANT_DISPATCHER_H */

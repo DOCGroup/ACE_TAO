@@ -2,7 +2,6 @@
 // $Id$
 
 project(*Server): taoserver {
-  avoids += ace_for_tao
   Source_Files {
     test_i.cpp
     server.cpp
@@ -10,8 +9,6 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient, anytypecode {
-  avoids += ace_for_tao
-  after += *Server
   Source_Files {
     testC.cpp
     client.cpp
@@ -20,7 +17,6 @@ project(*Client): taoclient, anytypecode {
 
 project(*OctetSeq): taoclient, anytypecode {
   exename = OctetSeq
-  after += *Client
   Source_Files {
     testC.cpp
     OctetSeq.cpp

@@ -9,19 +9,17 @@
  */
 //=============================================================================
 
-#include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/Servant_Base.h"
+#include "ServantRetentionStrategyNonRetain.h"
+#include "Non_Servant_Upcall.h"
+#include "Servant_Upcall.h"
+#include "POA_Current_Impl.h"
+#include "Root_POA.h"
+#include "Servant_Base.h"
 #include "tao/debug.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -135,15 +133,6 @@ namespace TAO
       servant_upcall.user_id (&system_id);
 
       return 0;
-    }
-
-    int 
-    ServantRetentionStrategyNonRetain::find_servant_priority (
-        const PortableServer::ObjectId &/*system_id*/,
-        CORBA::Short &/*priority*/
-        ACE_ENV_ARG_DECL)
-    {
-      return -1;
     }
 
     int
@@ -342,4 +331,3 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

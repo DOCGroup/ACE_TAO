@@ -4,8 +4,8 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: TAO_CosConcurrency
-Description: TAO CosConcurrency Stub Library
-Requires: TAO_AnyTypeCode, TAO
+Description: TAO CosConcurrency Library
+Requires: TAO_PortableServer, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_CosConcurrency
 Cflags: -I${includedir}

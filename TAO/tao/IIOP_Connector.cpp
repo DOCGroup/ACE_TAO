@@ -1,15 +1,15 @@
-#include "tao/IIOP_Connector.h"
-#include "tao/IIOP_Profile.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/Environment.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/Connect_Strategy.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Profile_Transport_Resolver.h"
-#include "tao/Transport.h"
-#include "tao/Wait_Strategy.h"
-#include "tao/SystemException.h"
+#include "IIOP_Connector.h"
+#include "IIOP_Profile.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "Environment.h"
+#include "Protocols_Hooks.h"
+#include "Connect_Strategy.h"
+#include "Thread_Lane_Resources.h"
+#include "Profile_Transport_Resolver.h"
+#include "Transport.h"
+#include "Wait_Strategy.h"
+#include "SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
@@ -17,8 +17,6 @@
 ACE_RCSID (tao,
            IIOP_Connector,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 {
@@ -146,7 +144,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
                 "to <%s:%d> which should %s\n",
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
+                ACE_TEXT_TO_TCHAR_IN(iiop_endpoint->host()),
                 iiop_endpoint->port(),
                 r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
 
@@ -398,5 +396,3 @@ TAO_IIOP_Connector::cancel_svc_handler (
   return -1;
 }
 //@@ TAO_CONNECTOR_SPL_COPY_HOOK_END
-
-TAO_END_VERSIONED_NAMESPACE_DECL

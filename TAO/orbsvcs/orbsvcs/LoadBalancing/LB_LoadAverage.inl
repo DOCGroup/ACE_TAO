@@ -2,7 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Float
 TAO_LB_LoadAverage::effective_load (CORBA::Float previous_load,
@@ -22,5 +21,3 @@ TAO_LB_LoadAverage::effective_load (CORBA::Float previous_load,
 
   return result;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

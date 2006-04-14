@@ -42,7 +42,7 @@
 #  endif /* (g++ || HP aC++) vs. HP C++ */
 #endif /* __hpux */
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (VXWORKS)
 #  include /**/ <loadLib.h> /* for module load */
 #  include /**/ <unldLib.h> /* for module unload */
 #  include /**/ <symLib.h> /* for findSymbol  */

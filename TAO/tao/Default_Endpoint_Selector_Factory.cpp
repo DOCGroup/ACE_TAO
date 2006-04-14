@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Default_Endpoint_Selector_Factory.h"
 #include "tao/Invocation_Endpoint_Selectors.h"
 
@@ -11,12 +12,11 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_Default_Endpoint_Selector_Factory::TAO_Default_Endpoint_Selector_Factory (
-  void)
-  : default_endpoint_selector_ (new TAO_Default_Endpoint_Selector)
+TAO_Default_Endpoint_Selector_Factory::TAO_Default_Endpoint_Selector_Factory (void)
 {
+  ACE_NEW (this->default_endpoint_selector_,
+           TAO_Default_Endpoint_Selector);
+
 }
 
 TAO_Default_Endpoint_Selector_Factory::~TAO_Default_Endpoint_Selector_Factory (void)
@@ -31,8 +31,6 @@ TAO_Default_Endpoint_Selector_Factory::get_selector (ACE_ENV_SINGLE_ARG_DECL_NOT
   // Trivial endpoint selector.  Just return the default selector.
   return this->default_endpoint_selector_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

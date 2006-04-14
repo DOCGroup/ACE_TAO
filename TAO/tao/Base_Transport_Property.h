@@ -1,5 +1,4 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 // ===================================================================
@@ -24,8 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Endpoint.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Base_Transport_Property
@@ -66,8 +63,6 @@ public:
   virtual u_long hash (void) const;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Base_Transport_Property.inl"

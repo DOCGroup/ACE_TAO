@@ -1,12 +1,9 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/Time_Value.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // It would be really cool to add another version of select that would
 // function like the one we're defending against below!
@@ -19,7 +16,7 @@ ACE_OS::select (int width,
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // We must defend against non-conformity!
   timeval copy;
-  timeval *timep = 0;
+  timeval *timep;
 
   if (timeout != 0)
     {
@@ -79,4 +76,3 @@ ACE_OS::select (int width,
 #undef ___ACE_TIMEOUT
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

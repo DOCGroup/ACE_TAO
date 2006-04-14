@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 
@@ -57,8 +55,5 @@ namespace TAO
     TAO_SYNCH_MUTEX lock_;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
 #endif /* TAO_TKRESOURCE_FACTORY_H */

@@ -2,4 +2,7 @@
 // $Id$
 
 workspace {
+  ciao
+  tools
+  DAnCE
 }

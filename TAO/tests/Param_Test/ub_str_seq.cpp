@@ -152,9 +152,9 @@ Test_String_Sequence::check_validity (void)
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
         {
-          if (ACE_OS::strcmp(this->in_[i], this->inout_[i]) ||
-              ACE_OS::strcmp(this->in_[i], this->out_[i]) ||
-              ACE_OS::strcmp(this->in_[i], this->ret_[i]))
+          if (ACE_OS::strcmp(this->in_[i].in(), this->inout_[i].in()) ||
+              ACE_OS::strcmp(this->in_[i].in(), this->out_[i].in()) ||
+              ACE_OS::strcmp(this->in_[i].in(), this->ret_[i].in()))
             // not equal
             flag = 0;
         }

@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_NS_WString;
 
 /**
@@ -44,8 +42,8 @@ public:
   ACE_NS_String (void);
 
   /// Initialization method.
-  ACE_NS_String (ACE_WCHAR_T *dst,
-                 const ACE_WCHAR_T *src,
+  ACE_NS_String (wchar_t *dst,
+                 const wchar_t *src,
                  size_t len);
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
@@ -73,7 +71,7 @@ public:
   size_t len (void) const;
 
   /// Returns the underlying representation.
-  ACE_WCHAR_T *fast_rep (void) const;
+  wchar_t *fast_rep (void) const;
 
   /// Returns a hash value for this string.
   u_long hash (void) const;
@@ -83,7 +81,7 @@ private:
   size_t len_;
 
   /// This actually points into shared/persistent memory.
-  ACE_WCHAR_T *rep_;
+  wchar_t *rep_;
 
   /// Should rep_ be deleted when destructed (only used
   /// for WString conversions)
@@ -121,8 +119,6 @@ private:
   /// Contains the type of the string.
   const char *type_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Include the ACE_Local_Name_Space templates stuff at this point.
 #include "ace/Local_Name_Space_T.h"

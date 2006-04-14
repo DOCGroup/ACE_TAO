@@ -27,8 +27,6 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_Set_Update_Interceptor
  *
@@ -80,7 +78,5 @@ public:
 private:
   const char *myname_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // TAO_SET_UPDATE_INTERCEPTOR_H

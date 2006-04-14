@@ -1,11 +1,11 @@
 // $Id$
 
-#include "tao/Object_Ref_Table.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
-#include "tao/debug.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
+#include "Object_Ref_Table.h"
+#include "ORB.h"
+#include "Environment.h"
+#include "debug.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
@@ -21,8 +21,6 @@ ACE_RCSID (tao,
 
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Object_Ref_Table::bind (const char *id,
@@ -58,7 +56,7 @@ TAO_Object_Ref_Table::bind (const char *id,
                       ACE_TEXT ("bind:")
                       ACE_TEXT ("  Could not register duplicate object <%s> ")
                       ACE_TEXT ("with the ORB\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (id)));
+                      ACE_TEXT_TO_TCHAR_IN (id)));
         }
 
       return -1;
@@ -83,5 +81,3 @@ TAO_Object_Ref_Table::find (const char *id)
 
   return CORBA::Object::_duplicate ((*found).second.in ());
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

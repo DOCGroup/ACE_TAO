@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -20,8 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "HTBP_Export.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -93,8 +91,6 @@ namespace ACE
     };
   }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Filter.inl"

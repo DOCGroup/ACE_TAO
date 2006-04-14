@@ -1,7 +1,9 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_TPC_Dispatching.h"
-#include "orbsvcs/Event/EC_Defaults.h"
+extern unsigned long EC_TPC_debug_level;
+
+#include "EC_TPC_Dispatching.h"
+#include "EC_Defaults.h"
 
 #include <ace/Dynamic_Service.h>
 
@@ -10,10 +12,6 @@ ACE_RCSID(Event, EC_TPC_Dispatching, "$Id$")
 #if !defined(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
 #define TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE 32
 #endif
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-extern unsigned long EC_TPC_debug_level;
 
 TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (TAO_EC_Queue_Full_Service_Object* so)
   : consumer_task_map_(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
@@ -132,7 +130,7 @@ TAO_EC_TPC_Dispatching::shutdown (void)
   MAPTYPE::ITERATOR iter = this->consumer_task_map_.begin ();
   while (! iter.done())
     {
-      MAPTYPE::ENTRY* entry = 0;
+      MAPTYPE::ENTRY* entry;
       if (! iter.next(entry))
         continue;
 
@@ -147,7 +145,7 @@ TAO_EC_TPC_Dispatching::shutdown (void)
   iter = this->consumer_task_map_.begin ();
   while (! iter.done())
     {
-      MAPTYPE::ENTRY* entry = 0;
+      MAPTYPE::ENTRY* entry;
       if (! iter.next(entry))
         continue;
 
@@ -194,5 +192,3 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       ACE_CHECK;
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,11 +1,8 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
 #include "ace/Global_Macros.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE pid_t
 ACE_OS::wait (int *status)
@@ -112,4 +109,4 @@ ACE_OS::wait (pid_t pid,
                           handle);
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+

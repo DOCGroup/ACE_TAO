@@ -15,9 +15,6 @@
 
 ACE_RCSID(ace, Read_Buffer, "$Id$")
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 void
 ACE_Read_Buffer::dump (void) const
 {
@@ -172,5 +169,3 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

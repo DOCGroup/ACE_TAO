@@ -14,10 +14,10 @@
 //
 // ============================================================================
 
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/sfp.h"
-#include "orbsvcs/AV/MCast.h"
-#include "orbsvcs/AV/RTCP.h"
+#include "AVStreams_i.h"
+#include "sfp.h"
+#include "MCast.h"
+#include "RTCP.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -25,14 +25,12 @@
 #include "ace/OS_NS_arpa_inet.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/AVStreams_i.i"
+#include "AVStreams_i.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (AV,
            AVStreams_i,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_Qos
@@ -1853,8 +1851,8 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           for (u_int i=0;i<peer_protocols.length ();i++)
             {
               for (u_int j=0;j<this->protocols_.length ();j++)
-                if (ACE_OS::strcmp (peer_protocols [i],
-                                    this->protocols_[j]) == 0)
+                if (ACE_OS::strcmp (peer_protocols [i].in(),
+                                    this->protocols_[j].in()) == 0)
                   {
                     // we'll agree upon the first protocol that matches.
                     this->protocol_ = CORBA::string_dup (peer_protocols [i]);
@@ -2069,7 +2067,7 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec
                forward_begin != end; ++forward_begin)
             {
               TAO_FlowSpec_Entry *entry = *forward_begin;
-              if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
+              if (ACE_OS::strcmp (entry->flowname (), flow_spec [i].in()) == 0)
                 {
                   //                  entry->protocol_object ()->start ();
                   if (entry->handler () != 0)
@@ -2088,7 +2086,7 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec
                reverse_begin != end; ++reverse_begin)
             {
               TAO_FlowSpec_Entry *entry = *reverse_begin;
-              if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
+              if (ACE_OS::strcmp (entry->flowname (), flow_spec [i].in()) == 0)
                 {
                   //                  entry->protocol_object ()->start ();
                   if (entry->handler () != 0)
@@ -2620,7 +2618,7 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name
       // redefine the "Flows" property
       AVStreams::flowSpec new_flows (this->flows_.length ());
       for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
-        if (ACE_OS::strcmp (flow_name, this->flows_[i]) != 0)
+        if (ACE_OS::strcmp (flow_name, this->flows_[i].in()) != 0)
           new_flows[j++] = this->flows_[i];
 
       CORBA::Any flows;
@@ -2873,7 +2871,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
               if (result == 0)
                 {
                   mcast_addr = dynamic_cast<ACE_INET_Addr *> (entry->address ());
-                  char str_addr [BUFSIZ];
+                  ACE_TCHAR str_addr [BUFSIZ];
                   result = mcast_addr->addr_to_string (str_addr, BUFSIZ);
                   if (result < 0)
                     ACE_ERROR_RETURN ((LM_ERROR, "TAO_StreamEndPointA::multiconnect ::addr_to_string failed\n"), 0);
@@ -2898,7 +2896,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                                         0);
                         mcast_addr->set (this->mcast_port_, this->mcast_addr_.c_str ());
                         this->mcast_port_++;
-                        char buf[BUFSIZ];
+                        ACE_TCHAR buf[BUFSIZ];
                         mcast_addr->addr_to_string (buf, BUFSIZ);
                         if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "%s\n", buf));
                         TAO_Forward_FlowSpec_Entry *new_entry;
@@ -3844,7 +3842,7 @@ TAO_MMDevice::remove_fdev (const char *flow_name
 
       AVStreams::flowSpec new_flows (this->flows_.length ());
       for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
-        if (ACE_OS::strcmp (flow_name, this->flows_[i]) != 0)
+        if (ACE_OS::strcmp (flow_name, this->flows_[i].in()) != 0)
           new_flows[j++] = this->flows_[i];
 
       CORBA::Any flows;
@@ -4244,7 +4242,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
                               this->mcast_addr_.c_str ()
                               );
 
-              char buf [BUFSIZ];
+              ACE_TCHAR buf [BUFSIZ];
               mcast_addr.addr_to_string (buf, BUFSIZ);
               ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (), buf);
             }
@@ -5298,5 +5296,3 @@ TAO_Tokenizer::operator [] (size_t index) const
 
   return this->token_array_[index];
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -20,8 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Refcountable
  *
@@ -46,8 +44,6 @@ protected:
   /// Current refcount.
   int refcount_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)

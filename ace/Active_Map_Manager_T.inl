@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::bind (ACE_Active_Map_Manager_Key &key,
@@ -307,5 +304,3 @@ ACE_Active_Map_Manager<T>::rend (void)
 {
   return ACE_AMM_BASE::rend ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

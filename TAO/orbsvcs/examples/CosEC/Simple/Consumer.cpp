@@ -2,17 +2,20 @@
 
 #include "Consumer.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (CosEC_Examples,
            Consumer,
            "$Id$")
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Consumer consumer;
 
-  return consumer.run (argc, argv);
+  return consumer.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************

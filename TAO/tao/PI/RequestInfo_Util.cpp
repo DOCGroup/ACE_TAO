@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#include "tao/PI/RequestInfo_Util.h"
+#include "RequestInfo_Util.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -16,7 +16,6 @@ ACE_RCSID (tao,
            RequestInfo_Util,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Dynamic::ParameterList *
 TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_DECL)
@@ -98,16 +97,15 @@ TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (any);
 
   if (tk_void_any)
     {
       any->_tao_set_typecode (CORBA::_tc_void);
     }
 
+  // No need to do an ACE_CHECK_RETURN.  The caller should do that.
+
   return any;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

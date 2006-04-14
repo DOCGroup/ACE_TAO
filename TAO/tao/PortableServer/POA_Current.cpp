@@ -1,17 +1,19 @@
 // $Id$
 
 // -- PortableServer Include --
-#include "tao/PortableServer/POA_Current.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
+#include "POA_Current.h"
+#include "POA_Current_Impl.h"
 
 // -- TAO Include --
 #include "tao/TSS_Resources.h"
 
+#if !defined (__ACE_INLINE__)
+# include "POA_Current.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (PortableServer,
            POA_Current,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -56,18 +58,6 @@ namespace TAO
       return impl->get_servant ();
     }
 
-    CORBA::Object_ptr
-    POA_Current::get_reference (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
-    {
-      POA_Current_Impl *impl = this->implementation ();
-
-      if (impl == 0)
-        ACE_THROW_RETURN (PortableServer::Current::NoContext (),
-                          0);
-      return impl->get_reference ();
-    }
 
     POA_Current_Impl *
     POA_Current::implementation (void)
@@ -91,4 +81,3 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

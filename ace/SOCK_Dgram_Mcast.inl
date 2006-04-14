@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_SOCK_Dgram_Mcast::set_option (int option,
@@ -48,5 +45,3 @@ ACE_SOCK_Dgram_Mcast::send (const iovec iov[],
                                      this->send_addr_,
                                      flags);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/OS_NS_fcntl.h"
@@ -11,8 +10,6 @@
 #if defined (__Lynx__)
 #  include "ace/OS_NS_sys_stat.h"
 #endif /* __Lynx__ */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)
 // Needed for some odd OS's (e.g., SGI).
@@ -308,9 +305,9 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   ACE_OS_TRACE ("ACE_OS::shm_open");
 # if defined (ACE_HAS_SHM_OPEN)
   ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
+  ACE_OSCALL_RETURN (::shm_open (ACE_TEXT_TO_CHAR_IN(filename), mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
 # elif defined (ACE_OPENVMS)
-  ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
+  ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_LIB_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
 # else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
   return ACE_OS::open (filename, mode, perms, sa);
@@ -322,11 +319,10 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
 # if defined (ACE_HAS_SHM_OPEN)
-  ACE_OSCALL_RETURN (::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path)), int, -1);
+  ACE_OSCALL_RETURN (::shm_unlink (ACE_TEXT_TO_CHAR_IN(path)), int, -1);
 # else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::unlink.
   return ACE_OS::unlink (path);
 # endif /* ACE_HAS_SHM_OPEN */
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

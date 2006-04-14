@@ -31,12 +31,10 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Value_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
-#include "tao/ObjRefTemplate/Default_ORTC.h"
+#include "Default_ORTC.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/value_typecode.cpp:50
@@ -123,4 +121,4 @@ operator>>= (
       );
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

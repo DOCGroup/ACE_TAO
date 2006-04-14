@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Filter_Builder.h
  *
@@ -19,13 +19,11 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_ProxyPushSupplier;
@@ -79,12 +77,10 @@ public:
                         ACE_ENV_ARG_DECL) const;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // ****************************************************************
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Filter_Builder.i"
+#include "EC_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

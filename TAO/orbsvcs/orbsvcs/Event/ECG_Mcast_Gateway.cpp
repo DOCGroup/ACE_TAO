@@ -1,13 +1,13 @@
 // $Id$
 
-#include "orbsvcs/Event/ECG_Mcast_Gateway.h"
+#include "ECG_Mcast_Gateway.h"
 
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
-#include "orbsvcs/Event/ECG_Simple_Address_Server.h"
-#include "orbsvcs/Event/ECG_Complex_Address_Server.h"
-#include "orbsvcs/Event/ECG_Simple_Mcast_EH.h"
-#include "orbsvcs/Event/ECG_Mcast_EH.h"
-#include "orbsvcs/Event/ECG_UDP_EH.h"
+#include "EC_Lifetime_Utils_T.h"
+#include "ECG_Simple_Address_Server.h"
+#include "ECG_Complex_Address_Server.h"
+#include "ECG_Simple_Mcast_EH.h"
+#include "ECG_Mcast_EH.h"
+#include "ECG_UDP_EH.h"
 
 #include "orbsvcs/Event_Utilities.h"
 
@@ -17,13 +17,10 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Mcast_Gateway.i"
+#include "ECG_Mcast_Gateway.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_Mcast_Gateway, "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_EC_Shutdown_Command<TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> >
 UDP_Sender_Shutdown;
@@ -115,7 +112,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              this->address_server_arg_.set (arg_shifter.get_current ());
+              this->address_server_arg_.set (ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
             }
         }
@@ -166,7 +163,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              this->nic_.set (arg_shifter.get_current ());
+              this->nic_.set (ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
             }
         }
@@ -315,7 +312,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
 
   if (this->nic_.length () != 0)
     {
-      dgram.set_nic (this->nic_.c_str ());
+      dgram.set_nic (ACE_TEXT_TO_TCHAR_IN(this->nic_.c_str ()));
     }
 
   if (this->ttl_value_ > 0)
@@ -436,7 +433,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
       handler.reset (h);
 
       h->reactor (reactor);
-      if (h->open (address_server_arg, nic) != 0)
+      if (h->open (address_server_arg, ACE_TEXT_TO_TCHAR_IN(nic)) != 0)
         return TAO_ECG_Refcounted_Handler ();
     }
 
@@ -444,7 +441,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
     {
       TAO_ECG_Mcast_EH * h = 0;
       ACE_NEW_RETURN (h,
-                      TAO_ECG_Mcast_EH (receiver, nic),
+                      TAO_ECG_Mcast_EH (receiver, ACE_TEXT_TO_TCHAR_IN(nic)),
                       handler);
       handler.reset (h);
 
@@ -691,8 +688,6 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
   receiver_shutdown.disallow_command ();
   sender_shutdown.disallow_command ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

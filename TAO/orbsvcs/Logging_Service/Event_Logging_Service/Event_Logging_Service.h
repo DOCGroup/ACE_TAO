@@ -40,7 +40,7 @@ class Event_Logging_Service
   virtual ~Event_Logging_Service (void);
   // Destructor.
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  int init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -53,11 +53,11 @@ class Event_Logging_Service
   // Returns 0 on success, -1 on error.
 
 protected:
-  void init_ORB (int& argc, char *argv []
+  void init_ORB (int& argc, char *argv[]
                  ACE_ENV_ARG_DECL);
   // initialize the ORB.
 
-  int parse_args (int argc, char *argv []);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the command line arguments.
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
@@ -79,13 +79,13 @@ protected:
   CosNaming::NamingContext_var naming_;
   // A naming context.
 
-  const char* service_name_;
+  ACE_CString service_name_;
   // The name we use to bind with the NameService
 
-  const char* ior_file_name_;
+  ACE_CString ior_file_name_;
   // The name of the file where we output the factory IOR.
 
-  const char* pid_file_name_;
+  ACE_CString pid_file_name_;
   // The name of the file where we output the process id.
 
   int bind_to_naming_service_;

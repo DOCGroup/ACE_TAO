@@ -11,11 +11,11 @@
  */
 // =================================================================
 
-#include "tao/PI_Server/ServerRequestInterceptor_Factory_Impl.h"
+#include "ServerRequestInterceptor_Factory_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI_Server/ServerInterceptorAdapter.h"
+#include "ServerInterceptorAdapter.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"
@@ -23,9 +23,6 @@
 ACE_RCSID (PI_Server,
            PolicyFactory_Loader,
            "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ServerRequestInterceptor_Adapter*
 TAO_ServerRequestInterceptor_Adapter_Factory_Impl::create (void)
@@ -36,8 +33,6 @@ TAO_ServerRequestInterceptor_Adapter_Factory_Impl::create (void)
                   0);
   return obj;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl,
                        ACE_TEXT ("ServerRequestInterceptor_Adapter_Factory"),

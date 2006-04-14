@@ -17,7 +17,6 @@ ACE_RCSID (Log,
            RTEventLog_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
 				    PortableServer::POA_ptr poa,
@@ -145,8 +144,7 @@ TAO_RTEventLog_i::append_observer (
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
-  return this->observer_strategy_->append_observer (observer
-                                                    ACE_ENV_ARG_PARAMETER);
+  return this->observer_strategy_->append_observer (observer ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -160,5 +158,3 @@ TAO_RTEventLog_i::remove_observer (
 {
   this->observer_strategy_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -30,10 +30,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Manager;
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 class MT_Server
 {

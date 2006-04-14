@@ -1,14 +1,12 @@
 // $Id$
 
-#include "orbsvcs/Notify/ETCL_Filter.h"
+#include "ETCL_Filter.h"
 
 ACE_RCSID(Notify, TAO_Notify_ETCL_Filter, "$Id$")
 
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Notify_Constraint_Visitors.h"
 
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (void)
   :constraint_expr_ids_ (0)
@@ -442,5 +440,3 @@ TAO_Notify_ETCL_Filter::get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     0);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

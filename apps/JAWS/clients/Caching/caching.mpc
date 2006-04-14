@@ -2,7 +2,6 @@
 // $Id$
 
 project(http_client) : aceexe {
-  avoids   += ace_for_tao
   requires += ace_filecache
 
   Source_Files {

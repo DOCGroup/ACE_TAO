@@ -4,8 +4,8 @@
 // All Rights Reserved
 // ORB:		Principal identifier pseudo-objref
 
-#include "tao/Principal.h"
-#include "tao/CDR.h"
+#include "Principal.h"
+#include "CDR.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Principal.i"
@@ -14,9 +14,6 @@
 ACE_RCSID (tao,
            Principal,
            "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Principal::Principal (void)
   : refcount_ (1)
@@ -64,4 +61,3 @@ operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -30,7 +30,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
 
   FILE *inf = ACE_OS::fopen (filename, "r");
 
-  if (inf == 0)
+  if (inf == NULL)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DAnCE (%P|%t) Deployment_Configuration.cpp:"
@@ -48,10 +48,11 @@ CIAO::Deployment_Configuration::init (const char *filename)
       //
       if (this->deployment_info_.bind (destination, ior) != 0)
         {
-          ACE_DEBUG ((LM_ERROR,
-                      "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                      "Reuse existing node in the cached map: [%s]\n",
-                      destination));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                             "Failed to bind destination [%s] : \n",
+                             destination),
+                             -1);
         }
 
       if (first)
@@ -60,12 +61,11 @@ CIAO::Deployment_Configuration::init (const char *filename)
           first = 0;
         }
     }
-  ACE_OS::fclose (inf);
   return 0;
 }
 
 const char *
-CIAO::Deployment_Configuration::get_node_manager_ior (const char *name) const
+CIAO::Deployment_Configuration::get_node_manager_ior (const char *name)
 {
   if (name == 0)
     return get_default_node_manager_ior ();
@@ -88,7 +88,7 @@ CIAO::Deployment_Configuration::get_node_manager_ior (const char *name) const
 }
 
 const char *
-CIAO::Deployment_Configuration::get_default_node_manager_ior (void) const
+CIAO::Deployment_Configuration::get_default_node_manager_ior (void)
 {
   if (this->default_node_manager_.IOR_.length () == 0)
     return 0;

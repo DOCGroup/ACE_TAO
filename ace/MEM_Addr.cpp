@@ -16,10 +16,8 @@
 #include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (ace,
-           MEM_Addr,
-           "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+	   MEM_Addr,
+	   "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Addr)
 
@@ -164,7 +162,5 @@ ACE_MEM_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

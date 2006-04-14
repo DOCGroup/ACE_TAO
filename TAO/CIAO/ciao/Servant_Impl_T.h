@@ -105,10 +105,8 @@ namespace CIAO
     CORBA::Boolean pre_activated_;
     CORBA::Boolean post_activated_;
 
-    /// Initialized in this constructor.
     EXEC_VAR executor_;
 
-    /// Initialized in the derived, generated servant constructor.
     CONTEXT * context_;
   };
 }

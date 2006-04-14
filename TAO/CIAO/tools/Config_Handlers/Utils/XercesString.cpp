@@ -111,8 +111,8 @@ namespace Config_Handlers
   {
     return _wstr[i];
   }
-  
-  XMLCh XStr::operator [] (const int i) const
+
+  const XMLCh XStr::operator [] (const int i) const
   {
     return _wstr[i];
   }

@@ -1,10 +1,9 @@
 // $Id$
 
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/EventPortDef_i.h"
-#include "orbsvcs/IFRService/EventDef_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "Repository_i.h"
+#include "EventPortDef_i.h"
+#include "EventDef_i.h"
+#include "IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 
@@ -13,7 +12,6 @@ ACE_RCSID (IFRService,
            EventPortDef_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -196,5 +194,3 @@ TAO_EventPortDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::dk_none;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

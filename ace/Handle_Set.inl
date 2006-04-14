@@ -1,7 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
+// Handle_Set.i
 #include "ace/Log_Msg.h"
 
 // todo: This should be cleaned up a bit.
@@ -20,8 +20,6 @@
 #if defined (ACE_HAS_STRINGS)
 #  include "ace/os_include/os_strings.h"
 #endif /* ACE_HAS_STRINGS */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize the bitmask to all 0s and reset the associated fields.
 
@@ -102,7 +100,7 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 #if defined (ACE_WIN32)
       FD_SET ((SOCKET) handle,
               &this->mask_);
-      ++this->size_;
+      this->size_++;
 #else /* ACE_WIN32 */
 #if defined (ACE_HAS_BIG_FD_SET)
       if (this->size_ == 0)
@@ -114,7 +112,7 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 
       FD_SET (handle,
               &this->mask_);
-      ++this->size_;
+      this->size_++;
 
       if (handle > this->max_handle_)
         this->max_handle_ = handle;
@@ -134,7 +132,7 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
     {
       FD_CLR ((ACE_SOCKET) handle,
               &this->mask_);
-      --this->size_;
+      this->size_--;
 
 #if !defined (ACE_WIN32)
       if (handle == this->max_handle_)
@@ -186,5 +184,3 @@ ACE_INLINE
 ACE_Handle_Set_Iterator::~ACE_Handle_Set_Iterator (void)
 {
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

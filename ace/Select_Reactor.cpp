@@ -4,7 +4,6 @@
 
 ACE_RCSID(ace, Select_Reactor, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -29,5 +28,3 @@ template class ACE_Lock_Adapter< ACE_Reactor_Token_T<ACE_Noop_Token> >;
 #   pragma instantiate ACE_Lock_Adapter< ACE_Reactor_Token_T<ACE_Noop_Token> >
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

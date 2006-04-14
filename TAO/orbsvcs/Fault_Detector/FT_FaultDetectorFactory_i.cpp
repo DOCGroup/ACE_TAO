@@ -14,7 +14,6 @@
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Auto_Ptr.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
@@ -42,8 +41,6 @@
       ));                     \
     return /* value goes here */
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i  Construction/destruction
@@ -107,7 +104,7 @@ void TAO::FT_FaultDetectorFactory_i::shutdown_i()
 int TAO::FT_FaultDetectorFactory_i::write_ior()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", this->ior_.in ());
@@ -128,7 +125,7 @@ int TAO::FT_FaultDetectorFactory_i::write_ior()
 
 int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:l:o:qr");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "d:l:o:qr");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -711,4 +708,3 @@ CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL
     1;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

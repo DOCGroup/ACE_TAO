@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   CEC_ProxyPushConsumer.h
@@ -17,15 +16,13 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
-#include "orbsvcs/CosEvent/event_serv_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
@@ -187,10 +184,8 @@ private:
   int locked_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.i"
+#include "CEC_ProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

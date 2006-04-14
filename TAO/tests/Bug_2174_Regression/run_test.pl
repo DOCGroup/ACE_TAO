@@ -13,22 +13,11 @@ unlink $iorfile;
 
 # Test A: object exists (_non_existent() returns false)
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
-}
+$SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
-$server = $SV->Spawn ();
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    exit 1;
-}
-
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+$SV->Spawn ();
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
@@ -45,15 +34,10 @@ if ($client != 2) {
 
 # Test B: object does not exist (_non_existent() returns true)
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -r");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile -r");
-}
+$SV = new PerlACE::Process ("server", "-o $iorfile -r");
 
 $SV->Spawn ();
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;

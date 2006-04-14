@@ -29,9 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Object.h"
 
 namespace CORBA
 {
@@ -42,6 +40,9 @@ namespace CORBA
 
   /**
    * @class LocalObject
+   *
+   * @note NW: It is not clear whether minimum CORBA should support
+   * LocalObject or not.  I think it should.
    */
   class TAO_Export LocalObject : public virtual CORBA::Object
   {
@@ -222,9 +223,6 @@ class TAO_Export TAO_Local_RefCounted_Object
 {
 public:
 
-  /// Destructor.
-  virtual ~TAO_Local_RefCounted_Object (void);
-
   /// Increment reference count.
   virtual void _add_ref (void);
 
@@ -256,10 +254,9 @@ protected:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/LocalObject.i"
+# include "LocalObject.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

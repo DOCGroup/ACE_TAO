@@ -1,7 +1,6 @@
 // $Id$
 
-#include "ace/Malloc_T.h"
-#include "ace/OS_Memory.h"
+#include "ace/Malloc.h"
 #if !defined (ACE_HAS_WINCE)
 //# include "ace/Service_Config.h"
 #endif /* !ACE_HAS_WINCE */
@@ -25,8 +24,6 @@ ACE_RCSID (ace,
 
 // ************************************************************
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_OSTREAM_TYPE &
 operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
@@ -41,12 +38,7 @@ operator<< (ACE_OSTREAM_TYPE &os, const ACE_WString &ws)
 {
   // @@ Need to figure out how to print the "wide" string
   //    on platforms that don't support "wide" strings.
-#if defined (ACE_HAS_WCHAR)
-  os << ACE_Wide_To_Ascii (ws.fast_rep ()).char_rep ();
-#else
-  ACE_UNUSED_ARG (ws);
-  os << "(*non-printable string*)";
-#endif
+  os << ACE_TEXT_TO_CHAR_IN (ws.fast_rep ());
   return os;
 }
 
@@ -568,5 +560,3 @@ template ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_WSTRING_TYPE *,
 template char ACE_String_Base<char>::NULL_String_;
 template ACE_WSTRING_TYPE ACE_String_Base<ACE_WSTRING_TYPE>::NULL_String_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

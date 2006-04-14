@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Default_Stub_Factory.h
@@ -27,8 +25,6 @@
 
 #include "tao/Stub_Factory.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_Default_Stub_Factory
  *
@@ -43,8 +39,7 @@ class TAO_Export TAO_Default_Stub_Factory
   : public TAO_Stub_Factory
 {
 public:
-
-  /// Destructor.
+  // -- Ctor/Dtor --
   virtual ~TAO_Default_Stub_Factory (void);
 
   /// Creates a Stub Object.
@@ -52,10 +47,7 @@ public:
                                  const TAO_MProfile &profiles,
                                  TAO_ORB_Core *orb_core
                                  ACE_ENV_ARG_DECL);
-
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Stub_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Stub_Factory)

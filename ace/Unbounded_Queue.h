@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -22,8 +22,6 @@
 
 // For size_t under Chorus
 #include "ace/os_include/os_stddef.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
 
@@ -279,8 +277,6 @@ protected:
   /// Allocation Strategy of the queue.
   ACE_Allocator *allocator_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Unbounded_Queue.inl"

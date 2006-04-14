@@ -62,8 +62,8 @@ public:
   void op_name (be_valuetype *node, TAO_OutStream *os);
   // if (in_obv_space_) print OBV_name else print name
 
-  bool in_obv_space_;
-
+  idl_bool in_obv_space_;
+  
 private:
   const char *pre_op_;
 };

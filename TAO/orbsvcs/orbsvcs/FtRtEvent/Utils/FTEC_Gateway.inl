@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
   ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr
@@ -12,5 +8,3 @@ namespace TAO_FTRTEC {
     return activate(poa.in() ACE_ENV_ARG_PARAMETER);
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

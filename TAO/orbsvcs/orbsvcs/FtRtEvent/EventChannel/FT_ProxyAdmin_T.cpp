@@ -1,10 +1,8 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "IOGR_Maker.h"
+#include "Replication_Service.h"
 #include "ace/Synch_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
@@ -141,5 +139,3 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
     ACE_CHECK;
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -54,8 +54,6 @@ inline void __ace_clearerr(FILE *stream)
 #   endif /* defined (clearerr) */
 # endif /* !ACE_LACKS_CLEARERR */
 
-#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
-    && !defined(ACE_WIN32) && !defined (VXWORKS)
 /// Helper for the ACE_OS::cuserid() function
 /**
  * On some platforms cuserid is a macro.  Defining ACE_OS::cuserid()
@@ -70,6 +68,8 @@ inline void __ace_clearerr(FILE *stream)
  *       probably need to move some of it off into some sort of emulation
  *       function.
  */
+#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
+    && !defined(ACE_WIN32) && !defined (VXWORKS)
 inline char *ace_cuserid(char *user)
 {
   return cuserid(user);
@@ -93,8 +93,6 @@ struct flock
 };
 #   endif /* ! VXWORKS */
 # endif /* ACE_LACKS_FILELOCKS */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -151,11 +149,10 @@ namespace ACE_OS {
   char *cuserid (char *user,
                  size_t maxlen = ACE_MAX_USERID);
 
-#   if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *cuserid (wchar_t *user,
                     size_t maxlen = ACE_MAX_USERID);
-#   endif /* ACE_HAS_WCHAR */
+
 # endif /* ACE_LACKS_CUSERID */
   //@}
 
@@ -181,10 +178,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *fgets (char *buf, int size, FILE *fp);
 
-# if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FGETWS)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *fgets (wchar_t *buf, int size, FILE *fp);
-# endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
   //@{ @name A set of wrappers for file locks.
 
@@ -245,14 +240,12 @@ namespace ACE_OS {
 #endif /* ACE_WIN32 */
   FILE *fopen (const char *filename, const ACE_TCHAR *mode);
 
-#if defined (ACE_HAS_WCHAR)
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
   FILE *fopen (const wchar_t *filename, const ACE_TCHAR *mode);
-#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_WIN32)
   /// Default Win32 Security Attributes definition.
@@ -295,20 +288,16 @@ namespace ACE_OS {
   extern ACE_Export
   int fprintf (FILE *fp, const char *format, ...);
 
-# if defined (ACE_HAS_WCHAR)
   extern ACE_Export
   int fprintf (FILE *fp, const wchar_t *format, ...);
-# endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fputs (const char *s,
              FILE *stream);
 
-# if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FPUTWS)
   ACE_NAMESPACE_INLINE_FUNCTION
   int fputs (const wchar_t *s,
              FILE *stream);
-# endif /* ACE_HAS_WCHAR && !ACE_LACKS_FPUTWS */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t fread (void *ptr,
@@ -341,10 +330,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void perror (const char *s);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   void perror (const wchar_t *s);
-#endif /* ACE_HAS_WCHAR */
 
   extern ACE_Export
   int printf (const char *format, ...);
@@ -352,22 +339,18 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int puts (const char *s);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int puts (const wchar_t *s);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rename (const char *old_name,
               const char *new_name,
               int flags = -1);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int rename (const wchar_t *old_name,
               const wchar_t *new_name,
               int flags = -1);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void rewind (FILE *fp);
@@ -375,28 +358,22 @@ namespace ACE_OS {
   extern ACE_Export
   int snprintf (char *buf, size_t maxlen, const char *format, ...);
 
-# if defined (ACE_HAS_WCHAR)
   extern ACE_Export
   int snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format,...);
-# endif /* ACE_HAS_WCHAR */
 
   extern ACE_Export
   int sprintf (char *buf, const char *format, ...);
 
-# if defined (ACE_HAS_WCHAR)
   extern ACE_Export
   int sprintf (wchar_t *buf, const wchar_t *format, ...);
-# endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *tempnam (const char *dir = 0,
                  const char *pfx = 0);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *tempnam (const wchar_t *dir,
                     const wchar_t *pfx = 0);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (char *buffer, const char *format, va_list argptr);
@@ -404,17 +381,13 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsnprintf (char *buffer, size_t maxlen, const char *format, va_list argptr);
 
-# if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list argptr);
-# endif /* ACE_HAS_WCHAR */
 
 } /* namespace ACE_OS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

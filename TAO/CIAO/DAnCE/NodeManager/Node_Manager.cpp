@@ -25,7 +25,7 @@ int spawn_delay = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:na:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:c:m:s:d:n");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -48,11 +48,11 @@ parse_args (int argc, char *argv[])
         nodeapp_location_ = get_opts.opt_arg ();
         nodeapp_loc_ = 1;
       break;
-
+      
       case 'a': // Nodeapplication arguments
         nodeapp_options_ = get_opts.opt_arg ();
         break;
-
+        
       case 'd': //get the spawn delay argument
         spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
       break;
@@ -69,7 +69,6 @@ parse_args (int argc, char *argv[])
                            "-c <svc.conf file>\n"
                            "-n <use naming service>\n"
                            "-s <NodeApplication executable path>\n"
-                           "-a <arguments to NodeApplication>\n"
                            "-d <spawn delay for nodeapplication>\n"
                            "\n",
                            argv [0]),
@@ -99,7 +98,7 @@ write_IOR(const char* ior)
 bool
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
-                  CIAO::NodeManagerDaemon_ptr obj
+                  CIAO::NodeManager_ptr obj
                   ACE_ENV_ARG_DECL)
 {
   // Naming Service related operations
@@ -123,7 +122,7 @@ register_with_ns (const char * name_context,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -172,9 +171,10 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (adapter.in ()))
           ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
 
-      // Create and install the CIAO NodeManager servant
-      CIAO::NodeManager_Impl *node_manager_servant = 0;
-      ACE_NEW_RETURN (node_manager_servant,
+
+      // Create and install the CIAO Daemon servant
+      CIAO::NodeManager_Impl *daemon_servant = 0;
+      ACE_NEW_RETURN (daemon_servant,
                       CIAO::NodeManager_Impl("NodeManager",
                                              orb.in (),
                                              poa.in (),
@@ -182,17 +182,16 @@ main (int argc, char *argv[])
                                              nodeapp_options_,
                                              spawn_delay),
                       -1);
-
-      PortableServer::ServantBase_var safe_daemon (node_manager_servant);
-
-      node_manager_servant->init ();
-
+      PortableServer::ServantBase_var safe_daemon (daemon_servant);
+      
+      daemon_servant->init ();
+      
       // Implicit activation
-      CIAO::NodeManagerDaemon_var node_manager =
-        node_manager_servant->_this ();
+      CIAO::NodeManager_var daemon =
+        daemon_servant->_this ();
 
       CORBA::String_var str =
-        orb->object_to_string (node_manager.in ()
+        orb->object_to_string (daemon.in ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -216,7 +215,7 @@ main (int argc, char *argv[])
           // Register this name with the Naming Service
           (void) register_with_ns (name,
                                    orb.in (),
-                                   node_manager.in ()
+                                   daemon.in ()
                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -231,17 +230,7 @@ main (int argc, char *argv[])
       mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Here start the Monitor
-/*
-      MonitorController* monitor_controller
-              = new MonitorController (orb);
-
-      ACE_DEBUG ((LM_DEBUG , "Before Activate"));
-       monitor_controller->activate ();
-      ACE_DEBUG ((LM_DEBUG , "After Activate"));
-*/
-
-      // Finishing Deployment part
+      // End Deployment part
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO_NodeManager is running...\n"));
 

@@ -6,14 +6,12 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/Messaging/Messaging_Policy_i.i"
+#include "Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Messaging,
            Messaging_Policy_i,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -341,5 +339,3 @@ TAO_Sync_Scope_Policy::_tao_cached_type (void) const
 }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

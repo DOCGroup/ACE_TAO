@@ -2,9 +2,6 @@
 //
 // $Id$
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <typename DiscriminatorType,
           typename StringType,
           typename TypeCodeType>
@@ -30,5 +27,3 @@ TAO::TypeCode::Case_T<DiscriminatorType,
   , label_ (member_label)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

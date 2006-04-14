@@ -24,8 +24,6 @@
 #include "tao/CORBA_String.h"
 #include "tao/IOR_Parser.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_MCAST_Parser
  *
@@ -87,10 +85,8 @@ private:
   CORBA::String_var service_name_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/MCAST_Parser.i"
+# include "MCAST_Parser.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_MCAST_Parser)

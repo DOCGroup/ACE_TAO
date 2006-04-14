@@ -1,3 +1,4 @@
+// SOCK_Stream.cpp
 // $Id$
 
 #include "ace/SOCK_Stream.h"
@@ -7,8 +8,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_Stream, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Stream)
 
@@ -27,4 +26,3 @@ ACE_SOCK_Stream::close (void)
   return ACE_SOCK::close ();
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

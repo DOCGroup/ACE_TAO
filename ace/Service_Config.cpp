@@ -34,8 +34,6 @@ ACE_RCSID (ace,
            Service_Config,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 void
@@ -45,6 +43,13 @@ ACE_Service_Config::dump (void) const
   ACE_TRACE ("ACE_Service_Config::dump");
 #endif /* ACE_HAS_DUMP */
 }
+
+// All the factory functions that allocate default statically linked
+// services should be placed below.
+
+// Allocate a Service Manager.
+
+ACE_FACTORY_DEFINE (ACE, ACE_Service_Manager)
 
 // ----------------------------------------
 
@@ -159,7 +164,7 @@ int
 ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args");
-  ACE_Get_Opt getopt (argc,
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc,
                       argv,
                       ACE_LIB_TEXT ("bdf:k:nyp:s:S:"),
                       1); // Start at argv[1].
@@ -344,15 +349,6 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("opening dynamic service %s\n"),
                 sr->name ()));
-
-  ACE_Service_Type *srp = 0;
-  if (ACE_Service_Repository::instance ()->find
-      (sr->name (),
-       (const ACE_Service_Type **) &srp) >= 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_LIB_TEXT ("%s already installed, please remove first before reinstalling\n"),
-                       sr->name ()),
-                      0);
 
   if (sr->type ()->init (args.argc (),
                          args.argv ()) == -1)
@@ -739,14 +735,12 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       // There's no point in dealing with this on NT since it doesn't
       // really support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-      // Only attempt to register a signal handler for positive
-      // signal numbers.
-      if (ACE_Service_Config::signum_ > 0)
-        if (ACE_Reactor::instance ()->register_handler
-            (ACE_Service_Config::signum_,
-             ACE_Service_Config::signal_handler_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("can't register signal handler\n")));
+      // @@ This really ought to be a Singleton.
+      if (ACE_Reactor::instance ()->register_handler
+          (ACE_Service_Config::signum_,
+           ACE_Service_Config::signal_handler_) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
       // See if we need to load the static services.
@@ -920,12 +914,3 @@ ACE_Service_Config::start_daemon (void)
   ACE_TRACE ("ACE_Service_Config::start_daemon");
   return ACE::daemonize ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-// All the factory functions that allocate default statically linked
-// services should be placed below.
-
-// Allocate a Service Manager.
-
-ACE_FACTORY_DEFINE (ACE, ACE_Service_Manager)

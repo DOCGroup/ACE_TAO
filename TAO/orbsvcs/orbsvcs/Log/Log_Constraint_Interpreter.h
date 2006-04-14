@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -27,9 +27,7 @@
 
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/DsLogAdminC.h"
-#include "orbsvcs/Log/log_serv_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "log_serv_export.h"
 
 class TAO_Log_Constraint_Visitor;
 
@@ -63,8 +61,5 @@ public:
   /// the evaluator.
   CORBA::Boolean evaluate (TAO_Log_Constraint_Visitor &evaluator);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
 #endif /* TAO_LOG_CONSTRAINT_INTERPRETER_H */

@@ -17,12 +17,6 @@ project(Test_Output) : acelib, script {
     run_test.pl
     run_test.lst
   }
-
-  verbatim(automake,local) {
-dist_check_SCRIPTS = run_test.pl run_test.lst
-TESTS = $(noinst_PROGRAMS)
-TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
-  }
 }
 
 project(Framework Component DLL) : acelib {
@@ -71,7 +65,6 @@ project(DLL Test Lib) : acelib, dll_test_parent_lib {
 }
 
 project(Based Pointer Test Lib) : acelib {
-  avoids      += ace_for_tao
   sharedname   = Based_Pointer_Test_Lib
   dynamicflags = ACE_SVC_BUILD_DLL
 
@@ -175,7 +168,6 @@ project(Basic Types Test) : acetest {
 }
 
 project(Bound Ptr Test) : acetest {
-  avoids += ace_for_tao
   exename = Bound_Ptr_Test
   Source_Files {
     Bound_Ptr_Test.cpp
@@ -196,13 +188,6 @@ project(Bug_1576_Regression_Test) : acetest {
   }
 }
 
-project(Bug_2497_Regression_Test) : acetest {
-  exename = Bug_2497_Regression_Test
-  Source_Files {
-    Bug_2497_Regression_Test.cpp
-  }
-}
-
 project(Cache Map Manager Test) : acetest {
   exename = Cache_Map_Manager_Test
   Source_Files {
@@ -211,7 +196,6 @@ project(Cache Map Manager Test) : acetest {
 }
 
 project(Memcpy_Test) : acetest {
-  avoids += ace_for_tao
   exename = Memcpy_Test
   Source_Files {
     Memcpy_Test.cpp
@@ -219,7 +203,6 @@ project(Memcpy_Test) : acetest {
 }
 
 project(Cached Accept Conn Test) : acetest {
-  avoids += ace_for_tao
   exename = Cached_Accept_Conn_Test
   Source_Files {
     Cached_Accept_Conn_Test.cpp
@@ -227,7 +210,6 @@ project(Cached Accept Conn Test) : acetest {
 }
 
 project(Cached Allocator Test) : acetest {
-  avoids += ace_for_tao
   exename = Cached_Allocator_Test
   Source_Files {
     Cached_Allocator_Test.cpp
@@ -235,7 +217,6 @@ project(Cached Allocator Test) : acetest {
 }
 
 project(Cached Conn Test) : acetest {
-  avoids += ace_for_tao
   exename = Cached_Conn_Test
   Source_Files {
     Cached_Conn_Test.cpp
@@ -243,7 +224,6 @@ project(Cached Conn Test) : acetest {
 }
 
 project(Capabilities Test) : acetest {
-  avoids += ace_for_tao
   exename = Capabilities_Test
   Source_Files {
     Capabilities_Test.cpp
@@ -251,7 +231,6 @@ project(Capabilities Test) : acetest {
 }
 
 project(CDR File Test) : acetest {
-  avoids += ace_for_tao
   exename = CDR_File_Test
   Source_Files {
     CDR_File_Test.cpp
@@ -274,7 +253,6 @@ project(Collection Test) : acetest {
 }
 
 project(Config Test) : acetest {
-  avoids += ace_for_tao
   exename = Config_Test
   Source_Files {
     Config_Test.cpp
@@ -286,7 +264,6 @@ project(Config Test) : acetest {
 }
 
 project(Conn Test) : acetest {
-  avoids += ace_for_tao
   exename = Conn_Test
   Source_Files {
     Conn_Test.cpp
@@ -294,7 +271,6 @@ project(Conn Test) : acetest {
 }
 
 project(Date Time Test) : acetest {
-  avoids += ace_for_tao
   exename = Date_Time_Test
   Source_Files {
     Date_Time_Test.cpp
@@ -309,7 +285,6 @@ project(Dev Poll Reactor Test) : acetest {
 }
 
 project(Dirent Test) : acetest {
-
   exename = Dirent_Test
   Source_Files {
     Dirent_Test.cpp
@@ -317,7 +292,6 @@ project(Dirent Test) : acetest {
 }
 
 project(DLList Test) : acetest {
-  avoids += ace_for_tao
   exename = DLList_Test
   Source_Files {
     DLList_Test.cpp
@@ -348,7 +322,6 @@ project(Env Value Test) : acetest {
 }
 
 project(Future Test) : acetest {
-  avoids += ace_for_tao
   exename = Future_Test
   Source_Files {
     Future_Test.cpp
@@ -356,7 +329,6 @@ project(Future Test) : acetest {
 }
 
 project(Future Set Test) : acetest {
-  avoids += ace_for_tao
   exename = Future_Set_Test
   Source_Files {
     Future_Set_Test.cpp
@@ -371,7 +343,6 @@ project(Get Opt Test) : acetest {
 }
 
 project(Handle Set Test) : acetest {
-  avoids += ace_for_tao
   exename = Handle_Set_Test
   Source_Files {
     Handle_Set_Test.cpp
@@ -379,7 +350,6 @@ project(Handle Set Test) : acetest {
 }
 
 project(High Res Timer Test) : acetest {
-  avoids += ace_for_tao
   exename = High_Res_Timer_Test
   Source_Files {
     High_Res_Timer_Test.cpp
@@ -422,7 +392,6 @@ project(Lazy Map Manager Test) : acetest {
 }
 
 project(Log Msg Test) : acetest {
-  avoids += ace_for_tao
   exename = Log_Msg_Test
   Source_Files {
     Log_Msg_Test.cpp
@@ -437,7 +406,6 @@ project(Logging Strategy Test) : acetest {
 }
 
 project(Malloc Test) : acetest {
-  avoids += ace_for_tao
   exename = Malloc_Test
   Source_Files {
     Malloc_Test.cpp
@@ -452,7 +420,6 @@ project(Manual_Event Test) : acetest {
 }
 
 project(Map Test) : acetest {
-  avoids += ace_for_tao
   exename = Map_Test
   Source_Files {
     Map_Test.cpp
@@ -460,7 +427,6 @@ project(Map Test) : acetest {
 }
 
 project(Map Manager Test) : acetest {
-  avoids += ace_for_tao
   exename = Map_Manager_Test
   Source_Files {
     Map_Manager_Test.cpp
@@ -475,7 +441,6 @@ project(Max Default Port Test) : acetest {
 }
 
 project(MEM Stream Test) : acetest {
-  avoids += ace_for_tao
   exename = MEM_Stream_Test
   Source_Files {
     MEM_Stream_Test.cpp
@@ -483,7 +448,6 @@ project(MEM Stream Test) : acetest {
 }
 
 project(Mem Map Test) : acetest {
-  avoids += ace_for_tao
   exename = Mem_Map_Test
   Source_Files {
     Mem_Map_Test.cpp
@@ -491,7 +455,6 @@ project(Mem Map Test) : acetest {
 }
 
 project(MM Shared Memory Test) : acetest {
-  avoids += ace_for_tao
   exename = MM_Shared_Memory_Test
   Source_Files {
     MM_Shared_Memory_Test.cpp
@@ -520,7 +483,6 @@ project(MT SOCK Test) : acetest {
 }
 
 project(Message Block Test) : acetest {
-  avoids += ace_for_tao
   exename = Message_Block_Test
   Source_Files {
     Message_Block_Test.cpp
@@ -528,7 +490,6 @@ project(Message Block Test) : acetest {
 }
 
 project(Message Queue Test) : acetest {
-  avoids += ace_for_tao
   exename = Message_Queue_Test
   Source_Files {
     Message_Queue_Test.cpp
@@ -536,7 +497,6 @@ project(Message Queue Test) : acetest {
 }
 
 project(Message Queue Test Ex) : acetest {
-  avoids += ace_for_tao
   exename = Message_Queue_Test_Ex
   Source_Files {
     Message_Queue_Test_Ex.cpp
@@ -558,7 +518,6 @@ project(Multicast Test) : acetest {
 }
 
 project(Multihomed INET Addr Test) : acetest {
-  avoids += ace_for_tao
   exename = Multihomed_INET_Addr_Test
   Source_Files {
     Multihomed_INET_Addr_Test.cpp
@@ -580,7 +539,6 @@ project(New Fail Test) : acetest {
 }
 
 project(Notify Performance Test) : acetest {
-  avoids += ace_for_tao
   exename = Notify_Performance_Test
   Source_Files {
     Notify_Performance_Test.cpp
@@ -616,7 +574,6 @@ project(OS Test) : acetest {
 }
 
 project(Proactor Scatter Gather Test) : acetest {
-  avoids += ace_for_tao
   exename = Proactor_Scatter_Gather_Test
   Source_Files {
     Proactor_Scatter_Gather_Test.cpp
@@ -624,7 +581,6 @@ project(Proactor Scatter Gather Test) : acetest {
 }
 
 project(Proactor Test) : acetest {
-  avoids += ace_for_tao
   exename = Proactor_Test
   Source_Files {
     Proactor_Test.cpp
@@ -632,7 +588,6 @@ project(Proactor Test) : acetest {
 }
 
 project(Proactor Timer Test) : acetest {
-  avoids += ace_for_tao
   exename = Proactor_Timer_Test
   Source_Files {
     Proactor_Timer_Test.cpp
@@ -647,7 +602,6 @@ project(Process Manual Event Test) : acetest {
 }
 
 project(Process Mutex Test) : acetest {
-  avoids += ace_for_tao
   exename = Process_Mutex_Test
   Source_Files {
     Process_Mutex_Test.cpp
@@ -655,7 +609,6 @@ project(Process Mutex Test) : acetest {
 }
 
 project(Process Semaphore Test) : acetest {
-  avoids += ace_for_tao
   exename = Process_Semaphore_Test
   Source_Files {
     Process_Semaphore_Test.cpp
@@ -663,7 +616,6 @@ project(Process Semaphore Test) : acetest {
 }
 
 project(Process Strategy Test) : acetest {
-  avoids += ace_for_tao    // Requires ace/File_Lock
   exename = Process_Strategy_Test
   Source_Files {
     Process_Strategy_Test.cpp
@@ -692,7 +644,6 @@ project(Priority Task Test) : acetest {
 }
 
 project(Priority Reactor Test) : acetest {
-  avoids += ace_for_tao
   exename = Priority_Reactor_Test
   Source_Files {
     Priority_Reactor_Test.cpp
@@ -700,7 +651,6 @@ project(Priority Reactor Test) : acetest {
 }
 
 project(Process Manager Test) : acetest {
-  avoids += ace_for_tao
   exename = Process_Manager_Test
   Source_Files {
     Process_Manager_Test.cpp
@@ -736,7 +686,6 @@ project(Reactor Exceptions Test) : acetest {
 }
 
 project(Reactor Notify Test) : acetest {
-  avoids += ace_for_tao
   exename = Reactor_Notify_Test
   Source_Files {
     Reactor_Notify_Test.cpp
@@ -758,7 +707,6 @@ project(Reactor Dispatch Order Test) : acetest {
 }
 
 project(Reactor Performance Test) : acetest {
-  avoids += ace_for_tao
   exename = Reactor_Performance_Test
   Source_Files {
     Reactor_Performance_Test.cpp
@@ -766,7 +714,6 @@ project(Reactor Performance Test) : acetest {
 }
 
 project(Reactor Timer Test) : acetest {
-  avoids += ace_for_tao
   exename = Reactor_Timer_Test
   Source_Files {
     Reactor_Timer_Test.cpp
@@ -802,7 +749,6 @@ project(Recursive Mutex Test) : acetest {
 }
 
 project(Refcounted Auto Ptr Test) : acetest {
-  avoids += ace_for_tao
   exename = Refcounted_Auto_Ptr_Test
   Source_Files {
     Refcounted_Auto_Ptr_Test.cpp
@@ -817,7 +763,6 @@ project(Reverse Lock Test) : acetest {
 }
 
 project(Semaphore Test) : acetest {
-  avoids += ace_for_tao
   exename = Semaphore_Test
   Source_Files {
     Semaphore_Test.cpp
@@ -874,7 +819,6 @@ project(SOCK Send Recv Test) : acetest {
 }
 
 project(SPIPE Test) : acetest {
-  avoids += ace_for_tao
   exename = SPIPE_Test
   Source_Files {
     SPIPE_Test.cpp
@@ -889,7 +833,6 @@ project(SString Test) : acetest {
 }
 
 project(SV Shared Memory Test) : acetest {
-  avoids += ace_for_tao
   exename = SV_Shared_Memory_Test
   Source_Files {
     SV_Shared_Memory_Test.cpp
@@ -897,7 +840,6 @@ project(SV Shared Memory Test) : acetest {
 }
 
 project(Svc Handler Test) : acetest {
-  avoids += ace_for_tao
   exename = Svc_Handler_Test
   Source_Files {
     Svc_Handler_Test.cpp
@@ -961,7 +903,6 @@ project(Time Value Test) : acetest {
 }
 
 project(Timer Queue Test) : acetest {
-  avoids += ace_for_tao
   exename = Timer_Queue_Test
   Source_Files {
     Timer_Queue_Test.cpp
@@ -976,7 +917,6 @@ project(Token Strategy Test) : acetest {
 }
 
 project(TP Reactor Test) : acetest {
-  avoids += ace_for_tao
   exename = TP_Reactor_Test
   Source_Files {
     TP_Reactor_Test.cpp
@@ -1005,7 +945,6 @@ project(Vector Test) : acetest {
 }
 
 project(UPIPE SAP Test) : acetest {
-  avoids += ace_for_tao
   exename = UPIPE_SAP_Test
   Source_Files {
     UPIPE_SAP_Test.cpp
@@ -1013,7 +952,6 @@ project(UPIPE SAP Test) : acetest {
 }
 
 project(Upgradable RW Test) : acetest {
-  avoids += ace_for_tao
   exename = Upgradable_RW_Test
   Source_Files {
     Upgradable_RW_Test.cpp
@@ -1021,7 +959,6 @@ project(Upgradable RW Test) : acetest {
 }
 
 project(Naming Test) : acetest {
-  avoids   += ace_for_tao
   exename   = Naming_Test
   requires += ace_other
 
@@ -1080,7 +1017,6 @@ project(TkReactor Test) : acetest,ace_tkreactor {
 }
 
 project(Codecs Test) : acetest {
-  avoids   += ace_for_tao
   exename   = Codecs_Test
   requires += ace_codecs
 
@@ -1099,7 +1035,6 @@ project(Tokens Test) : acetest {
 }
 
 project(CDR Array Test) : acetest {
-  avoids += ace_for_tao
   exename = CDR_Array_Test
   Source_Files {
     CDR_Array_Test.cpp
@@ -1123,7 +1058,6 @@ project(Framework Component Test) : acetest {
 }
 
 project(FIFO Test) : acetest {
-  avoids += ace_for_tao
   exename = FIFO_Test
   Source_Files {
     FIFO_Test.cpp
@@ -1205,7 +1139,6 @@ project(Reactor Registration Test) : acetest {
 }
 
 project(UUIDTest) : acetest {
-  avoids   += ace_for_tao
   exename   = UUIDTest
   requires += ace_uuid
   Source_Files {
@@ -1242,15 +1175,13 @@ project(Multicast Test IPV6) : acetest {
 }
 
 project(Multihomed INET Addr Test IPV6) : acetest {
-  avoids += ace_for_tao
-  exename = Multihomed_INET_Addr_Test_IPV6
+  exename =   Multihomed_INET_Addr_Test_IPV6
   Source_Files {
   Multihomed_INET_Addr_Test_IPV6.cpp
   }
 }
 
 project(Proactor Test IPV6) : acetest {
-  avoids += ace_for_tao
   exename =  Proactor_Test_IPV6
   Source_Files {
    Proactor_Test_IPV6.cpp
@@ -1272,7 +1203,6 @@ project(SOCK Test IPv6) : acetest {
 }
 
 project(SOCK_Dgram_Bcast_Test) : acetest {
-  avoids += ace_for_tao
   exename = SOCK_Dgram_Bcast_Test
   Source_Files {
   	SOCK_Dgram_Bcast_Test.cpp
@@ -1280,7 +1210,6 @@ project(SOCK_Dgram_Bcast_Test) : acetest {
 }
 
 project(SOCK_SEQPACK_SCTP_Test) : acetest {
-  avoids += ace_for_tao
   exename = SOCK_SEQPACK_SCTP_Test
   Source_Files {
   	SOCK_SEQPACK_SCTP_Test.cpp
@@ -1299,7 +1228,6 @@ project(QtReactor Test) : acetest, ace_qtreactor {
 }
 
 project(Based Pointer Test) : acetest {
-  avoids += ace_for_tao
   after  += Based_Pointer_Test_Lib
   exename = Based_Pointer_Test
   Source_Files {
@@ -1307,12 +1235,9 @@ project(Based Pointer Test) : acetest {
   }
 }
 
-project(Library Unload) {
-  exename = UnloadLibACE
-  staticflags += ACE_AS_STATIC_LIBS
+project(WChar_Conversion) : acetest {
+  exename = WChar_Conversion
   Source_Files {
-    Unload_libACE.cpp
-  }
-  Resource_Files {
+    WChar_Conversion.cpp
   }
 }

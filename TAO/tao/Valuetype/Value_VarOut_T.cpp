@@ -6,9 +6,6 @@
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Valuetype/Value_CORBA_methods.h"
 
-#include <algorithm>  /* For std::swap<>() */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 void
@@ -73,25 +70,23 @@ template <typename T>
 TAO_Value_Var_T<T> &
 TAO_Value_Var_T<T>::operator= (T * p)
 {
-  if (this->ptr_ != p)
-    {
-      // This constructor doesn't increase the reference count so we
-      // we must check for self-assignment.  Otherwise the reference
-      // count would be prematurely decremented upon exiting this
-      // scope.
-      TAO_Value_Var_T<T> tmp (p);
-      std::swap (this->ptr_, tmp.ptr_);
-    }
-
+  TAO::Value_Traits<T>::remove_ref (this->ptr_);
+  this->ptr_ = p;
+  TAO::Value_Traits<T>::add_ref (p);
   return *this;
 }
 
 template <typename T>
 TAO_Value_Var_T<T> &
-TAO_Value_Var_T<T>::operator= (const TAO_Value_Var_T<T> & p)
+TAO_Value_Var_T<T>::operator= (const TAO_Value_Var_T & p)
 {
-  TAO_Value_Var_T<T> tmp (p);
-  std::swap (this->ptr_, tmp.ptr_);
+  if (this != &p)
+  {
+    TAO::Value_Traits<T>::remove_ref (this->ptr_);
+    T * tmp = p.ptr ();
+    TAO::Value_Traits<T>::add_ref (tmp);
+    this->ptr_ = tmp;
+  }
 
   return *this;
 }
@@ -214,7 +209,5 @@ TAO_Value_Out_T<T>::operator-> (void)
 {
   return this->ptr_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_VALUE_VAROUT_T_CPP */

@@ -1,6 +1,6 @@
 // @(#) $Id$
 
-#include "tao/PortableServer/Default_Acceptor_Filter.h"
+#include "Default_Acceptor_Filter.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -8,9 +8,6 @@
 ACE_RCSID(PortableServer,
           Default_Acceptor_Filter,
           "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)
 {
@@ -54,5 +51,3 @@ TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,23 +1,21 @@
 // $Id$
 
-#include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"
-#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "Basic_Replication_Strategy.h"
+#include "GroupInfoPublisher.h"
+#include "FTEC_Event_Channel.h"
+#include "Request_Context_Repository.h"
 #include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            Basic_Replication_Strategy,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /// The mutex has to be recursive; otherwise, if the second replicate_request() is
 /// called while the first replicate_request() is waiting for reply, we will get
 /// a deadlock.
 Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
-  : sequence_num_(0)
-  , mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : 0)
+: sequence_num_(0)
+, mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : 0)
 {
 }
 
@@ -32,7 +30,7 @@ Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
     FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    TAO_FTRTEC::Log(1 , "check_validity : sequence no = %d\n", sequence_num_);
+    TAO_FTRTEC::Log(1 , ACE_TEXT("check_validity : sequence no = %d\n"), sequence_num_);
 
     if (this->sequence_num_ == 0) {
       // this is the first set_update received from the primary
@@ -45,7 +43,7 @@ Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
       //            client_interceptor_->sequence_num_--;
       FTRT::OutOfSequence exception;
       exception.current = this->sequence_num_;
-      TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence (old sequence_num_ = %d)\n", this->sequence_num_);
+      TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::OutOfSequence (old sequence_num_ = %d)\n"), this->sequence_num_);
       ACE_THROW(FTRT::OutOfSequence(exception));
     }
     else
@@ -92,7 +90,7 @@ Basic_Replication_Strategy::replicate_request(
     if (info_publisher->is_primary())
       this->sequence_num_++;
 
-    TAO_FTRTEC::Log(1, "replicate_request : sequence no = %d\n", sequence_num_);
+    TAO_FTRTEC::Log(1, ACE_TEXT("replicate_request : sequence no = %d\n"), sequence_num_);
     Request_Context_Repository().set_sequence_number(sequence_num_
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -114,7 +112,7 @@ Basic_Replication_Strategy::replicate_request(
     }
   }
   else if (transaction_depth > 1) {
-    TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
+    TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
     ACE_THROW(FTRT::TransactionDepthTooHigh());
   }
 }
@@ -154,5 +152,3 @@ int  Basic_Replication_Strategy::release (void)
 {
   return mutex_ ? mutex_->release() : 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

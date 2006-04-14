@@ -1,17 +1,15 @@
 
 // $Id$
 
-#include "tao/Messaging/Messaging_Loader.h"
-#include "tao/Messaging/Messaging_ORBInitializer.h"
+#include "Messaging_Loader.h"
+#include "Messaging_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (Messaging, Messaging_Loader, "$Id$")
+ACE_RCSID (TAO, Messaging_Loader, "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Messaging_Loader::TAO_Messaging_Loader (void)
 {
@@ -19,6 +17,7 @@ TAO_Messaging_Loader::TAO_Messaging_Loader (void)
 
 TAO_Messaging_Loader::~TAO_Messaging_Loader (void)
 {
+
 }
 
 int
@@ -62,7 +61,7 @@ TAO_Messaging_Loader::init (int,
       if (TAO_debug_level > 0)
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught exception:");
+                               "(%P | %t) Caught exception:");
         }
       return -1;
     }
@@ -70,8 +69,6 @@ TAO_Messaging_Loader::init (int,
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 

@@ -39,15 +39,11 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_ORB_Core;
+
+class ACE_Lock;
 
 namespace TAO
 {
@@ -279,13 +275,9 @@ namespace CORBA
     static CORBA::Boolean marshal (Object_ptr obj,
                                    TAO_OutputCDR &strm);
 
-    /// Accessor for the cached servant reference held on the stub
-    /// if this object is collocated
     virtual TAO_Abstract_ServantBase *_servant (void) const;
 
     /// Is this object collocated with the servant?
-    /// Note this does not return this->is_collocated_ but will instead
-    /// query the underlying stub for its collocation status
     virtual CORBA::Boolean _is_collocated (void) const;
 
     /// Is this a local object?
@@ -357,17 +349,30 @@ namespace CORBA
     /// Initializing a local object.
     Object (int dummy = 0);
 
-    /// Convenience accessor for the object proxy broker of the
-    /// underlying stub.
-    TAO::Object_Proxy_Broker *proxy_broker () const;
-
   private:
 
     // = Unimplemented methods
     Object (const Object &);
     Object &operator = (const Object &);
 
+  protected:
+
+    /// Servant pointer.  It is 0 except for collocated objects.
+    TAO_Abstract_ServantBase *servant_;
+
   private:
+
+    /// Pointer to the Proxy Broker
+    /**
+     * This cached pointer instance takes care of routing the call for
+     * standard calls in CORBA::Object like _is_a (), _get_component
+     * () etc.
+     */
+    TAO::Object_Proxy_Broker *proxy_broker_;
+
+    /// Flag to indicate collocation.  It is 0 except for collocated
+    /// objects.
+    CORBA::Boolean is_collocated_;
 
     /// Specify whether this is a local object or not.
     CORBA::Boolean is_local_;
@@ -443,7 +448,9 @@ namespace TAO
 /// library is present.
 extern
   TAO_Export TAO::Object_Proxy_Broker *
-  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (void);
+  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
+      CORBA::Object_ptr obj
+    );
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA::Object*);
@@ -451,7 +458,6 @@ operator<< (TAO_OutputCDR&, const CORBA::Object*);
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::Object *&);
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Object.i"

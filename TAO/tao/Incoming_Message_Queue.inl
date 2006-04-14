@@ -1,9 +1,6 @@
 // -*- C++ -*-
-//
 //$Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
+// -*- C++ -*-
 /************************************************************************/
 // Methods for TAO_Incoming_Message_Queue
 /************************************************************************/
@@ -12,6 +9,57 @@ TAO_Incoming_Message_Queue::queue_length (void)
 {
   return this->size_;
 }
+
+ACE_INLINE int
+TAO_Incoming_Message_Queue::is_tail_complete (void)
+{
+  // If the size is 0 return -1
+  if (this->size_ == 0)
+    return -1;
+
+  if (this->size_ &&
+      this->last_added_->missing_data_ == 0)
+    return 1;
+
+  return 0;
+}
+
+ACE_INLINE int
+TAO_Incoming_Message_Queue::is_head_complete (void)
+{
+  if (this->size_ == 0)
+    return -1;
+
+  if (this->size_  &&
+      this->last_added_->next_->missing_data_ == 0 &&
+      !this->last_added_->next_->more_fragments_)
+    return 1;
+
+  return 0;
+}
+
+ACE_INLINE int
+TAO_Incoming_Message_Queue::is_tail_fragmented (void)
+{
+  if (this->size_ == 0)
+    return 0;
+
+  if (this->size_  &&
+      this->last_added_->more_fragments_)
+    return 1;
+
+  return 0;
+}
+
+ACE_INLINE size_t
+TAO_Incoming_Message_Queue::missing_data_tail (void) const
+{
+  if (this->size_ != 0)
+    return this->last_added_->missing_data_;
+
+  return 0;
+}
+
 
 /************************************************************************/
 // Methods  for TAO_Queued_Data
@@ -42,5 +90,3 @@ TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
   // Remove the DONT_DELETE flags from mb
   mb.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

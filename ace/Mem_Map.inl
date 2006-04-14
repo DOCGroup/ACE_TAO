@@ -1,13 +1,9 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_mman.h"
 #include "ace/OS_NS_sys_stat.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE ACE_HANDLE
 ACE_Mem_Map::handle (void) const
 {
@@ -257,5 +253,3 @@ ACE_Mem_Map::close_handle (void)
 
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 Identity_Server::Identity_Server (void)
   : group_factory_ior_ (0),
@@ -16,7 +17,7 @@ Identity_Server::Identity_Server (void)
 int
 Identity_Server::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di:a:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "di:a:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -208,7 +209,7 @@ Identity_Server::create_objects (size_t number_of_objects,
       // Create an id for this servant.
       char id[BUFSIZ];
       ACE_OS::sprintf (id,
-                       "Identity object " ACE_SIZE_T_FORMAT_SPECIFIER,
+                       "Identity object " ACE_SIZE_T_FORMAT_SPECIFIER_A,
                        i);
 
       // Create and activate a servant.
@@ -268,16 +269,17 @@ Identity_Server::~Identity_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   int result = 0;
   Identity_Server server;
 
-  if (server.init (argc, argv) == -1)
+  if (server.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return 1;
 
   // Check the non-ORB arguments.
-  if (server.parse_args (argc, argv) == -1)
+  if (server.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return -1;
 
   ACE_DECLARE_NEW_CORBA_ENV;

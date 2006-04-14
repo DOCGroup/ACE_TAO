@@ -23,6 +23,7 @@
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Reference_Counted_Servant, server, "$Id$")
 
@@ -53,7 +54,7 @@ static const char *ior_output_file = "ior";
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -80,7 +81,7 @@ parse_args (int argc, char **argv)
 static int
 write_iors_to_file (const char *ior)
 {
-  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+  FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
 
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n",
@@ -105,20 +106,20 @@ write_iors_to_file (const char *ior)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result = parse_args (argc, argv);
+      int result = parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result != 0)
         return result;
 

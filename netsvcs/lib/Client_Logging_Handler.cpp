@@ -228,9 +228,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
           int remainder = length - retrieved;
 
-          ssize_t secondtry = ACE_OS::recv (handle,
-                                            ((char *) &log_record) + retrieved,
-                                            remainder);
+          int secondtry = ACE_OS::recv (handle,
+                                        ((char *) &log_record) + retrieved,
+                                        remainder);
           if (secondtry != remainder)
             {
               ACE_ERROR ((LM_ERROR,
@@ -500,7 +500,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 int
 ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("h:k:p:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("h:k:p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {

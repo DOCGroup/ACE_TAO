@@ -17,8 +17,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ciao/DeploymentC.h"
 #include "ace/SString.h"
-#include "CIAO_NAM_Export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -32,17 +30,33 @@ namespace CIAO
    * This is a helper class to populate the NodeImplementationInfo struct from
    * a deployment plan..
    */
-  class CIAO_NAM_Export Containers_Info_Map
+  class Containers_Info_Map
   {
   public:
 
-    Containers_Info_Map (const Deployment::DeploymentPlan & plan,
-            const Deployment::ComponentPlans & shared_components);
+    Containers_Info_Map (const Deployment::DeploymentPlan & plan);
 
     Deployment::ContainerImplementationInfos *
       containers_info (void);
 
   private:
+    typedef 
+    ACE_Hash_Map_Manager_Ex <ACE_CString,
+                            Deployment::ContainerImplementationInfo *,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> MAP;
+
+    typedef MAP::iterator Iterator;
+
+    MAP map_;
+
+    const Deployment::DeploymentPlan & plan_;
+
+    //Deployment::ContainerImplementationInfos_var containers_info_;
+
+  private:
+
     void initialize_map (void);
     bool build_map (void);
 
@@ -52,28 +66,6 @@ namespace CIAO
     bool insert_instance_into_container (
       const Deployment::InstanceDeploymentDescription & instance,
       Deployment::ComponentImplementationInfos & impl_infos);
-
-    /// Helper function to check wheather a component instance
-    /// is in the "shared components list".
-    bool is_shared_component (ACE_CString & name);
-
-    //Deployment::ContainerImplementationInfos_var containers_info_;
-
-    typedef 
-    ACE_Hash_Map_Manager_Ex <ACE_CString,
-                            Deployment::ContainerImplementationInfo *,
-                            ACE_Hash<ACE_CString>,
-                            ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> MAP;
-
-    typedef MAP::iterator Iterator;
-    MAP map_;
-
-    const Deployment::DeploymentPlan & plan_;
-
-    /// shared components list, passed in from NodeImplementationInfoHandler
-    /// class.
-    Deployment::ComponentPlans shared_components_;
   };
 }
 

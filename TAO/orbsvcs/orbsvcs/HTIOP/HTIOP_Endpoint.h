@@ -1,4 +1,5 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
+
 
 //=============================================================================
 /**
@@ -7,6 +8,7 @@
  *  $Id$
  *
  *   HTIOP implementation of PP Framework Endpoint interface.
+ *
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
@@ -17,7 +19,7 @@
 #define HTIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/HTIOP/HTIOP_Export.h"
+#include "HTIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,8 +29,6 @@
 
 #include "tao/Endpoint.h"
 #include "tao/ORB.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -152,10 +152,8 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "orbsvcs/HTIOP/HTIOP_Endpoint.i"
+# include "HTIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

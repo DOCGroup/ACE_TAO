@@ -40,7 +40,7 @@ void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   program_name = argv[0];
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:h:p:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("f:h:p:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
   ACE_INET_Addr sa (port_number, host_name);
-  void *cp = 0;
+  void *cp;
   char buf[BUFSIZ];
   int n;
   ACE_SOCK_CODgram dc;

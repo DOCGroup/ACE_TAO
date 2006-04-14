@@ -1,9 +1,8 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_TPC_Dispatching_Task.h"
+#include "EC_TPC_Dispatching_Task.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+//ACE_RCS_ID(RTEvent, EC_TPC_Dispatching_Task, "$Id$")
 
 TAO_EC_TPC_Dispatching_Task::TAO_EC_TPC_Dispatching_Task
 (ACE_Thread_Manager* thr_mgr,
@@ -13,10 +12,9 @@ TAO_EC_TPC_Dispatching_Task::TAO_EC_TPC_Dispatching_Task
 }
 
 int
-TAO_EC_TPC_Dispatching_Task::close (u_long /* flags */)
+TAO_EC_TPC_Dispatching_Task::close (u_long flags)
 {
+  ACE_UNUSED_ARG (flags);
   delete this;
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

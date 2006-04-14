@@ -13,16 +13,14 @@
 #define TAO_Notify_PUSHCONSUMER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/Notify/Consumer.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "../Consumer.h"
 
 /**
  * @class TAO_Notify_PushConsumer
@@ -42,6 +40,7 @@ public:
   /// Init
   void init (CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
 
+
   /// Push <event> to this consumer.
 //  virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
 
@@ -55,7 +54,7 @@ public:
   virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual bool get_ior (ACE_CString & iorstr) const;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
@@ -71,8 +70,6 @@ private:
   /// TAO_Notify_Destroy_Callback methods.
   virtual void release (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PUSHCONSUMER_H */

@@ -1,11 +1,13 @@
 // $Id$
-#ifndef TAO_OBJREF_VAROUT_T_CPP
-#define TAO_OBJREF_VAROUT_T_CPP
+#ifndef TAO_OBJREF_VAROUT_T_C
+#define TAO_OBJREF_VAROUT_T_C
 
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Environment.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Objref_VarOut_T,
+           "$Id$")
 
 template <typename T>
 TAO_Objref_Var_T<T>::TAO_Objref_Var_T (void)
@@ -200,6 +202,4 @@ TAO_Objref_Out_T<T>::operator-> (void)
   return this->ptr_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_OBJREF_VAROUT_T_CPP */
+#endif /* TAO_OBJREF_VAROUT_T_C */

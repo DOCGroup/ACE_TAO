@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -17,7 +17,7 @@
 #define TAO_TRADER_BASE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Interpreter_Utils.h"
+#include "Interpreter_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,8 +34,6 @@
 #pragma warning(push)
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declaration.
 class TAO_Trader_Base;
@@ -124,7 +122,7 @@ private:
  * Class used to remove the circular dependencies between the
  * Attribute classes and the Trader class.
  */
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
 // Work around Borland unresolved symbol errors concerning the
 // out-of-line virtual destructor.  The virtual destructor should
 // not be inlined, nor should we have to export TAO_Lockable from the
@@ -132,7 +130,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Lockable
 #else
 class TAO_Lockable
-#endif  /* __BORLANDC__ < 0x581 */
+#endif  /* __BORLANDC__ < 0x572 */
 {
 public:
   virtual ~TAO_Lockable (void);
@@ -514,8 +512,6 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 bool
 operator== (const CosTrading::Admin::OctetSeq& left,
             const CosTrading::Admin::OctetSeq& right);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

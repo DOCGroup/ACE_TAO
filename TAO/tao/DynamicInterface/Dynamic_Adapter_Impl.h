@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -28,19 +27,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/DynamicInterface/dynamicinterface_export.h"
+#include "dynamicinterface_export.h"
 #include "ace/Service_Config.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/**
- * @class TAO_Dynamic_Adapter_Impl
- *
- * Concrete subclass of TAO_Dynamic_Adapter
- * in the TAO library. This class helps implement various
- * functions in the CORBA namespace relating to DII/DSI
- * invocations.
- */
+  /**
+   * @class TAO_Dynamic_Adapter_Impl
+   *
+   * Concrete subclass of TAO_Dynamic_Adapter
+   * in the TAO library. This class helps implement various
+   * functions in the CORBA namespace relating to DII/DSI
+   * invocations.
+   */
 class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   : public TAO_Dynamic_Adapter
 {
@@ -88,14 +85,12 @@ public:
   static int Initializer (void);
 };
 
+ACE_STATIC_SVC_DECLARE (TAO_Dynamic_Adapter_Impl)
+ACE_FACTORY_DECLARE (TAO_DynamicInterface, TAO_Dynamic_Adapter_Impl)
+
 static int
 TAO_Requires_Request_Factory_Initializer =
   TAO_Dynamic_Adapter_Impl::Initializer ();
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-ACE_STATIC_SVC_DECLARE (TAO_Dynamic_Adapter_Impl)
-ACE_FACTORY_DECLARE (TAO_DynamicInterface, TAO_Dynamic_Adapter_Impl)
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_IMPL_H */

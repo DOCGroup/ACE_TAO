@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -35,8 +35,6 @@
 
 #define ACE_AIO_MAX_SIZE     2048
 #define ACE_AIO_DEFAULT_SIZE 1024
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_POSIX_Proactor
@@ -94,8 +92,8 @@ public:
   };
 
   enum Opcode {
-    ACE_OPCODE_READ = 1,
-    ACE_OPCODE_WRITE = 2
+    READ = 1,
+    WRITE = 2
   };
 
   virtual Proactor_Type  get_impl_type (void);
@@ -650,8 +648,6 @@ protected:
   /// Time value requested by caller
   ACE_Time_Value time_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/POSIX_Proactor.inl"

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Utils.h
@@ -21,9 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "portablegroup_export.h"
 
 namespace TAO
 {
@@ -53,7 +50,7 @@ namespace TAO
   };
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #include /**/ "ace/post.h"
 #endif /*TAO_PORTABLEGROUP_UTILS_H*/

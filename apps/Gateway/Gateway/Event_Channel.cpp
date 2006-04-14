@@ -250,8 +250,8 @@ Event_Channel::initiate_connection_connection (Connection_Handler *connection_ha
 int
 Event_Channel::complete_connection_connection (Connection_Handler *connection_handler)
 {
-  int option = connection_handler->connection_role () == 'S'
-    ? SO_RCVBUF
+  int option = connection_handler->connection_role () == 'S' 
+    ? SO_RCVBUF 
     : SO_SNDBUF;
   int socket_queue_size =
     Options::instance ()->socket_queue_size ();
@@ -305,11 +305,10 @@ Event_Channel::reinitiate_connection_connection (Connection_Handler *connection_
                   connection_handler->connection_id ()));
 
       // Reschedule ourselves to try and connect again.
-      ACE_Time_Value const timeout (connection_handler->timeout ());
       if (ACE_Reactor::instance ()->schedule_timer
           (connection_handler,
            0,
-           timeout) == -1)
+           connection_handler->timeout ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
                            "schedule_timer"),
@@ -368,10 +367,9 @@ Event_Channel::initiate_acceptors (void)
 {
   if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR))
     {
-      ACE_INET_Addr
-        consumer_addr (Options::instance ()->consumer_acceptor_port ());
+    
       if (this->consumer_acceptor_.open
-          (consumer_addr,
+          (Options::instance ()->consumer_acceptor_port (),
            ACE_Reactor::instance (),
            Options::instance ()->blocking_semantics ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -385,10 +383,8 @@ Event_Channel::initiate_acceptors (void)
     }
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR))
     {
-      ACE_INET_Addr
-        supplier_addr (Options::instance ()->supplier_acceptor_port ());
-      if (this->supplier_acceptor_.open
-          (supplier_addr,
+    if(this->supplier_acceptor_.open
+          (Options::instance ()->supplier_acceptor_port (),
            ACE_Reactor::instance (),
            Options::instance ()->blocking_semantics ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

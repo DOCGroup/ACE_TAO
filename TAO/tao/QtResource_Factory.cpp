@@ -1,17 +1,16 @@
 //$Id$
 
-#include "tao/QtResource_Factory.h"
-#include "tao/debug.h"
+#include "QtResource_Factory.h"
+#include "debug.h"
 #include "ace/QtReactor.h"
 
-ACE_RCSID (TAO_QtResource,
+ACE_RCSID( TAO_QtResource,
            QtResource_Factory,
            "$Id$");
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
+
   QtResource_Factory::QtResource_Factory (QApplication *qapp)
     : reactor_impl_ (0)
     , qapp_ (qapp)
@@ -44,5 +43,3 @@ namespace TAO
     return this->reactor_impl_;
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

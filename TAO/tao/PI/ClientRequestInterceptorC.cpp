@@ -26,17 +26,19 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:277
+// be\be_codegen.cpp:291
 
 
-#include "tao/PI/ClientRequestInterceptorC.h"
+#include "ClientRequestInterceptorC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+#endif /* __BORLANDC__ */
+
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -71,13 +73,13 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::nil (void)
   return PortableInterceptor::ClientRequestInterceptor::_nil ();
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::marshal (
     PortableInterceptor::ClientRequestInterceptor_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return ::CORBA::Object::marshal (p, cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (void)
@@ -86,9 +88,17 @@ PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (void)
 PortableInterceptor::ClientRequestInterceptor::~ClientRequestInterceptor (void)
 {}
 
+void 
+PortableInterceptor::ClientRequestInterceptor::_tao_any_destructor (void *_tao_void_pointer)
+{
+  ClientRequestInterceptor *_tao_tmp_pointer =
+    static_cast<ClientRequestInterceptor *> (_tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
+
 PortableInterceptor::ClientRequestInterceptor_ptr
 PortableInterceptor::ClientRequestInterceptor::_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -99,7 +109,7 @@ PortableInterceptor::ClientRequestInterceptor::_narrow (
 
 PortableInterceptor::ClientRequestInterceptor_ptr
 PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
-    ::CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -125,7 +135,7 @@ PortableInterceptor::ClientRequestInterceptor::_tao_release (ClientRequestInterc
   CORBA::release (obj);
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 PortableInterceptor::ClientRequestInterceptor::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -163,10 +173,8 @@ const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository
   return "IDL:omg.org/PortableInterceptor/ClientRequestInterceptor:1.0";
 }
 
-::CORBA::Boolean
+CORBA::Boolean
 PortableInterceptor::ClientRequestInterceptor::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

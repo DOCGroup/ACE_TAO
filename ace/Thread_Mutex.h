@@ -30,23 +30,21 @@
 #include "ace/ACE_export.h"
 #include "ace/OS_NS_Thread.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/**
- * @class ACE_Thread_Mutex
- *
- * @brief ACE_Thread_Mutex wrapper (only valid for threads in the same
- * process).
- *
- * This implementation is optimized for locking threads that are
- * in the same process.  It maps to <CRITICAL_SECTION>s on NT
- * and <ACE_mutex_t> with <type> set to <USYNC_THREAD> on UNIX.
- * ACE_Thread_Mutex is recursive on some platforms (like
- * Win32). However, on most platforms (like Solaris) it is not
- * recursive.  To be totally safe and portable, developers
- * should use ACE_Recursive_Thread_Mutex when they need a
- * recursive mutex.
- */
+  /**
+   * @class ACE_Thread_Mutex
+   *
+   * @brief ACE_Thread_Mutex wrapper (only valid for threads in the same
+   * process).
+   *
+   * This implementation is optimized for locking threads that are
+   * in the same process.  It maps to <CRITICAL_SECTION>s on NT
+   * and <ACE_mutex_t> with <type> set to <USYNC_THREAD> on UNIX.
+   * ACE_Thread_Mutex is recursive on some platforms (like
+   * Win32). However, on most platforms (like Solaris) it is not
+   * recursive.  To be totally safe and portable, developers
+   * should use <ACE_Recursive_Thread_Mutex> when they need a
+   * recursive mutex.
+   */
 class ACE_Export ACE_Thread_Mutex
 {
   friend class ACE_Condition_Thread_Mutex;
@@ -69,10 +67,10 @@ public:
   int acquire (void);
 
   /**
-   * Block the thread until we acquire the mutex or until @a tv times
+   * Block the thread until we acquire the mutex or until <tv> times
    * out, in which case -1 is returned with <errno> == <ETIME>.  Note
-   * that @a tv is assumed to be in "absolute" rather than "relative"
-   * time.  The value of @a tv is updated upon return to show the
+   * that <tv> is assumed to be in "absolute" rather than "relative"
+   * time.  The value of <tv> is updated upon return to show the
    * actual (absolute) acquisition time.
    */
   int acquire (ACE_Time_Value &tv);
@@ -226,8 +224,6 @@ private:
   ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &);
 };
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Thread_Mutex.inl"

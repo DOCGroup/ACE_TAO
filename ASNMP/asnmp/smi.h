@@ -1,17 +1,23 @@
 /* -*-C++-*- */
+// $Id$
 #ifndef SMIDEF_
 #define SMIDEF_
-//=============================================================================
-/**
- *  @file    smi.h
- *
- *  $Id$
- *
- * Address class definition. Encapsulates various network
- * addresses into easy to use, safe and portable classes.
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//    smi.h
+//
+// = DESCRIPTION
+// Address class definition. Encapsulates various network
+// addresses into easy to use, safe and portable classes.
+//
+// = AUTHOR
+//    ??
+//
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

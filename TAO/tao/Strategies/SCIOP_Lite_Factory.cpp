@@ -1,6 +1,6 @@
-#include "tao/Strategies/SCIOP_Lite_Factory.h"
-#include "tao/Strategies/SCIOP_Acceptor.h"
-#include "tao/Strategies/SCIOP_Connector.h"
+#include "SCIOP_Lite_Factory.h"
+#include "SCIOP_Acceptor.h"
+#include "SCIOP_Connector.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
@@ -10,8 +10,6 @@
 ACE_RCSID(tao, SCIOP_Factory, "$Id$")
 
 static const char prefix_[] = "sciop";
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Lite_Protocol_Factory::TAO_SCIOP_Lite_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_SCIOP_PROFILE),
@@ -84,8 +82,6 @@ TAO_SCIOP_Lite_Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_SCIOP_Lite_Protocol_Factory,
                        ACE_TEXT ("SCIOP_Lite_Factory"),

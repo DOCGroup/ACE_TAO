@@ -1,5 +1,5 @@
-#include "orbsvcs/LoadBalancing/LB_Component.h"
-#include "orbsvcs/LoadBalancing/LB_ORBInitializer.h"
+#include "LB_Component.h"
+#include "LB_ORBInitializer.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -8,8 +8,6 @@
 ACE_RCSID (LoadBalancing,
            LB_Component,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
@@ -35,7 +33,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
   for (int i = 0; i < argc; ++i)
     {
-      if (ACE_OS::strcasecmp (argv[i], "-LBGroup") == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBGroup")) == 0)
         {
           const CORBA::ULong j = len;
           ++len;
@@ -47,7 +45,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
           ++i;  // 2
 
-          if (ACE_OS::strcasecmp (argv[i], "-LBTypeId") != 0)
+          if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBTypeId")) != 0)
             return -1;
 
           ++i;  // 3
@@ -55,7 +53,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           repository_ids.length (len);
           repository_ids[j] = CORBA::string_dup (argv[i]);
         }
-      else if (ACE_OS::strcasecmp (argv[i], "-LBTypeId") == 0)
+      else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBTypeId")) == 0)
         {
           const CORBA::ULong j = len;
           ++len;
@@ -67,7 +65,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
           ++i;  // 2
 
-          if (ACE_OS::strcasecmp (argv[i], "-LBGroup") != 0)
+          if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBGroup")) != 0)
             return -1;
 
           ++i;  // 3
@@ -75,7 +73,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           object_groups.length (len);
           object_groups[j] = CORBA::string_dup (argv[i]);
         }
-      else if (ACE_OS::strcasecmp (argv[i], "-LBLocation") == 0)
+      else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBLocation")) == 0)
         {
           ++i;
           location = CORBA::string_dup (argv[i]);
@@ -133,7 +131,6 @@ TAO_LB_Component::register_orb_initializer (
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_LB_Component,
                        ACE_TEXT ("LB_Component"),

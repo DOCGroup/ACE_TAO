@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
+#include "PG_Object_Group_Manipulator.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
@@ -30,15 +30,14 @@
 #include "ace/ACE.h"
 #include "ace/Hash_Map_Manager.h"
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 //////////////////
 // Forward reference
 namespace TAO
 {
   class PG_Property_Set;
 } // namespace TAO_PG
+
+
 
 namespace TAO
 {
@@ -176,8 +175,6 @@ namespace TAO
 
   };
 } // namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -5,8 +5,6 @@
 #include "tao/ORB_Core.h"
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE size_t
 TAO::SL3::SecurityCurrent::tss_slot (void) const
 {
@@ -22,5 +20,3 @@ TAO::SL3::SecurityCurrent::implementation (void)
 
   return impl;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

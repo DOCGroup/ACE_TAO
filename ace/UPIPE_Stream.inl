@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_HANDLE
 ACE_UPIPE_Stream::get_handle (void) const
@@ -11,4 +8,3 @@ ACE_UPIPE_Stream::get_handle (void) const
   return this->ACE_SPIPE::get_handle ();
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

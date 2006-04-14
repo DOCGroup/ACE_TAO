@@ -1,10 +1,9 @@
 // $Id$
 
-#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "HTIOP_Endpoint.h"
+#include "HTIOP_Profile.h"
 
 #include "ace/os_include/os_netdb.h"
-#include "ace/Log_Msg.h"
 
 #include "tao/IOPC.h"
 #include "tao/debug.h"
@@ -15,10 +14,8 @@ ACE_RCSID (HTIOP,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/HTIOP/HTIOP_Endpoint.i"
+# include "HTIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Endpoint::Endpoint (const ACE::HTBP::Addr &addr,
                                         int use_dotted_decimal_addresses)
@@ -221,5 +218,3 @@ TAO::HTIOP::Endpoint::hash (void)
     return ACE::hash_pjw(this->htid_.in());
   return this->object_addr ().get_ip_address () + this->port ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

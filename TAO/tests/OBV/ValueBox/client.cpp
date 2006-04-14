@@ -2,6 +2,7 @@
 
 #include "valueboxC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(ValueBox,
           client,
@@ -13,7 +14,7 @@ const char *ior = "file://test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -545,7 +546,7 @@ int test_boxed_sequence (void)
                   VBseqlong (),
                   1);
 
-  VBseqlong     *temp = 0;
+  VBseqlong     *temp;
   ACE_NEW_RETURN (temp,
                   VBseqlong (),
                   1);
@@ -562,7 +563,7 @@ int test_boxed_sequence (void)
   longarray[2] = 303;
 
   // Create a sequence
-  TDseqlong *temp2 = 0;
+  TDseqlong *temp2;
   ACE_NEW_RETURN (temp2,
                   TDseqlong(10, 3, longarray, 1),
                   1);
@@ -610,6 +611,7 @@ int test_boxed_sequence (void)
 
   // release
   vbseqlong1->_remove_ref ();
+  vbseqlong3->_remove_ref ();
   vbseqlong4->_remove_ref ();
 
   return fail;
@@ -729,11 +731,10 @@ int test_boxed_struct (void)
                     1);
 
     // Test boxed copy ctor.
-    VBfixed_struct1* valuebox2_ptr = 0;
-    ACE_NEW_RETURN (valuebox2_ptr,
+    VBfixed_struct1_var valuebox2;
+    ACE_NEW_RETURN (valuebox2,
                     VBfixed_struct1 (*valuebox1),
                     1);
-    VBfixed_struct1_var valuebox2 = valuebox2_ptr;
 
     VERIFY (valuebox1->l () == valuebox2->l ());
     VERIFY ((valuebox1->abstruct ()).s1 == (valuebox2->abstruct ()).s1 );
@@ -792,8 +793,9 @@ int test_boxed_struct (void)
       }
 
     //
-    // valuebox1 and valuebox3 must be explicitly removed.
+    // valuebox1, valuebox2, and valuebox3 must be explicitly removed.
     CORBA::remove_ref (valuebox1);
+    CORBA::remove_ref (valuebox2);
     CORBA::remove_ref (valuebox3);
 
     //
@@ -1440,19 +1442,20 @@ int test_boxed_union_invocations (Test * test_object)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Test_var test_object;
   CORBA::ORB_var orb;
-
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_EX (init)
     {
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (init);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // Obtain reference to the object.

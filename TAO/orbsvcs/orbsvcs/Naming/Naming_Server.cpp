@@ -1,11 +1,11 @@
 // $Id$
 
-#include "orbsvcs/Naming/Naming_Server.h"
-#include "orbsvcs/Naming/Transient_Naming_Context.h"
-#include "orbsvcs/Naming/Persistent_Context_Index.h"
-#include "orbsvcs/Naming/Storable_Naming_Context.h"
-#include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
-#include "orbsvcs/Naming/Flat_File_Persistence.h"
+#include "Naming_Server.h"
+#include "Transient_Naming_Context.h"
+#include "Persistent_Context_Index.h"
+#include "Storable_Naming_Context.h"
+#include "Storable_Naming_Context_Activator.h"
+#include "Flat_File_Persistence.h"
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/debug.h"
@@ -13,11 +13,7 @@
 #include "tao/ORB_Core.h"
 
 #include "tao/IORTable/IORTable.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
-#endif
-
 #include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Arg_Shifter.h"
@@ -28,8 +24,6 @@
 ACE_RCSID (Naming,
            Naming_Server,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Server::TAO_Naming_Server (void)
   : naming_context_ (),
@@ -171,7 +165,7 @@ int
 TAO_Naming_Server::parse_args (int argc,
                                ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:u:r:z:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:u:r:z:"));
 
   int c;
   int size, result;
@@ -208,9 +202,9 @@ TAO_Naming_Server::parse_args (int argc,
           this->context_size_ = size;
         break;
       case 'b':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
+        result = ::sscanf (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()),
 #if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-                           ACE_INT64_FORMAT_SPECIFIER,
+                           ACE_UINT64_FORMAT_SPECIFIER_A,
 #else
                            "%ld",
 #endif /* ACE_SIZEOF_VOID_P */
@@ -654,7 +648,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   ACE_UNUSED_ARG (enable_multicast);
 #endif /* ACE_HAS_IP_MULTICAST */
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0  
       if (use_round_trip_timeout == 1)
       {
         TimeBase::TimeT roundTripTimeoutVal = round_trip_timeout;
@@ -682,9 +675,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         ACE_TRY_CHECK;
         polList[0] = CORBA::Policy::_nil ();
       }
-#else
-  ACE_UNUSED_ARG (use_round_trip_timeout);
-#endif /* TAO_HAS_CORBA_MESSAGING */
     }
   ACE_CATCHANY
     {
@@ -764,5 +754,3 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
     delete this->servant_activator_;
 #endif /* TAO_HAS_MINIMUM_POA */
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

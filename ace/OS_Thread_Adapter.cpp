@@ -11,8 +11,6 @@ ACE_RCSID (ace,
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_Thread.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
      ACE_THR_FUNC user_func
      , void *arg
@@ -173,5 +171,3 @@ ACE_OS_Thread_Adapter::invoke (void)
 
   return status;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

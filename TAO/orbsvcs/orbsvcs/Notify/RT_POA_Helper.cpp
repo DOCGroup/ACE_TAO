@@ -1,17 +1,15 @@
 // $Id$
 
-#include "orbsvcs/Notify/RT_POA_Helper.h"
+#include "RT_POA_Helper.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/debug.h"
 #include "orbsvcs/NotifyExtC.h"
-#include "orbsvcs/Notify/RT_Properties.h"
+#include "RT_Properties.h"
 #include "ace/SString.h"
 
-ACE_RCSID (Notify,
+ACE_RCSID (RT_Notify,
            TAO_Notify_RT_POA_Helper,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper ()
 {
@@ -162,5 +160,3 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_D
 
   this->create_i (parent_poa, child_poa_name.c_str (), policy_list ACE_ENV_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

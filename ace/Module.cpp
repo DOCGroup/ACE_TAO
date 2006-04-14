@@ -1,7 +1,8 @@
+// Module.cpp
 // $Id$
 
-#ifndef ACE_MODULE_CPP
-#define ACE_MODULE_CPP
+#ifndef ACE_MODULE_C
+#define ACE_MODULE_C
 
 #include "ace/Module.h"
 
@@ -15,7 +16,7 @@
 #include "ace/Module.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Module, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Module)
 
@@ -267,7 +268,4 @@ ACE_Module<ACE_SYNCH_USE>::close_i (int which,
 
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_MODULE_CPP */
+#endif /* ACE_MODULE_C */

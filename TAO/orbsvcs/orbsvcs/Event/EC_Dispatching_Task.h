@@ -18,21 +18,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventCommC.h"
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Service_Config.h"
 #include "ace/Global_Macros.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl
 class TAO_EC_Dispatching_Task;
@@ -65,7 +63,7 @@ public:
   static int init_svcs (void);
 
   // = The Service_Object entry points
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   virtual int fini (void);
 
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
@@ -185,10 +183,8 @@ private:
   RtecEventComm::EventSet event_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Dispatching_Task.i"
+#include "EC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Simple_Queue_Full_Action)

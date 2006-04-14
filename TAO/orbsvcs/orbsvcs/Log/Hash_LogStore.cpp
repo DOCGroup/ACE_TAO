@@ -7,8 +7,6 @@ ACE_RCSID (Log,
            Hash_LogStore,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Hash_LogStore::TAO_Hash_LogStore(CORBA::ORB_ptr orb, TAO_LogMgr_i* mgr)
   : next_id_ (0),
     orb_ (CORBA::ORB::_duplicate (orb)),
@@ -258,5 +256,3 @@ TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id
 
   return recordstore;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

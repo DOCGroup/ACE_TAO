@@ -2,8 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 TAO_OutputCDR::~TAO_OutputCDR (void)
 {
@@ -288,5 +286,3 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 {
   return static_cast<ACE_InputCDR &> (is) >> x;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

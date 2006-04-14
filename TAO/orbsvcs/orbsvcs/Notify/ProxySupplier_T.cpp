@@ -1,24 +1,24 @@
 // $Id$
 
-#ifndef TAO_Notify_PROXYSUPPLIER_T_CPP
-#define TAO_Notify_PROXYSUPPLIER_T_CPP
+#ifndef TAO_Notify_PROXYSUPPLIER_T_C
+#define TAO_Notify_PROXYSUPPLIER_T_C
 
-#include "orbsvcs/Notify/ProxySupplier_T.h"
+#include "ProxySupplier_T.h"
 
-#include "orbsvcs/Notify/Consumer.h"
-#include "orbsvcs/Notify/Structured/StructuredEvent.h"
-#include "orbsvcs/Notify/Any/AnyEvent.h"
+ACE_RCSID(Notify, TAO_Notify_ProxySupplier_T, "$Id$")
 
-#include "orbsvcs/Notify/Method_Request_Dispatch.h"
-#include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Event_Manager.h"
-#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "Consumer.h"
+#include "Structured/StructuredEvent.h"
+#include "Any/AnyEvent.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Method_Request_Dispatch.h"
+#include "Worker_Task.h"
+#include "Event_Manager.h"
+#include "ConsumerAdmin.h"
 
 template <class SERVANT_TYPE>
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::TAO_Notify_ProxySupplier_T (void)
-  : is_suspended_ (0)
+  :is_suspended_ (0)
 {
 }
 
@@ -222,6 +222,4 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (CosNotifyFilter::Mapp
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* #define TAO_Notify_PROXYSUPPLIER_T_CPP */
+#endif /* #define TAO_Notify_PROXYSUPPLIER_T_C */

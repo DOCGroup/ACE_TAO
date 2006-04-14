@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
-#include "orbsvcs/HTIOP/htiop_endpointsC.h"
+#include "HTIOP_Profile.h"
+#include "htiop_endpointsC.h"
 
 #include "ace/os_include/os_netdb.h"
 
@@ -16,9 +16,7 @@ ACE_RCSID(HTIOP,
           TAO_HTIOP_Profile,
           "$Id$")
 
-static const char the_prefix[] = "htiop";
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+static const char prefix_[] = "htiop";
 
 const char TAO::HTIOP::Profile::object_key_delimiter_ = '/';
 
@@ -293,7 +291,7 @@ TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::the_prefix) +
+                   ACE_OS::strlen (::prefix_) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
@@ -311,7 +309,7 @@ TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   ACE_OS::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
-                   ::the_prefix,
+                   ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
                    this->endpoint_.host (),
@@ -327,7 +325,7 @@ TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 const char *
 TAO::HTIOP::Profile::prefix (void)
 {
-  return ::the_prefix;
+  return ::prefix_;
 }
 
 void
@@ -469,5 +467,3 @@ TAO::HTIOP::Profile::decode_endpoints (void)
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

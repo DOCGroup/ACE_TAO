@@ -1,6 +1,8 @@
+// This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
 
-#include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
+#include "UIPMC_Endpoint.h"
 
 #include "tao/debug.h"
 #include "ace/Guard_T.h"
@@ -15,10 +17,8 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/PortableGroup/UIPMC_Endpoint.i"
+# include "UIPMC_Endpoint.i"
 #endif /* __ACE_INLINE__ */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
   : TAO_Endpoint (TAO_TAG_UIPMC_PROFILE),
@@ -145,5 +145,3 @@ TAO_UIPMC_Endpoint::hash (void)
 
   return this->hash_val_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -5,8 +5,6 @@
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void)
   : value_ (0)
@@ -14,7 +12,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void)
 }
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (const long &c)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (long c)
   : value_ (c)
 {
 }
@@ -159,7 +157,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void)
 }
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (const unsigned long &c)
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (unsigned long c)
   : value_ (c)
 {
 }
@@ -295,7 +293,5 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value_i (void)
 {
   return this->value_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */

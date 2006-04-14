@@ -22,7 +22,7 @@ print STDERR "\n\n==== Running PolicyFactory test\n";
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill (30);
+$server = $SV->WaitKill (5);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

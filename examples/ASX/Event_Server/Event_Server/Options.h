@@ -116,6 +116,8 @@ private:
   static Options *instance_;
   // Static Singleton.
 
+  friend class ACE_Shutup_GPlusPlus;
+  // Turn off g++ warning...
 };
 
 #include "Options.i"

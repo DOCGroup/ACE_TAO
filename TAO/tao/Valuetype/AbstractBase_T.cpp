@@ -1,14 +1,14 @@
 // $Id$
+#ifndef TAO_ABSTRACT_BASE_T_C
+#define TAO_ABSTRACT_BASE_T_C
 
-#ifndef TAO_ABSTRACT_BASE_T_CPP
-#define TAO_ABSTRACT_BASE_T_CPP
-
-#include "tao/Valuetype/AbstractBase_T.h"
-#include "tao/Valuetype/AbstractBase.h"
+#include "AbstractBase_T.h"
+#include "AbstractBase.h"
 #include "tao/Stub.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
+ACE_RCSID (Valuetype,
+           Abstractbase_T,
+           "$Id$")
 namespace TAO
 {
   template<typename T> T *
@@ -102,7 +102,6 @@ namespace TAO
                              collocated ? 1 : 0,
                              obj->_servant ()),
                           CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (proxy);
       }
     else
       {
@@ -114,6 +113,4 @@ namespace TAO
   }
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif  /* TAO_ABSTRACT_BASE_T_CPP */
+#endif /*TAO_ABSTRACT_BASE_T_C*/

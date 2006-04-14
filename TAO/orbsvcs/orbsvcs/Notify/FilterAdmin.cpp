@@ -1,18 +1,16 @@
 /* -*- C++ -*- $Id$ */
 
-#include "orbsvcs/Notify/FilterAdmin.h"
+#include "FilterAdmin.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/FilterAdmin.inl"
+#include "FilterAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, FilterAdmin, "$Id$")
 
-#include "orbsvcs/Notify/Topology_Saver.h"
-#include "orbsvcs/Notify/Properties.h"
+#include "Topology_Saver.h"
+#include "Properties.h"
 #include "ace/Bound_Ptr.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin (void)
@@ -200,5 +198,3 @@ TAO_Notify_FilterAdmin::release (void)
 {
   delete this;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,11 +1,10 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
+
+// FIFO_Send.i
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ssize_t
 ACE_FIFO_Send::send (const void *buf, size_t len)
@@ -20,5 +19,3 @@ ACE_FIFO_Send::send_n (const void *buf, size_t n)
   ACE_TRACE ("ACE_FIFO_Send::send_n");
   return ACE::send_n (this->get_handle (), buf, n);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

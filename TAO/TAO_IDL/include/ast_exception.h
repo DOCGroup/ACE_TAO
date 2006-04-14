@@ -83,12 +83,12 @@ public:
   AST_Exception (void);
 
   AST_Exception (UTL_ScopedName *n,
-                 bool local,
-                 bool abstract);
+                 idl_bool local,
+                 idl_bool abstract);
 
   virtual ~AST_Exception (void);
 
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Check if we or the parameter node is in recursion.
 
   // Narrowing

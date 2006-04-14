@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -11,7 +11,7 @@
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  @David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
 
@@ -34,8 +34,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_BasicLogActivator;
 
@@ -98,8 +96,6 @@ protected:
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var        log_mgr_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Messaging/Messaging.h"
+#include "Messaging.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,8 +45,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Messaging
 {
@@ -203,9 +201,7 @@ namespace POA_Messaging
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:1072
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#include "tao/Messaging/MessagingS_T.h"
+#include "MessagingS_T.h"
 
 
 #include /**/ "ace/post.h"

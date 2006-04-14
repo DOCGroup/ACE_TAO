@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/AnyTypeCode/Any_Impl.h"
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/Marshal.h"
+#include "Any_Impl.h"
+#include "TypeCode.h"
+#include "Marshal.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
@@ -13,8 +13,6 @@ ACE_RCSID (tao,
            Any_Impl,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc,
@@ -137,4 +135,3 @@ TAO::Any_Impl::encoded (void) const
   return this->encoded_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

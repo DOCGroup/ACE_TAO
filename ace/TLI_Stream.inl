@@ -1,10 +1,9 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-#include "ace/TLI_Stream.h"
+// TLI_Stream.i
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "ace/TLI_Stream.h"
 
 ACE_INLINE
 void
@@ -21,5 +20,3 @@ ACE_TLI_Stream::get_rwflag (void)
   ACE_TRACE ("ACE_TLI_Stream::get_rwflag");
   return this->rwflag_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

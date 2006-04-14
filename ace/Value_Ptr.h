@@ -16,11 +16,7 @@
 #ifndef ACE_VALUE_PTR_H
 #define ACE_VALUE_PTR_H
 
-#include "ace/config-lite.h"
-
 #include <algorithm>
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -161,7 +157,5 @@ namespace ACE
   };
 
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_VALUE_PTR_H */

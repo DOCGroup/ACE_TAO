@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/os_include/os_errno.h"
@@ -8,8 +7,6 @@
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_QoS.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_CONST_STRBUF_PTR)
 typedef struct strbuf *ACE_STRBUF_TYPE;
@@ -114,7 +111,7 @@ ACE_OS::ioctl (ACE_HANDLE handle,
 #if defined (ACE_WIN32)
   ACE_SOCKET sock = (ACE_SOCKET) handle;
   ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, reinterpret_cast<unsigned long *> (val)), int, -1);
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x620)
+#elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, reinterpret_cast<int> (val)),
                      int, -1);
 #elif defined (ACE_PSOS)
@@ -199,5 +196,3 @@ ACE_OS::putpmsg (ACE_HANDLE handle,
   return ACE_OS::putmsg (handle, ctl, data, flags);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -26,7 +26,7 @@ Policy_Verifier::init (int argc,
     CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
@@ -260,7 +260,7 @@ Policy_Verifier::check_reference (CORBA::Object_ptr object,
 {
   if (CORBA::is_nil (object))
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (msg)));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT_TO_TCHAR_IN (msg)));
       return 0;
     }
   return 1;

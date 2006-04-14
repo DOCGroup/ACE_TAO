@@ -6,8 +6,6 @@
 #define CCF_COMPILER_ELEMENTS_PREPROCESSOR_HPP
 
 #include <memory>
-#include <string>
-#include <set>
 
 #include "CCF/CompilerElements/TokenStream.hpp"
 #include "CCF/CompilerElements/PreprocessorToken.hpp"
@@ -18,17 +16,13 @@ namespace CCF
   {
     namespace CPP
     {
-      typedef
-      std::set<std::string>
-      Symbols;
-
       class Preprocessor : public TokenStream<Token>
       {
       public:
         virtual
         ~Preprocessor ();
 
-        Preprocessor (TokenStream<char>& is, Symbols const&);
+        Preprocessor (TokenStream<char>& is);
 
         virtual Token
         next ();

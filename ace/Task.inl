@@ -2,7 +2,6 @@
 //
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Task_Base::thr_mgr (void) const
@@ -23,7 +22,7 @@ ACE_INLINE size_t
 ACE_Task_Base::thr_count (void) const
 {
   ACE_TRACE ("ACE_Task_Base::thr_count");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, const_cast <ACE_Thread_Mutex&>(this->lock_), 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->lock_, 0));
 
   return this->thr_count_;
 }
@@ -58,7 +57,7 @@ ACE_INLINE int
 ACE_Task_Base::grp_id (void) const
 {
   ACE_TRACE ("ACE_Task_Base::grp_id");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, const_cast <ACE_Thread_Mutex&>(this->lock_), -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->lock_, -1));
   return this->grp_id_;
 }
 
@@ -77,4 +76,3 @@ ACE_Task_Base::grp_id (int identifier)
     this->thr_mgr ()->set_grp (this, identifier);
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

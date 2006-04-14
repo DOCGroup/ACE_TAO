@@ -1,14 +1,12 @@
 // $Id$
 
-#include "orbsvcs/Notify/Any/ProxyPushSupplier.h"
+#include "ProxyPushSupplier.h"
 
 ACE_RCSID (Notify, TAO_Notify_ProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Any/PushConsumer.h"
-#include "orbsvcs/Notify/Properties.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "PushConsumer.h"
+#include "../Properties.h"
 
 TAO_Notify_ProxyPushSupplier::TAO_Notify_ProxyPushSupplier (void)
 {
@@ -21,6 +19,7 @@ TAO_Notify_ProxyPushSupplier::~TAO_Notify_ProxyPushSupplier ()
 void
 TAO_Notify_ProxyPushSupplier::release (void)
 {
+
   delete this;
   //@@ inform factory
 }
@@ -80,31 +79,24 @@ TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
-  if (attrs.load("PeerIOR", ior))
+  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
+  {
+    CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
     {
-      CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
-        {
-          CosNotifyComm::PushConsumer_var pc =
-            CosNotifyComm::PushConsumer::_nil();
-          if (ior.length() > 0)
-            {
-              CORBA::Object_var obj =
-                orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              pc = CosNotifyComm::PushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-          this->connect_any_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // if we can't reconnect, tough...
-        }
-      ACE_ENDTRY;
+      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CosNotifyComm::PushConsumer_var pc =
+        CosNotifyComm::PushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->connect_any_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
+    ACE_CATCHANY
+    {
+      // if we can't reconnect, tough...
+    }
+    ACE_ENDTRY;
+  }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

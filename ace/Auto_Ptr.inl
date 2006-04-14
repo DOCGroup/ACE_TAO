@@ -1,10 +1,9 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-#include "ace/Global_Macros.h"
+// Auto_Ptr.i
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "ace/Global_Macros.h"
 
 template<class X> ACE_INLINE void
 ACE_Auto_Basic_Ptr<X>::dump (void) const
@@ -168,4 +167,3 @@ ACE_Auto_Array_Ptr<X>::operator->() const
   return this->get ();
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

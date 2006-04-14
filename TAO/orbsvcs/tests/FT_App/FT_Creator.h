@@ -14,10 +14,8 @@
 
 #ifndef FT_CREATOR_H
 #define FT_CREATOR_H
-
-#include /**/ "ace/pre.h"
-
 #include <ace/ACE.h>
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

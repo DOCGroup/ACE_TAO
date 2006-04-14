@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -26,8 +26,6 @@
 #include "ace/Manual_Event.h"
 #endif /* ACE_WIN32 */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_SPIPE_Acceptor
  *
@@ -43,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @warning Works on non-Windows platforms only when @c ACE_HAS_STREAM_PIPES
  * is defined.
- *
+ * 
  */
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {
@@ -161,8 +159,6 @@ private:
 #endif /* ACE_WIN32 */
 
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SPIPE_ACCEPTOR_H */

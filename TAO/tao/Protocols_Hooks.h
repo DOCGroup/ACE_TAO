@@ -22,13 +22,10 @@
 
 #include "ace/Service_Object.h"
 
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
-#include "tao/IOP_IORC.h"
+#include "TAO_Export.h"
+#include "Basic_Types.h"
+#include "IOP_IORC.h"
 #include "ace/SString.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -202,8 +199,6 @@ public:
 
   //@}
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

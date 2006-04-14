@@ -15,7 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,8 +32,6 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Default_Constants.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Mem_Map
  *
@@ -37,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class works with both the mmap(2) UNIX system and the
  * Win32 family of memory mapping system calls.
  */
-class ACE_Export ACE_Mem_Map
+class ACE_Memory_Export ACE_Mem_Map
 {
 public:
   // = Initialization and termination methods.
@@ -45,7 +48,7 @@ public:
   /// Default constructor.
   ACE_Mem_Map (void);
 
-  /// Map a file from an open file descriptor @a handle.  This function
+  /// Map a file from an open file descriptor <handle>.  This function
   /// will lookup the length of the file if it is not given.
   ACE_Mem_Map (ACE_HANDLE handle,
                int length = -1,
@@ -55,7 +58,7 @@ public:
                off_t offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Map a file specified by @a file_name.
+  /// Map a file specified by <file_name>.
   ACE_Mem_Map (const ACE_TCHAR *filename,
                int len = -1,
                int flags = O_RDWR | O_CREAT,
@@ -66,7 +69,7 @@ public:
                off_t offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Map a file from an open file descriptor @a handle.  This function
+  /// Map a file from an open file descriptor <handle>.  This function
   /// will lookup the length of the file if it is not given.
   int map (ACE_HANDLE handle,
            int length = -1,
@@ -175,23 +178,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
-  /// This method does the dirty work of actually calling ::mmap to map
-  /// the file into memory.
-  int map_it (ACE_HANDLE handle,
-              int len = -1,
-              int prot = PROT_RDWR,
-              int share = MAP_SHARED,
-              void *addr = 0,
-              off_t offset = 0,
-              LPSECURITY_ATTRIBUTES sa = 0);
-
-  // = Disallow copying and assignment.
-  ACE_Mem_Map (const ACE_Mem_Map &);
-  void operator = (const ACE_Mem_Map &);
-
-private:
-
   /// Base address of the memory-mapped file.
   void *base_addr_;
 
@@ -216,9 +202,20 @@ private:
   /// if we opened the file.
   int close_handle_;
 
-};
+  /// This method does the dirty work of actually calling ::mmap to map
+  /// the file into memory.
+  int map_it (ACE_HANDLE handle,
+              int len = -1,
+              int prot = PROT_RDWR,
+              int share = MAP_SHARED,
+              void *addr = 0,
+              off_t offset = 0,
+              LPSECURITY_ATTRIBUTES sa = 0);
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+  // = Disallow copying and assignment.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Mem_Map (const ACE_Mem_Map &))
+  ACE_UNIMPLEMENTED_FUNC (void operator = (const ACE_Mem_Map &))
+};
 
 #if defined (__ACE_INLINE__)
 #include "ace/Mem_Map.inl"

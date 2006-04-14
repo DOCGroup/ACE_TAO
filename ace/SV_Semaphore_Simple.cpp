@@ -11,9 +11,8 @@ ACE_RCSID (ace,
            SV_Semaphore_Simple,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE (ACE_SV_Semaphore_Simple)
+
 
 void
 ACE_SV_Semaphore_Simple::dump (void) const
@@ -56,7 +55,7 @@ ACE_SV_Semaphore_Simple::init (key_t k, int i)
 // specific amount (positive or negative; amount can`t be zero).
 
 int
-ACE_SV_Semaphore_Simple::op (short val, u_short n, short flags) const
+ACE_SV_Semaphore_Simple::op (int val, u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::op");
   sembuf op_op;
@@ -77,10 +76,10 @@ ACE_SV_Semaphore_Simple::op (short val, u_short n, short flags) const
 
 int
 ACE_SV_Semaphore_Simple::open (key_t k,
-                               short flags,
+                               int flags,
                                int initial_value,
                                u_short n,
-                               mode_t perms)
+                               int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
   union semun ivalue;
@@ -106,10 +105,10 @@ ACE_SV_Semaphore_Simple::open (key_t k,
 }
 
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
-                                                  short flags,
+                                                  int flags,
                                                   int initial_value,
                                                   u_short n,
-                                                  mode_t perms)
+                                                  int perms)
   : key_ (k)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
@@ -154,10 +153,10 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 
 int
 ACE_SV_Semaphore_Simple::open (const char *name,
-                               short flags,
+                               int flags,
                                int initial_value,
                                u_short n,
-                               mode_t perms)
+                               int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
 
@@ -172,10 +171,10 @@ ACE_SV_Semaphore_Simple::open (const char *name,
 }
 
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
-                                                  short flags,
+                                                  int flags,
                                                   int initial_value,
                                                   u_short n,
-                                                  mode_t perms)
+                                                  int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
   if (this->open (name,
@@ -188,15 +187,14 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                 ACE_LIB_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
-                                                  short flags,
+                                                  int flags,
                                                   int initial_value,
                                                   u_short nsems,
-                                                  mode_t perms)
+                                                  int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple(wchar_t)");
-  if (this->open (ACE_Wide_To_Ascii (name).char_rep (),
+  if (this->open (ACE_TEXT_TO_CHAR_IN (name),
                   flags,
                   initial_value,
                   nsems,
@@ -205,7 +203,6 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
 {
@@ -233,5 +230,3 @@ ACE_SV_Semaphore_Simple::remove (void) const
   ((ACE_SV_Semaphore_Simple *) this)->init ();
   return result;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

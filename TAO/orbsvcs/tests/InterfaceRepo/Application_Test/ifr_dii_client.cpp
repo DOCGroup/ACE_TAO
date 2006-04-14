@@ -3,6 +3,7 @@
 
 #include "ifr_dii_client.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Application_Test,
            ifr_dii_client,
@@ -26,8 +27,7 @@ IFR_DII_Client::init (int argc,
                       char *argv[]
                       ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -98,10 +98,9 @@ IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-IFR_DII_Client::parse_args (int argc,
-                            char *argv[])
+IFR_DII_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "dn");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "dn");
   int c;
 
   while ((c = opts ()) != -1)

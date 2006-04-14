@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Do nothing constructor.
 
@@ -26,5 +23,3 @@ ACE_LSOCK_CODgram::get_handle (void) const
   ACE_TRACE ("ACE_LSOCK_CODgram::get_handle");
   return this->ACE_SOCK_CODgram::get_handle ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -14,6 +14,7 @@
 
 #include "ace/Array_Base.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Reactor.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
@@ -571,7 +572,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *message)
 int
 parse_args (int argc, char ** argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "d");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "d");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -597,8 +598,10 @@ parse_args (int argc, char ** argv)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // We may want this to be alive beyond the next block.
   TAO_EC_Servant_Var<Heartbeat_Application> app;
 
@@ -606,10 +609,10 @@ main (int argc, char *argv[])
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return 1;
 
       CORBA::Object_var obj =

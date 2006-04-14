@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // $Id$
 
 #ifndef METRICS_LOGGER_H
@@ -32,7 +30,7 @@
 #include "orbsvcs/MetricsS.h"
 #include "orbsvcs/RtecEventCommS.h"
 
-#include "orbsvcs/Metrics/Metrics_Utils.h"
+#include "Metrics_Utils.h"
 
 #if defined (METRICS_LOGGER_SENDS_EVENTS)
 #include "MetricsC.h"
@@ -42,8 +40,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Metrics_Export TAO_Metrics_Logger_Data
 {
@@ -215,8 +211,6 @@ TAO_METRICS_LOGGER_REF_SINGLETON;
 
 typedef ACE_Singleton<TAO_Metrics_Logger, ACE_SYNCH_MUTEX>
 TAO_METRICS_LOGGER_SINGLETON;
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_METRICS_COLLECTION */

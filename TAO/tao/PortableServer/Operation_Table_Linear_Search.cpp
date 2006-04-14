@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/Operation_Table_Linear_Search.h"
+#include "Operation_Table_Linear_Search.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
 
@@ -31,7 +31,9 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 /***************************************************************/
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+TAO_Linear_Search_OpTable::TAO_Linear_Search_OpTable (void)
+{
+}
 
 TAO_Linear_Search_OpTable::~TAO_Linear_Search_OpTable (void)
 {
@@ -90,4 +92,4 @@ TAO_Linear_Search_OpTable::find (const char *opname,
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

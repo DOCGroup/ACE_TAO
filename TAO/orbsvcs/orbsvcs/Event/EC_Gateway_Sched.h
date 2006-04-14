@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Gateway_Sched.h
  *
@@ -18,13 +18,11 @@
 #define TAO_EC_GATEWAY_SCHED_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "EC_Gateway_IIOP.h"
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/sched_event_export.h"
+#include "sched_event_export.h"
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Gateway_Sched
@@ -50,10 +48,8 @@ public:
              RtecScheduler::Scheduler_ptr consumer_sched,
              const char* consumer_name,
              const char* supplier_name
-             ACE_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_EC_GATEWAY_SCHED_H */

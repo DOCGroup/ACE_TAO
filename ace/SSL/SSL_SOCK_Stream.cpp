@@ -5,7 +5,6 @@
 #include "ace/Countdown_Time.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_select.h"
-#include "ace/OS_Memory.h"
 
 #include <openssl/err.h>
 
@@ -18,8 +17,6 @@
 ACE_RCSID (ACE_SSL,
            SSL_SOCK_Stream,
            "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
@@ -45,7 +42,7 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ACE_SSL_SOCK_Stream "
                   "- cannot allocate new SSL structure %p\n",
-                  ACE_TEXT ("")));
+                  ACE_LIB_TEXT ("")));
     }
 }
 
@@ -158,11 +155,12 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
       break;
     }
 
-  int inlen;
+  u_long inlen;
+
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-                     &inlen) == -1)
+                     (u_long *) &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
@@ -588,5 +586,3 @@ ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
 
   return -1;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_BD_STRING_ARGUMENT_T_CPP
-#define TAO_BD_STRING_ARGUMENT_T_CPP
+#ifndef TAO_BD_STRING_ARGUMENT_T_C
+#define TAO_BD_STRING_ARGUMENT_T_C
 
 #include "tao/BD_String_Argument_T.h"
 
@@ -9,7 +9,9 @@
 #include "tao/BD_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           BD_String_Argument_T,
+           "$Id$")
 
 template<typename S,
          typename to_S,
@@ -151,6 +153,4 @@ TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::intercep
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_BD_STRING_ARGUMENT_T_CPP */
+#endif /* TAO_BD_STRING_ARGUMENT_T_C */

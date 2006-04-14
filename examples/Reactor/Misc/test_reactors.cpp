@@ -195,7 +195,7 @@ template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

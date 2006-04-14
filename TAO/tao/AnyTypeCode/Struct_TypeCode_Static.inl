@@ -2,7 +2,6 @@
 //
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::TypeCode::Struct<char const *,
@@ -22,5 +21,3 @@ TAO::TypeCode::Struct<char const *,
   , fields_ (fields)
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

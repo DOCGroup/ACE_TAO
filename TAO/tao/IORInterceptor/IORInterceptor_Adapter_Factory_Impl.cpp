@@ -1,15 +1,13 @@
 // $Id$
 
-#include "tao/IORInterceptor/IORInterceptor_Adapter_Impl.h"
-#include "tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h"
+#include "IORInterceptor_Adapter_Impl.h"
+#include "IORInterceptor_Adapter_Factory_Impl.h"
 
 #include "tao/ORB_Core.h"
 
 ACE_RCSID (IORInterceptor,
            IORInterceptor_Adapter_Factory_Impl,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORInterceptor_Adapter_Factory_Impl::~TAO_IORInterceptor_Adapter_Factory_Impl (void)
 {
@@ -23,7 +21,6 @@ TAO_IORInterceptor_Adapter_Factory_Impl::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (nia,
                     TAO_IORInterceptor_Adapter_Impl (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (nia);
 
   return nia;
 }
@@ -45,8 +42,6 @@ TAO_IORInterceptor_Adapter_Factory_Impl::Initializer (void)
         ace_svc_desc_TAO_IORInterceptor_Adapter_Factory_Impl
       );
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_IORInterceptor_Adapter_Factory_Impl,

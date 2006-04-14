@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,8 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/SystemException.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Policy_Validator;
@@ -52,8 +50,5 @@ public:
 
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
 #endif /* TAO_BIDIR_ADAPTER_H */

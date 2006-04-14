@@ -114,16 +114,18 @@
 // used as formal arguments to a template class.
 #    define ACE_HAS_TEMPLATE_TYPEDEFS
 
+// This is legit for A.03.05 - not sure A.03.04, but it should be.
+#    define ACE_HAS_USING_KEYWORD
+
 #    define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
 // Lack of (and broken) support for placement operator delete is a known
-// bug by HP, up until aC++ A.03.55.02.
-#    if (__HP_aCC < 35502)
-#      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-#    endif /* __HP_aCC < 35502 */
+// bug by HP, at least as of aC++ A.03.10. It may be fixed later, and if so
+// this would change to be a #if against an appropriate value of __HP_aCC
+#    define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 
 // Compiler's 'new' throws exceptions on failure, regardless of whether or
 // not exception handling is enabled in the compiler options. Fortunately,
@@ -147,8 +149,6 @@
 
 // Platform has XPG4 wide character support
 #    define ACE_HAS_XPG4_MULTIBYTE_CHAR
-#    define ACE_HAS_WCHAR
-#    define ACE_SIZEOF_WCHAR _WCHAR_T
 
 #  endif /* __cplusplus < 199707L */
 
@@ -274,10 +274,6 @@
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
-// At least for 11iv2, lacks perfect filtering.
-#if (HPUX_VERS >= 1123) && !defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING)
-# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
-#endif
 
 /* Platform defines MAP_FAILED as a long constant. */
 #define ACE_HAS_LONG_MAP_FAILED 1
@@ -400,13 +396,6 @@
 // dlopen() takes a char* instead of const char*
 #define ACE_HAS_CHARPTR_DL
 
-// lacks setegid and seteuid
-#define ACE_LACKS_SETEGID
-#define ACE_LACKS_SETEUID
-
-#define ACE_LACKS_SUSECONDS_T
-#define ACE_LACKS_SYS_SYSCTL_H
-
 // Shared library name/path components
 #define ACE_DLL_SUFFIX  ".sl"
 #if defined (__LP64__)
@@ -499,7 +488,7 @@
 #define ACE_HAS_POSIX_SEM
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS
+#define ACE_HAS_TERMIOS 
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

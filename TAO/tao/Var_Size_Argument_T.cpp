@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_VAR_SIZE_ARGUMENT_T_CPP
-#define TAO_VAR_SIZE_ARGUMENT_T_CPP
+#ifndef TAO_VAR_SIZE_ARGUMENT_T_C
+#define TAO_VAR_SIZE_ARGUMENT_T_C
 
 #include "tao/Var_Size_Argument_T.h"
 
@@ -9,7 +9,9 @@
 #include "tao/Var_Size_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Var_Size_Argument_T,
+           "$Id$")
 
 template<typename S,
          typename Insert_Policy>
@@ -115,6 +117,4 @@ TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::interceptor_value (CORBA::A
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* TAO_VAR_SIZE_ARGUMENT_T_CPP */
+#endif /* TAO_VAR_SIZE_ARGUMENT_T_C */

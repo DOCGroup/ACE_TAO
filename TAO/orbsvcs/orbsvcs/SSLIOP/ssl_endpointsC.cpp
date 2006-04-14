@@ -34,14 +34,12 @@
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
-#include "orbsvcs/SSLIOP/ssl_endpointsC.h"
+#include "ssl_endpointsC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
@@ -209,5 +207,3 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_TAO_SSLEndpointSequence_CPP_ */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,7 +15,7 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_STROPTS_H
-#define ACE_OS_NS_STROPTS_H
+# define ACE_OS_NS_STROPTS_H
 
 # include /**/ "ace/pre.h"
 
@@ -37,8 +37,6 @@
 #  undef ACE_EXPORT_MACRO
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
@@ -115,7 +113,7 @@ namespace ACE_OS {
              void * = 0);
 
   /// QoS-enabled <ioctl>.
-  extern ACE_Export
+  extern ACE_Export 
   int ioctl (ACE_HANDLE socket,
              unsigned long io_control_code,
              void *in_buffer_p,
@@ -126,10 +124,10 @@ namespace ACE_OS {
              ACE_OVERLAPPED *overlapped,
              ACE_OVERLAPPED_COMPLETION_FUNC func);
 
-#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
+#if !defined (ACE_HAS_WINCE)
   /// QoS-enabled <ioctl> when the I/O control code is either
   /// SIO_SET_QOS or SIO_GET_QOS.
-  extern ACE_Export
+  extern ACE_Export 
   int ioctl (ACE_HANDLE socket,
              unsigned long io_control_code,
              ACE_QoS &ace_qos,
@@ -138,7 +136,7 @@ namespace ACE_OS {
              unsigned long buffer = 0,
              ACE_OVERLAPPED *overlapped = 0,
              ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
-#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
+#endif  /* ACE_HAS_WINCE */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int isastream (ACE_HANDLE handle);
@@ -157,8 +155,6 @@ namespace ACE_OS {
                int flags);
 
 } /* namespace ACE_OS */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

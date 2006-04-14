@@ -16,8 +16,6 @@ ACE_RCSID (ace,
            Shared_Object,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Initializes object when dynamic linking occurs.
 
 int
@@ -51,5 +49,3 @@ ACE_Shared_Object::~ACE_Shared_Object (void)
 {
   ACE_TRACE ("ACE_Shared_Object::~ACE_Shared_Object");
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

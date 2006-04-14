@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 void
@@ -110,5 +107,3 @@ ACE::HTBP::Session_Id_t::operator ==(const ACE::HTBP::Session_Id_t &other) const
           (this->local_ == other.local_) &&
           (this->peer_ == other.peer_));
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

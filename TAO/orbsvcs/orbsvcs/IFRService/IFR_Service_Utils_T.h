@@ -31,8 +31,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Repository_i;
 
 template<typename T>
@@ -110,10 +108,8 @@ public:
                                ACE_Configuration_Section_Key &key);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.cpp"
+#include "IFR_Service_Utils_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 #if defined(_MSC_VER)

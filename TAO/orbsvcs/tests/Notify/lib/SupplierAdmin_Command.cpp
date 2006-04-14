@@ -17,20 +17,20 @@ TAO_Notify_Tests_SupplierAdmin_Command::~TAO_Notify_Tests_SupplierAdmin_Command 
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_SupplierAdmin_Command::get_name (void)
 {
   return TAO_Notify_Tests_SupplierAdmin_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_SupplierAdmin_Command::name (void)
 {
   return TAO_Notify_Tests_Name::supplier_admin_command;
 }
 
 void
-TAO_Notify_Tests_SupplierAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_SupplierAdmin_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -159,21 +159,17 @@ TAO_Notify_Tests_SupplierAdmin_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == CREATE)
     {
       this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == OFFER)
     {
       this->handle_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == SET_QOS)
     {
       this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
   else if (this->command_ == DUMP_STATE)
     {
       this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
     }
 }

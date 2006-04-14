@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// ACE_HTBP_Filter.i
 
 ACE_INLINE
 ssize_t
@@ -59,5 +58,3 @@ ACE::HTBP::Filter::http_code (void)
 {
   return this->http_code_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

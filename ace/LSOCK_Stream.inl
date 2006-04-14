@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Sets both the file descriptors... Overrides handle from the base
 // classes.
@@ -22,4 +19,5 @@ ACE_LSOCK_Stream::get_handle (void) const
   return this->ACE_SOCK_Stream::get_handle ();
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+
+

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/PG_MemberInfo.h"
+#include "PG_MemberInfo.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
@@ -31,8 +31,6 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PG_ObjectGroup_Map_Entry
@@ -77,7 +75,6 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Equal_To<PortableServer::ObjectId>,
   ACE_Null_Mutex> TAO_PG_ObjectGroup_Map;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

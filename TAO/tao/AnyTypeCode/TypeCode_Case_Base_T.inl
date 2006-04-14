@@ -5,7 +5,6 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, typename TypeCodeType>
 ACE_INLINE
@@ -75,5 +74,3 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::type (CORBA::TypeCode_ptr tc)
   // case.
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

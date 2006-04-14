@@ -19,10 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class ForwardCtrlServerInterceptor
-  : public PortableInterceptor::ServerRequestInterceptor
+class ForwardCtrlServerInterceptor :
+  public PortableInterceptor::ServerRequestInterceptor
 {
 public:
   ForwardCtrlServerInterceptor();
@@ -59,7 +57,4 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif

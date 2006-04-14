@@ -23,8 +23,6 @@
 
 #include "tao/Basic_Types.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Endpoint;
 
 /**
@@ -85,8 +83,6 @@ protected:
   /// delete it when we destruct ourselves.
   CORBA::Boolean endpoint_from_heap_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Transport_Descriptor_Interface.inl"

@@ -1,9 +1,13 @@
 // $Id$
 
 #include "server_i.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+// This test cannot be run on a wide character build
+// ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {

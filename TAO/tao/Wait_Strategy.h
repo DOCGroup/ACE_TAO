@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,12 +23,7 @@
 
 #include "tao/TAO_Export.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_ORB_Core;
 class TAO_Transport;
 class TAO_Synch_Reply_Dispatcher;
@@ -96,11 +91,9 @@ protected:
   int is_registered_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
-# include "tao/Wait_Strategy.inl"
+# include "Wait_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

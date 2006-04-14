@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 /**
  * @file TSS_Adapter.cpp
  *
@@ -10,9 +11,11 @@
 
 #include "ace/TSS_Adapter.h"
 
-ACE_RCSID(ace, TSS_Adapter, "$Id$")
+#if !defined (__ACE_INLINE__)
+#include "ace/TSS_Adapter.inl"
+#endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, TSS_Adapter, "$Id$")
 
 ACE_TSS_Adapter::ACE_TSS_Adapter (void *object, ACE_THR_DEST f)
   : ts_obj_ (object),
@@ -28,18 +31,17 @@ ACE_TSS_Adapter::cleanup (void)
   (*this->func_)(this->ts_obj_);  // call cleanup routine for ts_obj_
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 extern "C" void
 ACE_TSS_C_cleanup (void *object)
 {
   // ACE_TRACE ("ACE_TSS_C_cleanup");
   if (object != 0)
     {
-      ACE_TSS_Adapter * const tss_adapter = (ACE_TSS_Adapter *) object;
+      ACE_TSS_Adapter *tss_adapter = (ACE_TSS_Adapter *) object;
       // Perform cleanup on the real TS object.
       tss_adapter->cleanup ();
       // Delete the adapter object.
       delete tss_adapter;
     }
 }
+

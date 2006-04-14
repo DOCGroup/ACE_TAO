@@ -1,7 +1,5 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
-
 /*
  * Copyright (c) 1995 Regents of the University of California.
  * All rights reserved.
@@ -41,12 +39,8 @@
 #define TAO_AV_MEDIA_TIMER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
-#include "tao/Versioned_Namespace.h"
-
+#include "ace/Basic_Types.h"
 //long random (void);
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class MediaTimer
 {
@@ -62,8 +56,6 @@ class MediaTimer
  protected:
   ACE_UINT32 offset_;   /* random offset */
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_MEDIA_TIMER_H */

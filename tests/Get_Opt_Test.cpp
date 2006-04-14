@@ -7,7 +7,7 @@
 //
 // = DESCRIPTION
 //    This program tests both the short and long option support in
-//    <ACE_Get_Opt>, and demonstrates how to use it.
+//    <ACE_Get_Arg_Opt<ACE_TCHAR> >, and demonstrates how to use it.
 //
 // = AUTHOR
 //    Don Hinton <dhinton@dresystems.com>
@@ -25,7 +25,7 @@ ACE_RCSID(tests, Get_Opt_Test, "$Id$")
 
 /*
  * This is the heart of the test. It sets up the optstring, instantiates
- * ACE_Get_Opt, add long options, processes them in a loop, and prints out
+ * ACE_Get_Arg_Opt<ACE_TCHAR> , add long options, processes them in a loop, and prints out
  * the results to the log.
  *
  * It returns 0 for success and 1 for error so we can keep track of the
@@ -65,7 +65,7 @@ parse_args (int test_number,
 
   ACE_ARGV args (test.c_str ());
 
-  ACE_Get_Opt get_opt (args.argc (),
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (args.argc (),
                        args.argv (),
                        optstring.c_str (),
                        skip_argv,
@@ -75,31 +75,31 @@ parse_args (int test_number,
   // Now add the default long args.
   if (get_opt.long_option (ACE_TEXT ("flag"),
                            'f',
-                           ACE_Get_Opt::NO_ARG) != 0)
+                           ACE_Get_Arg_Opt<ACE_TCHAR> ::NO_ARG) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'f' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("requires_arg"),
                            'r',
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+                           ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'r' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("optional_arg"),
                            'o',
-                           ACE_Get_Opt::ARG_OPTIONAL) != 0)
+                           ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_OPTIONAL) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'o' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_option"),
                            'l',
-                           ACE_Get_Opt::ARG_OPTIONAL) != 0)
+                           ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_OPTIONAL) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'l' \n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_only"),
                            -11,
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+                           ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
                        ACE_TEXT ("\"long_only\" \n")), 1);
@@ -115,7 +115,7 @@ parse_args (int test_number,
   // (afterall, there are only so many alpha numeric characters available).
   if (get_opt.long_option (ACE_TEXT ("non_alpha-num_short"),
                            -10,
-                           ACE_Get_Opt::ARG_OPTIONAL) != 0)
+                           ACE_Get_Arg_Opt<ACE_TCHAR> ::ARG_OPTIONAL) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
                        ACE_TEXT ("\"non_alpha_short\" \n")), 1);
@@ -337,9 +337,9 @@ run_main (int, ACE_TCHAR *argv[])
   int test_number = 0;
 
   // Run the tests for each type of ordering.
-  retval = run_test (test_number, ACE_Get_Opt::PERMUTE_ARGS);
-  retval += run_test (test_number, ACE_Get_Opt::REQUIRE_ORDER);
-  retval += run_test (test_number, ACE_Get_Opt::RETURN_IN_ORDER);
+  retval = run_test (test_number, ACE_Get_Arg_Opt<ACE_TCHAR> ::PERMUTE_ARGS);
+  retval += run_test (test_number, ACE_Get_Arg_Opt<ACE_TCHAR> ::REQUIRE_ORDER);
+  retval += run_test (test_number, ACE_Get_Arg_Opt<ACE_TCHAR> ::RETURN_IN_ORDER);
 
   ACE_END_TEST;
   return retval;

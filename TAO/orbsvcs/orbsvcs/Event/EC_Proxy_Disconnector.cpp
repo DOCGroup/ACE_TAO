@@ -6,9 +6,7 @@
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 
-#include "orbsvcs/Event/EC_Proxy_Disconnector.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "EC_Proxy_Disconnector.h"
 
 void
 TAO_EC_Supplier_Proxy_Disconnect_Functor::operator() (
@@ -43,5 +41,3 @@ TAO_EC_Consumer_Proxy_Disconnect_Functor::operator() (
     }
   ACE_ENDTRY;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

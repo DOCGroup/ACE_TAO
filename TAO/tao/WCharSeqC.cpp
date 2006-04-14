@@ -29,13 +29,11 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/WCharSeqC.h"
+#include "WCharSeqC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -153,5 +151,3 @@ void CORBA::WCharSeq::_tao_any_destructor (
 }
 
 #endif /* _TAO_CDR_OP_CORBA_WCharSeq_CPP_ */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

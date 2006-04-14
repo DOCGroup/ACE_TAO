@@ -24,9 +24,9 @@ ACE_RCSID (ace,
 #include "ace/Guard_T.h"
 
 extern "C" void
-ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
+ace_mutex_lock_cleanup_adapter (void *args)
 {
-  ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::mutex_lock_cleanup (args);
+  ACE_OS::mutex_lock_cleanup (args);
 }
 
 
@@ -86,8 +86,6 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 /*****************************************************************************/
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Thread_ID::to_string (char *thr_string) const
@@ -781,40 +779,26 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
   }
 }
 
-TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
+TSS_Cleanup_Instance::~TSS_Cleanup_Instance()
 {
-  // Variable to hold the mutex_ to delete outside the scope of the
-  // guard.
-  ACE_Thread_Mutex *del_mutex = 0;
-
-  // scope the guard
-  {
-    ACE_Guard<ACE_Thread_Mutex> guard (*mutex_);
-    if (ptr_ != 0)
-      {
-        if (ACE_BIT_ENABLED (flags_, FLAG_DELETING))
-          {
-            ACE_ASSERT(instance_ == 0);
-            ACE_ASSERT(reference_count_ == 0);
-            delete ptr_;
-            del_mutex = mutex_ ;
-            mutex_ = 0;
-          }
-        else
-          {
-            ACE_ASSERT (reference_count_ > 0);
-            --reference_count_;
-            if (reference_count_ == 0 && instance_ == NULL)
-              condition_->signal ();
-          }
-      }
-  }// end of guard scope
-
-  if (del_mutex != 0)
+  ACE_Guard<ACE_Thread_Mutex> guard(*mutex_);
+  if (ptr_ != 0)
     {
-      delete condition_;
-      condition_ = 0;
-      delete del_mutex;
+      if (ACE_BIT_ENABLED (flags_,FLAG_DELETING))
+        {
+          ACE_ASSERT(instance_ == 0);
+          ACE_ASSERT(reference_count_ == 0);
+          delete ptr_;
+        }
+      else
+        {
+          ACE_ASSERT (reference_count_ > 0);
+          --reference_count_;
+          if (reference_count_ == 0 && instance_ == NULL)
+            {
+              condition_->signal();
+            }
+        }
     }
 }
 
@@ -925,7 +909,7 @@ ACE_TSS_Cleanup::thread_exit (void)
 extern "C" void
 ACE_TSS_Cleanup_keys_destroyer (void *tss_keys)
 {
-  delete static_cast <ACE_TSS_Keys *> (tss_keys);
+  delete reinterpret_cast <ACE_TSS_Keys *> (tss_keys);
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
@@ -1318,7 +1302,6 @@ ACE_OS::cond_init (ACE_cond_t *cv,
     ACE_OS::cond_init (cv, static_cast<short> (attributes.type), name, arg);
 }
 
-# if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
@@ -1327,7 +1310,6 @@ ACE_OS::cond_init (ACE_cond_t *cv,
   return
     ACE_OS::cond_init (cv, static_cast<short> (attributes.type), name, arg);
 }
-# endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
@@ -1358,7 +1340,6 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
 # endif /* ACE_HAS_THREADS */
 }
 
-# if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
 {
@@ -1387,7 +1368,6 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
 }
-# endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::cond_signal (ACE_cond_t *cv)
@@ -1999,7 +1979,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
                           (sa, &sa_buffer, &sd_buffer),
                         FALSE,
-                        ACE_Ascii_To_Wide (name).wchar_rep ());
+                        ACE_TEXT_TO_WCHAR_IN (name));
 #   else /* ACE_HAS_WINCE */
       m->proc_mutex_ =
   ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
@@ -2152,7 +2132,6 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::mutex_init (ACE_mutex_t *m,
                     int lock_scope,
@@ -2189,13 +2168,12 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #else /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
   return ACE_OS::mutex_init (m,
                              lock_scope,
-                             ACE_Wide_To_Ascii (name).char_rep (),
+                             ACE_TEXT_TO_CHAR_IN (name),
                              attributes,
                              sa,
                              lock_type);
 #endif /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
 }
-#endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::mutex_lock (ACE_mutex_t *m)
@@ -2663,7 +2641,7 @@ ACE_OS::event_destroy (ACE_event_t *event)
 # endif
       ACE_OS::munmap (event->eventdata_,
                       sizeof (ACE_eventdata_t));
-      ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR(event->name_));
+      ACE_OS::shm_unlink (ACE_TEXT_TO_TCHAR_IN(event->name_));
       ACE_OS::free (event->name_);
       return r1 != 0 || r2 != 0 ? -1 : 0;
     }
@@ -2752,7 +2730,7 @@ ACE_OS::event_init (ACE_event_t *event,
                              (sa, &sa_buffer, &sd_buffer),
                            manual_reset,
                            initial_state,
-                           ACE_Ascii_To_Wide (name).wchar_rep ());
+                           ACE_TEXT_TO_WCHAR_IN (name));
 # else /* ACE_HAS_WINCE */
   *event = ::CreateEventA (ACE_OS::default_win32_security_attributes_r
                              (sa, &sa_buffer, &sd_buffer),
@@ -2773,13 +2751,13 @@ ACE_OS::event_init (ACE_event_t *event,
     {
       int owner = 0;
       // Let's see if the shared memory entity already exists.
-      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_TO_TCHAR_IN (name),
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+            fd = ACE_OS::shm_open (ACE_TEXT_TO_TCHAR_IN (name),
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
           if (fd == ACE_INVALID_HANDLE)   // Still can't get it.
@@ -2807,7 +2785,7 @@ ACE_OS::event_init (ACE_event_t *event,
       if (evtdata == MAP_FAILED)
         {
           if (owner)
-            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+            ACE_OS::shm_unlink (ACE_TEXT_TO_TCHAR_IN (name));
           return -1;
         }
 
@@ -2816,7 +2794,7 @@ ACE_OS::event_init (ACE_event_t *event,
           event->name_ = ACE_OS::strdup (name);
           if (event->name_ == 0)
             {
-              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+              ACE_OS::shm_unlink (ACE_TEXT_TO_TCHAR_IN (name));
               return -1;
             }
           event->eventdata_ = evtdata;
@@ -4003,19 +3981,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
 
-  ACE_Base_Thread_Adapter *thread_args = 0;
+  ACE_Base_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
-                                           (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
+                                           (ACE_THR_C_FUNC) ace_thread_adapter,
                                            ACE_OS_Object_Manager::seh_except_selector(),
                                            ACE_OS_Object_Manager::seh_except_handler()),
                     -1);
 #else
   ACE_NEW_RETURN (thread_args,
                   ACE_OS_Thread_Adapter (func, args,
-                                         (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME),
+                                         (ACE_THR_C_FUNC) ace_thread_adapter),
                   -1);
 
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
@@ -4398,22 +4376,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             }
         }
 #   endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
-
-#   ifdef ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP
-      if (ACE_BIT_ENABLED (flags, THR_SUSPENDED))
-        {
-           if (ACE_ADAPT_RETVAL(::pthread_attr_setcreatesuspend_np(&attr), result) != 0)
-	     {
-
-#     if defined (ACE_HAS_PTHREADS_DRAFT4)
-              ::pthread_attr_delete (&attr);
-#     else /* ACE_HAS_PTHREADS_DRAFT4 */
-              ::pthread_attr_destroy (&attr);
-#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
-	      return -1;
-	    }
-        }
-#   endif /* !ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP */
 
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
@@ -4825,9 +4787,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     return -1;
   else
     {
-      if (! thr_id_provided && thr_id)
+      if (! thr_id_provided  &&  thr_id)
         {
-          if (*thr_id && (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
+          if (*thr_id  &&  (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
             // *thr_id was allocated by the Thread_Manager.  ::taskTcb
             // (int tid) returns the address of the WIND_TCB (task
             // control block).  According to the ::taskSpawn()
@@ -4835,12 +4797,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             // pStackBase, but is that of the current task?  If so, it
             // might be a bit quicker than this extraction of the tcb
             // . . .
-            ACE_OS::strsncpy (*thr_id + 1, ::taskName (tid), 10);
+            ACE_OS::strsncpy (*thr_id + 1, ::taskTcb (tid)->name, 10);
           else
             // *thr_id was not allocated by the Thread_Manager.
             // Pass back the task name in the location pointed to
             // by thr_id.
-            *thr_id = ::taskName (tid);
+            *thr_id = ::taskTcb (tid)->name;
         }
       // else if the thr_id was provided, there's no need to overwrite
       // it with the same value (string).  If thr_id is 0, then we can't
@@ -5028,99 +4990,6 @@ ACE_OS::thr_key_detach (ACE_thread_key_t key, void *)
 }
 
 int
-ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
-                          size_t cpu_set_size,
-                          cpu_set_t * cpu_mask)
-{
-#if defined (ACE_HAS_PTHREAD_GETAFFINITY_NP)
-  // Handle of the thread, which is NPTL thread-id, normally a big number
-  if (::pthread_getaffinity_np (thr_id,
-                                cpu_set_size,
-                                cpu_mask) != 0)
-    {
-      return -1;
-    }
-  return 0;
-#elif defined (ACE_HAS_2_PARAM_SCHED_GETAFFINITY)
-  // The process-id is expected as <thr_id>, which can be a thread-id of
-  // linux-thread, thus making binding to cpu of that particular thread only.
-  // If you are using this flag for NPTL-threads, however, please pass as a
-  // thr_id process id obtained by ACE_OS::getpid ()
-  ACE_UNUSED_ARG (cpu_set_size);
-  if (::sched_getaffinity(thr_id,
-                          cpu_mask) == -1)
-    {
-      return -1;
-    }
-  return 0;
-#elif defined (ACE_HAS_SCHED_GETAFFINITY)
-  // The process-id is expected as <thr_id>, which can be a thread-id of
-  // linux-thread, thus making binding to cpu of that particular thread only.
-  // If you are using this flag for NPTL-threads, however, please pass as a
-  // thr_id process id obtained by ACE_OS::getpid ()
-  if (::sched_getaffinity(thr_id,
-                          cpu_set_size,
-                          cpu_mask) == -1)
-    {
-      return -1;
-    }
-  return 0;
-#else
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (cpu_set_size);
-  ACE_UNUSED_ARG (cpu_mask);
-  ACE_NOTSUP_RETURN (-1);
-#endif
-}
-
-int
-ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
-                          size_t cpu_set_size,
-                          const cpu_set_t * cpu_mask)
-{
-#if defined (ACE_HAS_PTHREAD_SETAFFINITY_NP)
-  if (::pthread_setaffinity_np (thr_id,
-                                cpu_set_size,
-                                cpu_mask) != 0)
-    {
-      return -1;
-    }
-  return 0;
-#elif defined (ACE_HAS_2_PARAM_SCHED_SETAFFINITY)
-  // The process-id is expected as <thr_id>, which can be a thread-id of
-  // linux-thread, thus making binding to cpu of that particular thread only.
-  // If you are using this flag for NPTL-threads, however, please pass as a
-  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
-  //
-  ACE_UNUSED_ARG (cpu_set_size);
-  if (::sched_setaffinity (thr_id,
-                           cpu_mask) == -1)
-    {
-      return -1;
-    }
-  return 0;
-#elif defined (ACE_HAS_SCHED_SETAFFINITY)
-  // The process-id is expected as <thr_id>, which can be a thread-id of
-  // linux-thread, thus making binding to cpu of that particular thread only.
-  // If you are using this flag for NPTL-threads, however, please pass as a
-  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
-  //
-  if (::sched_setaffinity (thr_id,
-                           cpu_set_size,
-                           cpu_mask) == -1)
-    {
-      return -1;
-    }
-  return 0;
-#else
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (cpu_set_size);
-  ACE_UNUSED_ARG (cpu_mask);
-  ACE_NOTSUP_RETURN (-1);
-#endif
-}
-
-int
 ACE_OS::thr_key_used (ACE_thread_key_t key)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
@@ -5251,12 +5120,8 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     else
       return -1;
       /* NOTREACHED */
-#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   else /* ACE_HAS_TSS_EMULATION */
     return  ACE_OS::thr_keycreate_native (key, dest);
-#   else
-    ACE_UNUSED_ARG (key);
-    ACE_UNUSED_ARG (dest);
-    ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5319,11 +5184,8 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
         return cleanup->free_key (key);
       }
     return -1;
-#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   else /* ACE_HAS_TSS_EMULATION */
     return ACE_OS::thr_keyfree_native (key);
-#   else
-    ACE_UNUSED_ARG (key);
-    ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5392,7 +5254,7 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #       else
     int result;
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setspecific (key, data),
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
                                          result),
                        int, -1);
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
@@ -5474,12 +5336,8 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
         return -1;
       }
     return -1;
-#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-      return ACE_OS::thr_setspecific_native (key, data);
 #   else /* ACE_HAS_TSS_EMULATION */
-      ACE_UNUSED_ARG (key);
-      ACE_UNUSED_ARG (data);
-      ACE_NOTSUP_RETURN (-1);
+  return ACE_OS::thr_setspecific_native (key, data);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5508,7 +5366,6 @@ ACE_OS::unique_name (const void *object,
                     length);
 }
 
-#if defined (ACE_USES_WCHAR)
 void
 ACE_OS::unique_name (const void *object,
                      wchar_t *name,
@@ -5521,20 +5378,16 @@ ACE_OS::unique_name (const void *object,
   // <object>.
   wchar_t temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   ACE_LIB_TEXT ("%p%d"),
+                   ACE_TEXT_WIDE ("%p%d"),
                    object,
                    static_cast <int> (ACE_OS::getpid ()));
   ACE_OS::strsncpy (name,
                     temp_name,
                     length);
 }
-#endif
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (VXWORKS)
 # include /**/ <usrLib.h>   /* for ::sp() */
-# include /**/ <sysLib.h>   /* for ::sysClkRateGet() */
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
@@ -5545,8 +5398,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 int
 spa (FUNCPTR entry, ...)
 {
-  static const unsigned int ACE_MAX_ARGS = 10;
-  static char *argv[ACE_MAX_ARGS];
+  static const unsigned int MAX_ARGS = 10;
+  static char *argv[MAX_ARGS];
   va_list pvar;
   unsigned int argc;
 
@@ -5562,7 +5415,7 @@ spa (FUNCPTR entry, ...)
   // number of arguments would have to be passed.
   va_start (pvar, entry);
 
-  for (argc = 1; argc <= ACE_MAX_ARGS; ++argc)
+  for (argc = 1; argc <= MAX_ARGS; ++argc)
     {
       argv[argc] = va_arg (pvar, char *);
 
@@ -5570,18 +5423,18 @@ spa (FUNCPTR entry, ...)
         break;
     }
 
-  if (argc > ACE_MAX_ARGS  &&  argv[argc-1] != 0)
+  if (argc > MAX_ARGS  &&  argv[argc-1] != 0)
     {
       // try to read another arg, and warn user if the limit was exceeded
       if (va_arg (pvar, char *) != 0)
         ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %d\n",
-                         ACE_MAX_ARGS);
+                         MAX_ARGS);
     }
   else
     {
       // fill unused argv slots with 0 to get rid of leftovers
       // from previous invocations
-      for (unsigned int i = argc; i <= ACE_MAX_ARGS; ++i)
+      for (unsigned int i = argc; i <= MAX_ARGS; ++i)
         argv[i] = 0;
     }
 
@@ -5677,8 +5530,8 @@ int
 spae (FUNCPTR entry, ...)
 {
   static const int WINDSH_ARGS = 10;
-  static const int ACE_MAX_ARGS    = 128;
-  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
+  static const int MAX_ARGS    = 128;
+  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5692,12 +5545,12 @@ spae (FUNCPTR entry, ...)
   for (char* str = va_arg (pvar, char*);
        str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
     {
-      add_to_argv(argc, argv, ACE_MAX_ARGS, str);
+      add_to_argv(argc, argv, MAX_ARGS, str);
     }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (i = argc; i < ACE_MAX_ARGS; ++i)
+  for (i = argc; i < MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
@@ -5731,8 +5584,8 @@ int
 spaef (FUNCPTR entry, ...)
 {
   static const int WINDSH_ARGS = 10;
-  static const int ACE_MAX_ARGS    = 128;
-  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
+  static const int MAX_ARGS    = 128;
+  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5746,12 +5599,12 @@ spaef (FUNCPTR entry, ...)
   for (char* str = va_arg (pvar, char*);
        str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
     {
-      add_to_argv(argc, argv, ACE_MAX_ARGS, str);
+      add_to_argv(argc, argv, MAX_ARGS, str);
     }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (i = argc; i < ACE_MAX_ARGS; ++i)
+  for (i = argc; i < MAX_ARGS; ++i)
     argv[i] = 0;
 
   int ret = entry (argc, argv);
@@ -5782,18 +5635,18 @@ _vx_call_entry(FUNCPTR entry, int argc, char* argv[])
 int
 vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 {
-  static const int ACE_MAX_ARGS    = 128;
-  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
+  static const int MAX_ARGS    = 128;
+  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
 
   if (arg)
-    add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
+    add_to_argv(argc, argv, MAX_ARGS, arg);
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (int i = argc; i < ACE_MAX_ARGS; ++i)
+  for (int i = argc; i < MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
@@ -5815,7 +5668,7 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   // successful
   return ret > 0 ? _vx_call_rc : 255;
 }
-#endif /* ACE_VXWORKS && !__RTP__ */
+#endif /* VXWORKS */
 
 #if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
 extern "C" int __d6_sigwait (sigset_t *set);

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Basic_Factory.h
  *
@@ -18,13 +17,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Factory.h"
+#include "EC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Basic_Factory
@@ -112,8 +109,6 @@ public:
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

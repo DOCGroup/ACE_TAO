@@ -124,10 +124,9 @@ Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&en
 }
 
 int
-Client::parse_args (int argc,
-                    char **argv)
+Client::parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt opts (argc,argv,"f:a:p:s");
+  ACE_Get_Arg_Opt<char> opts (argc,argv,"f:a:p:s");
 
   this->use_sfp_ = 0;
   int c;
@@ -240,7 +239,7 @@ Client::init (int argc,char **argv)
                        "the TAO_Naming_Client. \n"),
                       -1);
 
-  this->fp_ = ACE_OS::fopen (this->filename_,"r");
+  this->fp_ = ACE_OS::fopen (this->filename_,ACE_TEXT("r"));
   if (this->fp_ != 0)
     {
       ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
@@ -347,14 +346,15 @@ Client::run (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+     ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -368,7 +368,7 @@ main (int argc,
       ACE_TRY_CHECK;
 
       int result = 0;
-      result = CLIENT::instance ()->init (argc,argv);
+      result = CLIENT::instance ()->init (convert.get_argc(), convert.get_ASCII_argv());
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();

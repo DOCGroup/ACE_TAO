@@ -32,14 +32,9 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
@@ -351,10 +346,8 @@ private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ObserverStrategy.i"
+#include "EC_ObserverStrategy.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -4,7 +4,9 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testS.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 const char* filename = "test.ior";
 
@@ -60,10 +62,10 @@ private:
 
 int 
 parse_args (int argc,
-	    ACE_TCHAR* argv [])
+	    char* argv [])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "f:");
 
   int c;
   while ((c= opts ()) != -1)
@@ -82,18 +84,20 @@ parse_args (int argc,
 }
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-	CORBA::ORB_init (argc,
-			 argv,
+	      CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
 			 ""
 			 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      parse_args (argc, argv);
+      parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       CORBA::Object_var object =
 	orb->resolve_initial_references ("RootPOA"
@@ -112,11 +116,11 @@ main (int argc, char* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
+      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ()
+      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
 									  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -155,11 +159,11 @@ main (int argc, char* argv[])
 		  "IOR = %s\n",
 		  ior.in ()));
 
-      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
 									      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -169,7 +173,7 @@ main (int argc, char* argv[])
       // Print ior to the file.
       if (filename != 0)
 	{
-	  FILE* output_file = ACE_OS::fopen (filename, "w");
+	  FILE* output_file = ACE_OS::fopen (filename, ACE_TEXT("w"));
 	  if (output_file == 0)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "Cannot open output file for writing IOR: %s",

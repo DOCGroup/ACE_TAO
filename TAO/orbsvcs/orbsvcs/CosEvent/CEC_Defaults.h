@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   CEC_Defaults.h
@@ -8,6 +7,7 @@
  *
  * In this file we set the compile time defaults for the event
  * channel.
+ *
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */

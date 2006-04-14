@@ -3,9 +3,7 @@
 
 #include "QoS_Decorator.h"
 
-ACE_RCSID(ace, QoS_Decorator, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, QoS_Decorator, "$Id $")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QOS_DECORATOR)
 
@@ -161,5 +159,3 @@ ACE_QoS_Event_Handler::handle_input (ACE_HANDLE fd)
 {
   return this->decorator_base_->handle_qos (fd);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -4,8 +4,6 @@
 
 #include "ace/OS_NS_errno.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
@@ -319,5 +317,3 @@ ACE_SSL_SOCK_Stream::ssl (void) const
 {
   return this->ssl_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 /**
  * @file Thread_Semaphore.cpp
  *
@@ -20,8 +21,6 @@
 
 ACE_RCSID(ace, Thread_Semaphore, "$Id$")
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Thread_Semaphore::dump (void) const
@@ -56,7 +55,5 @@ ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>::operator () (const ACE_TCHAR *n
                     0);
   return p;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

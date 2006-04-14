@@ -22,7 +22,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Stock_StockBrokerHome_Servant</string>
+          <string>createStockBrokerHome_Servant</string>
         </value>
       </value>
     </execParameter>

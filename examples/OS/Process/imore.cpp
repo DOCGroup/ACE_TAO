@@ -37,7 +37,7 @@
 ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
-static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
+static const char * executable = "MORE.COM";
 static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("c:/temp");
 static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #else
@@ -60,7 +60,7 @@ usage (void)
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("un"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("un"));
   int c;
 
   while ((c = get_opt ()) != -1)

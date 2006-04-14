@@ -1,11 +1,12 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file RT_Transport_Descriptor_Property.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
+ *
+ *
  */
 
 #ifndef TAO_RT_TRANSPORT_DESCRIPTOR_PROPERTY_H
@@ -13,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +23,6 @@
 #include "tao/Basic_Types.h"
 
 #include "ace/Global_Macros.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Transport_Descriptor_Property
@@ -51,9 +50,9 @@ protected:
   TAO_RT_Transport_Descriptor_Property* next_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &);
-  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &);
+  // = Disallow copy constructor and assignment operator.
+  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Transport_Descriptor_Property &operator = (const TAO_RT_Transport_Descriptor_Property &))
 };
 
 /**
@@ -94,7 +93,7 @@ private:
 
 };
 
-/*****************************************************************************/
+/*************************************************************************************************/
 
 /**
  * @class TAO_RT_Transport_Descriptor_Banded_Connection_Property
@@ -131,12 +130,10 @@ protected:
   CORBA::Short high_priority_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-/*****************************************************************************/
+/*************************************************************************************************/
 
 #if defined (__ACE_INLINE__)
-#include "tao/RTCORBA/RT_Transport_Descriptor_Property.inl"
+#include "RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

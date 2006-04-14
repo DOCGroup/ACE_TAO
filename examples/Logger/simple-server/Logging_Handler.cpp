@@ -87,7 +87,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
         if (lp.length () == n)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ")));
-            lp.print (ACE_TEXT_CHAR_TO_TCHAR (this->host_name_), 1);
+            lp.print (ACE_TEXT_TO_TCHAR_IN (this->host_name_), 1);
           }
         else
           ACE_ERROR ((LM_ERROR,

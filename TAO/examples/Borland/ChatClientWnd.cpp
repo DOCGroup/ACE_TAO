@@ -81,8 +81,8 @@ void __fastcall TChatClientWindow::WMMessageReceived (TMessage& Message)
   delete str;
 }
 //---------------------------------------------------------------------------
-void __fastcall TChatClientWindow::FormClose (TObject *,
-      TCloseAction &)
+void __fastcall TChatClientWindow::FormClose (TObject *Sender,
+      TCloseAction &Action)
 {
   try
     {
@@ -96,7 +96,7 @@ void __fastcall TChatClientWindow::FormClose (TObject *,
     }
 }
 //---------------------------------------------------------------------------
-void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *, char &Key)
+void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *Sender, char &Key)
 {
   if (Key == '\n' || Key == '\r')
     {

@@ -25,12 +25,10 @@ ACE_RCSID (ace,
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_ctype.h"
 # include "ace/OS_NS_sys_time.h"
-# if !defined (ACE_HAS_WINCE) && !(defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x551)) && !defined (max)
+# if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS) && !defined (max)
 #  include /**/ <limits>
 # endif
 #endif  /* ACE_LACKS_MKSTEMP */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 
@@ -159,7 +157,7 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
 }
 #endif /* !ACE_HAS_ITOA */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_ITOW)
+#if defined (ACE_LACKS_ITOW)
 wchar_t *
 ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 {
@@ -209,7 +207,7 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 
   return string;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_ITOW */
+#endif /* ACE_LACKS_ITOW */
 
 void *
 ACE_OS::malloc (size_t nbytes)
@@ -337,10 +335,8 @@ ACE_OS::realpath (const char *file_name,
       dest = rpath;
     }
 
-#if !defined (ACE_LACKS_SYMLINKS)
   char expand_buf[PATH_MAX]; // Extra buffer needed to expand symbolic links
   int nlinks = 0;
-#endif
 
   while (*file_name)
     {
@@ -626,7 +622,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // greatly slowing down this mkstemp() implementation.  It is more
   // practical to limit the search space to UTF-8 / ASCII characters
   // (i.e. 127 characters).
-#  if defined (ACE_HAS_WINCE) || (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x551)) || defined (max)
+#  if defined (ACE_HAS_WINCE) || defined (ACE_VXWORKS) || defined (max)
   static float const MAX_VAL = static_cast<float> (127);
 #else
   static float const MAX_VAL =
@@ -689,5 +685,3 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   return ACE_INVALID_HANDLE;
 }
 #endif /* ACE_LACKS_MKSTEMP */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

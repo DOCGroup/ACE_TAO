@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
-// $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+//$Id$
 
 template<typename T, typename T_elem>
 ACE_INLINE
@@ -152,35 +148,25 @@ TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
   return this->ptr_->operator[] (index);
 }
 
-template<typename T, typename T_elem>
-ACE_INLINE
-const T_elem &
-TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index) const
-{
-  return this->ptr_->operator[] (index);
-}
-
 // ***************************************************************
 
 template<typename T, typename T_elem>
 ACE_INLINE
 TAO_VarSeq_Var_T<T,T_elem>::TAO_VarSeq_Var_T (void)
-{
-}
+{}
 
 template<typename T, typename T_elem>
 ACE_INLINE
 TAO_VarSeq_Var_T<T,T_elem>::TAO_VarSeq_Var_T (T * p)
   : TAO_Seq_Var_Base_T<T,T_elem> (p)
-{
-}
+{}
 
 template<typename T, typename T_elem>
 TAO_VarSeq_Var_T<T,T_elem>::TAO_VarSeq_Var_T (
-    const TAO_VarSeq_Var_T<T,T_elem> & p)
+    const TAO_VarSeq_Var_T<T,T_elem> & p
+  )
   : TAO_Seq_Var_Base_T<T,T_elem> (p)
-{
-}
+{}
 
 template<typename T, typename T_elem>
 ACE_INLINE
@@ -208,14 +194,6 @@ TAO_VarSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
   return this->ptr_->operator[] (index);
 }
 
-template<typename T, typename T_elem>
-ACE_INLINE
-const T_elem &
-TAO_VarSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index) const
-{
-  return this->ptr_->operator[] (index);
-}
-
 // ***************************************************************
 
 template<typename T, typename T_elem>
@@ -227,15 +205,14 @@ template<typename T, typename T_elem>
 ACE_INLINE
 TAO_MngSeq_Var_T<T,T_elem>::TAO_MngSeq_Var_T (T * p)
   : TAO_Seq_Var_Base_T<T,T_elem> (p)
-{
-}
+{}
 
 template<typename T, typename T_elem>
 TAO_MngSeq_Var_T<T,T_elem>::TAO_MngSeq_Var_T (
-    const TAO_MngSeq_Var_T<T,T_elem> & p)
+    const TAO_MngSeq_Var_T<T,T_elem> & p
+  )
   : TAO_Seq_Var_Base_T<T,T_elem> (p)
-{
-}
+{}
 
 template<typename T, typename T_elem>
 ACE_INLINE
@@ -262,5 +239,3 @@ TAO_MngSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

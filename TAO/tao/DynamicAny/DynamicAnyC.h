@@ -44,7 +44,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/DynamicAny/dynamicany_export.h"
+#include "dynamicany_export.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -76,8 +76,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace DynamicAny
 {
@@ -2533,8 +2531,6 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_Lifetime_Utils_T.h
  *
@@ -17,13 +16,11 @@
 #ifndef TAO_EC_LIFETIME_UTILS_T_H
 #define TAO_EC_LIFETIME_UTILS_T_H
 
-#include "orbsvcs/Event/EC_Lifetime_Utils.h"
+#include "EC_Lifetime_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @brief Helper for activating objects.
@@ -186,14 +183,12 @@ bool operator!=(TAO_EC_Servant_Var<X> const & x,
                 TAO_EC_Servant_Var<Y> const & y);
 
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.i"
+#include "EC_Lifetime_Utils_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.cpp"
+#include "EC_Lifetime_Utils_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

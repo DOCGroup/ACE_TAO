@@ -16,7 +16,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,8 +32,6 @@
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Pagefile_Memory_Pool_Options
  *
@@ -37,13 +40,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This should be a nested class, but that breaks too many
  * compilers.
  */
-class ACE_Export ACE_Pagefile_Memory_Pool_Options
+class ACE_Memory_Export ACE_Pagefile_Memory_Pool_Options
 {
 public:
   /// Initialization method.
-  ACE_Pagefile_Memory_Pool_Options (
-    void *base_addr = ACE_DEFAULT_PAGEFILE_POOL_BASE,
-    size_t max_size = ACE_DEFAULT_PAGEFILE_POOL_SIZE);
+  ACE_Pagefile_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_PAGEFILE_POOL_BASE,
+                                    size_t max_size = ACE_DEFAULT_PAGEFILE_POOL_SIZE);
 
   /// Base address of the memory-mapped backing store.
   void *base_addr_;
@@ -58,7 +60,7 @@ public:
  * @brief Make a memory pool that is based on "anonymous" memory
  * regions allocated from the Win32 page file.
  */
-class ACE_Export ACE_Pagefile_Memory_Pool
+class ACE_Memory_Export ACE_Pagefile_Memory_Pool
 {
 public:
   typedef ACE_Pagefile_Memory_Pool_Options OPTIONS;
@@ -188,8 +190,6 @@ private:
   /// Name of the backing store where the shared memory pool is kept.
   ACE_TCHAR backing_store_name_[MAXPATHLEN];
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
 

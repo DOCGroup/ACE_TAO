@@ -6,8 +6,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/sys/os_socket.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE void
 ACE_DEV_Addr::set (const ACE_TCHAR *devname)
 {
@@ -35,7 +33,7 @@ ACE_DEV_Addr::operator != (const ACE_DEV_Addr &sap) const
 {
   ACE_TRACE ("ACE_DEV_Addr::operator !=");
 
-  return !((*this) == sap);     // This is lazy, of course... ;-).
+  return !((*this) == sap);	// This is lazy, of course... ;-).
 }
 
 // Return the path name used for the rendezvous point.
@@ -47,5 +45,3 @@ ACE_DEV_Addr::get_path_name (void) const
 
   return this->devname_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -19,10 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <ACE_PEER_STREAM_1>
 class ConnectionAcceptHandler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
 {
@@ -40,11 +36,7 @@ private:
    ACE_Reactor* reactor_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "FTEC_Group_Manager.h"
 
 template <ACE_PEER_STREAM_1>
 class ConnectionDetectHandler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
@@ -61,10 +53,8 @@ private:
   TAO_FTEC_Fault_Listener* listener_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.cpp"
+#include "ConnectionHandler_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+// This may look like C, but it's really -*- C++ -*-
 //=============================================================================
 /**
  *  @file Asynch_Reply_Dispatcher_Base.h
@@ -25,17 +24,13 @@
 
 #include "tao/IOP_IORC.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class TAO_Pluggable_Reply_Params;
+class TAO_ORB_Core ;
 class ACE_Time_Value;
+class TAO_Transport;
 class ACE_Lock;
 class ACE_Allocator;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_Pluggable_Reply_Params;
-class TAO_ORB_Core;
-class TAO_Transport;
 /**
  * @class TAO_Asynch_Reply_Dispatcher_Base
  *
@@ -160,8 +155,6 @@ namespace TAO
   };
 
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Asynch_Reply_Dispatcher_Base.i"

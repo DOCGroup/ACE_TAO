@@ -11,7 +11,7 @@ ACE_RCSID (AMI_Observer, Callback_Handler, "$Id$")
 
 Callback_Handler::Callback_Handler (const char *pathname,
                                     Web_Server::Callback_ptr client_callback)
-  : file_ (pathname),
+  : file_ (ACE_TEXT_TO_TCHAR_IN(pathname)),
     file_io_ (),
     callback_ (Web_Server::Callback::_duplicate (client_callback)),
     ami_handler_ (),
@@ -86,7 +86,7 @@ Callback_Handler::next_chunk (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 Callback_Handler::next_chunk_excep
-  (::Messaging::ExceptionHolder *excep_holder
+  (Web_Server::AMI_CallbackExceptionHolder *excep_holder
    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -98,7 +98,7 @@ Callback_Handler::next_chunk_excep
       this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+      excep_holder->raise_next_chunk (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

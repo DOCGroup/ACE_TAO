@@ -2,7 +2,6 @@
 // $Id$
 
 project(*SOCK_STREAM_clt) : aceexe {
-  avoids += ace_for_tao
   exename = SOCK_STREAM_clt
   source_files {
     SOCK_STREAM_clt.cpp
@@ -27,7 +26,6 @@ project(*SOCK_STREAM_srv) : aceexe {
 }
 
 project(*SOCK_SEQPACK_clt) : aceexe {
-  avoids += ace_for_tao
   exename = SOCK_SEQPACK_clt
   source_files {
     SOCK_SEQPACK_clt.cpp
@@ -44,7 +42,6 @@ project(*SOCK_SEQPACK_clt) : aceexe {
 }
 
 project(*SOCK_SEQPACK_srv) : aceexe {
-  avoids += ace_for_tao
   exename = SOCK_SEQPACK_srv
   source_files {
     SOCK_SEQPACK_srv.cpp
@@ -53,7 +50,6 @@ project(*SOCK_SEQPACK_srv) : aceexe {
 }
 
 project(*SOCK_SEQPACK_Association_Test) : aceexe {
-  avoids += ace_for_tao
   exename = SOCK_SEQPACK_Association_Test
   source_files {
     SOCK_SEQPACK_Association_Test.cpp

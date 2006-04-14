@@ -1,23 +1,21 @@
 // -*- C++ -*-
 
-#include "orbsvcs/Security/Security_PolicyFactory.h"
+#include "Security_PolicyFactory.h"
 
 ACE_RCSID (Security,
            Security_PolicyFactory,
            "$Id$")
 
-#include "orbsvcs/Security/SL2_QOPPolicy.h"
-#include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
+#include "SL2_QOPPolicy.h"
+#include "SL2_EstablishTrustPolicy.h"
 
-#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
-#include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
+#include "SL3_ContextEstablishmentPolicy.h"
+#include "SL3_ObjectCredentialsPolicy.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 #include "orbsvcs/SecurityLevel3C.h"
 
 #include "tao/ORB_Constants.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO::Security::PolicyFactory::create_policy (
@@ -155,5 +153,3 @@ TAO::Security::PolicyFactory::create_policy (
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

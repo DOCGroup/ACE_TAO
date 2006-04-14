@@ -1,5 +1,5 @@
-#include "tao/Strategies/SCIOP_Acceptor.h"
-#include "tao/Strategies/SCIOP_Profile.h"
+#include "SCIOP_Acceptor.h"
+#include "SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -11,15 +11,12 @@
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Strategies/SCIOP_Acceptor.i"
+#include "SCIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao,
           SCIOP_Acceptor,
           "$Id$")
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
@@ -610,7 +607,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) SCIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
+                      ACE_TEXT_TO_TCHAR_IN(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -1030,7 +1027,5 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

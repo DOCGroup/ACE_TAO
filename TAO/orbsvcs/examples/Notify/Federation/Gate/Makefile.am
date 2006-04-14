@@ -17,7 +17,6 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.Gate.am
 
 if BUILD_THREADS
-if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_LTLIBRARIES = libGate.la
@@ -41,7 +40,6 @@ noinst_HEADERS = \
   Gate.h
 
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_THREADS
 
 ## Clean up template repositories, etc.

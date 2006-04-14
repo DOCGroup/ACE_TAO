@@ -49,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   // Determine IP address of the server.
-  if ((hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR(host))) == 0)
+  if ((hp = ACE_OS::gethostbyname (ACE_TEXT_TO_CHAR_IN(host))) == 0)
     ACE_OS::perror (ACE_TEXT("gethostbyname")), ACE_OS::exit (1);
 
   // Set up the address information to contact the server.

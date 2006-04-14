@@ -23,8 +23,6 @@
 
 #include "tao/Protocol_Factory.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_Acceptor;
 class TAO_Connector;
 
@@ -56,11 +54,9 @@ public:
 private:
   /// Changing the version number can be used to provide backwards
   /// compatibility with old clients.
-  int const major_;
-  int const minor_;
+  int major_;
+  int minor_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_IIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Protocol_Factory)

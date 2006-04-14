@@ -14,8 +14,6 @@ ACE_RCSID (ace,
 # include "ace/Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                                         void *arg,
                                         ACE_THR_C_FUNC entry_point,
@@ -247,5 +245,3 @@ ACE_Thread_Adapter::invoke_i (void)
 
   return status;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

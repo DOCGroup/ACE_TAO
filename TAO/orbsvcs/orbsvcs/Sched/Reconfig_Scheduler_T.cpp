@@ -18,7 +18,7 @@
 #ifndef TAO_RECONFIG_SCHEDULER_T_C
 #define TAO_RECONFIG_SCHEDULER_T_C
 
-#include "orbsvcs/Sched/Reconfig_Scheduler_T.h"
+#include "Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Auto_Ptr.h"
 
@@ -30,7 +30,7 @@
 //#define SCHEDULER_LOGGING 1
 //#endif
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(Sched, Reconfig_Scheduler_T, "$Id$")
 
 //////////////////////////////////////////////
 // Helper function type definition for sort //
@@ -1294,8 +1294,8 @@ compute_scheduling (CORBA::Long minimum_priority,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-recompute_scheduling (CORBA::Long /* minimum_priority */,
-                      CORBA::Long /* maximum_priority */,
+recompute_scheduling (CORBA::Long minimum_priority,
+                      CORBA::Long maximum_priority,
                       RtecScheduler::Scheduling_Anomaly_Set_out anomalies
                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -1316,8 +1316,8 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
   ACE_CHECK;
 
   // @@ TO DO - use these to establish the bounds of priority assignment.
-  //      minimum_priority
-  //      maximum_priority
+  ACE_UNUSED_ARG (minimum_priority);
+  ACE_UNUSED_ARG (maximum_priority);
 
   // If everything is already up to date, we're done.
   if (SCHED_ALL_STABLE == stability_flags_)
@@ -3153,7 +3153,5 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecSch
 
 */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_RECONFIG_SCHEDULER_T_C */
-

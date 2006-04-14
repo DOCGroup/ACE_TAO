@@ -4,7 +4,9 @@
 
 ACE_RCSID(tao, Client_Strategy_Factory, "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+TAO_Client_Strategy_Factory::TAO_Client_Strategy_Factory (void)
+{
+}
 
 TAO_Client_Strategy_Factory::~TAO_Client_Strategy_Factory (void)
 {
@@ -63,5 +65,3 @@ TAO_Client_Strategy_Factory::use_cleanup_options (void) const
 {
   return false;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

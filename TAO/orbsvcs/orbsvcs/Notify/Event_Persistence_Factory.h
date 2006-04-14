@@ -15,16 +15,13 @@
 #ifndef EVENT_PERSISTENCE_FACTORY_H
 #define EVENT_PERSISTENCE_FACTORY_H
 #include /**/ "ace/pre.h"
-
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "notify_serv_export.h"
 
 namespace TAO_Notify
 {
@@ -47,8 +44,6 @@ namespace TAO_Notify
 
   };
 } // namespace TAO_Notify
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* EVENT_PERSISTENCE_FACTORY_H */

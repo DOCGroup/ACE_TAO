@@ -1,5 +1,5 @@
-#include "tao/Strategies/UIOP_Endpoint.h"
-#include "tao/Strategies/UIOP_Connection_Handler.h"
+#include "UIOP_Endpoint.h"
+#include "UIOP_Connection_Handler.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -15,10 +15,9 @@ ACE_RCSID (Strategies,
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/UIOP_Endpoint.i"
+# include "UIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
                                       CORBA::Short priority)
@@ -103,7 +102,4 @@ TAO_UIOP_Endpoint::hash (void)
 
   return this->hash_val_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif  /* TAO_HAS_UIOP == 1 */

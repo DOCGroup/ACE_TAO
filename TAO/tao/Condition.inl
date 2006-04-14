@@ -1,9 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 //$Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <class MUTEX> ACE_INLINE int
 TAO_Condition<MUTEX>::wait (void)
 {
@@ -51,5 +47,3 @@ TAO_Condition<MUTEX>::broadcast (void)
 {
   return this->cond_->broadcast ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

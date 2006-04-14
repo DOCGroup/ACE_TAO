@@ -48,9 +48,6 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
-noinst_HEADERS = \
-  Test.idl
-
 ## Makefile.Bug_1395_Regression_Client.am
 
 noinst_PROGRAMS = client

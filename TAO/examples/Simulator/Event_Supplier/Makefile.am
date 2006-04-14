@@ -16,11 +16,15 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+CLEANFILES =
 noinst_PROGRAMS =
+BUILT_SOURCES =
 
-## Makefile.Event_Supplier_IDL.am
+## Makefile.Event_Supplier_DualEC_Sup.am
 
-BUILT_SOURCES = \
+if BUILD_CORBA_MESSAGING
+
+BUILT_SOURCES += \
   ./NavWeapC.cpp \
   ./NavWeapC.h \
   ./NavWeapC.inl \
@@ -31,7 +35,7 @@ BUILT_SOURCES = \
   ./NavWeapS_T.h \
   ./NavWeapS_T.inl
 
-CLEANFILES = \
+CLEANFILES += \
   ./NavWeap-stamp \
   ./NavWeapC.cpp \
   ./NavWeapC.h \
@@ -47,17 +51,8 @@ CLEANFILES = \
 
 ./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/../NavWeap.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
-
-
-noinst_HEADERS = \
-  ../NavWeap.idl
-
-## Makefile.Event_Supplier_DualEC_Sup.am
-
-if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += DualEC_Sup
 
@@ -70,10 +65,15 @@ DualEC_Sup_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 DualEC_Sup_SOURCES = \
+  ./NavWeapC.cpp \
+  ./NavWeapS.cpp \
   DOVE_Supplier.cpp \
   DualEC_Sup.cpp \
-  NavWeapC.cpp \
-  NavWeapS.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.h \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl \
   DOVE_Supplier.h \
   DualEC_Sup.h
 
@@ -94,12 +94,41 @@ DualEC_Sup_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Supplier_Event_Con.am
 
 if BUILD_CORBA_MESSAGING
+
+BUILT_SOURCES += \
+  ./NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.cpp \
+  ./NavWeapS.h \
+  ./NavWeapS.inl \
+  ./NavWeapS_T.cpp \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl
+
+CLEANFILES += \
+  ./NavWeap-stamp \
+  ./NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.cpp \
+  ./NavWeapS.h \
+  ./NavWeapS.inl \
+  ./NavWeapS_T.cpp \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl
+
+./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
+
+./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
+	mkdir -p .
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
+	@touch $@
 
 noinst_PROGRAMS += Event_Con
 
@@ -112,8 +141,14 @@ Event_Con_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 Event_Con_SOURCES = \
+  ./NavWeapC.cpp \
+  ./NavWeapS.cpp \
   Event_Con.cpp \
-  NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.h \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl \
   Event_Con.h
 
 Event_Con_LDADD = \
@@ -137,6 +172,36 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 
+BUILT_SOURCES += \
+  ./NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.cpp \
+  ./NavWeapS.h \
+  ./NavWeapS.inl \
+  ./NavWeapS_T.cpp \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl
+
+CLEANFILES += \
+  ./NavWeap-stamp \
+  ./NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.cpp \
+  ./NavWeapS.h \
+  ./NavWeapS.inl \
+  ./NavWeapS_T.cpp \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl
+
+./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
+
+./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
+	mkdir -p .
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
+	@touch $@
+
 noinst_PROGRAMS += Event_Sup
 
 Event_Sup_CPPFLAGS = \
@@ -148,9 +213,15 @@ Event_Sup_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 Event_Sup_SOURCES = \
+  ./NavWeapC.cpp \
+  ./NavWeapS.cpp \
   DOVE_Supplier.cpp \
   Event_Sup.cpp \
-  NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.h \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl \
   DOVE_Supplier.h \
   Event_Sup.h
 
@@ -176,6 +247,36 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 
+BUILT_SOURCES += \
+  ./NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.cpp \
+  ./NavWeapS.h \
+  ./NavWeapS.inl \
+  ./NavWeapS_T.cpp \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl
+
+CLEANFILES += \
+  ./NavWeap-stamp \
+  ./NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.cpp \
+  ./NavWeapS.h \
+  ./NavWeapS.inl \
+  ./NavWeapS_T.cpp \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl
+
+./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
+
+./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
+	mkdir -p .
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
+	@touch $@
+
 noinst_PROGRAMS += Logging_Sup
 
 Logging_Sup_CPPFLAGS = \
@@ -187,9 +288,15 @@ Logging_Sup_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 Logging_Sup_SOURCES = \
+  ./NavWeapC.cpp \
+  ./NavWeapS.cpp \
   DOVE_Supplier.cpp \
   Logging_Sup.cpp \
-  NavWeapC.cpp \
+  ./NavWeapC.h \
+  ./NavWeapC.inl \
+  ./NavWeapS.h \
+  ./NavWeapS_T.h \
+  ./NavWeapS_T.inl \
   DOVE_Supplier.h \
   Logging_Sup.h
 

@@ -9,8 +9,6 @@ ACE_RCSID (lib,
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
-#include "ace/Arg_Shifter.h"
-
 
 TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser (void)
 {
@@ -21,9 +19,9 @@ TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser ()
 }
 
 void
-TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_TArg_Shifter< char >& arg_shifter)
 {
-  const ACE_TCHAR* current_arg = 0;
+  const char* current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {
@@ -52,9 +50,9 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, 
 }
 
 void
-TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_TArg_Shifter< char >& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
   int default_priority = ACE_DEFAULT_THREAD_PRIORITY;
 
   if (arg_shifter.cur_arg_strncasecmp ("-ThreadPool") == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]

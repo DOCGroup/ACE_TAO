@@ -1,13 +1,12 @@
+/* -*- C++ -*- */
 // $Id$
 
-#include "orbsvcs/IFRService/AbstractInterfaceDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
+#include "AbstractInterfaceDef_i.h"
+#include "Repository_i.h"
 
 ACE_RCSID (IFRService, 
            AbstractInterfaceDef_i, 
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AbstractInterfaceDef_i::TAO_AbstractInterfaceDef_i (
     TAO_Repository_i *repo
@@ -58,5 +57,3 @@ TAO_AbstractInterfaceDef_i::is_a_i (const char *interface_id
   return this->TAO_InterfaceDef_i::is_a_i (interface_id
                                            ACE_ENV_ARG_PARAMETER);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

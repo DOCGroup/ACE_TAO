@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/TypedefDef_i.h"
+#include "Repository_i.h"
+#include "TypedefDef_i.h"
 
 #include "ace/SString.h"
 
@@ -10,7 +10,6 @@ ACE_RCSID (IFRService,
            TypedefDef_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TypedefDef_i::TAO_TypedefDef_i (
     TAO_Repository_i *repo
@@ -78,5 +77,3 @@ TAO_TypedefDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 
   return retval._retn ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

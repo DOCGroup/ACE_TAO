@@ -24,10 +24,8 @@
 
 #include "ace/SString.h"
 
-#include "tao/objectid.h"
-#include "tao/CORBA_String.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "objectid.h"
+#include "CORBA_String.h"
 
 // Forward decls.
 
@@ -39,6 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //    footprint by using this container.
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
+
 
 // -------------------------------------------------------------------
 
@@ -84,10 +83,6 @@ public:
   /// Set/Get the status of whether to use TCP_NODELAY or not.
   int nodelay (void) const;
   void nodelay (int);
-
-  /// Set/Get whether we should set SO_KEEPALIVE on the socket or not.
-  int sock_keepalive (void);
-  void sock_keepalive (int);
 
   /**
    * Octet sequences are marshalled without doing any copies, we
@@ -231,9 +226,6 @@ private:
   /// 1 if we're using TCP_NODELAY and 0 otherwise.
   int nodelay_;
 
-  /// 1 if we're using SO_KEEPALIV and 0 otherwise (default 0).
-  int sock_keepalive_;
-
   /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.
   int cdr_memcpy_tradeoff_;
@@ -320,8 +312,6 @@ private:
   /// Enable the use of codeset negotiation
   bool negotiate_codesets_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/params.i"

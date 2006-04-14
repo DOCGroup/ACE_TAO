@@ -18,7 +18,7 @@ ACE_CString client_orb;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:o:n:m:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:o:n:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -68,19 +68,19 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return -1;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv (),
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          server_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -101,10 +101,9 @@ main (int argc, char *argv[])
       // Wait for the server thread to do some processing
       me.wait ();
 
-      ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
-        CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv (),
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          client_orb.c_str ()
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

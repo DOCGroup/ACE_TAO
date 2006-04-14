@@ -1,11 +1,10 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/CE_Screen_Output.h"
 #if defined (ACE_HAS_WINCE)
 
 #include "ace/Log_Msg.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_CE_Screen_Output::ACE_CE_Screen_Output(HWND hEdit)
 : handler_(hEdit)
@@ -77,13 +76,13 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (const ACE_TCHAR* output
 
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (ACE_ANTI_TCHAR* output)
 {
-    *this << ACE_TEXT_CHAR_TO_TCHAR(output);
+    *this << ACE_TEXT_TO_TCHAR_IN(output);
     return *this;
 }
 
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (const ACE_ANTI_TCHAR* output)
 {
-    *this << ACE_TEXT_CHAR_TO_TCHAR(output);
+    *this << ACE_TEXT_TO_TCHAR_IN(output);
     return *this;
 }
 
@@ -152,7 +151,5 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (FILE* pFile)
     pFile_ = pFile;
     return *this;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  // ACE_HAS_WINCE

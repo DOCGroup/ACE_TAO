@@ -18,10 +18,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.h"
-#include "orbsvcs/FtRtEvent/EventChannel/ProxySupplierStateWorker.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "FT_ProxyAdmin_T.h"
+#include "ProxySupplierStateWorker.h"
 
 namespace FtRtecEventChannelAdmin {
   struct ConsumerAdminState;
@@ -66,8 +64,6 @@ public:
 
   void disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr obj);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_CONSUMERADMIN_H */

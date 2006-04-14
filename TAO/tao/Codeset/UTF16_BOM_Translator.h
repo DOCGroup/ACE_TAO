@@ -22,14 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Codeset/codeset_export.h"
-#include "tao/Versioned_Namespace.h"
 #include "ace/CDR_Stream.h"
-
+#include "codeset_export.h"
 
 // ****************************************************************
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UTF16_BOM_Translator
@@ -94,8 +90,6 @@ private:
   bool forceBE_;
 
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* UTF16_BOM_TRANSLATOR_H */

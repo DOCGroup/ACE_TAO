@@ -40,7 +40,6 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/Versioned_Namespace.h"
 
 #include "CCM_ContainerC.h"
 
@@ -69,12 +68,9 @@
 // be/be_visitor_traits.cpp:50
 
 // Traits specializations.
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 }
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48

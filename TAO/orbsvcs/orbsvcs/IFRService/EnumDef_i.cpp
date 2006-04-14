@@ -1,8 +1,8 @@
 // $Id$
 
-#include "orbsvcs/IFRService/EnumDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "EnumDef_i.h"
+#include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
@@ -11,7 +11,6 @@ ACE_RCSID (IFRService,
            EnumDef_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -159,5 +158,3 @@ TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
                                                 member_name);
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

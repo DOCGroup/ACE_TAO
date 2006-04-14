@@ -15,6 +15,7 @@
 
 #include "server.h"
 #include "tao/ORB_Core.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Quoter, server, "$Id$")
 
@@ -28,7 +29,7 @@ Quoter_Server::Quoter_Server (void)
 int
 Quoter_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "d:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "d:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -259,13 +260,14 @@ Quoter_Server::~Quoter_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Quoter_Server quoter_server;
 
   ACE_TRY_NEW_ENV
     {
-      int result = quoter_server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int result = quoter_server.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result == -1)

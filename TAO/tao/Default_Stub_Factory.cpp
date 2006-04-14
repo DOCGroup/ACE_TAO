@@ -1,9 +1,9 @@
 // $Id$
 
-#include "tao/Default_Stub_Factory.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
+#include "Default_Stub_Factory.h"
+#include "Stub.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
 
 #include "ace/Log_Msg.h"
 
@@ -12,7 +12,6 @@ ACE_RCSID (tao,
            TAO_Default_Stub_Factory,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Stub_Factory::~TAO_Default_Stub_Factory (void)
 {
@@ -34,8 +33,6 @@ TAO_Default_Stub_Factory::create_stub (const char *repository_id,
 
   return retval;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,11 +27,10 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Profile.h"
-#include "tao/Strategies/SHMIOP_Endpoint.h"
+#include "SHMIOP_Endpoint.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO SHMIOP_Profile concrete Profile definitions
 /**
@@ -122,8 +121,6 @@ private:
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

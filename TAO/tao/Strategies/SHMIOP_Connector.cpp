@@ -1,12 +1,12 @@
 // $Id$
 
 
-#include "tao/Strategies/SHMIOP_Connector.h"
+#include "SHMIOP_Connector.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/Strategies/SHMIOP_Profile.h"
-#include "tao/Strategies/SHMIOP_Endpoint.h"
+#include "SHMIOP_Profile.h"
+#include "SHMIOP_Endpoint.h"
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/ORB_Core.h"
@@ -21,8 +21,6 @@ ACE_RCSID (Strategies,
            SHMIOP_Connector,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
@@ -34,6 +32,7 @@ TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Boolean flag)
 TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector (void)
 {
 }
+
 
 int
 TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
@@ -146,7 +145,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "making a new connection to <%s:%d>\n",
-                ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                ACE_TEXT_TO_TCHAR_IN (shmiop_endpoint->host ()),
                 shmiop_endpoint->port ()));
 
   // Get the right synch options
@@ -182,7 +181,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                       ACE_TEXT ("connection to <%s:%u> failed (%p)\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                      ACE_TEXT_TO_TCHAR_IN (shmiop_endpoint->host ()),
                       shmiop_endpoint->port (),
                       ACE_TEXT ("errno")));
         }
@@ -196,7 +195,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "new connection to <%s:%d> on Transport[%d]\n",
-                ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                ACE_TEXT_TO_TCHAR_IN (shmiop_endpoint->host ()),
                 shmiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
 
@@ -349,6 +348,5 @@ TAO_SHMIOP_Connector::cancel_svc_handler (
   return -1;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Sched_Factory.h"
-#include "orbsvcs/Event/EC_Priority_Dispatching.h"
-#include "orbsvcs/Event/EC_Priority_Scheduling.h"
-#include "orbsvcs/Event/EC_Sched_Filter_Builder.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "EC_Sched_Factory.h"
+#include "EC_Priority_Dispatching.h"
+#include "EC_Priority_Scheduling.h"
+#include "EC_Sched_Filter_Builder.h"
+#include "EC_Event_Channel_Base.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Arg_Shifter.h"
@@ -12,12 +12,10 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.i"
+#include "EC_Sched_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Sched_Factory, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory (void)
 {
@@ -211,8 +209,6 @@ TAO_EC_Sched_Factory::create_scheduling_strategy (TAO_EC_Event_Channel_Base* ec)
     }
   return this->TAO_EC_Sched_Factory::create_scheduling_strategy (ec);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

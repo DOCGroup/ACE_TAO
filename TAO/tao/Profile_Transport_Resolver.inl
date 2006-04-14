@@ -1,10 +1,5 @@
 // -*- C++ -*-
-//
 // $Id$
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   ACE_INLINE
@@ -13,12 +8,12 @@ namespace TAO
     TAO_Stub *stub,
     bool block)
     : obj_ (p)
-    , stub_ (stub)
-    , transport_ (0)
-    , profile_ (0)
-    , inconsistent_policies_ (0)
-    , is_released_ (false)
-    , blocked_ (block)
+      , stub_ (stub)
+      , transport_ (0)
+      , profile_ (0)
+      , inconsistent_policies_ (0)
+      , is_released_ (false)
+      , blocked_ (block)
   {
   }
 
@@ -72,5 +67,3 @@ namespace TAO
     return tmp;
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

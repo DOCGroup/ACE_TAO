@@ -1,10 +1,9 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-// Establish a connection.
+// MEM_Connector.i
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// Establish a connection.
 
 ACE_INLINE ACE_MEM_IO::Signal_Strategy
 ACE_MEM_Connector::preferred_strategy (void) const
@@ -26,5 +25,3 @@ ACE_MEM_Connector::malloc_options (void)
 
   return this->malloc_options_;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

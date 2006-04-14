@@ -26,11 +26,7 @@ namespace CIAO
            i != src.end_priorityModel ();
            ++i)
         {
-          ::CIAO::DAnCE::PriorityModelPolicyDef pmd;
-
-          PM_Handler::priority_model_pd (*i, pmd);
-
-          dest.policies[len++].PriorityModelDef (pmd);
+          PM_Handler::priority_model_pd (*i, dest.policies[len++].PriorityModelDef ());
         }
       
       for (PolicySet::threadpool_const_iterator i = src.begin_threadpool ();

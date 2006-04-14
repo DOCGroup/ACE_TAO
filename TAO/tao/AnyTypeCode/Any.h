@@ -29,8 +29,6 @@
 #include "ace/CDR_Stream.h"
 #include "ace/CORBA_macros.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   class Any_Impl;
@@ -325,13 +323,9 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::WChar *&);
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any.inl"
 #else
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Copying versions of insertion operators for basic types
 /// must also be defined for CORBA::Any_var.
@@ -396,8 +390,6 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Any::to_wstring);
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Any::to_object);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
 

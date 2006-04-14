@@ -90,7 +90,7 @@ CC_Client::read_ior (char *filename)
 int
 CC_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dc:sf:k:xbhe:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "dc:sf:k:xbhe:");
   int c;
   int result;
 
@@ -180,7 +180,7 @@ CC_Client::run (void)
       // Open the command file for parsing if the filename!=stdin
       if(ACE_OS::strcmp(this->script_file_, "stdin")!=0)
         {
-          f = ACE_OS::fopen(this->script_file_, "r");
+          f = ACE_OS::fopen(this->script_file_, ACE_TEXT("r"));
           if(f==0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to open %s\n",
@@ -453,14 +453,16 @@ CC_Client::init (int argc, char **argv)
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CC_Client cc_client;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n \t CosConcurrencyControl: client \n\n"));
 
-  if (cc_client.init (argc, argv) == -1)
+  if (cc_client.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Did not initialize correctly\n"));

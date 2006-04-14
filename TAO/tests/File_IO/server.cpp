@@ -7,6 +7,7 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (File_IO,
            server,
@@ -40,7 +41,7 @@ private:
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:d");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -69,8 +70,10 @@ parse_args (int argc, char **argv)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_HANDLE handle = ACE_OS::open ("big.txt",
                                     O_RDWR | O_CREAT,
                                     ACE_DEFAULT_FILE_PERMS);
@@ -83,10 +86,10 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result = parse_args (argc, argv);
+      int result = parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result != 0)
         return result;
 
@@ -173,7 +176,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,"%s\n",
                   file_system_ior.in ()));
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",

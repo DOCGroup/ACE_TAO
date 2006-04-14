@@ -1,11 +1,11 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/Strategies/DIOP_Acceptor.h"
+#include "DIOP_Acceptor.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Profile.h"
+#include "DIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -17,7 +17,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Strategies/DIOP_Acceptor.i"
+#include "DIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
@@ -25,8 +25,6 @@
 ACE_RCSID (Strategies,
            DIOP_Acceptor,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
@@ -437,7 +435,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) DIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (this->hosts_[i]),
+                      ACE_TEXT_TO_TCHAR_IN (this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -615,8 +613,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major;
-  CORBA::Octet minor = CORBA::Octet();
+  CORBA::Octet major, minor;
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -721,7 +718,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) DIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR (opt.c_str ())),
+                               ACE_TEXT_TO_TCHAR_IN (opt.c_str ())),
                               -1);
 
           ACE_CString name = opt.substring (0, slot);
@@ -743,13 +740,11 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid DIOP option: <%s>\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
+                               ACE_TEXT_TO_TCHAR_IN (name.c_str ())),
                               -1);
         }
     }
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

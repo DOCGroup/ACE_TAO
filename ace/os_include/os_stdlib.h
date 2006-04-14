@@ -35,7 +35,7 @@
 #  include /**/ <stdlib.h>
 #endif /* !ACE_LACKS_STDLIB_H */
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__)
+#if defined (VXWORKS)
 #  include /**/ <envLib.h>
 #endif /* VXWORKS */
 

@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Notify_Factory*
 TAO_Notify_Properties::factory (void)
@@ -147,5 +143,3 @@ TAO_Notify_Properties::default_proxy_consumer_qos_properties (const CosNotificat
 {
   this->pc_qos_ = pc_qos;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

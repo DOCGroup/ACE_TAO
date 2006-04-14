@@ -1,11 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
-#include "ace/Truncate.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Send an n byte message to the connected socket.
 
@@ -55,7 +51,7 @@ ACE_SOCK_IO::recvv (iovec iov[],
   ACE_TRACE ("ACE_SOCK_IO::recvv");
   return ACE::recvv (this->get_handle (),
                      iov,
-                     ACE_Utils::Truncate<size_t> (n),
+                     n,
                      timeout);
 }
 
@@ -66,7 +62,7 @@ ACE_SOCK_IO::recv (iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return this->recvv (iov,
-                      n,
+                      static_cast<int> (n),
                       timeout);
 }
 
@@ -125,7 +121,7 @@ ACE_SOCK_IO::sendv (const iovec iov[],
   ACE_TRACE ("ACE_SOCK_IO::sendv");
   return ACE::sendv (this->get_handle (),
                      iov,
-                     ACE_Utils::Truncate<size_t> (n),
+                     n,
                      timeout);
 }
 
@@ -147,9 +143,7 @@ ACE_SOCK_IO::send (const void *buf,
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return ACE_OS::write (this->get_handle (),
-                        buf,
+                        (const char *) buf,
                         n,
                         overlapped);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

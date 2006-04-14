@@ -79,7 +79,7 @@ CACE_Init_TestApp theApp;
 
 BOOL CACE_Init_TestApp::InitInstance()
 {
-  // This is needed because there's no overridden main(int, char *[])
+  // This is needed because there's no overridden ACE_TMAIN(int, ACE_TCHAR *[])
   // which would normally handle the initialization.  Also see the
   // corresponding ACE::fini, below.
   ACE::init();

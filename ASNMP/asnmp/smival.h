@@ -1,20 +1,24 @@
 /* -*-C++-*- */
+// $Id$
 #ifndef SMIVALUE_
 #define SMIVALUE_
-//=============================================================================
-/**
- *  @file    smival.h
- *
- *  $Id$
- *
- * SMIValue class definition. Superclass for the various types
- * of SNMP values (Address, Oid, Octet, etc.).  Provides
- * only a few functions, most info is in subclass.
- *
- *
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    smival.h
+//
+// = DESCRIPTION
+// SMIValue class definition. Superclass for the various types
+// of SNMP values (Address, Oid, Octet, etc.).  Provides
+// only a few functions, most info is in subclass.
+//
+// = AUTHOR
+// Jeff Meyer
+//
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

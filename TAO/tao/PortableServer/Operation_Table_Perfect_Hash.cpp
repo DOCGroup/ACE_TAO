@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
+#include "Operation_Table_Perfect_Hash.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
 
@@ -29,7 +29,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+// Do nothing constructor.
+TAO_Perfect_Hash_OpTable::TAO_Perfect_Hash_OpTable (void)
+{
+}
 
 // Do nothing destrctor.
 TAO_Perfect_Hash_OpTable::~TAO_Perfect_Hash_OpTable (void)
@@ -51,7 +54,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
                          ACE_TEXT ("operation '%s' (length=%d) failed\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (opname ? opname : "<null string>"), length),
+                         ACE_TEXT_TO_TCHAR_IN (opname ? opname : "<null string>"), length),
                         -1);
     }
 
@@ -77,7 +80,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
                          ACE_TEXT ("operation '%s' (length=%d) failed\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (opname ? opname : "<null string>"), length),
+                         ACE_TEXT_TO_TCHAR_IN (opname ? opname : "<null string>"), length),
                         -1);
     }
 
@@ -100,4 +103,3 @@ TAO_Perfect_Hash_OpTable::bind (const char *,
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -193,6 +193,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   os->gen_endif ();
 
-  node->cli_stub_gen (true);
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }

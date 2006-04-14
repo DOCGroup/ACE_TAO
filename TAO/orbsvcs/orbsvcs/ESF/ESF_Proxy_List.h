@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   ESF_Proxy_List.h
  *
@@ -19,8 +18,6 @@
 
 #include "ace/Unbounded_Set.h"
 #include "ace/Containers.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// A concrete proxy collection.
 /**
@@ -71,14 +68,12 @@ private:
   ACE_Unbounded_Set<PROXY*> impl_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_List.i"
+#include "ESF_Proxy_List.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Proxy_List.cpp"
+#include "ESF_Proxy_List.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

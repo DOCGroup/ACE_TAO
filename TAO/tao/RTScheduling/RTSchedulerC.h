@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTScheduling/rtscheduler_export.h"
+#include "rtscheduler_export.h"
 
 #include "tao/PI_Server/ServerRequestInfoC.h"
 #include "tao/PI/ClientRequestInfoC.h"
@@ -80,8 +80,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -1280,8 +1278,6 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

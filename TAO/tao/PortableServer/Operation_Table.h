@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +23,6 @@
 
 #include "tao/Object.h"
 #include "tao/Collocation_Strategy.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServerRequest;
 class TAO_Abstract_ServantBase;
@@ -71,7 +69,6 @@ struct TAO_operation_db_entry
   TAO_Collocated_Skeleton direct_skel_ptr;
 };
 
-// --------------------------
 
 namespace TAO
 {
@@ -132,8 +129,6 @@ public:
 
   virtual ~TAO_Operation_Table (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPTABLE_H */

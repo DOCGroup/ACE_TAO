@@ -85,7 +85,7 @@ private:
   // corresponding server method is received.
 
   virtual void register_callback_excep
-  (::Messaging::ExceptionHolder *
+  (Web_Server::AMI_Iterator_FactoryExceptionHolder *
    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 

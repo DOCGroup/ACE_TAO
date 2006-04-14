@@ -1,11 +1,9 @@
 // $Id$
 
-#include "orbsvcs/Trader/Trader_Utils.h"
+#include "Trader_Utils.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID(Trader, Trader_Utils, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Creator::TAO_Policy_Creator (int num_policies)
   : policies_ (num_policies),
@@ -901,7 +899,7 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
 
   CORBA::ULong i = 0;
   for (i = 0; i < policy_seq.length (); i++)
-    if (ACE_OS::strcmp (policy_seq[i].name,
+    if (ACE_OS::strcmp (policy_seq[i].name.in(),
                         POLICY_NAMES[LINK_FOLLOW_RULE]) == 0)
       {
         policy_seq[i].value <<= follow_option;
@@ -1524,5 +1522,3 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
     //      d_props.replace (length, length, props, 0);
     d_props = s_props;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

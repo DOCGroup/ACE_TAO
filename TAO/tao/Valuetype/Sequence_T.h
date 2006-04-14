@@ -16,13 +16,10 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Sequence.h"
-#include "tao/Valuetype/Value_VarOut_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T, typename T_var>
 class TAO_Unbounded_Valuetype_Sequence;
@@ -236,10 +233,8 @@ public:
                                CORBA::ULong old_length);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "tao/Valuetype/Sequence_T.inl"
+#include "Sequence_T.inl"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -248,7 +243,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Valuetype/Sequence_T.cpp"
+#include "Sequence_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

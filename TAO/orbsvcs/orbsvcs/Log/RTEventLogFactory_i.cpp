@@ -21,15 +21,14 @@ ACE_RCSID (Log,
            RTEventLogFactory_i,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i (void)
 {
+  // No-Op.
 }
 
 TAO_RTEventLogFactory_i::~TAO_RTEventLogFactory_i()
 {
+  // No-Op.
 }
 
 int
@@ -237,5 +236,3 @@ TAO_RTEventLogFactory_i::obtain_push_supplier (
 {
   return consumer_admin_->obtain_push_supplier();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

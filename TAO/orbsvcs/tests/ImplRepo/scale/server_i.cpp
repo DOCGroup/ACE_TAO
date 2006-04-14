@@ -7,6 +7,7 @@
 #include "tao/ImR_Client/ImR_Client.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/streams.h"
 
@@ -56,7 +57,7 @@ Server_i::~Server_i()
 int
 Server_i::parse_args (int argc, char* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:c:h");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "p:c:h");
   int c;
 
   while ((c = get_opts ()) != -1)

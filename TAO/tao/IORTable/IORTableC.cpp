@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/IORTable/IORTable.h"
+#include "IORTable.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -39,8 +39,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -541,5 +539,3 @@ CORBA::Boolean operator>> (
 {
   return true;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

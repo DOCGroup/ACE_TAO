@@ -42,7 +42,6 @@
 #include "be_visitor_typecode.h"
 #include "be_visitor_union.h"
 #include "be_visitor_valuebox.h"
-#include "ace/Log_Msg.h"
 
 #include "be_visitor_valuebox/valuebox.cpp"
 #include "be_visitor_valuebox/valuebox_ch.cpp"

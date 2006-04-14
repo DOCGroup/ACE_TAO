@@ -6,9 +6,12 @@
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
    {
@@ -16,7 +19,7 @@ int main (int argc, char* argv[])
 
       // Initialise ORB.
       //
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER) ;
+      CORBA::ORB_var orb = CORBA::ORB_init( convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
 
       // Find the Interface Repository.

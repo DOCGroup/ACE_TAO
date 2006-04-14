@@ -1,7 +1,7 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
-#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
-#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
+#include "SSLIOP_Connector.h"
+#include "SSLIOP_OwnCredentials.h"
+#include "SSLIOP_Profile.h"
+#include "SSLIOP_X509.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 
@@ -23,8 +23,6 @@
 ACE_RCSID (SSLIOP,
            SSLIOP_Connector,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
@@ -221,7 +219,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 TAO_Profile *
 TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_SSLIOP_Profile (this->orb_core ()),
                   0);
@@ -485,7 +483,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
   // profile does not (and cannot) contain the desired QOP, trust, or
   // credential information which is necesary to uniquely identify
   // this connection.
-  if (!ssl_endpoint->credentials_set ())
+  if (!ssl_endpoint->credentials_set())
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_ERROR,
@@ -858,5 +856,3 @@ TAO::SSLIOP::Connector::cancel_svc_handler (
 
   return -1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

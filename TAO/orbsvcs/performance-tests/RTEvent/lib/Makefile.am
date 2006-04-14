@@ -21,7 +21,6 @@ TAO_ROOT = $(top_srcdir)
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
-if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
@@ -167,7 +166,6 @@ noinst_HEADERS = \
   rtec_perf_export.h
 
 endif !BUILD_MINIMUM_CORBA
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
 

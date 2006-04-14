@@ -5,8 +5,6 @@
 
 ACE_RCSID(ace, Thread_Hook, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Thread_Hook::~ACE_Thread_Hook ()
 {
 }
@@ -29,5 +27,3 @@ ACE_Thread_Hook::thread_hook (void)
 {
   return ACE_OS_Object_Manager::thread_hook ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -4,6 +4,7 @@
 #include "Supplier.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(EC_MT_Mcast,
           Supplier,

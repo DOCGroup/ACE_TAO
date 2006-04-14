@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // ================================================================
 /**
  *  @file   LRU_Connection_Purging_Strategy.h
@@ -23,8 +21,6 @@
 
 // ****************************************************************
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_LRU_Connection_Purging_Strategy
  *
@@ -36,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * first.
  */
 
-class TAO_Export TAO_LRU_Connection_Purging_Strategy
+class TAO_Export TAO_LRU_Connection_Purging_Strategy 
   : public TAO_Connection_Purging_Strategy
 {
 public:
@@ -53,8 +49,6 @@ private:
   /// The ordering information for each transport in the cache
   unsigned long order_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

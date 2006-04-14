@@ -5,8 +5,6 @@
 // Exception macros
 #include "tao/Environment.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_INLINE CORBA::Boolean
 TAO_Root_POA::cleanup_in_progress (void)
 {
@@ -242,5 +240,3 @@ TAO_Root_POA::servant_deactivation_condition (void)
 {
   return servant_deactivation_condition_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

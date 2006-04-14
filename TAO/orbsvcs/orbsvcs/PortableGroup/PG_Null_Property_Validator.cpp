@@ -1,11 +1,10 @@
-#include "orbsvcs/PortableGroup/PG_Null_Property_Validator.h"
+#include "PG_Null_Property_Validator.h"
 
 
 ACE_RCSID (PortableGroup,
            PG_Null_Property_Validator,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_PG_Null_Property_Validator::validate_property (
@@ -26,5 +25,3 @@ TAO_PG_Null_Property_Validator::validate_criteria (
                    PortableGroup::CannotMeetCriteria))
 {
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,15 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_PortableServer_Export TAO_POA_Initializer
 {
@@ -35,23 +31,21 @@ public:
 static int
 TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "tao/PortableServer/PortableServerC.h"
+#include "PortableServerC.h"
 #undef TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "tao/PortableServer/POAManagerC.h"
-#include "tao/PortableServer/PS_CurrentC.h"
-#include "tao/PortableServer/PortableServer_Functions.h"
-#include "tao/PortableServer/PortableServer_WFunctions.h"
-#include "tao/PortableServer/PS_ForwardA.h"
-#include "tao/PortableServer/IdUniquenessPolicyA.h"
-#include "tao/PortableServer/ImplicitActivationPolicyA.h"
-#include "tao/PortableServer/RequestProcessingPolicyA.h"
-#include "tao/PortableServer/ServantRetentionPolicyA.h"
-#include "tao/PortableServer/ThreadPolicyA.h"
-#include "tao/PortableServer/IdAssignmentPolicyA.h"
-#include "tao/PortableServer/LifespanPolicyA.h"
+#include "POAManagerC.h"
+#include "PS_CurrentC.h"
+#include "PortableServer_Functions.h"
+#include "PortableServer_WFunctions.h"
+#include "PS_ForwardA.h"
+#include "IdUniquenessPolicyA.h"
+#include "ImplicitActivationPolicyA.h"
+#include "RequestProcessingPolicyA.h"
+#include "ServantRetentionPolicyA.h"
+#include "ThreadPolicyA.h"
+#include "IdAssignmentPolicyA.h"
+#include "LifespanPolicyA.h"
 
 #include /**/ "ace/post.h"
 

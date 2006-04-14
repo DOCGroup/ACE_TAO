@@ -1,8 +1,5 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if !defined (_ACE_USE_SV_SEM)
 ACE_INLINE const ACE_mutex_t &
@@ -114,5 +111,3 @@ ACE_Process_Mutex::tryacquire_write_upgrade (void)
 {
   return 0;
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

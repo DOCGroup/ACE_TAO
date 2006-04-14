@@ -21,7 +21,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
-using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
+using namespace TAO::details;
 
 using namespace boost::unit_test_framework;
 
@@ -381,20 +381,20 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-ACE_Proper_Export_Flag test_suite *
+test_suite *
 init_unit_test_suite(int, char*[])
 {
-  test_suite * ts =
-      BOOST_TEST_SUITE("string sequence element unit test");
+  std::auto_ptr<test_suite> ts(
+      BOOST_TEST_SUITE("string sequence element unit test"));
 
   boost::shared_ptr<Tester<char> > char_tester(
       Tester<char>::allocate());
-  char_tester->add_all(ts);
+  char_tester->add_all(ts.get());
 
   boost::shared_ptr<Tester<CORBA::WChar> > wchar_tester(
       Tester<CORBA::WChar>::allocate());
-  wchar_tester->add_all(ts);
+  wchar_tester->add_all(ts.get());
 
-  return ts;
+  return ts.release();
 }
 

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/StringDef_i.h"
+#include "Repository_i.h"
+#include "StringDef_i.h"
 
 #include "ace/SString.h"
 
@@ -10,7 +10,6 @@ ACE_RCSID (IFRService,
            StringDef_i,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_StringDef_i::TAO_StringDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -127,5 +126,3 @@ TAO_StringDef_i::bound_i (CORBA::ULong bound
                                              "bound",
                                              bound);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

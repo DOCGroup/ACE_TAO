@@ -24,31 +24,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Forward declarations.
 class ACE_Object_Manager_Preallocations;
 class ACE_Sig_Adapter;
 class ACE_Sig_Set;
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
   class ACE_Mutex;
   class ACE_Null_Mutex;
   class ACE_Thread_Mutex;
   class ACE_Recursive_Thread_Mutex;
   class ACE_RW_Thread_Mutex;
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // only used by ACE_OS_Object_Manager::ctor
 # if defined (ACE_WIN32)
@@ -158,7 +146,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * With ACE_HAS_NONSTATIC_OBJECT_MANAGER enabled, the ACE
  * library has no static objects that require destruction.
  * However, there are two drawbacks to using it:
- * 1) main (int, char *[]) must be declared with arguments, even
+ * 1) ACE_TMAIN (int, ACE_TCHAR *[]) must be declared with arguments, even
  * if they're not used.  All of ACE is converted to this, so
  * just applications have to be concerned with it.
  * 2) If there any static objects that depend on those that are
@@ -346,7 +334,7 @@ public:
   // use by ACE_Singleton _only_.
 
   /**
-   * Accesses an ACE_Null_Mutex to be used for construction of
+   * Accesses an <ACE_Null_Mutex> to be used for construction of
    * <ACE_Singletons>.  Returns 0, and the lock in the argument, on
    * success; returns -1 on failure.
    */
@@ -367,7 +355,7 @@ public:
   static int get_singleton_lock (ACE_Mutex *&);
 
   /**
-   * Accesses a recursive ACE_Recursive_Thread_Mutex to be used for
+   * Accesses a recursive <ACE_Recursive_Thread_Mutex> to be used for
    * construction of <ACE_Singletons>.  Returns 0, and the lock in the
    * argument, on success; returns -1 on failure.
    */
@@ -435,7 +423,6 @@ private:
   ACE_Object_Manager &operator= (const ACE_Object_Manager &);
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Static_Object_Lock.h"
 
@@ -449,10 +436,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // We can't use the ACE_SVC_FACTORY_DECLARE macro here because this
 // needs to be in the ACE_Export context rather than the
 // ACE_Svc_Export context.
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Service_Object;
-ACE_END_VERSIONED_NAMESPACE_DECL
-ACE_FACTORY_DECLARE (ACE, ACE_Service_Manager)
+extern "C" ACE_Export
+ACE_Service_Object *
+_make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 

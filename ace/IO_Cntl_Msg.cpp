@@ -1,3 +1,4 @@
+// IO_Cntl_Msg.cpp
 // $Id$
 
 #include "ace/IO_Cntl_Msg.h"
@@ -14,8 +15,6 @@ ACE_RCSID(ace, IO_Cntl_Msg, "$Id$")
 #if !defined (__ACE_INLINE__)
 #include "ace/Intrusive_List.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl
 template <class SYNCH> class ACE_Module;
@@ -44,8 +43,5 @@ private:
   ACE_Module *mod_lower_;
   int    count_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif
 

@@ -1,8 +1,7 @@
+// -*- C++ -*-
 // $Id$
 
-#include "orbsvcs/Time/TAO_TIO.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "TAO_TIO.h"
 
 // Constructor.
 TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
@@ -70,8 +69,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
           ACE_NEW_RETURN (tio,
                           TAO_TIO (lb1, up1),
                           CosTime::OTNoOverlap);
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
 
           return CosTime::OTOverlap;
         }
@@ -82,7 +80,6 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           CosTime::OTNoOverlap);
 
           overlap = tio->_this ();
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
           return CosTime::OTContained;
         }
@@ -92,8 +89,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb2, up2),
                           CosTime::OTNoOverlap);
 
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
 
           return CosTime::OTContained;
         }
@@ -105,8 +101,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                               TAO_TIO (0, 0),
                               CosTime::OTNoOverlap);
 
-              overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+              overlap = tio->_this ();
 
               return CosTime::OTNoOverlap;
             }
@@ -115,8 +110,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
               ACE_NEW_RETURN (tio,
                               TAO_TIO (lb2, up1),
                               CosTime::OTNoOverlap);
-              overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+              overlap = tio->_this ();
 
               return CosTime::OTOverlap;
             }
@@ -128,8 +122,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (0, 0),
                           CosTime::OTNoOverlap);
 
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
 
           return CosTime::OTNoOverlap;
         }
@@ -139,8 +132,8 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb1, up2),
                           CosTime::OTNoOverlap);
 
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
+
         }
     }
   ACE_CATCHANY
@@ -187,8 +180,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 
       ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTOverlap;
     }
@@ -199,8 +191,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTContained;
     }
@@ -211,8 +202,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTContained;
     }
@@ -224,8 +214,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                             TAO_TIO (0, 0),
                             CORBA::NO_MEMORY ());
           ACE_CHECK_RETURN (CosTime::OTNoOverlap);
-          overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio_i->_this ();
 
           return CosTime::OTNoOverlap;
         }
@@ -236,8 +225,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                             CORBA::NO_MEMORY ());
           ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-          overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio_i->_this ();
 
           return CosTime::OTOverlap;
         }
@@ -249,8 +237,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTNoOverlap;
     }
@@ -282,7 +269,5 @@ TAO_TIO::time (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

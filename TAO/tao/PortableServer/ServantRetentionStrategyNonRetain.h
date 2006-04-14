@@ -14,15 +14,13 @@
 #define TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/ServantRetentionStrategy.h"
+#include "ServantRetentionStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Location.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Servant_Location.h"
 
 class TAO_Root_POA;
 
@@ -108,11 +106,6 @@ namespace TAO
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
         ACE_ENV_ARG_DECL);
 
-      virtual int find_servant_priority (
-        const PortableServer::ObjectId &system_id,
-        CORBA::Short &priority
-        ACE_ENV_ARG_DECL);
-
       virtual void deactivate_all_objects (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
@@ -164,8 +157,6 @@ namespace TAO
     };
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H */

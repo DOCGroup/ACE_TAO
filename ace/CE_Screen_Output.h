@@ -24,13 +24,8 @@
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 
-namespace
-{
-  const ACE_TCHAR endl[] = ACE_LIB_TEXT("\r\n");
-  const ACE_TCHAR tab[]  = ACE_LIB_TEXT("\t");
-}
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+const ACE_TCHAR endl[] = ACE_LIB_TEXT("\r\n");
+const ACE_TCHAR tab[]  = ACE_LIB_TEXT("\t");
 
 /**
  * @class ACE_CE_Screen_Output
@@ -92,7 +87,7 @@ public:
 
 private:
 
-  ACE_CE_Screen_Output (ACE_CE_Screen_Output&);
+  ACE_CE_Screen_Output(ACE_CE_Screen_Output&);
 
 private:
 
@@ -102,8 +97,6 @@ private:
   /// not own the file handler pointer.
   FILE* pFile_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  // ACE_HAS_WINCE
 #endif  // ACE_CE_SCREEN_OUTPUT_H

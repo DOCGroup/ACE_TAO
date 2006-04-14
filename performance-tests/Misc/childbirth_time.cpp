@@ -75,9 +75,9 @@ ACE_RCSID(Misc, childbirth_time, "$Id$")
 
 #define MAX_NO_ITERATION  10000
 #if defined (ACE_WIN32)
-#define SUBPROGRAM ACE_TEXT ("date.exe")
+#define SUBPROGRAM "date.exe"
 #else
-#define SUBPROGRAM ACE_TEXT ("date")
+#define SUBPROGRAM "date"
 #endif
 
 size_t MULTIPLY_FACTOR = 10;
@@ -336,7 +336,7 @@ prof_mutex_base (size_t iteration)
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:l:pftahmxe"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("n:l:pftahmxe"));
   int c;
   size_t iteration = 10;
   Profiler profiler = 0;

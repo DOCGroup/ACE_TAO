@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TypeCodeFactory/typecodefactory_export.h"
+#include "typecodefactory_export.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/ORB.h"
@@ -67,8 +67,6 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -455,8 +453,6 @@ TAO_TypeCodeFactory_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

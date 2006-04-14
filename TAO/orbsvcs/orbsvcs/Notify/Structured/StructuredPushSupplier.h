@@ -13,16 +13,14 @@
 #define TAO_Notify_STRUCTUREDPUSHSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/Notify/Supplier.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "../Supplier.h"
 
 class TAO_Notify_ProxyConsumer;
 
@@ -44,8 +42,9 @@ public:
   /// Init
   void init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
 
+
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual bool get_ior (ACE_CString & iorstr) const;
 
 protected:
   /// The Supplier
@@ -55,8 +54,6 @@ private:
   /// Release
   virtual void release (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_STRUCTUREDPUSHSUPPLIER_H */

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file Proxy_T.h
  *
@@ -15,16 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Proxy.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Proxy.h"
 
 /**
  * @class TAO_Notify_Proxy_T
@@ -147,10 +143,8 @@ template class TAO_Notify_Serv_Export
 TAO_Notify_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/Proxy_T.cpp"
+#include "Proxy_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

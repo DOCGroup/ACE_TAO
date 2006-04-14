@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 // ===================================================================
 /**
@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  @author Originally by Chris Cleeland as IIOP_Connect.h
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -26,8 +26,6 @@
 
 #include "tao/Connection_Handler.h"
 #include "tao/Basic_Types.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -130,8 +128,6 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IIOP_CONNECTION_HANDLER_H */

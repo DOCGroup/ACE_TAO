@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_PAIR_T_CPP
-#define ACE_PAIR_T_CPP
+#ifndef ACE_PAIR_T_C
+#define ACE_PAIR_T_C
 
 #include "ace/Pair_T.h"
 
@@ -13,4 +13,6 @@
 #include "ace/Pair_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_PAIR_T_CPP */
+ACE_RCSID(ace, Pair_T, "$Id$")
+
+#endif /* ACE_PAIR_T_C */

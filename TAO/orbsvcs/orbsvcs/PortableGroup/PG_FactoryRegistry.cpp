@@ -1,19 +1,16 @@
 // -*- C++ -*-
 // $Id$
 
-#include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
+#include "PG_FactoryRegistry.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Vector_T.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/POAManagerC.h"
-#include "orbsvcs/PortableGroup/PG_Operators.h" // operator == on CosNaming::Name
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "PG_Operators.h" // operator == on CosNaming::Name
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -66,7 +63,7 @@ TAO::PG_FactoryRegistry::~PG_FactoryRegistry (void)
 
 int TAO::PG_FactoryRegistry::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:q");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:n:q");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -714,7 +711,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char * ior)
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (outputFile, "w");
+  FILE* out = ACE_OS::fopen (outputFile, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", ior);
@@ -729,5 +726,3 @@ int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char 
   }
   return result;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

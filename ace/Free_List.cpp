@@ -10,11 +10,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Empty constructor
 
 template <class T>
 ACE_Free_List<T>::~ACE_Free_List (void)
 {
+  // Nothing
 }
 
 // Default constructor that takes in a preallocation number
@@ -55,13 +57,13 @@ ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List (void)
 // elements withing and it pasts the high water mark, delete the
 // element)
 
-template <class T, class ACE_LOCK> void
+template <class T, class ACE_LOCK> void 
 ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
   // Check to see that we not at the high water mark.
-  if (this->mode_ == ACE_PURE_FREE_LIST
+  if (this->mode_ == ACE_PURE_FREE_LIST 
       || this->size_ < this->hwm_)
     {
       element->set_next (this->free_list_);
@@ -100,7 +102,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::remove (void)
 
 // Returns the current size of the free list
 
-template <class T, class ACE_LOCK> size_t
+template <class T, class ACE_LOCK> size_t 
 ACE_Locked_Free_List<T, ACE_LOCK>::size (void)
 {
   return this->size_;
@@ -108,7 +110,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::size (void)
 
 // Resizes the free list to <newsize>
 
-template <class T, class ACE_LOCK> void
+template <class T, class ACE_LOCK> void 
 ACE_Locked_Free_List<T, ACE_LOCK>::resize (size_t newsize)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
@@ -118,7 +120,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::resize (size_t newsize)
     // Check to see if we grow or shrink
     if (newsize < this->size_)
       this->dealloc (this->size_ - newsize);
-    else
+    else 
       this->alloc (newsize - this->size_);
 }
 
@@ -151,7 +153,5 @@ ACE_Locked_Free_List<T, ACE_LOCK>::dealloc (size_t n)
       this->size_--;
     }
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_FREE_LIST_CPP */

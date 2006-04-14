@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/Notify/AdminProperties.h"
+#include "AdminProperties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/AdminProperties.inl"
+#include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify,
@@ -11,8 +11,6 @@ ACE_RCSID (Notify,
            "$Id$")
 
 #include "orbsvcs/CosNotificationC.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_AdminProperties::TAO_Notify_AdminProperties (void)
   : max_global_queue_length_ (CosNotification::MaxQueueLength, 0)
@@ -90,5 +88,3 @@ TAO_Notify_AdminProperties::queue_full (void)
 
   return 0;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 //=============================================================================
@@ -19,13 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicInterface/dynamicinterface_export.h"
+#include "dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/DynamicInterface/DII_CORBA_methods.h"
+#include "DII_CORBA_methods.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/Pseudo_VarOut_T.h"
@@ -43,8 +42,6 @@
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -196,10 +193,8 @@ namespace CORBA
   };
 } // End CORBA namespace.
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/Context.inl"
+# include "Context.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

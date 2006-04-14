@@ -22,8 +22,6 @@
 
 #include "tao/orbconf.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace CORBA
 {
   class TypeCode;
@@ -61,8 +59,6 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS */
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_EXCEPTION_DATA_H*/

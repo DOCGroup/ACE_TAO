@@ -24,15 +24,15 @@
 
 #include "ACEXML/common/CharStream.h"
 #include "ACEXML/common/Encoding.h"
-#include "zzip/zzip.h"
+#include "zziplib.h"
 
-// Ugly wart to get aroung a macro version of read defined in zzip.h. Evil...
+// Ugly wart to get aroung a macro version of read defined in zziplib.h. Evil...
 #ifdef read
 #undef read
 #endif
 
 /**
- * @class ACEXML_ZipCharStream
+ * @class ACEXML_ZipCharStream ZipCharStream.h "ACEXML/common/ZipCharStream.h"
  *
  * An implementation of ACEXML_CharStream for reading input from a ZIP archive.
  */

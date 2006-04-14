@@ -1,10 +1,6 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "ace/Log_Msg.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
 TAO_Notify_Refcountable_Guard_T<T>::TAO_Notify_Refcountable_Guard_T (T *t)
@@ -87,5 +83,3 @@ TAO_Notify_Refcountable_Guard_T<T>::swap(
   this->t_ = rhs.t_;
   rhs.t_ = temp;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -11,7 +11,7 @@ const char *ior = "file://test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,7 +35,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -80,9 +80,7 @@ main (int argc, char *argv[])
       info.servant_dll =
         CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
       info.servant_entrypt =
-        CORBA::string_dup (
-            "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
-          );
+        CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
 
       // Create a ContainerImplementationInfo sequence
       Deployment::ContainerImplementationInfo container_info;

@@ -1,11 +1,7 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #ifndef METRICS_UTILS_I
 #define METRICS_UTILS_I
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////
 // Class TAO_Metrics_Utils //
@@ -33,7 +29,5 @@ TAO_Metrics_Utils::timeoutEvent (RtecScheduler::handle_t handle)
 {
   TAO_Metrics_Utils::timeoutEvent_ = handle;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* METRICS_UTILS_I */

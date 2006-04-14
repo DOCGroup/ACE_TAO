@@ -196,7 +196,7 @@ run_test (int write_file,
       output_cdr << cdr_test;
 
       // Output the data to cout.
-#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#if defined (ACE_HAS_WINCE)
       // Since CE does not have ostream, ace_file_stream and output_file() cannot
       // be used.  Just use 'hard-coded' file name here.
       (*ACE_CE_OSTREAM::instance()).open(ACE_TEXT("\\Log\\CDR_File_Test.txt"));
@@ -295,7 +295,7 @@ run_test (int write_file,
       // <CDR_Test> object.
       input_cdr >> temp;
 
-#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#ifdef ACE_HAS_WINCE
       (*ACE_CE_OSTREAM::instance()) << temp;
 #else
       *ace_file_stream::instance ()->output_file () << temp;
@@ -330,7 +330,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE::minor_version (),
               ACE::beta_version ()));
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:rw"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("f:rw"));
   int opt;
   int reading = 1;
   int writing = 1;

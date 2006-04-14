@@ -25,8 +25,6 @@
 
 #include "ace/OS_NS_dirent.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Dirent
  *
@@ -70,15 +68,15 @@ public:
    * update the st_atime field of the directory each time the
    * directory is actually read.
    */
-  ACE_DIRENT *read (void);
+  dirent *read (void);
 
   /**
    * Has the equivalent functionality as <readdir> except that an
    * <entry> and <result> buffer must be supplied by the caller to
    * store the result.
    */
-  int read (struct ACE_DIRENT *entry,
-            struct ACE_DIRENT **result);
+  int read (struct dirent *entry,
+            struct dirent **result);
 
   // = Manipulators.
   /// Returns the current location associated with the directory
@@ -111,8 +109,6 @@ private:
   /// Pointer to the directory stream.
   ACE_DIR *dirp_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Dirent.inl"

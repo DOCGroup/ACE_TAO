@@ -17,24 +17,16 @@
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/TAO_Export.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-#include "ace/CORBA_macros.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Time_Value;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "tao/TAO_Export.h"
 
 class TAO_MProfile;
+class ACE_Time_Value;
 
 namespace TAO
 {
@@ -63,6 +55,8 @@ namespace CORBA
 class TAO_Export TAO_Invocation_Endpoint_Selector
 {
 public:
+  /// Constructor.
+  TAO_Invocation_Endpoint_Selector (void);
 
   /// Destructor.
   virtual ~TAO_Invocation_Endpoint_Selector (void);
@@ -88,10 +82,12 @@ public:
  * profile in the IOR.  If that doesn't work, try the next
  * profile, and so on.
  */
-class TAO_Export TAO_Default_Endpoint_Selector
-  : public TAO_Invocation_Endpoint_Selector
+class TAO_Export TAO_Default_Endpoint_Selector :
+  public TAO_Invocation_Endpoint_Selector
 {
 public:
+  /// Constructor.
+  TAO_Default_Endpoint_Selector (void);
 
   /// Destructor.
   virtual ~TAO_Default_Endpoint_Selector (void);
@@ -101,8 +97,5 @@ public:
                                 ACE_ENV_ARG_DECL);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_INVOCATION_ENDPOINT_SELECTOR_H */

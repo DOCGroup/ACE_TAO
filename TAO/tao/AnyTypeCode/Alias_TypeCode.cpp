@@ -15,7 +15,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -198,7 +197,5 @@ TAO::TypeCode::Alias<StringType,
      CORBA::TypeCode::_duplicate (
        Traits<StringType>::get_typecode (this->content_type_));
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /*  TAO_ALIAS_TYPECODE_CPP */

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // $Id$
 
 //=============================================================================
@@ -21,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,8 +28,6 @@
 #include "tao/orbconf.h"
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 {
@@ -42,10 +38,8 @@ public:
 
 static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
+#include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */

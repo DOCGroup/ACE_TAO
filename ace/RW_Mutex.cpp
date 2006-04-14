@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 /**
  * @file RW_Mutex.cpp
  *
@@ -19,8 +20,6 @@
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, RW_Mutex, "$Id$")
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_RW_Mutex::dump (void) const
@@ -49,7 +48,5 @@ ACE_RW_Mutex::~ACE_RW_Mutex (void)
 // ACE_TRACE ("ACE_RW_Mutex::~ACE_RW_Mutex");
   this->remove ();
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

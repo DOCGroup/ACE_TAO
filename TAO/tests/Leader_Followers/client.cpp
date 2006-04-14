@@ -17,6 +17,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 #include "testC.h"
 
 #include "tao/Strategies/advanced_resource.h"
@@ -45,7 +46,7 @@ static int shutdown_server = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:c:e:w:t:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:c:e:w:t:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -236,22 +237,24 @@ private:
 };
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
+      int parse_args_result = parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (parse_args_result != 0)
         return parse_args_result;
 

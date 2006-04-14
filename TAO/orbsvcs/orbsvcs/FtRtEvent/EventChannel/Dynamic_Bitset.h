@@ -13,15 +13,12 @@
 #define DYNAMIC_BITSET_H
 
 #include "ace/config-all.h"
-
-#include "tao/Versioned_Namespace.h"
 #include "ace/OS_NS_string.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  *
  */
+
 class Dynamic_Bitset
 {
   typedef unsigned block;
@@ -67,10 +64,8 @@ private:
 bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
 Dynamic_Bitset operator & (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
+#include "Dynamic_Bitset.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif

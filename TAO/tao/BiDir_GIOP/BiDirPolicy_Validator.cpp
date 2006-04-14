@@ -1,13 +1,11 @@
-#include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
-#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
+#include "BiDirPolicy_Validator.h"
+#include "BiDir_Policy_i.h"
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (BiDir_GIOP, 
+ACE_RCSID (TAO, 
            BiDirPolicy_Validator, 
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_BiDirPolicy_Validator::TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core)
@@ -56,5 +54,3 @@ TAO_BiDirPolicy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
   return (type == BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

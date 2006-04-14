@@ -1,18 +1,16 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Priority_Scheduling.h"
-#include "orbsvcs/Event/EC_QOS_Info.h"
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_Supplier_Filter.h"
+#include "EC_Priority_Scheduling.h"
+#include "EC_QOS_Info.h"
+#include "EC_ProxyConsumer.h"
+#include "EC_ProxySupplier.h"
+#include "EC_Supplier_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Priority_Scheduling.i"
+#include "EC_Priority_Scheduling.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Priority_Scheduling, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Priority_Scheduling::~TAO_EC_Priority_Scheduling (void)
 {
@@ -96,5 +94,3 @@ TAO_EC_Priority_Scheduling::schedule_event (const RtecEventComm::EventSet &event
       ACE_CHECK;
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

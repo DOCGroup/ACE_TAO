@@ -30,9 +30,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   namespace SL3
@@ -44,7 +41,7 @@ namespace TAO
      *
      *
      */
-    class SecurityManager
+    class TAO_Security_Export SecurityManager
       : public virtual SecurityLevel3::SecurityManager,
         public virtual TAO_Local_RefCounted_Object
     {
@@ -94,7 +91,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      virtual ~SecurityManager (void);
+      ~SecurityManager (void);
 
     private:
 
@@ -106,8 +103,6 @@ namespace TAO
 
   } // End SL3 namespace
 }  // End TAO namespace
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined(_MSC_VER)

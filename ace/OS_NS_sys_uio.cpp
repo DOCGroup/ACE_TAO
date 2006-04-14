@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_sys_uio.h"
@@ -11,8 +12,6 @@ ACE_RCSID(ace, OS_NS_sys_uio, "$Id$")
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_LACKS_READV)
 
@@ -126,5 +125,3 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
   return bytes_sent;
 }
 # endif /* ACE_LACKS_WRITEV */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

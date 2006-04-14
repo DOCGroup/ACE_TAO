@@ -204,11 +204,7 @@ namespace CCF
 
             //@@ this code is highly experimental
             CompilerElements::InputStreamAdapter isa (ifs);
-
-            CompilerElements::CPP::Symbols const& symbols (
-              context_.get<CompilerElements::CPP::Symbols> ("cpp-symbols"));
-            CompilerElements::CPP::Preprocessor pp (isa, symbols);
-
+            CompilerElements::CPP::Preprocessor pp (isa);
             IDL3::LexicalAnalyzer lexer (pp);
 
             TokenList token_stream;

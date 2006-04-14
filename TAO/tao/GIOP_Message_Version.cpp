@@ -1,5 +1,5 @@
 //$Id$
-# include "tao/GIOP_Message_Version.h"
+# include "GIOP_Message_Version.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Version.inl"

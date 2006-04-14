@@ -5,8 +5,6 @@ ACE_RCSID (Log,
            Hash_Persistence_Strategy,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Hash_Persistence_Strategy::TAO_Hash_Persistence_Strategy()
 {
 }
@@ -22,5 +20,3 @@ TAO_Hash_Persistence_Strategy::create_log_store(CORBA::ORB_ptr orb,
 {
   return new TAO_Hash_LogStore (orb, mgr);
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

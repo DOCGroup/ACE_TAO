@@ -9,8 +9,6 @@ ACE_RCSID(ace, OS_NS_arpa_inet, "$Id$")
 # include "ace/OS_NS_arpa_inet.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
@@ -36,7 +34,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       addr->s_addr = ip_addr;  // Network byte ordered
       return 1;
     }
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x620)
+#elif defined (VXWORKS)
   // inet_aton() returns OK (0) on success and ERROR (-1) on failure.
   // Must reset errno first. Refer to WindRiver SPR# 34949, SPR# 36026
   ::errnoSet(0);
@@ -68,5 +66,3 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   return addrstr;
 }
 #endif /* defined (ACE_PSOS) */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

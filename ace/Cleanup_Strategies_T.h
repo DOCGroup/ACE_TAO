@@ -24,8 +24,6 @@
 // For linkers that cant grok long names.
 #define ACE_Cleanup_Strategy ACLE
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Cleanup_Strategy
  *
@@ -59,7 +57,7 @@ public:
  *
  * The entry to be cleaned up is removed from the container.
  * Here, since we are dealing with svc_handlers specifically, we
- * perform a couple of extra operations. @note To be used when
+ * perform a couple of extra operations. Note: To be used when
  * the handler is recyclable.
  */
 template <class KEY, class VALUE, class CONTAINER>
@@ -106,7 +104,7 @@ public:
  *
  * The entry to be cleaned up is removed from the container.
  * Here, since we are dealing with svc_handlers specifically, we
- * perform a couple of extra operations. @note This cleanup strategy
+ * perform a couple of extra operations. Note: This cleanup strategy
  * should be used in the case when the handler has the caching
  * attributes.
  */
@@ -140,8 +138,6 @@ public:
   /// The dummy cleanup method.
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cleanup_Strategies_T.cpp"

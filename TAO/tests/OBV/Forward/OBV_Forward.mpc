@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, valuetype {
+project(*Server): taoexe, portableserver, valuetype {
   IDL_Files {
     TreeBase.idl
     TreeController.idl
@@ -13,8 +13,7 @@ project(*Server): taoserver, valuetype {
   }
 }
 
-project(*Client): taoclient, valuetype {
-  after += *Server
+project(*Client): taoexe, valuetype {
   Source_Files {
     TreeBaseC.cpp
     TreeControllerC.cpp

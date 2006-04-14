@@ -25,15 +25,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Thread_Per_Connection_Handler.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/ORB_Core.h"
-#include "tao/Transport_Cache_Manager.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Transport.h"
-#include "tao/debug.h"
+#include "Thread_Per_Connection_Handler.h"
+#include "Server_Strategy_Factory.h"
+#include "ORB_Core.h"
+#include "Transport_Cache_Manager.h"
+#include "Thread_Lane_Resources.h"
+#include "Transport.h"
+#include "debug.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Acceptor_Impl,
+           "$Id$")
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -210,7 +212,5 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_H
 
 
 /////////////////////////////////////////////////////////////////////
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ACCEPTOR_IMPL_CPP */

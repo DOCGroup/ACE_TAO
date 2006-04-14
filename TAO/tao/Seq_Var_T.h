@@ -19,9 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "ace/OS_Memory.h"
 
 /**
  * @class TAO_Seq_Var_Base_T
@@ -86,7 +84,6 @@ public:
   TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T,T_elem> &);
 
   T_elem & operator[] (CORBA::ULong index);
-  const T_elem & operator[] (CORBA::ULong index) const;
 
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T & operator= (const T &);
@@ -111,7 +108,6 @@ public:
   TAO_VarSeq_Var_T & operator= (const TAO_VarSeq_Var_T<T,T_elem> &);
 
   T_elem & operator[] (CORBA::ULong index);
-  const T_elem & operator[] (CORBA::ULong index) const;
 
   // Variable-size base types only.
   operator T *& ();
@@ -143,10 +139,10 @@ public:
   T_elem operator[] (CORBA::ULong index);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
-#include "tao/Seq_Var_T.inl"
+#include "Seq_Var_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

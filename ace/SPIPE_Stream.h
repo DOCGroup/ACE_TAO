@@ -24,8 +24,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stropts.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_SPIPE_Stream
  *
@@ -160,8 +158,6 @@ public:
 private:
   ACE_SPIPE_Addr remote_addr_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SPIPE_Stream.inl"

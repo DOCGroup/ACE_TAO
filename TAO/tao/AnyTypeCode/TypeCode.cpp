@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "TypeCode.h"
 
 ACE_RCSID (tao,
            TypeCode,
@@ -8,7 +8,7 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/TypeCode.inl"
+# include "TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "tao/SystemException.h"
@@ -18,7 +18,6 @@ ACE_RCSID (tao,
 
 #include "ace/OS_NS_string.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::TypeCode::~TypeCode (void)
 {
@@ -333,7 +332,7 @@ CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 {
-  CORBA::Exception *result = 0;
+  CORBA::Exception *result;
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::BadKind (*this),
                   0);
@@ -486,4 +485,3 @@ TAO::unaliased_kind (CORBA::TypeCode_ptr tc
   return unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

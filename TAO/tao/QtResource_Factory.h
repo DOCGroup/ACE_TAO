@@ -24,10 +24,9 @@
 #include "ace/QtReactor.h"
 #include "tao/GUIResource_Factory.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
+
   /**
    * @class QtResource_Factory
    *
@@ -61,8 +60,6 @@ namespace TAO
     TAO_SYNCH_MUTEX lock_;
   };
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_QTRESOURCE_FACTORY_H */

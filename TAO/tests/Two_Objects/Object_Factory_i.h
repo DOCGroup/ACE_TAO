@@ -1,6 +1,6 @@
-// -*- C++ -*-
 //
 // $Id$
+//
 
 #ifndef OBJECT_FACTORY_I_H
 #define OBJECT_FACTORY_I_H
@@ -9,8 +9,7 @@
 #include "First_i.h"
 #include "Second_i.h"
 
-#include "ace/Auto_Event.h"
-
+class ACE_Event;
 
 /// Implement the MTServer::Test interface
 class Object_Factory_i

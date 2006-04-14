@@ -15,8 +15,6 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : endpoints_map_ (10)
   , mcast_discovery_endpoint_ ()
@@ -24,7 +22,6 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ)
   , sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ)
   , nodelay_ (1)
-  , sock_keepalive_ (0)
   , cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
   , use_lite_protocol_ (0)
   , use_dotted_decimal_addresses_ (0)
@@ -305,5 +302,3 @@ TAO_ORB_Parameters::connect_ipv6_only (void) const
   return this->connect_ipv6_only_;
 }
 #endif /* ACE_HAS_IPV6 */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -24,8 +24,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/naming_export.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class TAO_Naming_Client
  *
@@ -71,8 +69,6 @@ protected:
   /// Reference to the root Naming Context.
   CosNaming::NamingContext_var naming_context_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NAMING_CLIENT_H */

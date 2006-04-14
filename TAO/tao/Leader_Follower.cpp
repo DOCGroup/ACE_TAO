@@ -21,9 +21,6 @@ ACE_RCSID (tao,
            Leader_Follower,
            "$Id$")
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {
   while (!this->follower_free_list_.empty ())
@@ -160,7 +157,7 @@ TAO_Leader_Follower::set_client_thread (void)
       // re-enable it if we want to receive any replys...
       this->orb_core_->reactor ()->reset_reactor_event_loop ();
     }
-  ++this->clients_;
+  this->clients_++;
 }
 
 void
@@ -175,7 +172,7 @@ TAO_Leader_Follower::reset_client_thread (void)
       ++this->leaders_;
     }
 
-  --this->clients_;
+  this->clients_--;
   if (this->clients_ == 0 &&
       this->orb_core_->has_shutdown ())
     {
@@ -488,4 +485,3 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   return result;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

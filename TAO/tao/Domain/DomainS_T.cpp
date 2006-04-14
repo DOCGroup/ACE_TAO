@@ -31,10 +31,10 @@
 #ifndef _TAO_IDL_ORIG_DOMAINS_T_CPP_
 #define _TAO_IDL_ORIG_DOMAINS_T_CPP_
 
-#include "tao/Domain/DomainS_T.h"
+#include "DomainS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Domain/DomainS_T.inl"
+#include "DomainS_T.inl"
 #endif /* !defined INLINE */
 
 

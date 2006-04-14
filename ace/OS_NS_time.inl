@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/OS_NS_string.h"
@@ -7,8 +6,7 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+//#include "ace/TSS_T.h"
 
 ACE_INLINE char *
 ACE_OS::asctime (const struct tm *t)
@@ -115,24 +113,31 @@ ACE_OS::ctime (const time_t *t)
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
 #else
-#  if defined (ACE_USES_WCHAR)   /* Not Win32, else it would do the above */
+#  if defined (ACE_USES_WCHAR) // Wide and not Win32
   char *narrow_time;
   ACE_OSCALL (::ctime (t), char *, 0, narrow_time);
   if (narrow_time == 0)
     return 0;
-  // ACE_Ascii_To_Wide::convert allocates (via new []) a wchar_t[]. If
+  // ACE_TEXT_TO_MALLOC_WCHAR_OUT allocates (via malloc) a wchar_t[]. If
   // we've done this before, free the previous one. Yes, this leaves a
   // small memory leak (26 characters) but there's no way around this
   // that I know of. (Steve Huston, 12-Feb-2003).
-  static wchar_t *wide_time = 0;
-  if (wide_time != 0)
-    delete [] wide_time;
-  wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
+// Including ACE_TSS_T.h causes error!
+/*
+  wchar_t* init = 0;
+  static ACE_TSS< wchar_t* > wide_time (&init);
+  ACE::String_Conversion::Allocator_malloc<wchar_t>().free(*wide_time);
+  *wide_time.ts_object() = ACE_TEXT_TO_MALLOC_WCHAR_OUT (narrow_time);
+  return *wide_time;
+*/
+  static wchar_t* wide_time = 0;
+  ACE::String_Conversion::Allocator_malloc<wchar_t>().free(wide_time);
+  wide_time = ACE_TEXT_TO_MALLOC_WCHAR_OUT (narrow_time);
   return wide_time;
 #  else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
-#  endif /* ACE_USES_WCHAR */
-# endif /* ACE_HAS_BROKEN_CTIME */
+#  endif // ACE_USES_WCHAR
+# endif // ACE_HAS_BROKEN_CTIME
 }
 
 #if !defined (ACE_HAS_WINCE)  /* CE version in OS.cpp */
@@ -178,8 +183,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
     return 0;
 
 #   if defined (ACE_USES_WCHAR)
-  ACE_Ascii_To_Wide wide_buf (bufp);
-  ACE_OS_String::strcpy (buf, wide_buf.wchar_rep ());
+  ACE_OS::string_copy (buf, bufp, buflen);
   return buf;
 #   else
   return bufp;
@@ -219,7 +223,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 #endif /* ! ACE_LACKS_DIFFTIME */
 
 #if defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
-  extern "C" ACE_hrtime_t ACE_GETHRTIME_NAME ();
+  extern "C" ACE_hrtime_t ACE_gethrtime ();
 #endif /* ghs && ACE_HAS_PENTIUM */
 
 ACE_INLINE ACE_hrtime_t
@@ -240,7 +244,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 #elif defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
-  return ACE_GETHRTIME_NAME ();
+  return ACE_gethrtime ();
 #elif (defined(__KCC) || defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined (ACE_WIN32) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -360,12 +364,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   struct timespec ts;
 
-  ACE_OS::clock_gettime (
-#if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
-         CLOCK_MONOTONIC,
-#endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
-         CLOCK_REALTIME,
-         &ts);
+  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
 
   // Carefully create the return value to avoid arithmetic overflow
   // if ACE_hrtime_t is ACE_U_LongLong.
@@ -484,8 +483,13 @@ ACE_OS::nanosleep (const struct timespec *requested,
   ACE_UNUSED_ARG (remaining);
 
   // Convert into seconds and microseconds.
-  ACE_Time_Value tv (requested->tv_sec,
+# if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
+  ACE_Time_Value tv (static_cast<long>(requested->tv_sec),
                      requested->tv_nsec / 1000);
+# else
+  ACE_Time_Value tv (requested->ts_sec,
+                     requested->ts_nsec / 1000);
+# endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return ACE_OS::sleep (tv);
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }
@@ -558,4 +562,3 @@ ACE_OS::tzset (void)
 # endif /* ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS && !__rtems__ && !ACE_HAS_DINKUM_STL */
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL

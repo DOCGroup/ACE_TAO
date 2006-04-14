@@ -1,22 +1,20 @@
 // $Id$
 
-#include "orbsvcs/Notify/EventChannel.h"
+#include "EventChannel.h"
 
-#include "orbsvcs/Notify/Container_T.h"
-#include "orbsvcs/Notify/EventChannelFactory.h"
-#include "orbsvcs/Notify/ConsumerAdmin.h"
-#include "orbsvcs/Notify/SupplierAdmin.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/Factory.h"
-#include "orbsvcs/Notify/Builder.h"
-#include "orbsvcs/Notify/Find_Worker_T.h"
-#include "orbsvcs/Notify/Seq_Worker_T.h"
-#include "orbsvcs/Notify/Topology_Saver.h"
-#include "orbsvcs/Notify/Save_Persist_Worker_T.h"
-#include "orbsvcs/Notify/Reconnect_Worker_T.h"
-#include "orbsvcs/Notify/Proxy.h"
-#include "orbsvcs/Notify/Event_Manager.h"
-#include "orbsvcs/Notify/POA_Helper.h"
+#include "Container_T.h"
+#include "EventChannelFactory.h"
+#include "ConsumerAdmin.h"
+#include "SupplierAdmin.h"
+#include "Properties.h"
+#include "Factory.h"
+#include "Builder.h"
+#include "Find_Worker_T.h"
+#include "Seq_Worker_T.h"
+#include "Topology_Saver.h"
+#include "Save_Persist_Worker_T.h"
+#include "Reconnect_Worker_T.h"
+#include "Proxy.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
@@ -25,8 +23,6 @@
 #endif //DEBUG_LEVEL
 
 ACE_RCSID(Notify, TAO_Notify_EventChannel, "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin
                              , CosNotifyChannelAdmin::ConsumerAdmin
@@ -159,6 +155,7 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent ACE_ENV_ARG_D
   this->sa_container().init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+
   // Set the admin properties.
   TAO_Notify_AdminProperties* admin_properties = 0;
   ACE_NEW_THROW_EX (admin_properties,
@@ -209,10 +206,7 @@ TAO_Notify_EventChannel::release (void)
 int
 TAO_Notify_EventChannel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  int sd_ret = TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
-
-  if (sd_ret == 1)
+  if (TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return 1;
 
   this->ca_container().shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -232,18 +226,13 @@ TAO_Notify_EventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  TAO_Notify_EventChannel::Ptr guard( this );
-
-  int result = this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  if ( result == 1)
+  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return;
+
+  ACE_CHECK;
 
   this->ecf_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  this->sa_container_.reset( 0 );
-  this->ca_container_.reset( 0 );
 }
 
 void
@@ -682,4 +671,3 @@ TAO_Notify_EventChannel::sa_container()
   return *sa_container_;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL

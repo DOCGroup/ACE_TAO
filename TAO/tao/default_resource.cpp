@@ -31,8 +31,6 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_locked_data_blocks_ (1)
   , parser_names_count_ (0)
@@ -46,11 +44,6 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , dynamically_allocated_reactor_ (0)
   , options_processed_ (0)
   , factory_disabled_ (0)
-#if TAO_USE_LOCAL_MEMORY_POOL == 1
-  , use_local_memory_pool_ (true)
-#else
-  , use_local_memory_pool_ (false)
-#endif
   , cached_connection_lock_type_ (TAO_THREAD_LOCK)
   , object_key_table_lock_type_ (TAO_THREAD_LOCK)
   , corba_object_lock_type_ (TAO_THREAD_LOCK)
@@ -165,7 +158,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           {
             TAO_Protocol_Item *item = 0;
             ACE_NEW_RETURN (item,
-                            TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
+                            TAO_Protocol_Item (ACE_TEXT_TO_CHAR_IN(argv[curarg])),
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
@@ -319,7 +312,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
         if (curarg < argc)
           {
-            this->add_to_ior_parser_names (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+            this->add_to_ior_parser_names (ACE_TEXT_TO_CHAR_IN(argv[curarg]));
           }
       }
 
@@ -631,7 +624,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to add ")
                       ACE_TEXT ("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (item->protocol_name ().c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN (item->protocol_name ().c_str ())));
 
           delete item;
 
@@ -672,7 +665,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) Unable to load ")
                              ACE_TEXT ("protocol <%s>, %p\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()),
+                             ACE_TEXT_TO_TCHAR_IN(name.c_str ()),
                              ACE_TEXT ("")),
                             -1);
         }
@@ -681,7 +674,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN(name.c_str ())));
         }
     }
 
@@ -771,32 +764,20 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 }
 
 
+#if TAO_USE_LOCAL_MEMORY_POOL == 1
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,TAO_SYNCH_MUTEX> LOCKED_MALLOC;
-typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR_POOL;
-typedef ACE_New_Allocator LOCKED_ALLOCATOR_NO_POOL;
-
-void
-TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
-{
-  use_local_memory_pool_ = flag;
-}
+typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR;
+#else
+typedef ACE_New_Allocator LOCKED_ALLOCATOR;
+#endif
 
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_dblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
 
   return allocator;
 }
@@ -805,18 +786,9 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
 
   return allocator;
 }
@@ -825,18 +797,9 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_msgblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
 
   return allocator;
 }
@@ -851,19 +814,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
-
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -871,19 +824,9 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
-
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -891,19 +834,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_msgblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
-
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -911,19 +844,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::amh_response_handler_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
-
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -931,19 +854,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::ami_response_handler_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
-
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -1169,8 +1082,6 @@ TAO_Default_Resource_Factory::drop_replies_during_shutdown (void) const
 {
   return this->drop_replies_;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

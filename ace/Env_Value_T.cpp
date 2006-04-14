@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_ENV_VALUE_T_CPP
-#define ACE_ENV_VALUE_T_CPP
+#if !defined (ACE_ENV_VALUE_T_C)
+#define ACE_ENV_VALUE_T_C
 
 #include "ace/Env_Value_T.h"
 
@@ -9,4 +9,6 @@
 #include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_ENV_VALUE_T_CPP */
+ACE_RCSID(ace, Env_Value_T, "$Id$")
+
+#endif /* ACE_ENV_VALUE_T_C */

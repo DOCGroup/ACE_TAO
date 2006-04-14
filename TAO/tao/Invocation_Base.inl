@@ -1,9 +1,5 @@
 // -*- C++ -*-
-//
 // $Id$
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   ACE_INLINE TAO_ORB_Core *
@@ -84,13 +80,7 @@ namespace TAO
   {
     return this->invoke_status_;
   }
+#endif /*TAO_HAS_INTERCEPTORS*/
 
-  ACE_INLINE bool
-  Invocation_Base::is_remote_request (void) const
-  {
-    return this->is_remote_request_;
-  }
-#endif /* TAO_HAS_INTERCEPTORS */
+
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
+
+// DEV_IO.i
 
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_unistd.h"
@@ -10,8 +11,6 @@
 
 // Send exactly N bytes from BUF to this device.  Keeping trying until
 // this many bytes are sent.
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ssize_t
 ACE_DEV_IO::send_n (const void *buf, size_t n) const
@@ -24,7 +23,7 @@ ACE_DEV_IO::send_n (const void *buf, size_t n) const
 // this many bytes are received.
 
 ACE_INLINE ssize_t
-ACE_DEV_IO::recv_n (void *buf,
+ACE_DEV_IO::recv_n (void *buf, 
                     size_t n,
                     const ACE_Time_Value *timeout,
                     size_t *bytes_transferred) const
@@ -122,5 +121,3 @@ ACE_DEV_IO::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int flags) c
   return ACE_OS::putmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, flags);
 }
 #endif /* ACE_HAS_STREAM_PIPES */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

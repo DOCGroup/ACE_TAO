@@ -32,9 +32,6 @@
 #  pragma warning(disable: 4284)
 #endif /* _MSC_VER */
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Auto_Basic_Ptr
  *
@@ -68,8 +65,6 @@ protected:
   X *p_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if !defined (ACE_LACKS_AUTO_PTR) && \
      defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
             (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
@@ -98,7 +93,6 @@ public:
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @brief Implements the draft C++ standard auto_ptr abstraction.
@@ -169,24 +163,17 @@ public:
   X *operator-> () const;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // Some platforms have an older version of auto_ptr
 // support, which lacks reset, and cannot be disabled
 // easily.  Portability to these platforms requires
 // use of the following ACE_AUTO_PTR_RESET macro.
-//
-// Note that this macro correctly handles the case where NEWPTR may be
-// a call to operator new(), e.g. "new foo", by making sure it is only
-// evaluated once.
 # if defined (ACE_AUTO_PTR_LACKS_RESET)
 #   define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
       do { \
-        TYPE * tmp_ptr = NEWPTR; \
-        if (tmp_ptr != AUTOPTR.get ()) \
+        if (NEWPTR != AUTOPTR.get ()) \
           { \
-            delete AUTOPTR.release (); \
-            AUTOPTR = auto_ptr<TYPE> (tmp_ptr); \
+            AUTOPTR.release (); \
+            AUTOPTR = auto_ptr<TYPE> (NEWPTR); \
           } \
       } while (0)
 # else /* ! ACE_AUTO_PTR_LACKS_RESET */

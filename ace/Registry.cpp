@@ -25,9 +25,9 @@ ACE_RCSID (ace,
     } while (0)
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_TCHAR const ACE_Registry::STRING_SEPARATOR[] = ACE_LIB_TEXT ("\\");
+// Separator for components in a name
+/* static */
+const ACE_TCHAR *ACE_Registry::STRING_SEPARATOR = ACE_LIB_TEXT ("\\");
 
 bool
 ACE_Registry::Name_Component::operator== (const Name_Component &rhs) const
@@ -623,7 +623,7 @@ ACE_Registry::make_string (const Name &const_name)
     {
       if (iterator != name.begin ())
         // If this is not the first component, we will add separators
-        string += STRING_SEPARATOR;
+        string += ACE_Registry::STRING_SEPARATOR;
       const Name_Component &component = *iterator;
       // Add to string
       string += component.id_;
@@ -646,7 +646,7 @@ ACE_Registry::make_name (const ACE_TString &string)
     {
       Name_Component component;
       // Find the separator
-      new_position = string.find (STRING_SEPARATOR, new_position);
+      new_position = string.find (ACE_Registry::STRING_SEPARATOR, new_position);
       if (new_position != ACE_TString::npos)
         // If we have not gone past the end
         {
@@ -655,7 +655,7 @@ ACE_Registry::make_name (const ACE_TString &string)
                                          new_position - last_position);
           // Skip past the seperator
           new_position +=
-            ACE_OS::strlen (STRING_SEPARATOR);
+            ACE_OS::strlen (ACE_Registry::STRING_SEPARATOR);
         }
       else
         {
@@ -1149,7 +1149,5 @@ template class ACE_Unbounded_Set_Iterator<ACE_Registry::Name_Component>;
 #pragma instantiate ACE_Unbounded_Set<ACE_Registry::Name_Component>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Registry::Name_Component>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */

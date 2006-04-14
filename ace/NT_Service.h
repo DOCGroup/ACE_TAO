@@ -38,8 +38,6 @@
 #define ACE_NT_SERVICE_START_TIMEOUT  5000
 #endif /* ACE_NT_SERVICE_TIMEOUT */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_NT_Service
  *
@@ -369,8 +367,6 @@ protected:
   ACE_OS_Log_Msg_Attributes  log_msg_attributes_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // These macros help to get things set up correctly at compile time
 // and to take most of the grudge work out of creating the proper
 // functions and doing the registrations.
@@ -420,7 +416,7 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
 #define ACE_NT_SERVICE_RUN(SVCNAME, SVCINSTANCE, RET)                      \
   ACE_TEXT_SERVICE_TABLE_ENTRY _ace_nt_svc_table[2] =                      \
   {                                                                        \
-    ACE_NT_SERVICE_ENTRY(ACE_TEXT (#SVCNAME), SVCNAME),                    \
+    ACE_NT_SERVICE_ENTRY(ACE_LIB_TEXT (#SVCNAME), SVCNAME),                    \
     { 0, 0 }                                                               \
   };                                                                       \
   _ace_nt_svc_obj_##SVCNAME = SVCINSTANCE;                                 \

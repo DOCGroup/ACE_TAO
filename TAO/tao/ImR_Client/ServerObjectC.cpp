@@ -33,7 +33,7 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
-#include "tao/ImR_Client/ServerObjectC.h"
+#include "ServerObjectC.h"
 #include "tao/CDR.h"
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
@@ -44,13 +44,11 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/ImR_Client/ServerObjectC.inl"
+#include "ServerObjectC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -459,5 +457,3 @@ operator>>= (
     
   return 1;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

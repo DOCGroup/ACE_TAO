@@ -71,7 +71,7 @@ namespace CIAO
 
       public:
       PackagedComponentImplementation (::XMLSchema::string< ACE_TCHAR > const& name__,
-                                       ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__);
+      ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__);
 
       PackagedComponentImplementation (::XSCRT::XML::Element< ACE_TCHAR > const&);
       PackagedComponentImplementation (PackagedComponentImplementation const& s);
@@ -367,6 +367,7 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::PackagedComponentImplementation Type;
         PackagedComponentImplementation (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -375,9 +376,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -386,9 +390,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         referencedImplementation (Type &o)
         {
@@ -397,6 +404,7 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         referencedImplementation (Type const&);
 
@@ -410,6 +418,7 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ComponentPackageDescription Type;
         ComponentPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -418,9 +427,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         label (Type &o)
         {
@@ -429,9 +441,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         label (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         UUID (Type &o)
         {
@@ -440,9 +455,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         UUID (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         realizes (Type &o)
         {
@@ -451,9 +469,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         realizes (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         configProperty (Type &o)
         {
@@ -462,9 +483,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         configProperty (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         implementation (Type &o)
         {
@@ -473,9 +497,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         implementation (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         infoProperty (Type &o)
         {
@@ -484,9 +511,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         contentLocation (Type &o)
         {
@@ -495,9 +525,12 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         contentLocation (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
         virtual void 
         href (Type &o)
         {
@@ -506,6 +539,7 @@ namespace CIAO
         }
 
 
+        #endif /* __BORLANDC__ */
         virtual void
         href (Type const&);
 

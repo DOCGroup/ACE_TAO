@@ -24,8 +24,6 @@
 
 #include "ace/Dynamic_Service_Base.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Service_Object;
 
 /**
@@ -42,15 +40,11 @@ class ACE_Dynamic_Service : public ACE_Dynamic_Service_Base
 {
 public:
   /// Return instance using @a name to search the Service_Repository.
-  static TYPE* instance (const ACE_TCHAR *name);
+  static TYPE* instance (const char *name);
 
-#if defined (ACE_USES_WCHAR)
   /// Return instance using @a name to search the Service_Repository.
-  static TYPE* instance (const ACE_ANTI_TCHAR *name);
-#endif  // ACE_USES_WCHAR
+  static TYPE* instance (const wchar_t *name);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Dynamic_Service.inl"

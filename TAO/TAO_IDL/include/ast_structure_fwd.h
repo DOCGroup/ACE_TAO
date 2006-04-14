@@ -23,7 +23,7 @@ public:
   AST_Structure *full_definition (void);
   void set_full_definition (AST_Structure *nfd);
 
-  virtual bool is_defined (void);
+  virtual idl_bool is_defined (void);
 
   // Cleanup function.
   virtual void destroy (void);

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_IPC_SAP
  *
@@ -32,6 +30,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_IPC_SAP
 {
 public:
+  /// Default dtor.
+  ~ACE_IPC_SAP (void);
 
   /// Interface for <ioctl>.
   int control (int cmd, void *) const;
@@ -65,18 +65,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // = Ensure that ACE_IPC_SAP is an abstract base class.
   /// Default constructor.
   ACE_IPC_SAP (void);
-
-  /// Protected destructor.
-  /**
-   * Not a virtual destructor.  Protected destructor to prevent
-   * operator delete() from being called through a base class
-   * ACE_IPC_SAP pointer/reference.
-   */
-  ~ACE_IPC_SAP (void);
 
 private:
   /// Underlying I/O handle.
@@ -85,8 +76,6 @@ private:
   /// Cache the process ID.
   static pid_t pid_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/IPC_SAP.inl"

@@ -25,12 +25,7 @@
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
@@ -249,7 +244,7 @@ protected:
   virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
 
   /**
-   * Helper for decode().  Decodes endpoints from a tagged component.
+   * Helper for <decode>.  Decodes endpoints from a tagged component.
    * Decode only if RTCORBA is enabled.  Furthermore, we may not find
    * TAO_TAG_ENDPOINTS component, e.g., if we are talking to nonRT
    * version of TAO or some other ORB.  This is not an error, and we
@@ -303,9 +298,9 @@ private:
   /// i.e. is not a GIOP 1.0 profile.
   void verify_profile_version (ACE_ENV_SINGLE_ARG_DECL);
 
-  // Profiles should not be copied or assigned!
-  TAO_Profile (const TAO_Profile&);
-  void operator= (const TAO_Profile&);
+  // Profiles should not be copied!
+  ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
 
   //@@ TAO_PROFILE_SPL_PROTECTED_METHODS_ADD_HOOK
 
@@ -420,10 +415,8 @@ private:
 
 //@@ TAO_PROFILE_SPL_EXTERN_HOOK
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-# include "tao/Profile.i"
+# include "Profile.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

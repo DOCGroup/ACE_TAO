@@ -24,13 +24,11 @@
 #include "StructuredEvent.h"
 #include "ace/Task.h"
 #include "ace/Barrier.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Barrier;
-class ACE_Arg_Shifter;
-ACE_END_VERSIONED_NAMESPACE_DECL
+#include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 class TAO_Notify_Tests_Task_Callback;
+class ACE_Barrier;
 
 /**
  * @class TAO_Notify_Tests_Periodic_Supplier
@@ -51,7 +49,7 @@ public:
   void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
-  int init_state (ACE_Arg_Shifter& arg_shifter);
+  int init_state (ACE_TArg_Shifter< char >& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
   virtual int activate_task (ACE_Barrier* barrier);
@@ -60,7 +58,7 @@ public:
   virtual int svc (void);
 
   /// Dump stats.
-  void dump_stats (ACE_TCHAR* msg, int dump_samples);
+  void dump_stats (const ACE_TCHAR* msg, int dump_samples);
 
   /// Get the name of the proxy
   const char* proxy_name (void);

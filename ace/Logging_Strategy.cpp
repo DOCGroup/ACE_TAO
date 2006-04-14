@@ -20,8 +20,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Parse the string containing (thread) priorities and set them
 // accordingly.
 
@@ -154,7 +152,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   this->interval_ = ACE_DEFAULT_LOGFILE_POLL_INTERVAL;
   this->max_size_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv,
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv,
                        ACE_LIB_TEXT ("f:i:k:m:n:N:op:s:t:w"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
@@ -346,7 +344,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
             {
               ACE_NEW_RETURN
                 (output_file,
-                 ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_)),
+                 ofstream (ACE_TEXT_TO_CHAR_IN (this->filename_)),
                  -1);
               delete_ostream = 1;
             }
@@ -354,7 +352,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
             {
               ACE_NEW_RETURN
                 (output_file,
-                 ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_),
+                 ofstream (ACE_TEXT_TO_CHAR_IN (this->filename_),
                            ios::app | ios::out),
                  -1);
               delete_ostream = 1;
@@ -362,7 +360,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 
           if (output_file->rdstate () != ios::goodbit)
             {
-              if (delete_ostream)
+	      if (delete_ostream) 
                 delete output_file;
               return -1;
             }
@@ -439,7 +437,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 
               this->log_msg_->msg_ostream (output_file);
 #else
-              output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
+              output_file->open (ACE_TEXT_TO_CHAR_IN (this->filename_),
                                  ios::out);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -532,7 +530,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 
       this->log_msg_->msg_ostream (output_file);
 #else
-      output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
+      output_file->open (ACE_TEXT_TO_CHAR_IN (this->filename_),
                          ios::out);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -549,10 +547,9 @@ ACE_Logging_Strategy::log_msg (ACE_Log_Msg *log_msg)
   this->log_msg_  = log_msg;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // The following is a "Factory" used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the
 // Logging_Strategy.
 
 ACE_FACTORY_DEFINE (ACE, ACE_Logging_Strategy)
+

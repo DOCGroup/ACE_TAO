@@ -130,10 +130,8 @@ extern "C"
 #  if (__BORLANDC__ <= 0x540)
 #    define _stat stat
 #  endif
-#  if (__BORLANDC__ < 0x560)
-#    define _umask umask
-#    define _fstat fstat
-#  endif
+#  define _umask umask
+#  define _fstat fstat
 #endif /* __BORLANDC__ */
 
 #if defined (ACE_PSOS_SNARFS_HEADER_INFO)

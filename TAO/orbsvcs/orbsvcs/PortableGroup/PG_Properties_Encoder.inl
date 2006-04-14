@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Properties_Encoder.inl
@@ -9,9 +8,6 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO_PG
 {
   ACE_INLINE
@@ -61,4 +57,3 @@ namespace TAO_PG
 
 } //namespace TAO_PG
 
-TAO_END_VERSIONED_NAMESPACE_DECL

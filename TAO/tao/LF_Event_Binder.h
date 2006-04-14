@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class TAO_LF_Follower;
 
 /**
@@ -43,10 +41,8 @@ public:
 
 private:
   /// Keep a reference to the leader follower
-  TAO_LF_Event * const event_;
+  TAO_LF_Event *event_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/LF_Event_Binder.inl"

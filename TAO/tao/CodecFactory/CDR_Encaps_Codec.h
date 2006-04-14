@@ -15,17 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CodecFactory/IOP_Codec_includeC.h"
+#include "IOP_Codec_includeC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_Codeset_Translator_Base;
 
 /**
  * @class TAO_CDR_Encaps_Codec
@@ -52,9 +48,7 @@ public:
   /// Constructor.
   TAO_CDR_Encaps_Codec (CORBA::Octet major,
                         CORBA::Octet minor,
-                        TAO_ORB_Core * orb_core,
-                        TAO_Codeset_Translator_Base * char_trans,
-                        TAO_Codeset_Translator_Base * wchar_trans);
+                        TAO_ORB_Core * orb_core);
 
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
@@ -109,8 +103,9 @@ private:
 
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
-  TAO_CDR_Encaps_Codec (const TAO_CDR_Encaps_Codec &);
-  void operator= (const TAO_CDR_Encaps_Codec &);
+  ACE_UNIMPLEMENTED_FUNC (
+    TAO_CDR_Encaps_Codec (const TAO_CDR_Encaps_Codec &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_CDR_Encaps_Codec &))
 
 private:
 
@@ -124,14 +119,7 @@ private:
   /// encapsulation.
   TAO_ORB_Core * const orb_core_;
 
-  /// Char codeset translator
-  TAO_Codeset_Translator_Base * char_translator_;
-
-  /// WChar codeset translator
-  TAO_Codeset_Translator_Base * wchar_translator_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -67,9 +67,7 @@
          || (defined (ACE_PSOS) && defined (ACE_PSOS_LACKS_ARGC_ARGV))
 
 #     define main \
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
 ace_os_main_i (int, char *[]); \
-ACE_END_VERSIONED_NAMESPACE_DECL \
 ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 { \
   ace_os_main_i (argc, argv); /* what the user calls "main" */ \
@@ -77,16 +75,14 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 int \
 ace_main_i
 
-#   elif defined (ACE_VXWORKS) && !defined (__RTP__)
+#   elif defined (ACE_VXWORKS)
 
 typedef int (*ace_main_proc_ptr)(int, char *[]);
 
 extern ace_main_proc_ptr vx_ace_main_i_ptr;
 
 #     define main \
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
 ace_os_main_i (int, char *[]); \
-ACE_END_VERSIONED_NAMESPACE_DECL \
 int ace_main_i(int, char *[]); \
 int \
 ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
@@ -100,9 +96,7 @@ ace_main_i
 #   elif !defined (ACE_WIN32)
 
 #     define main \
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
 ace_os_main_i (int, char *[]); \
-ACE_END_VERSIONED_NAMESPACE_DECL \
 int \
 ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
 { \
@@ -114,17 +108,12 @@ ace_main_i
 #   elif !defined (ACE_HAS_WINCE)
 
 #     if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Main_Base
 {
 public:
   int run (int, ACE_TCHAR *[]);
   virtual int run_i (int, ACE_TCHAR *[]) = 0;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #       define wmain \
 ace_wmain_i (int, ACE_TCHAR *[]); \
@@ -145,8 +134,6 @@ ace_wmain_i
 
 #     else /* ! (ACE_WIN32 && ACE_USES_WCHAR) */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Main_Base
 {
 public:
@@ -154,18 +141,14 @@ public:
   virtual int run_i (int, char *[]) = 0;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #       define main \
 ace_main_i (int, char *[]); \
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
 ACE_Export int ace_os_main_i (ACE_Main_Base&, int, char *[]); \
 class ACE_Main : public ACE_Main_Base {int run_i (int, char *[]);}; \
 inline int ACE_Main::run_i (int argc, char *argv[])  \
 { \
   return ace_main_i (argc, argv); \
 } \
-ACE_END_VERSIONED_NAMESPACE_DECL \
 int \
 ACE_MAIN (int argc, char *argv[]) /* user's entry point, e.g., wmain */ \
 { \
@@ -179,16 +162,12 @@ ace_main_i
 
 #   else /* ACE_HAS_WINCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Main_Base
 {
 public:
   int run (HINSTANCE, HINSTANCE, LPWSTR, int);
   virtual int run_i (int, ACE_TCHAR *[]) = 0;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #     if defined (ACE_TMAIN)  // Use WinMain on CE; others give warning/error.
 #       undef ACE_TMAIN

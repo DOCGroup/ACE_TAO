@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 /**
@@ -20,15 +18,11 @@
 #pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ORB;
   typedef ORB *ORB_ptr;
 }
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CIAO
 {
@@ -41,7 +35,6 @@ namespace CIAO
    */
   CIAO_CLIENT_Export int Client_init (CORBA::ORB_ptr o);
 }
-
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_CLIENT_INIT_H */

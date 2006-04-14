@@ -1,8 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+// AVStreams_i.i
 
 ACE_INLINE
 TAO_AV_QoS &
@@ -59,4 +58,4 @@ TAO_AV_QoS::get_flow_qos (const char *flowname,
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

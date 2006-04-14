@@ -16,14 +16,16 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+CLEANFILES =
 noinst_PROGRAMS =
+BUILT_SOURCES =
 
-## Makefile.AMI_Observer_IDL.am
+## Makefile.AMI_Observer_Client.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES = \
+BUILT_SOURCES += \
   Push_Web_ServerC.cpp \
   Push_Web_ServerC.h \
   Push_Web_ServerC.inl \
@@ -34,7 +36,7 @@ BUILT_SOURCES = \
   Push_Web_ServerS_T.h \
   Push_Web_ServerS_T.inl
 
-CLEANFILES = \
+CLEANFILES += \
   Push_Web_Server-stamp \
   Push_Web_ServerC.cpp \
   Push_Web_ServerC.h \
@@ -49,21 +51,8 @@ CLEANFILES = \
 Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl Push_Web_ServerS_T.cpp Push_Web_ServerS_T.h Push_Web_ServerS_T.inl: Push_Web_Server-stamp
 
 Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Push_Web_Server.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Push_Web_Server.idl
 	@touch $@
-
-
-noinst_HEADERS = \
-  Push_Web_Server.idl
-
-endif BUILD_CORBA_MESSAGING
-endif BUILD_AMI
-
-## Makefile.AMI_Observer_Client.am
-
-if BUILD_AMI
-if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -82,7 +71,12 @@ client_SOURCES = \
   Push_Web_ServerS.cpp \
   client.cpp \
   Callback_i.h \
-  Push_Iterator_Handler.h
+  Push_Iterator_Handler.h \
+  Push_Web_ServerC.h \
+  Push_Web_ServerC.inl \
+  Push_Web_ServerS.h \
+  Push_Web_ServerS_T.h \
+  Push_Web_ServerS_T.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -95,7 +89,6 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
@@ -103,7 +96,35 @@ endif BUILD_AMI
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
+
+BUILT_SOURCES += \
+  Push_Web_ServerC.cpp \
+  Push_Web_ServerC.h \
+  Push_Web_ServerC.inl \
+  Push_Web_ServerS.cpp \
+  Push_Web_ServerS.h \
+  Push_Web_ServerS.inl \
+  Push_Web_ServerS_T.cpp \
+  Push_Web_ServerS_T.h \
+  Push_Web_ServerS_T.inl
+
+CLEANFILES += \
+  Push_Web_Server-stamp \
+  Push_Web_ServerC.cpp \
+  Push_Web_ServerC.h \
+  Push_Web_ServerC.inl \
+  Push_Web_ServerS.cpp \
+  Push_Web_ServerS.h \
+  Push_Web_ServerS.inl \
+  Push_Web_ServerS_T.cpp \
+  Push_Web_ServerS_T.h \
+  Push_Web_ServerS_T.inl
+
+Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl Push_Web_ServerS_T.cpp Push_Web_ServerS_T.h Push_Web_ServerS_T.inl: Push_Web_Server-stamp
+
+Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Push_Web_Server.idl
+	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -122,7 +143,12 @@ server_SOURCES = \
   Push_Web_ServerS.cpp \
   server.cpp \
   Callback_Handler.h \
-  Push_Iterator_Factory_i.h
+  Push_Iterator_Factory_i.h \
+  Push_Web_ServerC.h \
+  Push_Web_ServerC.inl \
+  Push_Web_ServerS.h \
+  Push_Web_ServerS_T.h \
+  Push_Web_ServerS_T.inl
 
 server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -135,7 +161,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

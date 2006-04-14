@@ -1,9 +1,9 @@
-#include "tao/MCAST_Parser.h"
-#include "tao/default_ports.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
-#include "tao/debug.h"
+#include "MCAST_Parser.h"
+#include "default_ports.h"
+#include "ORB_Core.h"
+#include "ORB.h"
+#include "Environment.h"
+#include "debug.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
@@ -11,7 +11,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/MCAST_Parser.i"
+#include "MCAST_Parser.i"
 #endif /* __ACE_INLINE__ */
 
 
@@ -22,12 +22,10 @@ ACE_RCSID (tao,
 
 static const char mcast_prefix[] = "mcast:";
 
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
 {
 }
+
 
 int
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
@@ -190,7 +188,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
       else
         {
           // Set NIC
-          dgram.set_nic (ACE_TEXT_CHAR_TO_TCHAR (mcast_nic),
+          dgram.set_nic (ACE_TEXT_TO_TCHAR_IN (mcast_nic),
                          multicast_addr.get_type ());
 
           // Set TTL
@@ -329,7 +327,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                           else if (TAO_debug_level > 0)
                             ACE_DEBUG ((LM_DEBUG,
                                         ACE_TEXT ("%N: service resolved to IOR <%s>\n"),
-                                        ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                                        ACE_TEXT_TO_TCHAR_IN (buf)));
                         }
                     }
                 }
@@ -339,7 +337,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("\nmulticast discovery of %s failed.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (service_name)));
+                        ACE_TEXT_TO_TCHAR_IN (service_name)));
 
             if (ACE_OS::strcasecmp (service_name,
                                     "NameService") == 0)
@@ -509,8 +507,6 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                                   mcast_name_cstring.length()
                                   -1).c_str ();
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
                        ACE_TEXT ("MCAST_Parser"),

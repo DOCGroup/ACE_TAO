@@ -33,7 +33,9 @@ namespace CIAO
     regulator__ ()
     {
       {
-        for (package_const_iterator i (s.package_.begin ());i != s.package_.end ();++i) add_package (*i);
+        for (package_const_iterator i (s.package_.begin ());
+        i != s.package_.end ();
+        ++i) add_package (*i);
       }
     }
 
@@ -42,7 +44,9 @@ namespace CIAO
     {
       package_.clear ();
       {
-        for (package_const_iterator i (s.package_.begin ());i != s.package_.end ();++i) add_package (*i);
+        for (package_const_iterator i (s.package_.begin ());
+        i != s.package_.end ();
+        ++i) add_package (*i);
       }
 
       return *this;
@@ -202,7 +206,9 @@ namespace CIAO
         if (b != e)
         {
           package_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) package_next (o);
@@ -222,7 +228,9 @@ namespace CIAO
         if (b != e)
         {
           package_pre (o);
-          for (; b != e;)
+          for (;
+           b != e;
+          )
           {
             dispatch (*b);
             if (++b != e) package_next (o);

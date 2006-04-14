@@ -41,11 +41,7 @@ namespace CCF
           {
             try
             {
-              // With introduction of CORBA 3.1 we have a new beast:
-              // struct with incoplete members which itself becomes
-              // incomplete.
-              //
-              type_ = &resolve<Type> (from, name/*, Flags::complete*/);
+              type_ = &resolve<Type> (from, name, Flags::complete);
             }
             catch (Resolve const&)
             {

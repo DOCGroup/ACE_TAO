@@ -27,10 +27,8 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
+#include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Priority_Mapping
@@ -52,8 +50,6 @@ public:
       to_CORBA (RTCORBA::NativePriority native_priority,
                 RTCORBA::Priority &corba_priority) = 0;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

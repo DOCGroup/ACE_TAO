@@ -14,18 +14,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/Notify/Topology_Object.h"
-#include "orbsvcs/Notify/Object.h"
-#include "orbsvcs/Notify/EventChannelFactory.h"
+#include "Topology_Object.h"
+#include "Object.h"
+#include "EventChannelFactory.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_ConsumerAdmin;
 class TAO_Notify_SupplierAdmin;
@@ -35,7 +34,7 @@ class TAO_Notify_ProxySupplier;
 template <class TYPE> class TAO_Notify_Container_T;
 
 #if defined(_MSC_VER)
-#pragma warning(push)
+  #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -95,6 +94,7 @@ public:
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+
 
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -242,8 +242,6 @@ private:
   /// Release
   virtual void release (void);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -238,13 +238,13 @@ Library::load_modules ()
   ACE_CString subdir = path_ + "/.shobj";
 
   struct dirent **dent;
-  num_modules_ = ACE_OS::scandir(ACE_TEXT_CHAR_TO_TCHAR (subdir.c_str()),
+  num_modules_ = ACE_OS::scandir(ACE_TEXT_TO_TCHAR_IN (subdir.c_str()),
                                  &dent,selector,comparator);
 
   if (num_modules_ > 0) {
     modules_ = new Obj_Module * [num_modules_];
     for (int i = 0; i < num_modules_; i++) {
-      ACE_CString ent_name (ACE_TEXT_ALWAYS_CHAR (dent[i]->d_name));
+      ACE_CString ent_name (ACE_TEXT_TO_CHAR_IN (dent[i]->d_name));
       modules_[i] = new Obj_Module(ent_name);
       modules_[i]->add_source (ACE_CString(subdir + "/" + ent_name).c_str());
       ACE_OS::free(dent[i]);
@@ -302,7 +302,7 @@ Library::write_export_list (int show_ref_counts)
 
   if (show_ref_counts) {
     ACE_DEBUG ((LM_DEBUG, "Making directory %s\n",rcpath.c_str()));
-    if (ACE_OS::mkdir(ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str())) == -1 &&
+    if (ACE_OS::mkdir(ACE_TEXT_TO_TCHAR_IN (rcpath.c_str())) == -1 &&
         errno != EEXIST)
       ACE_ERROR ((LM_ERROR, "%p\n", "mkdir"));
   }

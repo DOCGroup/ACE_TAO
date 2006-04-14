@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -26,8 +26,6 @@
 
 #include "ace/Null_Mutex.h"
 #include "ace/Map_Manager.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Local_Mutex;
 class ACE_Mutex_Token;
@@ -138,13 +136,11 @@ private:
   COLLECTION collection_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Token_Manager.inl"
 #endif /* __ACE_INLINE__ */
-
-#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_MANAGER_H */

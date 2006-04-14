@@ -1,14 +1,12 @@
 // $Id$
 
-#include "tao/Request_Dispatcher.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/ORB_Core.h"
+#include "Request_Dispatcher.h"
+#include "TAO_Server_Request.h"
+#include "ORB_Core.h"
 
 ACE_RCSID (tao, 
            Request_Dispatcher, 
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Request_Dispatcher::~TAO_Request_Dispatcher (void)
 {
@@ -27,5 +25,3 @@ TAO_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

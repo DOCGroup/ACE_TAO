@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,11 +30,9 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RTCORBA.h"
+#include "RTCORBA.h"
 
 #include "tao/Invocation_Endpoint_Selectors.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Invocation_Endpoint_Selector
@@ -45,8 +43,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * private connection policy.
  *
  **/
-class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector
-  : public TAO_Invocation_Endpoint_Selector
+class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector :
+  public TAO_Invocation_Endpoint_Selector
 {
 public:
 
@@ -67,8 +65,6 @@ protected:
                              ACE_Time_Value *v
                              ACE_ENV_ARG_DECL);
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

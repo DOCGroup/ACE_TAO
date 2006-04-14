@@ -45,7 +45,7 @@ struct Tester_Args
 // for all other threads to complete this iteration.
 
 static void *
-wait_tester (Tester_Args *args)
+tester (Tester_Args *args)
 {
   for (int iterations = 1;
        iterations <= args->n_iterations_;
@@ -55,27 +55,9 @@ wait_tester (Tester_Args *args)
                   iterations));
 
       // Block until all other threads have waited, then continue.
-      if (args->tester_barrier_.wait () != 0)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("wait failed")));
+      args->tester_barrier_.wait ();
     }
 
-  return 0;
-}
-
-// Wait on the barrier, expecting it to be shut down before completing
-// the wait.
-
-static void *
-shut_tester (Tester_Args *args)
-{
-  if (args->tester_barrier_.wait () == 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) wait succeeded, should have shut down\n")));
-  else if (errno != ESHUTDOWN)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) wait failed, expecting ESHUTDOWN, %p\n"),
-                ACE_TEXT ("got")));
   return 0;
 }
 
@@ -103,7 +85,7 @@ run_main (int, ACE_TCHAR *[])
 
       if (ACE_Thread_Manager::instance ()->spawn_n
           (n_threads,
-           (ACE_THR_FUNC) wait_tester,
+           (ACE_THR_FUNC) tester,
            (void *) &args,
            THR_NEW_LWP | THR_JOINABLE) == -1)
 
@@ -112,21 +94,6 @@ run_main (int, ACE_TCHAR *[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-
-  // Now test ACE_Barrier shutdown. Set up a barrier for n_threads, and start
-  // n_threads - 1 threads to wait, then shut the barrier down.
-  ACE_Barrier shut_barrier (n_threads);
-  Tester_Args shut_args (shut_barrier, 1);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting shutdown test threads\n")));
-  if (ACE_Thread_Manager::instance ()->spawn_n
-      (n_threads - 1,
-       (ACE_THR_FUNC) shut_tester,
-       (void *) &shut_args,
-       THR_NEW_LWP | THR_JOINABLE) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
-
-  shut_barrier.shutdown ();
-  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("test done\n")));
 #else

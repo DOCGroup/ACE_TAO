@@ -12,15 +12,13 @@
 #ifndef FT_PROXYADMIN_H
 #define FT_PROXYADMIN_H
 
-#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h"
+#include "FT_ProxyAdmin_Base.h"
 #include "../Utils/ScopeGuard.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "Request_Context_Repository.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
@@ -33,7 +31,8 @@ public:
   FT_ProxyAdmin(EC_PROXY_ADMIN* admin,
               PortableServer::POA_var poa);
 
-  ProxyInterface_ptr obtain_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  ProxyInterface_ptr
+      obtain_proxy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   /// this is used for updating the state
   void obtain_proxy (const FtRtecEventChannelAdmin::Operation& op
@@ -45,10 +44,8 @@ private:
   EC_PROXY_ADMIN* admin_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp"
+#include "FT_ProxyAdmin_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

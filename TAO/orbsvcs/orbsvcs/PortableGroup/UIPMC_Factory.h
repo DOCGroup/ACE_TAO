@@ -23,9 +23,7 @@
 
 #include "ace/Service_Config.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "portablegroup_export.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -38,7 +36,7 @@ public:
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
 
   /// Verify prefix is a match
   virtual int match_prefix (const ACE_CString &prefix);
@@ -61,8 +59,6 @@ private:
   int major_;
   int minor_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_UIPMC_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_UIPMC_Protocol_Factory)

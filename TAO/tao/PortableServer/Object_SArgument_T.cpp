@@ -9,7 +9,6 @@
 #include "tao/PortableServer/Object_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_ptr,
          typename S_var,
@@ -119,7 +118,5 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_OBJECT_SARGUMENT_T_CPP */

@@ -9,20 +9,16 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/Basic_Types.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class tested_sequence,
     class tested_allocation_traits>
 struct value_sequence_tester
 {
   typedef typename tested_sequence::value_type value_type;
-  typedef typename tested_sequence::const_value_type const_value_type;
 
   void test_default_constructor()
   {
@@ -70,7 +66,7 @@ struct value_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    const_value_type & z = y[4];
+    int const & z = y[4];
     BOOST_CHECK_EQUAL(z, y[4]);
   }
 
@@ -80,7 +76,7 @@ struct value_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    const_value_type & z = y[4];
+    int const & z = y[4];
     x[4] = 4;
     BOOST_CHECK_EQUAL(4, x[4]);
     BOOST_CHECK_EQUAL(4, y[4]);
@@ -265,5 +261,4 @@ private:
   boost::weak_ptr<value_sequence_tester> self_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_value_sequence_tester_hpp

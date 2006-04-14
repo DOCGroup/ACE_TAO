@@ -22,8 +22,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   /**
@@ -89,8 +87,6 @@ namespace TAO
   };
 
 } // namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

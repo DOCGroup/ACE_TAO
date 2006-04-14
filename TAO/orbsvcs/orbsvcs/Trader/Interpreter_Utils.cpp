@@ -1,10 +1,8 @@
 // $Id$
 
-#include "orbsvcs/Trader/Interpreter_Utils.h"
+#include "Interpreter_Utils.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Methods to deal with ACE_Hash_Map_Manager.
 
@@ -96,5 +94,3 @@ sequence_type (CORBA::TypeCode* type_code
 
   return return_value;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

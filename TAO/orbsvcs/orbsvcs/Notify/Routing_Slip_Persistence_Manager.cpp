@@ -1,10 +1,8 @@
 // $Id$
 
-#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
-#include "orbsvcs/Notify/Standard_Event_Persistence.h"
-#include "orbsvcs/Notify/Persistent_File_Allocator.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "Routing_Slip_Persistence_Manager.h"
+#include "Standard_Event_Persistence.h"
+#include "Persistent_File_Allocator.h"
 
 namespace TAO_Notify
 {
@@ -327,16 +325,16 @@ Routing_Slip_Persistence_Manager::Block_Header::put_header(
   data[pos++] = static_cast<unsigned char> ((serial_number >> 8) & 0xff);
   data[pos++] = static_cast<unsigned char> ((serial_number >> 0) & 0xff);
   // Store next_overflow
-  data[pos++] = static_cast<unsigned char> (next_overflow >> 24);
-  data[pos++] = static_cast<unsigned char> ((next_overflow >> 16) & 0xff);
-  data[pos++] = static_cast<unsigned char> ((next_overflow >> 8) & 0xff);
-  data[pos++] = static_cast<unsigned char> (next_overflow & 0xff);
+  data[pos++] = next_overflow >> 24;
+  data[pos++] = (next_overflow >> 16) & 0xff;
+  data[pos++] = (next_overflow >> 8) & 0xff;
+  data[pos++] = next_overflow & 0xff;
   // Store header_type
-  data[pos++] = static_cast<unsigned char> ((header_type >> 8) & 0xff);
-  data[pos++] = static_cast<unsigned char> (header_type & 0xff);
+  data[pos++] = (header_type >> 8) & 0xff;
+  data[pos++] = header_type & 0xff;
   // Store data_size
-  data[pos++] = static_cast<unsigned char> ((data_size >> 8) & 0xff);
-  data[pos++] = static_cast<unsigned char> (data_size & 0xff);
+  data[pos++] = (data_size >> 8) & 0xff;
+  data[pos++] = data_size & 0xff;
 
   return pos;
 }
@@ -386,10 +384,10 @@ Routing_Slip_Persistence_Manager::Routing_Slip_Header::put_header(
 
   unsigned char* data = psb.data();
   // Store next_routing_slip_block
-  data[pos++] = static_cast<unsigned char> (next_routing_slip_block >> 24);
-  data[pos++] = static_cast<unsigned char> ((next_routing_slip_block >> 16) & 0xff);
-  data[pos++] = static_cast<unsigned char> ((next_routing_slip_block >> 8) & 0xff);
-  data[pos++] = static_cast<unsigned char> (next_routing_slip_block & 0xff);
+  data[pos++] = next_routing_slip_block >> 24;
+  data[pos++] = (next_routing_slip_block >> 16) & 0xff;
+  data[pos++] = (next_routing_slip_block >> 8) & 0xff;
+  data[pos++] = next_routing_slip_block & 0xff;
   // Store serial_number
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 56) & 0xff);
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 48) & 0xff);
@@ -400,10 +398,10 @@ Routing_Slip_Persistence_Manager::Routing_Slip_Header::put_header(
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 8) & 0xff);
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 0) & 0xff);
   // Store event_block
-  data[pos++] = static_cast<unsigned char> (event_block >> 24);
-  data[pos++] = static_cast<unsigned char> ((event_block >> 16) & 0xff);
-  data[pos++] = static_cast<unsigned char> ((event_block >> 8) & 0xff);
-  data[pos++] = static_cast<unsigned char> (event_block & 0xff);
+  data[pos++] = event_block >> 24;
+  data[pos++] = (event_block >> 16) & 0xff;
+  data[pos++] = (event_block >> 8) & 0xff;
+  data[pos++] = event_block & 0xff;
   return pos;
 }
 
@@ -579,8 +577,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     mblk = mblk->cont();
     remainder = this->fill_block(*first_block, pos, mblk, 0);
   }
-  first_header.data_size = 
-    static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (data_size - remainder);
+  first_header.data_size = data_size - remainder;
   first_header.next_overflow = 0;
 
   Block_Header* prevhdr = &first_header;
@@ -597,8 +594,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     prevhdr->next_overflow = curblk->block_number();
     prevhdr->put_header(*prevblk);
     pos = hdr->put_header(*curblk);
-    hdr->data_size = 
-      static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (remainder);
+    hdr->data_size = remainder;
 
     size_t offset_into_msg = mblk->length() - remainder;
     remainder = this->fill_block(*curblk, pos, mblk, offset_into_msg);
@@ -609,8 +605,7 @@ Routing_Slip_Persistence_Manager::build_chain(
       remainder = this->fill_block(*curblk, pos, mblk, 0);
     }
 
-    hdr->data_size = hdr->data_size - 
-      static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (remainder);
+    hdr->data_size -= remainder;
     if (prevblk != first_block)
     {
       // allocator obtains ownership, so write out and delete the header
@@ -800,5 +795,3 @@ Routing_Slip_Persistence_Manager::remove_from_dllist()
 }
 
 } /* namespace TAO_Notify */
-
-TAO_END_VERSIONED_NAMESPACE_DECL

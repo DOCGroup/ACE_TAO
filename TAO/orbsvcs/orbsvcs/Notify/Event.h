@@ -14,24 +14,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Refcountable.h"
-#include "orbsvcs/Notify/Property.h"
-#include "orbsvcs/Notify/Property_Boolean.h"
-#include "orbsvcs/Notify/Property_T.h"
+#include "Refcountable.h"
+#include "Property.h"
+#include "Property_Boolean.h"
+#include "Property_T.h"
 
 #include "orbsvcs/Event_ForwarderS.h"
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosNotificationC.h"
 
 #include "ace/Copy_Disabled.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Consumer;
 class TAO_Notify_EventType;
@@ -128,10 +126,8 @@ private:
   bool        is_on_heap_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Event.inl"
+#include "Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

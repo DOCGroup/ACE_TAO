@@ -19,8 +19,6 @@ ACE_RCSID(ace, TLI, "$Id$")
 #include "ace/TLI.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI)
 
 void
@@ -267,7 +265,5 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
   return -1;
 #endif /* ACE_HAS_SVR4_TLI */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TLI */

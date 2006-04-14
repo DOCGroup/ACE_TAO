@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -25,8 +25,6 @@
 #include "ace/Default_Constants.h"
 
 #if defined (ACE_HAS_TLI)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward reference...
 class ACE_TLI_Request_Queue;
@@ -115,8 +113,6 @@ private:
   /// Used for handling disconnects
   struct t_discon *disp_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TLI */
 #include /**/ "ace/post.h"

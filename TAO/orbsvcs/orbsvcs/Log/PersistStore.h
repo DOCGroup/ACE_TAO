@@ -26,11 +26,9 @@
 
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Mutex.h"
-#include "orbsvcs/Log/log_serv_export.h"
+#include "log_serv_export.h"
 
 #define PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN 250
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct PersistentData
 {
@@ -121,8 +119,6 @@ class TAO_Log_Serv_Export TAO_PersistStore
   /// Lock the log operation.
   ACE_Mutex write_lock_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_PERSIST_STORE_H*/

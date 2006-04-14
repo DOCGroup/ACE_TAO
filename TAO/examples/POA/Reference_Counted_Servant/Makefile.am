@@ -25,8 +25,7 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../Generic_Servant \
-  -I../Generic_Servant
+  -I$(srcdir)/../Generic_Servant
 
 server_SOURCES = \
   server.cpp

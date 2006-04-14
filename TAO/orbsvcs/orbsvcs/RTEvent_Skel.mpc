@@ -4,7 +4,6 @@
 project(RTEvent_Skel) : orbsvcslib, core, rtevent, portableserver {
   sharedname   = TAO_RTEvent_Skel
   dynamicflags = TAO_RTEVENT_SKEL_BUILD_DLL
-  tagchecks   += RTEvent
 
   IDL_Files {
   }
@@ -36,9 +35,5 @@ project(RTEvent_Skel) : orbsvcslib, core, rtevent, portableserver {
 
   Resource_Files{
     RTEvent_Skel.rc
-  }
-
-  Pkgconfig_Files {
-    TAO_RTEvent_Skel.pc.in
   }
 }

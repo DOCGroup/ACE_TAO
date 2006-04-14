@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   Flat_File_Persistence.h
@@ -13,10 +12,8 @@
 #ifndef TAO_FLAT_FILE_PERSISTENCE_H
 #define TAO_FLAT_FILE_PERSISTENCE_H
 
-#include "orbsvcs/Naming/Storable.h"
+#include "Storable.h"
 #include "ace/OS_NS_stdio.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------------------
 // The Flat File concrete classes
@@ -90,6 +87,5 @@ public:
                                            const ACE_TCHAR * mode);
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

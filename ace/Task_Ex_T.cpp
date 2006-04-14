@@ -1,7 +1,8 @@
+// Task_Ex_T.cpp
 // $Id$
 
-#ifndef ACE_TASK_EX_T_CPP
-#define ACE_TASK_EX_T_CPP
+#ifndef ACE_TASK_EX_T_C
+#define ACE_TASK_EX_T_C
 
 #include "ace/Task_Ex_T.h"
 
@@ -16,8 +17,7 @@
 #include "ace/Task_Ex_T.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID(ace, Task_Ex_T, "$Id$")
 
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> void
 ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::dump (void) const
@@ -109,6 +109,4 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::module (void) const
   return this->mod_;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_TASK_EX_T_CPP */
+#endif /* ACE_TASK_EX_T_C */

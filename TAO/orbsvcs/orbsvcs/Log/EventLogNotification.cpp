@@ -7,8 +7,6 @@ ACE_RCSID (Log,
            EventLogNotification,
            "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_EventLogNotification::TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr ec)
 : TAO_LogNotification (), event_channel_ (CosEventChannelAdmin::EventChannel::_duplicate (ec))
 {
@@ -49,4 +47,4 @@ TAO_EventLogNotification::send_notification (const CORBA::Any& any
   consumer_->push (any ACE_ENV_ARG_PARAMETER);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+

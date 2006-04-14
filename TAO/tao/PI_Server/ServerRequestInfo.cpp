@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/PI_Server/ServerRequestInfo.h"
+#include "ServerRequestInfo.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-ACE_RCSID (PI_Server,
+ACE_RCSID (PortableServer,
            ServerRequestInfo,
            "$Id$")
 
@@ -26,10 +26,9 @@ ACE_RCSID (PI_Server,
 #include "ace/OS_NS_string.h"
 
 # if !defined (__ACE_INLINE__)
-#   include "tao/PI_Server/ServerRequestInfo.inl"
+#   include "ServerRequestInfo.inl"
 # endif /* !__ACE_INLINE__ */
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ULong
 TAO::ServerRequestInfo::request_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -586,7 +585,5 @@ TAO::ServerRequestInfo::add_reply_service_context (
                                        CORBA::COMPLETED_NO));
     }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

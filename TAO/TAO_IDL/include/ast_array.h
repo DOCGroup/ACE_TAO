@@ -88,8 +88,8 @@ public:
   AST_Array (UTL_ScopedName *n,
              unsigned long ndims,
              UTL_ExprList *dims,
-             bool local,
-             bool abstract);
+             idl_bool local,
+             idl_bool abstract);
 
   // Destructor.
   virtual ~AST_Array (void);

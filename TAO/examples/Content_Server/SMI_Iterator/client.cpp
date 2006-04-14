@@ -9,7 +9,7 @@
 #include "Web_ServerC.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (SMI_Iterator,
            client,
@@ -32,8 +32,9 @@ int spawn_viewer (const char *content_type,
                   const char *filename);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -43,8 +44,7 @@ main (int argc, char *argv[])
                           -1);
 
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             "Mighty ORB"
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -92,7 +92,7 @@ main (int argc, char *argv[])
         }
 
       // Get a Content_Iterator
-      const char *pathname = argv[1];
+      const char *pathname = convert.get_ASCII_argv()[1];
       Web_Server::Content_Iterator_var contents;
       Web_Server::Metadata_Type_var metadata;
       factory->get_iterator (pathname,
@@ -211,7 +211,7 @@ int retrieve_data (const char *content_type,
 
   // Now spawn a view to display the retrieved data.
   if (::spawn_viewer (content_type,
-                      file_addr.get_path_name ()) != 0)
+                      ACE_TEXT_TO_CHAR_IN(file_addr.get_path_name ())) != 0)
     return -1;
 
   return 0;

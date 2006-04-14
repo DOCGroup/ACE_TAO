@@ -74,10 +74,8 @@ run_main (int, ACE_TCHAR *[])
 
   errors += check (ACE_TEXT ("ACE_SIZEOF_CHAR: %u%s"),
                    sizeof (char), ACE_SIZEOF_CHAR);
-#if defined (ACE_HAS_WCHAR)
   errors += check (ACE_TEXT ("ACE_SIZEOF_WCHAR: %u%s"),
                    sizeof (wchar_t), ACE_SIZEOF_WCHAR);
-#endif /* ACE_HAS_WCHAR */
   errors += check (ACE_TEXT ("ACE_SIZEOF_SHORT: %u%s"),
                    sizeof (short), ACE_SIZEOF_SHORT);
   errors += check (ACE_TEXT ("ACE_SIZEOF_INT: %u%s"),
@@ -133,17 +131,17 @@ run_main (int, ACE_TCHAR *[])
   errors += check (ACE_TEXT ("sizeof (ACE_UINT64) is %u%s"),
                    sizeof (ACE_UINT64), 8);
 
-  // ACE assumes sizeof (ptrdiff_t) == sizeof (void*)
-  if (sizeof (ptrdiff_t) == sizeof (void *))
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptrdiff_t) == sizeof (void*)\n")));
+  // ACE assumes sizeof (ptr_arith_t) == sizeof (void*)
+  if (sizeof (ptr_arith_t) == sizeof (void *))
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptr_arith_t) == sizeof (void*)\n")));
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("sizeof (ptrdiff_t) != sizeof (void*)\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("sizeof (ptr_arith_t) != sizeof (void*)\n")));
 
-  // ACE assumes sizeof (ptrdiff_t) >= sizeof (a_function_pointer)
-  if (sizeof (ptrdiff_t) >= sizeof (a_function_pointer))
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptrdiff_t) >= sizeof (a_function_pointer)\n")));
+  // ACE assumes sizeof (ptr_arith_t) >= sizeof (a_function_pointer)
+  if (sizeof (ptr_arith_t) >= sizeof (a_function_pointer))
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptr_arith_t) >= sizeof (a_function_pointer)\n")));
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("sizeof (ptrdiff_t) < sizeof (a_function_pointer)\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("sizeof (ptr_arith_t) < sizeof (a_function_pointer)\n")));
 
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("little endian\n")));

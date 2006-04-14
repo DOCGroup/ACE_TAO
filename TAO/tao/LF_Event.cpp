@@ -1,8 +1,8 @@
+// -*- C++ -*-
 // $Id$
-
-#include "tao/LF_Event.h"
-#include "tao/LF_Follower.h"
-#include "tao/Leader_Follower.h"
+#include "LF_Event.h"
+#include "LF_Follower.h"
+#include "Leader_Follower.h"
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -12,8 +12,6 @@
 ACE_RCSID (tao,
            LF_Event,
            "$Id$")
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Event::TAO_LF_Event (void)
   : state_ (TAO_LF_Event::LFS_IDLE)
@@ -41,10 +39,9 @@ TAO_LF_Event::state_changed (int new_state,
     }
 }
 
+
 void
 TAO_LF_Event::set_state (int new_state)
 {
   this->state_ = new_state;
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL

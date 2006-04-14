@@ -21,11 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Log_Msg.h"
 #include "ace/Basic_Types.h"
-#include "ace/Global_Macros.h"
-#include "ace/Default_Constants.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration.
 class ACE_Allocator;
@@ -264,8 +261,8 @@ public:
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the <ACE_Atomic_Op> with an
    * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>, or if you need to
-   * guard the state of an iterator.
-   * @note The right name would be <lock>, but HP/C++ will choke on that!
+   * guard the state of an iterator.  NOTE: the right name would be
+   * <lock>, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
 
@@ -567,7 +564,7 @@ protected:
  * <ACE_Map_Manager> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -614,7 +611,7 @@ public:
  * <ACE_Map_Manager> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -661,7 +658,7 @@ public:
  * <ACE_Map_Manager> it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -698,8 +695,6 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Map_Manager.inl"

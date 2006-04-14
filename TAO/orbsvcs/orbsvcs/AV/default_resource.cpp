@@ -6,8 +6,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory (void)
 {
   if (TAO_debug_level > 0)
@@ -90,8 +88,6 @@ TAO_AV_Default_Resource_Factory::init (int argc, char *argv[])
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 // ****************************************************************
 
@@ -105,3 +101,11 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_Default_Resource_Factory,
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_Default_Resource_Factory)
 
 // ****************************************************************
+
+
+
+
+
+
+
+

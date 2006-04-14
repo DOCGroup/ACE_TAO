@@ -32,7 +32,6 @@
 #include "ace/Local_Tokens.h"
 #include "ace/Null_Mutex.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Mutex_Invariants
@@ -236,8 +235,6 @@ protected:
   /// Singleton pointer.
   static ACE_Token_Invariant_Manager *instance_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 

@@ -17,7 +17,7 @@ bin_PROGRAMS =
 
 ## Makefile.NT_Naming_Service.am
 
-if !BUILD_ACE_FOR_TAO
+if BUILD_CORBA_MESSAGING
 
 bin_PROGRAMS += NT_Naming_Service
 
@@ -51,11 +51,11 @@ NT_Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Naming_Service.am
 
-if !BUILD_ACE_FOR_TAO
+if BUILD_CORBA_MESSAGING
 
 bin_PROGRAMS += Naming_Service
 
@@ -82,13 +82,12 @@ Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

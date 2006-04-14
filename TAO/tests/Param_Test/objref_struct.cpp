@@ -194,9 +194,9 @@ Test_Objref_Struct::check_validity (void)
       Coffee::Desc_var s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_ret->name) != 0 )
+      if (ACE_OS::strcmp (s_in->name.in(), s_out->name.in()) != 0
+          || ACE_OS::strcmp (s_in->name.in(), s_inout->name.in()) != 0
+          || ACE_OS::strcmp (s_in->name.in(), s_ret->name.in()) != 0 )
         {
           return 0;
         }

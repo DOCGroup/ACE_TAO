@@ -38,8 +38,6 @@ ACE_RCSID (ace,
 
 #include "ace/Auto_Event.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /// Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
@@ -138,7 +136,7 @@ ACE_Proactor_Timer_Handler::svc (void)
           if (absolute_time > cur_time)
             relative_time = absolute_time - cur_time;
           else
-            relative_time = ACE_Time_Value::zero;
+            relative_time = 0;
 
           // Block for relative time.
           result = this->timer_event_.wait (&relative_time, 0);
@@ -237,8 +235,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
   auto_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
 
   // Post a completion.
-  if (-1 == safe_asynch_timer->post_completion
-      (this->proactor_->implementation ()))
+  if (asynch_timer->post_completion (this->proactor_->implementation ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Failure in dealing with timers: ")
                        ACE_LIB_TEXT ("PostQueuedCompletionStatus failed\n")),
@@ -1192,15 +1189,12 @@ template class auto_ptr<ACE_Asynch_Result_Impl>;
 #pragma instanstiate auto_ptr<ACE_Asynch_Result_Impl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #else /* !ACE_WIN32 || !ACE_HAS_AIO_CALLS */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 ACE_Proactor *
-ACE_Proactor::instance (size_t /* threads */)
+ACE_Proactor::instance (size_t threads)
 {
+  ACE_UNUSED_ARG (threads);
   return 0;
 }
 
@@ -1241,7 +1235,5 @@ ACE_Proactor::event_loop_done (void)
 {
   return sig_atomic_t (1);
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/

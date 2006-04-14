@@ -16,20 +16,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
+#include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
+#include "SSLIOP_Credentials.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -49,7 +47,7 @@ namespace TAO
      * @c OwnCredentials are a representation of our identity, not our
      * peer's identity.
      */
-    class OwnCredentials
+    class TAO_SSLIOP_Export OwnCredentials
       : public virtual SecurityLevel3::OwnCredentials,
         public virtual SSLIOP_Credentials
     {
@@ -107,8 +105,6 @@ namespace TAO
   } // End SSLIOP namespace
 }  // End TAO namespace
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

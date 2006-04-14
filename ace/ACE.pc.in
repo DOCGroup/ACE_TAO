@@ -6,5 +6,5 @@ includedir=@includedir@
 Name: ACE
 Description: ADAPTIVE Communication Environment 
 Version: @VERSION@
-Libs: -L${libdir} -lACE @LIBS@
+Libs: -L${libdir} -lACE
 Cflags: -I${includedir}

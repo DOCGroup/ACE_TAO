@@ -20,35 +20,26 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "pi_server_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI_Server/ServerRequestInterceptorC.h"
+#include "ServerRequestInterceptorC.h"
 
 #include "tao/PI/Interceptor_List_T.h"
 #include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/Basic_Types.h"
-#include "tao/PI_Server/ServerRequestDetails.h"
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor,
-                            ServerRequestDetails>
+  typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor>
     ServerRequestInterceptor_List;
-}
-
-namespace CORBA
-{
-  class PolicyList;
 }
 
 class TAO_ServerRequest;
@@ -65,8 +56,8 @@ namespace TAO
    * A convenient helper class to invoke registered server request
    * interceptor(s).
    */
-  class ServerRequestInterceptor_Adapter_Impl
-    : public ServerRequestInterceptor_Adapter
+  class TAO_PI_Server_Export ServerRequestInterceptor_Adapter_Impl :
+    public ServerRequestInterceptor_Adapter
   {
   public:
 
@@ -161,11 +152,6 @@ namespace TAO
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor
       ACE_ENV_ARG_DECL);
 
-    virtual void add_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL);
-
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
 
     virtual TAO::PICurrent_Impl *allocate_pi_current (void);
@@ -191,8 +177,6 @@ namespace TAO
   };
 
 }  // End namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS */
 

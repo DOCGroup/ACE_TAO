@@ -18,8 +18,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 
 ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
@@ -588,7 +586,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
-                                      (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
+                                      (ACE_THR_C_FUNC) ace_thread_adapter,
                                       this,
                                       new_thr_desc.get (),
                                       ACE_OS_Object_Manager::seh_except_selector(),
@@ -598,7 +596,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
-                                      (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
+                                      (ACE_THR_C_FUNC) ace_thread_adapter,
                                       this,
                                       new_thr_desc.get ()),
                   -1);
@@ -2375,5 +2373,3 @@ template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MA
 #  pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
 #  pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL

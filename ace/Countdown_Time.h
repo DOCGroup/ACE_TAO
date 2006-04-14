@@ -23,8 +23,6 @@
 
 #include "ace/Time_Value.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class ACE_Countdown_Time
  *
@@ -72,8 +70,6 @@ private:
   ACE_Countdown_Time (const ACE_Countdown_Time &);
   ACE_Countdown_Time &operator= (const ACE_Countdown_Time &);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

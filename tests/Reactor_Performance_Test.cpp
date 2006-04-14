@@ -186,13 +186,13 @@ client (void *arg)
   int i;
 
   // Automagic memory cleanup.
-  Write_Handler **temp_writers = 0;
+  Write_Handler **temp_writers;
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
   ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
 
-  ACE_TCHAR *temp_failed = 0;
+  ACE_TCHAR *temp_failed;
   ACE_NEW_RETURN (temp_failed,
                   ACE_TCHAR[opt_nconnections],
                   0);
@@ -315,7 +315,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
+  ACE_Get_Arg_Opt<ACE_TCHAR>  getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {

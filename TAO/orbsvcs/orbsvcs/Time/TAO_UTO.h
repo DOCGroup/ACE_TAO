@@ -19,9 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "orbsvcs/Time/time_export.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "time_export.h"
 
 /**
  * @class TAO_UTO
@@ -112,8 +110,6 @@ private:
    */
   TimeBase::UtcT attr_utc_time_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UTO_H */

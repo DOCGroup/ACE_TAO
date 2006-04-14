@@ -51,7 +51,8 @@ namespace CIAO
       if (this->map_.is_plan_available (plan.UUID.in ()))
         return this->map_.fetch_dam_reference (plan.UUID.in ());
 
-      // We are about to begin working on a new DeploymentPlan.
+      // We are about to begin working on a new
+      // DeploymentPlan.
       // Create a DAM servant, which will be populated
       // to be sent back to the PlanLauncher.
       //
@@ -66,7 +67,6 @@ namespace CIAO
           this->orb_.in (),
           this->poa_.in (),
           ::Deployment::TargetManager::_nil (),
-          this, // a plain C++ pointer
           plan,
           this->init_file_.c_str ()),
           CORBA::NO_MEMORY ());
@@ -97,6 +97,10 @@ namespace CIAO
       //
       ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
+      /// @@ Can be removed -- Bala
+      /// Gan, have you addressed this comment by Bala?
+      /// Do we still need this code lying around?
+      ///
       dam_servant->set_uuid (plan.UUID.in ());
 
       Deployment::DomainApplicationManager_var dam =
@@ -123,14 +127,6 @@ namespace CIAO
       return this->map_.get_dams (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
-    Deployment::DomainApplicationManager_ptr
-    Execution_Manager_Impl::getManager (const char * plan_uuid
-                                        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist))
-    {
-      return this->map_.fetch_dam_reference (plan_uuid);
-    }
-
     void
     Execution_Manager_Impl::destroyManager (
       Deployment::DomainApplicationManager_ptr manager
@@ -145,8 +141,6 @@ namespace CIAO
               manager->getPlan (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // What if we still have components running within this plan?
-          //
           (void) this->map_.unbind_dam (plan->UUID.in ());
 
           // Where does the POA deactivate happen?
@@ -175,70 +169,6 @@ namespace CIAO
       ACE_CHECK;
     }
 
-
-    void
-    Execution_Manager_Impl::destroyManagerByPlan (
-      const char * plan_uuid
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StopError))
-    {
-      CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::destroyManagerByPlan");
-      ACE_TRY
-        {
-          // Get DomainApplicationManager first
-          if (! this->map_.is_plan_available (plan_uuid))
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          "Execution_Manager_Impl::destroyManagerByPlan - "
-                          "Invalid plan uuid [%s]\n", plan_uuid));
-              ACE_THROW (Deployment::StopError ());
-            }
-
-          Deployment::DomainApplicationManager_var
-            dam = this->map_.fetch_dam_reference (plan_uuid);
-
-          // Get the plan
-          Deployment::DeploymentPlan_var plan = dam->getPlan ();
-
-          // If any component is still running, then we return.
-          CORBA::ULong inst_lenth = plan->instance.length ();
-          for (CORBA::ULong i = 0; i < inst_lenth; ++i)
-            {
-              if (this->is_component_running (plan->instance[i].name.in (),
-                                              plan_uuid))
-                return;
-            }
-
-          (void) this->map_.unbind_dam (plan->UUID.in ());
-
-          // Where does the POA deactivate happen?
-          //
-          dam->destroyManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-#if 0
-          PortableServer::ObjectId_var oid =
-            this->poa_->reference_to_id (manager
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          this->poa_->deactivate_object (oid.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-#endif /*if 0*/
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Execution_Manager_Impl::destroyManager\t\n");
-          ACE_THROW (Deployment::StopError ());
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-    }
-
-
     void
     Execution_Manager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
@@ -247,202 +177,6 @@ namespace CIAO
       // Shutdown the ORB on which it is runing
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-    }
-
-    void
-    Execution_Manager_Impl::perform_redeployment (
-      const Deployment::DeploymentPlan & plan
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Deployment::PlanError,
-                       ::Deployment::InstallationFailure,
-                       ::Deployment::UnknownImplId,
-                       ::Deployment::ImplEntryPointNotFound,
-                       ::Deployment::InvalidConnection,
-                       ::Deployment::InvalidProperty,
-                       ::Components::RemoveFailure))
-    {
-      CIAO_TRACE ("CIAO::Execution_Manager_Impl::perform_redeployment");
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "CIAO (%P|%t) Dynamic Redeployment: "
-                  "invoked CIAO::Execution_Manager_Impl::perform_redeployment \n"));
-
-      Deployment::DomainApplicationManager_var dam;
-
-      if (this->map_.is_plan_available (plan.UUID.in ()))
-        dam = this->map_.fetch_dam_reference (plan.UUID.in ());
-      else
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
-                      "CIAO::Execution_Manager_Impl::perform_redeployment -"
-                      "Invalid plan uuid: %s\n", plan.UUID.in ()));
-          ACE_THROW (Deployment::PlanError (
-                        "Execution_Manager_Impl::perform_redeployment",
-                        "Invalid plan uuid specified."));
-        }
-
-      ACE_TRY
-        {
-          // Call perform_redeployment() on the DAM, which will do the
-          // actual redeployment and reconfiguration on the dommain level.
-          dam->perform_redeployment (plan);
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Execution_Manager_Impl::perform_redeployment\t\n");
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-    }
-
-    Deployment::DeploymentPlan *
-    Execution_Manager_Impl::getPlan (const char * plan_uuid
-                                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((::CORBA::SystemException))
-    {
-      Deployment::DomainApplicationManager_var dam;
-
-      if (this->map_.is_plan_available (plan_uuid))
-        dam = this->map_.fetch_dam_reference (plan_uuid);
-      else
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
-                      "CIAO::Execution_Manager_Impl::getPlan -"
-                      "Invalid plan uuid: %s\n", plan_uuid));
-          ACE_THROW (::CORBA::BAD_PARAM ());
-        }
-
-      ACE_TRY
-        {
-          return dam->getPlan ();
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Execution_Manager_Impl::getPlan\t\n");
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-    }
-
-    void
-    Execution_Manager_Impl::finalize_global_binding (
-          const Component_Binding_Info & binding,
-          CORBA::Boolean add_or_remove)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException,
-          ::Deployment::InvalidConnection))
-    {
-      ACE_DEBUG ((LM_ERROR,
-                  "Execution_Manage::finalizing  global bindings.\n"));
-
-      // Find the NodeApplication hosting the component, and then call
-      // <finishLaunch> on it
-      ACE_TRY
-      {
-        Deployment::NodeApplication_var
-          node_app = this->find_node_application (binding);
-
-        if (CORBA::is_nil (node_app.in ()))
-          {
-            ACE_DEBUG ((LM_ERROR,
-                        "Execution_Manager_Impl::finalize_global_binding - "
-                        "nil NodeApplication object reference.\n"));
-            ACE_THROW (Deployment::InvalidConnection ());
-          }
-
-        node_app->finishLaunch (binding.providedReference_.in (),
-                                true, // start
-                                add_or_remove);
-
-        // Update the internal shared component list
-        if (add_or_remove)
-          this->add_shared_component (binding);
-        else
-          this->remove_shared_component (binding);
-      }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Execution_Manager_Impl::finalize_global_binding\t\n");
-          ACE_THROW (Deployment::InvalidConnection ());
-        }
-      ACE_ENDTRY;
-    }
-
-    Deployment::NodeApplication_ptr
-    Execution_Manager_Impl::
-    find_node_application (const Component_Binding_Info & binding)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Deployment::InvalidConnection))
-    {
-      // Find the DAM based on plan_UUID
-      Deployment::DomainApplicationManager_var dam;
-
-      if (this->map_.is_plan_available (binding.plan_uuid_))
-        dam = this->map_.fetch_dam_reference (binding.plan_uuid_);
-      else
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
-                      "CIAO::Execution_Manager_Impl::find_node_application -"
-                      "Invalid plan uuid: %s\n", binding.plan_uuid_.c_str ()));
-          ACE_THROW (::CORBA::BAD_PARAM ());
-        }
-
-      // Find the NA based on the NodeName field of the binding
-      // This is a CORBA call on the DAM
-      Deployment::NodeApplication_var
-        node_app = dam->get_node_app (binding.node_.c_str ());
-
-      if (CORBA::is_nil (node_app.in ()))
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
-                      "CIAO::Execution_Manager_Impl::find_node_application -"
-                      "Invalid node name: %s!\n", binding.node_.c_str ()));
-          ACE_THROW (::CORBA::BAD_PARAM ());
-        }
-
-      return node_app._retn ();
-    }
-
-    void
-    Execution_Manager_Impl::
-    add_shared_component (const Component_Binding_Info & comp)
-    {
-      this->shared_components_.insert (comp);
-    }
-
-    void
-    Execution_Manager_Impl::
-    remove_shared_component (const Component_Binding_Info & comp)
-    {
-      this->shared_components_.remove (comp);
-    }
-
-    bool
-    Execution_Manager_Impl::
-    is_component_running (const char * name, const char * plan_uuid)
-    {
-      for (ACE_Unbounded_Set<Component_Binding_Info>::iterator
-           iter = this->shared_components_.begin ();
-           iter != this->shared_components_.end ();
-           ++iter)
-        {
-          if (ACE_OS::strcmp ((*iter).name_.c_str (), name) == 0 &&
-              ACE_OS::strcmp ((*iter).plan_uuid_.c_str (), plan_uuid) == 0)
-            return true;
-        }
-
-      return false;
     }
   }
 }

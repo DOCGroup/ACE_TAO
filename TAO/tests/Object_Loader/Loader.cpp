@@ -12,7 +12,7 @@ Loader::Loader (void)
 CORBA::Object_ptr
 Loader::create_object (CORBA::ORB_ptr orb,
                        int,
-                       char * []
+                       ACE_TCHAR * []
                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

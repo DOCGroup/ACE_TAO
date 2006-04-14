@@ -24,8 +24,6 @@
 
 #include "ace/OS_NS_Thread.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Time_Value;
 
 /**
@@ -66,7 +64,7 @@ public:
    * value of <tv> is updated upon return to show the actual
    * (absolute) acquisition time.
    *
-   * @note Solaris threads do not support timed semaphores.
+   * NOTE: Solaris threads do not support timed semaphores.
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
@@ -83,7 +81,7 @@ public:
    * The value of <*tv> is updated upon return to show the actual
    * (absolute) acquisition time.
    *
-   * @note Solaris threads do not support timed semaphores.
+   * NOTE: Solaris threads do not support timed semaphores.
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
@@ -171,8 +169,6 @@ private:
   void operator= (const ACE_Semaphore &);
   ACE_Semaphore (const ACE_Semaphore &);
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Semaphore.inl"

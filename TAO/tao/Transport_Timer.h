@@ -20,10 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/Versioned_Namespace.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include "TAO_Export.h"
 
 class TAO_Transport;
 
@@ -53,8 +50,6 @@ private:
   /// The Adaptee
   TAO_Transport *transport_;
 };
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

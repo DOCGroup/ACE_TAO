@@ -7,8 +7,6 @@
 
 ACE_RCSID(ace, Time_Request_Reply, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // Default "do nothing" constructor.
 
 ACE_Time_Request::ACE_Time_Request (void)
@@ -192,5 +190,3 @@ ACE_Time_Request::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("+++++++\n")));
 #endif /* ACE_HAS_DUMP */
 }
-
-ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,6 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+// $Id$
+//
 
 // ===================================================================
 /**
@@ -13,21 +15,19 @@
 #ifndef TAO_BIDIR_POLICY_I_H
 #define TAO_BIDIR_POLICY_I_H
 #include /**/ "ace/pre.h"
-#include "tao/BiDir_GIOP/bidirgiop_export.h"
+#include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "BiDirGIOP.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
-# pragma warning(push)
-# pragma warning(disable:4250)
+#pragma warning(push)
+#pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_BidirectionalPolicy
@@ -38,11 +38,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * clients can be made bi-directional or not. Further, this policy
  * also needs to be set by the server to use the connections
  * established by the clients to send requests.
+ *
  */
-class TAO_BidirectionalPolicy
-  : public virtual BiDirPolicy::BidirectionalPolicy
-  , public virtual TAO_Local_RefCounted_Object
+
+class TAO_BiDirGIOP_Export TAO_BidirectionalPolicy
+  : public virtual BiDirPolicy::BidirectionalPolicy,
+    public virtual TAO_Local_RefCounted_Object
 {
+
 public:
 
   /// Constructor.
@@ -57,6 +60,7 @@ public:
   /// = The BiDir::BidirectionalPolicy methods
   virtual BiDirPolicy::BidirectionalPolicyValue value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
@@ -71,18 +75,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
-
 private:
 
   /// The attribute
   BiDirPolicy::BidirectionalPolicyValue value_;
-
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 #if defined(_MSC_VER)
-# pragma warning(pop)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
