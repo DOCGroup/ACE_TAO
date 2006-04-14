@@ -1,0 +1,80 @@
+//
+// $Id$
+//
+
+module Test
+{
+  /// The message type, just used to send a lot of data on each
+  /// request
+  typedef sequence<octet> Payload;
+
+  /// A session is a single instance of the test
+  interface Session;
+  typedef sequence<Session> Session_List;
+
+  /// A session control is used to determine if all the Session in an
+  /// experiment have finished.
+  /**
+   * @param success If false then the session failed, the experiment
+   *        is successful only if all sessions finish successfully
+   */
+  interface Session_Control
+  {
+    void session_finished (in boolean success);
+  };
+
+  /// A Peer is used to create sessions
+  interface Peer
+  {
+    /// Create a new session
+    /**
+     * @param payload_size The size of each message
+     * @param thread_count The number of threads that each session
+     *        must create
+     * @param message_count How many messages does each thread send.
+     */
+    Session create_session (in Session_Control control,
+                            in unsigned long payload_size,
+                            in unsigned long thread_count,
+                            in unsigned long message_count,
+                            in unsigned long peer_count);
+
+    /// Shutdown the peer
+    oneway void shutdown ();
+  };
+
+  /// The Session already has an experiment running.
+  exception Already_Running {};
+
+  /// The experiment requires at least two Sessions
+  exception No_Peers {};
+
+  interface Session
+  {
+    /// Start the test, send messages to all the peers
+    /**
+     * @param other_sessions The list of sessions participating in the
+     *        experiment, this list must not include the session
+     *        receiving the start() call.
+     */
+    void start (in Session_List other_sessions)
+      raises (Already_Running, No_Peers);
+
+    /// Echo back the payload
+    Payload echo_payload (in Payload the_payload);
+
+    /// Destroy the Session object
+    void destroy ();
+  };
+
+  interface Coordinator
+  {
+    /// Add a new peer.
+    /**
+     * The coordinator starts the test by calling <send_oneways> on
+     * all peers. How does it decide to do that is application
+     * specific.
+     */
+    void add_peer (in Peer the_peer);
+  };
+};
