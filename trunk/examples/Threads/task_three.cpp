@@ -53,11 +53,11 @@ public:
 size_t Test_Task::current_count_ = 0;
 size_t Test_Task::done_cnt_ = 0;
 
-static ACE_Thread_Mutex lock_;
+static ACE_Thread_Mutex Lock;
 
 Test_Task::Test_Task (void)
 {
-  ACE_GUARD (ACE_Thread_Mutex, ace_mon, lock_);
+  ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
   this->handled_ = 0;
   Test_Task::current_count_++;
@@ -68,7 +68,7 @@ Test_Task::Test_Task (void)
 
 Test_Task::~Test_Task (void)
 {
-  ACE_GUARD (ACE_Thread_Mutex, ace_mon, lock_);
+  ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_Task destroyed, current_count_ = %d\n"),
@@ -85,7 +85,7 @@ Test_Task::open (void *args)
 int
 Test_Task::close (u_long)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
 
   Test_Task::current_count_--;
   ACE_DEBUG ((LM_DEBUG,
@@ -110,7 +110,7 @@ Test_Task::svc (void)
 
       if (r_->notify (this, ACE_Event_Handler::READ_MASK) == -1)
 	{
-	  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
+	  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
 
 	  ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Test_Task: error %p!\n"),
@@ -130,7 +130,7 @@ Test_Task::handle_input (ACE_HANDLE)
 
   if (this->handled_ == NUM_INVOCATIONS)
     {
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
       Test_Task::done_cnt_++;
       ACE_DEBUG ((LM_DEBUG,
 		  ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %d.\n"),
