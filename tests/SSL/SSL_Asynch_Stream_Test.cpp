@@ -312,7 +312,7 @@ Server_Handler::handle_read_stream
       delete this;
       return;
     }
-  
+
   // Scan through the received data for the expected string. There may be
   // multiples and/or partials. Count up how many arrive before the connection
   // is closed.
@@ -417,7 +417,7 @@ start_clients (void *arg)
         }
 
       Client_Handler *new_handler = 0;
-      ACE_NEW_RETURN (new_handler, Client_Handler, -1);
+      ACE_NEW_RETURN (new_handler, Client_Handler, (void *) -1);
       if (new_handler->open (stream.get_handle ()) != 0)
         delete new_handler;
       stream.set_handle (ACE_INVALID_HANDLE);
