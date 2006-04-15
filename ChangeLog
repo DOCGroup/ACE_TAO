@@ -1,3 +1,8 @@
+Sat Apr 15 10:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+          Fixed compile error
+
 Fri Apr 14 15:53:21 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * NEWS: Updated to reflect the changes and fixes below.
