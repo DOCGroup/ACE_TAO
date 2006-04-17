@@ -7,7 +7,7 @@
 
 CIAO::NodeImplementationInfoHandler::
 NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan,
-              const Deployment::ComponentPlans & shared_components) :
+                               const Deployment::ComponentPlans & shared_components) :
   plan_ (plan),
   node_info_ (0),
   containers_info_map_ (plan, shared_components)

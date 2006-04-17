@@ -3,9 +3,10 @@
 #include "DataType_Handler.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "ciao/CIAO_common.h"
-namespace CIAO{
-
-  namespace Config_Handlers{
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
 
     DataType_Handler::DataType_Handler (void)
     {
@@ -172,7 +173,6 @@ namespace CIAO{
           ACE_ERROR ((LM_ERROR, "Invalid typecode\n"));
           throw 1;
         }
-
 
     }
 

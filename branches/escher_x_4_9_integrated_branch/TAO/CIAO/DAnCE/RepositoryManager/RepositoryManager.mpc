@@ -4,7 +4,7 @@
 //RepositoryManager project: implementation of a repository manager
 //compleint with the D&C spec
 
-project (RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, zzip, zlib {
+project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zzip, zlib {
 
   includes += $(CIAO_ROOT)/tools/Config_Handlers  //to circumvent an improper include resolution
                                                   //in the Package_Handlers/PC_Intf.h
@@ -13,12 +13,12 @@ project (RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, 
   libs += Package_Config_Handlers
 
   IDL_Files {
-    RepositoryManager.idl
+    RepositoryManagerDaemon.idl
   }
 
   Source_Files {
-    RepositoryManagerC.cpp
-    RepositoryManagerS.cpp
+    RepositoryManagerDaemonC.cpp
+    RepositoryManagerDaemonS.cpp
     ZIP_Wrapper.cpp
     RepositoryManager.cpp
     RepositoryManager_Impl.cpp
@@ -34,17 +34,17 @@ project (RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, 
 
 // RMadmin project: a sample client for the RM.
 
-project (RMAdmin) : ciao_component_dnc, ciao_config_handlers {
+project (RMAdmin) : ciao_servant_dnc, ciao_config_handlers {
   exename = RMadmin
-  after    += RepositoryManager
+  after  += RepositoryManager
 
   IDL_Files {
-   RepositoryManager.idl
+   RepositoryManagerDaemon.idl
   }
 
   Source_Files {
     RMadmin.cpp
-    RepositoryManagerC.cpp
+    RepositoryManagerDaemonC.cpp
     Options.cpp
     RM_Helper.cpp
   }

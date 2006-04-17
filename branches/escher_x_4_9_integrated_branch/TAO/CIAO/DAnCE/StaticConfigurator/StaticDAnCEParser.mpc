@@ -1,12 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(StaticDAnCEParser): ciao_component_dnc, taoexe, ciao_config_handlers {
+project(StaticDAnCEParser): ciao_component_dnc, taoexe, ciao_config_handlers, ciao_domainapplicationmanager_dnc, iortable, exceptions, ciao_server_dnc {
   exename   = StaticDAnCEParser
-  requires += exceptions dummy_label
   includes += ..
-  libs     += TAO_IORTable NodeApplicationManager DomainApplicationManager
-  after    += TAO_IORTable NodeApplicationManager DomainApplicationManager NodeManager
+  libs     += NodeApplicationManager
+  after    += NodeApplicationManager NodeManager
 
   Source_Files {
     StaticDAnCEParser.cpp

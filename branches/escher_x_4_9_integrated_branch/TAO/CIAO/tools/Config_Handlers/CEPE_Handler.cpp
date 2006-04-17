@@ -34,7 +34,7 @@ namespace CIAO
                                           const ComponentExternalPortEndpoint &src,
                                           ::Deployment::ComponentExternalPortEndpoint &dest)
     {
-      CIAO_TRACE("CEPE_Handler::external_port_endpoint");
+      CIAO_TRACE("CEOE_Handler::external_port_endpoint");
       dest.portName = src.portName ().c_str ();
     }
 
@@ -42,7 +42,8 @@ namespace CIAO
     CEPE_Handler::external_port_endpoint (
                                           const ::Deployment::ComponentExternalPortEndpoint &src)
     {
-      CIAO_TRACE("CEPE_Handler::external_port_endpoint - reverse");
+      CIAO_TRACE("CEOE_Handler::external_port_endpoint - reverse");
+      //MAJO Unfinished
       XMLSchema::string< char > portname ((src.portName));
       return ComponentExternalPortEndpoint  (portname);
     }

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ID_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
@@ -22,8 +21,9 @@ namespace CIAO
     ID_Handler::get_ImplementationDependency (const ImplementationDependency& desc,
                                               Deployment::ImplementationDependency& toconfig)
     {
-      CIAO_TRACE("ID_Handler::get_ImplementationDependency");
 
+      CIAO_TRACE("ID_Handler::get_ImplementationDependency");
+      
       toconfig.requiredType=
         CORBA::string_dup (desc.requiredType ().c_str ());
     }

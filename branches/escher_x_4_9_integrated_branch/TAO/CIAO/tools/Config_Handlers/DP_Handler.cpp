@@ -17,12 +17,14 @@
 #include "cdp.hpp"
 #include "RT-CCM/SRD_Handler.h"
 #include "RT-CCM/CIAOServerResources.hpp"
+#include "CIAO_Events/CIAOEvents_Handler.h"
+#include "CIAO_Events/CIAOEvents.hpp"
 
 #include "DP_PCD_Handler.h"
 
 ACE_RCSID (Config_Handlers,
            DP_Handler,
-           "$Id$")
+           "$Id$");
 
   namespace CIAO
   {
@@ -84,6 +86,7 @@ ACE_RCSID (Config_Handlers,
       ::Deployment::DeploymentPlan *
       DP_Handler::plan (void)
         throw (DP_Handler::NoPlan)
+
       {
         if (this->retval_ && this->idl_dp_.get () != 0)
           return this->idl_dp_.release ();

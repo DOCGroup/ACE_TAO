@@ -200,7 +200,7 @@ namespace CIAO
                                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
-
+          
           if (write_to_ior_)
             {
               retval =

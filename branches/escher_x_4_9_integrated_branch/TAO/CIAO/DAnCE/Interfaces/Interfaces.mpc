@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (ExecutionManager_stub): ciao_component_dnc {
+project (ExecutionManager_stub): ciao_deployment_stub {
 
   sharedname = ExecutionManager_stub
 
@@ -11,15 +11,15 @@ project (ExecutionManager_stub): ciao_component_dnc {
   dynamicflags = EXECUTIONMANAGER_STUB_BUILD_DLL
 
   IDL_Files {
-   ExecutionManager.idl
+   ExecutionManagerDaemon.idl
   }
 
   Source_Files {
-   ExecutionManagerC.cpp
+   ExecutionManagerDaemonC.cpp
   }
 }
 
-project (NodeManager_stub): ciao_component_dnc {
+project (NodeManager_stub): ciao_deployment_stub {
   sharedname = NodeManager_stub
 
   idlflags     += -Wb,stub_export_macro=NodeManager_stub_Export
@@ -30,10 +30,10 @@ project (NodeManager_stub): ciao_component_dnc {
   dynamicflags = NODEMANAGER_STUB_BUILD_DLL
 
   IDL_Files {
-   NodeManager.idl
+   NodeManagerDaemon.idl
   }
 
   Source_Files {
-   NodeManagerC.cpp
+   NodeManagerDaemonC.cpp
   }
 }

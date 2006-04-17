@@ -3,8 +3,16 @@
 // cvs-id    : $Id$
 
 #include "ServantHeaderGenerator.hpp"
-#include "TypeNameEmitter.hpp"
+#include "CorbaTypeNameEmitters.hpp"
+#include "UtilityTypeNameEmitters.hpp"
+#include "AttributeHeaderEmitters.hpp"
+#include "OperationHeaderEmitters.hpp"
+#include "ParameterEmitter_T.hpp"
+#include "CompositionEmitter.hpp"
+#include "ModuleEmitter.hpp"
+#include "InterfaceEmitter.hpp"
 #include "Literals.hpp"
+#include "Upcase.hpp"
 
 #include <ostream>
 
@@ -17,475 +25,8 @@ using namespace StringLiterals;
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 
-using std::string;
-
 namespace
 {
-  // On some platforms toupper can be something other than a
-  // function.
-  int
-  upcase (int c)
-  {
-    return std::toupper (c);
-  }
-}
-
-namespace
-{
-  class Context
-  {
-  public:
-    Context (std::ostream& os,
-             string export_macro)
-        : os_ (os),
-          export_macro_ (export_macro)
-    {
-    }
-
-  std::ostream&
-  os ()
-  {
-    return os_;
-  }
-
-  string
-  export_macro ()
-  {
-    return export_macro_;
-  }
-
-  private:
-    std::ostream& os_;
-    string export_macro_;
-  };
-
-  class EmitterBase
-  {
-  public:
-    EmitterBase (Context& c)
-      : ctx (c),
-        os (ctx.os ())
-    {
-    }
-
-  protected:
-    Context& ctx;
-    std::ostream& os;
-  };
-
-  struct ModuleEmitter : Traversal::Module, EmitterBase
-  {
-    ModuleEmitter (Context& c)
-      : EmitterBase (c)
-    {
-    }
-
-    virtual void
-    pre (Type& t)
-    {
-      os << "namespace " << t.name () << "{";
-    }
-
-    virtual void
-    post (Type&)
-    {
-      os << "}";
-    }
-  };
-
-  struct OperationEmitter : Traversal::Operation, EmitterBase
-  {
-    OperationEmitter (Context& c)
-      : EmitterBase (c)
-    {}
-
-    virtual void
-    pre (Type&)
-    {
-      os << "virtual ";
-    }
-
-    virtual void
-    name (Type& o)
-    {
-      os << endl << o.name ();
-    }
-
-    virtual void
-    receives_pre (Type&)
-    {
-      os << " (" << endl;
-    }
-
-    virtual void
-    receives_none (Type&)
-    {
-      os << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl;
-    }
-
-    virtual void
-    receives_post (Type&)
-    {
-      os << endl << STRS[ENV_HDR] << ")" << endl;
-    }
-
-    virtual void
-    raises_pre (Type&)
-    {
-      os << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl;
-    }
-
-    virtual void
-    raises_none (Type&)
-    {
-      os << STRS[EXCP_SNGL];
-    }
-
-    virtual void
-    raises_post (Type&)
-    {
-      os << "))";
-    }
-
-    virtual void
-    post (Type&)
-    {
-      os << ";" << endl << endl;
-    }
-
-    virtual void
-    comma (Type&)
-    {
-      os << "," << endl;
-    }
-  };
-
-  // For generating parameter names.
-  template <typename T>
-  struct ParameterEmitter : T
-  {
-    ParameterEmitter (std::ostream& os_)
-      : os (os_)
-    {}
-
-    virtual void
-    name (typename T::Type& p)
-    {
-      os << " " << p.name ();
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-  // Generic scoped typename emitter used by various other emitters.
-  struct TypeNameEmitter : Traversal::Type
-  {
-    TypeNameEmitter (std::ostream& os_)
-      : os (os_)
-    {}
-
-    virtual void
-    traverse (SemanticGraph::Type& t)
-    {
-      os << t.scoped_name ();
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-  // Generic local typename emitter used by various other emitters.
-  struct SimpleTypeNameEmitter : Traversal::Type
-  {
-    SimpleTypeNameEmitter (std::ostream& os_)
-      : os (os_)
-    {}
-
-    virtual void
-    traverse (SemanticGraph::Type& t)
-    {
-      os << t.name ();
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-  // Generate name of type's enclosing scope.
-  struct EnclosingTypeNameEmitter : Traversal::Type
-  {
-    EnclosingTypeNameEmitter (std::ostream& os_)
-      : os (os_)
-    {}
-
-    virtual void
-    traverse (SemanticGraph::Type& t)
-    {
-      os << t.scoped_name ().scope_name ();
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-  // Emits typename minus the leading double colon.
-  struct StrippedTypeNameEmitter : Traversal::Type
-  {
-    StrippedTypeNameEmitter (std::ostream& os_)
-      : os (os_)
-    {}
-
-    virtual void
-    traverse (SemanticGraph::Type& t)
-    {
-      ScopedName scoped (t.scoped_name ());
-      os << Name (scoped.begin () + 1, scoped.end ());
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-  // Generates the set operation of a ReadWriteAttribute.
-  struct WriteAttributeEmitter : Traversal::ReadWriteAttribute,
-                                 EmitterBase
-  {
-    WriteAttributeEmitter (Context& c)
-      : EmitterBase (c),
-        write_type_name_emitter_ (c.os ()),
-        type_name_emitter_ (c.os ())
-    {
-      write_belongs_.node_traverser (write_type_name_emitter_);
-
-      edge_traverser (set_raises_);
-      set_raises_.node_traverser (type_name_emitter_);
-    }
-
-    virtual void
-    pre (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << "virtual void" << endl;
-    }
-
-    virtual void
-    name (SemanticGraph::ReadWriteAttribute& a)
-    {
-      os << a.name () << " (" << endl;
-
-      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
-
-      os << " " << a.name () << endl
-         << STRS[ENV_HDR] << ")" << endl;
-    }
-
-    virtual void
-    get_raises (SemanticGraph::ReadWriteAttribute&)
-    {
-    }
-
-    virtual void
-    set_raises_none (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << STRS[EXCP_SNGL];
-    }
-
-    virtual void
-    set_raises_pre (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl;
-    }
-
-    virtual void
-    set_raises_post (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << "))";
-    }
-
-    virtual void
-    post (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << ";" << endl << endl;
-    }
-
-    virtual void
-    comma (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << "," << endl;
-    }
-
-  private:
-    INArgTypeNameEmitter write_type_name_emitter_;
-    TypeNameEmitter type_name_emitter_;
-    Traversal::Belongs write_belongs_;
-    Traversal::SetRaises set_raises_;
-  };
-
-  // Generates operations associated with attributes.
-  struct AttributeEmitter : Traversal::ReadAttribute,
-                            Traversal::ReadWriteAttribute,
-                            EmitterBase
-  {
-    AttributeEmitter (Context& c)
-      : EmitterBase (c),
-        read_type_name_emitter_ (c.os ()),
-        type_name_emitter_ (c.os ())
-    {
-      read_belongs_.node_traverser (read_type_name_emitter_);
-
-      edge_traverser (get_raises_);
-      get_raises_.node_traverser (type_name_emitter_);
-    }
-
-    // ReadWriteAttribute
-    //
-    virtual void
-    pre (SemanticGraph::ReadWriteAttribute& a)
-    {
-      os << "virtual ";
-
-      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
-
-      os << endl;
-    }
-
-    virtual void
-    name (SemanticGraph::ReadWriteAttribute& a)
-    {
-      os << a.name () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl;
-    }
-
-    virtual void
-    get_raises_none (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << STRS[EXCP_SNGL];
-    }
-
-    virtual void
-    get_raises_pre (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl;
-    }
-
-    virtual void
-    get_raises_post (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << "))";
-    }
-
-    virtual void
-    set_raises (SemanticGraph::ReadWriteAttribute&)
-    {
-    }
-
-    virtual void
-    post (SemanticGraph::ReadWriteAttribute& a)
-    {
-      os << ";" << endl << endl;
-
-      WriteAttributeEmitter write_attribute_emitter (ctx);
-      write_attribute_emitter.traverse (a);
-    }
-
-    virtual void
-    comma (SemanticGraph::ReadWriteAttribute&)
-    {
-      os << "," << endl;
-    }
-
-    // ReadAttribute
-    //
-    virtual void
-    pre (SemanticGraph::ReadAttribute& a)
-    {
-      os << "virtual ";
-
-      Traversal::ReadAttribute::belongs (a, read_belongs_);
-
-      os << endl;
-    }
-
-    virtual void
-    name (SemanticGraph::ReadAttribute& a)
-    {
-      os << a.name () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl;
-    }
-
-    virtual void
-    get_raises_none (SemanticGraph::ReadAttribute&)
-    {
-      os << STRS[EXCP_SNGL];
-    }
-
-    virtual void
-    get_raises_pre (SemanticGraph::ReadAttribute&)
-    {
-      os << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl;
-    }
-
-    virtual void
-    get_raises_post (SemanticGraph::ReadAttribute&)
-    {
-      os << "))";
-    }
-
-    virtual void
-    set_raises (SemanticGraph::ReadAttribute&)
-    {
-    }
-
-    virtual void
-    post (SemanticGraph::ReadAttribute&)
-    {
-      os << ";" << endl << endl;
-    }
-
-    virtual void
-    comma (SemanticGraph::ReadAttribute&)
-    {
-      os << "," << endl;
-    }
-
-  private:
-    ReturnTypeNameEmitter read_type_name_emitter_;
-    TypeNameEmitter type_name_emitter_;
-    Traversal::Belongs read_belongs_;
-    Traversal::GetRaises get_raises_;
-  };
-
-  struct InterfaceEmitter : Traversal::Interface,
-                            EmitterBase
-  {
-    InterfaceEmitter (Context& c)
-      : EmitterBase (c)
-    {}
-
-    bool
-    add (Interface& i)
-    {
-      return interfaces_.insert (&i).second;
-    }
-
-    virtual void
-    traverse (Interface& i)
-    {
-      if (add (i))
-      {
-        Traversal::Interface::traverse (i);
-      }
-    }
-
-  private:
-    std::set<Interface*> interfaces_;
-  };
-
   struct FacetEmitter : Traversal::UnconstrainedInterface,
                         EmitterBase
   {
@@ -522,7 +63,7 @@ namespace
         interface_emitter.edge_traverser (inherits_);
 
         // Works for both read/write and readonly attributes.
-        AttributeEmitter attribute_emitter (ctx);
+        AttributeHeaderEmitter attribute_emitter (ctx);
         defines_.node_traverser (attribute_emitter);
 
         OperationEmitter operation_emitter (ctx);
@@ -536,15 +77,15 @@ namespace
         operation_emitter.edge_traverser (returns);
         operation_emitter.edge_traverser (raises);
 
-        ParameterEmitter<Traversal::InParameter> in_param (os);
-        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
-        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        ParameterEmitter<Traversal::InParameter> in_param (ctx);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
+        ParameterEmitter<Traversal::OutParameter> out_param (ctx);
         receives.node_traverser (in_param);
         receives.node_traverser (inout_param);
         receives.node_traverser (out_param);
 
-        ReturnTypeNameEmitter return_type_emitter (os);
-        TypeNameEmitter type_name_emitter (os);
+        ReturnTypeNameEmitter return_type_emitter (ctx);
+        FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
         raises.node_traverser (type_name_emitter);
 
@@ -553,9 +94,9 @@ namespace
         inout_param.edge_traverser (inout_belongs);
         out_param.edge_traverser (out_belongs);
 
-        INArgTypeNameEmitter in_arg_emitter (os);
-        INOUTArgTypeNameEmitter inout_arg_emitter (os);
-        OUTArgTypeNameEmitter out_arg_emitter (os);
+        INArgTypeNameEmitter in_arg_emitter (ctx);
+        INOUTArgTypeNameEmitter inout_arg_emitter (ctx);
+        OUTArgTypeNameEmitter out_arg_emitter (ctx);
         in_belongs.node_traverser (in_arg_emitter);
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
@@ -569,7 +110,6 @@ namespace
          << "_get_component (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl
-         << endl
          << "protected:" << endl
          << "// Facet executor." << endl
          << i.scoped_name ().scope_name ()<< "::CCM_" << i.name ()
@@ -602,7 +142,7 @@ namespace
     {
       PortsEmitterPublic (Context& c)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c)
       {
         belongs_.node_traverser (type_name_emitter_);
       }
@@ -672,7 +212,7 @@ namespace
     {
       PortsEmitterProtected (Context& c)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c)
       {
         belongs_.node_traverser (type_name_emitter_);
       }
@@ -687,9 +227,9 @@ namespace
 
         os << "Consumer_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "));" << endl << endl;
+           << STRS[EXCP_AC] << "));" << endl;
 
         os << "virtual ";
 
@@ -698,9 +238,9 @@ namespace
         os << "Consumer_ptr" << endl
            << "disconnect_" << e.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl << endl;
+           << STRS[EXCP_NC] << "));" << endl;
       }
 
       virtual void
@@ -713,10 +253,10 @@ namespace
 
         os << "_ptr" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
 
         os << "virtual ";
 
@@ -725,9 +265,9 @@ namespace
         os << "_ptr" << endl
            << "disconnect_" << u.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl << endl;
+           << STRS[EXCP_NC] << "));" << endl;
       }
 
       virtual void
@@ -740,10 +280,10 @@ namespace
 
         os << "_ptr" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
 
         os << "virtual ";
 
@@ -753,9 +293,9 @@ namespace
            << "disconnect_" << u.name () << " (" << endl
            << "::Components::Cookie * ck" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
       }
 
       virtual void
@@ -768,18 +308,18 @@ namespace
 
         os << "Consumer_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl << endl;
+           << STRS[EXCP_ECL] << "));" << endl;
 
         os << "// CIAO-specific." << endl
            << STRS[COMP_CK] << " *" << endl
            << "subscribe_" << p.name () << "_generic (" << endl
            << STRS[COMP_ECB] << "_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl << endl;
+           << STRS[EXCP_ECL] << "));" << endl;
 
         os << "virtual ";
 
@@ -789,13 +329,13 @@ namespace
            << "unsubscribe_" << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
       }
 
     private:
-      TypeNameEmitter type_name_emitter_;
+      FullTypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
     };
 
@@ -807,7 +347,7 @@ namespace
     {
       PortsEmitterMembers (Context& c)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c)
       {
         belongs_.node_traverser (type_name_emitter_);
       }
@@ -819,7 +359,7 @@ namespace
 
         os << "Consumer_var" << endl
            << "ciao_emits_" << e.name () << "_consumer_;"
-           << endl << endl;
+           << endl;
       }
 
       virtual void
@@ -830,7 +370,7 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_var" << endl
-           << "ciao_uses_" << u.name () << "_;" << endl << endl;
+           << "ciao_uses_" << u.name () << "_;" << endl;
      }
 
       virtual void
@@ -842,7 +382,7 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_var>" << endl
-           << "ciao_uses_" << u.name () << "_;" << endl << endl;
+           << "ciao_uses_" << u.name () << "_;" << endl;
      }
 
       virtual void
@@ -854,16 +394,16 @@ namespace
 
         os << "Consumer_var>" << endl
            << "ciao_publishes_" << p.name () << "_map_;"
-           << endl << endl;
+           << endl;
 
         os << "ACE_Active_Map_Manager<" << endl
            << STRS[COMP_ECB] << "_var>" << endl
            << "ciao_publishes_" << p.name () << "_generic_map_;"
-           << endl << endl;
+           << endl;
       }
 
     private:
-      TypeNameEmitter type_name_emitter_;
+      FullTypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
     };
 
@@ -1063,9 +603,9 @@ namespace
     {
       PortsEmitterPublic (Context& c)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ()),
-          simple_type_name_emitter_ (c.os ()),
-          stripped_type_name_emitter_ (c.os ())
+          type_name_emitter_ (c),
+          simple_type_name_emitter_ (c),
+          stripped_type_name_emitter_ (c)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
@@ -1082,7 +622,7 @@ namespace
         os << "_ptr" << endl
            << "provide_" << p.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
       }
 
       virtual void
@@ -1095,10 +635,10 @@ namespace
 
         os << "_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
 
         os << "virtual ";
 
@@ -1107,9 +647,9 @@ namespace
         os << "_ptr" << endl
            << "disconnect_" << u.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl << endl;
+           << STRS[EXCP_NC] << "));" << endl;
 
         os << "virtual ";
 
@@ -1118,7 +658,7 @@ namespace
         os << "_ptr" << endl
            << "get_connection_" << u.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
       }
 
       virtual void
@@ -1131,10 +671,10 @@ namespace
 
         os << "_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
 
         os << "virtual ";
 
@@ -1144,14 +684,14 @@ namespace
            << "disconnect_" << u.name () << " (" << endl
            << "::Components::Cookie * ck" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
 
         os << "virtual " << u.scoped_name () << "Connections *" << endl
            << "get_connections_" << u.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
       }
 
       virtual void
@@ -1181,18 +721,15 @@ namespace
            << endl
            << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name ()
-           << "_Context_ptr c);" << endl << endl;
+           << "_Context_ptr c);" << endl;
 
         os << "virtual ~";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
         os << "Consumer_"
-           << c.name () << "_Servant (void);" << endl << endl;
+           << c.name () << "_Servant (void);" << endl;
 
-        // @@@ (JP) May need to generate this for the eventtype's ancestors
-        // as well (the spec is vague on this point). If so, we need the
-        // CIDL compiler to support valuetype/eventtype inheritance.
         os << "virtual void" << endl
            << "push_";
 
@@ -1204,39 +741,39 @@ namespace
 
         os << " *evt" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
 
         os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "virtual void" << endl
-           << "push_event (::Components::EventBase *ev" << endl
+           << "push_event ( ::Components::EventBase *ev" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_BET] << "));" << endl << endl;
+           << STRS[EXCP_BET] << "));" << endl;
 
         os << "// CIAO-specific in " << STRS[COMP_ECB] << "." << endl
            << "virtual CORBA::Boolean" << endl
            << "ciao_is_substitutable (" << endl
            << "const char *event_repo_id" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
 
         os << "// Get component implementation." << endl
            << "virtual CORBA::Object_ptr" << endl
            << "_get_component (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
 
         os << "protected:" << endl
            << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name ()
            << "_var" << endl
-           << "executor_;" << endl << endl;
+           << "executor_;" << endl;
 
         os << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name ()
            << "_Context_var" << endl
-           << "ctx_;" << endl << endl;
+           << "ctx_;" << endl;
 
         os << "};";
 
@@ -1247,7 +784,7 @@ namespace
         os << "Consumer_ptr" << endl
            << "get_consumer_" << c.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
       }
 
       virtual void
@@ -1260,9 +797,9 @@ namespace
 
         os << "Consumer_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "));" << endl << endl;
+           << STRS[EXCP_AC] << "));" << endl;
 
         os << "virtual ";
 
@@ -1271,9 +808,9 @@ namespace
         os << "Consumer_ptr" << endl
            << "disconnect_" << e.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl << endl;
+           << STRS[EXCP_NC] << "));" << endl;
       }
 
       virtual void
@@ -1286,18 +823,18 @@ namespace
 
         os << "Consumer_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl << endl;
+           << STRS[EXCP_ECL] << "));" << endl;
 
         os << "// CIAO-specific." << endl
            << STRS[COMP_CK] << " *" << endl
            << "subscribe_" << p.name () << "_generic (" << endl
            << STRS[COMP_ECB] << "_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl << endl;
+           << STRS[EXCP_ECL] << "));" << endl;
 
         os << "virtual ";
 
@@ -1307,13 +844,13 @@ namespace
            << "unsubscribe_" << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_START] << endl
+           << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl << endl;
+           << STRS[EXCP_IC] << "));" << endl;
       }
 
     private:
-      TypeNameEmitter type_name_emitter_;
+      FullTypeNameEmitter type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
       StrippedTypeNameEmitter stripped_type_name_emitter_;
       Traversal::Belongs belongs_;
@@ -1327,7 +864,7 @@ namespace
     {
       PortsEmitterProtected (Context& c)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c)
       {
         belongs_.node_traverser (type_name_emitter_);
       }
@@ -1338,7 +875,7 @@ namespace
         Traversal::ProviderData::belongs (p, belongs_);
 
         os << "_var" << endl
-           << "provide_" << p.name () << "_;" << endl << endl;
+           << "provide_" << p.name () << "_;" << endl;
       }
 
       virtual void
@@ -1347,11 +884,11 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "Consumer_var" << endl
-           << "consumes_" << c.name () << "_;" << endl << endl;
+           << "consumes_" << c.name () << "_;" << endl;
       }
 
     private:
-      TypeNameEmitter type_name_emitter_;
+      FullTypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
     };
 
@@ -1365,9 +902,9 @@ namespace
     {
       PortsEmitterPrivate (Context& c)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ()),
-          simple_type_name_emitter_ (c.os ()),
-          stripped_type_name_emitter_ (c.os ())
+          type_name_emitter_ (c),
+          simple_type_name_emitter_ (c),
+          stripped_type_name_emitter_ (c)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
@@ -1380,7 +917,7 @@ namespace
         os << "::CORBA::Object_ptr" << endl
            << "provide_" << p.name () << "_i (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
       }
 
       virtual void
@@ -1399,7 +936,7 @@ namespace
         os << "::Components::EventConsumerBase_ptr" << endl
            << "get_consumer_" << c.name () << "_i (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl;
+           << STRS[EXCP_SNGL] << ";" << endl;
       }
 
       virtual void
@@ -1413,7 +950,7 @@ namespace
       }
 
     private:
-      TypeNameEmitter type_name_emitter_;
+      FullTypeNameEmitter type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
       StrippedTypeNameEmitter stripped_type_name_emitter_;
       Traversal::Belongs belongs_;
@@ -1449,7 +986,7 @@ namespace
          << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
          << "    " << t.name () << "_Context" << endl
-         << "  > comp_svnt_base;" << endl << endl;
+         << "  > comp_svnt_base;" << endl;
 
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
@@ -1457,15 +994,14 @@ namespace
          << "::Components::CCMHome_ptr h," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
-         << "::CIAO::Session_Container *c);" << endl << endl;
+         << "::CIAO::Session_Container *c);" << endl;
 
-      os << "virtual ~" << t.name () << "_Servant (void);"
-         << endl << endl;
+      os << "virtual ~" << t.name () << "_Servant (void);" << endl;
 
       os << "virtual void" << endl
          << "set_attributes (" << endl
          << "const ::Components::ConfigValues &descr" << endl
-         << STRS[ENV_SRC] << ");" << endl << endl;
+         << STRS[ENV_SRC] << ");" << endl;
 
       os << "// Supported operations." << endl << endl;
 
@@ -1488,7 +1024,7 @@ namespace
         interface_emitter.edge_traverser (interface_inherits);
 
         // Works for both read/write and readonly attributes.
-        AttributeEmitter attribute_emitter (ctx);
+        AttributeHeaderEmitter attribute_emitter (ctx);
         defines.node_traverser (attribute_emitter);
 
         OperationEmitter operation_emitter (ctx);
@@ -1502,15 +1038,15 @@ namespace
         operation_emitter.edge_traverser (returns);
         operation_emitter.edge_traverser (raises);
 
-        ParameterEmitter<Traversal::InParameter> in_param (os);
-        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
-        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        ParameterEmitter<Traversal::InParameter> in_param (ctx);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
+        ParameterEmitter<Traversal::OutParameter> out_param (ctx);
         receives.node_traverser (in_param);
         receives.node_traverser (inout_param);
         receives.node_traverser (out_param);
 
-        ReturnTypeNameEmitter return_type_emitter (os);
-        TypeNameEmitter type_name_emitter (os);
+        ReturnTypeNameEmitter return_type_emitter (ctx);
+        FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
         raises.node_traverser (type_name_emitter);
 
@@ -1519,9 +1055,9 @@ namespace
         inout_param.edge_traverser (inout_belongs);
         out_param.edge_traverser (out_belongs);
 
-        INArgTypeNameEmitter in_arg_emitter (os);
-        INOUTArgTypeNameEmitter inout_arg_emitter (os);
-        OUTArgTypeNameEmitter out_arg_emitter (os);
+        INArgTypeNameEmitter in_arg_emitter (ctx);
+        INOUTArgTypeNameEmitter inout_arg_emitter (ctx);
+        OUTArgTypeNameEmitter out_arg_emitter (ctx);
         in_belongs.node_traverser (in_arg_emitter);
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
@@ -1563,7 +1099,7 @@ namespace
         component_emitter.edge_traverser (component_inherits);
 
         // Works for both read/write and readonly attributes.
-        AttributeEmitter attribute_emitter (ctx);
+        AttributeHeaderEmitter attribute_emitter (ctx);
         defines.node_traverser (attribute_emitter);
 
         component_emitter.traverse (t);
@@ -1576,24 +1112,29 @@ namespace
          << "const char *name," << endl
          << "CORBA::Object_ptr connection" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
+         << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl << endl;
+         << STRS[EXCP_ECL] << "));" << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
          << "disconnect (" << endl
          << "const char *name," << endl
          << STRS[COMP_CK] << " *ck" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
+         << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_CR] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl << endl;
+         << STRS[EXCP_NC] << "));" << endl;
+
+      os << "virtual " << STRS[COMP_RD] << " *" << endl
+         << "get_all_receptacles (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "// Operations for Events interface." << endl << endl;
 
@@ -1602,40 +1143,59 @@ namespace
          << "const char *publisher_name," << endl
          << STRS[COMP_ECB] << "_ptr subscriber" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
+         << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl << endl;
+         << STRS[EXCP_ECL] << "));" << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
          << "unsubscribe (" << endl
          << "const char *publisher_name," << endl
          << STRS[COMP_CK] << " *ck" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
+         << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
+         << STRS[EXCP_IC] << "));" << endl;
 
       os << "virtual void" << endl
          << "connect_consumer (" << endl
          << "const char *emitter_name," << endl
          << STRS[COMP_ECB] << "_ptr consumer" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
+         << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
+         << STRS[EXCP_IC] << "));" << endl;
 
-      os << "// CIAO specific operations on the servant " << endl
+      os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
+         << "disconnect_consumer (" << endl
+         << "const char *source_name" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << " "
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "," << endl
+         << STRS[EXCP_NC] << "));" << endl;
+
+      os << "virtual " << STRS[COMP_PD] << " *" << endl
+         << "get_all_publishers (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl;
+
+      os << "virtual " << STRS[COMP_ED] << " *" << endl
+         << "get_all_emitters (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl;
+
+      os << "// CIAO specific operations on the servant. " << endl
          << "CORBA::Object_ptr" << endl
          << "get_facet_executor (" << endl
          << "const char *name" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS]<< "));" << endl << endl;
+         << STRS[EXCP_START] << " "
+         << STRS[EXCP_SYS]<< "));" << endl;
 
       os << "private:" << endl << endl;
 
@@ -1656,13 +1216,13 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "const char *ins_name_;" << endl << endl;
+      os << "const char *ins_name_;" << endl;
 
       os << "private:" << endl << endl
          << "void" << endl
          << "populate_port_tables (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       // Generate private operations for ports.
       {
@@ -1695,211 +1255,15 @@ namespace
     HomeEmitter (Context& c, CommandLine const& cl)
       : EmitterBase (c),
         cl_ (cl),
-        type_name_emitter_ (c.os ()),
-        simple_type_name_emitter_ (c.os ()),
-        enclosing_type_name_emitter_ (c.os ())
+        type_name_emitter_ (c),
+        simple_type_name_emitter_ (c),
+        enclosing_type_name_emitter_ (c)
     {
       manages_.node_traverser (type_name_emitter_);
       simple_manages_.node_traverser (simple_type_name_emitter_);
       enclosing_manages_.node_traverser (enclosing_type_name_emitter_);
     }
 
-  // Nested classes used by this emitter.
-  private:
-    // HomeFactory and HomeFinder are tied to Operation in
-    // the front end. Since we want to treat them differently
-    // than regular operations in a home (we want to generate
-    // base class factory operations returning the base component,
-    // for example), we use this class for regular home operations
-    // that overrides HomeFactory and HomeFinder traversals
-    // to do nothing.
-    struct HomeOperationEmitter : OperationEmitter,
-                                  Traversal::HomeFactory,
-                                  Traversal::HomeFinder
-    {
-      HomeOperationEmitter (Context& c)
-        : OperationEmitter (c)
-      {}
-
-      virtual void
-      traverse (SemanticGraph::HomeFactory&)
-      {
-      }
-
-      virtual void
-      traverse (SemanticGraph::HomeFinder&)
-      {
-      }
-    };
-
-    struct FactoryOperationEmitter : Traversal::HomeFactory,
-                                     EmitterBase
-    {
-      FactoryOperationEmitter (Context& c)
-        : EmitterBase (c)
-      {}
-
-      virtual void
-      pre (SemanticGraph::HomeFactory&)
-      {
-        os << "virtual ";
-      }
-
-      virtual void
-      returns (SemanticGraph::HomeFactory& t)
-      {
-        ReturnTypeNameEmitter returns_emitter (os);
-        Traversal::Returns returns_;
-        returns_.node_traverser (returns_emitter);
-
-        Traversal::HomeFactory::returns (t, returns_);
-
-        os << endl;
-      }
-
-      virtual void
-      name (SemanticGraph::HomeFactory& t)
-      {
-        os << t.name ();
-      }
-
-      virtual void
-      receives_none (SemanticGraph::HomeFactory&)
-      {
-        os << " (" << endl
-           << STRS[ENV_SNGL_HDR] << ")" << endl;
-      }
-
-      virtual void
-      receives_pre (SemanticGraph::HomeFactory&)
-      {
-        os << " (" << endl;
-      }
-
-      virtual void
-      receives_post (SemanticGraph::HomeFactory&)
-      {
-        os << endl << STRS[ENV_HDR] << ")" << endl;
-      }
-
-      virtual void
-      raises_none (SemanticGraph::HomeFactory&)
-      {
-        os << STRS[EXCP_SNGL];
-      }
-
-      virtual void
-      raises_pre (SemanticGraph::HomeFactory&)
-      {
-        os << STRS[EXCP_START] << endl
-           << STRS[EXCP_SYS] << "," << endl;
-      }
-
-      virtual void
-      raises_post (SemanticGraph::HomeFactory&)
-      {
-        os << "))";
-      }
-
-      virtual void
-      post (SemanticGraph::HomeFactory&)
-      {
-        os << ";" << endl << endl;
-      }
-
-      virtual void
-      comma (SemanticGraph::HomeFactory&)
-      {
-        os << "," << endl;
-      }
-    };
-
-    struct FinderOperationEmitter : Traversal::HomeFinder,
-                                    EmitterBase
-    {
-      FinderOperationEmitter (Context& c)
-        : EmitterBase (c),
-          returns_emitter_ (c.os ())
-      {
-        returns_.node_traverser (returns_emitter_);
-      }
-
-      virtual void
-      pre (SemanticGraph::HomeFinder&)
-      {
-        os << "virtual ";
-      }
-
-      virtual void
-      returns (SemanticGraph::HomeFinder& t)
-      {
-        Traversal::HomeFinder::returns (t, returns_);
-
-        os << endl;
-      }
-
-      virtual void
-      name (SemanticGraph::HomeFinder& t)
-      {
-        os << t.name ();
-      }
-
-      virtual void
-      receives_none (SemanticGraph::HomeFinder&)
-      {
-        os << " (" << endl
-           << STRS[ENV_SNGL_HDR] << ")" << endl;
-      }
-
-      virtual void
-      receives_pre (SemanticGraph::HomeFinder&)
-      {
-        os << " (" << endl;
-      }
-
-      virtual void
-      receives_post (SemanticGraph::HomeFinder&)
-      {
-        os << endl << STRS[ENV_HDR] << ")" << endl;
-      }
-
-      virtual void
-      raises_none (SemanticGraph::HomeFinder&)
-      {
-        os << STRS[EXCP_SNGL];
-      }
-
-      virtual void
-      raises_pre (SemanticGraph::HomeFinder&)
-      {
-        os << STRS[EXCP_START] << endl
-           << STRS[EXCP_SYS] << "," << endl;
-      }
-
-      virtual void
-      raises_post (SemanticGraph::HomeFinder&)
-      {
-        os << "))";
-      }
-
-      virtual void
-      post (SemanticGraph::HomeFinder&)
-      {
-        os << ";" << endl << endl;
-      }
-
-      virtual void
-      comma (SemanticGraph::HomeFinder&)
-      {
-        os << "," << endl;
-      }
-
-    private:
-      ReturnTypeNameEmitter returns_emitter_;
-      Traversal::Returns returns_;
-    };
-
-  public:
     virtual void pre (Type& t)
     {
       os << "class " << ctx.export_macro () << " " << t.name ()
@@ -1995,19 +1359,18 @@ namespace
       Traversal::Home::manages (t, simple_manages_);
 
       os << "_Servant" << endl
-         << "  > home_svnt_base;" << endl << endl;
+         << "  > home_svnt_base;" << endl;
 
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
-         << "::CIAO::Session_Container *c);" << endl << endl;
+         << "::CIAO::Session_Container *c);" << endl;
 
-      os << "virtual ~" << t.name () << "_Servant (void);"
-         << endl << endl;
+      os << "virtual ~" << t.name () << "_Servant (void);" << endl;
 
       // Generate home operations.
-      os << "// Home operations." << endl << endl;
+      os << "// Home operations." << endl;
 
       {
         Traversal::Home home_emitter;
@@ -2029,15 +1392,15 @@ namespace
         home_operation_emitter.edge_traverser (returns);
         home_operation_emitter.edge_traverser (raises);
 
-        ParameterEmitter<Traversal::InParameter> in_param (os);
-        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
-        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        ParameterEmitter<Traversal::InParameter> in_param (ctx);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
+        ParameterEmitter<Traversal::OutParameter> out_param (ctx);
         receives.node_traverser (in_param);
         receives.node_traverser (inout_param);
         receives.node_traverser (out_param);
 
-        ReturnTypeNameEmitter return_type_emitter (os);
-        TypeNameEmitter type_name_emitter (os);
+        ReturnTypeNameEmitter return_type_emitter (ctx);
+        FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
         raises.node_traverser (type_name_emitter);
 
@@ -2046,9 +1409,9 @@ namespace
         inout_param.edge_traverser (inout_belongs);
         out_param.edge_traverser (out_belongs);
 
-        INArgTypeNameEmitter in_arg_emitter (os);
-        INOUTArgTypeNameEmitter inout_arg_emitter (os);
-        OUTArgTypeNameEmitter out_arg_emitter (os);
+        INArgTypeNameEmitter in_arg_emitter (ctx);
+        INOUTArgTypeNameEmitter inout_arg_emitter (ctx);
+        OUTArgTypeNameEmitter out_arg_emitter (ctx);
         in_belongs.node_traverser (in_arg_emitter);
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
@@ -2086,15 +1449,15 @@ namespace
         finder_operation_emitter.edge_traverser (returns);
         finder_operation_emitter.edge_traverser (raises);
 
-        ParameterEmitter<Traversal::InParameter> in_param (os);
-        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
-        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        ParameterEmitter<Traversal::InParameter> in_param (ctx);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
+        ParameterEmitter<Traversal::OutParameter> out_param (ctx);
         receives.node_traverser (in_param);
         receives.node_traverser (inout_param);
         receives.node_traverser (out_param);
 
-        ReturnTypeNameEmitter return_type_emitter (os);
-        TypeNameEmitter type_name_emitter (os);
+        ReturnTypeNameEmitter return_type_emitter (ctx);
+        FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
         raises.node_traverser (type_name_emitter);
 
@@ -2103,9 +1466,9 @@ namespace
         inout_param.edge_traverser (inout_belongs);
         out_param.edge_traverser (out_belongs);
 
-        INArgTypeNameEmitter in_arg_emitter (os);
-        INOUTArgTypeNameEmitter inout_arg_emitter (os);
-        OUTArgTypeNameEmitter out_arg_emitter (os);
+        INArgTypeNameEmitter in_arg_emitter (ctx);
+        INOUTArgTypeNameEmitter inout_arg_emitter (ctx);
+        OUTArgTypeNameEmitter out_arg_emitter (ctx);
         in_belongs.node_traverser (in_arg_emitter);
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
@@ -2127,7 +1490,7 @@ namespace
         home_emitter.edge_traverser (home_inherits);
 
         // Works for both read/write and readonly attributes.
-        AttributeEmitter attribute_emitter (ctx);
+        AttributeHeaderEmitter attribute_emitter (ctx);
         defines.node_traverser (attribute_emitter);
 
         home_emitter.traverse (t);
@@ -2153,7 +1516,7 @@ namespace
         interface_emitter.edge_traverser (inherits);
 
         // Works for both read/write and readonly attributes.
-        AttributeEmitter attribute_emitter (ctx);
+        AttributeHeaderEmitter attribute_emitter (ctx);
         defines.node_traverser (attribute_emitter);
 
         OperationEmitter operation_emitter (ctx);
@@ -2167,15 +1530,15 @@ namespace
         operation_emitter.edge_traverser (returns);
         operation_emitter.edge_traverser (raises);
 
-        ParameterEmitter<Traversal::InParameter> in_param (os);
-        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
-        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        ParameterEmitter<Traversal::InParameter> in_param (ctx);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
+        ParameterEmitter<Traversal::OutParameter> out_param (ctx);
         receives.node_traverser (in_param);
         receives.node_traverser (inout_param);
         receives.node_traverser (out_param);
 
-        ReturnTypeNameEmitter return_type_emitter (os);
-        TypeNameEmitter type_name_emitter (os);
+        ReturnTypeNameEmitter return_type_emitter (ctx);
+        FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
         raises.node_traverser (type_name_emitter);
 
@@ -2184,9 +1547,9 @@ namespace
         inout_param.edge_traverser (inout_belongs);
         out_param.edge_traverser (out_belongs);
 
-        INArgTypeNameEmitter in_arg_emitter (os);
-        INOUTArgTypeNameEmitter inout_arg_emitter (os);
-        OUTArgTypeNameEmitter out_arg_emitter (os);
+        INArgTypeNameEmitter in_arg_emitter (ctx);
+        INOUTArgTypeNameEmitter inout_arg_emitter (ctx);
+        OUTArgTypeNameEmitter out_arg_emitter (ctx);
         in_belongs.node_traverser (in_arg_emitter);
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
@@ -2210,32 +1573,12 @@ namespace
 
   private:
     CommandLine const& cl_;
-    TypeNameEmitter type_name_emitter_;
+    FullTypeNameEmitter type_name_emitter_;
     SimpleTypeNameEmitter simple_type_name_emitter_;
     EnclosingTypeNameEmitter enclosing_type_name_emitter_;
     Traversal::Manages manages_;
     Traversal::Manages simple_manages_;
     Traversal::Manages enclosing_manages_;
-  };
-
-  struct CompositionEmitter : Traversal::Composition, EmitterBase
-  {
-    CompositionEmitter (Context& c)
-      : EmitterBase (c)
-    {
-    }
-
-    virtual void
-    pre (Type& t)
-    {
-      os << STRS[CIDL_NS] << t.name () << "{";
-    }
-
-    virtual void
-    post (Type&)
-    {
-      os << "}";
-    }
   };
 
   struct IncludesEmitter : Traversal::QuoteIncludes,
@@ -2361,8 +1704,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
      << "#include \"ciao/"
      << (swapping ? "Swapping_Servant_Home_Impl_T.h"
                   : "Home_Servant_Impl_T.h")
-     << "\"" << endl
-     << "#include \"ace/Active_Map_Manager_T.h\"" << endl << endl;
+     << "\"" << endl << endl;
 }
 
 void
@@ -2370,7 +1712,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 {
   pre (u);
 
-  Context c (os, export_macro_);
+  Context c (os, export_macro_, cl_);
 
   Traversal::TranslationUnit unit;
 

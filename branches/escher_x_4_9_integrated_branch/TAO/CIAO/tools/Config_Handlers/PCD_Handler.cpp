@@ -74,15 +74,14 @@ namespace CIAO
           res != desc.end_deployedResource();
           res++)
         {
-          crddhandler.get_ConnectionResourceDeploymentDescription (
-                                                                   toconfig.deployedResource[pos++],
+          crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++],
                                                                    *res);
         }
 
     }
 
-    PlanConnectionDescription PCD_Handler::get_PlanConnectionDescription (
-                                                                          const Deployment::PlanConnectionDescription &src)
+    PlanConnectionDescription 
+    PCD_Handler::get_PlanConnectionDescription (const Deployment::PlanConnectionDescription &src)
     {
       CIAO_TRACE("PCD_Handler::get_PlanConnectionDescription");
 

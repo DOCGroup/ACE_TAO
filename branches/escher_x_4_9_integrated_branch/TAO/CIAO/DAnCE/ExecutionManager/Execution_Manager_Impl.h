@@ -16,7 +16,7 @@
 #define CIAO_EXECUTION_MANAGER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "Interfaces/ExecutionManagerS.h"
+#include "Interfaces/ExecutionManagerDaemonS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

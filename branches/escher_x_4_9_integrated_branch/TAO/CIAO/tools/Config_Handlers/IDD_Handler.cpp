@@ -131,15 +131,11 @@ namespace CIAO
 
       //Check if there is a deployedResource, if so store
       if(src.deployedResource.length() != 0)
-        idd.deployedResource(
-                             IRDD_Handler::instance_resource_deployment_descr(
-                                                                              src.deployedResource[0]));
+        idd.deployedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedResource[0]));
 
       //Check if there is a deployedSharedResource, if so store it
       if(src.deployedSharedResource.length() != 0)
-        idd. deployedSharedResource(
-                                    IRDD_Handler::instance_resource_deployment_descr(
-                                                                                     src.deployedSharedResource[0]));
+        idd. deployedSharedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedSharedResource[0]));
 
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid;

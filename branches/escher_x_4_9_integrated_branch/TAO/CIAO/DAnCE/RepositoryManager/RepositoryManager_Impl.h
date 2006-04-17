@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 
 //======================================================================
@@ -31,8 +30,7 @@
 //uncomment this line to turn on the code that relates to interface types
 //#define ASSEMBLY_INTERFACE_SUPPORT 1
 
-
-#include "RepositoryManagerS.h"
+#include "RepositoryManagerDaemonS.h"
 
 #include "ace/Hash_Map_Manager.h"      //for the ACE_Hash_Map_Manager
 #include "ace/Null_Mutex.h"          //for ACE_Null_Mutex

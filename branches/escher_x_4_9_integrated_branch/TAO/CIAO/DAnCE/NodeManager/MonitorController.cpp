@@ -1,4 +1,5 @@
 // $Id$
+
 //----------------------------------------------------------------------------------
 /**
  * @file MonitorController.cpp
@@ -81,7 +82,7 @@ int CIAO::MonitorController::svc (void)
                        "dll.symbol"),
                       -1);
   {
-    ACE_TRACE ((LM_DEBUG "Inside the init call\n"));
+    ACE_TRACE ((LM_DEBUG, "Inside the init call\n"));
 
     // here creating the monitor object
     monitor_.reset ((MonitorBase*) factory ());

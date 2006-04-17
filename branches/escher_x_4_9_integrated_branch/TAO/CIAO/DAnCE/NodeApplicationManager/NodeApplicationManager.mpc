@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplicationManager): ciao_component_dnc, ciao_deployment_svnt, dance_extension_stub {
+project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, dance_extension_stub {
 
   sharedname   = NodeApplicationManager
   after       += NodeManager_stub CIAO_TargetManager_stub

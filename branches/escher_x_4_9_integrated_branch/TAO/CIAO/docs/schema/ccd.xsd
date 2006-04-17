@@ -5,7 +5,7 @@
             targetNamespace="http://www.omg.org/Deployment">
 
   <xsd:include schemaLocation="Basic_Deployment_Data.xsd" />
-
+            
   <xsd:complexType name="ComponentInterfaceDescription">
     <xsd:choice minOccurs="0" maxOccurs="1">
       <xsd:sequence>

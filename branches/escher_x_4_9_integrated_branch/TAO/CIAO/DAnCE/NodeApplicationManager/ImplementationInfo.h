@@ -37,8 +37,9 @@ namespace CIAO
   class CIAO_NAM_Export NodeImplementationInfoHandler
   {
   public:
-    NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan,
-                  const Deployment::ComponentPlans & shared_components);
+    NodeImplementationInfoHandler (
+        const ::Deployment::DeploymentPlan & plan,
+        const Deployment::ComponentPlans & shared_components);
 
     Deployment::NodeImplementationInfo *
       node_impl_info (void) const;

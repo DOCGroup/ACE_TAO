@@ -15,8 +15,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "UpgradeableContextC.h"
-#include "Context_Impl_T.h"
+#include "ciao/UpgradeableContextC.h"
+#include "ciao/Context_Impl_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -71,6 +71,9 @@ namespace CIAO
     SVNT *servant_;
     COMP_VAR component_;
     typedef Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR> session_context;
+  private:
+    /// Not to be used
+    Upgradeable_Context_Impl (void);
   };
 }
 
