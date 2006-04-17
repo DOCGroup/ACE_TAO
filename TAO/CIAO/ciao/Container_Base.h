@@ -9,7 +9,6 @@
  *  Header file for CIAO's container implementations
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
- *  @author Gan Deng <dengg@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -29,6 +28,7 @@
 #include "tao/ORB.h"
 
 #include "ace/Hash_Map_Manager_T.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -118,7 +118,6 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   protected:
-    /// Reference to the ORB
     CORBA::ORB_var orb_;
 
     /// POA within which all the components in this container will be
@@ -132,7 +131,6 @@ namespace CIAO
      * are distinct from the component.
      */
     PortableServer::POA_var facet_cons_poa_;
-
     PortableServer::POA_var home_servant_poa_;
     Container_Impl *container_impl_;
   private:
@@ -176,6 +174,9 @@ namespace CIAO
   class CIAO_SERVER_Export Session_Container : public Container
   {
   public:
+    // @@ (OO) Does the static_config_flag really need to be an int?
+    //         It appears to be a boolean value.  Please use bool
+    //         instead.
     Session_Container (CORBA::ORB_ptr o,
                        Container_Impl *container_impl,
                        bool static_config_flag = false,
@@ -214,41 +215,41 @@ namespace CIAO
                        Deployment::ImplEntryPointNotFound,
                        Deployment::InstallationFailure));
 
-    /// Uninstall a servant for component or home.
+    // Uninstall a servant for component or home.
     virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Uninstall a servant for component.
+    // Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
                                       PortableServer::ObjectId_out oid
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Install a servant for component or home.
+    // Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
                                        Container::OA_Type t
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Install a component servant.
+    // Install a component servant.
     CORBA::Object_ptr install_component (PortableServer::Servant p,
                                          PortableServer::ObjectId_out oid
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Get an object reference to a component or home from the servant.
+    // Get an object reference to a component or home from the servant.
     virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Uninstall a servant for component or home.
+    // Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref,
                     Container::OA_Type t
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Uninstall a servant for component or home.
+    // Uninstall a servant for component or home.
     void uninstall (PortableServer::Servant svt,
                     Container::OA_Type t
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -282,8 +283,8 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Analog of the POA method that creates an object reference from
-    /// an object id string.
+    // Analog of the POA method that creates an object reference from
+    // an object id string.
     CORBA::Object_ptr generate_reference (const char *obj_id,
                                           const char *repo_id,
                                           Container::OA_Type t
@@ -295,7 +296,7 @@ namespace CIAO
 
   private:
 
-    /// Create POA for the component.
+    /// Create POA  for the component.
     /**
      * This is the POA that is returned to the component applications
      * if they need one.
@@ -315,13 +316,15 @@ namespace CIAO
     Session_Container (void);
 
   protected:
-    unsigned long number_;
+    long number_;
 
-    /// Static variable to store the highest number we have given out until
-    /// now
     static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> serial_number_;
 
-    const bool static_config_flag_;
+    // @@ (OO) Does this really need to be an int?  It appears to be a
+    //         boolean value.  Please use bool instead.
+    //
+    //         It looks like it can also be declared const, as well.
+    bool static_config_flag_;
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
 
     /// The servant activator factory used to activate facets and

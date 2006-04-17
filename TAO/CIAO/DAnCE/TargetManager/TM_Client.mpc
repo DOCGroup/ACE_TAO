@@ -5,7 +5,7 @@
 
 project(TMClient): ciao_client_dnc,ciao_deployment_stub, ciao_config_handlers {
   after += CIAO_TargetManager_stub
-  includes += $(CIAO_ROOT)/DAnCE $(TAO_ROOT)/orbsvcs 
+  includes += $(CIAO_ROOT)/DAnCE $(TAO_ROOT)/orbsvcs
   includes += $(CIAO_ROOT)/DAnCE/TargetManager
   libs += TargetManager_stub
 
@@ -14,12 +14,12 @@ project(TMClient): ciao_client_dnc,ciao_deployment_stub, ciao_config_handlers {
   }
 
   Source_Files {
-    CmpClient.cpp 
+    CmpClient.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 

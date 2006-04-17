@@ -21,86 +21,86 @@ namespace CIAO{
     {
 
         TCKind kind (desc.kind ());
-        
+
         switch (kind.integral ())
           {
           case  TCKind::tk_null_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-            
+
 
           case  TCKind::tk_short_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_short);
-            
+
 
           case  TCKind::tk_long_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_long);
-            
+
 
           case  TCKind::tk_ushort_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
-            
+
 
           case  TCKind::tk_ulong_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
-            
+
 
           case  TCKind::tk_float_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_float);
-            
+
 
           case  TCKind::tk_double_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_double);
-            
+
 
           case  TCKind::tk_boolean_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
-            
+
 
           case  TCKind::tk_char_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_char);
-            
+
 
           case  TCKind::tk_octet_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
-            
+
 
           case  TCKind::tk_string_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_string);
-            
+
 
           case  TCKind::tk_longlong_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
-            
+
 
           case  TCKind::tk_ulonglong_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
-            
+
 
           case  TCKind::tk_longdouble_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
-            
+
 
           case  TCKind::tk_wchar_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
-            
+
 
           case  TCKind::tk_wstring_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
-            
+
 
           case  TCKind::tk_any_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_any);
-            
+
 
           case  TCKind::tk_TypeCode_l:
             return CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
-            
+
 
           default:
             ACE_ERROR ((LM_ERROR, "Invalid typecode in any\n"));
             throw 1;
           }
-        
+
         //   This case used to be supported...is it not in the schema?
     //    case  TCKind::tk_Object)
     //      return CORBA::TypeCode::_duplicate (CORBA::_tc_Object);*/
@@ -112,7 +112,7 @@ namespace CIAO{
                       const CORBA::TypeCode_ptr&  src)
     {
         DataType type;
-        
+
         switch (src->kind ())
           {
           case ::CORBA::tk_null:
@@ -172,7 +172,7 @@ namespace CIAO{
             ACE_ERROR ((LM_ERROR, "Invalid typecode\n"));
             throw 1;
           }
-        
+
         return type;
     }
 

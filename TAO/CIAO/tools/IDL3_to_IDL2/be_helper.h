@@ -119,7 +119,7 @@ public:
   void gen_ifndef_string (const char *fname,
                           const char *prefix,
                           const char *suffix);
-                          
+
   // =overloaded operators
 
   TAO_OutStream &operator<< (const char *str);

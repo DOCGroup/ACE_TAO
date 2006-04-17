@@ -144,29 +144,29 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C>
     ns_prefix (std::basic_string<C> const& ns, Element<C> const& e);
-    
+
     // Casting helpers, made necessary by the Xerces project's braindead
     // avoidance of RTTI.
     template <typename DERIVED> struct dom_traits;
-    
+
     // Specializations for different node types
     template <>
     struct dom_traits<xercesc::DOMElement *>
     {
       enum { node_type = xercesc::DOMNode::ELEMENT_NODE };
     };
-    
+
     template <>
     struct dom_traits<xercesc::DOMAttr *>
     {
       enum { node_type = xercesc::DOMNode::ATTRIBUTE_NODE };
     };
-    
+
     template <typename DERIVED_PTR>
     DERIVED_PTR dom_cast (xercesc::DOMNode *node)
     {
       DERIVED_PTR elem = 0;
-      if ((node != 0) && 
+      if ((node != 0) &&
           (node->getNodeType () == dom_traits<DERIVED_PTR>::node_type))
         {
           elem = reinterpret_cast <DERIVED_PTR> (node);

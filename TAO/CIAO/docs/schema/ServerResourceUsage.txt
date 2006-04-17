@@ -27,7 +27,7 @@ So, the DeploymentPlan should look something like:
             <type>tk_tring</type>
             <value>RTConfig4LinuxBox</value>  <!-- Component instances
                                                    will refer to this
-                                                   name to specify 
+                                                   name to specify
                                                    required server
                                                    config -->
           </value>
@@ -52,7 +52,7 @@ So, the DeploymentPlan should look something like:
             <type>tk_tring</type>
             <value>RTConfig4Win32Box</value>  <!-- Component instances
                                                    will refer to this
-                                                   name to specify 
+                                                   name to specify
                                                    required server
                                                    config -->
           </value>
@@ -75,7 +75,7 @@ policySet as following:
      ....
      <instance ...>
 
-     
+
        <deployedResource>
          <resourceUsage>InstanceUsesResource</resourceUsage>
          <requirementName>CIAO:PolicySet</requirementName>
@@ -99,7 +99,7 @@ policySet as following:
 
      </instance>
    </deploymentplan>
-  
+
 If only ID of CIAO:ServerResources is specified, we are using it as a
 collocation constraint.  I.e., if two instances are deployed to the
 same target node with different ServerResources IDs, DAnCE should

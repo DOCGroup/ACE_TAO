@@ -49,7 +49,7 @@ namespace CCF
       {
       }
 
-      
+
       // Union
       //
       //

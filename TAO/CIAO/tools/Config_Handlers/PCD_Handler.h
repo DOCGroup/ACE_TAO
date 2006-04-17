@@ -1,11 +1,11 @@
 //==============================================================
 /**
- *  @file  PCD_Handler.h
- *
- *  $Id$
- *
- *  @author Jules White <jules@dre.vanderbilt.edu>
- */
+*  @file  PCD_Handler.h
+*
+*  $Id$
+*
+*  @author Jules White <jules@dre.vanderbilt.edu>
+*/
 //================================================================
 
 #ifndef CIAO_CONFIG_HANDLERS_PCD_HANDLER_H
@@ -20,49 +20,49 @@
 
 namespace Deployment
 {
-  struct PlanConnectionDescription; 
+struct PlanConnectionDescription;
 }
 
 namespace CIAO
 {
 
-  namespace Config_Handlers
-  {
-    
-   class PlanConnectionDescription;
-   
-   /*
-    * @class PCD_Handler
-    *
-    * @brief Handler class for <PlanConnectionDescription> types.
-    *
-    * This class defines handler methods to map values from
-    * XSC PlanConnectionDescription objects, parsed from
-    * the descriptor files, to the corresponding CORBA IDL type.
-    *
-    */
-    
-    class Config_Handlers_Export PCD_Handler{
-     
-      public:
-       
-        PCD_Handler (void);
-        virtual ~PCD_Handler (void);
-  
-        ///This method takes a <Deployment::PlanConnectionDescription>
-        ///and maps the values from the passed in XSC 
-        ///PlanConnectionDescription to its members.
-        void get_PlanConnectionDescription (
-                    Deployment::PlanConnectionDescription& toconfig,
-                    PlanConnectionDescription& desc);          
+namespace Config_Handlers
+{
 
-	//This method takes a <Deployment::PlanConnectionDescription>
-	//converts it into a <Config_Handler::PlanConnectionDescription>
-	//and returns the value
-	static PlanConnectionDescription get_PlanConnectionDescription (
-	    const Deployment::PlanConnectionDescription &src);
-    };
-  }
+class PlanConnectionDescription;
+
+/*
+* @class PCD_Handler
+*
+* @brief Handler class for <PlanConnectionDescription> types.
+*
+* This class defines handler methods to map values from
+* XSC PlanConnectionDescription objects, parsed from
+* the descriptor files, to the corresponding CORBA IDL type.
+*
+*/
+
+class Config_Handlers_Export PCD_Handler{
+
+public:
+
+PCD_Handler (void);
+virtual ~PCD_Handler (void);
+
+///This method takes a <Deployment::PlanConnectionDescription>
+///and maps the values from the passed in XSC
+///PlanConnectionDescription to its members.
+void get_PlanConnectionDescription (
+Deployment::PlanConnectionDescription& toconfig,
+PlanConnectionDescription& desc);
+
+//This method takes a <Deployment::PlanConnectionDescription>
+//converts it into a <Config_Handler::PlanConnectionDescription>
+//and returns the value
+static PlanConnectionDescription get_PlanConnectionDescription (
+const Deployment::PlanConnectionDescription &src);
+};
+}
 }
 
 #include /**/ "ace/post.h"

@@ -290,11 +290,11 @@ namespace
   //
   //
   //
-  struct FullTypeNameEmitter : Traversal::FundamentalType,
+  struct TypeNameEmitter : Traversal::FundamentalType,
                            Traversal::Type,
                            Emitter
   {
-    FullTypeNameEmitter (Context& c, ostream& os)
+    TypeNameEmitter (Context& c, ostream& os)
         : Emitter (c, os)
     {
     }
@@ -462,7 +462,7 @@ namespace
   private:
     Traversal::GetRaises get_raises_;
     Traversal::SetRaises set_raises_;
-    FullTypeNameEmitter type_name_;
+    TypeNameEmitter type_name_;
   };
 
 
@@ -634,7 +634,7 @@ namespace
     Traversal::Belongs belongs;
     Traversal::Belongs provider_belongs;
 
-    FullTypeNameEmitter type_name_emitter;
+    TypeNameEmitter type_name_emitter;
   };
 
 
@@ -2046,7 +2046,7 @@ generate (CommandLine const& cl,
     home_explicit.edge_traverser (home_explicit_defines);
 
     //--
-    FullTypeNameEmitter type (ctx, os);
+    TypeNameEmitter type (ctx, os);
 
     ComponentContextEmitter session_component_context (ctx, os);
     ComponentExecutorEmitter session_component_executor (ctx, os);

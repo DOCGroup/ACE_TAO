@@ -17,13 +17,13 @@
 
 // Utility class that provides a std::string like facade to XMLString.
 // Doesn't implement all of the methods of std::string.
-
+#include "CIAO_XML_Utils_Export.h"
 namespace CIAO
 {
 namespace Config_Handlers
 {
 
-  class XStr
+  class CIAO_XML_Utils_Export XStr
   {
   public:
     XStr() : _wstr(0L) { };
@@ -62,12 +62,12 @@ namespace Config_Handlers
 
   };
 
-  bool operator== (const XStr& lhs, const XStr& rhs);
-  bool operator!= (const XStr& lhs, const XStr& rhs);
+  CIAO_XML_Utils_Export bool operator== (const XStr& lhs, const XStr& rhs);
+  CIAO_XML_Utils_Export bool operator!= (const XStr& lhs, const XStr& rhs);
 
-  std::ostream&
+  CIAO_XML_Utils_Export std::ostream&
   operator<< (std::ostream& o, XStr const& str);
-  
+
 }
 }
 #include /**/ "ace/post.h"

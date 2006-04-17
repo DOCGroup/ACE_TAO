@@ -22,24 +22,24 @@
 
 namespace CIAO
 {
-    namespace Config_Handlers
+  namespace Config_Handlers
+  {
+    class ThreadpoolDef;
+
+    /*
+     * @class TP_Handler
+     * A brief Handler class for <ThreadpoolDef>
+     */
+
+    class RT_CCM_Handlers_Export TP_Handler
     {
-	class ThreadpoolDef;
+    public:
+      static bool thread_pool (const ThreadpoolDef &src,
+                               ::CIAO::DAnCE::ORS_Threadpool &dest);
 
-	/*
-	 * @class TP_Handler
-	 * A brief Handler class for <ThreadpoolDef>
-	 */
-
-	class RT_CCM_Handlers_Export TP_Handler
-	{
-        public:
-          static bool thread_pool (const ThreadpoolDef &src,
-                                   ::CIAO::DAnCE::ORS_Threadpool &dest);
-          
-          static ThreadpoolDef thread_pool (const ::CIAO::DAnCE::ORS_Threadpool &src);
-	};
-    }
+      static ThreadpoolDef thread_pool (const ::CIAO::DAnCE::ORS_Threadpool &src);
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

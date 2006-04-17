@@ -7,7 +7,6 @@
  *  @file    NodeApplicationManager_Impl.h
  *
  *  @author  Tao Lu <lu@dre.vanderbilt.edu>
- *  @author  Gan Deng <dengg@dre.vanderbilt.edu>
  *
  *  This file contains implementation for the servant of
  *  Deployment::NodeApplicationManager.
@@ -27,8 +26,10 @@
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/OS_NS_sys_wait.h"
+#include "ace/Process_Manager.h"
 #include "ciao/NodeApp_CB_Impl.h"
-#include "ciao/NodeApplicationManagerS.h"
+#include "ciao/DeploymentS.h"
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"
@@ -37,6 +38,7 @@
 
 namespace CIAO
 {
+
   /**
    * @class NodeApplicationManager_Impl_Base
    */
@@ -77,7 +79,6 @@ namespace CIAO
     virtual Deployment::Application_ptr
     perform_redeployment (const Deployment::Properties & configProperty,
                           Deployment::Connections_out providedReference,
-                          CORBA::Boolean add_or_remove,
                           CORBA::Boolean start
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException,
@@ -144,32 +145,16 @@ namespace CIAO
     /// @note This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nodeapp_manager (void);
 
+    /// Set the priority of the NodeApplication process which this NAM manages
+    virtual ::CORBA::Long set_priority (
+        const char * cid,
+        const ::Deployment::Sched_Params & params
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException ));
+
   protected:
     /// Destructor
     virtual ~NodeApplicationManager_Impl_Base (void);
-
-    /// Add new components
-    virtual void
-    add_new_components (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      ::Deployment::PlanError,
-                      ::Deployment::InstallationFailure,
-                      ::Deployment::UnknownImplId,
-                      ::Deployment::ImplEntryPointNotFound,
-                      ::Deployment::InvalidConnection,
-                      ::Deployment::InvalidProperty));
-
-    /// Remove existing components
-    virtual void
-    remove_existing_components (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::PlanError,
-                   ::Components::RemoveFailure));
-
-    /// Determine whether a component is absent in the new_plan
-    /// Return true if absent
-    virtual bool
-    is_to_be_removed (const char * name);
 
     /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
@@ -259,7 +244,49 @@ namespace CIAO
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
+
+    /// The Process Manager for this NodeApplicationManager
+    ACE_Process_Manager node_app_process_manager_;
+
+    /// The process id of the NA associated with the NAM,
+    /// Each NAM will only have one NA associated with it,
+    /// so we have only one process associated with it.
+
+    // this is UNIX specific .... not portable
+    pid_t process_id_;
   };
+
+
+  /**
+   * @class NAM_Handler
+   * @brief The signal handler class for the SIGCHLD
+   * handling to avoid zombies
+   *
+   */
+  class NAM_Handler : public ACE_Event_Handler
+    {
+    public:
+      virtual int handle_signal (int sig,
+                                 siginfo_t *,
+                                 ucontext_t *)
+        {
+          ACE_UNUSED_ARG (sig);
+
+          // @@ Note that this code is not portable to all OS platforms
+          // since it uses print statements within signal handler context.
+          //ACE_DEBUG ((LM_DEBUG,
+          //            "Executed ACE signal handler for signal %S \n",
+          //            sig));
+
+          ACE_exitcode status;
+          // makes a claal to the underlying os system call
+          // -1 to wait for any child process
+          // and WNOHANG so that it retuurns immediately
+          ACE_OS::waitpid (-1 ,&status, WNOHANG, 0);
+
+          return 0;
+        }
+    };
 
 
   /**
@@ -297,6 +324,18 @@ namespace CIAO
                        Deployment::ResourceNotAvailable,
                        Deployment::StartError,
                        Deployment::InvalidProperty));
+
+
+    /**
+     * @operation push_component_info
+     * @brief pushes component info to the NodeManager
+     *
+     * @param process_id The id of the process of NodeApplication
+     */
+    void push_component_info (pid_t process_id);
+
+    /// The signal handler
+    NAM_Handler child_handler_;
   };
 
 
@@ -344,7 +383,6 @@ namespace CIAO
 
     CIAO::NoOp_Configurator configurator_;
   };
-
 }
 
 #if defined (__ACE_INLINE__)

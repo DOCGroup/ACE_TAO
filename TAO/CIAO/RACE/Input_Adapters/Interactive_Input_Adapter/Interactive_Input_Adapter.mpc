@@ -82,14 +82,14 @@ project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handle
              Input_Adapter_svnt \
              Plan_Analyzer_Interface_stub \
              XSC_Config_Handlers
-  
+
   idlflags  +=  -Sc \
                 -Wb,export_macro=INTERACTIVE_INPUT_ADAPTER_EXEC_Export \
                 -Wb,export_include=Interactive_Input_Adapter_exec_export.h
   dynamicflags   = INTERACTIVE_INPUT_ADAPTER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {

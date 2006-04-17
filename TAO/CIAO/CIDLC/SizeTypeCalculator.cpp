@@ -163,12 +163,12 @@ calculate (SemanticGraph::TranslationUnit& u)
   //
   Traversal::ContainsRoot contains_root;
   Traversal::Includes includes;
-  
+
   region.edge_traverser (includes);
   region.edge_traverser (contains_root);
-  
+
   //--
-  Traversal::Root root;  
+  Traversal::Root root;
   includes.node_traverser (region);
   contains_root.node_traverser (root);
 
@@ -183,15 +183,15 @@ calculate (SemanticGraph::TranslationUnit& u)
   Traversal::UnconstrainedInterface uinterface;
   Traversal::ValueType vtype;
   Traversal::Home component_home;
-  
+
   Calculator calculator;
-  
+
   defines.node_traverser (module);
   defines.node_traverser (uinterface);
   defines.node_traverser (vtype);
   defines.node_traverser (component_home);
   defines.node_traverser (calculator);
-  
+
   // Layer 4
   //
   Traversal::Defines struct_defines;
@@ -200,16 +200,16 @@ calculate (SemanticGraph::TranslationUnit& u)
   vtype.edge_traverser (defines);
   component_home.edge_traverser (defines);
   calculator.edge_traverser (struct_defines);
-  
+
   //--
   Traversal::Member member;
   struct_defines.node_traverser (member);
-  
+
   // Layer 5
   //
   Traversal::Belongs belongs;
   member.edge_traverser (belongs);
-  
+
   //--
   belongs.node_traverser (calculator);
 

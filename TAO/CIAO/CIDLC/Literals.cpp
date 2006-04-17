@@ -28,7 +28,7 @@ namespace StringLiterals
     "//    http://www.dre.vanderbilt.edu/CIAO"
     "\n\n";
 
-  char const* const STRS[LIT_SIZE] =
+  char const* const STRS[SIZE] =
   {
     // ACE Environment portability macros.
     "ACE_ENV_ARG_DECL_WITH_DEFAULTS",                     // ENV_HDR
@@ -41,10 +41,9 @@ namespace StringLiterals
     "ACE_ENV_SINGLE_ARG_PARAMETER",                       // ENV_SNGL_ARG
 
     // Common CORBA and all Components exceptions.
-    "ACE_THROW_SPEC (( ::CORBA::SystemException))",       // EXCP_SNGL
+    "ACE_THROW_SPEC ((CORBA::SystemException))",          // EXCP_SNGL
     "ACE_THROW_SPEC ((",                                  // EXCP_START
     "::CORBA::SystemException",                           // EXCP_SYS
-    "::CORBA::BAD_PARAM ()",                              // EXCP_BP
     "::Components::IllegalState",                         // EXCP_IS
     "::Components::AlreadyConnected",                     // EXCP_AC
     "::Components::InvalidConnection",                    // EXCP_IC
@@ -65,9 +64,6 @@ namespace StringLiterals
     "::Components::EnterpriseComponent",                  // COMP_EC
     "::Components::SessionContext",                       // COMP_SC
     "::Components::ConsumerDescriptions",                 // COMP_CD
-    "::Components::ReceptacleDescriptions",               // COMP_RD
-    "::Components::PublisherDescriptions",                // COMP_PD
-    "::Components::EmitterDescriptions",                  // COMP_ED
 
     // This could change - don't want it scattered all over.
     "namespace CIDL_",                                    // CIDL_NS
@@ -83,11 +79,9 @@ namespace StringLiterals
     "variable-size",                                      // VAR_SIZE
     "_ciao_extract_val",                                  // EXTRACT
     "_ciao_extract_tmp",                                  // EXTRACT_TMP
-    "ACE_UNUSED_ARG",                                     // ACE_UA
-    "ACE_CHECK",                                          // ACE_CK
-    "ACE_CHECK_RETURN",                                   // ACE_CR
-    "ACE_THROW",                                          // ACE_TH
-    "ACE_THROW_RETURN"                                    // ACE_TR
+	  "ACE_UNUSED_ARG",                                     // ACE_UA
+	  "ACE_CHECK_RETURN",                                   // ACE_CR
+	  "ACE_THROW_RETURN"                                    // ACE_TR
   };
 }
 

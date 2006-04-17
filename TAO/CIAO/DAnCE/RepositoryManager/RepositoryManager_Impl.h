@@ -32,7 +32,7 @@
 //#define ASSEMBLY_INTERFACE_SUPPORT 1
 
 
-#include "RepositoryManagerDaemonS.h"
+#include "RepositoryManagerS.h"
 
 #include "ace/Hash_Map_Manager.h"      //for the ACE_Hash_Map_Manager
 #include "ace/Null_Mutex.h"          //for ACE_Null_Mutex

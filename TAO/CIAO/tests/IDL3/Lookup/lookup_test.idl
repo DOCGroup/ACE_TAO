@@ -3,7 +3,7 @@
  * @file lookup_test.idl
  * @authors Boris Kolpackov <boris@dre.vanderbilt.edu>
  *          Jeff Parsons <j.parsons@vanderbilt.edu>
- * 
+ *
  * Tests IDL compiler lookup when local names are used
  * to reference declarations in supported interfaces,
  * base valuetypes, base components, and base homes.
@@ -27,46 +27,46 @@ module M
   {
     void f (in Foo bar) raises (Ex);
   };
-  
+
   valuetype VB
   {
     typedef long Bar;
   };
-  
+
   valuetype V : VB supports IB
   {
     void f (in Bar foo) raises (Ex);
   };
-  
+
   valuetype EB
   {
     typedef long Bar;
   };
-  
+
   valuetype E : EB supports IB
   {
     void f (in Bar foo) raises (Ex);
   };
-  
+
   interface T
   {
     typedef long Bar;
   };
-  
+
   component CB supports T
   {
   };
-  
+
   component C : CB
   {
     attribute Bar baz;
   };
-  
+
   home HB supports IB manages CB
   {
     typedef long Bar;
   };
-  
+
   home H : HB manages C
   {
     void f (in Bar b) raises (Ex);

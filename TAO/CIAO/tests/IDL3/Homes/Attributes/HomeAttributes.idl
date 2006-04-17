@@ -10,45 +10,45 @@
 
 module HomeAttributes
 {
-  interface foo_interface 
+  interface foo_interface
     {
     };
-  
-  component Foo supports foo_interface 
+
+  component Foo supports foo_interface
     {
     };
-  
+
   home FooHome manages Foo
     {
       attribute float test;
       attribute long testA, testB;
     };
-  
+
   exception FooException
     {
     };
-  
+
   exception BarException
     {
     };
-  
+
   home ROFooHome manages Foo
     {
       readonly attribute float test1;
       readonly attribute long testB, testC;
     };
-  
+
   home FooRaisesHome manages Foo
     {
       attribute float test2 getraises (FooException);
       attribute float test3 setraises (BarException);
-      attribute float test4 
+      attribute float test4
         getraises (FooException) setraises (BarException);
     };
-  
+
   home ROFooRaisesHome manages Foo
     {
       readonly attribute float test5 raises (FooException);
     };
-  
+
 };

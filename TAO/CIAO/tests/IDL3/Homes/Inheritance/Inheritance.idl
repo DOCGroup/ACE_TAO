@@ -2,7 +2,7 @@
 /**
  * @file Inheritance.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * Tests the compilation of Home inheritance.
  */
 
@@ -10,24 +10,24 @@
 
 module HomeInheritance
 {
-  interface foo_interface 
+  interface foo_interface
     {
     };
-  
+
   component Foo supports foo_interface
     {
     };
-  
+
   home FooHome manages Foo
     {
     };
-  
+
   component Bar
     {
     };
-  
+
   home BarHome : FooHome manages Bar
     {
     };
-  
+
 };

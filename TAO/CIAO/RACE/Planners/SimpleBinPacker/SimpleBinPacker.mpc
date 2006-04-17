@@ -3,7 +3,6 @@
 // This file is generated with "generate_component_mpc.pl -p Planner_Interface SimpleBinPacker"
 
 project(SimpleBinPacker_stub): ciao_deployment_stub {
-  avoids += ace_for_tao
   after += Planner_Interface_stub Planner_stub
   sharedname = SimpleBinPacker_stub
   idlflags += -Sc \
@@ -77,7 +76,6 @@ project(SimpleBinPacker_svnt) : ciao_servant_dnc {
 
 
 project(SimpleBinPacker_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
   after   += SimpleBinPacker_svnt
   sharedname = SimpleBinPacker_exec
   libs      += SimpleBinPacker_stub \
@@ -85,16 +83,16 @@ project(SimpleBinPacker_exec) : ciao_component_dnc {
                Planner_Interface_stub \
                Planner_Interface_svnt \
                Planner_stub \
-               Planner_svnt \ 
+               Planner_svnt \
                RACE_common_stub
-  
+
   idlflags  +=  -Sc \
                 -Wb,export_macro=SIMPLEBINPACKER_EXEC_Export \
                 -Wb,export_include=SimpleBinPacker_exec_export.h
   dynamicflags   = SIMPLEBINPACKER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {

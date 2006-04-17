@@ -42,9 +42,9 @@ namespace Components
 {
   typedef SecurityLevel2::Credentials Principal;
   typedef Principal *Principal_ptr;
-  
+
   class IllegalState;
-  
+
   namespace Transaction
   {
     class UserTransaction;
@@ -64,9 +64,9 @@ namespace CIAO
    * This class implements operations and contains parameterized
    * members common to all generated servants.
    */
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   class Context_Impl : public virtual BASE_CTX,
                        public virtual Context_Impl_Base,
@@ -85,7 +85,7 @@ namespace CIAO
     get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
-                       
+
   protected:
     SVNT *servant_;
     COMP_VAR component_;

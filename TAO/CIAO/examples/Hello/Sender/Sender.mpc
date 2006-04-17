@@ -2,7 +2,6 @@
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Sender"
 
 project(Hello_Base_Sender_DnC_stub): ciao_client_dnc {
-  avoids += ace_for_tao
   after += Hello_Base_DnC_stub
   sharedname = Sender_DnC_stub
   idlflags += -Sc \
@@ -20,18 +19,17 @@ project(Hello_Base_Sender_DnC_stub): ciao_client_dnc {
   Source_Files {
     SenderC.cpp
   }
-  
+
   Header_Files {
     SenderC.h
   }
-  
+
   Inline_Files {
     SenderC.inl
   }
 }
 
 project(Hello_Base_Sender_DnC_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
   after += Hello_Base_DnC_svnt \
            Hello_Base_Sender_DnC_stub
   sharedname  = Sender_DnC_svnt
@@ -57,13 +55,13 @@ project(Hello_Base_Sender_DnC_svnt) : ciao_servant_dnc {
     SenderS.cpp
     Sender_svnt.cpp
   }
-  
+
   Header_Files {
     SenderEC.h
     SenderS.h
     Sender_svnt.h
   }
-  
+
   Inline_Files {
     SenderEC.inl
     SenderS.inl
@@ -71,7 +69,6 @@ project(Hello_Base_Sender_DnC_svnt) : ciao_servant_dnc {
 }
 
 project(Hello_Base_Sender_DnC_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
   after   += Hello_Base_Sender_DnC_svnt
   sharedname = Sender_DnC_exec
   libs      += Sender_DnC_stub \
@@ -90,14 +87,13 @@ project(Hello_Base_Sender_DnC_exec) : ciao_component_dnc {
   Source_Files {
     Sender_exec.cpp
   }
-  
+
   Header_Files {
     Sender_exec.h
   }
 }
 
 project (Hello_DnC_Starter) : ciao_client_dnc, valuetype {
-  avoids += ace_for_tao
   exename = starter
   after += Hello_Base_Sender_DnC_stub
   libs += Sender_DnC_stub Hello_Base_DnC_stub
@@ -108,10 +104,10 @@ project (Hello_DnC_Starter) : ciao_client_dnc, valuetype {
   Source_Files {
     starter.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }

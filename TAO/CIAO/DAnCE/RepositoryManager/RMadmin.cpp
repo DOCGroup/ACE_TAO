@@ -11,7 +11,7 @@
  * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  **/
 
-#include "RepositoryManagerDaemonC.h"
+#include "RepositoryManagerC.h"
 #include "Options.h"
 
 #include "ace/OS_NS_fcntl.h"      //for open

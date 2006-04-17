@@ -104,7 +104,7 @@ private:
   void gen_params (UTL_Scope *s, int arg_count);
   void gen_exception_list (UTL_ExceptList *exceptions,
                            const char *prefix = "",
-                           bool closed = true);
+                           idl_bool closed = I_TRUE);
 
 private:
   TAO_OutStream *os;

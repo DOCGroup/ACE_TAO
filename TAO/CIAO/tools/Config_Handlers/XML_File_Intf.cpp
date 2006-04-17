@@ -28,7 +28,7 @@ namespace CIAO
     XML_File_Intf::read_process_file (const char *file)
     {
       CIAO_TRACE("XML_File_Intf::read_process_file");
-      
+
       XML_Helper helper;
 
       if (!helper.is_initialized ())
@@ -53,7 +53,7 @@ namespace CIAO
 
       return false;
     }
- 
+
     ::Deployment::DeploymentPlan const *
     XML_File_Intf::get_plan (void) const
     {
@@ -65,7 +65,7 @@ namespace CIAO
     XML_File_Intf::get_plan (void)
     {
       CIAO_TRACE("XML_File_Intf::get_plan");
-      
+
       return this->idl_dp_.release ();
     }
   }

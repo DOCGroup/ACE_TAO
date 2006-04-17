@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Thread_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -269,7 +268,7 @@ public:
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Protect the state of a Task during concurrent operations, but
   /// only if we're configured as MT safe...
-  ACE_Recursive_Thread_Mutex lock_;
+  ACE_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 
 private:

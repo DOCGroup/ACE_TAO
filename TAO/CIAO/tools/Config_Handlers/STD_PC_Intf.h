@@ -1,11 +1,11 @@
 //==============================================================
 /**
- *  @file  STD_PC_Intf.h
- *
- *  $Id$
- *
- *  @author Ming Xiong <mxiong@dre.vanderbilt.edu>
- */
+*  @file  STD_PC_Intf.h
+*
+*  $Id$
+*
+*  @author Ming Xiong <mxiong@dre.vanderbilt.edu>
+*/
 //================================================================
 
 #ifndef CIAO_CONFIG_STD_PC_INTF_H
@@ -23,39 +23,39 @@
 
 namespace Deployment
 {
-  struct PackageConfiguration ;
+struct PackageConfiguration ;
 }
 
 namespace CIAO
 {
-  namespace Config_Handlers
-  {
-   /*
-    * @class STD_PC_Intf
-    *
-    * @brief Wrapper class for PackageConfiguration extraction
-    *
-    * This class defines wrapper functions for extracting
-    * PackageConfiguration IDL structures from XSC structures.
-    * It serves as the public interface used by application
-    * developers.
-    *
-    */
-    class Config_Handlers_Export STD_PC_Intf
-    {
-    public:
-      STD_PC_Intf (const char *file);
+namespace Config_Handlers
+{
+/*
+* @class STD_PC_Intf
+*
+* @brief Wrapper class for PackageConfiguration extraction
+*
+* This class defines wrapper functions for extracting
+* PackageConfiguration IDL structures from XSC structures.
+* It serves as the public interface used by application
+* developers.
+*
+*/
+class Config_Handlers_Export STD_PC_Intf
+{
+public:
+STD_PC_Intf (const char *file);
 
-      ::Deployment::PackageConfiguration const *get_PC (void) const;
-      ::Deployment::PackageConfiguration *get_PC (void);
+::Deployment::PackageConfiguration const *get_PC (void) const;
+::Deployment::PackageConfiguration *get_PC (void);
 
-    protected:
-      bool prepare_PC (const char *file);
+protected:
+bool prepare_PC (const char *file);
 
-    private:
-      ACE_Auto_Ptr< ::Deployment::PackageConfiguration> idl_pc_;
-    };
-  }
+private:
+ACE_Auto_Ptr< ::Deployment::PackageConfiguration> idl_pc_;
+};
+}
 }
 
 #include /**/ "ace/post.h"
