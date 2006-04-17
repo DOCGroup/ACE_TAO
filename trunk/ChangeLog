@@ -1,3 +1,9 @@
+Mon Apr 17 14:47:23 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-tiger.h
+        
+          Added ACE_HAS_AIO_CALLS.
+
 Sat Apr 15 10:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SSL/SSL_Asynch_Stream_Test.cpp:
