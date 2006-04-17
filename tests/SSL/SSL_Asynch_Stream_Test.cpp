@@ -45,7 +45,9 @@
 
 ACE_RCSID(tests, SSL_Asynch_Stream_Test, "$Id$")
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+  // This only works on Win32 platforms and on Unix platforms
+  // supporting POSIX aio calls.
 
 class Client_Handler : public ACE_Handler
 {
@@ -403,8 +405,6 @@ start_clients (void *arg)
   ACE_INET_Addr addr (rendezvous);
   ACE_SSL_SOCK_Stream stream;
   ACE_SSL_SOCK_Connector connect;
-  ACE_Time_Value delay (0, req_delay);
-  size_t len = * reinterpret_cast<ACE_TCHAR *> (arg);
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {
@@ -469,10 +469,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("SSL_Asynch_Stream_Test"));
 
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("This test requires threads which are not supported ")
-              ACE_TEXT ("on this platform\n"));
+              ACE_TEXT ("This test requires threads and AIO which are not ")
+              ACE_TEXT ("supported on this platform\n"));
 
   ACE_END_TEST;
   return 0;
 }
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && (WIN32 || AIO) */
