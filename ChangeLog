@@ -4,6 +4,12 @@ Mon Apr 17 14:47:23 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         
           Added ACE_HAS_AIO_CALLS.
 
+Mon Apr 17 10:06:23 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp: Restrict building this test
+          to platforms with both threads and AIO support. Fixes Cygwin
+          build problem.
+
 Sat Apr 15 10:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SSL/SSL_Asynch_Stream_Test.cpp:
