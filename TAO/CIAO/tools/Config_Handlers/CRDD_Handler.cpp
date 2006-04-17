@@ -7,6 +7,7 @@
 #include "Property_Handler.h"
 
 #include "ciao/CIAO_common.h"
+
 namespace CIAO
 {
   namespace Config_Handlers
@@ -23,8 +24,7 @@ namespace CIAO
     ///This method takes a <Deployment::ConnectionResourceDeploymentDescription>
     ///and maps the values from the passed in XSC
     ///ConnectionResourceDeploymentDescription to its members.
-    void CRDD_Handler::get_ConnectionResourceDeploymentDescription (
-                                                                    Deployment::ConnectionResourceDeploymentDescription& toconfig,
+    void CRDD_Handler::get_ConnectionResourceDeploymentDescription (Deployment::ConnectionResourceDeploymentDescription& toconfig,
                                                                     ConnectionResourceDeploymentDescription& desc)
     {
       CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDD");
@@ -57,6 +57,7 @@ namespace CIAO
         {
           crdd.add_property (Property_Handler::get_property (src.property[i]));
         }
+
 
       return crdd;
     }

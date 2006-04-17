@@ -50,6 +50,7 @@ namespace CIAO
         }
 
       CORBA::ULong tmp = 0;
+
       IDD_Handler::IDREF.find_ref (ACE_CString (src.instance ().id ().c_str ()),
                                    tmp);
 

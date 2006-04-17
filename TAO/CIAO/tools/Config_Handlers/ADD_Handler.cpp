@@ -7,14 +7,15 @@
 
 ACE_RCSID (DAnCE,
            ADD_Handler,
-           "$Id$")
+           "$Id$");
 
 
-  namespace CIAO
+
+namespace CIAO
+{
+  namespace Config_Handlers
   {
-    namespace Config_Handlers
-    {
-      IDREF_Base<CORBA::ULong> ADD_Handler::IDREF;
+    IDREF_Base<CORBA::ULong> ADD_Handler::IDREF;
 
       void
       ADD_Handler::artifact_deployment_descrs (
@@ -46,6 +47,7 @@ ACE_RCSID (DAnCE,
       {
         CIAO_TRACE("ADD_Handler::atrifact_deployment_descr");
         dest.name = src.name ().c_str ();
+
 
         dest.node = src.node ().c_str ();
 
@@ -156,16 +158,10 @@ ACE_RCSID (DAnCE,
         total = src.execParameter.length ();
         for (size_t k = 0; k < total; ++k)
           {
-            add.add_execParameter (
-                                   Property_Handler::get_property (
-                                                                   src.execParameter[k]));
+            add.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
           }
 
         return add;
       }
-
-
-
     }
-
   }

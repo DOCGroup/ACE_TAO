@@ -1,6 +1,4 @@
-
 // $Id$
-
 
 #include "IRDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
@@ -30,7 +28,7 @@ namespace CIAO
       throw (Config_Error)
     {
       CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr");
-
+      
       switch (desc.resourceUsage ().integral ())
         {
         case ResourceUsageKind::None_l:

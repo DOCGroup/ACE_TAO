@@ -11,7 +11,7 @@
 #include "Deployment.hpp"
 #include "STD_PCD_Handler.h"
 #include "ciao/Packaging_DataC.h"
-
+#include "ciao/CIAO_common.h"
 
 namespace CIAO
 {
@@ -26,6 +26,8 @@ namespace CIAO
     bool
     STD_PC_Intf::prepare_PC (const char *file)
     {
+      CIAO_TRACE("STD_PC_Intf::prepare_PC");
+      
       ACE_Auto_Ptr<XML_Helper> helper (new XML_Helper);
 
       if (!helper->is_initialized ())

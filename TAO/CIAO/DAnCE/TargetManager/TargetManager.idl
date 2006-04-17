@@ -22,7 +22,6 @@
  * @brief TargetManager interface defintion
  *
  */
-
 module CIAO
 {
   component TargetManagerImpl

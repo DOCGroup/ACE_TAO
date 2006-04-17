@@ -13,7 +13,7 @@
 namespace CIAO
 {
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long>
   Swapping_Container::serial_number_ (0);
 
   Swapping_Container::Swapping_Container (CORBA::ORB_ptr o,

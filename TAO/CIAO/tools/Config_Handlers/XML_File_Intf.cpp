@@ -65,7 +65,6 @@ namespace CIAO
     XML_File_Intf::get_plan (void)
     {
       CIAO_TRACE("XML_File_Intf::get_plan");
-
       return this->idl_dp_.release ();
     }
   }

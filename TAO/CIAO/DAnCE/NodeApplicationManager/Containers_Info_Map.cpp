@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Containers_Info_Map.h"
 #include "ciao/CIAO_Config.h"
 #include "ciao/CIAO_common.h"
@@ -127,6 +128,10 @@ namespace CIAO
 
       for (j = 0; j < infoProperty_length; ++j)
         {
+          if (ACE_OS::strcmp (this->plan_.infoProperty[j].name.in (),
+                              "CIAOServerResources") != 0)
+            continue;
+
           CIAO::DAnCE::ServerResource *server_resource_def = 0;
           this->plan_.infoProperty[j].value >>= server_resource_def;
 

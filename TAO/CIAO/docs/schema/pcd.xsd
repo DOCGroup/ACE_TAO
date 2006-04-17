@@ -6,7 +6,7 @@
 
   <xsd:include schemaLocation="Basic_Deployment_Data.xsd" />
   <xsd:include schemaLocation="cpd.xsd" />
-
+  
   <xsd:complexType name="ComponentPackageImport">
     <xsd:sequence>
       <xsd:element name="location" type="xsd:string" maxOccurs="unbounded" />

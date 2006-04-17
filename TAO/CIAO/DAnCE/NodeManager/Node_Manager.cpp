@@ -126,7 +126,7 @@ write_pid (void)
 bool
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
-                  CIAO::NodeManager_ptr obj
+                  CIAO::NodeManagerDaemon_ptr obj
                   ACE_ENV_ARG_DECL)
 {
   // Naming Service related operations
@@ -223,7 +223,7 @@ main (int argc, char *argv[])
       node_manager_servant->init ();
 
       // Implicit activation
-      CIAO::NodeManager_var node_manager =
+      CIAO::NodeManagerDaemon_var node_manager =
         node_manager_servant->_this ();
 
       CORBA::String_var str =

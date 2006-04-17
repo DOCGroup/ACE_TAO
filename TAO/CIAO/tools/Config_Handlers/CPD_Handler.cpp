@@ -1,4 +1,5 @@
 // $Id$
+
 #include "CPD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
@@ -25,6 +26,7 @@ namespace CIAO
       std::for_each (desc.begin_supportedType (),
                      desc.end_supportedType (),
                      String_Seq_Functor (toconfig.supportedType));
+
 
       switch (desc.kind ().integral ())
         {
@@ -137,7 +139,6 @@ namespace CIAO
           ACE_ERROR ((LM_ERROR, "Invalid port kind in connection %s\n",
                       name.c_str ()));
         }
-
 
       for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
         cpd.add_supportedType (XMLSchema::string< char > ((src.supportedType[i])));

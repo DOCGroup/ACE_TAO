@@ -158,6 +158,7 @@ namespace CIAO
                         CPD_Handler::component_port_description (src.port[l]));
         }
 
+
       //Load up the property field
       total = src.property.length();
       for(size_t m = 0;

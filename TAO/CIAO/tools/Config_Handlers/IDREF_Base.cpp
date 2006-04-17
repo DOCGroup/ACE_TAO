@@ -1,4 +1,5 @@
 // $Id$
+
 #ifndef IDREF_BASE_CPP
 #define IDREF_BASE_CPP
 
@@ -9,10 +10,9 @@
 
 ACE_RCSID (DAnCE,
            IDREF_Base,
-           "$Id$")
+           "$Id$");
 
-
-  namespace CIAO
+namespace CIAO
   {
     namespace Config_Handlers
     {

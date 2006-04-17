@@ -5,6 +5,12 @@
 #include "ciao/CIAO_common.h"
 
 
+void print_arg (int argc, char *argv[])
+{
+  for (int i = 0; i < argc; ++i)
+    ACE_DEBUG ((LM_DEBUG, "NodeApplication ARGV[%d] = %s\n", i, argv [i]));
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -31,6 +37,9 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "*** Starting NodeApplication\n"));
 
       CIAO::NodeApplication_Options nodeapp_options;
+
+      if (CIAO::debug_level () > 9)
+        print_arg (argc, argv);
 
       if (nodeapp_options.parse_args (argc, argv) != 0)
         return -1;

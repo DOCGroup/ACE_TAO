@@ -228,6 +228,8 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
+      <xsd:enumeration value="rtecEventPublisher"/>
+      <xsd:enumeration value="rtecEventConsumer"/>      
     </xsd:restriction>
   </xsd:simpleType>
 

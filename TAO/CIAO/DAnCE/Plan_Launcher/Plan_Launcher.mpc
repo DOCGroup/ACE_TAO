@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Plan_Launcher_Impl) : ciao_component_dnc, ciao_config_handlers {
+project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers {
   sharedname = Plan_Launcher_Impl
   after    += ExecutionManager_stub
   libs     += ExecutionManager_stub
@@ -19,7 +19,7 @@ project(Plan_Launcher_Impl) : ciao_component_dnc, ciao_config_handlers {
   }
 }
 
-project(Plan_Launcher) : ciao_component_dnc, taoexe, ciao_config_handlers  {
+project(Plan_Launcher) : ciao_server_dnc, ciao_config_handlers  {
   exename = plan_launcher
 
   after += Plan_Launcher_Impl

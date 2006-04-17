@@ -29,7 +29,7 @@
 #include "ciao/Container_Base.h"
 //#include "ciao/Swapping_Container.h"
 #include "ace/SString.h"
-#include "ciao/Server_init.h"  // write_IOR function
+#include "ciao/Server_init.h"  // write_IOR function & NameUtility
 #include "ciao/CIAO_common.h" // CIAO::debug_level
 
 namespace CIAO
@@ -208,6 +208,13 @@ protected:
                                     ACE_Null_Mutex> CCMComponent_Map;
     typedef CCMComponent_Map::iterator Component_Iterator;
     CCMComponent_Map component_map_;
+
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    ACE_CString,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> CCMNaming_Map;
+    CCMNaming_Map naming_map_;
 
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };

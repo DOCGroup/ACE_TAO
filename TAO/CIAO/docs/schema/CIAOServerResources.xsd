@@ -7,10 +7,10 @@
   <xsd:element name="ServerResources" type="CIAO:ServerResourcesDef">
     <xsd:annotation>
       <xsd:documentation>
-        Root element for defining all the resources used by a DeploymentPlan.
-        A CIAO:ServerResources document should reside in a separate file.
+        Root element for defining all the resources used by a DeploymentPlan.  
+        A CIAO:ServerResources document should reside in a separate file.  
         A DeploymentPlan can refer to one or more CIAO:ServerResources file names
-        using the "infoProperty" tag.
+        using the "infoProperty" tag.  
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>
@@ -73,7 +73,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="resources" type="CIAO:ORBResources"
+      <xsd:element name="resources" type="CIAO:ORBResources" 
                                     minOccurs="0"/>
       <xsd:element name="policySet" type="CIAO:PolicySet"
                                     maxOccurs="unbounded"/>
@@ -113,7 +113,7 @@
 
   <xsd:complexType name="ThreadpoolWithLanesDef">
     <xsd:sequence>
-      <xsd:element name="threadpoolLane" type="CIAO:ThreadpoolLaneDef"
+      <xsd:element name="threadpoolLane" type="CIAO:ThreadpoolLaneDef" 
                    maxOccurs="unbounded"/>
       <xsd:element name="stacksize" type="xsd:unsignedLong" />
       <xsd:element name="allow_borrowing" type="xsd:boolean"/>
@@ -121,7 +121,7 @@
       <xsd:element name="max_buffered_requests" type="xsd:unsignedLong"/>
       <xsd:element name="max_request_buffered_size" type="xsd:unsignedLong"/>
     </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID"/>  <!-- Threadpool ID should be
+    <xsd:attribute name="id" type="xsd:ID"/>  <!-- Threadpool ID should be 
                                                    referenced by individual policies
                                                    in the policysets below -->
   </xsd:complexType>

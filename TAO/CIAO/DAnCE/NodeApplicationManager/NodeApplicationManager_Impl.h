@@ -7,6 +7,7 @@
  *  @file    NodeApplicationManager_Impl.h
  *
  *  @author  Tao Lu <lu@dre.vanderbilt.edu>
+ *  @author  Gan Deng <dengg@dre.vanderbilt.edu>
  *
  *  This file contains implementation for the servant of
  *  Deployment::NodeApplicationManager.
@@ -29,7 +30,7 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/Process_Manager.h"
 #include "ciao/NodeApp_CB_Impl.h"
-#include "ciao/DeploymentS.h"
+#include "ciao/NodeApplicationManagerS.h"
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"
@@ -79,6 +80,7 @@ namespace CIAO
     virtual Deployment::Application_ptr
     perform_redeployment (const Deployment::Properties & configProperty,
                           Deployment::Connections_out providedReference,
+                          CORBA::Boolean add_or_remove,
                           CORBA::Boolean start
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException,
@@ -155,6 +157,29 @@ namespace CIAO
   protected:
     /// Destructor
     virtual ~NodeApplicationManager_Impl_Base (void);
+
+    /// Add new components
+    virtual void
+    add_new_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      ::Deployment::PlanError,
+                      ::Deployment::InstallationFailure,
+                      ::Deployment::UnknownImplId,
+                      ::Deployment::ImplEntryPointNotFound,
+                      ::Deployment::InvalidConnection,
+                      ::Deployment::InvalidProperty));
+
+    /// Remove existing components
+    virtual void
+    remove_existing_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Deployment::PlanError,
+                   ::Components::RemoveFailure));
+
+    /// Determine whether a component is absent in the new_plan
+    /// Return true if absent
+    virtual bool
+    is_to_be_removed (const char * name);
 
     /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr

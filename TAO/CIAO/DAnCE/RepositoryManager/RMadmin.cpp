@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 
 /***
@@ -11,7 +10,7 @@
  * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  **/
 
-#include "RepositoryManagerC.h"
+#include "RepositoryManagerDaemonC.h"
 #include "Options.h"
 
 #include "ace/OS_NS_fcntl.h"      //for open

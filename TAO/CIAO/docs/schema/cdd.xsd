@@ -8,13 +8,13 @@
 
   <xsd:complexType name="Domain">
     <xsd:sequence>
-      <xsd:element name="UUID" type="xsd:string" minOccurs="0" />
+      <xsd:element name="UUID" type="xsd:string" minOccurs="0" />       
       <xsd:element name="label" type="xsd:string" minOccurs="0" />
       <xsd:element name="node" type="Deployment:Node" maxOccurs="unbounded"/>
-      <xsd:element name="interconnect" type="Deployment:Interconnect" minOccurs="0" maxOccurs="unbounded"/>
-      <xsd:element name="bridge" type="Deployment:Bridge" minOccurs="0" maxOccurs="unbounded"/>
-      <xsd:element name="sharedResource" type="Deployment:SharedResource" minOccurs="0" maxOccurs="unbounded"/>
-      <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="interconnect" type="Deployment:Interconnect"/>
+      <xsd:element name="bridge" type="Deployment:Bridge"/>
+      <xsd:element name="sharedResource" type="Deployment:SharedResource" minOccurs="0"/>
+      <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -23,7 +23,7 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="label" type="xsd:string" minOccurs="0" />
       <xsd:element name="connect" type="Deployment:Interconnect" maxOccurs="unbounded" />
-      <xsd:element name="resource" type="Deployment:Resource" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="resource" type="Deployment:Resource" minOccurs="0" maxOccurs="unbounded" />      
     </xsd:sequence>
   </xsd:complexType>
 
@@ -33,17 +33,17 @@
       <xsd:element name="label" type="xsd:string" minOccurs="0" />
       <xsd:element name="connection" type="Deployment:Bridge" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="connect" type="Deployment:Node" maxOccurs="unbounded" />
-      <xsd:element name="resource" type="Deployment:Resource" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="resource" type="Deployment:Resource" minOccurs="0" maxOccurs="unbounded" />      
     </xsd:sequence>
   </xsd:complexType>
-
+  
   <xsd:complexType name="Node">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="label" type="xsd:string" minOccurs="0" />
       <xsd:element name="connection" type="Deployment:Interconnect" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="sharedResource" type="Deployment:SharedResource" minOccurs="0" maxOccurs="unbounded" />
-      <xsd:element name="resource" type="Deployment:Resource" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="resource" type="Deployment:Resource" minOccurs="0" maxOccurs="unbounded" />      
     </xsd:sequence>
   </xsd:complexType>
 
@@ -53,7 +53,7 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="node" type="Deployment:Node"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>      
     </xsd:sequence>
   </xsd:complexType>
 

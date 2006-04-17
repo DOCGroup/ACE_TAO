@@ -527,8 +527,8 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
                          0,
                          0,
                          0,
-                         I_FALSE,
-                         I_FALSE);
+                         false,
+                         false);
   xplicit.set_defined_in (node->defined_in ());
 
   // Reset the home's decls to be defined in the explicit home interface.
@@ -806,17 +806,17 @@ idl3_to_idl2_visitor::visit_argument (AST_Argument *node)
 
   switch (node->direction ())
     {
-    case AST_Argument::dir_IN:
-      *os << "in ";
-      break;
-    case AST_Argument::dir_INOUT:
-      *os << "inout ";
-      break;
-    case AST_Argument::dir_OUT:
-      *os << "out ";
-      break;
-    default:
-      return -1;
+      case AST_Argument::dir_IN:
+        *os << "in ";
+        break;
+      case AST_Argument::dir_INOUT:
+        *os << "inout ";
+        break;
+      case AST_Argument::dir_OUT:
+        *os << "out ";
+        break;
+      default:
+        return -1;
     }
 
   *os << this->type_name (node->field_type ())
@@ -828,7 +828,8 @@ idl3_to_idl2_visitor::visit_argument (AST_Argument *node)
 int
 idl3_to_idl2_visitor::visit_attribute (AST_Attribute *node)
 {
-  idl_bool rd_only = node->readonly ();
+
+  bool rd_only = node->readonly ();
 
   // Keep output statements separate because of side effects.
   // No need to check for anonymous array - anonymous types not
@@ -961,56 +962,56 @@ idl3_to_idl2_visitor::visit_constant (AST_Constant *node)
 
   switch (node->et ())
     {
-    case AST_Expression::EV_short:
-      *os << "short";
-      break;
-    case AST_Expression::EV_ushort:
-      *os << "unsigned short";
-      break;
-    case AST_Expression::EV_long:
-      *os << "long";
-      break;
-    case AST_Expression::EV_ulong:
-      *os << "unsigned long";
-      break;
-    case AST_Expression::EV_longlong:
-      *os << "long long";
-      break;
-    case AST_Expression::EV_ulonglong:
-      *os << "unsigned long long";
-      break;
-    case AST_Expression::EV_char:
-      *os << "char";
-      break;
-    case AST_Expression::EV_wchar:
-      *os << "wchar";
-      break;
-    case AST_Expression::EV_bool:
-      *os << "boolean";
-      break;
-    case AST_Expression::EV_octet:
-      *os << "octet";
-      break;
-    case AST_Expression::EV_float:
-      *os << "float";
-      break;
-    case AST_Expression::EV_double:
-      *os << "double";
-      break;
-    case AST_Expression::EV_longdouble:
-      *os << "long double";
-      break;
-    case AST_Expression::EV_string:
-      *os << "string";
-      break;
-    case AST_Expression::EV_wstring:
-      *os << "wstring";
-      break;
-    case AST_Expression::EV_enum:
-      *os << node->enum_full_name ();
-      break;
-    default:
-      break;
+      case AST_Expression::EV_short:
+        *os << "short";
+        break;
+      case AST_Expression::EV_ushort:
+        *os << "unsigned short";
+        break;
+      case AST_Expression::EV_long:
+        *os << "long";
+        break;
+      case AST_Expression::EV_ulong:
+        *os << "unsigned long";
+        break;
+      case AST_Expression::EV_longlong:
+        *os << "long long";
+        break;
+      case AST_Expression::EV_ulonglong:
+        *os << "unsigned long long";
+        break;
+      case AST_Expression::EV_char:
+        *os << "char";
+        break;
+      case AST_Expression::EV_wchar:
+        *os << "wchar";
+        break;
+      case AST_Expression::EV_bool:
+        *os << "boolean";
+        break;
+      case AST_Expression::EV_octet:
+        *os << "octet";
+        break;
+      case AST_Expression::EV_float:
+        *os << "float";
+        break;
+      case AST_Expression::EV_double:
+        *os << "double";
+        break;
+      case AST_Expression::EV_longdouble:
+        *os << "long double";
+        break;
+      case AST_Expression::EV_string:
+        *os << "string";
+        break;
+      case AST_Expression::EV_wstring:
+        *os << "wstring";
+        break;
+      case AST_Expression::EV_enum:
+        *os << node->enum_full_name ();
+        break;
+      default:
+        break;
     }
 
   *os <<  " "
@@ -1095,7 +1096,7 @@ idl3_to_idl2_visitor::visit_typedef (AST_Typedef *node)
     {
       *os << this->type_name (bt);
       *os << " " << node->local_name ();
-    }
+   }
 
   *os << ";";
 
@@ -1251,57 +1252,57 @@ idl3_to_idl2_visitor::type_name (AST_Type *t)
 
   switch (t->node_type ())
     {
-    case AST_Decl::NT_wstring:
-    case AST_Decl::NT_string:
-    case AST_Decl::NT_sequence:
-      // This causes side effects so output statements
-      // sending us here should not be concatenated.
-      (void) t->ast_accept (this);
-      return "";
-    case AST_Decl::NT_pre_defined:
-      pdt = AST_PredefinedType::narrow_from_decl (t);
+      case AST_Decl::NT_wstring:
+      case AST_Decl::NT_string:
+      case AST_Decl::NT_sequence:
+        // This causes side effects so output statements
+        // sending us here should not be concatenated.
+        (void) t->ast_accept (this);
+        return "";
+      case AST_Decl::NT_pre_defined:
+        pdt = AST_PredefinedType::narrow_from_decl (t);
 
-      switch (pdt->pt ())
-        {
-        case AST_PredefinedType::PT_pseudo:
-          return t->full_name ();
-        case AST_PredefinedType::PT_object:
-          return "Object";
-        case AST_PredefinedType::PT_any:
-          return "any";
-        case AST_PredefinedType::PT_long:
-          return "long";
-        case AST_PredefinedType::PT_ulong:
-          return "unsigned long";
-        case AST_PredefinedType::PT_longlong:
-          return "long long";
-        case AST_PredefinedType::PT_ulonglong:
-          return "unsigned long long";
-        case AST_PredefinedType::PT_short:
-          return "short";
-        case AST_PredefinedType::PT_ushort:
-          return "unsigned short";
-        case AST_PredefinedType::PT_float:
-          return "float";
-        case AST_PredefinedType::PT_double:
-          return "double";
-        case AST_PredefinedType::PT_longdouble:
-          return "long double";
-        case AST_PredefinedType::PT_char:
-          return "char";
-        case AST_PredefinedType::PT_wchar:
-          return "wchar";
-        case AST_PredefinedType::PT_boolean:
-          return "boolean";
-        case AST_PredefinedType::PT_octet:
-          return "octet";
-        case AST_PredefinedType::PT_void:
-          return "void";
-        default:
-          break;
-        }
-    default:
-      return t->full_name ();
+        switch (pdt->pt ())
+          {
+            case AST_PredefinedType::PT_pseudo:
+              return t->full_name ();
+            case AST_PredefinedType::PT_object:
+              return "Object";
+            case AST_PredefinedType::PT_any:
+              return "any";
+            case AST_PredefinedType::PT_long:
+              return "long";
+            case AST_PredefinedType::PT_ulong:
+              return "unsigned long";
+            case AST_PredefinedType::PT_longlong:
+              return "long long";
+            case AST_PredefinedType::PT_ulonglong:
+              return "unsigned long long";
+            case AST_PredefinedType::PT_short:
+              return "short";
+            case AST_PredefinedType::PT_ushort:
+              return "unsigned short";
+            case AST_PredefinedType::PT_float:
+              return "float";
+            case AST_PredefinedType::PT_double:
+              return "double";
+            case AST_PredefinedType::PT_longdouble:
+              return "long double";
+            case AST_PredefinedType::PT_char:
+              return "char";
+            case AST_PredefinedType::PT_wchar:
+              return "wchar";
+            case AST_PredefinedType::PT_boolean:
+              return "boolean";
+            case AST_PredefinedType::PT_octet:
+              return "octet";
+            case AST_PredefinedType::PT_void:
+              return "void";
+            default:
+              break;
+          }
+      default:
+        return t->full_name ();
     }
 }
 
@@ -1369,21 +1370,21 @@ idl3_to_idl2_visitor::gen_label_value (AST_UnionLabel *node)
       this->os->print (ACE_UINT64_FORMAT_SPECIFIER, ev->u.ullval);
       *os << ")";
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-      break;
-    case AST_Expression::EV_char:
-      *os << ev->u.cval;
-      break;
-    case AST_Expression::EV_wchar:
-      *os << ev->u.wcval;
-      break;
-    case AST_Expression::EV_bool:
-      *os << (ev->u.bval ? "true" : "false");
-      break;
-    case AST_Expression::EV_enum:
-      *os << val->n ();
-      break;
-    default:
-      break;
+        break;
+      case AST_Expression::EV_char:
+        *os << ev->u.cval;
+        break;
+      case AST_Expression::EV_wchar:
+        *os << ev->u.wcval;
+        break;
+      case AST_Expression::EV_bool:
+        *os << (ev->u.bval ? "true" : "false");
+        break;
+      case AST_Expression::EV_enum:
+        *os << val->n ();
+        break;
+      default:
+        break;
     }
 }
 
@@ -1612,7 +1613,7 @@ idl3_to_idl2_visitor::gen_factories (AST_Home *node,
 
       if (exceps != 0 && exceps->length () > 0)
         {
-          this->gen_exception_list (exceps, "", I_FALSE);
+          this->gen_exception_list (exceps, "", false);
         }
       else
         {
@@ -1648,7 +1649,7 @@ idl3_to_idl2_visitor::gen_finders (AST_Home *node,
 
       if (exceps != 0 && exceps->length () > 0)
         {
-          this->gen_exception_list (exceps, "", I_FALSE);
+          this->gen_exception_list (exceps, "", false);
         }
       else
         {
@@ -1692,7 +1693,7 @@ idl3_to_idl2_visitor::gen_params (UTL_Scope *s, int arg_count)
 void
 idl3_to_idl2_visitor::gen_exception_list (UTL_ExceptList *exceptions,
                                           const char *prefix,
-                                          idl_bool closed)
+                                          bool closed)
 {
   if (exceptions != 0 && exceptions->length () > 0)
     {

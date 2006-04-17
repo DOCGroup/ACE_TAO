@@ -13,6 +13,7 @@ NodeApplication_Impl (CORBA::ORB_ptr o,
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
     configurator_ (c),
+    es_factory_ (o, p),
     static_entrypts_maps_ (static_entrypts_maps)
 {
 }

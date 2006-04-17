@@ -6,7 +6,6 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
 #include "Servant_Activator.h"
-#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
@@ -14,7 +13,6 @@
 
 namespace CIAO
 {
-
   ////////////////////////////////////////////////////////////////
 
   Container::Container (CORBA::ORB_ptr o)
@@ -60,11 +58,11 @@ namespace CIAO
                                         Container_Impl *container_impl,
                                         bool static_config_flag,
                                         const Static_Config_EntryPoints_Maps* maps)
-    : Container (o, container_impl),
-      number_ (0),
-      static_config_flag_ (static_config_flag),
-      static_entrypts_maps_ (maps),
-      sa_ (0)
+  : Container (o, container_impl),
+    number_ (0),
+    static_config_flag_ (static_config_flag),
+    static_entrypts_maps_ (maps),
+    sa_ (0)
   {
   }
 
@@ -178,14 +176,10 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    CORBA::ULong p_length;
+    CORBA::ULong p_length = 0;
     if (p != 0)
       {
         p_length = p->length ();
-      }
-    else
-      {
-        p_length = 0;
       }
 
     TAO::Utils::PolicyList_Destroyer policies (p_length + 3);
@@ -335,9 +329,9 @@ namespace CIAO
 
             ACE_THROW_RETURN
               (Deployment::UnknownImplId (
-                                          "Session_Container::ciao_install_home",
-                                          exception.c_str ()),
-               Components::CCMHome::_nil ());
+                 "Session_Container::ciao_install_home",
+            exception.c_str ()),
+                  Components::CCMHome::_nil ());
           }
 
         if (executor_dll.open (exe_dll_name,
