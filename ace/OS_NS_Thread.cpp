@@ -3714,7 +3714,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 #elif defined (ACE_HAS_PTHREADS) && \
       (!defined (ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) || \
       defined (ACE_HAS_PTHREAD_SCHEDPARAM))
-  ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
       // quantums not supported
@@ -3735,7 +3734,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 # if defined(ACE_TANDEM_T1248_PTHREADS) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)
       ACE_NOTSUP_RETURN (-1);
 # else  /* ! ACE_TANDEM_T1248_PTHREADS */
-      int result = ::sched_setscheduler (0, // this process
+      int result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
 # if defined (DIGITAL_UNIX)
@@ -3791,40 +3790,73 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     EtsSetTimeSlice (sched_params.quantum().msec());
 
 # else
-  ACE_UNUSED_ARG (id);
 
-  if (sched_params.scope () != ACE_SCOPE_PROCESS
-      || sched_params.quantum () != ACE_Time_Value::zero)
+  if (sched_params.quantum () != ACE_Time_Value::zero)
     {
-      // Win32 only allows setting priority class (therefore, policy)
-      // at the process level.  I don't know of a way to set the
-      // quantum.
+      // I don't know of a way to set the quantum on Win32.
       errno = EINVAL;
       return -1;
     }
 
-// Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
-// a VERY BAD THING. This include guard will allow people
-// to easily disable this feature in ACE.
-#ifndef ACE_DISABLE_WIN32_INCREASE_PRIORITY
-  // Set the priority class of this process to the REALTIME process class
-  // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
-  if (!::SetPriorityClass (::GetCurrentProcess (),
-                           (sched_params.policy () == ACE_SCHED_FIFO ||
-                           sched_params.policy () == ACE_SCHED_RR)
-                           ? REALTIME_PRIORITY_CLASS
-                           : NORMAL_PRIORITY_CLASS))
+  if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
+
+      // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
+      // a VERY BAD THING. This include guard will allow people
+      // to easily disable this feature in ACE.
+#ifndef ACE_DISABLE_WIN32_INCREASE_PRIORITY
+      // Set the priority class of this process to the REALTIME process class
+      // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
+      if (!::SetPriorityClass (::GetCurrentProcess (),
+                               (sched_params.policy () == ACE_SCHED_FIFO ||
+                                sched_params.policy () == ACE_SCHED_RR)
+                               ? REALTIME_PRIORITY_CLASS
+                               : NORMAL_PRIORITY_CLASS))
+        {
+          ACE_OS::set_errno_to_last_error ();
+          return -1;
+        }
 #endif /* ACE_DISABLE_WIN32_INCREASE_PRIORITY */
 
 # endif /* ACE_HAS_PHARLAP_RT */
-
-  // Set the thread priority on the current thread.
-  return ACE_OS::thr_setprio (sched_params.priority ());
-
+      // Now that we have set the priority class of the process, set the
+      // priority of the current thread to the desired value.
+      return ACE_OS::thr_setprio (sched_params.priority ());
+    }
+  else if (sched_params.scope () == ACE_SCOPE_PROCESS)
+    {
+      HANDLE hProcess = ::OpenProcess (PROCESS_SET_INFORMATION,
+                                       FALSE,
+                                       id);
+      if (!hProcess)
+        {
+          ACE_OS::set_errno_to_last_error();
+          return -1;
+        }
+      // There is no way for us to set the priority of the thread when we
+      // are setting the priority of a different process.  So just ignore
+      // the priority argument when ACE_SCOPE_PROCESS is specified.
+      // Setting the priority class will automatically increase the base
+      // priority of all the threads within a process while maintaining the
+      // relative priorities of the threads within it.
+      if (!::SetPriorityClass (hProcess,
+                               (sched_params.policy () == ACE_SCHED_FIFO ||
+                                sched_params.policy () == ACE_SCHED_RR)
+                               ? REALTIME_PRIORITY_CLASS
+                               : NORMAL_PRIORITY_CLASS))
+        {
+          ACE_OS::set_errno_to_last_error ();
+          ::CloseHandle (hProcess);
+          return -1;
+        }
+      ::CloseHandle (hProcess);
+      return 0;
+    }
+  else
+    {
+      errno = EINVAL;
+      return -1;
+    }
 #elif defined (VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (id);
 
