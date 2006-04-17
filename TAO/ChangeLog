@@ -1,3 +1,9 @@
+Mon Apr 17 14:30:49 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * NEWS:
+
+          Updated with J.T.'s input.
+
 Mon Apr 17 02:51:06 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Seq_Multi_ETCL_Filter.mpc:
