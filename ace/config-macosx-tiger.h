@@ -74,6 +74,8 @@
 //Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
 
+#define ACE_HAS_AIO_CALLS
+
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
