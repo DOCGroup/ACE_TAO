@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Receiver"
 
-project(Hello_Base_Receiver_DnC_stub): ciao_client_dnc {
+project(Hello_Base_Receiver_DnC_stub): ciao_events_base_dnc {
   avoids += ace_for_tao
   after += Hello_Base_DnC_stub
   sharedname = Receiver_DnC_stub

@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMDevice_DnC_stub): ciao_client_dnc {
+project(BMDevice_DnC_stub): ciao_events_base_dnc {
   avoids += ace_for_tao
   after += BasicSP_DnC_stub
   sharedname = BMDevice_stub
