@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base Distributor"
 
-project(Stock_Base_Distributor_stub): ciao_client_dnc {
+project(Stock_Base_Distributor_stub): ciao_events_base_dnc {
   avoids += ace_for_tao
   after += Stock_Base_stub
   sharedname = Distributor_stub

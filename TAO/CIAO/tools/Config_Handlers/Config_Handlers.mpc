@@ -31,7 +31,7 @@ project (XSC_XML_Handlers) : acelib, xerces {
   }
 }
 
-project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typecodefactory {
+project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typecodefactory, ciao_events_dnc {
   avoids += ace_for_tao
 
   verbatim(gnuace, macros) {
