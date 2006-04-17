@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i BMClosedED"
 // This file has been manually modified to add a second component implementation.
 
-project(BMClosedED_DnC_stub): ciao_client_dnc {
+project(BMClosedED_DnC_stub): ciao_events_base_dnc {
   avoids += ace_for_tao
   after += BasicSP_DnC_stub
   sharedname = BMClosedED_stub
