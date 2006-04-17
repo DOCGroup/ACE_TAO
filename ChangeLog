@@ -1,3 +1,7 @@
+Mon Apr 17 18:15:49 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp: Fixed compile error correctly.
+
 Mon Apr 17 14:47:23 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-macosx-tiger.h
