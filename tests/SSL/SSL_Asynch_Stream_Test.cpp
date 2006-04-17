@@ -417,7 +417,7 @@ start_clients (void *arg)
         }
 
       Client_Handler *new_handler = 0;
-      ACE_NEW_RETURN (new_handler, Client_Handler, (void *) -1);
+      ACE_NEW_RETURN (new_handler, Client_Handler, (ACE_THR_FUNC_RETURN)-1);
       if (new_handler->open (stream.get_handle ()) != 0)
         delete new_handler;
       stream.set_handle (ACE_INVALID_HANDLE);
