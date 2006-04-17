@@ -1,6 +1,7 @@
 //$Id$
 
 project (XSC_XML_Handlers) : acelib, xerces {
+  avoids += ace_for_tao
 
   verbatim(gnuace, macros) {
     override no_hidden_visibility = 1
@@ -31,6 +32,7 @@ project (XSC_XML_Handlers) : acelib, xerces {
 }
 
 project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typecodefactory {
+  avoids += ace_for_tao
 
   verbatim(gnuace, macros) {
     override no_hidden_visibility = 1
@@ -90,6 +92,7 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typeco
 }
 
 project (XSC_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
+  avoids += ace_for_tao
   requires += dummy_label
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   exename = test
