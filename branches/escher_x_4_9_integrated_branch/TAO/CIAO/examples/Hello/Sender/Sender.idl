@@ -11,17 +11,17 @@ module Hello
   /* This is a Sender specific interface which will be used to get the
    * process start.
    */
-
+  
   interface trigger
   {
     void start ();
   };
 
-  enum COLOR_SELECTION
+  enum COLOR_SELECTION 
     {
       empty,
-      white,
-      red,
+      white, 
+      red, 
       yellow
     };
 

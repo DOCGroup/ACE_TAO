@@ -38,8 +38,8 @@ parse_args (int argc, char *argv[])
           break;
 
         case 'r':
-          rate = atoi (get_opts.opt_arg ());
-          break;
+        rate = atoi (get_opts.opt_arg ());
+        break;
 
         case '?':  // display help for use of the server.
         default:
@@ -75,10 +75,10 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+		                                        argv,
+					                                  ""
+					                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -98,7 +98,7 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (pulser.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_ERROR_RETURN ((LM_ERROR, 
                              "Unable to acquire 'EC' objref\n"),
                             -1);
         }

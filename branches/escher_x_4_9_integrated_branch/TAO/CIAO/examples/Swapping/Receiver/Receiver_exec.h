@@ -25,8 +25,8 @@ namespace CIDL_Receiver_Impl
    */
 
   class RECEIVER_EXEC_Export ReceiverSwap_exec_i :
-    public virtual CIAO::Swap_Exec,
-    public virtual TAO_Local_RefCounted_Object
+      public virtual CIAO::Swap_Exec,
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     ReceiverSwap_exec_i ();
@@ -43,8 +43,8 @@ namespace CIDL_Receiver_Impl
   };
 
   class RECEIVER_EXEC_Export Receiver_exec_i :
-    public virtual Receiver_Exec,
-    public virtual TAO_Local_RefCounted_Object
+          public virtual Receiver_Exec,
+	  public virtual TAO_Local_RefCounted_Object
   {
 
   public:
@@ -117,7 +117,7 @@ namespace CIDL_Receiver_Impl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   };
-
+  
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
   createReceiverHome_Impl (void);
 }
