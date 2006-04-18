@@ -1,3 +1,11 @@
+Tue Apr 18 00:14:56 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+
+          Reverted back the two files I accidentally checked in, which
+          should have gone into a branch. :(
+        
 Mon Apr 17 18:04:56 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * M docs/tutorials/Quoter/Simple/Distributor/Distributor.mpc
