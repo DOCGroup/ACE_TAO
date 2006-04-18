@@ -91,9 +91,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
       // For every connection struct we finish the connection.
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          ACE_CString name = providedReference[i].instanceName.in ();
-
-          Components::CCMObject_var comp;
+          ACE_CString name = connections[i].instanceName.in ();
 
           // For ES_to_Consumer connection, we simply call
           // handle_es_consumer_connection method.
@@ -107,7 +105,6 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
           // For other type of connections, we need to fetch the
           // objref of the source component
-          ACE_CString name = connections[i].instanceName.in ();
           Component_State_Info comp_state;
 
           if (this->component_state_map_.find (name, comp_state) != 0)
@@ -121,15 +118,15 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
               ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
 
+          Components::EventConsumerBase_var consumer;
+
+          Components::CCMObject_var comp = comp_state.objref_;
+          
           if (CORBA::is_nil (comp.in ()))
             {
               ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
               throw Deployment::InvalidConnection ();
             }
-
-          Components::EventConsumerBase_var consumer;
-
-          Components::CCMObject_var comp = comp_state.objref_;
 
           switch (connections[i].kind)
             {
@@ -413,9 +410,9 @@ CIAO::NodeApplication_Impl::passivate_component (const char * name
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Components::RemoveFailure))
 {
-  Components::CCMObject_var comp;
+  Component_State_Info comp_state;
 
-  if (this->component_objref_map_.find (name, comp) != 0)
+  if (this->component_state_map_.find (name, comp_state) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -425,13 +422,13 @@ CIAO::NodeApplication_Impl::passivate_component (const char * name
       ACE_TRY_THROW (Deployment::StartError ());
     }
 
-  if (CORBA::is_nil (comp.in ()))
+  if (CORBA::is_nil (comp_state.objref_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
       throw Deployment::StartError ();
     }
 
-  comp->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  comp_state.objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -441,9 +438,9 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Components::RemoveFailure))
 {
-  Components::CCMObject_var comp;
+  Component_State_Info comp_state;
 
-  if (this->component_objref_map_.find (name, comp) != 0)
+  if (this->component_state_map_.find (name, comp_state) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -453,19 +450,19 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
       ACE_TRY_THROW (Deployment::StartError ());
     }
 
-  if (CORBA::is_nil (comp.in ()))
+  if (CORBA::is_nil (comp_state.objref_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
       throw Deployment::StartError ();
     }
 
-  comp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  comp_state.objref_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  comp->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  comp_state.objref_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  comp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  comp_state.objref_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 

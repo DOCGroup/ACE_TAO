@@ -53,6 +53,11 @@ namespace CIAO
         case SatisfierPropertyKind::Selection_l:
           toconfig.kind = Deployment::Selection;
           break;
+          
+        default:
+          ACE_ERROR ((LM_ERROR, "Unknown SatisfierPropertyKind\n"));
+          throw 1;
+          
         }
 
       toconfig.dynamic = desc.dynamic ();
@@ -70,7 +75,7 @@ namespace CIAO
       ::XMLSchema::string< ACE_TCHAR > name ((src.name));
       SatisfierPropertyKind::Value kind;
 
-      const SatisfierPropertyKind *spk;
+      const SatisfierPropertyKind *spk = 0;
 
       switch (src.kind)
         {

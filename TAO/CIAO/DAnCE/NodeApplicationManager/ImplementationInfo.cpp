@@ -6,7 +6,7 @@
 #include "ace/SString.h"
 
 CIAO::NodeImplementationInfoHandler::
-NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan,
+NodeImplementationInfoHandler (const ::Deployment::DeploymentPlan & plan,
                                const Deployment::ComponentPlans & shared_components) :
   plan_ (plan),
   node_info_ (0),

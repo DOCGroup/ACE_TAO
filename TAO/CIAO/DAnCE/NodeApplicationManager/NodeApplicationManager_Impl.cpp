@@ -77,28 +77,21 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       // Get all the facets first
       Components::FacetDescriptions_var facets;
 
-    if (CIAO::debug_level () > 20)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                  "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
-                  "CIAO::NodeApplicationManager_Impl::create_connections -"
-                  "success getting facets for the component "
-                  "instance [%s] \n",
-                  comp_name.c_str ()));
-      }
-
-    // Get all the event consumers
-    Components::ConsumerDescriptions_var consumers;
-
-    if (is_shared_component (comp_name))
-      consumers = this->node_manager_->get_all_consumers (comp_name);
-    else
-      {
-        consumers =
-          ((*iter).int_id_)->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-        this->node_manager_->set_all_consumers (comp_name, consumers);
-      }
-
+      if (is_shared_component (comp_name))
+        {
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Componsnt %s is shared\n",
+                      comp_name.c_str ()));
+          facets = this->node_manager_->get_all_facets (comp_name);
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting"
+                      "all facets\n",
+                      comp_name.c_str ()));
+          facets = ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->node_manager_->set_all_facets (comp_name, facets);
+        }
+      
       if (CIAO::debug_level () > 9)
         {
           ACE_DEBUG ((LM_DEBUG,

@@ -19,7 +19,7 @@
  */
 
 //#include <ciao/Deployment.idl>
-#include <DAnCE/Interfaces/NodeManager.idl>
+#include "DAnCE/Interfaces/NodeManagerDaemon.idl"
 
 module CIAO
 {
@@ -57,7 +57,7 @@ module CIAO
   struct Host_NodeManager
   {
     string host_;
-    ::CIAO::NodeManager node_mgr_;
+    ::CIAO::NodeManagerDaemon node_mgr_;
   };
 
   /// Sequence of NodeManager.
