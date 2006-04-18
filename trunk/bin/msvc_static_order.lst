@@ -33,6 +33,7 @@ TAO/tao/Utils
 TAO/tao/RTScheduler
 TAO/tao/IFR_Client
 TAO/tao/TypeCodeFactory
+TAO/tao/ImR_Client
 TAO/orbsvcs/orbsvcs/Svc_Utils
 TAO/orbsvcs/orbsvcs/CosNaming_IDL
 TAO/orbsvcs/orbsvcs/CosNaming
