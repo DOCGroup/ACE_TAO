@@ -470,7 +470,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("This test requires threads and AIO which are not ")
-              ACE_TEXT ("supported on this platform\n"));
+              ACE_TEXT ("supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;
