@@ -74,14 +74,10 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typeco
     DnC_Dump.cpp
     DnC_Dump_T.cpp
     Dump_Obj.cpp
-    STD_CID_Handler.cpp
-    STD_CPD_Handler.cpp
-    STD_IAD_Handler.cpp
-    STD_PC_Intf.cpp
-    STD_PCD_Handler.cpp
     PCD_Handler.cpp
     IRDD_Handler.cpp
     DD_Handler.cpp
+    SatisfierProperty_Handler.cpp
   }
 
   Header_Files {

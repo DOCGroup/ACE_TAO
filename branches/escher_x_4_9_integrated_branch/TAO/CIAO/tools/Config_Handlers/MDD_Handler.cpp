@@ -7,6 +7,7 @@
 #include "Property_Handler.h"
 #include "Req_Handler.h"
 #include "cdp.hpp"
+#include "ace/UUID.h"
 
 namespace CIAO
 {

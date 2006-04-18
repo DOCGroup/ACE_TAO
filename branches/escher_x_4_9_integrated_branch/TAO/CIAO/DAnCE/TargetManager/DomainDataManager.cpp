@@ -234,7 +234,7 @@ CIAO::Host_NodeManager_seq * CIAO::DomainDataManager::get_node_managers ()
           deployment_config_.get_node_manager (initial_domain_.node[i].name);
       //      if (node_manager.in () != 0)
         {
-          (*node_mgr_seq)[i].node_mgr_ = ::CIAO::NodeManager::_narrow (node_manager.in ());
+          (*node_mgr_seq)[i].node_mgr_ = ::CIAO::NodeManagerDaemon::_narrow (node_manager.in ());
         }
     }
   return node_mgr_seq;
