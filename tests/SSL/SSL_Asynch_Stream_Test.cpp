@@ -399,7 +399,7 @@ proactor_loop (void *)
 }
 
 static ACE_THR_FUNC_RETURN
-start_clients (void *arg)
+start_clients (void *)
 {
   // Client thread function.
   ACE_INET_Addr addr (rendezvous);
