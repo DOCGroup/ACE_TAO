@@ -13,26 +13,26 @@ parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:m:");
   int c = 0;
-
+  
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
         case 'k':
           ior = get_opts.opt_arg ();
-          break;
+	        break;
 
         case 'm':
-          message = get_opts.opt_arg ();
-          break;
+	        message = get_opts.opt_arg ();
+	        break;
 
         case '?':  // display help for use of the server.
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Usage:  %s\n"
-                             "-k <Sender IOR> (default is file://Sender.ior)\n",
-                             "-m <Message>\n",
-                             argv [0]),
+                            "Usage:  %s\n"
+			                      "-k <Sender IOR> (default is file://Sender.ior)\n",
+			                      "-m <Message>\n",
+                            argv [0]),
                             -1);
           break;
         }
@@ -42,7 +42,7 @@ parse_args (int argc, char *argv[])
     {
       ior = "file://Sender.ior";
     }
-
+    
   return 0;
 }
 
@@ -73,15 +73,15 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (sender.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_ERROR_RETURN ((LM_ERROR, 
                              "Unable to acquire Sender's objref\n"),
                             -1);
         }
 
       if (message)
-        {
-          sender->local_message (message);
-        }
+      {
+        sender->local_message (message);
+      }
 
       sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

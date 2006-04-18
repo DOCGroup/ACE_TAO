@@ -6,13 +6,13 @@
 
   <label>BasicSP-DeploymentPlan</label>
   <UUID>Test_UUID_0000</UUID>
-  <!-- Exactly one realizes
+  <!-- Exactly one realizes 
        This realizes section may also not be right. -->
   <realizes>
     <label>BasicSP-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType>
+    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
     <port>
       <name>timeout</name>
       <specificType>IDL:BasicSP/TimeOut:1.0</specificType>
@@ -24,7 +24,7 @@
       <kind>EventConsumer</kind>
     </port>
   </realizes>
-
+  
   <implementation id="BasicSP-BMClosedED-mdd">
     <name>BasicSP-BMClosedED-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
@@ -40,7 +40,7 @@
   <implementation id="BasicSP-BMDevice-mdd">
     <name>BasicSP-BMDevice-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
-
+    
     <artifact>BasicSP-BMDevice_exec</artifact>
     <artifact>BasicSP-BMDevice_stub</artifact>
     <artifact>BasicSP-BMDevice_svnt</artifact>
@@ -49,28 +49,28 @@
     <deployRequirement></deployRequirement>
     -->
   </implementation>
-
+  
   <implementation id="BasicSP-BMDisplay-mdd">
     <name>BasicSP-BMDisplay-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
     <artifact>BasicSP-BMDisplay_exec</artifact>
     <artifact>BasicSP-BMDisplay_svnt</artifact>
     <artifact>BasicSP-BMDisplay_stub</artifact>
-
+    
     <!--
       <execParameter></execParameter>
       <deployRequirement></deployRequirement>
     -->
   </implementation>
-
+  
   <implementation id="BasicSP-EC-mdd">
     <name>BasicSP-EC-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
-
+    
     <artifact>BasicSP-EC_stub</artifact>
     <artifact>BasicSP-EC_svnt</artifact>
     <artifact>BasicSP-EC_exec</artifact>
-
+    
     <!--
       <execParameter></execParameter>
       <deployRequirement></deployRequirement>
@@ -103,7 +103,7 @@
         <value>
           <string>AirFrameDevice_001</string>
         </value>
-      </value>
+      </value> 
     </configProperty>
   </instance>
 
@@ -124,7 +124,7 @@
       </value>
     </configProperty>
   </instance>
-
+  
   <instance id="BasicSP-BMDisplay-idd">
     <name>BasicSP-BMDisplay-idd</name>
     <node>AirFrameDevice</node>
@@ -142,7 +142,7 @@
       </value>
     </configProperty>
   </instance>
-
+  
   <instance id="BasicSP-EC-idd">
     <name>BasicSP-EC-idd</name>
     <node>TimerDevice</node>
@@ -159,7 +159,7 @@
         </value>
       </value>
     </configProperty>
-  </instance>
+  </instance>  
 
   <connection>
     <name>datain_data_read</name>
@@ -247,10 +247,10 @@
         </value>
       </value>
     </execParameter>
-
+    
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMClosedED_svnt">
     <name>BMClosedED_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -269,16 +269,16 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMClosedED_stub">
     <name>BMClosedED_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
     <location>BMClosedED_stub</location>
-
+    
      <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMDevice_exec">
     <name>BMDevice_exec</name>
     <source><!-- @@ Not sure --></source>
@@ -297,7 +297,7 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMDevice_stub">
     <name>BMDevice_stub</name>
     <source><!-- @@ Not sure --></source>
@@ -305,7 +305,7 @@
     <location>BMDevice_stub</location>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMDevice_svnt">
     <name>BMDevice_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -324,7 +324,7 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMDisplay_exec">
     <name>BMDisplay_exec</name>
     <source><!-- @@ Not sure --></source>
@@ -343,7 +343,7 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMDisplay_svnt">
     <name>BMDisplay_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -362,25 +362,25 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-BMDisplay_stub">
     <name>BMDisplay_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
     <location>BMDisplay_stub</location>
-
+    
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-EC_stub">
     <name>EC_stub</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
     <location>EC_stub</location>
-
+    
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-EC_svnt">
     <name>EC_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -399,7 +399,7 @@
     </execParameter>
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-
+  
   <artifact id="BasicSP-EC_exec">
     <name>EC_exec</name>
     <source><!-- @@ Not sure --></source>
@@ -416,7 +416,7 @@
         </value>
       </value>
     </execParameter>
-
+    
     <!-- @@ This has dependancies that need to be specified, how? -->
   </artifact>
-</Deployment:deploymentPlan>
+</Deployment:deploymentPlan>  

@@ -50,7 +50,7 @@ namespace CIDL_Receiver_Impl
                 "Receiver - Informed by the Sender \n"));
 
     Hello::ReadMessage_var rev
-      = this->context_->get_connection_read_message
+      = this->context_->get_connection_read_message 
         (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -173,17 +173,17 @@ namespace CIDL_Receiver_Impl
                      Components::CCMException))
   {
     Components::EnterpriseComponent_ptr tmp;
-
+      
     ACE_NEW_THROW_EX (tmp,
                       ReceiverSwap_exec_i,
                       CORBA::NO_MEMORY ());
-
-    /*
+   
+    /* 
     ACE_NEW_THROW_EX (tmp,
                       Receiver_exec_i,
                       CORBA::NO_MEMORY ());
     */
-
+   
     return tmp;
   }
 

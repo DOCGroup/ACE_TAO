@@ -109,7 +109,7 @@ if (PerlACE::waitforfile_timed ("EM.ior",
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR
       "ERROR: The ior file of execution manager could not be found\n";
-    kill_open_processes ();
+    kill_open_processes (); 
     exit 1;
 }
 
@@ -120,21 +120,21 @@ print "Invoking executor - start the application -\n";
 $E =
   new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
                         "-p rt-example.cdp -k file://EM.ior -o DAM.ior");
-
+ 
 $E->SpawnWaitKill (5000);
 
 if (PerlACE::waitforfile_timed (
       "Receiver.ior",
       $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of receiver could not be found\n";
-    kill_open_processes ();
+    kill_open_processes (); 
     exit 1;
 }
 
 if (PerlACE::waitforfile_timed ("Sender.ior",
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of sender could not be found\n";
-    kill_open_processes ();
+    kill_open_processes (); 
     exit 1;
 }
 

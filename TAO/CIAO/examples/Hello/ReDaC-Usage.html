@@ -4,7 +4,7 @@
 <!--//$Id$ -->
 
 
-
+  
   <title>ReDaC Service Usage</title>
 </head>
 
@@ -78,7 +78,7 @@ Start NodeManagers (NodeDameons) by running <code>
 run_NodeDaemons.pl </code> </li>
 
 
-
+  
   <ul>
 
 
@@ -87,7 +87,7 @@ run_NodeDaemons.pl </code> </li>
 tutorial page. </li>
 
 
-
+  
   </ul>
 
 
@@ -95,7 +95,7 @@ tutorial page. </li>
 -o EM.ior -i NodeManagerMap.dat </code> </li>
 
 
-
+  
   <ul>
 
 
@@ -105,11 +105,11 @@ the endpoint of each individual NodeManager (i.e., Node Daemon) where
 component(s) will be deployed.</li>
 
 
-
+  
   </ul>
 
 
-
+  
   <ul>
 
 
@@ -118,7 +118,7 @@ component(s) will be deployed.</li>
 tutorial page. </li>
 
 
-
+  
   </ul>
 
 
@@ -127,7 +127,7 @@ $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p
 flattened_deploymentplan_without_ns.cdp -k file://EM.ior -o DAM.ior</code>&nbsp;</li>
 
 
-
+  
   <ul>
 
 
@@ -147,7 +147,7 @@ in the interactive mode. (As a normal user, you don't need to worry
 about the details of what exactly a DomainApplicationManager is.)</li>
 
 
-
+  
   </ul>
 
 
@@ -197,7 +197,7 @@ Deployment" section of this tutorial.<code> </code>
 
 
   <li>
-
+    
     <p> Use ReDaC service through <code>Plan_Launcher</code>'s
 "-r" command line option to perform redeployment and reconfiguration.<br>
 
@@ -212,7 +212,7 @@ additional components to the existing running assembly.</p>
 
 
   <li>
-
+    
     <p>Run the command
     <code>$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -r
 flattened_deploymentplan_without_ns_remove.cdp </code>will
@@ -253,19 +253,19 @@ changes to the existing plan. One could use <a href="http://www.dre.vanderbilt.e
 <ul>
 
 
-
+  
   <p> You could also use ReDaC service programmatically by writing your
 own client to invoke ReDaC service. Basically, to accomplish this, your
 client program needs to:</p>
 
-
+  
   <ol>
 
     <li>Obtain the&nbsp;<code>ExecutionManager</code> object reference, either through naming service or through IOR file.</li>
 
     <li>Invoke the operation&nbsp;<code>perform_redeployment</code> on this interface by passing a single argument type called&nbsp;<code>DeploymentPlan</code>.</li>
 
-
+  
   </ol>
 
 
