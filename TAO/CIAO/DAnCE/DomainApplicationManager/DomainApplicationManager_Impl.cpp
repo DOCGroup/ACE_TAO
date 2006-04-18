@@ -6,7 +6,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
-#include "ace/Assert.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -915,7 +914,9 @@ finishLaunch (CORBA::Boolean start,
               // Invoke finishLaunch() operation on NodeApplication.
               if (unnecessary_connections->length () != 0)
                 {
-                  ACE_ASSERT (!CORBA::is_nil (entry->int_id_.node_application_.in ()));
+                  if (CORBA::is_nil (entry->int_id_.node_application_.in ()))
+                    throw Deployment::StartError ();
+                    
                   entry->int_id_.node_application_->finishLaunch
                     (*unnecessary_connections,
                      start,
@@ -1424,60 +1425,30 @@ handle_direct_connection (
           const CORBA::ULong all_conn_len = this->all_connections_->length ();
           for (CORBA::ULong j = 0; j < all_conn_len; ++j)
             {
-              const Deployment::Connection & curr_conn =
+              const Deployment::Connection & curr_recv_conn =
                   this->all_connections_[j];
 
-            //Cache the name of the other component for later usage (search).
-            ACE_CString name =
-              tmp_plan.instance[curr_conn.internalEndpoint[index].
-                 instanceRef].name.in ();
-
-            // Cache the name of the port from the
-            // other component for searching later.
-            ACE_CString port_name =
-              curr_conn.internalEndpoint[index].portName.in ();
-
-            if (CIAO::debug_level () > 10)
-              {
-                ACE_DEBUG ((LM_ERROR, "Looking: %s,%s \n",
-                            name.c_str (),
-                            port_name.c_str ()));
-              }
-            
-            
-            bool found = false;
-            // Now we have to search in the received
-            // connections to get the objRef.
-            const CORBA::ULong all_conn_len = this->all_connections_->length ();
-            for (CORBA::ULong conn_index = 0;
-                conn_index < all_conn_len;
-                ++conn_index)
-              {
-                const Deployment::Connection curr_rev_conn =
-                    this->all_connections_[conn_index];
-
-                // We need to look at the instance name and the
-                // port name to confirm.
-                if (ACE_OS::strcmp (curr_rev_conn.instanceName.in (),
-                                    name.c_str ()) == 0 &&
-                    ACE_OS::strcmp (curr_rev_conn.portName.in (),
-                                    port_name.c_str ()) == 0)
+              // We need to look at the instance name and the port name to confirm.
+              if (ACE_OS::strcmp (curr_recv_conn.instanceName.in (),
+                                  endpoint_inst.c_str ()) == 0 &&
+                  ACE_OS::strcmp (curr_recv_conn.portName.in (),
+                                  endpoint_port.c_str ()) == 0)
                   {
                     retv.length (len+1);
                     retv[len].instanceName = instname;
-                    retv[len].portName = endpoint.portName.in ();
-                    retv[len].kind = endpoint.kind;
-                    retv[len].endpoint =
-                       CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
+                    retv[len].portName = source_port.c_str ();
+                    retv[len].endpointInstanceName = endpoint_inst.c_str ();
+                    retv[len].endpointPortName = endpoint_port.c_str ();
 
-                    retv[len].endpointInstanceName = name.c_str ();
-                    retv[len].endpointPortName = port_name.c_str ();
+                    retv[len].endpoint =
+                      CORBA::Object::_duplicate(curr_recv_conn.endpoint.in ());
+                    retv[len].kind = binding.internalEndpoint[i].kind;
 
                     ++len;
                     found = true;
                     break;
                   }
-              }
+              } // End of searching received connections
 
           // We didnt find the objref of the connection ...
           if (!found)
@@ -1493,7 +1464,6 @@ handle_direct_connection (
             }
           break;
             }
-          
     }
   return true;
 }
@@ -1648,8 +1618,8 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
                    ("DomainApplicationManager_Impl::destroyApplication",
                      error.c_str ()));
             }
-    ACE_DEBUG ((LM_DEBUG, "DAM_Impl: Invoking passivate on %s\n",
-          this->node_manager_names_[i].c_str ()));
+      ACE_DEBUG ((LM_DEBUG, "DAM_Impl: Invoking passivate on %s\n",
+                  this->node_manager_names_[i].c_str ()));
 
           // Invoke ciao_passivate () operation on each cached NodeApplication object.
           ::Deployment::NodeApplication_ptr my_na =
