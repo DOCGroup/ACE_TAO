@@ -1,3 +1,8 @@
+Tue Apr 18 08:54:49 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+          Fixed main signature to resolve link errors in the Cygwin build.
+
 Tue Apr 18 07:58:49 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SSL/SSL_Asynch_Stream_Test.cpp:
