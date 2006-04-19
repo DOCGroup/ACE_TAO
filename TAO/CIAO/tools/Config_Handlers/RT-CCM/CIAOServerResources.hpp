@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -60,7 +56,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // cmdline
-      // 
+      //
       public:
       bool cmdline_p () const;
       ::CIAO::Config_Handlers::ServerCmdlineOptions const& cmdline () const;
@@ -70,7 +66,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ServerCmdlineOptions > cmdline_;
 
       // svcconf
-      // 
+      //
       public:
       bool svcconf_p () const;
       ::CIAO::Config_Handlers::ACESvcConf const& svcconf () const;
@@ -80,7 +76,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ACESvcConf > svcconf_;
 
       // orbConfigs
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ORBConfigs const& orbConfigs () const;
       void orbConfigs (::CIAO::Config_Handlers::ORBConfigs const& );
@@ -89,7 +85,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ORBConfigs > orbConfigs_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -119,7 +115,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // arg
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator arg_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator arg_const_iterator;
@@ -153,7 +149,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // uri
-      // 
+      //
       public:
       bool uri_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& uri () const;
@@ -182,7 +178,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // resources
-      // 
+      //
       public:
       bool resources_p () const;
       ::CIAO::Config_Handlers::ORBResources const& resources () const;
@@ -192,7 +188,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ORBResources > resources_;
 
       // policySet
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::PolicySet >::iterator policySet_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::PolicySet >::const_iterator policySet_const_iterator;
