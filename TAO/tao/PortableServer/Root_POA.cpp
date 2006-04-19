@@ -358,7 +358,7 @@ TAO_Root_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   }
 
-  CORBA::release (this);
+  ::CORBA::release (this);
 }
 
 PortableServer::POA_ptr

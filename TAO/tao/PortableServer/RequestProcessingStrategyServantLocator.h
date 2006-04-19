@@ -20,20 +20,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Location.h"
-#include "tao/PortableServer/PortableServer.h"
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace PortableServer
-{
-  class ServantLocator;
-
-  typedef ServantLocator *ServantLocator_ptr;
-  typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
-}
 
 namespace TAO
 {
