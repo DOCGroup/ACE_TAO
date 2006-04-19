@@ -2749,7 +2749,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; ++i)
     {
-      base_iface_id = ifd->base_interfaces[i].in ();
+      base_iface_id = ifd->base_interfaces[i];
 
       if (this->debug_)
         {
