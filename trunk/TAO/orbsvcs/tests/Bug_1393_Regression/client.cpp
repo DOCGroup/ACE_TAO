@@ -21,9 +21,9 @@ int main(int argc, char** argv)
 
 
       CORBA::ContainedSeq_var interfaces =
-                  repo_->contents (   CORBA::dk_Interface,    // Any type of contained object.
-                                      1                       // Exclude parents of interfaces.
-                                      ACE_ENV_ARG_PARAMETER);
+                  repo_->contents (CORBA::dk_Interface,    // Any type of contained object.
+                                   1                       // Exclude parents of interfaces.
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ULong length = interfaces->length ();
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
       CORBA::ULong first_one = 0;
 
       CORBA::InterfaceDef_var the_interface =
-            CORBA::InterfaceDef::_narrow (interfaces[first_one].in ()
+            CORBA::InterfaceDef::_narrow (interfaces[first_one]
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
