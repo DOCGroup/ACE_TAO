@@ -1,6 +1,23 @@
+Wed Apr 19 11:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * performance-tests/Throughput/run_test.pl:
+          Check the return value of spawn, speedsup the builds when no
+          executable is build
+
+        * performance-tests/Throughput/Receiver.cpp:
+          Prefix increment
+
+        * performance-tests/Throughput/Receiver_Factory.cpp:
+          Initialise pointer with 0
+
+        * performance-tests/Throughput/Throughput.mpc:
+          Simplified
+
 Wed Apr 19 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        Integrated iioptbranch.
+        Integrated iioptbranch. This fixes bugzilla 2467
 
         * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
         No need to include IIOP files, just use the base classes
@@ -37,7 +54,30 @@ Wed Apr 19 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 19 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        Integrated sequpdate3 branch. This fixes the following bugzilla entries:
+        Integrated sequpdate3 branch. Thanks to Carlos O'Ryan for the initial
+        work for this new sequence implementation which I merged to cvs head
+        and finished
+
+        This fixes the following bugzilla entries:
+        2492 - Simplify TAO_Seq_Out_T
+        2493 - Simplify _reset method on union generated code
+        2352 - Valuefactory operations not safe
+        2353 - Valuefactories stored per process instead of per orb
+        2349 - ORB::destroy() should throw BAD_INV_ORDER if called during a
+        2315 - Reimplement (w)string_var/_out as templates
+        1989 - Footprint reduction issue, split Sequence files
+        2273 - Deprecate old AMI support
+        2300 - Simplify serialize/deserialize of sequences
+        2299 - Reimplement string/wstring managers as templates
+        1936 - Unnecessary usage of virtual functions in sequence implementation
+        1673 - operator[] of sequence<string> returns TAO_SeqElem_String_Manager
+        instead of TAO_String_Manager. Thanks to Mark Paulus <mark dot paulus
+        at mci dot com> for reporting this one.
+        1930 - Assignment operator for sequences is not exception safe.
+        1931 - The length() member function for sequences is not exception-safe.
+        1933 - Incomplete implementation of freebuf() for reference types.
+        1934 - const version of operator[] for string sequences allows assignment
+        1938 - Possible incorrect duplication in sequences of references
 
         Also did several const changes throughout the code
 

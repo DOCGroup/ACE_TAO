@@ -78,7 +78,7 @@ public:
   int acquire (ACE_Time_Value &tv);
 
   /**
-   * If <tv> == 0 the call <acquire()> directly.  Otherwise, Block the
+   * If @a tv == 0 the call <acquire()> directly.  Otherwise, Block the
    * thread until we acquire the mutex or until <tv> times out, in
    * which case -1 is returned with <errno> == <ETIME>.  Note that
    * <*tv> is assumed to be in "absolute" rather than "relative" time.
@@ -99,21 +99,21 @@ public:
 
   /**
    * Acquire mutex ownership.  This calls <acquire> and is only here
-   * to make the <ACE_Thread_Mutex> interface consistent with the
+   * to make the ACE_Thread_Mutex interface consistent with the
    * other synchronization APIs.
    */
   int acquire_read (void);
 
   /**
    * Acquire mutex ownership.  This calls <acquire> and is only here
-   * to make the <ACE_Thread_Mutex> interface consistent with the
+   * to make the ACE_Thread_Mutex interface consistent with the
    * other synchronization APIs.
    */
   int acquire_write (void);
 
   /**
    * Conditionally acquire mutex (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the <ACE_Thread_Mutex>
+   * <tryacquire> and is only here to make the ACE_Thread_Mutex
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, <errno> is set to <EBUSY>.
@@ -122,7 +122,7 @@ public:
 
   /**
    * Conditionally acquire mutex (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the <ACE_Thread_Mutex>
+   * <tryacquire> and is only here to make the ACE_Thread_Mutex
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, <errno> is set to <EBUSY>.
@@ -130,7 +130,7 @@ public:
   int tryacquire_write (void);
 
   /**
-   * This is only here to make the <ACE_Thread_Mutex>
+   * This is only here to make the ACE_Thread_Mutex
    * interface consistent with the other synchronization APIs.
    * Assumes the caller has already acquired the mutex using one of
    * the above calls, and returns 0 (success) always.
@@ -169,7 +169,7 @@ private:
  *
  * @brief This data structure is meant to be used within a method or
  * function...  It performs automatic aquisition and release of
- * an <ACE_Thread_Mutex>.
+ * an ACE_Thread_Mutex.
  *
  * This class is obsolete and should be replaced by
  * ACE_Guard<ACE_Thread_Mutex>.
