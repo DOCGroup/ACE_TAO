@@ -638,15 +638,15 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // removing this Thread Descriptor before it gets put into our
   // thread table.
 
-  int result = ACE_Thread::spawn (func,
-                                  args,
-                                  flags,
-                                  t_id,
-                                  &thr_handle,
-                                  priority,
-                                  stack,
-                                  stack_size,
-                                  thread_args);
+  int const result = ACE_Thread::spawn (func,
+                                        args,
+                                        flags,
+                                        t_id,
+                                        &thr_handle,
+                                        priority,
+                                        stack,
+                                        stack_size,
+                                        thread_args);
 
   if (result != 0)
     {
@@ -1031,7 +1031,7 @@ ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_thr");
 
-  int result = ACE_Thread::suspend (td->thr_handle_);
+  int const result = ACE_Thread::suspend (td->thr_handle_);
   if (result == -1) {
     if (errno != ENOTSUP)
       this->thr_to_be_removed_.enqueue_tail (td);
@@ -1048,7 +1048,7 @@ ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_thr");
 
-  int result = ACE_Thread::resume (td->thr_handle_);
+  int const result = ACE_Thread::resume (td->thr_handle_);
   if (result == -1) {
     if (errno != ENOTSUP)
       this->thr_to_be_removed_.enqueue_tail (td);
@@ -1087,7 +1087,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   tid += tid[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
 #endif /* VXWORKS */
 
-  int result = ACE_Thread::kill (tid, signum);
+  int const result = ACE_Thread::kill (tid, signum);
 
   if (result != 0)
     {

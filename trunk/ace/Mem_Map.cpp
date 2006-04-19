@@ -248,10 +248,6 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
-  ACE_OS::strsncpy (this->filename_,
-                    file_name,
-                    MAXPATHLEN);
-
 #if defined (CHORUS) || defined(INTEGRITY)  || defined (__QNXNTO__)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
 #elif defined (ACE_OPENVMS)
@@ -264,6 +260,10 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
     return -1;
   else
     {
+      ACE_OS::strsncpy (this->filename_,
+                        file_name,
+                        MAXPATHLEN);
+
       this->close_handle_ = 1;
       return 0;
     }

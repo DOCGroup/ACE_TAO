@@ -73,7 +73,7 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
         }
 
       ::DispatchMessage (&msg);
-      number_of_messages++;
+      ++number_of_messages;
     }
 
   return number_of_messages;

@@ -56,7 +56,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove
+  size_t const entries_to_remove
     = ACE_MAX (static_cast<size_t> (1),
                static_cast<size_t> (static_cast<double> (purge_percent)
                                     / 100 * current_map_size));
@@ -156,7 +156,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove
+  size_t const entries_to_remove
     = ACE_MAX (static_cast<size_t> (1),
                static_cast<size_t> (static_cast<double> (purge_percent)
                                     / 100 * current_map_size));
@@ -266,7 +266,8 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
     return 0;
 
   // Get the number of entries in the container which can be considered for purging.
-  size_t available_entries = container.current_size () - this->marked_as_closed_entries_;
+  size_t const available_entries =
+    container.current_size () - this->marked_as_closed_entries_;
 
   // Also whether the number of entries in the cache zero.
   // Oops! then there is no way out but exiting.
@@ -275,7 +276,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove
+  size_t const entries_to_remove
     = ACE_MAX (static_cast<size_t> (1),
                static_cast<size_t> (static_cast<double> (purge_percent)
                                     / 100 * available_entries));

@@ -637,7 +637,7 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
 
       // Actual offset for the incoming message block assuming that it
       // is also aligned to the same "align" byte
-      size_t wr_offset = mb.wr_ptr_ - (start - mb.base ());
+      size_t const wr_offset = mb.wr_ptr_ - (start - mb.base ());
 
       // Copy wr_offset amount of data in to <this->data_block>
       (void) ACE_OS::memcpy (this->wr_ptr (),
@@ -753,7 +753,7 @@ ACE_Data_Block::release_i (void)
   ACE_Data_Block *result = 0;
 
   // decrement reference count
-  this->reference_count_--;
+  --this->reference_count_;
 
   if (this->reference_count_ == 0)
     // this will cause deletion of this
@@ -965,10 +965,10 @@ ACE_Data_Block::duplicate (void)
     {
       // We need to acquire the lock before incrementing the count.
       ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
-      this->reference_count_++;
+      ++this->reference_count_;
     }
   else
-    this->reference_count_++;
+    ++this->reference_count_;
 
   return this;
 }
@@ -1220,6 +1220,7 @@ ACE_Data_Block::base (char *msg_data,
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE))
     this->allocator_strategy_->free (this->base_);
+
   this->max_size_ = msg_length;
   this->cur_size_ = msg_length;
   this->base_ = msg_data;

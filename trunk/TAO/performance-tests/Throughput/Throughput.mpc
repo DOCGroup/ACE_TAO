@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): taoexe, portableserver, strategies {
+project(*server): taoserver, strategies {
   after += *idl
   Source_Files {
     Receiver_Factory.cpp
@@ -21,7 +21,7 @@ project(*server): taoexe, portableserver, strategies {
   }
 }
 
-project(*client):taoexe, strategies {
+project(*client): taoclient, strategies {
   after += *idl
   Source_Files {
     TestC.cpp

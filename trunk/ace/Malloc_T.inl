@@ -61,7 +61,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (int close)
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
   if (this->cb_ptr_ != 0)
     {
-      int retv = --this->cb_ptr_->ref_counter_;
+      int const retv = --this->cb_ptr_->ref_counter_;
 
 #if 0
       ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P) ACE_Malloc_T::release ->%d\n"),

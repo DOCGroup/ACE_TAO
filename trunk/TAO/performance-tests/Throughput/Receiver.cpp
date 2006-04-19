@@ -39,7 +39,7 @@ Receiver::receive_data (const Test::Message &the_message
         }
       this->last_message_id_ = the_message.message_id;
     }
-  this->message_count_++;
+  ++this->message_count_;
   this->byte_count_ += the_message.the_payload.length ();
   this->last_message_time_ = now;
 }

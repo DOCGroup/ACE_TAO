@@ -397,6 +397,9 @@
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
 
+// Linux implements sendfile().
+#define ACE_HAS_SENDFILE
+
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in
 // the sockaddr_in::sin_zero field by evaluation of the kernel

@@ -432,9 +432,9 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_, -1);
 
   int changes_required = 0;
-  int result = this->unbind_i (handle,
-                               mask,
-                               changes_required);
+  int const result = this->unbind_i (handle,
+                                     mask,
+                                     changes_required);
 
   if (changes_required)
     // Wake up all threads in WaitForMultipleObjects so that they can
@@ -685,7 +685,7 @@ ACE_WFMO_Reactor::suspend_handler (ACE_HANDLE handle)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   int changes_required = 0;
-  int result =
+  int const result =
     this->handler_rep_.suspend_handler_i (handle,
                                           changes_required);
 
