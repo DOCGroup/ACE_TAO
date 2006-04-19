@@ -24,9 +24,9 @@ namespace TAO
   void
   LocateRequest_Invocation_Adapter::invoke (ACE_ENV_SINGLE_ARG_DECL)
   {
-    CORBA::Object *effective_target = this->target_;
+    CORBA::Object * const effective_target = this->target_;
 
-    TAO_Stub *stub =
+    TAO_Stub * const stub =
       this->target_->_stubobj ();
 
     if (stub == 0)
@@ -39,7 +39,7 @@ namespace TAO
     ACE_Time_Value tmp_wait_time;
     ACE_Time_Value *max_wait_time = 0;
 
-    bool is_timeout  =
+    bool const is_timeout  =
       this->get_timeout (tmp_wait_time);
 
     if (is_timeout)

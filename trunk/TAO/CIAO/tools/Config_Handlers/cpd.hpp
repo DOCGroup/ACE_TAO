@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -52,7 +48,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -61,7 +57,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // referencedImplementation
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation () const;
       void referencedImplementation (::CIAO::Config_Handlers::ComponentImplementationDescription const& );
@@ -90,7 +86,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -100,7 +96,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
@@ -110,7 +106,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
 
       // realizes
-      // 
+      //
       public:
       bool realizes_p () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes () const;
@@ -120,7 +116,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > realizes_;
 
       // configProperty
-      // 
+      //
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
@@ -130,7 +126,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // implementation
-      // 
+      //
       public:
       bool implementation_p () const;
       ::CIAO::Config_Handlers::PackagedComponentImplementation const& implementation () const;
@@ -140,7 +136,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::PackagedComponentImplementation > implementation_;
 
       // infoProperty
-      // 
+      //
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
@@ -150,7 +146,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      // 
+      //
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
@@ -160,7 +156,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
 
       // href
-      // 
+      //
       public:
       bool href_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& href () const;

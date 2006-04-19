@@ -54,7 +54,7 @@ TAO_MCAST_Parser::parse_string (const char *ior,
    */
   CORBA::Object_ptr object = CORBA::Object::_nil ();
 
-  CORBA::UShort port =
+  CORBA::UShort const port =
     (CORBA::UShort) ACE_OS::atoi (this->mcast_port_.in ());
 
   ACE_Time_Value *timeout = orb->get_timeout ();
@@ -91,14 +91,14 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
     CORBA::Object::_nil ();
 
   // Use UDP multicast to locate the  service.
-  int result = this->multicast_query (ior,
-                                      service_name,
-                                      port,
-                                      mcast_address,
-                                      mcast_ttl,
-                                      mcast_nic,
-                                      timeout,
-                                      orb);
+  int const result = this->multicast_query (ior,
+                                            service_name,
+                                            port,
+                                            mcast_address,
+                                            mcast_ttl,
+                                            mcast_nic,
+                                            timeout,
+                                            orb);
 
   // If the IOR didn't fit into <buf>, memory for it was dynamically
   // allocated - make sure it gets deallocated.

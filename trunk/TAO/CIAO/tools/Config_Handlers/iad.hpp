@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -50,7 +46,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -59,7 +55,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // referencedArtifact
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact () const;
       void referencedArtifact (::CIAO::Config_Handlers::ImplementationArtifactDescription const& );
@@ -88,7 +84,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -98,7 +94,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
@@ -108,7 +104,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
 
       // location
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
@@ -123,7 +119,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
 
       // dependsOn
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
@@ -138,7 +134,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
 
       // execParameter
-      // 
+      //
       public:
       bool execParameter_p () const;
       ::CIAO::Config_Handlers::Property const& execParameter () const;
@@ -148,7 +144,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
@@ -158,7 +154,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // infoProperty
-      // 
+      //
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
@@ -168,7 +164,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      // 
+      //
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
@@ -178,7 +174,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
 
       // href
-      // 
+      //
       public:
       bool href_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& href () const;

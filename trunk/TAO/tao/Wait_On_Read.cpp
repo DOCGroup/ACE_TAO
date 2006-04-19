@@ -88,10 +88,10 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                      ACE_TEXT ("registering handle for cleanup \n"),
                      this->transport_->id ()));
 
-       ACE_Event_Handler *eh =
+       ACE_Event_Handler * const eh =
          this->transport_->event_handler_i ();
 
-       ACE_Reactor *r =
+       ACE_Reactor * const r =
          this->transport_->orb_core ()->reactor ();
 
        if (r->register_handler (eh,

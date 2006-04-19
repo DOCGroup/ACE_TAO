@@ -24,7 +24,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id,
   context.context_id = id;
 
   // Make a *copy* of the CDR stream...
-  size_t length = cdr.total_length ();
+  size_t const length = cdr.total_length ();
   context.context_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
@@ -44,7 +44,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
                                     TAO_OutputCDR &cdr)
 {
   // Make a *copy* of the CDR stream...
-  size_t length = cdr.total_length ();
+  size_t const length = cdr.total_length ();
   context.context_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
@@ -117,9 +117,9 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext& context)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
-          CORBA::ULong max = context.context_data.maximum ();
-          CORBA::ULong len = context.context_data.length ();
-          CORBA::Octet* buf = context.context_data.get_buffer (1);
+          CORBA::ULong const max = context.context_data.maximum ();
+          CORBA::ULong const len = context.context_data.length ();
+          CORBA::Octet * const buf = context.context_data.get_buffer (1);
           this->service_context_[i].context_data.replace (max, len, buf, 1);
           return;
         }
@@ -133,12 +133,12 @@ TAO_Service_Context::add_context_i (IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropiate action.
-  CORBA::ULong l = this->service_context_.length ();
+  CORBA::ULong const l = this->service_context_.length ();
   this->service_context_.length (l + 1);
   this->service_context_[l].context_id = context.context_id;
-  CORBA::ULong max = context.context_data.maximum ();
-  CORBA::ULong len = context.context_data.length ();
-  CORBA::Octet* buf = context.context_data.get_buffer (1);
+  CORBA::ULong const max = context.context_data.maximum ();
+  CORBA::ULong const len = context.context_data.length ();
+  CORBA::Octet* const buf = context.context_data.get_buffer (1);
   this->service_context_[l].context_data.replace (max, len, buf, 1);
 }
 
@@ -147,7 +147,7 @@ TAO_Service_Context::add_context_i (const IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropiate action.
-  CORBA::ULong l = this->service_context_.length ();
+  CORBA::ULong const l = this->service_context_.length ();
   this->service_context_.length (l + 1);
   this->service_context_[l] = context;
 }
@@ -187,7 +187,7 @@ int
 TAO_Service_Context::get_context (IOP::ServiceId id,
                                   IOP::ServiceContext_out context)
 {
-  CORBA::ULong len = this->service_context_.length ();
+  CORBA::ULong const len = this->service_context_.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {

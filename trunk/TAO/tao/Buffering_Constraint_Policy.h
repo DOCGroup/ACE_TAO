@@ -58,6 +58,7 @@ public:
 
   virtual TAO::BufferingConstraint buffering_constraint (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   void get_buffering_constraint (TAO::BufferingConstraint &) const;
 
   virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)

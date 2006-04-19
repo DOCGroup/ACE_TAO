@@ -37,7 +37,6 @@ TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
 void
 TAO_Adapter_Registry::close (int wait_for_completion
                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (())
 {
   ACE_TRY
     {
@@ -65,30 +64,15 @@ TAO_Adapter_Registry::close (int wait_for_completion
 void
 TAO_Adapter_Registry::check_close (int wait_for_completion
                                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (())
 {
-  ACE_TRY
+  for (size_t i = 0; i != this->adapters_count_; ++i)
     {
-      for (size_t i = 0; i != this->adapters_count_; ++i)
-        {
-          this->adapters_[i]->check_close (wait_for_completion
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+      this->adapters_[i]->check_close (wait_for_completion
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
-  ACE_CATCHALL
-    {
-      if (TAO_debug_level > 3)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) Exception in TAO_Adapter_Registry::check_close () \n")));
-        }
-      return;
-    }
-  ACE_ENDTRY;
-
-  return;
 }
+
 void
 TAO_Adapter_Registry::insert (TAO_Adapter *adapter
                               ACE_ENV_ARG_DECL)
@@ -96,7 +80,7 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter
   if (this->adapters_capacity_ == this->adapters_count_)
     {
       this->adapters_capacity_ *= 2;
-      TAO_Adapter **tmp;
+      TAO_Adapter **tmp = 0;
       ACE_NEW_THROW_EX (tmp,
                         TAO_Adapter*[this->adapters_capacity_],
                         CORBA::NO_MEMORY ());
@@ -108,7 +92,7 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter
       this->adapters_ = tmp;
     }
 
-  int priority = adapter->priority ();
+  int const priority = adapter->priority ();
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
       if (this->adapters_[i]->priority () >= priority)
@@ -120,7 +104,7 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter
               this->adapters_[j] = this->adapters_[j - 1];
             }
           this->adapters_[i] = adapter;
-          this->adapters_count_++;
+          ++this->adapters_count_;
           return;
         }
     }
@@ -135,10 +119,10 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
-      int r = this->adapters_[i]->dispatch (key,
-                                            request,
-                                            forward_to
-                                            ACE_ENV_ARG_PARAMETER);
+      int const r = this->adapters_[i]->dispatch (key,
+                                                  request,
+                                                  forward_to
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (r != TAO_Adapter::DS_MISMATCHED_KEY)
@@ -187,7 +171,7 @@ TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
-      int retval =
+      int const retval =
         this->adapters_[i]->initialize_collocated_object (stub);
       if (retval == 0)
         {

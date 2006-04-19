@@ -23,7 +23,7 @@ CORBA::ORB::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
-    this->refcount_--;
+    --this->refcount_;
 
     if (this->refcount_ != 0)
       {

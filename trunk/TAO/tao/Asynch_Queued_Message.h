@@ -37,7 +37,7 @@ public:
   /**
    * @param contents The message block chain that must be sent.
    *
-   * @param alloc Allocator used for creating <this> object.
+   * @param alloc Allocator used for creating @c this object.
    *
    * @todo I'm almost sure this class will require a callback
    *       interface for AMIs sent with SYNC_NONE policy.  Those guys

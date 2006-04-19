@@ -146,7 +146,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::release (
     CORBA::DomainManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::DomainManager_ptr
@@ -157,7 +157,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DomainManager>::marshal (
-    CORBA::DomainManager_ptr p,
+    const CORBA::DomainManager_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -183,7 +183,7 @@ TAO::Collocation_Proxy_Broker *
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
@@ -239,7 +239,7 @@ CORBA::DomainManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   DomainManager *_tao_tmp_pointer =
     static_cast<DomainManager *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::DomainManager_ptr
@@ -275,7 +275,7 @@ CORBA::DomainManager::_unchecked_narrow (
 CORBA::DomainManager_ptr
 CORBA::DomainManager::_duplicate (DomainManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -286,7 +286,7 @@ CORBA::DomainManager::_duplicate (DomainManager_ptr obj)
 void
 CORBA::DomainManager::_tao_release (DomainManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -310,7 +310,7 @@ CORBA::DomainManager::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -346,7 +346,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::release (
     CORBA::ConstructionPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::ConstructionPolicy_ptr
@@ -357,7 +357,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::marshal (
-    CORBA::ConstructionPolicy_ptr p,
+    const CORBA::ConstructionPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -384,7 +384,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_ConstructionPolicy_Proxy_Broker_ == 0)
@@ -442,7 +442,7 @@ CORBA::ConstructionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ConstructionPolicy *_tao_tmp_pointer =
     static_cast<ConstructionPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::ConstructionPolicy_ptr
@@ -478,7 +478,7 @@ CORBA::ConstructionPolicy::_unchecked_narrow (
 CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_duplicate (ConstructionPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -489,7 +489,7 @@ CORBA::ConstructionPolicy::_duplicate (ConstructionPolicy_ptr obj)
 void
 CORBA::ConstructionPolicy::_tao_release (ConstructionPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -517,7 +517,7 @@ CORBA::ConstructionPolicy::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -547,9 +547,8 @@ CORBA::DomainManagerList::DomainManagerList (void)
 CORBA::DomainManagerList::DomainManagerList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Object_Sequence<
-        CORBA::DomainManager,
-        CORBA::DomainManager_var
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::DomainManager, CORBA::DomainManager_var
       >
     (max)
 {}
@@ -560,9 +559,8 @@ CORBA::DomainManagerList::DomainManagerList (
     CORBA::DomainManager_ptr * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Object_Sequence<
-        CORBA::DomainManager,
-        CORBA::DomainManager_var
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::DomainManager, CORBA::DomainManager_var
       >
     (max, length, buffer, release)
 {}
@@ -570,9 +568,8 @@ CORBA::DomainManagerList::DomainManagerList (
 CORBA::DomainManagerList::DomainManagerList (
     const DomainManagerList &seq
   )
-  : TAO_Unbounded_Object_Sequence<
-        CORBA::DomainManager,
-        CORBA::DomainManager_var
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::DomainManager, CORBA::DomainManager_var
       >
     (seq)
 {}
@@ -674,25 +671,7 @@ CORBA::Boolean operator<< (
     const CORBA::DomainManagerList &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::DomainManager>::marshal (
-                _tao_sequence[i].in (), strm
-              );
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -700,40 +679,7 @@ CORBA::Boolean operator>> (
     CORBA::DomainManagerList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
-        }
-
-      return _tao_marshal_flag;
-
-    }
-
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */

@@ -57,7 +57,6 @@ class TAO_OutputCDR;
 class TAO_Stub;
 class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
-class TAO_SeqElem_String_Manager;
 
 // ****************************************************************
 
@@ -92,17 +91,14 @@ namespace CORBA
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
 
   typedef
-    TAO_MngSeq_Var_T<
-        ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
+    TAO_VarSeq_Var_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        ORB_ObjectIdList,
-        ORB_ObjectIdList_var,
-        TAO_SeqElem_String_Manager
+    TAO_Seq_Out_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
 
@@ -237,27 +233,20 @@ namespace CORBA
     // send_multiple_requests_*().
 
     typedef
-      TAO_Unbounded_Pseudo_Sequence<
-          CORBA::Request
+      TAO::unbounded_object_reference_sequence<
+          CORBA::Request, CORBA::Request_var
         >
       RequestSeq;
 
     typedef
       TAO_VarSeq_Var_T<
-          RequestSeq,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
+          RequestSeq
         >
       RequestSeq_var;
 
     typedef
       TAO_Seq_Out_T<
-          RequestSeq,
-          RequestSeq_var,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
+          RequestSeq
         >
       RequestSeq_out;
 
@@ -647,7 +636,7 @@ namespace CORBA
     CORBA::ULong refcount_;
 
     /// The ORB_Core that created us....
-    TAO_ORB_Core *orb_core_;
+    TAO_ORB_Core * orb_core_;
 
     /// Decides whether to use the URL notation or to use IOR notation.
     CORBA::Boolean use_omg_ior_format_;

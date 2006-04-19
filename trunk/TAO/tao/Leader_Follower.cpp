@@ -60,7 +60,7 @@ TAO_Leader_Follower::release_follower (TAO_LF_Follower *follower)
 int
 TAO_Leader_Follower::elect_new_leader_i (void)
 {
-  TAO_LF_Follower* follower =
+  TAO_LF_Follower* const follower =
     this->follower_set_.head ();
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)

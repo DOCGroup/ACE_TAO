@@ -63,7 +63,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
        message_block != 0 && iovcnt < iovcnt_max;
        message_block = message_block->cont ())
     {
-      size_t message_block_length = message_block->length ();
+      size_t const message_block_length = message_block->length ();
 
       // Check if this block has any data to be sent.
       if (message_block_length > 0)
@@ -151,7 +151,7 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
   // Set the flag to indicate that <qm> is created on the heap.
   if (qm)
     {
-      qm->is_heap_created_ = 1;
+      qm->is_heap_created_ = true;
     }
 
   return qm;

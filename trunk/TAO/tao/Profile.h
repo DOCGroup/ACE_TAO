@@ -334,10 +334,10 @@ protected:
 
 private:
   /// IOP protocol tag.
-  CORBA::ULong tag_;
+  CORBA::ULong const tag_;
 
   /// Pointer to the ORB core
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// The TAO_MProfile which contains the profiles for the forwarded
   /// object.
@@ -357,7 +357,7 @@ private:
 // A helper class to handle the various kinds of octet sequences used
 // inside the ORB.
 
-typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
+typedef TAO::unbounded_value_sequence<CORBA::Octet> TAO_opaque;
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const TAO_opaque&);

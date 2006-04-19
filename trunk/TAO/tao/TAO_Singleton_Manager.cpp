@@ -35,18 +35,8 @@ namespace
   TAO_Singleton_Manager * the_instance = 0;
 }
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_cleanup_destroyer)
-
-#else
-
-# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME TAO_Singleton_Manager_cleanup_destroyer
-
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 // Adapter for cleanup, used to register cleanup function with the

@@ -208,7 +208,7 @@ sub check_for_id_string ()
     }
 }
 
-# check for _MSC_VER >= 1200
+# check for _MSC_VER
 sub check_for_msc_ver_string ()
 {
     print "Running _MSC_VER check\n";
@@ -229,10 +229,18 @@ sub check_for_msc_ver_string ()
                     $found = 1;
                     $mscline = $.;
                 }
+                if ($disable == 0 and /\_MSC_VER \< 1300/) {
+                    $found = 1;
+                    $mscline = $.;
+                }
+                if ($disable == 0 and /\_MSC_VER \<= 1300/) {
+                    $found = 1;
+                    $mscline = $.;
+                }
             }
             close (FILE);
             if ($found == 1) {
-               print_error ("$file:$mscline: Incorrect _MSC_VER >= 1200 found");
+               print_error ("$file:$mscline: Incorrect _MSC_VER check found");
             }
         }
         else {

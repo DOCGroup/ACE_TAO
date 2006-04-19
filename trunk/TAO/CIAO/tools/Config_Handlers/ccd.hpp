@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -49,7 +45,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -59,7 +55,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
@@ -69,7 +65,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
 
       // specificType
-      // 
+      //
       public:
       bool specificType_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& specificType () const;
@@ -79,7 +75,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > specificType_;
 
       // supportedType
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
@@ -94,7 +90,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
 
       // idlFile
-      // 
+      //
       public:
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator idlFile_iterator;
       typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator idlFile_const_iterator;
@@ -109,7 +105,7 @@ namespace CIAO
       ::std::list< ::XMLSchema::string< ACE_TCHAR > > idlFile_;
 
       // configProperty
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
@@ -124,7 +120,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // port
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentPortDescription >::iterator port_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentPortDescription >::const_iterator port_const_iterator;
@@ -139,7 +135,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ComponentPortDescription > port_;
 
       // property
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentPropertyDescription >::iterator property_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ComponentPropertyDescription >::const_iterator property_const_iterator;
@@ -154,7 +150,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ComponentPropertyDescription > property_;
 
       // infoProperty
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
@@ -169,7 +165,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      // 
+      //
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
@@ -179,7 +175,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
 
       // href
-      // 
+      //
       public:
       bool href_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& href () const;

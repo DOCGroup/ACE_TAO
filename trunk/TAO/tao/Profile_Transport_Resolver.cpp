@@ -112,7 +112,7 @@ namespace TAO
 
     if (!this->transport_->is_tcs_set ())
       {
-        TAO_Codeset_Manager *tcm =
+        TAO_Codeset_Manager * const tcm =
           this->stub_->orb_core ()->codeset_manager ();
         if (tcm)
           tcm->set_tcs (*this->profile_, *this->transport_);
@@ -144,7 +144,7 @@ namespace TAO
 
     ACE_Time_Value connection_timeout;
 
-    const bool is_conn_timeout =
+    bool const is_conn_timeout =
       this->get_connection_timeout (connection_timeout);
 
 
@@ -225,7 +225,7 @@ namespace TAO
   int
   Profile_Transport_Resolver::find_transport (TAO_Transport_Descriptor_Interface *desc)
   {
-    TAO::Transport_Cache_Manager &cache =
+    TAO::Transport_Cache_Manager & const cache =
       this->profile_->orb_core()->lane_resources ().transport_cache();
 
     // the cache increments the reference count on the transport if the

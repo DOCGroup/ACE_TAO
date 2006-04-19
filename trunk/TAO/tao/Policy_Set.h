@@ -100,7 +100,7 @@ public:
   /// Returns the policy at the specified index.
   /// @c CORBA::Policy::_nil () is returned if the policy doesn't
   /// exist.
-  CORBA::Policy *get_policy_by_index (CORBA::ULong index);
+  CORBA::Policy *get_policy_by_index (CORBA::ULong index) const;
   CORBA::ULong num_policies (void) const;
 
 private:

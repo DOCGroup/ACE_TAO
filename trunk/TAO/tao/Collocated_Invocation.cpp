@@ -55,7 +55,8 @@ namespace TAO
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
             // Perform invocations on the servant through the servant's ORB.
-            CORBA::ORB_var servant_orb = this->effective_target ()->_stubobj ()->servant_orb_ptr ();
+            CORBA::ORB_var servant_orb =
+              this->effective_target ()->_stubobj ()->servant_orb_ptr ();
             TAO_ORB_Core * const orb_core = servant_orb->orb_core ();
 
             TAO_ServerRequest request (orb_core,
@@ -125,7 +126,7 @@ namespace TAO
           return TAO_INVOKE_SUCCESS;
 
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->handle_any_exception (&ACE_ANY_EXCEPTION
                                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -144,7 +145,7 @@ namespace TAO
         if (this->response_expected () == false)
           return TAO_INVOKE_SUCCESS;
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus st =
+        PortableInterceptor::ReplyStatus const st =
           this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 

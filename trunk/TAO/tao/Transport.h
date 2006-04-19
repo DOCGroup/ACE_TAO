@@ -196,7 +196,7 @@ namespace TAO
  *       to do the above, the reactor will call us back when the handle
  *       becomes read ready. The read-operation will copy data directly
  *       into the enqueued buffer.  If the message has bee read completely
- *       the message is sent to the higher layers of the ORB for processing. 
+ *       the message is sent to the higher layers of the ORB for processing.
  *
  *   (c) If we get multiple messages (possible if the client connected
  *       to the server sends oneways or AMI requests), we parse and
@@ -900,10 +900,10 @@ private:
 protected:
 
   /// IOP protocol tag.
-  CORBA::ULong tag_;
+  CORBA::ULong const tag_;
 
   /// Global orbcore resource.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// Our entry in the cache. We don't own this. It is here for our
   /// convenience. We cannot just change things around.

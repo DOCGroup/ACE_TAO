@@ -78,7 +78,7 @@ namespace TAO
       // index that we need.
       CORBA::ULong index = 0;
       IOP::IOR *ior_info = 0;
-      const int retval =
+      int const retval =
         this->resolver_.stub ()->create_ior_info (ior_info,
                                                   index
                                                   ACE_ENV_ARG_PARAMETER);
@@ -158,7 +158,7 @@ namespace TAO
 
     connection_handler->set_dscp_codepoint (set_client_network_priority);
 
-    const int retval =
+    int const retval =
       this->resolver_.transport ()->send_request (
         this->resolver_.stub (),
         this->resolver_.stub ()->orb_core (),

@@ -77,7 +77,7 @@ public:
   /// Constructor
   TAO_Queued_Message (TAO_ORB_Core *oc,
                       ACE_Allocator *alloc = 0,
-                      int is_heap_allocated = 0);
+                      bool is_heap_allocated = false);
 
   /// Destructor
   virtual ~TAO_Queued_Message (void);
@@ -204,11 +204,10 @@ protected:
   ACE_Allocator *allocator_;
 
   /*
-   * A flag that acts as a boolean to indicate whether @a this is on
-   * stack or heap. A non-zero value indicates that @a this was created
-   * on  heap.
+   * A flag to indicate whether @a this is on stack or heap. A true value
+   * indicates that @a this was created on  heap.
    */
-  int is_heap_created_;
+  bool is_heap_created_;
 
   /// Cached copy of ORB_Core pointer
   TAO_ORB_Core *orb_core_;

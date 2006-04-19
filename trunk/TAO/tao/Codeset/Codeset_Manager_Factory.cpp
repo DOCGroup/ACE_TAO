@@ -23,10 +23,10 @@ TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory ()
 {
 }
 
-int
+bool
 TAO_Codeset_Manager_Factory::is_default() const
 {
-  return 0;
+  return false;
 }
 
 

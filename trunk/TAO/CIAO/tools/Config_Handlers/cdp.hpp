@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -50,7 +46,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -60,7 +56,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
@@ -70,7 +66,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
 
       // realizes
-      // 
+      //
       public:
       bool realizes_p () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes () const;
@@ -80,7 +76,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > realizes_;
 
       // implementation
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::iterator implementation_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::const_iterator implementation_const_iterator;
@@ -95,7 +91,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > implementation_;
 
       // instance
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::iterator instance_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::const_iterator instance_const_iterator;
@@ -110,7 +106,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription > instance_;
 
       // connection
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription >::iterator connection_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription >::const_iterator connection_const_iterator;
@@ -125,7 +121,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription > connection_;
 
       // dependsOn
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::iterator dependsOn_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::const_iterator dependsOn_const_iterator;
@@ -140,7 +136,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
 
       // artifact
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::iterator artifact_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::const_iterator artifact_const_iterator;
@@ -155,7 +151,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > artifact_;
 
       // infoProperty
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;

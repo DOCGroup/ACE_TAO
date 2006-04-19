@@ -162,7 +162,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   // Have to use a const_cast<>.  *sigh*
-  this->profile_.object_key (const_cast<TAO::ObjectKey &> (target->_stubobj ()->object_key ()));
+  this->profile_.object_key (
+    const_cast<TAO::ObjectKey &> (target->_stubobj ()->object_key ()));
 
   // Shallow copy the request service context list. This way the operation
   // details and server request share the request context.
@@ -226,7 +227,8 @@ TAO_ServerRequest::reply_service_context (void)
   }
   else
   {
-    return const_cast <TAO_Operation_Details*> (this->operation_details_)->reply_service_context ();
+    return const_cast <TAO_Operation_Details*> (
+      this->operation_details_)->reply_service_context ();
   }
 }
 
@@ -261,11 +263,11 @@ TAO_ServerRequest::init_reply (void)
   // Forward exception only.
   if (!CORBA::is_nil (this->forward_location_.in ()))
     {
-      const CORBA::Boolean permanent_forward_condition = 
-        this->orb_core_->is_permanent_forward_condition (this->forward_location_.in (), 
+      CORBA::Boolean const permanent_forward_condition =
+        this->orb_core_->is_permanent_forward_condition (this->forward_location_.in (),
                                                          this->request_service_context ());
-      
-      reply_params.reply_status_ 
+
+      reply_params.reply_status_
         = permanent_forward_condition
         ? TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM
         : TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
@@ -372,7 +374,6 @@ TAO_ServerRequest::tao_send_reply (void)
 void
 TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 {
-  //  int result = 0;
   if (this->response_expected_ && !this->collocated ())
     {
       // A copy of the reply parameters

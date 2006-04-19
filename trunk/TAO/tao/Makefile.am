@@ -235,6 +235,7 @@ libTAO_la_SOURCES = \
   UShortSeqC.cpp \
   UserException.cpp \
   Valuetype_Adapter.cpp \
+  Valuetype_Adapter_Factory.cpp \
   WCharSeqC.cpp \
   WStringSeqC.cpp \
   Wait_On_LF_No_Upcall.cpp \
@@ -273,6 +274,7 @@ nobase_include_HEADERS = \
   Any_Insert_Policy_T.h \
   Arg_Traits_T.h \
   Argument.h \
+  Array_Traits_T.h \
   Array_VarOut_T.cpp \
   Array_VarOut_T.h \
   Array_VarOut_T.inl \
@@ -676,6 +678,7 @@ nobase_include_HEADERS = \
   UserException.h \
   UserException.inl \
   Valuetype_Adapter.h \
+  Valuetype_Adapter_Factory.h \
   VarOut_T.cpp \
   VarOut_T.h \
   VarOut_T.inl \

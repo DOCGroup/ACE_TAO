@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -58,7 +54,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -67,7 +63,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // package
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ComponentPackageDescription const& package () const;
       void package (::CIAO::Config_Handlers::ComponentPackageDescription const& );
@@ -76,7 +72,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > package_;
 
       // configProperty
-      // 
+      //
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
@@ -86,7 +82,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // selectRequirement
-      // 
+      //
       public:
       bool selectRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& selectRequirement () const;
@@ -96,7 +92,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > selectRequirement_;
 
       // reference
-      // 
+      //
       public:
       bool reference_p () const;
       ::CIAO::Config_Handlers::ComponentPackageReference const& reference () const;
@@ -106,7 +102,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > reference_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -137,7 +133,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // propertyName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& propertyName () const;
       void propertyName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -146,7 +142,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > propertyName_;
 
       // instance
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance () const;
       void instance (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& );
@@ -175,7 +171,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -184,7 +180,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // externalName
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& externalName () const;
       void externalName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -193,7 +189,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > externalName_;
 
       // delegatesTo
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo () const;
       void delegatesTo (::CIAO::Config_Handlers::SubcomponentPropertyReference const& );
