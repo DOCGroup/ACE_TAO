@@ -5,6 +5,7 @@ Wed Apr 19 13:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/Advanced/ch_21/icp.cpp:
         * examples/Advanced/ch_18/icp.cpp:
         * examples/Advanced/ch_8_and_10/icp.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.h:
           Removed workarounds for vc6
 
 Wed Apr 19 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>

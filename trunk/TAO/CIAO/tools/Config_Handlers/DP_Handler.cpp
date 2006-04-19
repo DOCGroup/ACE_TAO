@@ -1,9 +1,3 @@
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-#pragma warning (disable: 4018)
-#pragma warning (disable: 4284)
-#pragma warning (disable: 4146)
-#endif
-
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"
 
@@ -20,7 +14,7 @@
 #include "CIAO_Events/CIAOEvents.hpp"
 
 #include "DP_PCD_Handler.h"
-  
+
 ACE_RCSID (Config_Handlers,
            DP_Handler,
            "$Id$")
@@ -37,7 +31,7 @@ namespace CIAO
       if (!this->resolve_plan (dp))
         throw;
     }
-    
+
     DP_Handler::DP_Handler (const ::Deployment::DeploymentPlan &plan)
       : xsc_dp_ (new DeploymentPlan),
         idl_dp_ (0),
@@ -46,12 +40,12 @@ namespace CIAO
       if (!this->build_xsc (plan))
         throw;
     }
-    
+
     DP_Handler::~DP_Handler (void)
       throw ()
     {
     }
-    
+
     DeploymentPlan const *
     DP_Handler::xsc (void) const
       throw (DP_Handler::NoPlan)
@@ -61,17 +55,17 @@ namespace CIAO
 
       throw NoPlan ();
     }
-    
+
     DeploymentPlan *
     DP_Handler::xsc (void)
       throw (DP_Handler::NoPlan)
     {
       if (this->retval_ && this->xsc_dp_.get () != 0)
         return this->xsc_dp_.release ();
-      
+
       throw NoPlan ();
     }
-    
+
     ::Deployment::DeploymentPlan const *
     DP_Handler::plan (void) const
       throw (DP_Handler::NoPlan)
@@ -96,7 +90,7 @@ namespace CIAO
     DP_Handler::resolve_plan (DeploymentPlan &xsc_dp)
     {
       CIAO_TRACE ("DP_Handler::resolve_plan");
-      
+
       ::Deployment::DeploymentPlan *tmp =
           new Deployment::DeploymentPlan;
 
@@ -138,7 +132,7 @@ namespace CIAO
 	    this->idl_dp_->infoProperty.length ();
 
 	  this->idl_dp_->infoProperty.length (len + 1);
-          
+
 
 
           if (pstart->name () == "CIAOServerResources")
@@ -191,13 +185,13 @@ namespace CIAO
 
       ADD_Handler::artifact_deployment_descrs (xsc_dp,
                                                this->idl_dp_->artifact);
-      
+
       MDD_Handler::mono_deployment_descriptions (xsc_dp,
                                                  this->idl_dp_->implementation);
 
       IDD_Handler::instance_deployment_descrs (xsc_dp,
                                                this->idl_dp_->instance);
-      
+
       DP_PCD_Handler::plan_connection_descrs (xsc_dp, this->idl_dp_->connection);
       
       return true;

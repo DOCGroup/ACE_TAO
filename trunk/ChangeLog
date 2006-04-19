@@ -1,3 +1,10 @@
+Wed Apr 19 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Logging/Use_Multiple_Sinks.cpp:
+        * examples/APG/Logging/Use_Ostream.cpp:
+        * examples/APG/Logging/LogManager.h:
+          Removed vc6 workarounds
+
 Wed Apr 19 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2368_Regression_Test.cpp:
