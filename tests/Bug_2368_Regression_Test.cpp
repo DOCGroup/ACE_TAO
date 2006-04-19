@@ -1,5 +1,5 @@
 /**
- * @file Bug_1576_Regression_Test.cpp
+ * @file Bug_2368_Regression_Test.cpp
  *
  * $Id$
  *
