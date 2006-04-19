@@ -1,3 +1,9 @@
+Wed Apr 19 14:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_sendfile.h:
+          Updated include to get size_t and ACE_LOFF_T to fix compile
+          errors on Solaris
+
 Wed Apr 19 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Logging/Use_Multiple_Sinks.cpp:
