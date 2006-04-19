@@ -350,30 +350,6 @@ ACE_RWLock_Invariants::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Manager<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Entry<ACE_Token_Name, ACE_Mutex_Invariants *>;
-template class ACE_Map_Manager<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
-template class ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Manager<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_Mutex_Invariants *>
-#pragma instantiate ACE_Map_Manager<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

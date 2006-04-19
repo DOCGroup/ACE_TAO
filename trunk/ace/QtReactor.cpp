@@ -626,18 +626,4 @@ ACE_QtReactor::wait_for_multiple_events (
   // Timed out or input available
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Entry<ACE_HANDLE, QSocketNotifier *>;
-template class ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, QSocketNotifier *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

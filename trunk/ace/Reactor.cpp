@@ -943,10 +943,4 @@ ACE_Reactor::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Framework_Component_T<ACE_Reactor>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Framework_Component_T<ACE_Reactor>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

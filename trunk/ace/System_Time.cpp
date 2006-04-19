@@ -133,14 +133,4 @@ ACE_System_Time::sync_local_system_time (ACE_System_Time::Sync_Mode)
   ACE_NOTSUP_RETURN (-1);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -522,14 +522,6 @@ ACE_Remote_WLock::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS <ACE_SOCK_Stream>;
-template class ACE_Singleton <ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS <ACE_SOCK_Stream>
-#pragma instantiate ACE_Singleton <ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

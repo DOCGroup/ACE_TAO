@@ -540,33 +540,9 @@ EXIT_LABEL:
 
 // *************************************************************
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_String_Base<char>;
-template ACE_String_Base<char> operator + (const ACE_String_Base<char> &,
-                                           const ACE_String_Base<char> &);
-template ACE_String_Base<char> operator + (const ACE_String_Base<char> &,
-                                           const char *);
-template ACE_String_Base<char> operator + (const char *,
-                                           const ACE_String_Base<char> &);
-template class ACE_String_Base<ACE_WSTRING_TYPE>;
-template ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_String_Base<ACE_WSTRING_TYPE> &,
-                                                       const ACE_String_Base<ACE_WSTRING_TYPE> &);
-template ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_String_Base<ACE_WSTRING_TYPE> &,
-                                                       const ACE_WSTRING_TYPE *);
-template ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_WSTRING_TYPE *,
-                                                       const ACE_String_Base<ACE_WSTRING_TYPE> &);
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_String_Base<char>
-#pragma instantiate ACE_String_Base<char> operator + (const ACE_String_Base<char> &, const ACE_String_Base<char> &)
-#pragma instantiate ACE_String_Base<char> operator + (const ACE_String_Base<char> &, const char *)
-#pragma instantiate ACE_String_Base<char> operator + (const char *,const ACE_String_Base<char> &)
-#pragma instantiate ACE_String_Base<ACE_WSTRING_TYPE>
-#pragma instantiate ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_String_Base<ACE_WSTRING_TYPE> &, const ACE_String_Base<ACE_WSTRING_TYPE> &)
-#pragma instantiate ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_String_Base<ACE_WSTRING_TYPE> &, const ACE_WSTRING_TYPE *)
-#pragma instantiate ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_WSTRING_TYPE *,const ACE_String_Base<ACE_WSTRING_TYPE> &)
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template char ACE_String_Base<char>::NULL_String_;
 template ACE_WSTRING_TYPE ACE_String_Base<ACE_WSTRING_TYPE>::NULL_String_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

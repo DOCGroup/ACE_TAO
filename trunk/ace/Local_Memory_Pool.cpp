@@ -141,14 +141,4 @@ ACE_Local_Memory_Pool::round_up (size_t nbytes)
   return ACE::round_to_pagesize (static_cast<off_t> (nbytes));
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<char>;
-template class ACE_Unbounded_Set<char *>;
-template class ACE_Unbounded_Set_Iterator<char *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<char>
-#pragma instantiate ACE_Unbounded_Set<char *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<char *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
