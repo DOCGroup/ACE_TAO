@@ -225,7 +225,7 @@ namespace TAO
   int
   Profile_Transport_Resolver::find_transport (TAO_Transport_Descriptor_Interface *desc)
   {
-    TAO::Transport_Cache_Manager & const cache =
+    TAO::Transport_Cache_Manager & cache =
       this->profile_->orb_core()->lane_resources ().transport_cache();
 
     // the cache increments the reference count on the transport if the
