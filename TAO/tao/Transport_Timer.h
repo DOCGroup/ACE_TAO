@@ -36,7 +36,7 @@ class TAO_Transport;
  *        is a TAO_Transport and the client is the Reactor.
  *
  */
-class TAO_Export TAO_Transport_Timer : public ACE_Event_Handler
+class TAO_Transport_Timer : public ACE_Event_Handler
 {
 public:
   /// Constructor
