@@ -412,7 +412,7 @@ public:
    *
    * @brief Iterator for a folded poa name.
    */
-  class TAO_PortableServer_Export poa_name_iterator
+  class poa_name_iterator
   {
   public:
 
@@ -444,7 +444,7 @@ public:
    *
    * @brief This class allows iteration over a folded poa name.
    */
-  class TAO_PortableServer_Export iteratable_poa_name
+  class iteratable_poa_name
   {
   public:
 

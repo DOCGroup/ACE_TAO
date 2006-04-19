@@ -1,3 +1,11 @@
+Wed Apr 19 12:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Timer.h:
+          No need to export this class from the TAO lib
+
+        * tao/ORB.h:
+          Use false for the default of the shutdown method
+
 Wed Apr 19 12:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc:
@@ -106,6 +114,11 @@ Wed Apr 19 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         1934 - const version of operator[] for string sequences allows assignment
         1938 - Possible incorrect duplication in sequences of references
         1928 - Assignment from T_mgr to sequence elements does not duplicate
+        2417 - Double delete on Transport when using oneways with sync_none
+        Thanks to Jan Ohlenburg <jan dot ohlenburg at fit dot fraunhofer dot de>
+        for reporting this.
+        2355 - oneway op. with timeout crashes client due to server termination
+        Thans to Jan Zima <jan dot zima at sofis dot cz> for reporting this.
 
         Also did several const changes throughout the code
 

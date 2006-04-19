@@ -194,7 +194,7 @@ CORBA::Any::checked_to_value (CORBA::ValueBase *&_tao_elem) const
 {
   if (this->impl_ == 0)
     {
-      return 0;
+      return false;
     }
 
   return this->impl_->to_value (_tao_elem);
@@ -207,7 +207,7 @@ CORBA::Any::checked_to_abstract_base (
 {
   if (this->impl_ == 0)
     {
-      return 0;
+      return false;
     }
 
   return this->impl_->to_abstract_base (_tao_elem);
