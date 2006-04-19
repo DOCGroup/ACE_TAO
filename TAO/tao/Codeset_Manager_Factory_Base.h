@@ -57,7 +57,7 @@ public:
   /// to reload the factory with a dynamically linked libTAO_Codeset.
   /// Statically linked applications get derive implementation by
   /// including "tao/Codeset/Codeset.h" somewhere in their source code.
-  virtual int is_default (void) const;
+  virtual bool is_default (void) const;
 
   /// Static initializer ensures the factory is loaded
   static int initialize (void);

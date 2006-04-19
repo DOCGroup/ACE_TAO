@@ -332,8 +332,8 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
   if (CORBA::is_nil (other_obj))
     return false;
 
-  TAO_Profile *other_profile = other_obj->_stubobj ()->profile_in_use_;
-  TAO_Profile *this_profile = this->profile_in_use_;
+  TAO_Profile * const other_profile = other_obj->_stubobj ()->profile_in_use_;
+  TAO_Profile * const this_profile = this->profile_in_use_;
 
   if (other_profile == 0 || this_profile == 0)
     return false;
@@ -362,7 +362,7 @@ TAO_Stub::_decr_refcnt (void)
 TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 {
-  TAO_Profile *old = this->profile_in_use_;
+  TAO_Profile *const old = this->profile_in_use_;
 
   // Since we are actively using this profile we dont want
   // it to disappear, so increase the reference count by one!!

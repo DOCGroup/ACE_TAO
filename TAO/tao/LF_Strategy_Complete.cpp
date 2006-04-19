@@ -6,10 +6,6 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/LF_Strategy_Complete.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            LF_Strategy_Complete,
            "$Id$")

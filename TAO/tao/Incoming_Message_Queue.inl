@@ -21,7 +21,7 @@ TAO_Incoming_Message_Queue::queue_length (void)
 ACE_INLINE void
 TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
 {
-  size_t newsize =
+  size_t const newsize =
     ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
 
   ACE_Data_Block *db =

@@ -1,3 +1,20 @@
+Wed Apr 19 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/cpd.hpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/toplevel.hpp
+          Removed vc6 workarounds
+
+        * tools/Config_Handlers/vc6-4786.h
+          Removed
+
 Tue Apr 18 20:55:05 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * CIAO version 0.5.1 released.

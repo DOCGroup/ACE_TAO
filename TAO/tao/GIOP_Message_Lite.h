@@ -44,7 +44,6 @@ class TAO_GIOP_Message_Version;
  * This protocol is a modified version of GIOP. This is more suited
  * for homogenous platforms.
  */
-
 class TAO_Export TAO_GIOP_Message_Lite : public TAO_Pluggable_Messaging
 {
 public:
@@ -88,9 +87,9 @@ public:
 private:
   /// Parse the incoming messages..
   ///
-  /// \return -1 There was some error parsing the GIOP header
-  /// \return 0  The GIOP header was parsed correctly
-  /// \return 1  There was not enough data in the message block to
+  /// \retval -1 There was some error parsing the GIOP header
+  /// \retval 0  The GIOP header was parsed correctly
+  /// \retval 1  There was not enough data in the message block to
   ///            parse the header
   int parse_incoming_messages (ACE_Message_Block &message_block);
 
@@ -105,13 +104,13 @@ private:
 
 public:
   /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message 
-  /// header could not be parsed completely, returns a 1 if the message 
+  /// and initializes attributes of @a qd. Returns 0 if the message
+  /// header could not be parsed completely, returns a 1 if the message
   /// header could be parsed completely and returns -1 on error.
   virtual int parse_next_message (ACE_Message_Block &incoming,
-                                  TAO_Queued_Data &qd,        /* out */ 
-                                  size_t &mesg_length);      /* out */ 
-     
+                                  TAO_Queued_Data &qd,        /* out */
+                                  size_t &mesg_length);      /* out */
+
 
   /// Extract the details of the next message from the @a incoming
   /// through @a qd. Returns 0 if the message header could not be
@@ -287,8 +286,8 @@ private:
   /// The pay load size
   CORBA::ULong message_size_;
 
-  // The byte order..
-  // NOTE: GIOP lite cannot work between heterogenous platforms..
+  /// The byte order..
+  /// @note GIOP lite cannot work between heterogenous platforms..
   CORBA::Octet byte_order_;
 
   TAO_OutputCDR cdr_;

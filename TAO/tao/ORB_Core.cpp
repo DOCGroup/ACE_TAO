@@ -37,6 +37,9 @@
 #include "tao/ORBInitializer_Registry_Adapter.h"
 #include "tao/Codeset_Manager.h"
 
+#include "tao/Valuetype_Adapter.h"
+#include "tao/Valuetype_Adapter_Factory.h"
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "tao/Policy_Manager.h"
 #include "tao/Policy_Current.h"
@@ -130,7 +133,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
-    valuetype_adapter_name_ ("Valuetype_Adapter"),
+    valuetype_adapter_factory_name_ ("valuetype_Adapter_Factory"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
     poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", "")))
 {
@@ -268,9 +271,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  CORBA::release (this->policy_manager_);
+  ::CORBA::release (this->policy_manager_);
   delete this->default_policies_;
-  CORBA::release (this->policy_current_);
+  ::CORBA::release (this->policy_current_);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -283,7 +286,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // Don't delete, is a process wide singleton shared by all orbs
   orbinitializer_registry_ = 0;
 
-  CORBA::release (this->orb_);
+  ::CORBA::release (this->orb_);
 }
 
 int
@@ -1238,17 +1241,17 @@ TAO_ORB_Core::fini (void)
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
 
-  CORBA::release (this->implrepo_service_);
+  ::CORBA::release (this->implrepo_service_);
 
-  CORBA::release (this->typecode_factory_);
+  ::CORBA::release (this->typecode_factory_);
 
-  CORBA::release (this->codec_factory_);
+  ::CORBA::release (this->codec_factory_);
 
-  CORBA::release (this->dynany_factory_);
+  ::CORBA::release (this->dynany_factory_);
 
-  CORBA::release (this->ior_manip_factory_);
+  ::CORBA::release (this->ior_manip_factory_);
 
-  CORBA::release (this->ior_table_);
+  ::CORBA::release (this->ior_table_);
 
   if (TAO_debug_level > 2)
     {
@@ -1372,15 +1375,15 @@ TAO_ORB_Core::iorinterceptor_adapter_factory_name (void)
 }
 
 void
-TAO_ORB_Core::valuetype_adapter_name (const char *name)
+TAO_ORB_Core::valuetype_adapter_factory_name (const char *name)
 {
-  TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_name_ = name;
+  TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_factory_name_ = name;
 }
 
 const char *
-TAO_ORB_Core::valuetype_adapter_name (void)
+TAO_ORB_Core::valuetype_adapter_factory_name (void)
 {
-  return TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_name_.c_str();
+  return TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_factory_name_.c_str();
 }
 
 TAO_Resource_Factory *
@@ -2083,72 +2086,62 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (())
 {
-  ACE_TRY
-    {
-      {
-        ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
-        if (this->has_shutdown () != 0)
-          return;
+    if (this->has_shutdown () != 0)
+      return;
 
-        // Check if we are on the right state, i.e. do not accept
-        // shutdowns with the 'wait_for_completion' flag set in the middle
-        // of an upcall (because those deadlock).
-        this->adapter_registry_.check_close (wait_for_completion
-                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+    // Check if we are on the right state, i.e. do not accept
+    // shutdowns with the 'wait_for_completion' flag set in the middle
+    // of an upcall (because those deadlock).
+    this->adapter_registry_.check_close (wait_for_completion
+                                         ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
-        // Set the 'has_shutdown' flag, so any further attempt to shutdown
-        // becomes a noop.
-        this->has_shutdown_ = 1;
+    // Set the 'has_shutdown' flag, so any further attempt to shutdown
+    // becomes a noop.
+    this->has_shutdown_ = 1;
 
-        // need to release the mutex, because some of the shutdown
-        // operations invoke application code, that could (and in practice
-        // does!) callback into ORB Core code.
-      }
+    // need to release the mutex, because some of the shutdown
+    // operations invoke application code, that could (and in practice
+    // does!) callback into ORB Core code.
+  }
 
-      this->adapter_registry_.close (wait_for_completion
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  this->adapter_registry_.close (wait_for_completion
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-      // Shutdown reactor.
-      this->thread_lane_resources_manager ().shutdown_reactor ();
+  // Shutdown reactor.
+  this->thread_lane_resources_manager ().shutdown_reactor ();
 
-      // Cleanup transports that use the RW strategies
-      this->thread_lane_resources_manager ().cleanup_rw_transports ();
+  // Cleanup transports that use the RW strategies
+  this->thread_lane_resources_manager ().cleanup_rw_transports ();
 
-      // Grab the thread manager
-      ACE_Thread_Manager *tm = this->thr_mgr ();
+  // Grab the thread manager
+  ACE_Thread_Manager *tm = this->thr_mgr ();
 
-      // Try to cancel all the threads in the ORB.
-      tm->cancel_all ();
+  // Try to cancel all the threads in the ORB.
+  tm->cancel_all ();
 
-      // If <wait_for_completion> is set, wait for all threads to exit.
-      if (wait_for_completion != 0)
-        tm->wait ();
+  // If <wait_for_completion> is set, wait for all threads to exit.
+  if (wait_for_completion != 0)
+    tm->wait ();
 
-      // Explicitly destroy the object reference table since it
-      // contains references to objects, which themselves may contain
-      // reference to this ORB.
-      this->object_ref_table_.destroy ();
+  // Explicitly destroy the valuetype adapter
+  delete this->valuetype_adapter_;
+  this->valuetype_adapter_ = 0;
+
+  // Explicitly destroy the object reference table since it
+  // contains references to objects, which themselves may contain
+  // reference to this ORB.
+  this->object_ref_table_.destroy ();
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-      CORBA::release (this->pi_current_);
-      this->pi_current_ = CORBA::Object::_nil ();
+  CORBA::release (this->pi_current_);
+  this->pi_current_ = CORBA::Object::_nil ();
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    }
-  ACE_CATCHALL
-    {
-      // Do not allow exceptions to escape.. So catch all the
-      // exceptions.
-      // @@ Not sure what to print here for the users..
-
-    }
-  ACE_ENDTRY;
-
-  return;
 }
 
 void
@@ -3160,6 +3153,47 @@ TAO_ORB_Core::serverrequestinterceptor_adapter_i (void)
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
+
+TAO_Valuetype_Adapter *
+TAO_ORB_Core::valuetype_adapter (void)
+{
+  if (this->valuetype_adapter_ == 0)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
+
+      if (this->valuetype_adapter_ == 0)
+        {
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              TAO_Valuetype_Adapter_Factory * vt_ap_factory =
+                ACE_Dynamic_Service<TAO_Valuetype_Adapter_Factory>::instance (
+                    TAO_ORB_Core::valuetype_adapter_factory_name ()
+                  );
+
+              if (vt_ap_factory)
+                {
+                  this->valuetype_adapter_ =
+                    vt_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                }
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "Cannot initialize the "
+                                   "valuetype_adapter \n");
+            }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN(0);
+        }
+    }
+
+  return this->valuetype_adapter_;
+}
 
 // ****************************************************************
 

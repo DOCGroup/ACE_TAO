@@ -79,22 +79,19 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        LongLongSeq,
-        CORBA::LongLong
+        LongLongSeq
       >
     LongLongSeq_var;
 
   typedef
     TAO_Seq_Out_T<
-        LongLongSeq,
-        LongLongSeq_var,
-        CORBA::LongLong
+        LongLongSeq
       >
     LongLongSeq_out;
 
   class TAO_Export LongLongSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::LongLong
           >
   {
@@ -105,7 +102,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::LongLong* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     LongLongSeq (const LongLongSeq &);
     ~LongLongSeq (void);

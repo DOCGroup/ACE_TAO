@@ -22,7 +22,7 @@ TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (
    rd_(rd),
    tms_(tms)
 {
-  int retval =
+  int const retval =
     this->tms_->bind_dispatcher (this->request_id_,
                                  this->rd_);
 

@@ -40,7 +40,7 @@ TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGL
 
   bool ignore_address = false;
 
-  int result =
+  int const result =
     this->lane_resources_->open_acceptor_registry (endpoint_set,
                                                    ignore_address
                                                    ACE_ENV_ARG_PARAMETER);

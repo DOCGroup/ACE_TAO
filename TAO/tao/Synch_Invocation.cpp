@@ -650,7 +650,7 @@ namespace TAO
       }
 
     CORBA::SystemException *ex =
-      TAO_Exceptions::create_system_exception (type_id.in ());
+      TAO::create_system_exception (type_id.in ());
 
     if (ex == 0)
       {

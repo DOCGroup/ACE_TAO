@@ -43,7 +43,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_POLICYLIST_CS_)
@@ -55,9 +55,8 @@ CORBA::PolicyList::PolicyList (void)
 CORBA::PolicyList::PolicyList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Object_Sequence<
-        Policy,
-        Policy_var
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::Policy, CORBA::Policy_var
       >
     (max)
 {}
@@ -68,9 +67,8 @@ CORBA::PolicyList::PolicyList (
     CORBA::Policy_ptr * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Object_Sequence<
-        Policy,
-        Policy_var
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::Policy, CORBA::Policy_var
       >
     (max, length, buffer, release)
 {}
@@ -78,9 +76,8 @@ CORBA::PolicyList::PolicyList (
 CORBA::PolicyList::PolicyList (
     const PolicyList &seq
   )
-  : TAO_Unbounded_Object_Sequence<
-        Policy,
-        Policy_var
+  : TAO::unbounded_object_reference_sequence<
+        CORBA::Policy, CORBA::Policy_var
       >
     (seq)
 {}
@@ -99,7 +96,7 @@ void CORBA::PolicyList::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_POLICYTYPESEQ_CS_)
@@ -111,7 +108,7 @@ CORBA::PolicyTypeSeq::PolicyTypeSeq (void)
 CORBA::PolicyTypeSeq::PolicyTypeSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         PolicyType
       >
     (max)
@@ -123,7 +120,7 @@ CORBA::PolicyTypeSeq::PolicyTypeSeq (
     CORBA::ULong * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         PolicyType
       >
     (max, length, buffer, release)
@@ -132,7 +129,7 @@ CORBA::PolicyTypeSeq::PolicyTypeSeq (
 CORBA::PolicyTypeSeq::PolicyTypeSeq (
     const PolicyTypeSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         PolicyType
       >
     (seq)
@@ -163,25 +160,7 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyList &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::Policy>::marshal (
-                _tao_sequence[i].in (), strm
-              );
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -189,40 +168,7 @@ CORBA::Boolean operator>> (
     CORBA::PolicyList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyList_CPP_ */
@@ -238,15 +184,7 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyTypeSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      return strm.write_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -254,33 +192,7 @@ CORBA::Boolean operator>> (
     CORBA::PolicyTypeSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      return strm.read_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyTypeSeq_CPP_ */
@@ -297,12 +209,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, CORBA::SetOverrideType & _tao_en
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<CORBA::SetOverrideType> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

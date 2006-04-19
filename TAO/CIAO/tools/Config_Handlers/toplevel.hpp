@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -49,7 +45,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // package
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::PackageConfiguration >::iterator package_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::PackageConfiguration >::const_iterator package_const_iterator;
@@ -149,13 +145,13 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
         TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -166,7 +162,7 @@ namespace CIAO
         virtual void
         traverse (Type const&);
 
-        virtual void 
+        virtual void
         package_pre (Type &o)
         {
 
@@ -177,7 +173,7 @@ namespace CIAO
         virtual void
         package_pre (Type const&);
 
-        virtual void 
+        virtual void
         package_next (Type &o)
         {
 
@@ -188,7 +184,7 @@ namespace CIAO
         virtual void
         package_next (Type const&);
 
-        virtual void 
+        virtual void
         package_post (Type &o)
         {
 

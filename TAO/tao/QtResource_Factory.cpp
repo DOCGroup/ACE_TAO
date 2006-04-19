@@ -31,7 +31,6 @@ namespace TAO
 
     if (!this->reactor_impl_)
       {
-
         ACE_NEW_RETURN (this->reactor_impl_,
                         ACE_QtReactor (qapp_),
                         0);

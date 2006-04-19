@@ -44,6 +44,7 @@
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
+#include "tao/String_Manager_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
@@ -96,7 +97,7 @@ namespace TAO
     typedef IIOP_Endpoint_Info_var _var_type;
 
     static void _tao_any_destructor (void *);
-    TAO_String_Manager host;
+    TAO::String_Manager host;
     CORBA::Short port;
     CORBA::Short priority;
   };
@@ -111,22 +112,19 @@ namespace TAO
 
   typedef
     TAO_VarSeq_Var_T<
-        IIOPEndpointSequence,
-        IIOP_Endpoint_Info
+        IIOPEndpointSequence
       >
     IIOPEndpointSequence_var;
 
   typedef
     TAO_Seq_Out_T<
-        IIOPEndpointSequence,
-        IIOPEndpointSequence_var,
-        IIOP_Endpoint_Info
+        IIOPEndpointSequence
       >
     IIOPEndpointSequence_out;
 
   class TAO_Export IIOPEndpointSequence
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             IIOP_Endpoint_Info
           >
   {
@@ -137,7 +135,7 @@ namespace TAO
         CORBA::ULong max,
         CORBA::ULong length,
         IIOP_Endpoint_Info* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     IIOPEndpointSequence (const IIOPEndpointSequence &);
     ~IIOPEndpointSequence (void);

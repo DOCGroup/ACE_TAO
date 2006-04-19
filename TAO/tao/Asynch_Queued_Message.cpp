@@ -156,7 +156,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 
   // Set the flag to indicate that <qm> is created on the heap.
   if (qm)
-    qm->is_heap_created_ = 1;
+    qm->is_heap_created_ = true;
 
   return qm;
 }

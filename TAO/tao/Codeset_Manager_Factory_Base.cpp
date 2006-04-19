@@ -14,10 +14,10 @@ TAO_Codeset_Manager_Factory_Base::~TAO_Codeset_Manager_Factory_Base (void)
 {
 }
 
-int
+bool
 TAO_Codeset_Manager_Factory_Base::is_default (void) const
 {
-  return 1;
+  return true;
 }
 
 TAO_Codeset_Manager *

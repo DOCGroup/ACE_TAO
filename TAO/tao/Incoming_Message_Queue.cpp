@@ -45,7 +45,7 @@ TAO_Incoming_Message_Queue::dequeue_head (void)
     return 0;
 
   // Get the node on the head of the queue...
-  TAO_Queued_Data *head = this->last_added_->next_;
+  TAO_Queued_Data * const head = this->last_added_->next_;
 
   // Reset the head node..
   this->last_added_->next_ = head->next_;
@@ -131,7 +131,7 @@ static ACE_Message_Block*
 clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
 {
   // Calculate the required size of the cloned block with alignment
-  size_t aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
+  size_t const aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
 
   // Get the allocators
   ACE_Allocator *data_allocator = 0;

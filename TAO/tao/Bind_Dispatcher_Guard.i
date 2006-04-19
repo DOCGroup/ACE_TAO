@@ -33,7 +33,7 @@ TAO_Bind_Dispatcher_Guard::status (void) const
 ACE_INLINE int
 TAO_Bind_Dispatcher_Guard::unbind_dispatcher (void)
 {
-  int retval =
+  int const retval =
     this->tms_->unbind_dispatcher (this->request_id_);
 
   // Already unbound and so do not try again during destruction.

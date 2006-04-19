@@ -59,13 +59,5 @@ Incoming_Message_Stack::top (TAO_Queued_Data* &data)
   return 0;
 }
 
-/*
-ACE_INLINE bool
-Incoming_Message_Stack::is_empty ()
-{
-  return this->top_ == 0;
-}
-*/
-
 } /* namespace TAO */
 TAO_END_VERSIONED_NAMESPACE_DECL

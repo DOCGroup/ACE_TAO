@@ -82,7 +82,7 @@ public:
   /// Returns the total number of endpoints in all of its acceptors.
   size_t endpoint_count (void);
 
-  /// Check if there is at least one profile in <mprofile> that
+  /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
   int is_collocated (const TAO_MProfile& mprofile);
 

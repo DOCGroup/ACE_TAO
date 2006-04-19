@@ -90,7 +90,7 @@ TAO_IIOP_Connection_Handler::open (void*)
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
 
-  bool client =
+  bool const client =
     this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
   ACE_DECLARE_NEW_CORBA_ENV;

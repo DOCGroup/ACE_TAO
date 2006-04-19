@@ -23,14 +23,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_ORB_Core;
 class TAO_Policy_Validator;
-
-namespace CORBA
-{
-  class ORB;
-  typedef ORB *ORB_ptr;
-}
 
 /**
  * @class TAO_BiDir_Adapter

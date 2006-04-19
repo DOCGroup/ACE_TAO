@@ -76,7 +76,7 @@ TAO_MProfile::get_cprev (void)
   else if (last_ == 1)
     current_=1;
   else if (current_ > 1)
-    current_--;
+    --current_;
   else // current_ == 0 or 1, 0 => list never read before and == 1
     current_ = last_;
 
@@ -90,7 +90,7 @@ TAO_MProfile::get_prev (void)
     // No List of BeginningOfList
     return 0;
   if (current_ > 1)
-    current_--;
+    --current_;
 
   return pfiles_[current_ - 1];
 }

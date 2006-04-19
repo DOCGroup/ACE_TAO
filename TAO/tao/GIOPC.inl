@@ -39,7 +39,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-void 
+void
 GIOP::TargetAddress::_default ()
 {
   this->disc_ = -32768;
@@ -70,7 +70,7 @@ void
 GIOP::TargetAddress::object_key (const CORBA::OctetSeq &val)
 {
   // Set the discriminant value.
-  this->_reset (0, 0);
+  this->_reset ();
   this->disc_ = 0;
   ACE_NEW (
       this->u_.object_key_,
@@ -103,7 +103,7 @@ void
 GIOP::TargetAddress::profile (const IOP::TaggedProfile &val)
 {
   // Set the discriminant value.
-  this->_reset (1, 0);
+  this->_reset ();
   this->disc_ = 1;
   ACE_NEW (
       this->u_.profile_,
@@ -136,7 +136,7 @@ void
 GIOP::TargetAddress::ior (const GIOP::IORAddressingInfo &val)
 {
   // Set the discriminant value.
-  this->_reset (2, 0);
+  this->_reset ();
   this->disc_ = 2;
   ACE_NEW (
       this->u_.ior_,

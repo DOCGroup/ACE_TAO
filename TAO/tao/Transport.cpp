@@ -294,7 +294,7 @@ TAO_Transport::register_handler (void)
                   this->id ()));
     }
 
-  ACE_Reactor *r = this->orb_core_->reactor ();
+  ACE_Reactor * const r = this->orb_core_->reactor ();
 
   // @@note: This should be okay since the register handler call will
   // not make a nested call into the transport.
@@ -353,7 +353,7 @@ TAO_Transport::generate_request_header (
   // on a particular connection.
   if (this->first_request_)
     {
-      TAO_Codeset_Manager *csm = this->orb_core ()->codeset_manager ();
+      TAO_Codeset_Manager * const csm = this->orb_core ()->codeset_manager ();
       if (csm)
         csm->generate_service_context (opdetails,*this);
     }
@@ -482,7 +482,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
   synch_message.push_back (this->head_, this->tail_);
 
-  int n = this->drain_queue_i ();
+  int const n = this->drain_queue_i ();
 
   if (n == -1)
     {
@@ -696,7 +696,7 @@ TAO_Transport::schedule_output_i (void)
   // Check to see if our event handler is still registered with the
   // reactor.  It's possible for another thread to have run close_connection()
   // since we last used the event handler.
-  ACE_Event_Handler *found = reactor->find_handler (eh->get_handle ());
+  ACE_Event_Handler * const found = reactor->find_handler (eh->get_handle ());
   if (found != eh)
     {
       if(TAO_debug_level > 3)
@@ -727,8 +727,8 @@ TAO_Transport::schedule_output_i (void)
 int
 TAO_Transport::cancel_output_i (void)
 {
-  ACE_Event_Handler *eh = this->event_handler_i ();
-  ACE_Reactor *reactor = eh->reactor ();
+  ACE_Event_Handler * const eh = this->event_handler_i ();
+  ACE_Reactor *const reactor = eh->reactor ();
 
   if (TAO_debug_level > 3)
     {
