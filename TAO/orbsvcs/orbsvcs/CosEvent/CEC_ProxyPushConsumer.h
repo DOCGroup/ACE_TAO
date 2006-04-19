@@ -44,7 +44,7 @@ class TAO_CEC_ProxyPushSupplier;
  * The object commits suicide when disconnect_push_consumer() is
  * called.
  */
-class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer 
+class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer
   : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
 public:
@@ -67,7 +67,7 @@ public:
   virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Return 0 if no supplier is connected...
+  /// Return false if no supplier is connected...
   CORBA::Boolean is_connected (void) const;
 
   /// Return the consumer object reference. It returns nil() if it has
@@ -134,9 +134,9 @@ private:
   /// The supplier....
   CosEventComm::PushSupplier_var supplier_;
 
-  /// If the flag is not zero then we are connected, notice that the
+  /// If the flag is true then we are connected, notice that the
   /// supplier can be nil.
-  int connected_;
+  bool connected_;
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -182,9 +182,9 @@ private:
   /// The proxy whose lifetime is controlled by the reference count
   TAO_CEC_ProxyPushConsumer *proxy_;
 
-  /// This flag is set to 1 if the reference count was successfully
+  /// This flag is set to true if the reference count was successfully
   /// acquired.
-  int locked_;
+  bool locked_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
