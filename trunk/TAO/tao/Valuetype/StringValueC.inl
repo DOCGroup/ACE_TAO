@@ -35,16 +35,16 @@ ACE_INLINE
 CORBA::StringValue::StringValue (void)
 {}
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::StringValue::StringValue (CORBA::Char * val)
 {
   this->_pd_value = val;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::StringValue::StringValue (const CORBA::StringValue& val)
-  : ACE_NESTED_CLASS (CORBA, ValueBase) (val),
-    ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)
+  : ::CORBA::ValueBase (val),
+    ::CORBA::DefaultValueRefCountBase (val)
 {
   this->_pd_value = val._pd_value;
 }
@@ -56,7 +56,7 @@ CORBA::StringValue::operator= (CORBA::Char * val)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::StringValue::StringValue (const CORBA::Char * val)
 {
   this->_pd_value = val;
@@ -136,7 +136,7 @@ CORBA::StringValue::operator[] (CORBA::ULong slot) const
   return this->_pd_value[slot];
 }
 
-ACE_INLINE CORBA::Boolean 
+ACE_INLINE CORBA::Boolean
 CORBA::StringValue::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return (strm << this->_pd_value);
@@ -146,13 +146,13 @@ CORBA::StringValue::_tao_marshal_v (TAO_OutputCDR & strm) const
 
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ci.cpp:60
-ACE_INLINE const char* 
+ACE_INLINE const char*
 CORBA::StringValue::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/CORBA/StringValue:1.0";
 }
 
-ACE_INLINE CORBA::Boolean 
+ACE_INLINE CORBA::Boolean
 CORBA::StringValue::_tao_unmarshal_v (TAO_InputCDR & )
 {
   return 1;
@@ -167,16 +167,16 @@ ACE_INLINE
 CORBA::WStringValue::WStringValue (void)
 {}
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::WStringValue::WStringValue (CORBA::WChar * val)
 {
   this->_pd_value = val;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::WStringValue::WStringValue (const CORBA::WStringValue& val)
-  : ACE_NESTED_CLASS (CORBA, ValueBase) (val),
-    ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)
+  : ::CORBA::ValueBase (val),
+    ::CORBA::DefaultValueRefCountBase (val)
 {
   this->_pd_value = val._pd_value;
 }
@@ -188,7 +188,7 @@ CORBA::WStringValue::operator= (CORBA::WChar * val)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::WStringValue::WStringValue (const CORBA::WChar * val)
 {
   this->_pd_value = val;
@@ -268,7 +268,7 @@ CORBA::WStringValue::operator[] (CORBA::ULong slot) const
   return this->_pd_value[slot];
 }
 
-ACE_INLINE CORBA::Boolean 
+ACE_INLINE CORBA::Boolean
 CORBA::WStringValue::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return (strm << this->_pd_value);
@@ -278,13 +278,13 @@ CORBA::WStringValue::_tao_marshal_v (TAO_OutputCDR & strm) const
 
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ci.cpp:60
-ACE_INLINE const char* 
+ACE_INLINE const char*
 CORBA::WStringValue::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/CORBA/WStringValue:1.0";
 }
 
-ACE_INLINE CORBA::Boolean 
+ACE_INLINE CORBA::Boolean
 CORBA::WStringValue::_tao_unmarshal_v (TAO_InputCDR & )
 {
   return 1;

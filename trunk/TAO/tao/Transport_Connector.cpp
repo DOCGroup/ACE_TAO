@@ -399,6 +399,29 @@ TAO_Connector::wait_for_connection_completion (
 
   if (result == -1)
     {
+      // We are waiting for a non blocking connection
+      // but our connection handler is not connecting anymore,
+      // force close the connection
+      if (!r->blocked_connect () &&
+          !transport->connection_handler ()->is_connecting())
+        {
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - Transport_Connector::"
+                        "wait_for_connection_completion, "
+                        "waiting for a non blocking connection but our, "
+                        "connection handler is not connecting anymore.\n"));
+
+          // Forget the return value. We are busted anyway. Try our best
+          // here.
+          (void) this->cancel_svc_handler (transport->connection_handler ());
+
+          // Set transport to zero, it is not usable
+          transport = 0;
+
+          return false;
+        }
+
       if (!r->blocked_connect () && errno == ETIME)
         {
           // If we did a non blocking connect, just ignore

@@ -142,11 +142,9 @@ public:
 
   operator T *& ();
   T *& ptr (void);
-
   T * operator-> (void);
 
 private:
-  typedef TAO_Out_T<T,T_var> THIS_OUT_TYPE;
   T *& ptr_;
 
   // Assignment from T_var not allowed.
