@@ -92,7 +92,7 @@ namespace TAO
         TAO_Stub* stub = obj->_stubobj ();
 
         bool collocated =
-          !CORBA::is_nil (stub->servant_orb_var ().ptr ())
+          !CORBA::is_nil (stub->servant_orb_var ().in ())
           && stub->optimize_collocation_objects ()
           && obj->_is_collocated ()
           && pbf != 0;
