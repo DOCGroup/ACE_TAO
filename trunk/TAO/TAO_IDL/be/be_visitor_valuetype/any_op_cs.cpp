@@ -72,14 +72,14 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "{" << be_idt_nl
       << "::CORBA::add_ref (this->value_);" << be_nl
       << "_tao_elem = this->value_;" << be_nl
-      << "return 1;" << be_uidt_nl
+      << "return true;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << be_global->core_versioning_end () << be_nl;
 
   be_module *module = 0;
- 
+
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
