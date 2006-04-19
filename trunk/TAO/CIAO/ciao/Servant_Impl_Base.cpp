@@ -238,7 +238,7 @@ namespace CIAO
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        tmp = this->lookup_facet_description (names[i].in ());
+        tmp = this->lookup_facet_description (names[i]);
 
         if (0 == tmp)
           {
@@ -356,7 +356,7 @@ namespace CIAO
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        tmp = this->lookup_consumer_description (names[i].in ());
+        tmp = this->lookup_consumer_description (names[i]);
 
         if (0 == tmp)
           {
