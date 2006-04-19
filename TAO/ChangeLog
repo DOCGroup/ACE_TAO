@@ -1,3 +1,20 @@
+Wed Apr 19 13:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
+          Removed not needed forward declarations
+
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/Any_Impl.cpp:
+        * tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+          Use false/true instead of 0/1 for bool
+
+        * tao/PortableServer/Object_Adapter.h:
+          Don't export poa_name_iterator and iteratable_poa_name
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Use true/false and when the object adapter can't be found
+          throw a OBJECT_NOT_EXIST with minor code 2
+
 Wed Apr 19 12:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Timer.h:
