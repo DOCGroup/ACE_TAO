@@ -32,7 +32,7 @@ public:
                 "Handle close called\n"));
     handleA_close_called = true;
 
-    return;
+    return 0;
   }
 
   virtual int handle_signal (int sig,
@@ -95,9 +95,10 @@ run_main (int, ACE_TCHAR *[])
                        "register_handlerB"),
                       -1);
 
+  ACE_Sig_Action *new_disp = 0;
   if (ACE_Reactor::instance ()->remove_handler
       (SIGINT,
-       0) == -1)
+       new_disp) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "%p\n",
                        "remove_handlerB"),
