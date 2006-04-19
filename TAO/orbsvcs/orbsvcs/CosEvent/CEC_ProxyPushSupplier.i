@@ -86,11 +86,11 @@ TAO_CEC_ProxyPushSupplier::is_typed_ec (void) const
 {
   if (this->typed_event_channel_ != 0)
   {
-    return 1;
+    return true;
   }
   else
   {
-    return 0;
+    return false;
   }
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */

@@ -33,6 +33,10 @@ Wed Apr 19 12:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Removed virtual keywords, not needed and safes footprint. Fixes
           bugzilla 2179.
 
+        * bin/fuzz.pl:
+          Added more msvc checks to detect code constructors for vc6 or
+          vc7.0
+
 Wed Apr 19 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged ACE changes from sendfile branch. Also made a lot of const

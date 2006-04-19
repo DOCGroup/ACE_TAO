@@ -324,7 +324,7 @@ TAO_CEC_ProxyPushSupplier::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    this->refcount_--;
+    --this->refcount_;
     if (this->refcount_ != 0)
       return this->refcount_;
   }
