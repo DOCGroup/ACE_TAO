@@ -137,5 +137,3 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LACKS_LONGLONG_T */
 
-// Explicit template instantiation file
-#include "ace/Template_Instantiations.cpp"

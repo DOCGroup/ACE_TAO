@@ -1134,22 +1134,6 @@ ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
   return result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<ACE_Registry::Binding>;
-template class ACE_Unbounded_Set<ACE_Registry::Binding>;
-template class ACE_Unbounded_Set_Iterator<ACE_Registry::Binding>;
-template class ACE_Node<ACE_Registry::Name_Component>;
-template class ACE_Unbounded_Set<ACE_Registry::Name_Component>;
-template class ACE_Unbounded_Set_Iterator<ACE_Registry::Name_Component>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<ACE_Registry::Binding>
-#pragma instantiate ACE_Unbounded_Set<ACE_Registry::Binding>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Registry::Binding>
-#pragma instantiate ACE_Node<ACE_Registry::Name_Component>
-#pragma instantiate ACE_Unbounded_Set<ACE_Registry::Name_Component>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Registry::Name_Component>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */

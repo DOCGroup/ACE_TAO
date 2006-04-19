@@ -849,32 +849,4 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 }
 #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    template class ACE_Cleanup_Adapter<ACE_Null_Mutex>;
-    template class ACE_Cleanup_Adapter<ACE_Mutex>;
-    template class ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
-    template class ACE_Cleanup_Adapter<ACE_Thread_Mutex>;
-    template class ACE_Managed_Object<ACE_Null_Mutex>;
-    template class ACE_Managed_Object<ACE_Mutex>;
-    template class ACE_Managed_Object<ACE_Recursive_Thread_Mutex>;
-    template class ACE_Managed_Object<ACE_Thread_Mutex>;
-# endif /* ACE_MT_SAFE */
-  template class ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   pragma instantiate ACE_Cleanup_Adapter<ACE_Null_Mutex>
-#   pragma instantiate ACE_Cleanup_Adapter<ACE_Mutex>
-#   pragma instantiate ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
-#   pragma instantiate ACE_Cleanup_Adapter<ACE_Thread_Mutex>
-#   pragma instantiate ACE_Managed_Object<ACE_Null_Mutex>
-#   pragma instantiate ACE_Managed_Object<ACE_Mutex>
-#   pragma instantiate ACE_Managed_Object<ACE_Recursive_Thread_Mutex>
-#   pragma instantiate ACE_Managed_Object<ACE_Thread_Mutex>
-# endif /* ACE_MT_SAFE */
-# pragma instantiate ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>
-# pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

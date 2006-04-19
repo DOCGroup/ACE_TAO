@@ -1256,18 +1256,4 @@ ACE_Select_Reactor_Impl::resumable_handler (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-template class ACE_Unbounded_Queue <ACE_Notification_Buffer *>;
-template class ACE_Unbounded_Queue_Iterator <ACE_Notification_Buffer *>;
-template class ACE_Node <ACE_Notification_Buffer *>;
-#endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-#pragma instantiate ACE_Unbounded_Queue <ACE_Notification_Buffer *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <ACE_Notification_Buffer *>
-#pragma instantiate ACE_Node <ACE_Notification_Buffer *>
-#endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

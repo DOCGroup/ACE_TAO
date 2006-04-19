@@ -288,15 +288,5 @@ ACE_ARGV::create_buf_from_queue (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<ACE_TCHAR *>;
-template class ACE_Unbounded_Queue_Iterator<ACE_TCHAR *>;
-template class ACE_Node<ACE_TCHAR *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue<ACE_TCHAR *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_TCHAR *>
-#pragma instantiate ACE_Node<ACE_TCHAR *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
