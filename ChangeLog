@@ -1,3 +1,8 @@
+Wed Apr 19 19:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/*:
+          Removed explicit template support
+
 Wed Apr 19 15:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2368_Regression_Test.cpp:
