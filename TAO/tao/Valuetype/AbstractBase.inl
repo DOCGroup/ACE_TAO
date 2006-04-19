@@ -10,7 +10,7 @@ ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_nil (void)
 {
-  return (CORBA::AbstractBase_ptr)0;
+  return static_cast <CORBA::AbstractBase_ptr> (0);
 }
 
 ACE_INLINE CORBA::AbstractBase_ptr
