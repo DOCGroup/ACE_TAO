@@ -96,6 +96,7 @@ Wed Apr 19 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         1933 - Incomplete implementation of freebuf() for reference types.
         1934 - const version of operator[] for string sequences allows assignment
         1938 - Possible incorrect duplication in sequences of references
+        1928 - Assignment from T_mgr to sequence elements does not duplicate
 
         Also did several const changes throughout the code
 
