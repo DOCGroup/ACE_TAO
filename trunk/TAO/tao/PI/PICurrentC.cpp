@@ -66,7 +66,7 @@ TAO::Objref_Traits<PortableInterceptor::Current>::release (
     PortableInterceptor::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::Current_ptr
@@ -90,12 +90,12 @@ PortableInterceptor::Current::Current (void)
 PortableInterceptor::Current::~Current (void)
 {}
 
-void 
+void
 PortableInterceptor::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
     static_cast<Current *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 PortableInterceptor::Current_ptr
@@ -123,18 +123,18 @@ PortableInterceptor::Current::_unchecked_narrow (
 PortableInterceptor::Current_ptr
 PortableInterceptor::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

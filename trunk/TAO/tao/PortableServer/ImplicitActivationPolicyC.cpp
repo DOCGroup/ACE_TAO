@@ -64,7 +64,7 @@ TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::release (
     PortableServer::ImplicitActivationPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::ImplicitActivationPolicy_ptr
@@ -113,18 +113,18 @@ PortableServer::ImplicitActivationPolicy::_unchecked_narrow (
 PortableServer::ImplicitActivationPolicy_ptr
 PortableServer::ImplicitActivationPolicy::_duplicate (ImplicitActivationPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::ImplicitActivationPolicy::_tao_release (ImplicitActivationPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -183,12 +183,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ImplicitActivati
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ImplicitActivationPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

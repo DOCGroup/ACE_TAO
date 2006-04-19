@@ -46,7 +46,6 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/Managed_Types.h"
 #include "tao/AnyTypeCode/StringSeqA.h"
 #include "tao/CodecFactory/IOP_Codec_includeA.h"
 #include "tao/AnyTypeCode/PI_ForwardA.h"
@@ -246,7 +245,7 @@ namespace PortableInterceptor
     {
     public:
 
-      TAO_String_Manager name;
+      TAO::String_Manager name;
       DuplicateName (void);
       DuplicateName (const DuplicateName &);
       ~DuplicateName (void);

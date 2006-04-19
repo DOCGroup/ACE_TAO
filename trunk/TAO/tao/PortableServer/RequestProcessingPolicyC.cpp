@@ -64,7 +64,7 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::release (
     PortableServer::RequestProcessingPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::RequestProcessingPolicy_ptr
@@ -113,18 +113,18 @@ PortableServer::RequestProcessingPolicy::_unchecked_narrow (
 PortableServer::RequestProcessingPolicy_ptr
 PortableServer::RequestProcessingPolicy::_duplicate (RequestProcessingPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::RequestProcessingPolicy::_tao_release (RequestProcessingPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -183,12 +183,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::RequestProcessin
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::RequestProcessingPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

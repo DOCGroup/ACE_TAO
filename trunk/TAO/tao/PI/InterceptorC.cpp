@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::release (
     PortableInterceptor::Interceptor_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::Interceptor_ptr
@@ -111,18 +111,18 @@ PortableInterceptor::Interceptor::_unchecked_narrow (
 PortableInterceptor::Interceptor_ptr
 PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::Interceptor::_tao_release (Interceptor_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

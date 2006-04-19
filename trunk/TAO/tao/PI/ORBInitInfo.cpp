@@ -41,7 +41,7 @@ TAO::Objref_Traits<TAO_ORBInitInfo>::release (
     TAO_ORBInitInfo_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_ORBInitInfo_ptr
