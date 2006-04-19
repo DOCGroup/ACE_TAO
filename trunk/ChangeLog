@@ -1,3 +1,11 @@
+Wed Apr 19 13:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2368_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added regression for bug 2368, this will fail because this bug
+          isn't addressed yet
+
 Wed Apr 19 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_g++.GNU:
