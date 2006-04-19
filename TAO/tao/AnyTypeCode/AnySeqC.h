@@ -82,22 +82,19 @@ namespace CORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        AnySeq,
-        CORBA::Any
+        AnySeq
       >
     AnySeq_var;
 
   typedef
     TAO_Seq_Out_T<
-        AnySeq,
-        AnySeq_var,
-        CORBA::Any
+        AnySeq
       >
     AnySeq_out;
 
   class TAO_AnyTypeCode_Export AnySeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Any
           >
   {
@@ -108,7 +105,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Any* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     AnySeq (const AnySeq &);
     ~AnySeq (void);

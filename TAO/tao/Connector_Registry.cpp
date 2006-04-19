@@ -54,7 +54,7 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 int
 TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 {
-  TAO_ProtocolFactorySet *pfs =
+  TAO_ProtocolFactorySet * const pfs =
     orb_core->protocol_factories ();
 
   // The array containing the TAO_Connectors will never contain more

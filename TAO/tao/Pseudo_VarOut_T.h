@@ -83,7 +83,6 @@ public:
 
   // TAO extension.
   _retn_type    ptr (void) const;
-
 private:
 
   // Unimplemented - prevents widening assignment.
@@ -115,9 +114,7 @@ public:
   TAO_Pseudo_Out_T<T,T_var> & operator= (T *);
 
   operator T *& ();
-
   T *& ptr (void);
-
   T * operator-> (void);
 
 private:

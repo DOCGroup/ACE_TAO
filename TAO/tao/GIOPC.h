@@ -202,9 +202,9 @@ namespace GIOP
     // TAO_IDL - Generated from
     // be\be_visitor_union_branch/public_ch.cpp:665
 
-    void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);
-    const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const;
-    ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void);
+    void ior (const ::GIOP::IORAddressingInfo &);
+    const ::GIOP::IORAddressingInfo &ior (void) const;
+    ::GIOP::IORAddressingInfo &ior (void);
 
     // TAO_IDL - Generated from
     // be\be_visitor_union/union_ch.cpp:147
@@ -224,11 +224,11 @@ namespace GIOP
       IOP::TaggedProfile *profile_;
       // TAO_IDL - Generated from
       // be\be_visitor_union_branch/private_ch.cpp:526
-      ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
+      ::GIOP::IORAddressingInfo *ior_;
     } u_;
 
     // TAO extension - frees any allocated storage.
-    void _reset (CORBA::Short, CORBA::Boolean /* finalize */);
+    void _reset (void);
   };
 
 #endif /* end #if !defined */

@@ -84,7 +84,7 @@ public:
 
 protected:
   /// The ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// The leader follower strategy
   TAO_LF_Strategy *lf_strategy_;

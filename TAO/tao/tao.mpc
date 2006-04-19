@@ -1,4 +1,5 @@
 //$Id$
+
 project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
@@ -120,7 +121,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LongLongSeqC.cpp
     LongSeqC.cpp
     LRU_Connection_Purging_Strategy.cpp
-    Managed_Types.cpp
     MCAST_Parser.cpp
     Messaging_PolicyValueC.cpp
     Messaging_SyncScopeC.cpp
@@ -176,7 +176,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Request_Dispatcher.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
-    Sequence.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInterceptor_Adapter.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp
@@ -184,6 +183,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Service_Context.cpp
     Services_Activate.cpp
     ShortSeqC.cpp
+    String_Alloc.cpp
     StringSeqC.cpp
     Stub.cpp
     Stub_Factory.cpp
@@ -218,6 +218,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UserException.cpp
     UShortSeqC.cpp
     Valuetype_Adapter.cpp
+    Valuetype_Adapter_Factory.cpp
     Wait_On_Leader_Follower.cpp
     Wait_On_LF_No_Upcall.cpp
     Wait_On_Reactor.cpp
@@ -381,7 +382,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LongSeqC.h
     LongSeqS.h
     LRU_Connection_Purging_Strategy.h
-    Managed_Types.h
     MCAST_Parser.h
     Messaging_PolicyValueC.h
     Messaging_SyncScopeC.h
@@ -450,8 +450,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resource_Factory.h
     Resume_Handle.h
     Seq_Out_T.h
-    Sequence.h
-    Sequence_T.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
     Service_Callbacks.h
@@ -465,6 +463,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Special_Basic_Argument_T.h
     StringSeqC.h
     StringSeqS.h
+    String_Alloc.h
     Stub_Factory.h
     Stub.h
     Synch_Invocation.h
@@ -509,6 +508,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UShortSeqC.h
     UShortSeqS.h
     Valuetype_Adapter.h
+    Valuetype_Adapter_Factory.h
     Var_Array_Argument_T.h
     varbase.h
     VarOut_T.h

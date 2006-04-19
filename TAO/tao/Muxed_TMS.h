@@ -75,7 +75,7 @@ protected:
 
   /// Keep track of the orb core pointer. We need to this to create the
   /// Reply Dispatchers.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
                                    TAO_Reply_Dispatcher *,

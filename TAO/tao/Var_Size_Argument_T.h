@@ -118,7 +118,7 @@ namespace TAO
   };
 
   /**
-   * @struct Basic_Tag
+   * @struct Var_Size_Tag
    *
    * @brief Struct for fixed size IDL type arguments id tag.
    *

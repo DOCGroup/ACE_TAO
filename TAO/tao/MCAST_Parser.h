@@ -29,9 +29,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_MCAST_Parser
  *
- * @brief Implements the <mcast:> IOR format
+ * @brief Implements the @c mcast: IOR format
  *
- * This class implements the <mcast:> IOR format.
+ * This class implements the @c mcast: IOR format.
  * It is dynamically loaded by the ORB and used to parse the
  * string to separate the individual <obj_addr> from the list of object
  * addresses <obj_addr_list>.

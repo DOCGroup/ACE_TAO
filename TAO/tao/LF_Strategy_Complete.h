@@ -34,9 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Strategy_Complete : public TAO_LF_Strategy
 {
 public:
-  /// Constructor
-  TAO_LF_Strategy_Complete (void);
-
   //@{
   /** @name Virtual Methods
    *
@@ -52,10 +49,6 @@ public:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-# include "tao/LF_Strategy_Complete.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

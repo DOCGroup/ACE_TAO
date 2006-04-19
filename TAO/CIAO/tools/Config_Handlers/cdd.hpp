@@ -3,16 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -20,7 +16,7 @@
 #endif
 
 #include "XSC_XML_Handlers_Export.h"
- 
+
 #ifndef CDD_HPP
 #define CDD_HPP
 
@@ -54,7 +50,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
@@ -64,7 +60,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -74,7 +70,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
       // node
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Node >::iterator node_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Node >::const_iterator node_const_iterator;
@@ -89,7 +85,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Node > node_;
 
       // interconnect
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Interconnect const& interconnect () const;
       void interconnect (::CIAO::Config_Handlers::Interconnect const& );
@@ -98,7 +94,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Interconnect > interconnect_;
 
       // bridge
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Bridge const& bridge () const;
       void bridge (::CIAO::Config_Handlers::Bridge const& );
@@ -107,7 +103,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Bridge > bridge_;
 
       // sharedResource
-      // 
+      //
       public:
       bool sharedResource_p () const;
       ::CIAO::Config_Handlers::SharedResource const& sharedResource () const;
@@ -117,7 +113,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SharedResource > sharedResource_;
 
       // infoProperty
-      // 
+      //
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
@@ -147,7 +143,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -156,7 +152,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
@@ -166,7 +162,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
       // connect
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::iterator connect_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::const_iterator connect_const_iterator;
@@ -181,7 +177,7 @@ namespace CIAO
       ::std::list< ::CIAO::Config_Handlers::Interconnect > connect_;
 
       // resource
-      // 
+      //
       public:
       typedef ::std::list< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
       typedef ::std::list< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;

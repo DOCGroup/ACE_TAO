@@ -75,22 +75,19 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        OctetSeq,
-        CORBA::Octet
+        OctetSeq
       >
     OctetSeq_var;
 
   typedef
     TAO_Seq_Out_T<
-        OctetSeq,
-        OctetSeq_var,
-        CORBA::Octet
+        OctetSeq
       >
     OctetSeq_out;
 
   class TAO_Export OctetSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Octet
           >
   {
@@ -101,7 +98,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Octet* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     OctetSeq (const OctetSeq &);
     ~OctetSeq (void);
@@ -115,7 +112,7 @@ namespace CORBA
         CORBA::ULong length,
         const ACE_Message_Block* mb
       )
-      : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
+      : TAO::unbounded_value_sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
   };
 
@@ -143,7 +140,7 @@ namespace TAO
 // but we put the instantiation here because the application will
 // need to see it in *C.h to avoid the error.
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-  template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
+//  template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 

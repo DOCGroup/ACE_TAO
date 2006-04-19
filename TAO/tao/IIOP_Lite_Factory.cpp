@@ -52,7 +52,7 @@ TAO_IIOP_Lite_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   // We are a Lite factory
-  CORBA::Boolean lite_flag = 1;
+  CORBA::Boolean lite_flag = true;
   ACE_NEW_RETURN (acceptor,
                   TAO_IIOP_Acceptor (lite_flag),
                   0);
@@ -73,7 +73,7 @@ TAO_IIOP_Lite_Protocol_Factory::make_connector (void)
   TAO_Connector *connector = 0;
 
   // We are a Lite factory
-  CORBA::Boolean lite_flag = 1;
+  CORBA::Boolean lite_flag = true;
 
   ACE_NEW_RETURN (connector,
                   TAO_IIOP_Connector (lite_flag),

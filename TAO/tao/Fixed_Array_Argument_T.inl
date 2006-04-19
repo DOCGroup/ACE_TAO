@@ -12,17 +12,17 @@ ACE_INLINE
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
 In_Fixed_Array_Argument_T (const S_slice * x)
   : x_ (
-#if (defined (_MSC_VER) && _MSC_VER <= 1200) || (defined (__IBMCPP__) && (__IBMCPP__ <= 600))
-        // @@ (OO) MSVC++ 6 can't handle the const_cast<> in the
+#if (defined (__IBMCPP__) && (__IBMCPP__ <= 600))
+        // @@ (OO) IMBCPP 6 can't handle the const_cast<> in the
         //         multi-dimensional array case so C-style
         //         "sledgehammer" cast instead (reinterpret_cast<>
         //         doesn't work either).  It's not clear if this is
         //         really the right thing to do but the code won't
-        //         compile with MSVC++ 6 without it.
+        //         compile without it.
         (S_slice *) x
 #else
         const_cast<S_slice *> (x)
-#endif  /* _MSC_VER <= 1200 */
+#endif  /* IBMCPP <= 600 */
         )
 {
 }

@@ -129,16 +129,16 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       if (r->blocked_connect () ||
          (!r->blocked_connect () && r->profile ()->supports_non_blocking_oneways ()))
         {
-          const size_t endpoint_count =
+          size_t const endpoint_count =
             r->profile ()->endpoint_count ();
 
-          TAO_Endpoint *ep =
+          TAO_Endpoint * ep =
             r->profile ()->endpoint ();
 
           for (size_t i = 0; i < endpoint_count; ++i)
             {
               TAO_Base_Transport_Property desc (ep);
-              const bool retval =
+              bool const retval =
                 r->try_connect (&desc,
                                 max_wait_time
                                 ACE_ENV_ARG_PARAMETER);

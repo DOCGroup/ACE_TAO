@@ -66,7 +66,7 @@ namespace TAO
 
     TAO_OutputCDR &cdr = transport->out_stream ();
 
-    int retval =
+    int const retval =
       transport->generate_locate_request (tspec,
                                           this->details_,
                                           cdr);

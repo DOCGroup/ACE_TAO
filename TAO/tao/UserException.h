@@ -72,10 +72,9 @@ namespace CORBA
     /// function is not CORBA compliant.
     virtual ACE_CString _info (void) const;
 
-    //protected: // when msvc6 is dropped we can make this protected
+  protected:
     /// Default constructor.
     UserException (void);
-
   };
 
 }

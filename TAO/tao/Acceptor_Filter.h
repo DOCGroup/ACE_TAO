@@ -49,9 +49,9 @@ public:
   virtual ~TAO_Acceptor_Filter (void);
 
   /**
-   * Populate <mprofile> with profiles. Profiles are created for
+   * Populate @a mprofile with profiles. Profiles are created for
    * selected acceptors (endpoints) from the array delimited by
-   * <acceptors_begin> and <acceptors_end>.
+   * @a acceptors_begin and @a acceptors_end.
    */
   virtual int fill_profile (const TAO::ObjectKey &object_key,
                             TAO_MProfile &mprofile,
