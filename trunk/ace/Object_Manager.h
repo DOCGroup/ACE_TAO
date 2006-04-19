@@ -353,7 +353,7 @@ public:
   static int get_singleton_lock (ACE_Null_Mutex *&);
 
   /**
-   * Accesses a non-recursive <ACE_Thread_Mutex> to be used for
+   * Accesses a non-recursive ACE_Thread_Mutex to be used for
    * construction of <ACE_Singletons>.  Returns 0, and the lock in the
    * argument, on success; returns -1 on failure.
    */

@@ -39,29 +39,29 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
     {
       if (*buf == ACE_LIB_TEXT ('\\'))
         {
-          buf++;
+          ++buf;
           if (*buf == ACE_LIB_TEXT ('E') || *buf == ACE_LIB_TEXT ('e'))
             {
               cap += ACE_ESC;
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('r'))
             {
               cap += ACE_LIB_TEXT ('\r');
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('n'))
             {
               cap += ACE_LIB_TEXT ('\n');
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('t'))
             {
               cap += ACE_LIB_TEXT ('\t');
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('\\'))
@@ -203,7 +203,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
     {
       // Skip blanks or irrelevant characters
       while (*line && isspace(*line))
-        line++;
+        ++line;
 
       // End of line reached
       if (*line == ACE_LIB_TEXT ('\0'))
@@ -220,7 +220,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 
       // Skip puntuaction char if neccesary.
       if (*line == ACE_LIB_TEXT ('|') || *line == ACE_LIB_TEXT (','))
-        line++;
+        ++line;
       else
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -293,7 +293,7 @@ static int
 is_empty (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
-    line++;
+    ++line;
 
   return *line == ACE_LIB_TEXT ('\0') || *line == ACE_LIB_TEXT ('#');
 }
@@ -302,7 +302,7 @@ static int
 is_line (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
-    line++;
+    ++line;
 
   return *line != ACE_LIB_TEXT ('\0');
 }
@@ -321,7 +321,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 
   int done;
   ACE_TString line;
- 
+
   while (0 == (done = (this->getline (fp, line) == -1))
          && is_empty (line.c_str ()))
     continue;
