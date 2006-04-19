@@ -1,3 +1,12 @@
+Wed Apr 19 16:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/ExceptionHolderC.{h,cpp}:
+          Added constructor that accepts all values as generated now by the
+          IDL compiler
+
+        * tao/Messaging/ExceptionHolder_i.cpp:
+          Use the new constructor
+
 Wed Apr 19 14:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exception.h:
