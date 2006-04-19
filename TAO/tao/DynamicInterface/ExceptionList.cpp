@@ -35,7 +35,7 @@ CORBA::ExceptionList::~ExceptionList (void)
           return;
         }
 
-      CORBA::release (*tc);
+      ::CORBA::release (*tc);
     }
 }
 

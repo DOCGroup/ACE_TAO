@@ -41,7 +41,7 @@ class TAO_TSS_Resources;
  * Define the hash() method for Object Ids.
  */
 
-typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
+typedef TAO::unbounded_value_sequence<CORBA::Octet> IdType;
 
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {

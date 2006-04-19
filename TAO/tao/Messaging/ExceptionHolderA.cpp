@@ -41,8 +41,6 @@
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
@@ -194,4 +192,3 @@ operator>>= (
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif

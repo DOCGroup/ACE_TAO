@@ -7,8 +7,6 @@ ACE_RCSID (Messaging,
            ExceptionHolder_i,
            "$Id$")
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 #include "tao/Messaging/Messaging.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -64,6 +62,25 @@ namespace TAO
       this->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
+  CORBA::ValueBase*
+  ExceptionHolder::_copy_value (void)
+  {
+    TAO::ExceptionHolder* ret_val = 0;
+    ACE_NEW_THROW_EX (ret_val,
+                      ExceptionHolder,
+                      CORBA::NO_MEMORY ());
+    ACE_CHECK_RETURN (0);
+
+    // @todo According to the latest corba spec we should be able to
+    // pass this to the ExceptionHolder constructor but the TAO_IDL
+    // compiler doesn't seem to generate this.
+    ret_val->is_system_exception (this->is_system_exception ());
+    ret_val->byte_order (this->byte_order ());
+    ret_val->marshaled_exception (this->marshaled_exception ());
+
+    return ret_val;
+  }
+
   CORBA::ValueBase *
   ExceptionHolderFactory::create_for_unmarshal (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -81,4 +98,3 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif

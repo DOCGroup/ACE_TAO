@@ -155,7 +155,7 @@ CORBA::TypeCode::concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 ACE_INLINE void
 CORBA::TypeCode::_tao_any_destructor (void * x)
 {
-  CORBA::release (static_cast <CORBA::TypeCode_ptr> (x));
+  ::CORBA::release (static_cast <CORBA::TypeCode_ptr> (x));
 }
 
 

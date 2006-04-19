@@ -25,7 +25,7 @@ TAO::TypeCode::Union<StringType,
   CaseArrayType const & cases,
   CORBA::ULong ncases,
   CORBA::Long default_index)
-  : CORBA::TypeCode (CORBA::tk_union)
+  : ::CORBA::TypeCode (CORBA::tk_union)
   , RefCountPolicy ()
   , base_attributes_ (id, name)
   , discriminant_type_ (discriminant_type)
@@ -46,7 +46,7 @@ TAO::TypeCode::Union<StringType,
                      RefCountPolicy>::Union (
   CORBA::TCKind,
   char const * id)
-  : CORBA::TypeCode (CORBA::tk_union)
+  : ::CORBA::TypeCode (CORBA::tk_union)
   , RefCountPolicy ()
   , base_attributes_ (id)
   , discriminant_type_ (0)

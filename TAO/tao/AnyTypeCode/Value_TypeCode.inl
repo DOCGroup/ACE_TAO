@@ -26,7 +26,7 @@ TAO::TypeCode::Value<StringType,
 #endif
   FieldArrayType const & fields,
   CORBA::ULong nfields)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , base_attributes_ (id, name)
   , type_modifier_ (modifier)
@@ -47,7 +47,7 @@ TAO::TypeCode::Value<StringType,
                      RefCountPolicy>::Value (
   CORBA::TCKind kind,
   char const * id)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , base_attributes_ (id)
   , type_modifier_ (CORBA::VM_NONE)

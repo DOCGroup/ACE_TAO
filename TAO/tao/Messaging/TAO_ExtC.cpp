@@ -62,7 +62,7 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::release (
     TAO::ConnectionTimeoutPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO::ConnectionTimeoutPolicy_ptr
@@ -111,18 +111,18 @@ TAO::ConnectionTimeoutPolicy::_unchecked_narrow (
 TAO::ConnectionTimeoutPolicy_ptr
 TAO::ConnectionTimeoutPolicy::_duplicate (ConnectionTimeoutPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 TAO::ConnectionTimeoutPolicy::_tao_release (ConnectionTimeoutPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

@@ -27,12 +27,13 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/PI_Server/ServerRequestInfoC.h"
+#include "tao/PI/PIForwardRequestC.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/PortableInterceptorC.h"
-#include "tao/PI/PIForwardRequestC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

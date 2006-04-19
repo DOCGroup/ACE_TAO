@@ -66,7 +66,7 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The ORB Core we belong to
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// The table implementation
   TAO_IOR_Table_Impl *root_;

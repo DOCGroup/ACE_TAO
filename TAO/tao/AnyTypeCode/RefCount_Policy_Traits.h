@@ -32,7 +32,6 @@ namespace TAO
   class Null_RefCount_Policy;
   class True_RefCount_Policy;
 
-#if !defined (_MSC_VER) || (_MSC_VER >= 1310)
   /**
    * @struct RefCount_Policy_Traits
    *
@@ -74,34 +73,6 @@ namespace TAO
       CORBA::release (ptr);
     }
   };
-
-#else
-
-  // MSVC++ 6 can't handle partial template specializations so fall
-  // back on an alternate implementation.
-
-  template<class RefCountPolicy> struct RefCount_Policy_Traits;
-
-  template<>
-  struct RefCount_Policy_Traits<Null_RefCount_Policy>
-  {
-    static bool is_refcounted (void)
-    {
-      return false;
-    }
-  };
-
-  template<>
-  struct RefCount_Policy_Traits<True_RefCount_Policy>
-  {
-    static bool is_refcounted (void)
-    {
-      return true;
-    }
-  };
-
-#endif  /* !_MSC_VER || _MSC_VER >= 1310 */
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -59,7 +59,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
                                    CORBA::COMPLETED_MAYBE));
 
       CORBA::SystemException* exception =
-        TAO_Exceptions::create_system_exception (type_id.in ());
+        TAO::create_system_exception (type_id.in ());
 
       if (exception == 0)
         {
