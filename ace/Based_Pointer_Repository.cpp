@@ -116,6 +116,6 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX> *
   ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

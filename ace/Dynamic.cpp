@@ -29,7 +29,6 @@ ACE_Dynamic::instance (void)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex> *
   ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
