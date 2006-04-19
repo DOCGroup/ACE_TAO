@@ -564,19 +564,11 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
 // ****************************************************************
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
 template ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX> *
   ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::singleton_;
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
