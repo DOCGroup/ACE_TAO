@@ -13,6 +13,7 @@ call_counter mock_reference::duplicate_calls;
 call_counter mock_reference::release_calls;
 call_counter mock_reference::serialize_calls;
 call_counter mock_reference::deserialize_calls;
+call_counter mock_reference::marshal_calls;
 
 mock_reference::
 ~mock_reference()
@@ -78,21 +79,23 @@ TAO::Objref_Traits<mock_reference>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<mock_reference>::marshal (
-    mock_reference_ptr,
+    const mock_reference_ptr,
     TAO_OutputCDR &
   )
 {
+  mock_reference::marshal_calls ();
   return true;
 }
 
-CORBA::Boolean operator<< (mock_stream &, const mock_reference *)
+CORBA::Boolean operator<< (TAO_OutputCDR &, const mock_reference *)
 {
   mock_reference::serialize_calls ();
   return true;
 }
-CORBA::Boolean operator>> (mock_stream &, mock_reference *&)
+CORBA::Boolean operator>> (TAO_InputCDR &, mock_reference *&)
 {
   mock_reference::deserialize_calls ();
   return true;
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL

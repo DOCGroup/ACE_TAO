@@ -8,15 +8,16 @@
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"
-#include "object_reference_traits.hpp"
+#include "tao/Object_Reference_Traits_T.h"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
-#include "mock_stream.hpp"
 
-#include "unbounded_object_reference_sequence.hpp"
-#include "unbounded_sequence_cdr.hpp"
+#include "tao/Unbounded_Value_Sequence_T.h"
+#include "tao/Unbounded_Object_Reference_Sequence_T.h"
+#include "tao/Unbounded_Sequence_CDR_T.h"
+#include "tao/CDR.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
@@ -27,14 +28,14 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 typedef unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
 
-CORBA::Boolean operator<< (mock_stream &strm, const tested_sequence &sequence)
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
 {
-  return TAO::details::insert_unbounded_sequence(strm, sequence);
+  return TAO::marshal_sequence(strm, sequence);
 }
 
-CORBA::Boolean operator>> (mock_stream &strm, tested_sequence &sequence)
+CORBA::Boolean operator>> (TAO_InputCDR &strm, tested_sequence &sequence)
 {
-  return TAO::details::extract_unbounded_sequence(strm, sequence);
+  return TAO::demarshal_sequence(strm, sequence);
 }
 
 struct Tester
@@ -69,7 +70,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
 
-    expected_calls s(mock_reference::serialize_calls);
+    expected_calls s(mock_reference::marshal_calls);
     {
       tested_sequence a;
       a.replace(8, 4, buffer, false);
@@ -80,7 +81,7 @@ struct Tester
       BOOST_CHECK_EQUAL(false, a.release());
       check_values(a);
 
-      mock_stream stream;
+      TAO_OutputCDR stream;
       stream << a;
       BOOST_CHECK_MESSAGE(s.expect(4), s);
     }

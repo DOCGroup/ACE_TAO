@@ -188,7 +188,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
   unique += "_traits";
 
   *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << be_idt << be_idt_nl
@@ -203,7 +202,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << be_idt << be_idt_nl
@@ -218,7 +216,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << be_idt << be_idt_nl
@@ -234,7 +231,20 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+      << "ACE_INLINE" << be_nl
+      << "void" << be_nl
+      << "TAO::Array_Traits<" << be_idt << be_idt_nl
+      << fname << "," << be_nl
+      << fname << "_slice," << be_nl
+      << fname << "_tag" << be_uidt_nl
+      << ">::zero (" << be_idt_nl
+      << fname << "_slice * _tao_slice" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << fname << "_zero (_tao_slice);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << be_idt << be_idt_nl

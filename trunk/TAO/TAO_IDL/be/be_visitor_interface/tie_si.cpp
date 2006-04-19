@@ -184,7 +184,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << (be_global->use_raw_throw () ? "" : "ACE_ENV_SINGLE_ARG_DECL")
       << ")" << be_nl
       << "{" << be_idt_nl
-      << "if (! CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return PortableServer::POA::_duplicate (this->poa_.in ());"
       << be_uidt_nl

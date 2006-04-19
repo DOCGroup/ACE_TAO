@@ -24,6 +24,8 @@ main (int argc, char** argv)
                             1);
         }
 
+      server->destroy ();
+
       server->shutdown ();
 
       orb->destroy ();

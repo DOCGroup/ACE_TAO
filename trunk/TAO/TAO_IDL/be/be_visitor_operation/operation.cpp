@@ -365,7 +365,7 @@ be_visitor_operation::gen_stub_operation_body (
       // be null.  Initialize it now.
       *os << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);"
+          << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"

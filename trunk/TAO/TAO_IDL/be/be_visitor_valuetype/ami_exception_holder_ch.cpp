@@ -38,50 +38,6 @@ be_visitor_valuetype_ami_exception_holder_ch::
 }
 
 int
-be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (
-    be_valuetype *node
-  )
-{
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Generate the implemenation of the Messaging aware ORB.
-  *os << be_nl << be_nl
-      << "class _tao_" << node->local_name () << be_idt_nl
-      << ": public ";
-
-  if (!node->is_nested ())
-    {
-      *os << "OBV_";
-    }
-
-  *os << node->local_name () << "," << be_nl
-      << "  public virtual OBV_Messaging::ExceptionHolder," << be_nl
-      << "  public virtual ::CORBA::DefaultValueRefCountBase" << be_uidt_nl
-      << "{" << be_nl;
-  *os << "public:" << be_idt_nl;
-  *os << "_tao_" << node->local_name () << " ();" << be_nl << be_nl;
-  *os << "~_tao_" << node->local_name () << " ();";
-
-  if (this->visit_valuetype_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ami_"
-                         "exception_holder_cs::"
-                         "visit_valuetype - "
-                         "codegen for scope failed\n"),
-                        -1);
-    }
-
-  *os << be_uidt_nl
-      << "};";
-#else
-  ACE_UNUSED_ARG (node);
-#endif
-  return 0;
-}
-
-int
 be_visitor_valuetype_ami_exception_holder_ch::visit_operation (
     be_operation *node
   )
