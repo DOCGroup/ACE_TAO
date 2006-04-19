@@ -25,15 +25,10 @@ namespace TAO
       const ::CORBA::OctetSeq &marshaled_exception,
       ::TAO::Exception_Data* data,
       ::CORBA::ULong exceptions_count) :
+        ::OBV_Messaging::ExceptionHolder (is_system_exception, byte_order, marshaled_exception),
         data_ (data),
         count_ (exceptions_count)
   {
-    // @todo According to the latest corba spec we should be able to
-    // pass this to the ExceptionHolder constructor but the TAO_IDL
-    // compiler doesn't seem to generate this.
-    this->is_system_exception (is_system_exception);
-    this->byte_order (byte_order);
-    this->marshaled_exception (marshaled_exception);
   }
 
   ExceptionHolder::~ExceptionHolder ()
