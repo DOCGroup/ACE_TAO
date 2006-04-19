@@ -39,8 +39,6 @@
 #include "tao/AnyTypeCode/DynamicA.h"
 
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
@@ -82,8 +80,6 @@ TAO_Messaging_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Messagi
 #endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif
 
 #include /**/ "ace/post.h"
 

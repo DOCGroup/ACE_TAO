@@ -401,11 +401,6 @@ AST_Type::nested_name (const char* local_name,
                            len_to_match)
             == 0)
         {
-          // Initial prefix matches i.e., they have a common root.
-          // Start by initializing the macro.
-          ACE_OS::sprintf (this->nested_type_name_,
-                           "ACE_NESTED_CLASS (");
-
           // Initialize the first argument.
           ACE_OS::strncat (this->nested_type_name_,
                            def_curr,
@@ -479,7 +474,7 @@ AST_Type::nested_name (const char* local_name,
             }
 
           // Start the 2nd argument of the macro.
-          ACE_OS::strcat (this->nested_type_name_, ", ");
+          ACE_OS::strcat (this->nested_type_name_, "::");
 
           // Copy the remaining def_name (if any are left).
           if (def_curr != 0)
@@ -505,9 +500,6 @@ AST_Type::nested_name (const char* local_name,
               ACE_OS::strcat (this->nested_type_name_,
                               suffix);
             }
-
-          ACE_OS::strcat (this->nested_type_name_,
-                          ")");
 
           return this->nested_type_name_;
         } // End of if the root prefixes match.

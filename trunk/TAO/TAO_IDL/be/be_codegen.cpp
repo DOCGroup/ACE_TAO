@@ -30,7 +30,6 @@ ACE_RCSID (be,
            be_codegen,
            "$Id$")
 
-
 TAO_CodeGen * tao_cg = 0;
 
 TAO_CodeGen::TAO_CodeGen (void)
@@ -1638,7 +1637,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // Generated if (w)string member of struct/union/exception/array/valuetype
   // has been seen.
   this->gen_cond_file_include (idl_global->string_member_seen_,
-                               "tao/Managed_Types.h",
+                               "tao/String_Manager_T.h",
                                this->client_header_);
 
   // Include the Messaging library entry point, if AMI is enabled.
@@ -1787,27 +1786,8 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/Asynch_Invocation_Adapter.h");
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/ExceptionHolder_i.h");
-#endif
-
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-      // If a valuetype has been seen, this will already be in the header file.
-      if (!idl_global->valuetype_seen_)
-        {
-          // This may already be in the generated header file.
-          if (!idl_global->valuebase_seen_)
-            {
-              // For AMI exception holders.
-              this->gen_standard_include (this->client_stubs_,
-                                          "tao/Valuetype/ValueBase.h");
-            }
-
-          this->gen_standard_include (this->client_stubs_,
-                                      "tao/Valuetype/Valuetype_Adapter_Impl.h");
-        }
-#endif
     }
 
   // If valuefactory_seen_ was set, this was generated in the stub header file,

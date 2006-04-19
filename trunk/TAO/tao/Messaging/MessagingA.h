@@ -38,11 +38,7 @@
 #include "tao/Messaging/Messaging_SyncScope_PolicyA.h"
 #include "tao/Messaging/Messaging_RT_PolicyA.h"
 #include "tao/Messaging/Messaging_No_ImplA.h"
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-#include "tao/Messaging/OldExceptionHolderA.h"
-#else
 #include "tao/Messaging/ExceptionHolderA.h"
-#endif
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59

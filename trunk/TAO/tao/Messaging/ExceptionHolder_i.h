@@ -22,8 +22,6 @@
 
 #include "tao/orbconf.h"
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 #include "tao/Messaging/ExceptionHolderA.h"
 #include "tao/Messaging/ExceptionHolderC.h"
 #include "tao/Valuetype/ValueFactory.h"
@@ -65,6 +63,8 @@ namespace TAO
         const ::Dynamic::ExceptionList & exc_list ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    virtual CORBA::ValueBase* _copy_value (void);
+
   protected:
 
     virtual ~ExceptionHolder (void);
@@ -94,8 +94,6 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif
 
 #include /**/ "ace/post.h"
 #endif /* TAO_MESSAGING_EXCEPTIONHOLDER_I_H */

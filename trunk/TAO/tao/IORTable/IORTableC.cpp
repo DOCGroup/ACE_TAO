@@ -48,7 +48,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::AlreadyBound::AlreadyBound (void)
@@ -74,7 +74,7 @@ IORTable::AlreadyBound::AlreadyBound (const ::IORTable::AlreadyBound &_tao_excp)
 IORTable::AlreadyBound&
 IORTable::AlreadyBound::operator= (const ::IORTable::AlreadyBound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -123,7 +123,7 @@ void IORTable::AlreadyBound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -136,13 +136,13 @@ void IORTable::AlreadyBound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::NotFound::NotFound (void)
@@ -168,7 +168,7 @@ IORTable::NotFound::NotFound (const ::IORTable::NotFound &_tao_excp)
 IORTable::NotFound&
 IORTable::NotFound::operator= (const ::IORTable::NotFound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -217,7 +217,7 @@ void IORTable::NotFound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -230,7 +230,7 @@ void IORTable::NotFound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -254,7 +254,7 @@ TAO::Objref_Traits<IORTable::Table>::release (
     IORTable::Table_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 IORTable::Table_ptr
@@ -288,10 +288,10 @@ IORTable::Table::_narrow (
     {
       return Table::_nil ();
     }
-  
+
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-  
+
   return Table::_duplicate (proxy);
 }
 
@@ -305,28 +305,28 @@ IORTable::Table::_unchecked_narrow (
     {
       return Table::_nil ();
     }
-  
+
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-  
+
   return Table::_duplicate (proxy);
 }
 
 IORTable::Table_ptr
 IORTable::Table::_duplicate (Table_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 IORTable::Table::_tao_release (Table_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -387,7 +387,7 @@ TAO::Objref_Traits<IORTable::Locator>::release (
     IORTable::Locator_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 IORTable::Locator_ptr
@@ -421,10 +421,10 @@ IORTable::Locator::_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-  
+
   return Locator::_duplicate (proxy);
 }
 
@@ -438,28 +438,28 @@ IORTable::Locator::_unchecked_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-  
+
   return Locator::_duplicate (proxy);
 }
 
 IORTable::Locator_ptr
 IORTable::Locator::_duplicate (Locator_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 IORTable::Locator::_tao_release (Locator_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

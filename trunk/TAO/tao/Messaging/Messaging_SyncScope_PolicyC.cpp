@@ -62,7 +62,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::release (
     Messaging::SyncScopePolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::SyncScopePolicy_ptr
@@ -111,18 +111,18 @@ Messaging::SyncScopePolicy::_unchecked_narrow (
 Messaging::SyncScopePolicy_ptr
 Messaging::SyncScopePolicy::_duplicate (SyncScopePolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::SyncScopePolicy::_tao_release (SyncScopePolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

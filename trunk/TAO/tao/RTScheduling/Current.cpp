@@ -865,13 +865,13 @@ TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (const ::TAO_RTSchedule
 
 TAO_RTScheduler_Current_var::~TAO_RTScheduler_Current_var (void) // destructor
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
 }
 
 TAO_RTScheduler_Current_var &
 TAO_RTScheduler_Current_var::operator= (TAO_RTScheduler_Current_ptr p)
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
@@ -881,7 +881,7 @@ TAO_RTScheduler_Current_var::operator= (const ::TAO_RTScheduler_Current_var &p)
 {
   if (this != &p)
   {
-    CORBA::release (this->ptr_);
+    ::CORBA::release (this->ptr_);
     this->ptr_ = ::TAO_RTScheduler_Current::_duplicate (p.ptr ());
   }
   return *this;
@@ -918,7 +918,7 @@ TAO_RTScheduler_Current_var::inout (void)
 TAO_RTScheduler_Current_ptr &
 TAO_RTScheduler_Current_var::out (void)
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
   this->ptr_ = ::TAO_RTScheduler_Current::_nil ();
   return this->ptr_;
 }
@@ -941,7 +941,7 @@ TAO_RTScheduler_Current_var::duplicate (TAO_RTScheduler_Current_ptr p)
 void
 TAO_RTScheduler_Current_var::release (TAO_RTScheduler_Current_ptr p)
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_RTScheduler_Current_ptr

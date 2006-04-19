@@ -688,15 +688,8 @@ TAO_TypeCodeFactory_i::create_enum_tc (
                             tc);
         }
 
-      enumerators[index] = members[index].in ();
-
-//       cdr << members[index].in ();
+      enumerators[index] = members[index];
     }
-
-//   return this->assemble_tc (cdr,
-//                             CORBA::tk_enum,
-//                             0
-//                             ACE_ENV_ARG_PARAMETER);
 
   typedef TAO::TypeCode::Enum<
     CORBA::String_var,

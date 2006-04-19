@@ -71,7 +71,7 @@ TAO::Objref_Traits<CORBA::Pollable>::release (
     CORBA::Pollable_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Pollable_ptr
@@ -120,18 +120,18 @@ CORBA::Pollable::_unchecked_narrow (
 CORBA::Pollable_ptr
 CORBA::Pollable::_duplicate (Pollable_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CORBA::Pollable::_tao_release (Pollable_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -183,7 +183,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/CORBA/Pollable:1.0",
     "Pollable");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Pollable =
@@ -210,7 +210,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::release (
     CORBA::DIIPollable_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::DIIPollable_ptr
@@ -259,18 +259,18 @@ CORBA::DIIPollable::_unchecked_narrow (
 CORBA::DIIPollable_ptr
 CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CORBA::DIIPollable::_tao_release (DIIPollable_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -326,7 +326,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/CORBA/DIIPollable:1.0",
     "DIIPollable");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_DIIPollable =
@@ -353,7 +353,7 @@ TAO::Objref_Traits<CORBA::PollableSet>::release (
     CORBA::PollableSet_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::PollableSet_ptr
@@ -371,7 +371,7 @@ TAO::Objref_Traits<CORBA::PollableSet>::marshal (
   return ::CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
@@ -397,7 +397,7 @@ CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA::Polla
 CORBA::PollableSet::NoPossiblePollable&
 CORBA::PollableSet::NoPossiblePollable::operator= (const ::CORBA::PollableSet::NoPossiblePollable &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -480,11 +480,11 @@ static TAO::TypeCode::Struct<char const *,
     "NoPossiblePollable",
     _tao_fields_CORBA_PollableSet_NoPossiblePollable,
     0);
-  
+
 ::CORBA::TypeCode_ptr const CORBA::PollableSet::_tc_NoPossiblePollable =
   &_tao_tc_CORBA_PollableSet_NoPossiblePollable;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
@@ -510,7 +510,7 @@ CORBA::PollableSet::UnknownPollable::UnknownPollable (const ::CORBA::PollableSet
 CORBA::PollableSet::UnknownPollable&
 CORBA::PollableSet::UnknownPollable::operator= (const ::CORBA::PollableSet::UnknownPollable &_tao_excp)
 {
-  this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -593,7 +593,7 @@ static TAO::TypeCode::Struct<char const *,
     "UnknownPollable",
     _tao_fields_CORBA_PollableSet_UnknownPollable,
     0);
-  
+
 ::CORBA::TypeCode_ptr const CORBA::PollableSet::_tc_UnknownPollable =
   &_tao_tc_CORBA_PollableSet_UnknownPollable;
 
@@ -628,18 +628,18 @@ CORBA::PollableSet::_unchecked_narrow (
 CORBA::PollableSet_ptr
 CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CORBA::PollableSet::_tao_release (PollableSet_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -691,7 +691,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/CORBA/PollableSet:1.0",
     "PollableSet");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PollableSet =

@@ -35,7 +35,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_ORB_Core;
 class TAO_InputCDR;
 
 namespace CORBA
