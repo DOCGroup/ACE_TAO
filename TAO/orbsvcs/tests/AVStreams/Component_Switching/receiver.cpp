@@ -60,7 +60,7 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
        i++)
     {
       TAO_Forward_FlowSpec_Entry entry;
-      entry.parse (flowspec[i].in ());
+      entry.parse (flowspec[i]);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Handle Conection Requested flowname %s \n",

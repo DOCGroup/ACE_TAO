@@ -106,7 +106,7 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
        i++)
     {
       TAO_Forward_FlowSpec_Entry entry;
-      entry.parse (flowspec[i].in ());
+      entry.parse (flowspec[i]);
 
       //if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
