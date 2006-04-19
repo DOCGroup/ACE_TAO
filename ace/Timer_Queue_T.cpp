@@ -222,7 +222,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   // Schedule the timer.
-  long result =
+  long const result =
     this->schedule_i (type,
                       act,
                       future_time,

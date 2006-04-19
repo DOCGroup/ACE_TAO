@@ -119,9 +119,9 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
 
     size_t next_empty_slot = 0;
     for (size_t i = 0; i < size; ++i) {
-      int ret = this->secondaries_[next_empty_slot].set(port_number,
-                                                       secondary_ip_addrs[i],
-                                                       encode);
+      int const ret = this->secondaries_[next_empty_slot].set(port_number,
+                                                              secondary_ip_addrs[i],
+                                                              encode);
 
       if (ret) {
         ACE_DEBUG ((LM_DEBUG,
@@ -150,10 +150,10 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 
   for (size_t i = 0; i < size; ++i) {
 
-    int ret = this->secondaries_[i].set(port_number,
-                                       secondary_host_names[i],
-                                       encode,
-                                       address_family);
+    int const ret = this->secondaries_[i].set(port_number,
+                                              secondary_host_names[i],
+                                              encode,
+                                              address_family);
     if (ret) {
       return ret;
     }

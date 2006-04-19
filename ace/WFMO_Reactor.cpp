@@ -194,7 +194,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
 
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
-  size_t original_handle_count = this->handles_to_be_deleted_;
+  size_t const original_handle_count = this->handles_to_be_deleted_;
   int result = 0;
   size_t i;
 

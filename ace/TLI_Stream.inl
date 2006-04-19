@@ -16,7 +16,7 @@ ACE_TLI_Stream::set_rwflag (int value)
 
 ACE_INLINE
 int
-ACE_TLI_Stream::get_rwflag (void)
+ACE_TLI_Stream::get_rwflag (void) const
 {
   ACE_TRACE ("ACE_TLI_Stream::get_rwflag");
   return this->rwflag_;

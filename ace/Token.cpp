@@ -2,11 +2,11 @@
 
 #include "ace/Token.h"
 
-ACE_RCSID(ace, Token, "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Token.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(ace, Token, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -395,7 +395,7 @@ ACE_Token::renew (int requeue_position,
   ++this->waiters_;
 
   // Remember nesting level...
-  int save_nesting_level_ = this->nesting_level_;
+  int const save_nesting_level_ = this->nesting_level_;
 
   // Reset state for new owner.
   this->nesting_level_ = 0;
@@ -525,7 +525,7 @@ ACE_Token::wakeup_next_waiter (void)
     }
 
   // Wakeup next waiter.
-  ACE_Token_Queue *queue;
+  ACE_Token_Queue *queue = 0;
 
   // Writer threads get priority to run first.
   if (this->writers_.head_ != 0)

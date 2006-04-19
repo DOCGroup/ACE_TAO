@@ -112,7 +112,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::peek_dequeue_head (ACE_ME
 
   ACE_Message_Block *mb = 0;
 
-  int cur_count = this->queue_.peek_dequeue_head (mb, timeout);
+  int const cur_count = this->queue_.peek_dequeue_head (mb, timeout);
 
   if (cur_count != -1)
     first_item  = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
@@ -134,7 +134,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head (ACE_MESSAGE
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
                   -1);
 
-  int result = this->queue_.enqueue_head (mb, timeout);
+  int const result = this->queue_.enqueue_head (mb, timeout);
   if (result == -1)
     // Zap the message.
     mb->release ();
@@ -168,7 +168,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
                   -1);
 
-  int result = this->queue_.enqueue_prio (mb, timeout);
+  int const result = this->queue_.enqueue_prio (mb, timeout);
   if (result == -1)
     // Zap the message.
     mb->release ();
@@ -190,7 +190,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_deadline (ACE_MES
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY ),
                   -1);
 
-  int result = this->queue_.enqueue_deadline (mb, timeout);
+  int const result = this->queue_.enqueue_deadline (mb, timeout);
   if (result == -1)
     // Zap the message.
     mb->release ();
@@ -215,7 +215,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail (ACE_MESSAGE
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
                   -1);
 
-  int result = this->queue_.enqueue_tail (mb, timeout);
+  int const result = this->queue_.enqueue_tail (mb, timeout);
   if (result == -1)
     // Zap the message.
     mb->release ();
@@ -234,7 +234,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE
 
   ACE_Message_Block *mb = 0;
 
-  int cur_count = this->queue_.dequeue_head (mb, timeout);
+  int const cur_count = this->queue_.dequeue_head (mb, timeout);
 
   // Dequeue the message.
   if (cur_count != -1)
@@ -242,10 +242,9 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE
       first_item = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
-      return cur_count;
     }
-  else
-    return -1;
+
+  return cur_count;
 }
 
 // Remove the item with the lowest priority from the queue.  If timeout == 0
@@ -260,7 +259,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_prio (ACE_MESSAGE
 
   ACE_Message_Block *mb = 0;
 
-  int cur_count = this->queue_.dequeue_prio (mb, timeout);
+  int const cur_count = this->queue_.dequeue_prio (mb, timeout);
 
   // Dequeue the message.
   if (cur_count != -1)
@@ -268,10 +267,9 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_prio (ACE_MESSAGE
       dequeued = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
-      return cur_count;
     }
-  else
-    return -1;
+
+  return cur_count;
 }
 
 // Remove an item from the end of the queue.  If timeout == 0 block
@@ -286,7 +284,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_tail (ACE_MESSAGE
 
   ACE_Message_Block *mb = 0;
 
-  int cur_count = this->queue_.dequeue_tail (mb, timeout);
+  int const cur_count = this->queue_.dequeue_tail (mb, timeout);
 
   // Dequeue the message.
   if (cur_count != -1)
@@ -294,10 +292,9 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_tail (ACE_MESSAGE
       dequeued = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
-      return cur_count;
     }
-  else
-    return -1;
+
+  return cur_count;
 }
 
 // Remove an item with the lowest deadline time.  If timeout == 0 block
@@ -312,7 +309,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_deadline (ACE_MES
 
   ACE_Message_Block *mb = 0;
 
-  int cur_count = this->queue_.dequeue_deadline (mb, timeout);
+  int const cur_count = this->queue_.dequeue_deadline (mb, timeout);
 
   // Dequeue the message.
   if (cur_count != -1)
@@ -320,10 +317,9 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_deadline (ACE_MES
       dequeued = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
       // Delete the message block.
       mb->release ();
-      return cur_count;
     }
-  else
-    return -1;
+
+  return cur_count;
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
@@ -899,7 +895,7 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (int pulse)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i");
-  int previous_state = this->state_;
+  int const previous_state = this->state_;
 
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
     {
@@ -919,7 +915,7 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::activate_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::activate_i");
-  int previous_state = this->state_;
+  int const previous_state = this->state_;
   this->state_ = ACE_Message_Queue_Base::ACTIVATED;
   return previous_state;
 }
@@ -942,7 +938,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  int result = this->deactivate_i ();
+  int const result = this->deactivate_i ();
 
   // Free up the remaining messages on the queue.
   this->flush_i ();

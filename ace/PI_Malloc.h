@@ -84,8 +84,9 @@ public:
 
   private:
 
-    // Disallow assignment.
-    void operator= (const ACE_Malloc_Header &);
+    // Disallow copy construction and assignment.
+    ACE_Malloc_Header (ACE_Malloc_Header const &);
+    void operator= (ACE_Malloc_Header const &);
 
   };
 
