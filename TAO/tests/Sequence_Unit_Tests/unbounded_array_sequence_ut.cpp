@@ -1,31 +1,29 @@
 /**
  * @file
  *
- * @brief Unit test for unbounded sequences of forward declared object
- * references.
+ * @brief Unit test for unbounded sequences of arrays.
  *
  * $Id$
  *
- * @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ * @author Carlos O'Ryan
  */
-#include "testing_object_reference_traits.hpp"
+
+#include "mock_array.hpp"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "fwd_mock_reference.hpp"
-
-#include "tao/Unbounded_Object_Reference_Sequence_T.h"
+#include "tao/Unbounded_Array_Sequence_T.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
 using namespace boost::unit_test_framework;
-using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
+using namespace TAO;
 
 struct Tester
 {
-  typedef unbounded_object_reference_sequence<fwd_mock_reference, fwd_mock_reference_var> tested_sequence;
+  typedef unbounded_array_sequence<my_array, my_array_slice, my_array_tag> tested_sequence;
   typedef tested_sequence::value_type value_type;
   typedef tested_sequence::const_value_type const_value_type;
 
@@ -35,9 +33,6 @@ struct Tester
 
   void test_default_constructor()
   {
-    expected_calls a(tested_allocation_traits::allocbuf_calls);
-    expected_calls f(tested_allocation_traits::freebuf_calls);
-    expected_calls i(tested_element_traits::default_initializer_calls);
     {
       tested_sequence x;
 
@@ -45,9 +40,6 @@ struct Tester
       BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
       BOOST_CHECK_EQUAL(true, x.release());
     }
-    BOOST_CHECK_MESSAGE(a.expect(0), a);
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
-    BOOST_CHECK_MESSAGE(i.expect(0), i);
   }
 
   void add_all(test_suite * ts)
@@ -57,7 +49,6 @@ struct Tester
                 &Tester::test_default_constructor,
                 shared_this));
   }
-
   static boost::shared_ptr<Tester> allocate()
   {
     boost::shared_ptr<Tester> ptr(new Tester);
@@ -72,11 +63,11 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-ACE_Proper_Export_Flag test_suite *
+test_suite *
 init_unit_test_suite(int, char*[])
 {
   test_suite * ts =
-      BOOST_TEST_SUITE("unbounded object reference sequence unit test");
+      BOOST_TEST_SUITE("unbounded array sequence unit test");
 
   boost::shared_ptr<Tester> tester(Tester::allocate());
   tester->add_all(ts);

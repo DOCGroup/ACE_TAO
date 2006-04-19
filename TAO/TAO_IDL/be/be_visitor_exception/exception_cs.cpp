@@ -114,7 +114,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &_tao_excp)" << be_nl
       << "{" << be_idt_nl
-      << "this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= "
+      << "this->::CORBA::UserException::operator= "
       << "(_tao_excp);";
 
   // Assign each individual member.

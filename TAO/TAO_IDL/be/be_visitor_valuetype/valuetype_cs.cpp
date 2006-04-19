@@ -154,10 +154,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           be_decl *scope =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-          *os << "ACE_NESTED_CLASS ("
-              << scope->name () << ","
-              << node->local_name () << ")"
-              <<"::_tao_marshal_state (strm);" << be_uidt_nl;
+          *os << scope->name () << "::"
+              << node->local_name ()
+              << "::_tao_marshal_state (strm);" << be_uidt_nl;
         }
       else
         {
@@ -179,9 +178,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           be_decl *scope =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-          *os << "ACE_NESTED_CLASS ("
-              << scope->name () << ","
-              << node->local_name () << ")"
+          *os << scope->name () << "::"
+              << node->local_name ()
               <<"::_tao_unmarshal_state (strm);" << be_uidt_nl;
         }
       else
@@ -204,7 +202,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () << "::_tao_marshal_v (TAO_OutputCDR &) const"
           << be_nl
           << "{" << be_idt_nl
-          << "return 1;" << be_uidt_nl
+          << "return true;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // The virtual _tao_unmarshal_v method.
@@ -212,7 +210,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () << "::_tao_unmarshal_v (TAO_InputCDR &)"
           << be_nl
           << "{" << be_idt_nl
-          << "return 1;" << be_uidt_nl
+          << "return true;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
 
@@ -222,14 +220,14 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               << node->name () << "::_tao_marshal__" << node->flat_name ()
               << " (TAO_OutputCDR &) const" << be_nl
               << "{" << be_idt_nl
-              << "return 1;" << be_uidt_nl
+              << "return true;" << be_uidt_nl
               << "}" << be_nl << be_nl;
 
           *os << "::CORBA::Boolean" << be_nl
               << node->name () << "::_tao_unmarshal__" << node->flat_name ()
               << " (TAO_InputCDR &)" << be_nl
               << "{" << be_idt_nl
-              << "return 1;" << be_uidt_nl
+              << "return true;" << be_uidt_nl
               << "}" << be_nl << be_nl;
         }
     }
@@ -251,7 +249,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "base," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
-      << "if (retval == 0)" << be_idt_nl
+      << "if (retval == false)" << be_idt_nl
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -263,7 +261,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "return false;  // %! except.?" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "retval = base->_tao_unmarshal_v (strm);" << be_nl << be_nl
-      << "if (retval == 0)" << be_idt_nl
+      << "if (retval == false)" << be_idt_nl
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl

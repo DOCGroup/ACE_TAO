@@ -238,12 +238,12 @@ Quoter_Server::~Quoter_Server (void)
       factory_name.length (2);
       factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_name[1].id = CORBA::string_dup ("Quoter_Factory");
-      if (this->namingContext_var_.ptr () != 0)
+      if (!CORBA::is_nil (this->namingContext_var_.in ()))
         this->namingContext_var_->unbind (factory_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       factory_name.length (1);
-      if (this->namingContext_var_.ptr () != 0)
+      if (!CORBA::is_nil (this->namingContext_var_.in ()))
         this->namingContext_var_->unbind (factory_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

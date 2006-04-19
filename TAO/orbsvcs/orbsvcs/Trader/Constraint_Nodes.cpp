@@ -4,7 +4,6 @@
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/Managed_Types.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (Trader,
@@ -736,7 +735,7 @@ operator== (CORBA::Double left, const TAO_Literal_Constraint& right)
 }
 
 bool
-operator== (const TAO_String_Manager& left,
+operator== (const TAO::String_Manager& left,
             const TAO_Literal_Constraint& right)
 {
   bool result = false;
