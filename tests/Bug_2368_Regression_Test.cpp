@@ -25,8 +25,8 @@ static bool handleB_close_called = false;
 class My_HandlerA : public ACE_Event_Handler
 {
 public:
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask)
+  virtual int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Handle close called\n"));
@@ -35,7 +35,7 @@ public:
     return 0;
   }
 
-  virtual int handle_signal (int sig,
+  virtual int handle_signal (int,
                              siginfo_t *,
                              ucontext_t *)
   {
@@ -49,8 +49,8 @@ public:
 class My_HandlerB : public ACE_Event_Handler
 {
 public:
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask)
+  virtual int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Handle close called\n"));
@@ -59,7 +59,7 @@ public:
     return 0;
   }
 
-  virtual int handle_signal (int sig,
+  virtual int handle_signal (int,
                              siginfo_t *,
                              ucontext_t *)
   {
