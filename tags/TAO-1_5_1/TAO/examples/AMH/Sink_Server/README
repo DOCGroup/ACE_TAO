@@ -1,0 +1,53 @@
+Files:
+------
+AMH_Servant.h/cpp     : AMH Servant that implements the Test interface
+Base_Server.h/cpp/inl : Wrapper to do 'common' ORB initialisation stuff on the server side
+MT_AMH_Server.h/cpp   : Adds multithreading capabilities to the Base_Server
+Timer_Handler.cpp     : Class to fire an AMH servant upcall after a set time
+st_server.cpp         : Single threaded AMH sink server application
+st_server.conf        : Configuration paramters to optimise a ST server
+mt_server.cpp         : Multi-threaded AMH sink server application
+Client_Task.h/cpp     : Wrapper class that does common client side functionalities
+client.cpp            : client application
+README                : This file
+
+
+Building the servers:
+---------------------
+Single Threaded Server: make st_server
+Multi  Threaded Server: make mt_server
+
+
+Running the servers:
+--------------------
+Single threaded AMH Sink Server:
+st_server -ORBsvcconf st_server.conf -o <ior_output_file> -s <sleep_time (in microseconds)> 
+
+e.g.: st_server -o test.ior -s 20000
+to delay a reply to the client by 20 milliseconds.
+
+Both options are necessary and there are no defaults.
+
+
+Multi Threaded AMH Sink Server:
+mt_server -o <ior_output_file>  -n <num_threads>  -s <sleep_time (in microseconds)>
+
+Giving the parameters in the right order is STRONGLY recommended.
+Unexpected behaviour may result otherwise.  All three options are
+necessary and there are no defaults
+
+
+How the server works:
+---------------------
+- Each client request is 'timed' (with the sleep_time) and registered
+in the ORB's reactor.  
+
+- Upon expiration of the timer, the reactor fires the timer_handler
+and the AMH RH servant method is called to send the reply to the
+client.
+
+
+NOTES:
+------
+On Linux systems, set POSIXLY_CORECT=1 for correct behaviour in
+parsing of command line arguments.
