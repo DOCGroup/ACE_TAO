@@ -97,29 +97,20 @@ namespace PortableServer
   class POAList;
 
   typedef
-    TAO_MngSeq_Var_T<
-        POAList,
-        TAO_Object_Manager<
-            POA,
-            POA_var
-          >
+    TAO_VarSeq_Var_T<
+        POAList
       >
     POAList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        POAList,
-        POAList_var,
-        TAO_Object_Manager<
-            POA,
-            POA_var
-          >
+    TAO_Seq_Out_T<
+        POAList
       >
     POAList_out;
 
   class TAO_PortableServer_Export POAList
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             POA,
             POA_var
           >
@@ -131,7 +122,7 @@ namespace PortableServer
         CORBA::ULong max,
         CORBA::ULong length,
         POA_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     POAList (const POAList &);
     ~POAList (void);

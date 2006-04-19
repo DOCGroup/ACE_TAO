@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::release (
     PortableInterceptor::PolicyFactory_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::PolicyFactory_ptr
@@ -111,7 +111,7 @@ PortableInterceptor::PolicyFactory::_unchecked_narrow (
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -122,7 +122,7 @@ PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
 void
 PortableInterceptor::PolicyFactory::_tao_release (PolicyFactory_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

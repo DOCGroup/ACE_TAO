@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::release (
     PortableInterceptor::IORInterceptor_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::IORInterceptor_ptr
@@ -111,18 +111,18 @@ PortableInterceptor::IORInterceptor::_unchecked_narrow (
 PortableInterceptor::IORInterceptor_ptr
 PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::IORInterceptor::_tao_release (IORInterceptor_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -187,7 +187,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor_3_0>::release (
     PortableInterceptor::IORInterceptor_3_0_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::IORInterceptor_3_0_ptr
@@ -236,18 +236,18 @@ PortableInterceptor::IORInterceptor_3_0::_unchecked_narrow (
 PortableInterceptor::IORInterceptor_3_0_ptr
 PortableInterceptor::IORInterceptor_3_0::_duplicate (IORInterceptor_3_0_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::IORInterceptor_3_0::_tao_release (IORInterceptor_3_0_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean

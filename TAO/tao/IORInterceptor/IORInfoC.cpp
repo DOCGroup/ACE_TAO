@@ -45,7 +45,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_
-  
+
   template<>
   class Arg_Traits<PortableInterceptor::ObjectReferenceFactory>
     : public
@@ -81,7 +81,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::release (
     PortableInterceptor::IORInfo_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::IORInfo_ptr
@@ -130,18 +130,18 @@ PortableInterceptor::IORInfo::_unchecked_narrow (
 PortableInterceptor::IORInfo_ptr
 PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::IORInfo::_tao_release (IORInfo_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
