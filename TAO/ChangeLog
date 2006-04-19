@@ -1,3 +1,15 @@
+Wed Apr 19 12:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+          Generate doxygen documentation style and use true instead of 1
+
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+          Generate true for boolean instead of 1
+
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+          Generate also argument names in the header file so that doxygen
+          can parse IDL generated code
+
 Wed Apr 19 12:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.{h,cpp,i}:
