@@ -22,7 +22,7 @@ SUBDIRS = \
 
 CLEANFILES =
 lib_LTLIBRARIES =
-nobase_include_HEADERS = 
+nobase_include_HEADERS =
 pkgconfig_DATA =
 
 ## Makefile.ACE.am
@@ -706,7 +706,6 @@ nobase_include_HEADERS += \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   OS_Memory.h \
-  OS_Memory.inl \
   OS_NS_Thread.h \
   OS_NS_Thread.inl \
   OS_NS_arpa_inet.h \
@@ -773,7 +772,6 @@ nobase_include_HEADERS += \
   OS_NS_wchar.inl \
   OS_QoS.h \
   OS_String.h \
-  OS_String.inl \
   OS_TLI.h \
   OS_TLI.inl \
   OS_Thread_Adapter.h \

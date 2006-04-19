@@ -102,11 +102,9 @@ public:
   typedef ptrdiff_t                      difference_type;
   typedef size_t                         size_type;
 
-#if ((defined (_MSC_VER) && (_MSC_VER <= 1200)) || \
-     (defined (_MSC_VER) && !defined (_CPPLIB_VER)))
-  // MSVC++ 6 doesn't define a standard's compliant reverse_iterator,
-  // also the latest Platform SDK's don't do this.
-  //
+#if ((defined (_MSC_VER) && !defined (_CPPLIB_VER)))
+  // the latest Platform SDK's doesn't define a standard's compliant
+  // reverse_iterator,
   // It seems when there is no _CPPLIB_VER defined, then we can assume
   // also that the SDK is old.
   typedef std::reverse_iterator<iterator, value_type> reverse_iterator;
@@ -129,7 +127,7 @@ public:
 #else
   typedef std::reverse_iterator<iterator>       reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-#endif  /* _MSC_VER <= 1200 */
+#endif  /* _MSC_VER */
 
   /// Default Constructor.
   /**

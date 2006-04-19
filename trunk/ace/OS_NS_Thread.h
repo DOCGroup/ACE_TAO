@@ -1164,18 +1164,8 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_mutex_lock_cleanup_adapter)
-
-#else
-
-# define ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME ace_mutex_lock_cleanup_adapter
-
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 

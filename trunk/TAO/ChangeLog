@@ -1,3 +1,9 @@
+Wed Apr 19 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2503_Regression/*:
+          New regression for bug 2503. Thanks to Carlos O'Ryan for creating
+          this test
+
 Tue Apr 18 20:51:48 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * TAO version 1.5.1 released.

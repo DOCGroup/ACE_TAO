@@ -147,10 +147,6 @@
   // IOStream_Test never halts with Green Hills 1.8.9.
 # define ACE_LACKS_ACE_IOSTREAM
 
-#elif defined (__KCC) /* KAI compiler */
-
-# include "ace/config-kcc-common.h"
-
 #else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-sunos5.5.h
