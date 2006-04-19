@@ -371,9 +371,9 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                                 ACE_ENV_ARG_DECL)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = 0;
-  CORBA::Boolean is_persistent = 0;
-  CORBA::Boolean is_system_id = 0;
+  CORBA::Boolean is_root = false;
+  CORBA::Boolean is_persistent = false;
+  CORBA::Boolean is_system_id = false;
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   int result = 0;
@@ -382,12 +382,12 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
     ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
 
     result = TAO_Root_POA::parse_key (key,
-                                 poa_system_name,
-                                 system_id,
-                                 is_root,
-                                 is_persistent,
-                                 is_system_id,
-                                 poa_creation_time);
+                                      poa_system_name,
+                                      system_id,
+                                      is_root,
+                                      is_persistent,
+                                      is_system_id,
+                                      poa_creation_time);
   }
 
   if (result != 0)
@@ -406,7 +406,8 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   }
 
   if (result != 0)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    ACE_THROW (CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 2,
+                                        CORBA::COMPLETED_NO));
 }
 
 int
