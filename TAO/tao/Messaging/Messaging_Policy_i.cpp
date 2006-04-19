@@ -1,4 +1,5 @@
 // $Id$
+
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
@@ -19,9 +20,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
   , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (relative_expiry)
@@ -30,9 +31,9 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   const TAO_RelativeRoundtripTimeoutPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
   , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (rhs.relative_expiry_)
@@ -129,7 +130,7 @@ TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
                       CORBA::Policy::_nil ());
 
-  TAO_RelativeRoundtripTimeoutPolicy *tmp;
+  TAO_RelativeRoundtripTimeoutPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_RelativeRoundtripTimeoutPolicy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -202,9 +203,9 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , Messaging::SyncScopePolicy ()
   , TAO_Local_RefCounted_Object ()
   , synchronization_ (synchronization)
@@ -212,9 +213,9 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
 }
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , Messaging::SyncScopePolicy ()
   , TAO_Local_RefCounted_Object ()
   , synchronization_ (rhs.synchronization_)

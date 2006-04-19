@@ -159,7 +159,7 @@ namespace TAO
     TAO_DII_Deferred_Reply_Dispatcher *rd_;
 
     /// Cache the orb_core
-    TAO_ORB_Core *orb_core_;
+    TAO_ORB_Core * const orb_core_;
   };
 } // End namespace TAO
 

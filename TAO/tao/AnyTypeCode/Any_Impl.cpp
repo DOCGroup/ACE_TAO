@@ -45,7 +45,7 @@ void
 TAO::Any_Impl::free_value (void)
 {
   // We always have to do this.
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
 }
 
 CORBA::TypeCode_ptr
@@ -63,7 +63,7 @@ TAO::Any_Impl::_tao_get_typecode (void) const
 void
 TAO::Any_Impl::type (CORBA::TypeCode_ptr tc)
 {
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 }
 

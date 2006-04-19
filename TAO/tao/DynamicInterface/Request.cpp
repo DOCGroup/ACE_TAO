@@ -127,11 +127,11 @@ CORBA::Request::~Request (void)
 {
   ACE_ASSERT (refcount_ == 0);
 
-  CORBA::release (this->target_);
+  ::CORBA::release (this->target_);
   CORBA::string_free ((char*) this->opname_);
   this->opname_ = 0;
-  CORBA::release (this->args_);
-  CORBA::release (this->result_);
+  ::CORBA::release (this->args_);
+  ::CORBA::release (this->result_);
 }
 
 // The public DII interfaces:  normal and oneway calls.

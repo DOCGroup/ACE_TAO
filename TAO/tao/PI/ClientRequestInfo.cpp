@@ -10,7 +10,6 @@ ACE_RCSID (PI,
 
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/PI/PICurrent.h"
 #include "tao/PI/RequestInfo_Util.h"

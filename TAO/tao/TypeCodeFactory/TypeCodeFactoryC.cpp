@@ -66,7 +66,7 @@ TAO::Objref_Traits<CORBA::TypeCodeFactory>::release (
     CORBA::TypeCodeFactory_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::TypeCodeFactory_ptr
@@ -90,12 +90,12 @@ CORBA::TypeCodeFactory::TypeCodeFactory (void)
 CORBA::TypeCodeFactory::~TypeCodeFactory (void)
 {}
 
-void 
+void
 CORBA::TypeCodeFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   TypeCodeFactory *_tao_tmp_pointer =
     static_cast<TypeCodeFactory *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::TypeCodeFactory_ptr
@@ -108,10 +108,10 @@ CORBA::TypeCodeFactory::_narrow (
     {
       return TypeCodeFactory::_nil ();
     }
-  
+
   TypeCodeFactory_ptr proxy =
     dynamic_cast<TypeCodeFactory_ptr> (_tao_objref);
-  
+
   return TypeCodeFactory::_duplicate (proxy);
 }
 
@@ -125,28 +125,28 @@ CORBA::TypeCodeFactory::_unchecked_narrow (
     {
       return TypeCodeFactory::_nil ();
     }
-  
+
   TypeCodeFactory_ptr proxy =
     dynamic_cast<TypeCodeFactory_ptr> (_tao_objref);
-  
+
   return TypeCodeFactory::_duplicate (proxy);
 }
 
 CORBA::TypeCodeFactory_ptr
 CORBA::TypeCodeFactory::_duplicate (TypeCodeFactory_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CORBA::TypeCodeFactory::_tao_release (TypeCodeFactory_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

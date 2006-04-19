@@ -140,7 +140,7 @@ private:
 
   /// A pointer to the ORB Core for the context where the request was
   /// created.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * orb_core_;
 
   /// The reply service context
   TAO_Service_Context reply_service_context_;

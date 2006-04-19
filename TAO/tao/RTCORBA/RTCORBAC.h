@@ -180,22 +180,19 @@ namespace RTCORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        ThreadpoolLanes,
-        ThreadpoolLane
+        ThreadpoolLanes
       >
     ThreadpoolLanes_var;
 
   typedef
     TAO_Seq_Out_T<
-        ThreadpoolLanes,
-        ThreadpoolLanes_var,
-        ThreadpoolLane
+        ThreadpoolLanes
       >
     ThreadpoolLanes_out;
 
   class TAO_RTCORBA_Export ThreadpoolLanes
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             ThreadpoolLane
           >
   {
@@ -206,7 +203,7 @@ namespace RTCORBA
         CORBA::ULong max,
         CORBA::ULong length,
         ThreadpoolLane* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ThreadpoolLanes (const ThreadpoolLanes &);
     ~ThreadpoolLanes (void);
@@ -635,22 +632,19 @@ namespace RTCORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        ProtocolList,
-        Protocol
+        ProtocolList
       >
     ProtocolList_var;
 
   typedef
     TAO_Seq_Out_T<
-        ProtocolList,
-        ProtocolList_var,
-        Protocol
+        ProtocolList
       >
     ProtocolList_out;
 
   class TAO_RTCORBA_Export ProtocolList
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             Protocol
           >
   {
@@ -661,7 +655,7 @@ namespace RTCORBA
         CORBA::ULong max,
         CORBA::ULong length,
         Protocol* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ProtocolList (const ProtocolList &);
     ~ProtocolList (void);
@@ -2099,22 +2093,19 @@ namespace RTCORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        PriorityBands,
-        PriorityBand
+        PriorityBands
       >
     PriorityBands_var;
 
   typedef
     TAO_Seq_Out_T<
-        PriorityBands,
-        PriorityBands_var,
-        PriorityBand
+        PriorityBands
       >
     PriorityBands_out;
 
   class TAO_RTCORBA_Export PriorityBands
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             PriorityBand
           >
   {
@@ -2125,7 +2116,7 @@ namespace RTCORBA
         CORBA::ULong max,
         CORBA::ULong length,
         PriorityBand* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     PriorityBands (const PriorityBands &);
     ~PriorityBands (void);

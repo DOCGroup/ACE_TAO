@@ -189,7 +189,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // immediately like before,
   // because it could result in an
   // Object Reference with 0 profile. And it would not pass
-  // the CORBA::is_nil() evaluation.
+  // the ::CORBA::is_nil() evaluation.
   // Instead, we create the Object Reference right here, which is
   // earlier than before.(Actually, I just moved some code
   // from below up to here).

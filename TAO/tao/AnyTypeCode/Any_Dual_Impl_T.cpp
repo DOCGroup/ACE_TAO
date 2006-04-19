@@ -162,7 +162,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
         }
 
       // Duplicated by Any_Impl base class constructor.
-      CORBA::release (any_tc);
+      ::CORBA::release (any_tc);
     }
   ACE_CATCHANY
     {
@@ -182,7 +182,7 @@ TAO::Any_Dual_Impl_T<T>::free_value (void)
       this->value_destructor_ = 0;
     }
 
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
   this->value_ = 0;
 }
 

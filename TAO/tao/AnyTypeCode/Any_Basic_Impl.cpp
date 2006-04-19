@@ -165,7 +165,7 @@ namespace TAO
           }
 
         // Duplicated by Any_Impl base class constructor.
-        CORBA::release (any_tc);
+        ::CORBA::release (any_tc);
       }
     ACE_CATCHANY
       {
