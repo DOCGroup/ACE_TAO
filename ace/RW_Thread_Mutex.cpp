@@ -40,18 +40,6 @@ ACE_RW_Thread_Mutex::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// These are only instantiated with ACE_HAS_THREADS.
-template class ACE_Guard<ACE_RW_Thread_Mutex>;
-template class ACE_Read_Guard<ACE_RW_Thread_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// These are only instantiated with ACE_HAS_THREADS.
-#pragma instantiate ACE_Guard<ACE_RW_Thread_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_RW_Thread_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_RW_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

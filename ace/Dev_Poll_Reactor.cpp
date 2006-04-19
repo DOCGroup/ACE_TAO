@@ -2644,20 +2644,6 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire (ACE_Time_Value *max_wait)
   return result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dev_Poll_Reactor_Token;
-template class ACE_Lock_Adapter<ACE_Dev_Poll_Reactor_Token>;
-template class ACE_Reverse_Lock<ACE_Dev_Poll_Reactor_Token>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dev_Poll_Reactor_Token
-#pragma instantiate ACE_Lock_Adapter<ACE_Dev_Poll_Reactor_Token>
-#pragma instantiate ACE_Reverse_Lock<ACE_Dev_Poll_Reactor_Token>
-
-#endif  /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */

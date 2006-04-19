@@ -47,7 +47,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Configuration.cpp
     Configuration_Import_Export.cpp
     Connection_Recycling_Strategy.cpp
-    Container_Instantiations.cpp
     Containers.cpp
     Copy_Disabled.cpp
     Countdown_Time.cpp
@@ -109,7 +108,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     LSOCK_Stream.cpp
     Malloc.cpp
     Malloc_Allocator.cpp
-    Malloc_Instantiations.cpp
     Manual_Event.cpp
     MEM_Acceptor.cpp
     MEM_Addr.cpp
@@ -121,7 +119,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Message_Block.cpp
     Message_Queue.cpp
     Method_Request.cpp
-    Metrics_Cache.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
     Multihomed_INET_Addr.cpp
@@ -130,7 +127,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
-    Obstack.cpp
     OS_Errno.cpp
     OS_Log_Msg_Attributes.cpp
     OS_main.cpp
@@ -201,7 +197,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Sample_History.cpp
     Sbrk_Memory_Pool.cpp
     Sched_Params.cpp
-    Select_Reactor.cpp
     Select_Reactor_Base.cpp
     Semaphore.cpp
     Shared_Memory.cpp
@@ -338,7 +333,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     TSS_T.cpp
     Task_Ex_T.cpp
     Task_T.cpp
-    Template_Instantiations.cpp
     Test_and_Set.cpp
     Timeprobe_T.cpp
     Timer_Hash_T.cpp

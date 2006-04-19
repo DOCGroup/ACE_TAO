@@ -93,16 +93,6 @@ ACE_thread_key_t *log_msg_tss_key (void)
 /// deleted.
 int ACE_Log_Msg::instance_count_ = 0;
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-# if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-    template class ACE_Cleanup_Adapter<ACE_Log_Msg>;
-# endif /* ! ACE_MT_SAFE */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-#   pragma instantiate ACE_Cleanup_Adapter<ACE_Log_Msg>
-# endif /* ! ACE_MT_SAFE */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 /**
  * @class ACE_Log_Msg_Manager
  *
