@@ -1,0 +1,10 @@
+/*
+ * $Id$
+ */
+
+interface Simple_Server
+{
+  boolean print_status ();
+
+  oneway void shutdown ();
+};

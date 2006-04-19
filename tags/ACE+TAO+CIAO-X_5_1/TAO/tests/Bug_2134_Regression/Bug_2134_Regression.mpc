@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project (*Test) : taoserver, iortable {
+    exename = server
+    avoids += minimum_corba
+    Source_Files {
+        Hello.cpp
+    }
+}
