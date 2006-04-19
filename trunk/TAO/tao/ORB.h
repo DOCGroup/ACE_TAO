@@ -485,7 +485,7 @@ namespace CORBA
      * deactivation or other operations associated with object adapters)
      * has completed.
      */
-    void shutdown (CORBA::Boolean wait_for_completion = 0
+    void shutdown (CORBA::Boolean wait_for_completion = false
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /**

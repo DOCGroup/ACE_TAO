@@ -1,3 +1,12 @@
+Wed Apr 19 12:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc:
+          Made these projects dependent on each other to make sure
+          that they don't build in parallel and generate the same idl
+          file twice at the same moment. Thanks to Chad Elliot for the
+          info how to do this the easiest
+
 Wed Apr 19 12:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
