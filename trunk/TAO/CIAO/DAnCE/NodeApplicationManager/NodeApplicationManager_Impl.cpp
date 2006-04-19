@@ -241,7 +241,7 @@ startLaunch (const Deployment::Properties & configProperty,
                ++arg_i)
             {
               cmd_option += " "; // space between command line args
-              cmd_option += (*server_resource).args[arg_i].in ();
+              cmd_option += (*server_resource).args[arg_i];
             }
 
           // If service configuration file is specified through RTCCM

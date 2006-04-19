@@ -263,7 +263,7 @@ namespace CIAO
             // Copy the servant dll/so name.
             // @@ Note: I ignore all the other locations except the first one.
             impl_infos[i].servant_dll =
-              CORBA::string_dup (arti.location[0].in ());
+              CORBA::string_dup (arti.location[0]);
 
             // Get the entry point.
             const CORBA::ULong prop_length = arti.execParameter.length ();
@@ -306,7 +306,7 @@ namespace CIAO
             // @@ Note: I ignore all the other locations except the first one.
             exec_found = true;
             impl_infos[i].executor_dll =
-              CORBA::string_dup (arti.location[0].in ());
+              CORBA::string_dup (arti.location[0]);
 
             // Get the entry point.
             const CORBA::ULong prop_length = arti.execParameter.length ();
