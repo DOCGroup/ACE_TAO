@@ -319,10 +319,6 @@ public:
                      int signal_number) = 0;
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
-  // We don;t need to redefine the following function again because it
-  // has already been defined in ACE_Asynch_Read_Stream_Impl.  But we
-  // still need it here to supress a overwriting pure virtual function
-  // warning in KAI compiler.
   /// This starts off an asynchronous read. Upto <bytes_to_read> will
   /// be read and stored in the <message_block>.
   virtual int read (ACE_Message_Block &message_block,
@@ -408,13 +404,8 @@ public:
                       int signal_number) = 0;
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
-
-  // We don;t need to redefine the following function again because it
-  // has already been defined in ACE_Asynch_Write_Stream_Impl.  But we
-  // still need it here to supress a overwriting pure virtual function
-  // warning in KAI compiler.
-  /// This starts off an asynchronous write.  Upto <bytes_to_write>
-  /// will be written from the <message_block>.
+  /// This starts off an asynchronous write.  Upto @a bytes_to_write
+  /// will be written from the @a message_block.
   virtual int write (ACE_Message_Block &message_block,
                      size_t bytes_to_write,
                      const void *act,
@@ -472,12 +463,12 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto <bytes_to_read> will be read and stored in the
-   * <message_block>.  The <accept_handle> will be used for the
-   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * <message_block>.  The @a accept_handle will be used for the
+   * <accept> call.  If (@a accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
-   * <message_block> must be specified. This is because the address of
+   * @a message_block must be specified. This is because the address of
    * the new connection is placed at the end of this buffer.
    */
   virtual int accept (ACE_Message_Block &message_block,

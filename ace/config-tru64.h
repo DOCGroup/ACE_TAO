@@ -30,8 +30,6 @@
 # if DIGITAL_UNIX >= 0x40E
 #   define ACE_LACKS_STDINT_H
 # endif /* DIGITAL_UNIX >= 0x40E */
-#else  /* ! DIGITAL_UNIX */
-# include "ace/config-osf1-3.2.h"
 #endif /* ! DIGITAL_UNIX */
 
 #include /**/ "ace/post.h"

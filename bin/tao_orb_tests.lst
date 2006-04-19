@@ -56,6 +56,7 @@ TAO/tests/Bug_2349_Regression/run_test.pl: !DISABLE_ToFix_LynxOS_x86
 TAO/tests/Bug_2417_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/Bug_2429_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2494_Regression/run_test.pl: !ST
+TAO/tests/Bug_2503_Regression/run_test.pl: !ST
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !IPV6

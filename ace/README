@@ -226,10 +226,6 @@ ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks).
-ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
-                                        support namespaces (or the
-                                        support is not fully
-                                        implemented.)
 ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS Compiler can't handle const char *
                                         as rvalue in conditional operator.
 ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls
