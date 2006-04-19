@@ -1,4 +1,7 @@
 #include "tao/IIOP_Connector.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -12,7 +15,6 @@
 #include "tao/SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-
 
 ACE_RCSID (tao,
            IIOP_Connector,
@@ -400,3 +402,5 @@ TAO_IIOP_Connector::cancel_svc_handler (
 //@@ TAO_CONNECTOR_SPL_COPY_HOOK_END
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

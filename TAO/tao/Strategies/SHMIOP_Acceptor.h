@@ -1,21 +1,16 @@
 // -*- C++ -*-
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    SHMIOP_Acceptor.h
-//
-// = DESCRIPTION
-//    SHMIOP specific acceptor processing
-//
-// = AUTHOR
-//    Nanbor Wang
-//
-// ============================================================================
+// $Id$
+// ===================================================================
+/**
+ *  @file   SHMIOP_Acceptor.h
+ *
+ *  @brief  SHMIOP specific acceptor processing
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_SHMIOP_ACCEPTOR_H
 #define TAO_SHMIOP_ACCEPTOR_H

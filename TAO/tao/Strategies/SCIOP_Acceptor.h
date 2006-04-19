@@ -9,9 +9,6 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Acceptor, Originally by
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>
- *  @author  Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
 
@@ -19,7 +16,6 @@
 #ifndef TAO_SCIOP_ACCEPTOR_H
 #define TAO_SCIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
-#include "ace/Acceptor.h"
 
 #include "tao/orbconf.h"
 
@@ -29,12 +25,13 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "ace/SOCK_SEQPACK_Acceptor.h"
-
 #include "tao/Transport_Acceptor.h"
 #include "tao/Strategies/SCIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
+
+#include "ace/SOCK_SEQPACK_Acceptor.h"
+#include "ace/Acceptor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
