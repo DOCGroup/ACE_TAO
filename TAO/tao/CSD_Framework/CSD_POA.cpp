@@ -96,7 +96,7 @@ TAO_CSD_POA::new_POA (const String &name,
 
   CSD_Framework::Strategy_var strategy = repo->find (name);
 
-  if (! CORBA::is_nil (strategy.in ()))
+  if (! ::CORBA::is_nil (strategy.in ()))
     {
       poa->set_csd_strategy (strategy.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -115,7 +115,7 @@ void TAO_CSD_POA::poa_deactivated_hook ()
   this->sds_proxy_->poa_deactivated_event ();
 }
 
-void TAO_CSD_POA::servant_activated_hook (PortableServer::Servant servant, 
+void TAO_CSD_POA::servant_activated_hook (PortableServer::Servant servant,
                                const PortableServer::ObjectId& oid
                                ACE_ENV_ARG_DECL)
 {
@@ -123,7 +123,7 @@ void TAO_CSD_POA::servant_activated_hook (PortableServer::Servant servant,
   ACE_CHECK;
 }
 
-void TAO_CSD_POA::servant_deactivated_hook (PortableServer::Servant servant, 
+void TAO_CSD_POA::servant_deactivated_hook (PortableServer::Servant servant,
                                  const PortableServer::ObjectId& oid
                                  ACE_ENV_ARG_DECL)
 {

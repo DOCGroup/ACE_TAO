@@ -64,7 +64,7 @@ TAO::Objref_Traits<PortableServer::ThreadPolicy>::release (
     PortableServer::ThreadPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::ThreadPolicy_ptr
@@ -113,18 +113,18 @@ PortableServer::ThreadPolicy::_unchecked_narrow (
 PortableServer::ThreadPolicy_ptr
 PortableServer::ThreadPolicy::_duplicate (ThreadPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::ThreadPolicy::_tao_release (ThreadPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -183,12 +183,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ThreadPolicyValu
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ThreadPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

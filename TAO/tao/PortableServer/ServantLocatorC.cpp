@@ -65,7 +65,7 @@ TAO::Objref_Traits<PortableServer::ServantLocator>::release (
     PortableServer::ServantLocator_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::ServantLocator_ptr
@@ -114,18 +114,18 @@ PortableServer::ServantLocator::_unchecked_narrow (
 PortableServer::ServantLocator_ptr
 PortableServer::ServantLocator::_duplicate (ServantLocator_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::ServantLocator::_tao_release (ServantLocator_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean

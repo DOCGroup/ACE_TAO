@@ -62,7 +62,7 @@ TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::release (
     PortableServer::IdUniquenessPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::IdUniquenessPolicy_ptr
@@ -111,18 +111,18 @@ PortableServer::IdUniquenessPolicy::_unchecked_narrow (
 PortableServer::IdUniquenessPolicy_ptr
 PortableServer::IdUniquenessPolicy::_duplicate (IdUniquenessPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::IdUniquenessPolicy::_tao_release (IdUniquenessPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -181,12 +181,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::IdUniquenessPoli
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::IdUniquenessPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

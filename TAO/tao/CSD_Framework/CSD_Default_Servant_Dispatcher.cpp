@@ -48,7 +48,7 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
   CSD_Framework::Strategy_var strategy = repo->find (name);
 
-  if (! CORBA::is_nil (strategy.in ()))
+  if (! ::CORBA::is_nil (strategy.in ()))
     {
       poa->set_csd_strategy (strategy.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);

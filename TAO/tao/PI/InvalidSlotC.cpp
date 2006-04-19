@@ -75,7 +75,7 @@ PortableInterceptor::InvalidSlot::InvalidSlot (const ::PortableInterceptor::Inva
 PortableInterceptor::InvalidSlot&
 PortableInterceptor::InvalidSlot::operator= (const ::PortableInterceptor::InvalidSlot &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 

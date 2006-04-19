@@ -225,6 +225,10 @@ sub check_for_msc_ver_string ()
                 if (/FUZZ\: enable check_for_msc_ver/) {
                     $disable = 0;
                 }
+                if ($disable == 0 and /\_MSC_VER \<= 1200/) {
+                    $found = 1;
+                    $mscline = $.;
+                }
                 if ($disable == 0 and /\_MSC_VER \>= 1200/) {
                     $found = 1;
                     $mscline = $.;
