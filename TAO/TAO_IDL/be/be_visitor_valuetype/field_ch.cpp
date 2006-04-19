@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           field_ch, 
+ACE_RCSID (be_visitor_valuetype,
+           field_ch,
            "$Id$")
 
 be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
@@ -51,7 +51,7 @@ be_visitor_valuetype_field_ch::visit_field (be_field *node)
     }
 
   this->ctx_->node (node); // save the node
-  
+
   this->visibility_ = node->visibility ();
 
   if (bt->accept (this) == -1)
@@ -546,14 +546,14 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
     {
-      be_field *member_node = 
+      be_field *member_node =
         be_field::narrow_from_decl (this->ctx_->node ());
       node->field_node (member_node);
 
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
       be_visitor_sequence_ch visitor (&ctx);
-      
+
       if (this->visibility_ == AST_Field::vis_PRIVATE)
         {
           *os << be_uidt_nl << "public:" << be_idt_nl;
@@ -567,7 +567,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
                              "codegen failed\n"),
                             -1);
         }
-        
+
       if (this->visibility_ == AST_Field::vis_PRIVATE)
         {
           *os << be_uidt_nl << be_nl << "protected:" << be_idt;
@@ -620,13 +620,13 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   if (node->width () == (long) sizeof (char))
     {
       *os << pre_op ()
-          << "void " << ub->local_name () << " (char *)"
+          << "void " << ub->local_name () << " (char *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const char *)"
+          << "void " << ub->local_name () << " (const char *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const ::CORBA::String_var&)"
+          << "void " << ub->local_name () << " (const ::CORBA::String_var &val)"
           << post_op () << be_nl;
       // Get method.
       *os << pre_op () << "const char *" << ub->local_name ()
@@ -635,13 +635,13 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   else
     {
       *os << pre_op ()
-          << "void " << ub->local_name () << " ( ::CORBA::WChar *)"
+          << "void " << ub->local_name () << " ( ::CORBA::WChar *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const ::CORBA::WChar *)"
+          << "void " << ub->local_name () << " (const ::CORBA::WChar *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const ::CORBA::WString_var&)"
+          << "void " << ub->local_name () << " (const ::CORBA::WString_var &val)"
           << post_op () << be_nl;
       // Get method.
       *os << pre_op() << "const ::CORBA::WChar *" << ub->local_name ()
@@ -801,7 +801,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_ch::setenclosings (const char *pre, 
+be_visitor_valuetype_field_ch::setenclosings (const char *pre,
                                               const char *post)
 {
   pre_op_ = pre;
