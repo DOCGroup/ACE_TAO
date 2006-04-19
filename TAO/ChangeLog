@@ -1,3 +1,9 @@
+Wed Apr 19 12:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.{h,cpp,i}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.{h,i}:
+          Use bool and prefix increment/decrement
+
 Wed Apr 19 11:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/run_test.pl:
