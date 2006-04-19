@@ -31,11 +31,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "tao/CORBA_methods.h"
 #include "tao/PI/ClientRequestInfoC.h"
 #include "tao/PI/PIForwardRequestC.h"
 #include "tao/PI/PICurrent_Impl.h"
 #include "tao/PI/PICurrent_Copy_Callback.h"
+#include "tao/CORBA_methods.h"
 #include "tao/ORB_Constants.h"
 #include "tao/LocalObject.h"
 #include "tao/Invocation_Utils.h"

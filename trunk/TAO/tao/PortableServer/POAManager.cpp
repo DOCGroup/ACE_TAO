@@ -154,7 +154,7 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableInterceptor::AdapterState adapter_state = 
+  PortableInterceptor::AdapterState adapter_state =
     static_cast<PortableInterceptor::AdapterState> (state);
 
   TAO_IORInterceptor_Adapter *ior_adapter =
@@ -303,7 +303,7 @@ TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
     {
       if (this->poa_collection_.is_empty ())
         {
-          CORBA::release (this);
+          ::CORBA::release (this);
         }
     }
 
