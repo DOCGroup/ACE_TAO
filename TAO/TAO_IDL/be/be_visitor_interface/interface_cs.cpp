@@ -81,7 +81,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::release (p);" << be_uidt_nl
+          << "::CORBA::release (p);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -124,7 +124,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::AbstractBase_ptr abs = p;" << be_nl
-          << "CORBA::release (abs);" << be_uidt_nl
+          << "::CORBA::release (abs);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -134,7 +134,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::Object_ptr obj = p;" << be_nl
-          << "return CORBA::is_nil (obj);" << be_uidt_nl
+          << "return ::CORBA::is_nil (obj);" << be_uidt_nl
           << "}";
     }
 
@@ -271,7 +271,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
           << "static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
-          << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
+          << "::CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -280,7 +280,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "void" << be_nl
           << node->name () << "::_add_ref (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->ACE_NESTED_CLASS ( ::CORBA, Object)::_add_ref ();"
+          << "this->::CORBA::Object::_add_ref ();"
           << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -315,7 +315,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << bt->local_name ()
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "if (! CORBA::is_nil (obj))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (obj))" << be_idt_nl
       << "{" << be_idt_nl
       << "obj->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -328,7 +328,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << bt->local_name ()
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::release (obj);" << be_uidt_nl
+      << "::CORBA::release (obj);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
 
@@ -432,7 +432,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << "return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a ("
+      *os << "return this->::CORBA::Object::_is_a ("
           << be_idt << be_idt_nl
           << "value" << env_arg << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;

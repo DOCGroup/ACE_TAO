@@ -113,7 +113,7 @@ Thread_Task::svc (void)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Scheduling Segment Name - %s\n",
-                        (*name_list) [i].in ()));
+                        static_cast<char const*>((*name_list) [i])));
           }
       }
 

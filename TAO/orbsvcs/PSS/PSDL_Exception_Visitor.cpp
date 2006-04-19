@@ -90,12 +90,12 @@ TAO_PSDL_Exception_Visitor::print_class_for_exception (void)
 {
   // Get a pointer to PSDL_Stream of the stub header.
   TAO_PSDL_Stream *ps_sh = TAO_PSDL_Scope::instance ()->get_sh ();
-  
+
   // Code that should be generated to the stub (idlC.h) according to
   // the specification.
   ps_sh->nl ();
   ps_sh->nl ();
-  
+
   ACE_CString name_space =
     TAO_PSDL_Scope::instance ()->get_name_space ();
 
@@ -120,7 +120,7 @@ TAO_PSDL_Exception_Visitor::print_class_for_exception (void)
         {
           if (ACE_OS::strcmp (type.c_str (), "char *") == 0)
             {
-              *ps_sh << "      " << "TAO_String_Manager"
+              *ps_sh << "      " << "TAO::String_Manager"
                    << " " << this->identifiers_[i+1]
                    << ";\n";
             }

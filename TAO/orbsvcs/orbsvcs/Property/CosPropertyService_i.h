@@ -23,6 +23,7 @@
 
 #include "orbsvcs/CosPropertyS.h"
 
+#include "tao/Sequence_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
@@ -150,7 +151,7 @@ public:
   // modes".
 
 private:
-  TAO_Unbounded_Sequence<TAO_PropertySet*> propertyset_products_;
+  TAO::unbounded_value_sequence<TAO_PropertySet*> propertyset_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
 };
@@ -201,7 +202,7 @@ public:
   // initial properties.
 
 private:
-  TAO_Unbounded_Sequence<TAO_PropertySetDef*> propertysetdef_products_;
+  TAO::unbounded_value_sequence<TAO_PropertySetDef*> propertysetdef_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
 };
@@ -344,8 +345,7 @@ private:
   TAO_PropertySet (const TAO_PropertySet &);
   // Not possible to copy
 
-// XXX:This public: is a hack to keep the compiler complain about access violation.
-public:
+public: // @todo make private
   COSPROPERTY_HASH_MAP hash_table_;
   // This Hash_Table manages storage for our properties.
 

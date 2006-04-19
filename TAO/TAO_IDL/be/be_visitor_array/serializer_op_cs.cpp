@@ -11,17 +11,17 @@
 //    serializer_op_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor for code generation of Arrays for the 
+//    Visitor for code generation of Arrays for the
 //    TAO::DCPS::Serializer operators in the client stubs.
 //
 // = AUTHOR
-//    Scott Harris <harris_s@ociweb.com> based on code by 
+//    Scott Harris <harris_s@ociweb.com> based on code by
 //    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_array, 
-           serializer_op_cs, 
+ACE_RCSID (be_visitor_array,
+           serializer_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -45,13 +45,13 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
 {
   if (this->ctx_->alias ())
     {
-      // We are here because we are visiting base type 
+      // We are here because we are visiting base type
       // of the array node which is itself an
       // array, i.e., this is a case of array of array.
       return this->visit_node (node);
     }
 
-  if (node->cli_stub_serializer_op_gen () 
+  if (node->cli_stub_serializer_op_gen ()
       || node->imported ()
       || node->is_local ())
     {
@@ -137,8 +137,8 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
 
   // Save the node's local name and full name in a buffer for quick use later
   // on.
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->tdef ())
@@ -149,22 +149,22 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscope prepended
-      // to our local name. This needs to be inserted after the parents's 
+      // to our local name. This needs to be inserted after the parents's
       // name.
 
       if (node->is_nested ())
         {
-          be_decl *parent = 
+          be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
@@ -181,7 +181,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_MAX_MARSHALED_SIZE);
   *os << "size_t _dcps_max_marshaled_size (" << be_idt << be_idt_nl
       << "const " << fname << "_forany &_tao_array" << be_uidt_nl
-      <<")" << be_uidt_nl 
+      <<")" << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
@@ -199,7 +199,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_IS_BOUNDED_SIZE);
   *os << "::CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
       << "const " << fname << "_forany &_tao_array" << be_uidt_nl
-      <<")" << be_uidt_nl 
+      <<")" << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
@@ -217,7 +217,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_FIND_SIZE);
   *os << "size_t _dcps_find_size (" << be_idt << be_idt_nl
       << "const " << fname << "_forany &_tao_array" << be_uidt_nl
-      <<")" << be_uidt_nl 
+      <<")" << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
@@ -302,7 +302,7 @@ be_visitor_array_serializer_op_cs::visit_enum (be_enum *node)
       *os << "ACE_UNUSED_ARG (_tao_array);" << be_nl
           << "return true; // array of enum" << be_uidt_nl;
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
       {
         *os << "ACE_UNUSED_ARG (_tao_array);" << be_nl;
@@ -402,7 +402,7 @@ be_visitor_array_serializer_op_cs::visit_predefined_type (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_serializer_op_cs::"
                          "visit_predefined_type - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     default:
       // All other primitive types. Handle them as shown below.
@@ -441,7 +441,7 @@ be_visitor_array_serializer_op_cs::visit_predefined_type (
 
     // all predefined types are fixed size so
     //      _dcps_find_size() = _dcps_max_marshaled_size
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
       switch (node->pt ())
         {
@@ -737,7 +737,7 @@ be_visitor_array_serializer_op_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_serializer_op_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -812,7 +812,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
               *os << "return _tao_is_bounded_size (tmp);";
             break;
           default:
-            *os << "return _tao_is_bounded_size (*(_tao_array.in ()));"; 
+            *os << "return _tao_is_bounded_size (*(_tao_array.in ()));";
             break;
           }
           *os << be_uidt_nl;
@@ -861,7 +861,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
           default:
             // array size = slice type size * length
             // note: *(_tao_array.in ()) is the array's slice; hence base type
-            *os << "return (_dcps_max_marshaled_size (*(_tao_array.in ()))"; 
+            *os << "return (_dcps_max_marshaled_size (*(_tao_array.in ()))";
             break;
           }
         *os << " * ";
@@ -920,7 +920,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
           else
             {
               // Initialize a boolean variable.
-              *os << "::CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
+              *os << "::CORBA::Boolean _tao_marshal_flag = true;" << be_nl;
             }
 
     unsigned long ndims = node->n_dims ();
@@ -947,7 +947,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
         if (expr->ev ()->et == AST_Expression::EV_ulong)
           {
             // Generate a loop for each dimension.
-            *os << be_nl << "for ( ::CORBA::ULong i" << i 
+            *os << be_nl << "for ( ::CORBA::ULong i" << i
                 << " = 0; i" << i << " < "
                 << expr->ev ()->u.ulval;
 
@@ -991,7 +991,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
           else
             {
               if (AST_Decl::NT_string == bnt ||
-                  AST_Decl::NT_wstring == bnt ) 
+                  AST_Decl::NT_wstring == bnt )
                 *os << "the_length += _dcps_max_marshaled_size_ulong() + "
                     << "ACE_OS::strlen(_tao_array";
               else
@@ -1002,7 +1002,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
                   *os << "[i" << i << "]";
                 }
               if (AST_Decl::NT_string == bnt ||
-                  AST_Decl::NT_wstring == bnt ) 
+                  AST_Decl::NT_wstring == bnt )
                 *os << ".in()";
 
               *os << ");";
@@ -1100,13 +1100,13 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
             *os << bt->name () << "_forany tmp (tmp_var.inout ());" << be_nl;
             *os << "_tao_marshal_flag = (strm << tmp);";
           }
-        else if (nt == AST_Decl::NT_interface 
+        else if (nt == AST_Decl::NT_interface
                 || nt == AST_Decl::NT_interface_fwd)
           {
             *os << "_tao_marshal_flag = " << be_idt_nl;
 
             if (bt->is_defined ())
-              {    
+              {
                 *os << "_tao_array";
 
                 for (i = 0; i < ndims; ++i)
@@ -1118,8 +1118,8 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
               }
             else
               {
-                
-                AST_Decl *parent = 
+
+                AST_Decl *parent =
                   ScopeAsDecl (bt->defined_in ());
 
                 if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
@@ -1129,7 +1129,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
 
                 *os << "TAO::Objref_Traits<" << bt->name () << ">::"
                     << "tao_marshal (_tao_array";
-                
+
                 for (i = 0; i < ndims; ++i)
                   {
                     *os << "[i" << i << "]";

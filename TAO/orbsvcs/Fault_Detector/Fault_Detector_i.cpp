@@ -126,7 +126,7 @@ void TAO::Fault_Detector_i::run()
 
 void TAO::Fault_Detector_i::notify()
 {
-  CosNotification::StructuredEvent_var  vEvent;
+  CosNotification::StructuredEvent_var vEvent;
   ACE_NEW_NORETURN(vEvent, CosNotification::StructuredEvent );
   if (vEvent.ptr() != 0)
   {

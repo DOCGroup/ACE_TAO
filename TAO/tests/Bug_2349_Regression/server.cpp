@@ -15,6 +15,9 @@ public:
   void shutdown ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void destroy ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   CORBA::ORB_var orb_;
 };
@@ -23,12 +26,34 @@ void
 foo_i::shutdown ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // This causes an OBJECT_NOT_EXIST exception, but it should
-  // be a BAD_INV_ORDER exception.
-  this->orb_->destroy ();
+  this->orb_->shutdown ();
+}
 
-  // This works as it should.
-  //this->orb_->shutdown ();
+void
+foo_i::destroy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  bool expected_exception_raised = false;
+
+  ACE_TRY
+    {
+      // This should case an BAD_INV_ORDER exception
+      this->orb_->destroy ();
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+    {
+      if ((ex.minor() & 0xFFFU) == 3)
+        {
+          expected_exception_raised = true;
+        }
+    }
+  ACE_ENDTRY;
+
+  if (!expected_exception_raised)
+    ACE_ERROR ((LM_ERROR, "ERROR: Caught incorrect exception\n"));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
 }
 
 

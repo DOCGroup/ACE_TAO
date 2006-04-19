@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuebox, 
-           valuebox_ch, 
+ACE_RCSID (be_visitor_valuebox,
+           valuebox_ch,
            "$Id: valuebox_ch.cpp Exp")
 
 // ******************************************************
@@ -67,16 +67,16 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       << "TAO_Value_Out_T<" << be_idt << be_idt_nl
       << node->local_name () << be_uidt_nl
       << ">" << be_uidt_nl
-      << node->local_name () << "_out;" << be_uidt; 
+      << node->local_name () << "_out;" << be_uidt;
 
   *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ();
   *os << be_idt_nl <<": public virtual ::CORBA::DefaultValueRefCountBase";
 
-  *os << be_uidt << be_nl 
+  *os << be_uidt << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << be_nl;  
+      << be_nl;
 
   // _downcast method
   *os << "static " << node->local_name () << "* "
@@ -98,7 +98,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       << node->local_name () << " *&" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  be_type *bt = be_type::narrow_from_decl (node->boxed_type ()); 
+  be_type *bt = be_type::narrow_from_decl (node->boxed_type ());
 
   // Emit the type specific elements.  The visit_* methods in this
   // module do that work.
@@ -110,7 +110,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
                        -1);
     }
 
- 
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -131,7 +131,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "void operator= (const " << node->local_name () << " & val);"
       << be_nl;
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "};";
 
   os->gen_endif ();
@@ -180,31 +180,31 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   // Public assignment operator that takes a const array argument
   this->emit_assignment (node, "", "const ", "");
 
-  // Public accessor and modifier methods        
+  // Public accessor and modifier methods
   *os << "// accessors and modifier" << be_nl;
 
   *os << "const " << node->full_name () << "_slice* "
       << "_value (void) const;" << be_nl;
 
   *os << node->full_name () << "_slice* " << "_value (void);" << be_nl;
-        
+
   *os << "void" << " _value (const " << node->full_name () << " val);"
       << be_nl << be_nl;
 
   // Overloaded subscript operators
   *os << "const " << node->full_name ()
       << "_slice & operator[] ( ::CORBA::ULong index) const;" << be_nl;
-  
+
   *os << node->full_name ()
       << "_slice &  operator[] ( ::CORBA::ULong index);" << be_nl << be_nl;
 
   // Explicit conversion functions
-  *os << "const " << node->full_name () << "_slice * _boxed_in (void) const;" 
+  *os << "const " << node->full_name () << "_slice * _boxed_in (void) const;"
       << be_nl;
 
   *os << node->full_name () << "_slice * _boxed_inout (void);" << be_nl;
- 
-  *os << node->full_name () << "_slice * _boxed_out (void);" << be_nl 
+
+  *os << node->full_name () << "_slice * _boxed_out (void);" << be_nl
       << be_nl;
 
   // Member variable of underlying type;
@@ -310,9 +310,9 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
                          "base type visit failed\n"),
                         -1);
     }
-  
+
   *os << " * buf," << be_nl
-      << "::CORBA::Boolean release = 0" << be_uidt_nl << ");" << be_uidt_nl;
+      << "::CORBA::Boolean release = false" << be_uidt_nl << ");" << be_uidt_nl;
 
   // Public constructor with single argument of type const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
@@ -358,9 +358,9 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
 
 
   *os << "::CORBA::ULong maximum (void) const;" << be_nl;
- 
+
   *os << "::CORBA::ULong length (void) const;" << be_nl;
- 
+
   *os << "void length ( ::CORBA::ULong len);" << be_nl << be_nl;
 
   // Member variable of underlying type;
@@ -398,7 +398,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * vb_node = this->ctx_->node ();
-  
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -432,7 +432,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   *os << "// accessor" << be_nl;
 
   // Accessor function takes no arguments and returns a const char *
-  *os << "const " << node->full_name () 
+  *os << "const " << node->full_name ()
       << " _value (void) const;" << be_nl << be_nl;
 
   *os << "// modifiers" << be_nl;
@@ -593,7 +593,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
 
   // Public accessor and modifier methods
   this->emit_accessor_modifier (node);
- 
+
   // Access to the boxed value for method signatures
   if (node->size_type() == AST_Type::FIXED)
     {
@@ -671,7 +671,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
 
   // Member variable of underlying type;
   this->emit_boxed_member_var (node, "_var");
-  
+
   return 0;
 }
 
@@ -814,7 +814,7 @@ be_visitor_valuebox_ch::emit_boxed_access (be_decl *node,
 
   *os << node->full_name () << type_suffix << "&"
       << " _boxed_inout (void);" << be_nl;
- 
+
   *os << node->full_name () << type_suffix << out_ref_modifier << "&"
       << " _boxed_out (void);" << be_nl;
 

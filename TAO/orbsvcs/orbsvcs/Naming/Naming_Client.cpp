@@ -20,7 +20,7 @@ CosNaming::NamingContext_ptr
 TAO_Naming_Client::get_context (void) const
 {
   // Must duplicate this pointer so it can be stored in a _var.
-  return CosNaming::NamingContext::_duplicate (this->naming_context_.ptr ());
+  return CosNaming::NamingContext::_duplicate (this->naming_context_.in ());
 }
 
 int

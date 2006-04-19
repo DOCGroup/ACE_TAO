@@ -14,7 +14,6 @@ ACE_RCSID (IFRService,
            OperationDef_i,
            "$Id$")
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_OperationDef_i::TAO_OperationDef_i (
@@ -496,7 +495,7 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (contexts_key,
                                                 stringified,
-                                                contexts[i].in ());
+                                                contexts[i]);
     }
 }
 
