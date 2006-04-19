@@ -946,12 +946,7 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-// Include ace/Hash_Map_Manager_T.i on all platforms excluding SunCC.
-// This nonsense is necessary since SunCC (version 4.2) cannot inline
-// the code in ace/Hash_Map_Manager_T.i (with the fast option).
-# if !(defined (__SUNPRO_CC) && (__SUNPRO_CC == 0x420))
 #  include "ace/Hash_Map_Manager_T.inl"
-# endif /* ! __SUNPRO_CC */
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
