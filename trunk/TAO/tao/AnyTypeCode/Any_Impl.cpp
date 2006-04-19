@@ -35,7 +35,7 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {
   if ((cdr << this->type_) == 0)
     {
-      return 0;
+      return false;
     }
 
   return this->marshal_value (cdr);
@@ -116,19 +116,19 @@ TAO::Any_Impl::_tao_decode (TAO_InputCDR &
 CORBA::Boolean
 TAO::Any_Impl::to_object (CORBA::Object_ptr &) const
 {
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 TAO::Any_Impl::to_value (CORBA::ValueBase *&) const
 {
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 TAO::Any_Impl::to_abstract_base (CORBA::AbstractBase_ptr &) const
 {
-  return 0;
+  return false;
 }
 
 bool
