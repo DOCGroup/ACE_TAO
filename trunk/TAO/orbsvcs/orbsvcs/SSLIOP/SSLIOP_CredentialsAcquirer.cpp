@@ -21,18 +21,10 @@ ACE_RCSID (SSLIOP,
 
 // -------------------------------------------------------
 
-#if (defined (TAO_HAS_VERSIONED_NAMESPACE) \
-     && TAO_HAS_VERSIONED_NAMESPACE == 1) \
-  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-
+#if (defined (TAO_HAS_VERSIONED_NAMESPACE) && TAO_HAS_VERSIONED_NAMESPACE == 1)
 # define TAO_SSLIOP_PASSWORD_CALLBACK_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_SSLIOP_password_callback)
-
 #else
-
 # define TAO_SSLIOP_PASSWORD_CALLBACK_NAME TAO_SSLIOP_password_callback
-
 #endif  /* TAO_HAS_VERSIONED_NAMESPACE == 1 */
 
 

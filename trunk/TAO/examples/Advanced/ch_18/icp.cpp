@@ -216,19 +216,6 @@ actual_temp(const StateMap::iterator & pos)
 //---------------------------------------------------------------
 
 
-#if (_MSC_VER < 1300)
-namespace std
-{
-    size_t min (const size_t len1, const size_t len2)
-    {
-      return ( len1 < len2 ? len1:len2 );
-    }
-}
-#endif/*_MSC_VER*/
-
-
-//----------------------------------------------------------------
-
 // ICP_get() returns an attribute value of the device with the
 // given id. The attribute is named by the attr parameter. The
 // value is copied into the buffer pointed to by the value
