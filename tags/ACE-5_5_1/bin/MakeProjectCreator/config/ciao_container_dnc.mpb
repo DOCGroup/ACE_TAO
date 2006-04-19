@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : portableserver, ciao_client_dnc {
+  after    += CIAO_DnC_Container
+  libs     += CIAO_DnC_Container
+}
