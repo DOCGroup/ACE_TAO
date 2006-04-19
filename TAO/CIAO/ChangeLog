@@ -1,3 +1,8 @@
+Wed Apr 19 14:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+          Removed vc6 workaround
+
 Wed Apr 19 13:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/schema/xsc-banner.h:
