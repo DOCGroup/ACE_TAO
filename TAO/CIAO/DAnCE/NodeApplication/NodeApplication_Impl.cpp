@@ -1009,7 +1009,7 @@ handle_es_consumer_connection (
 
           for (CORBA::ULong j = 0; j < size; ++j)
             {
-              consumer_config->insert_source ((*filter).sources[j].in ());
+              consumer_config->insert_source ((*filter).sources[j]);
             }
         }
 
