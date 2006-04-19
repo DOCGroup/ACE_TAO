@@ -2,9 +2,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
-#if (defined (_MSC_VER) && (_MSC_VER < 1300))
-#include <fstream>
-#endif
+
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   // Output to default destination (stderr)
