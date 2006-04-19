@@ -279,16 +279,20 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_HAS_MINIMUM_CORBA 0
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-// Default DIOP settings
+/// Default IIOP settings
+#if !defined (TAO_HAS_IIOP)
+#  define TAO_HAS_IIOP 1
+#endif  /* !TAO_HAS_IIOP */
+
+/// Default DIOP settings
 #if !defined (TAO_HAS_DIOP)
-#    define TAO_HAS_DIOP 1
+#  define TAO_HAS_DIOP 1
 #endif  /* !TAO_HAS_DIOP */
 
-// SCIOP is disabled by default (i.e. TAO_HAS_SCIOP is undef)
-// to enable SCIOP, make with sctp=openss7 option on command line.
-// See $ACE_ROOT/performance-tests/SCTP/README for more info.
-
-// Default SCIOP Settings
+/// Default SCIOP Settings
+/// SCIOP is disabled by default (i.e. TAO_HAS_SCIOP is undef)
+/// to enable SCIOP, make with sctp=openss7 option on command line.
+/// See $ACE_ROOT/performance-tests/SCTP/README for more info.
 #if !defined (TAO_HAS_SCIOP)
 #  if defined (ACE_HAS_SCTP)
 #    define TAO_HAS_SCIOP 1

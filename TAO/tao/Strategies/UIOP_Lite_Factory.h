@@ -22,11 +22,11 @@
 
 #include "tao/orbconf.h"
 
-# if TAO_HAS_UIOP == 1
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+# if TAO_HAS_UIOP == 1
 
 #include "ace/Service_Config.h"
 #include "tao/Strategies/strategies_export.h"

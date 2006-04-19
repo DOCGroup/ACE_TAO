@@ -231,7 +231,7 @@ TAO_SCIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_SCIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  int const result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -304,7 +304,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
     IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  CORBA::ULong len = listen_list.length ();
+  CORBA::ULong const len = listen_list.length ();
 
   for (CORBA::ULong i = 0; i < len; ++ i)
     {
@@ -332,7 +332,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval = this->transport ()->recache_transport (&prop);
+      int const retval = this->transport ()->recache_transport (&prop);
       if (retval == -1)
         return retval;
 
@@ -361,10 +361,10 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
 
   if (tos != this->dscp_codepoint_)
     {
-      int result = this->peer ().set_option (IPPROTO_IP,
-                                             IP_TOS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+      int const result = this->peer ().set_option (IPPROTO_IP,
+                                                   IP_TOS,
+                                                   (int *) &tos ,
+                                                   (int) sizeof (tos));
 
       if (TAO_debug_level)
         {
