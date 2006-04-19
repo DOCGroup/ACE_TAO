@@ -1,4 +1,7 @@
 #include "tao/IIOP_Profile.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -748,3 +751,5 @@ TAO_IIOP_Profile::decode_endpoints (void)
 //@@ TAO_PROFILE_SPL_COPY_HOOK_END
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

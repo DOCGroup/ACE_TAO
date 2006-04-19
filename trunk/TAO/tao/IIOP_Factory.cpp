@@ -1,10 +1,11 @@
 #include "tao/IIOP_Factory.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/IOP_IORC.h"
-
 #include "ace/OS_NS_strings.h"
-
 
 ACE_RCSID (tao,
            IIOP_Factory,
@@ -92,3 +93,5 @@ ACE_STATIC_SVC_DEFINE (TAO_IIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_IIOP_Protocol_Factory)
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

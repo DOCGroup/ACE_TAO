@@ -4,6 +4,7 @@
 
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
+#include "tao/Protocol_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Reactive_Flushing_Strategy.h"
@@ -24,7 +25,6 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
-
 
 ACE_RCSID (tao,
            default_resource,
@@ -546,6 +546,7 @@ TAO_Default_Resource_Factory::add_to_ior_parser_names (const char *curarg)
 int
 TAO_Default_Resource_Factory::load_default_protocols (void)
 {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       // If the user did not list any protocols in her svc.conf file
       // then default to TAO's basic protocols.
       // You do *NOT* need modify this code to add your own protocol,
@@ -581,7 +582,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
       // If a protocol factory is obtained from the Service
       // Configurator then do not transfer ownership to the
       // TAO_Protocol_Item.
-      int transfer_ownership = 0;
+      bool transfer_ownership = false;
 
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory");
@@ -604,11 +605,12 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
                               protocol_factory,
                               TAO_Protocol_Factory);
 
-          transfer_ownership = 1;
+          transfer_ownership = true;
+
         }
       else
         {
-          transfer_ownership = 0;
+          transfer_ownership = false;
         }
 
       ACE_NEW_RETURN (item,
@@ -647,6 +649,8 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
                       ACE_TEXT ("TAO (%P|%t) Loaded default ")
                       ACE_TEXT ("protocol <IIOP_Factory>\n")));
         }
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
   return 0;
 }

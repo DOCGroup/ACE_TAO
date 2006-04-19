@@ -20,11 +20,11 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/Strategies/DIOP_Connection_Handler.h"

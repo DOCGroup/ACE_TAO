@@ -10,8 +10,6 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Endpoint by
- *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
 //==========================================================================
 

@@ -321,8 +321,10 @@ namespace
     //
     // where PN is the name of your protocol and LIB is the base
     // name of the shared library that implements the protocol.
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
     ACE_Service_Config::process_directive (
       ace_svc_desc_TAO_IIOP_Protocol_Factory);
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
     // add descriptor to list of static objects.
     ACE_Service_Config::process_directive (

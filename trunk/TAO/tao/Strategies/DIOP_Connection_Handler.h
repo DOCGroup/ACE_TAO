@@ -17,22 +17,19 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
-#include "ace/Reactor.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Strategies/DIOP_Transport.h"
 #include "ace/SOCK_Dgram.h"
-#include "tao/Strategies/strategies_export.h"
-
+#include "ace/Reactor.h"
+#include "ace/Acceptor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

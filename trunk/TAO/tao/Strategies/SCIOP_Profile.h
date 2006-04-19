@@ -8,8 +8,6 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Profile by
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -19,7 +17,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Profile.h"
+#include "tao/orbconf.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -27,6 +26,7 @@
 #if TAO_HAS_SCIOP == 1
 
 #include "tao/Strategies/SCIOP_Endpoint.h"
+#include "tao/Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr&
@@ -38,3 +40,6 @@ TAO_IIOP_Acceptor::set_default_address (const ACE_INET_Addr& addr)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
+
