@@ -450,7 +450,7 @@ public:
                       size_t lwm = ACE_DEFAULT_THREAD_MANAGER_LWM,
                       size_t inc = ACE_DEFAULT_THREAD_MANAGER_INC,
                       size_t hwm = ACE_DEFAULT_THREAD_MANAGER_HWM);
-  virtual ~ACE_Thread_Manager (void);
+  ~ACE_Thread_Manager (void);
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   /// Get pointer to a process-wide <ACE_Thread_Manager>.
@@ -981,16 +981,17 @@ protected:
   ACE_Thread_Descriptor *hthread_descriptor (ACE_hthread_t);
 
   /// Create a new thread (must be called with locks held).
-  virtual int spawn_i (ACE_THR_FUNC func,
-                       void *arg,
-                       long flags,
-                       ACE_thread_t * = 0,
-                       ACE_hthread_t *t_handle = 0,
-                       long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                       int grp_id = -1,
-                       void *stack = 0,
-                       size_t stack_size = 0,
-                       ACE_Task_Base *task = 0);
+  int spawn_i (ACE_THR_FUNC func,
+               void *arg,
+               long flags,
+               ACE_thread_t * = 0,
+               ACE_hthread_t *t_handle = 0,
+               long priority = ACE_DEFAULT_THREAD_PRIORITY,
+               int grp_id = -1,
+               void *stack = 0,
+               size_t stack_size = 0,
+               ACE_Task_Base *task = 0);
+
   /// Run the registered hooks when the thread exits.
   void run_thread_exit_hooks (int i);
 
