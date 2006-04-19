@@ -49,8 +49,7 @@ ACE_XTI_ATM_Mcast::add_leaf (ACE_TLI_Stream &current_stream,
       // Check for asynchronous event
       if (t_errno == TLOOK)
         {
-          int event;
-          event = ACE_OS::t_look(current_stream.get_handle());
+          int const event = ACE_OS::t_look(current_stream.get_handle());
           if (event != TNODATA && event != T_DATA)
             return -1;
           else

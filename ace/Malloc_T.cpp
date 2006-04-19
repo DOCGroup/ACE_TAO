@@ -474,7 +474,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name)
-  : memory_pool_ (pool_name),
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name),
     bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
@@ -496,7 +497,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                               const ACE_TCHAR *lock_name,
                                                               const ACE_MEM_POOL_OPTIONS *options)
-  : memory_pool_ (pool_name, options),
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name, options),
     bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
@@ -520,7 +522,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                               const ACE_MEM_POOL_OPTIONS *options,
                                                               ACE_LOCK *lock)
-  : memory_pool_ (pool_name, options),
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name, options),
     lock_ (lock),
     delete_lock_ (0),
     bad_flag_ (0)
@@ -546,7 +549,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                           const ACE_TCHAR *lock_name,
                                                           const void *options)
-  : memory_pool_ (pool_name,
+  : cb_ptr_ (0),
+    memory_pool_ (pool_name,
                   (const ACE_MEM_POOL_OPTIONS *) options),
     bad_flag_ (0)
 {
@@ -584,7 +588,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove");
   // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) destroying ACE_Malloc_T\n")));
-  int result = 0;
 
 #if defined (ACE_HAS_MALLOC_STATS)
   this->print_stats ();
@@ -595,7 +598,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
     this->lock_->remove ();
 
   // Give the memory pool a chance to release its resources.
-  result = this->memory_pool_.release ();
+  int const result = this->memory_pool_.release ();
 
   // Reset this->cb_ptr_ as it is no longer valid.
   // There's also no need to keep the reference counter as the
@@ -621,7 +624,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
     return 0;
 
   // Round up request to a multiple of the MALLOC_HEADER size.
-  size_t nunits =
+  size_t const nunits =
     (nbytes + sizeof (MALLOC_HEADER) - 1) / sizeof (MALLOC_HEADER)
     + 1; // Add one for the <MALLOC_HEADER> itself.
 
@@ -777,7 +780,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 
   if (ap == 0 || this->cb_ptr_ == 0)
     return;
-
 
   // Adjust AP to point to the block MALLOC_HEADER
   MALLOC_HEADER *blockp = ((MALLOC_HEADER *) ap) - 1;

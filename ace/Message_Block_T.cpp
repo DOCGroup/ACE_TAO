@@ -28,7 +28,7 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
   const ACE_Message_Block::Message_Flags always_clear =
     ACE_Message_Block::DONT_DELETE;
 
-  ACE_Locked_Data_Block<ACE_LOCK> *nb;
+  ACE_Locked_Data_Block<ACE_LOCK> *nb = 0;
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Locked_Data_Block<ACE_LOCK>*> (

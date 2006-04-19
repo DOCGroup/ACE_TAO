@@ -330,7 +330,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   size_t len = ACE_OS::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
   // memory.
-  char *new_type;
+  char *new_type = 0;
   ACE_NEW_RETURN (new_type,
                   char [len + 1],
                   -1);

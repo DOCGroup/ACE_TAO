@@ -116,9 +116,9 @@ class ACE_Map_Reverse_Iterator;
  * The <EXT_ID> must support <operator==>.  This constraint can
  * be alleviated via template specialization, as shown in the
  * $ACE_ROOT/tests/Conn_Test.cpp test.
- * This class uses an <ACE_Allocator> to allocate memory.  The
+ * This class uses an ACE_Allocator to allocate memory.  The
  * user can make this a persistant class by providing an
- * <ACE_Allocator> with a persistable memory pool.
+ * ACE_Allocator with a persistable memory pool.
  * This implementation of a map uses an array, which is searched
  * linearly.  For more efficient searching you should use the
  * <ACE_Hash_Map_Manager>.

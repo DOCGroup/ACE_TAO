@@ -101,7 +101,7 @@ ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node (void)
 ACE_Cleanup_Info_Node *
 ACE_Cleanup_Info_Node::insert (const ACE_Cleanup_Info &new_info)
 {
-  ACE_Cleanup_Info_Node *new_node;
+  ACE_Cleanup_Info_Node *new_node = 0;
 
   ACE_NEW_RETURN (new_node,
                   ACE_Cleanup_Info_Node (new_info, this),
@@ -136,7 +136,7 @@ ACE_OS_Exit_Info::at_exit_i (void *object,
   // Return -1 and sets errno if unable to allocate storage.  Enqueue
   // at the head and dequeue from the head to get LIFO ordering.
 
-  ACE_Cleanup_Info_Node *new_node;
+  ACE_Cleanup_Info_Node *new_node = 0;
 
   if ((new_node = registered_objects_->insert (new_info)) == 0)
     return -1;

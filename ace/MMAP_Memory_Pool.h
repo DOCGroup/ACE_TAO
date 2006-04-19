@@ -201,6 +201,12 @@ public:
   /// Dump the state of an object.
   virtual void dump (void) const;
 
+  /// Get reference to underlying ACE_Mem_Map object.
+  ACE_Mem_Map const & mmap (void) const;
+
+  /// Get reference to underlying ACE_Mem_Map object.
+  ACE_Mem_Map & mmap (void);
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -267,10 +273,10 @@ protected:
 /**
  * @class ACE_Lite_MMAP_Memory_Pool
  *
- * @brief Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.
+ * @brief Make a ``lighter-weight'' memory pool based ACE_Mem_Map.
  *
  * This implementation allows memory to be shared between
- * processes.  However, unlike the <ACE_MMAP_Memory_Pool>
+ * processes.  However, unlike the ACE_MMAP_Memory_Pool
  * the <sync> methods are no-ops, which means that we don't pay
  * for the price of flushing the memory to the backing store on
  * every update.  Naturally, this trades off increased
@@ -294,6 +300,10 @@ public:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/MMAP_Memory_Pool.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MMAP_MEMORY_POOL_H */

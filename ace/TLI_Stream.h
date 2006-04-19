@@ -124,10 +124,10 @@ private:
   int rwflag_;
 
   /// Get rwflag
-  int get_rwflag (void);
+  int get_rwflag (void) const;
 
   /// Set rwflag
-  void set_rwflag (int);
+  void set_rwflag (int value);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

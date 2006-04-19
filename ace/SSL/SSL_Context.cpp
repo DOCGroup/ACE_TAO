@@ -49,20 +49,9 @@ namespace
 
 #ifdef ACE_HAS_THREADS
 
-# if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
-// MSVC++ 6's preprocessor can't handle macro expansions required by
-// the versioned namespace support.  *sigh*
-
+# if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 #  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_SSL_locking_callback)
 #  define ACE_SSL_THREAD_ID_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_SSL_thread_id)
-
-# else
-
-#  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_SSL_locking_callback
-#  define ACE_SSL_THREAD_ID_NAME ACE_SSL_thread_id
-
 # endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 
