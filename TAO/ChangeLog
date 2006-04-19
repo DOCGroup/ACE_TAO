@@ -1,3 +1,12 @@
+Wed Apr 19 13:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+        * examples/Advanced/ch_12/icp.cpp:
+        * examples/Advanced/ch_21/icp.cpp:
+        * examples/Advanced/ch_18/icp.cpp:
+        * examples/Advanced/ch_8_and_10/icp.cpp:
+          Removed workarounds for vc6
+
 Wed Apr 19 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/AbstractBase.cpp:
