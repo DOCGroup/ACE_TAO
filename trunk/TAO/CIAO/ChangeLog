@@ -1,3 +1,12 @@
+Wed Apr 19 19:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Fixed usage of sequences. The sequences now return
+          a pointer on the subscript operators, not _var which was not according
+          to the spec.
+
 Wed Apr 19 14:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/XMLSchema/Types.hpp:
