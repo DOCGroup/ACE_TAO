@@ -1,3 +1,10 @@
+Wed Apr 19 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+          Use -shared instead of -G when building shared libraries. Thanks to
+          Alan L Batongbacal <alanlb at vt dot edu> for reporting this. This
+          fixes bugzilla bug 1848.
+
 Wed Apr 19 12:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ACE_Init_Test.rc:
