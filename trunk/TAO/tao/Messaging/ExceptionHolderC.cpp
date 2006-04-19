@@ -159,6 +159,17 @@ Messaging::ExceptionHolder::~ExceptionHolder (void)
 OBV_Messaging::ExceptionHolder::ExceptionHolder (void)
 {}
 
+OBV_Messaging::ExceptionHolder::ExceptionHolder (
+    ::CORBA::Boolean _tao_init_is_system_exception,
+    ::CORBA::Boolean _tao_init_byte_order,
+    const ::CORBA::OctetSeq & _tao_init_marshaled_exception
+  )
+{
+  is_system_exception (_tao_init_is_system_exception);
+  byte_order (_tao_init_byte_order);
+  marshaled_exception (_tao_init_marshaled_exception);
+}
+
 OBV_Messaging::ExceptionHolder::~ExceptionHolder (void)
 {}
 
