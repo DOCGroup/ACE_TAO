@@ -1,3 +1,9 @@
+Wed Apr 19 18:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/UShortSeqC.h:
+        * tao/OctetSeqC.h:
+          Do an explicit export of the base template
+
 Wed Apr 19 16:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/ExceptionHolderC.{h,cpp}:
