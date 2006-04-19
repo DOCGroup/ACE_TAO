@@ -1,3 +1,38 @@
+Wed Apr 19 12:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ACE_Init_Test.rc:
+          Removed msvc specific lines
+
+        * tests/tests.mpc:
+          The ACE_Init_Test should use its resource file. Fixes bugzilla
+          2495
+
+        * ace/Capabilities.{h,cpp}:
+          Prefix increment instead of postfix
+
+        * ace/Hash_Map_Manager_T.{h,cpp}:
+          Removed workaround for suncc 4.2
+
+        * ace/Object_Manager.h:
+        * ace/Parse_Node.h:
+        * ace/POSIX_Proactor.h:
+        * ace/Thread_Mutex.h:
+          Doxygen improvements
+
+        * ace/Parse_Node.cpp:
+          Use prefix increment, initialise pointers with 0 and don't print
+          an error message when we can't a dll, this gives false messages
+          when using TAO. This fixes bugzilla 2383. Thanks to Ming Xiong
+          for making a patch.
+
+        * ace/Proactor.h:
+          Removed all virtual keywords, not needed for this class. Fixes
+          bugzilla 2178.
+
+        * ace/Thread_Manager.h:
+          Removed virtual keywords, not needed and safes footprint. Fixes
+          bugzilla 2179.
+
 Wed Apr 19 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged ACE changes from sendfile branch. Also made a lot of const
