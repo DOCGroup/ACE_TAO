@@ -221,6 +221,11 @@ namespace OBV_Messaging
 
   protected:
     ExceptionHolder (void);
+    ExceptionHolder (
+      ::CORBA::Boolean _tao_init_is_system_exception,
+      ::CORBA::Boolean _tao_init_byte_order,
+      const ::CORBA::OctetSeq & _tao_init_marshaled_exception
+    );
     virtual ~ExceptionHolder (void);
 
   protected:
