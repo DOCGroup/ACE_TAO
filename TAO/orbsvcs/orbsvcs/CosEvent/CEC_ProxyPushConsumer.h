@@ -166,8 +166,8 @@ public:
   /// Destructor
   ~TAO_CEC_ProxyPushConsumer_Guard (void);
 
-  /// Returns 1 if the reference count successfully acquired
-  int locked (void) const;
+  /// Returns true if the reference count successfully acquired
+  bool locked (void) const;
 
 private:
   /// The lock used to protect the reference count

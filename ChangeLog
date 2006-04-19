@@ -1,3 +1,8 @@
+Wed Apr 19 15:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2368_Regression_Test.cpp:
+          Fixed compile error and compile warning
+
 Wed Apr 19 14:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_sendfile.h:
