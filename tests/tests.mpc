@@ -102,6 +102,9 @@ project(ACE Init Test) : acetest {
   Source_Files {
     ACE_Init_Test.cpp
   }
+  Resource_Files {
+    ACE_Init_Test.rc
+  }
 }
 
 project(ACE Test) : acetest {

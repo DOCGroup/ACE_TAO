@@ -37,7 +37,7 @@ ACE_Stream_Node::apply (int & yyerrno)
 
   if (ACE_Service_Config::initialize (this->node_->record (),
                                       this->node_->parameters ()) == -1)
-    yyerrno++;
+    ++yyerrno;
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -183,7 +183,7 @@ ACE_Suspend_Node::apply (int & yyerrno)
   ACE_TRACE ("ACE_Suspend_Node::apply");
 
   if (ACE_Service_Config::suspend (this->name ()) == -1)
-    yyerrno++;
+    ++yyerrno;
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -197,7 +197,7 @@ ACE_Resume_Node::apply (int & yyerrno)
 {
   ACE_TRACE ("ACE_Resume_Node::apply");
   if (ACE_Service_Config::resume (this->name ()) == -1)
-    yyerrno++;
+    ++yyerrno;
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -231,7 +231,7 @@ ACE_Remove_Node::apply (int & yyerrno)
 {
   ACE_TRACE ("ACE_Remove_Node::apply");
   if (ACE_Service_Config::remove (this->name ()) == -1)
-    yyerrno++;
+    ++yyerrno;
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -262,7 +262,7 @@ ACE_Dynamic_Node::apply (int & yyerrno)
 
   if (ACE_Service_Config::initialize (this->record (),
                                       this->parameters ()) == -1)
-    yyerrno++;
+    ++yyerrno;
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -308,7 +308,7 @@ const ACE_Service_Type *
 ACE_Static_Node::record (void) const
 {
   ACE_TRACE ("ACE_Static_Node::record");
-  ACE_Service_Type *sr;
+  ACE_Service_Type *sr = 0;
 
   if (ACE_Service_Repository::instance()->find
       (this->name (),
@@ -331,7 +331,7 @@ ACE_Static_Node::apply (int & yyerrno)
   ACE_TRACE ("ACE_Static_Node::apply");
   if (ACE_Service_Config::initialize (this->name (),
                                       this->parameters ()) == -1)
-    yyerrno++;
+    ++yyerrno;
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -411,14 +411,6 @@ ACE_Location_Node::open_dll (int & yyerrno)
   if (-1 == this->dll_.open (this->pathname ()))
     {
       ++yyerrno;
-
-#ifndef ACE_NLOGGING
-      ACE_TCHAR *errmsg = this->dll_.error ();
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("ACE_DLL::open failed for %s: %s\n"),
-                  this->pathname (),
-                  errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
-#endif /* ACE_NLOGGING */
 
       return -1;
     }
@@ -606,7 +598,7 @@ ACE_Function_Node::symbol (int & yyerrno,
 
       if (this->symbol_ == 0)
         {
-          yyerrno++;
+          ++yyerrno;
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%p\n"),
                              this->function_name_),
@@ -716,7 +708,7 @@ ACE_Static_Function_Node::symbol (int & yyerrno,
 
       if (this->symbol_ == 0)
         {
-          yyerrno++;
+          ++yyerrno;
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("no static service registered for function %s\n"),
@@ -730,7 +722,7 @@ ACE_Static_Function_Node::symbol (int & yyerrno,
 
   if (this->symbol_ == 0)
     {
-      yyerrno++;
+      ++yyerrno;
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%p\n"),
                          this->function_name_),

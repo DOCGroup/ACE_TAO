@@ -39,6 +39,8 @@ class ACE_Service_Type;
  * tree of Service Nodes.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Parse_Node
 {
@@ -71,6 +73,8 @@ private:
  * @brief Suspend a Service Node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Suspend_Node : public ACE_Parse_Node
 {
@@ -93,6 +97,8 @@ public:
  * @brief Resume a Service Node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Resume_Node : public ACE_Parse_Node
 {
@@ -115,6 +121,8 @@ public:
  * @brief Remove a Service Node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Remove_Node : public ACE_Parse_Node
 {
@@ -137,6 +145,8 @@ public:
  * @brief Handle a statically linked node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Static_Node : public ACE_Parse_Node
 {
@@ -165,6 +175,8 @@ private:
  * @brief Handle a dynamically linked node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Dynamic_Node : public ACE_Static_Node
 {
@@ -192,6 +204,8 @@ private:
  * @brief Handle a Stream.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Stream_Node : public ACE_Parse_Node
 {
@@ -219,6 +233,8 @@ private:
  * @brief Keep track of where a shared library is located.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Location_Node
 {
@@ -266,6 +282,8 @@ protected:
  * @brief Keeps track of the symbol name for a shared object.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Object_Node : public ACE_Location_Node
 {
@@ -292,6 +310,8 @@ private:
  * @brief Keeps track of the symbol name of for a shared function.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Function_Node : public ACE_Location_Node
 {
@@ -340,6 +360,8 @@ private:
  * @brief I forget why this is here... ;-)
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Dummy_Node : public ACE_Parse_Node
 {
@@ -368,6 +390,8 @@ private:
  * application.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Static_Function_Node : public ACE_Location_Node
 {
