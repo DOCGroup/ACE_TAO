@@ -231,25 +231,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Acceptor<Logging_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>;
-template class ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex>;
-template class ACE_Singleton<Options, ACE_Null_Mutex>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor<Logging_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>
-#pragma instantiate ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex>
-#pragma instantiate ACE_Singleton<Options, ACE_Null_Mutex>
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_Reactor, ACE_Null_Mutex> *
   ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>::singleton_;
 template ACE_Singleton<Options, ACE_Null_Mutex> *
   ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;
 template ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex> *
   ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
