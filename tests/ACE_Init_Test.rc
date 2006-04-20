@@ -66,6 +66,7 @@ IDR_MAINFRAME           ICON    DISCARDABLE     "ACE_Init_Test.ico"
 // Dialog
 //
 
+#ifdef APSTUDIO_INVOKED
 IDD_ACE_INIT_TEST_DIALOG DIALOGEX 0, 0, 185, 92
 STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
@@ -77,6 +78,7 @@ BEGIN
     LTEXT           "This box will auto-dismiss.",IDC_STATIC,13,7,113,
                     8
 END
+#endif    // APSTUDIO_INVOKED
 
 
 #ifndef _MAC
