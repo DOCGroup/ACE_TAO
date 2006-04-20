@@ -19,7 +19,7 @@ public:
                          CommandLine const& cl,
                          string export_macro,
                          fs::path const& file);
-                        
+
   virtual ~ExecImplHeaderEmitter () {}
 
   virtual void

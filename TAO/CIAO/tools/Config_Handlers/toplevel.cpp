@@ -3,12 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
 #include "toplevel.hpp"
 
 namespace CIAO
@@ -16,75 +16,49 @@ namespace CIAO
   namespace Config_Handlers
   {
     // TopLevelPackageDescription
-    // 
+    //
 
     TopLevelPackageDescription::
-    TopLevelPackageDescription ()
-    : 
-    ::XSCRT::Type (), 
-    regulator__ ()
+    TopLevelPackageDescription (::CIAO::Config_Handlers::PackageConfiguration const& package__)
+      :
+      ::XSCRT::Type (),
+      package_ (new ::CIAO::Config_Handlers::PackageConfiguration (package__)),
+      regulator__ ()
     {
+      package_->container (this);
     }
 
     TopLevelPackageDescription::
     TopLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
-    :
-    ::XSCRT::Type (),
-    regulator__ ()
+      :
+      ::XSCRT::Type (),
+      package_ (new ::CIAO::Config_Handlers::PackageConfiguration (*s.package_)),
+      regulator__ ()
     {
-      {
-        for (package_const_iterator i (s.package_.begin ());i != s.package_.end ();++i) add_package (*i);
-      }
+      package_->container (this);
     }
 
     ::CIAO::Config_Handlers::TopLevelPackageDescription& TopLevelPackageDescription::
     operator= (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
     {
-      package_.clear ();
-      {
-        for (package_const_iterator i (s.package_.begin ());i != s.package_.end ();++i) add_package (*i);
-      }
+      package (s.package ());
 
       return *this;
     }
 
 
     // TopLevelPackageDescription
-    // 
-    TopLevelPackageDescription::package_iterator TopLevelPackageDescription::
-    begin_package ()
+    //
+    ::CIAO::Config_Handlers::PackageConfiguration const& TopLevelPackageDescription::
+    package () const
     {
-      return package_.begin ();
-    }
-
-    TopLevelPackageDescription::package_iterator TopLevelPackageDescription::
-    end_package ()
-    {
-      return package_.end ();
-    }
-
-    TopLevelPackageDescription::package_const_iterator TopLevelPackageDescription::
-    begin_package () const
-    {
-      return package_.begin ();
-    }
-
-    TopLevelPackageDescription::package_const_iterator TopLevelPackageDescription::
-    end_package () const
-    {
-      return package_.end ();
+      return *package_;
     }
 
     void TopLevelPackageDescription::
-    add_package (::CIAO::Config_Handlers::PackageConfiguration const& e)
+    package (::CIAO::Config_Handlers::PackageConfiguration const& e)
     {
-      package_.push_back (e);
-    }
-
-    size_t TopLevelPackageDescription::
-    count_package(void) const
-    {
-      return package_.size ();
+      *package_ = e;
     }
   }
 }
@@ -98,26 +72,26 @@ namespace CIAO
 
     TopLevelPackageDescription::
     TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+      :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
       while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "package")
         {
-          ::CIAO::Config_Handlers::PackageConfiguration t (e);
-          add_package (t);
-        }
+          ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        else 
-        {
+          if (n == "package")
+            {
+              package_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > (new ::CIAO::Config_Handlers::PackageConfiguration (e));
+              package_->container (this);
+            }
+
+          else
+            {
+            }
         }
-      }
     }
   }
 }
@@ -195,71 +169,13 @@ namespace CIAO
       void TopLevelPackageDescription::
       package (Type& o)
       {
-        // VC6 anathema strikes again
-        //
-        TopLevelPackageDescription::Type::package_iterator b (o.begin_package()), e (o.end_package());
-
-        if (b != e)
-        {
-          package_pre (o);
-          for (; b != e;)
-          {
-            dispatch (*b);
-            if (++b != e) package_next (o);
-          }
-
-          package_post (o);
-        }
+        dispatch (o.package ());
       }
 
       void TopLevelPackageDescription::
       package (Type const& o)
       {
-        // VC6 anathema strikes again
-        //
-        TopLevelPackageDescription::Type::package_const_iterator b (o.begin_package()), e (o.end_package());
-
-        if (b != e)
-        {
-          package_pre (o);
-          for (; b != e;)
-          {
-            dispatch (*b);
-            if (++b != e) package_next (o);
-          }
-
-          package_post (o);
-        }
-      }
-
-      void TopLevelPackageDescription::
-      package_pre (Type&)
-      {
-      }
-
-      void TopLevelPackageDescription::
-      package_pre (Type const&)
-      {
-      }
-
-      void TopLevelPackageDescription::
-      package_next (Type&)
-      {
-      }
-
-      void TopLevelPackageDescription::
-      package_next (Type const&)
-      {
-      }
-
-      void TopLevelPackageDescription::
-      package_post (Type&)
-      {
-      }
-
-      void TopLevelPackageDescription::
-      package_post (Type const&)
-      {
+        dispatch (o.package ());
       }
 
       void TopLevelPackageDescription::
@@ -287,7 +203,7 @@ namespace CIAO
 
       TopLevelPackageDescription::
       TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
+        : ::XSCRT::Writer< ACE_TCHAR > (e)
       {
       }
 
@@ -303,21 +219,10 @@ namespace CIAO
       }
 
       void TopLevelPackageDescription::
-      package_pre (Type const&)
+      package (Type const& o)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("package", top_ ()));
-      }
-
-      void TopLevelPackageDescription::
-      package_next (Type const& o)
-      {
-        package_post (o);
-        package_pre (o);
-      }
-
-      void TopLevelPackageDescription::
-      package_post (Type const&)
-      {
+        Traversal::TopLevelPackageDescription::package (o);
         pop_ ();
       }
     }

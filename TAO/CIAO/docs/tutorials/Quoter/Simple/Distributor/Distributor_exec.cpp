@@ -40,7 +40,7 @@ namespace CIDL_StockDistributor_Impl
   pulse_Generator::open_h ()
   {
     // convert the task into a active object that runs in separate thread
-    return this->activate (); 
+    return this->activate ();
   }
 
   int
@@ -49,7 +49,7 @@ namespace CIDL_StockDistributor_Impl
     this->reactor ()->end_reactor_event_loop ();
 
     // wait for all threads in the task to exit before it returns
-    return this->wait (); 
+    return this->wait ();
   }
 
   int

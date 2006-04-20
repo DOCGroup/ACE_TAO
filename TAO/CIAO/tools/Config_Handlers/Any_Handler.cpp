@@ -29,24 +29,18 @@ namespace CIAO
     {
       CIAO_TRACE("Any_Handler::extract_into_any");
       DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
-                                                 desc.value ());
-      
+                                                                        desc.value ());
+
       toconfig = *dyn->to_any ();
-      
+
       dyn->destroy ();
     }
 
     Any Any_Handler::get_any (const ::CORBA::Any& src)
     {
       CIAO_TRACE("Any_Handler::extract_into_any - reverse");
-      //MAJO
-      //@Bala ... still haven't figured this one out yet
-      //I was saving it for last...going from corba::any
-      //to xsc DataValue
-      DataType type = DataType_Handler::data_type (src.type ());
-      DataValue value;
-      Any any (type,value);
-      return any;
+
+      return DYNANY_HANDLER->extract_from_dynany (src);
     }
   }
 }

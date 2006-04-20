@@ -18,7 +18,7 @@ CIAO::NodeApplication_Task::svc ()
     {
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
@@ -28,7 +28,7 @@ CIAO::NodeApplication_Task::svc ()
 
       object =
         this->orb_->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
@@ -85,8 +85,8 @@ CIAO::NodeApplication_Task::svc ()
       ACE_TRY_CHECK;
 
       if (retval)
-      {
-	ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
+        {
+          ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
                                initializing the session container!"));
 	return 1;
       }
@@ -117,7 +117,7 @@ CIAO::NodeApplication_Task::svc ()
 
           CIAO::NodeApplication_Callback_var nam_callback
             = CIAO::NodeApplication_Callback::_narrow (object.in ()
-						       ACE_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           Deployment::Properties_out properties_out (prop.out ());

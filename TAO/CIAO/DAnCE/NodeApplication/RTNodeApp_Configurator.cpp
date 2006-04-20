@@ -34,7 +34,7 @@ int
 CIAO::RTNodeApp_Configurator::init_resource_manager
 (const ::Deployment::Properties &properties)
 {
-  
+
   //  if (CIAO::debug_level () > 9)
     ACE_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::init_resource_manager\n"));
   // @@ Should we cache the properties that we consumed here?
@@ -57,7 +57,7 @@ CIAO::RTNodeApp_Configurator::init_resource_manager
             ACE_ERROR_RETURN ((LM_ERROR,
                                "ERROR: RTNodeApp_Configurator::init_resource_manager unable to extract CIAOServerResources\n"), -1);
         }
-      
+
       // Ignore other stuff
     }
 

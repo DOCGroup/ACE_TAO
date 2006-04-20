@@ -94,20 +94,20 @@ interface Bar : Components::CCMObject
     Foo objref;
     Components::Cookie ck;
   };
-  
+
   typedef sequence<needs_fooConnection> needs_fooConnections;
-  
+
   Components::Cookie connect_needs_foo (in Foo connection)
     raises (Components::ExceededConnectionLimit, Components::InvalidConnection);
-  
+
   Foo disconnect_needs_foo (in Components::Cookie ck)
     raises (Components::InvalidConnection);
-  
+
   needs_fooConnections get_connections_needs_foo ();
-  
+
   Components::Cookie subscribe_ev_pub (in EvConsumer consumer)
     raises (Components::ExceededConnectionLimit);
-  
+
   EvConsumer unsubscribe_ev_pub (in Components::Cookie ck)
     raises (Components::InvalidConnection);
 };
@@ -122,7 +122,7 @@ interface BarHomeImplicit : Components::KeylessCCMHome
     raises (Components::CreateFailure);
 };
 
-interface BarHome : BarHomeExplicit, BarHomeImplicit 
+interface BarHome : BarHomeExplicit, BarHomeImplicit
 {
 };
 

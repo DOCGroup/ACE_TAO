@@ -151,9 +151,27 @@
 
   <connection>
     <name>hello_event_ec_publisher_connection</name>
+
+    <!-- The position of the below "deployRequirement" element matters -->
+    <deployRequirement>
+      <resourceType>ciao::rtec</resourceType>
+      <name>dummy</name>
+      <property>
+        <name>dummy</name>
+        <value>
+	        <type>
+	          <kind>tk_string</kind>
+	        </type>
+	        <value>
+	          <string>dummy</string>
+	        </value>
+        </value>	        
+      </property> 
+    </deployRequirement>
+
     <internalEndpoint>
       <portName>click_out</portName>
-      <kind>rtecEventPublisher</kind>
+      <kind>EventPublisher</kind>
       <instance>Hello-Sender-idd</instance>
     </internalEndpoint>
     <externalReference>
@@ -163,9 +181,12 @@
 
   <connection>
     <name>hello_event_ec_consumer_connection</name>
+
+
+
     <internalEndpoint>
       <portName>click_in</portName>
-      <kind>rtecEventConsumer</kind>
+      <kind>EventConsumer</kind>
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
     <externalReference>

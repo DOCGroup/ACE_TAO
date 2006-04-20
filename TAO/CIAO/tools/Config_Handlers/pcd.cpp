@@ -3,49 +3,132 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
 #include "pcd.hpp"
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
+    // ComponentPackageImport
+    //
+
+    ComponentPackageImport::
+    ComponentPackageImport ()
+      :
+      ::XSCRT::Type (),
+      regulator__ ()
+    {
+    }
+
+    ComponentPackageImport::
+    ComponentPackageImport (::CIAO::Config_Handlers::ComponentPackageImport const& s)
+      :
+      ::XSCRT::Type (),
+      regulator__ ()
+    {
+      {
+        for (location_const_iterator i (s.location_.begin ());i != s.location_.end ();++i) add_location (*i);
+      }
+    }
+
+    ::CIAO::Config_Handlers::ComponentPackageImport& ComponentPackageImport::
+    operator= (::CIAO::Config_Handlers::ComponentPackageImport const& s)
+    {
+      location_.clear ();
+      {
+        for (location_const_iterator i (s.location_.begin ());i != s.location_.end ();++i) add_location (*i);
+      }
+
+      return *this;
+    }
+
+
+    // ComponentPackageImport
+    //
+    ComponentPackageImport::location_iterator ComponentPackageImport::
+    begin_location ()
+    {
+      return location_.begin ();
+    }
+
+    ComponentPackageImport::location_iterator ComponentPackageImport::
+    end_location ()
+    {
+      return location_.end ();
+    }
+
+    ComponentPackageImport::location_const_iterator ComponentPackageImport::
+    begin_location () const
+    {
+      return location_.begin ();
+    }
+
+    ComponentPackageImport::location_const_iterator ComponentPackageImport::
+    end_location () const
+    {
+      return location_.end ();
+    }
+
+    void ComponentPackageImport::
+    add_location (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      location_.push_back (e);
+    }
+
+    size_t ComponentPackageImport::
+    count_location(void) const
+    {
+      return location_.size ();
+    }
+
+
     // PackageConfiguration
-    // 
+    //
 
     PackageConfiguration::
     PackageConfiguration ()
-    : 
-    ::XSCRT::Type (), 
-    regulator__ ()
+      :
+      ::XSCRT::Type (),
+      regulator__ ()
     {
     }
 
     PackageConfiguration::
     PackageConfiguration (::CIAO::Config_Handlers::PackageConfiguration const& s)
-    :
-    ::XSCRT::Type (),
-    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
-    UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
-    basePackage_ (s.basePackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageDescription (*s.basePackage_) : 0),
-    reference_ (s.reference_.get () ? new ::CIAO::Config_Handlers::ComponentPackageReference (*s.reference_) : 0),
-    selectRequirement_ (s.selectRequirement_.get () ? new ::CIAO::Config_Handlers::Requirement (*s.selectRequirement_) : 0),
-    configProperty_ (s.configProperty_.get () ? new ::CIAO::Config_Handlers::Property (*s.configProperty_) : 0),
-    contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
-    regulator__ ()
+      :
+      ::XSCRT::Type (),
+      label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+        UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
+          basePackage_ (s.basePackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageDescription (*s.basePackage_) : 0),
+          specializedConfig_ (s.specializedConfig_.get () ? new ::CIAO::Config_Handlers::PackageConfiguration (*s.specializedConfig_) : 0),
+          importedPackage_ (s.importedPackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageImport (*s.importedPackage_) : 0),
+          referencedPackage_ (s.referencedPackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageReference (*s.referencedPackage_) : 0),
+          contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
+            href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
+              regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (basePackage_.get ()) basePackage_->container (this);
-      if (reference_.get ()) reference_->container (this);
-      if (selectRequirement_.get ()) selectRequirement_->container (this);
-      if (configProperty_.get ()) configProperty_->container (this);
+      if (specializedConfig_.get ()) specializedConfig_->container (this);
+      if (importedPackage_.get ()) importedPackage_->container (this);
+      if (referencedPackage_.get ()) referencedPackage_->container (this);
+      {
+        for (selectRequirement_const_iterator i (s.selectRequirement_.begin ());i != s.selectRequirement_.end ();++i) add_selectRequirement (*i);
+      }
+
+      {
+        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
+      }
+
       if (contentLocation_.get ()) contentLocation_->container (this);
+      if (href_.get ()) href_->container (this);
     }
 
     ::CIAO::Config_Handlers::PackageConfiguration& PackageConfiguration::
@@ -60,24 +143,37 @@ namespace CIAO
       if (s.basePackage_.get ()) basePackage (*(s.basePackage_));
       else basePackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > (0);
 
-      if (s.reference_.get ()) reference (*(s.reference_));
-      else reference_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > (0);
+      if (s.specializedConfig_.get ()) specializedConfig (*(s.specializedConfig_));
+      else specializedConfig_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > (0);
 
-      if (s.selectRequirement_.get ()) selectRequirement (*(s.selectRequirement_));
-      else selectRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (0);
+      if (s.importedPackage_.get ()) importedPackage (*(s.importedPackage_));
+      else importedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageImport > (0);
 
-      if (s.configProperty_.get ()) configProperty (*(s.configProperty_));
-      else configProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (0);
+      if (s.referencedPackage_.get ()) referencedPackage (*(s.referencedPackage_));
+      else referencedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > (0);
+
+      selectRequirement_.clear ();
+      {
+        for (selectRequirement_const_iterator i (s.selectRequirement_.begin ());i != s.selectRequirement_.end ();++i) add_selectRequirement (*i);
+      }
+
+      configProperty_.clear ();
+      {
+        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
+      }
 
       if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
       else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      if (s.href_.get ()) href (*(s.href_));
+      else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       return *this;
     }
 
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     label_p () const
     {
@@ -94,19 +190,19 @@ namespace CIAO
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (label_.get ())
-      {
-        *label_ = e;
-      }
+        {
+          *label_ = e;
+        }
 
       else
-      {
-        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        label_->container (this);
-      }
+        {
+          label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          label_->container (this);
+        }
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     UUID_p () const
     {
@@ -123,19 +219,19 @@ namespace CIAO
     UUID (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (UUID_.get ())
-      {
-        *UUID_ = e;
-      }
+        {
+          *UUID_ = e;
+        }
 
       else
-      {
-        UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        UUID_->container (this);
-      }
+        {
+          UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          UUID_->container (this);
+        }
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     basePackage_p () const
     {
@@ -152,106 +248,182 @@ namespace CIAO
     basePackage (::CIAO::Config_Handlers::ComponentPackageDescription const& e)
     {
       if (basePackage_.get ())
-      {
-        *basePackage_ = e;
-      }
+        {
+          *basePackage_ = e;
+        }
 
       else
-      {
-        basePackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > (new ::CIAO::Config_Handlers::ComponentPackageDescription (e));
-        basePackage_->container (this);
-      }
+        {
+          basePackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > (new ::CIAO::Config_Handlers::ComponentPackageDescription (e));
+          basePackage_->container (this);
+        }
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
-    reference_p () const
+    specializedConfig_p () const
     {
-      return reference_.get () != 0;
+      return specializedConfig_.get () != 0;
+    }
+
+    ::CIAO::Config_Handlers::PackageConfiguration const& PackageConfiguration::
+    specializedConfig () const
+    {
+      return *specializedConfig_;
+    }
+
+    void PackageConfiguration::
+    specializedConfig (::CIAO::Config_Handlers::PackageConfiguration const& e)
+    {
+      if (specializedConfig_.get ())
+        {
+          *specializedConfig_ = e;
+        }
+
+      else
+        {
+          specializedConfig_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > (new ::CIAO::Config_Handlers::PackageConfiguration (e));
+          specializedConfig_->container (this);
+        }
+    }
+
+    // PackageConfiguration
+    //
+    bool PackageConfiguration::
+    importedPackage_p () const
+    {
+      return importedPackage_.get () != 0;
+    }
+
+    ::CIAO::Config_Handlers::ComponentPackageImport const& PackageConfiguration::
+    importedPackage () const
+    {
+      return *importedPackage_;
+    }
+
+    void PackageConfiguration::
+    importedPackage (::CIAO::Config_Handlers::ComponentPackageImport const& e)
+    {
+      if (importedPackage_.get ())
+        {
+          *importedPackage_ = e;
+        }
+
+      else
+        {
+          importedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageImport > (new ::CIAO::Config_Handlers::ComponentPackageImport (e));
+          importedPackage_->container (this);
+        }
+    }
+
+    // PackageConfiguration
+    //
+    bool PackageConfiguration::
+    referencedPackage_p () const
+    {
+      return referencedPackage_.get () != 0;
     }
 
     ::CIAO::Config_Handlers::ComponentPackageReference const& PackageConfiguration::
-    reference () const
+    referencedPackage () const
     {
-      return *reference_;
+      return *referencedPackage_;
     }
 
     void PackageConfiguration::
-    reference (::CIAO::Config_Handlers::ComponentPackageReference const& e)
+    referencedPackage (::CIAO::Config_Handlers::ComponentPackageReference const& e)
     {
-      if (reference_.get ())
-      {
-        *reference_ = e;
-      }
+      if (referencedPackage_.get ())
+        {
+          *referencedPackage_ = e;
+        }
 
       else
-      {
-        reference_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > (new ::CIAO::Config_Handlers::ComponentPackageReference (e));
-        reference_->container (this);
-      }
+        {
+          referencedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > (new ::CIAO::Config_Handlers::ComponentPackageReference (e));
+          referencedPackage_->container (this);
+        }
     }
 
     // PackageConfiguration
-    // 
-    bool PackageConfiguration::
-    selectRequirement_p () const
+    //
+    PackageConfiguration::selectRequirement_iterator PackageConfiguration::
+    begin_selectRequirement ()
     {
-      return selectRequirement_.get () != 0;
+      return selectRequirement_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Requirement const& PackageConfiguration::
-    selectRequirement () const
+    PackageConfiguration::selectRequirement_iterator PackageConfiguration::
+    end_selectRequirement ()
     {
-      return *selectRequirement_;
+      return selectRequirement_.end ();
+    }
+
+    PackageConfiguration::selectRequirement_const_iterator PackageConfiguration::
+    begin_selectRequirement () const
+    {
+      return selectRequirement_.begin ();
+    }
+
+    PackageConfiguration::selectRequirement_const_iterator PackageConfiguration::
+    end_selectRequirement () const
+    {
+      return selectRequirement_.end ();
     }
 
     void PackageConfiguration::
-    selectRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_selectRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (selectRequirement_.get ())
-      {
-        *selectRequirement_ = e;
-      }
+      selectRequirement_.push_back (e);
+    }
 
-      else
-      {
-        selectRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (new ::CIAO::Config_Handlers::Requirement (e));
-        selectRequirement_->container (this);
-      }
+    size_t PackageConfiguration::
+    count_selectRequirement(void) const
+    {
+      return selectRequirement_.size ();
     }
 
     // PackageConfiguration
-    // 
-    bool PackageConfiguration::
-    configProperty_p () const
+    //
+    PackageConfiguration::configProperty_iterator PackageConfiguration::
+    begin_configProperty ()
     {
-      return configProperty_.get () != 0;
+      return configProperty_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Property const& PackageConfiguration::
-    configProperty () const
+    PackageConfiguration::configProperty_iterator PackageConfiguration::
+    end_configProperty ()
     {
-      return *configProperty_;
+      return configProperty_.end ();
+    }
+
+    PackageConfiguration::configProperty_const_iterator PackageConfiguration::
+    begin_configProperty () const
+    {
+      return configProperty_.begin ();
+    }
+
+    PackageConfiguration::configProperty_const_iterator PackageConfiguration::
+    end_configProperty () const
+    {
+      return configProperty_.end ();
     }
 
     void PackageConfiguration::
-    configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (::CIAO::Config_Handlers::Property const& e)
     {
-      if (configProperty_.get ())
-      {
-        *configProperty_ = e;
-      }
+      configProperty_.push_back (e);
+    }
 
-      else
-      {
-        configProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
-        configProperty_->container (this);
-      }
+    size_t PackageConfiguration::
+    count_configProperty(void) const
+    {
+      return configProperty_.size ();
     }
 
     // PackageConfiguration
-    // 
+    //
     bool PackageConfiguration::
     contentLocation_p () const
     {
@@ -268,15 +440,50 @@ namespace CIAO
     contentLocation (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (contentLocation_.get ())
-      {
-        *contentLocation_ = e;
-      }
+        {
+          *contentLocation_ = e;
+        }
 
       else
-      {
-        contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        contentLocation_->container (this);
-      }
+        {
+          contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          contentLocation_->container (this);
+        }
+    }
+
+    // PackageConfiguration
+    //
+    bool PackageConfiguration::
+    href_p () const
+    {
+      return href_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& PackageConfiguration::
+    href () const
+    {
+      return *href_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& PackageConfiguration::
+    href ()
+    {
+      return *href_;
+    }
+
+    void PackageConfiguration::
+    href (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (href_.get ())
+        {
+          *href_ = e;
+        }
+
+      else
+        {
+          href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          href_->container (this);
+        }
     }
   }
 }
@@ -285,67 +492,121 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    // PackageConfiguration
+    // ComponentPackageImport
     //
 
-    PackageConfiguration::
-    PackageConfiguration (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    ComponentPackageImport::
+    ComponentPackageImport (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+      :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
       while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "label")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          label (t);
+          ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+          if (n == "location")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              add_location (t);
+            }
+
+          else
+            {
+            }
+        }
+    }
+
+    // PackageConfiguration
+    //
+
+    PackageConfiguration::
+    PackageConfiguration (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+      :Base__ (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+        {
+          ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+          if (n == "label")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              label (t);
+            }
+
+          else if (n == "UUID")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              UUID (t);
+            }
+
+          else if (n == "basePackage")
+            {
+              ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
+              basePackage (t);
+            }
+
+          else if (n == "specializedConfig")
+            {
+              ::CIAO::Config_Handlers::PackageConfiguration t (e);
+              specializedConfig (t);
+            }
+
+          else if (n == "importedPackage")
+            {
+              ::CIAO::Config_Handlers::ComponentPackageImport t (e);
+              importedPackage (t);
+            }
+
+          else if (n == "referencedPackage")
+            {
+              ::CIAO::Config_Handlers::ComponentPackageReference t (e);
+              referencedPackage (t);
+            }
+
+          else if (n == "selectRequirement")
+            {
+              ::CIAO::Config_Handlers::Requirement t (e);
+              add_selectRequirement (t);
+            }
+
+          else if (n == "configProperty")
+            {
+              ::CIAO::Config_Handlers::Property t (e);
+              add_configProperty (t);
+            }
+
+          else if (n == "contentLocation")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              contentLocation (t);
+            }
+
+          else
+            {
+            }
         }
 
-        else if (n == "UUID")
+      while (p.more_attributes ())
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          UUID (t);
-        }
+          ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
+          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+          if (n == "href")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (a);
+              href (t);
+            }
 
-        else if (n == "basePackage")
-        {
-          ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
-          basePackage (t);
+          else
+            {
+            }
         }
-
-        else if (n == "reference")
-        {
-          ::CIAO::Config_Handlers::ComponentPackageReference t (e);
-          reference (t);
-        }
-
-        else if (n == "selectRequirement")
-        {
-          ::CIAO::Config_Handlers::Requirement t (e);
-          selectRequirement (t);
-        }
-
-        else if (n == "configProperty")
-        {
-          ::CIAO::Config_Handlers::Property t (e);
-          configProperty (t);
-        }
-
-        else if (n == "contentLocation")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          contentLocation (t);
-        }
-
-        else 
-        {
-        }
-      }
     }
   }
 }
@@ -366,6 +627,20 @@ namespace CIAO
     namespace
     {
       ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct ComponentPackageImportTypeInfoInitializer
+      {
+        ComponentPackageImportTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentPackageImport));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentPackageImportTypeInfoInitializer ComponentPackageImportTypeInfoInitializer_;
 
       struct PackageConfigurationTypeInfoInitializer
       {
@@ -390,6 +665,116 @@ namespace CIAO
   {
     namespace Traversal
     {
+      // ComponentPackageImport
+      //
+      //
+
+      void ComponentPackageImport::
+      traverse (Type& o)
+      {
+        pre (o);
+        location (o);
+        post (o);
+      }
+
+      void ComponentPackageImport::
+      traverse (Type const& o)
+      {
+        pre (o);
+        location (o);
+        post (o);
+      }
+
+      void ComponentPackageImport::
+      pre (Type&)
+      {
+      }
+
+      void ComponentPackageImport::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentPackageImport::
+      location (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentPackageImport::Type::location_iterator b (o.begin_location()), e (o.end_location());
+
+        if (b != e)
+          {
+            location_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) location_next (o);
+              }
+
+            location_post (o);
+          }
+      }
+
+      void ComponentPackageImport::
+      location (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentPackageImport::Type::location_const_iterator b (o.begin_location()), e (o.end_location());
+
+        if (b != e)
+          {
+            location_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) location_next (o);
+              }
+
+            location_post (o);
+          }
+      }
+
+      void ComponentPackageImport::
+      location_pre (Type&)
+      {
+      }
+
+      void ComponentPackageImport::
+      location_pre (Type const&)
+      {
+      }
+
+      void ComponentPackageImport::
+      location_next (Type&)
+      {
+      }
+
+      void ComponentPackageImport::
+      location_next (Type const&)
+      {
+      }
+
+      void ComponentPackageImport::
+      location_post (Type&)
+      {
+      }
+
+      void ComponentPackageImport::
+      location_post (Type const&)
+      {
+      }
+
+      void ComponentPackageImport::
+      post (Type&)
+      {
+      }
+
+      void ComponentPackageImport::
+      post (Type const&)
+      {
+      }
+
       // PackageConfiguration
       //
       //
@@ -404,14 +789,18 @@ namespace CIAO
         else UUID_none (o);
         if (o.basePackage_p ()) basePackage (o);
         else basePackage_none (o);
-        if (o.reference_p ()) reference (o);
-        else reference_none (o);
-        if (o.selectRequirement_p ()) selectRequirement (o);
-        else selectRequirement_none (o);
-        if (o.configProperty_p ()) configProperty (o);
-        else configProperty_none (o);
+        if (o.specializedConfig_p ()) specializedConfig (o);
+        else specializedConfig_none (o);
+        if (o.importedPackage_p ()) importedPackage (o);
+        else importedPackage_none (o);
+        if (o.referencedPackage_p ()) referencedPackage (o);
+        else referencedPackage_none (o);
+        selectRequirement (o);
+        configProperty (o);
         if (o.contentLocation_p ()) contentLocation (o);
         else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
         post (o);
       }
 
@@ -425,14 +814,18 @@ namespace CIAO
         else UUID_none (o);
         if (o.basePackage_p ()) basePackage (o);
         else basePackage_none (o);
-        if (o.reference_p ()) reference (o);
-        else reference_none (o);
-        if (o.selectRequirement_p ()) selectRequirement (o);
-        else selectRequirement_none (o);
-        if (o.configProperty_p ()) configProperty (o);
-        else configProperty_none (o);
+        if (o.specializedConfig_p ()) specializedConfig (o);
+        else specializedConfig_none (o);
+        if (o.importedPackage_p ()) importedPackage (o);
+        else importedPackage_none (o);
+        if (o.referencedPackage_p ()) referencedPackage (o);
+        else referencedPackage_none (o);
+        selectRequirement (o);
+        configProperty (o);
         if (o.contentLocation_p ()) contentLocation (o);
         else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
         post (o);
       }
 
@@ -513,37 +906,143 @@ namespace CIAO
       }
 
       void PackageConfiguration::
-      reference (Type& o)
+      specializedConfig (Type& o)
       {
-        dispatch (o.reference ());
+        dispatch (o.specializedConfig ());
       }
 
       void PackageConfiguration::
-      reference (Type const& o)
+      specializedConfig (Type const& o)
       {
-        dispatch (o.reference ());
+        dispatch (o.specializedConfig ());
       }
 
       void PackageConfiguration::
-      reference_none (Type&)
+      specializedConfig_none (Type&)
       {
       }
 
       void PackageConfiguration::
-      reference_none (Type const&)
+      specializedConfig_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      importedPackage (Type& o)
+      {
+        dispatch (o.importedPackage ());
+      }
+
+      void PackageConfiguration::
+      importedPackage (Type const& o)
+      {
+        dispatch (o.importedPackage ());
+      }
+
+      void PackageConfiguration::
+      importedPackage_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      importedPackage_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      referencedPackage (Type& o)
+      {
+        dispatch (o.referencedPackage ());
+      }
+
+      void PackageConfiguration::
+      referencedPackage (Type const& o)
+      {
+        dispatch (o.referencedPackage ());
+      }
+
+      void PackageConfiguration::
+      referencedPackage_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      referencedPackage_none (Type const&)
       {
       }
 
       void PackageConfiguration::
       selectRequirement (Type& o)
       {
-        dispatch (o.selectRequirement ());
+        // VC6 anathema strikes again
+        //
+        PackageConfiguration::Type::selectRequirement_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
+
+        if (b != e)
+          {
+            selectRequirement_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) selectRequirement_next (o);
+              }
+
+            selectRequirement_post (o);
+          }
+
+        else selectRequirement_none (o);
       }
 
       void PackageConfiguration::
       selectRequirement (Type const& o)
       {
-        dispatch (o.selectRequirement ());
+        // VC6 anathema strikes again
+        //
+        PackageConfiguration::Type::selectRequirement_const_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
+
+        if (b != e)
+          {
+            selectRequirement_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) selectRequirement_next (o);
+              }
+
+            selectRequirement_post (o);
+          }
+
+        else selectRequirement_none (o);
+      }
+
+      void PackageConfiguration::
+      selectRequirement_pre (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      selectRequirement_pre (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      selectRequirement_next (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      selectRequirement_next (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      selectRequirement_post (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      selectRequirement_post (Type const&)
+      {
       }
 
       void PackageConfiguration::
@@ -559,13 +1058,75 @@ namespace CIAO
       void PackageConfiguration::
       configProperty (Type& o)
       {
-        dispatch (o.configProperty ());
+        // VC6 anathema strikes again
+        //
+        PackageConfiguration::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+          {
+            configProperty_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) configProperty_next (o);
+              }
+
+            configProperty_post (o);
+          }
+
+        else configProperty_none (o);
       }
 
       void PackageConfiguration::
       configProperty (Type const& o)
       {
-        dispatch (o.configProperty ());
+        // VC6 anathema strikes again
+        //
+        PackageConfiguration::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+          {
+            configProperty_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) configProperty_next (o);
+              }
+
+            configProperty_post (o);
+          }
+
+        else configProperty_none (o);
+      }
+
+      void PackageConfiguration::
+      configProperty_pre (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      configProperty_pre (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      configProperty_next (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      configProperty_next (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      configProperty_post (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      configProperty_post (Type const&)
+      {
       }
 
       void PackageConfiguration::
@@ -601,6 +1162,28 @@ namespace CIAO
       }
 
       void PackageConfiguration::
+      href (Type& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void PackageConfiguration::
+      href (Type const& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void PackageConfiguration::
+      href_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      href_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
       post (Type&)
       {
       }
@@ -619,13 +1202,53 @@ namespace CIAO
   {
     namespace Writer
     {
+      // ComponentPackageImport
+      //
+      //
+
+      ComponentPackageImport::
+      ComponentPackageImport (::XSCRT::XML::Element< ACE_TCHAR >& e)
+        : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      ComponentPackageImport::
+      ComponentPackageImport ()
+      {
+      }
+
+      void ComponentPackageImport::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentPackageImport::traverse (o);
+      }
+
+      void ComponentPackageImport::
+      location_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("location", top_ ()));
+      }
+
+      void ComponentPackageImport::
+      location_next (Type const& o)
+      {
+        location_post (o);
+        location_pre (o);
+      }
+
+      void ComponentPackageImport::
+      location_post (Type const&)
+      {
+        pop_ ();
+      }
+
       // PackageConfiguration
       //
       //
 
       PackageConfiguration::
       PackageConfiguration (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
+        : ::XSCRT::Writer< ACE_TCHAR > (e)
       {
       }
 
@@ -665,26 +1288,64 @@ namespace CIAO
       }
 
       void PackageConfiguration::
-      reference (Type const& o)
+      specializedConfig (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("reference", top_ ()));
-        Traversal::PackageConfiguration::reference (o);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("specializedConfig", top_ ()));
+        Traversal::PackageConfiguration::specializedConfig (o);
         pop_ ();
       }
 
       void PackageConfiguration::
-      selectRequirement (Type const& o)
+      importedPackage (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("importedPackage", top_ ()));
+        Traversal::PackageConfiguration::importedPackage (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      referencedPackage (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("referencedPackage", top_ ()));
+        Traversal::PackageConfiguration::referencedPackage (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      selectRequirement_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("selectRequirement", top_ ()));
-        Traversal::PackageConfiguration::selectRequirement (o);
+      }
+
+      void PackageConfiguration::
+      selectRequirement_next (Type const& o)
+      {
+        selectRequirement_post (o);
+        selectRequirement_pre (o);
+      }
+
+      void PackageConfiguration::
+      selectRequirement_post (Type const&)
+      {
         pop_ ();
       }
 
       void PackageConfiguration::
-      configProperty (Type const& o)
+      configProperty_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
-        Traversal::PackageConfiguration::configProperty (o);
+      }
+
+      void PackageConfiguration::
+      configProperty_next (Type const& o)
+      {
+        configProperty_post (o);
+        configProperty_pre (o);
+      }
+
+      void PackageConfiguration::
+      configProperty_post (Type const&)
+      {
         pop_ ();
       }
 
@@ -694,6 +1355,15 @@ namespace CIAO
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
         Traversal::PackageConfiguration::contentLocation (o);
         pop_ ();
+      }
+
+      void PackageConfiguration::
+      href (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        attr_ (&a);
+        Traversal::PackageConfiguration::href (o);
+        attr_ (0);
       }
     }
   }

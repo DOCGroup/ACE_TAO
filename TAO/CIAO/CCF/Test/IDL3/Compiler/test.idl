@@ -21,7 +21,7 @@ module ComponentTest
   interface J
   {
   };
-  
+
   component A : B supports I, J
   {
   };
@@ -83,11 +83,11 @@ module HomeTest
   interface J
   {
   };
-  
+
   component A
   {
   };
-  
+
   home AH manages A
   {
   };
@@ -103,14 +103,14 @@ module HomeTest
 
 
 // HomeFactory
-// 
+//
 //
 module HomeFactoryTest
 {
   component A
   {
   };
-  
+
   home AH manages A
   {
     factory new (in long size);
@@ -126,7 +126,7 @@ module ProvidesTest
   interface I
   {
   };
-  
+
   component C
   {
     provides I i;
@@ -158,7 +158,7 @@ module UsesTest
   interface I
   {
   };
-  
+
   component C
   {
     uses I i;

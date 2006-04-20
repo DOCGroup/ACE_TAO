@@ -105,7 +105,7 @@ BE_produce (void)
                   ACE_TEXT ("No Root\n")));
       BE_abort ();
     }
-    
+
   idl3_to_idl2_visitor visitor;
 
   if (visitor.visit_root (ast_root) == -1)

@@ -38,7 +38,7 @@ namespace CCF
         post (Type&);
       };
 
-      
+
       //
       //
       //
@@ -52,7 +52,7 @@ namespace CCF
 
         virtual void
         name (Type&);
-        
+
         virtual void
         post (Type&);
       };

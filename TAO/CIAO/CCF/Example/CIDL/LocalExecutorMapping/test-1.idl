@@ -9,13 +9,13 @@ module M1
 {
   interface Blah;
   interface Fool {};
-  
-  component C1 
+
+  component C1
   {
     provides M::I i;
     readonly attribute long l;
   };
-  
+
   home H1 manages C1
   {
     attribute M::I i;

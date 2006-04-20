@@ -38,54 +38,54 @@ namespace CIDL_RoundTrip_Impl
     RoundTrip_exec_i ();
 
     /// Operation to test the data
-      virtual CORBA::Long cube_long (CORBA::Long data
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Long cube_long (CORBA::Long data
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*
-    virtual ::NodeAppTest::CCM_LatencyTest*
-                        get_latency (ACE_ENV_SINGLE_ARG_DECL)
-                ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual ::NodeAppTest::CCM_LatencyTest*
+      get_latency (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
     */
 
-      NodeAppTest::CCM_LatencyTest_ptr
-      get_facet_1(ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    NodeAppTest::CCM_LatencyTest_ptr
+    get_facet_1(ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 
-      NodeAppTest::CCM_LatencyTest_ptr
-      get_facet_2(ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    NodeAppTest::CCM_LatencyTest_ptr
+    get_facet_2(ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-      virtual void set_session_context (Components::SessionContext_ptr ctx
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::CCMException));
+    virtual void set_session_context (Components::SessionContext_ptr ctx
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-      virtual void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::CCMException));
+    virtual void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-      virtual void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::CCMException));
+    virtual void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-      virtual void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::CCMException));
+    virtual void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     /// Helper function to be called back by timeout_Handler
-      void pulse (void);
+    void pulse (void);
 
     // CIAO defined methods
-      virtual void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::CCMException));
+    virtual void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-      virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::CCMException));
+    virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
   protected:
 
@@ -109,9 +109,9 @@ namespace CIDL_RoundTrip_Impl
     {
     }
 
-    virtual CORBA::Long cube_long (CORBA::Long data 
-		    	                         ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Long cube_long (CORBA::Long data
+                                   ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
   /**

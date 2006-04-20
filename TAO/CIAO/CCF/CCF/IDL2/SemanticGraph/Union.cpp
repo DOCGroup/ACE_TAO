@@ -1,7 +1,6 @@
 // file      : CCF/IDL2/SemanticGraph/Union.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
-
 #include "CCF/IDL2/SemanticGraph/Union.hpp"
 
 namespace CCF

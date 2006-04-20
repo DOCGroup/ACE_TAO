@@ -94,7 +94,7 @@ project(Plan_Analyzer_exec) : ciao_component_dnc {
   dynamicflags   = PLAN_ANALYZER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {

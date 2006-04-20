@@ -7,7 +7,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool 
+    bool
     TPL_Handler::threadpool_with_lanes (
            const ThreadpoolWithLanesDef &src,
            ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &dest)
@@ -25,7 +25,7 @@ namespace CIAO
           size_t len = dest.threadpool_lanes.length ();
 
           dest.threadpool_lanes.length (len + 1);
-                      
+
           dest.threadpool_lanes[len].lane_priority =
             static_cast <ACE_INT16> (loc->priority ());
 
@@ -47,7 +47,7 @@ namespace CIAO
 
       dest.max_request_buffer_size =
         static_cast <ACE_UINT32> (src.max_request_buffered_size ());
-        
+
       return true;
     }
 
@@ -60,10 +60,10 @@ namespace CIAO
                                   XMLSchema::unsignedLong ((src.max_buffered_requests)),
                                   XMLSchema::unsignedLong ((src.max_request_buffer_size))
                                   );
-        
+
       //XMLSchema::ID <ACE_TCHAR> id = ((src.Id));
       tpl.id (src.Id.in ());
-        
+
       size_t len = src.threadpool_lanes.length ();
       for (size_t i = 0; i < len; i++)
         {
@@ -71,10 +71,10 @@ namespace CIAO
                XMLSchema::unsignedLong (src.threadpool_lanes[i].static_threads),
                XMLSchema::unsignedLong (src.threadpool_lanes[i].dynamic_threads),
                XMLSchema::int_ (src.threadpool_lanes[i].lane_priority));
-                          
+
           tpl.add_threadpoolLane (new_tplane);
-        } 
-              
+        }
+
       return tpl;
     }
   }

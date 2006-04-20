@@ -34,16 +34,16 @@ module mod
   interface foo
   {
     typeprefix foo "preefy";
-    
+
     exception wrongety_wrong
     {
       base unrelated;
       string explanation;
     };
-    
+
     attribute base base_attr
       getraises (wrongety_wrong)
-      setraises (pre_mod::wrong, wrongety_wrong);     
+      setraises (pre_mod::wrong, wrongety_wrong);
   };
 
   interface bleep;

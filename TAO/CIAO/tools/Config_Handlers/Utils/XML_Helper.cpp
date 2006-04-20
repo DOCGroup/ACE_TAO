@@ -72,25 +72,25 @@ namespace CIAO
 
       // Instantiate the DOM parser.
       static const XMLCh gLS[] = { xercesc::chLatin_L,
-				   xercesc::chLatin_S,
-				   xercesc::chNull };
-      
+                                   xercesc::chLatin_S,
+                                   xercesc::chNull };
+
       // Get an implementation of the Load-Store (LS) interface
       // and cache it for later use
       impl_ =
-	  DOMImplementationRegistry::getDOMImplementation(gLS);
-      
+        DOMImplementationRegistry::getDOMImplementation(gLS);
+
       this->initialized_ = true;
       return;
     }
-    
+
     XERCES_CPP_NAMESPACE::DOMDocument *
     XML_Helper::create_dom (const ACE_TCHAR *root,
                             const ACE_TCHAR *ns)
     {
       if (root == 0 || ns == 0)
         return 0;
-      
+
       return this->impl_->createDocument (XStr (ns),
                                           XStr (root),
                                           0);
@@ -101,10 +101,10 @@ namespace CIAO
     {
 
       if (url == 0)
-	  return impl_->createDocument(
-	      XStr ("http://www.omg.org/DeploymentPlan"),
-	      XStr ("deploymentPlan"),
-	      0);
+        return impl_->createDocument(
+                                     XStr ("http://www.omg.org/DeploymentPlan"),
+                                     XStr ("deploymentPlan"),
+                                     0);
 
       try
         {
@@ -112,7 +112,7 @@ namespace CIAO
           // Create a DOMBuilder
           DOMBuilder* parser =
             impl_->createDOMBuilder (DOMImplementationLS::MODE_SYNCHRONOUS,
-                                    0);
+                                     0);
 
           // Discard comment nodes in the document
           parser->setFeature (XMLUni::fgDOMComments, false);
@@ -151,15 +151,15 @@ namespace CIAO
           XML_Error_Handler handler;
 
           parser->setErrorHandler (&handler);
-          
+
           CIAO_Schema_Resolver resolver;
-          
+
           parser->setEntityResolver (&resolver);
-          
+
           DOMDocument* doc = parser->parseURI (url);
 
           if (handler.getErrors ())
-            throw;
+            throw 0;
 
           return doc;
         }
@@ -183,13 +183,13 @@ namespace CIAO
         {
           char* message = XMLString::transcode (e.getMessage());
           ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
-          throw;
+          throw 0;
         }
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Caught an unknown exception \n"));
-          throw;
+          throw 0;
         }
 
       return 0;
@@ -214,22 +214,22 @@ namespace CIAO
       return;
     }
 
-      bool XML_Helper::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
-				 ACE_TCHAR *file)
-      {
-	  bool retn;
-	  XERCES_CPP_NAMESPACE::DOMWriter *writer = impl_->createDOMWriter();
-          
-          if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
-                                      true))
-            writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
-          
-	  xercesc::XMLFormatTarget* ft (new xercesc::LocalFileFormatTarget(file));
-	  retn = writer->writeNode(ft, *doc);
-	  delete writer;
-	  delete ft;
-	  return retn;
-      }
-	  
+    bool XML_Helper::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
+                                const ACE_TCHAR *file)
+    {
+      bool retn;
+      XERCES_CPP_NAMESPACE::DOMWriter *writer = impl_->createDOMWriter();
+
+      if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
+                                 true))
+        writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
+
+      xercesc::XMLFormatTarget* ft (new xercesc::LocalFileFormatTarget(file));
+      retn = writer->writeNode(ft, *doc);
+      delete writer;
+      delete ft;
+      return retn;
+    }
+
   }
 }

@@ -122,8 +122,8 @@ idl3_to_idl2_visitor::visit_module (AST_Module *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_module - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_module - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -180,8 +180,8 @@ idl3_to_idl2_visitor::visit_interface (AST_Interface *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_interface - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_interface - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -319,8 +319,8 @@ idl3_to_idl2_visitor::visit_valuetype (AST_ValueType *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_valuetype - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_valuetype - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -382,8 +382,8 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_component - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_component - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -425,8 +425,8 @@ idl3_to_idl2_visitor::visit_eventtype (AST_EventType *node)
   if (this->visit_valuetype (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_eventtype - "
-                          "codegen for valuetype failed\n"),
+                         "idl3_to_idl2_visitor::visit_eventtype - "
+                         "codegen for valuetype failed\n"),
                         -1);
     }
 
@@ -473,8 +473,8 @@ idl3_to_idl2_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
   if (this->visit_valuetype_fwd (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_eventtype_fwd - "
-                          "codegen for valuetype_fwd failed\n"),
+                         "idl3_to_idl2_visitor::visit_eventtype_fwd - "
+                         "codegen for valuetype_fwd failed\n"),
                         -1);
     }
 
@@ -646,8 +646,8 @@ idl3_to_idl2_visitor::visit_structure (AST_Structure *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_structure - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_structure - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -690,8 +690,8 @@ idl3_to_idl2_visitor::visit_exception (AST_Exception *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_exception - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_exception - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -828,6 +828,7 @@ idl3_to_idl2_visitor::visit_argument (AST_Argument *node)
 int
 idl3_to_idl2_visitor::visit_attribute (AST_Attribute *node)
 {
+
   bool rd_only = node->readonly ();
 
   // Keep output statements separate because of side effects.
@@ -872,8 +873,8 @@ idl3_to_idl2_visitor::visit_union (AST_Union *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_union - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_union - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -905,8 +906,8 @@ idl3_to_idl2_visitor::visit_union_branch (AST_UnionBranch *node)
       if (this->visit_union_label (node->label (i)) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                              "idl3_to_idl2_visitor::visit_union_branch - "
-                              "codegen for label failed\n"),
+                             "idl3_to_idl2_visitor::visit_union_branch - "
+                             "codegen for label failed\n"),
                             -1);
         }
     }
@@ -1176,8 +1177,8 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_root - "
-                          "codegen for scope failed\n"),
+                         "idl3_to_idl2_visitor::visit_root - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -1346,28 +1347,28 @@ idl3_to_idl2_visitor::gen_label_value (AST_UnionLabel *node)
 
   switch (ev->et)
     {
-      case AST_Expression::EV_short:
-        *os << ev->u.sval;
-        break;
-      case AST_Expression::EV_ushort:
-        *os << ev->u.usval;
-        break;
-      case AST_Expression::EV_long:
-        *os << ev->u.lval;
-        break;
-      case AST_Expression::EV_ulong:
-        *os << ev->u.ulval;
-        break;
-      case AST_Expression::EV_longlong:
+    case AST_Expression::EV_short:
+      *os << ev->u.sval;
+      break;
+    case AST_Expression::EV_ushort:
+      *os << ev->u.usval;
+      break;
+    case AST_Expression::EV_long:
+      *os << ev->u.lval;
+      break;
+    case AST_Expression::EV_ulong:
+      *os << ev->u.ulval;
+      break;
+    case AST_Expression::EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-        this->os->print ("%ld", ev->u.llval);
+      this->os->print ("%ld", ev->u.llval);
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-        break;
-      case AST_Expression::EV_ulonglong:
+      break;
+    case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-        *os << "ACE_UINT64_LITERAL (";
-        this->os->print (ACE_UINT64_FORMAT_SPECIFIER, ev->u.ullval);
-        *os << ")";
+      *os << "ACE_UINT64_LITERAL (";
+      this->os->print (ACE_UINT64_FORMAT_SPECIFIER, ev->u.ullval);
+      *os << ")";
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         break;
       case AST_Expression::EV_char:

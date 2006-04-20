@@ -17,6 +17,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "ace/Singleton.h"
+#include "ace/Null_Mutex.h"
 
 #include "xercesc/util/XercesDefs.hpp"
 
@@ -47,15 +49,15 @@ namespace CIAO
       /// Create a DOM tree
       XERCES_CPP_NAMESPACE::DOMDocument *
       create_dom (const ACE_TCHAR *uri);
-      
+
       XERCES_CPP_NAMESPACE::DOMDocument *
       create_dom (const ACE_TCHAR *root,
                   const ACE_TCHAR *ns);
-      
+
       //Writes out a DOMDocument to an XML file
       bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
-		      ACE_TCHAR *file);
-      
+                      const ACE_TCHAR *file);
+
       bool is_initialized (void) const;
 
     protected:
@@ -69,8 +71,16 @@ namespace CIAO
       bool initialized_;
       XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
     };
+
+    CIAO_XML_UTILS_SINGLETON_DECLARE (ACE_Singleton,
+                                      XML_Helper,
+                                      ACE_Null_Mutex);
+
+    typedef ACE_Singleton < XML_Helper, ACE_Null_Mutex > XML_Helper_Singleton;
+#define XML_HELPER XML_Helper_Singleton::instance ()
   }
 }
+
 
 #include /**/ "ace/post.h"
 #endif/*CIAO_CONFIG_HANDLERS_XML_HELPER_H*/

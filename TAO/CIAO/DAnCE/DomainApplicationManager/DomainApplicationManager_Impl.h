@@ -189,6 +189,15 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                       Deployment::StartError));
 
+    virtual void passivate_shared_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
+    virtual void activate_shared_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
+
     /**
      * Starts the application. Raises the StartError exception if
      * starting the application fails.

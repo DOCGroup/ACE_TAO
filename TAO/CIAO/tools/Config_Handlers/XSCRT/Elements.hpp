@@ -8,8 +8,90 @@
 #include <map>
 #include <string>
 #include <sstream>
+// #include <iostream> //@@ tmp
 
 #include "XSCRT/Parser.hpp"
+
+#if defined (_MSC_VER) && (_MSC_VER < 1300)
+
+
+// Stuff for broken VC6. Don't like what you see - use better compiler!
+//
+
+
+inline
+std::wistream&
+operator>> (std::wistream& is, __int64& v)
+{
+  long t;
+  is >> t;
+  v = t;
+  return is;
+}
+
+inline
+std::wistream&
+operator>> (std::wistream& is, unsigned __int64& v)
+{
+  unsigned long t;
+  is >> t;
+  v = t;
+  return is;
+}
+
+inline
+std::wostream&
+operator<< (std::wostream& os, __int64 const& v)
+{
+  os << long (v);
+  return os;
+}
+
+inline
+std::wostream&
+operator<< (std::wostream& os, unsigned __int64 const& v)
+{
+  os << unsigned long (v);
+  return os;
+}
+
+inline
+std::istream&
+operator>> (std::istream& is, __int64& v)
+{
+  long t;
+  is >> t;
+  v = t;
+  return is;
+}
+
+inline
+std::istream&
+operator>> (std::istream& is, unsigned __int64& v)
+{
+  unsigned long t;
+  is >> t;
+  v = t;
+  return is;
+}
+
+inline
+std::ostream&
+operator<< (std::ostream& os, __int64 const& v)
+{
+  os << long (v);
+  return os;
+}
+
+inline
+std::ostream&
+operator<< (std::ostream& os, unsigned __int64 const& v)
+{
+  os << unsigned long (v);
+  return os;
+}
+
+#endif
 
 namespace XSCRT
 {
@@ -251,12 +333,12 @@ namespace XSCRT
     }
 
   public:
-    
+
     operator X const& () const
     {
       return x_;
     }
-    /* 
+    /*
     operator X& ()
     {
       return x_;

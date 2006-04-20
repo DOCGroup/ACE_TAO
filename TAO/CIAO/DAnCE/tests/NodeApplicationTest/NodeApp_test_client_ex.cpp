@@ -81,8 +81,8 @@ main (int argc, char *argv[])
         CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
       info.servant_entrypt =
         CORBA::string_dup (
-            "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
-          );
+                           "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
+                           );
 
       // Create a ContainerImplementationInfo sequence
       Deployment::ContainerImplementationInfo container_info;
@@ -110,11 +110,11 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip_var.in ()))
-       {
-         ACE_ERROR_RETURN ((LM_DEBUG,
-                            "Nil RoundTrip reference\n"),
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil RoundTrip reference\n"),
                             1);
-       }
+        }
 
       // initialize the component
       roundtrip_var->ciao_postactivate ();
@@ -122,45 +122,45 @@ main (int argc, char *argv[])
 
       //get the provided facets info.
       Components::FacetDescriptions_var facets_info =
-      	roundtrip_var->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER) ;
+        roundtrip_var->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
 
       if ( facets_info->length () != 2 )
-      {
-	      ACE_DEBUG((LM_DEBUG, "Didn't get 2 facet back! but only %d\n",
-		               facets_info->length ()));
-	      return 1;
-      }
+        {
+          ACE_DEBUG((LM_DEBUG, "Didn't get 2 facet back! but only %d\n",
+                     facets_info->length ()));
+          return 1;
+        }
 
       // Invoke Operation on the Interface
       ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
 
       for (i = 0; i < 2; ++i )
         {
-	        NodeAppTest::LatencyTest_var latency_var
-	          = NodeAppTest::LatencyTest::_narrow ( (facets_info[i]->facet_ref ()));
-	        ACE_DEBUG((LM_DEBUG, "Calling on facet %s\n", (facets_info[i]->name ())));
+          NodeAppTest::LatencyTest_var latency_var
+            = NodeAppTest::LatencyTest::_narrow ( (facets_info[i]->facet_ref ()));
+          ACE_DEBUG((LM_DEBUG, "Calling on facet %s\n", (facets_info[i]->name ())));
 
-	        ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
 
-	        if ( CORBA::is_nil (latency_var.in ()) )
-	        {
-	          ACE_DEBUG((LM_DEBUG, "get nil latency ref for facet%d\n", i));
-	          return 1;
-	        }
+          if ( CORBA::is_nil (latency_var.in ()) )
+            {
+              ACE_DEBUG((LM_DEBUG, "get nil latency ref for facet%d\n", i));
+              return 1;
+            }
 
-	        CORBA::Long input = 1L;
-	        CORBA::Long output =
-	          latency_var->cube_long (input ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
-                
-	        if (input == output)
-	          ACE_DEBUG ((LM_DEBUG, "Retrun values matched!!\n"));
-	        else
-	          {
-	            ACE_DEBUG ((LM_DEBUG, "Return values did not match: failure\n"));
-	            exit (1);
-	          }
+          CORBA::Long input = 1L;
+          CORBA::Long output =
+            latency_var->cube_long (input ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (input == output)
+            ACE_DEBUG ((LM_DEBUG, "Retrun values matched!!\n"));
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG, "Return values did not match: failure\n"));
+              exit (1);
+            }
         }
 
       ACE_DEBUG ((LM_DEBUG, "Try removing test component and its home\n"));

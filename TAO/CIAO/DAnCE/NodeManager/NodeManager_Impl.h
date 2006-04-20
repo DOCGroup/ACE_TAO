@@ -123,6 +123,17 @@ namespace CIAO
     get_shared_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
+    /// RACE specific extension. Modify the priority of a node application
+    /// process.
+
+    virtual ::CORBA::Long
+    set_priority (
+        const char * plan_id,
+        const char * cid,
+        const ::Deployment::Sched_Params & nm_params
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
     // ********* CIAO Specific Helper functions ************
 
     virtual ::Components::FacetDescriptions *
@@ -138,6 +149,19 @@ namespace CIAO
     virtual void
     set_all_consumers (ACE_CString &name,
                        const ::Components::ConsumerDescriptions_var & consumers);
+
+    // ********* Function added for getting component ids...
+
+    struct Component_Ids
+    {
+      ACE_Unbounded_Set <ACE_CString> cid_seq_;
+      pid_t process_id_;
+    };
+
+    virtual void push_component_id_info (Component_Ids comps);
+
+
+    Component_Ids get_component_detail ();
 
   private:
     /// Validate the child deployment plan. In particular, we are
@@ -232,6 +256,9 @@ namespace CIAO
 
     /// The MonitorController pointer
     auto_ptr <MonitorController> monitor_controller_;
+
+    /// The set of Components
+    Component_Ids components_;
   };
 
 

@@ -516,9 +516,9 @@ namespace IDL3
       concrete_event_type.edge_traverser (inherits);
 
       //--
-      
+
       supports.node_traverser (type_name);
-      
+
       component_defines.node_traverser (attribute);
       component_defines.node_traverser (provider);
       component_defines.node_traverser (user);

@@ -12,6 +12,15 @@
 #include <xercesc/util/XMLString.hpp>
 
 
+//@@ VC6
+#if defined (_MSC_VER) && (_MSC_VER < 1300)
+
+namespace std
+{
+  typedef ::size_t size_t;
+}
+#endif
+
 namespace XSCRT
 {
   namespace XML
