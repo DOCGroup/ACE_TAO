@@ -1,3 +1,19 @@
+Thu Apr 20 11:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Added a check for deprecated macros, first one to check is
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+
+        * tests/*.cpp:
+        * protocols/*.cpp:
+        * ACEXML/*.cpp:
+        * performance-tests/*.cpp
+        * netsvcs/*.cpp
+          Removed all explicit template instantiations
+
+        * ace/os_include/sys/os_types.h:
+          Added ACE_LOFF_T typedef for VxWorks 6.2 and newer
+
 Thu Apr 20 07:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
