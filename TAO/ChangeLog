@@ -1,3 +1,9 @@
+Thu Apr 20 14:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/extra_core.mpb:
+        * tao/tao.mpc:
+          Moved ServicesC.cpp to tao.mpc
+
 Thu Apr 20 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Sequence_CDR_T.h:
