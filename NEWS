@@ -10,6 +10,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 
 . Visual C++ 6.0 and 7.0 support has been removed
 
+. Added a wrapper for the sendfile API
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
 
