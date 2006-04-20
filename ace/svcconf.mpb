@@ -14,7 +14,6 @@ feature(ace_svcconf) {
     Service_Object.cpp
     Service_Repository.cpp
     Service_Types.cpp
-    Service_Templates.cpp
     Shared_Object.cpp
     Svc_Conf_Lexer.cpp
     Svc_Conf_y.cpp
