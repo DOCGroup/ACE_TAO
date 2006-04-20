@@ -1,3 +1,9 @@
+Thu Apr 20 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+          Fixed compile error
+
 Thu Apr 20 09:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/RT-CCM/CLA_Handler.cpp:
