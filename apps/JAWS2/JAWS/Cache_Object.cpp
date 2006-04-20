@@ -289,13 +289,3 @@ JAWS_Counted_Cache_Object_Factory::destroy (JAWS_Cache_Object *obj)
   ACE_DES_FREE (cco, this->allocator_->free, JAWS_Counted_Cache_Object);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// These are only specialized with ACE_HAS_THREADS.
-template class ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// These are only specialized with ACE_HAS_THREADS.
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

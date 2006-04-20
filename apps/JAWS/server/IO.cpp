@@ -568,11 +568,3 @@ JAWS_Synch_IO_No_Cache::send_message (const char *buffer,
   stream.send_n (buffer, length);
 }
 
-//-------------------
-
-
-// #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// template class ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>;
-// #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// #pragma instantiate ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>
-// #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -586,20 +586,3 @@ Event_Channel::open (void *)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
-template class ACE_Map_Entry<ACE_INT32, Connection_Handler *>;
-template class ACE_Map_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
-template class ACE_Map_Manager<ACE_INT32, Connection_Handler *, MAP_MUTEX>;
-template class ACE_Unbounded_Set_Iterator<Connection_Handler *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_INT32, Connection_Handler *>
-#pragma instantiate ACE_Map_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_INT32, Connection_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Manager<ACE_INT32, Connection_Handler *, MAP_MUTEX>
-#pragma instantiate ACE_Unbounded_Set_Iterator<Connection_Handler *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

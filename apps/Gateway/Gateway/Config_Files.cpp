@@ -213,10 +213,3 @@ main (int argc, char *argv[])
 }
 #endif /* DEBUGGING */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class File_Parser<Connection_Config_Info>;
-template class File_Parser<Consumer_Config_Info>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate File_Parser<Connection_Config_Info>
-#pragma instantiate File_Parser<Consumer_Config_Info>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

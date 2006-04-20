@@ -207,11 +207,8 @@ void test_url_addr (void)
                       "URL[%d]\n"
                       "    \"%s\" ERROR\n",
                       i, addresses[i]));
-                      
+
         }
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
