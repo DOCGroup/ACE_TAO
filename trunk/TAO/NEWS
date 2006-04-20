@@ -18,11 +18,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 ====================================================
 
-. (Remedy) Finish and integrate new sequence implementation made by
-  Carlos O'Ryan. This also includes a rework of the TAO_String_Managers
-  and CORBA::(W)String implementations. This is ready in the sequenceupdate3
-  branch but can't be merged until 1.5.2 because it breaks with vc6.
-
 . (Remedy/Ossama) Add the ability to use the sendfile API to send out data
   on the transport
 
@@ -31,7 +26,17 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 
 . (OCI) Make TAO compilable when ACE_USES_WCHAR is set
 
-USER VISIBLE CHANGES BETWEEN TAO-1.5.0 and TAO-1.5.1
+USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
+====================================================
+
+. Integrate new sequence implementation made by Carlos O'Ryan. This
+  also includes a rework of the TAO_String_Managers and CORBA::(W)String
+  implementations.
+
+. Store Value Factories per orb instead of per process and made the
+  storage thread safe.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5 and TAO-1.5.1
 ====================================================
 
 . Fixed LOCATION_FORWARD_PERM handling. See bugzilla #1777 for full details.
