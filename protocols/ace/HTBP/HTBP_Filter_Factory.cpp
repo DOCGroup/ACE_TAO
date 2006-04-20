@@ -54,9 +54,3 @@ ACE_STATIC_SVC_DEFINE (ACE_HTBP_Filter_Factory,
 ACE_FACTORY_NAMESPACE_DEFINE (HTBP, ACE_HTBP_Filter_Factory,
                               ACE::HTBP::Filter_Factory)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<ACE::HTBP::Filter_Factory>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<ACE::HTBP::Filter_Factory>
-#endif
-

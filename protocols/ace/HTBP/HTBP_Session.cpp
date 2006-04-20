@@ -286,20 +286,4 @@ ACE::HTBP::Session::stream (ACE::HTBP::Stream *s)
   this->stream_ = s;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*>;
-template class ACE_Hash<ACE::HTBP::Session_Id_t>;
-template class ACE_Equal_To<ACE::HTBP::Session_Id_t>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager <ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry <ACE::HTBP::Session_Id_t, ACE::HTBP::Session*>
-#pragma instantiate ACE_Hash<ACE::HTBP::Session_Id_t>;
-
-#pragma instantiate ACE_Equal_To<ACE::HTBP::Session_Id_t>
-#endif
-
 ACE_END_VERSIONED_NAMESPACE_DECL
