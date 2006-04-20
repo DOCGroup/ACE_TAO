@@ -1,3 +1,9 @@
+Thu Apr 20 19:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+          Added ACE_LOFF_T for the BSD variants, thanks to J.T. Conklin
+          for delivering the patch
+
 Thu Apr 20 18:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macros.h:
