@@ -649,8 +649,3 @@ Client_Test::find (const char *key)
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<ACE_Naming_Context>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<ACE_Naming_Context>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
