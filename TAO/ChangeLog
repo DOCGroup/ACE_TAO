@@ -1,3 +1,11 @@
+Thu Apr 20 11:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/sfp.idl:
+          Use CORBA::OctetSeq and CORBA::ULongSeq
+
+        * tao/Strategies/SCIOP_Profile.cpp:
+          Fixed compile error
+
 Thu Apr 20 08:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
