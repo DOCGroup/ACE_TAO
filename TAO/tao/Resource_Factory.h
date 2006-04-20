@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Versioned_Namespace.h"
+#include "tao/Basic_Types.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
@@ -44,6 +45,8 @@ class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
 class TAO_Codeset_Manager;
+class TAO_GIOP_Fragmentation_Strategy;
+class TAO_Transport;
 
 // ****************************************************************
 
@@ -238,6 +241,11 @@ public:
   /// Creates the leader followers strategy.  The new instance is owned by the
   /// caller.
   virtual TAO_LF_Strategy *create_lf_strategy (void) = 0;
+
+  /// Outgoing fragment creation strategy.
+  virtual auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+    create_fragmentation_strategy (TAO_Transport * transport,
+                                   CORBA::ULong max_message_size) const = 0;
 
   /// Disables the factory.  When a new factory is installed and used,
   /// this function should be called on the previously used (default)

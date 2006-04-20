@@ -47,7 +47,7 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
+               TAO_GIOP_Message_Base (orb_core, this));
     }
 //@@ MESSAGING_SPL_COMMENT_HOOK_END
 }

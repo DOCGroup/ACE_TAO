@@ -75,6 +75,11 @@ public:
       CORBA::ULong request_id,
       TAO_GIOP_Locate_Status_Msg &status) = 0;
 
+  /// Write the GIOP fragment message header to the output CDR stream
+  /// @a cdr.
+  virtual bool write_fragment_header (TAO_OutputCDR & cdr,
+                                      CORBA::ULong request_id) = 0;
+
   /// Parse the Request Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
   virtual int parse_request_header (TAO_ServerRequest &) = 0;

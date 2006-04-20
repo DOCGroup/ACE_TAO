@@ -893,6 +893,10 @@ public:
   (const CORBA::Object_ptr obj,
    const TAO_Service_Context &service_context);
 
+  /// Get outgoing fragmentation strategy.
+  auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+  fragmentation_strategy (TAO_Transport * transport);
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference

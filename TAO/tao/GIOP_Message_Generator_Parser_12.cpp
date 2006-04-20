@@ -249,6 +249,17 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
   return 1;
 }
 
+bool
+TAO_GIOP_Message_Generator_Parser_12::write_fragment_header (
+  TAO_OutputCDR & cdr,
+  CORBA::ULong request_id)
+{
+  return (cdr << request_id);
+
+  // No need to align write pointer to an 8 byte boundary since it
+  // should already be aligned (12 for GIOP messager + 4 for fragment
+  // header = 16 -- a multiple of 8)
+}
 
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_request_header (

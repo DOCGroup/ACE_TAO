@@ -79,6 +79,7 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core,
+                                  this,
                                   MIOP_MAX_DGRAM_SIZE));
 
   // Replace the default wait strategy with our own
@@ -494,11 +495,11 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Make a node of the message block..
   TAO_Queued_Data qd (&message_block);
-  size_t mesg_length; 
+  size_t mesg_length;
 
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->messaging_object ()->parse_next_message (message_block, 
+  if (this->messaging_object ()->parse_next_message (message_block,
                                                      qd,
                                                      mesg_length) == -1)
     {

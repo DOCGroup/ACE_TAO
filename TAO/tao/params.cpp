@@ -26,6 +26,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , nodelay_ (1)
   , sock_keepalive_ (0)
   , cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
+  , max_message_size_ (0) // Disable outgoing GIOP fragments by default
   , use_lite_protocol_ (0)
   , use_dotted_decimal_addresses_ (0)
   , cache_incoming_by_dotted_decimal_address_ (0)
