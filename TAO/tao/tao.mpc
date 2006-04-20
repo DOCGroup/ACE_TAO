@@ -185,6 +185,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Service_Callbacks.cpp
     Service_Context.cpp
     Services_Activate.cpp
+    ServicesC.cpp
     ShortSeqC.cpp
     String_Alloc.cpp
     StringSeqC.cpp
