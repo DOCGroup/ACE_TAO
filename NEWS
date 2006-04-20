@@ -3,13 +3,20 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) VxWorks 6.2 support
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.2
+====================================================
+
+. Explicit template instantiations support has been removed
+
+. Visual C++ 6.0 and 7.0 support has been removed
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
 
 . Added support for the --enable-symbol-visibility configure option
   to the autoconf build infrastructure instead of solely relying on
   feature tests to enable/disable symbol visibility support.  This
-  avoids build problems with icc, etc. 
+  avoids build problems with icc, etc.
 
 . Added support for the --enable-fl-reactor configure option to the
   autoconf build infrastructure to build the ACE_FlReactor library.
