@@ -1,0 +1,72 @@
+# $Id$
+
+This test verifies that the PortableInterceptor::ForwardRequest
+exception support is working properly.  There are three cases that it
+tests:
+
+  - PortableInterceptor::ForwardRequest exception thrown from a client
+    request interception point.
+  - PortableInterceptor::ForwardRequest exception thrown from the
+    receive_request_service_contexts() server request interception
+    point.
+  - PortableInterceptor::ForwardRequest exception thrown from the
+    receive_request() server request interception point.
+
+The reason why there are two server side cases is because the
+receive_request_service_contexts() interception point occurs before
+the operation is dispatched to the servant.  Hence, the implementation
+of the PortableInterceptor::ForwardRequest-to-LOCATION_FORWARD GIOP
+reply conversion in that interception point differs from the
+conversion that occurs in interception points in servant skeletons.
+
+Two servants are activated.  Their corresponding references are then
+passed to the client.  The following sequence of operations then
+occurs:
+
+  1) Issue client request.
+  2) Intercept the request on the client side.
+  3) Forward the request to servant two by throwing the
+     PortableInterceptor::ForwardRequest in the
+     ClientRequestInterceptor::send_reply() interception point.
+  4) The server will receive the request.
+  5) However, it will be intercepted by the server request
+     interceptor.
+  6) The ServerRequestInterceptor::receive_request_service_contexts()
+     then forwards the client request back to servant one by throwing
+     the PortableInterceptor::ForwardRequest exception.
+  7) That exception will be converted to a LOCATION_FORWARD GIOP
+     reply.
+  8) The client will receive the LOCATION_FORWARD reply, and then
+     transparently forward its request to servant one.
+  9) The ServerRequestInterceptor::receive_request() interception
+     point will then throw the PortableInterceptor::ForwardRequest
+     exception to cause the request to be forwarded back to servant
+     two.
+ 10) At this point, the request will actually be handled by servant
+     two.
+
+Test output should be similar to the following:
+
+==== Running PortableInterceptor::ForwardRequest test
+
+ForwardRequestTest::test servant 1: <IOR:010000002000...>
+ForwardRequestTest::test servant 2: <IOR:010000002001...>
+CLIENT: Issuing request 1.
+CLIENT: Request 1 handled by object 1.
+CLIENT: Issuing request 2.
+CLIENT (1376|1540) Request 2 will be forwarded to object 2
+CLIENT (1376|1540) via send_request().
+CLIENT: Request 2 handled by object 2.
+CLIENT: Issuing request 3.
+SERVER (1604|1276) Request 3 will be forwarded to object 1
+SERVER (1604|1276) via receive_request_service_contexts().
+CLIENT (1376|1540) Received LOCATION_FORWARD reply.
+CLIENT: Request 3 handled by object 1.
+CLIENT: Issuing request 4.
+SERVER (1604|1276) Request 4 will be forwarded to object 2
+SERVER (1604|1276) via receive_request().
+CLIENT (1376|1540) Received LOCATION_FORWARD reply.
+CLIENT: Request 4 handled by object 2.
+Server is shutting down via object 2.
+Event loop finished.
+PortableInterceptor::ForwardRequest test passed.
