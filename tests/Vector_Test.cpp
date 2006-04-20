@@ -133,16 +133,3 @@ int run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Vector<DATA>;
-template class ACE_Vector_Iterator<DATA>;
-template class ACE_Array<DATA>;
-template class ACE_Array_Base<DATA>;
-template class ACE_Array_Iterator<DATA>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Vector<DATA>
-#pragma instantiate ACE_Vector_Iterator<DATA>
-#pragma instantiate ACE_Array<DATA>
-#pragma instantiate ACE_Array_Base<DATA>
-#pragma instantiate ACE_Array_Iterator<DATA>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

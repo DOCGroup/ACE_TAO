@@ -64,27 +64,11 @@ typedef Server_T <2> Server_2;
 FRAMEWORK_COMPONENT_DLL_SINGLETON_DECLARATION(Server_T<2>;)
 ACE_FACTORY_DEFINE (Framework_Component_DLL, Server_2)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Server_T<1>;
-template class Server_T<2>;
-template class FWCT_DLL_Singleton_Adapter_T<Simple_Service>;
-template class ACE_DLL_Singleton_T< FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
-                                    ACE_SYNCH_MUTEX >;
-template class ACE_Framework_Component_T<ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T<Simple_Service>,
-                                         ACE_SYNCH_MUTEX> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Server_T<1>
-#pragma instantiate Server_T<2>
-#pragma instantiate FWCT_DLL_Singleton_Adapter_T<Simple_Service>
-#pragma instantiate ACE_DLL_Singleton_T< FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
-                                         ACE_SYNCH_MUTEX >
-#pragma instantiate ACE_Framework_Component_T<ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T<Simple_Service>,
-                                               ACE_SYNCH_MUTEX> >;
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
 template ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
                              ACE_SYNCH_MUTEX> *
   ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
                       ACE_SYNCH_MUTEX>::singleton_;
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

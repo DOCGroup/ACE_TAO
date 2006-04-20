@@ -186,10 +186,3 @@ run_main (int, ACE_TCHAR *[])
   return retval == 0 ? 0 : 1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr <Hello>;
-template class ACE_Auto_Basic_Ptr <Hello>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr <Hello>
-#pragma instantiate ACE_Auto_Basic_Ptr <Hello>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

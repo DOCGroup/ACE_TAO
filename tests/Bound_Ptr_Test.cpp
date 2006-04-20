@@ -145,18 +145,6 @@ void Child::do_something (void)
     strong_parent->do_something ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex>;
-template class ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex>;
-template class ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex>;
-template class ACE_Bound_Ptr_Counter<ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex>
-#pragma instantiate ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex>
-#pragma instantiate ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex>
-#pragma instantiate ACE_Bound_Ptr_Counter<ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 size_t Printer::instance_count_ = 0;
 
 Printer::Printer (const char *message)
@@ -354,38 +342,7 @@ Scheduler::print (Printer_var &printer)
 // Total number of loops.
 static int n_loops = 10;
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Strong_Bound_Ptr<Printer, ACE_Thread_Mutex>;
-template class ACE_Weak_Bound_Ptr<Printer, ACE_Thread_Mutex>;
-template class ACE_Bound_Ptr_Counter<ACE_Thread_Mutex>;
-template class ACE_Auto_Basic_Ptr<Printer>;
-template class auto_ptr<Printer>;
-template class ACE_Strong_Bound_Ptr<Scheduler, ACE_Null_Mutex>;
-template class ACE_Strong_Bound_Ptr<ACE_Method_Request, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Strong_Bound_Ptr<Printer, ACE_Thread_Mutex>
-#pragma instantiate ACE_Weak_Bound_Ptr<Printer, ACE_Thread_Mutex>
-#pragma instantiate ACE_Bound_Ptr_Counter<ACE_Thread_Mutex>
-#pragma instantiate ACE_Auto_Basic_Ptr<Printer>
-#pragma instantiate auto_ptr<Printer>
-#pragma instantiate ACE_Strong_Bound_Ptr<Scheduler, ACE_Null_Mutex>
-#pragma instantiate ACE_Strong_Bound_Ptr<ACE_Method_Request, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_THREADS */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex>;
-template class ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex>
-#pragma instantiate ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 int
 run_main (int, ACE_TCHAR *[])

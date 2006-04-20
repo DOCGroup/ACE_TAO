@@ -500,14 +500,3 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-
-#if !defined (ACE_LACKS_ACE_IOSTREAM)
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_IOStream<ACE_SOCK_Stream>;
-template class ACE_Streambuf_T<ACE_SOCK_Stream>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_IOStream<ACE_SOCK_Stream>
-#pragma instantiate ACE_Streambuf_T<ACE_SOCK_Stream>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* !ACE_LACKS_ACE_IOSTREAM */

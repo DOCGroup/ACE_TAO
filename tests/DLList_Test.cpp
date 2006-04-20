@@ -26,18 +26,6 @@ typedef ACE_DLList<ACE_STRING> STRLIST;
 typedef ACE_DLList_Iterator<ACE_STRING> STRLIST_ITERATOR;
 typedef ACE_DLList_Reverse_Iterator<ACE_STRING> STRLIST_REVERSE_ITERATOR;
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_DLList<ACE_STRING>;
-template class ACE_DLList_Iterator<ACE_STRING>;
-template class ACE_DLList_Reverse_Iterator<ACE_STRING>;
-template class ACE_Static_Allocator<8192>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_DLList<ACE_STRING>
-#pragma instantiate ACE_DLList_Iterator<ACE_STRING>
-#pragma instantiate ACE_DLList_Reverse_Iterator<ACE_STRING>
-#pragma instantiate ACE_Static_Allocator<8192>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 static ACE_STRING string_table[] =
 {
   // Note: all these casts are to appease SC 5.0 which is not pleased

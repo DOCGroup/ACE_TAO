@@ -46,14 +46,3 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
-template class ACE_Guard<REVERSE_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Guard<REVERSE_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

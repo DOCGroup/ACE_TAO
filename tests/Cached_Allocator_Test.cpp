@@ -274,22 +274,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMBLOCK> >;
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<char> >;
-template class ACE_Dynamic_Cached_Allocator<ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Cached_Allocator<MEMBLOCK, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<char>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Cached_Mem_Pool_Node<char>;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMBLOCK>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Cached_Mem_Pool_Node<MEMBLOCK>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMBLOCK> >
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<char> >
-#pragma instantiate ACE_Dynamic_Cached_Allocator<ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Cached_Allocator<MEMBLOCK, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<char>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Cached_Mem_Pool_Node<char>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMBLOCK>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Cached_Mem_Pool_Node<MEMBLOCK>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
