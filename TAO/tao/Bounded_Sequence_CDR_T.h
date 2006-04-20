@@ -11,7 +11,7 @@
  * @author Johnny Willemsen
  */
 
-#include "tao/Bounded_Basic_String_Sequence_T.h"
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
