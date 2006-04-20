@@ -1,3 +1,8 @@
+Thu Apr 20 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ACE_Init_Test.rc:
+          Removed another msvc specific part
+
 Thu Apr 20 11:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
