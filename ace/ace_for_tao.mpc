@@ -78,7 +78,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
-    Obstack.cpp
     OS_Errno.cpp
     OS_Log_Msg_Attributes.cpp
     OS_main.cpp
