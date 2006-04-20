@@ -79,7 +79,6 @@ libACE_la_SOURCES = \
   Configuration.cpp \
   Configuration_Import_Export.cpp \
   Connection_Recycling_Strategy.cpp \
-  Container_Instantiations.cpp \
   Containers.cpp \
   Copy_Disabled.cpp \
   Countdown_Time.cpp \
@@ -155,13 +154,11 @@ libACE_la_SOURCES = \
   MMAP_Memory_Pool.cpp \
   Malloc.cpp \
   Malloc_Allocator.cpp \
-  Malloc_Instantiations.cpp \
   Manual_Event.cpp \
   Mem_Map.cpp \
   Message_Block.cpp \
   Message_Queue.cpp \
   Method_Request.cpp \
-  Metrics_Cache.cpp \
   Msg_WFMO_Reactor.cpp \
   Multihomed_INET_Addr.cpp \
   Mutex.cpp \
@@ -212,7 +209,6 @@ libACE_la_SOURCES = \
   Obchunk.cpp \
   Object_Manager.cpp \
   Object_Manager_Base.cpp \
-  Obstack.cpp \
   PI_Malloc.cpp \
   POSIX_Asynch_IO.cpp \
   POSIX_CB_Proactor.cpp \
@@ -271,14 +267,12 @@ libACE_la_SOURCES = \
   Sample_History.cpp \
   Sbrk_Memory_Pool.cpp \
   Sched_Params.cpp \
-  Select_Reactor.cpp \
   Select_Reactor_Base.cpp \
   Semaphore.cpp \
   Service_Config.cpp \
   Service_Manager.cpp \
   Service_Object.cpp \
   Service_Repository.cpp \
-  Service_Templates.cpp \
   Service_Types.cpp \
   Shared_Memory.cpp \
   Shared_Memory_MM.cpp \
@@ -987,7 +981,6 @@ nobase_include_HEADERS += \
   Task_T.cpp \
   Task_T.h \
   Task_T.inl \
-  Template_Instantiations.cpp \
   Test_and_Set.cpp \
   Test_and_Set.h \
   Thread.h \
@@ -1093,7 +1086,6 @@ nobase_include_HEADERS += \
   config-win32-borland.h \
   config-win32-common.h \
   config-win32-ghs.h \
-  config-win32-msvc-6.h \
   config-win32-msvc-7.h \
   config-win32-msvc.h \
   config-win32-visualage.h \
