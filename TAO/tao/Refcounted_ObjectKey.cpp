@@ -23,7 +23,7 @@ TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey (void)
 {
 }
 
-long
+CORBA::ULong
 TAO::Refcounted_ObjectKey::decr_refcount (void)
 {
   if (--this->ref_count_ > 0)
