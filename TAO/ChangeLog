@@ -1,3 +1,8 @@
+Thu Apr 20 07:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.h:
+          Fixed template instantiation
+
 Wed Apr 19 18:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/UShortSeqC.h:
