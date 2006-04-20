@@ -291,12 +291,3 @@ ACEXML_AttributesImpl::setValue (size_t index,
   return -1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<ACEXML_Attribute>;
-template class ACE_Array<ACEXML_Attribute>;
-template class ACE_Array_Iterator<ACEXML_Attribute>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<ACEXML_Attribute>
-#pragma instantiate ACE_Array<ACEXML_Attribute>
-#pragma instantiate ACE_Array_Iterator<ACEXML_Attribute>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -245,26 +245,3 @@ ACEXML_NamespaceSupport::reset (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<ACEXML_String, ACEXML_String>;
-template class ACE_Hash_Map_Manager_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>;
-template class ACE_Unbounded_Queue<const ACEXML_Char *>;
-template class ACE_Unbounded_Queue_Iterator<const ACEXML_Char *>;
-template class ACE_Node<const ACEXML_Char *>;
-template class ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*>;
-template class ACE_Node<ACEXML_NS_CONTEXT*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<ACEXML_String, ACEXML_String>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String, ACEXML_String, ACE_Hash<ACEXML_String>, ACE_Equal_To<ACEXML_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Unbounded_Queue<const ACEXML_Char *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<const ACEXML_Char *>
-#pragma instantiate ACE_Node<const ACEXML_Char *>
-#pragma instantiate ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*>
-#pragma instantiate ACE_Node<ACEXML_NS_CONTEXT*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
