@@ -25,7 +25,7 @@ namespace CIAO
     ///and maps the values from the passed in XSC
     ///ConnectionResourceDeploymentDescription to its members.
     void CRDD_Handler::get_ConnectionResourceDeploymentDescription (Deployment::ConnectionResourceDeploymentDescription& toconfig,
-                                                                    ConnectionResourceDeploymentDescription& desc)
+                                                                    const ConnectionResourceDeploymentDescription& desc)
     {
       CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDD");
 

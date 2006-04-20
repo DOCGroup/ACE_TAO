@@ -56,30 +56,6 @@
 #  include "ace/Trace.h"
 #endif /* CIAO_NTRACE */
 
-#if defined (CIAO_NDEBUG)
-#define CIAO_DEBUG(X, ...) do {} while (0)
-#define CIAO_ERROR(X, ...) do {} while (0)
-#else
-#define CIAO_DEBUG(X, ...) \
-  do { \
-     if (CIAO::debug_level () > X) { \
-       int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-       ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-       ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
-       ace___->log (LM_DEBUG, __VA_ARGS__); \
-     } \
-  } while (0)
-#define CIAO_ERROR(X, ...) \
-  do { \
-     if (CIAO::debug_level () > X) { \
-       int __ace_error = ACE_Log_Msg::last_error_adapter (); \
-       ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-       ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
-       ace___->log (LM_ERROR, __VA_ARGS__); \
-     } \
-  } while (0)
-#endif
-
 namespace CIAO
 {
   /**

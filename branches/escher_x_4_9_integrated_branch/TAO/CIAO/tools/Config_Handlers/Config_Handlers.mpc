@@ -49,7 +49,6 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typeco
     CCD_Handler.cpp
     Property_Handler.cpp
     ComponentPropertyDescription_Handler.cpp
-    DP_PCD_Handler.cpp
     CPD_Handler.cpp
     DataType_Handler.cpp
     MDD_Handler.cpp

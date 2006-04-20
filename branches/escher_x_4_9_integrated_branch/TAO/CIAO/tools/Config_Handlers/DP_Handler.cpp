@@ -20,7 +20,7 @@
 #include "CIAO_Events/CIAOEvents_Handler.h"
 #include "CIAO_Events/CIAOEvents.hpp"
 
-#include "DP_PCD_Handler.h"
+#include "PCD_Handler.h"
 
 ACE_RCSID (Config_Handlers,
            DP_Handler,
@@ -195,8 +195,13 @@ ACE_RCSID (Config_Handlers,
 
         IDD_Handler::instance_deployment_descrs (xsc_dp,
                                                  this->idl_dp_->instance);
-
-        DP_PCD_Handler::plan_connection_descrs (xsc_dp, this->idl_dp_->connection);
+        
+        this->idl_dp_->connection.length (xsc_dp.count_connection ());
+        std::for_each (xsc_dp.begin_connection (),
+                       xsc_dp.end_connection (),
+                       PCD_Functor (this->idl_dp_->connection));
+        
+        //PCD_Handler::get_PlanConnectionDescription (xsc_dp, this->idl_dp_->connection);
 
         return true;
       }
@@ -311,8 +316,7 @@ ACE_RCSID (Config_Handlers,
         len = plan.connection.length();
         for(size_t n = 0; n < len; n++)
           {
-            this->xsc_dp_->add_connection (
-                                           DP_PCD_Handler::plan_connection_descr (
+            this->xsc_dp_->add_connection (PCD_Handler::get_PlanConnectionDescription (
                                                                                   plan.connection[n]));
           }
 
