@@ -70,8 +70,8 @@ public:
 
   /// @name Mutators for refcount
   //@{
-  long incr_refcount (void);
-  long decr_refcount (void);
+  void incr_refcount (void);
+  void decr_refcount (void);
   //@}
 
   /// A helper method that can be used by the subclasses
@@ -125,7 +125,7 @@ private:
   ACE_Lock *lock_;
 
   /// Refcount paraphernalia for this class
-  long refcount_;
+  CORBA::ULong refcount_;
 
   /// Has the reply been dispatched?
   bool is_reply_dispatched_;

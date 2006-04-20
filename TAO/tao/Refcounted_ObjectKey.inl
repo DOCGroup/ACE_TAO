@@ -5,10 +5,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE long
+ACE_INLINE void
 TAO::Refcounted_ObjectKey::incr_refcount (void)
 {
-  return ++this->ref_count_;
+  ++this->ref_count_;
 }
 
 ACE_INLINE const TAO::ObjectKey &
