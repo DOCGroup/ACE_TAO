@@ -13,8 +13,6 @@
 
 #include "tao/Basic_Types.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 namespace details
@@ -140,8 +138,6 @@ struct range_checking
 
 } // namespace details
 } // namespace TAO
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE)
 #  include TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE

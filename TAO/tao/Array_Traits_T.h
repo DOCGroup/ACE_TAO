@@ -14,8 +14,6 @@
 #include <algorithm>
 #include "tao/Array_VarOut_T.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
 namespace details
@@ -63,7 +61,5 @@ struct array_traits
 
 } // namespace details
 } // namespace CORBA
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_array_traits_hpp
