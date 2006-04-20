@@ -92,7 +92,7 @@ TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
                              key_new);
       }
 
-    (void) key_new->incr_refcount ();
+    key_new->incr_refcount ();
   }
 
   return retval;

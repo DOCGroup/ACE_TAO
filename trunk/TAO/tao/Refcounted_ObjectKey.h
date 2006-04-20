@@ -52,16 +52,19 @@ namespace TAO
     /// Protected destructor
     ~Refcounted_ObjectKey (void);
 
-    /// Methods for incrementing and decrementing refcounts.
-    long incr_refcount (void);
-    long decr_refcount (void);
+    /// Methods for incrementing refcount.
+    void incr_refcount (void);
+
+    /// Methods for decrementing refcount. Return the refcount, used by the
+    /// ObjectKey table.
+    CORBA::ULong decr_refcount (void);
 
   private:
     /// The object key
     ObjectKey object_key_;
 
     /// The refcount on the object key..
-    long ref_count_;
+    CORBA::ULong ref_count_;
   };
 }
 
