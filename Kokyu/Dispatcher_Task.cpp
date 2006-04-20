@@ -11,7 +11,7 @@
 
 ACE_RCSID(Kokyu, Dispatcher_Task, "$Id$")
 
-namespace 
+namespace
 //anonymous namespace - use this to avoid polluting the global namespace
 {
   const int ALLOC_POOL_CHUNKS = 200;
@@ -20,7 +20,7 @@ namespace
 namespace Kokyu
 {
 
-typedef ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX> 
+typedef ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX>
 Dispatch_Queue_Item_Allocator;
 
 int
@@ -150,7 +150,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
                                    this->allocator_);
 
   this->putq (mb);
-  
+
   return 0;
 }
 
@@ -187,21 +187,3 @@ void Dispatch_Queue_Item::init_i (const QoSDescriptor& qos_info)
 
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
-template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
-template class ACE_Cached_Allocator<Kokyu::Dispatch_Queue_Item, ACE_SYNCH_MUTEX>;
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<Kokyu::Dispatch_Queue_Item> >;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<Kokyu::Dispatch_Queue_Item>, ACE_SYNCH_MUTEX>;
-template class ACE_Cached_Mem_Pool_Node<Kokyu::Dispatch_Queue_Item>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
-#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<Kokyu::Dispatch_Queue_Item> >
-#pragma instantiate ACE_Cached_Allocator<Kokyu::Dispatch_Queue_Item, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<Kokyu::Dispatch_Queue_Item, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Cached_Mem_Pool_Node<Kokyu::Dispatch_Queue_Item>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
