@@ -333,34 +333,3 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Map_Manager<int, int, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<int, int, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<int, int, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<int, int, ACE_Null_Mutex>;
-template class ACE_Map_Entry<int, int>;
-
-template class ACE_Active_Map_Manager<int>;
-template class ACE_Map_Manager<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>;
-template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, int>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Map_Manager<int, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<int, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<int, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<int, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<int, int>
-
-#pragma instantiate ACE_Active_Map_Manager<int>
-#pragma instantiate ACE_Map_Manager<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, int>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

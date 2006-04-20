@@ -248,17 +248,6 @@ worker (void *c)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<Errno>;
-template class ACE_TSS_Type_Adapter<u_int>;
-template class ACE_TSS<ACE_TSS_Type_Adapter<u_int> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<Errno>
-#pragma instantiate ACE_TSS_Type_Adapter<u_int>
-#pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<u_int> >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 #endif /* ACE_HAS_THREADS */
 
 int

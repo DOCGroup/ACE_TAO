@@ -117,8 +117,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   return status;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<ACE_Byte>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_Byte>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

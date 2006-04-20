@@ -410,16 +410,6 @@ run_main (int, ACE_TCHAR *[])
     return retval == 0 ? 0 : 1;
 }
 
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block>;
-
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#  pragma instantiate class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block>
-
-# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else /* ! ACE_HAS_POSITION_INDEPENDENT_POINTERS */
 // Nothing to test !
 int

@@ -1467,14 +1467,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   return success;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Asynch_Acceptor<Receiver>;
-template class ACE_Asynch_Connector<Sender>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Asynch_Acceptor<Receiver>
-#pragma instantiate ACE_Asynch_Connector<Sender>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 int
 run_main (int, ACE_TCHAR *[])

@@ -280,34 +280,7 @@ Scheduler::print (Printer_var &printer)
 // Total number of loops.
 static int n_loops = 10;
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>;
-template class ACE_Auto_Basic_Ptr<Printer>;
-template class ACE_Auto_Basic_Ptr<Scheduler>;
-template class auto_ptr<Scheduler>;
-template class auto_ptr<ACE_Method_Request>;
-template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>
-#pragma instantiate ACE_Auto_Basic_Ptr<Printer>
-#pragma instantiate ACE_Auto_Basic_Ptr<Scheduler>
-#pragma instantiate auto_ptr<Scheduler>
-#pragma instantiate auto_ptr<ACE_Method_Request>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_THREADS */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 int
 run_main (int, ACE_TCHAR *[])

@@ -122,13 +122,3 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if !defined (ACE_HAS_PURIFY)
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>;
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#   pragma instantiate ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>
-# elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-    template ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX> *
-      ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>::singleton_;
-# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ! ACE_HAS_PURIFY */
