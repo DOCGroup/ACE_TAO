@@ -106,7 +106,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       TAO_SCIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,
-                      TAO_SCIOP_Endpoint (endpointSeq[i].in(),
+                      TAO_SCIOP_Endpoint (endpointSeq[i],
                                           this->endpoint_.port_,
                                           this->endpoint_.priority()),
                       -1);
