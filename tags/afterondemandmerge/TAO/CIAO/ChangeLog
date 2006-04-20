@@ -1,0 +1,70 @@
+Thu Apr 20 09:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.cpp:
+          Fixed compile error
+
+Wed Apr 19 19:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Fixed usage of sequences. The sequences now return
+          a pointer on the subscript operators, not _var which was not according
+          to the spec.
+
+Wed Apr 19 14:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+          Removed vc6 workaround
+
+Wed Apr 19 13:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/schema/xsc-banner.h:
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+          Removed include of vc6-4786.h
+
+Wed Apr 19 13:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/STD_PC_Intf.cpp:
+        * tools/Config_Handlers/XSCRT/XMLSchema.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/DP_Handler.cpp:
+          Removed vc6 workarounds
+
+Wed Apr 19 11:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DnC_Dump.{h,cpp}:
+          Updated for string manager change in TAO
+
+        * ciao/Servant_Impl_Base.cpp:
+          Updated for sequence change
+
+Wed Apr 19 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/cpd.hpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/toplevel.hpp
+          Removed vc6 workarounds
+
+        * tools/Config_Handlers/vc6-4786.h
+          Removed
+
+Tue Apr 18 20:55:05 2006  Wallace Zhang  <zhangw@ociweb.com>
+
+        * CIAO version 0.5.1 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

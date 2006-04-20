@@ -1,0 +1,32 @@
+/**
+
+@page Oneway_Buffering Test README File
+
+	A regression test for oneway buffering.  The test verifies
+that the TAO::BufferingConstraint policies are respected by the
+ORB. Three separate tests are possible:
+
+- TAO::BUFFER_MESSAGE_COUNT: The buffer should not be flushed until
+  enough messages are in the queue.
+
+- TAO::BUFFER_TIMEOUT: The buffer should not be flushed unless the
+  specified interval has expired.
+
+- TAO::BUFFER_MESSAGE_BYTES: The buffer should not be flushed until
+  enough bytes are in the queue.
+
+	To run the test use run_test.pl script:
+
+$ ./run_test.pl
+
+	the nightly regression builds impose severe constraints on the
+maximum time allowed for a single test.  Three separate scripts are
+used to stay within those bounds:
+
+$ ./run_message_count.pl
+$ ./run_timeout.pl
+$ ./run_message_bytes.pl
+
+	each script returns 0 if the test was successful.
+
+*/

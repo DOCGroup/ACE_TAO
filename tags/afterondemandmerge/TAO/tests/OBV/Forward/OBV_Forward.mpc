@@ -1,0 +1,25 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, valuetype {
+  IDL_Files {
+    TreeBase.idl
+    TreeController.idl
+    TreeNode.idl
+  }
+  Source_Files {
+    Test_impl.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, valuetype {
+  after += *Server
+  Source_Files {
+    TreeBaseC.cpp
+    TreeControllerC.cpp
+    TreeNodeC.cpp
+    client.cpp
+  }
+}
+
