@@ -75,8 +75,7 @@ class TAO_SSLEndpointSequence;
 
 typedef
   TAO_FixedSeq_Var_T<
-      TAO_SSLEndpointSequence,
-      SSLIOP::SSL
+      TAO_SSLEndpointSequence
     >
   TAO_SSLEndpointSequence_var;
 
