@@ -1,3 +1,10 @@
+Thu Apr 20 18:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Removed setting of ACE_ANY_OPS_USE_NAMESPACE again. This causes
+          problems when building CIAO. Thanks to Jeff Parsons for finding
+          this.
+
 Thu Apr 20 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ACE_Init_Test.rc:
