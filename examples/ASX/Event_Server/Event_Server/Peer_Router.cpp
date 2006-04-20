@@ -107,7 +107,7 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
       if (this->acceptor ().get_local_addr (addr) != -1)
 	ACE_DEBUG ((LM_DEBUG,
 		    ACE_TEXT ("(%t) initializing %C on port = %d, handle = %d, this = %u\n"),
-		    addr.get_port_number () == Options::instance ()->supplier_port () 
+		    addr.get_port_number () == Options::instance ()->supplier_port ()
                     ? "Supplier_Handler" : "Consumer_Handler",
 		    addr.get_port_number (),
 		    this->acceptor().get_handle (),
@@ -250,7 +250,7 @@ Peer_Handler::open (void *)
   // Insert outselves into the routing map.
   else if (this->peer_router_context_->bind_peer (this->get_handle (),
                                                   this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("bind_peer")),
                       -1);
@@ -285,7 +285,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
                                   db->size ());
 
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p"),
                        ACE_TEXT ("recv failed")),
                       -1);
@@ -300,7 +300,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) shutting down handle %d\n"), h));
       // Instruct the <ACE_Reactor> to deregister us by returning -1.
-      return -1; 
+      return -1;
     }
   else
     {
@@ -411,7 +411,7 @@ Peer_Handler::svc (void)
 
           // We do not need to be deregistered by reactor
 	  // as we were not registered at all.
-	  return -1; 
+	  return -1;
 	}
       else
 	{
@@ -433,20 +433,3 @@ Peer_Handler::svc (void)
 #endif /* 0 */
 #endif /* _PEER_ROUTER_C */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>;
-template class ACE_Map_Iterator_Base<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>
-#pragma instantiate ACE_Map_Iterator_Base<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -135,26 +135,4 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   return ACE_OS::strlen (mod_name);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Acceptor<Consumer_Handler, ACE_UPIPE_ACCEPTOR>;
-template class Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>;
-template class Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>;
-template class Peer_Router<Consumer_Handler, CONSUMER_KEY>;
-template class ACE_Map_Entry<CONSUMER_KEY, Consumer_Handler *>;
-template class ACE_Map_Iterator_Base<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Iterator<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Reverse_Iterator<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Manager<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor<Consumer_Handler, ACE_UPIPE_ACCEPTOR>
-#pragma instantiate Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>
-#pragma instantiate Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>
-#pragma instantiate Peer_Router<Consumer_Handler, CONSUMER_KEY>
-#pragma instantiate ACE_Map_Entry<CONSUMER_KEY, Consumer_Handler *>
-#pragma instantiate ACE_Map_Iterator_Base<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>
-#pragma instantiate ACE_Map_Iterator<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>
-#pragma instantiate ACE_Map_Manager<CONSUMER_KEY, Consumer_Handler *, ACE_RW_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_THREADS */
