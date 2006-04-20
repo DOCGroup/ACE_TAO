@@ -308,7 +308,7 @@ ReplicaController::send_reply (
 
   CORBA::OctetSeq_var reply;
 
-  ACE_NEW (reply, CORBA::OctetSeq (cdr.total_length ()));
+  ACE_NEW (reply.out (), CORBA::OctetSeq (cdr.total_length ()));
 
   reply->length (cdr.total_length ());
 
@@ -372,7 +372,7 @@ ReplicaController::send_reply (
 
     CORBA::OctetSeq_var msg;
 
-    ACE_NEW (msg, CORBA::OctetSeq (size));
+    ACE_NEW (msg.out (), CORBA::OctetSeq (size));
 
     msg->length (size);
 
