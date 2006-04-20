@@ -1,3 +1,9 @@
+Thu Apr 20 14:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+          Include orbconf.h instead of one of the sequence header files
+
 Thu Apr 20 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Reply_Dispatcher_Base.{h,cpp}:
