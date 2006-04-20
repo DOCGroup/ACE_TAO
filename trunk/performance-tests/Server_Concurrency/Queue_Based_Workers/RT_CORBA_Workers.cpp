@@ -555,7 +555,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
      "(%P|%t) Throughput is [%f] \n",
-     elapsed_time_per_invocation)); 
+     elapsed_time_per_invocation));
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Throughput is [%f] \n",
@@ -573,18 +573,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return result;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
-template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else /*ACE_HAS_THREADS*/
 

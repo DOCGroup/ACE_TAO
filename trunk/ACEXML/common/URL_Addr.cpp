@@ -175,8 +175,3 @@ ACEXML_URL_Addr::~ACEXML_URL_Addr (void)
   this->path_name_ = 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<ACEXML_Char>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACEXML_Char>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
