@@ -49,23 +49,4 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Bound_Ptr_Counter<ACE_SYNCH_MUTEX>;
-template class ACE_Strong_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX>;
-template class ACE_Weak_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX>;
-template class ACE_Strong_Bound_Ptr<Gadget_Part, ACE_SYNCH_MUTEX>;
-template class ACE_Weak_Bound_Ptr<Gadget_Part, ACE_SYNCH_MUTEX>;
-template class ACE_Node<Gadget_Part_var>;
-template class ACE_Unbounded_Queue<Gadget_Part_var>;
-template class ACE_Unbounded_Queue_Iterator<Gadget_Part_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Bound_Ptr_Counter<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Strong_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Weak_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Strong_Bound_Ptr<Gadget_Part, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Weak_Bound_Ptr<Gadget_Part, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Node<Gadget_Part_var>
-#pragma instantiate ACE_Unbounded_Queue<Gadget_Part_var>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Gadget_Part_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

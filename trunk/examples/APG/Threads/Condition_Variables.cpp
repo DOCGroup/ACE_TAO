@@ -56,7 +56,7 @@ HA_CommandHandler::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Handler Thread running\n")));
-    
+
   for (int i = 0; i < NUM_USES; i++)
     {
       this->mutex_.acquire ();
@@ -72,11 +72,11 @@ HA_CommandHandler::svc (void)
 
       this->waitCond_.signal ();
     }
-    
+
   return 0;
 }
 // Listing 2
-int 
+int
 HA_Device_Repository::update_device (int device_id)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Updating device %d\n"),
@@ -104,12 +104,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 // Listing 3
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
 #include "ace/OS_main.h"

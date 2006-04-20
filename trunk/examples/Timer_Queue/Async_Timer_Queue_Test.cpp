@@ -25,16 +25,6 @@
 
 #include "Async_Timer_Queue_Test.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
-template class Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>;
-template class Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>
-#pragma instantiate Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>
-#pragma instantiate Timer_Queue_Test_Driver<Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_RCSID(Timer_Queue, Async_Timer_Queue_Test, "$Id$")
 
 // Hook method that is called to handle the expiration of a timer.

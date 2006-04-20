@@ -174,31 +174,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op_Ex<ACE_Token, int>;
-template class ACE_Atomic_Op<ACE_Token, int>;
-template class ACE_Guard<ACE_Token>;
-template class ACE_TSS<TSS_Data>;
-template class ACE_TSS<TSS_Obj>;
-template class ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Token, int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Atomic_Op<ACE_Token, int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Token, int>
-#pragma instantiate ACE_Guard<ACE_Token>
-#pragma instantiate ACE_TSS<TSS_Data>
-#pragma instantiate ACE_TSS<TSS_Obj>
-#pragma instantiate ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX> *
   ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 #else
 

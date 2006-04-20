@@ -258,18 +258,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Thread_Mutex>;
-template class ACE_Node<Worker*>;
-template class ACE_Unbounded_Queue<Worker*>;
-template class ACE_Unbounded_Queue_Iterator<Worker*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-#pragma instantiate ACE_Node<Worker*>
-#pragma instantiate ACE_Unbounded_Queue<Worker*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Worker*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"

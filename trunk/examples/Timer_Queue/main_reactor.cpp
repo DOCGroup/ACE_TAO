@@ -55,16 +55,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return driver->run_test ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr <REACTOR_TIMER_QUEUE_TEST_DRIVER>;
-template class ACE_Auto_Basic_Ptr <REACTOR_TIMER_QUEUE_TEST_DRIVER>;
-template class Timer_Queue_Test_Driver<ACE_Timer_Heap *,
-                                       Input_Handler,
-                                       Input_Handler::ACTION>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr <REACTOR_TIMER_QUEUE_TEST_DRIVER>
-#pragma instantiate ACE_Auto_Basic_Ptr <REACTOR_TIMER_QUEUE_TEST_DRIVER>
-#pragma instantiate Timer_Queue_Test_Driver<ACE_Timer_Heap *, \
-                                       Input_Handler, \
-                                       Input_Handler::ACTION>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

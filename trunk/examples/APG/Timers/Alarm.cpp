@@ -24,7 +24,7 @@ public:
     ACE_ASSERT ((*val) == id_);
 
     ACE_UNUSED_ARG (val);
- 
+
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Timer expired\n")));
     return 0;
   }
@@ -39,7 +39,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Create the timer such that it blocks all signals
   // when it goes off.
   Timer timer;
-  
+
   // Schedule a timer to go off 2 seconds later and then
   // after every 4 seconds.
   CB cb (1);
@@ -48,15 +48,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value repeat (4);
   initial += ACE_OS::gettimeofday ();
   timer.schedule (&cb, &arg, initial, repeat);
-  
+
   while (1)      // Don't let the main thread exit.
     ACE_OS::sleep (2);
   ACE_NOTREACHED (return 0);     // Not reached.
 }
 // Listing 2
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

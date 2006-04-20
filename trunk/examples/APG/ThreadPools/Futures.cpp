@@ -308,30 +308,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 5
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Thread_Mutex>;
-template class ACE_Future<ACE_String_Base<char>*>;
-template class ACE_Future_Observer<ACE_String_Base<char>*>;
-template class ACE_Future_Rep<ACE_String_Base<char>*>;
-template class ACE_Node<Worker*>;
-template class ACE_Node<ACE_Future_Observer<ACE_String_Base<char>*>*>;
-template class ACE_Unbounded_Queue<Worker*>;
-template class ACE_Unbounded_Queue_Iterator<Worker*>;
-template class ACE_Unbounded_Set<ACE_Future_Observer<ACE_String_Base<char>*>*>;
-template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<ACE_String_Base<char>*>*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-#pragma instantiate ACE_Future<ACE_String_Base<char>*>
-#pragma instantiate ACE_Future_Observer<ACE_String_Base<char>*>
-#pragma instantiate ACE_Future_Rep<ACE_String_Base<char>*>
-#pragma instantiate ACE_Node<Worker*>
-#pragma instantiate ACE_Node<ACE_Future_Observer<ACE_String_Base<char>*>*>
-#pragma instantiate ACE_Unbounded_Queue<Worker*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Worker*>
-#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<ACE_String_Base<char>*>*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<ACE_String_Base<char>*>*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"

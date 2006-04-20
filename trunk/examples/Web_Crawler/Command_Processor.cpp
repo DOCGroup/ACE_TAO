@@ -123,16 +123,6 @@ Command_Processor::insert (Command *command)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Options, ACE_Null_Mutex>;
-template class ACE_Node<Command *>;
-template class ACE_Unbounded_Queue_Iterator<Command *>;
-template class ACE_Unbounded_Queue<Command *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Options, ACE_Null_Mutex>
-#pragma instantiate ACE_Node<Command *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Command *>
-#pragma instantiate ACE_Unbounded_Queue<Command *>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<Options, ACE_Null_Mutex> *ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

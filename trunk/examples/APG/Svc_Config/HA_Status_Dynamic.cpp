@@ -111,10 +111,3 @@ HA_Status::info (ACE_TCHAR **str, size_t len) const
 ACE_FACTORY_DEFINE (HASTATUS, HA_Status)
 // Listing 4
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#  pragma instantiate ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

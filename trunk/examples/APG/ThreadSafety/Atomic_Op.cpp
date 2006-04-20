@@ -56,7 +56,7 @@ public:
   {
     return (item == MAX_PROD);
   }
-    
+
 private:
   int * buf_;
   SafeUInt& in_;
@@ -93,7 +93,7 @@ public:
 
     return 0;
   }
-    
+
   int check_termination (int item)
   {
     return (item == MAX_PROD);
@@ -125,14 +125,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 4
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<ACE_Null_Mutex, unsigned int>;
-template class ACE_Atomic_Op<ACE_Null_Mutex, int>;
-template class ACE_Atomic_Op_Ex<ACE_Null_Mutex, unsigned int>;
-template class ACE_Atomic_Op_Ex<ACE_Null_Mutex, int>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<ACE_Null_Mutex, unsigned int>
-#pragma instantiate ACE_Atomic_Op<ACE_Null_Mutex, int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Null_Mutex, unsigned int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Null_Mutex, int>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -133,26 +133,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return te.run ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_RB_Tree <int, DataElement*,
-ACE_Less_Than<int>, ACE_Null_Mutex>
-;
-template class Tree <int, DataElement*>
-;
-template class ACE_RB_Tree_Iterator_Base<int, DataElement*, ACE_Less_Than<int>, ACE_Null_Mutex>
-;
-template class ACE_RB_Tree_Iterator<int, DataElement*, ACE_Less_Than<int>, ACE_Null_Mutex>
-;
-template class ACE_RB_Tree_Reverse_Iterator<int, DataElement*, ACE_Less_Than<int>, ACE_Null_Mutex>
-;
-template class ACE_RB_Tree_Node<int, DataElement*>
-;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_RB_Tree <int, DataElement*,ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_Less_Than <int>
-#pragma instantiate Tree <int, DataElement*>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<int, DataElement*, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Iterator<int, DataElement*, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<int, DataElement*, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Node<int, DataElement*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

@@ -25,14 +25,6 @@
 #include "Driver.h"
 #include "Reactor_Timer_Queue_Test.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>;
-template class Command<Input_Handler, Input_Handler::ACTION>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
-#pragma instantiate Command<Input_Handler, Input_Handler::ACTION>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_RCSID(Timer_Queue, Reactor_Timer_Queue_Test, "$Id$")
 
 void
