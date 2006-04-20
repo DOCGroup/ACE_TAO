@@ -96,7 +96,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         for (size_t i = 0;
            i < seq->length ();
            ++i)
-           cout << seq[i].in () << endl;
+           cout << seq[i] << endl;
       }
       catch (CORBA::Exception & ex)
       {
@@ -113,7 +113,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         for (size_t i = 0;
            i < seq->length ();
            ++i)
-           cout << seq[i].in () << endl;
+           cout << seq[i] << endl;
       }
       catch (CORBA::Exception & ex)
       {
@@ -130,7 +130,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         for (size_t i = 0;
            i < seq->length ();
            ++i)
-           cout << seq[i].in () << endl;
+           cout << seq[i] << endl;
       }
       catch (CORBA::Exception & ex)
       {
