@@ -1,3 +1,12 @@
+Thu Apr 20 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Reply_Dispatcher_Base.{h,cpp}:
+        * tao/ObjectKey_Table.cpp:
+        * tao/Refcounted_ObjectKey.{h,cpp,inl}:
+          Made the refcounts CORBA::ULong and only return the refcount
+          from the incr/decr methods when really needed, using the refcount
+          form external is always tricky. Fixes bugzilla bug 2505.
+
 Thu Apr 20 12:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Integrated ondemand branch to cvs head. This makes an ondemand write
