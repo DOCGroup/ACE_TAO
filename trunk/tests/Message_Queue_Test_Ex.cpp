@@ -321,14 +321,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   return status;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>;
-#if defined (ACE_HAS_THREADS)
-template class ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH>;
-#endif /* ACE_HAS_THREADS */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>
-#if defined (ACE_HAS_THREADS)
-#pragma instantiate ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH>
-#endif /* ACE_HAS_THREADS */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

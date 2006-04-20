@@ -396,12 +396,6 @@ Thread_Pool::test_empty_message_shutdown (void)
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_THREADS */
 
 int

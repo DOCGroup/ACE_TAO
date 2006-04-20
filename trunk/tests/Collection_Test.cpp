@@ -182,25 +182,3 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Set<DATA>;
-template class ACE_Unbounded_Set_Iterator<DATA>;
-template class ACE_Unbounded_Set_Const_Iterator<DATA>;
-template class ACE_Node<DATA>;
-template class ACE_Array<ARRAY_DATA>;
-template class ACE_Array_Base<ARRAY_DATA>;
-template class ACE_Array_Iterator<ARRAY_DATA>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Set<DATA>
-#pragma instantiate ACE_Unbounded_Set_Iterator<DATA>
-#pragma instantiate ACE_Unbounded_Set_Const_Iterator<DATA>
-#pragma instantiate ACE_Node<DATA>
-#pragma instantiate ACE_Array<ARRAY_DATA>
-#pragma instantiate ACE_Array_Base<ARRAY_DATA>
-#pragma instantiate ACE_Array_Iterator<ARRAY_DATA>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

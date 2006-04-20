@@ -133,23 +133,3 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<MyNode>;
-template class ACE_Unbounded_Set<MyNode>;
-template class ACE_Unbounded_Set_Iterator<MyNode>;
-template class ACE_Unbounded_Set_Const_Iterator<MyNode>;
-template class ACE_Auto_Basic_Ptr<ACE_CString>;
-template class auto_ptr<ACE_CString>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<MyNode>
-#pragma instantiate ACE_Unbounded_Set<MyNode>
-#pragma instantiate ACE_Unbounded_Set_Iterator<MyNode>
-#pragma instantiate ACE_Unbounded_Set_Const_Iterator<MyNode>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_CString>
-#pragma instantiate auto_ptr<ACE_CString>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

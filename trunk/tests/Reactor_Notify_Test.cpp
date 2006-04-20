@@ -491,18 +491,3 @@ run_main (int, ACE_TCHAR *[])
   return test_result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr<Purged_Notify>;
-template class auto_ptr<ACE_Reactor>;
-template class auto_ptr<ACE_Select_Reactor>;
-template class ACE_Auto_Basic_Ptr<Purged_Notify>;
-template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
-template class ACE_Auto_Basic_Ptr<ACE_Select_Reactor>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr<Purged_Notify>
-#pragma instantiate auto_ptr<ACE_Reactor>
-#pragma instantiate auto_ptr<ACE_Select_Reactor>
-#pragma instantiate ACE_Auto_Basic_Ptr<Purged_Notify>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Select_Reactor>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

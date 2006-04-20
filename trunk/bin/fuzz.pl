@@ -1153,6 +1153,26 @@ sub check_for_changelog_errors ()
     }
 }
 
+sub check_for_deprecated_macros ()
+{
+    print "Running deprecated macros check\n";
+    foreach $file (@files_cpp, @files_inl, @files_h) {
+        if (open (FILE, $file)) {
+
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                # Check for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION usage.
+                if (m/ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION\)/) {
+                    print_error ("$file:$.: ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION found.");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
 # This test checks for ptr_arith_t usage in source code.  ptr_arith_t
 # is non-portable.  Use ptrdiff_t instead.
 sub check_for_ptr_arith_t ()
@@ -1420,6 +1440,7 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_deprecated_macros () if ($opt_l > 1 );
 check_for_refcountservantbase () if ($opt_l > 1 );
 check_for_msc_ver_string () if ($opt_l >= 3);
 check_for_empty_inline_files () if ($opt_l >= 1);

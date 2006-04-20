@@ -244,18 +244,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
-template class ACE_Unbounded_Set<ACE_HANDLE>;
-template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
-# if defined(_CRAYMPP) \
-     || ((defined(ghs) || defined(__MINGW32__)) && defined (ACE_WIN32))
-// MPP Cray ACE_HANDLE is 64-bit, defined as int, but ACE_INT32 is short
-// so instantiation in ace/Stats.cpp isn't used in this case
-template class ACE_Node<ACE_HANDLE>;
-# endif
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
-#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -671,9 +671,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Bounded_Set<long>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Bounded_Set<long>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

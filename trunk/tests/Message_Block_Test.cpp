@@ -285,24 +285,6 @@ alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
   { &mem_allocator, ACE_TEXT ("Cached Memory"), {0,0,0} }
 };
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    (defined (ACE_HAS_GNU_REPO) && !defined (ACE_VXWORKS))
-  // The explicit instantiations are necessary with g++ 2.91.66
-  // with -frepo, because it misses some of them.
-template class ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
-template class ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >;
-template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 #endif /* ACE_HAS_THREADS */
 
 int
