@@ -149,12 +149,6 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Asynch_Acceptor<HA_Proactive_Service>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Asynch_Acceptor<HA_Proactive_Service>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
-
 #else
 
 int

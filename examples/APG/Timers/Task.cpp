@@ -71,8 +71,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 3
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

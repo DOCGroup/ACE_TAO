@@ -173,26 +173,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 6
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Future<int>;
-template class ACE_Future_Rep<int>;
-template class ACE_Future_Observer<int>;
-template class ACE_Unbounded_Set<ACE_Future_Observer<int> *>;
-template class ACE_Node<ACE_Future_Observer<int> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<int> *>;
-template class ACE_Atomic_Op<ACE_Null_Mutex, unsigned int>;
-template class ACE_Atomic_Op_Ex<ACE_Null_Mutex, unsigned int>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Future<int>
-#pragma instantiate ACE_Future_Rep<int>
-#pragma instantiate ACE_Future_Observer<int>
-#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<int> *>
-#pragma instantiate ACE_Node<ACE_Future_Observer<int> *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<int> *>
-#pragma instantiate ACE_Atomic_Op<ACE_Null_Mutex, unsigned int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Null_Mutex, unsigned int>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"

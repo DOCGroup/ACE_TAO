@@ -78,31 +78,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<ACE_TString, ACE_TString>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#if defined(ACE_HAS_THREADS)
-#pragma instantiate ACE_Guard<ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>
-#endif /* ACE_HAS_THREADS */
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_TString, ACE_TString>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_TString, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_SYNCH_RW_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

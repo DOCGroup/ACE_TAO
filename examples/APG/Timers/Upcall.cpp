@@ -170,26 +170,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 3
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Free_List<ACE_Timer_Node_T<PCB*> >;
-template class ACE_Locked_Free_List<ACE_Timer_Node_T<PCB*>, ACE_Null_Mutex>;
-template class ACE_Timer_Node_T<PCB*>;
-template class ACE_Timer_Heap_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Timer_Heap_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Timer_Queue_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Timer_Queue_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Node<ACE_Timer_Node_T<PCB*>*>;
-template class ACE_Unbounded_Set<ACE_Timer_Node_T<PCB*>*>;
-template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<PCB*>*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Free_List<ACE_Timer_Node_T<PCB*> >
-#pragma instantiate ACE_Locked_Free_List<ACE_Timer_Node_T<PCB*>, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Node_T<PCB*>
-#pragma instantiate ACE_Timer_Heap_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Heap_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Queue_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Queue_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Node<ACE_Timer_Node_T<PCB*>*>
-#pragma instantiate ACE_Unbounded_Set<ACE_Timer_Node_T<PCB*>*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<PCB*>*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

@@ -119,10 +119,3 @@ ACE_STATIC_SVC_DEFINE (HA_Status_Descriptor,
 ACE_STATIC_SVC_REQUIRE (HA_Status_Descriptor)
 // Listing 4
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#  pragma instantiate ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

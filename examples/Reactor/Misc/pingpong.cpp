@@ -48,12 +48,6 @@
 #  include "ace/Thread.h"
 #endif
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_RCSID(Misc, pingpong, "$Id$")
 
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>

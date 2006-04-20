@@ -62,13 +62,9 @@ int TP_Logging_Task::svc () {
 
 ACE_FACTORY_DEFINE (TPLS, TP_Logging_Server)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Reactor_Logging_Server<TP_Logging_Acceptor>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Reactor_Logging_Server<TP_Logging_Acceptor>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<TP_Logging_Task, ACE_Null_Mutex> *
   ACE_Singleton<TP_Logging_Task, ACE_Null_Mutex>::singleton_;
 template ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex> *
   ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

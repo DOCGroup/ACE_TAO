@@ -31,13 +31,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dumpable_Adapter<SOCK_Stream>;
-template class ACE_Dumpable_Adapter<SOCK>;
-template class ACE_Dumpable_Adapter<SOCK_Acceptor>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dumpable_Adapter<SOCK_Stream>
-#pragma instantiate ACE_Dumpable_Adapter<SOCK>
-#pragma instantiate ACE_Dumpable_Adapter<SOCK_Acceptor>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

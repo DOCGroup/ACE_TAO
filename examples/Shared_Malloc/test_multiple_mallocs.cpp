@@ -123,14 +123,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr <ACE_Allocator_Adapter<TEST_MALLOC> >;
-template class ACE_Auto_Basic_Ptr<ACE_Allocator_Adapter<TEST_MALLOC> >;
-template class auto_ptr <TEST_MALLOC>;
-template class ACE_Auto_Basic_Ptr<TEST_MALLOC>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr <ACE_Allocator_Adapter<TEST_MALLOC> >
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Allocator_Adapter<TEST_MALLOC> >
-#pragma instantiate auto_ptr <TEST_MALLOC>
-#pragma instantiate ACE_Auto_Basic_Ptr<TEST_MALLOC>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

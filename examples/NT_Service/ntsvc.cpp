@@ -27,11 +27,11 @@ Service::Service (void)
   reactor (ACE_Reactor::instance ());
 }
 
-Service::~Service (void) 
-{ 
-  if (ACE_Reactor::instance ()->cancel_timer(this) == -1) 
+Service::~Service (void)
+{
+  if (ACE_Reactor::instance ()->cancel_timer(this) == -1)
     ACE_ERROR ((LM_ERROR,
-                "Service::~Service failed to cancel_timer.\n")); 
+                "Service::~Service failed to cancel_timer.\n"));
 }
 
 // This method is called when the service gets a control request.  It
@@ -111,8 +111,3 @@ Service::svc (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Service, ACE_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Service, ACE_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
