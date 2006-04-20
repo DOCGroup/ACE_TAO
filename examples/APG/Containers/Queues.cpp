@@ -113,18 +113,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return que.run ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<DataElement>;
-template class ACE_Node<DataElement*>;
-template class ACE_Unbounded_Queue<DataElement*>;
-template class ACE_Unbounded_Queue_Iterator<DataElement*>;
-template class ACE_Unbounded_Queue<DataElement>;
-template class ACE_Unbounded_Queue_Iterator<DataElement>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<DataElement>
-#pragma instantiate ACE_Node<DataElement*>
-#pragma instantiate ACE_Unbounded_Queue<DataElement*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<DataElement*>
-#pragma instantiate ACE_Unbounded_Queue<DataElement>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<DataElement>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

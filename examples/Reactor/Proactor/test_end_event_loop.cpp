@@ -154,12 +154,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Task <ACE_NULL_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Task <ACE_NULL_SYNCH>
-#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
-
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
 
 int

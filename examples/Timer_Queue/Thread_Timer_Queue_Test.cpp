@@ -29,43 +29,6 @@
 #include "ace/Condition_T.h"
 #include "ace/Thread_Mutex.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
-template class Timer_Queue_Test_Driver<Thread_Timer_Queue,
-                                       Input_Task,
-                                       Input_Task::ACTION>;
-template class Command<Input_Task, Input_Task::ACTION>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
-#pragma instantiate Timer_Queue_Test_Driver<Thread_Timer_Queue, \
-                                           Input_Task, \
-                                           Input_Task::ACTION>
-#pragma instantiate Command<Input_Task, Input_Task::ACTION>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// These templates will specialized in libACE.* if the platforms does
-// not define ACE_MT_SAFE.
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Thread_Condition<ACE_Thread_Mutex>;
-template class ACE_Condition<ACE_Thread_Mutex>;
-template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>;
-template class ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Thread_Condition<ACE_Thread_Mutex>
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-#pragma instantiate ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_MT_SAFE */
-
 ACE_RCSID(Timer_Queue, Thread_Timer_Queue_Test, "$Id$")
 
 // Administrivia methods...

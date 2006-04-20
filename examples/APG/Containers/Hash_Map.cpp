@@ -116,19 +116,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return me.run ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Hash_Map <int, DataElement>
-;
-template class ACE_Hash_Map_Manager_Ex<int, DataElement, ACE_Hash<int>, ACE_Equal_To<int>, ACE_Null_Mutex>
-;
-template class ACE_Hash_Map_Entry<int, DataElement>
-;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, DataElement, ACE_Hash<int>, ACE_Equal_To<int>, ACE_Null_Mutex>
-;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Hash_Map <int, DataElement*>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, DataElement, ACE_Hash<int>, ACE_Equal_To<int>, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Entry<int, DataElement>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, DataElement, ACE_Hash<int>, ACE_Equal_To<int>, ACE_Null_Mutex>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
-

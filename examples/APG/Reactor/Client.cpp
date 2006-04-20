@@ -115,15 +115,4 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 // Listing 6
 
 // Listing 7 code/ch07
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Connector<Client, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector_Base<Client>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_NonBlocking_Connect_Handler<Client>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Connector<Client, ACE_SOCK_CONNECTOR>
-# pragma instantiate ACE_Connector_Base<Client>
-# pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-# pragma instantiate ACE_NonBlocking_Connect_Handler<Client>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 // Listing 7
