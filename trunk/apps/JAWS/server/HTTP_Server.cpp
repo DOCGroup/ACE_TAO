@@ -138,7 +138,7 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
   // Parse arguments which sets the initial state.
   this->parse_args (argc, argv);
 
-  //If the IO strategy is synchronous (SYNCH case), then choose a handler 
+  //If the IO strategy is synchronous (SYNCH case), then choose a handler
   //factory based on the desired caching scheme
   HTTP_Handler_Factory *f = 0;
 
@@ -429,8 +429,3 @@ ACE_STATIC_SVC_DEFINE (HTTP_Server, ACE_TEXT ("HTTP_Server"), ACE_SVC_OBJ_T,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ, 0)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

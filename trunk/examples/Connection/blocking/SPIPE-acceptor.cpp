@@ -219,16 +219,6 @@ IPC_Server::svc (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Concurrency_Strategy<Svc_Handler>;
-template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
 #endif /* SPIPE_ACCEPTOR_C */
 

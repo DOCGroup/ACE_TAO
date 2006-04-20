@@ -338,10 +338,3 @@ Gateway::parse_consumer_config_file (void)
 
 ACE_SVC_FACTORY_DEFINE (Gateway)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Connection_Handler *>;
-template class ACE_Unbounded_Set<Connection_Handler *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Connection_Handler *>
-#pragma instantiate ACE_Unbounded_Set<Connection_Handler *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

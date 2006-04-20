@@ -436,8 +436,3 @@ ACCESSOR(int,JAWS_Header_Info,end_of_line)
 ACCESSOR(int,JAWS_Header_Info,end_of_headers)
 ACCESSOR(int,JAWS_Header_Info,status)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Singleton<JAWS_Parse_Headers, ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate  ACE_Singleton<JAWS_Parse_Headers, ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
