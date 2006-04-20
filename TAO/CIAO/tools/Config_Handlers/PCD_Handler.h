@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
-
+#include "Utils/Functors.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -21,6 +21,7 @@
 namespace Deployment
 {
   struct PlanConnectionDescription;
+  class PlanConnectionDescriptions;
 }
 
 namespace CIAO
@@ -52,8 +53,8 @@ namespace CIAO
       ///This method takes a <Deployment::PlanConnectionDescription>
       ///and maps the values from the passed in XSC
       ///PlanConnectionDescription to its members.
-      void get_PlanConnectionDescription (Deployment::PlanConnectionDescription& toconfig,
-                                          PlanConnectionDescription& desc);
+      static void get_PlanConnectionDescription (const PlanConnectionDescription& desc,
+                                          Deployment::PlanConnectionDescription& toconfig);
 
       //This method takes a <Deployment::PlanConnectionDescription>
       //converts it into a <Config_Handler::PlanConnectionDescription>
@@ -61,6 +62,12 @@ namespace CIAO
       static PlanConnectionDescription 
         get_PlanConnectionDescription (const Deployment::PlanConnectionDescription &src);
     };
+    
+    typedef Sequence_Handler < PlanConnectionDescription,
+                               ::Deployment::PlanConnectionDescriptions,
+                               ::Deployment::PlanConnectionDescription,
+                               PCD_Handler::get_PlanConnectionDescription > PCD_Functor;
+    
   }
 }
 

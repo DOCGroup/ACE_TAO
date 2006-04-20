@@ -133,6 +133,9 @@ namespace CIAO
         case ::Deployment::EventConsumer:
           pspe.kind (CCMComponentPortKind::EventConsumer);
           break;
+          
+        default:
+          ACE_ERROR ((LM_ERROR, "Invalid port kind in PSPE\n"));
         }
 
 

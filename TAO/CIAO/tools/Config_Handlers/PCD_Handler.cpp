@@ -26,9 +26,8 @@ namespace CIAO
     ///This method takes a <Deployment::PlanConnectionDescription>
     ///and maps the values from the passed in XSC
     ///PlanConnectionDescription to its members.
-    void PCD_Handler::get_PlanConnectionDescription (
-                                                     Deployment::PlanConnectionDescription& toconfig,
-                                                     PlanConnectionDescription& desc)
+    void PCD_Handler::get_PlanConnectionDescription (const PlanConnectionDescription& desc,
+                                                     Deployment::PlanConnectionDescription& toconfig)
     {
       CIAO_TRACE("PCD_Handler::get_PlanConnectionDescription");
 
@@ -57,7 +56,6 @@ namespace CIAO
                                              toconfig.externalEndpoint);
 
       //Configure the PlanSubcomponentPortEndpoint's.
-
       PSPE_Handler::sub_component_port_endpoints (desc,
                                                   toconfig.internalEndpoint);
 
@@ -69,7 +67,7 @@ namespace CIAO
       CRDD_Handler crddhandler;
       CORBA::ULong pos = 0;
       toconfig.deployedResource.length (desc.count_deployedResource ());
-      for(PlanConnectionDescription::deployedResource_iterator res =
+      for(PlanConnectionDescription::deployedResource_const_iterator res =
             desc.begin_deployedResource();
           res != desc.end_deployedResource();
           res++)
