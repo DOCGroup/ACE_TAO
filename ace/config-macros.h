@@ -623,10 +623,6 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #  define ACE_STD_NAMESPACE
 #endif
 
-// Compiler can handle any operators in namespace, just try this for all
-// compilers, if it works we can zap this fully
-#define ACE_ANY_OPS_USE_NAMESPACE
-
 #if !defined (ACE_OS_String)
 #  define ACE_OS_String ACE_OS
 #endif /* ACE_OS_String */
