@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    True_Fragmentation_Strategy.h
+ *  @file    On_Demand_Fragmentation_Strategy.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_TRUE_FRAGMENTATION_STRATEGY_H
-#define TAO_TRUE_FRAGMENTATION_STRATEGY_H
+#ifndef TAO_ONDEMAND_FRAGMENTATION_STRATEGY_H
+#define TAO_ONDEMAND_FRAGMENTATION_STRATEGY_H
 
 #include /**/ "ace/pre.h"
 
@@ -74,4 +74,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif  /* TAO_TRUE_FRAGMENTATION_STRATEGY_H */
+#endif  /* TAO_ONDEMAND_FRAGMENTATION_STRATEGY_H */

@@ -129,7 +129,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     RW_Mutex.cpp
     RW_Thread_Mutex.cpp
     Sched_Params.cpp
-    Select_Reactor.cpp
     Select_Reactor_Base.cpp
     Signal.cpp
     SOCK.cpp
