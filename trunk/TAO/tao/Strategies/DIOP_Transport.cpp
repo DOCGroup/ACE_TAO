@@ -52,6 +52,7 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
+                                      this,
                                       ACE_MAX_DGRAM_SIZE));
     }
 

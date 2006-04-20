@@ -6,6 +6,7 @@
 #include "tao/Exception_Data.h"
 #include "tao/SystemException.h"
 #include "tao/Argument.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -61,6 +62,11 @@ TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
       if (!((*this->args_[i]).marshal (cdr)))
         return false;
     }
+
+  // Nothing else to fragment.  We're also guaranteed to have
+  // data in the CDR stream since the operation was a marshaling
+  // operation, not a fragmentation operation.
+  cdr.more_fragments (false);
 
   return true;
 }

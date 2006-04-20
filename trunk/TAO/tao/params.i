@@ -40,6 +40,18 @@ TAO_ORB_Parameters::cdr_memcpy_tradeoff (int x)
   this->cdr_memcpy_tradeoff_ = x;
 }
 
+ACE_INLINE ACE_CDR::ULong
+TAO_ORB_Parameters::max_message_size (void) const
+{
+  return this->max_message_size_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::max_message_size (ACE_CDR::ULong size)
+{
+  this->max_message_size_ = size;
+}
+
 ACE_INLINE int
 TAO_ORB_Parameters::use_dotted_decimal_addresses (void) const
 {

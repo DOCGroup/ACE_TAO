@@ -25,9 +25,11 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
+                                              TAO_Transport * transport,
                                               size_t /* input_cdr_size */)
   : orb_core_ (orb_core)
   , message_state_ ()
+  , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport))
   , out_stream_ (this->buffer_,
                  sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
@@ -35,6 +37,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                 fragmentation_strategy_.get (),
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
@@ -228,14 +231,51 @@ TAO_GIOP_Message_Base::generate_reply_header (
 }
 
 int
+TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
+                                                 CORBA::ULong request_id)
+{
+  // Get a parser for us
+  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
+
+  CORBA::Octet major, minor;
+
+  cdr.get_version (major, minor);
+
+  // GIOP fragments are supported in GIOP 1.1 and better, but TAO only
+  // supports them in 1.2 or better since GIOP 1.1 fragments do not
+  // have a fragment message header.
+  if (major == 1 && minor < 2)
+    return -1;
+
+  // Get the state information that we need to use
+  this->set_state (major,
+                   minor,
+                   generator_parser);
+
+  // Write the GIOP header first
+  if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, cdr)
+      || !generator_parser->write_fragment_header (cdr, request_id))
+    {
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+
+      return -1;
+    }
+
+  return 0;
+}
+
+int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 {
   // Ptr to first buffer.
-  char *buf = (char *) stream.buffer ();
+  char * buf = (char *) stream.buffer ();
+
+  this->set_giop_flags (stream);
 
   // Length of all buffers.
-  size_t const total_len =
-    stream.total_length ();
+  size_t const total_len = stream.total_length ();
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -645,6 +685,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         this->orb_core_->input_cdr_dblock_allocator (),
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                        this->fragmentation_strategy_.get (),
                         qd->major_version_,
                         qd->minor_version_);
 
@@ -859,30 +900,33 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
   msg.reset ();
 
   CORBA::Octet header[12] =
-  {
-    // The following works on non-ASCII platforms, such as MVS (which
-    // uses EBCDIC).
-    0x47, // 'G'
-    0x49, // 'I'
-    0x4f, // 'O'
-    0x50  // 'P'
-  };
+    {
+      // The following works on non-ASCII platforms, such as MVS (which
+      // uses EBCDIC).
+      0x47, // 'G'
+      0x49, // 'I'
+      0x4f, // 'O'
+      0x50  // 'P'
+    };
 
   CORBA::Octet major, minor = 0;
-  msg.get_version (major, minor);
+
+  (void) msg.get_version (major, minor);
 
   header[4] = major;
   header[5] = minor;
 
-  // We are putting the byte order. But at a later date if we support
-  // fragmentation and when we want to use the other 6 bits in this
-  // octet we can have a virtual function do this for us as the
-  // version info , Bala
-  header[6] = (TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
+  // "flags" octet, i.e. header[6] will be set up later when message
+  // is formatted by the transport.
 
-  header[7] = CORBA::Octet(type);
+  header[7] = CORBA::Octet (type);  // Message type
 
-  static int header_size = sizeof (header) / sizeof (header[0]);
+  static ACE_CDR::ULong const header_size =
+    sizeof (header) / sizeof (header[0]);
+
+  // Fragmentation should not occur at this point since there are only
+  // 12 bytes in the stream, and fragmentation may only occur when
+  // the stream length >= 16.
   msg.write_octet_array (header, header_size);
 
   return msg.good_bit ();
@@ -966,6 +1010,11 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           // Send back the reply service context.
           reply_params.service_context_notowned (&request.reply_service_info ());
 
+          output.message_attributes (request_id,
+                                     0,
+                                     TAO_Transport::TAO_REPLY,
+                                     0);
+
           // Make the GIOP header and Reply header
           this->generate_reply_header (output,
                                        reply_params);
@@ -979,6 +1028,8 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
               return -1;
             }
+
+          output.more_fragments (false);
 
           int result = transport->send_message (output,
                                                 0,
@@ -1259,6 +1310,8 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
                                    request.request_id (),
                                    status_info);
 
+  output.more_fragments (false);
+
   // Send the message
   int result = transport->send_message (output,
                                         0,
@@ -1498,6 +1551,8 @@ TAO_GIOP_Message_Base::send_reply_exception (
                                       *x) == -1)
     return -1;
 
+  output.more_fragments (false);
+
   return transport->send_message (output,
                                   0,
                                   TAO_Transport::TAO_REPLY);
@@ -1543,7 +1598,8 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       char *tmp_id = 0;
 
       if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
-          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
+          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY ||
+          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_FRAGMENT)
         {
           if (major == 1 && minor < 2)
             {
@@ -1555,16 +1611,16 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
               tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
             }
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-      if (byte_order == TAO_ENCAP_BYTE_ORDER)
-        {
-          id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
-        }
-      else
-        {
-          ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
-        }
+        if (byte_order == TAO_ENCAP_BYTE_ORDER)
+          {
+            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+          }
+        else
+          {
+            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
+          }
 #else
-      id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
         }
@@ -2041,7 +2097,6 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
           cancel_request_id == head_request_id)
         {
           TAO_Queued_Data::release (head);
-
           discard_all_GIOP11_messages = true;
         }
       else if (head->major_version_ == 1 &&
@@ -2066,5 +2121,32 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
   return 0;
 }
 
+TAO_GIOP_Fragmentation_Strategy *
+TAO_GIOP_Message_Base::fragmentation_strategy (void)
+{
+  return this->fragmentation_strategy_.get ();
+}
+
+void
+TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
+{
+  CORBA::Octet * const buf =
+    reinterpret_cast<CORBA::Octet *> (const_cast<char *> (msg.buffer ()));
+
+  CORBA::Octet const & major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
+  CORBA::Octet const & minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
+
+  // Flags for the GIOP protocol header "flags" field.
+  CORBA::Octet & flags = buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET];
+
+  // Least significant bit:        Byte order
+  ACE_SET_BITS (flags, TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
+
+  // Second least significant bit: More fragments
+  //
+  // Only supported in GIOP 1.1 or better.
+  if (!(major <= 1 && minor == 0))
+    ACE_SET_BITS (flags, msg.more_fragments () << 1);
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
