@@ -1,3 +1,8 @@
+Thu Apr 20 08:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+          Fixed compile error
+
 Thu Apr 20 07:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.h:
