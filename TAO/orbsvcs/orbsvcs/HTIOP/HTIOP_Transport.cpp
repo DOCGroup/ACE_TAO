@@ -45,7 +45,7 @@ TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
+               TAO_GIOP_Message_Base (orb_core, this));
     }
 }
 

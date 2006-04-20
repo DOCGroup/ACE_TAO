@@ -66,6 +66,13 @@ namespace TAO
     // try block is to take care of the cases when things go wrong.
     ACE_TRY
       {
+        // Oneway semantics.  See comments for below send_message()
+        // call.
+        cdr.message_attributes (this->details_.request_id (),
+                                this->resolver_.stub (),
+                                TAO_Transport::TAO_ONEWAY_REQUEST,
+                                max_wait_time);
+
         this->write_header (tspec,
                             cdr
                             ACE_ENV_ARG_PARAMETER);

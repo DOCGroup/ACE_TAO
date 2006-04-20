@@ -1,4 +1,5 @@
 //$Id$
+
 #include "tao/Remote_Invocation.h"
 #include "tao/Profile.h"
 #include "tao/Profile_Transport_Resolver.h"
@@ -113,6 +114,7 @@ namespace TAO
   {
     this->resolver_.transport ()->clear_translators (0,
                                                      &out_stream);
+
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
                                                                spec,
