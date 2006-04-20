@@ -60,6 +60,8 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                           "CIAOEvents") != 0)
         continue;
 
+      // Note, we should do a sanity check here to make
+      // sure we didn't pick up the wrong infoProperty!!
       this->plan_.infoProperty[0].value >>= this->esd_;
       break;
     }
@@ -703,7 +705,7 @@ install_all_es (void)
           // Invoke install_es () operation on each cached NodeApplication object.
           ::Deployment::NodeApplication_ptr my_na =
               (entry->int_id_).node_application_.in ();
-          
+
           ::Deployment::CIAO_Event_Services_var event_services =
               my_na->install_es (es_infos);
 
@@ -916,7 +918,7 @@ finishLaunch (CORBA::Boolean start,
                 {
                   if (CORBA::is_nil (entry->int_id_.node_application_.in ()))
                     throw Deployment::StartError ();
-                    
+
                   entry->int_id_.node_application_->finishLaunch
                     (*unnecessary_connections,
                      start,
@@ -1240,25 +1242,14 @@ populate_connection_for_binding (
 {
   const CORBA::ULong binding_len = binding.internalEndpoint.length ();
 
+  // If only 1 internalEndpoint, then we know it's through event service.
   if (binding_len == 1)
     {
-      switch (binding.internalEndpoint[0].kind)
-        {
-          case Deployment::rtecEventPublisher:
-          case Deployment::rtecEventConsumer:
-            return
-              this->handle_es_connection (instname,
-                                          binding,
-                                          plan,
-                                          retv);
-          default:
-            ACE_ERROR ((LM_ERROR,
-                        "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                        "CIAO::DomainApplicationManager_Impl::"
-                        "populate_connection_for_binding -"
-                        "invalid connection specified in deployment plan\n"));
-            return false;
-        }
+      return
+        this->handle_es_connection (instname,
+                                    binding,
+                                    plan,
+                                    retv);
     }
   else if (binding_len == 2)
     {
@@ -1338,7 +1329,9 @@ handle_es_connection (
   retv[len].event_service = es._retn ();
 
   // One more thing needs to be done if this is a es_consumer connection
-  if (endpoint.kind == Deployment::rtecEventConsumer)
+  // We need to populate the <endpoint> field of this connection, which
+  // is the object reference of this event consumer port.
+  if (endpoint.kind == Deployment::EventConsumer)
     {
       // Now we search in the received connections to get the objRef of event sink
       bool found = false;
@@ -1463,7 +1456,7 @@ handle_direct_connection (
                               false);
             }
           break;
-            }
+        }
     }
   return true;
 }
@@ -1886,16 +1879,6 @@ dump_connections (const ::Deployment::Connections & connections)
           case Deployment::EventConsumer:
 
             ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
-            break;
-
-          case Deployment::rtecEventPublisher:
-
-            ACE_DEBUG ((LM_DEBUG, "rtecEventPublisher\n"));
-            break;
-
-          case Deployment::rtecEventConsumer:
-
-            ACE_DEBUG ((LM_DEBUG, "rtecEventConsumer\n"));
             break;
 
         default:

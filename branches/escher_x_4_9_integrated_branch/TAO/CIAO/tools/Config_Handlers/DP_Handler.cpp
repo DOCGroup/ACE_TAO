@@ -140,10 +140,7 @@ ACE_RCSID (Config_Handlers,
 
             this->idl_dp_->infoProperty.length (len + 1);
 
-            if (pstart->name () != "CIAOServerResources")
-              Property_Handler::get_property (*pstart,
-                                              this->idl_dp_->infoProperty [len]);
-            else
+            if (pstart->name () == "CIAOServerResources")
               {
                 /*
                  * Hook for RT-CCM
@@ -159,6 +156,27 @@ ACE_RCSID (Config_Handlers,
                 // Populate the property
                 this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
                 this->idl_dp_->infoProperty [len].value <<= *(srd_handler.srd_idl ());
+              }
+            else if (pstart->name () == "CIAOEvents")
+              {
+                /*
+                * Hook for EVENTS
+                */
+
+                ACE_DEBUG ((LM_DEBUG,
+                            "Importing CIAOEvents...\n"));
+
+                // Parse the SR document
+                CIAOEvents_Handler event_handler (pstart->value ().value ().begin_string ()->c_str ());
+
+                // Populate the property
+                this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
+                this->idl_dp_->infoProperty [len].value <<= *(event_handler.esd_idl ());
+              }
+            else
+              {
+                Property_Handler::get_property (*pstart,
+                                                this->idl_dp_->infoProperty [len]);
               }
           }
         // Read in the realizes, if present

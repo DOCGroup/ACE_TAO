@@ -95,7 +95,8 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
           // For ES_to_Consumer connection, we simply call
           // handle_es_consumer_connection method.
-          if (connections[i].kind == Deployment::rtecEventConsumer)
+          //if (connections[i].kind == Deployment::rtecEventConsumer)
+          if (this->_is_es_consumer_conn (connections[i]))
             {
               this->handle_es_consumer_connection (
                       connections[i],
@@ -121,7 +122,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
           Components::EventConsumerBase_var consumer;
 
           Components::CCMObject_var comp = comp_state.objref_;
-          
+
           if (CORBA::is_nil (comp.in ()))
             {
               ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
@@ -146,23 +147,16 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 break;
 
               case Deployment::EventPublisher:
-                this->handle_publisher_consumer_connection (
-                        comp.in (),
-                        connections[i],
-                        add_connection);
-                break;
-
-              case Deployment::rtecEventPublisher:
-                this->handle_publisher_es_connection (
-                        comp.in (),
-                        connections[i],
-                        add_connection);
-                break;
-
-              case Deployment::rtecEventConsumer:
-                this->handle_es_consumer_connection (
-                        connections[i],
-                        add_connection);
+                if (this->_is_publisher_es_conn (connections[i]))
+                  this->handle_publisher_es_connection (
+                          comp.in (),
+                          connections[i],
+                          add_connection);
+                else
+                  this->handle_publisher_consumer_connection (
+                          comp.in (),
+                          connections[i],
+                          add_connection);
                 break;
 
               default:
@@ -922,7 +916,7 @@ handle_publisher_es_connection (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidConnection))
 {
-  if (connection.kind != Deployment::rtecEventPublisher)
+  if (! this->_is_publisher_es_conn (connection))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -1018,7 +1012,7 @@ handle_es_consumer_connection (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidConnection))
 {
-  if (connection.kind != Deployment::rtecEventConsumer)
+  if (! this->_is_es_consumer_conn (connection))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -1091,7 +1085,7 @@ handle_es_consumer_connection (
 
           for (CORBA::ULong j = 0; j < size; ++j)
             {
-              consumer_config->insert_source ((*filter).sources[j].in ());
+              consumer_config->insert_source ((*filter).sources[j]);
             }
         }
 
@@ -1239,4 +1233,26 @@ CIAO::NodeApplication_Impl::build_event_connection (
       }
 
     ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection () completed!!!!\n"));
+}
+
+bool
+CIAO::NodeApplication_Impl::
+_is_es_consumer_conn (Deployment::Connection conn)
+{
+  if (conn.kind == Deployment::EventConsumer &&
+    ACE_OS::strcmp (conn.endpointPortName, "CIAO_ES") == 0)
+    return true;
+  else
+    return false;
+}
+
+bool
+CIAO::NodeApplication_Impl::
+_is_publisher_es_conn (Deployment::Connection conn)
+{
+  if (conn.kind == Deployment::EventPublisher &&
+    ACE_OS::strcmp (conn.endpointPortName, "CIAO_ES") == 0)
+    return true;
+  else
+    return false;
 }

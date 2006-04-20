@@ -1,3 +1,16 @@
+Thu Apr 20 01:40:11 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciao/Deployment_Core.idl
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events.cdp
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        
+          Reverted CCMComponentPortKind definition back to spec defined
+          data type.
+
 Thu Apr 13 13:43:19 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * First cut integration point.

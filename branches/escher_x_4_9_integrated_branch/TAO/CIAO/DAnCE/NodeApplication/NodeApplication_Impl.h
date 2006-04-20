@@ -279,6 +279,12 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidConnection));
 
+    virtual bool
+    _is_es_consumer_conn (Deployment::Connection conn);
+
+    virtual bool
+    _is_publisher_es_conn (Deployment::Connection conn);
+
     /// Register the publisher to the CIAO event service
     /// The only fields of <connection> struct used in this method
     /// are: <type>, <event_service>, <instanceName>, <portName>.
