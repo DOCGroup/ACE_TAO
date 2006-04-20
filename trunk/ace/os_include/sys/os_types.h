@@ -76,21 +76,17 @@ typedef double ACE_timer_t;
    typedef unsigned int dev_t;
 #endif /* ACE_HAS_WINCE */
 
-/* This should work for linux, solaris 5.6 and above, IRIX, OSF */
-#if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
-#  if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
-     typedef off_t ACE_LOFF_T;
-#  elif defined (__sgi) || defined (AIX) || defined (HPUX) \
-    || defined (__QNX__)
-     typedef off64_t ACE_LOFF_T;
-#  elif defined (__sun)
-     typedef offset_t ACE_LOFF_T;
-#  elif defined (WIN32) //Add by Nick Lin -- for win32 llseek
-     typedef __int64  ACE_LOFF_T;  //Add by Nick Lin -- for win32 llseek
-#  else
-     typedef loff_t ACE_LOFF_T;
-#  endif
-#endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
+#if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
+   typedef off_t ACE_LOFF_T;
+#elif defined (__sgi) || defined (AIX) || defined (HPUX) || defined (__QNX__)
+   typedef off64_t ACE_LOFF_T;
+#elif defined (__sun)
+   typedef offset_t ACE_LOFF_T;
+#elif defined (WIN32) //Add by Nick Lin -- for win32 llseek
+   typedef __int64  ACE_LOFF_T;  //Add by Nick Lin -- for win32 llseek
+#else
+   typedef loff_t ACE_LOFF_T;
+#endif
 
 #if defined (ACE_WIN32)
 #  if !defined (__BORLANDC__)
