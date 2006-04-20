@@ -84,8 +84,8 @@ typedef double ACE_timer_t;
    typedef offset_t ACE_LOFF_T;
 #elif defined (WIN32)
    typedef __int64  ACE_LOFF_T;
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x620)
-   typedef off_t64 ACE_LOFF_T;
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x620)
+   typedef long long ACE_LOFF_T;
 #else
    typedef loff_t ACE_LOFF_T;
 #endif
