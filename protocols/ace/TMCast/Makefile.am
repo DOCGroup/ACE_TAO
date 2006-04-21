@@ -25,8 +25,7 @@ libACE_TMCast_la_CPPFLAGS = \
 libACE_TMCast_la_SOURCES = \
   Group.cpp \
   MTQueue.cpp \
-  Protocol.cpp \
-  Template_Instantiations.cpp
+  Protocol.cpp
 
 libACE_TMCast_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
