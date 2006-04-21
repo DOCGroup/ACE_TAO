@@ -1,3 +1,9 @@
+Fri Apr 21 08:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/String_Traits_Base_T.h:
+          Disabled the warning when wchar_t is not a native type. This
+          makes the vxworks logs unreadable.
+
 Fri Apr 21 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Trading/TTest.idl:
