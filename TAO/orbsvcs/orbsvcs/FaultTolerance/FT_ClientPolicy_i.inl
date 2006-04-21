@@ -16,9 +16,9 @@ ACE_INLINE
 TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (
     const TAO_FT_Request_Duration_Policy &rhs
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (),
-    ACE_NESTED_CLASS (CORBA, Policy) (),
-    ACE_NESTED_CLASS (CORBA, LocalObject) (),
+  : CORBA::Object (),
+    CORBA::Policy (),
+    CORBA::LocalObject (),
     FT::RequestDurationPolicy (),
     TAO_Local_RefCounted_Object (),
     request_duration_ (rhs.request_duration_)
@@ -41,9 +41,9 @@ ACE_INLINE
 TAO_FT_Heart_Beat_Policy::TAO_FT_Heart_Beat_Policy (
     const TAO_FT_Heart_Beat_Policy &rhs
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (),
-    ACE_NESTED_CLASS (CORBA, Policy) (),
-    ACE_NESTED_CLASS (CORBA, LocalObject) (),
+  : CORBA::Object (),
+    CORBA::Policy (),
+    CORBA::LocalObject (),
     FT::HeartbeatPolicy (),
     TAO_Local_RefCounted_Object (),
     heartbeat_ (rhs.heartbeat_),
