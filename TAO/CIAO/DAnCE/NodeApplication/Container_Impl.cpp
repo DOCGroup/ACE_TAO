@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Container_Impl.h"
 #include "ciao/CCM_ComponentC.h" // for calling StandardConfigurator interface
 
@@ -17,6 +18,7 @@ CIAO::Container_Impl::~Container_Impl ()
 PortableServer::POA_ptr
 CIAO::Container_Impl::_default_POA (void)
 {
+  CIAO_TRACE ("CIAO::Container_Impl::_default_POA");
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
@@ -27,6 +29,7 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::init");
   // @@ Initialize container and create the internal container
   // implementation that actually interacts with installed
   // homes/components.
@@ -70,6 +73,7 @@ CIAO::Container_Impl::install (
                   ::Deployment::InstallationFailure,
                   ::Components::InvalidConfiguration))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::install");
   Deployment::ComponentInfos_var retv;
   ACE_TRY
    {
@@ -252,6 +256,7 @@ CIAO::Container_Impl::install (
 CIAO::Container_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::properties");
   ::Deployment::Properties *retval;
 
   ACE_NEW_THROW_EX (retval,
@@ -268,6 +273,7 @@ CIAO::Container_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
 CIAO::Container_Impl::get_node_application (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::get_node_application");
   return ::Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }
 
@@ -281,6 +287,7 @@ CIAO::Container_Impl::install_home (
                    Deployment::InstallationFailure,
                    Components::InvalidConfiguration))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::install_home");
   if (CIAO::debug_level () > 9)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -338,6 +345,8 @@ CIAO::Container_Impl::remove_home (const char * comp_ins_name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::remove_home");
+
   Components::CCMHome_ptr home;
   ACE_CString str (comp_ins_name);
 
@@ -363,6 +372,7 @@ CIAO::Container_Impl::remove_home (const char * comp_ins_name
 CIAO::Container_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::get_homes");
   Components::CCMHomes * tmp;
   ACE_NEW_THROW_EX (tmp,
                     Components::CCMHomes (),
@@ -393,6 +403,8 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::remove");
+
   // Remove all components first.
   this->remove_components (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -412,8 +424,7 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 
   this->home_map_.unbind_all ();
 
-  //if (CIAO::debug_level () > 1)
-  if (true)
+  if (CIAO::debug_level () > 3)
     ACE_DEBUG ((LM_DEBUG,
                 "Removed all homes and components from this container!\n"));
 }
@@ -427,6 +438,8 @@ CIAO::Container_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::remove_components");
+
   // Remove all the components in the NodeApplication/Container
   // Release all component servant object.
   const Component_Iterator end = this->component_map_.end ();
@@ -461,12 +474,18 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  CIAO_TRACE ("CIAO::Container_Impl::remove_component");
+
   Components::CCMObject_var comp;
   Components::CCMHome_ptr home;
 
   ACE_CString naming_context;
 
   ACE_CString str (comp_ins_name);
+
+  if (CIAO::debug_level () > 5)
+    ACE_DEBUG ((LM_DEBUG, "CIAO::COntainer_Impl::remove_component: Removing comp_ins_name:: %s\n",
+                str.c_str ()));
 
   /* Before we do remove component we have to inform the homeservant so
    * Component::ccm_passivate ()
@@ -521,6 +540,8 @@ CIAO::Container_Impl::register_with_ns (const char * s,
                                         Components::CCMObject_ptr obj
                                         ACE_ENV_ARG_DECL)
 {
+  CIAO_TRACE ("CIAO::Container_Impl::register_with_ns");
+
   ACE_TRY
     {
     // Obtain the naming service
@@ -596,6 +617,8 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
                                           CORBA::ORB_ptr orb
                                           ACE_ENV_ARG_DECL)
 {
+  CIAO_TRACE ("CIAO::Container_Impl::unregister_with_ns");
+
   ACE_TRY
     {
     // Obtain the naming service
@@ -613,7 +636,6 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
         CosNaming::NamingContext::_narrow (naming_obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
 
       CosNaming::Name name (0);
       name.length (0);

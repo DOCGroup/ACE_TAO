@@ -1,6 +1,10 @@
 // $Id$
+
 #include "NodeApplication_Core.h"
+#include "ace/Sched_Params.h"
+#include "ace/OS_NS_errno.h"
 #include "ciao/CIAO_common.h"
+
 
 void print_arg (int argc, char *argv[])
 {
@@ -11,6 +15,24 @@ void print_arg (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+   int priority = 20;
+   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+
+  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_RR,
+                                              priority,
+                                              ACE_SCOPE_PROCESS)) != 0)
+    {
+      if (errno == EPERM)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "server (%P|%t): user is not superuser, "
+                      "test runs in time-shared class\n"));
+        }
+      else
+        ACE_ERROR ((LM_ERROR,
+                    "server (%P|%t): sched_params failed\n"));
+    }
+
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG, "*** Starting NodeApplication\n"));
@@ -40,6 +62,8 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) - This NodeApplication is destroyed!\n"));
+  if (CIAO::debug_level () > 1)
+    ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) - This NodeApplication is destroyed!\n"));
+
   return 0;
 }

@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 
 //======================================================================
@@ -30,7 +29,6 @@
 
 //uncomment this line to turn on the code that relates to interface types
 //#define ASSEMBLY_INTERFACE_SUPPORT 1
-
 
 #include "RepositoryManagerDaemonS.h"
 

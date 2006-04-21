@@ -38,6 +38,8 @@ sched_policy_name (int sched_policy)
 int
 check_supported_priorities (CORBA::ORB_ptr orb)
 {
+  CIAO_TRACE ("NodeApplication_Core::check_supported_priorities");
+
   int sched_policy =
     orb->orb_core ()->orb_params ()->ace_sched_policy ();
 
@@ -64,11 +66,13 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 int
 CIAO::NodeApplication_Core::svc ()
 {
+  CIAO_TRACE ("CIAO::NodeApplication_Core::svc");
+
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
@@ -125,11 +129,11 @@ CIAO::NodeApplication_Core::svc ()
       ACE_TRY_CHECK;
 
       if (retval)
-      {
-	ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
+        {
+          ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
                                initializing the session container!"));
-	return 1;
-      }
+          return 1;
+        }
 
       CORBA::String_var str = this->orb_->object_to_string (nodeapp_obj.in ()
                                                             ACE_ENV_ARG_PARAMETER);
@@ -157,7 +161,7 @@ CIAO::NodeApplication_Core::svc ()
 
           CIAO::NodeApplication_Callback_var nam_callback
             = CIAO::NodeApplication_Callback::_narrow (object.in ()
-						       ACE_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           Deployment::Properties_out properties_out (prop.out ());
@@ -196,6 +200,8 @@ CIAO::NodeApplication_Core::svc ()
 int
 CIAO::NodeApplication_Core::startup (int argc, char *argv[])
 {
+  CIAO_TRACE ("CIAO::NodeApplication_Core::startup");
+
   // pre-init
   this->configurator_.reset (this->options_.create_nodeapp_configurator ());
 
@@ -215,6 +221,8 @@ CIAO::NodeApplication_Core::startup (int argc, char *argv[])
 int
 CIAO::NodeApplication_Core::run_orb ()
 {
+  CIAO_TRACE ("CIAO::NodeApplication_Core::run_orb");
+
   // check supported priority before running RT
   if (this->options_.rt_support () &&
       check_supported_priorities (this->orb_.in ()) != 0)
@@ -225,7 +233,7 @@ CIAO::NodeApplication_Core::run_orb ()
 
   if (this->options_.rt_support ()) // RT support reuqested
     {
-      
+
 
       // spawn a thread
       // Task activation flags.

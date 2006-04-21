@@ -56,7 +56,7 @@ namespace
       virtual void
       traverse (Type& c)
       {
-        os << "<componentrepid repid=\"" 
+        os << "<componentrepid repid=\""
            << c.context ().get<string> (STRS[REPO_ID])
            << "\"/>"
            << endl;
@@ -72,7 +72,7 @@ namespace
       virtual void
       traverse (Type& h)
       {
-        os << "<homerepid repid=\"" 
+        os << "<homerepid repid=\""
            << h.context ().get<string> (STRS[REPO_ID])
            << "\"/>"
            << endl;
@@ -90,7 +90,7 @@ namespace
       {
         os << "<homefeatures" << endl
            << "name=\"" << h.name () << "\"" << endl
-           << "repid=\"" 
+           << "repid=\""
            << h.context ().get<string> (STRS[REPO_ID])
            << "\">" << endl;
 
@@ -116,7 +116,7 @@ namespace
         virtual void
         traverse (Type& h)
         {
-          os << "<inheritshome repid=\"" 
+          os << "<inheritshome repid=\""
              << h.context ().get<string> (STRS[REPO_ID])
              << "\"/>"
              << endl;
@@ -135,7 +135,7 @@ namespace
       {
         os << "<componentfeatures" << endl
            << "name=\"" << c.name () << "\"" << endl
-           << "repid=\"" 
+           << "repid=\""
            << c.context ().get<string> (STRS[REPO_ID])
            << "\">" << endl;
 
@@ -175,7 +175,7 @@ namespace
         virtual void
         traverse (Type& c)
         {
-          os << "<inheritscomponent repid=\"" 
+          os << "<inheritscomponent repid=\""
              << c.context ().get<string> (STRS[REPO_ID])
              << "\"/>"
              << endl;
@@ -191,7 +191,7 @@ namespace
         virtual void
         traverse (Type& i)
         {
-          os << "<supportsinterface repid=\"" 
+          os << "<supportsinterface repid=\""
              << i.context ().get<string> (STRS[REPO_ID])
              << "\"/>"
              << endl;
@@ -294,7 +294,7 @@ namespace
           virtual void
           traverse (SemanticGraph::Type& t)
           {
-            os << '\"' 
+            os << '\"'
                << t.context ().get<string> (STRS[REPO_ID])
                << '\"';
           }
@@ -328,7 +328,7 @@ namespace
           os << "<interface" << endl
              << "name=\"" << i.name ()
              << "\"" << endl
-             << "repid=\"" 
+             << "repid=\""
              << i.context ().get<string> (STRS[REPO_ID])
              << "\">" << endl;
 
@@ -354,7 +354,7 @@ namespace
       virtual void
       traverse (Type& i)
       {
-        os << "<inheritsinterface repid=\"" 
+        os << "<inheritsinterface repid=\""
            << i.context ().get<string> (STRS[REPO_ID])
            << "\"/>" << endl;
       }

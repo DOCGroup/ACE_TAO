@@ -56,7 +56,6 @@
 #  include "ace/Trace.h"
 #endif /* CIAO_NTRACE */
 
-
 namespace CIAO
 {
   /**

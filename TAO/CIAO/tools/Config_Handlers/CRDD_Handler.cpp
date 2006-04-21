@@ -4,7 +4,10 @@
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
+#include "Property_Handler.h"
+
 #include "ciao/CIAO_common.h"
+
 namespace CIAO
 {
   namespace Config_Handlers
@@ -21,36 +24,41 @@ namespace CIAO
     ///This method takes a <Deployment::ConnectionResourceDeploymentDescription>
     ///and maps the values from the passed in XSC
     ///ConnectionResourceDeploymentDescription to its members.
-    void CRDD_Handler::get_ConnectionResourceDeploymentDescription (
-                Deployment::ConnectionResourceDeploymentDescription& toconfig,
-                ConnectionResourceDeploymentDescription& desc)
+    void CRDD_Handler::get_ConnectionResourceDeploymentDescription (Deployment::ConnectionResourceDeploymentDescription& toconfig,
+                                                                    const ConnectionResourceDeploymentDescription& desc)
     {
-      CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDeploymentDescription");
-      toconfig.targetName = CORBA::string_dup (desc.targetName ().c_str ());
-      toconfig.requirementName =
-        CORBA::string_dup (desc.requirementName ().c_str ());
-      toconfig.resourceName =
-        CORBA::string_dup (desc.resourceName ().c_str ());
+      CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDD");
 
-      Any_Handler::extract_into_any (desc.resourceValue (),
-                                     toconfig.resourceValue);
+      toconfig.targetName = desc.targetName ().c_str ();
+      toconfig.requirementName = desc.requirementName ().c_str ();
+      toconfig.resourceName = desc.resourceName ().c_str ();
+
+      std::for_each (desc.begin_property (),
+                     desc.end_property (),
+                     Property_Functor (toconfig.property));
     }
-    
+
     ConnectionResourceDeploymentDescription
     CRDD_Handler::connection_resource_depl_desc (
-      const ::Deployment::ConnectionResourceDeploymentDescription& src)
+                                                 const ::Deployment::ConnectionResourceDeploymentDescription& src)
     {
       CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDeploymentDescription- reverse");
-      XMLSchema::string< char > tname ((src.targetName));
-      XMLSchema::string< char > reqname ((src.requirementName));
-      XMLSchema::string< char > resname ((src.resourceName));
-      Any resval (Any_Handler::get_any (src.resourceValue));
-      
-      ConnectionResourceDeploymentDescription crdd (
-                                              tname,
-                                              reqname,
-                                              resname,
-                                              resval);
+      XMLSchema::string< ACE_TCHAR > tname ((src.targetName));
+      XMLSchema::string< ACE_TCHAR > reqname ((src.requirementName));
+      XMLSchema::string <ACE_TCHAR> resname ((src.resourceName));
+
+      ConnectionResourceDeploymentDescription crdd (tname,
+                                                    reqname,
+                                                    resname);
+
+      for (CORBA::ULong i = 0;
+           i != src.property.length ();
+           ++i)
+        {
+          crdd.add_property (Property_Handler::get_property (src.property[i]));
+        }
+
+
       return crdd;
     }
 

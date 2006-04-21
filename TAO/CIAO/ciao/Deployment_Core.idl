@@ -281,7 +281,16 @@ module Deployment
     void remove_component (in string inst_name)
       raises (::Components::RemoveFailure);
 
-    /// CIAO specific extension
+    /// CIAO specific extensions
+    /// Activate a component instance from the NodeApplication
+    void activate_component (in string inst_name)
+      raises (::Components::RemoveFailure);
+
+    /// CIAO specific extensions
+    /// Passivate a component instance from the NodeApplication
+    void passivate_component (in string inst_name)
+      raises (::Components::RemoveFailure);
+
     /// Remove all containers, components and component homes.
     /// Shuts down the ORB of the NodeApplication to terminate the process.
     oneway void remove ();

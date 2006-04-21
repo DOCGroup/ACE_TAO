@@ -11,8 +11,8 @@ namespace CIAO
   {
     void
     PSPE_Handler::sub_component_port_endpoints (
-        const PlanConnectionDescription &src,
-        ::Deployment::PlanSubcomponentPortEndpoints &dest)
+                                                const PlanConnectionDescription &src,
+                                                ::Deployment::PlanSubcomponentPortEndpoints &dest)
     {
       CIAO_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
@@ -33,8 +33,8 @@ namespace CIAO
 
     void
     PSPE_Handler::sub_component_port_endpoint (
-        const PlanSubcomponentPortEndpoint &src,
-        ::Deployment::PlanSubcomponentPortEndpoint &dest)
+                                               const PlanSubcomponentPortEndpoint &src,
+                                               ::Deployment::PlanSubcomponentPortEndpoint &dest)
     {
       CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint");
       dest.portName =
@@ -50,54 +50,47 @@ namespace CIAO
         }
 
       CORBA::ULong tmp = 0;
+
       IDD_Handler::IDREF.find_ref (ACE_CString (src.instance ().id ().c_str ()),
-              tmp);
+                                   tmp);
 
       dest.instanceRef = tmp;
 
       switch (src.kind ().integral ())
         {
-          case CCMComponentPortKind::Facet_l:
-            dest.kind = Deployment::Facet;
-            break;
+        case CCMComponentPortKind::Facet_l:
+          dest.kind = Deployment::Facet;
+          break;
 
-          case CCMComponentPortKind::SimplexReceptacle_l:
-            dest.kind = Deployment::SimplexReceptacle;
-            break;
+        case CCMComponentPortKind::SimplexReceptacle_l:
+          dest.kind = Deployment::SimplexReceptacle;
+          break;
 
-          case CCMComponentPortKind::MultiplexReceptacle_l:
-            dest.kind = Deployment::MultiplexReceptacle;
-            break;
+        case CCMComponentPortKind::MultiplexReceptacle_l:
+          dest.kind = Deployment::MultiplexReceptacle;
+          break;
 
-          case CCMComponentPortKind::EventEmitter_l:
-            dest.kind = Deployment::EventEmitter;
-            break;
+        case CCMComponentPortKind::EventEmitter_l:
+          dest.kind = Deployment::EventEmitter;
+          break;
 
-          case CCMComponentPortKind::EventPublisher_l:
-            dest.kind = Deployment::EventPublisher;
-            break;
+        case CCMComponentPortKind::EventPublisher_l:
+          dest.kind = Deployment::EventPublisher;
+          break;
 
-          case CCMComponentPortKind::EventConsumer_l:
-            dest.kind = Deployment::EventConsumer;
-            break;
+        case CCMComponentPortKind::EventConsumer_l:
+          dest.kind = Deployment::EventConsumer;
+          break;
 
-          case CCMComponentPortKind::rtecEventPublisher_l:
-            dest.kind = Deployment::rtecEventPublisher;
-            break;
+        default:
+          ACE_DEBUG ((LM_DEBUG, "Invalid port kind in connection\n"));
 
-          case CCMComponentPortKind::rtecEventConsumer_l:
-            dest.kind = Deployment::rtecEventConsumer;
-            break;
-
-          default:
-            ACE_DEBUG ((LM_DEBUG, "Invalid port kind in connection\n"));
-
-         }
+        }
     }
 
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
-      const Deployment::PlanSubcomponentPortEndpoint &src)
+                                               const Deployment::PlanSubcomponentPortEndpoint &src)
     { // @@MAJO
       CIAO_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
       XMLSchema::string< char > pname ((src.portName));
@@ -111,8 +104,8 @@ namespace CIAO
         prov = tval;
 
       PlanSubcomponentPortEndpoint pspe (pname,
-           CCMComponentPortKind::Facet,
-           idref);
+                                         CCMComponentPortKind::Facet,
+                                         idref);
       pspe.provider (prov);
 
       switch (src.kind)
@@ -140,19 +133,9 @@ namespace CIAO
         case ::Deployment::EventConsumer:
           pspe.kind (CCMComponentPortKind::EventConsumer);
           break;
-
-        case ::Deployment::ecEventEmitter:
-        case ::Deployment::ecEventPublisher:
-        case ::Deployment::ecEventConsumer:
-        case ::Deployment::rtecEventEmitter:
-        case ::Deployment::rtecEventPublisher:
-        case ::Deployment::rtecEventConsumer:
-        case ::Deployment::nsEventEmitter:
-        case ::Deployment::nsEventPublisher:
-        case ::Deployment::nsEventConsumer:
-          ACE_ERROR ((LM_ERROR, "Unsupported PortKind\n"));
-          break;
-
+          
+        default:
+          ACE_ERROR ((LM_ERROR, "Invalid port kind in PSPE\n"));
         }
 
 

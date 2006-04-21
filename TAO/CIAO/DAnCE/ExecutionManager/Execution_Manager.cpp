@@ -1,5 +1,6 @@
 //--*C++*--
 // $Id$
+
 #include "Execution_Manager_Impl.h"
 
 // Include Name Service header
@@ -18,14 +19,14 @@ namespace CIAO
   {
     const char *ior_file_name_ = "executionManager.ior";
     const char *init_file_name = "deployment.dat";
-
+    const char *pid_file_name_ = 0;
     static bool register_with_ns_ = false;
     static bool write_to_ior_ = false;
 
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:m:i:n");
+      ACE_Get_Opt get_opts (argc, argv, "o:m:i:n:p");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
@@ -39,6 +40,9 @@ namespace CIAO
             break;
           case 'n':
             register_with_ns_ = true;
+            break;
+          case 'p':
+            pid_file_name_ = get_opts.opt_arg ();
             break;
           case '?':  // display help for use of the server.
           default:
@@ -81,6 +85,23 @@ namespace CIAO
       return true;
     }
 
+    void
+    write_pid (void)
+    {
+      if (pid_file_name_ == 0)
+        return;
+
+      FILE* pid_file = ACE_OS::fopen (pid_file_name_, "w");
+
+      if (pid_file)
+        {
+          ACE_OS::fprintf (pid_file,
+                           "%i",
+                           ACE_OS::getpid ());
+          ACE_OS::fclose (pid_file);
+        }
+    }
+
     bool
     register_with_ns (CORBA::ORB_ptr orb,
                       CIAO::ExecutionManagerDaemon_ptr obj
@@ -103,10 +124,16 @@ namespace CIAO
       name[0].id = CORBA::string_dup ("ExecutionManager");
 
       // Register the servant with the Naming Service
-      naming_context->bind (name,
-                            obj
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      try
+        {
+          // Register the servant with the Naming Service
+          naming_context->bind (name, obj);
+        }
+      catch (CosNaming::NamingContext::AlreadyBound &)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Execution_Manager.cpp: Name already bound, rebinding....\n"));
+          naming_context->rebind (name, obj);
+        }
 
       return true;
     }
@@ -142,9 +169,9 @@ namespace CIAO
 
           if (poa.in () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                              "(%P|%t) CIAO_ExecutionManager: "
+                               "(%P|%t) CIAO_ExecutionManager: "
                                "Nil POA panic error, returning \n"),
-                               -1);
+                              -1);
 
           // Create and install the CIAO Daemon servant
           Execution_Manager_Impl *daemon_servant = 0;
@@ -161,7 +188,7 @@ namespace CIAO
             daemon_servant->_this ();
 
           TAO::Utils::Implicit_Deactivator de (daemon_servant);
-                                               
+
           ACE_TRY_CHECK;
 
           bool retval = false;
@@ -196,7 +223,7 @@ namespace CIAO
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
                                "Nil POA Manager error, returning \n"),
-                               -1);
+                              -1);
 
           mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -204,6 +231,8 @@ namespace CIAO
           // End Deployment part
           ACE_DEBUG ((LM_DEBUG,
                       "CIAO_ExecutionManager is running...\n"));
+
+          write_pid ();
 
           // Run the main event loop for the ORB.
           orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -241,5 +270,5 @@ int
 main (int argc, char *argv[])
 {
   return CIAO::Execution_Manager::run_main (argc,
-                                           argv);
+                                            argv);
 }

@@ -382,6 +382,41 @@ namespace CIAO
   }
 
   ::Components::ReceptacleDescriptions *
+
+  Servant_Impl_Base::get_all_receptacles (
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_DEBUG ((LM_DEBUG, "In Servant_Impl_Base::get_all_receptacles\n"));
+
+    ::Components::ReceptacleDescriptions *tmp = 0;
+    ACE_NEW_RETURN (tmp,
+                    ::Components::ReceptacleDescriptions,
+                    0);
+
+    ::Components::ReceptacleDescriptions_var retval = tmp;
+
+    retval->length (this->receptacle_table_.current_size ());
+    CORBA::ULong i = 0;
+
+    ACE_DEBUG ((LM_DEBUG, "Building sequence of length %d\n", retval->length()));
+
+    for (ReceptacleTable::iterator iter = this->receptacle_table_.begin ();
+         iter != this->receptacle_table_.end ();
+         ++iter, ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Starting loop iteration...\n", retval->length()));
+
+        ReceptacleTable::ENTRY & entry = *iter;
+        retval[i] = entry.int_id_;
+      }
+
+    ACE_DEBUG ((LM_DEBUG, "Escaped loop.\n"));
+    return retval._retn ();
+  }
+
+  ::Components::ReceptacleDescriptions *
   Servant_Impl_Base::get_named_receptacles (
       const ::Components::NameList & /* names */
       ACE_ENV_ARG_DECL
@@ -486,6 +521,73 @@ namespace CIAO
     }
 
     return fd._retn ();
+  }
+
+  void
+  Servant_Impl_Base::add_receptacle (const char *receptacle_name,
+                                     CORBA::Object_ptr recept_ref,
+                                     ::Components::Cookie * cookie)
+  {
+    ACE_DEBUG ((LM_DEBUG, "In Servant_Impl_Base::add_receptacle (%s)\n", receptacle_name));
+
+    ::Components::ReceptacleDescription_var safe;
+    ::Components::ReceptacleDescription *rd = 0;
+
+    if (this->receptacle_table_.find (receptacle_name,
+                                      safe) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Found no receptacle named (%s)\n", receptacle_name));
+
+      ACE_NEW (rd,
+               OBV_Components::ReceptacleDescription);
+      safe = rd;
+
+      rd->name (receptacle_name);
+      rd->type_id (recept_ref->_interface_repository_id ());
+      // The receptacle is a multiplex receptacle if and only if a
+      // cookie was given.
+      rd->is_multiple (cookie != 0);
+
+      ::Components::ConnectionDescription *cd = 0;
+      ACE_NEW (cd,
+               OBV_Components::ConnectionDescription);
+      ::Components::ConnectionDescription_var cd_safe = cd;
+
+      cd->ck (cookie);
+      cd->objref (recept_ref);
+
+      ::Components::ConnectionDescriptions cds (1);
+
+      cds.length (1);
+      cds[0] = cd_safe;
+      rd->connections (cds);
+    }
+    else
+    {
+      ACE_DEBUG ((LM_DEBUG, "Found a receptacle named (%s)\n", receptacle_name));
+      rd = safe.inout ();
+
+      ::Components::ConnectionDescription *cd = 0;
+      ACE_NEW (cd,
+               OBV_Components::ConnectionDescription);
+      ::Components::ConnectionDescription_var cd_safe = cd;
+
+      cd->ck (cookie);
+      cd->objref (recept_ref);
+
+      ::Components::ConnectionDescriptions & cds = rd->connections ();
+      CORBA::ULong old_length = cds.length ();
+      ACE_DEBUG ((LM_DEBUG, "Old length was %d\n", old_length));
+      cds.length (old_length + 1);
+      ACE_DEBUG ((LM_DEBUG, "New length  %d\n", cds.length ()));
+      cds [old_length] = cd_safe;
+      ACE_DEBUG ((LM_DEBUG, "Added new connection to receptacle named  (%s)\n", receptacle_name));
+    }
+
+    if (this->receptacle_table_.bind (receptacle_name, safe) == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Successfully added new receptacle named (%s)\n", receptacle_name));
+      }
   }
 
   void

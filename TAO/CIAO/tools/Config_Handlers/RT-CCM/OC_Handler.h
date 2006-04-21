@@ -23,28 +23,28 @@
 
 namespace CIAO
 {
-    namespace Config_Handlers
+  namespace Config_Handlers
+  {
+    class ORBConfigs;
+
+    /*
+     * @class OC_Handler
+     *
+     * @brief Handler class for <ORBConfigs>
+     */
+
+    class RT_CCM_Handlers_Export OC_Handler
     {
-	class ORBConfigs;
+    public:
+      static bool orb_config (const ORBConfigs &src,
+                              ::CIAO::DAnCE::ORBConfigs &dest);
 
-	/*
-	 * @class OC_Handler
-	 *
-	 * @brief Handler class for <ORBConfigs>
-	 */
+      static ORBConfigs orb_config (const ::CIAO::DAnCE::ORBConfigs &src);
 
-	class RT_CCM_Handlers_Export OC_Handler
-	{
-	public:
-          static bool orb_config (const ORBConfigs &src,
-                                  ::CIAO::DAnCE::ORBConfigs &dest);
-          
-	  static ORBConfigs orb_config (const ::CIAO::DAnCE::ORBConfigs &src);
-
-	};
-    }
+    };
+  }
 }
 
 #include /**/ "ace/post.h"
 #endif /* OC_HANDLER_H */
-		
+

@@ -10,8 +10,8 @@ namespace CIAO
   {
     void
     CEPE_Handler::external_port_endpoints (
-        const PlanConnectionDescription &src,
-        ::Deployment::ComponentExternalPortEndpoints &dest)
+                                           const PlanConnectionDescription &src,
+                                           ::Deployment::ComponentExternalPortEndpoints &dest)
     {
       CIAO_TRACE("CEOE_Handler::external_port_endpoints");
       PlanConnectionDescription::externalEndpoint_const_iterator eeci_e =
@@ -31,22 +31,21 @@ namespace CIAO
 
     void
     CEPE_Handler::external_port_endpoint (
-        const ComponentExternalPortEndpoint &src,
-        ::Deployment::ComponentExternalPortEndpoint &dest)
+                                          const ComponentExternalPortEndpoint &src,
+                                          ::Deployment::ComponentExternalPortEndpoint &dest)
     {
       CIAO_TRACE("CEOE_Handler::external_port_endpoint");
       dest.portName = src.portName ().c_str ();
     }
-    
+
     ComponentExternalPortEndpoint
     CEPE_Handler::external_port_endpoint (
-      const ::Deployment::ComponentExternalPortEndpoint &src)
+                                          const ::Deployment::ComponentExternalPortEndpoint &src)
     {
       CIAO_TRACE("CEOE_Handler::external_port_endpoint - reverse");
       //MAJO Unfinished
       XMLSchema::string< char > portname ((src.portName));
-      ComponentExternalPortEndpoint cepe (portname);
-      return cepe;
+      return ComponentExternalPortEndpoint  (portname);
     }
   }
 }

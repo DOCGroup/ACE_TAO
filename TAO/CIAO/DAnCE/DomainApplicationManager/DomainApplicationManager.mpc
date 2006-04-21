@@ -6,7 +6,7 @@ project (DomainApplicationManager): ciao_deployment_svnt  {
   after += ExecutionManager_stub
 
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
-  
+
   Source_Files {
     DomainApplicationManager_Impl.cpp
     Deployment_Configuration.cpp

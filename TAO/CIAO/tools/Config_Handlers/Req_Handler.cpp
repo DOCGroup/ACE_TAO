@@ -18,43 +18,39 @@ namespace CIAO
     }
 
     void
-    Req_Handler::get_Requirement (
-                         Deployment::Requirement& toconfig,
-                         Requirement& desc)
+    Req_Handler::get_requirement (const Requirement& desc,
+                                  Deployment::Requirement& toconfig)
     {
       CIAO_TRACE("Req_Handler::get_Requirement");
-      
+
       //Map the basic string types to their Deployment::Req
       //counterparts.
-      toconfig.name = CORBA::string_dup (desc.name ().c_str ());
-      toconfig.resourceType =
-        CORBA::string_dup (desc.resourceType ().c_str ());
+      toconfig.name = desc.name ().c_str ();
+      toconfig.resourceType = desc.resourceType ().c_str ();
 
-      //Map the XSC Req's property into the next
-      //position in the IDL Req's sequence.
-      /// @@ MAJO:
-      Property_Handler prophandler;
-      toconfig.property.length (toconfig.property.length () + 1);
-      Property_Handler::get_property (
-        desc.property (),
-        toconfig.property[toconfig.property.length () - 1]);
+      toconfig.property.length (desc.count_property ());
+      std::for_each (desc.begin_property (),
+                     desc.end_property (),
+                     Property_Functor (toconfig.property));
     }
-    
+
     Requirement
     Req_Handler::get_requirement (const Deployment::Requirement& src)
     {
       CIAO_TRACE("Req_Handler::get_requirement - reverse");
-      
+
       //Get the values for name and res
       XMLSchema::string< char > name ((src.name));
       XMLSchema::string< char > res ((src.resourceType));
-      
-      //Get the Property
-      Property prop (Property_Handler::get_property (src.property[0]));
-      
+
       //Instantiate the Requirement
-      Requirement req (name,res,prop);
-      
+      Requirement req (name,res);
+
+      for (CORBA::ULong i = 0; i < src.property.length (); ++i)
+        {
+          req.add_property (Property_Handler::get_property (src.property[i]));
+        }
+
       return req;
     }
   }

@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-
-
 #include "Configurator_Factory.h"
 
 ACE_INLINE

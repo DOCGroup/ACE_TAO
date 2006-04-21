@@ -47,7 +47,7 @@ namespace CIDL_TargetManager_i
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::CIAO::CCM_TargetManagerExt_ptr 
+    virtual ::CIAO::CCM_TargetManagerExt_ptr
       get_target_manager_ext (
                               ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
                               )
@@ -104,6 +104,8 @@ namespace CIDL_TargetManager_i
 
     /// The exec Object
     ::Deployment::CCM_TargetManager_var exec_object_;
+
+    ::CIAO::CCM_TargetManagerExt_var exec_ext_object_;
   };
 
   class TARGETMANAGER_EXEC_Export TargetManagerExt_exec_i
@@ -129,6 +131,11 @@ namespace CIDL_TargetManager_i
 
       virtual ::CIAO::Component_Infos *
         get_component_cpu (
+                           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual ::CIAO::Host_NodeManager_seq *
+        get_all_node_managers (
                            ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
     };
@@ -221,7 +228,7 @@ namespace CIDL_TargetManager_i
   };
 
   extern "C" TARGETMANAGER_EXEC_Export ::Components::HomeExecutorBase_ptr
-    createTargetManagerHome_Impl (void);
+    create_CIAO_TargetManagerHome_Impl (void);
 }
 
 #include /**/ "ace/post.h"

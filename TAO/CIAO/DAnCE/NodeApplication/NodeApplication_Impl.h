@@ -1,4 +1,5 @@
 //$Id$
+
 /**========================================================
  *
  * @file   NodeApplication_Impl.h
@@ -179,6 +180,16 @@ namespace CIAO
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Components::RemoveFailure));
 
+    virtual void activate_component (const char * name
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Components::RemoveFailure));
+
+    virtual void passivate_component (const char * name
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Components::RemoveFailure));
+
     /// Remove everything inside including all components and homes.
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -243,7 +254,6 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError,
                        Deployment::InvalidConnection));
-
     virtual void
     handle_facet_receptable_connection (
         Components::CCMObject_ptr comp,
@@ -267,6 +277,12 @@ namespace CIAO
         CORBA::Boolean add_connection)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidConnection));
+
+    virtual bool
+    _is_es_consumer_conn (Deployment::Connection conn);
+
+    virtual bool
+    _is_publisher_es_conn (Deployment::Connection conn);
 
     /// Register the publisher to the CIAO event service
     /// The only fields of <connection> struct used in this method

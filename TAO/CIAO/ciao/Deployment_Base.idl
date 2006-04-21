@@ -1,4 +1,5 @@
 //$Id$
+
 #ifndef DEPLOYMENT_BASE_IDL
 #define DEPLOYMENT_BASE_IDL
 
@@ -19,6 +20,7 @@ module Deployment {
   struct SatisfierProperty {
     string name;
     SatisfierPropertyKind kind;
+    boolean dynamic;
     any value;
   };
 
