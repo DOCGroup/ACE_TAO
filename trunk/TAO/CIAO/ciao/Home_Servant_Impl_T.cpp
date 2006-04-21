@@ -4,6 +4,7 @@
 #define CIAO_HOME_SERVANT_IMPL_T_C
 
 #include "Home_Servant_Impl_T.h"
+#include "CIAO_common.h"
 
 
 namespace CIAO
@@ -51,6 +52,8 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::~Home_Servant_Impl (void)
   {
+    CIAO_TRACE ("Home_Servant_Impl<>::destructor");
+
     const OBJ_ITERATOR end =
       this->objref_map_.end ();
 
@@ -87,6 +90,8 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
+    CIAO_TRACE ("Home_Servant_Impl<>::remove_component");
+
     PortableServer::ObjectId_var oid =
       this->container_->the_POA ()->reference_to_id (comp
                                                      ACE_ENV_ARG_PARAMETER);
@@ -112,7 +117,8 @@ namespace CIAO
     _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "removed the component\n"));
+    if (CIAO::debug_level () > 3)
+      ACE_DEBUG ((LM_DEBUG, "removed the component\n"));
   }
 
   template <typename BASE_SKEL,
@@ -134,6 +140,8 @@ namespace CIAO
                     COMP_SVNT>::update_component_map (
       PortableServer::ObjectId &oid)
   {
+    CIAO_TRACE ("update_component_map");
+
     Components::CCMObject_var ccm_obj_ptr;
     if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
       {
@@ -167,6 +175,8 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
   {
+    CIAO_TRACE ("Home_Servant_Impl<>::create_component");
+
     return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
@@ -194,6 +204,8 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
   {
+    CIAO_TRACE ("Home_Servant_Impl<>::create");
+
     if (this->executor_.in () == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
@@ -237,6 +249,8 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
+
     CORBA::Object_var hobj =
       this->container_->get_objref (this
                                     ACE_ENV_ARG_PARAMETER);
@@ -302,6 +316,8 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CIAO_TRACE ("Home_Servant_Impl<>::_ciao_passivate_component");
+
     PortableServer::ObjectId_var oid;
     this->container_->uninstall_component (comp,
                                            oid.out ()

@@ -10,7 +10,7 @@
     <label>BasicSP-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
+    <supportedType>IDL:BasicSP/EC:1.0</supportedType>
     <port>
       <name>read_message</name>
       <specificType>IDL:Hello/ReadMessage:1.0</specificType>
@@ -53,7 +53,7 @@
   </instance>
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
-  
+
   <artifact id="TargetManager_exec">
     <name>TargetManager_exec</name>
     <source><!-- @@ Not sure about this--></source>
@@ -66,12 +66,12 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createTargetManagerHome_Impl</string>
+          <string>create_CIAO_TargetManagerHome_Impl</string>
         </value>
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="TargetManager_svnt">
     <name>TargetManager_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -89,4 +89,4 @@
       </value>
     </execParameter>
   </artifact>
-</Deployment:deploymentPlan>  
+</Deployment:deploymentPlan>

@@ -29,7 +29,7 @@ namespace CIAO
     class Any;
     class DataType;
     class DataValue;
-    
+
     /**
     * @class Any_Handler
     *
@@ -46,26 +46,23 @@ namespace CIAO
       DynAny_Handler ();
 
       ~DynAny_Handler (void);
-      
-      //      static DynAny_Handler *instance ();
-      
+
       DynamicAny::DynAny_ptr  extract_into_dynany (const DataType& type,
                                                    const DataValue& value);
-      
-      //      Any get_any (const CORBA::Any &src);
-      
+
+      Any extract_from_dynany (const CORBA::Any &any);
+
       CORBA::ORB_ptr orb ();
-            
+
       DynamicAny::DynAnyFactory_ptr daf ();
-            
+
     private:
-      //      static DynAny_Handler *instance_;
-      
+
       CORBA::ORB_var orb_;
-      
+
       DynamicAny::DynAnyFactory_var daf_;
     };
-    
+
     typedef ACE_Singleton<DynAny_Handler, ACE_Null_Mutex> DynAny_Singleton;
     #define DYNANY_HANDLER DynAny_Singleton::instance()
   }

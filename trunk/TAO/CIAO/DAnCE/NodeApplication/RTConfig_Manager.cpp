@@ -368,7 +368,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name
 
   ACE_DEBUG ((LM_DEBUG, "RTResource_Config_Manager::find_policies_by_name: %s\n",
               name));
-              
+
   POLICY_MAP::ENTRY *entry = 0;
 
   if (this->policy_map_.find (name, entry) != 0)

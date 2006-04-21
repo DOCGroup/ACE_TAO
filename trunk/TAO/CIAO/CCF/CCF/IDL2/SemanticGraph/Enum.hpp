@@ -5,7 +5,7 @@
 #ifndef CCF_IDL2_SEMANTIC_GRAPH_ENUM_HPP
 #define CCF_IDL2_SEMANTIC_GRAPH_ENUM_HPP
 
-#include "CCF/IDL2/SemanticGraph/Elements.hpp"
+#include "CCF/IDL2/SemanticGraph/IntExpression.hpp"
 
 namespace CCF
 {
@@ -35,7 +35,7 @@ namespace CCF
       };
 
 
-      class Enumerator : public virtual Nameable, public virtual Instance
+      class Enumerator : public virtual Nameable, public virtual IntConst
       {
       public:
         static Introspection::TypeInfo const&

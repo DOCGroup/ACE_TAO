@@ -121,6 +121,16 @@ namespace CIAO
         ::CORBA::SystemException,
         ::Deployment::InvalidConnection));
 
+    virtual void passivate_shared_components (
+        const Component_Binding_Info & binding)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
+    virtual void activate_shared_components (
+        const Component_Binding_Info & binding)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
+
       /// Add shared component information.
       /// This call will be made by DomainApplicationManager.
       virtual void

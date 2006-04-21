@@ -23,7 +23,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
 
   if (filename == 0)
     {
-      ACE_ERROR ((LM_ERROR, "CIAO (%P|%t) Deployment_Configuration.cpp"
+      ACE_ERROR ((LM_ERROR, "DANCE (%P|%t) Deployment_Configuration.cpp"
                             ": Unable to identify the file name \n"));
       return -1;
     }
@@ -118,14 +118,25 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
 
   if (CORBA::is_nil (entry->int_id_.node_manager_.in ()))
     {
-      CORBA::Object_var temp = this->orb_->string_to_object
-        (entry->int_id_.IOR_.c_str ()
-         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_TRY
+        {
 
-      entry->int_id_.node_manager_ =
-        ::Deployment::NodeManager::_narrow (temp.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+          CORBA::Object_var temp = this->orb_->string_to_object
+                                   (entry->int_id_.IOR_.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
+          entry->int_id_.node_manager_ =
+            ::Deployment::NodeManager::_narrow (temp.in ()
+                                                ACE_ENV_ARG_PARAMETER);
+        }
+      ACE_CATCHANY
+        {
+          ACE_ERROR ((LM_ERROR, "DANCE (%P|%t) Deployment_Configuration.cpp: "
+                      "Error while contacting NodeManager %s\n", name));
+          ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
       ACE_CHECK_RETURN (0);
     }
   return ::Deployment::NodeManager::_duplicate

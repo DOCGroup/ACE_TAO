@@ -3,21 +3,22 @@
 #include "NodeManager_Impl.h"
 #include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 #include "ace/Log_Msg.h"
+#include <errno.h>
 
 CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
-                                          CORBA::ORB_ptr orb,
-                                          PortableServer::POA_ptr poa,
-                                          const char * nodeapp_loc,
-                                          const char * nodeapp_options,
-                                          int spawn_delay)
+                                                    CORBA::ORB_ptr orb,
+                                                    PortableServer::POA_ptr poa,
+                                                    const char * nodeapp_loc,
+                                                    const char * nodeapp_options,
+                                                    int spawn_delay)
   ACE_THROW_SPEC ((CORBA::SystemException))
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    poa_ (PortableServer::POA::_duplicate (poa)),
-    name_ (CORBA::string_dup (name)),
-    nodeapp_location_ (CORBA::string_dup (nodeapp_loc)),
-    nodeapp_options_ (CORBA::string_dup (nodeapp_options)),
-    callback_poa_ (PortableServer::POA::_nil ()),
-    spawn_delay_ (spawn_delay)
+    : orb_ (CORBA::ORB::_duplicate (orb)),
+      poa_ (PortableServer::POA::_duplicate (poa)),
+      name_ (CORBA::string_dup (name)),
+      nodeapp_location_ (CORBA::string_dup (nodeapp_loc)),
+      nodeapp_options_ (CORBA::string_dup (nodeapp_options)),
+      callback_poa_ (PortableServer::POA::_nil ()),
+      spawn_delay_ (spawn_delay)
 {
 }
 
@@ -71,48 +72,88 @@ void
 CIAO::NodeManager_Impl_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
-                                   Deployment::TargetManager_ptr target,
-                                   Deployment::Logger_ptr
-                                   ACE_ENV_ARG_DECL)
+                                         Deployment::TargetManager_ptr target,
+                                         Deployment::Logger_ptr
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-//  ACE_THROW (CORBA::NO_IMPLEMENT ());
-// Here start the Monitor
-   CIAO_TRACE("CIAO::NodeManager_Impl_Base::joinDomain");
+  //  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  // Here start the Monitor
+  CIAO_TRACE("CIAO::NodeManager_Impl_Base::joinDomain");
 
-   ::Deployment::Domain this_domain = domain;
-//  MonitorController* monitor_controller
-   monitor_controller_.reset (
-      new MonitorController (orb_.in (),
-                             this_domain,
-                             target));
+  ::Deployment::Domain this_domain = domain;
 
-   if (CIAO::debug_level () > 9)
-   {
-      ACE_DEBUG ((LM_DEBUG , "Before Activate"));
-   }
+  monitor_controller_.reset (
+                             new MonitorController (orb_.in (),
+                                                    this_domain,
+                                                    target,
+                                                    this));
+
+  if (CIAO::debug_level () > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG , "Before Activate\n"));
+    }
   /// Activate the Monitor Controller to
   //start the monitoring
-   monitor_controller_->activate ();
+  monitor_controller_->activate ();
 
-   if (CIAO::debug_level () > 9)
-   {
-      ACE_DEBUG ((LM_DEBUG , "After Activate"));
-   }
+  if (CIAO::debug_level () > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG , "Monitor Activated\n"));
+    }
 }
 
 void
 CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //Implementation undefined.
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  // Delete the monitor , this will also terminate the thread
+  monitor_controller_.reset ();
+}
+
+CORBA::Long
+CIAO::NodeManager_Impl_Base::set_priority (
+                                           const char * plan_id,
+                                           const char * cid,
+                                           const ::Deployment::Sched_Params & nm_params
+                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                                           )
+  ACE_THROW_SPEC ((::CORBA::SystemException))
+
+{
+  ACE_CString key (plan_id);
+  key += "@";
+  key += this->name_.in ();
+
+  if (CIAO::debug_level () > 10)
+    {
+      ACE_DEBUG ((LM_DEBUG , "Inside the set_priority\n"));
+      ACE_DEBUG ((LM_DEBUG , "pid = [%s] , cid = [%s]\n", key.c_str () , cid));
+    }
+
+  try {
+    CORBA::Object_var obj =
+      this->poa_->id_to_reference (this->map_.get_nam (key));
+
+    Deployment::NodeApplicationManager_var nam =
+      Deployment::NodeApplicationManager::_narrow (obj.in ());
+
+    return nam->set_priority (cid, nm_params);
+  }
+  catch (CORBA::Exception& ex)
+    {
+
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "(%P|%t) NodeManager_Impl::set_priority ()\t\n");
+      ACE_RE_THROW;
+    }
 }
 
 ::Components::FacetDescriptions *
@@ -123,7 +164,7 @@ get_all_facets (ACE_CString & name)
 
   if (this->comp_facets_map_.find (name.c_str (), entry) != 0)
     ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
-      "No component with name [%s] was found in the NodeManager\n", name.c_str ()));
+                "No component with name [%s] was found in the NodeManager\n", name.c_str ()));
 
   CORBA::ULong facet_len = entry->int_id_->length ();
 
@@ -150,7 +191,7 @@ get_all_consumers (ACE_CString & name)
 
   if (this->comp_consumers_map_.find (name.c_str (), entry) != 0)
     ACE_DEBUG ((LM_ERROR, "(%P|%t) - NodeManager_Impl_Base::get_all_facets - "
-      "Component [%s] was not found in the NodeManager\n", name.c_str ()));
+                "Component [%s] was not found in the NodeManager\n", name.c_str ()));
 
   CORBA::ULong consumer_len = entry->int_id_->length ();
 
@@ -199,10 +240,10 @@ preparePlan (const Deployment::DeploymentPlan &plan
   if (! this->validate_plan (plan))
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) NodeManager <%s>:prepare_plan:Plan_Error.\n",
-        plan.instance[0].node.in ()));
+                  plan.instance[0].node.in ()));
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) All component instances hosted in the "
-        "same component server must have the "
-        "same \"resourceName\" defined.\n"));
+                  "same component server must have the "
+                  "same \"resourceName\" defined.\n"));
 
       ACE_THROW_RETURN (Deployment::PlanError (),
                         Deployment::NodeApplicationManager::_nil ());
@@ -339,8 +380,8 @@ preparePlan (const Deployment::DeploymentPlan &plan
 
 void
 CIAO::NodeManager_Impl_Base::destroyManager
-        (Deployment::NodeApplicationManager_ptr manager
-         ACE_ENV_ARG_DECL)
+(Deployment::NodeApplicationManager_ptr manager
+ ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError,
                    Deployment::InvalidReference))
@@ -348,7 +389,6 @@ CIAO::NodeManager_Impl_Base::destroyManager
   CIAO_TRACE("CIAO::NodeManager_Impl::destroyManager");
   ACE_TRY
     {
-      printf("Entering NM_Impl::destroyManager\n");
       // Deactivate this object
       PortableServer::ObjectId_var id =
         this->poa_->reference_to_id (manager
@@ -365,7 +405,6 @@ CIAO::NodeManager_Impl_Base::destroyManager
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      printf("Exiting NM_Impl::destroyManager\n");
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
@@ -408,6 +447,9 @@ destroyPlan (const Deployment::DeploymentPlan & plan
   CORBA::ULong const length = plan.instance.length ();
   for (CORBA::ULong i = 0; i <  length; ++i)
     {
+      ACE_DEBUG ((LM_DEBUG, "NM_DP - forloop instance %s\n",
+                  plan.instance[i].name.in ()));
+
       Reference_Count_Map::ENTRY *entry = 0;
       if (this->ref_count_map_.find (plan.instance[i].name.in (), entry) == 0)
         {
@@ -416,23 +458,25 @@ destroyPlan (const Deployment::DeploymentPlan & plan
           if (entry->int_id_.count_ == 0)
             {
               // Remove this component from the shared set
+              ACE_DEBUG ((LM_DEBUG, "\tremoving shared...\n"));
               this->shared_components_.remove (plan.instance[i].name.in ());
-
+              ACE_DEBUG ((LM_DEBUG, "\tunbinding from the ref count map\n"));
               // Unbind this component from the ref_count_map_
               this->ref_count_map_.unbind (plan.instance[i].name.in ());
 
+              ACE_DEBUG ((LM_DEBUG, "\tunbinding from the facet/consumer maps\n"));
               // Unbind this component from the facet/consumer maps
               if (this->comp_facets_map_.unbind (
-                    plan.instance[i].name.in ()) != 0 ||
+                                                 plan.instance[i].name.in ()) != 0 ||
                   this->comp_consumers_map_.unbind (
-                    plan.instance[i].name.in ()) != 0)
+                                                    plan.instance[i].name.in ()) != 0)
                 {
                   ACE_TRY_THROW
                     (Deployment::StopError ("NodeManager_Impl_Base::destroyPlan ",
                                             "Unable to find component instance"));
                 }
             }
-       }
+        }
     }
 
   // Find the NAM from the map and invoke the destroyPlan() operation on
@@ -443,6 +487,7 @@ destroyPlan (const Deployment::DeploymentPlan & plan
 
   Deployment::NodeApplicationManager_var nam =
     Deployment::NodeApplicationManager::_narrow (obj.in ());
+
 
   // Reset each NAM about the shared components information
   Deployment::ComponentPlans_var shared = this->get_shared_components_i ();
@@ -495,8 +540,8 @@ CIAO::NodeManager_Impl_Base::get_shared_components_i (void)
         {
           // should never happen
           ACE_DEBUG ((LM_ERROR, "Component [%s] in the list of shared component, "
-                                "was not found in the NodeManager ref count map.\n",
-                                (*iter).c_str ()));
+                      "was not found in the NodeManager ref count map.\n",
+                      (*iter).c_str ()));
         }
     }
 
@@ -532,6 +577,9 @@ validate_plan (const Deployment::DeploymentPlan &plan)
   const char * resource_id = 0;
   CORBA::ULong i = 0;
 
+  // Update the name of ourself
+  this->name_ = plan.instance[0].node.in ();
+
   for (i = 0; i < plan.instance.length (); ++i)
     {
       if (plan.instance[i].deployedResource.length () != 0)
@@ -540,9 +588,10 @@ validate_plan (const Deployment::DeploymentPlan &plan)
           // the "resourceValue" field represents the policy_set_id, so we
           // are checking to make sure that all component instances have
           // the same server_resource_id.
-          resource_id =
-            plan.instance[i].deployedResource[0].resourceName.in ();
-          break;
+
+          //resource_id =
+          //  plan.instance[i].deployedResource[0].resourceName.in ();
+          //break;
         }
     }
   if (i == plan.instance.length ()) // No server resource id has been set for any instance
@@ -551,7 +600,7 @@ validate_plan (const Deployment::DeploymentPlan &plan)
   for (i = 0; i < plan.instance.length (); ++i)
     {
       const char * my_resource_id;
-      if (plan.instance[i].deployedResource.length () == 0)
+      if (true || plan.instance[i].deployedResource.length () == 0)
         {
           continue;
         }
@@ -569,17 +618,31 @@ validate_plan (const Deployment::DeploymentPlan &plan)
   return true;
 }
 
+
+void CIAO::NodeManager_Impl_Base::
+push_component_id_info (Component_Ids comps)
+{
+  components_ = comps;
+}
+
+CIAO::NodeManager_Impl_Base::Component_Ids
+CIAO::NodeManager_Impl_Base::
+get_component_detail ()
+{
+  return components_;
+}
+
 CIAO::NodeManager_Impl::~NodeManager_Impl ()
 {
 }
 
 CIAO::NodeManager_Impl::
 NodeManager_Impl (const char *name,
-                 CORBA::ORB_ptr orb,
-                 PortableServer::POA_ptr poa,
-                 const char * nodeapp_loc,
-                 const char * nodeapp_options,
-                 int spawn_delay)
+                  CORBA::ORB_ptr orb,
+                  PortableServer::POA_ptr poa,
+                  const char * nodeapp_loc,
+                  const char * nodeapp_options,
+                  int spawn_delay)
   : NodeManager_Impl_Base (name, orb, poa, nodeapp_loc, nodeapp_options, spawn_delay)
 {}
 
@@ -605,12 +668,12 @@ CIAO::Static_NodeManager_Impl::~Static_NodeManager_Impl ()
 
 CIAO::Static_NodeManager_Impl::
 Static_NodeManager_Impl (const char *name,
-                        CORBA::ORB_ptr orb,
-                        PortableServer::POA_ptr poa,
-                        const char * nodeapp_loc,
-                        const char * nodeapp_options,
-                        int spawn_delay,
-                        Static_Config_EntryPoints_Maps* static_config_entrypoints_maps)
+                         CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr poa,
+                         const char * nodeapp_loc,
+                         const char * nodeapp_options,
+                         int spawn_delay,
+                         Static_Config_EntryPoints_Maps* static_config_entrypoints_maps)
   : NodeManager_Impl_Base (name, orb, poa, nodeapp_loc, nodeapp_options, spawn_delay),
     static_config_entrypoints_maps_ (static_config_entrypoints_maps)
 {}
@@ -622,20 +685,22 @@ create_node_app_manager (CORBA::ORB_ptr orb,
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "creating static_node_app_manager\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "creating static_node_app_manager\n"));
+
   CIAO::NodeApplicationManager_Impl_Base *app_mgr;
   ACE_NEW_THROW_EX (app_mgr,
-    CIAO::Static_NodeApplicationManager_Impl (orb,
-      poa,
-      this->static_config_entrypoints_maps_),
-    CORBA::NO_MEMORY ());
+                    CIAO::Static_NodeApplicationManager_Impl (orb,
+                                                              poa,
+                                                              this->static_config_entrypoints_maps_),
+                    CORBA::NO_MEMORY ());
   return app_mgr;
 }
 
 void
 CIAO::Static_NodeManager_Impl::destroyManager
-        (Deployment::NodeApplicationManager_ptr manager
-         ACE_ENV_ARG_DECL)
+(Deployment::NodeApplicationManager_ptr manager
+ ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError,
                    Deployment::InvalidReference))

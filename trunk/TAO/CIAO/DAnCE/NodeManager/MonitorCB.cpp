@@ -39,16 +39,20 @@ int CIAO::MonitorCB::update_data (::Deployment::Domain& data)
 
   try
   {
-    if (CIAO::debug_level () > 9)
+    if (CIAO::debug_level () > 20)
       {
-        ACE_DEBUG ((LM_DEBUG , "---Making a call to update\n"));
+        ACE_DEBUG ((LM_DEBUG , "CIAO::NM::MonitorCB::Making a call to update\n"));
       }
     target_mgr_->updateDomain (elements , domain , update_kind);
   }
-  catch (CORBA::Exception&)
+  catch (CORBA::Exception& ex)
     {
-      ACE_DEBUG ((LM_DEBUG, "Unknown Exception"));
+      //ACE_DEBUG ((LM_DEBUG, "CIAO::NM::MonitorCB::Unknown Exception\n"));
+      //ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NM::MonitorCB::updateDomain");
     }
-
+  catch (...)
+    {
+      // ignore
+    }
   return 0;
 }

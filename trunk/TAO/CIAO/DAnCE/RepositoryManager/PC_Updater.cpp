@@ -44,7 +44,7 @@ using namespace PC_Updater_T;
 
 PC_Updater::PC_Updater (const char* server_path, const char* package)
 : server_path_ (server_path),
-  file_list_ (&allocator_),
+  file_list_ (),
   package_ (package),
   success_ (true)
 {
@@ -53,7 +53,7 @@ PC_Updater::PC_Updater (const char* server_path, const char* package)
 
 PC_Updater::PC_Updater (ACE_CString& server_path, ACE_CString& package)
 : server_path_ (server_path),
-  file_list_ (&allocator_),
+  file_list_ (),
   package_ (package),
   success_ (true)
 {
@@ -137,7 +137,7 @@ void PC_Updater::clear_list ()
 
   void PC_Updater::update (const ::Deployment::SubcomponentInstantiationDescription &sid)
   {
-    update_sequence (sid.package, this);
+    update_sequence (sid.basePackage, this);
   }
 
   // SubcomponentPortEndpoint
@@ -185,15 +185,13 @@ void PC_Updater::clear_list ()
       //weird. Need to call next to get current ?!?!
 
       const char* name;
-      const char* ext;
 
       name = ACE_OS::strstr (str, iad.location[0]);
 
       if (name)
       {
-        ext = ACE_OS::strstr (name, ".");
-
         ACE_CString loc (this->server_path_);
+        loc += name;
         loc += iad.location[0];
         loc += ext;
 

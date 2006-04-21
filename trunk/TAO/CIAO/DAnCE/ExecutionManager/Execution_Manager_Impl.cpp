@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Execution_Manager_Impl.h"
 #include "ciao/CIAO_common.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
@@ -48,8 +49,15 @@ namespace CIAO
       // No need to create a new DAM. Hence pass the
       // reference that is already created.
       //
-      if (this->map_.is_plan_available (plan.UUID.in ()))
+      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) calling this->man_.is_plan_available()...\n"));
+      if (this->map_.is_plan_available (plan.UUID.in ())) {
+  ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Plan is already available; "
+        "calling this->man_.fetch_dam_reference()...\n"));
+
         return this->map_.fetch_dam_reference (plan.UUID.in ());
+      }
+      else
+  ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Plan wasn't already available\n"));
 
       // We are about to begin working on a new DeploymentPlan.
       // Create a DAM servant, which will be populated
@@ -60,6 +68,7 @@ namespace CIAO
       // Create a new Domain Application Manager servant
       // to be sent back to the Plan Launcher.
       //
+      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to instantiate CIAO::DomainApplicationManager_Impl\n"));
       ACE_NEW_THROW_EX (
         dam_servant,
         CIAO::DomainApplicationManager_Impl (
@@ -70,6 +79,7 @@ namespace CIAO
           plan,
           this->init_file_.c_str ()),
           CORBA::NO_MEMORY ());
+      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Instantiated CIAO::DomainApplicationManager_Impl\n"));
 
       // Sanity check for NULL pointer
       // Should we throw an exception here?
@@ -88,6 +98,7 @@ namespace CIAO
       // plans, so that those plans can be sent off to individual
       // Node Application Managers.
       //
+      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to init...\n"));
       dam_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // This is a wrong exception to be thrown here.
@@ -97,6 +108,7 @@ namespace CIAO
       //
       ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
+      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to set uuid on DAM...\n"));
       dam_servant->set_uuid (plan.UUID.in ());
 
       Deployment::DomainApplicationManager_var dam =
@@ -107,6 +119,7 @@ namespace CIAO
       this->map_.bind_dam_reference (
         plan.UUID.in (),
         Deployment::DomainApplicationManager::_duplicate (dam.in ()));
+      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Bound DAM reference...\n"));
 
       // Return the ApplicationManager instance
       return dam._retn ();
@@ -376,7 +389,81 @@ namespace CIAO
       ACE_ENDTRY;
     }
 
+    void
+    Execution_Manager_Impl::passivate_shared_components (
+          const Component_Binding_Info & binding)
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException,
+          Deployment::StartError))
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "Execution_Manage::passivate shared components.\n"));
+
+      // Find the NodeApplication hosting the component, and then call
+      // <finishLaunch> on it
+      ACE_TRY
+      {
+        Deployment::NodeApplication_var
+          node_app = this->find_node_application (binding);
+
+        if (CORBA::is_nil (node_app.in ()))
+          {
+            ACE_DEBUG ((LM_ERROR,
+                        "Execution_Manager_Impl::passivate_shared_components - "
+                        "nil NodeApplication object reference.\n"));
+            ACE_THROW (Deployment::StartError ());
+          }
+
+        node_app->passivate_component (binding.name_.c_str ());
+      }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Execution_Manager_Impl::passivate_shared_components\t\n");
+          ACE_THROW (Deployment::StartError ());
+        }
+      ACE_ENDTRY;
+    }
+
+    void
+    Execution_Manager_Impl::activate_shared_components (
+          const Component_Binding_Info & binding)
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException,
+          Deployment::StartError))
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "Execution_Manage::activate shared components.\n"));
+
+      // Find the NodeApplication hosting the component, and then call
+      // <ciao_activate> on it
+      ACE_TRY
+      {
+        Deployment::NodeApplication_var
+          node_app = this->find_node_application (binding);
+
+        if (CORBA::is_nil (node_app.in ()))
+          {
+            ACE_DEBUG ((LM_ERROR,
+                        "Execution_Manager_Impl::activate_shared_components - "
+                        "nil NodeApplication object reference.\n"));
+            ACE_THROW (Deployment::StartError ());
+          }
+
+        node_app->activate_component (binding.name_.c_str ());
+      }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Execution_Manager_Impl::passivate_shared_components\t\n");
+          ACE_THROW (Deployment::StartError ());
+        }
+      ACE_ENDTRY;
+    }
+
+
     Deployment::NodeApplication_ptr
+
     Execution_Manager_Impl::
     find_node_application (const Component_Binding_Info & binding)
       ACE_THROW_SPEC ((

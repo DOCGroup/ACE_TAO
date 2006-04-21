@@ -100,6 +100,19 @@ namespace CIAO
 
     /// The Domain data structure
     auto_ptr <Deployment::Domain> current_domain_;
+
+    ///The previous user cpu
+    long prev_user_cpu_;
+
+    ///The previous user cpu low priority
+    long prev_user_cpu_low_;
+
+    ///The previous system cpu
+    long prev_sys_cpu_;
+
+    ///The previous idle time
+    long prev_idle_time_;
+
   };
 
 } // CIAO

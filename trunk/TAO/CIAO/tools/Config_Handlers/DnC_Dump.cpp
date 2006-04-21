@@ -101,15 +101,15 @@ namespace Deployment
 
 #if (_MSC_VER > 1200)
     dump_ref_seq<Deployment::Domain> (
-      "sharedResourceRef",
-      node.sharedResourceRef, "Domain",
-      &Domain::sharedResource);
+                                      "sharedResourceRef",
+                                      node.sharedResourceRef, "Domain",
+                                      &Domain::sharedResource);
 
     dump_ref_seq<Deployment::Domain> (
-      "connectionRef",
-      node.connectionRef,
-      "Domain",
-      &Domain::interconnect);
+                                      "connectionRef",
+                                      node.connectionRef,
+                                      "Domain",
+                                      &Domain::interconnect);
 #endif /* _MSC_VER */
     dump_sequence ("resource",
                    node.resource);
@@ -125,16 +125,16 @@ namespace Deployment
 
 #if (_MSC_VER > 1200)
     dump_ref_seq<Deployment::Domain> (
-      "connectionRef",
-      conn.connectionRef,
-      "Domain",
-      &Domain::bridge);
+                                      "connectionRef",
+                                      conn.connectionRef,
+                                      "Domain",
+                                      &Domain::bridge);
 
     dump_ref_seq<Deployment::Domain> (
-      "connectRef",
-      conn.connectRef,
-      "Domain",
-      &Domain::node);
+                                      "connectRef",
+                                      conn.connectRef,
+                                      "Domain",
+                                      &Domain::node);
 #endif /*_MSC_VER*/
 
     dump_sequence ("resource",
@@ -151,10 +151,10 @@ namespace Deployment
 #if (_MSC_VER > 1200)
 
     dump_ref_seq<Deployment::Domain> (
-      "connectRef",
-      bridge.connectRef,
-      "Domain",
-      &Domain::interconnect);
+                                      "connectRef",
+                                      bridge.connectRef,
+                                      "Domain",
+                                      &Domain::interconnect);
 #endif /*_MSC_VER*/
 
     dump_sequence ("resource", bridge.resource);
@@ -189,7 +189,7 @@ namespace Deployment
   // ComponentPortDescription
 
   void DnC_Dump::dump (const ::Deployment::ComponentPortDescription
-                         &compportdesc)
+                       &compportdesc)
   {
     Dump_Obj dump_obj("ComponentPortDescription");
 
@@ -334,7 +334,7 @@ namespace Deployment
     dump ("requirementName", irdd.requirementName);
     dump ("resourceName", irdd.resourceName);
     ACE_DEBUG ((LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump (irdd.resourceValue);
+    dump_sequence ("property",  irdd.property);
   }
 
   // InstanceDeploymentDescription
@@ -411,7 +411,7 @@ namespace Deployment
     dump ("requirementName", crdd.requirementName);
     dump ("resourceName", crdd.resourceName);
     ACE_DEBUG ((LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump (crdd.resourceValue);
+    dump_sequence ("properties", crdd.property);
   }
 
   // PlanConnectionDescription
@@ -474,7 +474,7 @@ namespace Deployment
     dump ("requirementName", rdd.requirementName);
     dump ("resourceName", rdd.resourceName);
     ACE_DEBUG ((LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump (rdd.resourceValue);
+    dump_sequence ("properties", rdd.property);
   }
 
   // ArtifactDeploymentDescription
@@ -530,10 +530,10 @@ namespace Deployment
     Dump_Obj dump_obj("SubcomponentInstantiationDescription");
 
     dump ("name", sid.name);
-    dump_sequence ("package", sid.package);
+    //    dump_sequence ("basePackage", sid.package);
     dump_sequence ("configProperty", sid.configProperty);
     dump_sequence ("selectRequirement", sid.selectRequirement);
-    dump_sequence ("reference", sid.reference);
+    //    dump_sequence ("reference", sid.reference);
   }
 
   // SubcomponentPortEndpoint
@@ -654,11 +654,11 @@ namespace Deployment
   // MonolithicImplementationDescription
 
   void DnC_Dump::dump (const ::Deployment::MonolithicImplementationDescription
-                         &mid)
+                       &mid)
   {
     Dump_Obj dump_obj("MonolithicImplementationDescription");
 
-    dump_sequence ("execParameter", mid.execParameter);
+    //    dump_sequence ("execParameter", mid.execParameter);
     dump_sequence ("primaryArtifact", mid.primaryArtifact);
     dump_sequence ("deployRequirement", mid.deployRequirement);
   }
@@ -677,7 +677,7 @@ namespace Deployment
   // ComponentImplementationDescription
 
   void DnC_Dump::dump (
-        const ::Deployment::ComponentImplementationDescription &cid)
+                       const ::Deployment::ComponentImplementationDescription &cid)
   {
     Dump_Obj dump_obj("ComponentImplementationDescription");
 
@@ -708,7 +708,7 @@ namespace Deployment
   // ComponentPackageDescription
 
   void DnC_Dump::dump (const ::Deployment::ComponentPackageDescription
-                         &comppkgdesc)
+                       &comppkgdesc)
   {
     Dump_Obj dump_obj("ComponentPackageDescription");
 
@@ -768,7 +768,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
-                                  encoded different type"));
+encoded different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
@@ -790,7 +790,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
@@ -804,7 +804,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
-                                   encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
@@ -818,7 +818,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
@@ -832,7 +832,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
@@ -845,7 +845,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
@@ -858,7 +858,7 @@ namespace Deployment
           if (! (any >>= CORBA::Any::to_boolean (temp)))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
 
@@ -875,7 +875,7 @@ namespace Deployment
           if (! (any >>= CORBA::Any::to_char (temp)))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
@@ -889,7 +889,7 @@ namespace Deployment
           if (! (any >>= CORBA::Any::to_octet (temp)))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
@@ -903,7 +903,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),
@@ -916,7 +916,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %l \n", Dump_Obj::indent (),
@@ -930,7 +930,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
@@ -944,7 +944,7 @@ namespace Deployment
           if (! (any >>= CORBA::Any::to_wchar (temp)))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
@@ -958,7 +958,7 @@ namespace Deployment
           if (! (any >>= temp))
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
-                                    encoded with different type"));
+encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),

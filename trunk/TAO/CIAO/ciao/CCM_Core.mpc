@@ -1,4 +1,3 @@
-// -*- MPC -*-
 // $Id$
 
 project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {

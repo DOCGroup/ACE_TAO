@@ -27,6 +27,8 @@
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/OS_NS_sys_wait.h"
+#include "ace/Process_Manager.h"
 #include "ciao/NodeApp_CB_Impl.h"
 #include "ciao/NodeApplicationManagerS.h"
 #include "ciao/CIAO_common.h"
@@ -37,6 +39,7 @@
 
 namespace CIAO
 {
+
   /**
    * @class NodeApplicationManager_Impl_Base
    */
@@ -143,6 +146,13 @@ namespace CIAO
 
     /// @note This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nodeapp_manager (void);
+
+    /// Set the priority of the NodeApplication process which this NAM manages
+    virtual ::CORBA::Long set_priority (
+        const char * cid,
+        const ::Deployment::Sched_Params & params
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException ));
 
   protected:
     /// Destructor
@@ -259,7 +269,49 @@ namespace CIAO
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
+
+    /// The Process Manager for this NodeApplicationManager
+    ACE_Process_Manager node_app_process_manager_;
+
+    /// The process id of the NA associated with the NAM,
+    /// Each NAM will only have one NA associated with it,
+    /// so we have only one process associated with it.
+
+    // this is UNIX specific .... not portable
+    pid_t process_id_;
   };
+
+
+  /**
+   * @class NAM_Handler
+   * @brief The signal handler class for the SIGCHLD
+   * handling to avoid zombies
+   *
+   */
+  class NAM_Handler : public ACE_Event_Handler
+    {
+    public:
+      virtual int handle_signal (int sig,
+                                 siginfo_t *,
+                                 ucontext_t *)
+        {
+          ACE_UNUSED_ARG (sig);
+
+          // @@ Note that this code is not portable to all OS platforms
+          // since it uses print statements within signal handler context.
+          //ACE_DEBUG ((LM_DEBUG,
+          //            "Executed ACE signal handler for signal %S \n",
+          //            sig));
+
+          ACE_exitcode status;
+          // makes a claal to the underlying os system call
+          // -1 to wait for any child process
+          // and WNOHANG so that it retuurns immediately
+          ACE_OS::waitpid (-1 ,&status, WNOHANG, 0);
+
+          return 0;
+        }
+    };
 
 
   /**
@@ -297,6 +349,18 @@ namespace CIAO
                        Deployment::ResourceNotAvailable,
                        Deployment::StartError,
                        Deployment::InvalidProperty));
+
+
+    /**
+     * @operation push_component_info
+     * @brief pushes component info to the NodeManager
+     *
+     * @param process_id The id of the process of NodeApplication
+     */
+    void push_component_info (pid_t process_id);
+
+    /// The signal handler
+    NAM_Handler child_handler_;
   };
 
 
@@ -344,7 +408,6 @@ namespace CIAO
 
     CIAO::NoOp_Configurator configurator_;
   };
-
 }
 
 #if defined (__ACE_INLINE__)

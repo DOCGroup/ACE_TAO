@@ -33,10 +33,10 @@ parse_args (int argc, char *argv[])
                            "-i <input file> "
                            "\n",
                            argv [0]),
-                          -1); 
+                          -1);
       }
   // Indicates sucessful parsing of the command-line
-  return 0;  
+  return 0;
 }
 
 // Check to see if SRD was imported.
@@ -47,42 +47,43 @@ using namespace CIAO::Config_Handlers;
 
 int main (int argc, char *argv[])
 {
-  
+
   if (parse_args (argc, argv) != 0)
     return 1;
 
   // Initialize an ORB so Any will work
   CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
-
+  ACE_UNUSED_ARG (orb);
+  
   //Create an XML_Helper for all the file work
   XML_Helper the_helper;
-  
+
   if (xercesc::DOMDocument *doc = the_helper.create_dom (input_file))
-  {
+    {
       //Read in the XSC type structure from the DOMDocument
       DeploymentPlan dp = deploymentPlan (doc);
 
       //Convert the XSC to an IDL datatype
 
       DP_Handler dp_handler (dp);
-      
+
       std::cout << "Instance document import succeeded.  Dumping contents to file\n";
 
       //Retrieve the newly created IDL structure
       Deployment::DeploymentPlan *idl = dp_handler.plan();
-      
+
       // Check for server resources, if present....
       check_srd (*idl);
-      
+
       //Convert it back to an XSC structure with a new DP_Handler
       DP_Handler reverse_handler(*idl);
-      
+
       //Create a new DOMDocument for writing the XSC into XML
       xercesc::DOMDocument* the_xsc (the_helper.create_dom(0));
 
       //Serialize the XSC into a DOMDocument
       deploymentPlan(*reverse_handler.xsc(), the_xsc);
-      
+
 
       //Write it to test.xml
       the_helper.write_DOM(the_xsc, "test.xml");
@@ -90,7 +91,7 @@ int main (int argc, char *argv[])
       //Cleanliness is next to Godliness
       delete doc;
     }
-  
+
   std::cout << "Test completed!\n";
 
   return 0;
@@ -107,7 +108,7 @@ void check_srd (const Deployment::DeploymentPlan &dp)
                           "CIAOServerResources") == 0)
         {
           CIAO::DAnCE::ServerResource *test;
-          
+
           if (dp.infoProperty[i].value >>= test)
             std::cerr << "ServerResources found and successfully extracted." << std::endl;
           else
