@@ -302,6 +302,22 @@ public:
 
   /// Return the number of managed Processes.
   size_t managed (void) const;
+  /**
+   * Sets the scheduling parameters for the <Process> managed by
+   * <ACE_Process_Manager> identified by pid by passing <params>, <pid> to
+   * <ACE_OS::sched_params>. Returns 0 on success, -1 on failure, and
+   * ACE_INVALID_PID when given pid is not managed by
+   * <ACE_Process_Manager>.
+   */
+  int set_scheduler (const ACE_Sched_Params &params,
+                          pid_t pid);
+
+  /**
+   * Sets the scheduling parameters for all the <Process>es managed by
+   * <ACE_Process_Manager> by passing <params> to
+   * <ACE_OS::sched_params>. Returns 0 on success, -1 on failure.
+   */
+  int set_scheduler_all (const ACE_Sched_Params &);
 
   /// Dump the state of an object.
   void dump (void) const;
