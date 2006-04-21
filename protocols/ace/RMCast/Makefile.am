@@ -35,8 +35,7 @@ libACE_RMCast_la_SOURCES = \
   Retransmit.cpp \
   Simulator.cpp \
   Socket.cpp \
-  Stack.cpp \
-  Template_Instantiations.cpp
+  Stack.cpp
 
 libACE_RMCast_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
