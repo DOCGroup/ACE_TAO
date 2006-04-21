@@ -1,3 +1,11 @@
+Fri Apr 21 08:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+          Removed usage of ACE_NESTED_CLASS
+
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+          Fixed compile errors
+
 Thu Apr 20 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DnC_Dump.cpp:
