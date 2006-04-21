@@ -1,0 +1,7 @@
+// $Id$
+
+#include <orb.idl>
+
+local interface foo {
+     void op (in CORBA::ValueFactory vf);
+};
