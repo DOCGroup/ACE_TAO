@@ -853,8 +853,8 @@ handle_publisher_consumer_connection (
     {
       ::Components::Cookie_var cookie =
         comp->subscribe (connection.portName.in (),
-                          consumer.in ()
-                          ACE_ENV_ARG_PARAMETER);
+                         consumer.in ()
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_CString key = (*create_connection_key (connection));
@@ -887,8 +887,8 @@ handle_publisher_consumer_connection (
         }
 
       comp->unsubscribe (connection.portName.in (),
-                        cookie.in ()
-                        ACE_ENV_ARG_PARAMETER);
+                         cookie.in ()
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->cookie_map_.unbind (key);
 
@@ -942,20 +942,21 @@ handle_publisher_es_connection (
 
   if (add_connection)
     {
-      ::Components::Cookie_var cookie =
-      comp->subscribe (connection.portName.in (),
-                       event_service);
-
-      ACE_CString key = (*create_connection_key (connection));
-      this->cookie_map_.rebind (key, cookie);
-
       // Create a supplier_config and register it to ES
       CIAO::Supplier_Config_var supplier_config =
         event_service->create_supplier_config ();
 
       supplier_config->supplier_id (sid.c_str ());
       event_service->connect_event_supplier (supplier_config.in ());
-      supplier_config->destroy ();
+
+      ::Components::Cookie_var cookie =
+        comp->subscribe (connection.portName.in (),
+                        supplier_config._retn ());
+
+      ACE_CString key = (*create_connection_key (connection));
+      this->cookie_map_.rebind (key, cookie);
+
+      //supplier_config->destroy ();
 
       if (CIAO::debug_level () > 6)
         {
@@ -984,10 +985,23 @@ handle_publisher_es_connection (
           ACE_TRY_THROW (Deployment::InvalidConnection ());
         }
 
+     ACE_DEBUG ((LM_DEBUG, "about to unsubscribe event supplier\n"));
+
       comp->unsubscribe (connection.portName.in (),
                          cookie.in ());
       this->cookie_map_.unbind (key);
+
+      ACE_DEBUG ((LM_DEBUG, "unsubscribe returned\n"));
+
+  if (CORBA::is_nil (event_service))
+    {
+      ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
+      ACE_THROW (Deployment::InvalidConnection ());
+    }
+
       event_service->disconnect_event_supplier (sid.c_str ());
+
+      ACE_DEBUG ((LM_DEBUG, "disconnection event supplier returned\n"));
 
       if (CIAO::debug_level () > 6)
         {
@@ -1064,12 +1078,14 @@ handle_es_consumer_connection (
       CIAO::Consumer_Config_var consumer_config =
         event_service->create_consumer_config ();
 
-      consumer_config->supplier_id ("Hello-Sender-idd_click_out_publisher");
+      //consumer_config->supplier_id ("Hello-Sender-idd_click_out_publisher");
       //consumer_config->supplier_id (sid.c_str ());
       consumer_config->consumer_id (cid.c_str ());
       consumer_config->consumer (consumer.in ());
 
       // Need to setup a filter, if it's specified in the descriptor
+      // @TODO: This below code needs to be refactored into the consumer_config
+      // servant implementation to make the code cleaner.
       for (CORBA::ULong i = 0; i < connection.config.length (); ++i)
         {
           if (ACE_OS::strcmp (connection.config[i].name.in (),
@@ -1081,11 +1097,32 @@ handle_es_consumer_connection (
           connection.config[i].value >>=  filter;
 
           CORBA::ULong size = (*filter).sources.length ();
-          consumer_config->start_disjunction_group (size);
+
+          switch ((*filter).type)
+          {
+          case CIAO::DAnCE::CONJUNCTION:
+            ACE_DEBUG ((LM_DEBUG,
+                        "DAnCE (%P|%t): Creating a conjunction group of size [%d]\n",
+                        size));
+            consumer_config->start_conjunction_group (size);
+            break;
+          case CIAO::DAnCE::DISJUNCTION:
+            ACE_DEBUG ((LM_DEBUG,
+                        "DAnCE (%P|%t): Creating a disjunction group of size [%d]\n",
+                        size));
+            consumer_config->start_conjunction_group (size);
+            break;
+          default:
+            ACE_DEBUG ((LM_DEBUG, "Unknown event filter type.\n"));
+            ACE_THROW (CORBA::NO_IMPLEMENT ());
+          }
 
           for (CORBA::ULong j = 0; j < size; ++j)
             {
-              consumer_config->insert_source ((*filter).sources[j]);
+              ACE_DEBUG ((LM_DEBUG,
+                          "DAnCE (%P|%t): Insert source id [%s]\n",
+                          (*filter).sources[j].in ()));
+              consumer_config->insert_source ((*filter).sources[j].in ());
             }
         }
 
@@ -1218,7 +1255,7 @@ CIAO::NodeApplication_Impl::build_event_connection (
           event_service->create_consumer_config ();
 
         //@@@
-        consumer_config->supplier_id ("dummy");
+        //consumer_config->supplier_id ("dummy");
         consumer_config->consumer_id (cid.c_str ());
         consumer_config->consumer (consumer.in ());
 
