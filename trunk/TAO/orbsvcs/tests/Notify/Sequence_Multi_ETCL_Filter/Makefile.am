@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -19,6 +19,8 @@ TAO_ROOT = $(top_srcdir)
 noinst_PROGRAMS =
 
 ## Makefile.Seq_Multi_ETCL_Filter_Idl.am
+
+if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES = \
   goC.cpp \
@@ -53,9 +55,12 @@ go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   go.idl
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Seq_Multi_ETCL_Filter_Ntf_Seq_Cons.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Sequence_Consumer
@@ -100,11 +105,13 @@ Sequence_Consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Seq_Multi_ETCL_Filter_Ntf_Seq_Supp.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Sequence_Supplier
@@ -149,6 +156,7 @@ Sequence_Supplier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

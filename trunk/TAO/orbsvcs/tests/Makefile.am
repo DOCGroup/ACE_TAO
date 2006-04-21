@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
         AVStreams \
@@ -22,6 +22,7 @@ SUBDIRS = \
         Bug_2285_Regression \
         Bug_2287_Regression \
         Bug_2316_Regression \
+        Bug_2377_Regression \
         Concurrency \
         CosEvent \
         EC_Custom_Marshal \

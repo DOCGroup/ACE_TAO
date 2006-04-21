@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
         TAO_Service \
@@ -28,8 +28,16 @@ SUBDIRS = \
         Event_Service \
         Dump_Schedule \
         CosEvent_Service \
-        Concurrency_Service \
+        Concurrency_Service
+
+if BUILD_TESTS
+SUBDIRS += \
         performance-tests \
-        tests \
+        tests
+endif
+
+if BUILD_EXAMPLES
+SUBDIRS += \
         examples
+endif
 
