@@ -87,6 +87,7 @@ libTAO_la_SOURCES = \
   FloatSeqC.cpp \
   Flushing_Strategy.cpp \
   GIOPC.cpp \
+  GIOP_Fragmentation_Strategy.cpp \
   GIOP_Message_Base.cpp \
   GIOP_Message_Generator_Parser.cpp \
   GIOP_Message_Generator_Parser_10.cpp \
@@ -142,12 +143,12 @@ libTAO_la_SOURCES = \
   LongSeqC.cpp \
   MCAST_Parser.cpp \
   MProfile.cpp \
-  Managed_Types.cpp \
   Messaging_PolicyValueC.cpp \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
   NVList_Adapter.cpp \
   New_Leader_Generator.cpp \
+  Null_Fragmentation_Strategy.cpp \
   ORB.cpp \
   ORBInitializer_Registry.cpp \
   ORBInitializer_Registry_Adapter.cpp \
@@ -163,6 +164,7 @@ libTAO_la_SOURCES = \
   Object_Proxy_Broker.cpp \
   Object_Ref_Table.cpp \
   OctetSeqC.cpp \
+  On_Demand_Fragmentation_Strategy.cpp \
   PI_ForwardC.cpp \
   ParameterModeC.cpp \
   Parser_Registry.cpp \
@@ -193,7 +195,6 @@ libTAO_la_SOURCES = \
   Request_Dispatcher.cpp \
   Resource_Factory.cpp \
   Resume_Handle.cpp \
-  Sequence.cpp \
   ServerRequestInterceptor_Adapter.cpp \
   ServerRequestInterceptor_Adapter_Factory.cpp \
   Server_Strategy_Factory.cpp \
@@ -203,6 +204,7 @@ libTAO_la_SOURCES = \
   Services_Activate.cpp \
   ShortSeqC.cpp \
   StringSeqC.cpp \
+  String_Alloc.cpp \
   Stub.cpp \
   Stub_Factory.cpp \
   Synch_Invocation.cpp \
@@ -274,7 +276,6 @@ nobase_include_HEADERS = \
   Any_Insert_Policy_T.h \
   Arg_Traits_T.h \
   Argument.h \
-  Array_Traits_T.h \
   Array_VarOut_T.cpp \
   Array_VarOut_T.h \
   Array_VarOut_T.inl \
@@ -387,6 +388,7 @@ nobase_include_HEADERS = \
   GIOPC.h \
   GIOPC.inl \
   GIOPS.h \
+  GIOP_Fragmentation_Strategy.h \
   GIOP_Message_Base.h \
   GIOP_Message_Generator_Parser.h \
   GIOP_Message_Generator_Parser_10.h \
@@ -461,7 +463,6 @@ nobase_include_HEADERS = \
   LF_Invocation_Event.h \
   LF_Strategy.h \
   LF_Strategy_Complete.h \
-  LF_Strategy_Complete.inl \
   LRU_Connection_Purging_Strategy.h \
   Leader_Follower.h \
   Leader_Follower.i \
@@ -483,8 +484,6 @@ nobase_include_HEADERS = \
   MCAST_Parser.i \
   MProfile.h \
   MProfile.i \
-  Managed_Types.h \
-  Managed_Types.i \
   Messaging_PolicyValue.pidl \
   Messaging_PolicyValueC.h \
   Messaging_SyncScope.pidl \
@@ -492,6 +491,7 @@ nobase_include_HEADERS = \
   Muxed_TMS.h \
   NVList_Adapter.h \
   New_Leader_Generator.h \
+  Null_Fragmentation_Strategy.h \
   ORB.h \
   ORB.i \
   ORBInitializer_Registry.h \
@@ -525,6 +525,7 @@ nobase_include_HEADERS = \
   OctetSeq.pidl \
   OctetSeqC.h \
   OctetSeqS.h \
+  On_Demand_Fragmentation_Strategy.h \
   PI_Forward.pidl \
   PI_ForwardC.h \
   ParameterMode.pidl \
@@ -587,11 +588,6 @@ nobase_include_HEADERS = \
   Seq_Var_T.cpp \
   Seq_Var_T.h \
   Seq_Var_T.inl \
-  Sequence.h \
-  Sequence.i \
-  Sequence_T.cpp \
-  Sequence_T.h \
-  Sequence_T.i \
   ServerRequestInterceptor_Adapter.h \
   ServerRequestInterceptor_Adapter_Factory.h \
   Server_Strategy_Factory.h \
@@ -612,6 +608,7 @@ nobase_include_HEADERS = \
   StringSeq.pidl \
   StringSeqC.h \
   StringSeqS.h \
+  String_Alloc.h \
   Stub.h \
   Stub.i \
   Stub_Factory.h \
@@ -2007,6 +2004,7 @@ libTAO_Valuetype_la_SOURCES = \
   Valuetype/ValueBase.cpp \
   Valuetype/ValueFactory.cpp \
   Valuetype/ValueFactory_Map.cpp \
+  Valuetype/Valuetype_Adapter_Factory_Impl.cpp \
   Valuetype/Valuetype_Adapter_Impl.cpp
 
 libTAO_Valuetype_la_LDFLAGS = \
@@ -2023,11 +2021,13 @@ nobase_include_HEADERS += \
   Valuetype/AbstractBase_Invocation_Adapter.h \
   Valuetype/AbstractBase_T.cpp \
   Valuetype/AbstractBase_T.h \
-  Valuetype/Sequence_T.cpp \
+  Valuetype/Bounded_Valuetype_Allocation_Traits_T.h \
+  Valuetype/Bounded_Valuetype_Sequence_T.h \
   Valuetype/Sequence_T.h \
-  Valuetype/Sequence_T.inl \
   Valuetype/StringValueC.h \
   Valuetype/StringValueC.inl \
+  Valuetype/Unbounded_Valuetype_Allocation_Traits_T.h \
+  Valuetype/Unbounded_Valuetype_Sequence_T.h \
   Valuetype/ValueBase.h \
   Valuetype/ValueBase.inl \
   Valuetype/ValueFactory.h \
@@ -2035,7 +2035,11 @@ nobase_include_HEADERS += \
   Valuetype/Value_CORBA_methods.h \
   Valuetype/Value_VarOut_T.cpp \
   Valuetype/Value_VarOut_T.h \
+  Valuetype/Valuetype_Adapter_Factory_Impl.h \
   Valuetype/Valuetype_Adapter_Impl.h \
+  Valuetype/Valuetype_Sequence_Element_T.h \
+  Valuetype/Valuetype_Traits_Base_T.h \
+  Valuetype/Valuetype_Traits_T.h \
   Valuetype/valuetype_export.h
 
 pkgconfig_DATA += \
@@ -2087,8 +2091,6 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Messaging_RT_PolicyC.cpp \
   Messaging/Messaging_SyncScope_PolicyA.cpp \
   Messaging/Messaging_SyncScope_PolicyC.cpp \
-  Messaging/OldExceptionHolderA.cpp \
-  Messaging/OldExceptionHolderC.cpp \
   Messaging/PollableC.cpp \
   Messaging/TAO_ExtA.cpp \
   Messaging/TAO_ExtC.cpp
@@ -2141,11 +2143,6 @@ nobase_include_HEADERS += \
   Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/Messaging_SyncScope_PolicyA.h \
   Messaging/Messaging_SyncScope_PolicyC.h \
-  Messaging/OldExceptionHolder.pidl \
-  Messaging/OldExceptionHolderA.h \
-  Messaging/OldExceptionHolderC.h \
-  Messaging/OldExceptionHolderC.inl \
-  Messaging/OldExceptionHolderS.h \
   Messaging/Pollable.pidl \
   Messaging/PollableC.h \
   Messaging/PollableS.h \
