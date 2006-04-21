@@ -158,7 +158,7 @@ private:
 
   /// A list of the constraints stored in this filter.
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
-                                ACE_NESTED_CLASS (TAO_Notify_ETCL_Filter, TAO_Notify_Constraint_Expr*),
+                                TAO_Notify_ETCL_Filter::TAO_Notify_Constraint_Expr*,
                                 ACE_SYNCH_NULL_MUTEX>
   CONSTRAINT_EXPR_LIST;
 

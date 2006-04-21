@@ -1139,7 +1139,7 @@ namespace
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c," << endl
          << t.name () << "_Servant *sv)" << endl
-         << "  : ACE_NESTED_CLASS (CIAO, Context_Impl_Base (h, c)), " << endl
+         << "  : CIAO::Context_Impl_Base (h, c), " << endl
          << "    ctx_svnt_base (h, c, sv)";
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -2877,8 +2877,8 @@ namespace
          << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base "
-         << "(h, hs, c))," << endl
+         << "  : CIAO::Servant_Impl_Base "
+         << "(h, hs, c)," << endl
          << "    comp_svnt_base (exe, h, hs, c)," << endl
          << "    ins_name_ (ins_name)" << endl
          << "{"
@@ -3979,7 +3979,7 @@ namespace
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : ACE_NESTED_CLASS (CIAO, Home_Servant_Impl_Base (c))," << endl
+         << "  : CIAO::Home_Servant_Impl_Base (c)," << endl
          << "    home_svnt_base (exe, c, ins_name";
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
