@@ -70,16 +70,7 @@ module Deployment
     MultiplexReceptacle,
     EventEmitter,
     EventPublisher,
-    EventConsumer,
-    ecEventEmitter,
-    ecEventPublisher,
-    ecEventConsumer,
-    rtecEventEmitter,
-    rtecEventPublisher,
-    rtecEventConsumer,
-    nsEventEmitter,
-    nsEventPublisher,
-    nsEventConsumer
+    EventConsumer
   };
 
   // CIAO's specific <Connection> type defition.
