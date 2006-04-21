@@ -73,8 +73,10 @@ namespace CIAO
     if (CIAO::debug_level () > 9)
       {
         ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::connect_event_supplier\n"));
+        ACE_DEBUG ((LM_DEBUG, "Supplier's source id: %s\n",
+                    supplier_config->supplier_id()));
       }
-
+/*
     RTEvent_Supplier_Config_ptr rt_config =
       RTEvent_Supplier_Config::_narrow (supplier_config
                                         ACE_ENV_ARG_PARAMETER);
@@ -84,22 +86,17 @@ namespace CIAO
       {
         ACE_THROW (CORBA::BAD_PARAM ());
       }
-
+*/
     ACE_Hash<ACE_CString> hasher;
     this->source_id_ = hasher (supplier_config->supplier_id (ACE_ENV_SINGLE_ARG_PARAMETER));
     ACE_CHECK;
     this->type_id_ = this->source_id_;
 
-    if (CIAO::debug_level () > 11)
-      {
-        ACE_DEBUG ((LM_DEBUG, "connect source id: %i\n", this->source_id_));
-      }
-
     RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
       this->rt_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    this->proxy_consumer_ =
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer =
       supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -111,14 +108,25 @@ namespace CIAO
       supplier_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    RtecEventChannelAdmin::SupplierQOS_var qos =
-      rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+    supplier_config->register_proxy_consumer (proxy_consumer.in ());
+
+    ACE_SupplierQOS_Factory qos;
+
+    qos.insert (this->source_id_,
+                ACE_ES_EVENT_ANY,
+                0,
+                1);
+
+    proxy_consumer->connect_push_supplier (push_supplier.in (),
+                                           qos.get_SupplierQOS ()
+                                           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    this->proxy_consumer_->connect_push_supplier (push_supplier.in (),
-                                                  qos.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+    ACE_CString supplier_id =
+      supplier_config->supplier_id (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
+    this->proxy_consumer_map_.bind (supplier_id.c_str (), proxy_consumer._retn ());
   }
 
   void
@@ -170,7 +178,6 @@ namespace CIAO
 
     //@@@
     rt_config->start_disjunction_group (1);
-
     rt_config->insert_type (ACE_ES_EVENT_ANY);
 
     RtecEventChannelAdmin::ConsumerQOS_var qos =
@@ -197,13 +204,13 @@ namespace CIAO
       CORBA::SystemException,
       Components::InvalidConnection))
   {
-    ACE_UNUSED_ARG (connection_id);
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer;
 
-    this->proxy_consumer_->disconnect_push_consumer (
+    this->proxy_consumer_map_.unbind (connection_id, proxy_consumer);
+
+    proxy_consumer->disconnect_push_consumer (
       ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
-
-    // What to do with the consumers?!
   }
 
   void
@@ -240,6 +247,9 @@ namespace CIAO
     events[0].header.source = ACE_ES_EVENT_SOURCE_ANY; //this->source_id_;
     events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
     events[0].data.any_value <<= ev;
+
+    // We need to find the right "proxy_consumer" object from the
+    // proxy_consumer_map_, and then call push on it.
 
     this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -290,6 +300,32 @@ namespace CIAO
     this->_remove_ref ();
   }
 
+/*
+  void
+  RTEventServiceSupplier_impl::push_event (
+      Components::EventBase * ev
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "------CIAO::RTEventService::push_event------\n"));
+      }
+
+    RtecEventComm::EventSet events (1);
+    events.length (1);
+    events[0].header.source = ACE_ES_EVENT_SOURCE_ANY; //this->source_id_;
+    events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
+    events[0].data.any_value <<= ev;
+
+    // We need to find the right "proxy_consumer" object from the
+    // proxy_consumer_map_, and then call push on it.
+
+    this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+*/
   //////////////////////////////////////////////////////////////////////
   ///                   Consumer Servant Implementation
   //////////////////////////////////////////////////////////////////////
@@ -426,6 +462,43 @@ namespace CIAO
     this->_remove_ref ();
   }
 
+  void
+  RTEvent_Supplier_Config_impl::register_proxy_consumer (
+      ::CORBA::Object_ptr proxy_consumer
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((::CORBA::SystemException))
+  {
+    // Do a narrow first...
+    this->proxy_consumer_ =
+      RtecEventChannelAdmin::ProxyPushConsumer::_narrow (proxy_consumer);
+  }
+
+  void
+  RTEvent_Supplier_Config_impl::push_event (
+      Components::EventBase * ev
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    if (CIAO::debug_level () > 10)
+      {
+        ACE_DEBUG ((LM_DEBUG, "----CIAO::RTEvent_Supplier_Config::push_event----\n"));
+      }
+
+    RtecEventComm::EventSet events (1);
+    events.length (1);
+    events[0].header.source = ACE_ES_EVENT_SOURCE_ANY; //this->source_id_;
+    events[0].header.type = ACE_ES_EVENT_ANY; //this->type_id_;
+    events[0].data.any_value <<= ev;
+
+    // We need to find the right "proxy_consumer" object from the
+    // proxy_consumer_map_, and then call push on it.
+
+    this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
   //////////////////////////////////////////////////////////////////////
   ///                   Consumer Config Implementation
   //////////////////////////////////////////////////////////////////////
@@ -524,10 +597,13 @@ namespace CIAO
     RtecEventComm::EventSourceID source_id =
       hasher (this->supplier_id_.c_str ());
 
+    /* NOTE: This code needs to be refactored to facilitate the current
+             flexibility of event channel connection setup.
     this->qos_.start_disjunction_group (1);
     this->qos_.insert (source_id,
                        source_id,
                        0);
+                       */
   }
 
   void

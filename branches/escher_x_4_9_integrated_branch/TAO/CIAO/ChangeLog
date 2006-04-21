@@ -1,3 +1,18 @@
+Fri Apr 21 12:44:42 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciao/Deployment_Core.idl
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h
+        
+          Modified the CIAO RT Event service implementation by
+          allow Supplier_Config inherits from the EventConsumerBase,
+          so a component servant with a publisher port will cache
+          the object reference of Supplier_Config object. Once a
+          push_event call is made on this object, it will in turn
+          invoke push opeation on the cached proxy_consumer object of
+          the event channel.
+
 Thu Apr 20 01:40:11 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciao/Deployment_Core.idl
