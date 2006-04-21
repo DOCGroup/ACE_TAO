@@ -1,5 +1,11 @@
 // $Id$
 
+#if defined (_MSC_VER) && (_MSC_VER < 1300)
+#pragma warning (disable: 4018)
+#pragma warning (disable: 4284)
+#pragma warning (disable: 4146)
+#endif
+
 #include "XML_File_Intf.h"
 #include "Utils/XML_Helper.h"
 #include "Deployment.hpp"
@@ -59,7 +65,6 @@ namespace CIAO
     XML_File_Intf::get_plan (void)
     {
       CIAO_TRACE("XML_File_Intf::get_plan");
-
       return this->idl_dp_.release ();
     }
   }

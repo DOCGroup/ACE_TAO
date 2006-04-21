@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Plan_Launcher_Impl.h"
 
 #include "ace/OS.h"
@@ -203,7 +204,7 @@ namespace CIAO
               ACE_DEBUG ((LM_DEBUG,
                           "Plan_Launcher: reconfigure application assembly....."));
               const char* uuid = launcher.re_launch_plan (new_package_url);
-              
+
               if (uuid == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error re-launching plan\n"));
@@ -239,7 +240,7 @@ namespace CIAO
                               "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
                               "unkonw plan uuid.\n"));
             }
-          
+
           orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -276,6 +277,6 @@ ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
   //ACE_DEBUG ((LM_DEBUG, "NEW PLAN LAUNCHER\n"));
-  
+
   return run_main_implementation (argc, argv);
 }

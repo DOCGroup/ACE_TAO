@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 
 //========================================================================
@@ -101,7 +100,7 @@ private:
   ACE_CString server_path_;
 
   /// create a doubly link list
-  ACE_New_Allocator allocator_;
+  //ACE_New_Allocator allocator_;
   ACE_Double_Linked_List<ZIP_File_Info> file_list_;
 
   ACE_CString package_;

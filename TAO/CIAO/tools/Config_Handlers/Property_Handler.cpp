@@ -20,11 +20,11 @@ namespace CIAO
 
     void
     Property_Handler::get_property (
-      const Property& desc,
-      Deployment::Property& toconfig)
+                                    const Property& desc,
+                                    Deployment::Property& toconfig)
     {
       CIAO_TRACE("Property_Handler::get_property");
-      
+
       toconfig.name =
         CORBA::string_dup (desc.name ().c_str ());
 
@@ -35,10 +35,10 @@ namespace CIAO
 
     Property
     Property_Handler::get_property (
-      const Deployment::Property& src)
+                                    const Deployment::Property& src)
     {
       CIAO_TRACE("Property_Handler::get_property - reverse");
-      
+
       ::XMLSchema::string< char > name ((src.name));
       Any value (Any_Handler::get_any (src.value));
 

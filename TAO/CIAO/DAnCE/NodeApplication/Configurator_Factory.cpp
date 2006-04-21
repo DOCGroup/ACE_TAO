@@ -26,6 +26,13 @@ CIAO::NodeApplication_Options::parse_args (int &argc, char *argv[])
         this->rt_support_ = 1;
         shifter.consume_arg ();
       }
+    else if (ACE_OS::strncmp (shifter.get_current (),
+                              "-ORB",
+                              ACE_OS::strlen ("-ORB")) == 0)
+      {
+        // Ignore ORB parameter
+        shifter.ignore_arg ();
+      }
     else if (shifter.cur_arg_strncasecmp ("-o") == 0) 
       {
         // This double checking is necessary to avoid the Arg_Shifter from

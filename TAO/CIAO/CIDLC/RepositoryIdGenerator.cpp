@@ -38,7 +38,7 @@ namespace
 
     return 0;
   }
-  
+
   void
   compute_new_repo_id (Nameable& d)
   {
@@ -177,7 +177,7 @@ namespace
         {
           SemanticGraph::TypePrefix* prev =
             ctx.get<SemanticGraph::TypePrefix*> (STRS[TYPE_PREFIX]);
-        
+
           if (prev->prefix () != tp.prefix ())
           {
             //@@ Seems tp should contain filename and line
@@ -200,7 +200,7 @@ namespace
         else
         {
           decl->context ().set (STRS[TYPE_PREFIX], &tp);
-          
+
           // A typeprefix declaration could appear after the IDL
           // type declaration, so we want to update the repo id
           // every time.
@@ -213,7 +213,7 @@ namespace
     Diagnostic::Stream& dout_;
     SemanticGraph::TranslationUnit& tu_;
   };
-  
+
   class RepoIdGenerator : public Traversal::Interface,
                           public Traversal::EventType,
                           public Traversal::Home,
@@ -224,19 +224,19 @@ namespace
     {
       compute_repo_id (i);
     }
-    
+
     virtual void
     traverse (SemanticGraph::EventType& e)
     {
       compute_repo_id (e);
     }
-    
+
     virtual void
     traverse (SemanticGraph::Home& h)
     {
       compute_repo_id (h);
     }
-    
+
     virtual void
     traverse (SemanticGraph::Component& c)
     {
@@ -264,11 +264,11 @@ bool RepositoryIdGenerator::generate (TranslationUnit& u)
 
   Traversal::ContainsRoot contains_root;
   Traversal::Includes includes;
-  
+
   region.edge_traverser (includes);
   region.edge_traverser (contains_root);
-  
-  Traversal::Root root;  
+
+  Traversal::Root root;
   includes.node_traverser (region);
   contains_root.node_traverser (root);
 
@@ -276,17 +276,17 @@ bool RepositoryIdGenerator::generate (TranslationUnit& u)
   root.edge_traverser (defines);
 
   Traversal::Module module;
-  
+
   defines.node_traverser (module);
   defines.node_traverser (type_id);
   defines.node_traverser (type_prefix);
   defines.node_traverser (repo_id);
-  
+
   module.edge_traverser (defines);
-  
+
   Traversal::Interface iface;
   defines.node_traverser (iface);
-  
+
   unit.traverse (u);
 
   if (dout.error_count () != 0) return false;

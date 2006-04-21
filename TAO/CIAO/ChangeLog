@@ -1,3 +1,8 @@
+Fri Apr 21 16:24:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Merge from the ARMS Escher repository.  This contains fixes too
+          numerous to list to support RACE and shared components.
+
 Fri Apr 21 08:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/ServantSourceGenerator.cpp:

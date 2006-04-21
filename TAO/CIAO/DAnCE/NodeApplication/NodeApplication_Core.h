@@ -48,7 +48,7 @@ namespace CIAO
     virtual int svc (void);
 
     int startup (int argc, char *argv[]);
-    
+
     int run_orb (void);
 
   protected:

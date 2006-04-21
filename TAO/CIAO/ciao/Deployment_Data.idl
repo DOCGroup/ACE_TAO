@@ -1,4 +1,5 @@
 // $Id$
+
 #ifndef DEPLOYMENT_DATA_IDL
 #define DEPLOYMENT_DATA_IDL
 #include "Deployment_Base.idl"
@@ -67,7 +68,7 @@ module Deployment {
     ResourceUsageKind resourceUsage;
     string requirementName;
     string resourceName;
-    any resourceValue;
+    Properties property;
   };
 
   typedef sequence < InstanceResourceDeploymentDescription > InstanceResourceDeploymentDescriptions;
@@ -109,7 +110,7 @@ module Deployment {
     string targetName;
     string requirementName;
     string resourceName;
-    any resourceValue;
+    Properties property;
   };
 
   typedef sequence < ConnectionResourceDeploymentDescription > ConnectionResourceDeploymentDescriptions;
@@ -151,7 +152,7 @@ module Deployment {
   struct ResourceDeploymentDescription {
     string requirementName;
     string resourceName;
-    any resourceValue;
+    Properties property;
   };
 
   typedef sequence < ResourceDeploymentDescription > ResourceDeploymentDescriptions;
@@ -175,7 +176,7 @@ module Deployment {
     MonolithicDeploymentDescriptions implementation;
     InstanceDeploymentDescriptions instance;
     PlanConnectionDescriptions connection;
-    PlanPropertyMappings externalProperty;
+            PlanPropertyMappings externalProperty;
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
     Properties infoProperty;
@@ -195,38 +196,6 @@ module Deployment {
   };
 
   typedef sequence < ComponentPackageReference > ComponentPackageReferences;
-
-  struct SubcomponentPortEndpoint {
-    string portName;
-    unsigned long instanceRef;
-  };
-
-  typedef sequence < SubcomponentPortEndpoint > SubcomponentPortEndpoints;
-
-  struct AssemblyConnectionDescription {
-    string name;
-    Requirements deployRequirement;
-    ComponentExternalPortEndpoints externalEndpoint;
-    SubcomponentPortEndpoints internalEndpoint;
-    ExternalReferenceEndpoints externalReference;
-  };
-
-  typedef sequence < AssemblyConnectionDescription > AssemblyConnectionDescriptions;
-
-  struct SubcomponentPropertyReference {
-    string propertyName;
-    unsigned long instanceRef;
-  };
-
-  typedef sequence < SubcomponentPropertyReference > SubcomponentPropertyReferences;
-
-  struct AssemblyPropertyMapping {
-    string name;
-    string externalName;
-    SubcomponentPropertyReferences delegatesTo;
-  };
-
-  typedef sequence < AssemblyPropertyMapping > AssemblyPropertyMappings;
 
   typedef sequence < ResourceUsageKind > ResourceUsageKinds;
 

@@ -1,4 +1,5 @@
 // $Id$
+
 //---------------------------------------------------------------------------------
 /**
  *  @file MonitorController.h
@@ -15,13 +16,14 @@
 #define MONITOR_CONTROLLER_H
 
 #include "NodeManager_svnt_export.h"
+#include "Deployment_BaseC.h"
+
 #include "TargetManager/TargetManagerC.h"
 #include "ace/Task.h"
 #include "ace/Auto_Ptr.h"
 
 #include "ace/Synch_Traits.h"
 #include "ace/Synch.h"
-
 
 
 /**
@@ -35,6 +37,8 @@ namespace CIAO
 {
 
   class MonitorBase;
+
+  class NodeManager_Impl_Base;
 
   /**
    *  @class MonitorController
@@ -66,46 +70,56 @@ namespace CIAO
        * thread
        */
       void terminate ();
-      
-      
+
+
       /// The Constructor.
       MonitorController (CORBA::ORB_ptr orb,
                          ::Deployment::Domain& domain,
-                         ::Deployment::TargetManager_ptr target
+                         ::Deployment::TargetManager_ptr target,
+                         ::CIAO::NodeManager_Impl_Base* node_mgr
                          );
-      
+
       ~MonitorController ();
     protected:
-      
+
       /**
        * @function terminating.
        * @brief returns the terminating flag
        * @return bool The terminting state of the thread
        */
       bool terminating ();
-      
+
       /// The monitor object
       auto_ptr <MonitorBase>  monitor_;
-      
+
       /// The TargetManagerImpl object
       CIAO::TargetManagerImpl_var target_impl_cmp_;
-      
+
       /// The TargetManager Facet ....
       Deployment::TargetManager_var target_facet_i_;
-      
+
       /// The terminate flag_
       bool terminate_flag_;
-      
+
       //Thread Mutex for synchronizing call
       ACE_SYNCH_MUTEX lock_;
-      
+
       // the ORB pointer ..
       CORBA::ORB_ptr orb_;
-      
+
       /// The initial domain
       ::Deployment::Domain initial_domain_;
+
+      /// The Node Manager
+      ::CIAO::NodeManager_Impl_Base* node_mgr_;
+
+      /// flag tells ; what to monitor
+      bool monitor_cpu_usage_;
+
+      /// TO add component pid or not ..
+      bool add_component_pid_;
     };
 
 } // CIAO
-  
+
 #endif

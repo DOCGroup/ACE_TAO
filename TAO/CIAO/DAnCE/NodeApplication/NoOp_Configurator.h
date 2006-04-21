@@ -24,7 +24,7 @@ namespace CIAO
    *
    * @brief The NoOp_Configurator doesn't do anything.
    */
-  class NoOp_Configurator_Export NoOp_Configurator 
+  class NoOp_Configurator_Export NoOp_Configurator
     : public NodeApp_Configurator
   {
   public:

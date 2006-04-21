@@ -18,6 +18,7 @@
     <property>
       <name>LoadAverage</name>
       <kind>Quantity</kind>
+      <dynamic>true</dynamic>
       <value>
         <type>
 	  <kind>tk_long</kind>
@@ -36,6 +37,7 @@
     <property>
       <name>LoadAverage</name>
       <kind>Quantity</kind>
+      <dynamic>true</dynamic>
       <value>
         <type>
 	  <kind>tk_long</kind>
@@ -57,6 +59,7 @@
       <property>
         <name>LoadAverage</name>
         <kind>Quantity</kind>
+        <dynamic>true</dynamic>
         <value>
           <type>
 	    <kind>tk_long</kind>
@@ -81,6 +84,7 @@
         <property>
           <name>LoadAverage</name>
           <kind>Quantity</kind>
+          <dynamic>true</dynamic>
           <value>
             <type>
 	      <kind>tk_long</kind>

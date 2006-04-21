@@ -1,7 +1,18 @@
 // $Id$
+
 #include "Containers_Info_Map.h"
 #include "ciao/CIAO_Config.h"
 #include "ciao/CIAO_common.h"
+
+//Added for HTTP
+#include "URL_Parser.h"              //for parsing the URL
+#include "HTTP_Client.h"             //the HTTP client class to downloading packages
+#include "ace/Message_Block.h"       //for ACE_Message_Block
+#include "ace/OS_NS_fcntl.h"         //for open
+#include "ace/OS_NS_unistd.h"        //for close
+#include "ace/OS_NS_sys_stat.h"      //for filesize and mkdir
+#include "ace/OS_NS_string.h"        //for string functions
+
 
 namespace CIAO
 {
@@ -10,8 +21,29 @@ namespace CIAO
           const Deployment::ComponentPlans & shared_components)
     : map_ (CIAO_DEFAULT_MAP_SIZE),
       plan_ (plan),
-      shared_components_ (shared_components)
+      shared_components_ (shared_components),
+      HTTP_DOWNLOAD_PATH ()
   {
+    char* temp = ACE_OS::getenv ("CIAO_ROOT");
+    HTTP_DOWNLOAD_PATH += temp;
+
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+    HTTP_DOWNLOAD_PATH += "\\";
+#else
+    HTTP_DOWNLOAD_PATH += "/";
+#endif
+
+    HTTP_DOWNLOAD_PATH += "HTTP_DOWNLOADED_LIBS";
+
+    ACE_OS::mkdir(HTTP_DOWNLOAD_PATH.c_str ());
+    //if dir already exists a -1 is returned
+    //we ignore this, just need to make sure the directory exists
+
+    //now lets update the loader path to include
+    //the HTTP_DOWNLOAD_PATH
+    this->update_loader_path ();
+
+
     this->initialize_map ();
     this->build_map ();
   }
@@ -60,11 +92,15 @@ namespace CIAO
 
         if (this->plan_.instance[i].deployedResource.length () != 0)
           {
+            /*
             my_resource_id =
               this->plan_.instance[i].deployedResource[0].resourceName.in ();
 
             this->plan_.instance[i].deployedResource[0].resourceValue >>=
               my_policy_set_id;
+            */
+
+            // ACE_ERROR ((LM_ERROR, "ERROR: RT-CCM support has been disabled until code in Containers_Info_Map is updated to reflect IDL changes."));
           }
 
         // If we find a existing policy_set_id, then do nothing.
@@ -188,7 +224,8 @@ namespace CIAO
     const char * policy_set_id = "";
     if (instance.deployedResource.length () != 0)
       {
-        instance.deployedResource[0].resourceValue >>= policy_set_id;
+        //        instance.deployedResource[0].resourceValue >>= policy_set_id;
+        //ACE_ERROR ((LM_ERROR, "ERROR: RT-CCM support has been disabled until code in Containers_Info_Map is updated to reflect IDL changes."));
       }
 
     // Find the ContainerImplementationInfo entry from the map
@@ -237,6 +274,35 @@ namespace CIAO
       {
         const Deployment::ArtifactDeploymentDescription & arti =
           this->plan_.artifact[ impl.artifactRef[j] ];
+
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+        for (size_t loc_num = 0;
+             loc_num < arti.location.length ();
+             ++loc_num)
+          {
+            if (ACE_OS::strstr (arti.location[loc_num], "http://"))
+              {
+                ACE_CString path;
+                if (!this->resolve_http_reference (arti.location[loc_num],
+                                                   path))
+                  {
+                    ACE_ERROR
+                         ((LM_ERROR,
+                         "CIAO (%P|%t) Containers_Info_Map.cpp -"
+                         "Containers_Info_Map::insert_instance_into_container -"
+                         "ERROR: Unable to resolve HTTP ref to location[%d] of %s\n",
+                         loc_num, arti.name.in ()));
+
+                    arti.location[loc_num] = CORBA::string_dup ("HTTP_failure");
+                  }
+                else
+                  {
+                    arti.location[loc_num] = CORBA::string_dup (arti.name.in ());
+                    //enque for cleanup
+                  }
+              }
+          }
+#endif
 
         ACE_CString tmp = arti.name.in ();
         ssize_t pos;
@@ -349,3 +415,179 @@ is_shared_component (ACE_CString & name)
 
   return false;
 }
+
+
+/*---------------------------------------------------------------------
+ * functions to support HTTP capabilities of the NodeApplicationManager
+ * @author Stoyan Paunov
+ *
+ * Purpose: Adding the HTTP access code which will resove
+ * any references to HTTP URLs
+ */
+
+  // This function checks if the HTTP_DOWNLOAD_PATH is
+  // in the library load path
+  void
+  CIAO::Containers_Info_Map::update_loader_path (void)
+  {
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+    char* path = ACE_OS::getenv ("PATH");
+#else
+    char* path = ACE_OS::getenv ("LD_LIBRARY_PATH");
+#endif
+
+    if (ACE_OS::strstr (path, this->HTTP_DOWNLOAD_PATH.c_str ()))
+       return;
+
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+    ACE_CString new_path = "PATH=";
+#else
+    ACE_CString new_path = "LD_LIBRARY_PATH=";
+#endif
+
+    new_path += this->HTTP_DOWNLOAD_PATH;
+
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+    new_path += ";";
+#else
+    new_path += ":";
+#endif
+
+    new_path += path;
+
+//turn off the HTTP feature for Linux until
+//I discover what the problem with Linux is
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+    ACE_OS::putenv (new_path.c_str ());
+#endif
+
+  }
+
+  //This function resolves any http location references
+  //in the name of the implementation artifacts
+  //It returns true on success and false on failure
+
+  bool
+  CIAO::Containers_Info_Map::resolve_http_reference (const char* location,
+                                                     ACE_CString &path)
+  {
+
+    ACE_DEBUG ((LM_INFO,
+               "Attempting to download %s\n",
+               location));
+
+    //figure out the file name
+    char* name = const_cast<char*> (location);
+    char* p = NULL;
+    while (1)
+    {
+      if (p = ACE_OS::strstr (name, "/"))
+      {
+        name = ++p;
+        continue;
+      }
+      else if (p = ACE_OS::strstr (name, "\\"))
+      {
+        name = ++p;
+        continue;
+      }
+      else
+        break;
+    }
+
+    //get the file
+    ACE_Message_Block* mb = 0;
+    ACE_NEW_RETURN (mb, ACE_Message_Block (0,0), false);
+
+    if (!this->retrieve_via_HTTP (location, *mb))
+    {
+      mb->release ();
+      return false;
+    }
+
+    path = HTTP_DOWNLOAD_PATH;
+    path += "/";
+    path += name;
+
+    if (!this->write_to_disk (path.c_str (), *mb))
+    {
+      mb->release ();
+      return false;
+    }
+
+    mb->release ();
+    return true;
+  }
+
+  //function to retvieve a file via HTTP
+  //stores the file in the passed preallocated ACE_Message_Block
+  //returns 1 on success
+  //        0 on error
+
+  bool
+  CIAO::Containers_Info_Map::retrieve_via_HTTP (const char* URL,
+                                                ACE_Message_Block &mb)
+  {
+    URL_Parser *parser = TheURL_Parser::instance ();
+    if (!parser->parseURL (const_cast<char*> (URL)))
+    return false;
+
+    // Create a client
+    HTTP_Client client;
+
+    // Open the client
+    if (client.open (parser->filename_,
+                     parser->hostname_,
+                     parser->port_) == -1)
+    {
+        client.close ();
+        return false;
+    }
+
+    // Read from it
+    if (client.read (&mb) <= 0)
+    {
+        client.close ();
+        return false;
+    }
+
+    return true;
+  }
+
+  //This function attempts to write a sequence of bytes from an
+  //ACE_Message_Block to a specified location. A 0 is returned
+  //in the case of an error and a 1 upon success
+
+  bool
+  CIAO::Containers_Info_Map::write_to_disk (const char* full_path,
+                                            ACE_Message_Block& mb,
+                                            bool replace)
+  {
+    ACE_stat stat;
+
+    if (ACE_OS::stat(full_path, &stat) != -1 && !replace)
+       return false;
+
+    // Open a file handle to the local filesystem
+    ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
+    if (handle == ACE_INVALID_HANDLE)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("[CIAO::Containers_Info_Map::write_to_disk]"),
+                           ACE_TEXT (" file creation error")),
+                           false);
+
+    //write the data to the file
+    for (ACE_Message_Block * curr = &mb; curr != 0; curr = curr->cont ())
+    if (ACE_OS::write_n (handle, curr->rd_ptr(), curr->length()) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("[CIAO::Containers_Info_Map::write_to_disk]"),
+                           ACE_TEXT (" write error")),
+                           false);
+
+    // Close the file handle
+    ACE_OS::close (handle);
+
+    return true;
+  }

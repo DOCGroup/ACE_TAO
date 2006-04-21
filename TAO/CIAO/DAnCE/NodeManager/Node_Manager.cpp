@@ -17,6 +17,7 @@ char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
 char *nodeapp_location_ = 0;
 char *nodeapp_options_ = 0;
+const char *pid_file_name_ = 0;
 int write_to_ior_ = 0;
 int register_with_ns_ = 0;
 int nodeapp_loc_ = 0;
@@ -25,29 +26,33 @@ int spawn_delay = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:na:");
+  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:na:p:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'z':
+        nodeapp_options_ = "-ORBDebugLevel 10";
+        break;
+
       case 'o':  // get the file name to write to
-       ior_file_name_ = get_opts.opt_arg ();
-       write_to_ior_ = 1;
-      break;
+        ior_file_name_ = get_opts.opt_arg ();
+        write_to_ior_ = 1;
+        break;
 
       case 'c':  // get the default svc.conf filename
         default_svcconf_ = get_opts.opt_arg ();
-      break;
+        break;
 
       case 'm':  // get the svc.conf map configuration filename
         svcconf_config_ = get_opts.opt_arg ();
-      break;
+        break;
 
       case 's': //get the location to spawn the NodeApplication
         nodeapp_location_ = get_opts.opt_arg ();
         nodeapp_loc_ = 1;
-      break;
+        break;
 
       case 'a': // Nodeapplication arguments
         nodeapp_options_ = get_opts.opt_arg ();
@@ -55,11 +60,15 @@ parse_args (int argc, char *argv[])
 
       case 'd': //get the spawn delay argument
         spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
-      break;
+        break;
 
       case 'n':
         register_with_ns_ = 1;
-      break;
+        break;
+
+      case 'p':
+        pid_file_name_ = get_opts.opt_arg ();
+        break;
 
       case '?':  // display help for use of the server.
       default:
@@ -71,6 +80,7 @@ parse_args (int argc, char *argv[])
                            "-s <NodeApplication executable path>\n"
                            "-a <arguments to NodeApplication>\n"
                            "-d <spawn delay for nodeapplication>\n"
+                           "-p <pid file>\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -96,6 +106,23 @@ write_IOR(const char* ior)
   return 0;
 }
 
+void
+write_pid (void)
+{
+  if (pid_file_name_ == 0)
+    return;
+
+  FILE* pid_file = ACE_OS::fopen (pid_file_name_, "w");
+
+  if (pid_file)
+    {
+      ACE_OS::fprintf (pid_file,
+                       "%i",
+                       ACE_OS::getpid ());
+      ACE_OS::fclose (pid_file);
+    }
+}
+
 bool
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
@@ -116,8 +143,16 @@ register_with_ns (const char * name_context,
   name.length (1);
   name[0].id = name_context;
 
-  // Register the servant with the Naming Service
-  naming_context->bind (name, obj);
+  try
+    {
+      // Register the servant with the Naming Service
+      naming_context->bind (name, obj);
+    }
+  catch (CosNaming::NamingContext::AlreadyBound &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Node_Manager.cpp: Name already bound, rebinding....\n"));
+      naming_context->rebind (name, obj);
+    }
 
   return true;
 }
@@ -170,7 +205,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (adapter.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
 
       // Create and install the CIAO NodeManager servant
       CIAO::NodeManager_Impl *node_manager_servant = 0;
@@ -232,18 +267,20 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Here start the Monitor
-/*
-      MonitorController* monitor_controller
-              = new MonitorController (orb);
+      /*
+        MonitorController* monitor_controller
+        = new MonitorController (orb);
 
-      ACE_DEBUG ((LM_DEBUG , "Before Activate"));
-       monitor_controller->activate ();
-      ACE_DEBUG ((LM_DEBUG , "After Activate"));
-*/
+        ACE_DEBUG ((LM_DEBUG , "Before Activate"));
+        monitor_controller->activate ();
+        ACE_DEBUG ((LM_DEBUG , "After Activate"));
+      */
 
       // Finishing Deployment part
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO_NodeManager is running...\n"));
+
+      write_pid ();
 
       // Run the main event loop for the ORB.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -91,9 +91,12 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
       // For every connection struct we finish the connection.
       for (CORBA::ULong i = 0; i < length; ++i)
         {
+          ACE_CString name = connections[i].instanceName.in ();
+
           // For ES_to_Consumer connection, we simply call
           // handle_es_consumer_connection method.
-          if (connections[i].kind == Deployment::rtecEventConsumer)
+          //if (connections[i].kind == Deployment::rtecEventConsumer)
+          if (this->_is_es_consumer_conn (connections[i]))
             {
               this->handle_es_consumer_connection (
                       connections[i],
@@ -103,7 +106,6 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
           // For other type of connections, we need to fetch the
           // objref of the source component
-          ACE_CString name = connections[i].instanceName.in ();
           Component_State_Info comp_state;
 
           if (this->component_state_map_.find (name, comp_state) != 0)
@@ -117,7 +119,15 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
               ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
 
+          Components::EventConsumerBase_var consumer;
+
           Components::CCMObject_var comp = comp_state.objref_;
+
+          if (CORBA::is_nil (comp.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
+              throw Deployment::InvalidConnection ();
+            }
 
           switch (connections[i].kind)
             {
@@ -137,23 +147,16 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 break;
 
               case Deployment::EventPublisher:
-                this->handle_publisher_consumer_connection (
-                        comp.in (),
-                        connections[i],
-                        add_connection);
-                break;
-
-              case Deployment::rtecEventPublisher:
-                this->handle_publisher_es_connection (
-                        comp.in (),
-                        connections[i],
-                        add_connection);
-                break;
-
-              case Deployment::rtecEventConsumer:
-                this->handle_es_consumer_connection (
-                        connections[i],
-                        add_connection);
+                if (this->_is_publisher_es_conn (connections[i]))
+                  this->handle_publisher_es_connection (
+                          comp.in (),
+                          connections[i],
+                          add_connection);
+                else
+                  this->handle_publisher_consumer_connection (
+                          comp.in (),
+                          connections[i],
+                          add_connection);
                 break;
 
               default:
@@ -250,6 +253,7 @@ CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
 
     ((*iter).int_id_).state_ = PASSIVE;
   }
+  ACE_DEBUG ((LM_DEBUG, "exiting passivate\n"));
 }
 
 Deployment::ComponentInfos *
@@ -372,6 +376,9 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Components::RemoveFailure))
 {
+  ACE_DEBUG ((LM_DEBUG, "NA_I: removing component %s\n",
+        inst_name));
+
   // Fetch the container object reference from the componet_container_map
   ::Deployment::Container_var container_ref;
   if (this->component_container_map_.find (inst_name, container_ref) != 0)
@@ -392,10 +399,74 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
 }
 
 void
+CIAO::NodeApplication_Impl::passivate_component (const char * name
+                                                 ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Components::RemoveFailure))
+{
+  Component_State_Info comp_state;
+
+  if (this->component_state_map_.find (name, comp_state) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::passivate_component, "
+                  "invalid instance [%s] \n",
+                   name));
+      ACE_TRY_THROW (Deployment::StartError ());
+    }
+
+  if (CORBA::is_nil (comp_state.objref_.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
+      throw Deployment::StartError ();
+    }
+
+  comp_state.objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+CIAO::NodeApplication_Impl::activate_component (const char * name
+                                                ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Components::RemoveFailure))
+{
+  Component_State_Info comp_state;
+
+  if (this->component_state_map_.find (name, comp_state) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::passivate_component, "
+                  "invalid instance [%s] \n",
+                   name));
+      ACE_TRY_THROW (Deployment::StartError ());
+    }
+
+  if (CORBA::is_nil (comp_state.objref_.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
+      throw Deployment::StartError ();
+    }
+
+  comp_state.objref_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  comp_state.objref_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  comp_state.objref_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+
+void
 CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If we still have components installed, then do nothing
+
   if (this->component_state_map_.current_size () != 0)
     return;
 
@@ -403,12 +474,14 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   const CORBA::ULong set_size = this->container_set_.size ();
   for (CORBA::ULong i = 0; i < set_size; ++i)
     {
+      ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
       this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   // Remove all containers
   // Maybe we should also deactivate container object reference.
+  ACE_DEBUG ((LM_DEBUG, "NA: remove all\n"));
   this->container_set_.remove_all ();
 
   if (CIAO::debug_level () > 1)
@@ -416,7 +489,10 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 
   //For static deployment, ORB will be shutdown in the Static_NodeManager
   if (this->static_entrypts_maps_ == 0)
-    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+    {
+      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG ((LM_DEBUG, "NA: shutdown\n"));
+    }
 }
 
 
@@ -573,10 +649,10 @@ create_connection_key (const Deployment::Connection & connection)
   (*retv) += connection.portName.in ();
   (*retv) += connection.endpointInstanceName.in ();
   (*retv) += connection.endpointPortName.in ();
-  if (CIAO::debug_level () > 11)
-    {
-      ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
-    }
+
+  if (CIAO::debug_level () > 3)
+    ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
+
   return retv;
 }
 
@@ -840,7 +916,7 @@ handle_publisher_es_connection (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidConnection))
 {
-  if (connection.kind != Deployment::rtecEventPublisher)
+  if (! this->_is_publisher_es_conn (connection))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -936,7 +1012,7 @@ handle_es_consumer_connection (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidConnection))
 {
-  if (connection.kind != Deployment::rtecEventConsumer)
+  if (! this->_is_es_consumer_conn (connection))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -1157,4 +1233,26 @@ CIAO::NodeApplication_Impl::build_event_connection (
       }
 
     ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection () completed!!!!\n"));
+}
+
+bool
+CIAO::NodeApplication_Impl::
+_is_es_consumer_conn (Deployment::Connection conn)
+{
+  if (conn.kind == Deployment::EventConsumer &&
+    ACE_OS::strcmp (conn.endpointPortName, "CIAO_ES") == 0)
+    return true;
+  else
+    return false;
+}
+
+bool
+CIAO::NodeApplication_Impl::
+_is_publisher_es_conn (Deployment::Connection conn)
+{
+  if (conn.kind == Deployment::EventPublisher &&
+    ACE_OS::strcmp (conn.endpointPortName, "CIAO_ES") == 0)
+    return true;
+  else
+    return false;
 }

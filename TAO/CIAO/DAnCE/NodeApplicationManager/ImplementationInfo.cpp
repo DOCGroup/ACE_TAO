@@ -6,9 +6,8 @@
 #include "ace/SString.h"
 
 CIAO::NodeImplementationInfoHandler::
-NodeImplementationInfoHandler (
-     const ::Deployment::DeploymentPlan & plan,
-     const Deployment::ComponentPlans & shared_components) :
+NodeImplementationInfoHandler (const ::Deployment::DeploymentPlan & plan,
+                               const Deployment::ComponentPlans & shared_components) :
   plan_ (plan),
   node_info_ (0),
   containers_info_map_ (plan, shared_components)
@@ -44,7 +43,7 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
   // users to specify some self-conflicting configuration in the descriptor.
   for (i = 0; i < instance_len; ++i)
     {
-      if (this->plan_.instance[i].deployedResource.length () != 0)
+      if (false && this->plan_.instance[i].deployedResource.length () != 0)
         {
           target_resource_id =
             this->plan_.instance[i].deployedResource[0].resourceName.in ();
