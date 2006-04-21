@@ -143,6 +143,17 @@ namespace CIAO
     /**
      * @var ACE_Hash_Map_Manager<> proxy_supplier_map_
      *
+     * Mapping of each event publisher to a proxy consumer for disconnect purposes.
+     */
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            RtecEventChannelAdmin::ProxyPushConsumer_var,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> proxy_consumer_map_;
+
+    /**
+     * @var ACE_Hash_Map_Manager<> proxy_supplier_map_
+     *
      * Mapping of each event sink to a proxy supplier for disconnect purposes.
      */
     ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -317,6 +328,18 @@ namespace CIAO
     virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual void register_proxy_consumer (
+        ::CORBA::Object_ptr proxy_consumer
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
+    virtual void push_event (
+        Components::EventBase * ev
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
   private:
     ACE_CString supplier_id_;
 
@@ -325,6 +348,8 @@ namespace CIAO
     ACE_SupplierQOS_Factory qos_;
 
     PortableServer::POA_var poa_;
+
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
   };
 }
 
