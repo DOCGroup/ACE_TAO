@@ -1110,7 +1110,7 @@ handle_es_consumer_connection (
             ACE_DEBUG ((LM_DEBUG,
                         "DAnCE (%P|%t): Creating a disjunction group of size [%d]\n",
                         size));
-            consumer_config->start_conjunction_group (size);
+            consumer_config->start_disjunction_group (size);
             break;
           default:
             ACE_DEBUG ((LM_DEBUG, "Unknown event filter type.\n"));
