@@ -45,7 +45,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
 
-  if (this->ACE_NESTED_CLASS (TAO, IIOP_SSL_Connector)::open (orb_core) == -1)
+  if (this->TAO::IIOP_SSL_Connector::open (orb_core) == -1)
     return -1;
 
   // Our connect creation strategy
@@ -77,7 +77,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO::SSLIOP::Connector::close (void)
 {
-  (void) this->ACE_NESTED_CLASS (TAO, IIOP_SSL_Connector)::close ();
+  (void) this->TAO::IIOP_SSL_Connector::close ();
 
   delete this->base_connector_.creation_strategy ();
   delete this->base_connector_.concurrency_strategy ();
@@ -406,7 +406,7 @@ TAO::SSLIOP::Connector::iiop_connect (
 
   // Note that the IIOP-only transport descriptor is used!
   return
-    this->ACE_NESTED_CLASS (TAO, IIOP_SSL_Connector)::connect (
+    this->TAO::IIOP_SSL_Connector::connect (
       resolver,
       &iiop_desc,
       timeout
