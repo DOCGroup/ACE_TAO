@@ -8,6 +8,10 @@ Fri Apr 21 07:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl:
         * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
         * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
           Removed usage of ACE_NESTED_CLASS
 
 Thu Apr 20 14:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
