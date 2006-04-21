@@ -112,7 +112,7 @@ progress_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  @ACE_FLTK_CPPFLAGS@
+  $(ACE_FLTK_CPPFLAGS)
 
 progress_SOURCES = \
   Progress_i.cpp \
@@ -120,6 +120,9 @@ progress_SOURCES = \
   testC.cpp \
   testS.cpp \
   Progress_i.h
+
+progress_LDFLAGS = \
+ $(ACE_FLTK_LDFLAGS)
 
 progress_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_FlResource.la \
@@ -132,7 +135,7 @@ progress_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_FLTK_LIBS@
+  $(ACE_FLTK_LIBS)
 
 endif BUILD_X11
 endif BUILD_TAO_FLRESOURCE
