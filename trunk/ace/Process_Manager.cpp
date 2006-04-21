@@ -652,6 +652,46 @@ ACE_Process_Manager::terminate (pid_t pid,
   return ACE_OS::kill (pid, sig);
 }
 
+
+int
+ACE_Process_Manager::set_scheduler (const ACE_Sched_Params & params,
+                                         pid_t pid)
+{
+  ACE_TRACE ("ACE_Process_Manager::sched_setscheduler");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                            ace_mon, this->lock_, -1));
+
+  // Check to see if the process identified by the given pid is managed by
+  // this instance of ACE_Process_Manager.
+  ssize_t i = this->find_proc (pid);
+
+  if (i == -1)
+    // set "no such process" error
+    return ACE_INVALID_PID;
+
+  return ACE_OS::sched_params (params, pid);
+}
+
+int
+ACE_Process_Manager::set_scheduler_all (const ACE_Sched_Params & params)
+{
+  ACE_TRACE ("ACE_Process_Manager::setscheduler_all");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                            ace_mon, this->lock_, -1));
+  pid_t pid;
+  for (size_t i = 0; i < this->current_count_; ++i)
+    {
+      pid = this->process_table_[i].process_->getpid ();
+      if (ACE_OS::sched_params (params, pid) != 0)
+        return -1;
+    }
+  return 0;
+
+}
+
+
 // Locate the index in the table associated with <pid>.  Must be
 // called with the lock held.
 
