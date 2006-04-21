@@ -1,3 +1,8 @@
+Fri Apr 21 07:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Caching_Utility_T.cpp:
+          Removed invalid added const
+
 Thu Apr 20 19:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
