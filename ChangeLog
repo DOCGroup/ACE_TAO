@@ -1,3 +1,12 @@
+Fri Apr 21 16:28:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.cpp
+        * ace/Process_Manager.cpp
+        * ace/Process_Manager.h
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
+        
+        Merge from ARMS Escher repository.
+        
 Fri Apr 21 07:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Caching_Utility_T.cpp:
