@@ -382,7 +382,7 @@ namespace CIAO
     void
     purge_connections (Deployment::Connections_var & connections,
                        const char * inst);
-                       
+
     /**
      * The first step in finish_launching an application in the
      * domain-level.  We install all the CIAO_Event_Service objects
@@ -408,9 +408,10 @@ namespace CIAO
      * deployment requirement. The deployment requirement only specifies
      * an identifier/reference to the EventServiceDeploymentDescriptions.
      */
-    virtual const Deployment::Properties &
+    virtual const Deployment::Properties_var
     get_connection_QoS_configuration (
-      const Deployment::Requirement & requirement);
+        const Deployment::Requirement & requirement)
+      ACE_THROW_SPEC ((Deployment::StartError));
 
   protected:
     /// location of the Domainapplication

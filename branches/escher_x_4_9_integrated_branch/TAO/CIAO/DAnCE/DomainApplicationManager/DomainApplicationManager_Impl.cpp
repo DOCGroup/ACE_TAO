@@ -1308,7 +1308,7 @@ handle_es_connection (
   if (binding.deployRequirement.length () != 0)
     {
       retv[len].config =
-        this->get_connection_QoS_configuration (binding.deployRequirement[0]);
+        (this->get_connection_QoS_configuration (binding.deployRequirement[0])).in ();
     }
 
   // If we didnt find the objref of the connection ...
@@ -2052,9 +2052,10 @@ purge_connections (Deployment::Connections_var & connections,
     }
 }
 
-const Deployment::Properties &
+const Deployment::Properties_var
 CIAO::DomainApplicationManager_Impl::
 get_connection_QoS_configuration (const Deployment::Requirement & requirement)
+  ACE_THROW_SPEC ((Deployment::StartError))
 {
   // Get the name/identifier of the filter associated with
   // this connection
@@ -2080,22 +2081,31 @@ get_connection_QoS_configuration (const Deployment::Requirement & requirement)
         }
 
       // Search for the desired filter
+      bool found = false;
       for (CORBA::ULong j = 0; j < this->esd_->length (); ++j)
         {
           // Populate the "filters" info, in case this CIAO_Event_Service has
           // one or more filters specified through descriptors
           for (CORBA::ULong k = 0; k < this->esd_[j].filters.length (); ++k)
             {
+              ACE_DEBUG ((LM_DEBUG, "the current filter name is %s\n", this->esd_[j].filters[k].name.in ()));
+
               if (ACE_OS::strcmp (this->esd_[j].filters[k].name.in (),
                                   filter_name) == 0)
                 {
                   retv->length (len + 1);
                   retv[len].name =  CORBA::string_dup ("EventFilter");
                   retv[len].value <<= this->esd_[j].filters[k];
+                  found = true;
                   break;
                 }
             }
         }
+      if (found == false)
+        {
+          ACE_DEBUG ((LM_ERROR, "DAnCE (%P|%t): Error, No matching filter found\n"));
+          throw Deployment::StartError ();
+        }
     }
-  return retv.inout ();
+  return retv;
 }

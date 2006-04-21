@@ -4,6 +4,9 @@ Fri Apr 21 12:44:42 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
         * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp        
         
           Modified the CIAO RT Event service implementation by
           allow Supplier_Config inherits from the EventConsumerBase,
