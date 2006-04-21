@@ -1,0 +1,12 @@
+
+Performance tests for the performance of the DIOP
+implementation using oneways. 
+
+1000 oneway requests containing a sequence of 256 chars are 
+performed and the average time per call is measured.
+
+To execute the test either
+
+- use 'run_test.pl', or
+
+- start 'server' and 'client' without any arguments
