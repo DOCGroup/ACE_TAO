@@ -276,13 +276,12 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t const entries_to_remove
+  size_t entries_to_remove
     = ACE_MAX (static_cast<size_t> (1),
                static_cast<size_t> (static_cast<double> (purge_percent)
                                     / 100 * available_entries));
 
-  if (entries_to_remove >= available_entries  ||
-      entries_to_remove == 0)
+  if (entries_to_remove >= available_entries  || entries_to_remove == 0)
     entries_to_remove = available_entries - 1;
 
   KEY *key_to_remove = 0;
