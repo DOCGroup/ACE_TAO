@@ -76,8 +76,9 @@ struct string_traits_base<CORBA::WChar>
 #if defined(ACE_HAS_WCHAR) || defined(ACE_HAS_XPG4_MULTIBYTE_CHAR)
     return CORBA::wstring_dup(L"");
 #else
-#warning "platform not configured with native wchar_t support"
-    static CORBA::WChar empty[] = { 0 };
+//#warning "platform not configured with native wchar_t support"
+//    static CORBA::WChar empty[] = { 0 };
+    CORBA::WChar empty[] = { 0 };
     return CORBA::wstring_dup(empty);
 #endif /* 0 */
   }
