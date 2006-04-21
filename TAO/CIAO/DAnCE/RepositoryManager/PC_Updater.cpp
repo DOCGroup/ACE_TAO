@@ -187,14 +187,14 @@ void PC_Updater::clear_list ()
       const char* name;
       const char* ext;
 
-      name = ACE_OS::strstr (str, iad.location[0].in ());
+      name = ACE_OS::strstr (str, iad.location[0]);
 
       if (name)
       {
         ext = ACE_OS::strstr (name, ".");
 
         ACE_CString loc (this->server_path_);
-        loc += iad.location[0].in ();
+        loc += iad.location[0];
         loc += ext;
 
         iad.location[0] = CORBA::string_dup (loc.c_str ());

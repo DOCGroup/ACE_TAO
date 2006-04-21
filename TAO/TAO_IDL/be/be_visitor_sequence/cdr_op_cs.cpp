@@ -93,12 +93,12 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-    << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+    << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << "#if !defined _TAO_CDR_OP_"
       << node->flat_name () << "_CPP_" << be_nl
       << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
-      << be_nl << be_nl;
+      << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -134,6 +134,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << be_uidt_nl;
 
   *os << "}";
+
+  *os << be_nl << be_global->core_versioning_end ();
 
   *os << be_nl
       << "#endif /* _TAO_CDR_OP_"
