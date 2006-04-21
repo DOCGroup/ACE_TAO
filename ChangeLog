@@ -1,12 +1,24 @@
 Fri Apr 21 16:28:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
-
+       
+         Merge from ARMS Escher repository.
+     
         * ace/OS_NS_Thread.cpp
+        
+          Updated sched_params() to not ignore the process id passed in.
+          Also enhanced the Windows implementation to get a handle to the
+          process specified before applying the priority class changes.
+
         * ace/Process_Manager.cpp
         * ace/Process_Manager.h
+
+           Added methods set_scheduler and set_scheduler_all
+           to set scheduling parameters for process(es) managed by this
+           class.
+        
         * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
         
-        Merge from ARMS Escher repository.
-        
+          Fixed build ordering problem in CIAO.
+                
 Fri Apr 21 07:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Caching_Utility_T.cpp:
