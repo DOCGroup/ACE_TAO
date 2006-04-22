@@ -1,5 +1,6 @@
-Sat Apr 22 21:13:10 UTC 2006    <wotte@blade35.isislab.vanderbilt.edu>
+Sat Apr 22 21:13:10 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp
         * tools/Config_Handlers/Basic_Deployment_Data.hpp
         * tools/Config_Handlers/Deployment.hpp
         * tools/Config_Handlers/ccd.hpp
