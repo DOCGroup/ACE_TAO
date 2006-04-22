@@ -1,3 +1,19 @@
+Sat Apr 22 21:13:10 UTC 2006    <wotte@blade35.isislab.vanderbilt.edu>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/cpd.hpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        
+        Compile errors. 
+        
 Fri Apr 21 16:24:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Merge from the ARMS Escher repository.  
