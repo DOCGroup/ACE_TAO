@@ -1,8 +1,13 @@
+Sun Apr 23 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+          Removed some left over ACE_NESTED_CLASS usage
+
 Fri Apr 21 20:43:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/Makefile.am:
         * performance-tests/Makefile.am:
-        
+
           Remove handful of subdirectories that have not yet been updated
           to work with autoconf builds.
 
