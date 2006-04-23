@@ -3215,8 +3215,8 @@ POA_CORBA::ComponentIR::ModuleDef::ModuleDef (const ModuleDef& rhs)
     POA_CORBA::IRObject (rhs),
     POA_CORBA::Container (rhs),
     POA_CORBA::Contained (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, ModuleDef) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA::ComponentIR, Container) (rhs)
+    POA_CORBA::ModuleDef (rhs),
+    POA_CORBA::ComponentIR::Container (rhs)
 {
 }
 
@@ -3945,8 +3945,8 @@ POA_CORBA::ComponentIR::Repository::Repository (const Repository& rhs)
     TAO_ServantBase (rhs),
     POA_CORBA::IRObject (rhs),
     POA_CORBA::Container (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, Repository) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA::ComponentIR, Container) (rhs)
+    POA_CORBA::Repository (rhs),
+    POA_CORBA::ComponentIR::Container (rhs)
 {
 }
 
@@ -7619,7 +7619,7 @@ POA_CORBA::ComponentIR::EmitsDef::EmitsDef (const EmitsDef& rhs)
     TAO_ServantBase (rhs),
     POA_CORBA::IRObject (rhs),
     POA_CORBA::Contained (rhs),
-    ACE_NESTED_CLASS (POA_CORBA::ComponentIR, EventPortDef) (rhs)
+    POA_CORBA::ComponentIR::EventPortDef (rhs)
 {
 }
 
@@ -8321,7 +8321,7 @@ POA_CORBA::ComponentIR::PublishesDef::PublishesDef (const PublishesDef& rhs)
     TAO_ServantBase (rhs),
     POA_CORBA::IRObject (rhs),
     POA_CORBA::Contained (rhs),
-    ACE_NESTED_CLASS (POA_CORBA::ComponentIR, EventPortDef) (rhs)
+    POA_CORBA::ComponentIR::EventPortDef (rhs)
 {
 }
 
@@ -9023,7 +9023,7 @@ POA_CORBA::ComponentIR::ConsumesDef::ConsumesDef (const ConsumesDef& rhs)
     TAO_ServantBase (rhs),
     POA_CORBA::IRObject (rhs),
     POA_CORBA::Contained (rhs),
-    ACE_NESTED_CLASS (POA_CORBA::ComponentIR, EventPortDef) (rhs)
+    POA_CORBA::ComponentIR::EventPortDef (rhs)
 {
 }
 
@@ -9764,9 +9764,9 @@ POA_CORBA::ComponentIR::ComponentDef::ComponentDef (const ComponentDef& rhs)
     POA_CORBA::Container (rhs),
     POA_CORBA::Contained (rhs),
     POA_CORBA::IDLType (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, InterfaceDef) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, InterfaceAttrExtension) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, ExtInterfaceDef) (rhs)
+    POA_CORBA::InterfaceDef (rhs),
+    POA_CORBA::InterfaceAttrExtension (rhs),
+    POA_CORBA::ExtInterfaceDef (rhs)
 {
 }
 
@@ -11597,7 +11597,7 @@ POA_CORBA::ComponentIR::FactoryDef::FactoryDef (const FactoryDef& rhs)
     TAO_ServantBase (rhs),
     POA_CORBA::IRObject (rhs),
     POA_CORBA::Contained (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, OperationDef) (rhs)
+    POA_CORBA::OperationDef (rhs)
 {
 }
 
@@ -12362,7 +12362,7 @@ POA_CORBA::ComponentIR::FinderDef::FinderDef (const FinderDef& rhs)
     TAO_ServantBase (rhs),
     POA_CORBA::IRObject (rhs),
     POA_CORBA::Contained (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, OperationDef) (rhs)
+    POA_CORBA::OperationDef (rhs)
 {
 }
 
@@ -13105,9 +13105,9 @@ POA_CORBA::ComponentIR::HomeDef::HomeDef (const HomeDef& rhs)
     POA_CORBA::Container (rhs),
     POA_CORBA::Contained (rhs),
     POA_CORBA::IDLType (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, InterfaceDef) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, InterfaceAttrExtension) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA, ExtInterfaceDef) (rhs)
+    POA_CORBA::InterfaceDef (rhs),
+    POA_CORBA::InterfaceAttrExtension (rhs),
+    POA_CORBA::ExtInterfaceDef (rhs)
 {
 }
 
