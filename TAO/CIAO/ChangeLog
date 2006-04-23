@@ -1,3 +1,8 @@
+Sun Apr 23 11:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Utils/XML_Helper.h:
+          Fixed compile error
+
 Sat Apr 22 21:13:10 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp
@@ -12,15 +17,15 @@ Sat Apr 22 21:13:10 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/pcd.hpp
         * tools/Config_Handlers/toplevel.hpp
         * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
-        
-        Compile errors. 
-        
+
+        Compile errors.
+
 Fri Apr 21 16:24:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * Merge from the ARMS Escher repository.  
-          
+        * Merge from the ARMS Escher repository.
+
           Changelog entries to follow:
-        
+
    Tue Apr 11 09:29:12 UTC 2006    <wotte@blade35.isislab.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
@@ -28,8 +33,8 @@ Fri Apr 21 16:24:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/NodeApplication/NodeApplication_Impl.h
         * DAnCE/NodeManager/Node_Manager.cpp
 
-        Additional debugging/compile fixes. 
-        
+        Additional debugging/compile fixes.
+
   Tue Apr 11 08:30:42 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciao/Deployment_Core.idl
@@ -37,7 +42,7 @@ Fri Apr 21 16:24:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
         * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
         * DAnCE/ExecutionManager/ExecutionManager_Impl.h
-        
+
           Modified to passivate (and reactivate later) shared components
           when tearing down an assembly.
 
