@@ -1,3 +1,9 @@
+Mon Apr 24 09:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.{h,cpp}:
+          Made the arguments of the set method a const reference, this fixes
+          the internal backend errors in the BCB2006 release builds.
+
 Mon Apr 24 06:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl:
