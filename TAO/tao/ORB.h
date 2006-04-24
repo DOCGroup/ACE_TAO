@@ -134,6 +134,30 @@ namespace CORBA
 
   typedef CORBA::Short ValueModifier;
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
+    // Typedefs for CORBA::RequestSeq, which is an argument of
+    // send_multiple_requests_*().
+
+    typedef
+      TAO::unbounded_object_reference_sequence<
+          CORBA::Request, CORBA::Request_var
+        >
+      RequestSeq;
+
+    typedef
+      TAO_VarSeq_Var_T<
+          RequestSeq
+        >
+      RequestSeq_var;
+
+    typedef
+      TAO_Seq_Out_T<
+          RequestSeq
+        >
+      RequestSeq_out;
+#endif
+
   /**
    * @class ORB
    *
@@ -229,27 +253,6 @@ namespace CORBA
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-    // Typedefs for CORBA::ORB::RequestSeq, which is an argument of
-    // send_multiple_requests_*().
-
-    typedef
-      TAO::unbounded_object_reference_sequence<
-          CORBA::Request, CORBA::Request_var
-        >
-      RequestSeq;
-
-    typedef
-      TAO_VarSeq_Var_T<
-          RequestSeq
-        >
-      RequestSeq_var;
-
-    typedef
-      TAO_Seq_Out_T<
-          RequestSeq
-        >
-      RequestSeq_out;
-
     void create_list (CORBA::Long count,
                       CORBA::NVList_ptr &new_list
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -281,10 +284,10 @@ namespace CORBA
       CORBA::ServiceInformation_out service_information
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    void send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &req
+    void send_multiple_requests_oneway (const CORBA::RequestSeq &req
                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    void send_multiple_requests_deferred (const CORBA::ORB::RequestSeq &req
+    void send_multiple_requests_deferred (const CORBA::RequestSeq &req
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     void get_next_response (CORBA::Request_ptr &req

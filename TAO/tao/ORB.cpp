@@ -413,7 +413,7 @@ CORBA::ORB::get_default_context (CORBA::Context_ptr &
 }
 
 void
-CORBA::ORB::send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &
+CORBA::ORB::send_multiple_requests_oneway (const CORBA::RequestSeq &
                                           ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
@@ -424,7 +424,7 @@ CORBA::ORB::send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &
 }
 
 void
-CORBA::ORB::send_multiple_requests_deferred (const CORBA::ORB::RequestSeq &
+CORBA::ORB::send_multiple_requests_deferred (const CORBA::RequestSeq &
                                             ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (

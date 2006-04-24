@@ -1,3 +1,12 @@
+Mon Apr 24 13:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/params.cpp:
+          Small const improvement
+
+        * tao/ORB.{h,cpp}:
+          Updated CORBA::ORB::RequestSeq to CORBA::RequestSeq as the spec
+          describes. Fixes bugzilla bug 2512.
+
 Mon Apr 24 12:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
