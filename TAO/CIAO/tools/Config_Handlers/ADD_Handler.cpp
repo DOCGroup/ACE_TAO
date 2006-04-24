@@ -7,9 +7,7 @@
 
 ACE_RCSID (DAnCE,
            ADD_Handler,
-           "$Id$");
-
-
+           "$Id$")
 
 namespace CIAO
 {
