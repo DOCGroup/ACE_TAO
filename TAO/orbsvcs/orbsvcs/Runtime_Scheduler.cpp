@@ -101,16 +101,16 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle
 // Set characteristics of the RT_Info corresponding to the passed handle.
 
 void
-ACE_Runtime_Scheduler::set (const RtecScheduler::handle_t &handle,
-                            const RtecScheduler::Criticality_t &criticality,
-                            const RtecScheduler::Time &time,
-                            const RtecScheduler::Time &typical_time,
-                            const RtecScheduler::Time &cached_time,
-                            const RtecScheduler::Period_t &period,
-                            const RtecScheduler::Importance_t &importance,
-                            const RtecScheduler::Quantum_t &quantum,
-                            const RtecScheduler::Threads_t &threads,
-                            const RtecScheduler::Info_Type_t &info_type
+ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
+                            ::RtecScheduler::Criticality_t criticality,
+                            ::RtecScheduler::Time time,
+                            ::RtecScheduler::Time typical_time,
+                            ::RtecScheduler::Time cached_time,
+                            ::RtecScheduler::Period_t period,
+                            ::RtecScheduler::Importance_t importance,
+                            ::RtecScheduler::Quantum_t quantum,
+                            ::RtecScheduler::Threads_t threads,
+                            ::RtecScheduler::Info_Type_t info_type
                             ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
