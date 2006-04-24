@@ -4472,7 +4472,7 @@ TAO_FlowEndPoint::open (const char *flowname,
           protocol_spec [i] = CORBA::string_dup (entry.carrier_protocol_str ());
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "%s\n",
+                        "[%s]\n",
                         static_cast<char const*>(protocol_spec[i])));
         }
       this->set_protocol_restriction (protocol_spec
