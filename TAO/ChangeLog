@@ -1,3 +1,9 @@
+Mon Apr 24 10:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1676_Regression/*:
+          Added regression for bug 1676 written by Kees van Marle. This bug
+          seems not to be fixed yet.
+
 Mon Apr 24 09:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Runtime_Scheduler.{h,cpp}:
