@@ -90,6 +90,8 @@ typedef double ACE_timer_t;
    typedef long long ACE_LOFF_T;
 #elif defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x551)
    typedef long long ACE_LOFF_T;
+#elif defined (ACE_LYNXOS_MAJOR)
+   typedef long long ACE_LOFF_T;
 #else
    typedef loff_t ACE_LOFF_T;
 #endif
