@@ -10,7 +10,7 @@
 
 ACE_RCSID (DAnCE,
            IDREF_Base,
-           "$Id$");
+           "$Id$")
 
 namespace CIAO
   {
