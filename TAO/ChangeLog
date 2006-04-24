@@ -1,3 +1,14 @@
+Mon Apr 24 11:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          When we can't get a valuetype adapter throw an internal corba
+          exception
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Updated include generated for the valuetype library, makes sure
+          that the valuetype library gets linked into the executable when
+          building static.
+
 Mon Apr 24 10:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1676_Regression/*:
