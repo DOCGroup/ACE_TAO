@@ -1,3 +1,17 @@
+Mon Apr 24 14:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+          Improved debug messages so that we can see if a string is empty
+          or not.
+
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+          Doxygen cleanup
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Improved debugging output to resolve bug that seems to be introduced
+          by the sequence changes, the flowspec sequence has length of 1 but
+          just an empty string as value
+
 Mon Apr 24 13:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/params.cpp:
