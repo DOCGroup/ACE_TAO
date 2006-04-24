@@ -1,3 +1,9 @@
+Mon Apr 24 12:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+          Added include of ObjectIdListC.h to resolve compile errors related
+          to this type with Sun Studio 10
+
 Mon Apr 24 11:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted change below, set method is IDL generated.
