@@ -240,7 +240,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                                    TAO_AV_Core::Flow_Component flow_comp)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address %s\n", address));
+    ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%s]\n", address));
 
   if (address == 0)
     return 0;
@@ -897,7 +897,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_Reverse_FlowSpec_Entry::parse %s\n",
+                "TAO_Reverse_FlowSpec_Entry::parse [%s]\n",
                 flowSpec_entry));
 
   if (tokenizer [TAO_AV_ADDRESS] != 0)
