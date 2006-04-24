@@ -262,10 +262,9 @@ protected:
 
 /**
  * @class TAO_Forward_FlowSpec_Entry
- * @brief
  */
 class TAO_AV_Export TAO_Forward_FlowSpec_Entry
-  :public TAO_FlowSpec_Entry
+  : public TAO_FlowSpec_Entry
 {
 public:
   enum Position {TAO_AV_FLOWNAME = 0,

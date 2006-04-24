@@ -544,7 +544,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Forward_FlowSpec_Entry::parse %s\n",
+                  "TAO_Forward_FlowSpec_Entry::parse [%s]\n",
                   flowSpec_entry));
 
   if (tokenizer [TAO_AV_DIRECTION] != 0)
