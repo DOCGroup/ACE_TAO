@@ -1,3 +1,9 @@
+Mon Apr 24 06:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/IDREF_Base.cpp:
+          Removed not needed semi colon that caused compile errors in some
+          builds
+
 Sun Apr 23 11:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Utils/XML_Helper.h:
