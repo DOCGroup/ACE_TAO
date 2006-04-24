@@ -1,3 +1,9 @@
+Mon Apr 24 09:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Increase template depth to resolve compile errors when building
+          TAO with the new sequence implementation
+
 Mon Apr 24 09:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
