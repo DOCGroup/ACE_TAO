@@ -81,7 +81,7 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
   TAO_EndpointSet endpoint_set;
 
   // Parse the additional endpoints.
-  int result =
+  int const result =
     this->parse_and_add_endpoints (additional_endpoints,
                                    endpoint_set);
 
