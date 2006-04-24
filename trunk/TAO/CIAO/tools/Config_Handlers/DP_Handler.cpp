@@ -24,7 +24,7 @@
 
 ACE_RCSID (Config_Handlers,
            DP_Handler,
-           "$Id$");
+           "$Id$")
 
   namespace CIAO
   {
@@ -179,7 +179,7 @@ ACE_RCSID (Config_Handlers,
                                                 this->idl_dp_->infoProperty [len]);
               }
           }
-        
+
         // Read in the realizes, if present
         if (xsc_dp.realizes_p ())
           {
@@ -196,7 +196,7 @@ ACE_RCSID (Config_Handlers,
 
         IDD_Handler::instance_deployment_descrs (xsc_dp,
                                                  this->idl_dp_->instance);
-        
+
         this->idl_dp_->connection.length (xsc_dp.count_connection ());
         std::for_each (xsc_dp.begin_connection (),
                        xsc_dp.end_connection (),
