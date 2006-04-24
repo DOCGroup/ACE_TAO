@@ -57,6 +57,10 @@ public:
   // The function that computes a hash value.
 };
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+  template class TAO_Trading_Serv_Export TAO::String_var <char>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key,
                                 int,
                                 ACE_Hash<TAO_String_Hash_Key>,
