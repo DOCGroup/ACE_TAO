@@ -1218,52 +1218,19 @@ namespace
 
         // Generate IF block for each event sources.
         {
-          os << "// Operations defined in " << t.scoped_name ().scope_name ()
-             << "::CCM_" << t.name () << "_Context" << endl
-             << "// that enable component swapping in the container"
-             << endl << endl;
+          Traversal::Component component_emitter;
 
-          os << STRS[COMP_CD] << " *" << endl
-             << t.name () << "_Context::get_registered_consumers (" << endl
-             << "const char *publisher_name" << endl
-             << STRS[ENV_SRC] << ")" << endl
-             << STRS[EXCP_START] << endl
-             << STRS[EXCP_SYS] << "," << endl
-             << STRS[EXCP_IN] << "," << endl
-             << STRS[EXCP_IC] << "))" << endl
-             << "{"
-             << "if (publisher_name == 0)" << endl
-             << "{"
-             << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
-             << "}"
-             << STRS[COMP_CD] << " *tmp = 0;"
-             << STRS[COMP_CD] << "_var retval;"
-             << "CORBA::ULong _ciao_index = 0;"
-             << "CORBA::ULong _ciao_size = 0;"
-             << STRS[ACE_UA] << " (tmp);"
-             << STRS[ACE_UA] << " (retval);"
-             << STRS[ACE_UA] << " (_ciao_index);"
-             << STRS[ACE_UA] << " (_ciao_size);" << endl;
+          Traversal::Inherits inherits;
+          inherits.node_traverser (component_emitter);
 
-          // Generate IF block for each event sources.
-          {
-            Traversal::Component component_emitter;
+          Traversal::Defines defines;
+          component_emitter.edge_traverser (defines);
+          component_emitter.edge_traverser (inherits);
 
-            Traversal::Inherits inherits;
-            inherits.node_traverser (component_emitter);
+          SwappableGetConsumersEmitter get_consumers_emitter (ctx);
+          defines.node_traverser (get_consumers_emitter);
 
-            Traversal::Defines defines;
-            component_emitter.edge_traverser (defines);
-            component_emitter.edge_traverser (inherits);
-
-            SwappableGetConsumersEmitter get_consumers_emitter (ctx);
-            defines.node_traverser (get_consumers_emitter);
-
-            component_emitter.traverse (t);
-          }
-
-          os << STRS[ACE_TR] << " (" << STRS[EXCP_IN] << " (), 0);"
-             << "}";
+          component_emitter.traverse (t);
         }
 
         os << STRS[ACE_TR] << " ( " << STRS[EXCP_IN] << " (), 0);"
