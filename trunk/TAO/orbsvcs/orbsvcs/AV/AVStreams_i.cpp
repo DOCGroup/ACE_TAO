@@ -1106,7 +1106,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                           0);
           for (i=0; i< flow_spec.length ();i++)
             {
-              TAO_Forward_FlowSpec_Entry *entry;
+              TAO_Forward_FlowSpec_Entry *entry = 0;
               ACE_NEW_RETURN (entry,
                               TAO_Forward_FlowSpec_Entry,
                               0);
@@ -2016,17 +2016,17 @@ TAO_StreamEndPoint::stop (const AVStreams::flowSpec &flow_spec
                begin != end; ++begin)
             {
               TAO_Forward_FlowSpec_Entry entry;
-               entry.parse (flow_spec[i]);
-               if (ACE_OS::strcmp ((*begin)->flowname (), entry.flowname ()) == 0)
-                {
-                  TAO_FlowSpec_Entry *entry = *begin;
-                  //                  (*begin)->protocol_object ()->stop ();
-                  if (entry->handler() != 0)
-                    entry->handler ()->stop (entry->role ());
-                  if (entry->control_handler () != 0)
-                    entry->control_handler ()->stop (entry->role ());
-                  break;
-                }
+              entry.parse (flow_spec[i]);
+              if (ACE_OS::strcmp ((*begin)->flowname (), entry.flowname ()) == 0)
+               {
+                 TAO_FlowSpec_Entry *entry = *begin;
+                 //                  (*begin)->protocol_object ()->stop ();
+                 if (entry->handler() != 0)
+                   entry->handler ()->stop (entry->role ());
+                 if (entry->control_handler () != 0)
+                   entry->control_handler ()->stop (entry->role ());
+                 break;
+               }
             }
         }
     }
@@ -2310,10 +2310,9 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\n(%P|%t) TAO_StreamEndPoint::request_connection: "
-                    "flowspec has length = %d"
-                    "and the strings are:",
+                    "flowspec has length = %d and the strings are:\n",
                     flow_spec.length ()));
-      u_int i;
+      CORBA::ULong i;
 
       for (i=0;i<flow_spec.length ();i++)
         {
@@ -2322,22 +2321,24 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                           TAO_Forward_FlowSpec_Entry,
                           0);
 
+          CORBA::String_var string_entry = CORBA::string_dup (flow_spec[i]);
+
           if(TAO_debug_level > 0)
              ACE_DEBUG(( LM_DEBUG,
-                         "%N:%l Parsing flow spec: %s\n",
-                         static_cast<char const*>(flow_spec[i])));
+                         "%N:%l Parsing flow spec: [%s]\n",
+                         string_entry.in ()));
 
-          if (entry->parse (flow_spec[i]) == -1)
+          if (entry->parse (string_entry.in ()) == -1)
           {
             if (TAO_debug_level > 0)
               ACE_DEBUG ((LM_DEBUG,
-                          "%N:%l Error parsing flow_spec: %s\n",
-                          static_cast<char const*>(flow_spec[i])));
+                          "%N:%l Error parsing flow_spec: [%s]\n",
+                          string_entry.in ()));
             return 0;
           }
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO_StreamEndPoint::request_connection Flow Spec %s",
+                        "TAO_StreamEndPoint::request_connection Flow Spec [%s]",
                         entry->entry_to_string ()));
 
           this->forward_flow_spec_set.insert (entry);
