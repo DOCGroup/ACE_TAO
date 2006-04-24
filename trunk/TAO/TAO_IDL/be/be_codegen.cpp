@@ -1554,7 +1554,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
         }
 
       this->gen_standard_include (this->client_header_,
-                                  "tao/Valuetype/Valuetype_Adapter_Impl.h");
+                                  "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h");
 
       // Check for setting this bit performed in y.tab.cpp, actual checking
       // code is in be_valuetype.cpp.

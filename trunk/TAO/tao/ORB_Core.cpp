@@ -3208,6 +3208,12 @@ TAO_ORB_Core::valuetype_adapter (void)
           ACE_ENDTRY;
           ACE_CHECK_RETURN(0);
         }
+
+      if (this->valuetype_adapter_ == 0)
+        {
+           ACE_THROW_RETURN (CORBA::INTERNAL (),
+                             0);
+        }
     }
 
   return this->valuetype_adapter_;
