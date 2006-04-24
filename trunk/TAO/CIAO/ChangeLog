@@ -1,3 +1,9 @@
+Mon Apr 24 18:53:22 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp
+        
+          Fixed a code generation problem caused by careless merging.
+
 Mon Apr 24 18:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/ADD_Handler.cpp:
