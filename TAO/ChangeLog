@@ -1,3 +1,8 @@
+Mon Apr 24 06:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl:
+          Removed some left over ACE_NESTED_CLASS usage
+
 Sun Apr 23 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
