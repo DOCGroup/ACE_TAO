@@ -29,6 +29,7 @@ ACE_RCSID (tao,
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "tao/default_environment.h"
+#include "tao/ObjectIdListC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"

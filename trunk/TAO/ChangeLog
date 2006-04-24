@@ -1,3 +1,12 @@
+Mon Apr 24 11:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted change below, set method is IDL generated.
+
+        Mon Apr 24 09:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * orbsvcs/orbsvcs/Runtime_Scheduler.{h,cpp}:
+          Made the arguments of the set method a const reference, this fixes
+          the internal backend errors in the BCB2006 release builds.
+
 Mon Apr 24 11:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
