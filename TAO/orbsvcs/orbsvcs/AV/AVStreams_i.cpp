@@ -2288,7 +2288,6 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
     ACE_DEBUG ((LM_DEBUG,
                 "\n(%P|%t) TAO_StreamEndPoint::request_connection called"));
 
-
   int result = 0;
   ACE_TRY
     {
@@ -2338,7 +2337,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
           }
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO_StreamEndPoint::request_connection Flow Spec [%s]",
+                        "TAO_StreamEndPoint::request_connection flow spec [%s]\n",
                         entry->entry_to_string ()));
 
           this->forward_flow_spec_set.insert (entry);
