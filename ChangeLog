@@ -1,3 +1,10 @@
+Tue Apr 25 13:50:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Signal_Test.cpp:
+          Fixed this test for (modern) Linux and Solaris at least.
+          The crux is blocking signals before calling sigwait() when doing
+          synchronous signal handling.
+
 Tue Apr 25 09:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Base_Thread_Adapter.h:
