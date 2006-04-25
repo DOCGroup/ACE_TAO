@@ -156,6 +156,7 @@ namespace CORBA
     virtual ~StringValue (void);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
 
   private:
     void operator= (const StringValue & val);
@@ -254,6 +255,7 @@ namespace CORBA
     virtual ~WStringValue (void);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
 
   private:
     void operator= (const WStringValue & val);

@@ -162,6 +162,7 @@ namespace Messaging
 
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+    virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
 
   private:
     ExceptionHolder (const ExceptionHolder &);

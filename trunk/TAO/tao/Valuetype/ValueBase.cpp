@@ -142,11 +142,11 @@ CORBA::ValueBase::_tao_any_destructor (void *x)
 CORBA::Boolean
 CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
                                 const CORBA::ValueBase *this_,
-                                ptrdiff_t /*formal_type_id*/)
+                                ptrdiff_t formal_type_id)
 {
   if ( ! write_special_value (strm, this_))
   {
-    return write_value (strm, this_);
+    return write_value (strm, this_, formal_type_id);
   }
 
   return true;
@@ -199,7 +199,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                                       const char * const repo_id)
 {
   CORBA::ValueFactory factory = 0;
-  ACE_UNUSED_ARG (repo_id);
+
   // %! yet much to do ... look for +++ !
 
   // 1. Get the <value-tag> (else it may be <indirection-tag> or <null-ref>).
@@ -231,6 +231,9 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   if (TAO_OBV_GIOP_Flags::is_indirection_tag (valuetag))
         {
     //@@TODO: read indirection value.
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO does not currently support valuetype indirecton\n")));
     return false;
     }
   else if (TAO_OBV_GIOP_Flags::is_null_ref (valuetag))
@@ -239,27 +242,29 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     valuetype = 0;
     return true;
     }
+  else if (TAO_OBV_GIOP_Flags::has_single_type_info (valuetag))
+    {
+      ACE_CString id;
+      if (! strm.read_string(id))
+        return false;
+      ids.push_back (id);
+    }
+  else if (TAO_OBV_GIOP_Flags::has_list_type_info (valuetag))
+    {
+      if (! read_repository_ids(strm, ids))
+        return false;
+    }
   else if (TAO_OBV_GIOP_Flags::has_no_type_info (valuetag))
     {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("missing value type information or unknown value tag: %x\n"),
-                       valuetag),
-                       false);
-  }
-  else if (TAO_OBV_GIOP_Flags::has_single_type_info (valuetag))
-        {
-    ACE_CString id;
-    if (! strm.read_string(id))
-          return false;
-    ids.push_back (id);
-        }
-  else if (TAO_OBV_GIOP_Flags::has_list_type_info (valuetag))
-            {
-    if (! read_repository_ids(strm, ids))
-              return false;
-            }
+      ids.push_back (repo_id);
+    }
   else
-    return false;
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) unknown value tag: %x\n"), valuetag));
+      return false;
+    }
 
   TAO_ORB_Core *orb_core = strm.orb_core ();
 
@@ -275,8 +280,8 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
             }
         }
 
-  CORBA::Boolean chunking = TAO_OBV_GIOP_Flags::is_chunked (valuetag);
   CORBA::Boolean require_truncation = false;
+  CORBA::Boolean chunking = TAO_OBV_GIOP_Flags::is_chunked (valuetag);
 
   CORBA::ULong num_ids = ids.size ();
   // Find the registered factory for this unmarshalling valuetype. If any
@@ -300,7 +305,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
+            ACE_TEXT ("TAO (%P|%t) OBV factory is null, id = %s\n"), repo_id));
             }
       return false;
         }
@@ -439,9 +444,11 @@ CORBA::ValueBase::write_special_value(TAO_OutputCDR &strm,
 
 
 CORBA::Boolean
-CORBA::ValueBase::write_value(TAO_OutputCDR &strm, const CORBA::ValueBase * value)
+CORBA::ValueBase::write_value(TAO_OutputCDR &strm,
+                              const CORBA::ValueBase * value,
+                              ptrdiff_t formal_type_id)
 {
-  if (! value->write_value_header (strm))
+  if (! value->write_value_header (strm, formal_type_id))
     return false;
 
   if (! value->_tao_marshal_v (strm))
@@ -452,13 +459,30 @@ CORBA::ValueBase::write_value(TAO_OutputCDR &strm, const CORBA::ValueBase * valu
 
 
 CORBA::Boolean
-CORBA::ValueBase::write_value_header(TAO_OutputCDR &strm) const
+CORBA::ValueBase::write_value_header(TAO_OutputCDR &strm,
+                                     ptrdiff_t formal_type_id) const
 {
-  //TODO: The list of repo ids may only be necessary if the formal_type_id
-  //      is unequal to the 'true derived' type of this object.
-  //      In the future only write the repo ids if necessary.
-  //      This would require knowing the formal parameter type.
-  //      See section 15.3.4.2 of the CORBA spec.
+#if defined (TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING)
+  // this case allows TAO to avoid marshaling the typeID for values
+  // where the actual type matches the formal type (ie not a derived
+  // type).
+  //
+  // I would much prefer that there be a way to have a -ORB option to
+  // control this behavior, but for now there is no reference to the
+  // ORB Core available during marshaling (there is during unmarshaling)
+  // and no other way to communicate such configuration values.
+
+  CORBA::Boolean is_formal_type =
+    this->_tao_match_formal_type (formal_type_id);
+#else
+  // Unfortunately, all versions of tao prior to TAO 1.5.2 did not
+  // support unmarshaling of valuetypes that did not explicitly
+  // marshal the type id. At least it is benign to always encode the
+  // typecode value, even if it can be a little verbose.
+  CORBA::Boolean is_formal_type =
+    false;
+  ACE_UNUSED_ARG (formal_type_id);
+#endif /* TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
 
   // Get the list of repository ids for this valuetype.
   Repository_Id_List repository_ids;
@@ -476,32 +500,31 @@ CORBA::ValueBase::write_value_header(TAO_OutputCDR &strm) const
   if (this->is_truncatable_ || this->chunking_)
     valuetag |= TAO_OBV_GIOP_Flags::Chunking_tag_sigbits;
 
-  if (num_ids == 1)
-  {
+  if (!is_formal_type || this->is_truncatable_)
     valuetag |= TAO_OBV_GIOP_Flags::Type_info_single;
+
+  if (num_ids > 1)
+      valuetag |= TAO_OBV_GIOP_Flags::Type_info_list;
+
     // Write <value-tag>.
     if (! strm.write_long (valuetag))
     {
       return false;
     }
-  }
-  else
-  {
-    valuetag |= TAO_OBV_GIOP_Flags::Type_info_list;
-    // Write <value-tag> and number of repository ids.
-    if (! strm.write_long (valuetag)
-      || ! strm.write_long (num_ids))
-    {
+
+  if (num_ids > 1 && !strm.write_long (num_ids))
       return false;
-    }
-  }
 
+  if (this->is_truncatable_ ||
+      !is_formal_type ||
+      num_ids > 1)
+    {
   // Marshal type information.
-
   for( CORBA::Long i = 0; i < num_ids; ++i )
     {
       if (! strm.write_string (repository_ids[i]))
         return false;
+        }
     }
 
   return true;
