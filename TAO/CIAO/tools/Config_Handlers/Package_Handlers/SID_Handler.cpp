@@ -19,7 +19,7 @@ namespace CIAO
       IDREF_Base<CORBA::ULong> SID_Handler::IDREF;
 
       void
-      SID_Handler::sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
+      SID_Handler::handle_sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
                                          ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         CIAO_TRACE ("SID_Handler::sub_comp_inst_descr");

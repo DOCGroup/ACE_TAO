@@ -84,8 +84,8 @@ namespace CIAO
              adcb != adce;
              ++adcb)
           {
-            Property_Handler::get_property ((*adcb),
-                                            dest.execParameter[len++]);
+            Property_Handler::handle_property ((*adcb),
+					       dest.execParameter[len++]);
           }
 
         if (src.id_p ())

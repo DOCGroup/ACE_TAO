@@ -21,7 +21,7 @@ namespace CIAO
       {
         struct SPE_Handler
         {
-          static void get_spe (const SubcomponentPortEndpoint &desc,
+          static void handle_spe (const SubcomponentPortEndpoint &desc,
                                ::Deployment::SubcomponentPortEndpoint &toconfig)
           {
             CIAO_TRACE("SPE_Handler::get_spe");
@@ -50,11 +50,11 @@ namespace CIAO
         typedef Sequence_Handler < SubcomponentPortEndpoint,
                                    ::Deployment::SubcomponentPortEndpoints,
                                    ::Deployment::SubcomponentPortEndpoint,
-                                   SPE_Handler::get_spe > SPE_Functor;
+                                   SPE_Handler::handle_spe > SPE_Functor;
 
         struct ACD_Handler
         {
-          static void get_acd (const AssemblyConnectionDescription &desc,
+          static void handle_acd (const AssemblyConnectionDescription &desc,
                                ::Deployment::AssemblyConnectionDescription &toconfig)
           {
             CIAO_TRACE("ACD_Handler::get_acd");
@@ -113,12 +113,12 @@ namespace CIAO
         typedef Sequence_Handler < AssemblyConnectionDescription,
                                    ::Deployment::AssemblyConnectionDescriptions,
                                    ::Deployment::AssemblyConnectionDescription,
-                                   ACD_Handler::get_acd > ACD_Functor;
+                                   ACD_Handler::handle_acd > ACD_Functor;
 
 
         struct SPR_Handler
         {
-          static void get_spr (const SubcomponentPropertyReference &desc,
+          static void handle_spr (const SubcomponentPropertyReference &desc,
                                ::Deployment::SubcomponentPropertyReference &toconfig)
           {
             CIAO_TRACE("SPR_Handler::get_spr");
@@ -149,11 +149,11 @@ namespace CIAO
         typedef Sequence_Handler < SubcomponentPropertyReference,
                                    ::Deployment::SubcomponentPropertyReferences,
                                    ::Deployment::SubcomponentPropertyReference,
-                                   SPR_Handler::get_spr > SPR_Functor;
+                                   SPR_Handler::handle_spr > SPR_Functor;
 
         struct APM_Handler
         {
-          static void get_apm (const AssemblyPropertyMapping &desc,
+          static void handle_apm (const AssemblyPropertyMapping &desc,
                                ::Deployment::AssemblyPropertyMapping &toconfig)
           {
             CIAO_TRACE("APM_Handler::get_apm");
@@ -185,7 +185,7 @@ namespace CIAO
         typedef Sequence_Handler < AssemblyPropertyMapping,
                                    ::Deployment::AssemblyPropertyMappings,
                                    ::Deployment::AssemblyPropertyMapping,
-                                   APM_Handler::get_apm > APM_Functor;
+                                   APM_Handler::handle_apm > APM_Functor;
       }
 
 

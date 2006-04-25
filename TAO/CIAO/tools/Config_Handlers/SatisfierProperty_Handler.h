@@ -1,11 +1,11 @@
 //================================================
 /**
-*  @file  SatisfierProperty_Handler.h
-*
-*  $Id$
-*
-*  @author Jules White <jules@dre.vanderbilt.edu>
-*/
+ *  @file  SatisfierProperty_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Jules White <jules@dre.vanderbilt.edu>
+ */
 //================================================
 
 #ifndef CIAO_CONFIG_HANDLERS_SATIS_PROPERTY_HANDLER_H
@@ -22,49 +22,49 @@
 
 namespace Deployment
 {
-struct SatisfierProperty;
-class SatisfierProperties;
+  struct SatisfierProperty;
+  class SatisfierProperties;
 }
 
 namespace CIAO
 {
-namespace Config_Handlers
-{
-class SatisfierProperty;
+  namespace Config_Handlers
+    {
+      class SatisfierProperty;
 
-/*
-* @class SatisfierProperty_Handler
-*
-* @brief Handler class for <CCMComponentPortDescription> types.
-*
-* This class defines handler methods to map values from
-* XSC objects, parsed from the descriptor files, to the
-* corresponding CORBA IDL type for the schema element.
-*
-*/
+      /*
+       * @class SatisfierProperty_Handler
+       *
+       * @brief Handler class for <CCMComponentPortDescription> types.
+       *
+       * This class defines handler methods to map values from
+       * XSC objects, parsed from the descriptor files, to the
+       * corresponding CORBA IDL type for the schema element.
+       *
+       */
 
-class Config_Handlers_Export SatisfierProperty_Handler
-{
-public:
-SatisfierProperty_Handler (void);
-virtual ~SatisfierProperty_Handler (void);
+      class Config_Handlers_Export SatisfierProperty_Handler
+	{
+	public:
+	  SatisfierProperty_Handler (void);
+	  virtual ~SatisfierProperty_Handler (void);
 
-typedef Sequence_Iterator< const ::Deployment::SatisfierProperties, const ::Deployment::SatisfierProperty > sat_prop_iter;
+	  typedef Sequence_Iterator< const ::Deployment::SatisfierProperties, const ::Deployment::SatisfierProperty > sat_prop_iter;
 
-/// This method maps the values from the XSC object
-/// <CIAO::Config_Handlers::SatisfierProperty> to the CORBA IDL type
-/// <Deployment::SatisfierProperty>.
-static void get_sat_property (const SatisfierProperty& desc,
-::Deployment::SatisfierProperty& toconfig);
-static SatisfierProperty get_sat_property (const ::Deployment::SatisfierProperty& src);
-};
+	  /// This method maps the values from the XSC object
+	  /// <CIAO::Config_Handlers::SatisfierProperty> to the CORBA IDL type
+	  /// <Deployment::SatisfierProperty>.
+	  static void handle_sat_property (const SatisfierProperty& desc,
+					   ::Deployment::SatisfierProperty& toconfig);
+	  static SatisfierProperty get_sat_property (const ::Deployment::SatisfierProperty& src);
+	};
 
-typedef Sequence_Handler < SatisfierProperty,
-::Deployment::SatisfierProperties,
-::Deployment::SatisfierProperty,
-SatisfierProperty_Handler::get_sat_property> SatisfierProperty_Functor;
+      typedef Sequence_Handler < SatisfierProperty,
+	::Deployment::SatisfierProperties,
+	::Deployment::SatisfierProperty,
+	SatisfierProperty_Handler::handle_sat_property> SatisfierProperty_Functor;
 
-}
+    }
 }
 
 #include /**/ "ace/post.h"

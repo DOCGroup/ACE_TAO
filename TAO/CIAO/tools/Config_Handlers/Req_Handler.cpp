@@ -18,8 +18,8 @@ namespace CIAO
     }
 
     void
-    Req_Handler::get_requirement (const Requirement& desc,
-                                  Deployment::Requirement& toconfig)
+    Req_Handler::handle_requirement (const Requirement& desc,
+				     Deployment::Requirement& toconfig)
     {
       CIAO_TRACE("Req_Handler::get_Requirement");
 

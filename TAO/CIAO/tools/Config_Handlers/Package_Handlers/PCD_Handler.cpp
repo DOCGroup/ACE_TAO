@@ -31,14 +31,14 @@ namespace CIAO
 
         if (root == XStr ("Deployment:topLevelPackageDescription"))
           {
-            TopLevelPackageDescription tpd (topLevelPackageDescription (dom));
-            PCD_Handler::package_config (tpd.package (),
-                                         toconfig);
+            TopLevelPackageDescription tpd = topLevelPackageDescription (dom);
+            //PCD_Handler::package_config (tpd.package (),
+            //                             toconfig);
           }
         else if (root == XStr ("Deployment:packageConfiguration"))
           {
-            PackageConfiguration pcd (packageConfiguration (dom));
-            PCD_Handler::package_config (pcd, toconfig);
+            //PackageConfiguration pcd (packageConfiguration (dom));
+            //PCD_Handler::package_config (pcd, toconfig);
           }
         else
           {

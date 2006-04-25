@@ -50,11 +50,11 @@ namespace CIAO
         /// Maps the values from the XSC object
         /// <ComponentPackageDescription> to the CORBA IDL type
         /// <Deployment::ComponentPackageDescription>.
-        static void component_package_descr (const ComponentPackageDescription &desc,
+        static void handle_component_package_descr (const ComponentPackageDescription &desc,
                                              ::Deployment::ComponentPackageDescription &toconfig);
 
         static ComponentPackageDescription
-        component_package_descr (const Deployment::ComponentPackageDescription& src);
+	  component_package_descr (const Deployment::ComponentPackageDescription& src);
       private:
         static ComponentPackageDescription * resolve_cpd (const char *uri);
 
@@ -63,7 +63,7 @@ namespace CIAO
       typedef Sequence_Handler < ComponentPackageDescription,
                                  ::Deployment::ComponentPackageDescriptions,
                                  ::Deployment::ComponentPackageDescription,
-                                 CPD_Handler::component_package_descr > CPD_Functor;
+                                 CPD_Handler::handle_component_package_descr > CPD_Functor;
 
     }
 

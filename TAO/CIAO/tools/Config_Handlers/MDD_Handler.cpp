@@ -87,7 +87,7 @@ namespace CIAO
            epcb != epce;
            ++epcb)
         {
-          Property_Handler::get_property ((*epcb),
+          Property_Handler::handle_property ((*epcb),
                                           toconfig.execParameter[len++]);
         }
 

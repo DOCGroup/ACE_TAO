@@ -284,7 +284,7 @@ module Deployment
     /// CIAO specific extensions
     /// Activate a component instance from the NodeApplication
     void activate_component (in string inst_name)
-      raises (::Components::RemoveFailure);
+      raises (::Deployment::StartError);
 
     /// CIAO specific extensions
     /// Passivate a component instance from the NodeApplication
