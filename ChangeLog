@@ -1,3 +1,8 @@
+Mon Apr 24 08:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.h:
+          Always use bool for Boolean, see bugzilla 2514 for more info
+
 Mon Apr 24 06:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.h:
