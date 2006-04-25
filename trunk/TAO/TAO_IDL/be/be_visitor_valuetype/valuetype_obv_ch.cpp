@@ -174,9 +174,9 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           this->begin_public ();
         }
-      
+
       *os << be_nl;
-      
+
       // Default constructor.
       if (! node->is_nested ())
         {
@@ -184,19 +184,19 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
 
       *os << node->local_name () << " (void);";
-      
+
       // Initializing constructor.
       if (node->has_member ())
         {
           *os << be_nl;
-        
+
           if (! node->is_nested ())
             {
               *os << "OBV_";
             }
-            
+
           *os << node->local_name () << " (" << be_idt << be_idt;
-          
+
           unsigned long index = 0;
           this->gen_obv_init_constructor_args (node, index);
 
@@ -221,16 +221,20 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
           *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_marshal__" << node->flat_name ()
-              << " (TAO_OutputCDR &) const;" << be_nl << be_nl;
+              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl << be_nl;
 
           *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_unmarshal__" << node->flat_name ()
-              << " (TAO_InputCDR &);" << be_nl << be_nl;
+              << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl << be_nl;
 
           *os << "::CORBA::Boolean "
-              << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
+              << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
+              << be_nl
               << "::CORBA::Boolean "
-              << "_tao_unmarshal_state (TAO_InputCDR &);"
+              << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
+              << be_nl
+              << "virtual void "
+              << "truncation_hook (void);"
               << be_uidt_nl << be_nl;
 
           *os << "private:" << be_idt;
@@ -238,8 +242,9 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           this->gen_pd (node);
         }
 
-      *os << be_uidt_nl;
-      *os << "};";
+      *os << be_nl
+          << "CORBA::Boolean require_truncation_;" << be_uidt_nl
+          << "};";
 
       os->gen_endif ();
     }
@@ -287,13 +292,13 @@ void
 be_visitor_valuetype_obv_ch::begin_public (void)
 {
   AST_Decl::NodeType nt = this->ctx_->node ()->node_type ();
-  
+
   // These types are skipped in the OBV class.
   if (nt == AST_Decl::NT_attr || nt == AST_Decl::NT_op)
     {
       return;
     }
-    
+
   TAO_OutStream *os = this->ctx_->stream ();
   *os << be_uidt_nl << be_nl
       << "public:" << be_idt;

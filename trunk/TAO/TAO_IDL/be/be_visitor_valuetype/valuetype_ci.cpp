@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_ci, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_ci,
            "$Id$")
 
 // **************************************************
@@ -56,8 +56,17 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::" << node->local_name () << " (void)" << be_nl
-      << "{}" << be_nl << be_nl;
+  *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
+
+  if (node->truncatable())
+    {
+      *os << "{" << be_idt_nl
+          << "this->is_truncatable_ = true;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
+  else
+    *os << "{}" << be_nl << be_nl;
+
 
   *os << "ACE_INLINE const char* " << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
@@ -70,7 +79,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ci::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -83,7 +92,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ci::"
                          "visit_valuetype - "
-                         "failed to generate _init construct.\n"),  
+                         "failed to generate _init construct.\n"),
                         -1);
     }
 
@@ -111,7 +120,7 @@ be_visitor_valuetype_ci::visit_field (be_field *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_ci::"
                              "visit_field - "
-                             "visit_field failed\n"), 
+                             "visit_field failed\n"),
                             -1);
         }
     }
