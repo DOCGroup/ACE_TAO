@@ -32,6 +32,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
 namespace CORBA
 {
   class ValueBase;

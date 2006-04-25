@@ -58,18 +58,29 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       *os << "strm";
     }
 
+  *os << ", TAO_ChunkInfo&";
+  // If the valuetype has no fields, and no stateful inherit,
+  // the chunking helper arg is unused.
+  if (inh != 0 || node->data_members_count () > 0)
+    {
+      *os << "ci";
+    }
+
   *os << ") const" << be_nl
       << "{" << be_idt_nl;
 
   if (inh)
     {
+      *os << "if (! ci.start_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+
       if (inh->opt_accessor ())
         {
           *os << "if (!this->";
 
           this->class_name (inh, os);
 
-          *os << "::_tao_marshal_state (strm))" << be_idt_nl
+          *os << "::_tao_marshal_state (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
@@ -79,7 +90,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
         {
           *os << "if (! this->_tao_marshal__"
               <<       inh->flat_name ()
-              << " (strm))" << be_idt_nl
+              << " (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
@@ -90,15 +101,32 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   be_visitor_valuetype_field_cdr_decl field_out_cdr (&new_ctx);
   field_out_cdr.visit_scope (node);
 
-  *os << "return (" << be_idt << be_idt_nl;
+  if (node->data_members_count () > 0)
+    {
+      *os << "if (! ci.start_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+      *os << "CORBA::Boolean ret = " << be_idt << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
   this->gen_fields (node,
                     *this->ctx_);
 
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      *os << ";" << be_uidt << be_uidt_nl;
+
+      *os << "if ( ! ret) " << be_idt_nl;
+      *os << "return false; " << be_uidt_nl << be_nl;
+      *os << "if (! ci.end_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+    }
+
+  if (inh)
+    {
+      *os << "if (! ci.end_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+    }
+
+  *os << "return true;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -116,18 +144,29 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       *os << "strm";
     }
 
+  *os << ", TAO_ChunkInfo&";
+  // If the valuetype has no fields, and no stateful inherit,
+  // the chunking helper arg is unused.
+  if (inh != 0 || node->data_members_count () > 0)
+    {
+      *os << "ci";
+    }
+
   *os << ")" << be_nl
       << "{" << be_idt_nl;
 
   if (inh)
     {
+      *os << "if (! ci.handle_chunking (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+
       if (inh->opt_accessor ())
         {
           *os << "if (!this->";
 
           this->class_name (inh, os);
 
-          *os << "::_tao_unmarshal_state (strm))" << be_idt_nl
+          *os << "::_tao_unmarshal_state (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
@@ -136,7 +175,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
         {
           *os << "if (! this->_tao_unmarshal__"
               <<       inh->flat_name ()
-              << " (strm))" << be_idt_nl
+              << " (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
@@ -146,15 +185,37 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   be_visitor_valuetype_field_cdr_decl field_in_cdr (&new_ctx);
   field_in_cdr.visit_scope (node);
 
-  *os << "return (" << be_idt_nl;
+  if (node->data_members_count () > 0)
+    {
+      *os << "if (! ci.handle_chunking (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+      *os << "CORBA::Boolean ret = " << be_idt << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
   this->gen_fields (node,
                     *this->ctx_);
 
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}";
+      *os << ";" << be_uidt << be_uidt_nl;
+
+      *os << "if ( ! ret) " << be_idt_nl;
+      *os << "return false; " << be_uidt_nl << be_nl;
+      *os << "if (this->require_truncation_)" << be_idt_nl;
+      *os << "return ci.skip_chunks (strm);" << be_uidt_nl << be_nl;
+      *os << "else" << be_idt_nl;
+      *os << "return ci.handle_chunking (strm);" << be_uidt_nl << be_nl;
+    }
+    else
+      *os << "return true;";
+  *os << be_uidt_nl << "}" << be_nl << be_nl;
+
+  *os << "void" << be_nl;
+
+  this->class_name (node, os);
+
+  *os << "::truncation_hook (void)" << be_nl
+      << "{" << be_idt_nl
+      << "this->require_truncation_ = true;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   return 0;
 }

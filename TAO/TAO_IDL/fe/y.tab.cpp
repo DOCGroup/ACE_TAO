@@ -2708,17 +2708,6 @@ tao_yyreduce:
     {
 // value_header : value_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
-
-          if (tao_yyvsp[0].nlval != 0 && tao_yyvsp[0].nlval->truncatable ())
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("warning in %s line %d\n"),
-                          idl_global->filename ()->get_string (),
-                          idl_global->lineno ()));
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("truncatable modifier not supported ")
-                          ACE_TEXT ("and is ignored\n")));
-            }
         }
     break;
 
@@ -7477,16 +7466,6 @@ tao_yyreduce:
 // event_rest_of_header : inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
 
-          if (tao_yyvsp[0].nlval != 0 && tao_yyvsp[0].nlval->truncatable ())
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("warning in %s line %d\n"),
-                          idl_global->filename ()->get_string (),
-                          idl_global->lineno ()));
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("truncatable modifier not supported ")
-                          ACE_TEXT ("and is ignored\n")));
-            }
         }
     break;
 
@@ -7851,4 +7830,3 @@ tao_yyerror (const char *msg)
               "%s\n",
               msg));
 }
-

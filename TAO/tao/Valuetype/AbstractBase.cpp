@@ -389,7 +389,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 }
 
 CORBA::Boolean
-CORBA::AbstractBase::_tao_marshal_v (TAO_OutputCDR &) const
+CORBA::AbstractBase::_tao_marshal_v (TAO_OutputCDR &)
 {
   return false;
 }
