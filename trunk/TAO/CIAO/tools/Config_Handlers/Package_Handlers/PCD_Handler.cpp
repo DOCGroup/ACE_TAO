@@ -1,19 +1,19 @@
 // $Id$
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "ciao/CIAO_common.h"
+#include "ciao/Packaging_DataC.h"
+#include "Utils/XML_Helper.h"
+#include "Utils/XercesString.h"
+#include "Utils/Exceptions.h"
 #include "Package_Handlers/PCD_Handler.h"
 #include "Package_Handlers/CPD_Handler.h"
-#include "Basic_Deployment_Data.hpp"
-#include "ciao/Packaging_DataC.h"
 #include "Deployment.hpp"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
-#include "Utils/XercesString.h"
-#include "Utils/Exceptions.h"
+
+#include "Basic_Deployment_Data.hpp"
 
 #include <memory>
-#include "ciao/CIAO_common.h"
-
-#include <xercesc/util/XMLString.hpp>
 
 namespace CIAO
 {
@@ -25,20 +25,27 @@ namespace CIAO
       PCD_Handler::package_config (const ACE_TCHAR *uri,
                                    ::Deployment::PackageConfiguration &toconfig)
       {
-        xercesc::DOMDocument *dom = XML_HELPER->create_dom (uri);
+        const xercesc::DOMDocument *dom = XML_HELPER->create_dom (uri);
 
-        XStr root = dom->getDocumentElement ()->getTagName ();
+	if (dom == 0)
+	  {
+	    std::string error ("Unable to open file: ");
+	    error += uri;
+	    throw Parse_Error (error);
+	  }
+
+	XStr root = dom->getDocumentElement ()->getTagName ();
 
         if (root == XStr ("Deployment:topLevelPackageDescription"))
           {
-            TopLevelPackageDescription tpd = topLevelPackageDescription (dom);
-            //PCD_Handler::package_config (tpd.package (),
-            //                             toconfig);
+	TopLevelPackageDescription tpd = topLevelPackageDescription (dom);
+            PCD_Handler::package_config (tpd.package (),
+                                         toconfig);
           }
         else if (root == XStr ("Deployment:packageConfiguration"))
           {
-            //PackageConfiguration pcd (packageConfiguration (dom));
-            //PCD_Handler::package_config (pcd, toconfig);
+            PackageConfiguration pcd (packageConfiguration (dom));
+            PCD_Handler::package_config (pcd, toconfig);
           }
         else
           {
@@ -83,8 +90,8 @@ namespace CIAO
         if (pcd->basePackage_p ())
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::component_package_descr (pcd->basePackage (),
-                                                  toconfig.basePackage [0]);
+            CPD_Handler::handle_component_package_descr (pcd->basePackage (),
+							 toconfig.basePackage [0]);
           }
 
         // @@ MAJO: Support other elements present here.

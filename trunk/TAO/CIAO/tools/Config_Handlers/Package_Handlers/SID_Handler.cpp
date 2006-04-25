@@ -28,7 +28,7 @@ namespace CIAO
         if (desc.basePackage_p ())
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::component_package_descr (desc.basePackage (),
+            CPD_Handler::handle_component_package_descr (desc.basePackage (),
                                                   toconfig.basePackage[0]);
           }
         else if (desc.specializedConfig_p ())
