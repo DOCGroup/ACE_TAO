@@ -1,3 +1,9 @@
+Tue Apr 25 06:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.{h,cpp}:
+          Made the signature of the static marshal method the same in the
+          definition and the implementation.
+
 Mon Apr 24 19:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
