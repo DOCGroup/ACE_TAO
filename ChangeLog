@@ -1,3 +1,12 @@
+Tue Apr 25 16:44:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+          Added code to support rewinding the output CDR to some previous
+          location and updating a value there. This is required to support
+          marshaling offset values were the target of the offset is not
+          known until the final offset target is actually reached.
+
 Tue Apr 25 13:50:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Signal_Test.cpp:
