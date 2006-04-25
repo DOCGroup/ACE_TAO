@@ -127,6 +127,12 @@ synchronous_signal_handler (void *)
   else
     sigset.sig_add (SIGHUP);
 
+  // block signal to prevent delivery to default handler
+  // (at least necessary on linux and solaris; POSIX spec also
+  //  states that signal(s) should be blocked before call to
+  //  sigwait())
+  ACE_Sig_Guard hupguard (&sigset);
+
   for (;;)
     {
       // Block waiting for SIGINT, SIGTERM, or SIGHUP, depending on
@@ -286,7 +292,7 @@ worker_parent (void *arg)
     while (shut_down == 0)
       {
         // Wait for a signal to arrive.
-        if (ACE_OS::sigsuspend (0) == -1)
+        if (ACE_OS::sigsuspend (0) == -1 && errno != EINTR)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("sigsuspend")));
@@ -443,8 +449,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       // of Linux threads...
       parent_pid = ACE_OS::getpid ();
 
-#if !defined (linux)
-      // Linux threads don't support this use-case very well.
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 1: handle signals synchronously in a separate thread\n")));
 
@@ -452,10 +456,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Run the parent logic for the signal test, first by handling
       // signals synchronously in a separate thread.
       run_test (worker_parent, 1L, 1L);
-#else
-      // Must increment anyhow.
-      test_number++;
-#endif /* linux */
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 2: handle signals synchronously in this thread\n")));
@@ -481,7 +481,7 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Signal_Test"));
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ACE_TEXT ("The Unix Signals capability is not supported on this platform\n")));
   ACE_END_TEST;
   return 0;
