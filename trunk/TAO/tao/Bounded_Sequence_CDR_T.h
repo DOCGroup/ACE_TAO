@@ -328,7 +328,7 @@ namespace TAO {
 namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Short, MAX> & source) {
-    const ::CORBA::ULong length = source.length ();
+    ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
     }
@@ -337,7 +337,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Long, MAX> & source) {
-    const ::CORBA::ULong length = source.length ();
+    ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
     }
