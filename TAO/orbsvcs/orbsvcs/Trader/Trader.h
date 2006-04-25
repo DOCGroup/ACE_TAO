@@ -498,7 +498,7 @@ protected:
 // hard time with it like that when compiling TAO_Service_Offer_Iterator.
 typedef ACE_Hash_Map_Manager_Ex<CORBA::ULong, CosTrading::Offer*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex> TAO_Offer_Map;
 
-typedef ACE_Unbounded_Set<TAO_String_Hash_Key> TAO_String_Set;
+typedef ACE_Unbounded_Set<CORBA::String_var> TAO_String_Set;
 typedef ACE_Unbounded_Queue<char*> TAO_String_Queue;
 
 // = Helpful operators.

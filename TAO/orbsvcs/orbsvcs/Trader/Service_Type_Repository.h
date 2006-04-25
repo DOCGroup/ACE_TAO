@@ -232,24 +232,24 @@ private:
     CORBA::Boolean has_subtypes_;
   };
 
-  typedef ACE_Hash_Map_Manager_Ex <TAO_String_Hash_Key,
+  typedef ACE_Hash_Map_Manager_Ex <CORBA::String_var,
                                   CosTradingRepos::ServiceTypeRepository::PropStruct *,
-                                  ACE_Hash<TAO_String_Hash_Key>,
-                                  ACE_Equal_To<TAO_String_Hash_Key>,
+                                  ACE_Hash<CORBA::String_var>,
+                                  ACE_Equal_To<CORBA::String_var>,
                                   ACE_Null_Mutex>
                                   Prop_Map;
 
-  typedef ACE_Hash_Map_Manager_Ex <TAO_String_Hash_Key,
+  typedef ACE_Hash_Map_Manager_Ex <CORBA::String_var,
                                    Type_Info *,
-                                   ACE_Hash<TAO_String_Hash_Key>,
-                                   ACE_Equal_To<TAO_String_Hash_Key>,
+                                   ACE_Hash<CORBA::String_var>,
+                                   ACE_Equal_To<CORBA::String_var>,
                                    ACE_Null_Mutex>
                                    Service_Type_Map;
 
-  typedef ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key,
+  typedef ACE_Hash_Map_Iterator_Ex<CORBA::String_var,
                                    Type_Info *,
-                                   ACE_Hash<TAO_String_Hash_Key>,
-                                   ACE_Equal_To<TAO_String_Hash_Key>,
+                                   ACE_Hash<CORBA::String_var>,
+                                   ACE_Equal_To<CORBA::String_var>,
                                    ACE_Null_Mutex>
                                    Service_Type_Map_Iterator;
 

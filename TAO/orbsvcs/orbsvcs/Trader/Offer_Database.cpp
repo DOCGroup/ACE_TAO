@@ -52,7 +52,7 @@ insert_offer (const char* type, CosTrading::Offer* offer)
 {
   CosTrading::OfferId return_value = 0;
   ACE_TYPENAME Offer_Database::ENTRY* database_entry = 0;
-  TAO_String_Hash_Key service_type (type);
+  CORBA::String_var service_type (type);
 
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
@@ -102,7 +102,7 @@ remove_offer (const char* type, CORBA::ULong id)
 
   int return_value = -1;
   ACE_TYPENAME Offer_Database::ENTRY* db_entry = 0;
-  TAO_String_Hash_Key service_type (type);
+  CORBA::String_var service_type (type);
 
   if (this->offer_db_.find (service_type, db_entry) == 0)
     {
@@ -220,7 +220,7 @@ lookup_offer (const char* type, CORBA::ULong id)
 
   CosTrading::Offer* return_value = 0;
   ACE_TYPENAME Offer_Database::ENTRY* db_entry = 0;
-  TAO_String_Hash_Key service_type (type);
+  CORBA::String_var service_type (type);
 
   if (this->offer_db_.find (service_type, db_entry) == 0)
     {
@@ -325,7 +325,7 @@ TAO_Service_Offer_Iterator (const char* type,
     offer_iter_ (0),
     type_ (type)
 {
-  TAO_String_Hash_Key service_type (type);
+  CORBA::String_var service_type (type);
 
   if (this->stm_.db_lock_.acquire_read () == -1)
     return;
