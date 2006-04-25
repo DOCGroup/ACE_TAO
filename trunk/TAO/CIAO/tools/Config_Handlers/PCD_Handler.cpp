@@ -26,7 +26,7 @@ namespace CIAO
     ///This method takes a <Deployment::PlanConnectionDescription>
     ///and maps the values from the passed in XSC
     ///PlanConnectionDescription to its members.
-    void PCD_Handler::get_PlanConnectionDescription (const PlanConnectionDescription& desc,
+    void PCD_Handler::handle_PlanConnectionDescription (const PlanConnectionDescription& desc,
                                                      Deployment::PlanConnectionDescription& toconfig)
     {
       CIAO_TRACE("PCD_Handler::get_PlanConnectionDescription");

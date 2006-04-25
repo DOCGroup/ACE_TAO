@@ -1,3 +1,43 @@
+Tue Apr 25 20:12:25 UTC 2006  William R. Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
+        * ciao/Deployment_Core.idl
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/CCD_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.h
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.h
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ERE_Handler.cpp
+        * tools/Config_Handlers/ERE_Handler.h
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/PCD_Handler.h
+        * tools/Config_Handlers/Property_Handler.cpp
+        * tools/Config_Handlers/Property_Handler.h
+        * tools/Config_Handlers/Req_Handler.cpp
+        * tools/Config_Handlers/Req_Handler.h
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp
+        * tools/Config_Handlers/SatisfierProperty_Handler.h
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/NIA_Handler.h
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.h
+        
+        Compilation fixes for borland, some cosmetic fixes as well.
+        
 Tue Apr 25 09:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/CPD_Handler.h:

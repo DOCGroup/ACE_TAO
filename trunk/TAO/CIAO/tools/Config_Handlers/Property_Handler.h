@@ -1,11 +1,11 @@
 //================================================
 /**
-*  @file  Property_Handler.h
-*
-*  $Id$
-*
-*  @author Jules White <jules@dre.vanderbilt.edu>
-*/
+ *  @file  Property_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Jules White <jules@dre.vanderbilt.edu>
+ */
 //================================================
 
 #ifndef CIAO_CONFIG_HANDLERS_PROPERTY_HANDLER_H
@@ -22,50 +22,51 @@
 
 namespace Deployment
 {
-struct Property;
-class Properties;
+  struct Property;
+  class Properties;
 }
 
 namespace CIAO
 {
-namespace Config_Handlers
-{
-class Property;
+  namespace Config_Handlers
+    {
+      class Property;
 
-/*
-* @class Property_Handler
-*
-* @brief Handler class for <CCMComponentPortDescription> types.
-*
-* This class defines handler methods to map values from
-* XSC objects, parsed from the descriptor files, to the
-* corresponding CORBA IDL type for the schema element.
-*
-*/
+      /*
+       * @class Property_Handler
+       *
+       * @brief Handler class for <CCMComponentPortDescription> types.
+       *
+       * This class defines handler methods to map values from
+       * XSC objects, parsed from the descriptor files, to the
+       * corresponding CORBA IDL type for the schema element.
+       *
+       */
 
-class Config_Handlers_Export Property_Handler
-{
-public:
-Property_Handler (void);
-virtual ~Property_Handler (void);
+      class Config_Handlers_Export Property_Handler
+	{
+	public:
+	  Property_Handler (void);
+	  virtual ~Property_Handler (void);
 
-typedef Sequence_Iterator< const ::Deployment::Properties, const ::Deployment::Property > prop_iter;
+	  typedef Sequence_Iterator< const ::Deployment::Properties, const ::Deployment::Property > prop_iter;
 
-/// This method maps the values from the XSC object
-/// <CIAO::Config_Handlers::Property> to the CORBA IDL type
-/// <Deployment::Property>.
-static void get_property (const Property& desc,
-::Deployment::Property& toconfig);
-static Property get_property (
-const ::Deployment::Property& src);
-};
+	  /// This method maps the values from the XSC object
+	  /// <CIAO::Config_Handlers::Property> to the CORBA IDL type
+	  /// <Deployment::Property>.
+	  static void handle_property (const Property& desc,
+				    ::Deployment::Property& toconfig);
+	  static Property get_property (
+					const ::Deployment::Property& src);
+	};
 
-typedef Sequence_Handler < Property,
-::Deployment::Properties,
-::Deployment::Property,
-Property_Handler::get_property> Property_Functor;
 
-}
+      typedef Sequence_Handler < Property,
+				 ::Deployment::Properties,
+				 ::Deployment::Property,
+				 Property_Handler::handle_property > Property_Functor;
+
+    }
 }
 
 #include /**/ "ace/post.h"

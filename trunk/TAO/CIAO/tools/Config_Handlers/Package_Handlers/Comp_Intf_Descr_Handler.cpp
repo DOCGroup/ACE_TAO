@@ -20,7 +20,7 @@ namespace CIAO
       {
         struct Comp_Prop_Handler
         {
-          static void get_cpd (const ComponentPropertyDescription &desc,
+          static void handle_cpd (const ComponentPropertyDescription &desc,
                                ::Deployment::ComponentPropertyDescription &toconfig)
           {
             CIAO_TRACE ("Comp_Prop_Handler::get_cpd");
@@ -44,7 +44,7 @@ namespace CIAO
         typedef Sequence_Handler < ComponentPropertyDescription,
                                    ::Deployment::ComponentPropertyDescriptions,
                                    ::Deployment::ComponentPropertyDescription,
-                                   Comp_Prop_Handler::get_cpd > Comp_Prop_Functor;
+                                   Comp_Prop_Handler::handle_cpd > Comp_Prop_Functor;
       }
 
       void

@@ -19,7 +19,7 @@ namespace CIAO
       {
         struct PCI_Handler
         {
-          static void get_pci (const PackagedComponentImplementation &desc,
+          static void handle_pci (const PackagedComponentImplementation &desc,
                                ::Deployment::PackagedComponentImplementation &toconfig)
           {
             CIAO_TRACE ("PCI_Handler::get_pci");
@@ -41,11 +41,11 @@ namespace CIAO
         typedef Sequence_Handler < PackagedComponentImplementation,
                                    ::Deployment::PackagedComponentImplementations,
                                    ::Deployment::PackagedComponentImplementation,
-                                   PCI_Handler::get_pci > PCI_Functor;
+                                   PCI_Handler::handle_pci > PCI_Functor;
       }
 
       void
-      CPD_Handler::component_package_descr (const ComponentPackageDescription &desc,
+      CPD_Handler::handle_component_package_descr (const ComponentPackageDescription &desc,
                                             ::Deployment::ComponentPackageDescription &toconfig)
       {
         CIAO_TRACE ("CPD_Handler::component_package_descr");
@@ -136,7 +136,7 @@ namespace CIAO
       {
         CIAO_TRACE ("CPD_Handler::resolve_cpd");
         if (!XML_HELPER->is_initialized ())
-          return false;
+          return 0;
 
         xercesc::DOMDocument* dom =
           XML_HELPER->create_dom (uri);
