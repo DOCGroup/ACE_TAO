@@ -118,6 +118,12 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_v (TAO_I
   return this->_tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (strm);
 }
 
+CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t>(&TAO_Default_ORT::ObjectReferenceTemplate::_downcast);
+}
+
 CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
     TAO_InputCDR &strm,
     ObjectReferenceTemplate *&new_object

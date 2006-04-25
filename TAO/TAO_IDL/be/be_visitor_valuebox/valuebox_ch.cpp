@@ -128,6 +128,8 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
   *os << "virtual ::CORBA::Boolean "
       << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
+  *os << "virtual ::CORBA::Boolean "
+      << "_tao_match_formal_type (ptrdiff_t ) const;" << be_nl;
 
   // Private unimplemented default assignment operator
   *os << be_uidt_nl << "private:" << be_idt_nl;

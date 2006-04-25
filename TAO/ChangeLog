@@ -1,3 +1,55 @@
+Tue Apr 25 17:38:34 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * tao/Messaging/ExceptionHolderC.h:
+        * tao/Messaging/ExceptionHolderC.cpp:
+        * tao/ObjRefTemplate/Default_ORTC.h:
+        * tao/ObjRefTemplate/Default_ORTC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/StringValueC.h:
+        * tao/Valuetype/StringValueC.inl:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueBase.cpp:
+
+          These are further valuetype changes that are related to Bugzilla
+          #2162. The problem is that TAO assumes that a valuetype's
+          typecode is always encoded as 0x7FFFFF02 <repID> but that is not
+          compliant with the spec. It is also valid to encode a valuetype
+          typecode as 0x7FFFFF00 which indicates that the actual type of
+          the value matches the formal type for the argument for which the
+          value is a parameter.  TAO already had most of the hooks in
+          place to support this, but was missing a key bit of
+          functionality. This patch adds that functionality, the ability
+          to test that the formal type matches the actual type when
+          marshaling values.
+
+          Valuetypes encoded this way are substantially more efficient, if
+          the type can be implied then there is no need to carry the
+          actual type id.  Unfortunately to do so blindly would break
+          backwards compatibility with all previous versions of TAO.
+          For the time being, the effective code to cause TAO to marshal
+          values using the more efficient typecode is disabled using a new
+          compile-time flag, TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING,
+          which must be defined to give TAO the opportunity to use this
+          new technique. THIS FLAG BREAKS BACKWARDS COMPATIBILITY. It is
+          not a violation of the spec to always encode the valuetype's
+          type ID when marshaling, so TAO can continue being backwards
+          compatible and not be in violation of the spec. The only
+          violation comes when failing to unmarshal a value which is using
+          an implied type ID.
+
+          I would prefer to not have a compiler flag to guard the use of
+          optimized marshaling, but I don't know any other way to do it.
+          At the point where the decision is made, there is no reference
+          to an ORB Core so there is no easy way to set a dynamic option
+          that could be used to selectively control this optimization.
+
 Tue Apr 25 15:14:13 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
           Merging in truncatable valuetype support. This work was done on

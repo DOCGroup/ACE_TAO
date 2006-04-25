@@ -208,6 +208,16 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
         }
 
       *os << "}" << be_nl << be_nl;
+
+      *os << "::CORBA::Boolean " << be_nl
+          << node->name ()
+          << "::_tao_match_formal_type (ptrdiff_t formal_type_id) const"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return formal_type_id == reinterpret_cast<ptrdiff_t> ("
+          << node->name() << "::_downcast);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
     }
   else if (is_an_amh_exception_holder)
     {
@@ -230,6 +240,15 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << be_nl
           << "{" << be_idt_nl
           << "return true;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      // The virtual _tao_match_formal_type method.
+      *os << "::CORBA::Boolean " << be_nl
+          << node->name ()
+          << "::_tao_match_formal_type (ptrdiff_t ) const"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return 0;"<< be_uidt_nl
           << "}" << be_nl << be_nl;
 
 

@@ -277,6 +277,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
       *os << "virtual ::CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
+      *os << "virtual ::CORBA::Boolean "
+          << "_tao_match_formal_type (ptrdiff_t ) const;" << be_nl;
     }
 
   // Private member:

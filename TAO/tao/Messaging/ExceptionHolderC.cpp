@@ -106,17 +106,27 @@ Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
 Messaging::ExceptionHolder::~ExceptionHolder (void)
 {}
 
-::CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return this->_tao_marshal__Messaging_ExceptionHolder (strm);
 }
 
-::CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
 {
   return this->_tao_unmarshal__Messaging_ExceptionHolder (strm);
 }
 
-::CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t>(&Messaging::ExceptionHolder::_downcast);
+}
+
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_unmarshal (
     TAO_InputCDR &strm,
     ExceptionHolder *&new_object
   )
