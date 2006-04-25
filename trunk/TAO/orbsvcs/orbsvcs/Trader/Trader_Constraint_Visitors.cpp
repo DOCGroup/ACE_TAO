@@ -16,7 +16,7 @@ TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
   // Create a map of property names to their values.
   for (int i = 0; i < length; i++)
     {
-      TAO_String_Hash_Key name = (const char*) offer->properties[i].name;
+      CORBA::String_var name = (const char*) offer->properties[i].name;
       this->props_.bind (name, i);
     }
 }
@@ -27,7 +27,7 @@ visit_property (TAO_Property_Constraint* literal)
 {
   int return_value = -1, prop_index = 0;
   // Handle case where property is not, in fact, mapped to a value
-  TAO_String_Hash_Key prop_name ((const char*) literal->name ());
+  CORBA::String_var prop_name ((const char*) literal->name ());
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
@@ -71,7 +71,7 @@ TAO_Trader_Constraint_Validator
       CORBA::TypeCode_ptr corba_type =
         CORBA::TypeCode::_duplicate (prop_seq[i].value_type.in ());
 
-      TAO_String_Hash_Key prop_name_str = (const char*) prop_seq[i].name;
+      CORBA::String_var prop_name_str = (const char*) prop_seq[i].name;
       this->type_map_.bind (prop_name_str, corba_type);
     }
 }
