@@ -22,7 +22,7 @@
 
 namespace Deployment
 {
-class ComponentPortDescription;
+struct ComponentPortDescription;
 class ComponentPortDescriptions;
 }
 
