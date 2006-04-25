@@ -40,7 +40,6 @@ operator < (const TAO_String_Hash_Key &left,
   return ACE_OS::strcmp (left.in (), right.in ()) < 0;
 }
 
-
 u_long
 TAO_String_Hash_Key::hash (void) const
 {
