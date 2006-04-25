@@ -29,6 +29,8 @@
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_THREAD_ADAPTER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_thread_adapter)
+#else
+# define ACE_THREAD_ADAPTER_NAME ace_thread_adapter
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 // Run the thread entry point for the ACE_Thread_Adapter.  This must
