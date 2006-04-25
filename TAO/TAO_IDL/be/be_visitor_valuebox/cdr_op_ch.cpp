@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuebox, 
-           cdr_op_ch, 
+ACE_RCSID (be_visitor_valuebox,
+           cdr_op_ch,
            "$Id$")
 
 be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
@@ -64,4 +64,3 @@ be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }
-

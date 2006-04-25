@@ -374,7 +374,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
   CORBA::Char char_v = CORBA::Char();
   CORBA::WChar wchar_v = CORBA::WChar();
   CORBA::Boolean boolean_v = false;
-  
+
   switch (kind)
     {
     case CORBA::tk_short:
@@ -957,9 +957,9 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
     {
       this->nested_processing_ = 1;
 
-      CORBA::ULong value_tag;
+      CORBA::Long value_tag;
 
-      if (!stream->read_ulong (value_tag))
+      if (!stream->read_long (value_tag))
         {
           return TAO::TRAVERSE_STOP;
         }

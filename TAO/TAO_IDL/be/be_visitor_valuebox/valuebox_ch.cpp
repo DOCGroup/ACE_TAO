@@ -89,6 +89,9 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "virtual const char* "
       << "_tao_obv_repository_id (void) const;"
       << be_nl << be_nl
+      << "virtual void "
+      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
+      << be_nl << be_nl
       << "static const char* "
       << "_tao_obv_static_repository_id (void);" << be_nl << be_nl;
 

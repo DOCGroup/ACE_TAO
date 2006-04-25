@@ -21,8 +21,8 @@
 //
 // ================================================================
 
-ACE_RCSID (be_visitor_valuetype_fwd, 
-           cdr_op_ch, 
+ACE_RCSID (be_visitor_valuetype_fwd,
+           cdr_op_ch,
            "$Id$")
 
 be_visitor_valuetype_fwd_cdr_op_ch::be_visitor_valuetype_fwd_cdr_op_ch (
@@ -61,7 +61,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_valuetype *fvd = 
+  be_valuetype *fvd =
     be_valuetype::narrow_from_decl (node->full_definition ());
 
   if (fvd->gen_helper_header () == -1)
@@ -69,7 +69,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
       ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) be_visitor_valuetype_fwd_cdr_op_ch::"
                          "visit_valuetype_fwd - "
-                         "codegen for helper functions failed\n"), 
+                         "codegen for helper functions failed\n"),
                         -1);
     }
 
@@ -87,7 +87,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   *os << be_global->stub_export_macro ()
       << " ::CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);" << be_nl;
-  
+
   *os << be_global->core_versioning_end () << be_nl;
 
   node->cli_hdr_cdr_op_gen (true);
@@ -101,4 +101,3 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
 }
-
