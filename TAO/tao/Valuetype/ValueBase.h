@@ -217,18 +217,26 @@ namespace CORBA
     /// implementation, we just use chunking for the truncatable valuetype.
     CORBA::Boolean chunking_;
 
+    /// Compare the supplied formal type identifier with our actual type.
+    /// This is used during marshaling of valuetypes to detect when it is
+    /// appropriate to not explicitly marshal the typecode for the value.
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const = 0;
+
   private:
     /// Write some special values such as null value or indirection value.
     static CORBA::Boolean write_special_value(TAO_OutputCDR &strm, const CORBA::ValueBase * value);
     /// Write whole value.
-    static CORBA::Boolean write_value(TAO_OutputCDR &strm, const CORBA::ValueBase * value);
+    static CORBA::Boolean write_value(TAO_OutputCDR &strm,
+                                      const CORBA::ValueBase * value,
+                                      ptrdiff_t formal_type_id);
+
     /// Write the header of the value which includes the valuetag, number of
     /// repository ids and list of repository ids.
-    CORBA::Boolean write_value_header(TAO_OutputCDR &strm) const;
+    CORBA::Boolean write_value_header(TAO_OutputCDR &strm,
+                                      ptrdiff_t formal_type_id) const;
 
     /// Read the repository ids from the CDR input stream.
     static CORBA::Boolean read_repository_ids(ACE_InputCDR& strm, Repository_Id_List& ids);
-
 
   private:
     ValueBase & operator= (const ValueBase &);

@@ -134,7 +134,8 @@ PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_voi
 PortableInterceptor::ObjectReferenceFactory::~ObjectReferenceFactory (void)
 {}
 
-CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
+CORBA::Boolean
+PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
     TAO_InputCDR &strm,
     ObjectReferenceFactory *&new_object
   )
@@ -238,6 +239,13 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceTemplate::_downcast (base);
   return 1;
+}
+
+CORBA::Boolean
+PortableInterceptor::ObjectReferenceFactory::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t>(&PortableInterceptor::ObjectReferenceFactory::_downcast);
 }
 
 // TAO_IDL - Generated from

@@ -147,6 +147,7 @@ namespace PortableInterceptor
 
     virtual ~ObjectReferenceFactory (void);
 
+    virtual CORBA::Boolean _tao_match_formal_type(ptrdiff_t ) const;
 
   private:
     ObjectReferenceFactory (const ObjectReferenceFactory &);
