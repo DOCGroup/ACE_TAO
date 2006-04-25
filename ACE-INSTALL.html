@@ -116,7 +116,7 @@ document</a>.</p><p>
   <tr>
     <th>DOC Group</th>
     <td>Solaris 7, 8, 9, and 10 (many compilers excluding SunC++ 4.x);
-        Windows 2000, XP (MSVC++ 6, 7.1, and 8);
+        Windows 2000, XP (MSVC++ 7.1, and 8);
         many versions of Linux/Intel (many compilers), Linux/IA64 (GCC).
     </td>
     <td>DOC sites at <a href="http://www.dre.vanderbilt.edu/">ISIS</a>,
@@ -147,7 +147,7 @@ document</a>.</p><p>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. Besides the standard DOC group platforms
         we also support AIX, Borland C++ Builder 6/2006, CBuilderX 1.0, MinGW,
-        Cygwin, VxWorks 5.5.1 & 6.x, OpenVMS 7.3-2 & 8.2-1, 
+        Cygwin, VxWorks 5.5.1 & 6.2, OpenVMS 7.3-2 & 8.2-1, 
         Tru64, SuSE Linux on Alpha/IA32/EM64T, 
         HPUX 11i v2/v2 32/64 bit on PA-RISC, and
         HPUX 11i v2 on Itanium. The Intel C++ compiler is supported on 
@@ -177,7 +177,7 @@ document</a>.</p><p>
         no longer maintained and may be removed from ACE at any time.
         If you want to have support for these environments contact one
         of the commercial support organisations. The platforms include:
-        DG/UX, VxWorks 5.4, MSVC5, Borland C++ Builder 4 and 5.
+        DG/UX, VxWorks 5.4, MSVC5/6/7.0, Borland C++ Builder 4 and 5.
         For up-to-date listings on platform that are deprecated and pending
         removal from ACE, please see the <a href="NEWS">NEWS file</a>.
     </td>
@@ -213,10 +213,10 @@ supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
 
 ACE (including TAO and CIAO) uses MPC (MakeProjectCreator) to generate
 files useful for the build tools (such as GNUmakefiles for UNIX based
-platforms, dsp and dsw files for VC6 and borland makefiles) on various
+platforms, sln and vcproj files for VC71/vc8 and borland makefiles) on various
 platforms. To help new users to bootstrap quickly the release bundles
-of ACE (TAO and CIAO) includes GNUmakefiles for UNIX platforms, VC6
-project files, and VC71 solution files. If it is necessary to generate
+of ACE (TAO and CIAO) includes GNUmakefiles for UNIX platforms, and VC71/vc8
+solution files. If it is necessary to generate
 files for build tools for other compilers such as Visual Age for IBM,
 and Windows CE users have to run MPC themselves to generate the
 appropriate files.  Please see <a href="MPC/USAGE">USAGE</a>, <a
@@ -2945,9 +2945,9 @@ quickly.
 
   from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use
 
-  <code> $ACE_ROOT/bin/mwc.pl -type vc6 ACE.mwc </code> </p><p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vc8 ACE.mwc </code> </p><p>
 
-  to generate VC6 project and workspace files. Please use <code>-type
+  to generate VC8 project and solution files. Please use <code>-type
   vc71</code> to generate VC71 project and solution files.
 
   </p></li><li>If you want to build TAO+CIAO and its associated libraries
