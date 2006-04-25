@@ -1,3 +1,11 @@
+Tue Apr 25 14:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted this change below, this change broke this test
+
+        Fri Apr 21 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * orbsvcs/tests/Trading/TTest.idl:
+          Use the CORBA predefined sequence types
+
 Tue Apr 25 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
