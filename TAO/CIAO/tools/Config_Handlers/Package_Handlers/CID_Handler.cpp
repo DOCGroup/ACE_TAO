@@ -31,7 +31,7 @@ namespace CIAO
       {
         struct Capability_Handler
         {
-          static void get_capability (const Capability &desc,
+          static void handle_capability (const Capability &desc,
                                       ::Deployment::Capability &toconfig)
           {
             CIAO_TRACE ("Capability_Handler::get_capability");
@@ -68,11 +68,11 @@ namespace CIAO
         typedef Sequence_Handler < Capability,
                                    ::Deployment::Capabilities,
                                    ::Deployment::Capability,
-                                   Capability_Handler::get_capability > Capability_Functor;
+                                   Capability_Handler::handle_capability > Capability_Functor;
 
         struct IR_Handler
         {
-          static void get_ir (const ImplementationRequirement &desc,
+          static void handle_ir (const ImplementationRequirement &desc,
                               ::Deployment::ImplementationRequirement &toconfig)
           {
             CIAO_TRACE ("IR_Handler::get_ir");
@@ -173,13 +173,13 @@ namespace CIAO
         typedef Sequence_Handler < ImplementationRequirement,
                                    ::Deployment::ImplementationRequirements,
                                    ::Deployment::ImplementationRequirement,
-                                   IR_Handler::get_ir > IR_Functor;
+                                   IR_Handler::handle_ir > IR_Functor;
 
 
 
         struct MID_Handler
         {
-          static void get_mid (const MonolithicImplementationDescription &desc,
+          static void handle_mid (const MonolithicImplementationDescription &desc,
                                ::Deployment::MonolithicImplementationDescription &toconfig)
           {
             CIAO_TRACE ("MID_Handler::get_mid");
@@ -236,7 +236,7 @@ namespace CIAO
         typedef Sequence_Handler < MonolithicImplementationDescription,
                                    ::Deployment::MonolithicImplementationDescriptions,
                                    ::Deployment::MonolithicImplementationDescription,
-                                   MID_Handler::get_mid > MID_Functor;
+                                   MID_Handler::handle_mid > MID_Functor;
 
       }
 
@@ -279,7 +279,7 @@ namespace CIAO
         else if (cid->monolithicImpl_p ())
           {
             toconfig.monolithicImpl.length (1);
-            MID_Handler::get_mid (cid->monolithicImpl (),
+            MID_Handler::handle_mid (cid->monolithicImpl (),
                                   toconfig.monolithicImpl[0]);
           }
         else

@@ -34,7 +34,7 @@ namespace CIAO
       class Packaging_Handlers_Export NIA_Handler
       {
       public:
-        static void get_nia (const NamedImplementationArtifact &desc,
+        static void handle_nia (const NamedImplementationArtifact &desc,
                              ::Deployment::NamedImplementationArtifact &toconfig)
         {
           toconfig.name = desc.name ().c_str ();
@@ -55,7 +55,7 @@ namespace CIAO
       typedef Sequence_Handler < NamedImplementationArtifact,
                                  ::Deployment::NamedImplementationArtifacts,
                                  ::Deployment::NamedImplementationArtifact,
-        NIA_Handler::get_nia > NIA_Functor;
+        NIA_Handler::handle_nia > NIA_Functor;
     }
   }
 }

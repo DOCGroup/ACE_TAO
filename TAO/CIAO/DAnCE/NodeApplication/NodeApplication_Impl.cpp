@@ -413,13 +413,13 @@ CIAO::NodeApplication_Impl::passivate_component (const char * name
                   "CIAO::NodeApplication_Impl::passivate_component, "
                   "invalid instance [%s] \n",
                    name));
-      ACE_TRY_THROW (Deployment::StartError ());
+      ACE_TRY_THROW (Components::RemoveFailure ());
     }
 
   if (CORBA::is_nil (comp_state.objref_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG, "comp is nil\n"));
-      throw Deployment::StartError ();
+      throw Components::RemoveFailure ();
     }
 
   comp_state.objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -430,7 +430,7 @@ void
 CIAO::NodeApplication_Impl::activate_component (const char * name
                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((::CORBA::SystemException,
-                   ::Components::RemoveFailure))
+                   ::Deployment::StartError))
 {
   Component_State_Info comp_state;
 
@@ -438,7 +438,7 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
     {
       ACE_ERROR ((LM_ERROR,
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                  "CIAO::NodeApplication_Impl::passivate_component, "
+                  "CIAO::NodeApplication_Impl::activate_component, "
                   "invalid instance [%s] \n",
                    name));
       ACE_TRY_THROW (Deployment::StartError ());

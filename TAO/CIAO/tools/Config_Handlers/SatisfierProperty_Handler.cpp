@@ -20,7 +20,7 @@ namespace CIAO
     }
 
     void
-    SatisfierProperty_Handler::get_sat_property (
+    SatisfierProperty_Handler::handle_sat_property (
                                                  const SatisfierProperty& desc,
                                                  Deployment::SatisfierProperty& toconfig)
     {

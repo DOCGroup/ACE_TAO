@@ -175,7 +175,7 @@ ACE_RCSID (Config_Handlers,
               }
             else
               {
-                Property_Handler::get_property (*pstart,
+                Property_Handler::handle_property (*pstart,
                                                 this->idl_dp_->infoProperty [len]);
               }
           }

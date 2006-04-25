@@ -183,7 +183,7 @@ namespace CIAO
     virtual void activate_component (const char * name
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Components::RemoveFailure));
+                       ::Deployment::StartError));
 
     virtual void passivate_component (const char * name
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)

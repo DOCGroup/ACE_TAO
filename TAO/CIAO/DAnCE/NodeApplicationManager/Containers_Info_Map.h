@@ -87,7 +87,10 @@ namespace CIAO
      * any references to HTTP URLs
      */
   protected:
-
+    
+    // @Stoyan - Please follow ACE coding guideines when naming your
+    //member variables.  In particular, please use lower case and
+    //follow the name with a trailing underscore.
     //directory in which to download the libraries obtained via HTTP
     ACE_CString HTTP_DOWNLOAD_PATH;
 
