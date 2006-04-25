@@ -1,7 +1,13 @@
+Tue Apr 25 09:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/CPD_Handler.h:
+          ComponentPortDescription is a struct, so also forward declare it
+          as a struct
+
 Mon Apr 24 18:53:22 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp
-        
+
           Fixed a code generation problem caused by careless merging.
 
 Mon Apr 24 18:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
