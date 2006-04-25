@@ -1,3 +1,10 @@
+Tue Apr 25 08:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+          Removed runtime check of the sizes of the basic data types. We
+          now always use bool for CORBA::Boolean independent of the size
+          of bool, see also bugzilla 2515
+
 Tue Apr 25 06:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.{h,cpp}:

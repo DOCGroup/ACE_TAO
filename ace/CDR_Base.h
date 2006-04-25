@@ -38,7 +38,6 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
-#include "ace/If_Then_Else.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -168,9 +167,7 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-  typedef ACE::If_Then_Else<(sizeof (bool) == 1),
-                            bool,
-                            unsigned char>::result_type Boolean;
+  typedef bool Boolean;
   typedef unsigned char Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
