@@ -1,3 +1,96 @@
+Tue Apr 25 19:24:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Missed a patch from the earlier commit.
+
+Tue Apr 25 19:09:08 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h:
+        * orbsvcs/examples/ORT/Server_IORInterceptor.cpp:
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+
+        * orbsvcs/orbsvcs/PortableGroup/GOA.h:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.cpp:
+
+        * tao/AnyTypeCode/PI_ForwardA.h:
+
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h:
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_POA.h:
+        * tao/CSD_Framework/CSD_POA.cpp:
+
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+
+        * tao/IORInterceptor/IORInfo.h:
+        * tao/IORInterceptor/IORInfo.cpp:
+        * tao/IORInterceptor/IORInfoC.h:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+
+        * tao/IORInterceptor_Adapter.h:
+        * tao/PI_Forward.pidl:
+        * tao/PI_ForwardC.h:
+
+        * tao/PortableServer/Default_Acceptor_Filter.h:
+        * tao/PortableServer/Default_Servant_Dispatcher.h:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/POAManager.i:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/POAManager.pidl:
+        * tao/PortableServer/POAManagerC.h:
+        * tao/PortableServer/PortableServer.h:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/Regular_POA.h:
+        * tao/PortableServer/Regular_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Servant_Dispatcher.h:
+
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+
+        * tao/RTPortableServer/RT_POA.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.h:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+        * tao/orbconf.h:
+        * tao/params.cpp:
+
+        * tests/ORT/ORT_test_IORInterceptor.h:
+        * tests/ORT/ORT_test_IORInterceptor.cpp:
+
+        * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
+        * tests/POA/EndpointPolicy/Hello.h:
+        * tests/POA/EndpointPolicy/Hello.cpp:
+        * tests/POA/EndpointPolicy/README:
+        * tests/POA/EndpointPolicy/Test.idl:
+        * tests/POA/EndpointPolicy/client.cpp:
+        * tests/POA/EndpointPolicy/run_test.pl:
+        * tests/POA/EndpointPolicy/server.cpp:
+
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+        * tests/POA/POAManagerFactory/POAManagerFactory.mpc:
+        * tests/POA/POAManagerFactory/run_test.pl:
+
+        * tests/POA/README:
+
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+
 Tue Apr 25 17:38:34 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
