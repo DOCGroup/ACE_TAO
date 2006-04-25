@@ -1279,7 +1279,6 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
       ++orb_init_count;
     }
 
-#if defined (ACE_HAS_EXCEPTIONS)
   // This must be done after the system TypeCodes and Exceptions have
   // been initialized.  An unexpected exception will cause TAO's
   // unexpected exception handler to be called.  That handler
@@ -1293,39 +1292,6 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
    */
   TAO_Singleton_Manager::instance ()->_set_unexpected (
     ::TAO_unexpected_exception_handler);
-#endif /* ACE_HAS_EXCEPTIONS */
-
-  // Verify some of the basic implementation requirements.  This test
-  // gets optimized away by a decent compiler (or else the rest of the
-  // routine does).
-  //
-  // NOTE:  we still "just" assume that native floating point is IEEE.
-  if (   sizeof (CORBA::Boolean)    != 1
-      || sizeof (CORBA::Short)      != 2
-      || sizeof (CORBA::Long)       != 4
-      || sizeof (CORBA::LongLong)   != 8
-      || sizeof (CORBA::Float)      != 4
-      || sizeof (CORBA::Double)     != 8
-      || sizeof (CORBA::LongDouble) != 16
-      || sizeof (CORBA::WChar)      < 2
-      || sizeof (void *)            != ACE_SIZEOF_VOID_P)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%N; ERROR: unexpected basic type size; "
-                  "b:%d s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
-                  "please reconfigure TAO\n",
-                  sizeof (CORBA::Boolean),
-                  sizeof (CORBA::Short),
-                  sizeof (CORBA::Long),
-                  sizeof (CORBA::LongLong),
-                  sizeof (CORBA::Float),
-                  sizeof (CORBA::Double),
-                  sizeof (CORBA::LongDouble),
-                  sizeof (CORBA::WChar),
-                  sizeof (void *)));
-
-      ACE_THROW (CORBA::INITIALIZE ());
-    }
 }
 
 const ACE_CString &
