@@ -1,3 +1,8 @@
+Wed Apr 26 13:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/POA/Bug_2511_Regression
+
 Wed Apr 26 12:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process_Manager.cpp:
