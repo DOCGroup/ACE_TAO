@@ -70,8 +70,8 @@ private:
   ACE_Parse_Node *next_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Parse_Node (const ACE_Parse_Node&));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Parse_Node& operator= (const ACE_Parse_Node&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Parse_Node (const ACE_Parse_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Parse_Node& operator= (const ACE_Parse_Node&))
 };
 
 /**
@@ -99,10 +99,10 @@ public:
 
 private:
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Suspend_Node (const ACE_Suspend_Node&));
+    (ACE_Suspend_Node (const ACE_Suspend_Node&))
 
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Suspend_Node& operator= (const ACE_Suspend_Node&));
+    (ACE_Suspend_Node& operator= (const ACE_Suspend_Node&))
 };
 
 /**
@@ -129,8 +129,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Resume_Node (const ACE_Resume_Node&));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Resume_Node& operator= (const ACE_Resume_Node&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Resume_Node (const ACE_Resume_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Resume_Node& operator= (const ACE_Resume_Node&))
 };
 
 /**
@@ -157,8 +157,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Remove_Node (const ACE_Remove_Node&));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Remove_Node& operator= (const ACE_Remove_Node&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Remove_Node (const ACE_Remove_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Remove_Node& operator= (const ACE_Remove_Node&))
 };
 
 /**
@@ -192,8 +192,8 @@ private:
   ACE_TCHAR *parameters_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Node (const ACE_Static_Node&));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Node& operator= (const ACE_Static_Node&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Node (const ACE_Static_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Node& operator= (const ACE_Static_Node&))
 };
 
 
@@ -231,10 +231,10 @@ private:
 
 private:
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Dynamic_Node (const ACE_Dynamic_Node&));
+    (ACE_Dynamic_Node (const ACE_Dynamic_Node&))
 
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&));
+    (ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&))
 };
 
 /**
@@ -266,8 +266,8 @@ private:
   const ACE_Parse_Node *mods_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Stream_Node (const ACE_Stream_Node&));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Stream_Node& operator= (const ACE_Stream_Node&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Stream_Node (const ACE_Stream_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Stream_Node& operator= (const ACE_Stream_Node&))
 };
 
 /**
@@ -298,8 +298,8 @@ private:
   const ACE_Parse_Node *mods_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dummy_Node (const ACE_Dummy_Node&));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dummy_Node& operator= (const ACE_Dummy_Node&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Dummy_Node (const ACE_Dummy_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Dummy_Node& operator= (const ACE_Dummy_Node&))
 };
 
 /**
@@ -356,10 +356,10 @@ protected:
 
 private:
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Location_Node (const ACE_Location_Node&));
+    (ACE_Location_Node (const ACE_Location_Node&))
 
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Location_Node& operator= (const ACE_Location_Node&));
+    (ACE_Location_Node& operator= (const ACE_Location_Node&))
 };
 
 /**
@@ -391,8 +391,8 @@ private:
   const ACE_TCHAR *object_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Node (const ACE_Object_Node&));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Node& operator= (const ACE_Object_Node&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Node (const ACE_Object_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Node& operator= (const ACE_Object_Node&))
 };
 
 /**
@@ -447,10 +447,10 @@ private:
 
 private:
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Function_Node (const ACE_Function_Node&));
+    (ACE_Function_Node (const ACE_Function_Node&))
 
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Function_Node& operator= (const ACE_Function_Node&));
+    (ACE_Function_Node& operator= (const ACE_Function_Node&))
 };
 
 /**
@@ -485,10 +485,10 @@ private:
 
 private:
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Static_Function_Node (const ACE_Static_Function_Node&));
+    (ACE_Static_Function_Node (const ACE_Static_Function_Node&))
 
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&));
+    (ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
