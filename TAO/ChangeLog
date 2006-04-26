@@ -1,3 +1,8 @@
+Wed Apr 26 19:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Simple/Client_i.h:
+          Fixed casing of include
+
 Wed Apr 26 19:13:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Connection_Handler.cpp:
