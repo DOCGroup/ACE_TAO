@@ -1,3 +1,11 @@
+Wed Apr 26 22:00:21 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Parse_Node.h:
+        * ace/Service_Gestalt.h:
+
+          Correcting a build problem, caused by the extraneous semicolons
+          after ACE_UNIMPLEMENTED_FUNC
+
 Wed Apr 26 20:21:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           The motivation for these changes was to enable support in ACE
@@ -6,7 +14,7 @@ Wed Apr 26 20:21:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
           something that's more than the sum of its parts).  This is
           feature is necessary to enable support for ORB-specific, or more
           generally - service-specific sets of services, i.e. to be able
-          to have dynamicaly loaded services to use their own private set
+          to have dynamically loaded services to use their own private set
           of service objects. In the context of the implementation I will
           use "gestalt" as a synonym for service configuration context or
           service configuration repository.
