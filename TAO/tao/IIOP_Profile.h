@@ -77,6 +77,15 @@ public:
    */
   void add_endpoint (TAO_IIOP_Endpoint *endp);
 
+  /**
+   * Remove @a endp from this profile's list of endpoints and free the
+   * @a endp memory.
+   * This method assumes @a endp is in this profile's endpoint list.
+   */
+  void remove_endpoint (TAO_IIOP_Endpoint *endp);
+
+  void remove_generic_endpoint (TAO_Endpoint *ep);
+
   //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
   /// The object key delimiter that IIOP uses or expects.

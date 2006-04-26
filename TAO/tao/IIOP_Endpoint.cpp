@@ -109,6 +109,22 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
 
 
+TAO_IIOP_Endpoint &
+TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
+{
+  this->host_ = other.host_;
+  this->port_ = other.port_;
+#if defined (ACE_HAS_IPV6)
+  this->is_ipv6_decimal_ = other.is_ipv6_decimal_;
+#endif /* ACE_HAS_IPV6 */
+  this->is_encodable_  = other.is_encodable_;
+  this->object_addr_set_ = other.object_addr_set_;
+  this->object_addr_ = other.object_addr_;
+  this->preferred_path_ = other.preferred_path_;
+  this->next_ = 0; // do not copy list membership, since we are only cloning the values
+  return *this;
+}
+
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
 {
 }

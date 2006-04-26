@@ -299,6 +299,9 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
 CORBA::Boolean
 TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
+  if (other_profile == this)
+    return 1;
+
   const TAO_IIOP_Profile *op =
     dynamic_cast<const TAO_IIOP_Profile *> (other_profile);
 
@@ -306,6 +309,10 @@ TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   if (op == 0)
     return 0;
 
+  if (this->count_ == 0 && op->count_ == 0)
+    return 1;
+  if (this->count_ != op->count_)
+    return 0;
   // Check endpoints equivalence.
   const TAO_IIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_IIOP_Endpoint *endp = &this->endpoint_;
@@ -370,6 +377,53 @@ TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
   this->endpoint_.next_ = endp;
 
   ++this->count_;
+}
+
+void
+TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
+{
+  if (endp == 0)
+    return;
+
+  // special handling for the target matching the base endpoint
+  if (endp == &this->endpoint_)
+    {
+      if (--this->count_ > 0)
+        {
+          TAO_IIOP_Endpoint* n = this->endpoint_.next_;
+          this->endpoint_ = *n;
+          // since the assignment operator does not copy the next_
+          // pointer, we must do it by hand
+          this->endpoint_.next_ = n->next_;
+          delete n;
+        }
+      return;
+    }
+
+  TAO_IIOP_Endpoint* last = &this->endpoint_;
+  TAO_IIOP_Endpoint* cur = this->endpoint_.next_;
+
+  while (cur != 0)
+  {
+    if (cur == endp)
+      break;
+    last = cur;
+    cur = cur->next_;
+  }
+
+  if (cur != 0)
+  {
+    last->next_ = cur->next_;
+    cur->next_ = 0;
+    --this->count_;
+    delete cur;
+  }
+}
+
+void
+TAO_IIOP_Profile::remove_generic_endpoint (TAO_Endpoint *ep)
+{
+  this->remove_endpoint(dynamic_cast<TAO_IIOP_Endpoint *>(ep));
 }
 
 char *

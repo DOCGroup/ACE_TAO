@@ -135,6 +135,11 @@ public:
 
   //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
+
+  /// Need to have an assignment operator since the IIOP_Profile class may
+  /// have to reorder its list of endpoints based on filtering by the EndpointPolicy.
+  TAO_IIOP_Endpoint & operator= (const TAO_IIOP_Endpoint& other);
+
 private:
 
   //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START
