@@ -1,3 +1,13 @@
+// =================================================================
+/**
+ * @file OC_Endpoint_Selector_Loader.cpp
+ *
+ * $Id$
+ *
+ * @author Phil Mesnier <mesnier_p@ociweb.com>
+ *
+ */
+// =================================================================
 // $Id$
 
 #include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
@@ -9,11 +19,10 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_OC_Endpoint_Selector_Loader::TAO_OC_Endpoint_Selector_Loader (void)
+int
+TAO_OC_Endpoint_Selector_Loader::init (void)
 {
-#if defined (TAO_AS_STATIC_LIBS)
-  ACE_Service_Config::process_directive (ace_svc_desc_TAO_OC_Endpoint_Selector_Factory);
-#endif /* TAO_AS_STATIC_LIBS */
+  return  ACE_Service_Config::process_directive (ace_svc_desc_TAO_OC_Endpoint_Selector_Factory);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

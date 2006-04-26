@@ -136,7 +136,8 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_factory_name_ ("valuetype_Adapter_Factory"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", "")))
+    poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", ""))),
+    alt_connection_timeout_hook_ (0)
 {
 }
 
@@ -2823,15 +2824,77 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
+
+  Timeout_Hook alt_connection_timeout_hook =
+    TAO_ORB_Core_Static_Resources::instance ()->alt_connection_timeout_hook_;
+
+  if (alt_connection_timeout_hook == 0)
+    return;
+
+  if (!has_timeout || time_value == ACE_Time_Value::zero )
+    {
+      (*alt_connection_timeout_hook) (this, stub, has_timeout,time_value);
+      return;
+    }
+
+  // At this point, both the primary and alternate hooks are defined, and
+  // the primary did indeed set a value
+  ACE_Time_Value tv1;
+  bool ht1;
+  (*alt_connection_timeout_hook) (this, stub, ht1,tv1);
+  if (ht1 && tv1 > ACE_Time_Value::zero && tv1 < time_value)
+    time_value = tv1;
 }
 
 void
 TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
 {
   // Saving the hook pointer so that we can use it later when needed.
-  TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_ = hook;
+  // For now there are only two entry points that may supply a connection
+  // timeout hook. But there might be future entry points, so this should
+  // probably be addressed by a more sophisticated mechanism.
 
-  return;
+#define TOCSRi TAO_ORB_Core_Static_Resources::instance ()
+
+  // A consern was raised that since this function is called by two
+  // different initializers there may be a race condition that might
+  // require a lock. We are not using a lock at this time because of
+  // two callers, one happens only during service directive processing
+  // and the other only during ORB Initialization time. The former
+  // happens when the OC_Endpoint_Selector_Factory is loaded, the
+  // latter is part of the messaging library. The messaging library
+  // calls this function as part of pre_init processing, and this call
+  // happes for every ORB instance. This was the case before these The
+  // latter call occurs when the messaging library is loaded. The
+  // redundant calls occured then as well. Second, it isn't clear how
+  // a lock in this static method would react in the face of windows
+  // dlls, shared memory segments, etc. Therefore we are continuing to
+  // keep this code lockless as it always was, assuming no
+  // simultanious overwrite will occur.
+
+  if (TOCSRi->connection_timeout_hook_ == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("TAO (%P|%t) setting primary hook\n")));
+      TOCSRi->connection_timeout_hook_ = hook;
+    }
+  else if (TOCSRi->connection_timeout_hook_ != hook &&
+           TOCSRi->alt_connection_timeout_hook_ == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("TAO (%P|%t) setting alternate hook\n")));
+      TOCSRi->alt_connection_timeout_hook_ = hook;
+    }
+  else
+    if (TAO_debug_level > 2)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) not overwriting alternate hook.")
+                  ACE_TEXT (" Is it still null? %d\n"),
+                  TOCSRi->alt_connection_timeout_hook_ == 0));
+
+#undef TOCSRi
 }
 
 void
