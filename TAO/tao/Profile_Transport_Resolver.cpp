@@ -14,6 +14,7 @@
 #include "tao/Transport_Connector.h"
 #include "tao/Endpoint.h"
 #include "tao/SystemException.h"
+#include "tao/Client_Strategy_Factory.h"
 
 #include "ace/Countdown_Time.h"
 
@@ -119,11 +120,32 @@ namespace TAO
       }
   }
 
-
   bool
   Profile_Transport_Resolver::try_connect (
       TAO_Transport_Descriptor_Interface *desc,
        ACE_Time_Value *max_time_value
+       ACE_ENV_ARG_DECL
+     )
+  {
+    return this->try_connect_i (desc,max_time_value,0 ACE_ENV_ARG_PARAMETER);
+  };
+
+  bool
+  Profile_Transport_Resolver::try_parallel_connect (
+       TAO_Transport_Descriptor_Interface *desc,
+       ACE_Time_Value *max_time_value
+       ACE_ENV_ARG_DECL
+     )
+  {
+    return this->try_connect_i (desc,max_time_value,1 ACE_ENV_ARG_PARAMETER);
+  };
+
+
+  bool
+  Profile_Transport_Resolver::try_connect_i (
+       TAO_Transport_Descriptor_Interface *desc,
+       ACE_Time_Value *max_time_value,
+       bool parallel
        ACE_ENV_ARG_DECL
      )
   {
@@ -147,28 +169,30 @@ namespace TAO
     bool const is_conn_timeout =
       this->get_connection_timeout (connection_timeout);
 
+    ACE_Time_Value *max_wait_time =
+      is_conn_timeout ? &connection_timeout : max_time_value;
 
-    ACE_Time_Value *max_wait_time = 0;
-
-    if (is_conn_timeout == true)
+    if (parallel)
       {
-        max_wait_time = &connection_timeout;
+        this->transport_ =
+          conn_reg->get_connector (desc->endpoint ()->tag ())->
+          parallel_connect (this,
+                            desc,
+                            max_wait_time
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (false);
       }
     else
       {
-        max_wait_time = max_time_value;
-      }
-
-
     // Obtain a connection.
     this->transport_ =
-      conn_reg->get_connector (desc->endpoint ()->tag ())->connect (
-        this,
+          conn_reg->get_connector (desc->endpoint ()->tag ())->
+          connect (this,
         desc,
         max_wait_time
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (false);
-
+      }
     // A timeout error occurred.
     // If the user has set a roundtrip timeout policy, throw a timeout
     // exception.  Otherwise, just fall through and return false to
@@ -190,6 +214,20 @@ namespace TAO
       }
 
     return true;
+  }
+
+  bool
+  Profile_Transport_Resolver::use_parallel_connect (void) const
+  {
+    TAO_ORB_Core *oc = this->stub_->orb_core();
+    return (oc->orb_params()->use_parallel_connects()
+#if 0       // it was decided that even with blocked connects
+            // parallel connects could be useful, at least for cache
+            // processing.
+            oc->client_factory()->connect_strategy() !=
+            TAO_Client_Strategy_Factory::TAO_BLOCKED_CONNECT
+#endif /* 0 */
+            );
   }
 
   bool

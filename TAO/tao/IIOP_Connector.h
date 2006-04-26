@@ -90,12 +90,23 @@ public:
   //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
 protected:
+  /// A flag indicating the actual connector supports parallel
+  /// connection attempts. The base implementation always returns
+  /// 0. Override to return non-zero if parallel connection attempts
+  /// may be tried.
+  virtual int supports_parallel_connects (void) const;
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep);
 
-  TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
+  virtual TAO_Transport *make_connection (
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface &desc,
+      ACE_Time_Value *timeout = 0);
+
+  virtual TAO_Transport *make_parallel_connection (
+      TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
@@ -118,6 +129,26 @@ protected:
   const bool lite_flag_;
 
 private:
+  /// This is the first half of making a connection. Both make_connection
+  /// and make_parallel_connection will start out using begin_connection.
+  int begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
+                        TAO::Profile_Transport_Resolver *r,
+                        TAO_IIOP_Endpoint *endpoint,
+                        ACE_Time_Value *timeout = 0);
+
+  /// This is the second half of making a connection when several endpoints
+  /// are involved. This works with modified wait strategies to wait for one
+  /// of many transports, and when once completes it will cancel the rest.
+  /// The winning transport is returned.
+  TAO_Transport *complete_connection (int result,
+                                      TAO_IIOP_Connection_Handler **&sh_list,
+                                      TAO_IIOP_Endpoint **ep_list,
+                                      unsigned count,
+                                      TAO::Profile_Transport_Resolver *r,
+                                      TAO_LF_Multi_Event *mev,
+                                      ACE_Time_Value *timeout = 0);
+
+
 
   /// Return the remote endpoint, a helper function
   TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);

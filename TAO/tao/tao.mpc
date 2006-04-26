@@ -113,6 +113,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LF_Follower_Auto_Adder.cpp
     LF_Follower_Auto_Ptr.cpp
     LF_Invocation_Event.cpp
+    LF_Multi_Event.cpp
     LF_Strategy.cpp
     LF_Strategy_Complete.cpp
     LocalObject.cpp

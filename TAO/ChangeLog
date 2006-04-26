@@ -1,3 +1,140 @@
+Wed Apr 26 16:42:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Options.html:
+
+          Adding text for the new commandline options used to control the
+          parallel connect feature.
+
+        * tao/Blocked_Connect_Strategy.h:
+        * tao/Blocked_Connect_Strategy.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/Client_Strategy_Factory.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Connect_Strategy.h:
+        * tao/Connect_Strategy.cpp:
+        * tao/Endpoint.h:
+        * tao/Endpoint.cpp:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Invocation_Endpoint_Selectors.h:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/LF_CH_Event.h:
+        * tao/LF_Connect_Strategy.h:
+        * tao/LF_Connect_Strategy.cpp:
+        * tao/LF_Event.h:
+        * tao/LF_Multi_Event.h:
+        * tao/LF_Multi_Event.cpp:
+        * tao/MProfile.h:
+        * tao/MProfile.i:
+        * tao/MProfile.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Reactive_Connect_Strategy.h:
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+        * tao/Transport_Descriptor_Interface.h:
+        * tao/Transport_Descriptor_Interface.inl:
+        * tao/Transport_Descriptor_Interface.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
+        * tao/tao.mpc:
+
+          These changes support a new technique for active connection
+          establishment when presented with a profile containing multiple
+          possible endpoints. This commit resolves bugzilla bug #2485.
+
+          The technique in question is "parallel connects" meaning
+          attempting to connect to many endpoints simultaniously. It was
+          conceived as a way to deal with timeouts when the Invocation
+          Endpoint Selector would first try to connect to one or more
+          unreachable endpoints. If those endpoints were defined as IP
+          addresses (not hostnames) or as resolvable hostnames that
+          pointed to unreachable IP addresses, the connection
+          establishment would take potentially several minutes to time out
+          and eventually encounter a reachable endpoint. In the case of
+          shared profiles (those using TAG_ALTERNATE_IIOP_ENDPOINT) this
+          delay impacts every single invocation.
+
+          This parallel connect feature (also referred to somewhat
+          inacurately as a strategy) avoids this by supplying all the
+          endpoints in a profile to the connector and letting it first
+          test to see if any are already cached and available, and if not,
+          to open connections to each and wait for a winner. When the
+          first connection completes, any pending connections are
+          terminated.
+
+          In order to minimize the use of pending connections, an iterator
+          traverses the list of endpoints creating new connections and
+          also checking any existing connections for completion. If the
+          first endpoint happens to be reachable and the server responds
+          quickly enough, the client may not open any more connections.
+
+          If the server does not respond immediately, a wait strategy is
+          entered. This wait strategy may be Reactive or Leader/Follower
+          based. In either case, a specal "multi event" type is used to
+          allow a single thread to wait on one of many connectors, and
+          then to clean up those that didn't finish in time. The parallel
+          connect feature is also available using blocking connects, but
+          the only advantage there is in checking the cache for all
+          endpoints in the profile, there is no performance gain during
+          actual connection establishment.
+
+          The parallel connect strategy differs from another endpoint
+          selection optimization, available in
+          tao/Strategies/Optimized_Connection_Endpoint_Selector.*. That
+          strategy works by examining all profiles simultaniously, this
+          feature still treats separate profiles separately. This profile
+          separation is necessary to support Load Balancing and Fault
+          Tolerence. Also, this feature requires additional support to be
+          built into protocol specific connectors (IIOP is currently the
+          only protocol supporting parallel connects) whereas the other
+          feature works regardless of the protocol.
+
+          As this is a new feature, it is disabled by default. Use the
+          -ORBUseParallelConnects option to enable its use. A second
+          option, -ORBParallelConnectDelay, is used to introduce a small
+          delay between the opening of new potential connections if the
+          server is particularly busy. This is useful to minimize the
+          impact on a busy server if more than one of the available
+          endpoints is reachable. Also, because this feature only focuses
+          on one profile at a time, the server must be run with
+          -ORBUseSharedProfiles enabled (it is disabled by default).
+
+        * tests/Parallel_Connect_Strategy/Parallel_Connect_Strategy.mpc:
+        * tests/Parallel_Connect_Strategy/README:
+        * tests/Parallel_Connect_Strategy/Test.idl:
+        * tests/Parallel_Connect_Strategy/Test_i.h:
+        * tests/Parallel_Connect_Strategy/Test_i.cpp:
+        * tests/Parallel_Connect_Strategy/blocked.conf:
+        * tests/Parallel_Connect_Strategy/client.cpp:
+        * tests/Parallel_Connect_Strategy/reactive.conf:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+        * tests/Parallel_Connect_Strategy/server.cpp:
+
+          This is a new test for the parallel connect feature. It works by
+          having the server open two endpoints, one aliased to something
+          unreachable. The client then uses different wait strategies to
+          make invocations on the server and records the time for
+          each. These tests also include counter-examples in which
+          parallel connects are not used, and these take several minutes
+          to run. On my Linux machine the timeout period is about 3
+          minutes which causes the overall test to take about 9 minutes to
+          run.
+
 Wed Apr 26 16:30:56 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/PortableServer/POAManagerFactory.cpp:

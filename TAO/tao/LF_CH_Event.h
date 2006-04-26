@@ -23,6 +23,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_LF_Multi_Event;
+
 /**
  * @class TAO_LF_CH_Event
  *
@@ -35,6 +37,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_CH_Event: public TAO_LF_Event
 {
 public:
+  /**
+   * The TAO_LF_Multi_Event class is another specialization of
+   * TAO_LF_Event, used for aggregating many connection handlers into
+   * a single event object.. It requires friendship so that it can
+   * check the is_state_final() flag on each of its contained
+   * connection handlers.
+   */
+  friend class TAO_LF_Multi_Event;
+
   /// Constructor
   TAO_LF_CH_Event (void);
 

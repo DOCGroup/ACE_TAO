@@ -169,8 +169,9 @@ TAO_IIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
-                ACE_TEXT("The local addr is <%s> \n"),
-                local_addr. get_host_addr ()));
+                ACE_TEXT("The local addr is <%s:%d> \n"),
+                local_addr.get_host_addr (),
+                local_addr.get_port_number()));
 
   if (local_addr == remote_addr)
     {
@@ -478,6 +479,31 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
   return 0;
 }
+
+void
+TAO_IIOP_Connection_Handler::abort (void)
+{
+      struct linger lval;
+      lval.l_onoff = 1;
+      lval.l_linger = 0;
+
+      if (this->peer ().set_option(SOL_SOCKET,
+                                   SO_LINGER,
+                                   (void*) &lval,
+                                   sizeof (lval)) == -1)
+        {
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
+                          ACE_TEXT ("SO_LINGER on %d\n"),
+                          this->peer ().get_handle ()));
+            }
+        }
+}
+
+
+
 //@@ CONNECTION_HANDLER_SPL_COPY_HOOK_END
 /*
  * End copy hook

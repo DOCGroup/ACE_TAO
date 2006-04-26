@@ -359,6 +359,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
   int linger = -1;
 
+  int use_parallel_connects = 0;
+
   // Copy command line parameter not to use original.
   ACE_Argv_Type_Converter command_line (argc, argv);
 
@@ -915,6 +917,20 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
          {
            negotiate_codesets =
              (ACE_OS::atoi (current_arg));
+
+           arg_shifter.consume_arg ();
+         }
+       else if ((current_arg = arg_shifter.get_the_parameter
+                 (ACE_LIB_TEXT("-ORBUseParallelConnects"))))
+         {
+           use_parallel_connects = ACE_OS::atoi (current_arg);
+           arg_shifter.consume_arg ();
+         }
+       else if ((current_arg = arg_shifter.get_the_parameter
+                 (ACE_LIB_TEXT("-ORBParallelConnectDelay"))))
+         {
+           this->orb_params ()->parallel_connect_delay
+             (ACE_OS::atoi (current_arg));
            arg_shifter.consume_arg ();
          }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
@@ -1155,6 +1171,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->orb_params ()->cache_incoming_by_dotted_decimal_address
                                             (no_server_side_name_lookups
                                              || dotted_decimal_addresses);
+
+  this->orb_params ()->use_parallel_connects
+    (use_parallel_connects != 0);
+
   this->orb_params ()->linger (linger);
   this->orb_params ()->nodelay (nodelay);
   this->orb_params ()->sock_keepalive (so_keepalive);

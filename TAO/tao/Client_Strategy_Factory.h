@@ -71,6 +71,15 @@ public:
   /// Create the correct client <asynch_connect> strategy.
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
 
+  enum Connect_Strategy
+  {
+    TAO_BLOCKED_CONNECT,
+    TAO_REACTIVE_CONNECT,
+    TAO_LEADER_FOLLOWER_CONNECT
+  };
+  /// Return the selected connection strategy option.
+  virtual Connect_Strategy connect_strategy (void) const;
+
   /// Does the client allow any form of callback?
   virtual int allow_callback (void);
 
