@@ -1,12 +1,17 @@
+Wed Apr 26 08:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+          Fixed compile problem in gcc4 build
+
 Tue Apr 25 21:27:05 UTC 2006  William R. Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/TargetManager.mpc
-        
-          Linking problems for Borland. 
-        
+
+          Linking problems for Borland.
+
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
         * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
-        
+
           More compile fixes for Borland.
 Tue Apr 25 20:12:25 UTC 2006  William R. Otte <wotte@dre.vanderbilt.edu>
 
@@ -45,9 +50,9 @@ Tue Apr 25 20:12:25 UTC 2006  William R. Otte <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
         * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
         * tools/Config_Handlers/Package_Handlers/SID_Handler.h
-        
+
         Compilation fixes for borland, some cosmetic fixes as well.
-        
+
 Tue Apr 25 09:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/CPD_Handler.h:
