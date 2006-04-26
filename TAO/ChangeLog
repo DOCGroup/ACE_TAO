@@ -1,3 +1,9 @@
+Wed Apr 26 03:46:16 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Valuetype/AbstractBase.cpp:
+
+          Fixed scoreboard detected warning.
+
 Tue Apr 25 19:24:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
