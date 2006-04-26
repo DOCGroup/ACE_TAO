@@ -83,6 +83,9 @@ namespace CIAO
 
         // Packaged Component Implementations
         toconfig.implementation.length ( cpd->count_implementation ());
+	SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
+				     cpd->begin_implementation (),
+				     toconfig.implementation);
         std::for_each (cpd->begin_implementation (),
                        cpd->end_implementation (),
                        PCI_Functor (toconfig.implementation));

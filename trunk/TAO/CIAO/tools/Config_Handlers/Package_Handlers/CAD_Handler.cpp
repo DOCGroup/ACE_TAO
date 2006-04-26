@@ -67,6 +67,9 @@ namespace CIAO
                            Requirement_Functor (toconfig.deployRequirement));
 
             toconfig.internalEndpoint.length (desc.count_internalEndpoint ());
+	    SEQ_HAND_GCC_BUG_WORKAROUND (SPE_Handler::handle_spe,
+					 desc.begin_internalEndpoint (),
+					 toconfig.internalEndpoint);
             std::for_each (desc.begin_internalEndpoint (),
                            desc.end_internalEndpoint (),
                            SPE_Functor (toconfig.internalEndpoint));
@@ -162,6 +165,9 @@ namespace CIAO
             toconfig.externalName = desc.externalName ().c_str ();
 
             toconfig.delegatesTo.length (desc.count_delegatesTo ());
+	    SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,
+					 desc.begin_delegatesTo (),
+					 toconfig.delegatesTo);
             std::for_each (desc.begin_delegatesTo (),
                            desc.end_delegatesTo (),
                            SPR_Functor (toconfig.delegatesTo));
@@ -204,11 +210,17 @@ namespace CIAO
         /* @@ MAJO: Implement Locality */
 
         toconfig.connection.length (desc.count_connection ());
+	SEQ_HAND_GCC_BUG_WORKAROUND (ACD_Handler::handle_acd,
+				     desc.begin_connection (),
+				     toconfig.connection);
         std::for_each (desc.begin_connection (),
                        desc.end_connection (),
                        ACD_Functor (toconfig.connection));
 
         toconfig.externalProperty.length (desc.count_externalProperty ());
+	SEQ_HAND_GCC_BUG_WORKAROUND (APM_Handler::handle_apm,
+				     desc.begin_externalProperty (),
+				     toconfig.externalProperty);
         std::for_each (desc.begin_externalProperty (),
                        desc.end_externalProperty (),
                        APM_Functor (toconfig.externalProperty));

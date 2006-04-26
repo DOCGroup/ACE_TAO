@@ -29,6 +29,10 @@ project (Package_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
     PCD_Handler.h
     SID_Handler.h
   }
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
 }
 
 project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
@@ -39,6 +43,9 @@ project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handle
   libs += Package_Config_Handlers XSC_Config_Handlers
   Source_Files {
     test.cpp
+  }
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
   }
 }
 

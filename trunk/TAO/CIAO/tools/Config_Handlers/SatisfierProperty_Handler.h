@@ -49,8 +49,6 @@ namespace CIAO
 	  SatisfierProperty_Handler (void);
 	  virtual ~SatisfierProperty_Handler (void);
 
-	  typedef Sequence_Iterator< const ::Deployment::SatisfierProperties, const ::Deployment::SatisfierProperty > sat_prop_iter;
-
 	  /// This method maps the values from the XSC object
 	  /// <CIAO::Config_Handlers::SatisfierProperty> to the CORBA IDL type
 	  /// <Deployment::SatisfierProperty>.
