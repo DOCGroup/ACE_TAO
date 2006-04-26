@@ -105,7 +105,6 @@ public:
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
         }
-
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR");
@@ -165,32 +164,6 @@ public:
   {
   }
 };
-
-void do_smi_exception (A::AMI_Test_var &ami_test_var)
-{
-  try {
-    CORBA::Long l = 12345;
-    CORBA::Long number = ami_test_var->foo (l,
-                                            0,
-                                            "Let's talk SMI."
-                                            ACE_ENV_ARG_PARAMETER);
-    if (debug)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "Received the following number: %d\n",
-                    number));
-      }
-  }
-  catch (A::DidTheRightThing ex) {
-    ACE_DEBUG ((LM_DEBUG,"Synch catch: <%d> <%W>\n",
-                ex.id,ex.whatDidTheRightThing.in()));
-    ACE_HEX_DUMP((LM_DEBUG,
-                  reinterpret_cast<char const *>(ex.whatDidTheRightThing.in()),
-                  wcslen(ex.whatDidTheRightThing.in()) * sizeof(wchar_t)
-                  ));
-  }
-}
-
 
 int
 main (int argc, char *argv[])
@@ -312,7 +285,18 @@ main (int argc, char *argv[])
       //  orb->perform_work ();
 
 
-      do_smi_exception(ami_test_var);
+      CORBA::Long number = ami_test_var->foo (l,
+                                              l,
+                                              "Let's talk SMI."
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Received the following number: %d\n",
+                      number));
+        }
 
       if (shutdown_flag)
         {
