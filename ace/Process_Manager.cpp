@@ -354,7 +354,7 @@ ACE_Process_Manager::handle_signal (int,
           {
             ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, lock_, -1));
 
-            ssize_t i = this->find_proc (proc);
+            ssize_t const i = this->find_proc (proc);
             if (i == -1)
               return -1;
 #if 0
@@ -400,7 +400,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
       return 0;
     }
 
-  ssize_t i = this->find_proc (pid);
+  ssize_t const i = this->find_proc (pid);
 
   if (i == -1)
     {
@@ -443,7 +443,7 @@ ACE_Process_Manager::spawn (ACE_Process *process,
 {
   ACE_TRACE ("ACE_Process_Manager::spawn");
 
-  pid_t pid = process->spawn (options);
+  pid_t const pid = process->spawn (options);
 
   // Only include the pid in the parent's table.
   if (pid == ACE_INVALID_PID || pid == 0)
@@ -479,7 +479,7 @@ ACE_Process_Manager::spawn_n (size_t n,
        i < n;
        i++)
     {
-      pid_t pid = this->spawn (options, event_handler);
+      pid_t const pid = this->spawn (options, event_handler);
       if (pid == ACE_INVALID_PID || pid == 0)
         // We're in the child or something's gone wrong.
         return pid;
@@ -521,7 +521,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
   // automagically.  Get a handle to this new Process and tell the
   // Reactor we're interested in <handling_input> on it.
 
-  ACE_Reactor *r = this->reactor ();
+  ACE_Reactor * const r = this->reactor ();
   if (r != 0)
     r->register_handler (this, proc->gethandle ());
 #endif /* ACE_WIN32 */
@@ -556,7 +556,7 @@ ACE_Process_Manager::remove (pid_t pid)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ssize_t i = this->find_proc (pid);
+  ssize_t const i = this->find_proc (pid);
 
   if (i != -1)
     return this->remove_proc (i);
@@ -584,7 +584,7 @@ ACE_Process_Manager::remove_proc (size_t i)
     }
 
 #if defined (ACE_WIN32)
-  ACE_Reactor *r = this->reactor ();
+  ACE_Reactor * const r = this->reactor ();
   if (r != 0)
     r->remove_handler (this->process_table_[i].process_->gethandle (),
                        ACE_Event_Handler::DONT_CALL);
@@ -643,7 +643,7 @@ ACE_Process_Manager::terminate (pid_t pid,
 
   // Check for duplicates and bail out if they're already
   // registered...
-  ssize_t i = this->find_proc (pid);
+  ssize_t const i = this->find_proc (pid);
 
   if (i == -1)
     // set "no such process" error
@@ -655,16 +655,16 @@ ACE_Process_Manager::terminate (pid_t pid,
 
 int
 ACE_Process_Manager::set_scheduler (const ACE_Sched_Params & params,
-                                         pid_t pid)
+                                    pid_t pid)
 {
-  ACE_TRACE ("ACE_Process_Manager::sched_setscheduler");
+  ACE_TRACE ("ACE_Process_Manager::set_scheduler");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                             ace_mon, this->lock_, -1));
 
   // Check to see if the process identified by the given pid is managed by
   // this instance of ACE_Process_Manager.
-  ssize_t i = this->find_proc (pid);
+  ssize_t const i = this->find_proc (pid);
 
   if (i == -1)
     // set "no such process" error
@@ -676,14 +676,14 @@ ACE_Process_Manager::set_scheduler (const ACE_Sched_Params & params,
 int
 ACE_Process_Manager::set_scheduler_all (const ACE_Sched_Params & params)
 {
-  ACE_TRACE ("ACE_Process_Manager::setscheduler_all");
+  ACE_TRACE ("ACE_Process_Manager::set_scheduler_all");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                             ace_mon, this->lock_, -1));
-  pid_t pid;
+
   for (size_t i = 0; i < this->current_count_; ++i)
     {
-      pid = this->process_table_[i].process_->getpid ();
+      pid_t const pid = this->process_table_[i].process_->getpid ();
       if (ACE_OS::sched_params (params, pid) != 0)
         return -1;
     }
@@ -740,7 +740,7 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
 
   while (this->current_count_ > 0)
     {
-      pid_t pid = this->wait (0, remaining);
+      pid_t const pid = this->wait (0, remaining);
 
       if (pid == ACE_INVALID_PID)       // wait() failed
         return -1;
