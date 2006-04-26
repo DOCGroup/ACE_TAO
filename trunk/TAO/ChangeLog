@@ -1,3 +1,9 @@
+Wed Apr 26 21:24:54 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * NEWS:
+
+          Added an entry to the NEWS file.
+
 Wed Apr 26 20:21:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           The motivation for these changes was to enable support for
@@ -13,10 +19,6 @@ Wed Apr 26 20:21:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
           existing code. As a consequence of this design choice, any
           un-named orb(s) will default to using the ubergestalt, which is
           consistent with the prior behavior.
-
-        * NEWS
-
-          Added an entry to the NEWS file.
 
         * tao/DLL_Parser.cpp:
 
