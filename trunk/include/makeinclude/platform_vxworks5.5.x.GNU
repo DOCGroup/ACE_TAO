@@ -230,7 +230,7 @@ else
 endif
 else
 ifeq ("$(TOOL)","gnu")
-C++FLAGS += -ftemplate-depth-34
+C++FLAGS += -ftemplate-depth-50
 ifeq ($(exceptions),1)
   C++FLAGS += -fexceptions
 else
