@@ -60,5 +60,6 @@ namespace CIAO
   }
 }
 
+#include /**/ "ace/post.h"
 
 #endif /* CIAO_PACKAGING_NIA_HANDLER_H */
