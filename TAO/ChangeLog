@@ -4,8 +4,8 @@ Wed Apr 26 12:20:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
         * tests/AMI/ami_test_i.cpp:
         * tests/AMI/simple_client.cpp:
 	  Reverting earlier test changes. They were causing problems on
-          some platforms and I don't have a clear enough memory of the 
-          original motivation for the change. 
+          some platforms and I don't have a clear enough memory of the
+          original motivation for the change.
 
 Wed Apr 26 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -17,9 +17,7 @@ Wed Apr 26 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           exceptions for this so it is allowed, then setting the length to
           1 does reinitialize element 0 so that we don't get old values.
           This was not done with the old sequences, then just the old
-          value was returned and things worked then. The multicast test
-          works now fine, the pluggable seems now to encounter another
-          bug.
+          value was returned and things worked then.
 
 Wed Apr 26 11:21:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
