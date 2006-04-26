@@ -42,7 +42,7 @@
 
 #include "tao/Messaging/messaging_export.h"
 #include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
+#include "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
