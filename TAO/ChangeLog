@@ -1,3 +1,8 @@
+Wed Apr 26 10:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Simple/*:
+          Added very simple OBV test
+
 Wed Apr 26 09:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2510_Regression:
