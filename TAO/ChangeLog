@@ -1,3 +1,111 @@
+Wed Apr 26 13:47:28 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy.mpc:
+        * tao/EndpointPolicy/EndpointPolicy.h:
+        * tao/EndpointPolicy/EndpointPolicy.pidl:
+        * tao/EndpointPolicy/EndpointPolicy.cpp:
+        * tao/EndpointPolicy/EndpointPolicyA.h:
+        * tao/EndpointPolicy/EndpointPolicyA.cpp:
+        * tao/EndpointPolicy/EndpointPolicyC.h:
+        * tao/EndpointPolicy/EndpointPolicyC.inl:
+        * tao/EndpointPolicy/EndpointPolicyC.cpp:
+        * tao/EndpointPolicy/EndpointPolicyType.pidl:
+        * tao/EndpointPolicy/EndpointPolicyTypeA.h:
+        * tao/EndpointPolicy/EndpointPolicyTypeA.cpp:
+        * tao/EndpointPolicy/EndpointPolicyTypeC.h:
+        * tao/EndpointPolicy/EndpointPolicyTypeC.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_Export.h:
+        * tao/EndpointPolicy/EndpointPolicy_Factory.h:
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h:
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_i.h:
+        * tao/EndpointPolicy/EndpointPolicy_i.cpp:
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.h:
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.h:
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp:
+        * tao/EndpointPolicy/Endpoint_Value_Impl.h:
+        * tao/EndpointPolicy/IIOPEndpointValue.pidl:
+        * tao/EndpointPolicy/IIOPEndpointValueA.h:
+        * tao/EndpointPolicy/IIOPEndpointValueA.cpp:
+        * tao/EndpointPolicy/IIOPEndpointValueC.h:
+        * tao/EndpointPolicy/IIOPEndpointValueC.cpp:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.h:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+
+          The EndpointPolicy is a new, TAO-specific policy that is applied
+          to POAManagers via the POAManagerFactory. The Endpoint policy
+          acts as a filter for constraining the final endpoints or
+          profiles listed in an IOR when it is created by a POA associated
+          with the POAManager containing the policy. The EndpointPolicy
+          value is a sequence, allow multiple endpoints to be published.
+
+          The way this works is that the ORB is initialized with all the
+          -ORBEndpoint options it needs to provide access to all the
+          objects it will serve. Then POAManagers are created with
+          Endpoint policies that contain only the endpoints that are to be
+          used for its subset of objects. For instance, the ORB could
+          define one endpoint for insecure, internal-use-only objects, and
+          another for secure internet-facing objects. Using the Endpoint
+          Policy these different objects would only get one or the other
+          endpoint. Mechanically what happens is that first all Acceptors
+          are queried to construct an MProfile, then the resulting
+          profiles/endpoints are compared to entries in the policy, those
+          not matching are eliminated. It is possible that an endpoint
+          policy will exclude all the profiles, which would result in an
+          exception being raised at object reference construction time.
+
+          Endpoints are matched in their final form. This means that if an
+          IIOP Endpoint makes use of the hostname_in_ior attribute, that
+          is the name the policy will use to match.
+
+          Endpoint values are protocol specific. A value for IIOP is
+          provided, but new values must be defined to support other
+          protocols. The Endpoint value is a local object. New protocol
+          specific values do not have to be added to the
+          TAO_EndpointPolicy library, but they must specialize
+          EndpointPolicy::ValueBase and the implementation must derive
+          from TAO_Endpoint_Value_Impl.
+
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+
+          The profile contains the base endpoint as an attribute. This
+          caused a problem for the endpoint removal scheme mentioned
+          above. If a profile contains two or more endpoints, and the base
+          happens to be the one to be eliminated as a result of the
+          endpoint comparison, the only thing that could be done is to
+          copy the contents of the first alternate into the base, then
+          eliminate the duplicate.
+
+        * tao/orbconf.h:
+
+          Added a tag for the new policy.
+
+        * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
+        * tests/POA/EndpointPolicy/Hello.h:
+        * tests/POA/EndpointPolicy/Hello.cpp:
+        * tests/POA/EndpointPolicy/README:
+        * tests/POA/EndpointPolicy/Test.idl:
+        * tests/POA/EndpointPolicy/client.cpp:
+        * tests/POA/EndpointPolicy/run_test.pl:
+        * tests/POA/EndpointPolicy/server.cpp:
+        * tests/POA/README:
+
+          A new test case for the endpoint policy. This test currently
+          fails due to an unresolved interaction with the sequence
+          code. The error appears to be related to memory corruption, but
+          the cause has not yet been determined. The error only manifests
+          when the multiple profiles portion of the test is being
+          run. This is where an unmodified IOR would contain two profiles,
+          each with one endpoint. The problem does not occur when a single
+          profile has two endpoints.
+
 Wed Apr 26 14:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/client.cpp:

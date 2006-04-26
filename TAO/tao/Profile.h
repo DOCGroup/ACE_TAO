@@ -215,6 +215,17 @@ public:
   /// Return how many endpoints this profile contains.
   virtual CORBA::ULong endpoint_count (void) const = 0;
 
+  /**
+   * Remove the provided endpoint from the profile. Some
+   * subclasses of TAO_Profile already have a protocol-specific
+   * version of remove_endpoint, but this generic interface is
+   * required. The default implementation is a no-op. Protocol
+   * maintainers wishing to add support for the EndpointPolicy must
+   * implement remove_generic_endpoint to call their protocol-specific
+   * version of remove_endpoint
+   */
+  virtual void remove_generic_endpoint (TAO_Endpoint *ep);
+
   /// Verify profile equivalance.
   /**
    * Two profiles are equivalent if their tag, object_key, version

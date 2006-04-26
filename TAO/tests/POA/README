@@ -81,3 +81,17 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 This program tests that nested non-servant upcalls are
                 handled correctly.
 
+        . POAManagerFactory
+   
+                The program tests the POAManagerFactory interface. Test may
+                be run by hand using "POAManagerFactory -v" to get a verbose 
+                report of individual tests being run.
+
+        . EndpointPolicy 
+
+                Tests for the endpoint policy, the server listens on two
+                endpoints, one with an alias rendering it unreachable. The 
+                server uses the endpoint policy to create two IORs, one with
+                the only the good endpoint and another with only the bad. The
+                client expects to reach the good ior and expects to fail with
+                the bad ior.
