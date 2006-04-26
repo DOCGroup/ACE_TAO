@@ -160,7 +160,7 @@ namespace PortableInterceptor
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual ::PortableInterceptor::AdapterManagerId manager_id (
+    virtual char * manager_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((

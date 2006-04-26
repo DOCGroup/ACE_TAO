@@ -1,3 +1,48 @@
+Wed Apr 26 13:29:44 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h:
+        * orbsvcs/examples/ORT/Server_IORInterceptor.cpp:
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+
+        * orbsvcs/orbsvcs/PortableGroup/GOA.h:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.cpp:
+
+        * tao/AnyTypeCode/PI_ForwardA.h:
+
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h:
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_POA.h:
+        * tao/CSD_Framework/CSD_POA.cpp:
+
+        * tao/IORInterceptor/IORInfo.h:
+        * tao/IORInterceptor/IORInfo.cpp:
+        * tao/IORInterceptor/IORInfoC.h:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+
+        * tao/IORInterceptor_Adapter.h:
+        * tao/PI_Forward.pidl:
+        * tao/PI_ForwardC.h:
+
+        * tao/RTPortableServer/RT_POA.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.h:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+        * tests/ORT/ORT_test_IORInterceptor.h:
+        * tests/ORT/ORT_test_IORInterceptor.cpp:
+
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+
+          These are more changes related to the POAManagerFactory. They
+          are coupled with my 13:10:59 utc checkin.
+
 Wed Apr 26 13:10:59 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/PortableServer/Acceptor_Filter_Factory.h:
