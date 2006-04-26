@@ -1,3 +1,9 @@
+Wed Apr 26 17:13:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added test for Parallel_Connect_Strategy. This test will take
+          about 9 minutes to run to completion.
+
 Wed Apr 26 14:22:31 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
