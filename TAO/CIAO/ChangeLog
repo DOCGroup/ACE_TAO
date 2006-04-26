@@ -1,3 +1,18 @@
+Wed Apr 26 21:25:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/Property_Handler.h
+        * tools/Config_Handlers/SatisfierProperty_Handler.h
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        * tools/Config_Handlers/Utils/Functors.h
+        
+          Introduced a workaround for a ICE in GCC 4.0.22.
+        
 Wed Apr 26 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DP_Handler.cpp:

@@ -49,8 +49,6 @@ namespace CIAO
 	  Property_Handler (void);
 	  virtual ~Property_Handler (void);
 
-	  typedef Sequence_Iterator< const ::Deployment::Properties, const ::Deployment::Property > prop_iter;
-
 	  /// This method maps the values from the XSC object
 	  /// <CIAO::Config_Handlers::Property> to the CORBA IDL type
 	  /// <Deployment::Property>.
