@@ -1,3 +1,26 @@
+Wed Apr 26 18:47:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+
+          Add an alternate connection timeout hook. This is necessary for
+          users of the Optimized Connect Endpoint Selector with its
+          timeout while also using CORBA messaging and the Connection
+          Timeout policy. Both of these connection timeouts are
+          dynamically loaded and one would override the other. This change
+          allows both to be loaded, and if both are initialized to nonzero
+          values, the lesser of the two timeouts is used. This results
+          from a bug originally reported to OCI by friedhelm.wolf@homag.de.
+
+        * tao/Strategies/OC_Endpoint_Selector_Loader.cpp:
+        * tao/Strategies/OC_Endpoint_Selector_Loader.h:
+
+          Cleaned up the initializer to be more consistent with others.
+
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
+
+          Fixed wihtespace in debug output.
+
 Wed Apr 26 16:42:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/Options.html:
