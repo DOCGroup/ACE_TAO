@@ -1,3 +1,9 @@
+Wed Apr 26 13:01:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/AbstractBase.h:
+          The _tao_marshal_v method is supposed to be const.
+
 Wed Apr 26 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Bug_2511_Regression/*:
