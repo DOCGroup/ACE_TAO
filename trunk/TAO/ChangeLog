@@ -1,3 +1,13 @@
+Wed Apr 26 09:44:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+          Check in all marshal_sequence methods if we aren't trying to
+          marshal a nill sequence, this can happen when the user doesn't
+          initialize an out argument. In that case we throw a BAD_PARAM
+          exception as described in the C++ spec. This fixes bugzilla bug
+          1676.
+
 Wed Apr 26 08:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
