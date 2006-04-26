@@ -1,3 +1,12 @@
+Wed Apr 26 12:20:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/AMI/ami_test.idl:
+        * tests/AMI/ami_test_i.cpp:
+        * tests/AMI/simple_client.cpp:
+	  Reverting earlier test changes. They were causing problems on
+          some platforms and I don't have a clear enough memory of the 
+          original motivation for the change. 
+
 Wed Apr 26 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
