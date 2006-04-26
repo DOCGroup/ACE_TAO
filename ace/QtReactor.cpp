@@ -1,5 +1,9 @@
 //$Id$
+
 #include "ace/QtReactor.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_QtReactor)
 
 // Must be called with lock held
@@ -149,7 +153,7 @@ ACE_QtReactor::read_event (int p_handle)
   ACE_Reactor_Mask mask = 0;
   mask = mask_ops( handle, mask, ACE_Reactor::GET_MASK );
   if ( -1 != mask )
-	set_enable_flag_by_mask ( 1, handle, mask);
+        set_enable_flag_by_mask ( 1, handle, mask);
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
 
@@ -178,7 +182,7 @@ ACE_QtReactor::write_event (int p_handle)
   ACE_Reactor_Mask mask = 0;
   mask = mask_ops( handle, mask, ACE_Reactor::GET_MASK );
   if ( -1 != mask )
-	set_enable_flag_by_mask ( 1, handle, mask);
+        set_enable_flag_by_mask ( 1, handle, mask);
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
 
@@ -208,7 +212,7 @@ ACE_QtReactor::exception_event (int p_handle)
   ACE_Reactor_Mask mask = 0;
   mask = mask_ops( handle, mask, ACE_Reactor::GET_MASK );
   if ( -1 != mask )
-	set_enable_flag_by_mask ( 1, handle, mask);
+        set_enable_flag_by_mask ( 1, handle, mask);
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
 
@@ -588,8 +592,9 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
 
 // mbrudka: who needs wait_for_multiple_events? It seems it's cargo load now!
 int
-ACE_QtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
-                                         ACE_Time_Value *max_wait_time)
+ACE_QtReactor::wait_for_multiple_events (
+  ACE_Select_Reactor_Handle_Set &handle_set,
+  ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_QtReactor::wait_for_multiple_events");
 
@@ -621,16 +626,4 @@ ACE_QtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
   // Timed out or input available
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Entry<ACE_HANDLE, QSocketNotifier *>;
-template class ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, QSocketNotifier *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -24,6 +24,8 @@
 
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Auto_IncDec
  *
@@ -62,9 +64,10 @@ private:
                                              ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_IncDec_T.inl"
-// On non-Win32 platforms, this code will be inlined
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

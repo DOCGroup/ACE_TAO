@@ -382,7 +382,7 @@ int FTClientMain::pass (
         }
         case 'S':
         {
-          if (state.in () != 0)
+          if (state->length () > 0)
           {
             if (this->verbose_ >= LOUD)
             {
@@ -412,7 +412,7 @@ int FTClientMain::pass (
         }
         case 'U':
         {
-          if (update.in () != 0)
+          if (update->length () > 0)
           {
             if (this->verbose_ >= LOUD)
             {

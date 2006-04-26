@@ -11,6 +11,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_syslog.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // NOTE:
 //   The ACE_Log_Msg_UNIX_Syslog class can use the openlog(),
 //   setlogmask(), syslog() and closelog() routines in a thread safe
@@ -195,4 +197,6 @@ ACE_Log_Msg_UNIX_Syslog::convert_log_mask (int lm_mask)
   return syslog_mask;
 }
 
-#endif /* !defined (ACE_LACKS_UNIX_SYSLOG) */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* !ACE_LACKS_UNIX_SYSLOG */

@@ -1,8 +1,8 @@
 
 // $Id$
 
-#include "RTScheduler_Loader.h"
-#include "RTScheduler_Initializer.h"
+#include "tao/RTScheduling/RTScheduler_Loader.h"
+#include "tao/RTScheduling/RTScheduler_Initializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -11,13 +11,10 @@
 ACE_RCSID (TAO, RTScheduler_Loader, "$Id$")
 
 
-TAO_RTScheduler_Loader::TAO_RTScheduler_Loader (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
 {
-
 }
 
 int
@@ -71,6 +68,8 @@ TAO_RTScheduler_Loader::init (int,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 

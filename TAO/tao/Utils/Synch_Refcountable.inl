@@ -1,7 +1,10 @@
 // -*- C++ -*-
+//
 //$Id$
 
 #include "ace/Guard_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 TAO_Synch_Refcountable::increment (void)
@@ -22,3 +25,5 @@ TAO_Synch_Refcountable::refcount (void) const
 {
   return ACE_Refcountable::refcount ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

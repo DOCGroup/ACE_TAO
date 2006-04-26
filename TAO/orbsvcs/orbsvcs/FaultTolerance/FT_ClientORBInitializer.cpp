@@ -1,10 +1,8 @@
-// -*- C++ -*-
-//
 // $Id$
 
-#include "FT_ClientORBInitializer.h"
-#include "FT_ClientPolicyFactory.h"
-#include "FT_ClientRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORBInitializer.h"
+#include "orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h"
+#include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
@@ -13,13 +11,14 @@ ACE_RCSID (FaultTolerance,
            FT_ClientORBInitializer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_FT_ClientORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
 }
 
 void
@@ -112,3 +111,5 @@ TAO_FT_ClientORBInitializer::register_client_request_interceptors (
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

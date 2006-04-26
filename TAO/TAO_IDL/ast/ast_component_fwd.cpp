@@ -4,8 +4,8 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
-           ast_component_fwd, 
+ACE_RCSID( ast,
+           ast_component_fwd,
            "$Id$")
 
 AST_ComponentFwd::AST_ComponentFwd (void)
@@ -18,8 +18,8 @@ AST_ComponentFwd::AST_ComponentFwd (void)
 
 AST_ComponentFwd::AST_ComponentFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : COMMON_Base (I_TRUE,
-                 I_FALSE),
+  : COMMON_Base (true,
+                 false),
     AST_Decl (AST_Decl::NT_component_fwd,
               n),
     AST_Type (AST_Decl::NT_component_fwd,

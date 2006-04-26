@@ -113,7 +113,7 @@ Common_Task::close (u_long exit_status)
 int
 Supplier::svc (void)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   // Send one message for each letter of the alphabet, then send an empty
   // message to mark the end.
@@ -161,7 +161,7 @@ Consumer::svc (void)
   ACE_Message_Block *mb = 0;
   int result;
   const char *c = ACE_ALPHABET;
-  char *output;
+  char *output = 0;
 
   // Keep looping, reading a message out of the queue, until we
   // timeout or get a message with a length == 0, which signals us to
@@ -169,14 +169,14 @@ Consumer::svc (void)
 
   for (;;)
     {
-      this->timeout_.sec (ACE_OS::time (0) + 4); // Wait for upto 4 seconds
+      this->timeout_.set (ACE_OS::time (0) + 4, 0); // Wait for upto 4 seconds
 
       result = this->getq (mb, &this->timeout_);
 
       if (result == -1)
         break;
 
-      size_t length = mb->length ();
+      size_t const length = mb->length ();
 
       if (length > 0)
         {
@@ -208,8 +208,8 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   // Control hierachically-related active objects.
   MT_Stream stream;
-  MT_Module *cm;
-  MT_Module *sm;
+  MT_Module *cm = 0;
+  MT_Module *sm = 0;
 
   // Allocate the Consumer and Supplier modules.
   ACE_NEW_RETURN (cm, MT_Module (ACE_TEXT ("Consumer"), new Consumer), -1);

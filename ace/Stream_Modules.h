@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #ifndef ACE_STREAM_MODULES
 #define ACE_STREAM_MODULES
 #include /**/ "ace/pre.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Stream_Head
@@ -149,6 +151,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Stream_Modules.cpp"

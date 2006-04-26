@@ -1,6 +1,8 @@
+// -*- C++ -*-
+
 // $Id$
 
-// ===========================================================================================
+// ===========================================================================
 // FILENAME
 //   Concurrency_Loader.h
 //
@@ -12,7 +14,7 @@
 //   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 //   Priyanka Gontla <pgontla<ece.uci.edu>
 //
-// ==========================================================================================
+// ===========================================================================
 
 #ifndef TAO_CONCURRENCY_LOADER_H
 #define TAO_CONCURRENCY_LOADER_H
@@ -25,7 +27,9 @@
 
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
 
-class TAO_Concurrency_Export TAO_Concurrency_Loader : public TAO_Object_Loader
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Concurrency_Serv_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
 public:
 
@@ -57,10 +61,14 @@ public:
 
 private:
 
-ACE_UNIMPLEMENTED_FUNC (TAO_Concurrency_Loader (const TAO_Concurrency_Loader &))
-ACE_UNIMPLEMENTED_FUNC (TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &))
+  // Disallow copying and assignment.
+  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &);
+  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &);
+
 };
 
-ACE_FACTORY_DECLARE (TAO_Concurrency, TAO_Concurrency_Loader)
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_DECLARE (TAO_Concurrency_Serv, TAO_Concurrency_Loader)
 
 #endif /* TAO_CONCURRENCY_LOADER_H */

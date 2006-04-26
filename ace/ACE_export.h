@@ -52,13 +52,21 @@
 
 #if defined (__ACE_INLINE__)
 #  if defined (_MSC_VER) || defined (__MINGW32__) || defined (CYGWIN32) || \
-      (defined (__SUNPRO_CC) && __SUNPRO_CC >= 0x560)
+      (defined (__SUNPRO_CC) && __SUNPRO_CC >= 0x560) || \
+      (defined (__HP_aCC) && (__HP_aCC >= 60500))
 #    define ACE_NAMESPACE_INLINE_FUNCTION inline
 #  else
 #    define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS inline
 #  endif
+#  define ACE_INLINE_TEMPLATE_FUNCTION inline
 #else
 #  define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS
+// Microsoft Visual C++ will accept 'extern'; others refuse.
+#  if defined (_MSC_VER) || defined (__BORLANDC__)
+#    define ACE_INLINE_TEMPLATE_FUNCTION ACE_Export
+#  else
+#    define ACE_INLINE_TEMPLATE_FUNCTION
+#  endif
 #endif
 
 #endif     /* ACE_EXPORT_H */

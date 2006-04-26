@@ -645,7 +645,10 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   // @todo Can we automate duplicate detection within the IDL compiler
   //       itself?
   os << "\n#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
-     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
+     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+     << be_nl;
+
+  os << be_global->core_versioning_begin () << be_nl;
 
   // namespace begin
   os << "namespace TAO" << be_nl
@@ -728,6 +731,8 @@ be_visitor_typecode_defn::visit_array (be_array *node)
      << "}" << be_uidt_nl
      << "}" << be_nl << be_nl;
 
+  os << be_global->core_versioning_end () << be_nl;
+  
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl;
 
@@ -962,6 +967,9 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
      << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
 
   // namespace begin
+
+  os << be_global->core_versioning_begin () << be_nl;
+
   os << "namespace TAO" << be_nl
      << "{" << be_idt_nl
      << "namespace TypeCode" << be_nl
@@ -998,6 +1006,8 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
      << "}" << be_uidt_nl
      << "}" << be_nl << be_nl;
 
+  os << be_global->core_versioning_end () << be_nl;
+
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl << be_nl;
 
@@ -1030,6 +1040,9 @@ be_visitor_typecode_defn::visit_string (be_string * node)
      << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
 
   // namespace begin
+
+  os << be_global->core_versioning_begin () << be_nl;
+
   os << "namespace TAO" << be_nl
      << "{" << be_idt_nl
      << "namespace TypeCode" << be_nl
@@ -1054,6 +1067,8 @@ be_visitor_typecode_defn::visit_string (be_string * node)
   os << be_uidt_nl
      << "}" << be_uidt_nl
      << "}" << be_nl << be_nl;
+
+  os << be_global->core_versioning_end () << be_nl;
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl << be_nl;

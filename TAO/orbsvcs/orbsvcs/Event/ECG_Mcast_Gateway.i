@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_Mcast_Gateway::TAO_ECG_Mcast_Gateway (void)
@@ -26,3 +30,5 @@ TAO_ECG_Mcast_Gateway::Attributes::Attributes (void)
   , non_blocking (TAO_ECG_DEFAULT_NON_BLOCKING)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

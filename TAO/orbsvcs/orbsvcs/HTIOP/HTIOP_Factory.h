@@ -15,7 +15,7 @@
 #define HTIOP_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,7 @@
 #include "tao/Protocol_Factory.h"
 #include "ace/Service_Config.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
   namespace HTBP
@@ -31,6 +32,9 @@ namespace ACE
     class Environment;
   }
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -80,6 +84,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Note that these declarations are placed outside of the scope of the
 // namespace. The generated functions use a C style signature which does

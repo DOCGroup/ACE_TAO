@@ -1,17 +1,20 @@
-#include "Remote_Object_Proxy_Broker.h"
-#include "CORBA_String.h"
-#include "UB_String_Arguments.h"
-#include "Special_Basic_Arguments.h"
-#include "Invocation_Adapter.h"
-#include "IFR_Client_Adapter.h"
-#include "ORB_Core.h"
-#include "SystemException.h"
+#include "tao/Remote_Object_Proxy_Broker.h"
+#include "tao/CORBA_String.h"
+#include "tao/UB_String_Arguments.h"
+#include "tao/Special_Basic_Arguments.h"
+#include "tao/Invocation_Adapter.h"
+#include "tao/IFR_Client_Adapter.h"
+#include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao,
            Remote_Object_Proxy_Broker,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -145,3 +148,5 @@ the_tao_remote_object_proxy_broker (void)
   static TAO::Remote_Object_Proxy_Broker the_broker;
   return &the_broker;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

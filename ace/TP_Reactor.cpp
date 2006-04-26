@@ -15,12 +15,14 @@ ACE_RCSID (ace,
            TP_Reactor,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
 int
-ACE_TP_Token_Guard::grab_token (ACE_Time_Value *max_wait_time)
+ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
 {
-  ACE_TRACE ("ACE_TP_Token_Guard::grab_token");
+  ACE_TRACE ("ACE_TP_Token_Guard::acquire_read_token");
 
   // The order of these events is very subtle, modify with care.
 
@@ -89,7 +91,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
         return -1;
     }
 
-  // We got the token and so let us mark ourseleves as owner
+  // We got the token and so let us mark ourselves as owner
   this->owner_ = 1;
 
   return result;
@@ -106,13 +108,13 @@ ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
   this->supress_notify_renew (1);
 }
 
-ACE_TP_Reactor::ACE_TP_Reactor (size_t size,
-                                int rs,
+ACE_TP_Reactor::ACE_TP_Reactor (size_t max_number_of_handles,
+                                int restart,
                                 ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
                                 int mask_signals,
                                 int s_queue)
-  : ACE_Select_Reactor (size, rs, sh, tq, 0, 0, mask_signals, s_queue)
+  : ACE_Select_Reactor (max_number_of_handles, restart, sh, tq, 0, 0, mask_signals, s_queue)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);
@@ -155,7 +157,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // this thread.
   ACE_TP_Token_Guard guard (this->token_);
 
-  int result = guard.grab_token (max_wait_time);
+  int const result = guard.acquire_read_token (max_wait_time);
 
   // If the guard is NOT the owner just return the retval
   if (!guard.is_owner ())
@@ -452,7 +454,7 @@ ACE_TP_Reactor::handle_notify_events (int & /*event_count*/,
         }
     }
 
-  // If we did ssome work, then we just return 1 which will allow us
+  // If we did some work, then we just return 1 which will allow us
   // to get out of here. If we return 0, then we will be asked to do
   // some work ie. dispacth socket events
   return result;
@@ -476,25 +478,17 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
     }
 
   // Suspend the handler so that other threads don't start dispatching
-  // it.
+  // it, if we can't suspend then return directly
   //
   // NOTE: This check was performed in older versions of the
   // TP_Reactor. Looks like it is a waste..
   if (dispatch_info.event_handler_ != this->notify_handler_)
-    this->suspend_i (dispatch_info.handle_);
-
-  int resume_flag =
-    dispatch_info.event_handler_->resume_handler ();
-
-  int reference_counting_required =
-    dispatch_info.event_handler_->reference_counting_policy ().value () ==
-    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+    if (this->suspend_i (dispatch_info.handle_) == -1)
+      return 0;
 
   // Call add_reference() if needed.
-  if (reference_counting_required)
-    {
-      dispatch_info.event_handler_->add_reference ();
-    }
+  if (dispatch_info.reference_counting_required_)
+    dispatch_info.event_handler_->add_reference ();
 
   // Release the lock.  Others threads can start waiting.
   guard.release_token ();
@@ -508,17 +502,6 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   // Dispatched an event
   if (this->dispatch_socket_event (dispatch_info) == 0)
     ++result;
-
-  // Resume handler if required.
-  if (dispatch_info.event_handler_ != this->notify_handler_ &&
-      resume_flag == ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
-    this->resume_handler (dispatch_info.handle_);
-
-  // Call remove_reference() if needed.
-  if (reference_counting_required)
-    {
-      dispatch_info.event_handler_->remove_reference ();
-    }
 
   return result;
 }
@@ -543,18 +526,9 @@ ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
       // yet have a size_ > 0. This is an attempt to remedy the affect,
       // without knowing why it happens.
 
-      //# if !(defined (__SUNPRO_CC) && (__SUNPRO_CC > 0x500))
-      // SunCC seems to be having problems with this piece of code
-      // here. I am  not sure why though. This works fine with other
-      // compilers. As we dont seem to understand when this piece of
-      // code is needed and as it creates problems for SunCC we will
-      // not compile this. Most of the tests in TAO seem to be happy
-      // without this in SunCC.
       this->ready_set_.rd_mask_.sync (this->ready_set_.rd_mask_.max_set ());
       this->ready_set_.wr_mask_.sync (this->ready_set_.wr_mask_.max_set ());
       this->ready_set_.ex_mask_.sync (this->ready_set_.ex_mask_.max_set ());
-      //# endif /* ! __SUNPRO_CC */
-
     }
 
   return this->wait_for_multiple_events (this->ready_set_,
@@ -564,9 +538,6 @@ ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
 int
 ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
 {
-  // Nothing to dispatch yet
-  event.reset ();
-
   // Check for dispatch in write, except, read. Only catch one, but if
   // one is caught, be sure to clear the handle from each mask in case
   // there is more than one mask set for it. This would cause problems
@@ -640,18 +611,14 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
   return found_io;
 }
 
-
-
 // Dispatches a single event handler
 int
 ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
 {
   ACE_TRACE ("ACE_TP_Reactor::dispatch_socket_event");
 
-  ACE_HANDLE handle = dispatch_info.handle_;
-  ACE_Event_Handler *event_handler = dispatch_info.event_handler_;
-  ACE_Reactor_Mask mask = dispatch_info.mask_;
-  ACE_EH_PTMF callback = dispatch_info.callback_;
+  ACE_Event_Handler * const event_handler = dispatch_info.event_handler_;
+  ACE_EH_PTMF const callback = dispatch_info.callback_;
 
   // Check for removed handlers.
   if (event_handler == 0)
@@ -664,19 +631,55 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
   // handling other things.
   int status = 1;
   while (status > 0)
-    status = (event_handler->*callback) (handle);
+    status = (event_handler->*callback) (dispatch_info.handle_);
 
-  // If negative, remove from Reactor
-  if (status < 0)
+  // Post process socket event
+  return this->post_process_socket_event (dispatch_info, status);
+}
+
+int
+ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
+                                           int status)
+{
+  int result = 0;
+
+  // First check if we really have to post process something, if not, then
+  // we don't acquire the token which saves us a lot of time.
+  if (status < 0 ||
+     (dispatch_info.event_handler_ != this->notify_handler_ &&
+      dispatch_info.resume_flag_ ==
+        ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER))
     {
-      int retval =
-        this->remove_handler (handle, mask);
+      // Get the reactor token and with this token acquired remove first the
+      // handler and resume it at the same time. This must be atomic, see also
+      // bugzilla 2395. When this is not atomic it can be that we resume the
+      // handle after it is reused by the OS.
+      ACE_TP_Token_Guard guard (this->token_);
 
-      return retval;
+      result = guard.acquire_token ();
+
+      // If the guard is NOT the owner just return the retval
+      if (!guard.is_owner ())
+        return result;
+
+      if (status < 0)
+        {
+          result =
+            this->remove_handler_i (dispatch_info.handle_, dispatch_info.mask_);
+        }
+
+      // Resume handler if required.
+      if (dispatch_info.event_handler_ != this->notify_handler_ &&
+          dispatch_info.resume_flag_ ==
+            ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
+        this->resume_i (dispatch_info.handle_);
     }
 
-  // assert (status >= 0);
-  return 0;
+  // Call remove_reference() if needed.
+  if (dispatch_info.reference_counting_required_)
+    dispatch_info.event_handler_->remove_reference ();
+
+  return result;
 }
 
 int
@@ -711,7 +714,7 @@ ACE_TP_Reactor::get_notify_handle (void)
 {
   // Call the notify handler to get a handle on which we would have a
   // notify waiting
-  ACE_HANDLE read_handle =
+  ACE_HANDLE const read_handle =
     this->notify_handler_->notify_handle ();
 
   // Check whether the rd_mask has been set on that handle. If so
@@ -721,18 +724,9 @@ ACE_TP_Reactor::get_notify_handle (void)
     {
       return read_handle;
     }
-    /*if (read_handle != ACE_INVALID_HANDLE)
-    {
-      ACE_Handle_Set_Iterator handle_iter (this->ready_set_.rd_mask_);
-      ACE_HANDLE handle = ACE_INVALID_HANDLE;
-
-      while ((handle = handle_iter ()) == read_handle)
-        {
-          return read_handle;
-        }
-      ACE_UNUSED_ARG (handle);
-      }*/
 
   // None found..
   return ACE_INVALID_HANDLE;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

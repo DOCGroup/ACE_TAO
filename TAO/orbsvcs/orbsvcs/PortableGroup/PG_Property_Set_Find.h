@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Property_Set_Find.h
@@ -20,9 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #include "ace/Hash_Map_Manager.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -44,6 +47,8 @@ namespace TAO
   }
 
 } //namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

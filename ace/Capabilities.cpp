@@ -16,6 +16,7 @@ ACE_RCSID (ace,
 
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_CapEntry::~ACE_CapEntry (void)
 {
@@ -38,29 +39,29 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
     {
       if (*buf == ACE_LIB_TEXT ('\\'))
         {
-          buf++;
+          ++buf;
           if (*buf == ACE_LIB_TEXT ('E') || *buf == ACE_LIB_TEXT ('e'))
             {
               cap += ACE_ESC;
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('r'))
             {
               cap += ACE_LIB_TEXT ('\r');
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('n'))
             {
               cap += ACE_LIB_TEXT ('\n');
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('t'))
             {
               cap += ACE_LIB_TEXT ('\t');
-              buf++;
+              ++buf;
               continue;
             }
           else if (*buf == ACE_LIB_TEXT ('\\'))
@@ -102,11 +103,11 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 void
 ACE_Capabilities::resetcaps (void)
 {
-  for (MAP::ITERATOR iter (this->caps_);
+  for (CAPABILITIES_MAP::ITERATOR iter (this->caps_);
        !iter.done ();
        iter.advance ())
     {
-      MAP::ENTRY *entry = 0;
+      CAPABILITIES_MAP::ENTRY *entry = 0;
       iter.next (entry);
       delete entry->int_id_;
     }
@@ -202,7 +203,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
     {
       // Skip blanks or irrelevant characters
       while (*line && isspace(*line))
-        line++;
+        ++line;
 
       // End of line reached
       if (*line == ACE_LIB_TEXT ('\0'))
@@ -219,7 +220,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 
       // Skip puntuaction char if neccesary.
       if (*line == ACE_LIB_TEXT ('|') || *line == ACE_LIB_TEXT (','))
-        line++;
+        ++line;
       else
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -292,7 +293,7 @@ static int
 is_empty (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
-    line++;
+    ++line;
 
   return *line == ACE_LIB_TEXT ('\0') || *line == ACE_LIB_TEXT ('#');
 }
@@ -301,7 +302,7 @@ static int
 is_line (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
-    line++;
+    ++line;
 
   return *line != ACE_LIB_TEXT ('\0');
 }
@@ -321,7 +322,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
   int done;
   ACE_TString line;
 
-  while (!(done = (this->getline (fp, line) == -1))
+  while (0 == (done = (this->getline (fp, line) == -1))
          && is_empty (line.c_str ()))
     continue;
 
@@ -330,7 +331,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
       ACE_TString newline;
       ACE_TString description;
 
-      while (!(done = (this->getline (fp, newline) == -1)))
+      while (0 == (done = (this->getline (fp, newline) == -1)))
         if (is_line (newline.c_str ()))
           description += newline;
         else
@@ -351,16 +352,4 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
   return -1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>;
-template class ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

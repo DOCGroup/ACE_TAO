@@ -129,7 +129,7 @@ Options::key_sort (char *base, int len)
           // Oh no, a duplicate!!!
           return 0;
 
-      base[curr] = tmp;
+      base[curr] = static_cast<char> (tmp);
     }
 
   return 1;
@@ -523,7 +523,7 @@ Options::parse_args (int argc, char *argv[])
                                        usage),
                                       -1);
                   else
-                    *l_key_pos = value;;
+                    *l_key_pos = static_cast<char> (value);
 
                 *l_key_pos = EOS;
 

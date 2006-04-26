@@ -9,6 +9,8 @@ ACE_RCSID (tao,
            default_server,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),
     thread_flags_ (THR_BOUND | THR_DETACHED),
@@ -379,6 +381,8 @@ TAO_Default_Server_Strategy_Factory::report_option_value_error (
              ACE_TEXT (" <%s> for <%s>\n"),
              option_value, option_name));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        ACE_TEXT ("Server_Strategy_Factory"),

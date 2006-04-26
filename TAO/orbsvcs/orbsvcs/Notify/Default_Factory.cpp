@@ -1,29 +1,32 @@
 // $Id$
 
-#include "Default_Factory.h"
+#include "orbsvcs/Notify/Default_Factory.h"
 
 ACE_RCSID (Notify,
            TAO_Notify_Default_Factory,
            "$Id$")
 
-#include "EventChannelFactory.h"
-#include "EventChannel.h"
-#include "Admin.h"
-#include "Proxy.h"
-#include "SupplierAdmin.h"
-#include "ConsumerAdmin.h"
-#include "Structured/StructuredProxyPushConsumer.h"
-#include "Structured/StructuredProxyPushSupplier.h"
-#include "Any/ProxyPushConsumer.h"
-#include "Any/ProxyPushSupplier.h"
-#include "Any/CosEC_ProxyPushConsumer.h"
-#include "Any/CosEC_ProxyPushSupplier.h"
-#include "Sequence/SequenceProxyPushConsumer.h"
-#include "Sequence/SequenceProxyPushSupplier.h"
-#include "Supplier.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
+#include "orbsvcs/Notify/EventChannel.h"
+#include "orbsvcs/Notify/Admin.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/SupplierAdmin.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
+#include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
+#include "orbsvcs/Notify/Any/ProxyPushConsumer.h"
+#include "orbsvcs/Notify/Any/ProxyPushSupplier.h"
+#include "orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h"
+#include "orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h"
+#include "orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h"
+#include "orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h"
+#include "orbsvcs/Notify/Supplier.h"
 
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Copy_On_Write.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY>
 class COW_Collection_Default_Factory
@@ -187,6 +190,8 @@ TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushSupplier*& proxy
                     TAO_Notify_SequenceProxyPushSupplier (),
                     CORBA::NO_MEMORY ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_Default_Factory)
 

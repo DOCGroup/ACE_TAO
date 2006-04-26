@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -17,8 +17,8 @@
 #define TAO_TRADER_H
 #include /**/ "ace/pre.h"
 
-#include "Trader.h"
-#include "Offer_Database.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Offer_Database.h"
 #include "ace/Containers.h"
 #include "ace/Lock_Adapter_T.h"
 
@@ -30,6 +30,8 @@
 #pragma warning(push)
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DynSequence_i;
 
@@ -262,8 +264,10 @@ public:
                    const ELEMENT_TYPE& element);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Trader_T.cpp"
+#include "orbsvcs/Trader/Trader_T.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined(_MSC_VER)

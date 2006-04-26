@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -23,6 +23,7 @@ noinst_PROGRAMS =
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ft_analyzer
@@ -68,6 +69,7 @@ ft_analyzer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -104,11 +106,15 @@ FT_TestReplica-stamp: $(srcdir)/FT_TestReplica.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  FT_TestReplica.idl
+
 ## Makefile.FT_App_Client.am
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ft_client
@@ -156,6 +162,7 @@ ft_client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -165,6 +172,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ft_create
@@ -205,6 +213,7 @@ ft_create_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -214,6 +223,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ft_registry
@@ -251,6 +261,7 @@ ft_registry_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -260,6 +271,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ft_fault_consumer
@@ -302,6 +314,7 @@ ft_fault_consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -311,6 +324,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ft_notifier
@@ -350,6 +364,7 @@ ft_notifier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -359,6 +374,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += replmgr_controller
@@ -405,6 +421,7 @@ replmgr_controller_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -414,6 +431,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += ft_replica
@@ -457,6 +475,7 @@ ft_replica_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID

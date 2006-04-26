@@ -75,7 +75,7 @@ private:
   {
     ACE_TRACE ("Manager::prepare");
 
-    options.command_line ("%s 1", this->programName_);
+    options.command_line (ACE_TEXT ("%s 1"), this->programName_);
     if (this->setStdHandles (options) == -1 ||
         this->setEnvVariable (options) == -1)
       return -1;

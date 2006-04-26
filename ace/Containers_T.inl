@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE int
 ACE_Bounded_Stack<T>::is_empty (void) const
@@ -347,7 +350,7 @@ ACE_DLList<T>::remove (ACE_DLList_Node *n)
 }
 
 template <class T> ACE_INLINE
-ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc )
+ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc)
   : ACE_DLList_Base (alloc)
 {
 }
@@ -472,3 +475,5 @@ ACE_DLList_Reverse_Iterator<T>::dump (void) const
   ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::dump ();
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

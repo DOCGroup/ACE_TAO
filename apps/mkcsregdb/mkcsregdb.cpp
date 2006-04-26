@@ -243,7 +243,7 @@ csdb_generator::init_output (const char *srcfile)
   fprintf (outf_," * mkcsregdb. The source is in $ACE_ROOT/apps/mkcsregdb. It will generate a new\n");
   fprintf (outf_," * copy of this file, with the registry_db_ array properly initialized.\n */\n");
   fprintf (outf_,"\n#include \"ace/Codeset_Registry.h\"\n\n%s\n%s\n{\n",
-           "ACE_Codeset_Registry::registry_entry",
+           "ACE_Codeset_Registry::registry_entry const",
            "ACE_Codeset_Registry::registry_db_[] =");
   return 0;
 }
@@ -286,7 +286,7 @@ csdb_generator::fini_output (const char *tgt)
   sprintf (target,"%s/ace/%s",ace_src_,tgt);
   if (count_ == 0)
     write_dummy_entry();
-  fprintf (outf_,"\n};\n\nsize_t ACE_Codeset_Registry::num_registry_entries_ = %d;\n\n",count_);
+  fprintf (outf_,"\n};\n\nsize_t const ACE_Codeset_Registry::num_registry_entries_ = %d;\n\n",count_);
   fclose (outf_);
   ACE_stat buf;
   if (ACE_OS::stat (target,&buf) == 0)

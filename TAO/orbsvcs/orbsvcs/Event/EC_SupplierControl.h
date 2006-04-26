@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_SupplierControl.h
  *
@@ -22,7 +23,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_ProxyPushConsumer;
 
@@ -68,6 +73,8 @@ public:
                                  CORBA::SystemException &
                                  ACE_ENV_ARG_DECL_NOT_USED);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

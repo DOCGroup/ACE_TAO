@@ -1,9 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Thread.inl
-
 #include "ace/OS_NS_string.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Allocates a <keyp> that is used to identify data that is specific
 // to each thread in the process.  The key is global to all threads in
@@ -279,3 +280,5 @@ ACE_Thread::setprio (ACE_hthread_t ht_id, int priority, int policy)
   ACE_TRACE ("ACE_Thread::setprio");
   return ACE_OS::thr_setprio (ht_id, priority, policy);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

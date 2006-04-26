@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file BiDirGIOP.h
@@ -16,7 +17,7 @@
 #define TAO_BIDIR_GIOP_H
 #include /**/ "ace/pre.h"
 
-#include "bidirgiop_export.h"
+#include "tao/BiDir_GIOP/bidirgiop_export.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/BiDir_Adapter.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_BiDirPolicy_Validator;
 
@@ -61,14 +64,17 @@ private:
   static int is_activated_;
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
-ACE_FACTORY_DECLARE (TAO_BiDirGIOP, TAO_BiDirGIOP_Loader)
-
 static int
 TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
+ACE_FACTORY_DECLARE (TAO_BiDirGIOP, TAO_BiDirGIOP_Loader)
+
+
 #define TAO_BIDIRGIOP_SAFE_INCLUDE
-#include "BiDirPolicyC.h"
+#include "tao/BiDir_GIOP/BiDirPolicyC.h"
 #undef TAO_BIDIRGIOP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

@@ -25,7 +25,7 @@ $SV = new PerlACE::Process ("server", "-o $inputfile -i file://$thrserverfile");
 
 $client = $CL->Spawn ();
 
-if (PerlACE::waitforfile_timed ($thrserverfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($thrserverfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$thrserverfile>\n";
     exit 1;
 }

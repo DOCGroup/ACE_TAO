@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "iorinterceptor_export.h"
+#include "tao/IORInterceptor/iorinterceptor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +25,7 @@
 #include "tao/IORInterceptor_Adapter_Factory.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IORInterceptor_Adapter;
 
@@ -51,12 +52,14 @@ public:
   static int Initializer (void);
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_IORInterceptor_Adapter_Factory_Impl)
-ACE_FACTORY_DECLARE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Factory_Impl)
-
 static int
 TAO_Requires_IORInterceptor_Initializer =
   TAO_IORInterceptor_Adapter_Factory_Impl::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_IORInterceptor_Adapter_Factory_Impl)
+ACE_FACTORY_DECLARE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Factory_Impl)
 
 #define TAO_IORINTERCEPTOR_SAFE_INCLUDE
 #include "tao/IORInterceptor/IORInterceptorC.h"

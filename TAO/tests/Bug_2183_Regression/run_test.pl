@@ -12,7 +12,12 @@ use PerlACE::Run_Test;
 $server_ior_file = PerlACE::LocalFile ("server.ior");
 
 # The client and server processes
-$SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
+if (PerlACE::is_vxworks_test()) {
+  $SERVER     = new PerlACE::ProcessVX(PerlACE::LocalFile("server"));
+}
+else {
+  $SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
+}
 $perl_executable = $^X;
 $perl_executable =~ s/\.exe//g;
 $DUMMY_CLIENT = new PerlACE::Process($perl_executable);
@@ -21,10 +26,20 @@ $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 $DUMMY_CLIENT->Arguments("hang_client.pl");
 $DUMMY_CLIENT->IgnoreExeSubDir(1);
 
-$SERVER->Arguments("-o $server_ior_file -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+if (PerlACE::is_vxworks_test()) {
+  $SERVER->Arguments("-o server.ior -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+}
+else {
+  $SERVER->Arguments("-o $server_ior_file -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+}
 
 # Fire up the server
-$SERVER->Spawn();
+$sv = $SERVER->Spawn();
+
+if ($sv != 0) {
+   print STDERR "ERROR: server returned $sv\n";
+   exit 1;
+}
 
 # We can wait on the IOR file 
 if (PerlACE::waitforfile_timed ($server_ior_file, 10) == -1) 

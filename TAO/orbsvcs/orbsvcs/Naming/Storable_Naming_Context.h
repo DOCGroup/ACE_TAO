@@ -14,14 +14,17 @@
 #define TAO_STORABLE_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Auto_Ptr.h"
 
-#include "Storable.h"
+#include "orbsvcs/Naming/Storable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
@@ -465,6 +468,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_STORABLE_NAMING_CONTEXT_H */

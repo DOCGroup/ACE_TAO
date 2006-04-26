@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_String_Base_Const
  *
@@ -32,8 +34,10 @@
 class ACE_Export ACE_String_Base_Const
 {
 public:
-  static ssize_t npos;
+  static ssize_t const npos;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_STRING_BASE_CONST_H */

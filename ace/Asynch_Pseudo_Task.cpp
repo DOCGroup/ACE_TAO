@@ -7,6 +7,8 @@
 
 ACE_RCSID(ace, Asynch_Pseudo_Task, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task()
   : select_reactor_ (),               // should be initialized before reactor_
     reactor_ (&select_reactor_, 0)    // don't delete implementation
@@ -18,7 +20,7 @@ ACE_Asynch_Pseudo_Task::~ACE_Asynch_Pseudo_Task()
   this->stop();
 }
 
-int 
+int
 ACE_Asynch_Pseudo_Task::start (void)
 {
   if (this->reactor_.initialized () == 0)
@@ -30,10 +32,10 @@ ACE_Asynch_Pseudo_Task::start (void)
   return this->activate () == -1 ? -1 : 0;   // If started, return 0
 }
 
-int 
+int
 ACE_Asynch_Pseudo_Task::stop (void)
 {
-  if (this->thr_count () == 0)  // already stopped 
+  if (this->thr_count () == 0)  // already stopped
     return 0;
 
   if (this->reactor_.end_reactor_event_loop () == -1)
@@ -47,7 +49,7 @@ ACE_Asynch_Pseudo_Task::stop (void)
 int
 ACE_Asynch_Pseudo_Task::svc (void)
 {
-#if !defined (ACE_WIN32) 
+#if !defined (ACE_WIN32)
 
   sigset_t RT_signals;
 
@@ -92,7 +94,7 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
           ACE_LIB_TEXT ("register_io_handler (suspended)")));
       this->reactor_.remove_handler (handle,
                                      ACE_Event_Handler::ALL_EVENTS_MASK
-                                     | ACE_Event_Handler::DONT_CALL); 
+                                     | ACE_Event_Handler::DONT_CALL);
       return -1;
     }
 
@@ -126,3 +128,5 @@ ACE_Asynch_Pseudo_Task::resume_io_handler (ACE_HANDLE handle)
 {
   return this->reactor_.resume_handler (handle);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

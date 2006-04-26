@@ -98,8 +98,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_generator.h"
 
-ACE_RCSID (ast, 
-           ast_generator, 
+ACE_RCSID (ast,
+           ast_generator,
            "$Id$")
 
 AST_PredefinedType *
@@ -202,8 +202,8 @@ AST_Generator::create_interface (UTL_ScopedName *n,
                                  long n_inherits,
                                  AST_Interface **inherits_flat,
                                  long n_inherits_flat,
-                                 idl_bool local,
-                                 idl_bool abstract)
+                                 bool local,
+                                 bool abstract)
 {
   AST_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -221,8 +221,8 @@ AST_Generator::create_interface (UTL_ScopedName *n,
 
 AST_InterfaceFwd *
 AST_Generator::create_interface_fwd (UTL_ScopedName *n,
-                                     idl_bool local,
-                                     idl_bool abstract)
+                                     bool local,
+                                     bool abstract)
 {
   AST_InterfaceFwd *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -249,9 +249,9 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
                                  AST_Interface **supports,
                                  long n_supports,
                                  AST_Interface *supports_concrete,
-                                 idl_bool abstract,
-                                 idl_bool truncatable,
-                                 idl_bool custom)
+                                 bool abstract,
+                                 bool truncatable,
+                                 bool custom)
 {
   AST_ValueType *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -282,7 +282,7 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
 
 AST_ValueTypeFwd *
 AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
-                                     idl_bool abstract)
+                                     bool abstract)
 {
   AST_ValueType *dummy = this->create_valuetype (n,
                                                  0,
@@ -294,8 +294,8 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
                                                  0,
                                                  0,
                                                  abstract,
-                                                 I_FALSE,
-                                                 I_FALSE);
+                                                 false,
+                                                 false);
 
   AST_ValueTypeFwd *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -316,9 +316,9 @@ AST_Generator::create_eventtype (UTL_ScopedName *n,
                                  AST_Interface **supports,
                                  long n_supports,
                                  AST_Interface *supports_concrete,
-                                 idl_bool abstract,
-                                 idl_bool truncatable,
-                                 idl_bool custom)
+                                 bool abstract,
+                                 bool truncatable,
+                                 bool custom)
 {
   AST_EventType *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -349,7 +349,7 @@ AST_Generator::create_eventtype (UTL_ScopedName *n,
 
 AST_EventTypeFwd *
 AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
-                                     idl_bool abstract)
+                                     bool abstract)
 {
   AST_EventType *dummy = this->create_eventtype (n,
                                                  0,
@@ -361,8 +361,8 @@ AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
                                                  0,
                                                  0,
                                                  abstract,
-                                                 I_FALSE,
-                                                 I_FALSE);
+                                                 false,
+                                                 false);
 
   AST_EventTypeFwd *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -440,8 +440,8 @@ AST_Generator::create_home (UTL_ScopedName *n,
 
 AST_Exception *
 AST_Generator::create_exception (UTL_ScopedName *n,
-                                 idl_bool local,
-                                 idl_bool abstract)
+                                 bool local,
+                                 bool abstract)
 {
   AST_Exception *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -455,8 +455,8 @@ AST_Generator::create_exception (UTL_ScopedName *n,
 
 AST_Structure *
 AST_Generator::create_structure (UTL_ScopedName *n,
-                                 idl_bool local,
-                                 idl_bool abstract)
+                                 bool local,
+                                 bool abstract)
 {
   AST_Structure *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -485,8 +485,8 @@ AST_Generator::create_structure_fwd (UTL_ScopedName *n)
 
 AST_Enum *
 AST_Generator::create_enum (UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
 {
   AST_Enum *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -502,8 +502,8 @@ AST_Operation *
 AST_Generator::create_operation (AST_Type *rt,
                                  AST_Operation::Flags fl,
                                  UTL_ScopedName *n,
-                                 idl_bool local,
-                                 idl_bool abstract)
+                                 bool local,
+                                 bool abstract)
 {
   AST_Operation *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -548,11 +548,11 @@ AST_Generator::create_argument (AST_Argument::Direction d,
 }
 
 AST_Attribute *
-AST_Generator::create_attribute (idl_bool ro,
+AST_Generator::create_attribute (bool ro,
                                  AST_Type *ft,
                                  UTL_ScopedName *n,
-                                 idl_bool local,
-                                 idl_bool abstract)
+                                 bool local,
+                                 bool abstract)
 {
   AST_Attribute *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -569,8 +569,8 @@ AST_Generator::create_attribute (idl_bool ro,
 AST_Union *
 AST_Generator::create_union (AST_ConcreteType *dt,
                              UTL_ScopedName *n,
-                             idl_bool local,
-                             idl_bool abstract)
+                             bool local,
+                             bool abstract)
 {
   AST_Union *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -693,13 +693,11 @@ AST_Generator::create_expr (long v)
 }
 
 AST_Expression *
-AST_Generator::create_expr (long v,
-                            AST_Expression::ExprType t)
+AST_Generator::create_expr (bool b)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (v,
-                                  t),
+                  AST_Expression (b),
                   0);
 
   return retval;
@@ -711,7 +709,7 @@ AST_Generator::create_expr (idl_uns_long v,
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (v, 
+                  AST_Expression (v,
                                   t),
                   0);
 
@@ -790,8 +788,8 @@ AST_Array *
 AST_Generator::create_array (UTL_ScopedName *n,
                              unsigned long ndims,
                              UTL_ExprList *dims,
-                             idl_bool local,
-                             idl_bool abstract)
+                             bool local,
+                             bool abstract)
 {
   AST_Array *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -809,8 +807,8 @@ AST_Sequence *
 AST_Generator::create_sequence (AST_Expression *ms,
                                 AST_Type *bt,
                                 UTL_ScopedName *n,
-                                idl_bool local,
-                                idl_bool abstract)
+                                bool local,
+                                bool abstract)
 {
   AST_Sequence *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -867,8 +865,8 @@ AST_Generator::create_wstring (AST_Expression *ms)
 AST_Typedef *
 AST_Generator::create_typedef (AST_Type *bt,
                                UTL_ScopedName *n,
-                               idl_bool local,
-                               idl_bool abstract)
+                               bool local,
+                               bool abstract)
 {
   AST_Typedef *retval = 0;
   ACE_NEW_RETURN (retval,

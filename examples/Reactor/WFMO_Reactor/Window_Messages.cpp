@@ -26,6 +26,7 @@
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Reactor.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Auto_Event.h"
 
 ACE_RCSID(WFMO_Reactor, Window_Messages, "$Id$")
 

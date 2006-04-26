@@ -1,13 +1,14 @@
 // $Id$
 
-#include "Protocol_Factory.h"
-#include "ace/Dynamic_Service.h"
+#include "tao/Protocol_Factory.h"
 
 ACE_RCSID (tao,
            Protocol_Factory,
            "$Id$")
 
-static const char prefix_[] = "\0";
+static const char the_prefix[] = "";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Protocol_Factory::TAO_Protocol_Factory (CORBA::ULong tag)
   : tag_ (tag)
@@ -52,7 +53,7 @@ TAO_Protocol_Factory::match_prefix (const ACE_CString & /* prefix */)
 const char *
 TAO_Protocol_Factory::prefix (void) const
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 char
@@ -61,3 +62,4 @@ TAO_Protocol_Factory::options_delimiter (void) const
   return '\0';
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

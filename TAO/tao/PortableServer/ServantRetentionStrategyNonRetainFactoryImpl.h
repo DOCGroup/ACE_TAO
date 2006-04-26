@@ -14,7 +14,7 @@
 #define TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYNONRETAIN_FACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 #include "tao/PortableServer/ServantRetentionStrategyFactory.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -41,11 +43,13 @@ namespace TAO
         ServantRetentionStrategy *strategy
         ACE_ENV_ARG_DECL);
     };
-
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionStrategyNonRetainFactoryImpl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionStrategyNonRetainFactoryImpl)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionStrategyNonRetainFactoryImpl)
+ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionStrategyNonRetainFactoryImpl)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: zzip, ipv6 {
+project: zlib, zzip, ipv6 {
   staticflags += ACE_AS_STATIC_LIBS
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
@@ -16,5 +16,10 @@ project: zzip, ipv6 {
   specific(automake) {
     am_version = @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
     includes += $(ACE_BUILDDIR)
+  }
+
+  specific(vc8) {
+    // Enable structured exception handling
+    ExceptionHandling = 2
   }
 }

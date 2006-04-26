@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,7 +15,7 @@
 #define TAO_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"
 
-#include "iortable_export.h"
+#include "tao/IORTable/iortable_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IOR_Table_Impl;
 
@@ -54,11 +56,17 @@ public:
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                                    CORBA::Object_ptr);
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
 private:
+  /// Helper method to find an object bound in the table.
+  /// @return 1 if found, 0 otherwise.
+  CORBA::Long find_object (TAO::ObjectKey &key,
+                           CORBA::Object_out forward_to
+                           ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// The ORB Core we belong to
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// The table implementation
   TAO_IOR_Table_Impl *root_;
@@ -76,6 +84,8 @@ public:
   // details.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Table_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_IORTable, TAO_Table_Adapter_Factory)

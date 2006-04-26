@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "RTPortableServer.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
@@ -40,6 +40,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -65,7 +67,7 @@ TAO::Objref_Traits<RTPortableServer::POA>::release (
     RTPortableServer::POA_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 RTPortableServer::POA_ptr
@@ -89,12 +91,12 @@ RTPortableServer::POA::POA (void)
 RTPortableServer::POA::~POA (void)
 {}
 
-void 
+void
 RTPortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
     static_cast<POA *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 RTPortableServer::POA_ptr
@@ -107,10 +109,10 @@ RTPortableServer::POA::_narrow (
     {
       return POA::_nil ();
     }
-  
+
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-  
+
   return POA::_duplicate (proxy);
 }
 
@@ -124,28 +126,28 @@ RTPortableServer::POA::_unchecked_narrow (
     {
       return POA::_nil ();
     }
-  
+
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-  
+
   return POA::_duplicate (proxy);
 }
 
 RTPortableServer::POA_ptr
 RTPortableServer::POA::_duplicate (POA_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 RTPortableServer::POA::_tao_release (POA_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -191,3 +193,5 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

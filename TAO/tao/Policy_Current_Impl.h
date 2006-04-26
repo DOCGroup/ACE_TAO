@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Policy_Current_Impl
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Policy_Current_Impl
 {
 public:
 
@@ -66,6 +68,8 @@ private:
   /// The implementation.
   TAO_Policy_Set manager_impl_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

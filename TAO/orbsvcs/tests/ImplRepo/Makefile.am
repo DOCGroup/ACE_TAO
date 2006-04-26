@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -54,6 +54,9 @@ Airplane-stamp: $(srcdir)/Airplane.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Airplane.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  Airplane.idl
 
 ## Makefile.airplane_client.am
 
@@ -146,6 +149,9 @@ Nestea-stamp: $(srcdir)/Nestea.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS += \
+  Nestea.idl
+
 ## Makefile.nestea_client.am
 
 if !BUILD_MINIMUM_CORBA
@@ -176,6 +182,7 @@ endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.nestea_server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += nestea_server
@@ -204,6 +211,7 @@ nestea_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

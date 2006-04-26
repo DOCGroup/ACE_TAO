@@ -3,10 +3,10 @@
 #ifndef TAO_ESF_COPY_ON_READ_CPP
 #define TAO_ESF_COPY_ON_READ_CPP
 
-#include "ESF_Copy_On_Read.h"
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Copy_On_Read.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
-ACE_RCSID(ESF, ESF_Copy_On_Read, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
@@ -114,5 +114,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 
   this->collection_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_COPY_ON_READ_CPP */

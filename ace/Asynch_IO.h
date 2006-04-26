@@ -47,6 +47,8 @@
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/os_include/sys/os_types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
                          && ! defined (ACE_HAS_PHARLAP)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
@@ -299,9 +301,17 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
-   * {ACE_Handler::handle} will be called on the {handler} to get the
-   * correct handle.
+   * each asynchronous call.
+   *
+   * @arg handler The ACE_Handler that will be called to handle completions
+   *              for operations initiated using this factory.
+   * @arg handle  The handle that future read operations will use.
+   *              If handle == @c ACE_INVALID_HANDLE,
+   *              ACE_Handler::handle() will be called on @ handler
+   *              to get the correct handle.
+   *
+   * @retval 0    for success.
+   * @retval -1   for failure; consult @c errno for further information.
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
@@ -452,7 +462,7 @@ public:
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -462,10 +472,10 @@ public:
               const void *act = 0,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// @todo (this should be protected...)
   virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
@@ -583,7 +593,7 @@ public:
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system
+  * @note In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   int readv (ACE_Message_Block &message_block,
@@ -717,7 +727,7 @@ public:
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system
+  * @note In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   int writev (ACE_Message_Block &message_block,
@@ -1660,6 +1670,8 @@ public:
   /// Called by ACE_Asynch_Acceptor to pass the act.
   virtual void act (const void *);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
 #include /**/ "ace/post.h"

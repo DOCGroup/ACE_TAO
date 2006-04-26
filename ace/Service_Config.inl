@@ -4,6 +4,8 @@
 
 #include "ace/OS_NS_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // This is the primary entry point into the ACE_Service_Config (the
 // constructor just handles simple initializations).
 
@@ -100,3 +102,5 @@ ACE_Service_Config::remove (const char svc_name[])
   return ACE_Service_Config::remove (ACE_TEXT_TO_TCHAR_IN (svc_name));
 }
 #endif /* ACE_HAS_WINCE && !ACE_USES_WCHAR */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

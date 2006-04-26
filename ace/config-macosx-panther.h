@@ -18,6 +18,7 @@
 
 #define ACE_SIZE_T_FORMAT_SPECIFIER_A "%lu"
 #define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_SIZE_T_FORMAT_SPECIFIER_A)
+#define ACE_LACKS_SUSECONDS_T
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
@@ -81,7 +82,8 @@
 
 #define ACE_LACKS_STRRECVFD
 
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -149,11 +151,9 @@
 #endif /* ! ACE_MT_SAFE */
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
-#define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_DIRENT
-#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_SEARCH_H
 
@@ -162,7 +162,7 @@
 //#define ACE_HAS_RECURSIVE_MUTEXES
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 #define ACE_HAS_SEMUN
 #define ACE_HAS_SIGINFO_T

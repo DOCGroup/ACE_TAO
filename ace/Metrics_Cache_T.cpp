@@ -1,14 +1,19 @@
 // $Id$
 
-#ifndef METRICS_CACHE_CPP
-#define METRICS_CACHE_CPP
+#ifndef ACE_METRICS_CACHE_CPP
+#define ACE_METRICS_CACHE_CPP
 
 //#define ACE_BUILD_DLL
+
+#include "ace/Metrics_Cache_T.h"
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
 #include "ace/Metrics_Cache.h"
-#include "ace/Metrics_Cache_T.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Metrics_Cache_T.inl"
+#endif /* __ACE_INLINE__ */
 
 // Const strings for timeprobe event type descriptions.
 
@@ -20,6 +25,7 @@ static const char * event_description_strings [] =
   "resume"
 };
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////
 // class ACE_Metrics_Timeprobe //
@@ -39,7 +45,7 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Metrics_Timeprobe (u_int id,
       name = "";
     }
 
-  char * name_tmp;
+  char * name_tmp = 0;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
                         (char *) this->allocator ()->malloc (strlen(name)+1),
                         char,
@@ -58,8 +64,8 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
                        const char *name,
                        u_long size)
   :
-	ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
-		id_ (id),
+        ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
+                id_ (id),
     name_ (0)
 {
   if (name == 0)
@@ -67,9 +73,8 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
       name = "";
     }
 
-  char * name_tmp;
+  char * name_tmp = 0;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-//                        (char *) this->allocator ()->malloc (strlen(name)+1),
                         (char *) alloc->malloc(strlen(name)+1),
                         char,
                         strlen(name)+1);
@@ -95,11 +100,11 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::~ACE_Metrics_Timeprobe ()
 template <class ACE_LOCK, class ALLOCATOR>
 int
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::is_event (const ACE_Metrics_Timeprobe<ACE_LOCK,
-													                              ALLOCATOR>::
-													    ACE_METRICS_TIMEPROBE_DATA_TYPE &t,
+                                                      ALLOCATOR>::
+                                                      ACE_METRICS_TIMEPROBE_DATA_TYPE &t,
                                                       ACE_Metrics_Timeprobe<ACE_LOCK,
-													                        ALLOCATOR>::
-													    event_id id)
+                                                      ALLOCATOR>::
+                                                      event_id id)
 {
   return (t.event_.event_number_ ==  (u_long) id) ? 1 : 0;
 }
@@ -115,7 +120,7 @@ template <class ACE_LOCK, class ALLOCATOR>
 void
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (char * name)
 {
-  char * name_tmp;
+  char * name_tmp = 0;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
                         (char *) this->allocator ()->malloc (strlen(name)+1),
                         char,
@@ -226,16 +231,8 @@ flush_ACE_Metrics_Cache ()
 {
 }
 
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Metrics_Cache_T.inl"
-#endif /* __ACE_INLINE__ */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* defined (ACE_COMPILE_TIMEPROBES) */
 
-#endif /* METRICS_CACHE_CPP */
-
-
-
-
-
+#endif /* ACE_METRICS_CACHE_CPP */

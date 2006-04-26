@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           argument, 
+ACE_RCSID (be_visitor_operation,
+           argument,
            "$Id$")
 
 // ************************************************************
@@ -100,11 +100,11 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
           // whether the operation node has parameters.
           if (node->argument_count () > 0)
             {
-              *os << be_nl << "ACE_ENV_ARG_PARAMETER";
+              *os << env_arg;
             }
           else
             {
-              *os << be_nl << "ACE_ENV_SINGLE_ARG_PARAMETER";
+              *os << env_sngl_arg;
             }
 
           break;

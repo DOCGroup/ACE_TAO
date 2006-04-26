@@ -40,6 +40,8 @@
 #   undef asctime_r
 # endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Type-safe, and unsigned.
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
@@ -154,14 +156,14 @@ inline long ace_timezone()
 #elif defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY)
   // The XPG/POSIX specification does not require gettimeofday to
   // set the timezone struct (it leaves the behavior of passing a
-  // non-null struct undefined). 
+  // non-null struct undefined).
   long result = 0;
   struct timeval time;
   struct timezone zone;
   ACE_UNUSED_ARG (result);
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
-#else  
+#else
   ACE_NOTSUP_RETURN (0);
 #endif
 }
@@ -213,7 +215,6 @@ typedef long long ACE_hrtime_t;
 #   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 # endif /* ACE_WIN32 */
 
-
 # if defined (ACE_HRTIME_T_IS_BASIC_TYPE)
 #   define ACE_HRTIME_CONVERSION(VAL) (VAL)
 #   define ACE_HRTIME_TO_U64(VAL) ACE_U_LongLong(VAL)
@@ -222,14 +223,8 @@ typedef long long ACE_hrtime_t;
 #   define ACE_HRTIME_TO_U64(VAL) (VAL)
 # endif
 
-
-namespace ACE_OS {
-
-# if defined (ACE_HAS_WINCE)
-  /// Supporting data for ctime and ctime_r functions on WinCE.
-  const ACE_TCHAR *day_of_week_name[];
-  const ACE_TCHAR *month_name[];
-# endif /* ACE_HAS_WINCE */
+namespace ACE_OS
+{
 
 # if defined (CHORUS) && !defined (CHORUS_4)
   // We must format this code as follows to avoid confusing OSE.
@@ -265,7 +260,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int clock_settime (clockid_t,
-		     const struct timespec *);
+                     const struct timespec *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_TCHAR *ctime (const time_t *t);
@@ -355,6 +350,19 @@ namespace ACE_OS {
 
   //@}
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+    && defined (ghs) \
+    && defined (ACE_HAS_PENTIUM) \
+    && !defined (ACE_WIN32)
+#define ACE_GETHRTIME_NAME ACE_PREPROC_CONCATENATE(ACE_,ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _gethrtime))
+#else
+# define ACE_GETHRTIME_NAME ACE_gethrtime
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

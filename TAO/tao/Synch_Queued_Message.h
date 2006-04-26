@@ -15,11 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Queued_Message.h"
+#include "tao/Queued_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Synch_Queued_Message
@@ -89,6 +91,8 @@ private:
    */
   ACE_Message_Block *current_block_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

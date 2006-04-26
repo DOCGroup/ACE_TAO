@@ -31,12 +31,14 @@
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
-#include "log_serv_export.h"
-#include "PersistStore.h"
+#include "orbsvcs/Log/log_serv_export.h"
+#include "orbsvcs/Log/PersistStore.h"
 
 #define PERSISTENT_LOG_FILE_NAME "LOG.DATA"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 100
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LogRecordStore
@@ -151,6 +153,8 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Persistent log file name.
   char file_name_[256];
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_LOG_RECORD_STORE_PERSIST_H*/

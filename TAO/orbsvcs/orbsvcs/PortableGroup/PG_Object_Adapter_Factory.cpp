@@ -1,7 +1,7 @@
 // $Id$
 
-#include "PG_Object_Adapter_Factory.h"
-#include "PG_Servant_Dispatcher.h"
+#include "orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h"
+#include "orbsvcs/PortableGroup/PG_Servant_Dispatcher.h"
 
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"
@@ -10,6 +10,7 @@ ACE_RCSID (TAO_PortableGroup,
            PG_Object_Adapter_Factory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_Object_Adapter_Factory::TAO_PG_Object_Adapter_Factory (void)
 {
@@ -36,6 +37,8 @@ TAO_PG_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
   return object_adapter;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_FACTORY_DEFINE (TAO_PortableGroup, TAO_PG_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_PG_Object_Adapter_Factory,
                        ACE_TEXT ("TAO_GOA"),
@@ -43,4 +46,3 @@ ACE_STATIC_SVC_DEFINE (TAO_PG_Object_Adapter_Factory,
                        &ACE_SVC_NAME (TAO_PG_Object_Adapter_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-

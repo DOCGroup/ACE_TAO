@@ -38,6 +38,8 @@
 #define ACE_NT_SERVICE_START_TIMEOUT  5000
 #endif /* ACE_NT_SERVICE_TIMEOUT */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_NT_Service
  *
@@ -366,6 +368,8 @@ protected:
   /// ACE_Log_Msg attributes to inherit from the starting thread.
   ACE_OS_Log_Msg_Attributes  log_msg_attributes_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // These macros help to get things set up correctly at compile time
 // and to take most of the grudge work out of creating the proper

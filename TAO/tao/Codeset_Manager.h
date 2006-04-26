@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /*
@@ -8,7 +8,7 @@
  *
  *  Interface for the TAO CodeSet Manager.
  *
- *  @author  Mahesh Vedantam <mahesh#ociweb.com>
+ *  @author  Mahesh Vedantam <mahesh@ociweb.com>
  */
 //=============================================================================
 
@@ -17,15 +17,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CONV_FRAMEC.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/CONV_FRAMEC.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_WChar_Codeset_Translator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_Transport;
@@ -55,17 +59,18 @@ class TAO_Codeset_Descriptor_Base;
  * context attached to the first request sent on the new connection.
  *
  */
-
 class TAO_Export TAO_Codeset_Manager
 {
 
 public:
-  virtual ~TAO_Codeset_Manager();
 
-  ///  Called by an object of TAO_Acceptor to set NCS and CCS values for
-  ///  Char/Wchar in to the Object Reference.
+  /// Destructor.
+  virtual ~TAO_Codeset_Manager (void);
+
+  /// Called by an object of TAO_Acceptor to set NCS and CCS values for
+  /// Char/Wchar in to the Object Reference.
   virtual void set_codeset (TAO_Tagged_Components& ) const = 0;
-  ///
+
   /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport
   virtual void set_tcs (TAO_Profile &theProfile, TAO_Transport &) = 0;
@@ -87,7 +92,11 @@ public:
   virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void) = 0;
   virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void) = 0;
 
+  virtual void get_ncs (CONV_FRAME::CodeSetId &ncsc,
+                        CONV_FRAME::CodeSetId &ncsw) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

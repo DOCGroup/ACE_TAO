@@ -24,9 +24,6 @@
 
 namespace CIAO
 {
-  // Forward declaration.
-  // class NodeApplicationManager;
-
   /**
    * @class NodeApplication_Callback_Impl
    *
@@ -47,14 +44,6 @@ namespace CIAO
                                    const Deployment::Properties &properties)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // @@ (OO) Since this class is reference counted, please make this
-    //         destructor protected to enforce proper memory managment
-    //         through the reference counting mechanism (i.e. to
-    //         disallow calling operator delete() on an instance of
-    //         this class.
-    /// Destructor.
-    ~NodeApplication_Callback_Impl ();
-
     /// Get the containing POA.  This operation does *not* increase
     /// the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
@@ -68,8 +57,11 @@ namespace CIAO
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  protected:
     Deployment::NodeApplication_ptr get_nodeapp_ref (void);
+
+  protected:
+    /// Destructor.
+    ~NodeApplication_Callback_Impl ();
 
     CORBA::ORB_var orb_;
 

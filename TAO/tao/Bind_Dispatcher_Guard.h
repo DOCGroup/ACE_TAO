@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file     Bind_Dispatcher_Guard.h
@@ -17,6 +18,8 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/TAO_Export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
@@ -54,6 +57,8 @@ private:
   TAO_Reply_Dispatcher*       rd_;
   TAO_Transport_Mux_Strategy* tms_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Bind_Dispatcher_Guard.i"

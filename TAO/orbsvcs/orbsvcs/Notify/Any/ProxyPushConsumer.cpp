@@ -1,14 +1,16 @@
 // $Id$
 
-#include "ProxyPushConsumer.h"
+#include "orbsvcs/Notify/Any/ProxyPushConsumer.h"
 
 ACE_RCSID (Notify, TAO_Notify_ProxyPushConsumer, "$Id$")
 
 #include "tao/debug.h"
-#include "../AdminProperties.h"
-#include "../Properties.h"
-#include "AnyEvent.h"
-#include "PushSupplier.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "orbsvcs/Notify/Any/PushSupplier.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_ProxyPushConsumer::TAO_Notify_ProxyPushConsumer (void)
 {
@@ -21,7 +23,6 @@ TAO_Notify_ProxyPushConsumer::~TAO_Notify_ProxyPushConsumer ()
 void
 TAO_Notify_ProxyPushConsumer::release (void)
 {
-
   delete this;
   //@@ inform factory
 }
@@ -99,29 +100,35 @@ TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
-  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
-  {
-    CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+  if (attrs.load("PeerIOR", ior))
     {
-      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CosNotifyComm::PushSupplier_var ps =
-        CosNotifyComm::PushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      // minor hack: suppress generating subscription updates during reload.
-      bool save_updates = this->updates_off_;
-      this->updates_off_ = true;
-      this->connect_any_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      this->updates_off_ = save_updates;
+      CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          ACE_TRY_CHECK;
+          CosNotifyComm::PushSupplier_var ps = CosNotifyComm::PushSupplier::_nil();
+          if ( ior.length() > 0 )
+            {
+              CORBA::Object_var obj =
+                orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              ps = CosNotifyComm::PushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+          // minor hack: suppress generating subscription updates during reload.
+          bool save_updates = this->updates_off_;
+          this->updates_off_ = true;
+          this->connect_any_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          this->updates_off_ = save_updates;
+        }
+      ACE_CATCHALL
+        {
+          ACE_ASSERT(0);
+        }
+      ACE_ENDTRY;
     }
-    ACE_CATCHALL
-    {
-      ACE_ASSERT(0);
-    }
-    ACE_ENDTRY;
-  }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

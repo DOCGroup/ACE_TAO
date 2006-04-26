@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -16,6 +17,8 @@
 //    David Levine
 //
 // ============================================================================
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Sched_Params::ACE_Sched_Params (
@@ -134,3 +137,5 @@ ACE_Sched_Priority_Iterator::next (void)
                                                this->scope ());
   this->done_ = old_priority == priority_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

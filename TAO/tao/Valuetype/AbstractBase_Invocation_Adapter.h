@@ -13,13 +13,15 @@
 #define TAO_ABSTRACTBASE_INVOCATION_ADAPTER_H
 
 #include /**/ "ace/pre.h"
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Invocation_Adapter.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -54,14 +56,19 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
   private:
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter (void))
+    // Don't allow default initializations
+    AbstractBase_Invocation_Adapter (void);
 
-    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter & operator= (
-        const AbstractBase_Invocation_Adapter &))
+    // Disallow copying and assignment.
+    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &);
+    AbstractBase_Invocation_Adapter & operator= (
+        const AbstractBase_Invocation_Adapter &);
+
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-#endif /*TAO_INVOCATION_ADAPTER_H*/
+
+#endif  /* TAO_INVOCATION_ADAPTER_H */

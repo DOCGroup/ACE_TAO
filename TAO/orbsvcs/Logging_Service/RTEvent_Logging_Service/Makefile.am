@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -17,6 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.RTEvent_Logging_Service.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS = RTEvent_Logging_Service
 
@@ -33,16 +34,17 @@ RTEvent_Logging_Service_SOURCES = \
   RTEvent_Logging_Service.h
 
 RTEvent_Logging_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -50,12 +52,14 @@ RTEvent_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

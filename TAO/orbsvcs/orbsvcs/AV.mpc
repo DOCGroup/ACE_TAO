@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(AV) : orbsvcslib, core, property, naming, qos {
+project(AV) : orbsvcslib, core, property_serv, naming, qos, tao_versioning_idl_defaults {
+  avoids       += ace_for_tao
   sharedname    = TAO_AV
   idlflags     += -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h
   dynamicflags  = TAO_AV_BUILD_DLL

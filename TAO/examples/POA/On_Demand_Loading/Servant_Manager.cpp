@@ -111,7 +111,7 @@ ServantManager_i::parse_string (const char *s)
 
   ACE_CString str (s);
 
-  int index = str.find (':');
+  ssize_t index = str.find (':');
   // On error, npos is returned.
   if (index == ACE_CString::npos)
     ACE_ERROR ((LM_ERROR,

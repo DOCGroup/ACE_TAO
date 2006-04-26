@@ -107,7 +107,6 @@ using std::size_t;
 
 #endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 
-// ACE_TCHAR Macros
 #if defined (ACE_USES_WCHAR)
   typedef wchar_t ACE_TCHAR;
   typedef char ACE_ANTI_TCHAR;
@@ -119,9 +118,9 @@ using std::size_t;
 #endif /* ACE_USES_WCHAR */
 
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  // Via compiler, sys headers, config-platform.h, 
+  // Via compiler, sys headers, config-platform.h,
   // or this header we have a wchar_t
-  #define ACE_HAS_WCHAR 
+  #define ACE_HAS_WCHAR
   #undef ACE_LACKS_WCHAR_T
   // The wchar type is simpley wchar_t
   #define ACE_WCHAR_T wchar_t

@@ -63,7 +63,7 @@ sub run_test
 
     for $test (@configurations)
       {
-        if (PerlACE::waitforfile_timed (PerlACE::LocalFile($test->{file}), 10) == -1)
+        if (PerlACE::waitforfile_timed (PerlACE::LocalFile($test->{file}),$PerlACE::wait_interval_for_process_creation ) == -1)
           {
             $server = $SV->TimedWait (1);
             if ($server == 2)

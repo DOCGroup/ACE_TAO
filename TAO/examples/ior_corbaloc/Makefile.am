@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.ior_corbaloc_client.am
+## Makefile.ior_corbaloc_IDL.am
 
 BUILT_SOURCES = \
   corbalocC.cpp \
@@ -44,8 +44,14 @@ CLEANFILES = \
 corbalocC.cpp corbalocC.h corbalocC.inl corbalocS.cpp corbalocS.h corbalocS.inl corbalocS_T.cpp corbalocS_T.h corbalocS_T.inl: corbaloc-stamp
 
 corbaloc-stamp: $(srcdir)/corbaloc.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/corbaloc.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/corbaloc.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  corbaloc.idl
+
+## Makefile.ior_corbaloc_client.am
 
 noinst_PROGRAMS = client
 
@@ -60,17 +66,10 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   corbalocC.cpp \
-  corbalocS.cpp \
   ior_corbaloc_client_i.cpp \
-  corbalocC.h \
-  corbalocC.inl \
-  corbalocS.h \
-  corbalocS_T.h \
-  corbalocS_T.inl \
   ior_corbaloc_client_i.h
 
 client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -78,94 +77,25 @@ client_LDADD = \
 
 ## Makefile.ior_corbaloc_corbaname_client.am
 
-BUILT_SOURCES += \
-  corbalocC.cpp \
-  corbalocC.h \
-  corbalocC.inl \
-  corbalocS.cpp \
-  corbalocS.h \
-  corbalocS.inl \
-  corbalocS_T.cpp \
-  corbalocS_T.h \
-  corbalocS_T.inl
-
-CLEANFILES += \
-  corbaloc-stamp \
-  corbalocC.cpp \
-  corbalocC.h \
-  corbalocC.inl \
-  corbalocS.cpp \
-  corbalocS.h \
-  corbalocS.inl \
-  corbalocS_T.cpp \
-  corbalocS_T.h \
-  corbalocS_T.inl
-
-corbalocC.cpp corbalocC.h corbalocC.inl corbalocS.cpp corbalocS.h corbalocS.inl corbalocS_T.cpp corbalocS_T.h corbalocS_T.inl: corbaloc-stamp
-
-corbaloc-stamp: $(srcdir)/corbaloc.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/corbaloc.idl
-	@touch $@
-
 noinst_PROGRAMS += corbaname_client
 
 corbaname_client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)
 
 corbaname_client_SOURCES = \
   corbalocC.cpp \
-  corbalocS.cpp \
   corbaname_client.cpp \
-  status_i.cpp \
-  corbalocC.h \
-  corbalocC.inl \
-  corbalocS.h \
-  corbalocS_T.h \
-  corbalocS_T.inl \
+  ior_corbaloc_client_i.h \
   status_i.h
 
 corbaname_client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.ior_corbaloc_server.am
-
-BUILT_SOURCES += \
-  corbalocC.cpp \
-  corbalocC.h \
-  corbalocC.inl \
-  corbalocS.cpp \
-  corbalocS.h \
-  corbalocS.inl \
-  corbalocS_T.cpp \
-  corbalocS_T.h \
-  corbalocS_T.inl
-
-CLEANFILES += \
-  corbaloc-stamp \
-  corbalocC.cpp \
-  corbalocC.h \
-  corbalocC.inl \
-  corbalocS.cpp \
-  corbalocS.h \
-  corbalocS.inl \
-  corbalocS_T.cpp \
-  corbalocS_T.h \
-  corbalocS_T.inl
-
-corbalocC.cpp corbalocC.h corbalocC.inl corbalocS.cpp corbalocS.h corbalocS.inl corbalocS_T.cpp corbalocS_T.h corbalocS_T.inl: corbaloc-stamp
-
-corbaloc-stamp: $(srcdir)/corbaloc.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/corbaloc.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -182,11 +112,6 @@ server_SOURCES = \
   corbalocS.cpp \
   server.cpp \
   status_i.cpp \
-  corbalocC.h \
-  corbalocC.inl \
-  corbalocS.h \
-  corbalocS_T.h \
-  corbalocS_T.inl \
   status_i.h
 
 server_LDADD = \

@@ -23,10 +23,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "LB_LoadAlertMap.h"
-#include "LB_MonitorMap.h"
-#include "LB_LoadListMap.h"
-#include "LB_Pull_Handler.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlertMap.h"
+#include "orbsvcs/LoadBalancing/LB_MonitorMap.h"
+#include "orbsvcs/LoadBalancing/LB_LoadListMap.h"
+#include "orbsvcs/LoadBalancing/LB_Pull_Handler.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
@@ -34,6 +34,7 @@
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
   : public virtual POA_CosLoadBalancing::LoadManager
@@ -511,6 +512,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

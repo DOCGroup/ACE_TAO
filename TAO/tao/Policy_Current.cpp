@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Policy_Current.h"
+#include "tao/Policy_Current.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -10,16 +10,17 @@
 # include "tao/Policy_Current.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Policy_Current,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Policy_Current_Impl &
 TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
 {
-  TAO_TSS_Resources *tss =
+  TAO_TSS_Resources * const tss =
     TAO_TSS_Resources::instance ();
 
   TAO_Policy_Current_Impl *old = tss->policy_current_;
@@ -76,5 +77,7 @@ TAO_Policy_Current::get_cached_policy (TAO_Cached_Policy_Type type
   return impl.get_cached_policy (type
                                  ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

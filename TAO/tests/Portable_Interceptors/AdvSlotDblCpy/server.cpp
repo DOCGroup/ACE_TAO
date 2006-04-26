@@ -8,6 +8,7 @@
 
 #include "tao/LocalObject.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "tao/CORBA_String.h"
 
 #include "ace/OS_NS_stdio.h"
 

@@ -14,7 +14,7 @@
 #define TAO_ID_ASSIGNMENT_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "Policy_Strategy.h"
+#include "tao/PortableServer/Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,12 +22,14 @@
 
 #include "tao/Basic_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
   {
-    class IdAssignmentStrategy :
-       public Policy_Strategy
+    class IdAssignmentStrategy
+      : public Policy_Strategy
     {
     public:
       virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
@@ -50,6 +52,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ID_ASSIGNMENT_STRATEGY_H */

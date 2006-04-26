@@ -2,6 +2,10 @@
 //
 // $Id$
 
+#include "tao/ORB_Core.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE void
 TAO_Stub::reset_base (void)
 {
@@ -65,7 +69,8 @@ TAO_Stub::next_forward_profile (void)
   TAO_Profile *pfile_next = 0;
 
   while (this->forward_profiles_
-         && (pfile_next = this->forward_profiles_->get_next ()) == 0)
+         && (pfile_next = this->forward_profiles_->get_next ()) == 0
+         && this->forward_profiles_ != this->forward_profiles_perm_)  // do not remove permanent forward from bottom of stack
     // that was the last profile.  Now we clean up our forward profiles.
     // since we own the forward MProfiles, we must delete them when done.
     this->forward_back_one ();
@@ -76,23 +81,62 @@ TAO_Stub::next_forward_profile (void)
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile_i (void)
 {
-
   TAO_Profile *pfile_next = 0;
-  if (this->forward_profiles_)
-    {
-      pfile_next = this->next_forward_profile ();
+
+  // First handle the case that a permanent forward occured
+  if (this->forward_profiles_perm_) // the permanent forward defined
+                                    // at bottom of stack
+                                    // forward_profiles_
+	{
+      // In case of permanent forward the base_profiles are ingored.
+
+	  pfile_next = this->next_forward_profile ();
+
       if (pfile_next == 0)
+        {
+          // COND: this->forward_profiles_ == this->forward_profiles_perm_
+
+          // reached end of list of permanent forward profiles
+          // now, reset forward_profiles_perm_
+
+          this->forward_profiles_->rewind ();
+          this->profile_success_ = false;
+          this->set_profile_in_use_i (this->forward_profiles_->get_next());
+	    }
+	  else
+		  this->set_profile_in_use_i (pfile_next);
+
+      // We may have been forwarded to / from a collocated situation
+      // Check for this and apply / remove optimisation if required.
+      this->orb_core_->reinitialize_object (this);
+                
+	  return pfile_next;
+	}
+  else 
+    {
+      if (this->forward_profiles_) // Now do the common operation
+        {
+          pfile_next = this->next_forward_profile ();
+          if (pfile_next == 0)
+            {
+              // Fall back to base profiles
+              pfile_next = this->base_profiles_.get_next ();
+            }
+
+          // We may have been forwarded to / from a collocated situation
+          // Check for this and apply / remove optimisation if required.
+          this->orb_core_->reinitialize_object (this);
+        }
+      else
         pfile_next = this->base_profiles_.get_next ();
-    }
-  else
-    pfile_next = this->base_profiles_.get_next ();
 
-  if (pfile_next == 0)
-    this->reset_base ();
-  else
-    this->set_profile_in_use_i (pfile_next);
+      if (pfile_next == 0)
+        this->reset_base ();
+      else
+        this->set_profile_in_use_i (pfile_next);
 
-  return pfile_next;
+      return pfile_next;
+   }
 }
 
 ACE_INLINE TAO_Profile *
@@ -133,6 +177,10 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
                             0));
 
   // first reset things so we start from scratch!
+
+  // @note This reset forward could effect the collocation status
+  // but as this method is only used from the Stub ctr, when the status
+  // is already correctly set, we don't reinitialise here. sm.
   this->reset_forward ();
   this->base_profiles_.set (mprofiles);
   this->reset_base ();
@@ -150,15 +198,20 @@ TAO_Stub::next_profile_retry (void)
 
   if (this->profile_success_ && this->forward_profiles_)
     {
+      // We have a forwarded reference that we have managed to *send* a message to
+      // previously in the remote path only (but not counting object proxy broker ops).
+      // @todo I can see little sense to this. It is at best highly inconsistent. sm.
+
+      // In this case we are falling back from the forwarded IOR stright to the base IOR
       this->reset_profiles_i ();
-      return 1;
+      return true;
     }
   else if (this->next_profile_i ())
     {
-      return 1;
+      return true;
     }
 
-  return 0;
+  return false;
 #if 0
   else
     {
@@ -171,10 +224,10 @@ TAO_Stub::next_profile_retry (void)
       // If the service is loaded and has a profile then try it.
       if (prof)
         {
-          return 1;
+          return true;
         }
       this->reset_profiles_i ();
-      return 0;
+      return false;
     }
 #endif /*If 0 */
 }
@@ -195,6 +248,12 @@ ACE_INLINE const TAO_MProfile *
 TAO_Stub::forward_profiles (void) const
 {
   return this->forward_profiles_;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_Stub::is_collocated (void) const
+{
+  return this->is_collocated_;
 }
 
 ACE_INLINE TAO_ORB_Core*
@@ -221,6 +280,30 @@ ACE_INLINE void
 TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
 {
   this->servant_orb_ = CORBA::ORB::_duplicate (orb);
+}
+
+ACE_INLINE TAO_Abstract_ServantBase *
+TAO_Stub::collocated_servant (void) const
+{
+  return collocated_servant_;
+}
+
+ACE_INLINE void
+TAO_Stub::collocated_servant (TAO_Abstract_ServantBase * servant)
+{
+  this->collocated_servant_ = servant;
+}
+
+ACE_INLINE TAO::Object_Proxy_Broker *
+TAO_Stub::object_proxy_broker (void) const
+{
+  return this->object_proxy_broker_;
+}
+
+ACE_INLINE void
+TAO_Stub::object_proxy_broker (TAO::Object_Proxy_Broker * object_proxy_broker)
+{
+  this->object_proxy_broker_ = object_proxy_broker;
 }
 
 ACE_INLINE void
@@ -313,3 +396,5 @@ TAO_Stub_Auto_Ptr::operator *() const
   // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

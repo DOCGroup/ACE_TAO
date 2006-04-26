@@ -374,7 +374,7 @@ object, hiding the transport- and strategy-specific details of the acceptor.
 
 <P>
 TAO's <TT>Acceptor</TT> interface, shown below, is declared in the  file
-<TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>&lt;<A HREF="../../tao/Transport_Acceptor.h">tao/Transport_Acceptor.h</A>&gt;</TT>.
 All <TT>Acceptor</TT> implementations must inherit from the <TT>TAO_Acceptor</TT>
 abstract base class.
 
@@ -969,7 +969,8 @@ object and to the <TT>Transport</TT> objects that were created.
 </H3>
 
 <P>
-TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;
+<A HREF="../../tao/Transport_Connector.h">tao/Transport_Connector.h</A>&gt;</TT>.
 All <TT>Connector</TT> implementations must inherit from the <TT>TAO_Connector</TT>
 abstract base class.
 
@@ -2199,7 +2200,7 @@ class.
 
 <P>
 All TAO pluggable protocol <TT>Transport</TT> classes must inherit from the
-<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Transport.h">tao/Transport.h</A>&gt;</TT>.
 The <TT>TAO_Transport</TT> interface is shown below. Again, only the methods
 that should be implemented for a given pluggable protocol are shown:
 

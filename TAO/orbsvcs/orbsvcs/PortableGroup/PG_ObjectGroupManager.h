@@ -16,19 +16,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_ObjectGroup_Map.h"
-#include "PG_Location_Map.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroup_Map.h"
+#include "orbsvcs/PortableGroup/PG_Location_Map.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
 class TAO_PG_GenericFactory;
@@ -305,6 +307,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -25,6 +25,7 @@
 #include <ace/SString.h>
 #include <ace/Vector_T.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class Object_Group_Creator
@@ -104,5 +105,6 @@ namespace TAO
   };
 
 } // namespace TAO
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // TAO_OBJECT_GROUP_CREATOR_H

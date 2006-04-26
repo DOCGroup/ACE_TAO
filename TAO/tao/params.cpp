@@ -15,6 +15,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : endpoints_map_ (10)
   , mcast_discovery_endpoint_ ()
@@ -22,7 +24,9 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ)
   , sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ)
   , nodelay_ (1)
+  , sock_keepalive_ (0)
   , cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
+  , max_message_size_ (0) // Disable outgoing GIOP fragments by default
   , use_lite_protocol_ (0)
   , use_dotted_decimal_addresses_ (0)
   , cache_incoming_by_dotted_decimal_address_ (0)
@@ -77,7 +81,7 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
   TAO_EndpointSet endpoint_set;
 
   // Parse the additional endpoints.
-  int result =
+  int const result =
     this->parse_and_add_endpoints (additional_endpoints,
                                    endpoint_set);
 
@@ -302,3 +306,5 @@ TAO_ORB_Parameters::connect_ipv6_only (void) const
   return this->connect_ipv6_only_;
 }
 #endif /* ACE_HAS_IPV6 */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

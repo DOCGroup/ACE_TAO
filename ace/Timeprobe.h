@@ -58,6 +58,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_Thread.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Event_Descriptions
  *
@@ -111,6 +113,8 @@ public:
   ACE_thread_t thread_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Timeprobe.inl"
 #endif /* __ACE_INLINE__ */
@@ -119,6 +123,8 @@ public:
 #include "ace/Null_Mutex.h"
 #include "ace/Singleton.h"
 #include "ace/Timeprobe_T.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // If ACE_MT_TIMEPROBES is defined, use a Thread_Mutex to lock the
 // internal state of ACE_Timerprobe.  This allows multiple threads to
@@ -148,11 +154,13 @@ typedef ACE_Timeprobe_Ex<ACE_TIMEPROBE_MUTEX, ACE_TIMEPROBE_ALLOCATOR>
 #  endif /* ACE_TSS_TIMEPROBES */
 
 ACE_SINGLETON_DECLARE (ACE_TIMEPROBE_SINGLETON_TYPE, \
-                                           ACE_TIMEPROBE_WITH_LOCKING, \
-                                           ACE_TIMEPROBE_SINGLETON_LOCK_TYPE)
+                       ACE_TIMEPROBE_WITH_LOCKING,   \
+                       ACE_TIMEPROBE_SINGLETON_LOCK_TYPE)
 
 typedef ACE_TIMEPROBE_SINGLETON_TYPE<ACE_TIMEPROBE_WITH_LOCKING, ACE_TIMEPROBE_SINGLETON_LOCK_TYPE>
         ACE_TIMEPROBE_SINGLETON;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_COMPILE_TIMEPROBES */
 

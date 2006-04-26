@@ -564,7 +564,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                       str.in ()));
         }
 
-      ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].in()) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (str.in (), static_cast<const char*>(members[i])) == 0);
     }
 
 
@@ -604,7 +604,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                       tmp));
         }
 
-      ACE_ASSERT (ACE_OS::strcmp (fellows[i].in(), members[i].in()) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (static_cast<const char*>(fellows[i]), static_cast<const char*>(members[i])) == 0);
     }
 
   evar->name ("another_enum"
@@ -2747,7 +2747,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; ++i)
     {
-      base_iface_id = ifd->base_interfaces[i].in ();
+      base_iface_id = ifd->base_interfaces[i];
 
       if (this->debug_)
         {

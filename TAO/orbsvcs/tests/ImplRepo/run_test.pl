@@ -143,44 +143,15 @@ sub nestea_test
     return $status;
 }
 
-###############################################################################
-# @todo: This test doesn't clean up too well if something fails
-
-sub nt_service_test
+sub nt_service_test_i
 {
-    my $result = 0;
-
-    # Just to show that it's possible, this test uses corbaloc instead of ior file.
-    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService"; 
-
-    # To avoid having to ensure that they LocalSystem account has the correct path
-    # we simply copy the imr executables to the same directory as the DLL's.
-    my $BIN_IMR_LOCATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImplRepo_Service","");
-    my $BIN_IMR_ACTIVATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImR_Activator","");
-    $BIN_IMR_LOCATOR->IgnoreExeSubDir(1);
-    $BIN_IMR_ACTIVATOR->IgnoreExeSubDir(1);
-
-    print "Copying ImplRepo services to the same location as the dlls.\n";
-    unlink $BIN_IMR_LOCATOR->Executable ();
-    copy ($IMR_LOCATOR->Executable (), $BIN_IMR_LOCATOR->Executable ());
-    unlink $BIN_IMR_ACTIVATOR->Executable ();
-    copy ($IMR_ACTIVATOR->Executable (), $BIN_IMR_ACTIVATOR->Executable ());
-
-    print "Stopping any existing TAO ImR Services\n";
-    system("net stop taoimractivator > nul 2>&1");
-    system("net stop taoimr > nul 2>&1");
-
-    print "Removing any existing TAO ImR Services\n";
-    $BIN_IMR_ACTIVATOR->Arguments ("-c remove");
-    $BIN_IMR_LOCATOR->Arguments ("-c remove");
-    $BIN_IMR_ACTIVATOR->SpawnWaitKill (5);
-    $BIN_IMR_LOCATOR->SpawnWaitKill (5);
+    my ($imr_initref, $BIN_IMR_ACTIVATOR, $BIN_IMR_LOCATOR) = @_;
 
     print "Installing TAO ImR Services\n";
     $BIN_IMR_ACTIVATOR->Arguments ("-c install $imr_initref -d 0");
     $BIN_IMR_LOCATOR->Arguments ("-c install -d 0 -orbendpoint iiop://:8888");
 
-    $result = $BIN_IMR_LOCATOR->SpawnWaitKill (5);
+    my $result = $BIN_IMR_LOCATOR->SpawnWaitKill (5);
     if ($result != 0) {
         print STDERR "ERROR: IMR Locator installation returned $result\n";
         return 1;
@@ -240,6 +211,41 @@ sub nt_service_test
         return 1;
     }
 
+    return 0;
+}
+
+sub nt_service_test
+{
+    my $result = 0;
+
+    # Just to show that it's possible, this test uses corbaloc instead of ior file.
+    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService";
+
+    # To avoid having to ensure that they LocalSystem account has the correct path
+    # we simply copy the imr executables to the same directory as the DLL's.
+    my $BIN_IMR_LOCATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImplRepo_Service","");
+    my $BIN_IMR_ACTIVATOR = new PerlACE::Process ("$ACE_ROOT/lib/ImR_Activator","");
+    $BIN_IMR_LOCATOR->IgnoreExeSubDir(1);
+    $BIN_IMR_ACTIVATOR->IgnoreExeSubDir(1);
+
+    print "Copying ImplRepo services to the same location as the dlls.\n";
+    unlink $BIN_IMR_LOCATOR->Executable ();
+    copy ($IMR_LOCATOR->Executable (), $BIN_IMR_LOCATOR->Executable ());
+    unlink $BIN_IMR_ACTIVATOR->Executable ();
+    copy ($IMR_ACTIVATOR->Executable (), $BIN_IMR_ACTIVATOR->Executable ());
+
+    print "Stopping any existing TAO ImR Services\n";
+    system("net stop taoimractivator > nul 2>&1");
+    system("net stop taoimr > nul 2>&1");
+
+    print "Removing any existing TAO ImR Services\n";
+    $BIN_IMR_ACTIVATOR->Arguments ("-c remove");
+    $BIN_IMR_LOCATOR->Arguments ("-c remove");
+    $BIN_IMR_ACTIVATOR->SpawnWaitKill (5);
+    $BIN_IMR_LOCATOR->SpawnWaitKill (5);
+
+    $result = nt_service_test_i ($imr_initref, $BIN_IMR_ACTIVATOR, $BIN_IMR_LOCATOR);
+
     print "Stopping TAO Implementation Repository Service\n";
     system("net stop taoimractivator 2>&1");
     system("net stop taoimr 2>&1");
@@ -254,7 +260,7 @@ sub nt_service_test
     unlink $BIN_IMR_ACTIVATOR->Executable ();
     unlink $BIN_IMR_LOCATOR->Executable ();
 
-    return 0;
+    return $result;
 }
 
 ###############################################################################
@@ -286,7 +292,7 @@ sub airplane_ir_test
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     # Can use update to add servers.
-    $TAO_IMR->Arguments ("$imr_initref update airplane_server -c \"" 
+    $TAO_IMR->Arguments ("$imr_initref update airplane_server -c \""
 			 . $A_SVR->Executable ()
       . " -o $airplane_ior \"");
 
@@ -442,15 +448,15 @@ sub nestea_ir_test
         $status = 1;
     }
 
-    # This should destroy the POA, causing another to be created the next time 
-    # the server is spawned. 
+    # This should destroy the POA, causing another to be created the next time
+    # the server is spawned.
     $TAO_IMR->Arguments ("$imr_initref remove nestea_server");
     $result = $TAO_IMR->SpawnWaitKill (10);
     if ($result != 0) {
         print STDERR "ERROR: tao_imr 1 returned $result\n";
         $status = 1;
     }
-    
+
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TAO_IMR->Arguments ("$imr_initref add nestea_server -c \""
                          . $N_SVR->Executable ()
@@ -463,7 +469,7 @@ sub nestea_ir_test
         $IMR_LOCATOR->Kill ();
         return 1;
     }
-    
+
     # This should cause the activator to spawn another server.
     $result = $N_CLI->SpawnWaitKill (20);
     if ($result != 0) {
@@ -534,9 +540,9 @@ sub perclient
         $IMR_LOCATOR->Kill ();
         return 1;
     }
-    
+
     $N_CLI->Arguments("-k corbaloc::localhost:8888/nestea_server");
-    
+
     # Running the client should start a server instance
     $result = $N_CLI->SpawnWaitKill (10);
     if ($result != 0) {
@@ -551,7 +557,7 @@ sub perclient
     }
 
     unlink $nestea_ior;
-    
+
     $N_CLI->Arguments("-s -k corbaloc::localhost:8888/nestea_server");
 
     # Running the client again should start another server instance
@@ -570,7 +576,7 @@ sub perclient
     # Note : We have to wait long enough for the first server to self-destruct
     # or it will print out an exception when it can't notify the imr of its shutdown.
     sleep 10;
-        
+
     my $implrepo = $IMR_ACTIVATOR->TerminateWaitKill (5);
     if ($implrepo != 0) {
         print STDERR "ERROR: IMR_Activator returned $implrepo\n";
@@ -596,7 +602,7 @@ sub shutdown_repo
     my $imr_initref = "-orbobjrefstyle URL -ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
     unlink "test.repo";
-    
+
     # Specify an endpoint so that we can restart on the same port.
     # Specify persistence so that we can test that shutdown-repo -a works after reconnect
     $IMR_LOCATOR->Arguments ("-p test.repo -d 1 -orbendpoint iiop://:8888 -o $imr_locator_ior");
@@ -641,7 +647,7 @@ sub shutdown_repo
       $IMR_LOCATOR->Kill ();
       return 1;
     }
-    
+
     $TAO_IMR->Arguments ("$imr_initref shutdown-repo -a");
     $result = $TAO_IMR->SpawnWaitKill (5);
     if ($result != 0) {
@@ -664,7 +670,7 @@ sub shutdown_repo
     }
 
     unlink "test.repo";
-    
+
     return $status;
 }
 
@@ -701,10 +707,10 @@ sub persistent_ir_test
     # Copy the server to a path with spaces to ensure that these
     # work corrrectly.
     copy ($A_SVR->Executable(), $P_SVR->Executable());
-    chmod(0755, $P_SVR->Executable()); 
+    chmod(0755, $P_SVR->Executable());
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
-    $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \"" 
+    $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \""
         . '\"' . $P_SVR->Executable() . '\"' . "\" " . $refstyle);
     $result = $TAO_IMR->SpawnWaitKill (10);
 
@@ -718,7 +724,7 @@ sub persistent_ir_test
     ## This will write out the imr-ified IOR. Note : If you don't use -orbendpoint
     ## when starting the ImR, then this IOR will no longer be valid when the ImR
     ## restarts below. You can fix this by creating a new valid IOR, or starting
-    ## the ImR on a consistent endpoint. 
+    ## the ImR on a consistent endpoint.
     $A_SVR->Arguments ("-o $airplane_ior -ORBUseIMR 1 $refstyle $imr_initref");
     $A_SVR->Spawn ();
     if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
@@ -827,7 +833,7 @@ sub persistent_ir_test
     unlink $imr_activator_ior;
     unlink $airplane_ior;
 
-    return 0;   
+    return 0;
 }
 
 ###############################################################################
@@ -860,7 +866,7 @@ sub both_ir_test
     ## Note : It's crucial NOT to write out an IOR file when the activator
     ## starts the server, or at least to write out a different file name
     ## than the IOR files we're using for the clients. Otherwise a client
-    ## may attempt to use a partially written file. 
+    ## may attempt to use a partially written file.
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TAO_IMR->Arguments ("$imr_initref add nestea_server -c \""
 			 . $N_SVR->Executable ()
@@ -868,7 +874,7 @@ sub both_ir_test
     $TAO_IMR->SpawnWaitKill (10);
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
-    $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \"" 
+    $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \""
 			 . $A_SVR->Executable ()
        . " $refstyle\"");
     $TAO_IMR->SpawnWaitKill (10);
@@ -883,7 +889,7 @@ sub both_ir_test
         $N_SVR->Kill ();
         return 1;
     }
-    
+
     $A_SVR->Arguments (" -o $airplane_ior -ORBUseIMR 1 $imr_initref $refstyle");
     $A_SVR->Spawn ();
     if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
@@ -912,8 +918,8 @@ sub both_ir_test
     $TAO_IMR->Arguments ("$imr_initref shutdown airplane_server");
     $TAO_IMR->SpawnWaitKill (15);
 
-    $A_SVR->WaitKill();
-    $N_SVR->WaitKill();
+    $A_SVR->WaitKill(1);
+    $N_SVR->WaitKill(1);
 
     print "\n\n\n\n## Spawning multiple simultaneous clients with no servers running.\n";
 

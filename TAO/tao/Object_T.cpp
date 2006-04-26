@@ -1,14 +1,13 @@
 // $Id$
-#ifndef TAO_OBJECT_T_C
-#define TAO_OBJECT_T_C
+
+#ifndef TAO_OBJECT_T_CPP
+#define TAO_OBJECT_T_CPP
 
 #include "tao/Object_T.h"
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (tao,
-           Object_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -88,7 +87,7 @@ namespace TAO
       {
         return proxy;
       }
-      
+
     TAO_Stub* stub = obj->_stubobj ();
 
     if (stub == 0)
@@ -100,7 +99,7 @@ namespace TAO
     stub->_incr_refcnt ();
 
     bool collocated =
-      !CORBA::is_nil (stub->servant_orb_var ().ptr ())
+      !CORBA::is_nil (stub->servant_orb_var ().in ())
       && stub->optimize_collocation_objects ()
       && obj->_is_collocated ()
       && pbf != 0;
@@ -132,4 +131,6 @@ namespace TAO
   }
 }
 
-#endif /* TAO_OBJECT_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_OBJECT_T_CPP */

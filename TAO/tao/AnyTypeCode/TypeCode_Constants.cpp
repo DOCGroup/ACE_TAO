@@ -1,7 +1,7 @@
 // $Id$
 
 
-#include "TypeCode_Constants.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 
 
 ACE_RCSID (tao,
@@ -9,11 +9,12 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-#include "Null_RefCount_Policy.h"
-#include "Empty_Param_TypeCode.h"
-#include "Objref_TypeCode_Static.h"
-#include "String_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -109,3 +110,5 @@ namespace CORBA
   TypeCode_ptr const _tc_Home       = &TAO::TypeCode::tc_Home;
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

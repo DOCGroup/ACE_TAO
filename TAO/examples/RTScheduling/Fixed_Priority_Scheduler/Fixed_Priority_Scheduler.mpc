@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Starter): namingexe, rtscheduling_server {
+  after += MIF_Scheduler_Starter
   idlflags += -o ..
 
   IDL_Files {
@@ -18,6 +19,8 @@ project(*Starter): namingexe, rtscheduling_server {
 }
 
 project(*test) : namingexe, rtscheduling_server {
+  after += *Starter
+
   idlflags += -o ..
 
   IDL_Files {

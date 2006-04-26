@@ -29,6 +29,8 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -106,6 +108,7 @@ namespace TAO
 
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/True_RefCount_Policy.inl"

@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Asynch_Result_Impl::ACE_Asynch_Result_Impl (void)
@@ -98,3 +102,5 @@ ACE_Asynch_Transmit_File_Result_Impl::ACE_Asynch_Transmit_File_Result_Impl (void
   : ACE_Asynch_Result_Impl ()
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

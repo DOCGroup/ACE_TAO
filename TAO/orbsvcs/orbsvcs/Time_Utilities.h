@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -21,6 +22,8 @@
 #include "orbsvcs/TimeBaseC.h"
 #include "orbsvcs/svc_utils_export.h"
 #include "ace/OS_NS_time.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ORBSVCS_Time
@@ -97,6 +100,8 @@ private:
   /// @brief Number of nanoseconds between the CORBA and UNIX epochs.
   static const ACE_UINT64 Time_Base_Offset;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Time_Utilities.i"

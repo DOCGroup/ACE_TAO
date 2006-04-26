@@ -10,7 +10,10 @@
 
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Stream.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Thread_Manager;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Request_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
   {

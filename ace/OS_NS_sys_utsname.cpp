@@ -1,32 +1,27 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_sys_utsname.h"
 
 ACE_RCSID(ace, OS_NS_sys_utsname, "$Id$")
 
-#if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_sys_utsname.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_UNAME)
 // for sysBspRev(), sysModel()
-#  include /**/ <sysLib.h> 
-#endif /* VXWORKS */
+#  include /**/ <sysLib.h>
+#endif /* ACE_VXWORKS && ACE_LACKS_UNAME */
 
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
-// Don't inline on those platforms because this function contains
-// string literals, and some compilers, e.g., g++, don't handle those
-// efficiently in unused inline functions.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 ACE_OS::uname (ACE_utsname *name)
 {
   ACE_OS_TRACE ("ACE_OS::uname");
-# if defined (ACE_WIN32)
+#if !defined (ACE_LACKS_UNAME)
+  ACE_OSCALL_RETURN (::uname (name), int, -1);
+#elif defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname,
                   ACE_LIB_TEXT ("Win32"));
@@ -138,6 +133,20 @@ ACE_OS::uname (ACE_utsname *name)
                            sinfo.wProcessorLevel);
           break;
 #     endif
+#     if defined PROCESSOR_ARCHITECTURE_AMD64
+        case PROCESSOR_ARCHITECTURE_AMD64:
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("x64"));
+          ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"),
+                           sinfo.wProcessorLevel);
+          break;
+#     endif
+#     if defined PROCESSOR_ARCHITECTURE_IA32_ON_WIN64
+        case PROCESSOR_ARCHITECTURE_IA32_ON_WIN64:
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("WOW64"));
+          ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"),
+                           sinfo.wProcessorLevel);
+          break;
+#     endif
 #     if defined PROCESSOR_ARCHITECTURE_ARM
         case PROCESSOR_ARCHITECTURE_ARM:
           ACE_OS::strcpy (processor, ACE_LIB_TEXT ("ARM"));
@@ -205,7 +214,7 @@ ACE_OS::uname (ACE_utsname *name)
   return ACE_OS::hostname (name->nodename, maxnamelen);
 # endif /* ACE_LACKS_HOSTNAME */
 
-# elif defined (VXWORKS)
+#elif defined (ACE_VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "VxWorks");
   ACE_OS::strcpy (name->release, "???");
@@ -213,7 +222,7 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
-# elif defined (CHORUS)
+#elif defined (CHORUS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "CHORUS/ClassiX");
   ACE_OS::strcpy (name->release, "???");
@@ -230,7 +239,18 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->release, "???");
   ACE_OS::strcpy (name->version, buf);
   ACE_OS::strcpy (name->machine, "PPC 405");  // a bit of a hack
-
+#elif defined (INTEGRITY)
+  if(!name) {
+    errno = EFAULT;
+    return -1;
+  }
+  strcpy(name->sysname,"INTEGRITY");
+  int status = gethostname(name->nodename,_SYS_NMLN);
+  strcpy(name->release,"4.0");
+  strcpy(name->version,"4.0.9");
+  strcpy(name->machine,"a standard name");
+  return status;
 #endif /* ACE_WIN32 */
 }
-#endif /* ACE_WIN32 || VXWORKS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

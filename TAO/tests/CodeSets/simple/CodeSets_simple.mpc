@@ -2,6 +2,7 @@
 // $Id$
 
 project(*client) : taoclient, anytypecode {
+  after += *server
   IDL_Files {
     simple.idl
   }

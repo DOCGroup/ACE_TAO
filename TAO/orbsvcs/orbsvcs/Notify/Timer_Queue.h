@@ -1,21 +1,20 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Timer_Queue.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_TIMER_QUEUE_H
 #define TAO_Notify_TIMER_QUEUE_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
-#include "Timer.h"
+#include "orbsvcs/Notify/Timer.h"
 
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Heap.h"
@@ -24,6 +23,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Timer_Queue
@@ -62,6 +63,8 @@ private:
   /// Release
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_TIMER_QUEUE_H */

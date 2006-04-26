@@ -1,18 +1,19 @@
 // $Id$
 
-#include "ClientRequestInfo.h"
+#include "tao/PI/ClientRequestInfo.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-ACE_RCSID (tao,
+ACE_RCSID (PI,
            ClientRequestInfo,
            "$Id$")
 
-#include "PICurrent.h"
-#include "RequestInfo_Util.h"
-
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
+
+#include "tao/PI/PICurrent.h"
+#include "tao/PI/RequestInfo_Util.h"
+
 #include "tao/PolicyC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/Invocation_Base.h"
@@ -23,6 +24,8 @@ ACE_RCSID (tao,
 #include "tao/debug.h"
 #include "tao/Service_Context.h"
 #include "tao/Exception_Data.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
   : invocation_ (inv),
@@ -544,8 +547,7 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
             this->invocation_->operation_details ().ex_data ()[i].tc_ptr;
           if (!CORBA::is_nil (tcp))
             {
-              TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
-              exception_list[i] = tcp_object;
+              exception_list[i] = tcp;
             }
         }
     }
@@ -601,8 +603,10 @@ TAO_ClientRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
 bool
 TAO_ClientRequestInfo::result (CORBA::Any *any)
 {
-  for (CORBA::ULong i = 0; i != this->invocation_->operation_details ().args_num (); ++i)
-    (*this->invocation_->operation_details ().args ()[i]).interceptor_value (any);
+  // Result is always first element in TAO::Argument array.
+  TAO::Argument * const r = this->invocation_->operation_details ().args ()[0];
+
+  r->interceptor_value (any);
 
   return true;
 }
@@ -721,5 +725,31 @@ TAO_ClientRequestInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                      CORBA::COMPLETED_NO));
 }
+
+void
+TAO_ClientRequestInfo::tao_ft_expiration_time (TimeBase::TimeT time)
+{
+  this->invocation_->operation_details ().ft_expiration_time (time);
+}
+
+TimeBase::TimeT
+TAO_ClientRequestInfo::tao_ft_expiration_time (void) const
+{
+  return this->invocation_->operation_details ().ft_expiration_time ();
+}
+
+void
+TAO_ClientRequestInfo::tao_ft_retention_id (CORBA::Long request_id)
+{
+  this->invocation_->operation_details ().ft_retention_id (request_id) ;
+}
+
+CORBA::Long
+TAO_ClientRequestInfo::tao_ft_retention_id (void) const
+{
+  return this->invocation_->operation_details ().ft_retention_id ();
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

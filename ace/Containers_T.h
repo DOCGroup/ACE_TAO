@@ -36,6 +36,8 @@
 // Backwards compatibility, please include "ace/Unbounded_Queue.h" directly.
 #include "ace/Unbounded_Queue.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Allocator;
 
 
@@ -602,8 +604,9 @@ protected:
   // = Iteration methods.
   /**
    * Move to the first element of the list. Returns 0 if the list is
-   * empty, else 1. Note: the head of the ACE_DLList is actually a
-   * null entry, so the first element is actually the 2n'd entry
+   * empty, else 1.
+   * @note the head of the ACE_DLList is actually a null entry, so the
+   * first element is actually the 2n'd entry
    */
   int go_head (void);
 
@@ -1061,7 +1064,6 @@ public:
   /// Delegates to ACE_Double_Linked_List.
   int remove (ACE_DLList_Node *n);
 
-
   // = Initialization and termination methods.
 
   /// Delegates to ACE_Double_Linked_List.
@@ -1230,23 +1232,23 @@ public:
 protected:
   // = Initialization method.
   ACE_Fixed_Set_Iterator_Base (ACE_Fixed_Set<T, ACE_SIZE> &s);
-  
+
   /// Set we are iterating over.
   ACE_Fixed_Set<T, ACE_SIZE> &s_;
 
   /// How far we've advanced over the set.
   ssize_t next_;
-  
+
   /// The number of non free items that the iterator had pointed at.
   size_t iterated_items_;
-  
+
   /// Dump the state of an object.
   void dump_i (void) const;
-  
+
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next_i (T *&next_item);
-}; 
+};
 
 /**
  * @class ACE_Fixed_Set_Iterator
@@ -1271,12 +1273,12 @@ public:
 
   /// Dump the state of an object.
   void dump (void) const;
-  
+
   /// Remove the item where the itearetor is located at.
   /// Returns 1 if it removes a item, else 0.
   /// Pass back the removed {item}.
   int remove (T *&item);
-  
+
   /// STL-like iterator dereference operator: returns a reference
   /// to the node underneath the iterator.
   T & operator* (void);
@@ -1307,7 +1309,7 @@ public:
 
   /// Dump the state of an object.
   void dump (void) const;
-  
+
   /// STL-like iterator dereference operator: returns a reference
   /// to the node underneath the iterator.
   const T & operator* (void) const ;
@@ -2004,6 +2006,8 @@ public:
    */
   bool operator!= (const ACE_Array<T> &s) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Containers_T.inl"

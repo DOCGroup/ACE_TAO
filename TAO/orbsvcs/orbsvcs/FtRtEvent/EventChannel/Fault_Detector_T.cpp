@@ -4,6 +4,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/os_include/os_netdb.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::Fault_Detector_T()
 {
@@ -65,3 +67,5 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(const FTRT::Lo
 
     return result ;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

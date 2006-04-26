@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,8 @@
 #include "HTBP_Addr.h"
 #include "HTBP_Filter.h"
 #include "HTBP_Notifier.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -282,6 +284,8 @@ namespace ACE
     };
   }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_STREAM_H */

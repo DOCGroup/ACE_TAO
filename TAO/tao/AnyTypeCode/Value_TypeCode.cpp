@@ -16,6 +16,7 @@
 # include "tao/AnyTypeCode/Value_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -124,29 +125,29 @@ TAO::TypeCode::Value<StringType,
 
   CORBA::ValueModifier const tc_type_modifier =
     tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_type_modifier != this->type_modifier_)
-    return 0;
+    return false;
 
   CORBA::TypeCode_var rhs_concrete_base_type =
     tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Boolean const equal_concrete_base_types =
     this->equal (rhs_concrete_base_type.in ()
                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (!equal_concrete_base_types)
-    return 0;
+    return false;
 
   CORBA::ULong const tc_nfields =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_nfields != this->nfields_)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
@@ -157,37 +158,37 @@ TAO::TypeCode::Value<StringType,
       CORBA::Visibility const rhs_visibility =
         tc->member_visibility (i
                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (lhs_visibility != rhs_visibility)
-        return 0;
+        return false;
 
       char const * const lhs_name =
         Traits<StringType>::get_string (lhs_field.name);;
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-        return 0;
+        return false;
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       CORBA::Boolean const equal_members =
         lhs_tc->equal (rhs_tc.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (!equal_members)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 template <typename StringType,
@@ -204,32 +205,32 @@ TAO::TypeCode::Value<StringType,
 {
   CORBA::ValueModifier const tc_type_modifier =
     tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_type_modifier != this->type_modifier_)
-    return 0;
+    return false;
 
   CORBA::TypeCode_var rhs_concrete_base_type =
     tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Boolean const equivalent_concrete_base_types =
     this->equivalent (rhs_concrete_base_type.in ()
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (!equivalent_concrete_base_types)
-    return 0;
+    return false;
 
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
 
   CORBA::ULong const tc_nfields =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_nfields != this->nfields_)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
@@ -241,28 +242,28 @@ TAO::TypeCode::Value<StringType,
       CORBA::Visibility const rhs_visibility =
         tc->member_visibility (i
                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (lhs_visibility != rhs_visibility)
-        return 0;
+        return false;
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       CORBA::Boolean const equiv_types =
         lhs_tc->equivalent (rhs_tc.in ()
                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (!equiv_types)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 template <typename StringType,
@@ -459,5 +460,6 @@ TAO::TypeCode::Value<StringType,
       Traits<StringType>::get_typecode (this->concrete_base_));
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_VALUE_TYPECODE_CPP */

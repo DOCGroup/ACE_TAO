@@ -1,13 +1,15 @@
-#include "PG_Group_Guard.h"
+#include "orbsvcs/PortableGroup/PG_Group_Guard.h"
 
-#include "PG_GenericFactory.h"
-#include "PG_ObjectGroupManager.h"
+#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
 
 
 ACE_RCSID (PortableGroup,
            PG_Group_Guard,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_Group_Guard::TAO_PG_Group_Guard (
   TAO_PG_GenericFactory & generic_factory,
@@ -54,3 +56,4 @@ TAO_PG_Group_Guard::release (void)
   this->released_ = 1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

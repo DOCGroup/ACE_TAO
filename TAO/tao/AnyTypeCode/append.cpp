@@ -38,6 +38,8 @@ ACE_RCSID (tao,
            append,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Encode instances of arbitrary data types based only on typecode.
 // "data" points to the data type; if it's not a primitve data type,
 // the TypeCode interpreter is used to recursively encode its
@@ -413,13 +415,13 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // Save the discriminator value in a temporary variable...
-  CORBA::Short short_v;
-  CORBA::UShort ushort_v;
-  CORBA::Long long_v;
-  CORBA::ULong ulong_v;
-  CORBA::ULong enum_v;
-  CORBA::Char char_v;
-  CORBA::WChar wchar_v;
+  CORBA::Short short_v = CORBA::Short();
+  CORBA::UShort ushort_v = CORBA::UShort();
+  CORBA::Long long_v = CORBA::Long();
+  CORBA::ULong ulong_v = CORBA::ULong();
+  CORBA::ULong enum_v = CORBA::ULong();
+  CORBA::Char char_v = CORBA::Char();
+  CORBA::WChar wchar_v = CORBA::WChar();
   CORBA::Boolean boolean_v = false;
 
   switch (kind)
@@ -1237,16 +1239,20 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
           return TAO::TRAVERSE_STOP;
         }
 
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
+	  TAO_ORB_Core *orb_core = src->orb_core ();
+      if (orb_core == 0)
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            TAO::TRAVERSE_STOP);
+          orb_core = TAO_ORB_Core_instance ();
+
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_WARNING,
+                          "TAO (%P|%t) WARNING: extracting "
+                          "valuetype using default ORB_Core\n"));
+            }
         }
+
+      TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
 
       if (value_tag == 0) // Null value type pointer.
         {
@@ -1319,3 +1325,5 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -52,10 +52,14 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << "_forany &);" << be_nl;
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << "_forany &);";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   node->cli_hdr_any_op_gen (1);
   return 0;

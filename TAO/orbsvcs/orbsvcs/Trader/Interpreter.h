@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,14 +10,15 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TCL_INTERPRETER_H
 #define TAO_TCL_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "Constraint_Nodes.h"
-#include "Constraint_Visitors.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
@@ -99,6 +100,8 @@ typedef union
 
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TCL_INTERPRETER_H */

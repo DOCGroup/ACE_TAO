@@ -7,12 +7,13 @@
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
-
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (ace,
            POSIX_CB_Proactor,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
   : ACE_POSIX_AIOCB_Proactor (max_aio_operations,
@@ -177,5 +178,7 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
 
   return ret_aio + ret_que > 0 ? 1 : 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__ */

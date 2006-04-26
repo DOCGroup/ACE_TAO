@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Unknown_User_Exception.h"
+#include "tao/DynamicInterface/Unknown_User_Exception.h"
 
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Environment.h"
@@ -18,6 +18,7 @@ ACE_RCSID (DynamicInterface,
            Unknown_User_Exception,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::UnknownUserException::UnknownUserException (void)
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
@@ -134,3 +135,5 @@ namespace CORBA
   CORBA::TypeCode_ptr const _tc_UnknownUserException =
     &TAO::TypeCode::tc_UnknownUserException;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

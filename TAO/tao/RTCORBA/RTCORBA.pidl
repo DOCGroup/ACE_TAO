@@ -52,9 +52,9 @@
 #ifndef _RT_CORBA_IDL_
 #define _RT_CORBA_IDL_
 
-#include <IOP.pidl>
-#include <TimeBase.pidl>
-#include <Policy.pidl>
+#include "tao/IOP.pidl"
+#include "tao/TimeBase.pidl"
+#include "tao/Policy.pidl"
 
 #pragma prefix "omg.org"
 

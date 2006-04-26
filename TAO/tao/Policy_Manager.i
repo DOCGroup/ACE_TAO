@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_Policy_Manager::TAO_Policy_Manager (void)
   : impl_ (TAO_POLICY_ORB_SCOPE)
@@ -32,3 +34,5 @@ TAO_Policy_Manager::get_cached_policy (TAO_Cached_Policy_Type type
   return this->impl_.get_cached_policy (type
                                         ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

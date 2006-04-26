@@ -1,7 +1,8 @@
 // $Id$
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Receiver"
 
-project(Hello_Base_Receiver_DnC_stub): ciao_client_dnc {
+project(Hello_Base_Receiver_DnC_stub): ciao_events_base_dnc {
+  avoids += ace_for_tao
   after += Hello_Base_DnC_stub
   sharedname = Receiver_DnC_stub
   idlflags += -Sc \
@@ -19,11 +20,11 @@ project(Hello_Base_Receiver_DnC_stub): ciao_client_dnc {
   Source_Files {
     ReceiverC.cpp
   }
-  
+
   Header_Files {
     ReceiverC.h
   }
-  
+
   Inline_Files {
     ReceiverC.inl
   }
@@ -36,7 +37,7 @@ project(Hello_Base_Receiver_DnC_svnt) : ciao_servant_dnc {
   libs    += Receiver_DnC_stub \
              Hello_Base_DnC_stub \
              Hello_Base_DnC_svnt
-  
+
   idlflags  +=  -Sc \
                 -Wb,export_macro=RECEIVER_SVNT_Export \
                 -Wb,export_include=Receiver_svnt_export.h
@@ -76,7 +77,7 @@ project(Hello_Base_Receiver_DnC_exec) : ciao_component_dnc {
                Receiver_DnC_svnt \
                Hello_Base_DnC_stub \
                Hello_Base_DnC_svnt
-  
+
   idlflags  +=  -Sc \
                 -Wb,export_macro=RECEIVER_EXEC_Export \
                 -Wb,export_include=Receiver_exec_export.h
@@ -88,10 +89,10 @@ project(Hello_Base_Receiver_DnC_exec) : ciao_component_dnc {
   Source_Files {
     Receiver_exec.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }

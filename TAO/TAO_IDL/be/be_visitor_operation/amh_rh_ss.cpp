@@ -66,7 +66,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   buf = 0;
 
   // Step 1 : Generate return type: always void
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
@@ -158,34 +158,44 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       operation_name[idx] = '\0';
 
       *os << be_nl << "{" << be_idt_nl
-          << "ACE_TRY" << be_nl
+          << (be_global->use_raw_throw () ? "try" : "ACE_TRY") << be_nl
           << "{" << be_idt_nl
           << "holder->raise_" << operation_name.c_str ()
-          << " (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl
-          << "ACE_TRY_CHECK;" << be_uidt_nl
+          << " ("
+          << (be_global->use_raw_throw ()
+                ? ""
+                : "ACE_ENV_SINGLE_ARG_PARAMETER")
+          << ");" << ace_try_check << be_uidt_nl
           << "}" << be_nl
-          << "ACE_CATCH ( ::CORBA::Exception, ex)" << be_nl
-          << "{" << be_nl
-          << "  this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);" 
+          << (be_global->use_raw_throw ()
+                ? "catch ( ::CORBA::Exception& ex)"
+                : "ACE_CATCH ( ::CORBA::Exception, ex)")
           << be_nl
-          << "  ACE_CHECK;" << be_nl
-          << "}" << be_nl
-          << "ACE_ENDTRY;" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "this->_tao_rh_send_exception (ex"
+          << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+          << ");" << TAO_ACE_CHECK () << be_uidt_nl
+          << "}" << ace_endtry << be_uidt_nl
           << "}";
     }
   else
     {
       // Step 3: Generate actual code for the method
       *os << be_nl << "{" << be_idt_nl
-          << "this->_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" 
-          << be_nl
-          << "ACE_CHECK;" << be_nl << be_nl;
+          << "this->_tao_rh_init_reply ("
+          << (be_global->use_raw_throw ()
+                ? ""
+                : "ACE_ENV_SINGLE_ARG_PARAMETER")
+          << ");" << TAO_ACE_CHECK () << be_nl << be_nl;
 
       this->marshal_params (node);
 
       *os << be_nl
-          << "this->_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" 
-          << be_uidt_nl
+          << "this->_tao_rh_send_reply ("
+          << (be_global->use_raw_throw ()
+                ? ""
+                : "ACE_ENV_SINGLE_ARG_PARAMETER")
+          << ");" << be_uidt_nl
           << "}";
     }
 

@@ -1,9 +1,9 @@
 // $Id$
-#include "RT_Stub_Factory.h"
+#include "tao/RTCORBA/RT_Stub_Factory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_Stub.h"
+#include "tao/RTCORBA/RT_Stub.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
@@ -15,6 +15,8 @@ ACE_RCSID (RTCORBA,
            RT_TAO_Stub_Factory,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory (void)
 {
@@ -39,6 +41,8 @@ TAO_RT_Stub_Factory::create_stub (const char *repository_id,
 
   return retval;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

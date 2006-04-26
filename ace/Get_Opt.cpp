@@ -2,6 +2,10 @@
 
 #include "ace/Get_Opt.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Get_Opt.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (ace,
            Get_Opt,
            "$Id$")
@@ -75,3 +79,17 @@ ACE_RCSID (ace,
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * Templates cannot be exported. Only explicit instances can.
+ * This is also a way to restrict what instances will be
+ *  publicly available.
+ */
+#if !defined (__ACE_INLINE__)
+  template class ACE_Get_Arg_Opt< ACE_TCHAR >;
+#endif /* __ACE_INLINE__ */
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

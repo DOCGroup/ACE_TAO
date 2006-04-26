@@ -24,6 +24,8 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #include "ace/SOCK_Stream.h"
 #include "ace/Sock_Connect.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
   : listen_handle_ (ACE_INVALID_HANDLE),
@@ -172,7 +174,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   return 0;
 }
 
-template <class HANDLER> void
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::set_handle");
@@ -185,9 +187,11 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
                                  this->listen_handle_,
                                  0,
                                  this->proactor ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Asynch_Accept::open")));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("ACE_Asynch_Accept::open")),
+                      -1);
+  return 0;
 }
 
 template <class HANDLER> ACE_HANDLE
@@ -367,14 +371,13 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
-    && (    defined (_MSC_VER) \
-        || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530)))
+    && (    defined (_MSC_VER) || (defined (__BORLANDC__)))
   return (int) ::CancelIo (this->listen_handle_);
 #else
   // Supported now
   return this->asynch_accept_.cancel();
 
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && ((defined (_MSC_VER)) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))) */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && ((defined (_MSC_VER)) || (defined (__BORLANDC__))) */
 }
 
 template <class HANDLER> void
@@ -517,6 +520,8 @@ ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept (void)
 {
   return this->reissue_accept_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #endif /* ACE_ASYNCH_ACCEPTOR_C */

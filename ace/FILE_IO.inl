@@ -1,11 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// FILE_IO.i
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_unistd.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::sendv_n (const iovec iov[], int n) const
@@ -147,3 +148,5 @@ ACE_FILE_IO::recv (void *buf, size_t n,
 }
 
 #endif /* ACE_HAS_STREAM_PIPES */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

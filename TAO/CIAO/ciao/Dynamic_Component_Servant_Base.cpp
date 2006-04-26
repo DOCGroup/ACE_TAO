@@ -10,6 +10,7 @@ ACE_RCSID (ciao,
 namespace CIAO
 {
   Dynamic_Component_Servant_Base::Dynamic_Component_Servant_Base (void)
+    : container_ (0)
   {
     ACE_ASSERT (0);
   }

@@ -1,11 +1,11 @@
-#include "Dynamic_Implementation.h"
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
 
 ACE_RCSID (DynamicInterface,
            Dynamic_Implementation,
            "$Id$")
 
 
-#include "Server_Request.h"
+#include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "tao/IFR_Client_Adapter.h"
@@ -15,6 +15,8 @@ ACE_RCSID (DynamicInterface,
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_DynamicImplementation::_is_a (const char *logical_type_id
@@ -185,7 +187,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
     }
   ACE_ENDTRY;
 
-  CORBA::release (dsi_request);
+  ::CORBA::release (dsi_request);
 }
 
 CORBA::RepositoryId
@@ -215,3 +217,5 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
                                    poa.in ()
                                    ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

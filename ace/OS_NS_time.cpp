@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_time.h"
@@ -18,25 +17,41 @@ ACE_RCSID(ace, OS_NS_time, "$Id$")
 
 #if defined (ACE_HAS_WINCE)
 #  include "ace/OS_NS_stdio.h"     /* Need ACE_OS::sprintf() */
-const ACE_TCHAR *ACE_OS::day_of_week_name[7] =
-                                     {ACE_LIB_TEXT ("Sun"),
-                                      ACE_LIB_TEXT ("Mon"),
-                                      ACE_LIB_TEXT ("Tue"),
-                                      ACE_LIB_TEXT ("Wed"),
-                                      ACE_LIB_TEXT ("Thu"),
-                                      ACE_LIB_TEXT ("Fri"),
-                                      ACE_LIB_TEXT ("Sat")};
 
-const ACE_TCHAR *ACE_OS::month_name[12] =
-                                {ACE_LIB_TEXT ("Jan"), ACE_LIB_TEXT ("Feb"),
-                                 ACE_LIB_TEXT ("Mar"), ACE_LIB_TEXT ("Apr"),
-                                 ACE_LIB_TEXT ("May"), ACE_LIB_TEXT ("Jun"),
-                                 ACE_LIB_TEXT ("Jul"), ACE_LIB_TEXT ("Aug"),
-                                 ACE_LIB_TEXT ("Sep"), ACE_LIB_TEXT ("Oct"),
-                                 ACE_LIB_TEXT ("Nov"), ACE_LIB_TEXT ("Dec") };
+namespace
+{
+  ACE_TCHAR const * const ACE_OS_day_of_week_name[] =
+    {
+      ACE_LIB_TEXT ("Sun"),
+      ACE_LIB_TEXT ("Mon"),
+      ACE_LIB_TEXT ("Tue"),
+      ACE_LIB_TEXT ("Wed"),
+      ACE_LIB_TEXT ("Thu"),
+      ACE_LIB_TEXT ("Fri"),
+      ACE_LIB_TEXT ("Sat")
+    };
 
-static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_LIB_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+  ACE_TCHAR const * const ACE_OS_month_name[] =
+    {
+      ACE_LIB_TEXT ("Jan"),
+      ACE_LIB_TEXT ("Feb"),
+      ACE_LIB_TEXT ("Mar"),
+      ACE_LIB_TEXT ("Apr"),
+      ACE_LIB_TEXT ("May"),
+      ACE_LIB_TEXT ("Jun"),
+      ACE_LIB_TEXT ("Jul"),
+      ACE_LIB_TEXT ("Aug"),
+      ACE_LIB_TEXT ("Sep"),
+      ACE_LIB_TEXT ("Oct"),
+      ACE_LIB_TEXT ("Nov"),
+      ACE_LIB_TEXT ("Dec")
+    };
+
+  static ACE_TCHAR const ACE_OS_CTIME_R_FMTSTR[] = ACE_LIB_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+} /* end blank namespace */
 #endif /* ACE_HAS_WINCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_PSOS)
 
@@ -237,8 +252,8 @@ ACE_OS::ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
   FileTimeToLocalFileTime (&file_time, &localtime);
   FileTimeToSystemTime (&localtime, &systime);
   ACE_OS::sprintf (buf, ACE_OS_CTIME_R_FMTSTR,
-                   ACE_OS::day_of_week_name[systime.wDayOfWeek],
-                   ACE_OS::month_name[systime.wMonth - 1],
+                   ACE_OS_day_of_week_name[systime.wDayOfWeek],
+                   ACE_OS_month_name[systime.wMonth - 1],
                    systime.wDay,
                    systime.wHour,
                    systime.wMinute,
@@ -447,7 +462,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 
    res->tm_mday = systime.wDay;
    res->tm_min = systime.wMinute;
-   res->tm_mon = systime.wMonth;
+   res->tm_mon = systime.wMonth - 1;
    res->tm_sec = systime.wSecond;
    res->tm_wday = systime.wDayOfWeek;
    res->tm_yday = __mon_yday[iLeap][systime.wMonth] + systime.wDay;
@@ -791,3 +806,5 @@ ACE_OS::strptime_getnum (char *buf,
 }
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

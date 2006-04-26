@@ -91,18 +91,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return se.run ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>;
-template class ACE_Unbounded_Stack<DataElement>;
-template class ACE_Node<DataElement>;
-template class ACE_Cached_Mem_Pool_Node<char>;
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<char> >;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<char>,ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>
-#pragma instantiate ACE_Unbounded_Stack<DataElement>
-#pragma instantiate ACE_Node<DataElement>
-#pragma instantiate ACE_Cached_Mem_Pool_Node<char>
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<char> >
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<char>,ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

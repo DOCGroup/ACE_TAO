@@ -86,7 +86,7 @@ Callback_Handler::next_chunk (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 Callback_Handler::next_chunk_excep
-  (Web_Server::AMI_CallbackExceptionHolder *excep_holder
+  (::Messaging::ExceptionHolder *excep_holder
    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -98,7 +98,7 @@ Callback_Handler::next_chunk_excep
       this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      excep_holder->raise_next_chunk (ACE_ENV_SINGLE_ARG_PARAMETER);
+      excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -26,7 +26,9 @@
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Unbounded_Queue.h"
 
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPullConsumer;
@@ -157,8 +159,10 @@ private:
   ACE_Unbounded_Queue<CORBA::Any> queue_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_ProxyPullSupplier.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

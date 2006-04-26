@@ -1,9 +1,9 @@
-#include "ORB_Table.h"
-#include "ORB_Core.h"
-#include "TAO_Singleton.h"
+#include "tao/ORB_Table.h"
+#include "tao/ORB_Core.h"
+#include "tao/TAO_Singleton.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ORB_Table.inl"
+# include "tao/ORB_Table.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/SString.h"
@@ -16,6 +16,8 @@ ACE_RCSID (tao,
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ORB_Table::ORB_Table (void)
   : lock_ (),
@@ -180,3 +182,5 @@ TAO::ORB_Table::instance (void)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template TAO_Singleton<TAO::ORB_Table,TAO_SYNCH_MUTEX> * TAO_Singleton<TAO::ORB_Table,TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

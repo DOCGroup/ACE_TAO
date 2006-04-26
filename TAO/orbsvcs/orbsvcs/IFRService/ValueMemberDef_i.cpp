@@ -1,9 +1,10 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "ValueMemberDef_i.h"
-#include "IDLType_i.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ValueMemberDef_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
@@ -12,6 +13,7 @@ ACE_RCSID (IFRService,
            ValueMemberDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueMemberDef_i::TAO_ValueMemberDef_i (
     TAO_Repository_i *repo
@@ -218,3 +220,5 @@ TAO_ValueMemberDef_i::access_i (CORBA::Visibility access
                                              "access",
                                              access);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

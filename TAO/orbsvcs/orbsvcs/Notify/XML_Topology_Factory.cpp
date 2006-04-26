@@ -1,21 +1,30 @@
 // $Id$
 
-#include "XML_Topology_Factory.h"
-#include "XML_Saver.h"
-#include "XML_Loader.h"
+#include "orbsvcs/Notify/XML_Topology_Factory.h"
+#include "orbsvcs/Notify/XML_Saver.h"
+#include "orbsvcs/Notify/XML_Loader.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 //#include "ace/Service_Object.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
+  const char TOPOLOGY_ID_NAME[] = "TopologyID";
 
   XML_Topology_Factory::XML_Topology_Factory()
     : save_base_path_ ("./Notification_Service_Topology")
     , load_base_path_ ("./Notification_Service_Topology")
     , backup_count_ (2)
     , timestamp_ (true)
+  {
+  }
+
+  // virtual
+  XML_Topology_Factory::~XML_Topology_Factory ()
   {
   }
 
@@ -144,6 +153,10 @@ namespace TAO_Notify
     // nothing to do yet
     return 0;
   }
-
-  ACE_FACTORY_DEFINE (TAO_Notify_Persist, XML_Topology_Factory)
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_NAMESPACE_DEFINE (TAO_Notify_Persist,
+                              TAO_Notify_XML_Topology_Factory,
+                              TAO_Notify::XML_Topology_Factory)

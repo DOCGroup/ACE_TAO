@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TQ> ACE_INLINE TQ *
 ACE_Thread_Timer_Queue_Adapter<TQ>::timer_queue (void) const
@@ -22,3 +25,5 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::thr_id (void) const
 {
   return this->thr_id_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

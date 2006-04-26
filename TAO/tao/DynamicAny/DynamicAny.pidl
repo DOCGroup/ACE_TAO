@@ -1,3 +1,5 @@
+// -*- IDL -*-
+
 /**
  * @file DynamicAny.pidl
  *
@@ -25,6 +27,8 @@
  *          -Wb,export_include=dynamicany_export.h \
  *          -Wb,pre_include="ace/pre.h" \
  *          -Wb,post_include="ace/post.h" \
+ *          -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
+ *          -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL \
  *          DynamicAny.pidl
  *
  * after the file is generated a patch must be applied.  The patch
@@ -48,7 +52,7 @@
 
 #pragma prefix "omg.org"
 
-#include <Typecode_types.pidl>
+#include "tao/Typecode_types.pidl"
 
 module DynamicAny {
 

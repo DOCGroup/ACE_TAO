@@ -25,7 +25,9 @@
 
 #include "ace/INET_Addr.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UIPMC_Endpoint
@@ -116,8 +118,10 @@ private:
   TAO_UIPMC_Endpoint *next_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "UIPMC_Endpoint.i"
+# include "orbsvcs/PortableGroup/UIPMC_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

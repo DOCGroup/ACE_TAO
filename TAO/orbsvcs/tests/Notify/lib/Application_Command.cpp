@@ -11,6 +11,8 @@ ACE_RCSID(lib, TAO_Application_Command, "$Id$")
 #include "Driver_Base.h"
 #include "Priority_Mapping.h"
 
+#include "ace/Arg_Shifter.h"
+
 TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command (void)
   : dump_samples_ (0)
 {
@@ -105,6 +107,7 @@ TAO_Notify_Tests_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
 
   /// Activate the root POA.
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   TAO_Notify_Tests_Priority_Mapping* mapping = new TAO_Notify_Tests_Priority_Mapping ();
 
@@ -188,29 +191,36 @@ TAO_Notify_Tests_Application_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == INIT)
     {
       this->handle_init (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == RUN)
     {
       this->handle_run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == WAIT_FOR_EVENTS)
     {
       this->handle_wait_for_completion (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SHUTDOWN)
     {
       this->handle_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == DUMP_STATE)
     {
       this->handle_dump_stats (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SIGNAL_PEER)
     {
       this->handle_signal_peer (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == WAIT_TO_START)
     {
       this->handle_wait_to_start (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }

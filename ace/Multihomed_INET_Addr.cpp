@@ -13,6 +13,8 @@ ACE_RCSID (ace,
            Multihomed_INET_Addr,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)
 
 // Default constructor
@@ -115,9 +117,9 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
 
     size_t next_empty_slot = 0;
     for (size_t i = 0; i < size; ++i) {
-      int ret = this->secondaries_[next_empty_slot].set(port_number,
-                                                       secondary_ip_addrs[i],
-                                                       encode);
+      int const ret = this->secondaries_[next_empty_slot].set(port_number,
+                                                              secondary_ip_addrs[i],
+                                                              encode);
 
       if (ret) {
         ACE_DEBUG ((LM_DEBUG,
@@ -146,10 +148,10 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 
   for (size_t i = 0; i < size; ++i) {
 
-    int ret = this->secondaries_[i].set(port_number,
-                                       secondary_host_names[i],
-                                       encode,
-                                       address_family);
+    int const ret = this->secondaries_[i].set(port_number,
+                                              secondary_host_names[i],
+                                              encode,
+                                              address_family);
     if (ret) {
       return ret;
     }
@@ -291,12 +293,4 @@ ACE_Multihomed_INET_Addr::~ACE_Multihomed_INET_Addr (void)
 
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<ACE_INET_Addr>;
-template class ACE_Array<ACE_INET_Addr>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Array_Base<ACE_INET_Addr>
-#pragma instantiate ACE_Array<ACE_INET_Addr>
-
-#endif /*ACE_HAS_TEMPLATE_INSTANTIATION*/
+ACE_END_VERSIONED_NAMESPACE_DECL

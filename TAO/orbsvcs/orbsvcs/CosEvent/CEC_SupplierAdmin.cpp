@@ -1,18 +1,21 @@
 // $Id$
 
-#include "CEC_SupplierAdmin.h"
-#include "CEC_ProxyPushConsumer.h"
-#include "CEC_ProxyPullConsumer.h"
-#include "CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_SupplierAdmin.i"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_SupplierAdmin,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_SupplierAdmin::TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel *ec)
   :  event_channel_ (ec),
@@ -98,3 +101,5 @@ TAO_CEC_SupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->pull_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

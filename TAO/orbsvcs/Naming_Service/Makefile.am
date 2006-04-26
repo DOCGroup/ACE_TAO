@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -17,7 +17,7 @@ bin_PROGRAMS =
 
 ## Makefile.NT_Naming_Service.am
 
-if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += NT_Naming_Service
 
@@ -51,11 +51,11 @@ NT_Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_CORBA_MESSAGING
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Naming_Service.am
 
-if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += Naming_Service
 
@@ -73,6 +73,7 @@ Naming_Service_SOURCES = \
   Naming_Service.h
 
 Naming_Service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -87,7 +88,7 @@ Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_CORBA_MESSAGING
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

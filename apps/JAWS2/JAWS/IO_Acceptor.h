@@ -21,8 +21,10 @@
 #include "JAWS/IO_Handler.h"
 
 // Forward declaration.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Proactor;
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (JAWS_HAS_THREAD_SAFE_ACCEPT)
 typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> JAWS_IO_SOCK_Acceptor;

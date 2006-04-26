@@ -27,6 +27,8 @@
 
 #include "tao/Policy_Current_Impl.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations
 namespace TAO
 {
@@ -58,8 +60,8 @@ private:
 
   /// Do not copy TSS resources
   //@{
-  ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Resources(const TAO_TSS_Resources&))
-  ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_TSS_Resources&))
+  TAO_TSS_Resources (const TAO_TSS_Resources&);
+  void operator= (const TAO_TSS_Resources&);
   //@}
 
 public:
@@ -104,6 +106,8 @@ public:
    */
   TAO::GUIResource_Factory * gui_resource_factory_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

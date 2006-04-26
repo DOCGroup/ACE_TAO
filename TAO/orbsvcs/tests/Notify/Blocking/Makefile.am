@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -50,8 +50,12 @@ go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  go.idl
+
 ## Makefile.Blocking_Ntf_Struct_Cons.am
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Structured_Consumer
@@ -69,13 +73,18 @@ Structured_Consumer_CPPFLAGS = \
 Structured_Consumer_SOURCES = \
   Notify_Structured_Push_Consumer.cpp \
   Structured_Consumer.cpp \
-  common.cpp \
   goC.cpp \
-  Notify_Structured_Push_Consumer.h \
-  common.h
+  Notify_Structured_Push_Consumer.h
 
 Structured_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -91,9 +100,11 @@ Structured_Consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Blocking_Ntf_Struct_Supp.am
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Structured_Supplier
@@ -112,11 +123,17 @@ Structured_Supplier_SOURCES = \
   Structured_Supplier.cpp \
   goC.cpp \
   goS.cpp \
-  Notify_Structured_Push_Consumer.h \
-  common.h
+  Notify_Structured_Push_Consumer.h
 
 Structured_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -132,6 +149,7 @@ Structured_Supplier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

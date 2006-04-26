@@ -26,8 +26,8 @@ ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
       if (len < 2)
         return ACEXML_DESTINATION_TOO_SHORT;
 
-      *dst = 0xc0 | (src / 0x40);
-      *(dst+1) = 0x80 | (src % 0x40);
+      *dst = 0xc0 | (static_cast<ACEXML_UTF8> (src) / 0x40);
+      *(dst+1) = 0x80 | (static_cast<ACEXML_UTF8> (src) % 0x40);
       return 2;
     }
   else
@@ -39,13 +39,12 @@ ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
       if (src >= 0xD800 && src < 0xE000)
         return ACEXML_IS_SURROGATE;
 
-      *dst = 0xe0 | (src / 0x1000);
-      *(dst+1) = 0x80 | ((src % 0x1000) / 0x40);
-      *(dst+2) = 0x80 | (src % 0x40);
+      *dst = 0xe0 | (static_cast<ACEXML_UTF8> (src) / 0x1000);
+      *(dst+1) = 0x80 | ((static_cast<ACEXML_UTF8> (src) % 0x1000) / 0x40);
+      *(dst+2) = 0x80 | (static_cast<ACEXML_UTF8> (src) % 0x40);
       return 3;
     }
-  ACE_NOTREACHED (return ACEXML_NON_UNICODE;)
-    }
+}
 
 int
 ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
@@ -67,10 +66,10 @@ ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
       if (dst == 0)
         return ACEXML_INVALID_ARGS;
 
-      *dst = 0xf0 | (src / 0x40000);
-      *(dst+1) = 0x80 | ((src % 0x40000) / 0x1000);
-      *(dst+2) = 0x80 | ((src % 0x1000) / 0x40);
-      *(dst+3) = 0x80 | (src % 0x40);
+      *dst = 0xf0 | (static_cast<ACEXML_UTF8> (src / 0x40000));
+      *(dst+1) = 0x80 | ((static_cast<ACEXML_UTF8> (src % 0x40000)) / 0x1000);
+      *(dst+2) = 0x80 | ((static_cast<ACEXML_UTF8> (src % 0x1000)) / 0x40);
+      *(dst+3) = 0x80 | (static_cast<ACEXML_UTF8> (src % 0x40));
       return 4;
     }
   return ACEXML_NON_UNICODE;
@@ -102,8 +101,8 @@ ACEXML_Transcoder::ucs42utf16 (ACEXML_UCS4 src,
       if (len < 2)
         return ACEXML_DESTINATION_TOO_SHORT;
 
-      *dst = 0xD800 | (src / 0x400);
-      *(dst+1) = 0xDC00 | (src % 0x400);
+      *dst = 0xD800 | (static_cast<ACEXML_UTF16> (src) / 0x400);
+      *(dst+1) = 0xDC00 | (static_cast<ACEXML_UTF16> (src) % 0x400);
       return 2;
     }
 
@@ -125,8 +124,8 @@ ACEXML_Transcoder::surrogate2utf8 (ACEXML_UTF16 high,
     return ACEXML_INVALID_ARGS;
 
   ACEXML_UCS4 src = (high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000;
-  *dst = 0xD800 | (src / 0x400);
-  *(dst+1) = 0xDC00 | (src % 0x400);
+  *dst = static_cast<ACEXML_UTF8> (0xD800 | (src / 0x400));
+  *(dst+1) = static_cast<ACEXML_UTF8> (0xDC00 | (src % 0x400));
   return 2;
 }
 

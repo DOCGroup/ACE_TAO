@@ -23,6 +23,9 @@
 
 #include "tao/CONV_FRAMEC.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Profile;
 
 /// Tag for storing multiple endpoints within a single profile.
@@ -31,7 +34,7 @@ class TAO_Profile;
  * The standard TAG_ALTERNATE_IIOP_ADDRESSES tagged component is the
  * portable alternative.
  */
-const CORBA::ULong TAO_TAG_ENDPOINTS =  0x54414f02U;
+static const CORBA::ULong TAO_TAG_ENDPOINTS =  0x54414f02U;
 
 /**
  * @class TAO_Tagged_Components
@@ -154,6 +157,8 @@ private:
   CORBA::Octet orb_type_set_;
   CORBA::Octet code_sets_set_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"

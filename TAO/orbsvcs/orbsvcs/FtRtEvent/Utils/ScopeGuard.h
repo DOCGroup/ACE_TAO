@@ -13,6 +13,8 @@
 #ifndef SCOPEGUARD_H_
 #define SCOPEGUARD_H_
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T>
 class RefHolder
 {
@@ -285,6 +287,8 @@ inline ObjScopeGuardImpl2<Obj, MemFun, P1, P2> MakeObjGuard(Obj& obj, MemFun mem
 {
   return ObjScopeGuardImpl2<Obj, MemFun, P1, P2>::MakeObjGuard(obj, memFun, p1, p2);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define CONCATENATE_DIRECT(s1, s2) s1##s2
 #define CONCATENATE(s1, s2) CONCATENATE_DIRECT(s1, s2)

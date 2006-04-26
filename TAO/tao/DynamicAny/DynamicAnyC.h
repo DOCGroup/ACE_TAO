@@ -44,7 +44,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "dynamicany_export.h"
+#include "tao/DynamicAny/dynamicany_export.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -76,6 +76,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace DynamicAny
 {
@@ -1142,7 +1144,7 @@ namespace DynamicAny
     typedef NameValuePair_var _var_type;
 
 
-    TAO_String_Manager id;
+    TAO::String_Manager id;
     CORBA::Any value;
   };
 
@@ -1156,22 +1158,19 @@ namespace DynamicAny
 
   typedef
     TAO_VarSeq_Var_T<
-        NameValuePairSeq,
-        NameValuePair
+        NameValuePairSeq
       >
     NameValuePairSeq_var;
 
   typedef
     TAO_Seq_Out_T<
-        NameValuePairSeq,
-        NameValuePairSeq_var,
-        NameValuePair
+        NameValuePairSeq
       >
     NameValuePairSeq_out;
 
   class TAO_DynamicAny_Export NameValuePairSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             NameValuePair
           >
   {
@@ -1182,7 +1181,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         NameValuePair* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     NameValuePairSeq (const NameValuePairSeq &);
     ~NameValuePairSeq (void);
@@ -1218,7 +1217,7 @@ namespace DynamicAny
     typedef NameDynAnyPair_var _var_type;
 
 
-    TAO_String_Manager id;
+    TAO::String_Manager id;
     DynamicAny::DynAny_var value;
   };
 
@@ -1232,22 +1231,19 @@ namespace DynamicAny
 
   typedef
     TAO_VarSeq_Var_T<
-        NameDynAnyPairSeq,
-        NameDynAnyPair
+        NameDynAnyPairSeq
       >
     NameDynAnyPairSeq_var;
 
   typedef
     TAO_Seq_Out_T<
-        NameDynAnyPairSeq,
-        NameDynAnyPairSeq_var,
-        NameDynAnyPair
+        NameDynAnyPairSeq
       >
     NameDynAnyPairSeq_out;
 
   class TAO_DynamicAny_Export NameDynAnyPairSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             NameDynAnyPair
           >
   {
@@ -1258,7 +1254,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         NameDynAnyPair* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     NameDynAnyPairSeq (const NameDynAnyPairSeq &);
     ~NameDynAnyPairSeq (void);
@@ -1613,22 +1609,19 @@ namespace DynamicAny
 
   typedef
     TAO_VarSeq_Var_T<
-        AnySeq,
-        CORBA::Any
+        AnySeq
       >
     AnySeq_var;
 
   typedef
     TAO_Seq_Out_T<
-        AnySeq,
-        AnySeq_var,
-        CORBA::Any
+        AnySeq
       >
     AnySeq_out;
 
   class TAO_DynamicAny_Export AnySeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Any
           >
   {
@@ -1639,7 +1632,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Any* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     AnySeq (const AnySeq &);
     ~AnySeq (void);
@@ -1658,29 +1651,20 @@ namespace DynamicAny
   class DynAnySeq;
 
   typedef
-    TAO_MngSeq_Var_T<
-        DynAnySeq,
-        TAO_Object_Manager<
-            DynAny,
-            DynAny_var
-          >
+    TAO_VarSeq_Var_T<
+        DynAnySeq
       >
     DynAnySeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        DynAnySeq,
-        DynAnySeq_var,
-        TAO_Object_Manager<
-            DynAny,
-            DynAny_var
-          >
+    TAO_Seq_Out_T<
+        DynAnySeq
       >
     DynAnySeq_out;
 
   class TAO_DynamicAny_Export DynAnySeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             DynAny,
             DynAny_var
           >
@@ -1692,7 +1676,7 @@ namespace DynamicAny
         CORBA::ULong max,
         CORBA::ULong length,
         DynAny_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     DynAnySeq (const DynAnySeq &);
     ~DynAnySeq (void);
@@ -2531,6 +2515,8 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 
 ACE_INLINE wint_t
 ACE_OS::fgetwc (FILE* fp)
@@ -77,3 +81,4 @@ ACE_OS::ungetwc (wint_t c, FILE* fp)
 #  endif /* ACE_LACKS_FGETWC */
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -19,8 +19,6 @@
 #include "ace/Reactor.h"
 #include "ace/Time_Value.h"
 
-class ACE_Reactor;
-
 class PushSupplier_impl :
    public virtual ACE_Event_Handler
  , public virtual POA_RtecEventComm::PushSupplier

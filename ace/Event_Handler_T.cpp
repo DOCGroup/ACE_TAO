@@ -17,6 +17,7 @@
 #include "ace/Event_Handler_T.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Event_Handler_T)
 
@@ -116,6 +117,8 @@ ACE_Event_Handler_T<T>::handle_signal (int signum, siginfo_t *s, ucontext_t *u)
   ACE_TRACE ("ACE_Event_Handler_T<T>::handle_signal");
   return this->sig_handler_ == 0 ? 0 : (this->op_handler_->*sig_handler_) (signum, s, u);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 

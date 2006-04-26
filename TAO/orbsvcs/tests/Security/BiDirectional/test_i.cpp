@@ -57,9 +57,9 @@ Simple_Server_i::callback_object (Callback_ptr callback
 int
 Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
 {
-  int pre_call_connections = 
+  size_t pre_call_connections =
     this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size ();
-  
+
   if (this->flag_)
     {
       for (int times = 0; times < this->no_iterations_; ++times)
@@ -67,9 +67,9 @@ Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
           this->callback_->callback_method (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          int cur_connections = 
+          size_t cur_connections =
             this->orb_->orb_core()->lane_resources().transport_cache().current_size ();
-          
+
           if (cur_connections > pre_call_connections)
             {
               ACE_ERROR ((LM_ERROR,

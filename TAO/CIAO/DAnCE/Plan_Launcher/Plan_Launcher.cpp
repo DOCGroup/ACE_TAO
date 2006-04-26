@@ -1,11 +1,12 @@
 // $Id$
+
 #include "Plan_Launcher_Impl.h"
 
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include <iostream>
 
-#include "ExecutionManager/ExecutionManagerC.h"
+#include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
 
 namespace CIAO
 {
@@ -13,16 +14,22 @@ namespace CIAO
   {
     // deployment plan URL
     const char* package_url = 0;
+    const char* new_package_url = 0;
+    const char* plan_uuid = 0;
     bool use_naming = false;
     const char* ior_file = "file://em.ior";
     const char* dap_ior_filename = 0;
     const char* dap_ior = 0;
-    enum mode_type { 
+
+    enum mode_type {
       pl_mode_start,
-      pl_mode_stop,
-      pl_mode_interactive
+      pl_mode_interactive,
+      pl_mode_stop_by_dam,
+      pl_mode_stop_by_uuid,
+      pl_mode_redeployment
     };
 
+    // default mode
     mode_type mode = pl_mode_interactive;
 
     static void
@@ -35,8 +42,10 @@ namespace CIAO
                   ACE_TEXT (" : Default file://em.ior\n")
                   ACE_TEXT ("-n : Use naming service to fetch")
                   ACE_TEXT (" Execution Manager IOR Alternative to -k\n")
+                  ACE_TEXT ("-t <PLAN_UUID>\n")
                   ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>\n")
                   ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>\n")
+                  ACE_TEXT ("-r <NEW_PLAN_DESCRIPTOR_FOR_REDEPLOYMENT>\n")
                   ACE_TEXT ("-h : Show this usage information\n"),
                   program));
     }
@@ -47,7 +56,7 @@ namespace CIAO
     {
       ACE_Get_Arg_Opt<char> get_opt (argc,
                            argv,
-                           ACE_TEXT ("p:nk:o:i:h"));
+                           ACE_TEXT ("p:nk:t:o:i:r:h"));
       int c;
 
       while ((c = get_opt ()) != EOF)
@@ -69,7 +78,15 @@ namespace CIAO
               break;
             case 'i':
               dap_ior = get_opt.opt_arg ();
-              mode = pl_mode_stop;
+              mode = pl_mode_stop_by_dam;
+              break;
+            case 't':
+              plan_uuid = get_opt.opt_arg ();
+              mode = pl_mode_stop_by_uuid;
+              break;
+            case 'r':
+              new_package_url = get_opt.opt_arg ();
+              mode = pl_mode_redeployment;
               break;
             case 'h':
             default:
@@ -78,12 +95,15 @@ namespace CIAO
             }
         }
 
-      if ((mode != pl_mode_stop) && (package_url == 0))
+      if ((mode != pl_mode_stop_by_dam) &&
+          (mode != pl_mode_stop_by_uuid) &&
+          (package_url == 0) &&
+          (new_package_url ==0))
         {
           usage (argv[0]);
           return false;
         }
-      
+
       return true;
     }
 
@@ -134,32 +154,32 @@ namespace CIAO
 
           if (parse_args (argc, argv) == false)
             return -1;
-          
-          
+
+
           Plan_Launcher_i launcher;
-          
+
           if (!launcher.init (use_naming ? 0 : ior_file,
                               orb.in ()))
             {
               ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
               return -1;
             }
-          
+
           ::Deployment::DomainApplicationManager_var dapp_mgr;
-          
-          if (mode != pl_mode_stop)
+
+          if (mode == pl_mode_start || mode == pl_mode_interactive)  // initial deployment
             {
               const char* uuid = launcher.launch_plan (package_url);
-              
+
               if (uuid == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error launching plan\n"));
                   return -1;
                 }
-              
+
               ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid));
               dapp_mgr = launcher.get_dam (uuid);
-              
+
               // Write out DAM ior if requested
               if (mode == pl_mode_start)
                 write_dap_ior (orb.in (), dapp_mgr.in ());
@@ -169,34 +189,57 @@ namespace CIAO
                               "Press <Enter> to tear down application\n"));
                   char dummy [256];
                   std::cin.getline (dummy, 256);
+
+                  // Tear down the assembly
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Plan_Launcher: destroy the application....."));
+                  if (! launcher.teardown_plan (uuid))
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                                  "unkonw plan uuid.\n"));
                 }
             }
-          else
+          else if (mode == pl_mode_redeployment && new_package_url != 0) // do redeployment
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Plan_Launcher: reconfigure application assembly....."));
+              const char* uuid = launcher.re_launch_plan (new_package_url);
+
+              if (uuid == 0)
+                {
+                  ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error re-launching plan\n"));
+                  return -1;
+                }
+            }
+          else if (mode == pl_mode_stop_by_dam) // tear down by DAM
             {
               dapp_mgr = read_dap_ior (orb.in ()
                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
-            }
-          
-          if (CORBA::is_nil (dapp_mgr.in ()))
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) CIAO_PlanLauncher:preparePlan call failed: "
-                          "nil DomainApplicationManager reference\n"));
-              return -1;
-            }
-          
-          if (CIAO::debug_level () > 9)
-            ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: Obtained DAM ref \n"));
 
-          if (mode != pl_mode_start)
-          {
-            // Tear down the assembly
-            ACE_DEBUG ((LM_DEBUG,
-                        "Plan_Launcher: destroy the application....."));
-            launcher.teardown_plan (dapp_mgr.in ());
-          }
+              if (CORBA::is_nil (dapp_mgr.in ()))
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                              "nil DomainApplicationManager reference\n"));
+                  return -1;
+                }
+
+              // Tear down the assembly
+              ACE_DEBUG ((LM_DEBUG,
+                          "Plan_Launcher: destroy the application....."));
+              launcher.teardown_plan (dapp_mgr.in ());
+            }
+          else if (mode == pl_mode_stop_by_uuid) // tear down by plan_uuid
+            {
+              // Tear down the assembly
+              ACE_DEBUG ((LM_DEBUG,
+                          "Plan_Launcher: destroy the application....."));
+              if (! launcher.teardown_plan (plan_uuid))
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                              "unkonw plan uuid.\n"));
+            }
 
           orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -233,7 +276,7 @@ int
 ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "NEW PLAN LAUNCHER\n"));
-  
+  //ACE_DEBUG ((LM_DEBUG, "NEW PLAN LAUNCHER\n"));
+
   return run_main_implementation (argc, argv);
 }

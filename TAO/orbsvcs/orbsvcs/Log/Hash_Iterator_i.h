@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,10 +8,8 @@
  *
  *  Implementation of the DsLogAdmin::Iterator interface.
  *
- *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *
  */
 //=============================================================================
 
@@ -34,6 +32,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Hash_Iterator_i
  *
@@ -48,6 +48,7 @@ public:
 
   /// Constructor.
   TAO_Hash_Iterator_i (ACE_Reactor* reactor,
+		       TAO_Hash_LogRecordStore* recordstore,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                        CORBA::ULong start,
@@ -65,6 +66,8 @@ public:
                      DsLogAdmin::InvalidParam));
 
 private:
+  /// Pointer to record store
+  TAO_Hash_LogRecordStore* recordstore_;
 
   /// Current Iterator.
   TAO_Hash_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
@@ -81,6 +84,8 @@ private:
   /// Max rec list length.
   CORBA::ULong max_rec_list_len_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

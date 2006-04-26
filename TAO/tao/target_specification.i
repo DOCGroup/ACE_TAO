@@ -1,6 +1,8 @@
-//-*- C++ -*-
+// -*- C++ -*-
+//
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Target_Specification::TAO_Target_Specification (void)
@@ -81,3 +83,5 @@ TAO_Target_Specification::specifier (void)
 {
   return this->specifier_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

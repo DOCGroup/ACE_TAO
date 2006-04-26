@@ -29,19 +29,18 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 
-extern "C"
-{
-  BIO_METHOD * BIO_s_ACE_Asynch (void);
-  BIO * BIO_new_ACE_Asynch (void *ssl_asynch_stream);
-}
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
-class ACE_SSL_Asynch_Stream;
 class ACE_SSL_Asynch_Result;
 class ACE_SSL_Asynch_Read_Stream_Result;
 class ACE_SSL_Asynch_Write_Stream_Result;
 
+
+// Only provide forward declarations to prevent possible abuse of the
+// friend declarations in ACE_SSL_Asynch_Stream.
+struct ACE_SSL_Asynch_Stream_Accessor;
 
 /**
  * @class ACE_SSL_Asynch_Stream
@@ -60,10 +59,19 @@ class ACE_SSL_Export ACE_SSL_Asynch_Stream
   : public ACE_Asynch_Operation,
     public ACE_Service_Handler
 {
-  friend int ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len);
-  friend int ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len);
-
 public:
+
+  // Use a class/struct to work around scoping
+  // problems for extern "C" free functions with some compilers.  For
+  // example, some can't handle
+  //
+  //   friend ::some_extern_c_free_function (...)
+  //
+  // Note that we could use a straight C++ (i.e. not extern "C") free
+  // function, but using a class or struct allows us to hide the
+  // interface from the user, which prevents abuse of this friend
+  // relationship.
+  friend struct ACE_SSL_Asynch_Stream_Accessor;
 
   enum Stream_Type
     {
@@ -168,6 +176,12 @@ protected:
   int ssl_bio_write (const char * buf, size_t len, int & errval);
   //@}
 
+private:
+
+  // Preventing copying through construction or assignment.
+  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &);
+  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &);
+
 protected:
 
   /// Stream Type ST_CLIENT/ST_SERVER
@@ -246,6 +260,7 @@ protected:
 
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
            ACE_HAS_AIO_CALLS) */

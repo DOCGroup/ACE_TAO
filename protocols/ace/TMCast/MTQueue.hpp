@@ -127,7 +127,7 @@ namespace ACE_TMCast
              !i.done ();
              i.advance ())
         {
-          ConditionalType** c;
+          ConditionalType** c = 0;
 
           i.next (c);
 

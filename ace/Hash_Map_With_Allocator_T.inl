@@ -1,8 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Hash_Map_With_Allocator_T.i
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EXT_ID, class INT_ID> ACE_INLINE int
 ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::close (ACE_Allocator *alloc)
@@ -71,3 +71,5 @@ ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::find (const EXT_ID &ext_id,
   this->allocator_ = alloc;
   return this->find_i (ext_id);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

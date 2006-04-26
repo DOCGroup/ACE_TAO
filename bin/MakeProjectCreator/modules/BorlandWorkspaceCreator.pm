@@ -116,7 +116,7 @@ sub write_comps {
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
   my(%targnum)  = ();
-  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
+  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum, 0);
   my($crlf)     = $self->crlf();
   my(@ltargets) = @targets;
 

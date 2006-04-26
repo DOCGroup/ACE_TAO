@@ -16,12 +16,7 @@
 #define ACE_THREAD_SEMAPHORE_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_THREADS_BUILD_DLL
-# include "ace/ACE_Threads_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Threads_Export ACE_Export
-#endif  /* ACE_THREADS_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,13 +29,15 @@
 
 #include "ace/Semaphore.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Thread_Semaphore
  *
  * @brief Wrapper for Dijkstra style general semaphores that work
  * only within one process.
  */
-class ACE_Threads_Export ACE_Thread_Semaphore : public ACE_Semaphore
+class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
 {
 public:
   /// Initialize the semaphore, with an initial value of @a count,
@@ -74,11 +71,13 @@ template <class T> class ACE_Malloc_Lock_Adapter_T;
  * the standard form used by other lock strategy classes.
  */
 template<>
-class ACE_Threads_Export ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
+class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
 {
 public:
   ACE_Thread_Semaphore * operator () (const ACE_TCHAR *name);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Thread_Semaphore.inl"

@@ -15,6 +15,7 @@
 #include "ace/Configuration_Import_Export.h"
 #include "ace/Singleton.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -102,6 +103,8 @@ namespace ACE
     };
   }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_ENVIRONMENT_H */

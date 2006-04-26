@@ -11,7 +11,7 @@ use lib "../../../bin";
 use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client.
-$sleeptime = 6;
+$sleeptime = $PerlACE::wait_interval_for_process_creation;
 
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files
@@ -19,11 +19,21 @@ $iorfile = PerlACE::LocalFile("test.ior");
 
 unlink $iorfile;
 
-$AMH = new PerlACE::Process ("server", "");
+if (PerlACE::is_vxworks_test()) {
+  $AMH = new PerlACE::ProcessVX ("server", "");
+}
+else {
+  $AMH = new PerlACE::Process ("server", "");
+}
 $CL = new PerlACE::Process ("client", "");
 
 # Run the AMH server.
-$AMH->Spawn ();
+$sv = $AMH->Spawn ();
+
+if ($sv != 0) {
+   print STDERR "ERROR: AMH server returned $sv\n";
+   exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
     print STDERR "ERROR: File containing AMH Server ior,".
@@ -32,7 +42,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
     exit 1;
 }
 
-# Run the cleint client.
+# Run the client.
 $client = $CL->Spawn ();
 
 
@@ -40,7 +50,7 @@ $client = $CL->Spawn ();
 
 $client = $CL->WaitKill (30);
 if ($client != 0) {
-    print STDERR "ERROR: Client returned $amhserver\n";
+    print STDERR "ERROR: Client returned $client\n";
     $status = 1;
 }
 

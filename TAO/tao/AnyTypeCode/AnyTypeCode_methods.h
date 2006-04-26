@@ -30,6 +30,8 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class NamedValue;
@@ -50,6 +52,8 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -78,7 +78,30 @@ RedGreen_Test::~RedGreen_Test ()
 {
   if (!CORBA::is_nil (ec_.in ()))
     {
-      this->ec_->destroy ();
+      // Even though we still have a reference, there's no guarantee
+      // the EC is still around.  So, trap exceptions.
+      ACE_TRY_NEW_ENV
+        {
+          this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::COMM_FAILURE, ex)
+        {
+          // Silently swallow this b/c this could mean the EC is gone
+          // or that the network is hosed.  Either way, we're not waiting
+          // around to figure out the problem.  Report the incident to the
+          // log and be done with it.
+          ACE_DEBUG ((LM_INFO,
+                      "INFO: Got a COMM_FAILURE exception while trying to \n"
+                      "      invoke `destroy()' on the Event Channel in the \n"
+                      "      RedGreen destructor.  This is likely not a problem.\n"));
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+                              "in RedGreen destructor; swallowing.\n");
+        }
+      ACE_ENDTRY;
     }
 }
 

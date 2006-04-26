@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "codeset_export.h"
+#include "tao/Codeset/codeset_export.h"
 #include "ace/CDR_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,6 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Codeset_Descriptor_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Translator_Factory;
 
@@ -55,6 +57,8 @@ private:
   int num_translators_;
   Translator_Node *trans_base_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

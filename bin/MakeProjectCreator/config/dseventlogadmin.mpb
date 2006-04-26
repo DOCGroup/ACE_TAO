@@ -2,6 +2,7 @@
 // $Id$
 
 project : orbsvcslib, dslogadmin, event {
-  after      += DsEventLogAdmin
-  libs       += TAO_DsEventLogAdmin
+  after     += DsEventLogAdmin
+  libs      += TAO_DsEventLogAdmin
+  tagchecks += EventLog
 }

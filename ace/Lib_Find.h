@@ -8,8 +8,6 @@
  *  libraries.
  *
  *  $Id$
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================
 
@@ -21,6 +19,7 @@
 #include "ace/ACE_export.h"
 #include "ace/os_include/os_stdio.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -100,5 +99,8 @@ namespace ACE
                                          wchar_t *&next_start);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 #endif  /* ACE_LIB_FIND_H */
+

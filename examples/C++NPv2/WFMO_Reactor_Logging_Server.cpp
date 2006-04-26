@@ -13,7 +13,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_string.h"
 
-#include "Reactor_Logging_Server.h"
+#include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 #include "Logging_Event_Handler_Ex.h"
 

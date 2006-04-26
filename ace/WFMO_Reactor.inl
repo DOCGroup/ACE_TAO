@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Handle_Set.h"
@@ -6,16 +7,15 @@
 #include "ace/Thread.h"
 #include "ace/OS_NS_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /************************************************************/
 
 ACE_INLINE int
-ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
-                                               siginfo_t *siginfo,
+ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */,
+                                               siginfo_t * /* siginfo */,
                                                ucontext_t *)
 {
-  ACE_UNUSED_ARG (signum);
-  ACE_UNUSED_ARG (siginfo);
-
   // This will get called when <WFMO_Reactor->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.
   //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) waking up to get updated handle set info\n")));
@@ -432,9 +432,9 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_, -1);
 
   int changes_required = 0;
-  int result = this->unbind_i (handle,
-                               mask,
-                               changes_required);
+  int const result = this->unbind_i (handle,
+                                     mask,
+                                     changes_required);
 
   if (changes_required)
     // Wake up all threads in WaitForMultipleObjects so that they can
@@ -685,7 +685,7 @@ ACE_WFMO_Reactor::suspend_handler (ACE_HANDLE handle)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   int changes_required = 0;
-  int result =
+  int const result =
     this->handler_rep_.suspend_handler_i (handle,
                                           changes_required);
 
@@ -1168,3 +1168,5 @@ ACE_WFMO_Reactor_Handler_Repository::~ACE_WFMO_Reactor_Handler_Repository (void)
 }
 
 #endif /* ACE_WIN32 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

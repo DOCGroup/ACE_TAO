@@ -45,6 +45,10 @@ BE_GlobalData::BE_GlobalData (void)
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
+    core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
+    core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
+    versioning_begin_ (),
+    versioning_end_ (),
     client_hdr_ending_ (ACE::strnew ("C.h")),
     client_stub_ending_ (ACE::strnew ("C.cpp")),
     client_inline_ending_ (ACE::strnew ("C.inl")),
@@ -62,35 +66,36 @@ BE_GlobalData::BE_GlobalData (void)
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
     anyop_output_dir_ (0),
-    any_support_ (I_TRUE),
-    tc_support_ (I_TRUE),
+    any_support_ (true),
+    tc_support_ (true),
     obv_opt_accessor_ (0),
-    gen_impl_files_ (I_FALSE),
-    gen_impl_debug_info_ (I_FALSE),
-    gen_copy_ctor_ (I_FALSE),
-    gen_assign_op_ (I_FALSE),
-    gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
-    gen_direct_collocation_ (I_FALSE),
+    gen_impl_files_ (false),
+    gen_impl_debug_info_ (false),
+    gen_copy_ctor_ (false),
+    gen_assign_op_ (false),
+    gen_thru_poa_collocation_ (true), // Default is thru_poa.
+    gen_direct_collocation_ (false),
 #ifdef ACE_HAS_EXCEPTIONS
-    exception_support_ (I_TRUE),
+    exception_support_ (true),
 #else
-    exception_support_ (I_FALSE),
+    exception_support_ (false),
 #endif /* ACE_HAS_EXCEPTIONS */
-    use_raw_throw_ (I_FALSE),
-    opt_tc_ (I_FALSE),
-    ami_call_back_ (I_FALSE),
-    gen_amh_classes_ (I_FALSE),
-    gen_tie_classes_ (I_TRUE),
-    gen_smart_proxies_ (I_FALSE),
-    gen_inline_constants_ (I_TRUE),
-    gen_dcps_type_support_ (I_FALSE),
+    use_raw_throw_ (false),
+    opt_tc_ (false),
+    ami_call_back_ (false),
+    gen_amh_classes_ (false),
+    gen_tie_classes_ (true),
+    gen_smart_proxies_ (false),
+    gen_inline_constants_ (true),
+    gen_dcps_type_support_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
-    gen_anyop_files_ (I_FALSE),
-    gen_skel_files_ (I_TRUE),
-    gen_client_inline_ (I_TRUE),
-    gen_server_inline_ (I_TRUE)
+    exceptionholder_ (0),
+    gen_anyop_files_ (false),
+    gen_skel_files_ (true),
+    gen_client_inline_ (true),
+    gen_server_inline_ (true)
 {
 }
 
@@ -218,8 +223,15 @@ const char *
 BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
                                   int base_name_only)
 {
+  // User-defined file extensions don't apply to .pidl files.
+  ACE_CString fn (idl_file_name->get_string ());
+  ACE_CString fn_ext = fn.substr (fn.length () - 5);
+  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+
   return be_change_idl_file_extension (idl_file_name,
-                                       be_global->client_hdr_ending (),
+                                       orb_file
+                                         ? "C.h"
+                                         : be_global->client_hdr_ending (),
                                        base_name_only);
 }
 
@@ -243,8 +255,15 @@ const char *
 BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
                                   int base_name_only)
 {
+  // User-defined file extensions don't apply to .pidl files.
+  ACE_CString fn (idl_file_name->get_string ());
+  ACE_CString fn_ext = fn.substr (fn.length () - 5);
+  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+
   return be_change_idl_file_extension (idl_file_name,
-                                       be_global->server_hdr_ending (),
+                                       orb_file
+                                         ? "S.h"
+                                         : be_global->server_hdr_ending (),
                                        base_name_only);
 }
 
@@ -547,6 +566,54 @@ BE_GlobalData::post_include (const char *s)
   this->post_include_ = ACE_OS::strdup (s);
 }
 
+void
+BE_GlobalData::versioning_begin (const char * s)
+{
+  this->versioning_begin_ =
+    ACE_CString ("\n\n")
+    + ACE_CString (s)
+    + ACE_CString ("\n\n");
+
+  this->core_versioning_end_ += this->versioning_begin_;  // Yes, "begin".
+}
+
+const char *
+BE_GlobalData::versioning_begin (void) const
+{
+  return this->versioning_begin_.c_str ();
+}
+
+const char *
+BE_GlobalData::core_versioning_begin (void) const
+{
+  return this->core_versioning_begin_.c_str ();
+}
+
+void
+BE_GlobalData::versioning_end (const char * s)
+{
+  this->versioning_end_ =
+    ACE_CString ("\n\n")
+    + ACE_CString (s)
+    + ACE_CString ("\n\n");
+
+  this->core_versioning_begin_ =
+    this->versioning_end_  // Yes, "end".
+    + this->core_versioning_begin_;  // Initialized in constructor.
+}
+
+const char *
+BE_GlobalData::versioning_end (void) const
+{
+  return this->versioning_end_.c_str ();
+}
+
+const char *
+BE_GlobalData::core_versioning_end (void) const
+{
+  return this->core_versioning_end_.c_str ();
+}
+
 // Set the client_hdr_ending.
 void
 BE_GlobalData::client_hdr_ending (const char* s)
@@ -772,215 +839,215 @@ BE_GlobalData::anyop_output_dir (void) const
 }
 
 void
-BE_GlobalData::any_support (idl_bool val)
+BE_GlobalData::any_support (bool val)
 {
   this->any_support_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::any_support (void) const
 {
   return this->any_support_;
 }
 
 void
-BE_GlobalData::tc_support (idl_bool val)
+BE_GlobalData::tc_support (bool val)
 {
   this->tc_support_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::tc_support (void) const
 {
   return this->tc_support_;
 }
 
 void
-BE_GlobalData::obv_opt_accessor (idl_bool val)
+BE_GlobalData::obv_opt_accessor (bool val)
 {
   this->obv_opt_accessor_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::obv_opt_accessor (void) const
 {
   return this->obv_opt_accessor_;
 }
 
 void
-BE_GlobalData::gen_impl_files (idl_bool val)
+BE_GlobalData::gen_impl_files (bool val)
 {
   this->gen_impl_files_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_impl_files (void) const
 {
   return this->gen_impl_files_;
 }
 
 void
-BE_GlobalData::gen_impl_debug_info (idl_bool val)
+BE_GlobalData::gen_impl_debug_info (bool val)
 {
   this->gen_impl_debug_info_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_impl_debug_info (void) const
 {
   return this->gen_impl_debug_info_;
 }
 
 void
-BE_GlobalData::gen_copy_ctor (idl_bool val)
+BE_GlobalData::gen_copy_ctor (bool val)
 {
   this->gen_copy_ctor_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_copy_ctor (void) const
 {
   return this->gen_copy_ctor_;
 }
 
 void
-BE_GlobalData::gen_assign_op (idl_bool val)
+BE_GlobalData::gen_assign_op (bool val)
 {
   this->gen_assign_op_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_assign_op (void) const
 {
   return this->gen_assign_op_;
 }
 
 void
-BE_GlobalData::gen_thru_poa_collocation (idl_bool val)
+BE_GlobalData::gen_thru_poa_collocation (bool val)
 {
   this->gen_thru_poa_collocation_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_thru_poa_collocation (void) const
 {
   return this->gen_thru_poa_collocation_;
 }
 
 void
-BE_GlobalData::gen_direct_collocation (idl_bool val)
+BE_GlobalData::gen_direct_collocation (bool val)
 {
   this->gen_direct_collocation_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_direct_collocation (void) const
 {
   return this->gen_direct_collocation_;
 }
 
 void
-BE_GlobalData::exception_support (idl_bool val)
+BE_GlobalData::exception_support (bool val)
 {
   this->exception_support_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::exception_support (void) const
 {
   return this->exception_support_;
 }
 
 void
-BE_GlobalData::use_raw_throw (idl_bool val)
+BE_GlobalData::use_raw_throw (bool val)
 {
   this->use_raw_throw_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::use_raw_throw (void) const
 {
   return this->use_raw_throw_;
 }
 
 void
-BE_GlobalData::opt_tc (idl_bool val)
+BE_GlobalData::opt_tc (bool val)
 {
   this->opt_tc_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::opt_tc (void) const
 {
   return this->opt_tc_;
 }
 
 void
-BE_GlobalData::ami_call_back (idl_bool val)
+BE_GlobalData::ami_call_back (bool val)
 {
   this->ami_call_back_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::ami_call_back (void) const
 {
   return this->ami_call_back_;
 }
 
 void
-BE_GlobalData::gen_amh_classes (idl_bool val)
+BE_GlobalData::gen_amh_classes (bool val)
 {
   this->gen_amh_classes_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_amh_classes (void) const
 {
   return this->gen_amh_classes_;
 }
 
 void
-BE_GlobalData::gen_tie_classes (idl_bool val)
+BE_GlobalData::gen_tie_classes (bool val)
 {
   this->gen_tie_classes_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_tie_classes (void) const
 {
   return this->gen_tie_classes_;
 }
 
 void
-BE_GlobalData::gen_smart_proxies (idl_bool val)
+BE_GlobalData::gen_smart_proxies (bool val)
 {
   this->gen_smart_proxies_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_smart_proxies (void) const
 {
   return this->gen_smart_proxies_;
 }
 
 void
-BE_GlobalData::gen_inline_constants (idl_bool val)
+BE_GlobalData::gen_inline_constants (bool val)
 {
   this->gen_inline_constants_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_inline_constants (void) const
 {
   return this->gen_inline_constants_;
 }
 void
-BE_GlobalData::gen_dcps_type_support (idl_bool val)
+BE_GlobalData::gen_dcps_type_support (bool val)
 {
   this->gen_dcps_type_support_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_dcps_type_support (void) const
 {
   return this->gen_dcps_type_support_;
@@ -1086,50 +1153,62 @@ BE_GlobalData::ccmobject (be_interface *val)
   this->ccmobject_ = val;
 }
 
-idl_bool
+be_valuetype *
+BE_GlobalData::exceptionholder (void) const
+{
+  return this->exceptionholder_;
+}
+
+void
+BE_GlobalData::exceptionholder (be_valuetype *val)
+{
+  this->exceptionholder_ = val;
+}
+
+bool
 BE_GlobalData::gen_anyop_files (void) const
 {
   return this->gen_anyop_files_;
 }
 
 void
-BE_GlobalData::gen_anyop_files (idl_bool val)
+BE_GlobalData::gen_anyop_files (bool val)
 {
   this->gen_anyop_files_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_skel_files (void) const
 {
   return this->gen_skel_files_;
 }
 
 void
-BE_GlobalData::gen_skel_files (idl_bool val)
+BE_GlobalData::gen_skel_files (bool val)
 {
   this->gen_skel_files_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_client_inline (void) const
 {
   return this->gen_client_inline_;
 }
 
 void
-BE_GlobalData::gen_client_inline (idl_bool val)
+BE_GlobalData::gen_client_inline (bool val)
 {
   this->gen_client_inline_ = val;
 }
 
-idl_bool
+bool
 BE_GlobalData::gen_server_inline (void) const
 {
   return this->gen_server_inline_;
 }
 
 void
-BE_GlobalData::gen_server_inline (idl_bool val)
+BE_GlobalData::gen_server_inline (bool val)
 {
   this->gen_server_inline_ = val;
 }
@@ -1476,18 +1555,18 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == 'C')
           {
             // AMI with Call back.
-            be_global->ami_call_back (I_TRUE);
+            be_global->ami_call_back (true);
           }
         else if (av[i][2] == 'H')
           {
             // AMH classes.
-            be_global->gen_amh_classes (I_TRUE);
+            be_global->gen_amh_classes (true);
           }
         else if (av[i][2] == 'A')
           {
             // TAO-team-only, undocumented option to generate
             // Any operators into a separate set of files.
-            be_global->gen_anyop_files (I_TRUE);
+            be_global->gen_anyop_files (true);
           }
         else if (av[i][2] == 'e')
           {
@@ -1508,7 +1587,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             if (av[i][3] == 'p')
               {
                 // smart proxies
-                be_global->gen_smart_proxies (I_TRUE);
+                be_global->gen_smart_proxies (true);
               }
             else
               {
@@ -1529,7 +1608,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             if (av[i][3] == 'c')
               {
                 // inline constants
-                be_global->gen_inline_constants (I_FALSE);
+                be_global->gen_inline_constants (false);
               }
             else
               {
@@ -1562,7 +1641,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 if (av[i][4] == 'p' && av[i][5] =='s' && '\0' == av[i][6])
                   {
                     // DDS DCSP type support
-                    be_global->gen_dcps_type_support (I_TRUE);
+                    be_global->gen_dcps_type_support (true);
                   }
                 else
                   {
@@ -1671,31 +1750,31 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == 'a')
           {
             // suppress Any support
-            be_global->any_support (I_FALSE);
+            be_global->any_support (false);
           }
         else if (av[i][2] == 't')
           {
             // suppress typecode support
             // Anys must be suppressed as well
-            be_global->tc_support (I_FALSE);
-            be_global->any_support (I_FALSE);
+            be_global->tc_support (false);
+            be_global->any_support (false);
           }
         else if (av[i][2] == 'p')
           {
             // suppress generating Thru_POA collocated stubs
-            be_global->gen_thru_poa_collocation (I_FALSE);
+            be_global->gen_thru_poa_collocation (false);
           }
         else if (av[i][2] == 'd')
           {
             // suppress generating Direct collocated stubs
-            be_global->gen_direct_collocation (I_FALSE);
+            be_global->gen_direct_collocation (false);
           }
         else if (av[i][2] == 'c')
           {
             if (av[i][3] == 'i')
               {
                 // no client inline
-                be_global->gen_client_inline (I_FALSE);
+                be_global->gen_client_inline (false);
               }
             else
               {
@@ -1711,14 +1790,14 @@ BE_GlobalData::parse_args (long &i, char **av)
         else if (av[i][2] == 'S')
           {
             // disable skeleton file generation.
-            be_global->gen_skel_files (I_FALSE);
+            be_global->gen_skel_files (false);
           }
         else if (av[i][2] == 's')
           {
             if (av[i][3] == 'i')
               {
                 // no client inline
-                be_global->gen_server_inline (I_FALSE);
+                be_global->gen_server_inline (false);
               }
             else
               {
@@ -1757,18 +1836,21 @@ BE_GlobalData::parse_args (long &i, char **av)
 void
 BE_GlobalData::prep_be_arg (char *s)
 {
-  const char arg_macro[] = "export_macro=";
-  const char arg_include[] = "export_include=";
-  const char skel_arg_macro[] = "skel_export_macro=";
-  const char skel_arg_include[] = "skel_export_include=";
-  const char stub_arg_macro[] = "stub_export_macro=";
-  const char stub_arg_include[] = "stub_export_include=";
-  const char anyop_arg_macro[] = "anyop_export_macro=";
-  const char anyop_arg_include[] = "anyop_export_include=";
-  const char arg_pch_include[] = "pch_include=";
-  const char arg_pre_include[] = "pre_include=";
-  const char arg_post_include[] = "post_include=";
-  const char obv_opt_accessor[] = "obv_opt_accessor";
+  static const char arg_macro[]            = "export_macro=";
+  static const char arg_include[]          = "export_include=";
+  static const char skel_arg_macro[]       = "skel_export_macro=";
+  static const char skel_arg_include[]     = "skel_export_include=";
+  static const char stub_arg_macro[]       = "stub_export_macro=";
+  static const char stub_arg_include[]     = "stub_export_include=";
+  static const char anyop_arg_macro[]      = "anyop_export_macro=";
+  static const char anyop_arg_include[]    = "anyop_export_include=";
+  static const char arg_pch_include[]      = "pch_include=";
+  static const char arg_pre_include[]      = "pre_include=";
+  static const char arg_post_include[]     = "post_include=";
+  static const char arg_versioning_begin[] = "versioning_begin=";
+  static const char arg_versioning_end[]   = "versioning_end=";
+  static const char obv_opt_accessor[]     = "obv_opt_accessor";
+
 
   char* last = 0;
 
@@ -1836,6 +1918,16 @@ BE_GlobalData::prep_be_arg (char *s)
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
           be_global->obv_opt_accessor (1);
+        }
+      else if (ACE_OS::strstr (arg, arg_versioning_begin) == arg)
+        {
+          char const * const val = arg + sizeof (arg_versioning_begin) - 1;
+          be_global->versioning_begin (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_versioning_end) == arg)
+        {
+          char const * const val = arg + sizeof (arg_versioning_end) - 1;
+          be_global->versioning_end (val);
         }
       else
         {
@@ -1913,6 +2005,83 @@ BE_GlobalData::arg_post_proc (void)
 void
 BE_GlobalData::usage (void) const
 {
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,export_macro=<macro name>\t\t\tsets export macro ")
+      ACE_TEXT ("for all files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,export_include=<include path>\t\tsets export include ")
+      ACE_TEXT ("file for all files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,stub_export_macro=<macro name>\t\tsets export ")
+      ACE_TEXT ("macro for client files only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,stub_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for client only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,skel_export_macro=<macro name>\t\tsets export ")
+      ACE_TEXT ("macro for server files only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,skel_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for server only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,anyop_export_macro=<macro name>\t\tsets export macro ")
+      ACE_TEXT ("for typecode/Any operator files only, when -GA option ")
+      ACE_TEXT ("is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,anyop_export_include=<include path>\tsets export ")
+      ACE_TEXT ("include file typecode/Any operator files only, when -GA ")
+      ACE_TEXT ("option is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,pch_include=<include path>\t\t\tsets include ")
+      ACE_TEXT ("file for precompiled header mechanism\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,pre_include=<include path>\t\t\tsets include ")
+      ACE_TEXT ("file generate before any other includes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,post_include=<include path>\t\tsets include ")
+      ACE_TEXT ("file generated at the end of the file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,obv_opt_accessor\t\t\t\toptimizes access to base class ")
+      ACE_TEXT ("data in valuetypes\n")
+    ));
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
+  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
+     && TAO_HAS_VERSIONED_NAMESPACE == 1)
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,versioning_begin\t\t\tSet text that opens a ")
+      ACE_TEXT ("a \"versioned\" namespace\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,versioning_end\t\t\tSet text that closes a ")
+      ACE_TEXT ("a \"versioned\" namespace\n")
+    ));
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -ci\t\t\tClient inline file name ending. Default is C.inl\n")

@@ -67,10 +67,19 @@
 #define ACE_LACKS_NET_IF_H
 #define ACE_LACKS_SYS_IPC_H
 #define ACE_LACKS_SYS_SEM_H
-#define ACE_LACKS_STDINT_H
-#define ACE_LACKS_DIRENT_H
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_LACKS_STROPTS_H
+
+#undef ACE_LACKS_STRUCT_DIR
+#undef ACE_LACKS_CLOSEDIR
+#undef ACE_LACKS_OPENDIR
+#undef ACE_LACKS_READDIR
+#undef ACE_LACKS_REWINDDIR
+
+#define ACE_HAS_WOPENDIR
+#define ACE_HAS_WCLOSEDIR
+#define ACE_HAS_WREADDIR
+#define ACE_HAS_WREWINDDIR
 
 #define ACE_LACKS_STRRECVFD
 #define ACE_USES_EXPLICIT_STD_NAMESPACE
@@ -86,8 +95,19 @@
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ < 0x570)
+#if (__BORLANDC__ < 0x580)
 # define ACE_LACKS_INTPTR_T
+# define ACE_HAS_NONCONST_SWAB
+# define ACE_HAS_NONCONST_FDOPEN
+#endif
+
+#define ACE_HAS_NONCONST_TEMPNAM
+
+// The Borland compiler can't handle assembly in inline methods or
+// templates (E2211). When we build for pentium optimized and we are inlining
+// then we disable inline assembly
+#if defined (ACE_HAS_PENTIUM) && defined(__ACE_INLINE__)
+# define ACE_LACKS_INLINE_ASSEMBLY
 #endif
 
 #if (__BORLANDC__ >= 0x600)
@@ -104,7 +124,6 @@
 # define ACE_STRCASECMP_EQUIVALENT ::stricmp
 # define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 # define ACE_HAS_ITOA 1
-# define ACE_HAS_NONCONST_SWAB
 #endif
 
 #include /**/ "ace/post.h"

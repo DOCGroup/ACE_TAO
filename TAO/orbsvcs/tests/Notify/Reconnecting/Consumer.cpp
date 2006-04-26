@@ -1814,6 +1814,8 @@ int Consumer_Main::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
 
   this->reconnection_callback_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-4);
+ 
   if (this->disconnect_on_exit_)
   {
     if (!CORBA::is_nil (this->structured_proxy_push_supplier_.in ()))

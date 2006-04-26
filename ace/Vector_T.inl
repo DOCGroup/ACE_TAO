@@ -1,9 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
 ACE_Vector<T, DEFAULT_SIZE>::ACE_Vector (const size_t init_size,
-					 ACE_Allocator* alloc)
+                                         ACE_Allocator* alloc)
   : ACE_Array<T> (init_size == 0 ? DEFAULT_SIZE : init_size, alloc)
 {
   length_ = 0;
@@ -88,3 +91,5 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::done (void) const
 
   return this->current_ >= vector_.size ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -2,6 +2,12 @@
 // $Id$
 
 project : ciao_xml_utils, dynamicany, typecodefactory {
-  after += XSC_Config_Handlers
-  libs += XSC_DynAny_Handler XSC_Config_Handlers XSC_XML_Handlers RT_CCM_Config_Handlers
+  verbatim(gnuace, macros) {
+   override no_hidden_visibility = 1
+  }
+  after += XSC_DynAny_Handler XSC_Config_Handlers XSC_XML_Handlers RT_CCM_Config_Handlers CIAO_Events_Handlers Package_Config_Handlers
+  libs  += XSC_DynAny_Handler XSC_Config_Handlers XSC_XML_Handlers RT_CCM_Config_Handlers CIAO_Events_Handlers Package_Config_Handlers
 }
+
+
+

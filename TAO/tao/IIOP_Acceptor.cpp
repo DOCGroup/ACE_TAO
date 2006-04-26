@@ -3,6 +3,9 @@
  */
 //@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 #include "tao/IIOP_Acceptor.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/debug.h"
@@ -24,6 +27,7 @@ ACE_RCSID (tao,
            IIOP_Acceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (IOP::TAG_INTERNET_IOP),
@@ -554,8 +558,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                      this->creation_strategy_,
                                      this->accept_strategy_,
                                      this->concurrency_strategy_,
-				     0, 0, 0, 1,
-				     this->reuse_addr_) == -1)
+                                     0, 0, 0, 1,
+                                     this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -590,8 +594,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                          this->creation_strategy_,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_,
-					 0, 0, 0, 1,
-					 this->reuse_addr_) != -1)
+                                         0, 0, 0, 1,
+                                         this->reuse_addr_) != -1)
             {
               found_a_port = true;
               break;
@@ -987,7 +991,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
   CORBA::Octet major;
-  CORBA::Octet minor;
+  CORBA::Octet minor = CORBA::Octet();
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -1065,8 +1069,8 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   ACE_CString **argv = 0;
   ACE_NEW_RETURN (argv, ACE_CString*[argc],-1);
 
-  int begin = 0;
-  int end = -1;
+  ssize_t begin = 0;
+  ssize_t end = -1;
   int result = 0;
   for (int j = 0; j < argc; ++j)
     {
@@ -1075,7 +1079,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
       if (j < argc - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<CORBA::ULong> (len);
+        end = static_cast<ssize_t> (len);
 
       if (end == begin)
         {
@@ -1119,9 +1123,9 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
   while (i < argc)
     {
       size_t len = argv[i]->length();
-      int slot = argv[i]->find ("=");
+      ssize_t slot = argv[i]->find ("=");
 
-      if (slot == static_cast <int> (len - 1)
+      if (slot == static_cast <ssize_t> (len - 1)
           || slot == ACE_CString::npos)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) - IIOP option <%s> is ")
@@ -1164,9 +1168,9 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
           this->hostname_in_ior_ = value.rep ();
         }
       else if (name == "reuse_addr")
-	{
-	  this->reuse_addr_ = ACE_OS::atoi (value.c_str ());
-	}
+        {
+          this->reuse_addr_ = ACE_OS::atoi (value.c_str ());
+        }
       else
         {
           // the name is not known, skip to the next option
@@ -1177,7 +1181,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
       // put this one on the end. This technique has the effect of
       // putting them in reverse order, but that doesn't matter, since
       // these arguments are only whole strings.
-      argc--;
+      --argc;
       ACE_CString *temp = argv[i];
       for (int j = i; j <= argc-1; j++)
         argv[j] = argv[j+1];
@@ -1185,5 +1189,9 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 //@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END

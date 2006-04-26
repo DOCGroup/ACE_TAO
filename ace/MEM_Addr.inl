@@ -5,6 +5,7 @@
 
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Set the port number.
 
@@ -106,3 +107,5 @@ ACE_MEM_Addr::operator != (const ACE_INET_Addr &sap) const
   ACE_TRACE ("ACE_MEM_Addr::operator !=");
   return !((*this) == sap);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

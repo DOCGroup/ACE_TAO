@@ -1,24 +1,33 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Reconnection_Registry.cpp
  *
  *  $Id$
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
- *
  */
-#include "Reconnection_Registry.h"
+#include "orbsvcs/Notify/Reconnection_Registry.h"
+
 #include "tao/debug.h"
-#include "Properties.h"
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 #include "ace/Vector_T.h"
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
+  const char REGISTRY_TYPE[] = "reconnect_registry";
+  const char RECONNECT_ID[] = "ReconnectId";
+  const char RECONNECT_IOR[] = "IOR";
+  const char REGISTRY_CALLBACK_TYPE[] = "reconnect_callback";
+
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
     : highest_id_(0)
   {
@@ -80,6 +89,7 @@ namespace TAO_Notify
       //@@todo  throw something
     }
     this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   CORBA::Boolean
@@ -242,5 +252,6 @@ namespace TAO_Notify
     //@@ inform factory
   }
 
-
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL

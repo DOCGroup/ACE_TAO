@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CIAO_Server_Export.h"
+#include "ciao/CIAO_Server_Export.h"
 
 namespace CIAO
 {
@@ -41,8 +41,6 @@ namespace CIAO
     : public virtual POA_Components::CCMHome
   {
   public:
-    explicit Swapping_Home_Servant_Impl_Base (void);
-
     Swapping_Home_Servant_Impl_Base (Swapping_Container * c);
 
     virtual ~Swapping_Home_Servant_Impl_Base (void);
@@ -58,6 +56,9 @@ namespace CIAO
 
   protected:
     Swapping_Container *container_;
+  private:
+    /// Not to be used
+    Swapping_Home_Servant_Impl_Base (void);
   };
 }
 

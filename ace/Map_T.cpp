@@ -13,6 +13,8 @@
 #include "ace/Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class KEY, class VALUE>
 ACE_Map<KEY, VALUE>::~ACE_Map (void)
 {
@@ -1335,5 +1337,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rend_impl (void)
                   0);
   return temp;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_MAP_T_CPP */

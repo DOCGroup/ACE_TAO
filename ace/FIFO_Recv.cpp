@@ -1,4 +1,3 @@
-// FIFO_Recv.cpp
 // $Id$
 
 #include "ace/FIFO_Recv.h"
@@ -10,6 +9,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FIFO_Recv, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Recv)
 
@@ -43,9 +44,9 @@ ACE_FIFO_Recv::close (void)
 
 int
 ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
-		     int flags,
-		     int perms,
-		     int persistent,
+                     int flags,
+                     mode_t perms,
+                     int persistent,
                      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Recv::open");
@@ -55,7 +56,7 @@ ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
   else if (this->disable (ACE_NONBLOCK) == -1)
     return -1;
   else if (persistent
-	   && (this->aux_handle_ = ACE_OS::open (fifo_name, O_WRONLY, 0, sa)) == ACE_INVALID_HANDLE)
+           && (this->aux_handle_ = ACE_OS::open (fifo_name, O_WRONLY, 0, sa)) == ACE_INVALID_HANDLE)
     return -1;
   else
     return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
@@ -68,18 +69,20 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (void)
 }
 
 ACE_FIFO_Recv::ACE_FIFO_Recv (const ACE_TCHAR *fifo_name,
-			      int flags,
-			      int perms,
-			      int persistent,
+                              int flags,
+                              mode_t perms,
+                              int persistent,
                               LPSECURITY_ATTRIBUTES sa)
   : aux_handle_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_FIFO_Recv::ACE_FIFO_Recv");
 
   if (this->ACE_FIFO_Recv::open (fifo_name,
-				 flags,
-				 perms,
-				 persistent,
+                                 flags,
+                                 perms,
+                                 persistent,
                                  sa) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_FIFO_Recv")));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

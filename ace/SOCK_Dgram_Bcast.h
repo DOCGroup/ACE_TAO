@@ -15,12 +15,7 @@
 #define ACE_SOCK_DGRAM_BCAST_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_SOCKETS_BUILD_DLL
-# include "ace/ACE_Sockets_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Sockets_Export ACE_Export
-#endif  /* ACE_SOCKETS_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,12 +24,14 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Bcast_Node
  *
  * @brief Linked list of broadcast interfaces.
  */
-class ACE_Sockets_Export ACE_Bcast_Node
+class ACE_Export ACE_Bcast_Node
 {
 public:
   /// Default constructor.
@@ -57,7 +54,7 @@ public:
  * @brief Defines the member functions for the ACE_SOCK datagram
  * abstraction.
  */
-class ACE_Sockets_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
+class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
 {
 public:
   // = Initialization and termination methods.
@@ -132,6 +129,8 @@ private:
   /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Bcast.inl"

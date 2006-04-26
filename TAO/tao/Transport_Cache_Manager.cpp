@@ -1,12 +1,12 @@
 //$Id$
-#include "Transport_Cache_Manager.h"
-#include "Transport.h"
-#include "debug.h"
-#include "ORB_Core.h"
-#include "Connection_Purging_Strategy.h"
-#include "Client_Strategy_Factory.h"
-#include "Condition.h"
-#include "Wait_Strategy.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Transport.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/Connection_Purging_Strategy.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Condition.h"
+#include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
 
@@ -15,10 +15,12 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 ACE_RCSID (tao,
            Transport_Cache_Manager,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -717,3 +719,5 @@ namespace TAO
   }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

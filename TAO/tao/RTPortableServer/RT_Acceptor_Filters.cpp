@@ -1,6 +1,6 @@
-// @(#) $Id$
+// $Id$
 
-#include "RT_Acceptor_Filters.h"
+#include "tao/RTPortableServer/RT_Acceptor_Filters.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -12,18 +12,22 @@ ACE_RCSID (RTPortableServer,
            RT_Acceptor_Filter,
            "$Id$")
 
-TAO_Server_Protocol_Acceptor_Filter::
-TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Server_Protocol_Acceptor_Filter::TAO_Server_Protocol_Acceptor_Filter (
+  RTCORBA::ProtocolList &protocols)
   : protocols_ (protocols)
 {
 }
 
 int
-TAO_Server_Protocol_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
-                                                   TAO_MProfile &mprofile,
-                                                   TAO_Acceptor **acceptors_begin,
-                                                   TAO_Acceptor **acceptors_end,
-                                                   CORBA::Short priority)
+TAO_Server_Protocol_Acceptor_Filter::fill_profile (
+  const TAO::ObjectKey &object_key,
+  TAO_MProfile &mprofile,
+  TAO_Acceptor **acceptors_begin,
+  TAO_Acceptor **acceptors_end,
+  CORBA::Short priority)
 {
   // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
   // which protocols get included into IOR and in what order.
@@ -59,5 +63,7 @@ TAO_Server_Protocol_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

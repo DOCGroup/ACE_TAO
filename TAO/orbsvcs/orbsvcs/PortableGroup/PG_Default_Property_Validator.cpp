@@ -1,11 +1,13 @@
-#include "PG_Default_Property_Validator.h"
-#include "PG_Operators.h"
+#include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
 
 ACE_RCSID (PortableGroup,
            PG_Default_Property_Validator,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator (void)
   : membership_ (1),
@@ -145,3 +147,5 @@ TAO_PG_Default_Property_Validator::validate_criteria (
       ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

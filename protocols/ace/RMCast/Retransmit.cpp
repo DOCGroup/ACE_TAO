@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "ace/Time_Value.h"     // ACE_Time_Value
+#include "ace/OS_NS_stdlib.h"   // abort
 #include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "Retransmit.h"
@@ -144,7 +145,7 @@ namespace ACE_RMCast
         if (cond_.wait (&time) == -1)
         {
           if (errno != ETIME)
-            abort ();
+            ACE_OS::abort ();
           else
             break;
         }

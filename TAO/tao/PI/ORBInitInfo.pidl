@@ -11,7 +11,7 @@
  * The command used to generate code is:
  *
  *  tao_idl
- *     -o orig -Gp -Gd -Ge 1 -GA -Sc -SS -Sci
+ *     -o orig -Gp -Gd -Ge 1 -Sc -SS -Sci
  *          -Wb,export_include="tao/TAO_Export.h"
  *          -Wb,export_macro=TAO_Export
  *          -Wb,pre_include="ace/pre.h"
@@ -22,10 +22,10 @@
 #ifndef _ORBINITINFO_PIDL_
 #define _ORBINITINFO_PIDL_
 
-#include <StringSeq.pidl>
+#include "tao/StringSeq.pidl"
 #include "tao/CodecFactory/IOP_Codec_include.pidl"
-#include <PI_Forward.pidl>
-#include <Policy.pidl>
+#include "tao/PI_Forward.pidl"
+#include "tao/Policy.pidl"
 
 module PortableInterceptor {
 
@@ -68,6 +68,23 @@ module PortableInterceptor {
       in CORBA::PolicyType type,
       in PolicyFactory policy_factory);
   };
+
+  local interface ORBInitInfo_3_1 : ORBInitInfo
+  {
+    void add_client_request_interceptor_with_policy(
+       in ClientRequestInterceptor interceptor,
+       in CORBA::PolicyList policies)
+       raises (DuplicateName, CORBA::PolicyError);
+    void add_server_request_interceptor_with_policy(
+       in ServerRequestInterceptor interceptor,
+       in CORBA::PolicyList policies)
+       raises (DuplicateName, CORBA::PolicyError);
+    void add_ior_interceptor_with_policy(
+       in IORInterceptor interceptor,
+       in CORBA::PolicyList policies)
+       raises (DuplicateName, CORBA::PolicyError);
+  };
+
 };
 
 #endif  /* _ORBINITINFO_PIDL_ */

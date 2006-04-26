@@ -1,12 +1,14 @@
 //$Id$
 
-#include "Request_Interceptor.h"
-#include "Current.h"
-#include "Distributable_Thread.h"
-#include "tao/TSS_Resources.h"
-#include "tao/debug.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+
+#include "tao/RTScheduling/Request_Interceptor.h"
+#include "tao/RTScheduling/Current.h"
+#include "tao/RTScheduling/Distributable_Thread.h"
+
+#include "tao/TSS_Resources.h"
+#include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
@@ -14,13 +16,10 @@ ACE_RCSID (RTScheduling,
            Request_Interceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const IOP::ServiceId
 Client_Interceptor::SchedulingInfo = 30;
-
-Client_Interceptor::Client_Interceptor (void)
-{
-}
 
 void
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
@@ -104,7 +103,8 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
       // Scheduler populates the service context with
       // scheduling parameters.
-      current->scheduler ()->send_request (ri);
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->send_request (ri);
 
       // If this is a one way request
       if (!ri->response_expected ())
@@ -133,8 +133,10 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
 
     current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
     if (current != 0)
-      current->scheduler ()->send_poll (ri);
-
+      {
+        RTScheduling::Scheduler_var scheduler = current->scheduler ();
+        scheduler->send_poll (ri);
+      }
 }
 
 void
@@ -152,7 +154,10 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)
-    current->scheduler ()->receive_reply (ri);
+    {
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->receive_reply (ri);
+    }
 }
 
 void
@@ -215,7 +220,8 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
         {
           // Inform scheduler that exception was
           // received.
-          current->scheduler ()->receive_exception (ri);
+          RTScheduling::Scheduler_var scheduler = current->scheduler ();
+          scheduler->receive_exception (ri);
         }
     }
 }
@@ -236,8 +242,10 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)
-    current->scheduler ()->receive_other (ri);
-
+    {
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->receive_other (ri);
+    }
 }
 
 char*
@@ -311,7 +319,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   CORBA::Policy_ptr sched_param = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
 
-  TAO_RTScheduler_Current_i* new_current;
+  TAO_RTScheduler_Current_i* new_current = 0;
   ACE_NEW_THROW_EX (new_current,
                     TAO_RTScheduler_Current_i (this->current_->orb (),
                                                this->current_->dt_hash ()),
@@ -325,13 +333,14 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // Scheduler retrieves scheduling parameters
   // from request and populates the out
   // parameters.
-  new_current->scheduler()->receive_request (ri,
-                                             guid_var.out (),
-                                             name,
-                                             sched_param,
-                                             implicit_sched_param);
+  RTScheduling::Scheduler_var scheduler = new_current->scheduler();
+  scheduler->receive_request (ri,
+                              guid_var.out (),
+                              name,
+                              sched_param,
+                              implicit_sched_param);
 
-  if (guid_var.in () == 0)
+  if (guid_var->length () == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "The scheduler MUST retreive and return the "
@@ -411,8 +420,8 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
 
       // Inform scheduler that upcall is complete.
-      current->scheduler ()->send_reply (ri
-                                         ACE_ENV_ARG_PARAMETER);
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->send_reply (ri ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       current->cleanup_DT ();
@@ -450,7 +459,8 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
   if (current != 0)
     {
       // Inform scheduler that upcall is complete.
-      current->scheduler ()->send_exception (ri);
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->send_exception (ri);
 
       current->cleanup_DT ();
       current->cleanup_current ();
@@ -475,7 +485,8 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
   if (current != 0)
     {
       // Inform scheduler that upcall is complete.
-      current->scheduler ()->send_other (ri);
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->send_other (ri);
 
       current->cleanup_DT ();
       current->cleanup_current ();
@@ -495,3 +506,5 @@ Server_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

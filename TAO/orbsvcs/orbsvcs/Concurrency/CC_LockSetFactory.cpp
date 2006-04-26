@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   CC_LockSetFactory.cpp
@@ -10,10 +9,12 @@
 //=============================================================================
 
 
-#include "CC_LockSetFactory.h"
-#include "CC_LockSet.h"
+#include "orbsvcs/Concurrency/CC_LockSetFactory.h"
+#include "orbsvcs/Concurrency/CC_LockSet.h"
 
 ACE_RCSID(Concurrency, CC_LockSetFactory, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor
 CC_LockSetFactory::CC_LockSetFactory (void)
@@ -57,3 +58,5 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which
 
   return ls->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

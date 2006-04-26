@@ -157,14 +157,14 @@ AST_Type::compute_size_type (void)
   return 0;
 }
 
-idl_bool
+bool
 AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> &)
 {
   // By default we are not involved in recursion.
   return 0;
 }
 
-idl_bool
+bool
 AST_Type::is_defined (void)
 {
   // AST_Interface, AST_Structure, and AST_Union will
@@ -172,41 +172,41 @@ AST_Type::is_defined (void)
   return 1;
 }
 
-idl_bool
+bool
 AST_Type::ifr_added (void)
 {
   return this->ifr_added_;
 }
 
 void
-AST_Type::ifr_added (idl_bool val)
+AST_Type::ifr_added (bool val)
 {
   this->ifr_added_ = val;
 }
 
-idl_bool
+bool
 AST_Type::ifr_fwd_added (void)
 {
   return this->ifr_fwd_added_;
 }
 
 void
-AST_Type::ifr_fwd_added (idl_bool val)
+AST_Type::ifr_fwd_added (bool val)
 {
   this->ifr_fwd_added_ = val;
 }
 
-idl_bool
+bool
 AST_Type::has_constructor (void)
 {
   return this->has_constructor_;
 }
 
 void
-AST_Type::has_constructor (idl_bool value)
+AST_Type::has_constructor (bool value)
 {
   // Similarly to be_decl::size_type_, once this
-  // gets set to I_TRUE, we don't want it to
+  // gets set to true, we don't want it to
   // change back.
   if (this->has_constructor_ == 0)
     {
@@ -345,9 +345,7 @@ AST_Type::nested_name (const char* local_name,
       use_next = ACE_OS::strstr (use_curr, "::");
 
       // If the scopes are identical, don't supply them.
-      if  (ACE_OS::strcmp (def_name,
-                         use_name)
-             == 0)
+      if  (ACE_OS::strcmp (def_name, use_name) == 0)
         {
           if (prefix != 0)
             {
@@ -403,11 +401,6 @@ AST_Type::nested_name (const char* local_name,
                            len_to_match)
             == 0)
         {
-          // Initial prefix matches i.e., they have a common root.
-          // Start by initializing the macro.
-          ACE_OS::sprintf (this->nested_type_name_,
-                           "ACE_NESTED_CLASS (");
-
           // Initialize the first argument.
           ACE_OS::strncat (this->nested_type_name_,
                            def_curr,
@@ -481,7 +474,7 @@ AST_Type::nested_name (const char* local_name,
             }
 
           // Start the 2nd argument of the macro.
-          ACE_OS::strcat (this->nested_type_name_, ", ");
+          ACE_OS::strcat (this->nested_type_name_, "::");
 
           // Copy the remaining def_name (if any are left).
           if (def_curr != 0)
@@ -508,9 +501,6 @@ AST_Type::nested_name (const char* local_name,
                               suffix);
             }
 
-          ACE_OS::strcat (this->nested_type_name_,
-                          ")");
-
           return this->nested_type_name_;
         } // End of if the root prefixes match.
     }
@@ -533,7 +523,7 @@ AST_Type::nested_name (const char* local_name,
   return this->nested_type_name_;
 }
 
-idl_bool
+bool
 AST_Type::match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list)
 {
   for (ACE_Unbounded_Queue_Iterator<AST_Type *> iter (list);
@@ -548,11 +538,11 @@ AST_Type::match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list)
       if (!ACE_OS::strcmp (t->full_name (),
                            (*temp)->full_name ()))
         {
-          return I_TRUE;
+          return true;
         }
     }
 
-  return I_FALSE;
+  return false;
 }
 
 int

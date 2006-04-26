@@ -9,10 +9,10 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
-#include "Codeset_Descriptor.h"
-#include "Codeset_Manager_i.h"
-#include "Codeset_Translator_Factory.h"
-#include "Codeset.h"
+#include "tao/Codeset/Codeset_Descriptor.h"
+#include "tao/Codeset/Codeset_Manager_i.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"
@@ -51,6 +51,8 @@ ACE_RCSID (Codeset,
 #define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet No. 1
 CONV_FRAME::CodeSetId
@@ -98,7 +100,7 @@ void
 TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
                                 TAO_Transport &trans)
 {
-  /// If tcs is already set on the transport then donot process,
+  /// If tcs is already set on the transport then do not process,
   /// use existing transport as CDR have translators set.
   TAO_Tagged_Components& theTaggedComp = theProfile.tagged_components ();
 
@@ -120,8 +122,8 @@ TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
                     ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::set_tcs, ")
                     ACE_TEXT ("No codeset component in profile\n")));
 
-  // These are the "fallback" codeset ids for use if no context is
-  // available
+       // These are the "fallback" codeset ids for use if no context is
+       // available
        remote.ForCharData.native_code_set =
          TAO_CODESET_ID_XOPEN_UTF_8;
        remote.ForWcharData.native_code_set =
@@ -216,7 +218,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
 
 void
 TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
-                                               TAO_Transport &trans)
+                                                 TAO_Transport &trans)
 {
   TAO_Service_Context &service_cntx = opd.request_service_context ();
   CONV_FRAME::CodeSetContext codeset_cntx;
@@ -255,7 +257,7 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
 /// Checks whether the NCS is a part of CCS
 int
 TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
-                                  CONV_FRAME::CodeSetComponent &cs_comp)
+                                    CONV_FRAME::CodeSetComponent &cs_comp)
 {
   for (CORBA::ULong i = 0L;
        i < cs_comp.conversion_code_sets.length ();
@@ -271,7 +273,7 @@ TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
 /// Find the Intersection of Client and Server CCS's
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
-                                     CONV_FRAME::CodeSetComponent &cs_comp2)
+                                       CONV_FRAME::CodeSetComponent &cs_comp2)
 {
   for(CORBA::ULong index = 0L;
        index < cs_comp1.conversion_code_sets.length();
@@ -288,7 +290,7 @@ TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
 
 int
 TAO_Codeset_Manager_i::isCompatible(CONV_FRAME::CodeSetId cs1,
-                                  CONV_FRAME::CodeSetId cs2 )
+                                    CONV_FRAME::CodeSetId cs2 )
 {
   // Call the is_compatible method of ACE_Codeset_Registry
   return ACE_Codeset_Registry::is_compatible(cs1,cs2);
@@ -297,7 +299,7 @@ TAO_Codeset_Manager_i::isCompatible(CONV_FRAME::CodeSetId cs1,
 /// returns the TCS for Char / Wchar
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
-                                 CONV_FRAME::CodeSetComponent &local )
+                                   CONV_FRAME::CodeSetComponent &local )
 {
   if (remote.native_code_set == local.native_code_set)
     {
@@ -401,8 +403,7 @@ TAO_Codeset_Manager_i::open(void)
     }
 }
 
-
-/// Initialise the specific type codeset factories
+// Initialise the specific type codeset factories
 int
 TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                                  CONV_FRAME::CodeSetComponent& cs_comp)
@@ -466,7 +467,6 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
   return 0;
 }
 
-
 TAO_Codeset_Translator_Base *
 TAO_Codeset_Manager_i::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
@@ -486,7 +486,7 @@ TAO_Codeset_Manager_i::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
 
 TAO_Codeset_Translator_Base *
 TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor& cd,
-                                       CONV_FRAME::CodeSetId tcs)
+                                         CONV_FRAME::CodeSetId tcs)
 {
   for (TAO_Codeset_Descriptor::Translator_Node *tlist = cd.translators();
        tlist; tlist = tlist->next_)
@@ -498,3 +498,12 @@ TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor& cd,
   return 0;
 }
 
+void
+TAO_Codeset_Manager_i::get_ncs (CONV_FRAME::CodeSetId &ncsc,
+                                CONV_FRAME::CodeSetId &ncsw)
+{
+   ncsc = this->char_descriptor_.ncs();
+   ncsw = this->wchar_descriptor_.ncs();
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

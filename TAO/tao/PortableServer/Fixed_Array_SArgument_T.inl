@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S,
          typename S_slice,
          typename S_forany,
@@ -117,3 +119,5 @@ TAO::Ret_Fixed_Array_SArgument_T<S_slice,
 {
   return this->x_._retn_arg ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

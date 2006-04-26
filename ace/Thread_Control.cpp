@@ -18,6 +18,8 @@ ACE_RCSID(ace, Thread_Control, "$Id$")
 # include "ace/Thread_Control.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Thread_Control::dump (void) const
 {
@@ -90,3 +92,5 @@ ACE_Thread_Control::exit (ACE_THR_FUNC_RETURN exit_status, int do_thr_exit)
       return 0;
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

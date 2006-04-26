@@ -7,14 +7,28 @@ ACE_RCSID (ace,
            Codecs,
            "$Id$")
 
-const ACE_Byte ACE_Base64::alphabet_[] =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+namespace
+{
+  // Just in case ...
+#undef alphabet
+#undef pad
+#undef max_columns
 
-const ACE_Byte ACE_Base64::pad_ = '=';
+  // Symbols which form the Base64 alphabet (Defined as per RFC 2045)
+  ACE_Byte const alphabet[] =
+     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-int ACE_Base64::init_ = 0;
+  // The padding character used in the encoding
+  ACE_Byte const pad = '=';
 
-int ACE_Base64::max_columns_ = 72;
+  // Number of columns per line of encoded output (Can have a maximum
+  // value of 76).
+  int const max_columns = 72;
+}
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+bool ACE_Base64::init_ = false;
 
 ACE_Byte ACE_Base64::decoder_[256];
 
@@ -34,7 +48,7 @@ ACE_Base64::encode (const ACE_Byte* input,
   ACE_Byte* result = 0;
 
   size_t length = ((input_len + 2) / 3) * 4;
-  size_t num_lines = length / ACE_Base64::max_columns_ + 1;
+  size_t num_lines = length / max_columns + 1;
   length += num_lines + 1;
   ACE_NEW_RETURN (result, ACE_Byte[length], 0);
 
@@ -50,12 +64,12 @@ ACE_Base64::encode (const ACE_Byte* input,
 
       if (char_count == 3)
         {
-          result[pos++] = ACE_Base64::alphabet_[bits >> 18];
-          result[pos++] = ACE_Base64::alphabet_[(bits >> 12) & 0x3f];
-          result[pos++] = ACE_Base64::alphabet_[(bits >> 6) & 0x3f];
-          result[pos++] = ACE_Base64::alphabet_[bits & 0x3f];
+          result[pos++] = alphabet[bits >> 18];
+          result[pos++] = alphabet[(bits >> 12) & 0x3f];
+          result[pos++] = alphabet[(bits >> 6) & 0x3f];
+          result[pos++] = alphabet[bits & 0x3f];
           cols += 4;
-          if (cols == ACE_Base64::max_columns_) {
+          if (cols == max_columns) {
             result[pos++] = '\n';
             cols = 0;
           }
@@ -71,17 +85,17 @@ ACE_Base64::encode (const ACE_Byte* input,
   if (char_count != 0)
     {
       bits <<= (16 - (8 * char_count));
-      result[pos++] = ACE_Base64::alphabet_[bits >> 18];
-      result[pos++] = ACE_Base64::alphabet_[(bits >> 12) & 0x3f];
+      result[pos++] = alphabet[bits >> 18];
+      result[pos++] = alphabet[(bits >> 12) & 0x3f];
       if (char_count == 1)
         {
-          result[pos++] = pad_;
-          result[pos++] = pad_;
+          result[pos++] = pad;
+          result[pos++] = pad;
         }
       else
         {
-          result[pos++] = ACE_Base64::alphabet_[(bits >> 6) & 0x3f];
-          result[pos++] = pad_;
+          result[pos++] = alphabet[(bits >> 6) & 0x3f];
+          result[pos++] = pad;
         }
       if (cols > 0)
         result[pos++] = '\n';
@@ -99,7 +113,7 @@ ACE_Base64::length (const ACE_Byte* input)
 
   ACE_Byte* ptr = const_cast<ACE_Byte*> (input);
   while (*ptr != 0 &&
-         (member_[*(ptr)] == 1 || *ptr == pad_
+         (member_[*(ptr)] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
     ptr++;
   size_t len = ptr - input;
@@ -122,7 +136,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
 
   ACE_Byte* ptr = const_cast<ACE_Byte*> (input);
   while (*ptr != 0 &&
-         (member_[*(ptr)] == 1 || *ptr == pad_
+         (member_[*(ptr)] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
     ptr++;
   size_t input_len = ptr - input;
@@ -134,7 +148,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
   size_t i = 0;
   for (; i < input_len; ++i)
     {
-      if (input[i] == pad_)
+      if (input[i] == pad)
         break;
       if (!ACE_Base64::member_[input[i]])
         continue;
@@ -143,9 +157,9 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
 
       if (char_count == 4)
         {
-          result[pos++] = bits >> 16;
-          result[pos++] = (bits >> 8) & 0xff;
-          result[pos++] = bits & 0xff;
+          result[pos++] = static_cast<ACE_Byte> (bits >> 16);
+          result[pos++] = static_cast<ACE_Byte> ((bits >> 8) & 0xff);
+          result[pos++] = static_cast<ACE_Byte> (bits & 0xff);
           bits = 0;
           char_count = 0;
         }
@@ -176,11 +190,11 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
           errors++;
           break;
         case 2:
-          result[pos++] = bits >> 10;
+          result[pos++] = static_cast<ACE_Byte> (bits >> 10);
           break;
         case 3:
-          result[pos++] = bits >> 16;
-          result[pos++] = (bits >> 8) & 0xff;
+          result[pos++] = static_cast<ACE_Byte> (bits >> 16);
+          result[pos++] = static_cast<ACE_Byte> ((bits >> 8) & 0xff);
           break;
         }
     }
@@ -200,12 +214,14 @@ ACE_Base64::init ()
 {
   if (!ACE_Base64::init_)
     {
-      for (ACE_Byte i = 0; i < sizeof (ACE_Base64::alphabet_); ++i)
+      for (ACE_Byte i = 0; i < sizeof (alphabet); ++i)
         {
-          ACE_Base64::decoder_[ACE_Base64::alphabet_[i]] = i;
-          ACE_Base64::member_[ACE_Base64::alphabet_[i]] = 1;
+          ACE_Base64::decoder_[alphabet[i]] = i;
+          ACE_Base64::member_ [alphabet[i]] = 1;
         }
-      ACE_Base64::init_ = 1;
+      ACE_Base64::init_ = true;
     }
   return;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

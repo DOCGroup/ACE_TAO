@@ -65,6 +65,8 @@ be_visitor_interface_fwd_cdr_op_ch::visit_interface_fwd (be_interface_fwd *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean "
       << "operator<< (TAO_OutputCDR &, const " << node->full_name ()
       << "_ptr );" << be_nl;
@@ -72,6 +74,8 @@ be_visitor_interface_fwd_cdr_op_ch::visit_interface_fwd (be_interface_fwd *node)
       << "operator>> (TAO_InputCDR &, "
       << node->full_name () << "_ptr &);\n";
 
+  *os << be_global->core_versioning_end () << be_nl;
+  
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }

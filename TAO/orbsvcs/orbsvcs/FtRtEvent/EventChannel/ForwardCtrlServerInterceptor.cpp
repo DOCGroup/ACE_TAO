@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ForwardCtrlServerInterceptor.h"
-#include "GroupInfoPublisher.h"
-#include "IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
@@ -16,6 +16,8 @@
 ACE_RCSID (EventChannel,
            ForwardCtrlServerInterceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri
                              ACE_ENV_ARG_DECL)
@@ -254,3 +256,5 @@ void ForwardCtrlServerInterceptor::send_other (PortableInterceptor::ServerReques
                        PortableInterceptor::ForwardRequest))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

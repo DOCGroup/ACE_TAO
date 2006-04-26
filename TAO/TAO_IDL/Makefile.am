@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -141,7 +141,6 @@ noinst_HEADERS = \
   include/fe_interface_header.h \
   include/fe_private.h \
   include/global_extern.h \
-  include/idl_bool.h \
   include/idl_defines.h \
   include/idl_global.h \
   include/idl_narrow.h \

@@ -17,7 +17,9 @@ ACE_RCSID(ace, OS_NS_netdb, "$Id$")
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_sys_socket.h"
 
-#if defined (VXWORKS)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
 
 struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
@@ -55,6 +57,10 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 
   return &ret;
 }
+
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYADDR */
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
 
 struct hostent *
 ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
@@ -106,6 +112,10 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
   return result;
 }
 
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYADDR */
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
+
 struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
@@ -134,6 +144,10 @@ ACE_OS::gethostbyname (const char *name)
 
   return &ret;
 }
+
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYNAME */
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
 
 struct hostent *
 ACE_OS::gethostbyname_r (const char *name, hostent *result,
@@ -183,13 +197,17 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   return result;
 }
 
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && ACE_LACKS_GETHOSTBYNAME*/
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Include if_arp so that getmacaddr can use the
 // arp structure.
 #if defined (sun)
 # include /**/ <net/if_arp.h>
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_OS::getmacaddress (struct macaddr_node_t *node)
@@ -307,14 +325,14 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     (struct sockaddr_in *)&(ar.arp_pa);
 
   ACE_OS::memset (&ar,
-		  0,
-		  sizeof (struct arpreq));
+                  0,
+                  sizeof (struct arpreq));
 
   psa->sin_family = AF_INET;
 
   ACE_OS::memcpy (&(psa->sin_addr),
-		  *paddrs,
-		  sizeof (struct in_addr));
+                  *paddrs,
+                  sizeof (struct in_addr));
 
   if (ACE_OS::ioctl (handle,
                      SIOCGARP,
@@ -367,9 +385,14 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 #endif
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 #   include "ace/OS_NS_Thread.h"
 #   include "ace/Object_Manager_Base.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 ACE_OS::netdb_acquire (void)
 {
@@ -385,4 +408,8 @@ ACE_OS::netdb_release (void)
     ACE_OS_Object_Manager::preallocated_object[
       ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 # endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+

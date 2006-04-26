@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 #include "tao/NVList_Adapter.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_NVList_Adapter
  */
@@ -44,12 +46,13 @@ public:
   static int Initializer (void);
 };
 
+static int TAO_Requires_NVList_Adapter_Impl_Initializer =
+  TAO_NVList_Adapter_Impl::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DECLARE (TAO_NVList_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_AnyTypeCode, TAO_NVList_Adapter_Impl)
-
-static int
-TAO_Requires_NVList_Adapter_Impl_Initializer =
-  TAO_NVList_Adapter_Impl::Initializer ();
 
 
 #include /**/ "ace/post.h"

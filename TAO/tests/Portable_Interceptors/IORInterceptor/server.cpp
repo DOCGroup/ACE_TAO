@@ -133,6 +133,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_INFO, "Event loop finished.\n"));
+
+      // The interceptors will be destroyed when we call this
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

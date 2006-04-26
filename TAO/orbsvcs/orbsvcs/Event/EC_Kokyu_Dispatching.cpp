@@ -1,9 +1,9 @@
 // $Id$
 
-#include "EC_Kokyu_Dispatching.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_ProxySupplier.h"
-#include "EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Kokyu_Dispatching.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/RtecSchedulerC.h"
@@ -15,12 +15,14 @@
 #include "Kokyu/Kokyu.h"
 
 #if     ! defined (__ACE_INLINE__)
-#include "EC_Kokyu_Dispatching.i"
+#include "orbsvcs/Event/EC_Kokyu_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,
            EC_Kokyu_Dispatching,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
   :allocator_ (0),
@@ -204,3 +206,5 @@ TAO_EC_Kokyu_Push_Command::execute ()
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

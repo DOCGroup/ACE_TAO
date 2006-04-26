@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "LB_Random.h"
+#include "orbsvcs/LoadBalancing/LB_Random.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
@@ -14,11 +14,12 @@ ACE_RCSID (LoadBalancing,
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
 #endif  /* ACE_HAS_PTHREADS_STD */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 extern "C" void tao_lb_random_init_routine (void)
 {
   ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
 }
-
 
 TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa))
@@ -175,3 +176,5 @@ TAO_LB_Random::init (void)
   ::tao_lb_random_init_routine ();
 #endif  /* ACE_HAS_PTHREADS_STD */
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

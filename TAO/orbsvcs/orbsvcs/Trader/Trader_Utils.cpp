@@ -1,9 +1,11 @@
 // $Id$
 
-#include "Trader_Utils.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID(Trader, Trader_Utils, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Creator::TAO_Policy_Creator (int num_policies)
   : policies_ (num_policies),
@@ -1522,3 +1524,5 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
     //      d_props.replace (length, length, props, 0);
     d_props = s_props;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

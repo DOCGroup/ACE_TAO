@@ -24,6 +24,7 @@
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_LoadAlertInfo
@@ -46,6 +47,7 @@ struct TAO_LB_LoadAlertInfo
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

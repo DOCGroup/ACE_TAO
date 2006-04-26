@@ -12,13 +12,17 @@
 #ifndef ECT_DRIVER_H
 #define ECT_DRIVER_H
 
+#include "tao/orbconf.h"
 #include "ace/Stats.h"
 #include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Environment;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 class ECT_Driver
 {
   //

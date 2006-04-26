@@ -197,6 +197,8 @@ int be_visitor_root::visit_root (be_root *node)
           *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+          *os << be_global->core_versioning_begin () << be_nl;
+
           *os << "// Overrides of CORBA::release and CORBA::is_nil for"
               << be_nl
               << "// interfaces that inherit from both CORBA::Object" << be_nl
@@ -220,13 +222,15 @@ int be_visitor_root::visit_root (be_root *node)
         {
           *os << be_uidt_nl
               << "}";
+
+          *os << be_global->core_versioning_end () << be_nl;
         }
     }
 
   // Make one more pass over the entire tree and generate the OBV_ namespaces
   // and OBV_ classes.
 
-  idl_bool obv = 1;
+  bool obv = 1;
   status = 0;
 
   switch (this->ctx_->state ())
@@ -455,6 +459,12 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       (void) tao_cg->end_client_header ();
       break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+      tao_cg->end_client_inline ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      tao_cg->end_client_stubs ();
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
       (void) tao_cg->end_server_header ();
       break;
@@ -471,6 +481,7 @@ int be_visitor_root::visit_root (be_root *node)
           (void) tao_cg->end_server_template_inline ();
         }
 
+      tao_cg->end_server_inline ();
       break;
     case TAO_CodeGen::TAO_ROOT_SS:
       if (be_global->gen_tie_classes ())

@@ -29,6 +29,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_ci.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if !defined (_CORBA_POLICY___CI_)
 #define _CORBA_POLICY___CI_
 
@@ -39,12 +41,7 @@ CORBA::Policy::Policy (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_Policy_Proxy_Broker_ (0)
 {
   this->CORBA_Policy_setup_collocation ();
@@ -55,9 +52,11 @@ CORBA::Policy::Policy (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_Policy_Proxy_Broker_ (0)
 {
 }
 
 #endif /* end #if !defined */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

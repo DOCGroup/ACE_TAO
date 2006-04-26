@@ -1,13 +1,16 @@
 // $Id$
 
-#include "Random_File.h"
+#include "orbsvcs/Notify/Random_File.h"
 
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -154,3 +157,5 @@ Random_File::sync()
 }
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

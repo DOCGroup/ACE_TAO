@@ -1,6 +1,8 @@
 // $Id$
 
-#include "Trader_Constraint_Visitors.h"
+#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Trader_Constraint_Evaluator::
 TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
@@ -78,3 +80,5 @@ TAO_Trader_Constraint_Validator::
 ~TAO_Trader_Constraint_Validator ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

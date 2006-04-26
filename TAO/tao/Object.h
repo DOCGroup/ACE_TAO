@@ -39,11 +39,15 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_ORB_Core;
-
-class ACE_Lock;
 
 namespace TAO
 {
@@ -272,12 +276,16 @@ namespace CORBA
 
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.
-    static CORBA::Boolean marshal (Object_ptr obj,
+    static CORBA::Boolean marshal (const Object_ptr obj,
                                    TAO_OutputCDR &strm);
 
+    /// Accessor for the cached servant reference held on the stub
+    /// if this object is collocated
     virtual TAO_Abstract_ServantBase *_servant (void) const;
 
     /// Is this object collocated with the servant?
+    /// Note this does not return this->is_collocated_ but will instead
+    /// query the underlying stub for its collocation status
     virtual CORBA::Boolean _is_collocated (void) const;
 
     /// Is this a local object?
@@ -349,30 +357,17 @@ namespace CORBA
     /// Initializing a local object.
     Object (int dummy = 0);
 
+    /// Convenience accessor for the object proxy broker of the
+    /// underlying stub.
+    TAO::Object_Proxy_Broker *proxy_broker () const;
+
   private:
 
     // = Unimplemented methods
     Object (const Object &);
     Object &operator = (const Object &);
 
-  protected:
-
-    /// Servant pointer.  It is 0 except for collocated objects.
-    TAO_Abstract_ServantBase *servant_;
-
   private:
-
-    /// Pointer to the Proxy Broker
-    /**
-     * This cached pointer instance takes care of routing the call for
-     * standard calls in CORBA::Object like _is_a (), _get_component
-     * () etc.
-     */
-    TAO::Object_Proxy_Broker *proxy_broker_;
-
-    /// Flag to indicate collocation.  It is 0 except for collocated
-    /// objects.
-    CORBA::Boolean is_collocated_;
 
     /// Specify whether this is a local object or not.
     CORBA::Boolean is_local_;
@@ -397,7 +392,7 @@ namespace CORBA
      * needs to be accessed from the stub and passed back as part of
      * _get_orb().
      */
-    TAO_ORB_Core *orb_core_;
+    TAO_ORB_Core * orb_core_;
 
     /**
      * Pointer to the protocol-specific "object" containing important
@@ -439,7 +434,7 @@ namespace TAO
     static CORBA::Object_ptr duplicate (CORBA::Object_ptr);
     static void release (CORBA::Object_ptr);
     static CORBA::Object_ptr nil (void);
-    static CORBA::Boolean marshal (CORBA::Object_ptr p,
+    static CORBA::Boolean marshal (const CORBA::Object_ptr p,
                                    TAO_OutputCDR & cdr);
   };
 }
@@ -448,9 +443,7 @@ namespace TAO
 /// library is present.
 extern
   TAO_Export TAO::Object_Proxy_Broker *
-  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
-      CORBA::Object_ptr obj
-    );
+  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (void);
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA::Object*);
@@ -458,6 +451,7 @@ operator<< (TAO_OutputCDR&, const CORBA::Object*);
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::Object *&);
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Object.i"

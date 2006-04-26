@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,7 +21,9 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosConcurrencyControlS.h"
-#include "concurrency_export.h"
+#include "orbsvcs/Concurrency/concurrency_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class CC_LockSetFactory
@@ -33,7 +35,7 @@
  * file for detailed descriptions apart from the comments in
  * this file.
  */
-class TAO_Concurrency_Export CC_LockSetFactory 
+class TAO_Concurrency_Serv_Export CC_LockSetFactory 
   : public POA_CosConcurrencyControl::LockSetFactory
 {
 public:
@@ -58,6 +60,8 @@ private:
   /// Lock to serialize the access to the factory.
   TAO_SYNCH_MUTEX lock_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

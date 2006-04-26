@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,12 +26,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosConcurrencyControlC.h"
-#include "concurrency_export.h"
+#include "orbsvcs/Concurrency/concurrency_serv_export.h"
 
 /// This constant defines the number of lock modes. There is really no
 /// way to set this constant dynamically because the nuber of lock
 /// modes are not stated as part of the IDL.
 #define NUMBER_OF_LOCK_MODES 5
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class CC_Lock
@@ -45,7 +47,7 @@
  * which is essentially a write lock since it is not allowed to
  * have more than one lock pr. servant in this implementation.
  */
-class TAO_Concurrency_Export CC_Lock
+class TAO_Concurrency_Serv_Export CC_Lock
 {
 public:
   /// Creates the lock with mode = intention_read (weakest)
@@ -114,7 +116,7 @@ private:
  * weakest (intention read) to the strongest (write).
  * Ordering: IR -> R -> U -> IW -> W
  */
-class TAO_Concurrency_Export CC_LockModeIterator
+class TAO_Concurrency_Serv_Export CC_LockModeIterator
 {
 public:
   /// Default constructor
@@ -139,6 +141,8 @@ public:
 private:
   CosConcurrencyControl::lock_mode current_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* !defined (_CC_LOCK_H) */

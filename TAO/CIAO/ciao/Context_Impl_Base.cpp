@@ -6,7 +6,6 @@ namespace CIAO
 {
   Context_Impl_Base::Context_Impl_Base (void)
   {
-    // Should not be called
     ACE_ASSERT (0);
   }
 
@@ -89,5 +88,17 @@ namespace CIAO
   Context_Impl_Base::_ciao_the_Container (void) const
   {
     return this->container_;
+  }
+
+  const char *
+  Context_Impl_Base::_ciao_instance_id (void) const
+  {
+    return this->ciao_instance_id_.in ();
+  }
+
+  void
+  Context_Impl_Base::_ciao_instance_id (const char *instance_id)
+  {
+    this->ciao_instance_id_ = instance_id;
   }
 }

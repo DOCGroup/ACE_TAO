@@ -17,6 +17,8 @@ ACE_RCSID (FT_FaultAnalyzer,
            FT_FaultAnalyzer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Default constructor.
 TAO::FT_FaultAnalyzer::FT_FaultAnalyzer ()
 {
@@ -27,3 +29,4 @@ TAO::FT_FaultAnalyzer::~FT_FaultAnalyzer ()
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

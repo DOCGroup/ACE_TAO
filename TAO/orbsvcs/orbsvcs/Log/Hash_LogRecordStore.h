@@ -29,9 +29,11 @@
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 100
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Hash_LogRecordStore
@@ -116,6 +118,15 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
     set_log_full_action(DsLogAdmin::LogFullActionType action
                         ACE_ENV_ARG_DECL);
 
+  /// Get the list of the QoS properties supported by the log.
+  virtual DsLogAdmin::QoSList*
+    get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const;
+
+  /// Set the list of the QoS properties supported by the log.
+  virtual void
+    set_log_qos (const DsLogAdmin::QoSList& qos
+		 ACE_ENV_ARG_DECL);
+
   /// Gets the max record life
   virtual CORBA::ULong
     get_max_record_life (ACE_ENV_SINGLE_ARG_DECL) const;
@@ -133,7 +144,16 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual void
     set_max_size (CORBA::ULongLong size
                   ACE_ENV_ARG_DECL);
-
+  
+  /// Get the weekly scheduling parameters
+  virtual DsLogAdmin::WeekMask*
+    get_week_mask (ACE_ENV_SINGLE_ARG_DECL);
+  
+  /// Set the weekly scheduling parameters.
+  virtual void
+    set_week_mask (const DsLogAdmin::WeekMask & masks
+		   ACE_ENV_ARG_DECL);
+  
 
   // = LogRecordStore status methods
 
@@ -225,6 +245,9 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   virtual CORBA::ULong
     remove_old_records (ACE_ENV_SINGLE_ARG_DECL);
+  
+  /// Read-Write Lock
+  virtual ACE_SYNCH_RW_MUTEX& lock();
 
 /* protected: */
   /// Defines macros to represent the hash that maps ids to
@@ -305,13 +328,22 @@ protected:
   /// The action to take if the log reaches max capacity
   DsLogAdmin::LogFullActionType         log_full_action_;
 
+  /// The list of the QoS properties supported by the log.
+  DsLogAdmin::QoSList			log_qos_;
+
   /// The maximum record lifetime
   CORBA::ULong                          max_record_life_;
+
+  /// The days of the week that the log should be operational
+  DsLogAdmin::WeekMask			weekmask_;
+  
 
   ACE_Reactor*                          reactor_;
 
   mutable ACE_SYNCH_RW_MUTEX		lock_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_HASH_LOG_RECORD_STORE_H*/

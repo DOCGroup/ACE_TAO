@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -18,10 +18,12 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantActivatorC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // forward declarations
 class TAO_LogMgr_i;
@@ -67,6 +69,8 @@ public:
 private:
   TAO_LogMgr_i&			logmgr_i_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA */
 

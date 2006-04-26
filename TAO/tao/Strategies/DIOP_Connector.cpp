@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "DIOP_Connector.h"
+#include "tao/Strategies/DIOP_Connector.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -15,12 +15,15 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-#include "DIOP_Profile.h"
+#include "tao/Strategies/DIOP_Profile.h"
 
 
 ACE_RCSID (Strategies,
            DIOP_Connector,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connector::TAO_DIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_DIOP_PROFILE),
@@ -232,11 +235,11 @@ TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
 int
 TAO_DIOP_Connector::cancel_svc_handler (
-  TAO_Connection_Handler * svc_handler)
+  TAO_Connection_Handler * /* svc_handler */)
 {
-  ACE_UNUSED_ARG(svc_handler);
-
-  // Noop
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

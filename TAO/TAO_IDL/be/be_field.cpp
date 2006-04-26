@@ -22,6 +22,7 @@
 #include "be_field.h"
 #include "be_visitor.h"
 #include "be_type.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (be, 
@@ -49,6 +50,14 @@ be_field::be_field (AST_Type *ft,
     be_decl (AST_Decl::NT_field,
              n)
 {
+  // This covers valuetype fields as well, which is what we want.
+  AST_Decl::NodeType nt =
+    ft->unaliased_type ()->node_type ();
+    
+  if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
+    {
+      idl_global->string_member_seen_ = true;
+    }
 }
 
 int

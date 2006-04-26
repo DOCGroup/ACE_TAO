@@ -9,6 +9,7 @@ project(*Server): taoserver, iormanip {
 }
 
 project(*Client): taoclient, iormanip {
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp

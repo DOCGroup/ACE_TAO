@@ -19,9 +19,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Arg_Shifter.h"
-#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/CosNotificationC.h"
+
+#include "ace/Arg_Shifter.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+//class ACE_TArg_Shifter< char >;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Options_Parser

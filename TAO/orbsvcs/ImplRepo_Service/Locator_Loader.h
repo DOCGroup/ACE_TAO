@@ -1,4 +1,7 @@
+// -*- C++ -*-
+//
 // $Id$
+
 #ifndef TAO_IMR_LOCATOR_LOADER_H
 #define TAO_IMR_LOCATOR_LOADER_H
 
@@ -29,7 +32,7 @@ public:
                                            ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
- // Unlike other service objects, we have our own orb. 
+ // Unlike other service objects, we have our own orb.
  int run(void);
 
 private:
@@ -37,8 +40,9 @@ private:
   Options opts_;
   ACE_Auto_Ptr<ImR_Locator_ORB_Runner> runner_;
 private:
-  ACE_UNIMPLEMENTED_FUNC (ImR_Locator_Loader (const ImR_Locator_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (ImR_Locator_Loader &operator = (const ImR_Locator_Loader &))
+  // Disallow copying and assignment.
+  ImR_Locator_Loader (const ImR_Locator_Loader &);
+  ImR_Locator_Loader &operator = (const ImR_Locator_Loader &);
 };
 
 ACE_FACTORY_DECLARE (Locator, ImR_Locator_Loader)

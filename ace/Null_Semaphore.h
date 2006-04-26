@@ -24,12 +24,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
 /**
  * @class ACE_Null_Semaphore
  *
- * @brief Implement a do nothing <ACE_Semaphore>, i.e., all the methods are
+ * @brief Implement a do nothing ACE_Semaphore, i.e., all the methods are
  * no ops.
  *
  * Although the methods are no-ops, the return values are different for
@@ -95,6 +97,8 @@ public:
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NULL_SEMAPHORE_H */

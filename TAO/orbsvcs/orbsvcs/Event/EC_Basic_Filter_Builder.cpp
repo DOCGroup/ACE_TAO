@@ -1,21 +1,24 @@
 // $Id$
 
 #include "orbsvcs/Event_Service_Constants.h"
-#include "EC_Basic_Filter_Builder.h"
-#include "EC_Type_Filter.h"
-#include "EC_Conjunction_Filter.h"
-#include "EC_Disjunction_Filter.h"
-#include "EC_And_Filter.h"
-#include "EC_Negation_Filter.h"
-#include "EC_Bitmask_Filter.h"
-#include "EC_Masked_Type_Filter.h"
-#include "EC_Timeout_Filter.h"
+#include "orbsvcs/Event/EC_Basic_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Type_Filter.h"
+#include "orbsvcs/Event/EC_Conjunction_Filter.h"
+#include "orbsvcs/Event/EC_Disjunction_Filter.h"
+#include "orbsvcs/Event/EC_And_Filter.h"
+#include "orbsvcs/Event/EC_Negation_Filter.h"
+#include "orbsvcs/Event/EC_Bitmask_Filter.h"
+#include "orbsvcs/Event/EC_Masked_Type_Filter.h"
+#include "orbsvcs/Event/EC_Timeout_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Basic_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Basic_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Basic_Filter_Builder, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Basic_Filter_Builder::~TAO_EC_Basic_Filter_Builder (void)
 {
@@ -196,3 +199,5 @@ TAO_EC_Basic_Filter_Builder::
     }
   return count;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

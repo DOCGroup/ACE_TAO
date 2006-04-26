@@ -1,4 +1,4 @@
-#include "Context.h"
+#include "tao/DynamicInterface/Context.h"
 
 ACE_RCSID (DynamicInterface,
            Context,
@@ -12,9 +12,10 @@ ACE_RCSID (DynamicInterface,
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Context.inl"
+# include "tao/DynamicInterface/Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Context::Context (void)
   : refcount_ (1)
@@ -199,4 +200,4 @@ CORBA::ContextList::_decr_refcnt (void)
     }
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

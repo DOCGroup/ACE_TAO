@@ -25,6 +25,8 @@ extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
 
 ACE_RCSID(ace, Lib_Find, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if ! defined (ACE_PSOS_DIAB_MIPS)
 int
 ACE::ldfind (const ACE_TCHAR* filename,
@@ -700,3 +702,6 @@ ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
 
   return replaced;
 }
+
+
+ACE_END_VERSIONED_NAMESPACE_DECL

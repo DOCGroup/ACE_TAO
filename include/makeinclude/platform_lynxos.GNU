@@ -67,10 +67,12 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-# LynxOS 3.x does not support shared libraries
+# LynxOS 3.x does not support shared libraries or native exceptions
 ifeq ($(LYNXOS_MAJOR),3)
   shared_libs_only =
   static_libs_only = 1
+  exceptions = 0
+  debug ?= 0
 endif
 
 ifeq ($(shared_libs_only),1)
@@ -93,25 +95,33 @@ PLATFORM_XT_LIBS=-lXm -lXt
 PLATFORM_XT_LDFLAGS=
 
 PLATFORM_X11_CPPFLAGS=
-PLATFORM_X11_LIBS=-lXpm -lXext -lX11 -lSM -lICE
+PLATFORM_X11_LIBS=-lXpm -lXmu -lXext -lX11 -lSM -lICE
 PLATFORM_X11_LDFLAGS=
 
-ifeq ($(LYNXOS_MAJOR),4)
-  PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
-  PLATFORM_TCL_LIBS=-ltcl8.4
-  PLATFORM_TCL_LDFLAGS=
+PLATFORM_TCL_CPPFLAGS=
+PLATFORM_TCL_LIBS=
+PLATFORM_TCL_LDFLAGS=
 
-  PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-  PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-  PLATFORM_TK_LDFLAGS=
-endif
+PLATFORM_TK_CPPFLAGS=
+PLATFORM_TK_LIBS=
+PLATFORM_TK_LDFLAGS=
+
+PLATFORM_SSL_CPPFLAGS=-I/usr/ssl/include
+PLATFORM_SSL_LIBS=
+PLATFORM_SSL_LDFLAGS=-L/usr/ssl/lib
 
 ifeq ($(threads),1)
-  CFLAGS += -mthreads
+  CFLAGS  += -mthreads
+  SOFLAGS += -mthreads
 endif
 
 ifeq ($(shared_libs),1)
-  CFLAGS  += -mshared
+  CFLAGS  += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
+  CFLAGS  += -DACE_HAS_BROKEN_THREAD_KEYFREE
+  SOFLAGS += -mshared -DACE_HAS_SVR4_DYNAMIC_LINKING
+  LIBS    += -ldl
+else
+  LIBS    += -lnetinet -lnsl
 endif
 
 CC              = gcc
@@ -122,7 +132,6 @@ DCFLAGS         += -g
 PIC             = -fPIC
 DLD             = $(CXX)
 LD              = $(CXX)
-LIBS            += -lnetinet -lnsl
 OCFLAGS         += -O2
 AR              = ar
 ARFLAGS         = ruv

@@ -159,7 +159,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // This is a non-portable, but the only currently available way of
       // determining the number of currently open connections.
-      int pre_call_connections =
+      size_t pre_call_connections =
         orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
       // A  method to kickstart callbacks from the server
@@ -179,7 +179,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // This is a non-portable, but the only currently available way of
       // determining the number of currently open connections.
-      int cur_connections =
+      size_t cur_connections =
         orb->orb_core()->lane_resources().transport_cache().current_size ();
 
       if (cur_connections > pre_call_connections)

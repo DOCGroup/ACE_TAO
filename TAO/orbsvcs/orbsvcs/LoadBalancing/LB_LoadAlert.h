@@ -24,6 +24,7 @@
 
 #include "orbsvcs/PortableGroupC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadAlert
   : public virtual POA_CosLoadBalancing::LoadAlert
@@ -55,16 +56,15 @@ public:
   /// by the LoadManager.
   CORBA::Boolean alerted (void) const;
 
-protected:
-
+// protected:
 
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  //~TAO_LB_LoadAlert (void);
-
+  virtual ~TAO_LB_LoadAlert (void);
+  
 private:
 
   /// Has this LoadAlert servant been alerted of a high load condition
@@ -76,9 +76,10 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "LB_LoadAlert.inl"
+# include "orbsvcs/LoadBalancing/LB_LoadAlert.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

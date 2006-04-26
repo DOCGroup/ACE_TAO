@@ -3,9 +3,11 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/Min_Max.h"
 
 #include "JAWS/JAWS.h"
 #include "JAWS/Data_Block.h"
@@ -14,6 +16,8 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
 #include "JAWS/Filecache.h"
+
+#include "ace/Asynch_IO.h"  //for ACE_Asynch_Write_Stream
 
 // #include "HTTP_Helpers.h"
 
@@ -552,7 +556,7 @@ void
 JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
                               const char *buffer,
                               unsigned int length,
-                              int act)
+                              long act)
 {
   ioh->idle ();
 
@@ -590,17 +594,3 @@ JAWS_Asynch2_IO::accept (JAWS_IO_Handler *,
 
 #endif /* ACE_WIN32 */
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
-  #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  template class ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>;
-  template class ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>;
-  #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)*/
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate  ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
-  #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  #pragma instantiate  ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
-  #pragma instantiate  ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>
-  #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)*/
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

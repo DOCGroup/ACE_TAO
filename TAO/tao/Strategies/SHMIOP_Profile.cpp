@@ -1,4 +1,4 @@
-#include "SHMIOP_Profile.h"
+#include "tao/Strategies/SHMIOP_Profile.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
@@ -19,6 +19,8 @@ ACE_RCSID (Strategies,
 #include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "shmiop";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char TAO_SHMIOP_Profile::object_key_delimiter_ = '/';
 
@@ -508,5 +510,7 @@ TAO_SHMIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

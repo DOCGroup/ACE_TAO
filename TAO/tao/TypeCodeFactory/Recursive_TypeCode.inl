@@ -2,11 +2,12 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::TypeCodeFactory::Recursive_TypeCode::Recursive_TypeCode (char const * id)
-  : CORBA::TypeCode (CORBA::TAO_TC_KIND_COUNT)
-  , ACE_NESTED_CLASS (TAO, True_RefCount_Policy) ()
+  : ::CORBA::TypeCode (CORBA::TAO_TC_KIND_COUNT)
+  , ::TAO::True_RefCount_Policy ()
   , id_ (id)
   , the_typecode_ ()
 {
@@ -26,3 +27,5 @@ TAO::TypeCodeFactory::Recursive_TypeCode::the_typecode (CORBA::TypeCode_ptr tc)
   mutable_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

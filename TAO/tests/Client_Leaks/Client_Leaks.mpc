@@ -11,6 +11,7 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient, anytypecode {
+  after += *Server
   Source_Files {
     TestC.cpp
     Client_Task.cpp
@@ -20,6 +21,7 @@ project(*Client): taoclient, anytypecode {
 
 project(*Child): taoserver {
   exename = child
+  after += *Client
   Source_Files {
     Process.cpp
     child.cpp

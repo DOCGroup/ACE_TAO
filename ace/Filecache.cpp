@@ -42,6 +42,8 @@ ACE_RCSID (ace,
 // static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 #endif /* ACE_WIN32 */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // static data members
 ACE_Filecache *ACE_Filecache::cvf_ = 0;
 
@@ -746,16 +748,4 @@ ACE_Filecache_Object::update (void) const
   return result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>;
-template class ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

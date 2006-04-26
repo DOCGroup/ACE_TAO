@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Framework_Component_T.h
@@ -17,6 +18,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Framework_Component_T
@@ -46,6 +49,8 @@ public:
   /// Close the contained singleton.
   void close_singleton (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // This macro should be called in the instance() method
 // of the Concrete class that will be managed.  Along

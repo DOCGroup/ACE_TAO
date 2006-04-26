@@ -2,6 +2,8 @@
 
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_Pluggable_Reply_Params_Base::TAO_Pluggable_Reply_Params_Base (void)
   : svc_ctx_ (),
@@ -27,3 +29,5 @@ TAO_Pluggable_Reply_Params_Base::service_context_notowned (void)
 {
   return *this->service_context_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

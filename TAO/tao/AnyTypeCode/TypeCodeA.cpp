@@ -1,13 +1,15 @@
 // $Id$
 
-#include "Struct_TypeCode_Static.h"
-#include "Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 
 ACE_RCSID (tao,
            TypeCode,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -57,3 +59,5 @@ CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_BadKind =
 CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_Bounds =
   &TAO::TypeCode::tc_Bounds;
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

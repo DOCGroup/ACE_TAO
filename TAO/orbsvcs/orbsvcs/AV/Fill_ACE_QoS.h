@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -18,11 +18,15 @@
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Synch.h"
 #include "ace/ACE.h"
 #include "ace/OS_QoS.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class Fill_ACE_QoS
@@ -75,6 +79,8 @@ private:
   // A list of flowspecs indexed by the flowspec name.
   FLOW_SPEC_HASH_MAP flow_spec_map_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 #endif /* FILL_ACE_QOS_H */

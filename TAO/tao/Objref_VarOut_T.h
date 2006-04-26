@@ -24,6 +24,8 @@
 #include "tao/Basic_Types.h"
 #include "tao/varbase.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_OutputCDR;
 
 namespace TAO
@@ -31,18 +33,11 @@ namespace TAO
   /**
    * struct Objref_Traits
    *
-   * @brief Specialized for each interface in generated code.
-   *
+   * @brief Specialized for each interface in generated code. Just forward
+   * declare, a specialization must always be there, if not, we get a
+   * compile error.
    */
-  template<typename T>
-  struct Objref_Traits
-  {
-    static T * duplicate (T *);
-    static void release (T *);
-    static T * nil (void);
-    static CORBA::Boolean marshal (T *,
-                                   TAO_OutputCDR &);
-  };
+  template<typename T> struct Objref_Traits;
 }
 
 /**
@@ -111,7 +106,6 @@ public:
   TAO_Objref_Out_T (const TAO_Objref_Out_T<T> &);
 
   TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &);
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &);
   TAO_Objref_Out_T &operator= (T *);
 
   // Cast operator.
@@ -121,9 +115,13 @@ public:
   T * operator-> (void);
 
 private:
-  typedef TAO_Objref_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
+
+  /// Assignment from _var not allowed.
+  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Objref_VarOut_T.cpp"

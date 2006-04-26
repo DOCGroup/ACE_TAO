@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 //==========================================================================
 /**
@@ -5,8 +7,6 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Lite_Factory by
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //==========================================================================
 
@@ -23,10 +23,11 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "ace/Service_Config.h"
 #include "tao/Protocol_Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -64,6 +65,8 @@ private:
   int major_;
   int minor_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_SCIOP_Lite_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SCIOP_Lite_Protocol_Factory)

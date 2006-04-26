@@ -62,12 +62,3 @@ JAWS_Waiter::wait_for_completion (int i)
   return ioh;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class JAWS_Assoc_Array<JAWS_Thread_ID, JAWS_IO_Handler *>;
-template class JAWS_Assoc_Array_Iterator<JAWS_Thread_ID, JAWS_IO_Handler *>;
-template class ACE_Singleton<JAWS_Waiter, ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate JAWS_Assoc_Array<JAWS_Thread_ID, JAWS_IO_Handler *>
-#pragma instantiate JAWS_Assoc_Array_Iterator<JAWS_Thread_ID, JAWS_IO_Handler *>
-#pragme instantiate ACE_Singleton<JAWS_Waiter, ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

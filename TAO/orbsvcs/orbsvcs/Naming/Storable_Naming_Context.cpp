@@ -1,5 +1,5 @@
-#include "Storable_Naming_Context.h"
-#include "Bindings_Iterator_T.h"
+#include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Bindings_Iterator_T.h"
 
 #include "tao/debug.h"
 
@@ -16,15 +16,17 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_RCSID (Naming,
+           Storable_Naming_Context,
+           "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char * TAO_Storable_Naming_Context::root_name_;
 ACE_UINT32 TAO_Storable_Naming_Context::gcounter_;
 ACE_Auto_Ptr<TAO_Storable_Base> TAO_Storable_Naming_Context::gfl_;
 int TAO_Storable_Naming_Context::redundant_;
-
-ACE_RCSID (Naming,
-           Storable_Naming_Context,
-           "$Id$")
 
 TAO_Storable_IntId::TAO_Storable_IntId (void)
   : ref_ (CORBA::string_dup ("")),
@@ -1454,7 +1456,12 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
     }
 }
 
-#include "Naming_Service_Container.h"
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/Naming/Naming_Service_Container.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
@@ -1539,3 +1546,5 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
 
   return result._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

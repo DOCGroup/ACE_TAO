@@ -66,8 +66,6 @@ Job_i::work (CORBA::ULong work,
 		    dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
 		    sizeof (dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
 
-
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"%t Guid is %d, Importance is %d\n",

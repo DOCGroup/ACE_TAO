@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,9 +14,9 @@
 #define NAME_VALUE_PAIR_H
 #include /**/ "ace/pre.h"
 
-#include "Property.h"
-#include "Property_Boolean.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Property_Boolean.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
@@ -24,6 +24,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -93,6 +95,8 @@ namespace TAO_Notify
     ACE_Vector<NVP> list_;
   };
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* NAME_VALUE_PAIR_H */

@@ -8,6 +8,7 @@ project(*Server): strategies, rt_server, minimum_corba {
 }
 
 project(*Client): strategies, rt_client, minimum_corba {
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp

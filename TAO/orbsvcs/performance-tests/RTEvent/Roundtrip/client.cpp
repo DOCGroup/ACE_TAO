@@ -113,7 +113,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int thread_count = 1 + options.nthreads;
 
-      ACE_Barrier barrier (thread_count);
+      ACE_Barrier the_barrier (thread_count);
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
@@ -169,7 +169,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           the_poa.in (),
           the_poa.in (),
           ec.in (),
-          &barrier
+          &the_barrier
           ACE_ENV_ARG_PARAMETER);
 
       if (options.high_priority_is_last)
@@ -186,7 +186,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                ACE_ES_EVENT_UNDEFINED,
                                experiment_id,
                                high_priority_group.supplier (),
-                               &barrier);
+                               &the_barrier);
       high_priority_task.thr_mgr (&my_thread_manager);
       {
         // Artificial scope to wait for the high priority task...

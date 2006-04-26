@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_UNBOUNDED_SET_C
-#define ACE_UNBOUNDED_SET_C
+#ifndef ACE_UNBOUNDED_SET_CPP
+#define ACE_UNBOUNDED_SET_CPP
 
 #include "ace/Unbounded_Set.h"
 #include "ace/Malloc_Base.h"
@@ -15,7 +15,7 @@
 #include "ace/Unbounded_Set.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Unbounded_Set, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
 
@@ -46,7 +46,7 @@ ACE_Unbounded_Set<T>::insert_tail (const T &item)
   // Point the head to the new dummy node.
   this->head_ = temp;
 
-  this->cur_size_++;
+  ++this->cur_size_;
   return 0;
 }
 
@@ -107,7 +107,7 @@ ACE_Unbounded_Set<T>::delete_nodes (void)
                              this->allocator_->free,
                              ACE_Node,
                              <T>);
-      this->cur_size_--;
+      --this->cur_size_;
     }
 
   // Reset the list to be a circular list with just a dummy node.
@@ -227,7 +227,7 @@ ACE_Unbounded_Set<T>::remove (const T &item)
       ACE_Node<T> *temp = curr->next_;
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
-      this->cur_size_--;
+      --this->cur_size_;
       ACE_DES_FREE_TEMPLATE (temp,
                              this->allocator_->free,
                              ACE_Node,
@@ -440,11 +440,13 @@ ACE_Unbounded_Set_Const_Iterator<T>::operator* (void)
   //ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::operator*");
   T *retv = 0;
 
-  int result = this->next (retv);
+  int const result = this->next (retv);
   ACE_ASSERT (result != 0);
   ACE_UNUSED_ARG (result);
 
   return *retv;
 }
 
-#endif /* ACE_UNBOUNDED_SET_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_UNBOUNDED_SET_CPP */

@@ -20,7 +20,7 @@
 #include "var_struct.h"
 
 ACE_RCSID (Param_Test,
-           var_struct, 
+           var_struct,
            "$Id$")
 
 // ************************************************************************
@@ -186,9 +186,9 @@ Test_Var_Struct::check_validity (void)
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; i++)
         {
-          if (ACE_OS::strcmp (this->in_.seq[i].in(), this->inout_->seq[i].in()) ||
-              ACE_OS::strcmp (this->in_.seq[i].in(), this->out_->seq[i].in()) ||
-              ACE_OS::strcmp (this->in_.seq[i].in(), this->ret_->seq[i].in()))
+          if (ACE_OS::strcmp (static_cast<const char*>(this->in_.seq[i]), static_cast<const char*>(this->inout_->seq[i])) ||
+              ACE_OS::strcmp (static_cast<const char*>(this->in_.seq[i]), static_cast<const char*>(this->out_->seq[i])) ||
+              ACE_OS::strcmp (static_cast<const char*>(this->in_.seq[i]), static_cast<const char*>(this->ret_->seq[i])))
             // not equal
             flag = 0;
         }

@@ -27,8 +27,13 @@
 
 #include "tao/IOP_IORC.h"
 
-class TAO_Transport;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Transport;
 
 /**
  * All GIOP messages include a header and message type.  Not
@@ -46,7 +51,7 @@ typedef enum GIOP_Messages
   TAO_GIOP_CLOSECONNECTION = 5,
   TAO_GIOP_MESSAGERROR = 6,           // by both.
   TAO_GIOP_FRAGMENT = 7                // by both.
-}TAO_GIOP_Message_Type;
+}  TAO_GIOP_Message_Type;
 
 
 typedef enum GIOP_LocateStatusType
@@ -143,6 +148,8 @@ public:
                               size_t len,
                               ACE_Time_Value *max_wait_time = 0);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_UTILS_H */

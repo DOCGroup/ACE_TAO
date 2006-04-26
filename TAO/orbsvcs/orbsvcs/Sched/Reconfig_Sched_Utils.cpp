@@ -18,14 +18,16 @@
 #ifndef TAO_RECONFIG_SCHED_UTILS_C
 #define TAO_RECONFIG_SCHED_UTILS_C
 
-#include "Reconfig_Sched_Utils_T.h"
-#include "Reconfig_Sched_Utils.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
 
 
 #include "orbsvcs/Time_Utilities.h"
 
 
 ACE_RCSID (Sched, Reconfig_Sched_Utils, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ///////////////////////////
 // struct TAO_RT_Info_Ex //
@@ -1802,3 +1804,5 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &
 
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_C */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -12,12 +12,14 @@
 #ifndef FTEC_EVENT_CHANNEL_H
 #define FTEC_EVENT_CHANNEL_H
 
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_Event_Channel_Impl;
 class TAO_FTEC_Become_Primary_Listener;
@@ -176,5 +178,7 @@ private:
   PortableServer::POA_var poa_, persistent_poa_;
   TAO_FTEC_Event_Channel_Impl* ec_impl_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

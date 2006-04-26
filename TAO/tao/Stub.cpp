@@ -8,17 +8,18 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "Stub.h"
-#include "Profile.h"
-#include "ORB_Core.h"
-#include "Client_Strategy_Factory.h"
-#include "Transport_Queueing_Strategies.h"
-#include "debug.h"
-#include "Policy_Manager.h"
-#include "SystemException.h"
+#include "tao/Stub.h"
+#include "tao/Profile.h"
+#include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Remote_Object_Proxy_Broker.h"
+#include "tao/Transport_Queueing_Strategies.h"
+#include "tao/debug.h"
+#include "tao/Policy_Manager.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Stub.i"
+# include "tao/Stub.i"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"
@@ -28,6 +29,7 @@ ACE_RCSID (tao,
            TAO_Stub,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
@@ -35,9 +37,13 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   : type_id (repository_id)
   , orb_core_ (orb_core)
   , orb_ ()
+  , is_collocated_ (false)
   , servant_orb_ ()
+  , collocated_servant_ (0)
+  , object_proxy_broker_ (the_tao_remote_object_proxy_broker ())
   , base_profiles_ ((CORBA::ULong) 0)
   , forward_profiles_ (0)
+  , forward_profiles_perm_ (0)
   , profile_in_use_ (0)
   , profile_lock_ptr_ (0)
   , profile_success_ (false)
@@ -105,7 +111,8 @@ TAO_Stub::~TAO_Stub (void)
 }
 
 void
-TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
+TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
+                                const CORBA::Boolean permanent_forward)
 {
   // we assume that the profile_in_use_ is being
   // forwarded!  Grab the lock so things don't change.
@@ -113,12 +120,24 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
                      guard,
                      *this->profile_lock_ptr_));
 
+  if (permanent_forward)
+    {
+      // paranoid, reset the bookmark, then clear the forward-stack
+      this->forward_profiles_perm_ = 0;
+
+      this->reset_forward ();
+    }
+
   TAO_MProfile *now_pfiles = this->forward_profiles_;
   if (now_pfiles == 0)
     now_pfiles = &this->base_profiles_;
 
   ACE_NEW (this->forward_profiles_,
            TAO_MProfile (mprofiles));
+
+  if (permanent_forward)
+    // bookmark the new element at bottom of stack
+    this->forward_profiles_perm_ = this->forward_profiles_;
 
   // forwarded profile points to the new IOR (profiles)
   this->profile_in_use_->forward_to (this->forward_profiles_);
@@ -266,7 +285,25 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
   return 0;
 }
 
-
+void
+TAO_Stub::is_collocated (CORBA::Boolean collocated)
+{
+  if (this->is_collocated_ != collocated)
+    {
+      if (collocated &&
+          _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
+        {
+          this->object_proxy_broker_ =
+            _TAO_Object_Proxy_Broker_Factory_function_pointer ();
+        }
+      else
+        {
+          this->object_proxy_broker_ =
+            the_tao_remote_object_proxy_broker ();
+        }
+      this->is_collocated_ = collocated;
+    }
+}
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -292,14 +329,14 @@ TAO_Stub::hash (CORBA::ULong max
 CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
-  if (CORBA::is_nil (other_obj) == 1)
-    return 0;
+  if (CORBA::is_nil (other_obj))
+    return false;
 
-  TAO_Profile *other_profile = other_obj->_stubobj ()->profile_in_use_;
-  TAO_Profile *this_profile = this->profile_in_use_;
+  TAO_Profile * const other_profile = other_obj->_stubobj ()->profile_in_use_;
+  TAO_Profile * const this_profile = this->profile_in_use_;
 
   if (other_profile == 0 || this_profile == 0)
-    return 0;
+    return false;
 
   // Compare the profiles
   return this_profile->is_equivalent (other_profile);
@@ -325,7 +362,7 @@ TAO_Stub::_decr_refcnt (void)
 TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 {
-  TAO_Profile *old = this->profile_in_use_;
+  TAO_Profile *const old = this->profile_in_use_;
 
   // Since we are actively using this profile we dont want
   // it to disappear, so increase the reference count by one!!
@@ -363,7 +400,6 @@ TAO_Stub::forward_back_one (void)
       from->get_current_profile ()->forward_to (0);
       this->forward_profiles_ = from;
     }
-
 }
 
 
@@ -581,3 +617,65 @@ TAO_Stub::transport_queueing_strategy (void)
   return this->orb_core_->default_transport_queueing_strategy ();
 }
 
+CORBA::Boolean
+TAO_Stub::marshal (TAO_OutputCDR &cdr)
+{
+  // do as many outside of locked else-branch as posssible
+
+  // STRING, a type ID hint
+  if ((cdr << this->type_id.in()) == 0)
+    return 0;
+
+  if ( ! this->forward_profiles_perm_)
+    {
+      const TAO_MProfile& mprofile = this->base_profiles_;
+
+      CORBA::ULong profile_count = mprofile.profile_count ();
+      if ((cdr << profile_count) == 0)
+        return 0;
+
+    // @@ The MProfile should be locked during this iteration, is there
+    // anyway to achieve that?
+    for (CORBA::ULong i = 0; i < profile_count; ++i)
+      {
+        const TAO_Profile* p = mprofile.get_profile (i);
+        if (p->encode (cdr) == 0)
+          return 0;
+      }
+    }
+  else
+    {
+        ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                                guard,
+                                *this->profile_lock_ptr_,
+                                0));
+
+      ACE_ASSERT(this->forward_profiles_ !=0);
+
+      // paranoid - in case of FT the basic_profiles_ would do, too,
+      // but might be dated
+      const TAO_MProfile& mprofile =
+          this->forward_profiles_perm_
+        ? *(this->forward_profiles_perm_)
+        : this->base_profiles_;
+
+      CORBA::ULong profile_count = mprofile.profile_count ();
+      if ((cdr << profile_count) == 0)
+           return 0;
+
+      // @@ The MProfile should be locked during this iteration, is there
+      // anyway to achieve that?
+      for (CORBA::ULong i = 0; i < profile_count; ++i)
+        {
+          const TAO_Profile* p = mprofile.get_profile (i);
+          if (p->encode (cdr) == 0)
+            return 0;
+        }
+
+      // release ACE_Lock
+    }
+
+  return (CORBA::Boolean) cdr.good_bit ();
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

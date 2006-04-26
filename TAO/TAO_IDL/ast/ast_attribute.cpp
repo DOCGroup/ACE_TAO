@@ -79,8 +79,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_attribute, 
+ACE_RCSID (ast,
+           ast_attribute,
            "$Id$")
 
 // Constructor(s) and destructor.
@@ -88,17 +88,17 @@ AST_Attribute::AST_Attribute (void)
   : COMMON_Base (),
     AST_Decl (),
     AST_Field (),
-    pd_readonly (I_TRUE),
+    pd_readonly (true),
     pd_get_exceptions (0),
     pd_set_exceptions (0)
 {
 }
 
-AST_Attribute::AST_Attribute (idl_bool ro,
+AST_Attribute::AST_Attribute (bool ro,
                               AST_Type *ft,
                               UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_attr,
@@ -122,7 +122,7 @@ AST_Attribute::~AST_Attribute (void)
 void
 AST_Attribute::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, (this->pd_readonly == I_TRUE ?
+  this->dump_i (o, (this->pd_readonly == true ?
                     "readonly attribute " : "attribute "));
   AST_Field::dump (o);
 }
@@ -167,7 +167,7 @@ AST_Attribute::be_add_set_exceptions (UTL_ExceptList *t)
 
 // Data accessors.
 
-idl_bool
+bool
 AST_Attribute::readonly (void) const
 {
   return this->pd_readonly;
@@ -201,7 +201,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
       nl_n = nl_i.item ();
 
       d = this->defined_in ()->lookup_by_name (nl_n,
-                                               I_TRUE);
+                                               true);
 
       if (d == 0 || d->node_type() != AST_Decl::NT_except)
         {
@@ -256,7 +256,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
       nl_n = nl_i.item ();
 
       d = this->defined_in ()->lookup_by_name (nl_n,
-                                               I_TRUE);
+                                               true);
 
       if (d == 0 || d->node_type() != AST_Decl::NT_except)
         {

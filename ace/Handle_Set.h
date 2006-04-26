@@ -40,6 +40,8 @@
 #  define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
 #endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Handle_Set
  *
@@ -171,7 +173,7 @@ private:
 /**
  * @class ACE_Handle_Set_Iterator
  *
- * @brief Iterator for the <ACE_Handle_Set> abstraction.
+ * @brief Iterator for the ACE_Handle_Set abstraction.
  */
 class ACE_Export ACE_Handle_Set_Iterator
 {
@@ -187,7 +189,7 @@ public:
   void reset_state (void);
 
   /**
-   * "Next" operator.  Returns the next unseen <ACE_HANDLE> in the
+   * "Next" operator.  Returns the next unseen ACE_HANDLE in the
    * <Handle_Set> up to <handle_set_.max_handle_>).  When all the
    * handles have been seen returns <ACE_INVALID_HANDLE>.  Advances
    * the iterator automatically, so you need not call <operator++>
@@ -197,6 +199,7 @@ public:
 
   /// This is a no-op and no longer does anything.  It's only here for
   /// backwards compatibility.
+  /// @deprecated
   void operator++ (void);
 
   /// Dump the state of an object.
@@ -235,6 +238,8 @@ private:
   u_long word_val_;
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Handle_Set.inl"

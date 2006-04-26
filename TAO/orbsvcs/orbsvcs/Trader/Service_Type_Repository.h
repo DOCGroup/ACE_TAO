@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,9 +16,11 @@
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 #include /**/ "ace/pre.h"
 
-#include "Trader.h"
+#include "orbsvcs/Trader/Trader.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Service_Type_Repository
@@ -26,7 +28,8 @@
  * @brief This class implements CosTradingRepos::ServiceTypeRepository
  * IDL interface.
  */
-class TAO_Trading_Serv_Export TAO_Service_Type_Repository : public POA_CosTradingRepos::ServiceTypeRepository
+class TAO_Trading_Serv_Export TAO_Service_Type_Repository
+  : public POA_CosTradingRepos::ServiceTypeRepository
 {
 public:
   /**
@@ -317,6 +320,8 @@ private:
   /// repository.
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVICE_TYPE_REPOSITORY_H */

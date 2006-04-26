@@ -1,12 +1,14 @@
 // $Id$
 
-#include "SequenceProxyPushSupplier.h"
+#include "orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h"
 
 ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"
-#include "SequencePushConsumer.h"
-#include "../Properties.h"
+#include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"
+#include "orbsvcs/Notify/Properties.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_SequenceProxyPushSupplier::TAO_Notify_SequenceProxyPushSupplier (void)
 {
@@ -19,7 +21,6 @@ TAO_Notify_SequenceProxyPushSupplier::~TAO_Notify_SequenceProxyPushSupplier ()
 void
 TAO_Notify_SequenceProxyPushSupplier::release (void)
 {
-
   delete this;
   //@@ inform factory
 }
@@ -79,17 +80,20 @@ TAO_Notify_SequenceProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& att
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
-  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
+  if (attrs.load("PeerIOR", ior))
   {
     CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
     {
-      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CosNotifyComm::SequencePushConsumer_var pc =
-        CosNotifyComm::SequencePushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CosNotifyComm::SequencePushConsumer_var pc = CosNotifyComm::SequencePushConsumer::_nil();
+      if (ior.length() > 0)
+      {
+        CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        pc = CosNotifyComm::SequencePushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
       this->connect_sequence_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -100,3 +104,5 @@ TAO_Notify_SequenceProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& att
     ACE_ENDTRY;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

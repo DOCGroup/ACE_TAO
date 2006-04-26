@@ -1,5 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -7,8 +6,7 @@
  *
  *  $Id$
  *
- *   IIOP profile specific processing
- *
+ *  IIOP profile specific processing.
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
@@ -20,13 +18,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Profile.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
+#include "tao/Profile.h"
 #include "tao/IIOP_Endpoint.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO IIOP_Profile concrete Profile definitions
 /**
@@ -169,5 +172,10 @@ protected:
   //@@ TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_END
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
+
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_IIOP_PROFILE_H */

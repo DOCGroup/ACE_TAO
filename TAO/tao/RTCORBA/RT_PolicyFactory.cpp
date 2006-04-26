@@ -1,4 +1,4 @@
-#include "RT_PolicyFactory.h"
+#include "tao/RTCORBA/RT_PolicyFactory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -6,10 +6,12 @@ ACE_RCSID (RTCORBA,
            RT_PolicyFactory,
            "$Id$")
 
-#include "RT_Policy_i.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
 
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (
@@ -101,5 +103,7 @@ TAO_RT_PolicyFactory::_create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

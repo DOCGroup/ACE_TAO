@@ -203,14 +203,13 @@ Server::Server (void)
 int
 Server::handle_input (ACE_HANDLE /* handle */)
 {
-  char buffer[BUFSIZ] = { 0 };
-
+  char buffer[BUFSIZ+1] = { 0 };    // Insure a trailing nul
   ssize_t bytes_read = 0;
 
   char * const begin = buffer;
   char * const end   = buffer + BUFSIZ;
 
-  for (char * buf = begin; buf != end; buf += bytes_read)
+  for (char * buf = begin; buf < end; buf += bytes_read)
     {
       // Keep reading until it is no longer possible to do so.
       //
@@ -218,7 +217,7 @@ Server::handle_input (ACE_HANDLE /* handle */)
       // mechanism may have a "state change" interface (as opposed to
       // "state monitoring"), in which case a "speculative" read is
       // done.
-      bytes_read = this->peer ().recv (buf, BUFSIZ - bytes_read);
+      bytes_read = this->peer ().recv (buf, end - buf);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("****** bytes_read = %d\n"),

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_MAP_MANAGER_C
-#define ACE_MAP_MANAGER_C
+#ifndef ACE_MAP_MANAGER_CPP
+#define ACE_MAP_MANAGER_CPP
 
 #include "ace/Map_Manager.h"
 
@@ -15,20 +15,14 @@
 #include "ace/Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Map_Manager, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Entry)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Manager)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Const_Iterator_Base)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator_Base)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Const_Iterator)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -702,4 +696,6 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#endif /* ACE_MAP_MANAGER_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_MAP_MANAGER_CPP */

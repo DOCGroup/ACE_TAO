@@ -153,6 +153,7 @@ ACE_THREAD_MANAGER_USES_SAFE_SPAWN      Disable the "check before lock" feature
                                         macro avoids a potential race condition
                                         on platforms with aggressive read/write
                                         reordering.
+ACE_HAS_CPU_SET_T                       Platform delivers cpu_set_t.
 ACE_HAS_PRIOCNTL                        OS has priocntl (2).
 ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive
                                         (e.g., Win32)
@@ -225,10 +226,6 @@ ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks).
-ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
-                                        support namespaces (or the
-                                        support is not fully
-                                        implemented.)
 ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS Compiler can't handle const char *
                                         as rvalue in conditional operator.
 ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls
@@ -260,12 +257,6 @@ ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
                                         t_error(char *) rather than
                                         t_error(const char *).
-ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct
-                                        timespec members as ts_sec and
-                                        ts_nsec instead of tv_sec and
-                                        tv_nsec.  This is highly
-                                        non-portable.  Currently only
-                                        FreeBSD 2.1.x uses it.
 ACE_HAS_BSTRING                         Platform has <bstring.h>
                                         (which contains bzero()
                                         prototype)
@@ -283,7 +274,9 @@ ACE_HAS_CHARPTR_SPRINTF                 sprintf() returns char *
                                         rather than int (e.g., SunOS
                                         4.x)
 ACE_HAS_CLOCK_GETTIME                   Platform supports POSIX.1b
-                                        clock_gettime ()
+                                        clock_gettime () at least for clock-id CLOCK_REALTIME
+ACE_HAS_CLOCK_GETTIME_MONOTONIC         Platform supports POSIX.1b
+                                        clock_gettime () with the clock-id CLOCK_MONOTONIC
 ACE_HAS_CLOCK_SETTIME                   Platform supports POSIX.1b
                                         clock_settime ()
 ACE_HAS_CONFLICTING_XTI_MACROS          OS's XTI header file defines some
@@ -484,11 +477,6 @@ ACE_HAS_POSIX_SEM_TIMEOUT               Platform supports timed wait operation
                                         on POSIX realtime semaphores.
 ACE_HAS_POSIX_TIME                      Platform supports the POSIX
                                         struct timespec type
-ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
-                                        LynxOS defines THREAD_CANCELLED macro
-                                        in system headers. This macro must be
-                                        undefined to avoid compilation errors
-                                        in TAO code.
 ACE_HAS_PROC_FS                         Platform supports the /proc
                                         file system and defines tid_t
                                         in <sys/procfs.h>
@@ -513,6 +501,8 @@ ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
                                         Pthreads).
 ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
                                         Pthreads (rwlocks)
+ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP  Platform has
+					pthread_attr_setcreatesuspend_np().
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
                                         pthread_mutexattr_setkind_np().
@@ -575,11 +565,13 @@ ACE_HAS_SIG_ATOMIC_T                    Compiler/platform defines the
                                         sig_atomic_t typedef
 ACE_HAS_SIG_C_FUNC                      Compiler requires extern "C"
                                         functions for signals.
-ACE_HAS_SIN_LEN                         Platform supports new BSD
-                                        inet_addr len field.
 ACE_HAS_SIZET_SOCKET_LEN                OS/compiler uses size_t *
                                         rather than int * for socket
                                         lengths
+ACE_HAS_SOCKADDR_IN_SIN_LEN		Platform has sin_len member in struct
+					sockaddr_in.
+ACE_HAS_SOCKADDR_IN6_SIN_LEN		Platform has sin6_len member in struct
+					sockaddr_in6.
 ACE_HAS_SOCKADDR_MSG_NAME               Platform requires (struct
                                         sockaddr *) for msg_name field
                                         of struct msghdr.
@@ -600,9 +592,14 @@ ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
                                         Standard C++ Library
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
-ACE_HAS_STRDUP_EMULATION                Platform/compiler lacks
-                                        strdup() (e.g., VxWorks,
-                                        Chorus, WinCE)
+ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
+					if platform has a native strdup()).
+				        This is useful if you need control
+					over what memory allocator is used.
+ACE_HAS_WCSDUP_EMULATION                Use ACE's wcsdup() emulation (even
+					if platform has a native wcsdup()).
+				        This is useful if you need control
+					over what memory allocator is used.
 ACE_HAS_STRNLEN                         Platform supports strnlen(3).
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
@@ -716,15 +713,21 @@ ACE_HAS_UNION_WAIT                      The wait() system call takes a
 ACE_HAS_UNIXWARE_SVR4_SIGNAL_T          Has inconsistent SVR4 signal
                                         stuff, but not the same as the
                                         other platforms
-ACE_HAS_USING_KEYWORD                   Compiler supports the new
-                                        using keyword for C++
-                                        namespaces.
 ACE_HAS_VALGRIND                        Running with valgrind
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for
                                         tracking down origin of
                                         ACE_NOTSUP.
-
+ACE_HAS_VERSIONED_NAMESPACE             Wrap all library code within a
+                                        "versioned namespace" to
+                                        prevent symbol conflicts with
+                                        other versions of ACE shared
+                                        libraries in third party
+                                        libraries.  Default namespace
+                                        name may be overridden by
+                                        defining preprocessor symbol
+                                        ACE_VERSIONED_NAMESPACE_NAME
+                                        to desired name.
 ACE_LACKS_INTMAX_T                      Platform lacks the intmax_t type
 ACE_LACKS_UINTMAX_T			Platform lacks the uintmax_t type.
 ACE_LACKS_INTPTR_T                      Platform lacks the intptr_t type
@@ -970,6 +973,7 @@ ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
+ACE_LACKS_NUMERIC_LIMITS		Platform lacks std::numeric_limits<>.
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
@@ -990,7 +994,7 @@ ACE_LACKS_PUTENV_PROTOTYPE              Platform/compiler lacks the
                                         LynxOS)
 ACE_LACKS_PWD_REENTRANT_FUNCTIONS       Platform lacks getpwnam_r()
                                         methods (e.g., SGI 6.2).
-ACE_LACKS_SID                           Platform lacks setsid
+ACE_LACKS_SID                           Platform lacks setsid()
 ACE_LACKS_QSORT                         Compiler/platform lacks the
                                         standard C library qsort()
                                         function
@@ -1043,14 +1047,14 @@ ACE_LACKS_SIGSET                        Platform lacks signal sets
                                         (e.g., Chorus and Win32)
 ACE_LACKS_NATIVE_STRPTIME               Platform/compiler lacks the strptime()
                                         function.
-ACE_LACKS_STRRCHR                       Platform/compiler lacks
-                                        strrchr () function.
-ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr ()
-                                        function
+ACE_LACKS_STRCHR			Platform/compiler lacks strchr()
+ACE_LACKS_WCSCHR			Platform/compiler lacks wcschr()
+ACE_LACKS_STRDUP			Platform/compiler lacks strdup()
+ACE_LACKS_WCSDUP			Platform/compiler lacks wcsdup()
+ACE_LACKS_STRRCHR                       Platform/compiler lacks strrchr()
+ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr()
 ACE_LACKS_SWAB                          Platform/compiler lacks
                                         swab () function.
-ACE_LACKS_SYSTIME_H                     <time.h> doesn't automatically
-                                        #include /**/ <sys/time.h>
 ACE_LACKS_SYS_MSG_H                     Platform lacks sys/msg.h
                                         (e.g., Chorus and VxWorks)
 ACE_LACKS_SYS_PARAM_H                   Platform lacks <sys/param.h>
@@ -1130,6 +1134,7 @@ ACE_LACKS_UNSIGNEDLONGLONG_T            Compiler/platform does not
                                         long datatype.
 ACE_LACKS_UTSNAME_T                     Platform lacks struct utsname
                                         (e.g., Win32 and VxWorks)
+ACE_LACKS_UNAME                         Platform lacks uname calls
 ACE_LACKS_WAIT                          The platform lacks wait
 ACE_LACKS_WILDCARD_BIND                 The bind() call will not
                                         select the port if it's 0.

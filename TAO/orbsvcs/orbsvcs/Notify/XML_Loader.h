@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,15 +21,15 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Topology_Loader.h"
+#include "orbsvcs/Notify/Topology_Loader.h"
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 
-#include "tao/corba.h"
-
 #include "ace/streams.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -80,6 +80,8 @@ private:
 };
 
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* XML_LOADER_H */

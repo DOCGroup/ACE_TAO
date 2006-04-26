@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "dynamicinterface_export.h"
+#include "tao/DynamicInterface/dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
@@ -39,6 +39,8 @@
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
 #  define TAO_EXPORT_NESTED_MACRO TAO_DynamicInterface_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -103,6 +105,7 @@ namespace CORBA
 
 } // End CORBA namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

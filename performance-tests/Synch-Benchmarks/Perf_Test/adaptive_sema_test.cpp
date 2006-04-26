@@ -35,9 +35,4 @@ Adaptive_Sema_Test::init (int, ACE_TCHAR *[])
 ACE_SVC_FACTORY_DECLARE (Adaptive_Sema_Test)
 ACE_SVC_FACTORY_DEFINE  (Adaptive_Sema_Test)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Lock_Adapter<ACE_Semaphore>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Lock_Adapter<ACE_Semaphore>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_THREADS */

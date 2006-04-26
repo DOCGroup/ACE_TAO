@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Eric C. Newton's <ecn@clark.net>
+ *  @author Eric C. Newton <ecn@clark.net>
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
@@ -28,6 +28,8 @@
 //#define String XtString
 #include /**/ <X11/Intrinsic.h>
 //#undef String
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_XtReactorID
@@ -131,5 +133,8 @@ private:
   ACE_XtReactor &operator = (const ACE_XtReactor &);
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_XTREACTOR_H */

@@ -2,15 +2,17 @@
 //
 // $Id$
 
-#include "CEC_DynamicImplementation.h"
+#include "orbsvcs/CosEvent/CEC_DynamicImplementation.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "tao/debug.h"
-#include "CEC_TypedEvent.h"
+#include "orbsvcs/CosEvent/CEC_TypedEvent.h"
 
 #if !defined(__ACE_INLINE__)
-#include "CEC_DynamicImplementation.i"
+#include "orbsvcs/CosEvent/CEC_DynamicImplementation.i"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Destructor
 TAO_CEC_DynamicImplementationServer::~TAO_CEC_DynamicImplementationServer (void)
@@ -173,3 +175,5 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
   request->set_result (result_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

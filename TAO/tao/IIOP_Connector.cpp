@@ -1,22 +1,26 @@
-#include "IIOP_Connector.h"
-#include "IIOP_Profile.h"
-#include "debug.h"
-#include "ORB_Core.h"
-#include "Environment.h"
-#include "Protocols_Hooks.h"
-#include "Connect_Strategy.h"
-#include "Thread_Lane_Resources.h"
-#include "Profile_Transport_Resolver.h"
-#include "Transport.h"
-#include "Wait_Strategy.h"
-#include "SystemException.h"
+#include "tao/IIOP_Connector.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
+#include "tao/IIOP_Profile.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/Environment.h"
+#include "tao/Protocols_Hooks.h"
+#include "tao/Connect_Strategy.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Transport.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-
 
 ACE_RCSID (tao,
            IIOP_Connector,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 {
@@ -396,3 +400,7 @@ TAO_IIOP_Connector::cancel_svc_handler (
   return -1;
 }
 //@@ TAO_CONNECTOR_SPL_COPY_HOOK_END
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

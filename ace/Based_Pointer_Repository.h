@@ -16,20 +16,18 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-# define ACE_MEMORY_SINGLETON_DECLARE ACE_SINGLETON_DECLARE
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_stddef.h"
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl., using the "Cheshire Cat" technique.
 class ACE_Based_Pointer_Repository_Rep;
@@ -40,10 +38,10 @@ class ACE_Based_Pointer_Repository_Rep;
  * @brief Maps pointers to the base address of the region to which each
  * pointer belongs.
  */
-class ACE_Memory_Export ACE_Based_Pointer_Repository
+class ACE_Export ACE_Based_Pointer_Repository
 {
 public:
-  // = Use <ACE_Null_Mutex> to allow locking while iterating.
+  // = Use ACE_Null_Mutex to allow locking while iterating.
 
   // = Initialization and termination methods.
   ACE_Based_Pointer_Repository (void);
@@ -51,9 +49,9 @@ public:
 
   // = Search structure methods.
   /**
-   * Return the appropriate <base_addr> region that contains <addr>.
-   * Returns 1 on success and 0 if the <addr> isn't contained in any
-   * <base_addr> region.
+   * Return the appropriate @a base_addr region that contains @a addr.
+   * Returns 1 on success and 0 if the @a addr isn't contained in any
+   * @a base_addr region.
    */
   int find (void *addr,
             void *&base_addr);
@@ -77,17 +75,16 @@ private:
 
 // ----------------------------------
 
-#include "ace/Singleton.h"
-
 /// Declare a process wide singleton
-ACE_MEMORY_SINGLETON_DECLARE (ACE_Singleton,
-                              ACE_Based_Pointer_Repository,
-                              ACE_SYNCH_RW_MUTEX)
+ACE_SINGLETON_DECLARE (ACE_Singleton,
+                       ACE_Based_Pointer_Repository,
+                       ACE_SYNCH_RW_MUTEX)
 
 /// Provide a Singleton access point to the based pointer repository.
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
         ACE_BASED_POINTER_REPOSITORY;
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

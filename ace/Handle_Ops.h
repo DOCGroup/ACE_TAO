@@ -6,9 +6,7 @@
  *
  *  $Id$
  *
- *  This class consolidates the operations on the Handles.
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ *  Handle operations.
  */
 //=============================================================================
 
@@ -24,6 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
@@ -42,6 +42,8 @@ namespace ACE
     int perms,
     LPSECURITY_ATTRIBUTES sa = 0);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

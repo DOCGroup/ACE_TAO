@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,20 +14,25 @@
 #define TAO_SERVANT_DISPATCHER_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableServer/Servant_Upcall.h"
 #include "ace/SStringfwd.h"
-#include "Servant_Upcall.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references.
 class TAO_POA_Manager;
 class TAO_POA_Policy_Set;
 class TAO_Root_POA;
-class ACE_Lock;
 class TAO_ORB_Core;
 class TAO_ServerRequest;
 
@@ -73,6 +78,8 @@ public:
       TAO_Object_Adapter *object_adapter
       ACE_ENV_ARG_DECL) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANT_DISPATCHER_H */

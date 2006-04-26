@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_Thread.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Guard
  *
@@ -45,7 +47,7 @@ public:
   ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
-  /// lock.  If <block> is non-0 then <acquire> the <ACE_LOCK>, else
+  /// lock.  If @a block is non-0 then <acquire> the <ACE_LOCK>, else
   /// <tryacquire> it.
   ACE_Guard (ACE_LOCK &l, int block);
 
@@ -108,7 +110,7 @@ private:
 /**
  * @class ACE_Write_Guard
  *
- * @brief This class is similar to class <ACE_Guard>, though it
+ * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a write lock automatically (naturally, the
  * <ACE_LOCK> it is instantiated with must support the appropriate
  * API).
@@ -152,7 +154,7 @@ public:
 /**
  * @class ACE_Read_Guard
  *
- * @brief This class is similar to class <ACE_Guard>, though it
+ * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a read lock automatically (naturally, the
  * <ACE_LOCK> it is instantiated with must support the appropriate
  * API).
@@ -342,7 +344,10 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
+
 #endif /* !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))) */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Guard_T.inl"

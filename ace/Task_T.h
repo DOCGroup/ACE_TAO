@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,8 +23,14 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Task.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls...
 template <ACE_SYNCH_DECL> class ACE_Module;
+
+#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
+  using namespace ACE_Task_Flags;
+#endif
 
 /**
  * @class ACE_Task
@@ -130,7 +136,13 @@ public: // Should be protected:
    * Note that if this conflicts with the C++ iostream <flush>
    * function, just rewrite the iostream function as ::<flush>.
    */
+
+#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
+  // Make LynxOS 3.x buggy compiler happy
+  int flush (u_long flag = ACE_FLUSHALL);
+#else
   int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
+#endif
 
   // = Special routines corresponding to certain message types.
 
@@ -166,6 +178,8 @@ private:
 template class ACE_Export ACE_Task<ACE_MT_SYNCH>;
 template class ACE_Export ACE_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Task_T.inl"

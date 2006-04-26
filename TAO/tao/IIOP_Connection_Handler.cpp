@@ -1,13 +1,16 @@
-#include "IIOP_Connection_Handler.h"
-#include "debug.h"
-#include "ORB_Core.h"
-#include "IIOP_Transport.h"
-#include "IIOP_Endpoint.h"
-#include "IIOPC.h"
-#include "Thread_Lane_Resources.h"
-#include "Base_Transport_Property.h"
-#include "Protocols_Hooks.h"
-#include "Wait_Strategy.h"
+#include "tao/IIOP_Connection_Handler.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/IIOP_Transport.h"
+#include "tao/IIOP_Endpoint.h"
+#include "tao/IIOPC.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Base_Transport_Property.h"
+#include "tao/Protocols_Hooks.h"
+#include "tao/Wait_Strategy.h"
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
@@ -15,6 +18,8 @@
 ACE_RCSID (tao,
            IIOP_Connection_Handler,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
@@ -82,11 +87,13 @@ TAO_IIOP_Connection_Handler::open (void*)
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
+  protocol_properties.keep_alive_ =
+    this->orb_core ()->orb_params ()->sock_keepalive ();
 
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
 
-  bool client =
+  bool const client =
     this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -127,6 +134,19 @@ TAO_IIOP_Connection_Handler::open (void*)
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
+
+  if (protocol_properties.keep_alive_)
+    {
+      if (this->peer ().
+          set_option (SOL_SOCKET,
+                      SO_KEEPALIVE,
+                      (void *) &protocol_properties.keep_alive_,
+                      sizeof (protocol_properties.keep_alive_)) == -1
+          && errno != ENOTSUP)
+        {
+          return -1;
+        }
+    }
 
   if (this->transport ()->wait_strategy ()->non_blocking ()
       || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)
@@ -236,7 +256,7 @@ TAO_IIOP_Connection_Handler::close_connection (void)
     {
       struct linger lval;
       lval.l_onoff = 1;
-      lval.l_linger = linger;
+      lval.l_linger = (u_short)linger;
 
       if (this->peer ().set_option(SOL_SOCKET,
                                    SO_LINGER,
@@ -404,7 +424,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
       CORBA::Long codepoint =
         tph->get_dscp_codepoint ();
 
-      tos = (int)(codepoint) << 2;
+      tos = static_cast<int> (codepoint) << 2;
     }
 
   if (tos != this->dscp_codepoint_)
@@ -462,3 +482,8 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 /*
  * End copy hook
  */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
+

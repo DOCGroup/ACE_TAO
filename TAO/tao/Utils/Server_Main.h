@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Server_Main.h
@@ -49,12 +50,18 @@
 #ifndef TAO_UTILS_SERVANTMAIN_H
 #define TAO_UTILS_SERVANTMAIN_H
 
-#include <ace/ACE.h>
+#include /**/ "ace/pre.h"
+
+#include "ace/ACE.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ <ace/pre.h>
+#include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Utils
@@ -78,14 +85,16 @@ namespace TAO
   } // namespace UTILS
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "Server_Main.cpp"
+# include "tao/Utils/Server_Main.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 # pragma implementation "Server_Main.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ <ace/post.h>
+#include /**/ "ace/post.h"
 
 #endif //TAO_UTILS_SERVANTMAIN_H

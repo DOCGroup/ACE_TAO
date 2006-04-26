@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -28,6 +28,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Singleton
@@ -62,7 +64,7 @@
  * typedef ACE_Singleton<foo, ACE_Null_Mutex> FOO;
  * @endverbatim
  *
- * NOTE:  the best types to use for ACE_LOCK are
+ * @note The best types to use for ACE_LOCK are
  * ACE_Recursive_Thread_Mutex and ACE_Null_Mutex.
  * ACE_Recursive_Thread_Mutex should be used in multi-threaded
  * programs in which it is possible for more than one thread to
@@ -307,6 +309,8 @@ class ACE_DLL_Singleton_Adapter_T : public TYPE
 public:
   const ACE_TCHAR *dll_name (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Singleton.inl"

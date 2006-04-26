@@ -12,12 +12,12 @@ class ThreadOne : public ACE_Task_Base
 public:
   virtual int svc (void)
   {
-    ACE_Local_Mutex mutex1 ("resource1",
+    ACE_Local_Mutex mutex1 (ACE_TEXT ("resource1"),
                             0, // Deadlock detection enabled.
                             1);// Debugging enabled.
     mutex1.acquire ();
     ACE_OS::sleep (2);
-    ACE_Local_Mutex mutex2 ("resource2", 0, 1);
+    ACE_Local_Mutex mutex2 (ACE_TEXT ("resource2"), 0, 1);
     mutex2.acquire ();
     return 0;
   }
@@ -28,12 +28,12 @@ class ThreadTwo : public ACE_Task_Base
 public:
   virtual int svc (void)
   {
-    ACE_Local_Mutex mutex2 ("resource2",
+    ACE_Local_Mutex mutex2 (ACE_TEXT ("resource2"),
                             0, // Deadlock detection enabled.
                             1);// Debugging enabled.
     mutex2.acquire ();
     ACE_OS::sleep (2);
-    ACE_Local_Mutex mutex1 ("resource1",
+    ACE_Local_Mutex mutex1 (ACE_TEXT ("resource1"),
                             0, // Deadlock detection enabled.
                             1);// Debugging enabled.
     mutex1.acquire ();

@@ -1,4 +1,3 @@
-// UPIPE_Connector.cpp
 // $Id$
 
 #include "ace/UPIPE_Connector.h"
@@ -7,11 +6,15 @@ ACE_RCSID(ace, UPIPE_Connector, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Handle_Ops.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stropts.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Connector.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Connector)
 
@@ -89,7 +92,10 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
         // connection anymore since we're linked via the Message_Queue
         // now.
         new_stream.ACE_SPIPE::close ();
-      return result;
+      return static_cast<int> (result);
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_THREADS */

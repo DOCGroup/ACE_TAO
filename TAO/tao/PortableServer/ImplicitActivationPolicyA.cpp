@@ -30,13 +30,15 @@
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
-#include "ImplicitActivationPolicyA.h"
+#include "tao/PortableServer/ImplicitActivationPolicyA.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/enum_typecode.cpp:34
@@ -110,5 +112,7 @@ CORBA::Boolean operator>>= (
         _tao_elem 
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file EC_RTCORBA_Factory.h
  *
@@ -16,13 +16,15 @@
 #define TAO_EC_RTCORBA_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_event_export.h"
-#include "EC_Factory.h"
+#include "orbsvcs/Event/rtcorba_event_export.h"
+#include "orbsvcs/Event/EC_Factory.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_RTCORBA_Factory
@@ -114,6 +116,8 @@ protected:
   /// Configure the thread pool lanes.
   RTCORBA::ThreadpoolLanes lanes_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_RTCORBA_FACTORY_H */

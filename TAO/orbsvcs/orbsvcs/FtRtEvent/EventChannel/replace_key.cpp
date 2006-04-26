@@ -13,10 +13,11 @@ ACE_RCSID (EventChannel,
 /// file conflicts with the use of auto_ptr in the
 /// VxWorks5.5.1_PPC85XX_DIAB platform.
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void replace_key(char* ior, char* end_ior,
-                const TAO::ObjectKey& oldkey,
-                const TAO::ObjectKey& newkey)
+                 const TAO::ObjectKey& oldkey,
+                 const TAO::ObjectKey& newkey)
 {
   size_t keylen = oldkey.length();
   ACE_ASSERT(keylen == newkey.length());
@@ -30,3 +31,5 @@ void replace_key(char* ior, char* end_ior,
     pos+= keylen;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

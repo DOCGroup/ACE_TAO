@@ -1,4 +1,7 @@
+// -*- C++ -*-
+//
 // $Id$
+
 #ifndef TAO_IMR_ACTIVATOR_LOADER_H
 #define TAO_IMR_ACTIVATOR_LOADER_H
 
@@ -39,8 +42,9 @@ private:
   ACE_Auto_Ptr<ImR_Activator_ORB_Runner> runner_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ImR_Activator_Loader (const ImR_Activator_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (ImR_Activator_Loader &operator = (const ImR_Activator_Loader &))
+  // Disallow copying and assignment.
+  ImR_Activator_Loader (const ImR_Activator_Loader &);
+  ImR_Activator_Loader &operator = (const ImR_Activator_Loader &);
 };
 
 ACE_FACTORY_DECLARE (Activator, ImR_Activator_Loader)

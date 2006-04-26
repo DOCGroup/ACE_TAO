@@ -1,10 +1,13 @@
 // $Id$
 
-#include "Shutdown_Utilities.h"
+#include "orbsvcs/Shutdown_Utilities.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(orbsvcs,
           Shutdown_Utilities,
           "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf)
   : functor_(sf)
@@ -38,7 +41,7 @@ void
 Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
 {
   // iterate over all the signals in which_signals and register them...
-  int did_register = 0;
+  bool did_register = false;
   for (int i = 1; i < ACE_NSIG; ++i)
   {
     if (which_signals.is_member (i))
@@ -57,7 +60,12 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
               }
           }
         else
-          did_register = 1;
+          {
+            // Store that we have registered for this signal
+            // we have to unregister later for just these signals
+            this->registered_signals_.sig_add (i);
+            did_register = true;
+          }
       }
   }
   if (! did_register)
@@ -70,7 +78,12 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
 Service_Shutdown::~Service_Shutdown ()
 {
   for (int i = 1; i < ACE_NSIG; ++i)
-    this->shutdown_.remove_handler(i);
+    {
+      if (this->registered_signals_.is_member (i))
+        {
+          this->shutdown_.remove_handler(i);
+        }
+    }
 }
 
 int
@@ -80,3 +93,5 @@ Service_Shutdown::handle_signal (int signum,
   this->functor_(signum);
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

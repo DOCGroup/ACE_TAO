@@ -15,17 +15,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Key_Adapters.h"
-#include "poa_macros.h"
-#include "Servant_Location.h"
-#include "Default_Policy_Validator.h"
-#include "POA_Policy_Set.h"
+#include "tao/PortableServer/Key_Adapters.h"
+#include "tao/PortableServer/poa_macros.h"
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/Default_Policy_Validator.h"
+#include "tao/PortableServer/POA_Policy_Set.h"
 
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
@@ -36,12 +36,14 @@
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Map_T.h"
 
-#include "Servant_Location.h"
+#include "tao/PortableServer/Servant_Location.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Root_POA;
 class TAO_POA_Manager;
@@ -170,8 +172,7 @@ public:
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                                    CORBA::Object_ptr);
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
 
 protected:
 
@@ -216,6 +217,10 @@ protected:
 
   static ACE_Lock *create_lock (int enable_locking,
                                 TAO_SYNCH_MUTEX &thread_lock);
+
+  virtual void do_dispatch (TAO_ServerRequest& req,
+                            TAO::Portable_Server::Servant_Upcall& upcall
+                            ACE_ENV_ARG_DECL);
 
 public:
 
@@ -407,7 +412,7 @@ public:
    *
    * @brief Iterator for a folded poa name.
    */
-  class TAO_PortableServer_Export poa_name_iterator
+  class poa_name_iterator
   {
   public:
 
@@ -439,7 +444,7 @@ public:
    *
    * @brief This class allows iteration over a folded poa name.
    */
-  class TAO_PortableServer_Export iteratable_poa_name
+  class iteratable_poa_name
   {
   public:
 
@@ -497,12 +502,14 @@ private:
   TAO_POA_Policy_Set default_poa_policies_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "Object_Adapter.i"
+# include "tao/PortableServer/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

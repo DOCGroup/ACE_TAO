@@ -3,13 +3,6 @@
 // The following configuration file is designed to work for LynxOS,
 // version 3.0.0 and later, using the GNU g++ compiler.
 
-// Note on why ACE_HAS_POSIX_SEM is not #defined:
-// ACE_HAS_POSIX_SEM would cause native LynxOS mutexes and condition
-// variables to be used.  But, they don't appear to be intended to be
-// used between processes.  Without ACE_HAS_POSIX_SEM, ACE uses
-// semaphores for all synchronization.  Those can be used between
-// processes
-
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
@@ -48,6 +41,8 @@
 #define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
 #define ACE_HAS_AUTOMATIC_INIT_FINI
+#define ACE_HAS_CHARPTR_SHMAT
+#define ACE_HAS_CHARPTR_SHMDT
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -58,7 +53,6 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_ICMP_SUPPORT 1
 #define ACE_HAS_IP_MULTICAST
-#define ACE_HAS_LYNXOS_BROKEN_MMAP
 #define ACE_HAS_LYNXOS_SIGNALS
 #define ACE_HAS_MEMCHR
 #define ACE_HAS_MSG
@@ -70,8 +64,8 @@
 #define ACE_HAS_NONCONST_SETRLIMIT
 #define ACE_HAS_NONCONST_WRITEV
 #define ACE_HAS_POSIX_NONBLOCK
+#define ACE_HAS_POSIX_REALTIME_SIGNALS
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_SCANDIR
 #define ACE_HAS_SEMUN
@@ -90,7 +84,6 @@
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 #define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_LACKS_CONST_TIMESPEC_PTR
-#define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_GETOPT_PROTOTYPE
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_INET_ATON_PROTOTYPE
@@ -102,14 +95,13 @@
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SCANDIR_PROTOTYPE
-#define ACE_LACKS_SETPGID
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETEUID
 #define ACE_LACKS_SIGINFO_H
-#define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_STRCASECMP_PROTOTYPE
 #define ACE_LACKS_STRNCASECMP_PROTOTYPE
 #define ACE_LACKS_SWAB_PROTOTYPE
 #define ACE_LACKS_SYS_SELECT_H
-#define ACE_LACKS_TCP_NODELAY
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_WCHAR_H
@@ -139,15 +131,11 @@
 #define ACE_LACKS_FPUTWS
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_SUSECONDS_T
+#define ACE_LACKS_USECONDS_T
 #define ACE_MALLOC_ALIGN 8
-#define ACE_SCANDIR_CMP_USES_VOIDPTR
-
-// Don't use MAP_FIXED, at least for now.
-#define ACE_MAP_FIXED 0
-// LynxOS, through 3.0.0, does not support MAP_PRIVATE, so map it to
-// MAP_SHARED.
-#define ACE_MAP_PRIVATE ACE_MAP_SHARED
 #define ACE_PAGE_SIZE 4096
+#define ACE_SCANDIR_CMP_USES_VOIDPTR
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
@@ -175,8 +163,6 @@
 # define ACE_LACKS_SETDETACH
 # define ACE_LACKS_THREAD_PROCESS_SCOPING
 # define ACE_LACKS_THREAD_STACK_ADDR
-  // This gets around Lynx broken macro calls resulting in "::0"
-# define _POSIX_THREADS_CALLS
 #endif /* ACE_MT_SAFE */
 
 #define ACE_HAS_AIO_CALLS
@@ -190,11 +176,6 @@
 
 #define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
 
-// Looks like the modern compilers  have support for namespaces. Or
-// rather we dont support any compiler without this support. Need to
-// get this macro off of ACE.
-#define ACE_HAS_USING_KEYWORD
-
 #if __GNUC__ == 2  &&  __GNUC_MINOR__ == 9
   // config-g++-common.h defines these incorrectly for LynxOS 3.x
   // with G++ version 2.9-gnupro-98r2
@@ -202,6 +183,10 @@
 # define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
 # undef ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #endif /* __GNUC__ == 2  &&  __GNUC_MINOR__ == 9 */
+
+#if __GNUC__ < 3
+# define ACE_LACKS_NUMERIC_LIMITS
+#endif /* __GNUC__ < 3 */
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
@@ -212,16 +197,40 @@
 #define __NO_INCLUDE_WARN__
 
 #if ACE_LYNXOS_MAJOR > 3 /* LynxOS 4.x */
+# define ACE_HAS_POSIX_SEM
   // "changes signedness" error (OS.i and many other files)
 # define ACE_HAS_SOCKLEN_T
   // LSOCK.cpp uses a macro from param.h, not included
 # define ALIGNBYTES (sizeof(int) - 1)
 # define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 #else /* LynxOS 3.x */
+  // Note on why ACE_HAS_POSIX_SEM is not #defined:
+  // ACE_HAS_POSIX_SEM would cause native LynxOS mutexes and condition
+  // variables to be used.  But, they don't appear to be intended to be
+  // used between processes.  Without ACE_HAS_POSIX_SEM, ACE uses
+  // semaphores for all synchronization.  Those can be used between
+  // processes
+  //# define ACE_HAS_POSIX_SEM
+
+  // Don't use MAP_FIXED, at least for now.
+# define ACE_MAP_FIXED 0
+  // LynxOS, through 3.0.0, does not support MAP_PRIVATE,
+  // so map it to MAP_SHARED.
+# define ACE_MAP_PRIVATE ACE_MAP_SHARED
+
+  // This gets around Lynx broken macro calls resulting in "::0"
+# define _POSIX_THREADS_CALLS
+
+# define ACE_HAS_LYNXOS_BROKEN_MMAP
 # define ACE_HAS_POLL
 # define ACE_LACKS_AUTO_PTR
+# define ACE_LACKS_DLFCN_H
+# define ACE_LACKS_SETPGID
 # define ACE_LACKS_SETREGID
 # define ACE_LACKS_SETREUID
+# define ACE_LACKS_SETUID
+# define ACE_LACKS_SI_ADDR
+# define ACE_LACKS_TCP_NODELAY
 #endif /* ACE_LYNXOS_MAJOR > 3 */
 
 #include /**/ "ace/post.h"

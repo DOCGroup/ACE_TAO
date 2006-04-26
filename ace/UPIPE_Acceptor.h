@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,10 +22,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
-#if defined (ACE_HAS_THREADS)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_UPIPE_Acceptor
@@ -84,10 +86,14 @@ private:
   ACE_Message_Block mb_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/UPIPE_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_UPIPE_ACCEPTOR_H */

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ExceptionDef_i.h"
-#include "Repository_i.h"
-#include "IDLType_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/ExceptionDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
@@ -11,6 +11,7 @@ ACE_RCSID (IFRService,
            ExceptionDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ExceptionDef_i::TAO_ExceptionDef_i (
     TAO_Repository_i *repo
@@ -346,3 +347,5 @@ TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members
                                                  count);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

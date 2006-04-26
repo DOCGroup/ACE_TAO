@@ -4,8 +4,11 @@
 
 #include "tao/ORB_Core.h"
 
+#include <algorithm>
 
-ACE_INLINE TAO_ORB_Core *
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_INLINE ::TAO_ORB_Core *
 TAO::ORB_Table::first_orb (void)
 {
   return this->first_orb_;
@@ -23,7 +26,7 @@ TAO::ORB_Table::end (void)
   return this->table_.end ();
 }
 
-ACE_INLINE TAO_ORB_Core* const *
+ACE_INLINE ::TAO_ORB_Core* const *
 TAO::ORB_Table::get_orbs (size_t& num_orbs)
 {
   num_orbs = this->num_orbs_;
@@ -46,7 +49,7 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (void)
 }
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (TAO_ORB_Core * core)
+TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (::TAO_ORB_Core * core)
   : core_ (core)
 {
 //   ACE_ASSERT (core != 0);
@@ -83,3 +86,5 @@ TAO::ORB_Core_Ref_Counter::operator= (TAO::ORB_Core_Ref_Counter const & rhs)
   TAO::ORB_Core_Ref_Counter tmp (rhs);
   std::swap (this->core_, tmp.core_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

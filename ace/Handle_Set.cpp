@@ -11,6 +11,8 @@
 
 ACE_RCSID(ace, Handle_Set, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 
   // ACE_MSB_MASK is only used here.
@@ -235,13 +237,13 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
       for (fd_mask val = maskp[i];
            (val & ACE_MSB_MASK) != 0;
            val = (val << 1))
-        this->max_handle_++;
+        ++this->max_handle_;
 #elif 1 /* !defined(ACE_HAS_BIG_FD_SET) */
       this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
            (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
            val = (val >> 1) & ACE_MSB_MASK)
-        this->max_handle_++;
+        ++this->max_handle_;
 #else
       register u_long val = this->mask_.fds_bits[i];
       this->max_handle_ = ACE_MULT_BY_WORDSIZE (i)
@@ -572,3 +574,5 @@ ACE_Handle_Set_Iterator::reset_state (void)
       }
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

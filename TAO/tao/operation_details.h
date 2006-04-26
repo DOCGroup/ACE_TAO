@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 //=============================================================================
 /**
  *  @file    operation_details.h
@@ -14,15 +14,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SystemException.h"
+#include "tao/SystemException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Service_Context.h"
-#include "target_specification.h"
+#include "tao/Service_Context.h"
+#include "tao/TimeBaseC.h"
+#include "tao/target_specification.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
 namespace Dynamic
@@ -35,6 +38,14 @@ namespace TAO
 {
   class Argument;
   struct Exception_Data;
+}
+
+namespace TAO
+{
+  namespace CSD
+  {
+    class FW_Server_Request_Wrapper;
+  }
 }
 
 /**
@@ -52,6 +63,11 @@ namespace TAO
 class TAO_Export TAO_Operation_Details
 {
 public:
+
+  /// Declare FW_Server_Request_Wrapper a friend
+  /// This friendship makes the FW_Server_Request_Wrapper be able to
+  /// clone the TAO_Operation_Details data member in TAO_ServerRequest.
+  friend class TAO::CSD::FW_Server_Request_Wrapper;
 
   /// Constructor
   TAO_Operation_Details (const char *name,
@@ -140,6 +156,12 @@ public:
 
   TAO::Exception_Data const * ex_data (void) const;
 
+  void ft_expiration_time (TimeBase::TimeT time);
+  TimeBase::TimeT ft_expiration_time (void) const;
+
+  void ft_retention_id (CORBA::Long request_id);
+  CORBA::Long ft_retention_id (void) const;
+
 private:
 
   /// Name of the operation being invoked.
@@ -181,10 +203,19 @@ private:
 
   /// Count of the exceptions that operations can throw.
   CORBA::ULong ex_count_;
+#if TAO_HAS_INTERCEPTORS == 1
+  /// FT request expiration time (absolute gregorian)
+  TimeBase::TimeT ft_expiration_time_;
+
+  /// FT request retention id
+  CORBA::Long ft_retention_id_;
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "operation_details.i"
+# include "tao/operation_details.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

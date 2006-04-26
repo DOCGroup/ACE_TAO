@@ -1,13 +1,15 @@
 // $Id$
 
-#include "ImplicitActivationStrategyFactoryImpl.h"
+#include "tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
-#include "ImplicitActivationStrategyImplicit.h"
-#include "ImplicitActivationStrategyExplicit.h"
+#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
+#include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
 
 ACE_RCSID (PortableServer,
            ImplicitActivationStrategyFactoryImpl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -52,17 +54,22 @@ namespace TAO
     {
       // Noop because both types are singletons
     }
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, ImplicitActivationStrategyFactoryImpl)
-
-    ACE_STATIC_SVC_DEFINE (
-        ImplicitActivationStrategyFactoryImpl,
-        ACE_TEXT ("ImplicitActivationStrategyFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ImplicitActivationStrategyFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  ImplicitActivationStrategyFactoryImpl,
+  TAO_VERSIONED_NAMESPACE_NAME::TAO::Portable_Server::ImplicitActivationStrategyFactoryImpl)
+
+
+ACE_STATIC_SVC_DEFINE (
+  ImplicitActivationStrategyFactoryImpl,
+  ACE_TEXT ("ImplicitActivationStrategyFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ImplicitActivationStrategyFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 

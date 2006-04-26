@@ -126,7 +126,7 @@ strip_date ()
 
 ###############################################################################
 #
-# parse 
+# parse
 #
 # Parse the commandline and validate the inputs
 #
@@ -169,7 +169,7 @@ parse ()
     METRIC="Compilation"
   fi
   echo "metric = ($METRIC)"
-  
+
   # set the date from command line
   if [ $# -gt 4 ]; then
     DATE=$5
@@ -221,7 +221,7 @@ gen_chart ()
     set xtics rotate
     set xlabel 'Date (YYYY/MM/DD)' 0,-3
     set ylabel "${YLABEL}"
-    set terminal png small color
+    set terminal png small size 800,600 color
     set yrange [$low:$high]
     set output ".metrics/images/${object}_${TYPE}.png"
     set title "${object//___//}"
@@ -343,7 +343,7 @@ composite_list ()
           DIR=""
           break
         fi
-          
+
         if [ $INDEX -eq 3 ]; then
           DIR="${i%?}"                        # strip off last "'"
           DIR="${DIR#*$ACE_ROOT/}"            # strip off $ACE_ROOT
@@ -448,7 +448,7 @@ library_list ()
         continue
       fi
 
-      # not a "make" line, so process it here.  We are interested in the 
+      # not a "make" line, so process it here.  We are interested in the
       # 3rd, and last,  token, i.e., lib*.a
       let INDEX="$INDEX+1"
       if [ $INDEX -eq 3 ]; then
@@ -544,7 +544,7 @@ footprint ()
       if [ "$TYPE" = "LIB" ]; then
         fpath=${FILE%/*}
         # now, do the same for all the objects in the file (if any)
-        size $FILE | 
+        size $FILE |
         grep -v text |
         awk '{print $4 " : " $6}' | process_included $fpath $lpath $FILE
       fi
@@ -572,7 +572,7 @@ process_included ()
   LIBRARY="${LIBRARY#*$ACE_ROOT/}"    # strip off $ACE_ROOT
   LIBRARY="${LIBRARY//\//___}"        # replace "/" with "___"
   echo -n  "$LIBRARY : " >> .metrics/size_composites.txt
- 
+
   while read size colon file; do
     FILE=$fpath/$file
     OUTFILE="${FILE#*$ACE_ROOT/}"      # strip off $ACE_ROOT
@@ -582,7 +582,7 @@ process_included ()
 
     # add the object
     echo -n "$OUTFILE " >> .metrics/size_composites.txt
-    
+
   done
   # add newline
   echo "" >> .metrics/size_composites.txt
@@ -707,7 +707,7 @@ create_images ()
 create_index_page ()
 {
   local TYPE="$1"
-  local TITLE="$TYPE metrics for ACE+TAO"
+  local TITLE="$TYPE metrics for ACE+TAO+CIAO"
 
   echo "<html>"
   echo "<head><title>$TITLE</title></head>"
@@ -721,24 +721,32 @@ create_index_page ()
   echo "<br><center><h1>$TITLE</h1></center><br><hr>"
   echo '<p>One of the goals of the PCES-TENA project is to decrease compile times.
            In order to track our progress, metrics are gathered nightly on all
-           objects in the ACE+TAO distribution and displayed here.'
+           objects in the ACE+TAO+CIAO distribution and displayed here.'
   echo '<ul>'
   echo "<li><a href=\"ace_${TYPE}.html\">ACE</a>"
   echo "<li><a href=\"tao_${TYPE}.html\">TAO</a>"
+  echo "<li><a href=\"ciao_${TYPE}.html\">CIAO</a>"
   echo '</ul>'
   echo '<hr>'
 
-  echo '<P>All the experiments run on a dual Pentium 4 @2.4Ghz, with
-      512Mb of RAM.  The machine is running Linux (Redhat 8.1),
-      and we use gcc-3.2 to compile ACE+TAO.
-    </P>'
+  echo '<P>All the experiments run on the system described below. '
+  echo 'The machine is running Linux ('
 
-  echo '<TABLE border="2"><TBODY><TR><TD>ACE+TAO Configuration</TD><TD>config.h</TD></TR>'
+  cat /etc/SuSE-release
+
+  echo '), and we use GCC '
+
+  /usr/bin/gcc -dumpversion > .metrics/gccversion.txt 2>&1
+  cat .metrics/gccversion.txt
+
+  echo ' to compile ACE+TAO+CIAO. </P>'
+
+  echo '<TABLE border="2"><TBODY><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>config.h</TD></TR>'
   echo '<TR><TD colspan="2"><PRE>'
 
   cat $ACE_ROOT/ace/config.h
 
-  echo '</PRE></TD></TR><TR><TD>ACE+TAO Configuration</TD><TD>platform_macros.GNU</TD></TR>'
+  echo '</PRE></TD></TR><TR><TD>ACE+TAO+CIAO Configuration</TD><TD>platform_macros.GNU</TD></TR>'
   echo '<TR><TD colspan="2"><PRE>'
 
   cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
@@ -780,11 +788,12 @@ create_index_page ()
 ###############################################################################
 create_page ()
 {
-  # always strip off "TAO___"
+  # always strip off "TAO___" / "CIAO___"
   local BASE=$1
   local TYPE=$2
   local EXT=""
   local BASE_NAME=${BASE#TAO___}
+  local BASE_NAME=${BASE#CIAO___}
   local TITLE="${TYPE} metrics for ${BASE_NAME//___//}"
 
   if [ "$TYPE" = "Compilation" ]; then
@@ -809,11 +818,11 @@ create_page ()
   if [ -e ".metrics/images/${BASE}_${TYPE}.png" ]; then
     echo '<DIV align="center"><P>'
     echo "<IMG alt=\"$BASE\" border=0 src=\"images/${BASE}_${TYPE}.png\""
-    echo 'width="640" height="480"></P></DIV>'
+    echo 'width="800" height="600"></P></DIV>'
   fi
 
   echo "<br><hr><br>"
-  echo "<center><h2>Detail</h2></center>"
+  echo "<center><h2>Detail (${DATE})</h2></center>"
 
   echo '<TABLE border="2"><TBODY><TR><TD rowspan=2><b>Object</b></TD>'
   echo '<TD colspan="3"; align=center><b>Last Compile</b></TD></TR>'
@@ -826,6 +835,8 @@ create_page ()
       if [ -e ".metrics/${i}_${TYPE}.html" ]; then
         # strip off "TAO___" if it exists
         NAME=${i#TAO___}
+        # strip off "CIAO___" if it exists
+        NAME=${i#CIAO___}
         echo "<a href=\"${i}_${TYPE}.html\">${NAME//___//}</a>"
       elif [ -e ".metrics/images/${i}_${TYPE}.png" ]; then
         # since you'll only have images if it's a composite, strip off the
@@ -859,6 +870,13 @@ create_page ()
       let VAL_INT="$VAL_TMP/10"
       let VAL_TENTH="$VAL_TMP-($VAL_INT*10)"
       echo "<TD align=right>${VAL_SIGN}${VAL_INT}.${VAL_TENTH}</TD></TR>"
+    else
+      echo '<TR><TD>'
+      echo "${i}"
+      echo '</TD><TD>'
+      echo '?'
+      echo "</TD><TD align=right>?</TD>"
+      echo "<TD align=right>?</TD></TR>"
     fi
   done # for
   echo '</TBODY></TABLE>'
@@ -904,6 +922,7 @@ create_html ()
   local ALL_BASE=""
   local ACE_OBJS=""
   local TAO_OBJS=""
+  local CIAO_OBJS=""
 
   while read base colon files; do
     # create individual page for app/lib
@@ -911,7 +930,9 @@ create_html ()
     sort_list ${files} | create_page ${base} ${TYPE} \
       > .metrics/${base}_${TYPE}.html
     cp .metrics/${base}_${TYPE}.html $DEST/${base}_${TYPE}.html
-    if [ "${base}" != "${base#TAO}" ]; then
+    if [ "${base}" != "${base#TAO___CIAO}" ]; then
+      CIAO_OBJS="${CIAO_OBJS} ${base}"
+    elif [ "${base}" != "${base#TAO}" ]; then
       TAO_OBJS="${TAO_OBJS} ${base}"
     else
       ACE_OBJS="${ACE_OBJS} ${base}"
@@ -931,6 +952,10 @@ create_html ()
 
     name="tao_${TYPE}.html"
     sort_list ${TAO_OBJS} | create_page "TAO" ${TYPE} > .metrics/${name}
+    cp .metrics/${name} ${DEST}/${name}
+
+    name="ciao_${TYPE}.html"
+    sort_list ${CIAO_OBJS} | create_page "CIAO" ${TYPE} > .metrics/${name}
     cp .metrics/${name} ${DEST}/${name}
   fi
 }
@@ -985,15 +1010,15 @@ elif [ "$METRIC" = "Footprint" ]; then
   # Run size on the executables and append results to *.size file.
   cat .metrics/composites.txt | footprint
 
-  # Run size on the libraries and append results to *.size for the 
+  # Run size on the libraries and append results to *.size for the
   # library and each contained object.
-  # It also creates .metrics/size_composites.txt based on size output for 
+  # It also creates .metrics/size_composites.txt based on size output for
   # libraries with entries like this:
   # ace___libACE.a : ace___ACE.o ace___Addr.o
   cat .metrics/libraries.txt | footprint LIB
 
   # Add executables to .metrics/size_composites.txt based on output
-  # from the map files (created with LDFLAGS=-Xlinker -M -Xlinker 
+  # from the map files (created with LDFLAGS=-Xlinker -M -Xlinker
   # -Map -Xlinker $(@).map).  Find the map files of we want based on
   # entries in .metrics/composites.txt.
   cat .metrics/composites.txt | create_size_composites

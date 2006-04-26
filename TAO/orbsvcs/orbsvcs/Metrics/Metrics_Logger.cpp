@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Metrics_Logger.h"
+#include "orbsvcs/Metrics/Metrics_Logger.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/ace_wchar.h"
 
@@ -10,8 +10,9 @@ ACE_RCSID(Metrics_Logger, Metrics_Logger, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
-const int    OPEN_CLOSE_BANNER_CYCLE = 4;
+static const int OPEN_CLOSE_BANNER_CYCLE = 4;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////
 // class TAO_Metrics_Logger //
@@ -863,6 +864,8 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_METRICS_COLLECTION */

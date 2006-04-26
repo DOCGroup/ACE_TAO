@@ -22,11 +22,11 @@
 #ifndef _REQUESTINFO_PIDL_
 #define _REQUESTINFO_PIDL_
 
-#include <PI_Forward.pidl>
+#include "tao/PI_Forward.pidl"
 #include "tao/AnyTypeCode/Dynamic.pidl"
-#include <Messaging_SyncScope.pidl>
+#include "tao/Messaging_SyncScope.pidl"
 #include "tao/PI/InvalidSlot.pidl"
-#include <IOP_IOR.pidl>
+#include "tao/IOP_IOR.pidl"
 
 module PortableInterceptor {
 

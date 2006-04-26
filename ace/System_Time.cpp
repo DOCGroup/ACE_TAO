@@ -1,4 +1,3 @@
-// System_Time.cpp
 // $Id$
 
 #include "ace/System_Time.h"
@@ -7,6 +6,8 @@
 #include "ace/Time_Value.h"
 
 ACE_RCSID(ace, System_Time, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
   : delta_time_ (0)
@@ -66,7 +67,7 @@ int
 ACE_System_Time::get_local_system_time (ACE_Time_Value &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
-  time_out.sec (ACE_OS::time (0));
+  time_out.set (ACE_OS::time (0), 0);
   return 0;
 }
 
@@ -132,12 +133,4 @@ ACE_System_Time::sync_local_system_time (ACE_System_Time::Sync_Mode)
   ACE_NOTSUP_RETURN (-1);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

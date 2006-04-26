@@ -20,13 +20,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
 }
-
-class ACE_Time_Value;
 
 namespace TAO
 {
@@ -67,6 +71,8 @@ namespace TAO
     CORBA::PolicyList_var list_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -11,11 +11,11 @@
  */
 // =================================================================
 
-#include "PICurrent_Loader.h"
+#include "tao/PI/PICurrent_Loader.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PICurrent.h"
+#include "tao/PI/PICurrent.h"
 
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
@@ -24,6 +24,8 @@
 ACE_RCSID (PI,
            PICurrent_Loader,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr
 TAO_PICurrent_Loader::create_object (
@@ -39,6 +41,8 @@ TAO_PICurrent_Loader::create_object (
                   CORBA::Object::_nil ());
   return obj;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_PICurrent_Loader,
                        ACE_TEXT ("PICurrent_Loader"),

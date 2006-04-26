@@ -11,6 +11,8 @@
  */
 #include "unbounded_basic_string_sequence.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -36,4 +38,5 @@ public:
 
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_unbounded_string_sequence_hpp

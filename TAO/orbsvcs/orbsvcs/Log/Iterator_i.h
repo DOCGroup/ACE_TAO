@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,7 +27,7 @@
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -35,6 +35,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Iterator_i
@@ -78,6 +80,8 @@ protected:
   
   virtual int handle_timeout (const ACE_Time_Value&, const void *);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

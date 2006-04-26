@@ -98,7 +98,7 @@ sub run_server
     $SV = new PerlACE::Process ("server", "$server_args");
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1)
+    if (PerlACE::waitforfile_timed ($iorfile,$PerlACE::wait_interval_for_process_creation ) == -1)
     {
         check_supported_priorities ($SV);
 	print STDERR "ERROR: cannot find ior file: $iorfile\n";

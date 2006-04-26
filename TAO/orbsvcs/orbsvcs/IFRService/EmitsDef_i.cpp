@@ -1,12 +1,14 @@
-/* -*- C++ -*- */
 // $Id$
 
-#include "EmitsDef_i.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/EmitsDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 ACE_RCSID (IFRService, 
            EmitsDef_i, 
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EmitsDef_i::TAO_EmitsDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -26,3 +28,5 @@ TAO_EmitsDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::dk_Emits;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

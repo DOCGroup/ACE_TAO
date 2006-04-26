@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "Messaging_SyncScope_PolicyA.h"
+#include "tao/Messaging/Messaging_SyncScope_PolicyA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -34,6 +34,8 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
@@ -51,4 +53,4 @@ namespace Messaging
     &_tao_tc_Messaging_SyncScopePolicy;
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "LB_LoadAlert.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 
 ACE_RCSID (LoadBalancer,
@@ -6,8 +6,10 @@ ACE_RCSID (LoadBalancer,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "LB_LoadAlert.inl"
+# include "orbsvcs/LoadBalancing/LB_LoadAlert.inl"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadAlert::TAO_LB_LoadAlert (void)
   : alerted_ (0),
@@ -15,9 +17,9 @@ TAO_LB_LoadAlert::TAO_LB_LoadAlert (void)
 {
 }
 
-// TAO_LB_LoadAlert::~TAO_LB_LoadAlert (void)
-// {
-// }
+TAO_LB_LoadAlert::~TAO_LB_LoadAlert (void)
+{
+}
 
 void
 TAO_LB_LoadAlert::enable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -36,3 +38,5 @@ TAO_LB_LoadAlert::disable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   this->alerted_ = 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -33,18 +33,15 @@
 #ifndef _OBJECT_REFERENCE_TEMPLATE_IDL_
 #define _OBJECT_REFERENCE_TEMPLATE_IDL_
 
-#include <PI_Forward.pidl>
+#include "tao/PI_Forward.pidl"
 
 module PortableInterceptor
 {
   typeprefix PortableInterceptor "omg.org";
 
   abstract valuetype ObjectReferenceFactory {
-    // boolean equals (in ObjectReferenceFactory other);
     Object make_object (in string repository_id,
 			in ObjectId id);
-    // IOP::TaggedProfileSeq make_profiles (in string repository_id,
-    //                                      in ObjectId id);
   };
 
   abstract valuetype ObjectReferenceTemplate : ObjectReferenceFactory {

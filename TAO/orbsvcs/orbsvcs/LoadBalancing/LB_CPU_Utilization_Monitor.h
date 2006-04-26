@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
- *          Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -25,6 +25,7 @@
 
 #include "orbsvcs/CosLoadBalancingS.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_CPU_Utilization_Monitor
@@ -91,6 +92,8 @@ private:
   CosLoadBalancing::Location location_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

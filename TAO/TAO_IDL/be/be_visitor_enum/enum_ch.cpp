@@ -92,7 +92,7 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
         }
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }
 

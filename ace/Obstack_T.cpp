@@ -15,6 +15,8 @@
 #include "ace/Obstack_T.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Obstack_T)
 
 template <class CHAR> void
@@ -200,5 +202,7 @@ ACE_Obstack_T<CHAR>::release (void)
   this->curr_ = this->head_;
   this->curr_->block_ = this->curr_->cur_ = this->curr_->contents_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_OBSTACK_T_CPP */

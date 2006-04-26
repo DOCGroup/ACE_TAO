@@ -1,23 +1,25 @@
 // $Id$
 
-#include "Proxy.h"
+#include "orbsvcs/Notify/Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Proxy.inl"
+#include "orbsvcs/Notify/Proxy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_Notify_Proxy, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Proxy, "$Id$")
 
-#include "Peer.h"
-#include "Proxy.h"
-#include "Method_Request_Updates.h"
-#include "Worker_Task.h"
-#include "Properties.h"
-#include "POA_Helper.h"
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/Peer.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/Method_Request_Updates.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/POA_Helper.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Proxy::TAO_Notify_Proxy (void)
-  :updates_off_ (0)
+  : updates_off_ (0)
 {
 }
 
@@ -74,10 +76,12 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
   if (TAO_Notify_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
     {
       this->execute_task (request ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else // execute in the current thread context.
     {
       request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -166,11 +170,7 @@ TAO_Notify_Proxy::save_attrs (TAO_Notify::NVPList& attrs)
   TAO_Notify_Peer * peer = this->peer();
   if (peer != 0)
   {
-    ACE_CString ior;
-    if (peer->get_ior(ior))
-    {
-      attrs.push_back (TAO_Notify::NVP("PeerIOR", ior));
-    }
+    attrs.push_back (TAO_Notify::NVP("PeerIOR", peer->get_ior()));
   }
 }
 
@@ -195,3 +195,5 @@ TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
   }
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

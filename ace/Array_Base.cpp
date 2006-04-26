@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_ARRAY_BASE_C
-#define ACE_ARRAY_BASE_C
+#ifndef ACE_ARRAY_BASE_CPP
+#define ACE_ARRAY_BASE_CPP
 
 #include "ace/Array_Base.h"
 
@@ -14,20 +14,11 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Malloc_Base.h"
-
-#if defined (_MSC_VER) && _MSC_VER == 1200 && !defined (ACE_HAS_WINCE)
-#  include <new>  /* For placement new() operator. */
-#endif  /* _MSC_VER == 1200 */
-
 #include "ace/os_include/os_errno.h"
 
-ACE_RCSID (ace,
-	   Array_Base,
-	   "$Id$")
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Dynamically initialize an array.
-
 template <class T>
 ACE_Array_Base<T>::ACE_Array_Base (size_t size,
                                    ACE_Allocator *alloc)
@@ -210,4 +201,6 @@ ACE_Array_Iterator<T>::next (T *&item)
     }
 }
 
-#endif /* ACE_ARRAY_BASE_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ARRAY_BASE_CPP */

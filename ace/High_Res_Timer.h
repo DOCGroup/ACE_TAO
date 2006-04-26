@@ -24,6 +24,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Time_Value.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_High_Res_Timer
  *
@@ -68,9 +70,9 @@
  * different implementation depending on the used windows HAL
  * (Hardware Abstraction Layer).  On some it uses the PC "timer chip"
  * while it uses RDTSC on others.
- * NOTE:  the elapsed time calculations in the print methods use
+ * @note The elapsed time calculations in the print methods use
  * ACE_hrtime_t values.  Those methods do _not_ check for overflow!
- * NOTE: Gabe <begeddov@proaxis.com> raises this issue regarding
+ * @note Gabe <begeddov@proaxis.com> raises this issue regarding
  * <ACE_OS::gethrtime>: on multi-processors, the processor that
  * you query for your <timer.stop> value might not be the one
  * you queried for <timer.start>.  Its not clear how much
@@ -131,8 +133,8 @@ public:
 
   /**
    * Sets the global_scale_factor to the value in the <env>
-   * environment variable.  Returns 0 on success, -1 on failure.  Note
-   * if @a env points to string "0" (value zero), this call will fail.
+   * environment variable.  Returns 0 on success, -1 on failure.
+   * @note If @a env points to string "0" (value zero), this call will fail.
    * This is basically a no-op on CE because there is no concept of
    * environment variable on CE.
    */
@@ -212,8 +214,8 @@ public:
   // @@ WINCE These two functions are currently not supported on Windows CE.
   //    However, we should probably use the handle and ACE_Log_Msg to
   //    print out the result.
-  /// Print total time.  NOTE: only use <print_total> if incremental
-  /// timings had been used!
+  /// Print total time.
+  /// @note only use <print_total> if incremental timings had been used!
   void print_total (const ACE_TCHAR *message,
                     const int iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
@@ -308,6 +310,8 @@ private:
    */
   static int global_scale_factor_status_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/High_Res_Timer.inl"

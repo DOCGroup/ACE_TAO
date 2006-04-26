@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "imr_client_export.h"
+#include "tao/ImR_Client/imr_client_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +25,8 @@
 #include "tao/PortableServer/ImR_Client_Adapter.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ServerObject_i;
 
@@ -62,14 +64,16 @@ namespace TAO
       ServerObject_i *server_object_;
     };
 
-    ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
-    ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
-
     static int
     TAO_Requires_ImR_Client_Initializer =
       TAO::ImR_Client::ImR_Client_Adapter_Impl::Initializer ();
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
+ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
 
 #include /**/ "ace/post.h"
 

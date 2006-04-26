@@ -110,9 +110,10 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
 
   if (Options::instance ()->performance_window () > 0)
     {
+      ACE_Time_Value const performance_time (Options::instance ()->performance_window ());
       if (ACE_Reactor::instance ()->schedule_timer
           (&this->event_channel_, 0,
-           Options::instance ()->performance_window ()) == -1)
+           performance_time) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("schedule_timer")));
@@ -337,10 +338,3 @@ Gateway::parse_consumer_config_file (void)
 
 ACE_SVC_FACTORY_DEFINE (Gateway)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Connection_Handler *>;
-template class ACE_Unbounded_Set<Connection_Handler *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Connection_Handler *>
-#pragma instantiate ACE_Unbounded_Set<Connection_Handler *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

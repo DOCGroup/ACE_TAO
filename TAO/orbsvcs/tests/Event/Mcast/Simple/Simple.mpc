@@ -4,7 +4,13 @@
 project(*supplier): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
-  includes += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
   exename   = supplier
 
   Source_Files {
@@ -13,9 +19,15 @@ project(*supplier): messaging, rteventexe, rtevent_serv, naming {
 }
 
 project(*consumer): messaging, rteventexe, rtevent_serv, naming {
-  after  += ECMcastTests_Lib
+  after  += ECMcastTests_lib
   libs     += ECMcastTests
-  includes += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
   exename   = consumer
 
   Source_Files {
@@ -26,11 +38,16 @@ project(*consumer): messaging, rteventexe, rtevent_serv, naming {
 project(*gateway-ec): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
-  includes += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
   exename   = gateway-ec
 
   Source_Files {
     gateway-ec.cpp
   }
 }
-

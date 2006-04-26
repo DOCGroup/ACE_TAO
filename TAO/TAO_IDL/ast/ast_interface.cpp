@@ -110,10 +110,10 @@ AST_Interface::AST_Interface (void)
     pd_n_inherits (0),
     pd_inherits_flat (0),
     pd_n_inherits_flat (0),
-    home_equiv_ (I_FALSE)
+    home_equiv_ (false)
 {
   this->size_type (AST_Type::VARIABLE); // Always the case.
-  this->has_constructor (I_TRUE);      // Always the case.
+  this->has_constructor (true);      // Always the case.
 }
 
 AST_Interface::AST_Interface (UTL_ScopedName *n,
@@ -121,8 +121,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
                               long nih,
                               AST_Interface **ih_flat,
                               long nih_flat,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_interface,
@@ -134,10 +134,10 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
     pd_n_inherits_flat (nih_flat),
-    home_equiv_ (I_FALSE)
+    home_equiv_ (false)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
-  this->has_constructor (I_TRUE);      // always the case
+  this->has_constructor (true);      // always the case
 }
 
 AST_Interface::~AST_Interface (void)
@@ -155,10 +155,10 @@ AST_Interface::be_replace_operation (AST_Decl *old_op,
                             new_op);
 }
 
-void
+AST_Operation *
 AST_Interface::be_add_operation (AST_Operation *op)
 {
-  (void) this->fe_add_operation (op);
+  return this->fe_add_operation (op);
 }
 
 // Add an AST_Constant node (a constant declaration) to this scope.
@@ -177,7 +177,7 @@ AST_Interface::fe_add_constant (AST_Constant *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -210,7 +210,7 @@ AST_Interface::fe_add_constant (AST_Constant *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -232,7 +232,7 @@ AST_Interface::fe_add_exception (AST_Exception *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -265,7 +265,7 @@ AST_Interface::fe_add_exception (AST_Exception *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -288,7 +288,7 @@ AST_Interface::fe_add_attribute (AST_Attribute *t)
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -321,7 +321,7 @@ AST_Interface::fe_add_attribute (AST_Attribute *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -335,7 +335,7 @@ AST_Interface::fe_add_field (AST_Field *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -368,7 +368,7 @@ AST_Interface::fe_add_field (AST_Field *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   AST_Type *ft = t->field_type ();
@@ -377,7 +377,7 @@ AST_Interface::fe_add_field (AST_Field *t)
   if (mru != 0)
     {
       this->add_to_referenced (ft,
-                               I_FALSE,
+                               false,
                                mru->first_component ());
     }
 
@@ -400,7 +400,7 @@ AST_Interface::fe_add_operation (AST_Operation *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -427,7 +427,7 @@ AST_Interface::fe_add_operation (AST_Operation *t)
           return 0;
         }
     }
-  else if ((d = this->look_in_inherited (t->name (), I_FALSE)) != 0)
+  else if ((d = this->look_in_inherited (t->name (), false)) != 0)
     {
       if (d->node_type () == AST_Decl::NT_op)
         {
@@ -444,7 +444,7 @@ AST_Interface::fe_add_operation (AST_Operation *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -457,7 +457,7 @@ AST_Interface::fe_add_structure (AST_Structure *t)
   AST_Decl *predef = 0;
   AST_StructureFwd *fwd = 0;
 
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_struct_fwd)
@@ -523,7 +523,7 @@ AST_Interface::fe_add_structure (AST_Structure *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -537,7 +537,7 @@ AST_Interface::fe_add_structure_fwd (AST_StructureFwd *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -598,7 +598,7 @@ AST_Interface::fe_add_structure_fwd (AST_StructureFwd *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   // Must check later that all struct and union forward declarations
@@ -623,7 +623,7 @@ AST_Interface::fe_add_enum (AST_Enum *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -656,7 +656,7 @@ AST_Interface::fe_add_enum (AST_Enum *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -669,7 +669,7 @@ AST_Interface::fe_add_union (AST_Union *t)
   AST_Decl *predef = 0;
   AST_UnionFwd *fwd = 0;
 
-  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((predef = this->lookup_for_add (t, false)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_union_fwd)
@@ -735,7 +735,7 @@ AST_Interface::fe_add_union (AST_Union *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -749,7 +749,7 @@ AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -810,7 +810,7 @@ AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   // Must check later that all struct and union forward declarations
@@ -838,7 +838,7 @@ AST_Interface::fe_add_enum_val (AST_EnumVal *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -871,7 +871,7 @@ AST_Interface::fe_add_enum_val (AST_EnumVal *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -893,7 +893,7 @@ AST_Interface::fe_add_typedef (AST_Typedef *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -926,7 +926,7 @@ AST_Interface::fe_add_typedef (AST_Typedef *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   AST_Type *bt = t->base_type ();
@@ -936,7 +936,7 @@ AST_Interface::fe_add_typedef (AST_Typedef *t)
     {
       this->add_to_referenced (
           bt,
-          I_FALSE,
+          false,
           mru->first_component ()
         );
     }
@@ -960,7 +960,7 @@ AST_Interface::fe_add_native (AST_Native *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -993,7 +993,7 @@ AST_Interface::fe_add_native (AST_Native *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1219,21 +1219,21 @@ AST_Interface::redef_clash_populate_r (AST_Interface *t)
     }
 }
 
-idl_bool
+bool
 AST_Interface::home_equiv (void) const
 {
   return this->home_equiv_;
 }
 
 void
-AST_Interface::home_equiv (idl_bool val)
+AST_Interface::home_equiv (bool val)
 {
   this->home_equiv_ = val;
 }
 
 int
 AST_Interface::insert_non_dup (AST_Interface *t,
-                               idl_bool abstract_paths_only)
+                               bool abstract_paths_only)
 {
   // Now check if the dequeued element has any ancestors. If yes, insert
   // them inside the queue making sure that there are no duplicates.
@@ -1328,7 +1328,7 @@ AST_Interface::redefine (AST_Interface *from)
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ());
+  this->set_file_name (idl_global->filename ()->get_string ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
 }
@@ -1371,7 +1371,7 @@ AST_Interface::get_del_queue (void)
   return this->del_queue;
 }
 
-idl_bool
+bool
 AST_Interface::redef_clash (void)
 {
   this->insert_queue.reset ();
@@ -1454,7 +1454,7 @@ AST_Interface::redef_clash (void)
 
                   Identifier *pid2 = group2_member_item->local_name ();
 
-                  if (pid1->compare (pid2) == I_TRUE)
+                  if (pid1->compare (pid2) == true)
                     {
                       idl_global->err ()->error3 (
                                               UTL_Error::EIDL_REDEF,
@@ -1464,7 +1464,7 @@ AST_Interface::redef_clash (void)
                                             );
                       return 1;
                     }
-                  else if (pid1->case_compare_quiet (pid2) == I_TRUE)
+                  else if (pid1->case_compare_quiet (pid2) == true)
                     {
                       if (idl_global->case_diff_error ())
                         {
@@ -1498,7 +1498,7 @@ AST_Interface::redef_clash (void)
 // Look through inherited interfaces.
 AST_Decl *
 AST_Interface::look_in_inherited (UTL_ScopedName *e,
-                                  idl_bool treat_as_ref)
+                                  bool treat_as_ref)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
@@ -1567,7 +1567,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
 
 AST_Decl *
 AST_Interface::lookup_for_add (AST_Decl *d,
-                               idl_bool /* treat_as_ref */)
+                               bool /* treat_as_ref */)
 {
   if (d == 0)
     {

@@ -1,6 +1,8 @@
+// $Id$
+
 #ifndef TAO_CONDITION_CPP
 #define TAO_CONDITION_CPP
-#include "Condition.h"
+#include "tao/Condition.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
@@ -8,9 +10,7 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID (TAO,
-           Condition,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class MUTEX>
 TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
@@ -57,4 +57,6 @@ TAO_Condition<MUTEX>::~TAO_Condition (void)
     delete this->mutex_;
 }
 
-#endif /* TAO_CONDITION_CPP*/
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif  /* TAO_CONDITION_CPP */

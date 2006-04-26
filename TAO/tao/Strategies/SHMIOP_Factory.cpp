@@ -1,9 +1,9 @@
-#include "SHMIOP_Factory.h"
+#include "tao/Strategies/SHMIOP_Factory.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Acceptor.h"
-#include "SHMIOP_Connector.h"
+#include "tao/Strategies/SHMIOP_Acceptor.h"
+#include "tao/Strategies/SHMIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -18,6 +18,8 @@ ACE_RCSID (Strategies,
 
 
 static const char prefix_[] = "shmiop";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory (void)
   : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE),
@@ -80,12 +82,12 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
     {
       const ACE_TCHAR *current_arg = 0;
 
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
         {
           this->min_bytes_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFilePrefix"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFilePrefix"))))
         {
           this->mmap_prefix_ = ACE::strnew (current_arg);
           arg_shifter.consume_arg ();
@@ -115,6 +117,8 @@ TAO_SHMIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_SHMIOP_Protocol_Factory,
                        ACE_TEXT ("SHMIOP_Factory"),

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Time_Value.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Timer_Node_Dispatch_Info_T
@@ -162,7 +164,7 @@ private:
  * @class ACE_Timer_Queue_Iterator_T
  *
  * @brief Generic interface for iterating over a subclass of
- * <ACE_Timer_Queue>.
+ * ACE_Timer_Queue.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it isn't guaranteed
@@ -378,7 +380,7 @@ public:
   /// Accessor to the upcall functor
   FUNCTOR &upcall_functor (void);
 
-  /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+  /// Returns a pointer to this ACE_Timer_Queue's iterator.
   virtual ITERATOR &iter (void) = 0;
 
   /// Removes the earliest node from the queue and returns it
@@ -429,8 +431,8 @@ protected:
   virtual int dispatch_info_i (const ACE_Time_Value &current_time,
                                ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
-  /// Synchronization variable for <ACE_Timer_Queue>.
-  /// NOTE: the right name would be lock_, but HP/C++ will choke on that!
+  /// Synchronization variable for ACE_Timer_Queue.
+  /// @note The right name would be lock_, but HP/C++ will choke on that!
   ACE_LOCK mutex_;
 
   /// Class that implements a free list
@@ -541,6 +543,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Event_Handler_Handle_Timeout_Upcall (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.inl"

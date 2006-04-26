@@ -18,6 +18,8 @@ ACE_RCSID(ace, WFMO_Reactor, "$Id$")
 
 #include "ace/Auto_Ptr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_WFMO_Reactor_Handler_Repository::ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor)
   : wfmo_reactor_ (wfmo_reactor)
 {
@@ -192,7 +194,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
 
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
-  size_t original_handle_count = this->handles_to_be_deleted_;
+  size_t const original_handle_count = this->handles_to_be_deleted_;
   int result = 0;
   size_t i;
 
@@ -2391,7 +2393,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
       else
         {
           ACE_Notification_Buffer *buffer =
-            (ACE_Notification_Buffer *) mb->base ();
+            reinterpret_cast <ACE_Notification_Buffer *> (mb->base ());
 
           // If eh == 0 then we've got major problems!  Otherwise, we
           // need to dispatch the appropriate handle_* method on the
@@ -2555,7 +2557,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 
   for (index = 0; index < queue_size; ++index)
     {
-      ACE_Message_Block  *mb;
+      ACE_Message_Block *mb = 0;
       if (-1 == this->message_queue_.dequeue_head (mb))
         return -1;        // This shouldn't happen...
 
@@ -2604,7 +2606,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
   queue_size  = local_queue.message_count ();
   for (index = 0; index < queue_size; ++index)
     {
-      ACE_Message_Block  *mb;
+      ACE_Message_Block  *mb = 0;
       if (-1 == local_queue.dequeue_head (mb))
         {
           ACE_ASSERT (0);
@@ -2676,28 +2678,22 @@ ACE_WFMO_Reactor::resumable_handler (void)
 // No-op WinSOCK2 methods to help WFMO_Reactor compile
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 int
-WSAEventSelect (SOCKET s,
-                WSAEVENT hEventObject,
-                long lNetworkEvents)
+WSAEventSelect (SOCKET /* s */,
+                WSAEVENT /* hEventObject */,
+                long /* lNetworkEvents */)
 {
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (hEventObject);
-  ACE_UNUSED_ARG (lNetworkEvents);
-
   return -1;
 }
 
 int
-WSAEnumNetworkEvents (SOCKET s,
-                      WSAEVENT hEventObject,
-                      LPWSANETWORKEVENTS lpNetworkEvents)
+WSAEnumNetworkEvents (SOCKET /* s */,
+                      WSAEVENT /* hEventObject */,
+                      LPWSANETWORKEVENTS /* lpNetworkEvents */)
 {
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (hEventObject);
-  ACE_UNUSED_ARG (lpNetworkEvents);
-
   return -1;
 }
 #endif /* !defined ACE_HAS_WINSOCK2 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */

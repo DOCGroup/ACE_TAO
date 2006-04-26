@@ -18,8 +18,8 @@
 #include "orbsvcs/LifeCycleServiceC.h"
 #include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID (Quoter, 
-           Generic_Factory, 
+ACE_RCSID (Quoter,
+           Generic_Factory,
            "$Id$")
 
 Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)
@@ -37,7 +37,7 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
       generic_Factory_Name.length (2);
       generic_Factory_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       generic_Factory_Name[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
-      if (this->quoterNamingContext_var_.ptr () != 0)
+      if (!CORBA::is_nil (this->quoterNamingContext_var_.in ()))
         this->quoterNamingContext_var_->unbind (generic_Factory_Name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

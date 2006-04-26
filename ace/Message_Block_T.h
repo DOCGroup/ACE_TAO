@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Locked_Data_Block
  *
@@ -66,6 +68,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Block_T.inl"

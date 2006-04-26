@@ -1,13 +1,19 @@
+// -*- C++ -*-
+
 #ifndef _SHUTDOWN_UTILS_H
 #define _SHUTDOWN_UTILS_H
 #include /**/ "ace/pre.h"
 
 // $Id$
 
-#include <ace/Event_Handler.h>
-#include <ace/Signal.h>
-
 #include "orbsvcs/svc_utils_export.h"
+
+#include "tao/Versioned_Namespace.h"
+
+#include "ace/Event_Handler.h"
+#include "ace/Signal.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * \brief Abstract definition for a Functor that shuts down a particular service.
@@ -54,7 +60,10 @@ public:
 protected:
   Shutdown_Functor& functor_;
   ACE_Sig_Handler   shutdown_;
+  ACE_Sig_Set       registered_signals_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif

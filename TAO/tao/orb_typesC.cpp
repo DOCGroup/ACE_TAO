@@ -29,14 +29,18 @@
 // be\be_codegen.cpp:288
 
 
-#include "orb_typesC.h"
+#include "tao/orb_typesC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

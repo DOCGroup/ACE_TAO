@@ -1,13 +1,13 @@
 /* -*- C++ -*- */
 // $Id$
 
-// NOTE:  if you are using Digital UNIX V4.0f or later, you must
+// @note If you are using Digital UNIX V4.0f or later, you must
 // use config-tru64.h instead of directly using this config file.
 
 // The following configuration file is designed to work for the
 // Digital UNIX V4.0a through V4.0d with either the GNU g++, DEC
-// cxx 5.4 and later, Rational RCC (2.4.1) compilers, or KAI 3.3
-// compilers.  It is configured to use the IEEE Std 1003.1c-1995,
+// cxx 5.4 and later, Rational RCC (2.4.1) compilers/
+// It is configured to use the IEEE Std 1003.1c-1995,
 // POSIX System Application Program Interface, or DCE threads (with
 // cxx only); it automatically selects the proper thread interface
 // depending on whether the cxx -pthread or -threads option was
@@ -64,12 +64,13 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD
-# define ACE_HAS_USING_KEYWORD
 #elif defined (__KCC)
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-kcc-common.h"
 #else
-# error unsupported compiler on Digital Unix
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#   error unsupported compiler on Digital Unix
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ && !_KCC */
 
 #if (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500)
@@ -138,6 +139,7 @@
 #define ACE_HAS_LONG_MAP_FAILED
 #define ACE_HAS_MSG
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
+#define ACE_HAS_NONCONST_SENDMSG
 #define ACE_HAS_OSF1_GETTIMEOFDAY
 #define ACE_HAS_OSF_TIMOD_H
 #define ACE_HAS_POLL

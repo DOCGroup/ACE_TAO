@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Service_Type_Impl
  *
@@ -188,6 +190,8 @@ private:
   /// Pointer to the head of the ACE_Module list.
   ACE_Module_Type *head_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Types.inl"

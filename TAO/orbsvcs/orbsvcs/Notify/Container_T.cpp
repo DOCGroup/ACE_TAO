@@ -3,22 +3,20 @@
 #ifndef TAO_Notify_CONTAINER_T_CPP
 #define TAO_Notify_CONTAINER_T_CPP
 
-#include "Container_T.h"
+#include "orbsvcs/Notify/Container_T.h"
 
-#include "Properties.h"
-#include "Factory.h"
-#include "POA_Helper.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Factory.h"
+#include "orbsvcs/Notify/POA_Helper.h"
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Container_T.inl"
+#include "orbsvcs/Notify/Container_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           Notify_Container_T, 
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TYPE>
 TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T (void)
@@ -61,5 +59,7 @@ TAO_Notify_Container_T<TYPE>::init (ACE_ENV_SINGLE_ARG_DECL)
   // Init variables
   factory->create (this->collection_ ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_Notify_CONTAINER_T_CPP */

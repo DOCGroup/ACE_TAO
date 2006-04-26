@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbconf.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +24,11 @@
 #include "ace/Condition_T.h"
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Condition
@@ -106,12 +109,14 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Condition (const TAO_Condition<MUTEX> &))
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Condition.inl"
+#include "tao/Condition.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Condition.cpp"
+#include "tao/Condition.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

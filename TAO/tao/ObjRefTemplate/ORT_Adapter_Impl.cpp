@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ORT_Adapter_Impl.h"
+#include "tao/ObjRefTemplate/ORT_Adapter_Impl.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"
@@ -10,6 +10,8 @@
 ACE_RCSID (ObjRefTemplate,
            ORT_Adapter_Impl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
 TAO::ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
@@ -111,3 +113,5 @@ TAO::ORT_Adapter_Impl::activate (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

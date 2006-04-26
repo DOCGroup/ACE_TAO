@@ -2,6 +2,7 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::True_RefCount_Policy::True_RefCount_Policy (void)
@@ -23,3 +24,5 @@ TAO::True_RefCount_Policy::remove_ref (void)
   if (new_count == 0)
     delete this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

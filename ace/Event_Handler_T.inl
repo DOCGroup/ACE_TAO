@@ -2,9 +2,9 @@
 //
 // $Id$
 
-
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class T> ACE_INLINE void
 ACE_Event_Handler_T<T>::op_handler (T *op)
@@ -131,3 +131,5 @@ ACE_Event_Handler_T<T>::sig_handler (ACE_TYPENAME ACE_Event_Handler_T<T>::SIG_HA
   ACE_TRACE ("ACE_Event_Handler_T<T>::sig_handler");
   this->sig_handler_ = h;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

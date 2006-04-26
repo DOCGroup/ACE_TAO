@@ -47,7 +47,8 @@ project(nestea_idl): taoidldefaults {
 }
 
 project(nestea server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
-  after += nestea_idl
+  avoids += ace_for_tao
+  after  += nestea_idl
 
   IDL_Files {
   }

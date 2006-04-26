@@ -26,6 +26,8 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_interface/tie_si.cpp:96
 
@@ -298,3 +300,5 @@ void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
   );
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

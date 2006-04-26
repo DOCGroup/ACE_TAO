@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -21,3 +24,4 @@ Delivery_Request::set_destination_id (IdVec & destination_id)
 } // namespace TAO_Notify
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL

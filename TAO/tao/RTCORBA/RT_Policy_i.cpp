@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RT_Policy_i.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -18,11 +18,14 @@ ACE_RCSID (RTCORBA,
 
 // ****************************************************************
 
-TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (RTCORBA::PriorityModel priority_model,
-                                                  RTCORBA::Priority server_priority)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
+  RTCORBA::PriorityModel priority_model,
+  RTCORBA::Priority server_priority)
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityModelPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_model_ (priority_model)
@@ -31,9 +34,9 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (RTCORBA::PriorityModel priorit
 }
 
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityModelPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_model_ (rhs.priority_model_)
@@ -95,7 +98,7 @@ CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PriorityModelPolicy* tmp;
+  TAO_PriorityModelPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -148,9 +151,9 @@ TAO_PriorityModelPolicy::_tao_scope (void) const
 // ****************************************************************
 
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ThreadpoolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , id_ (id)
@@ -158,9 +161,9 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 }
 
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ThreadpoolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , id_ (rhs.id_)
@@ -208,7 +211,7 @@ CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ThreadpoolPolicy* tmp;
+  TAO_ThreadpoolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -240,18 +243,18 @@ TAO_ThreadpoolPolicy::_tao_scope (void) const
 // ****************************************************************
 
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PrivateConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
 {
 }
 
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PrivateConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
 {
@@ -286,7 +289,7 @@ CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PrivateConnectionPolicy* tmp;
+  TAO_PrivateConnectionPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -319,9 +322,9 @@ TAO_PrivateConnectionPolicy::_tao_scope (void) const
 // ****************************************************************
 
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_bands_ (bands)
@@ -329,9 +332,9 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RT
 }
 
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
   , TAO_Local_RefCounted_Object ()
   , priority_bands_ (rhs.priority_bands_)
@@ -390,7 +393,7 @@ CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PriorityBandedConnectionPolicy *tmp;
+  TAO_PriorityBandedConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -440,9 +443,9 @@ TAO_PriorityBandedConnectionPolicy::priority_bands_rep (void)
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList &protocols)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ServerProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (protocols)
@@ -450,9 +453,9 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList 
 }
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ServerProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (rhs.protocols_)
@@ -486,7 +489,7 @@ RTCORBA::ProtocolList *
 TAO_ServerProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  RTCORBA::ProtocolList *tmp;
+  RTCORBA::ProtocolList *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -507,7 +510,7 @@ CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ServerProtocolPolicy* tmp;
+  TAO_ServerProtocolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -550,9 +553,9 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (void)
 
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ClientProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (protocols)
@@ -560,9 +563,9 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList 
 }
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , RTCORBA::ClientProtocolPolicy ()
   , TAO_Local_RefCounted_Object ()
   , protocols_ (rhs.protocols_)
@@ -596,7 +599,7 @@ RTCORBA::ProtocolList *
 TAO_ClientProtocolPolicy::protocols (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  RTCORBA::ProtocolList *tmp;
+  RTCORBA::ProtocolList *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -617,7 +620,7 @@ CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ClientProtocolPolicy* tmp;
+  TAO_ClientProtocolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -1300,9 +1303,9 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = 1;
-      CORBA::Boolean dont_route = 0;
-      CORBA::Boolean enable_network_priority = 0;
+      CORBA::Boolean keep_alive = true;
+      CORBA::Boolean dont_route = false;
+      CORBA::Boolean enable_network_priority = false;
 
       ACE_NEW_RETURN (property,
                       TAO_TCP_Protocol_Properties (send_buffer_size,
@@ -1319,9 +1322,9 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = 1;
-      CORBA::Boolean dont_route = 0;
-      CORBA::Long preallocate_buffer_size = 0;
+      CORBA::Boolean keep_alive = true;
+      CORBA::Boolean dont_route = false;
+      CORBA::Long preallocate_buffer_size = false;
       const char *mmap_filename = "";
       const char *mmap_lockname = "";
 
@@ -1362,9 +1365,9 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = 1;
-      CORBA::Boolean dont_route = 0;
-      CORBA::Boolean enable_network_priority = 0;
+      CORBA::Boolean keep_alive = true;
+      CORBA::Boolean dont_route = false;
+      CORBA::Boolean enable_network_priority = false;
 
       ACE_NEW_RETURN (property,
                       TAO_StreamControl_Protocol_Properties (send_buffer_size,
@@ -1401,5 +1404,7 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
                     0);
   return property;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE> ACE_INLINE
 ACE_TSS<TYPE>::ACE_TSS (TYPE *type)
@@ -33,5 +36,7 @@ ACE_TSS<TYPE>::ts_get (void) const
 {
   return this->type_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ! (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))) */

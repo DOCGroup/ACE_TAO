@@ -25,6 +25,8 @@ ACE_RCSID (tao,
            Any,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 using namespace TAO;
 
 CORBA::Any::Any (void)
@@ -192,7 +194,7 @@ CORBA::Any::checked_to_value (CORBA::ValueBase *&_tao_elem) const
 {
   if (this->impl_ == 0)
     {
-      return 0;
+      return false;
     }
 
   return this->impl_->to_value (_tao_elem);
@@ -205,7 +207,7 @@ CORBA::Any::checked_to_abstract_base (
 {
   if (this->impl_ == 0)
     {
-      return 0;
+      return false;
     }
 
   return this->impl_->to_abstract_base (_tao_elem);
@@ -273,7 +275,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 
   if ((cdr >> tc.out ()) == 0)
     {
-      return 0;
+      return false;
     }
 
   ACE_TRY_NEW_ENV
@@ -281,7 +283,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc.in ()),
-                      0);
+                      false);
 
       any.replace (impl);
       impl->_tao_decode (cdr
@@ -290,11 +292,11 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
 
-  return 1;
+  return true;
 }
 
 // =======================================================================
@@ -766,8 +768,8 @@ namespace TAO
     ) const
   {
     _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return 1;
+    return true;
   }
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

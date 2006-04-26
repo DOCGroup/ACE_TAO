@@ -1,11 +1,12 @@
 // $Id$
 
-#include "EC_Negation_Filter.h"
+#include "orbsvcs/Event/EC_Negation_Filter.h"
 
 ACE_RCSID(Event, EC_Negation_Filter, "$Id$")
 
-TAO_EC_Negation_Filter::
-    TAO_EC_Negation_Filter (TAO_EC_Filter* child)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_EC_Negation_Filter::TAO_EC_Negation_Filter (TAO_EC_Filter* child)
   :  child_ (child)
 {
   this->adopt_child (this->child_);
@@ -109,3 +110,5 @@ TAO_EC_Negation_Filter::add_dependencies (
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

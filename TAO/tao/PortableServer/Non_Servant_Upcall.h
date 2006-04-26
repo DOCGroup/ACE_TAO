@@ -15,11 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
 class TAO_Root_POA;
@@ -58,14 +62,16 @@ namespace TAO
     protected:
 
       TAO_Object_Adapter &object_adapter_;
-      ::TAO_Root_POA &poa_;
+      TAO_Root_POA &poa_;
       Non_Servant_Upcall *previous_;
     };
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Non_Servant_Upcall.inl"
+# include "tao/PortableServer/Non_Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

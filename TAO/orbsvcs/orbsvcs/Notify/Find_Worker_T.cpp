@@ -3,13 +3,13 @@
 #ifndef TAO_Notify_FIND_WORKER_T_CPP
 #define TAO_Notify_FIND_WORKER_T_CPP
 
-#include "Find_Worker_T.h"
+#include "orbsvcs/Notify/Find_Worker_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Find_Worker_T.inl"
+#include "orbsvcs/Notify/Find_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Find_Worker_T, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
 TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::TAO_Notify_Find_Worker_T (void)
@@ -32,6 +32,7 @@ template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> INTE
 TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
 {
   this->find (id, container ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (INTERFACE::_nil ());
 
   if (this->result_ == 0)
     ACE_THROW_RETURN (EXCEPTION ()
@@ -41,7 +42,8 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const
   ACE_CHECK_RETURN (INTERFACE::_nil ());
 
   return INTERFACE::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_Notify_FIND_WORKER_T_CPP */

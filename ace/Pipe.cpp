@@ -19,6 +19,8 @@
 
 ACE_RCSID(ace, Pipe, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Pipe::dump (void) const
 {
@@ -44,9 +46,14 @@ ACE_Pipe::open (int buffer_size)
   ACE_SOCK_Stream reader;
   ACE_SOCK_Stream writer;
   int result = 0;
+# if defined (ACE_WIN32)
+  ACE_INET_Addr local_any  (static_cast<u_short> (0), ACE_LOCALHOST);
+# else
+  ACE_Addr local_any = ACE_Addr::sap_any;
+# endif /* ACE_WIN32 */
 
   // Bind listener to any port and then find out what the port was.
-  if (acceptor.open (ACE_Addr::sap_any) == -1
+  if (acceptor.open (local_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
     result = -1;
   else
@@ -333,3 +340,5 @@ ACE_Pipe::recv (size_t n, ...) const
   va_end (argp);
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

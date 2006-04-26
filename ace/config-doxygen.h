@@ -16,7 +16,7 @@
 #define ACE_CONFIG_DOXYGEN_H
 
 /// Make sure that we always turn inlining on.
-#defind __ACE_INLINE__
+#define __ACE_INLINE__
 
 /// Make all the emulation versions of string operations visible
 // #define ACE_LACKS_WCSTOK
@@ -96,9 +96,6 @@
 
 /// Generate strptime documentation
 #define ACE_HAS_STRPTIME
-
-/// Doxygen is capable of parsing using
-#define ACE_HAS_USING_KEYWORD
 
 /// Generate icmp documentation
 #define ACE_HAS_ICMP_SUPPORT 1

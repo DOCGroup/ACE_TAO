@@ -128,48 +128,20 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
   // Generate the argument list.
   *os << "TAO_InputCDR &_tao_in, " << be_nl
-      << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-      << "::CORBA::ULong reply_status";
-
-  *os << be_nl
-      << "ACE_ENV_ARG_DECL";
-
-  *os << ")" << be_uidt << be_uidt_nl;
-
-  // Generate the actual code for the stub. However, if any of the argument
-  // types is "native", we flag a MARSHAL exception.
-  // last argument - is always ACE_ENV_ARG_PARAMETER
-  *os << "{\n" << be_idt;
-
-  // Generate any pre stub info if and only if none of our parameters is of the
-  // native type.
-  if (!node->has_native ())
-    {
-      // native type does not exist.
-
-      // Generate any "pre" stub information such as tables or declarations
-      // This is a template method and the actual work will be done by the
-      // derived class
-      if (this->gen_pre_stub_info (node, bt) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "gen_pre_stub_info failed\n"),
-                            -1);
-        }
-    }
-
-  os->indent();
+      << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
+      << "::CORBA::ULong reply_status"
+      << env_decl << ")" << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl;
 
   *os << "// Retrieve Reply Handler object." << be_nl;
   *os << parent->full_name () << "_var "
       << "_tao_reply_handler_object =" << be_idt_nl;
 
   *os << parent->full_name ();
-  *os << "::_narrow (_tao_reply_handler ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
-
-  *os << "ACE_CHECK;" << be_nl << be_nl
+  *os << "::_narrow (_tao_reply_handler"
+      << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+      << ");" << be_uidt
+      << TAO_ACE_CHECK () << be_nl << be_nl
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_nl
       << "{" << be_idt_nl
@@ -205,7 +177,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "case TAO_AMI_REPLY_USER_EXCEPTION:" << be_nl
       << "case TAO_AMI_REPLY_SYSTEM_EXCEPTION:" << be_nl
       << "{" << be_idt_nl
-      << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl << be_nl;
+      << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl ;
 
   be_interface *original =
     (be_interface::narrow_from_decl (parent))->original_interface ();
@@ -219,29 +191,63 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
                         -1);
     }
 
+  const char *exception_data_arg = "0";
+  const char *exception_count_arg = "0";
 
-  *os << original->compute_local_name ("AMI_", "ExceptionHolder")
-      << "_var exception_holder_var;" << be_nl
-      << "ACE_NEW (" << be_idt << be_idt_nl
-      << "exception_holder_var," << be_nl;
-
-  if (original->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+  // Don't do anything if the exception list is empty.
+  if (node->exceptions ())
     {
-      be_decl *scope =
-        be_scope::narrow_from_scope (original->defined_in ())->decl ();
+      *os << be_nl << "static TAO::Exception_Data " << "exceptions_data [] = " << be_nl;
+      *os << "{" << be_idt_nl;
 
-      *os << "OBV_" << scope->name() << "::"
-          << "_tao_"
-          << original->compute_local_name ("AMI_", "ExceptionHolder");
-    }
-  else
-    {
-      *os << "_tao_"
-          << original->compute_local_name ("AMI_", "ExceptionHolder");
-    }
+      int excep_count = 0;
 
-  *os << " ()" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      be_exception *ex = 0;
+
+      // Initialize an iterator to iterate thru the exception list.
+      // Continue until each element is visited.
+      // Iterator must be explicitly advanced inside the loop.
+      for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+           !ei.is_done ();)
+        {
+          ex = be_exception::narrow_from_decl (ei.item ());
+
+          *os << "{" << be_idt_nl
+              << "\"" << ex->repoID () << "\"," << be_nl;
+          // Allocator method.
+          *os << ex->name () << "::_alloc"
+              << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
+
+          if (be_global->tc_support ())
+            {
+              *os << ", " << ex->tc_name ();
+            }
+          else
+            {
+              *os << ", 0";
+            }
+
+          *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_uidt_nl
+              << "}";
+
+          ++excep_count;
+          ei.next ();
+
+          if (!ei.is_done ())
+            {
+              *os << "," << be_nl;
+            }
+
+        }
+
+      *os << be_uidt_nl << "};" << be_nl << be_nl;
+
+      *os << "::CORBA::ULong exceptions_count = "
+          << excep_count << ";\n" << be_nl;
+
+      exception_data_arg = "exceptions_data";
+      exception_count_arg = "exceptions_count";
+    }
 
   *os << "::CORBA::OctetSeq "
       << "_tao_marshaled_exception (" << be_idt << be_idt_nl
@@ -249,18 +255,23 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "static_cast <CORBA::ULong> (cdr->length ())," << be_nl
       << "reinterpret_cast <unsigned char*> (cdr->rd_ptr ())," << be_nl
       << "0" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "exception_holder_var->marshaled_exception (_tao_marshaled_exception);"
-      << be_nl << be_nl;
+      << ");" << be_uidt_nl;
 
-  *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl
-      << "exception_holder_var->is_system_exception (1);" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "exception_holder_var->is_system_exception (0);"
-      << be_uidt_nl << be_nl
-      << "exception_holder_var->byte_order (_tao_in.byte_order ());" << be_nl
-      << be_nl
-      << "_tao_reply_handler_object->"
+ *os  << "::Messaging::ExceptionHolder* exception_holder_ptr = 0;" << be_nl
+      << "ACE_NEW (" << be_idt << be_idt_nl
+      << "exception_holder_ptr," << be_nl
+      << "::TAO::ExceptionHolder (" << be_idt_nl
+      << "(reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)," << be_nl
+      << "_tao_in.byte_order ()," << be_nl
+      << "_tao_marshaled_exception," << be_nl
+      << exception_data_arg << "," << be_nl
+      << exception_count_arg << ")" << be_uidt_nl
+      << ");" << be_uidt_nl << be_uidt_nl;
+
+  *os << "::Messaging::ExceptionHolder_var exception_holder_var = "
+      << "exception_holder_ptr;" << be_nl;
+
+  *os << "_tao_reply_handler_object->"
       << node->local_name () << "_excep (" << be_idt << be_idt_nl
       << "exception_holder_var";
 
@@ -443,8 +454,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
                         -1);
     }
 
-  *os << be_uidt_nl << ");" << be_uidt_nl;
-  *os << "ACE_CHECK;" << be_nl;
+  *os << be_uidt_nl << ");" << be_uidt
+      << TAO_ACE_CHECK () << be_nl;
 
   return 0;
 }

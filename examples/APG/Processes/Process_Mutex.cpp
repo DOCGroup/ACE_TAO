@@ -55,7 +55,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else              // Run as the parent.
     {
       ACE_Process_Options options;
-      options.command_line ("%s a", argv[0]);
+      options.command_line (ACE_TEXT ("%s a"), argv[0]);
       ACE_Process processa, processb;
 
       pid_t pida = processa.spawn (options);

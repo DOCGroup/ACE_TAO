@@ -171,9 +171,6 @@
    PTHREAD_PROCESS_SHARED values */
 #define ACE_HAS_PTHREAD_PROCESS_ENUM 1
 
-/* Platform has pthread_sigmask() defined. */
-#define ACE_HAS_PTHREAD_SIGMASK 1
-
 /* Platform will recurse infinitely on thread exits from TSS cleanup routines
    (e.g., AIX) */
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS 1
@@ -209,7 +206,7 @@
 #define ACE_HAS_SIG_ATOMIC_T 1
 
 /* Platform supports new BSD inet_addr len field. */
-#define ACE_HAS_SIN_LEN 1
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN 1
 
 /* OS/compiler uses size_t * rather than int * for socket lengths */
 #define ACE_HAS_SIZET_SOCKET_LEN 1
@@ -341,9 +338,6 @@
 
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
 #define ACE_NEEDS_SCHED_H 1
-
-/* <time.h> doesn't automatically #include <sys/time.h> */
-#define ACE_LACKS_SYSTIME_H 1
 
 /*********************************************************************/
 /* Compiler's template mechanim must see source code (i.e., .cpp files).  This

@@ -13,6 +13,8 @@ ACE_RCSID(ace, LSOCK, "$Id$")
 #include "ace/LSOCK.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK)
 
 void
@@ -173,4 +175,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
     return ACE_INVALID_HANDLE;
 }
 #endif /* ACE_HAS_MSG */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

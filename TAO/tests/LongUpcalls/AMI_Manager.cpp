@@ -162,13 +162,13 @@ Controller_Handler::worker_started (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Controller_Handler::worker_started_excep
-    (Test::AMI_ControllerExceptionHolder* h
+    (::Messaging::ExceptionHolder* h
      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      h->raise_worker_started (ACE_ENV_SINGLE_ARG_PARAMETER);
+      h->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -190,13 +190,13 @@ Controller_Handler::worker_finished (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Controller_Handler::worker_finished_excep
-    (Test::AMI_ControllerExceptionHolder *h
+    (::Messaging::ExceptionHolder *h
      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      h->raise_worker_finished (ACE_ENV_SINGLE_ARG_PARAMETER);
+      h->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ort_export.h"
+#include "tao/ObjRefTemplate/ort_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/ORB.h"
@@ -66,6 +66,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Default_ORT
 {
@@ -238,8 +240,10 @@ TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::Objec
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Default_ORTC.inl"
+#include "tao/ObjRefTemplate/Default_ORTC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

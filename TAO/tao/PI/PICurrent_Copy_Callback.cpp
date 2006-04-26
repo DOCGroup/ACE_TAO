@@ -1,13 +1,15 @@
-#include "PICurrent_Copy_Callback.h"
+#include "tao/PI/PICurrent_Copy_Callback.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Impl.h"
 
 ACE_RCSID (tao,
            PICurrent_Copy_Callback,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent_Copy_Callback::PICurrent_Copy_Callback (void)
   : src_ (0),
@@ -24,28 +26,32 @@ TAO::PICurrent_Copy_Callback::~PICurrent_Copy_Callback (void)
     this->src_->copy_callback (0);
 }
 
-int
+void
 TAO::PICurrent_Copy_Callback::execute (void)
 {
   if (this->src_ != 0 && this->dst_ != 0
       && this->src_ != this->dst_)
     {
-      const PICurrent_Impl::Table & s = this->src_->current_slot_table ();
+      // Only do a copy when the destination still refers to the table
+      // of the src
+      if (this->dst_->lc_slot_table () != 0)
+        {
+          const PICurrent_Impl::Table & s = this->src_->current_slot_table ();
 
-      // Disable use of the logically copied slot table before
-      // performing the deep copy.
-      this->dst_->lc_slot_table (0);
+          // Disable use of the logically copied slot table before
+          // performing the deep copy.
+          this->dst_->lc_slot_table (0);
 
-      PICurrent_Impl::Table & d = this->dst_->slot_table ();
+          PICurrent_Impl::Table & d = this->dst_->slot_table ();
 
-      d = s;
+          d = s;
+        }
 
       // Prevent subsequent deep copies, effectively disabling this
       // callback.
       this->src_->copy_callback (0);
+      this->src_->destruction_callback (0);
     }
-
-  return 0;
 }
 
 void
@@ -55,5 +61,7 @@ TAO::PICurrent_Copy_Callback::src_and_dst (PICurrent_Impl * src,
   this->src_ = src;
   this->dst_ = dst;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef METRICS_LOCAL_CACHE_T_H
@@ -17,6 +19,8 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/MetricsC.h"
 #include "orbsvcs/Metrics/Metrics_Utils.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_METRICS_BASE_POINTERS)
   typedef ACE_Based_Pointer<char> ACE_METRICS_STRING_TYPE;
@@ -312,16 +316,14 @@ public:
   // Flush the TAO metrics local cache into shared memory.
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Metrics_LocalCache_T.cpp"
+#include "orbsvcs/Metrics/Metrics_LocalCache_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Metrics_LocalCache_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-#if defined (__ACE_INLINE__)
-#include "Metrics_LocalCache_T.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* METRICS_LOCAL_CACHE_T_H */

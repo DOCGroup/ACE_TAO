@@ -21,6 +21,8 @@
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Utils
@@ -138,6 +140,7 @@ namespace TAO
       T * ptr_;
     };
 
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
     /// Compare two Servant_Vars for equivalence.
     template <class X, class Y>
     bool operator==(Servant_Var<X> const & x,
@@ -147,16 +150,19 @@ namespace TAO
     template <class X, class Y>
     bool operator!=(Servant_Var<X> const & x,
                     Servant_Var<Y> const & y);
+#endif /* ! ACE_LACKS_MEMBER_TEMPLATES */
 
   } // namespace Utils
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Servant_Var.inl"
+# include "tao/Utils/Servant_Var.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Servant_Var.cpp"
+#include "tao/Utils/Servant_Var.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -28,9 +28,9 @@
 #ifndef TAO_TAO_IDL
 #define TAO_TAO_IDL
 
-#include "Policy.pidl"
-#include "TimeBase.pidl"
-#include "Messaging_SyncScope.pidl"
+#include "tao/Policy.pidl"
+#include "tao/TimeBase.pidl"
+#include "tao/Messaging_SyncScope.pidl"
 
 #pragma prefix "tao"
 

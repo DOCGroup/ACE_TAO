@@ -15,13 +15,7 @@
 #ifndef TAO_UTILS_SERVER_MAIN_T_CPP
 #define TAO_UTILS_SERVER_MAIN_T_CPP
 
-#include "Server_Main.h"
-
-
-ACE_RCSID (Utils,
-           Server_Main,
-           "$Id$")
-
+#include "tao/Utils/Server_Main.h"
 
 #include "tao/ORB.h"
 
@@ -29,6 +23,8 @@ ACE_RCSID (Utils,
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename SERVANT>
 TAO::Utils::Server_Main<SERVANT>::Server_Main (const char * name)
@@ -59,7 +55,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_init (argc, asciiArgv, name_ ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (! CORBA::is_nil(orb.in ()))
+    if (! ::CORBA::is_nil(orb.in ()))
     {
       // create an instance of the servant object and give it a
       // chance at the arguments.
@@ -133,5 +129,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
   ACE_ENDTRY;
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif //TAO_UTILS_SERVER_MAIN_T_CPP

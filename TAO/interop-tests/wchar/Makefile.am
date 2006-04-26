@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,62 +16,9 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.Interop_Wchar_Client.am
+## Makefile.interop_wchar_IDL.am
 
 BUILT_SOURCES = \
-  interop_wcharC.cpp \
-  interop_wcharC.h \
-  interop_wcharC.inl \
-  interop_wcharS.h \
-  interop_wcharS.inl \
-  interop_wcharS_T.cpp \
-  interop_wcharS_T.h \
-  interop_wcharS_T.inl
-
-CLEANFILES = \
-  interop_wchar-stamp \
-  interop_wcharC.cpp \
-  interop_wcharC.h \
-  interop_wcharC.inl \
-  interop_wcharS.h \
-  interop_wcharS.inl \
-  interop_wcharS_T.cpp \
-  interop_wcharS_T.h \
-  interop_wcharS_T.inl
-
-interop_wcharC.cpp interop_wcharC.h interop_wcharC.inl interop_wcharS.h interop_wcharS.inl interop_wcharS_T.cpp interop_wcharS_T.h interop_wcharS_T.inl: interop_wchar-stamp
-
-interop_wchar-stamp: $(srcdir)/interop_wchar.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/interop_wchar.idl
-	@touch $@
-
-noinst_PROGRAMS = client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  client.cpp \
-  interop_wcharC.cpp \
-  wchar_reference.cpp \
-  interop_wcharC.h \
-  interop_wcharC.inl \
-  interop_wcharS.h \
-  interop_wcharS_T.h \
-  interop_wcharS_T.inl \
-  wchar_reference.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-## Makefile.Interop_Wchar_Server.am
-
-BUILT_SOURCES += \
   interop_wcharC.cpp \
   interop_wcharC.h \
   interop_wcharC.inl \
@@ -82,7 +29,7 @@ BUILT_SOURCES += \
   interop_wcharS_T.h \
   interop_wcharS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   interop_wchar-stamp \
   interop_wcharC.cpp \
   interop_wcharC.h \
@@ -100,6 +47,33 @@ interop_wchar-stamp: $(srcdir)/interop_wchar.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/interop_wchar.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  interop_wchar.idl
+
+## Makefile.Interop_Wchar_Client.am
+
+noinst_PROGRAMS = client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  client.cpp \
+  interop_wcharC.cpp \
+  wchar_reference.cpp \
+  wchar_reference.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Interop_Wchar_Server.am
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -114,11 +88,6 @@ server_SOURCES = \
   interop_wchar_i.cpp \
   server.cpp \
   wchar_reference.cpp \
-  interop_wcharC.h \
-  interop_wcharC.inl \
-  interop_wcharS.h \
-  interop_wcharS_T.h \
-  interop_wcharS_T.inl \
   interop_wchar_i.h \
   wchar_reference.h
 

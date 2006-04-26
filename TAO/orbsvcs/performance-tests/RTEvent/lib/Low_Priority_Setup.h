@@ -19,7 +19,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class RT_Class;
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Basic_Stats;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class Low_Priority_Setup

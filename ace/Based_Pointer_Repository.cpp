@@ -7,6 +7,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/RW_Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Based_Pointer_Repository_Rep
  *
@@ -111,21 +113,9 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<void *, size_t>;
-template class ACE_Map_Manager<void *, size_t, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<void *, size_t, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<void *, size_t, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<void *, size_t, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<void *, size_t>
-#pragma instantiate ACE_Map_Manager<void *, size_t, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<void *, size_t, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<void *, size_t, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<void *, size_t, ACE_Null_Mutex>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX> *
   ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -25,12 +25,14 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "VisibilityA.h"
+#include "tao/AnyTypeCode/VisibilityA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -51,3 +53,4 @@ namespace CORBA
 }
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL

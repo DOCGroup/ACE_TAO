@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,7 +16,7 @@
 #define TAO_ETCL_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "etcl_export.h"
+#include "orbsvcs/ETCL/etcl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 
 #include "tao/orbconf.h"
 #include "ace/Thread_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ETCL_Constraint;
 
@@ -101,6 +103,8 @@ typedef union
 
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ETCL_INTERPRETER_H */

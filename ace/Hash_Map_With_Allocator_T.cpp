@@ -1,4 +1,3 @@
-// Hash_Map_With_Allocator_T.cpp
 // $Id$
 
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_CPP
@@ -14,6 +13,8 @@
 #include "ace/Hash_Map_With_Allocator_T.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator (ACE_Allocator *alloc)
   : ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_Null_Mutex> (alloc)
@@ -28,5 +29,7 @@ ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator (size_t
 {
   ACE_TRACE ("ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator");
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HASH_MAP_WITH_ALLOCATOR_T_CPP */

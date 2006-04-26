@@ -1,10 +1,10 @@
 // $Id$
 
-#include "Any_SystemException.h"
-#include "Any.h"
-#include "Any_Unknown_IDL_Type.h"
-#include "Marshal.h"
-#include "TypeCode.h"
+#include "tao/AnyTypeCode/Any_SystemException.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 
 #include "tao/CDR.h"
 #include "tao/Exception.h"
@@ -20,6 +20,8 @@ ACE_RCSID (tao,
            Any_SystemException,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,
                                                CORBA::TypeCode_ptr tc,
@@ -90,13 +92,13 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
   ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean _tao_equiv = any_tc->equivalent (tc
-                                                      ACE_ENV_ARG_PARAMETER);
+      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc
+                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (_tao_equiv == 0)
+      if (_tao_equiv == false)
         {
-          return 0;
+          return false;
         }
 
       TAO::Any_Impl *impl = any.impl ();
@@ -108,11 +110,11 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 
           if (narrow_impl == 0)
             {
-              return 0;
+              return false;
             }
 
           _tao_elem = narrow_impl->value_;
-          return 1;
+          return true;
         }
 
       CORBA::SystemException *empty_value =  (*f) ();
@@ -122,7 +124,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
                       TAO::Any_SystemException (destructor,
                                                 any_tc,
                                                 empty_value),
-                      0);
+                      false);
 
       auto_ptr<TAO::Any_SystemException > replacement_safety (replacement);
 
@@ -134,7 +136,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
       // shared by another Any. This copies the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean good_decode =
+      CORBA::Boolean const good_decode =
         replacement->demarshal_value (for_reading);
 
       if (good_decode)
@@ -142,7 +144,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           _tao_elem = replacement->value_;
           const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
-          return 1;
+          return true;
         }
     }
   ACE_CATCHANY
@@ -179,13 +181,13 @@ TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
       this->value_->_tao_encode (cdr
                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      return 1;
+      return true;
     }
   ACE_CATCHANY
     {
     }
   ACE_ENDTRY;
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
@@ -196,11 +198,13 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
       this->value_->_tao_decode (cdr
                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      return 1;
+      return true;
     }
   ACE_CATCHANY
     {
     }
   ACE_ENDTRY;
-  return 0;
+  return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

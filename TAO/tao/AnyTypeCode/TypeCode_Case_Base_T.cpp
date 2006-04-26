@@ -3,13 +3,14 @@
 #ifndef TAO_TYPECODE_CASE_CPP
 #define TAO_TYPECODE_CASE_CPP
 
-#include "TypeCode_Case_Base_T.h"
+#include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "ace/OS_NS_string.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, typename TypeCodeType>
 TAO::TypeCode::Case<StringType, TypeCodeType>::~Case (void)
@@ -82,5 +83,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equivalent (
                             tc
                             ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_TYPECODE_CASE_CPP */

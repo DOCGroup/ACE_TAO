@@ -32,6 +32,7 @@
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Service_Repository;
 
@@ -1056,6 +1057,8 @@ protected:
   int delete_recycling_strategy_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -1069,6 +1072,5 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-
 
 #endif /* ACE_STRATEGIES_T_H */

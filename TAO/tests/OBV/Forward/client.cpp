@@ -154,14 +154,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Now build simple graph (tree in our case).
 
       TreeController_var tc;
-      ACE_NEW_RETURN (tc,
+      ACE_NEW_RETURN (tc.inout (),
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn,
+        ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -170,7 +170,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
@@ -180,7 +180,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));

@@ -31,12 +31,14 @@
 #include "orbsvcs/Event/EC_Defaults.h"
 #include "orbsvcs/Log/RTEventLogConsumer.h"
 
-#include "rteventlog_export.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_RTEventLog_i;
@@ -50,7 +52,7 @@ class TAO_RTEventLogFactory_i;
  * It is used to log events that pass through the EventChannel.
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_RTEventLog_Export TAO_RTEventLog_i :
+class TAO_RTEventLog_Serv_Export TAO_RTEventLog_i :
   public TAO_Log_i,
   public POA_RTEventLogAdmin::EventLog
 {
@@ -126,6 +128,8 @@ public:
 
   PortableServer::POA_var	poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

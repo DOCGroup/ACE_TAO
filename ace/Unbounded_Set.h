@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
 
@@ -96,8 +98,8 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Set.
-  /// Returns 0 when all items have been seen, else 1.
+  /// Pass back the @a next_item that hasn't been seen in the Set.
+  /// @return Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
   /// Move forward by one element in the set.  Returns 0 when all the
@@ -298,6 +300,8 @@ private:
   /// Allocation strategy of the set.
   ACE_Allocator *allocator_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Unbounded_Set.inl"

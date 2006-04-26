@@ -34,7 +34,7 @@ int Dispatcher_Attributes::thread_creation_flags () const
 
    switch (sched_policy_)
    {
-      case ACE_SCHED_FIFO: 
+      case ACE_SCHED_FIFO:
          thread_creation_flags |= THR_SCHED_FIFO;
          break;
 
@@ -54,22 +54,13 @@ int Dispatcher_Attributes::thread_creation_flags () const
          thread_creation_flags |= THR_SCOPE_PROCESS;
          break;
 
-      case ACE_SCOPE_THREAD: 
-      default:        
+      case ACE_SCOPE_THREAD:
+      default:
          thread_creation_flags |= THR_SCOPE_SYSTEM;
          break;
    }
-   return thread_creation_flags;   
+   return thread_creation_flags;
 }
 
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array<Kokyu::ConfigInfo>;
-template class ACE_Array_Base<Kokyu::ConfigInfo>;
-template class ACE_Array_Iterator<Kokyu::ConfigInfo>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array<Kokyu::ConfigInfo>
-#pragma instantiate ACE_Array_Base<Kokyu::ConfigInfo>
-#pragma instantiate ACE_Array_Iterator<Kokyu::ConfigInfo>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "SL2_EstablishTrustPolicy.h"
+#include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -9,6 +9,8 @@ ACE_RCSID (Security,
            SL2_EstablishTrustPolicy,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Security::EstablishTrustPolicy::EstablishTrustPolicy (
   const ::Security::EstablishTrust &trust)
@@ -57,3 +59,5 @@ TAO::Security::EstablishTrustPolicy::trust (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->trust_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

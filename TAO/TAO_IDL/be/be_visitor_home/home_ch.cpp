@@ -75,6 +75,6 @@ be_visitor_home_ch::visit_home (be_home *node)
           }
       }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

@@ -3,15 +3,15 @@
 #ifndef TAO_ESF_COPY_ON_WRITE_CPP
 #define TAO_ESF_COPY_ON_WRITE_CPP
 
-#include "ESF_Copy_On_Write.h"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Copy_On_Write.i"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.i"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Environment.h"
 
-ACE_RCSID(ESF, ESF_Copy_On_Write, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR> CORBA::ULong
 TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_incr_refcnt (void)
@@ -202,5 +202,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 }
 
 // ****************************************************************
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_COPY_ON_WRITE_CPP */

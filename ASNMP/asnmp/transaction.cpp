@@ -106,7 +106,7 @@ int transaction::run(transaction_result * r)
     retry_counter_ = 0;
 
     // register a time handler and a socket with this
-    ACE_Time_Value to = params_.get_timeout();
+    ACE_Time_Value to (params_.get_timeout());
     if (reactor->schedule_timer(this, 0, to, to) < 0)
         return SNMP_CLASS_INTERNAL_ERROR;
 
@@ -122,19 +122,18 @@ int transaction::handle_input (ACE_HANDLE)
   delete [] (char*) receive_iovec_.iov_base;
   reset_receive_buffer(receive_iovec_);
   int rc = session_.recv(&receive_iovec_, receive_addr_, 0);
-  if (rc == -1) {
+  if (rc == -1)
+    {
       delete [] (char*) receive_iovec_.iov_base;
       reset_receive_buffer(receive_iovec_);
       if (result_)
-          result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
+        result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
       return SNMP_CLASS_RESOURCE_UNAVAIL;
-  }
+    }
   if (result_)
-  {
-      result_->result(this, rc);
-      return 0;
-  }
-  return rc;
+    result_->result(this, rc);
+
+  return 0;
 }
 
 int transaction::handle_timeout(const ACE_Time_Value &,
@@ -201,8 +200,8 @@ int transaction::send()
 
 transaction_result::~transaction_result() {}
 
-ACE_HANDLE 
-transaction::get_handle () const 
+ACE_HANDLE
+transaction::get_handle () const
 {
   return session_.get_handle ();
 }

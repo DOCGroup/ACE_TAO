@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -7,18 +10,26 @@ namespace ACE_OS {
   floor (double x)
   {
     // This method computes the largest integral value not greater than x.
-    return double (static_cast<long> (x));
+    if(x > 0)
+      return static_cast<long> (x);
+    else if (static_cast<long> (x) == x)
+      return x;
+    else
+      return static_cast<long>(x) - 1;
   }
 
   ACE_INLINE double
   ceil (double x)
   {
     // This method computes the smallest integral value not less than x.
-    const double floor = ACE_OS::floor (x);
-    if (floor == x)
-      return floor;
+    if (x < 0)
+      return static_cast<long> (x);
+    else if (static_cast<long> (x) == x)
+      return x;
     else
-      return floor + 1;
+      return static_cast<long> (x) + 1;
   }
 
 } // ACE_OS namespace
+
+ACE_END_VERSIONED_NAMESPACE_DECL

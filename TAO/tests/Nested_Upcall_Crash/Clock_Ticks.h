@@ -14,7 +14,7 @@
 namespace Clock_Ticks
 {
   /// Return the number of clock ticks per second
-  int get_hz (void);
+  long get_hz (void);
 
   /// Return the number of microseconds per tick
   int get_usecs_per_tick (void);

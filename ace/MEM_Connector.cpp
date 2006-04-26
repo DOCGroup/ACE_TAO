@@ -11,6 +11,8 @@ ACE_RCSID(ace, MEM_Connector, "$Id$")
 #include "ace/MEM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Connector)
 
 void
@@ -141,5 +143,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

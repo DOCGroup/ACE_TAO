@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,16 +23,17 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
-#include "Random_File.h"
-#include "Bit_Vector.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Random_File.h"
+#include "orbsvcs/Notify/Bit_Vector.h"
 #include "ace/Containers_T.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Manager.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
-
 
 /// \brief An interface to allow callbacks on completion of persistent storage
 /// requests.
@@ -200,6 +201,8 @@ private:
 };
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* PERSISTENT_FILE_ALLOCATOR_H */

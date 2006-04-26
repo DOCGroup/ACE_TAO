@@ -5,8 +5,8 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
-           ast_valuetype_fwd, 
+ACE_RCSID( ast,
+           ast_valuetype_fwd,
            "$Id$")
 
 AST_ValueTypeFwd::AST_ValueTypeFwd (void)
@@ -19,7 +19,7 @@ AST_ValueTypeFwd::AST_ValueTypeFwd (void)
 
 AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : COMMON_Base (I_FALSE,
+  : COMMON_Base (false,
                  dummy->is_abstract ()),
     AST_Decl (AST_Decl::NT_valuetype_fwd,
               n),

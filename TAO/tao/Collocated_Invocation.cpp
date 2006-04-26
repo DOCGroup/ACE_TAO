@@ -1,19 +1,21 @@
-#include "Collocated_Invocation.h"
-#include "Collocation_Proxy_Broker.h"
-#include "ORB_Core.h"
-#include "Request_Dispatcher.h"
-#include "TAO_Server_Request.h"
-#include "Stub.h"
-#include "operation_details.h"
+#include "tao/Collocated_Invocation.h"
+#include "tao/Collocation_Proxy_Broker.h"
+#include "tao/ORB_Core.h"
+#include "tao/Request_Dispatcher.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/Stub.h"
+#include "tao/operation_details.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PortableInterceptorC.h"
+# include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
 ACE_RCSID (tao,
            Collocated_Invocation,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -26,7 +28,8 @@ namespace TAO
                        et,
                        stub,
                        detail,
-                       response_expected)
+                       response_expected,
+                       false /* request_is_remote */ )
   {
   }
 
@@ -52,7 +55,8 @@ namespace TAO
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
             // Perform invocations on the servant through the servant's ORB.
-            CORBA::ORB_var servant_orb = this->effective_target ()->_stubobj ()->servant_orb_ptr ();
+            CORBA::ORB_var servant_orb =
+              this->effective_target ()->_stubobj ()->servant_orb_ptr ();
             TAO_ORB_Core * const orb_core = servant_orb->orb_core ();
 
             TAO_ServerRequest request (orb_core,
@@ -122,7 +126,7 @@ namespace TAO
           return TAO_INVOKE_SUCCESS;
 
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->handle_any_exception (&ACE_ANY_EXCEPTION
                                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -141,7 +145,7 @@ namespace TAO
         if (this->response_expected () == false)
           return TAO_INVOKE_SUCCESS;
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus st =
+        PortableInterceptor::ReplyStatus const st =
           this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
@@ -164,3 +168,5 @@ namespace TAO
   }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

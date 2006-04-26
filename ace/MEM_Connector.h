@@ -14,13 +14,7 @@
 #define ACE_MEM_CONNECTOR_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
-#include "ace/SOCK_Connector.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,8 +22,11 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
+#include "ace/SOCK_Connector.h"
 #include "ace/MEM_Stream.h"
 #include "ace/MEM_Addr.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_MEM_Connector
@@ -37,7 +34,7 @@
  * @brief Defines the format and interface for connecting to a peer
  * on a @c ACE_MEM_Stream object.
  */
-class ACE_Memory_Export ACE_MEM_Connector : public ACE_SOCK_Connector
+class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
 public:
   // = Initialization methods.
@@ -169,6 +166,8 @@ private:
   /// Preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Connector.inl"

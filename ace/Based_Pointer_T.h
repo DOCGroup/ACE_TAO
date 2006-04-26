@@ -27,6 +27,8 @@
 #pragma warning(disable: 4284)
 #endif /* _MSC_VER */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Based_Pointer_Basic
  *
@@ -158,15 +160,15 @@ class ACE_Based_Pointer : public ACE_Based_Pointer_Basic<CONCRETE>
 {
 public:
   // = Initialization method.
-  /// Constructor.  See constructor for <ACE_Based_Pointer_Basic> for
+  /// Constructor.  See constructor for ACE_Based_Pointer_Basic for
   /// details.
   ACE_Based_Pointer (void);
 
   /// Initialize this object using the <initial> pointer.  See
-  /// constructor for <ACE_Based_Pointer_Basic> for details.
+  /// constructor for ACE_Based_Pointer_Basic for details.
   ACE_Based_Pointer (CONCRETE *initial);
 
-  /// Initialize this object with known <base_addr>.  <dummy> is
+  /// Initialize this object with known @a base_addr.  @a dummy is
   /// a dummy value used to resolve overload ambiguity and it
   /// otherwise ignored.
   ACE_Based_Pointer (const void *base_addr, int dummy);
@@ -183,6 +185,8 @@ public:
   /// The C++ "delegation operator".
   CONCRETE *operator-> (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Based_Pointer_T.inl"

@@ -1,8 +1,7 @@
-// Stream_Modules.cpp
 // $Id$
 
-#ifndef ACE_STREAM_MODULES_C
-#define ACE_STREAM_MODULES_C
+#ifndef ACE_STREAM_MODULES_CPP
+#define ACE_STREAM_MODULES_CPP
 
 #include "ace/Stream_Modules.h"
 #include "ace/OS_NS_string.h"
@@ -11,7 +10,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Stream_Modules, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Head)
 
@@ -375,4 +375,6 @@ ACE_Thru_Task<ACE_SYNCH_USE>::fini (void)
   return 0;
 }
 
-#endif /* ACE_STREAM_MODULES_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_STREAM_MODULES_CPP */

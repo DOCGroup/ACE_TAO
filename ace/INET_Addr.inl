@@ -7,16 +7,27 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_arpa_inet.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_INET_Addr::reset (void)
 {
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->get_type() == AF_INET)
-    this->inet_addr_.in4_.sin_family = AF_INET;
+    {
+#ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
+      this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
+#endif
+      this->inet_addr_.in4_.sin_family = AF_INET;
+    }
 #if defined (ACE_HAS_IPV6)
   else if (this->get_type() == AF_INET6)
-    this->inet_addr_.in6_.sin6_family = AF_INET6;
+    {
+#ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
+      this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
+#endif
+      this->inet_addr_.in6_.sin6_family = AF_INET6;
+    }
 #endif  /* ACE_HAS_IPV6 */
 }
 
@@ -29,8 +40,9 @@ ACE_INET_Addr::determine_type (void) const
 #  else
   return AF_INET6;
 #  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-#endif /* ACE_HAS_IPV6 */
+#else
   return AF_INET;
+#endif /* ACE_HAS_IPV6 */
 }
 
 ACE_INLINE void *
@@ -202,3 +214,4 @@ ACE_INET_Addr::is_ipv4_compat_ipv6 (void) const
 }
 #endif /* ACE_HAS_IPV6 */
 
+ACE_END_VERSIONED_NAMESPACE_DECL

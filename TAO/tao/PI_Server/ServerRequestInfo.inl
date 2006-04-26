@@ -5,6 +5,8 @@
 #include "tao/PortableServer/Servant_Upcall.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO::ServerRequestInfo::ServerRequestInfo (
   TAO_ServerRequest & server_request,
@@ -54,3 +56,5 @@ TAO::ServerRequestInfo::server_request (void)
   return this->server_request_;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

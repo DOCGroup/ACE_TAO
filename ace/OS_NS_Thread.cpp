@@ -24,9 +24,9 @@ ACE_RCSID (ace,
 #include "ace/Guard_T.h"
 
 extern "C" void
-ace_mutex_lock_cleanup_adapter (void *args)
+ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 {
-  ACE_OS::mutex_lock_cleanup (args);
+  ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::mutex_lock_cleanup (args);
 }
 
 
@@ -86,6 +86,8 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 /*****************************************************************************/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Thread_ID::to_string (char *thr_string) const
@@ -779,26 +781,40 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
   }
 }
 
-TSS_Cleanup_Instance::~TSS_Cleanup_Instance()
+TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
 {
-  ACE_Guard<ACE_Thread_Mutex> guard(*mutex_);
-  if (ptr_ != 0)
+  // Variable to hold the mutex_ to delete outside the scope of the
+  // guard.
+  ACE_Thread_Mutex *del_mutex = 0;
+
+  // scope the guard
+  {
+    ACE_Guard<ACE_Thread_Mutex> guard (*mutex_);
+    if (ptr_ != 0)
+      {
+        if (ACE_BIT_ENABLED (flags_, FLAG_DELETING))
+          {
+            ACE_ASSERT(instance_ == 0);
+            ACE_ASSERT(reference_count_ == 0);
+            delete ptr_;
+            del_mutex = mutex_ ;
+            mutex_ = 0;
+          }
+        else
+          {
+            ACE_ASSERT (reference_count_ > 0);
+            --reference_count_;
+            if (reference_count_ == 0 && instance_ == NULL)
+              condition_->signal ();
+          }
+      }
+  }// end of guard scope
+
+  if (del_mutex != 0)
     {
-      if (ACE_BIT_ENABLED (flags_,FLAG_DELETING))
-        {
-          ACE_ASSERT(instance_ == 0);
-          ACE_ASSERT(reference_count_ == 0);
-          delete ptr_;
-        }
-      else
-        {
-          ACE_ASSERT (reference_count_ > 0);
-          --reference_count_;
-          if (reference_count_ == 0 && instance_ == NULL)
-            {
-              condition_->signal();
-            }
-        }
+      delete condition_;
+      condition_ = 0;
+      delete del_mutex;
     }
 }
 
@@ -909,7 +925,7 @@ ACE_TSS_Cleanup::thread_exit (void)
 extern "C" void
 ACE_TSS_Cleanup_keys_destroyer (void *tss_keys)
 {
-  delete reinterpret_cast <ACE_TSS_Keys *> (tss_keys);
+  delete static_cast <ACE_TSS_Keys *> (tss_keys);
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
@@ -3692,7 +3708,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 #elif defined (ACE_HAS_PTHREADS) && \
       (!defined (ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) || \
       defined (ACE_HAS_PTHREAD_SCHEDPARAM))
-  ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
       // quantums not supported
@@ -3713,7 +3728,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 # if defined(ACE_TANDEM_T1248_PTHREADS) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)
       ACE_NOTSUP_RETURN (-1);
 # else  /* ! ACE_TANDEM_T1248_PTHREADS */
-      int result = ::sched_setscheduler (0, // this process
+      int result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
 # if defined (DIGITAL_UNIX)
@@ -3769,40 +3784,73 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     EtsSetTimeSlice (sched_params.quantum().msec());
 
 # else
-  ACE_UNUSED_ARG (id);
 
-  if (sched_params.scope () != ACE_SCOPE_PROCESS
-      || sched_params.quantum () != ACE_Time_Value::zero)
+  if (sched_params.quantum () != ACE_Time_Value::zero)
     {
-      // Win32 only allows setting priority class (therefore, policy)
-      // at the process level.  I don't know of a way to set the
-      // quantum.
+      // I don't know of a way to set the quantum on Win32.
       errno = EINVAL;
       return -1;
     }
 
-// Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
-// a VERY BAD THING. This include guard will allow people
-// to easily disable this feature in ACE.
-#ifndef ACE_DISABLE_WIN32_INCREASE_PRIORITY
-  // Set the priority class of this process to the REALTIME process class
-  // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
-  if (!::SetPriorityClass (::GetCurrentProcess (),
-                           (sched_params.policy () == ACE_SCHED_FIFO ||
-                           sched_params.policy () == ACE_SCHED_RR)
-                           ? REALTIME_PRIORITY_CLASS
-                           : NORMAL_PRIORITY_CLASS))
+  if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
+
+      // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
+      // a VERY BAD THING. This include guard will allow people
+      // to easily disable this feature in ACE.
+#ifndef ACE_DISABLE_WIN32_INCREASE_PRIORITY
+      // Set the priority class of this process to the REALTIME process class
+      // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
+      if (!::SetPriorityClass (::GetCurrentProcess (),
+                               (sched_params.policy () == ACE_SCHED_FIFO ||
+                                sched_params.policy () == ACE_SCHED_RR)
+                               ? REALTIME_PRIORITY_CLASS
+                               : NORMAL_PRIORITY_CLASS))
+        {
+          ACE_OS::set_errno_to_last_error ();
+          return -1;
+        }
 #endif /* ACE_DISABLE_WIN32_INCREASE_PRIORITY */
 
 # endif /* ACE_HAS_PHARLAP_RT */
-
-  // Set the thread priority on the current thread.
-  return ACE_OS::thr_setprio (sched_params.priority ());
-
+      // Now that we have set the priority class of the process, set the
+      // priority of the current thread to the desired value.
+      return ACE_OS::thr_setprio (sched_params.priority ());
+    }
+  else if (sched_params.scope () == ACE_SCOPE_PROCESS)
+    {
+      HANDLE hProcess = ::OpenProcess (PROCESS_SET_INFORMATION,
+                                       FALSE,
+                                       id);
+      if (!hProcess)
+        {
+          ACE_OS::set_errno_to_last_error();
+          return -1;
+        }
+      // There is no way for us to set the priority of the thread when we
+      // are setting the priority of a different process.  So just ignore
+      // the priority argument when ACE_SCOPE_PROCESS is specified.
+      // Setting the priority class will automatically increase the base
+      // priority of all the threads within a process while maintaining the
+      // relative priorities of the threads within it.
+      if (!::SetPriorityClass (hProcess,
+                               (sched_params.policy () == ACE_SCHED_FIFO ||
+                                sched_params.policy () == ACE_SCHED_RR)
+                               ? REALTIME_PRIORITY_CLASS
+                               : NORMAL_PRIORITY_CLASS))
+        {
+          ACE_OS::set_errno_to_last_error ();
+          ::CloseHandle (hProcess);
+          return -1;
+        }
+      ::CloseHandle (hProcess);
+      return 0;
+    }
+  else
+    {
+      errno = EINVAL;
+      return -1;
+    }
 #elif defined (VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (id);
 
@@ -3981,19 +4029,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
 
-  ACE_Base_Thread_Adapter *thread_args;
+  ACE_Base_Thread_Adapter *thread_args = 0;
   if (thread_adapter == 0)
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
-                                           (ACE_THR_C_FUNC) ace_thread_adapter,
+                                           (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                                            ACE_OS_Object_Manager::seh_except_selector(),
                                            ACE_OS_Object_Manager::seh_except_handler()),
                     -1);
 #else
   ACE_NEW_RETURN (thread_args,
                   ACE_OS_Thread_Adapter (func, args,
-                                         (ACE_THR_C_FUNC) ace_thread_adapter),
+                                         (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME),
                   -1);
 
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
@@ -4376,6 +4424,22 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             }
         }
 #   endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
+
+#   ifdef ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP
+      if (ACE_BIT_ENABLED (flags, THR_SUSPENDED))
+        {
+           if (ACE_ADAPT_RETVAL(::pthread_attr_setcreatesuspend_np(&attr), result) != 0)
+	     {
+
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
+              ::pthread_attr_delete (&attr);
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
+              ::pthread_attr_destroy (&attr);
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+	      return -1;
+	    }
+        }
+#   endif /* !ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP */
 
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
@@ -4787,9 +4851,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     return -1;
   else
     {
-      if (! thr_id_provided  &&  thr_id)
+      if (! thr_id_provided && thr_id)
         {
-          if (*thr_id  &&  (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
+          if (*thr_id && (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
             // *thr_id was allocated by the Thread_Manager.  ::taskTcb
             // (int tid) returns the address of the WIND_TCB (task
             // control block).  According to the ::taskSpawn()
@@ -4797,12 +4861,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             // pStackBase, but is that of the current task?  If so, it
             // might be a bit quicker than this extraction of the tcb
             // . . .
-            ACE_OS::strsncpy (*thr_id + 1, ::taskTcb (tid)->name, 10);
+            ACE_OS::strsncpy (*thr_id + 1, ::taskName (tid), 10);
           else
             // *thr_id was not allocated by the Thread_Manager.
             // Pass back the task name in the location pointed to
             // by thr_id.
-            *thr_id = ::taskTcb (tid)->name;
+            *thr_id = ::taskName (tid);
         }
       // else if the thr_id was provided, there's no need to overwrite
       // it with the same value (string).  If thr_id is 0, then we can't
@@ -4990,6 +5054,99 @@ ACE_OS::thr_key_detach (ACE_thread_key_t key, void *)
 }
 
 int
+ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
+                          size_t cpu_set_size,
+                          cpu_set_t * cpu_mask)
+{
+#if defined (ACE_HAS_PTHREAD_GETAFFINITY_NP)
+  // Handle of the thread, which is NPTL thread-id, normally a big number
+  if (::pthread_getaffinity_np (thr_id,
+                                cpu_set_size,
+                                cpu_mask) != 0)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_2_PARAM_SCHED_GETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid ()
+  ACE_UNUSED_ARG (cpu_set_size);
+  if (::sched_getaffinity(thr_id,
+                          cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_SCHED_GETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid ()
+  if (::sched_getaffinity(thr_id,
+                          cpu_set_size,
+                          cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#else
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (cpu_set_size);
+  ACE_UNUSED_ARG (cpu_mask);
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
+int
+ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
+                          size_t cpu_set_size,
+                          const cpu_set_t * cpu_mask)
+{
+#if defined (ACE_HAS_PTHREAD_SETAFFINITY_NP)
+  if (::pthread_setaffinity_np (thr_id,
+                                cpu_set_size,
+                                cpu_mask) != 0)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_2_PARAM_SCHED_SETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
+  //
+  ACE_UNUSED_ARG (cpu_set_size);
+  if (::sched_setaffinity (thr_id,
+                           cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_SCHED_SETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
+  //
+  if (::sched_setaffinity (thr_id,
+                           cpu_set_size,
+                           cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#else
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (cpu_set_size);
+  ACE_UNUSED_ARG (cpu_mask);
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
+int
 ACE_OS::thr_key_used (ACE_thread_key_t key)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
@@ -5120,8 +5277,12 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     else
       return -1;
       /* NOTREACHED */
-#   else /* ACE_HAS_TSS_EMULATION */
+#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
     return  ACE_OS::thr_keycreate_native (key, dest);
+#   else
+    ACE_UNUSED_ARG (key);
+    ACE_UNUSED_ARG (dest);
+    ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5184,8 +5345,11 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
         return cleanup->free_key (key);
       }
     return -1;
-#   else /* ACE_HAS_TSS_EMULATION */
+#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
     return ACE_OS::thr_keyfree_native (key);
+#   else
+    ACE_UNUSED_ARG (key);
+    ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5254,7 +5418,7 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #       else
     int result;
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setspecific (key, data),
                                          result),
                        int, -1);
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
@@ -5336,8 +5500,12 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
         return -1;
       }
     return -1;
+#   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+      return ACE_OS::thr_setspecific_native (key, data);
 #   else /* ACE_HAS_TSS_EMULATION */
-  return ACE_OS::thr_setspecific_native (key, data);
+      ACE_UNUSED_ARG (key);
+      ACE_UNUSED_ARG (data);
+      ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
@@ -5386,8 +5554,11 @@ ACE_OS::unique_name (const void *object,
                     length);
 }
 
-#if defined (VXWORKS)
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # include /**/ <usrLib.h>   /* for ::sp() */
+# include /**/ <sysLib.h>   /* for ::sysClkRateGet() */
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
@@ -5398,8 +5569,8 @@ ACE_OS::unique_name (const void *object,
 int
 spa (FUNCPTR entry, ...)
 {
-  static const unsigned int MAX_ARGS = 10;
-  static char *argv[MAX_ARGS];
+  static const unsigned int ACE_MAX_ARGS = 10;
+  static char *argv[ACE_MAX_ARGS];
   va_list pvar;
   unsigned int argc;
 
@@ -5415,7 +5586,7 @@ spa (FUNCPTR entry, ...)
   // number of arguments would have to be passed.
   va_start (pvar, entry);
 
-  for (argc = 1; argc <= MAX_ARGS; ++argc)
+  for (argc = 1; argc <= ACE_MAX_ARGS; ++argc)
     {
       argv[argc] = va_arg (pvar, char *);
 
@@ -5423,18 +5594,18 @@ spa (FUNCPTR entry, ...)
         break;
     }
 
-  if (argc > MAX_ARGS  &&  argv[argc-1] != 0)
+  if (argc > ACE_MAX_ARGS  &&  argv[argc-1] != 0)
     {
       // try to read another arg, and warn user if the limit was exceeded
       if (va_arg (pvar, char *) != 0)
         ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %d\n",
-                         MAX_ARGS);
+                         ACE_MAX_ARGS);
     }
   else
     {
       // fill unused argv slots with 0 to get rid of leftovers
       // from previous invocations
-      for (unsigned int i = argc; i <= MAX_ARGS; ++i)
+      for (unsigned int i = argc; i <= ACE_MAX_ARGS; ++i)
         argv[i] = 0;
     }
 
@@ -5530,8 +5701,8 @@ int
 spae (FUNCPTR entry, ...)
 {
   static const int WINDSH_ARGS = 10;
-  static const int MAX_ARGS    = 128;
-  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  static const int ACE_MAX_ARGS    = 128;
+  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5545,12 +5716,12 @@ spae (FUNCPTR entry, ...)
   for (char* str = va_arg (pvar, char*);
        str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
     {
-      add_to_argv(argc, argv, MAX_ARGS, str);
+      add_to_argv(argc, argv, ACE_MAX_ARGS, str);
     }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (i = argc; i < MAX_ARGS; ++i)
+  for (i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
@@ -5584,8 +5755,8 @@ int
 spaef (FUNCPTR entry, ...)
 {
   static const int WINDSH_ARGS = 10;
-  static const int MAX_ARGS    = 128;
-  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  static const int ACE_MAX_ARGS    = 128;
+  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5599,12 +5770,12 @@ spaef (FUNCPTR entry, ...)
   for (char* str = va_arg (pvar, char*);
        str != 0 && i < WINDSH_ARGS; str = va_arg (pvar, char*), ++i)
     {
-      add_to_argv(argc, argv, MAX_ARGS, str);
+      add_to_argv(argc, argv, ACE_MAX_ARGS, str);
     }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (i = argc; i < MAX_ARGS; ++i)
+  for (i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   int ret = entry (argc, argv);
@@ -5635,18 +5806,18 @@ _vx_call_entry(FUNCPTR entry, int argc, char* argv[])
 int
 vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 {
-  static const int MAX_ARGS    = 128;
-  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  static const int ACE_MAX_ARGS    = 128;
+  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
 
   if (arg)
-    add_to_argv(argc, argv, MAX_ARGS, arg);
+    add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (int i = argc; i < MAX_ARGS; ++i)
+  for (int i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
@@ -5668,7 +5839,7 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   // successful
   return ret > 0 ? _vx_call_rc : 255;
 }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 #if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
 extern "C" int __d6_sigwait (sigset_t *set);

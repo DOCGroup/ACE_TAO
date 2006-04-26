@@ -15,8 +15,9 @@
 #include /**/ "ace/pre.h"
 #include "ace/Auto_Ptr.h"
 
-#include "Refcountable.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/Refcountable.h"
+
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +26,8 @@
 #include "tao/orbconf.h"
 
 #include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_ProxyConsumer;
@@ -112,12 +115,21 @@ protected:
   void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq ACE_ENV_ARG_DECL);
 
 private:
+  // Disallow copying and assignment; we don't need them
+  // and if we let the compiler generate them it needs the
+  // full declaration of the template arguments for ACE_Auto_Ptr<>
+  // below.
+  TAO_Notify_Event_Manager (TAO_Notify_Event_Manager&);
+  TAO_Notify_Event_Manager& operator= (TAO_Notify_Event_Manager&);
+
   /// Consumer Map
   ACE_Auto_Ptr< TAO_Notify_Consumer_Map > consumer_map_;
 
   /// Supplier Map
   ACE_Auto_Ptr< TAO_Notify_Supplier_Map > supplier_map_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

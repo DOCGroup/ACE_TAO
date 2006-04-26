@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
          typename to_S,
@@ -129,3 +133,4 @@ TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::arg (voi
   return this->x_.out ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

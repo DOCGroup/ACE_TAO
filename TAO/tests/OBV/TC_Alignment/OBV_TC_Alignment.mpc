@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, valuetype {
+project(*Server): taoserver, valuetype {
   Source_Files {
     testS.cpp
     testC.cpp
@@ -10,7 +10,8 @@ project(*Server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*Client): taoexe, valuetype {
+project(*Client): taoclient, valuetype {
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp

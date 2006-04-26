@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
@@ -6,7 +7,10 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
   ACE_INLINE ACE_HANDLE
   creat (const ACE_TCHAR *filename, mode_t mode)
@@ -18,11 +22,7 @@ namespace ACE_OS {
     ACE_OSCALL_RETURN(::create_f((char *)filename, 1024,
                                  S_IRUSR | S_IWUSR | S_IXUSR),
                       ACE_HANDLE, ACE_INVALID_HANDLE);
-#elif defined(ACE_PSOS_TM)
-    ACE_UNUSED_ARG (filename);
-    ACE_UNUSED_ARG (mode);
-    ACE_NOTSUP_RETURN (-1);
-#elif defined(ACE_PSOS)
+#elif defined(ACE_PSOS_TM) || defined (ACE_PSOS)
     ACE_UNUSED_ARG (filename);
     ACE_UNUSED_ARG (mode);
     ACE_NOTSUP_RETURN (-1);
@@ -111,19 +111,19 @@ namespace ACE_OS {
   // This function returns the number of bytes in the file referenced by
   // FD.
 
-  ACE_INLINE long
+  ACE_INLINE off_t
   filesize (ACE_HANDLE handle)
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
 #if defined (ACE_WIN32)
-    ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), long, -1);
+    ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), off_t, -1);
 #else /* !ACE_WIN32 */
     ACE_stat sb;
-    return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
+    return ACE_OS::fstat (handle, &sb) == -1 ? -1 : sb.st_size;
 #endif /* ACE_WIN32 */
   }
 
-  ACE_INLINE long
+  ACE_INLINE off_t
   filesize (const ACE_TCHAR *filename)
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
@@ -131,7 +131,7 @@ namespace ACE_OS {
     ACE_HANDLE h = ACE_OS::open (filename, O_RDONLY);
     if (h != ACE_INVALID_HANDLE)
       {
-        long size = ACE_OS::filesize (h);
+        off_t size = ACE_OS::filesize (h);
         ACE_OS::close (h);
         return size;
       }
@@ -209,7 +209,7 @@ namespace ACE_OS {
 
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
     ACE_UNUSED_ARG (mode);
-    ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
+    ACE_OSCALL_RETURN (::_mkdir (const_cast <char *> (path)), int, -1);
 #elif defined (ACE_HAS_WINCE)
     ACE_UNUSED_ARG (mode);
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_TO_TCHAR_IN (path), 0),
@@ -347,7 +347,7 @@ namespace ACE_OS {
 # if defined (ACE_LACKS_UMASK)
     ACE_UNUSED_ARG (cmask);
     ACE_NOTSUP_RETURN ((mode_t)-1);
-# elif defined (ACE_WIN32)
+# elif defined (ACE_WIN32) && !defined (__BORLANDC__)
     ACE_OSCALL_RETURN (::_umask (cmask), mode_t, -1);
 # else
     return ::umask (cmask); // This call shouldn't fail...
@@ -355,3 +355,5 @@ namespace ACE_OS {
   }
 
 } // ACE_OS namespace
+
+ACE_END_VERSIONED_NAMESPACE_DECL

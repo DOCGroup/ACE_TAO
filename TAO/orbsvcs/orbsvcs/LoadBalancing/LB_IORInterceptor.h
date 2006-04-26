@@ -29,6 +29,8 @@
 #endif /* _MSC_VER */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations.
 class TAO_LB_LoadAlert;
 
@@ -47,7 +49,7 @@ class TAO_LB_LoadAlert;
  * @see LB_ObjectReferenceFactory.h for details.
  */
 class TAO_LB_IORInterceptor
-  : public virtual PortableInterceptor::IORInterceptor,
+  : public virtual PortableInterceptor::IORInterceptor_3_0,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
@@ -140,6 +142,8 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

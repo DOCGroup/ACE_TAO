@@ -28,17 +28,11 @@
 #include "tao/orbconf.h"
 #include "ace/Object_Manager_Base.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_HAS_EXCEPTIONS)
 typedef void (*TAO_unexpected_handler)(void);
 #endif  /* ACE_HAS_EXCEPTIONS */
-
-
-/// Adapter for cleanup, used to register cleanup function with the
-/// ACE_Object_Manager.
-extern "C"
-void
-TAO_Singleton_Manager_cleanup_destroyer (void *, void *);
-
 
 /**
  * @class TAO_Singleton_Manager
@@ -59,9 +53,6 @@ TAO_Singleton_Manager_cleanup_destroyer (void *, void *);
  */
 class TAO_Export TAO_Singleton_Manager : public ACE_Object_Manager_Base
 {
-
-  friend void TAO_Singleton_Manager_cleanup_destroyer (void *, void *);
-
 public:
   /// Explicitly initialize.
   virtual int init (void);
@@ -85,24 +76,6 @@ public:
   /// Returns 1 after the TAO_Singleton_Manager has been destroyed.
   /// See ACE_Object_Manager::shutting_down for more information.
   static int shutting_down (void);
-
-  /// Unique identifiers for preallocated Objects.
-  enum Preallocated_Object
-    {
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      /// @@ No MT-specific preallocated objects (yet).  Remove the
-      ///    below dummy enum once a preallocated object is added.
-      TAO_EMPTY_PREALLOCATED_OBJECT,
-# else
-      /// Without ACE_MT_SAFE, There are no preallocated objects.
-      /// Make sure that the preallocated_array size is at least one
-      /// by declaring this dummy ...
-      TAO_EMPTY_PREALLOCATED_OBJECT,
-# endif /* ACE_MT_SAFE */
-
-      /// This enum value must be last!
-      TAO_PREALLOCATED_OBJECTS
-    };
 
   /// Accesses a default signal set used, for example, in
   /// ACE_Sig_Guard methods.
@@ -160,12 +133,15 @@ public:
   void _set_unexpected (TAO_unexpected_handler u);
 #endif /* ACE_HAS_EXCEPTIONS */
 
-private:
+protected:
+
   /// Force allocation on the heap.
   //@{
   TAO_Singleton_Manager (void);
   ~TAO_Singleton_Manager (void);
   //@}
+
+private:
 
   /// Disallow copying by not implementing the following ...
   //@{
@@ -178,11 +154,6 @@ private:
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
 
 private:
-  /// Singleton instance pointer.
-  static TAO_Singleton_Manager *instance_;
-
-  /// Table of preallocated objects.
-  static void *preallocated_object[TAO_PREALLOCATED_OBJECTS];
 
   /// Default signal set used, for example, in ACE_Sig_Guard.
   sigset_t *default_mask_;
@@ -214,6 +185,8 @@ private:
   TAO_unexpected_handler old_unexpected_;
 #endif  /* ACE_HAS_EXCEPTIONS */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/TAO_Singleton_Manager.inl"

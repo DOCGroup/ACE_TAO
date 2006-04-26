@@ -16,50 +16,58 @@
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+#include "ace/OS_Memory.h"
+
 ACE_RCSID(ace, Log_Record, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
-const ACE_TCHAR *ACE_Log_Record::priority_names_[] =
+namespace
 {
-  ACE_LIB_TEXT ("LM_SHUTDOWN"),
-  ACE_LIB_TEXT ("LM_TRACE"),
-  ACE_LIB_TEXT ("LM_DEBUG"),
-  ACE_LIB_TEXT ("LM_INFO"),
-  ACE_LIB_TEXT ("LM_NOTICE"),
-  ACE_LIB_TEXT ("LM_WARNING"),
-  ACE_LIB_TEXT ("LM_STARTUP"),
-  ACE_LIB_TEXT ("LM_ERROR"),
-  ACE_LIB_TEXT ("LM_CRITICAL"),
-  ACE_LIB_TEXT ("LM_ALERT"),
-  ACE_LIB_TEXT ("LM_EMERGENCY"),
-  ACE_LIB_TEXT ("LM_UNK(04000)"),
-  ACE_LIB_TEXT ("LM_UNK(010000)"),
-  ACE_LIB_TEXT ("LM_UNK(020000)"),
-  ACE_LIB_TEXT ("LM_UNK(040000)"),
-  ACE_LIB_TEXT ("LM_UNK(0100000)"),
-  ACE_LIB_TEXT ("LM_UNK(0200000)"),
-  ACE_LIB_TEXT ("LM_UNK(0400000)"),
-  ACE_LIB_TEXT ("LM_UNK(01000000)"),
-  ACE_LIB_TEXT ("LM_UNK(02000000)"),
-  ACE_LIB_TEXT ("LM_UNK(04000000)"),
-  ACE_LIB_TEXT ("LM_UNK(010000000)"),
-  ACE_LIB_TEXT ("LM_UNK(020000000)"),
-  ACE_LIB_TEXT ("LM_UNK(040000000)"),
-  ACE_LIB_TEXT ("LM_UNK(0100000000)"),
-  ACE_LIB_TEXT ("LM_UNK(0200000000)"),
-  ACE_LIB_TEXT ("LM_UNK(0400000000)"),
-  ACE_LIB_TEXT ("LM_UNK(01000000000)"),
-  ACE_LIB_TEXT ("LM_UNK(02000000000)"),
-  ACE_LIB_TEXT ("LM_UNK(04000000000)"),
-  ACE_LIB_TEXT ("LM_UNK(010000000000)"),
-  ACE_LIB_TEXT ("LM_UNK(020000000000)")
-};
+  // Symbolic names for the <ACE_Log_Priority> enumerators.
+  ACE_TCHAR const * ace_priority_names[] =
+    {
+      ACE_LIB_TEXT ("LM_SHUTDOWN"),
+      ACE_LIB_TEXT ("LM_TRACE"),
+      ACE_LIB_TEXT ("LM_DEBUG"),
+      ACE_LIB_TEXT ("LM_INFO"),
+      ACE_LIB_TEXT ("LM_NOTICE"),
+      ACE_LIB_TEXT ("LM_WARNING"),
+      ACE_LIB_TEXT ("LM_STARTUP"),
+      ACE_LIB_TEXT ("LM_ERROR"),
+      ACE_LIB_TEXT ("LM_CRITICAL"),
+      ACE_LIB_TEXT ("LM_ALERT"),
+      ACE_LIB_TEXT ("LM_EMERGENCY"),
+      ACE_LIB_TEXT ("LM_UNK(04000)"),
+      ACE_LIB_TEXT ("LM_UNK(010000)"),
+      ACE_LIB_TEXT ("LM_UNK(020000)"),
+      ACE_LIB_TEXT ("LM_UNK(040000)"),
+      ACE_LIB_TEXT ("LM_UNK(0100000)"),
+      ACE_LIB_TEXT ("LM_UNK(0200000)"),
+      ACE_LIB_TEXT ("LM_UNK(0400000)"),
+      ACE_LIB_TEXT ("LM_UNK(01000000)"),
+      ACE_LIB_TEXT ("LM_UNK(02000000)"),
+      ACE_LIB_TEXT ("LM_UNK(04000000)"),
+      ACE_LIB_TEXT ("LM_UNK(010000000)"),
+      ACE_LIB_TEXT ("LM_UNK(020000000)"),
+      ACE_LIB_TEXT ("LM_UNK(040000000)"),
+      ACE_LIB_TEXT ("LM_UNK(0100000000)"),
+      ACE_LIB_TEXT ("LM_UNK(0200000000)"),
+      ACE_LIB_TEXT ("LM_UNK(0400000000)"),
+      ACE_LIB_TEXT ("LM_UNK(01000000000)"),
+      ACE_LIB_TEXT ("LM_UNK(02000000000)"),
+      ACE_LIB_TEXT ("LM_UNK(04000000000)"),
+      ACE_LIB_TEXT ("LM_UNK(010000000000)"),
+      ACE_LIB_TEXT ("LM_UNK(020000000000)")
+    };
+}
 
 const ACE_TCHAR *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)
 {
-  return ACE_Log_Record::priority_names_[ACE::log2 (p)];
+  return ace_priority_names[ACE::log2 (p)];
 }
 
 void
@@ -67,7 +75,7 @@ ACE_Log_Record::priority_name (ACE_Log_Priority p,
                                const ACE_TCHAR *name)
 {
   // Name must be a statically allocated string
-  ACE_Log_Record::priority_names_[ACE::log2 (p)] = name;
+  ace_priority_names[ACE::log2 (p)] = name;
 }
 
 u_long
@@ -112,7 +120,7 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
   ACE_OS::strsncpy (this->msg_data_, data,
-                    (sizeof this->msg_data_ / sizeof (ACE_TCHAR)));
+                    (MAXLOGMSGLEN / sizeof (ACE_TCHAR)));
   this->round_up ();
 }
 
@@ -126,6 +134,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
+  ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
@@ -138,6 +147,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
+  ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 }
 
 void
@@ -145,7 +155,7 @@ ACE_Log_Record::round_up (void)
 {
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
-  size_t len = (sizeof (*this) - sizeof (this->msg_data_))
+  size_t len = (sizeof (*this) - MAXLOGMSGLEN)
     + (sizeof (ACE_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
 
   // Round up to the alignment.
@@ -162,6 +172,7 @@ ACE_Log_Record::ACE_Log_Record (void)
     pid_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
+  ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 }
 
 int
@@ -190,7 +201,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       || ACE_BIT_ENABLED (verbose_flag,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
-      time_t now = this->secs_;
+      time_t const now = this->secs_;
       ACE_TCHAR ctp[26]; // 26 is a magic number...
 
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
@@ -245,7 +256,9 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
-  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  ACE_TCHAR* verbose_msg = 0;
+  ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+
   int result = this->format_msg (host_name,
                                  verbose_flag,
                                  verbose_msg);
@@ -266,6 +279,8 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
         }
     }
 
+  delete[] verbose_msg;
+
   return result;
 }
 
@@ -276,8 +291,10 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        ACE_OSTREAM_TYPE &s)
 {
-  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
-  int result = this->format_msg (host_name, verbose_flag, verbose_msg);
+  ACE_TCHAR* verbose_msg = 0;
+  ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+
+  int const result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
   if (result == 0)
     {
@@ -286,7 +303,11 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
       s.flush ();
     }
 
+  delete[] verbose_msg;
+
   return result;
 }
 
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

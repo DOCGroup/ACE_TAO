@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:277
 
 
-#include "Messaging_RT_PolicyC.h"
+#include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -60,7 +62,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::release (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
@@ -109,18 +111,18 @@ Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (RelativeRoundtripTimeoutPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RelativeRoundtripTimeoutPolicy::_tao_release (RelativeRoundtripTimeoutPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -166,3 +168,5 @@ Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

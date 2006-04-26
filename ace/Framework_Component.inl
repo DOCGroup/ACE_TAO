@@ -1,13 +1,14 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// Framework_Component.inl
 
 #include "ace/ACE.h"
 #include "ace/Guard_T.h"
 
-ACE_INLINE 
-ACE_Framework_Component::ACE_Framework_Component (void *_this, 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_INLINE
+ACE_Framework_Component::ACE_Framework_Component (void *_this,
                                                   const ACE_TCHAR *dll_name,
                                                   const ACE_TCHAR *name)
   :  this_ (_this),
@@ -34,3 +35,5 @@ ACE_Framework_Repository::total_size (void) const
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->lock_, -1));
   return this->total_size_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

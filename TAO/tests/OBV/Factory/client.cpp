@@ -35,6 +35,39 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
+bool
+no_factory (OBV_FactoryTest::Test_ptr test)
+{
+  bool succeed = false;
+  ACE_TRY_NEW_ENV
+    {
+      // Calling this without a factory registred should give a marshal
+      // exception with minor code 1
+      OBV_FactoryTest::BaseValue_var base_value =
+        test->get_base_value (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::MARSHAL, ex)
+    {
+      if ((ex.minor() & 0xFFFU) == 1)
+        {
+          succeed = true;
+        }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
+  if (!succeed)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ERROR, no_factory failed\n"));
+  }
+
+  return succeed;
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -48,46 +81,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
-
-      // Create factories.
-
-      OBV_FactoryTest::BaseValue_init *base_factory = 0;
-      ACE_NEW_RETURN (base_factory,
-                      OBV_FactoryTest::BaseValue_init,
-                      1); // supplied by mapping
-
-      orb->register_value_factory (base_factory->tao_repository_id (),
-                                   base_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      base_factory->_remove_ref (); // release ownership
-
-
-
-      OBV_FactoryTest::Value1_init *value1_factory = 0;
-      ACE_NEW_RETURN (value1_factory,
-                      OBV_FactoryTest::Value1_init,
-                      1); // supplied by mapping
-
-      orb->register_value_factory (value1_factory->tao_repository_id (),
-                                   value1_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      value1_factory->_remove_ref ();
-
-
-
-      OBV_FactoryTest::Value2_init *value2_factory = 0;
-      ACE_NEW_RETURN (value2_factory,
-                      Value2_init_impl,
-                      1); // custom implementation
-
-      orb->register_value_factory (value2_factory->tao_repository_id (),
-                                   value2_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      value2_factory->_remove_ref ();
-
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
@@ -105,6 +98,45 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ior),
                           1);
       }
+
+      // Check if we get the correct exception with minor code because no
+      // factory has been set.
+      if (!no_factory (test.in ()))
+        return 1;
+
+      // Create factories.
+      OBV_FactoryTest::BaseValue_init *base_factory = 0;
+      ACE_NEW_RETURN (base_factory,
+                      OBV_FactoryTest::BaseValue_init,
+                      1); // supplied by mapping
+
+      orb->register_value_factory (base_factory->tao_repository_id (),
+                                   base_factory
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      base_factory->_remove_ref (); // release ownership
+
+      OBV_FactoryTest::Value1_init *value1_factory = 0;
+      ACE_NEW_RETURN (value1_factory,
+                      OBV_FactoryTest::Value1_init,
+                      1); // supplied by mapping
+
+      orb->register_value_factory (value1_factory->tao_repository_id (),
+                                   value1_factory
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      value1_factory->_remove_ref ();
+
+      OBV_FactoryTest::Value2_init *value2_factory = 0;
+      ACE_NEW_RETURN (value2_factory,
+                      Value2_init_impl,
+                      1); // custom implementation
+
+      orb->register_value_factory (value2_factory->tao_repository_id (),
+                                   value2_factory
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      value2_factory->_remove_ref ();
 
       // Now perform the test. I don't check return values.
       // I just hope to get MARSHAL.

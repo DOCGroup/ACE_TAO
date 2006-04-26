@@ -13,6 +13,8 @@ ACE_RCSID (tao,
            Fault_Tolerance_Service,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Fault_Tolerance_Service::~TAO_Fault_Tolerance_Service (void)
 {
   delete this->ft_service_callback_;
@@ -60,3 +62,5 @@ TAO_Fault_Tolerance_Service::retention_id (void)
 
   return ++this->ft_object_retention_id_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

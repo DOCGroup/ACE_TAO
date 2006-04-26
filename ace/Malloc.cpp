@@ -16,6 +16,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Process-wide ACE_Allocator.
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
 
@@ -121,27 +123,11 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
     next->prev_ = this;
 }
 
-ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
-{
-  ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
-#if !defined (ACE_PSOS)
-  ACE_ASSERT (!"not implemented!");
-#endif /* ! ACE_PSOS */
-}
-
 const char *
 ACE_Control_Block::ACE_Name_Node::name (void) const
 {
   const char *c = this->name_;
   return c;
-}
-
-void
-ACE_Control_Block::ACE_Name_Node::name (const char *)
-{
-#if !defined (ACE_PSOS)
-  ACE_ASSERT (!"not implemented!");
-#endif /* ! ACE_PSOS */
 }
 
 ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
@@ -185,9 +171,9 @@ ACE_Malloc_Stats::dump (void) const
   ACE_TRACE ("ACE_Malloc_Stats::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  int nblocks = this->nblocks_.value ();
-  int ninuse  = this->ninuse_.value ();
-  int nchunks = this->nchunks_.value ();
+  int const nblocks = this->nblocks_.value ();
+  int const ninuse  = this->ninuse_.value ();
+  int const nchunks = this->nchunks_.value ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("nblocks = %d"), nblocks));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\nninuse = %d"), ninuse));
@@ -197,11 +183,6 @@ ACE_Malloc_Stats::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
-template class ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /*ACE_HAS_MALLOC_STATS*/
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,9 +1,11 @@
 // $Id$
 
-#include "Method_Request_Event.h"
-#include "Delivery_Request.h"
+#include "orbsvcs/Notify/Method_Request_Event.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
 
 ACE_RCSID (Notify, TAO_Notify_Method_Request_Event_Queueable, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
       const TAO_Notify_Event * event)
@@ -65,10 +67,10 @@ TAO_Notify_Method_Request_Event::should_retry ()
 
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
       const TAO_Notify_Method_Request_Event & prev_request,
-      const TAO_Notify_Event::Ptr & event_var)
-  : TAO_Notify_Method_Request_Queueable (event_var.get ())
-  , TAO_Notify_Method_Request_Event (prev_request, event_var.get ())
-  , event_var_ (event_var)
+      const TAO_Notify_Event::Ptr& event)
+  : TAO_Notify_Method_Request_Queueable (event.get ())
+  , TAO_Notify_Method_Request_Event (prev_request, event.get ())
+  , event_var_ (event)
 {
 }
 
@@ -96,3 +98,5 @@ TAO_Notify_Method_Request_Event::event() const
 {
   return this->event_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,6 +26,8 @@
 #include "ace/os_include/sys/os_ipc.h"
 #include "ace/Default_Constants.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SV_Message_Queue
  *
@@ -91,6 +93,8 @@ protected:
   /// Returned from the underlying <msgget> system call.
   int internal_id_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Message_Queue.inl"

@@ -1,17 +1,17 @@
 // $Id$
 
-#include "CEC_Default_Factory.h"
-#include "CEC_MT_Dispatching.h"
-#include "CEC_Reactive_Pulling_Strategy.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_SupplierAdmin.h"
-#include "CEC_ProxyPushConsumer.h"
-#include "CEC_ProxyPullConsumer.h"
-#include "CEC_ProxyPushSupplier.h"
-#include "CEC_ProxyPullSupplier.h"
-#include "CEC_EventChannel.h"
-#include "CEC_Reactive_ConsumerControl.h"
-#include "CEC_Reactive_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h"
+#include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h"
 
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 #include "orbsvcs/ESF/ESF_Delayed_Changes.h"
@@ -23,20 +23,26 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Null_Condition.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "CEC_TypedConsumerAdmin.h"
-#include "CEC_TypedSupplierAdmin.h"
-#include "CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_Default_Factory.i"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_Default_Factory,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory (void)
 {
@@ -1315,6 +1321,8 @@ TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
 {
   delete x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

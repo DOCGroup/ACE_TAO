@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "Object_KeyC.h"
+#include "tao/Object_KeyC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
@@ -44,13 +44,15 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_OBJECTKEY_CS_)
@@ -62,7 +64,7 @@ TAO::ObjectKey::ObjectKey (void)
 TAO::ObjectKey::ObjectKey (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (max)
@@ -74,7 +76,7 @@ TAO::ObjectKey::ObjectKey (
     CORBA::Octet * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (max, length, buffer, release)
@@ -83,7 +85,7 @@ TAO::ObjectKey::ObjectKey (
 TAO::ObjectKey::ObjectKey (
     const ObjectKey &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Octet
       >
     (seq)
@@ -96,7 +98,7 @@ TAO::ObjectKey::~ObjectKey (void)
 
 void
 TAO::ObjectKey::encode_sequence_to_string (char * &str,
-                                           const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
+                                           const TAO::unbounded_value_sequence<CORBA::Octet> &seq)
 {
   // We must allocate a buffer which is (gag) 3 times the length
   // of the sequence, which is the length required in the worst-case
@@ -148,7 +150,7 @@ int TAO::ObjectKey::is_legal (u_char & c)
 }
 
 void
-TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+TAO::ObjectKey::decode_string_to_sequence (TAO::unbounded_value_sequence<CORBA::Octet> &seq,
                                            const char *str)
 {
   if (str == 0)
@@ -219,10 +221,8 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
       if (ACE_BIT_DISABLED (strm.start ()->flags (),
       ACE_Message_Block::DONT_DELETE))
       {
-        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-          static_cast<TAO_Unbounded_Sequence<CORBA::Octet>*> (&key);
-        oseq->replace (_tao_seq_len, strm.start ());
-        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+        key.replace (_tao_seq_len, strm.start ());
+        key.mb ()->wr_ptr (key.mb()->rd_ptr () + _tao_seq_len);
         strm.skip_bytes (_tao_seq_len);
         return 1;
       }
@@ -249,29 +249,7 @@ CORBA::Boolean operator<< (
     const TAO::ObjectKey &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      {
-        TAO_Unbounded_Sequence<CORBA::Octet> *_tao_octet_seq = 
-          static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> (const_cast<TAO::ObjectKey *> (&_tao_sequence));
-        if (_tao_octet_seq->mb ())
-          return strm.write_octet_array_mb (_tao_octet_seq->mb ());
-        else
-          return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-      }
-      
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -279,55 +257,9 @@ CORBA::Boolean operator>> (
     TAO::ObjectKey &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      if (ACE_BIT_DISABLED (strm.start ()->flags (),
-      ACE_Message_Block::DONT_DELETE))
-      {
-        TAO_ORB_Core* orb_core = strm.orb_core ();
-        if (orb_core != 0 &&
-        strm.orb_core ()->resource_factory ()->
-        input_cdr_allocator_type_locked () == 1)
-        {
-          TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-            static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> (&_tao_sequence);
-          oseq->replace (_tao_seq_len, strm.start ());
-          oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-          strm.skip_bytes (_tao_seq_len);
-          return 1;
-        }
-      }
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_CPP_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

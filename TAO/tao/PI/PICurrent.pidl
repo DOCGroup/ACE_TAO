@@ -20,9 +20,9 @@
 #ifndef _PI_CURRENT_IDL_
 #define _PI_CURRENT_IDL_
 
-#include <InvalidSlot.pidl>
-#include <PI_Forward.pidl>
-#include <Current.pidl>
+#include "tao/PI/InvalidSlot.pidl"
+#include "tao/PI_Forward.pidl"
+#include "tao/Current.pidl"
 
 module PortableInterceptor {
 

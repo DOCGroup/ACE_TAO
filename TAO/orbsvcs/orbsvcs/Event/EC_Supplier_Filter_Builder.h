@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Supplier_Filter_Builder.h
  *
@@ -19,11 +20,13 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Supplier_Filter;
 class TAO_EC_ProxyPushConsumer;
@@ -54,6 +57,8 @@ public:
   virtual void
       destroy (TAO_EC_Supplier_Filter *filter) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

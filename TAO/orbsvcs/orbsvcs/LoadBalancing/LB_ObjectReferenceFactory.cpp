@@ -1,9 +1,8 @@
-#include "LB_ObjectReferenceFactory.h"
+#include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
 
 ACE_RCSID (LoadBalancing,
            LB_ObjectReferenceFactory,
            "$Id$")
-
 
 #include "tao/debug.h"
 
@@ -11,6 +10,8 @@ ACE_RCSID (LoadBalancing,
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The number of different object groups to support.
 #ifndef TAO_LB_ORF_GROUP_TABLE_SIZE
@@ -184,7 +185,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
   PortableGroup::ObjectGroup_var group;
   if (this->table_.find (repository_id, group) != 0)
     {
-      if (ACE_OS::strcasecmp (this->object_groups_[index].in (),
+      if (ACE_OS::strcasecmp (this->object_groups_[index],
                               "CREATE") == 0)
         {
           PortableGroup::Criteria criteria (1);
@@ -217,7 +218,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
       else
         {
           group =
-            this->orb_->string_to_object (this->object_groups_[index].in ()
+            this->orb_->string_to_object (this->object_groups_[index]
                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
@@ -247,9 +248,11 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (const char * repository_id,
 
   const CORBA::ULong len = this->repository_ids_.length ();
   for (i = 0; i < len; ++i)
-    if (ACE_OS::strcmp (this->repository_ids_[i].in (), repository_id) == 0)
+    if (ACE_OS::strcmp (this->repository_ids_[i], repository_id) == 0)
       return 1;
 
   return 0;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

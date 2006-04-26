@@ -33,7 +33,7 @@
 #define _TAO_IDL_MESSAGINGS_CPP_
 
 
-#include "MessagingS.h"
+#include "tao/Messaging/MessagingS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
@@ -62,6 +62,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -794,6 +796,8 @@ POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
         Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ifndef */
 

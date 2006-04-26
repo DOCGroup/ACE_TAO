@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef METRICS_UPCALL_MONITOR_T_H
@@ -11,8 +13,8 @@
 
 #endif /* ! VXWORKS */
 
-#include "Metrics_LocalCache.h"
-#include "Metrics_FrameManager.h"
+#include "orbsvcs/Metrics/Metrics_LocalCache.h"
+#include "orbsvcs/Metrics/Metrics_FrameManager.h"
 
 #include "ace/Hash_Map_Manager.h"
 
@@ -21,6 +23,9 @@
 #include "orbsvcs/MetricsS.h"
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 class TAO_Metrics_UpcallMonitorAdapter
@@ -40,7 +45,7 @@ public:
     TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR> & cache,
     TAO_Metrics_FrameManager<ACE_LOCK> & frame_manager,
     POA_RtecEventComm::PushConsumer & consumer,
-    TAO_String_Manager entry_point,
+    TAO::String_Manager entry_point,
     RtecScheduler::handle_t handle,
     RtecScheduler::Period_t period,
     RtecScheduler::Time wcet,
@@ -62,11 +67,11 @@ public:
   // Set the current period for the adapter.
 
   void push (const RtecEventComm::EventSet & data,
-             CORBA::Environment &ACE_TRY_ENV = 
+             CORBA::Environment &ACE_TRY_ENV =
              CORBA::Environment::default_environment ());
   // Do a monitored push to the actual PushConsumer for which we're a proxy
 
-  void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV = 
+  void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV =
                                  CORBA::Environment::default_environment ());
   // Delegates to the actual PushConsumer for which we're a proxy
 
@@ -122,14 +127,14 @@ public:
     TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR> & cache,
     TAO_Metrics_FrameManager<ACE_LOCK> & frame_manager,
     POA_RtecEventComm::PushConsumer & consumer,
-    TAO_String_Manager entry_point,
+    TAO::String_Manager entry_point,
     RtecScheduler::handle_t handle,
     RtecScheduler::Period_t period,
     RtecScheduler::Time wcet,
     RtecScheduler::Criticality_t criticality,
     int adapter_owns_consumer = 1,
     Metrics::QoSLogger_ptr logger = 0);
-  // Constructor that takes a reference to a logger object and 
+  // Constructor that takes a reference to a logger object and
   // info needed to construct or base class.
 
 protected:
@@ -141,17 +146,19 @@ protected:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.i"
+#endif /* __ACE_INLINE__ */
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Metrics_UpcallMonitor_T.cpp"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Metrics_UpcallMonitor_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-#if defined (__ACE_INLINE__)
-#include "Metrics_UpcallMonitor_T.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* METRICS_UPCALL_MONITOR_T_H */
 

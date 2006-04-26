@@ -4,6 +4,7 @@
 
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
+#include "tao/Protocol_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Reactive_Flushing_Strategy.h"
@@ -14,6 +15,8 @@
 #include "tao/Codeset_Descriptor_Base.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/Null_Fragmentation_Strategy.h"
+#include "tao/On_Demand_Fragmentation_Strategy.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -25,11 +28,12 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
-
 ACE_RCSID (tao,
            default_resource,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_locked_data_blocks_ (1)
@@ -44,6 +48,11 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , dynamically_allocated_reactor_ (0)
   , options_processed_ (0)
   , factory_disabled_ (0)
+#if TAO_USE_LOCAL_MEMORY_POOL == 1
+  , use_local_memory_pool_ (true)
+#else
+  , use_local_memory_pool_ (false)
+#endif
   , cached_connection_lock_type_ (TAO_THREAD_LOCK)
   , object_key_table_lock_type_ (TAO_THREAD_LOCK)
   , corba_object_lock_type_ (TAO_THREAD_LOCK)
@@ -539,6 +548,7 @@ TAO_Default_Resource_Factory::add_to_ior_parser_names (const char *curarg)
 int
 TAO_Default_Resource_Factory::load_default_protocols (void)
 {
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       // If the user did not list any protocols in her svc.conf file
       // then default to TAO's basic protocols.
       // You do *NOT* need modify this code to add your own protocol,
@@ -574,7 +584,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
       // If a protocol factory is obtained from the Service
       // Configurator then do not transfer ownership to the
       // TAO_Protocol_Item.
-      int transfer_ownership = 0;
+      bool transfer_ownership = false;
 
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory");
@@ -597,11 +607,12 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
                               protocol_factory,
                               TAO_Protocol_Factory);
 
-          transfer_ownership = 1;
+          transfer_ownership = true;
+
         }
       else
         {
-          transfer_ownership = 0;
+          transfer_ownership = false;
         }
 
       ACE_NEW_RETURN (item,
@@ -640,6 +651,8 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
                       ACE_TEXT ("TAO (%P|%t) Loaded default ")
                       ACE_TEXT ("protocol <IIOP_Factory>\n")));
         }
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
   return 0;
 }
@@ -764,20 +777,32 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 }
 
 
-#if TAO_USE_LOCAL_MEMORY_POOL == 1
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,TAO_SYNCH_MUTEX> LOCKED_MALLOC;
-typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR;
-#else
-typedef ACE_New_Allocator LOCKED_ALLOCATOR;
-#endif
+typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR_POOL;
+typedef ACE_New_Allocator LOCKED_ALLOCATOR_NO_POOL;
+
+void
+TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
+{
+  use_local_memory_pool_ = flag;
+}
 
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_dblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
 
   return allocator;
 }
@@ -786,9 +811,18 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
 
   return allocator;
 }
@@ -797,9 +831,18 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_msgblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
 
   return allocator;
 }
@@ -814,9 +857,19 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
+
   return allocator;
 }
 
@@ -824,9 +877,19 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
+
   return allocator;
 }
 
@@ -834,9 +897,19 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_msgblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
+
   return allocator;
 }
 
@@ -844,9 +917,19 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::amh_response_handler_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
+
   return allocator;
 }
 
@@ -854,9 +937,19 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::ami_response_handler_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator,
-                  LOCKED_ALLOCATOR,
-                  0);
+  if (use_local_memory_pool_)
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_POOL,
+                    0);
+  }
+  else
+  {
+    ACE_NEW_RETURN (allocator,
+                    LOCKED_ALLOCATOR_NO_POOL,
+                    0);
+  }
+
   return allocator;
 }
 
@@ -994,6 +1087,56 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
   return strategy;
 }
 
+auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+TAO_Default_Resource_Factory::create_fragmentation_strategy (
+  TAO_Transport * transport,
+  CORBA::ULong max_message_size) const
+{
+  auto_ptr<TAO_GIOP_Fragmentation_Strategy> strategy (0);
+
+  TAO_GIOP_Fragmentation_Strategy * tmp = 0;
+
+  // Minimum GIOP message size is 24 (a multiple of 8):
+  //   12   GIOP Message Header
+  //    4   GIOP Fragment Header (request ID)
+  // +  8   Smallest payload, including padding.
+  //  ---
+  //   24
+  static CORBA::ULong const min_message_size = 24;
+
+  // GIOP fragments are supported in GIOP 1.1 and better, but TAO only
+  // supports them in 1.2 or better since GIOP 1.1 fragments do not
+  // have a fragment message header.
+
+
+  if (transport) // No transport.  Cannot fragment.
+    {
+      if (max_message_size < min_message_size
+          || (TAO_DEF_GIOP_MAJOR == 1 && TAO_DEF_GIOP_MINOR < 2))
+        {
+          // No maximum was set by the user.
+          ACE_NEW_RETURN (tmp,
+                          TAO_Null_Fragmentation_Strategy,
+                          strategy);
+
+        }
+      else
+        {
+          ACE_NEW_RETURN (tmp,
+                          TAO_On_Demand_Fragmentation_Strategy (
+                            transport,
+                            max_message_size),
+                          strategy);
+        }
+    }
+
+  ACE_AUTO_PTR_RESET (strategy,
+                      tmp,
+                      TAO_GIOP_Fragmentation_Strategy);
+
+  return strategy;
+}
+
 void
 TAO_Default_Resource_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,
@@ -1082,6 +1225,8 @@ TAO_Default_Resource_Factory::drop_replies_during_shutdown (void) const
 {
   return this->drop_replies_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

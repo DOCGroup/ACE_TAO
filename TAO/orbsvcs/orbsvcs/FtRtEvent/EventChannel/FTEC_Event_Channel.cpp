@@ -1,29 +1,31 @@
 // $Id$
 
 #include "ace/Dynamic_Service.h"
-#include "FTEC_Event_Channel.h"
-#include "FTEC_Event_Channel_Impl.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h"
 #include "../Utils/activate_with_id.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/UUID.h"
-#include "Fault_Detector_Loader.h"
-#include "Fault_Detector.h"
-#include "Request_Context_Repository.h"
-#include "Replication_Service.h"
-#include "Identification_Service.h"
-#include "create_persistent_poa.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_Event_Channel,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                                                PortableServer::POA_var poa)
-:    orb_(orb)
-,    poa_(poa)
-,    ec_impl_(NULL)
+  : orb_(orb)
+  , poa_(poa)
+  , ec_impl_(NULL)
 {
 }
 
@@ -210,7 +212,7 @@ TAO_FTEC_Event_Channel::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 RtecEventChannelAdmin::Observer_Handle
-TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr observer
+TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr
                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
@@ -221,11 +223,11 @@ TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr obs
   /// throw an exception for the moment
   ACE_THROW_RETURN(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(), 0);
 
-  return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
+  //return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
+TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle
                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
@@ -236,7 +238,7 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle 
   /// throw an exception for the moment
   ACE_THROW(RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER());
 
-  ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
+  //ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -404,7 +406,7 @@ TAO_FTEC_Event_Channel::resume_push_supplier (
       ))
 {
   ec_impl_->resume_push_supplier(oid
-                       ACE_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -418,7 +420,9 @@ TAO_FTEC_Event_Channel::push (
         , FtRtecEventComm::InvalidObjectID
       ))
 {
-  ec_impl_->push(oid, data
-       ACE_ENV_ARG_PARAMETER);
+  ec_impl_->push(oid,
+                 data
+                 ACE_ENV_ARG_PARAMETER);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

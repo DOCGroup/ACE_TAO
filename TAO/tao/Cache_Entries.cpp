@@ -13,6 +13,8 @@ ACE_RCSID(tao,
           "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Cache_IntId::Cache_IntId (TAO_Transport *transport)
@@ -46,3 +48,5 @@ namespace TAO
     return *this;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

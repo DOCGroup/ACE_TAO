@@ -14,14 +14,16 @@
 #define TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IdUniquenessStrategy.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -50,10 +52,14 @@ namespace TAO
       TAO_Root_POA* poa_;
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyUnique)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, IdUniquenessStrategyUnique)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyUnique)
+ACE_FACTORY_DECLARE (TAO_PortableServer, IdUniquenessStrategyUnique)
+
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H */

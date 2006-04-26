@@ -24,6 +24,8 @@
 #include "ace/OS_NS_Thread.h"
 #include "ace/Thread_Adapter.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 struct cancel_state
 {
   /// e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
@@ -264,6 +266,8 @@ private:
   /// Ensure that we don't get instantiated.
   ACE_Thread (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Thread.inl"

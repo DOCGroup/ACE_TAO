@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl.
 template <class X, class ACE_LOCK> class ACE_Refcounted_Auto_Ptr_Rep;
@@ -187,6 +189,8 @@ private:
   ACE_Refcounted_Auto_Ptr_Rep (X *p = 0);
   ~ACE_Refcounted_Auto_Ptr_Rep (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Refcounted_Auto_Ptr.inl"
 

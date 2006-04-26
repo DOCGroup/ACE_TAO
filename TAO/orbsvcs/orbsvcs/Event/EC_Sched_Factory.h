@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Sched_Factory.h
  *
@@ -16,13 +16,15 @@
 #define TAO_EC_SCHED_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "sched_event_export.h"
+#include "orbsvcs/Event/sched_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Sched_Factory
@@ -56,8 +58,10 @@ public:
 private:
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Sched_Factory.i"
+#include "orbsvcs/Event/EC_Sched_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Sched_Factory)

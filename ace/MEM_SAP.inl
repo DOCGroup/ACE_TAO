@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/RW_Thread_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_MEM_SAP_Node::ACE_MEM_SAP_Node (size_t cap)
@@ -57,3 +60,5 @@ ACE_MEM_SAP::release_buffer (ACE_MEM_SAP_Node *buf)
   this->shm_malloc_->free (buf);
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

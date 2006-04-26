@@ -1,5 +1,5 @@
-#include "Timer_Helper.h"
-#include "TAO_Time_Service_Clerk.h"
+#include "orbsvcs/Time/Timer_Helper.h"
+#include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 
 #include "tao/debug.h"
 
@@ -10,6 +10,8 @@ ACE_RCSID (Time,
            Timer_Helper,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Timer_Helper::Timer_Helper (void)
   : clerk_ (0)
@@ -150,3 +152,5 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

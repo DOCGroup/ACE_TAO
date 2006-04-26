@@ -22,7 +22,7 @@ use vars qw(@ISA);
 
 sub process {
   my($noext)   = $_[1];
-  my($objects) = [];
+  my(@objects) = ();
   my(@exts)    = ('o');
   my(@dirs)    = (defined $ENV{VDIR} ? $ENV{VDIR} : '');
   $noext =~ s/\.[^\.]+$//o;
@@ -36,11 +36,11 @@ sub process {
 
   foreach my $dirs (@dirs) {
     foreach my $ext (@exts) {
-      push(@$objects, "$dirs$noext.$ext");
+      push(@objects, "$dirs$noext.$ext");
     }
   }
 
-  return $objects;
+  return \@objects;
 }
 
 

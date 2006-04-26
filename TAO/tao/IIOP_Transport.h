@@ -16,11 +16,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
+#include "tao/Transport.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace IIOP
 {
@@ -144,6 +150,10 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 

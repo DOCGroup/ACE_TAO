@@ -4,6 +4,7 @@
 
 #include "ace/OS_NS_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_SizeCDR::ACE_SizeCDR (ACE_CDR::Octet major_version,
@@ -415,3 +416,5 @@ operator<< (ACE_SizeCDR &ss, ACE_OutputCDR::from_wstring x)
     (ACE_CDR::Boolean) (ss.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 
+
+ACE_END_VERSIONED_NAMESPACE_DECL

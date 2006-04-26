@@ -16,7 +16,7 @@ $daemons = 2;
 @ports = ( 60001, 60002 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
-$dat_file = "TestNodeManagerMap.dat";
+$dat_file = "NodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
@@ -61,7 +61,7 @@ sub run_node_daemons {
       $node_app = "$DAnCE/NodeApplication/NodeApplication";
 
       $d_cmd = "$DAnCE/NodeManager/NodeManager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile";
+      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -d 30";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();

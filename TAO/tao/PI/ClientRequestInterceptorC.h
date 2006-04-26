@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_CLIENTREQUESTINTERCEPTORC_H_
-#define _TAO_IDL_ORIG_CLIENTREQUESTINTERCEPTORC_H_
+#ifndef _TAO_IDL_CLIENTREQUESTINTERCEPTORC_H_
+#define _TAO_IDL_CLIENTREQUESTINTERCEPTORC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -55,36 +55,29 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PI_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__VAR_OUT_CH_
-
+  
   class ClientRequestInfo;
   typedef ClientRequestInfo *ClientRequestInfo_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ClientRequestInfo
       >
     ClientRequestInfo_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ClientRequestInfo
@@ -92,22 +85,22 @@ namespace PortableInterceptor
     ClientRequestInfo_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__VAR_OUT_CH_
-
+  
   class ClientRequestInterceptor;
   typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ClientRequestInterceptor
       >
     ClientRequestInterceptor_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ClientRequestInterceptor
@@ -115,88 +108,88 @@ namespace PortableInterceptor
     ClientRequestInterceptor_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_
-
+  
   class TAO_PI_Export ClientRequestInterceptor
     : public virtual ::PortableInterceptor::Interceptor
   {
   public:
     typedef ClientRequestInterceptor_ptr _ptr_type;
     typedef ClientRequestInterceptor_var _var_type;
-
+    
     // The static operations.
     static ClientRequestInterceptor_ptr _duplicate (ClientRequestInterceptor_ptr obj);
-
+    
     static void _tao_release (ClientRequestInterceptor_ptr obj);
-
+    
     static ClientRequestInterceptor_ptr _narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientRequestInterceptor_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientRequestInterceptor_ptr _nil (void)
     {
       return static_cast<ClientRequestInterceptor_ptr> (0);
     }
-
-    static void _tao_any_destructor (void *);
-
+    
+    
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_request (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_poll (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void receive_reply (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void receive_exception (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
@@ -205,20 +198,20 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
     
-    virtual CORBA::Boolean _is_a (
+    virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
     // Abstract or local interface only.
@@ -234,14 +227,9 @@ namespace PortableInterceptor
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_PI_Export ::CORBA::TypeCode_ptr const _tc_ClientRequestInterceptor;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableInterceptor
 
@@ -252,8 +240,8 @@ namespace PortableInterceptor
 namespace TAO
 {
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__TRAITS_CH_
+#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__TRAITS_)
+#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__TRAITS_
   
   template<>
   struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::ClientRequestInfo>
@@ -265,7 +253,7 @@ namespace TAO
         ::PortableInterceptor::ClientRequestInfo_ptr
       );
     static ::PortableInterceptor::ClientRequestInfo_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ClientRequestInfo_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -273,8 +261,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__TRAITS_CH_
+#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__TRAITS_)
+#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__TRAITS_
   
   template<>
   struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::ClientRequestInterceptor>
@@ -286,7 +274,7 @@ namespace TAO
         ::PortableInterceptor::ClientRequestInterceptor_ptr
       );
     static ::PortableInterceptor::ClientRequestInterceptor_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ClientRequestInterceptor_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -296,22 +284,10 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_codegen.cpp:1040
 
-TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr); // copying
-TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr *); // non-copying
-TAO_PI_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr &);
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

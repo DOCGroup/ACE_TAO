@@ -1,10 +1,10 @@
 // $Id$
 
-#ifndef TAO_SEQUENCE_T_C
-#define TAO_SEQUENCE_T_C
+#ifndef TAO_SEQUENCE_T_CPP
+#define TAO_SEQUENCE_T_CPP
 
-#include "Sequence_T.h"
-#include "Array_VarOut_T.h"
+#include "tao/Sequence_T.h"
+#include "tao/Array_VarOut_T.h"
 
 #include "ace/OS_Memory.h"
 
@@ -14,9 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID (tao,
-           Sequence_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (
@@ -135,6 +133,18 @@ TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
   this->maximum_ = 0;
   this->length_  = 0;
   this->release_ = 0;
+}
+
+template<typename T>
+void
+TAO_Unbounded_Sequence<T>::_shrink_buffer (CORBA::ULong nl,
+                                           CORBA::ULong ol)
+{
+  T * tmp = reinterpret_cast <T *> (this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i) {
+    tmp[i] = T();
+  }
 }
 
 template <typename T>
@@ -319,6 +329,18 @@ TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
   this->buffer_ = 0;
   this->length_  = 0;
   this->release_ = 0;
+}
+
+template<typename T, size_t MAX>
+void
+TAO_Bounded_Sequence<T, MAX>::_shrink_buffer (CORBA::ULong nl,
+                                              CORBA::ULong ol)
+{
+  T * tmp = reinterpret_cast <T *> (this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i) {
+    tmp[i] = T();
+  }
 }
 
 template <typename T, size_t MAX>
@@ -2134,4 +2156,6 @@ TAO_Bounded_WString_Sequence<MAX>::replace (CORBA::ULong length,
   this->release_ = release;
 }
 
-#endif /* TAO_SEQUENCE_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* tao/TAO_SEQUENCE_T_CPP */

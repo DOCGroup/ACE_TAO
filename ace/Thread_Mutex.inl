@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_thread_mutex_t &
 ACE_Thread_Mutex::lock (void) const
@@ -165,3 +168,5 @@ ACE_Thread_Mutex_Guard::remove (void)
   return this->release ();
 }
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

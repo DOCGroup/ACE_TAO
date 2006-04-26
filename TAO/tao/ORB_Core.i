@@ -5,6 +5,7 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Table.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
@@ -213,13 +214,6 @@ TAO_ORB_Core::not_default (const char * orb_id)
   table->not_default (orb_id);
 }
 
-/// Return the valuetype adapter
-ACE_INLINE TAO_Valuetype_Adapter *&
-TAO_ORB_Core::valuetype_adapter (void)
-{
-  return this->valuetype_adapter_;
-}
-
 ACE_INLINE void
 TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
 {
@@ -359,14 +353,6 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
   tss_resources->orb_core_ = this;
 
   return 0;
-}
-
-ACE_INLINE int
-TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
-                                    size_t &slot_id)
-{
-  return this->tss_cleanup_funcs_.register_cleanup_function (cleanup,
-                                                             slot_id);
 }
 
 ACE_INLINE TAO_Cleanup_Func_Registry *
@@ -638,3 +624,23 @@ TAO_ORB_Core::serverrequestinterceptor_adapter (void)
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+/// Verify condition for  permanent forward is given,
+/// both parameters must provide group attributes.
+ACE_INLINE  CORBA::Boolean
+TAO_ORB_Core::is_permanent_forward_condition
+(const CORBA::Object_ptr obj,
+ const TAO_Service_Context &service_context)
+{
+  const TAO_Service_Callbacks *service_callback =
+      this->fault_tolerance_service ().service_callback ();
+
+  const CORBA::Boolean permanent_forward_condition =
+      service_callback &&
+      service_callback->is_permanent_forward_condition (obj,
+                                                        service_context);
+
+  return permanent_forward_condition;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

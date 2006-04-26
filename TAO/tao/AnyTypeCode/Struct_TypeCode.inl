@@ -2,6 +2,7 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -17,7 +18,7 @@ TAO::TypeCode::Struct<StringType,
   char const * name,
   FieldArrayType const & fields,
   CORBA::ULong nfields)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , base_attributes_ (id, name)
   , nfields_ (nfields)
@@ -36,7 +37,7 @@ TAO::TypeCode::Struct<StringType,
                       RefCountPolicy>::Struct (
   CORBA::TCKind kind,
   char const * id)
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , base_attributes_ (id)
   , nfields_ (0)
@@ -45,3 +46,5 @@ TAO::TypeCode::Struct<StringType,
   // CORBA::tk_except is not allowed in the recursive TypeCode case.
   // ACE_ASSERT (kind == CORBA::tk_struct);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

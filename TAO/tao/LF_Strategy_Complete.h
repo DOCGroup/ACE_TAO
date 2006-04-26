@@ -21,6 +21,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
+
 /**
  * @brief A concrete TAO_LF_Strategy for ORB configurations that use
  * the Leader/Followers event loop.
@@ -28,9 +34,6 @@
 class TAO_Export TAO_LF_Strategy_Complete : public TAO_LF_Strategy
 {
 public:
-  /// Constructor
-  TAO_LF_Strategy_Complete (void);
-
   //@{
   /** @name Virtual Methods
    *
@@ -45,9 +48,7 @@ public:
                                         TAO_Leader_Follower &);
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/LF_Strategy_Complete.inl"
-#endif /* __ACE_INLINE__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

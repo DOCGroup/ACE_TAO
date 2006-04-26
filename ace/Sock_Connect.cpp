@@ -29,14 +29,14 @@
 #   include /**/ <ifaddrs.h>
 # endif /* ACE_HAS_GETIFADDRS */
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
 #include /**/ <inetLib.h>
 #include /**/ <netinet/in_var.h>
 extern "C" {
   extern struct in_ifaddr* in_ifaddr;
 }
 #include "ace/OS_NS_stdio.h"
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 #if defined (ACE_HAS_WINCE)
 #include /**/ <Iphlpapi.h>
@@ -51,13 +51,13 @@ extern "C" {
 #    include "ace/Object_Manager.h"
 #  endif /* ACE_HAS_THREADS */
 
-namespace ACE
+namespace
 {
   // private:
   //  Used internally so not exported.
 
   /// Does this box have ipv6 turned on?
-  int ipv6_enabled_ = -1;
+  int ace_ipv6_enabled = -1;
 }
 #endif /* ACE_HAS_IPV6 */
 
@@ -67,10 +67,7 @@ namespace ACE
 // and not the one for <sys/socket.h> which is also needed.  Although we
 // don't need the template defined here, it makes the compiler pull in
 // <sys/socket.h> and the build runs clean.
-#if defined (AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 500)
-#  if (__IBMCPP__ >= 700)
-#    error Recheck this hack to see if version 7 fixed it!
-#  endif
+#if defined (AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 500) && (__IBMCPP__ < 700)
 static ACE_Auto_Array_Ptr<sockaddr> force_compiler_to_include_socket_h;
 #endif /* AIX && __IBMCPP__ >= 500 */
 
@@ -274,6 +271,8 @@ get_windows_version()
 }
 
 #endif //(ACE_WIN32) && !(ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Bind socket to an unused port.
 
@@ -626,10 +625,10 @@ ACE::get_ip_interfaces (size_t &count,
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
-  for (count = 0, i = 0; i < n_interfaces; i++)
+  for (count = 0, i = 0; i < n_interfaces; ++i)
     {
       LPINTERFACE_INFO lpii;
-      struct sockaddr_in *addrp;
+      struct sockaddr_in *addrp = 0;
 
       lpii = &info[i];
       if (!(lpii->iiFlags & IFF_UP))
@@ -977,7 +976,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   // Count the number of interfaces
   while (dev_names.next () != 0)
-    n_interfaces ++;
+    ++n_interfaces;
 
   // case 1. no interfaces present, empty string? OS version change?
   if (n_interfaces == 0)
@@ -1077,7 +1076,7 @@ ACE::get_ip_interfaces (size_t &count,
               addrs[count].set ((u_short) 0,
                                 addr->sin_addr.s_addr,
                                 0);
-              count++;
+              ++count;
             }
         }
 # if defined (ACE_HAS_IPV6)
@@ -1092,7 +1091,7 @@ ACE::get_ip_interfaces (size_t &count,
             {
               addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
                                sizeof(sockaddr_in6));
-              count++;
+              ++count;
             }
         }
 # endif /* ACE_HAS_IPV6 */
@@ -1102,7 +1101,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   return 0;
 
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs, num_ifs_found;
@@ -1212,17 +1211,17 @@ ACE::get_ip_interfaces (size_t &count,
           if (inAddr.sin_addr.s_addr != 0)
             {
               addrs[count].set(&inAddr, sizeof(struct sockaddr_in));
-              count++;
+              ++count;
             }
 #endif /* ! _UNICOS */
         }
 
 #if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
-      pcur++;
+      ++pcur;
 #else
       if (pcur->ifr_addr.sa_len <= sizeof (struct sockaddr))
         {
-           pcur++;
+           ++pcur;
         }
       else
         {
@@ -1270,7 +1269,7 @@ ACE::get_ip_interfaces (size_t &count,
                 !IN6_IS_ADDR_UNSPECIFIED (&reinterpret_cast<sockaddr_in6 *> (res0->ai_addr)->sin6_addr))
             {
               addrs[count].set(reinterpret_cast<sockaddr_in *> (res0->ai_addr), res0->ai_addrlen);
-              count++;
+              ++count;
             }
           freeaddrinfo (res0);
 
@@ -1280,7 +1279,7 @@ ACE::get_ip_interfaces (size_t &count,
 # endif /* ACE_HAS_IPV6 */
 
   return 0;
-#elif defined (VXWORKS)
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
   count = 0;
   // Loop through each address structure
   for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
@@ -1330,7 +1329,7 @@ ACE::get_ip_interfaces (size_t &count,
 #else
   ACE_UNUSED_ARG (count);
   ACE_UNUSED_ARG (addrs);
-  ACE_NOTSUP_RETURN (-1);;                      // no implementation
+  ACE_NOTSUP_RETURN (-1);                      // no implementation
 #endif /* ACE_WIN32 */
 }
 
@@ -1371,7 +1370,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 
   how_many = num_ifs;
   return 0;
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
   // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
   // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
@@ -1467,7 +1466,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (how_many);
-  ACE_NOTSUP_RETURN (-1);; // no implmentation
+  ACE_NOTSUP_RETURN (-1); // no implementation
 #endif /* sparc && SIOCGIFNUM */
 }
 
@@ -1480,7 +1479,7 @@ ACE::get_handle (void)
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc) && ! defined (CHORUS)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
   // Note: DEC CXX doesn't define "unix" BSD compatible OS: HP UX,
   // AIX, SunOS 4.x
 
@@ -1494,42 +1493,33 @@ int
 ACE::ipv6_enabled (void)
 {
 #if defined (ACE_HAS_IPV6)
-  if (ACE::ipv6_enabled_ == -1)
+  if (ace_ipv6_enabled == -1)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Static_Object_Lock::instance (), 0));
 
-      if (ACE::ipv6_enabled_ == -1)
+      if (ace_ipv6_enabled == -1)
         {
           // Determine if the kernel has IPv6 support by attempting to
           // create a PF_INET6 socket and see if it fails.
           ACE_HANDLE s = ACE_OS::socket (PF_INET6, SOCK_DGRAM, 0);
           if (s == ACE_INVALID_HANDLE)
             {
-              ACE::ipv6_enabled_ = 0;
+              ace_ipv6_enabled = 0;
             }
           else
             {
-              ACE::ipv6_enabled_ = 1;
+              ace_ipv6_enabled = 1;
               ACE_OS::closesocket (s);
             }
         }
     }
 
-  return ACE::ipv6_enabled_;
+  return ace_ipv6_enabled;
 #else /* ACE_HAS_IPV6 */
   return 0;
 #endif /* !ACE_HAS_IPV6 */
 }
 
-#if defined (__unix) || defined (__unix__) || defined (__Lynx__) || \
-    defined (_AIX)
-#  if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Array_Ptr<struct ifreq>;
-template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
-#  elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Array_Ptr<struct ifreq>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<struct ifreq>
-#  endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* (__unix || __Lynx_ || AIX ) */
+ACE_END_VERSIONED_NAMESPACE_DECL

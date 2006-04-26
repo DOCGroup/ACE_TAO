@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_Notify_Service.h
  *
@@ -13,19 +14,20 @@
 #define TAO_Notify_RT_NOTIFY_SERVICE_H
 
 #include /**/ "ace/pre.h"
-#include "rt_notify_export.h"
+#include "orbsvcs/Notify/rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CosNotify_Service.h"
+#include "orbsvcs/Notify/CosNotify_Service.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Notify_Service
  *
- * @brief Implementation of the TAO_Notify_Service interface for
- * RT Notification.
+ * @brief Implemetation of the TAO_Notify_Service interface for RT Notification.
  *
  */
 class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
@@ -36,7 +38,6 @@ public:
 
   /// Destructor
   ~TAO_RT_Notify_Service ();
-
 
   /// Init the service.
   virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
@@ -51,6 +52,8 @@ protected:
   /// Creates the Builder for RT Notify objects.
   virtual TAO_Notify_Builder* create_builder (ACE_ENV_SINGLE_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_RT_Notify,TAO_RT_Notify_Service)
 

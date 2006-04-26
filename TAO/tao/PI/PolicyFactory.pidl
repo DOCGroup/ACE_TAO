@@ -20,7 +20,7 @@
 #ifndef _POLICYFACTORY_PIDL_
 #define _POLICYFACTORY_PIDL_
 
-#include <Policy.pidl>
+#include "tao/Policy.pidl"
 
 module PortableInterceptor {
 

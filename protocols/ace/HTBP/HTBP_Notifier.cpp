@@ -14,6 +14,8 @@
 #include "HTBP_Session.h"
 #include "ace/Reactor.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE::HTBP::Notifier::Notifier (ACE::HTBP::Channel *s)
   : channel_(s)
 {
@@ -80,3 +82,5 @@ ACE::HTBP::Notifier::get_handle(void) const
 {
   return this->channel_->ace_stream().get_handle();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

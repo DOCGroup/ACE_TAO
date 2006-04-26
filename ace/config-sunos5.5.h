@@ -38,8 +38,7 @@
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
-#     define ACE_HAS_USING_KEYWORD
-#       define ACE_HAS_TEMPLATE_TYPEDEFS
+#     define ACE_HAS_TEMPLATE_TYPEDEFS
 #     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
@@ -83,6 +82,29 @@
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */
 
+
+// Take advantage of Sun Studio 8 (Sun C++ 5.5) or better symbol
+// visibility to generate improved shared library binaries.
+#  if (__SUNPRO_CC > 0x540)
+
+#    if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
+#     undef ACE_HAS_CUSTOM_EXPORT_MACROS
+#    else
+#      ifndef ACE_HAS_CUSTOM_EXPORT_MACROS
+#        define ACE_HAS_CUSTOM_EXPORT_MACROS
+#      endif  /* !ACE_HAS_CUSTOM_EXPORT_MACROS */
+#      define ACE_Proper_Export_Flag __symbolic
+#      define ACE_Proper_Import_Flag __global
+
+#      define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
+#      define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
+
+// #      define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
+// #      define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE<CLASS, LOCK>;
+
+#    endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
+#  endif  /* __SUNPRO_CC > 0x540 (> Sun C++ 5.4) */
+
 #elif defined (__GNUG__)
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
@@ -125,23 +147,21 @@
   // IOStream_Test never halts with Green Hills 1.8.9.
 # define ACE_LACKS_ACE_IOSTREAM
 
-#elif defined (__KCC) /* KAI compiler */
-
-# include "ace/config-kcc-common.h"
-
 #else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
-# error unsupported compiler in ace/config-sunos5.5.h
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler in ace/config-sunos5.5.h
+#  endif /* __cplusplus */
 #endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 
 #if !defined (__ACE_INLINE__)
-// NOTE:  if you have link problems with undefined inline template
+// @note If you have link problems with undefined inline template
 // functions with Sun C++, be sure that the #define of __ACE_INLINE__
 // below is not commented out.
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 // Platform supports the POSIX regular expression library.
-// NOTE:  please comment out the ACE_HAS_REGEX #define if you
+// @note Please comment out the ACE_HAS_REGEX #define if you
 // have link problems with g++ or egcs on SunOS 5.5.
 #define ACE_HAS_REGEX
 
@@ -258,6 +278,11 @@
 
 // SunOS 5.5.x does not support mkstemp
 #define ACE_LACKS_MKSTEMP
+#define ACE_LACKS_SYS_SYSCTL_H
+
+#if !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION - 0 >= 4))
+#  define ACE_HAS_CHARPTR_SHMDT
+#endif
 
 // Platform has posix getpwnam_r
 #if (defined (_POSIX_C_SOURCE) && _POSIX_C_SOURCE - 0 >= 199506L) || \

@@ -17,11 +17,13 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/FTRTC.h"
 #include "orbsvcs/FtRtecEventCommC.h"
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
 {
@@ -44,11 +46,12 @@ namespace FTRTEC
     FtRtecEventComm::ObjectId object_id_;
     CosNaming::Name name_;
   };
-
-
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Identification_Service)
-  ACE_STATIC_SVC_REQUIRE(Identification_Service)
-  ACE_FACTORY_DECLARE (TAO_FTRTEC, Identification_Service)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Identification_Service)
+ACE_STATIC_SVC_REQUIRE(Identification_Service)
+ACE_FACTORY_DECLARE (TAO_FTRTEC, Identification_Service)
 
 #endif

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,9 +27,11 @@
 
 #include "ace/POSIX_Proactor.h"
 
-#if defined(AIX) || defined(sun) || defined(__APPLE__)
+#if defined(AIX) || defined(sun) || defined(__APPLE__) || defined (ACE_VXWORKS)
 typedef union sigval sigval_t;
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_POSIX_CB_Proactor
@@ -91,6 +93,8 @@ protected:
   /// used to wait the first AIO start
   ACE_SYNCH_SEMAPHORE sema_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__  */
 #endif /* ACE_POSIX_CB_PROACTOR_H*/

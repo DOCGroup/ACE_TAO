@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_fcntl.h"
@@ -13,6 +12,8 @@ ACE_RCSID(ace, OS_NS_fcntl, "$Id$")
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/Object_Manager_Base.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
 ACE_OS::open (const char *filename,
@@ -264,3 +265,5 @@ ACE_OS::open (const wchar_t *filename,
                        sa);
 #endif /* ACE_WIN32 */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

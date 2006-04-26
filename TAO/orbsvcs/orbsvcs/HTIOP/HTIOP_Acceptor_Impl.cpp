@@ -1,11 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #ifndef HTIOP_ACCEPTOR_IMPL_CPP
 #define HTIOP_ACCEPTOR_IMPL_CPP
 
-#include "HTIOP_Acceptor_Impl.h"
-#include "HTIOP_Completion_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h"
+#include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,9 +22,7 @@
 
 #include "ace/Object_Manager.h"
 
-ACE_RCSID(HTIOP,
-          TAO_HTIOP_Acceptor_Impl,
-          "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -319,5 +316,7 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handle
 {
   return this->creation_strategy_->make_svc_handler (sh);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* HTIOP_ACCEPTOR_IMPL_CPP */

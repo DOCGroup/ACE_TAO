@@ -34,13 +34,16 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__) && !defined(__IBMCPP__)
       typedef struct _stat ACE_stat;
 # else
       typedef struct stat ACE_stat;
 # endif /* ACE_WIN32 */
 
-namespace ACE_OS {
+namespace ACE_OS
+{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE creat (const ACE_TCHAR *filename,
@@ -50,11 +53,10 @@ namespace ACE_OS {
 
   // non-standard
   ACE_NAMESPACE_INLINE_FUNCTION
-  long filesize (ACE_HANDLE handle);
+  off_t filesize (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  long filesize (const ACE_TCHAR *handle);
-
+  off_t filesize (const ACE_TCHAR *handle);
 
   //@}
 
@@ -92,6 +94,8 @@ namespace ACE_OS {
   mode_t umask (mode_t cmask);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -1,17 +1,18 @@
-// Thread.cpp
 // $Id$
 
 #include "ace/Thread.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Thread.inl"
-#endif /* !defined (__ACE_INLINE__) */
 
 ACE_RCSID(ace,
           Thread,
           "$Id$")
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Thread.inl"
+#endif /* !defined (__ACE_INLINE__) */
+
 #if defined (ACE_HAS_THREADS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 size_t
 ACE_Thread::spawn_n (size_t n,
@@ -88,5 +89,7 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
 
   return i;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

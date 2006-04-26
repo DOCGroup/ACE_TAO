@@ -1,4 +1,4 @@
-/**
+  /**
  * @file NAM_Map.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
@@ -13,14 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Null_Mutex.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ciao/DeploymentC.h"
-#include "ace/SString.h"
 #include "tao/PortableServer/PortableServer.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Null_Mutex.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
 
 namespace CIAO
 {

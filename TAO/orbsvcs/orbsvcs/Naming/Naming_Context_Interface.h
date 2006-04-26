@@ -17,8 +17,10 @@
 
 #include "orbsvcs/CosNamingS.h"
 
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Context_Impl;
 
@@ -412,6 +414,8 @@ public:
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

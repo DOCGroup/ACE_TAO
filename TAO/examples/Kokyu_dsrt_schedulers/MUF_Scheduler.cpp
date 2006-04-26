@@ -14,9 +14,9 @@ MUF_Sched_Param_Policy::MUF_Sched_Param_Policy ()
 MUF_Sched_Param_Policy::MUF_Sched_Param_Policy (
     const MUF_Sched_Param_Policy &rhs
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (),
-  ACE_NESTED_CLASS (CORBA, Policy) (),
-  ACE_NESTED_CLASS (CORBA, LocalObject) (),
+  : CORBA::Object (),
+  CORBA::Policy (),
+  CORBA::LocalObject (),
   MUF_Scheduling::SchedulingParameterPolicy (),
   TAO_Local_RefCounted_Object (),
   value_ (rhs.value_)

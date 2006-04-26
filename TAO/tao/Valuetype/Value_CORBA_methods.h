@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +29,8 @@
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_Valuetype_Export
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -45,6 +47,8 @@ namespace CORBA
 
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

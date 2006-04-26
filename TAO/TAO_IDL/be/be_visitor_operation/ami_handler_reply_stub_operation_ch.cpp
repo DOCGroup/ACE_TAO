@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           ami_handler_reply_stub_operation_ch, 
+ACE_RCSID (be_visitor_operation,
+           ami_handler_reply_stub_operation_ch,
            "$Id$")
 
 // ************************************************************
@@ -52,7 +52,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (
   if (!node->has_native ())
     {
       // Next line.
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "static void ";
 
       // Check if we are an attribute node in disguise
@@ -73,11 +73,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (
           << "_reply_stub (" << be_idt << be_idt_nl;
 
       *os << "TAO_InputCDR &_tao_reply_cdr," << be_nl
-          << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
+          << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
           << "::CORBA::ULong reply_status";
 
-      *os << be_nl
-          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      *os << env_dflts << be_uidt_nl
           << ");" << be_uidt;
     }
 

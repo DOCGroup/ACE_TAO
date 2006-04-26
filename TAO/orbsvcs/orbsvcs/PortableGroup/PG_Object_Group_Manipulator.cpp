@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#include "PG_Object_Group_Manipulator.h"
-#include "PG_Utils.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
+#include "orbsvcs/PortableGroup/PG_Utils.h"
 
 #include "tao/debug.h"
 #include <ace/OS_NS_stdio.h>
@@ -19,6 +19,9 @@
 ACE_RCSID (PortableGroup,
            PG_Object_Group_Manipulator,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Object_Group_Manipulator::PG_Object_Group_Manipulator ()
   : orb_ (CORBA::ORB::_nil ())
@@ -68,7 +71,7 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
 
   // Create a reference for the ObjectGroup
   CORBA::Object_var object_group =
-    this->poa_->create_reference_with_id (ACE_U64_TO_U32 (group_id),
+    this->poa_->create_reference_with_id (oid.in(),
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -183,3 +186,5 @@ void dump_membership (const char * label, PortableGroup::ObjectGroup_ptr member)
   }
 #endif
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// ATM_Connector.i
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_ATM_Connector::dump (void) const
@@ -12,13 +14,13 @@ ACE_ATM_Connector::dump (void) const
 }
 
 ACE_INLINE
-ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream, 
-                                      const ACE_ATM_Addr &remote_sap, 
+ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
+                                      const ACE_ATM_Addr &remote_sap,
                                       ACE_ATM_Params params,
                                       ACE_ATM_QoS options,
                                       ACE_Time_Value *timeout,
-                                      const ACE_ATM_Addr &local_sap, 
-                                      int reuse_addr, 
+                                      const ACE_ATM_Addr &local_sap,
+                                      int reuse_addr,
                                       int flags,
                                       int perms)
 {
@@ -29,11 +31,11 @@ ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
                                  options,
                                  timeout,
                                  local_sap,
-                                 reuse_addr, 
+                                 reuse_addr,
                                  flags,
                                  perms) == ACE_INVALID_HANDLE
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  
+    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_ATM_Stream::ACE_ATM_Stream")));
 }
 
@@ -41,9 +43,9 @@ ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
 
 ACE_INLINE
 int
-ACE_ATM_Connector::complete (ACE_ATM_Stream &new_stream, 
-			     ACE_ATM_Addr *remote_sap,
-			     ACE_Time_Value *tv)
+ACE_ATM_Connector::complete (ACE_ATM_Stream &new_stream,
+                             ACE_ATM_Addr *remote_sap,
+                             ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_ATM_Connector::complete");
 #if defined (ACE_HAS_ATM)
@@ -80,18 +82,18 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
                             &cqos,
                             0,
                             (JL_SENDER_ONLY));
- 
+
   ACE_OS::printf( "ATM_Connector::add_leaf: connecting...\n" );
 
   ACE_HANDLE result = ACE_OS::join_leaf(current_stream.get_handle(),
-                                        (struct sockaddr *)saddr, 
+                                        (struct sockaddr *)saddr,
                                         addr_len,
                                         qos_params);
-  
-  if ( result == ACE_INVALID_HANDLE ) 
-    ACE_OS::printf( "ATM_Connector(add_leaf): connection failed, %d\n", 
+
+  if ( result == ACE_INVALID_HANDLE )
+    ACE_OS::printf( "ATM_Connector(add_leaf): connection failed, %d\n",
                     ::WSAGetLastError());
-  
+
   return (result != ACE_INVALID_HANDLE);
 #elif defined (ACE_HAS_LINUX_ATM)
   ACE_OS::printf("ATM_Connector(add_leaf): not yet implemented in Linux \n");
@@ -116,13 +118,15 @@ int
 ACE_ATM_Connector::reset_new_handle (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  // Reset the event association 
+  // Reset the event association
   return ::WSAEventSelect ((SOCKET) handle,
                            0,
-                           0);    
+                           0);
 #else /* !defined ACE_HAS_WINSOCK2 */
   ACE_UNUSED_ARG (handle);
   return 0;
 #endif /* ACE_WIN32 */
 }
 
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

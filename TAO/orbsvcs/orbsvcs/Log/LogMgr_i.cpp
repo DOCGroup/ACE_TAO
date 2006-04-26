@@ -1,5 +1,5 @@
-#include "LogMgr_i.h"
-#include "LogActivator.h"
+#include "orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/Log/LogActivator.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
@@ -9,6 +9,9 @@
 ACE_RCSID (Log,
            LogMgr_i,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LogMgr_i::TAO_LogMgr_i ()
   : logstore_ (0)
@@ -271,3 +274,5 @@ TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
 				   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Basic_Filter_Builder.h
  *
@@ -17,13 +18,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel_Base;
@@ -67,8 +70,10 @@ private:
   TAO_EC_Event_Channel_Base* event_channel_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Basic_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Basic_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

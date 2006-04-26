@@ -1,6 +1,7 @@
 //$Id$
 
 #include "ace/High_Res_Timer.h"
+#include "ace/Log_Msg.h"
 
 ACE_INLINE double
 Task_Stats::diff_sec (ACE_UINT64 before, ACE_UINT64 after)

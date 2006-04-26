@@ -13,11 +13,14 @@
 //   Carlos O'Ryan <coryan@uci.edu>
 // ================================================================
 
-#include "Naming_Loader.h"
+#include "orbsvcs/Naming/Naming_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Naming, Naming_Loader, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Loader::TAO_Naming_Loader (void)
 {
@@ -89,5 +92,7 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_Naming_Serv, TAO_Naming_Loader)

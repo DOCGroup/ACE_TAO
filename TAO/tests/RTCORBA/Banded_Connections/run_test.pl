@@ -50,7 +50,7 @@ else {
 $CL = new PerlACE::Process ("client", "-n file://$iorfile1 -o file://$iorfile2");
 
 $SV->Spawn();
-if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) 
+if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1) 
 {
     $server = $SV->TimedWait (1);
     if ($server == 2) 

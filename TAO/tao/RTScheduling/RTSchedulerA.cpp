@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "RTScheduler.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -35,6 +35,8 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
@@ -268,3 +270,4 @@ namespace RTScheduling
     &_tao_tc_RTScheduling_Scheduler;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

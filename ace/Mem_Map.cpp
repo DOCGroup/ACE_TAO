@@ -23,6 +23,8 @@
 
 ACE_RCSID(ace, Mem_Map, "Mem_Map.cpp,v 4.39 2003/11/01 11:15:13 dhinton Exp")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
 
 #if defined (ACE_USE_MAPPING_NAME)
@@ -123,7 +125,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   if (result == -1)
     return -1;
 #else
-  long result = ACE_OS::filesize (this->handle_);
+  off_t result = ACE_OS::filesize (this->handle_);
 #endif /* CHORUS */
 
   // At this point we know <result> is not negative...
@@ -246,10 +248,6 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
-  ACE_OS::strsncpy (this->filename_,
-                    file_name,
-                    MAXPATHLEN);
-
 #if defined (CHORUS) || defined(INTEGRITY)  || defined (__QNXNTO__)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
 #elif defined (ACE_OPENVMS)
@@ -262,6 +260,10 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
     return -1;
   else
     {
+      ACE_OS::strsncpy (this->filename_,
+                        file_name,
+                        MAXPATHLEN);
+
       this->close_handle_ = 1;
       return 0;
     }
@@ -392,3 +394,5 @@ ACE_Mem_Map::remove (void)
   else
     return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

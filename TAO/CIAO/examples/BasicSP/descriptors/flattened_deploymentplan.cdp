@@ -263,7 +263,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createBMClosedEDHome_Servant</string>
+          <string>create_BasicSP_BMClosedEDHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -318,7 +318,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createBMDeviceHome_Servant</string>
+          <string>create_BasicSP_BMDeviceHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -356,7 +356,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createBMDisplayHome_Servant</string>
+          <string>create_BasicSP_BMDisplayHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -393,7 +393,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createECHome_Servant</string>
+          <string>create_BasicSP_ECHome_Servant</string>
         </value>
       </value>
     </execParameter>

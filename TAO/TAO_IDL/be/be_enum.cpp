@@ -24,8 +24,8 @@
 
 #include "global_extern.h"
 
-ACE_RCSID (be, 
-           be_enum, 
+ACE_RCSID (be,
+           be_enum,
            "$Id$")
 
 be_enum::be_enum (void)
@@ -42,8 +42,8 @@ be_enum::be_enum (void)
 }
 
 be_enum::be_enum (UTL_ScopedName *n,
-                  idl_bool local,
-                  idl_bool abstract)
+                  bool local,
+                  bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_enum,

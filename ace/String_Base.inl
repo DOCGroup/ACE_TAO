@@ -8,6 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class CHAR> ACE_INLINE void
 ACE_String_Base<CHAR>::dump (void) const
@@ -31,6 +32,12 @@ ACE_String_Base<CHAR>::length (void) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::length");
   return this->len_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base<CHAR>::empty (void) const
+{
+  return this->len_ == 0;
 }
 
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
@@ -113,3 +120,4 @@ ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
   return this->find (s.rep_);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

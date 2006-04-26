@@ -1,13 +1,15 @@
 // $Id$
 
-#include "TSS_Resources.h"
-#include "GUIResource_Factory.h"
-#include "TAO_Singleton.h"
+#include "tao/TSS_Resources.h"
+#include "tao/GUIResource_Factory.h"
+#include "tao/TAO_Singleton.h"
 
 ACE_RCSID (tao,
            TSS_Resources,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TSS_Resources::TAO_TSS_Resources (void)
   : poa_current_impl_ (0)
@@ -45,3 +47,5 @@ template
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> *
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

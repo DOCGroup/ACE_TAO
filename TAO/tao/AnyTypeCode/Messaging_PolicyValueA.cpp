@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "Messaging_PolicyValueA.h"
+#include "tao/AnyTypeCode/Messaging_PolicyValueA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -40,6 +40,8 @@
 
 #include "tao/AnyTypeCode/Policy_ForwardA.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:87
@@ -238,3 +240,5 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

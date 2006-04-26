@@ -1,5 +1,5 @@
 //$Id$
-#include "Connection_Timeout_Policy_i.h"
+#include "tao/Messaging/Connection_Timeout_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
@@ -12,11 +12,13 @@ ACE_RCSID (Messaging,
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
   , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (relative_expiry)
@@ -25,9 +27,9 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
 
 TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   const TAO_ConnectionTimeoutPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
   , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (rhs.relative_expiry_)
@@ -186,11 +188,13 @@ TAO_ConnectionTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      CORBA::ULong msecs = time_value.msec ();
+      CORBA::ULong const msecs = time_value.msec ();
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Timeout is <%u>\n"),
                   msecs));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */

@@ -1,16 +1,18 @@
 // $Id$
 
-#include "ECG_CDR_Message_Sender.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
 #include "tao/CDR.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_CDR_Message_Sender.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_CDR_Message_Sender, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_ECG_CDR_Message_Sender::init (
@@ -79,7 +81,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
       iov[iovcnt].iov_base = rd_ptr;
       iov[iovcnt].iov_len  = l;
       fragment_size += l;
-      iovcnt++;
+      ++iovcnt;
       while (fragment_size > max_fragment_payload)
         {
           // This fragment is full, we have to send it...
@@ -100,7 +102,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                iovcnt
                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          fragment_id++;
+          ++fragment_id;
           fragment_offset += max_fragment_payload;
 
           // Reset, but don't forget that the last Message_Block
@@ -128,7 +130,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                iovcnt
                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          fragment_id++;
+          ++fragment_id;
           fragment_offset += max_fragment_payload;
 
           iovcnt = 1;
@@ -149,7 +151,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                iovcnt
                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          fragment_id++;
+          ++fragment_id;
           fragment_offset += fragment_size;
 
           iovcnt = 1;
@@ -173,7 +175,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                            iovcnt
                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      fragment_id++;
+      ++fragment_id;
       fragment_offset += fragment_size;
 
       // reset, not needed here...
@@ -301,11 +303,11 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
       CORBA::ULong l = b->length ();
       total_length += l;
       fragment_size += l;
-      iovcnt++;
+      ++iovcnt;
       while (fragment_size > max_fragment_payload)
         {
           // Ran out of space, must create a fragment...
-          fragment_count++;
+          ++fragment_count;
 
           // The next iovector will contain what remains of this
           // buffer, but also consider
@@ -315,14 +317,14 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
         }
       if (fragment_size == max_fragment_payload)
         {
-          fragment_count++;
+          ++fragment_count;
           iovcnt = 1;
           fragment_size = 0;
         }
       if (iovcnt >= iov_size)
         {
           // Ran out of space in the iovector....
-          fragment_count++;
+          ++fragment_count;
           iovcnt = 1;
           fragment_size = 0;
         }
@@ -330,7 +332,9 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
   if (iovcnt != 1)
     {
       // Send the remaining data in another fragment
-      fragment_count++;
+      ++fragment_count;
     }
   return fragment_count;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

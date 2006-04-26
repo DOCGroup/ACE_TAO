@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Replication_Service.h"
-#include "AMI_Replication_Strategy.h"
-#include "Basic_Replication_Strategy.h"
-#include "FTEC_ORBInitializer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h"
 #include "../Utils/Log.h"
 
 #include "tao/ORBInitializer_Registry.h"
@@ -17,6 +17,7 @@ ACE_RCSID (EventChannel,
            Replication_Service,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
 {
@@ -190,14 +191,20 @@ namespace FTRTEC
   int Replication_Service::threads() const {
     return FTRTEC::threads;
   }
-
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Replication_Service)
-
-  ACE_STATIC_SVC_DEFINE (Replication_Service,
-    ACE_TEXT ("FTRTEC_Replication"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (Replication_Service),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRTEC,
+  Replication_Service,
+  FTRTEC::Replication_Service)
+
+ACE_STATIC_SVC_DEFINE (
+  Replication_Service,
+  ACE_TEXT ("FTRTEC_Replication"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (Replication_Service),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)

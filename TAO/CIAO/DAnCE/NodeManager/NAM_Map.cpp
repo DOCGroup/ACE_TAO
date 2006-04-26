@@ -9,35 +9,35 @@ namespace CIAO
     : map_ (CIAO_DEFAULT_MAP_SIZE)
   {
   }
-  
+
   bool
   NAM_Map::is_available (const ACE_CString &str)
   {
     if (this->map_.find (str) == 0)
       return true;
-    
+
     return false;
   }
-  
+
   bool
   NAM_Map::insert_nam (const ACE_CString &str,
                        const PortableServer::ObjectId &oid)
   {
     return (this->map_.bind (str, oid) == 0);
   }
-  
+
   ::PortableServer::ObjectId
   NAM_Map::get_nam (const ACE_CString &str)
   {
-    MAP::ENTRY *entry;
-    
+    MAP::ENTRY *entry = 0;
+
     if (this->map_.find (str, entry) != 0)
       return ::PortableServer::ObjectId ();
-    
+
     return entry->int_id_.in ();
   }
-  
-  bool 
+
+  bool
   NAM_Map::remove_nam (const PortableServer::ObjectId &oid)
   {
     for (Iterator i = this->map_.begin ();
@@ -51,6 +51,6 @@ namespace CIAO
   }
 }
 
-      
-  
+
+
 

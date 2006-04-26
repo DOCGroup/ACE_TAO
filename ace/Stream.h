@@ -25,6 +25,8 @@
 #include "ace/Message_Block.h"
 #include "ace/Module.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls.
 template<ACE_SYNCH_DECL> class ACE_Stream_Iterator;
 class ACE_Time_Value;
@@ -219,6 +221,8 @@ private:
   /// Next <Module> that we haven't yet seen.
   ACE_Module<ACE_SYNCH_USE> *next_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Stream.inl"

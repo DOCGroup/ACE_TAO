@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_ANY_ARRAY_IMPL_T_C
-#define TAO_ANY_ARRAY_IMPL_T_C
+#ifndef TAO_ANY_ARRAY_IMPL_T_CPP
+#define TAO_ANY_ARRAY_IMPL_T_CPP
 
 #include "tao/AnyTypeCode/Any_Array_Impl_T.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -18,9 +18,7 @@
 # include "tao/AnyTypeCode/Any_Array_Impl_T.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Any_Array_Impl_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T_slice, typename T_forany>
 TAO::Any_Array_Impl_T<T_slice, T_forany>::Any_Array_Impl_T (
@@ -67,14 +65,14 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
   ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      const CORBA::Boolean _tao_equiv =
+      CORBA::Boolean const _tao_equiv =
         any_tc->equivalent (tc
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (_tao_equiv == 0)
+      if (_tao_equiv == false)
         {
-          return 0;
+          return false;
         }
 
       TAO::Any_Impl *impl = any.impl ();
@@ -86,11 +84,11 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
 
           if (narrow_impl == 0)
             {
-              return 0;
+              return false;
             }
 
           _tao_elem = reinterpret_cast <T_slice*> (narrow_impl->value_);
-          return 1;
+          return true;
         }
 
       TAO::Any_Array_Impl_T<T_slice, T_forany> *replacement = 0;
@@ -99,7 +97,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                       ARRAY_ANY_IMPL (destructor,
                                       any_tc,
                                       T_forany::tao_alloc ()),
-                      0);
+                      false);
 
       auto_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (
           replacement
@@ -113,7 +111,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
       // shared by another Any. This copies the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean good_decode =
+      CORBA::Boolean const good_decode =
         replacement->demarshal_value (for_reading);
 
       if (good_decode)
@@ -121,11 +119,11 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
           _tao_elem = reinterpret_cast <T_slice*> (replacement->value_);
           const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
-          return 1;
+          return true;
         }
 
       // Duplicated by Any_Impl base class constructor.
-      CORBA::release (any_tc);
+      ::CORBA::release (any_tc);
     }
   ACE_CATCHANY
     {
@@ -146,7 +144,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
     }
 
   this->value_ = 0;
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
 }
 
 template<typename T_slice, typename T_forany>
@@ -160,4 +158,6 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr
     }
 }
 
-#endif /* TAO_ANY_ARRAY_IMPL_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_ANY_ARRAY_IMPL_T_CPP */

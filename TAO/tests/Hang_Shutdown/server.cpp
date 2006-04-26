@@ -5,97 +5,94 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Argv_Type_Converter.h"
 
-namespace TAO
+namespace Test
 {
-  namespace Test
+  const char *ior_output_file = "server.ior";
+
+  static int
+  try_main (int argc,
+            char *argv[])
   {
-    const char *ior_output_file = "server.ior";
+    ACE_DECLARE_NEW_CORBA_ENV;
 
-    static int
-    try_main (int argc,
-              char *argv[])
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
+      {
+        CORBA::ORB_var orb =
+          CORBA::ORB_init (argc,
+                           argv,
+                           ""
+                           ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-      ACE_TRY
-        {
-          CORBA::ORB_var orb =
-            CORBA::ORB_init (argc,
-                             argv,
-                             ""
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          CORBA::Object_var poa_object =
-            orb->resolve_initial_references("RootPOA"
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          PortableServer::POA_var root_poa =
-            PortableServer::POA::_narrow (poa_object.in ()
+        CORBA::Object_var poa_object =
+          orb->resolve_initial_references("RootPOA"
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        ACE_TRY_CHECK;
 
-          if (CORBA::is_nil (root_poa.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Panic: nil RootPOA\n"),
-                              1);
+        PortableServer::POA_var root_poa =
+          PortableServer::POA::_narrow (poa_object.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-          PortableServer::POAManager_var poa_manager =
-            root_poa->the_POAManager ();
+        if (CORBA::is_nil (root_poa.in ()))
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
 
-          test_i *test_impl;
-          ACE_NEW_RETURN (test_impl,
-                          test_i (),
-                          1);
-          PortableServer::ServantBase_var owner_transfer (test_impl);
+        PortableServer::POAManager_var poa_manager =
+          root_poa->the_POAManager ();
 
-          Hang_var test =
-            test_impl->_this ();
+        test_i *test_impl;
+        ACE_NEW_RETURN (test_impl,
+                        test_i (),
+                        1);
+        PortableServer::ServantBase_var owner_transfer (test_impl);
 
-          CORBA::String_var ior =
-            orb->object_to_string (test.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        Hang_var test =
+          test_impl->_this ();
 
-          // If the ior_output_file exists, output the ior to it
-          FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
-                              1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+        CORBA::String_var ior =
+          orb->object_to_string (test.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-          poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        // If the ior_output_file exists, output the ior to it
+        FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
+        if (output_file == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file, "%s", ior.in ());
+        ACE_OS::fclose (output_file);
 
-          ACE_Time_Value tv (10);
+        poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-          orb->run (&tv);
+        ACE_Time_Value tv (10);
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) server - event loop finished\n"));
+        orb->run (&tv);
 
-          root_poa->destroy (1,
-                             1
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) server - event loop finished\n"));
 
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught CORBA exception \n");
-          return -1;
-        }
-      ACE_ENDTRY;
+        root_poa->destroy (1,
+                           1
+                           ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-      return 0;
-    }
+        orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "Caught CORBA exception \n");
+        return -1;
+      }
+    ACE_ENDTRY;
+
+    return 0;
   }
 }
 
@@ -104,5 +101,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
-  return TAO::Test::try_main (convert.get_argc(), convert.get_ASCII_argv());
+  return Test::try_main (convert.get_argc(), convert.get_ASCII_argv());
 }

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 // ===================================================================
 /**
@@ -5,9 +7,6 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Connection_Handler.h
- *  @author  Originally by Chris Cleeland
- *  @author  modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -17,9 +16,6 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
-#include "tao/TimeBaseC.h"
-
-#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -27,22 +23,24 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
+#include "tao/TimeBaseC.h"
 
+#include "ace/Reactor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_SEQPACK_Association.h"
-
-
-// Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
-        TAO_SCIOP_SVC_HANDLER;
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Service Handler for this transport
+typedef ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
+        TAO_SCIOP_SVC_HANDLER;
 
 // Forward Decls
 class TAO_Pluggable_Messaging;
@@ -136,6 +134,8 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

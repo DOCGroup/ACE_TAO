@@ -546,7 +546,7 @@ int test_boxed_sequence (void)
                   VBseqlong (),
                   1);
 
-  VBseqlong     *temp;
+  VBseqlong     *temp = 0;
   ACE_NEW_RETURN (temp,
                   VBseqlong (),
                   1);
@@ -563,7 +563,7 @@ int test_boxed_sequence (void)
   longarray[2] = 303;
 
   // Create a sequence
-  TDseqlong *temp2;
+  TDseqlong *temp2 = 0;
   ACE_NEW_RETURN (temp2,
                   TDseqlong(10, 3, longarray, 1),
                   1);
@@ -611,7 +611,6 @@ int test_boxed_sequence (void)
 
   // release
   vbseqlong1->_remove_ref ();
-  vbseqlong3->_remove_ref ();
   vbseqlong4->_remove_ref ();
 
   return fail;
@@ -731,10 +730,11 @@ int test_boxed_struct (void)
                     1);
 
     // Test boxed copy ctor.
-    VBfixed_struct1_var valuebox2;
-    ACE_NEW_RETURN (valuebox2,
+    VBfixed_struct1* valuebox2_ptr = 0;
+    ACE_NEW_RETURN (valuebox2_ptr,
                     VBfixed_struct1 (*valuebox1),
                     1);
+    VBfixed_struct1_var valuebox2 = valuebox2_ptr;
 
     VERIFY (valuebox1->l () == valuebox2->l ());
     VERIFY ((valuebox1->abstruct ()).s1 == (valuebox2->abstruct ()).s1 );
@@ -793,9 +793,8 @@ int test_boxed_struct (void)
       }
 
     //
-    // valuebox1, valuebox2, and valuebox3 must be explicitly removed.
+    // valuebox1 and valuebox3 must be explicitly removed.
     CORBA::remove_ref (valuebox1);
-    CORBA::remove_ref (valuebox2);
     CORBA::remove_ref (valuebox3);
 
     //

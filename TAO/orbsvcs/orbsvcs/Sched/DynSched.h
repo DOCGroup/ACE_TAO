@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -30,9 +31,12 @@
 #include "ace/Map_Manager.h"
 #include "ace/Message_Block.h"
 #include "ace/SString.h"
-#include "SchedEntry.h"
-#include "sched_export.h"
+#include "orbsvcs/Sched/SchedEntry.h"
+#include "orbsvcs/Sched/sched_export.h"
 #include "ace/Recursive_Thread_Mutex.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTSched_Export ACE_DynScheduler
   // = TITLE
@@ -460,8 +464,8 @@ private:
   // calculate utilization, frame size, etc.
 
   // the following functions are not implememented
-  ACE_UNIMPLEMENTED_FUNC(ACE_DynScheduler (const ACE_DynScheduler &))
-  ACE_UNIMPLEMENTED_FUNC(ACE_DynScheduler &operator= (const ACE_DynScheduler &))
+  ACE_DynScheduler (const ACE_DynScheduler &);
+  ACE_DynScheduler &operator= (const ACE_DynScheduler &);
 
   //////////////////////////
   // private data members //
@@ -528,8 +532,10 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "DynSched.i"
+#include "orbsvcs/Sched/DynSched.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

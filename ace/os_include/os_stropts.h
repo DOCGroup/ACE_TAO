@@ -72,10 +72,10 @@
 #  endif /* AIX */
 #endif /* ACE_HAS_STREAMS */
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 // for ioctl()
 #  include /**/ <ioLib.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

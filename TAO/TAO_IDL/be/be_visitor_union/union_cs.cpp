@@ -119,12 +119,12 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Get the first label in its list.
   AST_UnionLabel *ul = ub->label (0);
   AST_Union::DefaultValue dv;
-  
+
   // This can indicate an error in the return value, but it is
   // caught elsewhere.
   (void) node->default_value (dv);
-    
-  bool test = dv.computed_ == 0 
+
+  bool test = dv.computed_ == 0
               && ul->label_kind () == AST_UnionLabel::UL_label;
 
   if (test)
@@ -182,7 +182,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       << " (void)" << be_nl
       << "{" << be_idt_nl
       << "// Finalize." << be_nl
-      << "this->_reset (this->disc_, 1);" << be_uidt_nl
+      << "this->_reset ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   if (be_global->any_support ())
@@ -214,7 +214,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       << "return *this;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
   // Reset and set the discriminant.
-  *os << "this->_reset (u.disc_, 0);" << be_nl;
+  *os << "this->_reset ();" << be_nl;
   *os << "this->disc_ = u.disc_;" << be_nl << be_nl;
   // now switch based on the disc value
   *os << "switch (this->disc_)" << be_nl;
@@ -249,10 +249,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
-  
-  *os << "// Reset method to reset old values of a union." << be_nl;
-  *os << "void " << node->name () << "::_reset (" << bt->name ()
-      << ", ::CORBA::Boolean /*finalize*/)" << be_nl;
+
+  *os << "/// Reset method to reset old values of a union." << be_nl;
+  *os << "void " << node->name () << "::_reset (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "switch (this->disc_)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -298,6 +297,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
         }
     }
 
-  node->cli_stub_gen (I_TRUE);
+  node->cli_stub_gen (true);
   return 0;
 }

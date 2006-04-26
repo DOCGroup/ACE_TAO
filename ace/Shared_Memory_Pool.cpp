@@ -8,6 +8,9 @@
 ACE_RCSID(ace, Shared_Memory_Pool, "$Id$")
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_Pool)
 
 ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (const char *base_addr,
@@ -148,7 +151,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   ACE_TRACE ("ACE_Shared_Memory_Pool::handle_signal");
   // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("signal %S occurred\n"), signum));
 
-  // While FreeBSD 5.X has a siginfo_t struct with a si_addr field, 
+  // While FreeBSD 5.X has a siginfo_t struct with a si_addr field,
   // it does not define SEGV_MAPERR.
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR) && \
         (defined (SEGV_MAPERR) || defined (SEGV_MEMERR))
@@ -450,4 +453,7 @@ ACE_Shared_Memory_Pool::round_up (size_t nbytes)
 
   return ACE::round_to_pagesize (nbytes);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !ACE_LACKS_SYSV_SHMEM */

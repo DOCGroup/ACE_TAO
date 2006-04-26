@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 // ===================================================================
 /**
@@ -5,9 +7,6 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Transport
- *  @author  Originally by Fred Kuhns <fredk@cs.wustl.edu>
- *  @author  Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -15,7 +14,7 @@
 #define TAO_SCIOP_TRANSPORT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,9 +22,12 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
+#include "tao/Transport.h"
 #include "tao/IIOPC.h"
 #include "ace/SOCK_SEQPACK_Association.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class TAO_SCIOP_Connection_Handler;
@@ -136,6 +138,8 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

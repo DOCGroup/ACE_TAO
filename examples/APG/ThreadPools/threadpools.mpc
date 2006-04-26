@@ -2,6 +2,7 @@
 // $Id$
 
 project(Futures) : aceexe {
+  avoids += ace_for_tao
   exename = Futures
   Source_Files {
     Futures.cpp

@@ -8,7 +8,7 @@ project(*idl) : taoidldefaults {
   custom_only = 1
 }
 
-project(*security server): orbsvcslib, portableserver, ssl, ssliop {
+project(*security server): orbsvcslib, portableserver, ssl, ssliop, pi_server, codecfactory, interceptors {
   after += *idl
   Source_Files {
     Server_Worker.cpp

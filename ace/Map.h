@@ -6,6 +6,8 @@
  *
  *  $Id$
  *
+ *  Backward compatibility header.
+ *
  *  @author Irfan Pyarali
  */
 //=============================================================================

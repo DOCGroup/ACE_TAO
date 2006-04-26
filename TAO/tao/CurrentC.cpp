@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:288
 
 
-#include "CurrentC.h"
+#include "tao/CurrentC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -60,7 +62,7 @@ TAO::Objref_Traits<CORBA::Current>::release (
     CORBA::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Current_ptr
@@ -71,7 +73,7 @@ TAO::Objref_Traits<CORBA::Current>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Current>::marshal (
-    CORBA::Current_ptr p,
+    const CORBA::Current_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -109,18 +111,18 @@ CORBA::Current::_unchecked_narrow (
 CORBA::Current_ptr
 CORBA::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CORBA::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -162,3 +164,5 @@ CORBA::Current::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

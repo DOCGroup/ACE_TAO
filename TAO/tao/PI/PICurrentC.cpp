@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "PICurrentC.h"
+#include "tao/PI/PICurrentC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -39,6 +39,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -64,7 +66,7 @@ TAO::Objref_Traits<PortableInterceptor::Current>::release (
     PortableInterceptor::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::Current_ptr
@@ -88,12 +90,12 @@ PortableInterceptor::Current::Current (void)
 PortableInterceptor::Current::~Current (void)
 {}
 
-void 
+void
 PortableInterceptor::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
     static_cast<Current *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 PortableInterceptor::Current_ptr
@@ -121,18 +123,18 @@ PortableInterceptor::Current::_unchecked_narrow (
 PortableInterceptor::Current_ptr
 PortableInterceptor::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -178,3 +180,5 @@ PortableInterceptor::Current::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

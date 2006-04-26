@@ -84,10 +84,15 @@ extern long DRV_nfiles;
 extern const char *DRV_files[];
 
 // Push a file into the list of files to be processed
-static void
+void
 DRV_push_file (const char *s)
 {
-  DRV_files[DRV_nfiles++] = s;
+  // If filenames come from the command line, there is no
+  // need to duplicate the string, but some backends have
+  // an option to recurse over a directory and add all
+  // IDL files found. In this latter case we have to
+  // duplicate the file name string.
+  DRV_files[DRV_nfiles++] = ACE::strnew (s);
 }
 
 // Prepare a CPP argument
@@ -186,71 +191,9 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Wb,export_macro=<macro name>\t\t\tsets export macro ")
-      ACE_TEXT ("for all files\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,export_include=<include path>\t\tsets export include ")
-      ACE_TEXT ("file for all files\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,stub_export_macro=<macro name>\t\tsets export ")
-      ACE_TEXT ("macro for client files only\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,stub_export_include=<include path>\t\tsets export ")
-      ACE_TEXT ("include file for client only\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,skel_export_macro=<macro name>\t\tsets export ")
-      ACE_TEXT ("macro for server files only\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,skel_export_include=<include path>\t\tsets export ")
-      ACE_TEXT ("include file for server only\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,anyop_export_macro=<macro name>\t\tsets export macro ")
-      ACE_TEXT ("for typecode/Any operator files only, when -GA option ")
-      ACE_TEXT ("is used\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,anyop_export_include=<include path>\tsets export ")
-      ACE_TEXT ("include file typecode/Any operator files only, when -GA ")
-      ACE_TEXT ("option is used\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,pch_include=<include path>\t\t\tsets include ")
-      ACE_TEXT ("file for precompiled header mechanism\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,pre_include=<include path>\t\t\tsets include ")
-      ACE_TEXT ("file generate before any other includes\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,post_include=<include path>\t\tsets include ")
-      ACE_TEXT ("file generated at the end of the file\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wb,obv_opt_accessor\t\t\t\toptimizes access to base class ")
-      ACE_TEXT ("data in valuetypes\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
       ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
     ));
-    
+
   be_global->usage ();
 }
 
@@ -333,16 +276,16 @@ DRV_parse_args (long ac, char **av)
                   if (i < ac - 1)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
-                      
+
                       has_space = idl_global->hasspace (av[i + 1]);
-                      
+
                       // If the include path has a space, we need to
                       // add literal "s.
                       ACE_CString arg = av[i];
                       arg += (has_space ? "\"" : "");
                       arg += av[i + 1];
                       arg += (has_space ? "\"" : "");
-                      
+
                       DRV_cpp_putarg (arg.c_str ());
                       idl_global->add_include_path (arg.substr (2).c_str ());
                       i++;
@@ -362,14 +305,14 @@ DRV_parse_args (long ac, char **av)
               else
                 {
                   has_space = idl_global->hasspace (av[i]);
-                  
+
                   // If the include path has a space, we need to
                   // add literal "s.
                   ACE_CString arg (av[i], 2);
                   arg += (has_space ? "\"" : "");
                   arg += av[i] + 2;
                   arg += (has_space? "\"" : "");
-                  
+
                   idl_global->add_include_path (arg.substr (2).c_str ());
                   DRV_cpp_putarg (arg.c_str ());
                 }
@@ -488,12 +431,12 @@ DRV_parse_args (long ac, char **av)
               if (av[i][2] == 'e')
                 {
                   // ...report an error.
-                  idl_global->case_diff_error (I_TRUE);
+                  idl_global->case_diff_error (true);
                 }
               else if (av[i][2] == 'w')
                 {
                   // ...report a warning (default for now)
-                  idl_global->case_diff_error (I_FALSE);
+                  idl_global->case_diff_error (false);
                 }
               else
                 {
@@ -570,6 +513,6 @@ DRV_parse_args (long ac, char **av)
 
       idl_global->temp_dir (tmpdir);
     }
-    
+
   DRV_cpp_post_init ();
 }

@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SV_Message
  *
@@ -52,6 +54,9 @@ protected:
   /// Type of the message.
   long type_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Message.inl"

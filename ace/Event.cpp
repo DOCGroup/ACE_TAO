@@ -10,6 +10,8 @@
 
 ACE_RCSID(ace, Event, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Event::ACE_Event (int manual_reset,
                       int initial_state,
                       int type,
@@ -85,3 +87,5 @@ ACE_Event::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

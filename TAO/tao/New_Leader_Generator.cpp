@@ -1,6 +1,6 @@
 // $Id$
 
-#include "New_Leader_Generator.h"
+#include "tao/New_Leader_Generator.h"
 
 
 ACE_RCSID (tao,
@@ -8,6 +8,10 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_New_Leader_Generator::~TAO_New_Leader_Generator (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

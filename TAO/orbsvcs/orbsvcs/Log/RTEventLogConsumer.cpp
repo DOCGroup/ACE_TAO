@@ -17,16 +17,15 @@ ACE_RCSID (Log,
            RTEventLogConsumer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log)
-: log_ (log)
+  : log_ (log)
 {
-  // No-Op.
 }
 
 TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer (void)
 {
-  // No-Op.
 }
 
 void
@@ -62,6 +61,8 @@ void
 TAO_Rtec_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 template <class T> class ACE_Unbounded_Set;
@@ -59,13 +61,19 @@ private:
   ACE_Node (const T &i, ACE_Node<T> *n);
   ACE_Node (ACE_Node<T> *n = 0, int = 0);
   ACE_Node (const ACE_Node<T> &n);
+private:
+  /// Not possible
+  void operator= (const ACE_Node<T> &);
 
+private:
   /// Pointer to next element in the list of <ACE_Node>s.
   ACE_Node<T> *next_;
 
   /// Current value of the item in this node.
   T item_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Node.cpp"

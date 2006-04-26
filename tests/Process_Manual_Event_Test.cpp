@@ -92,7 +92,7 @@ acquire_release (void)
           event_ping.signal ();
 
           if (event_pong.wait ())
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P) %p\n"),
                         ACE_TEXT ("Failed acquiring pong")));
           else
@@ -109,12 +109,14 @@ acquire_release (void)
       wait.sec (wait.sec () + 3); // timeout in 3 secs
 
       if (event_pong.wait (&wait))
-        if (errno != ETIME)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P) %p, but expected ETIME\n"),
-                      ACE_TEXT ("event_pong.wait()")));
+        {
+          if (errno != ETIME)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P) %p, but expected ETIME\n"),
+                        ACE_TEXT ("event_pong.wait()")));
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquired pong without release()\n")));
 
       event_ping.signal ();   // release waiting parent before timeout
@@ -124,7 +126,7 @@ acquire_release (void)
       for (i = 0; i < iterations; ++i)
         {
           if (event_ping.wait ())
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P) %p\n"),
                         ACE_TEXT ("Failed acquiring ping")));
           else
@@ -149,8 +151,8 @@ acquire_release (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P) %p but should be ETIME\n"),
                         ACE_TEXT ("Acquire pong")));
-          else
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) Acquire pong timed out\n")));
+
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) Acquire pong timed out\n")));
         }
     }
 }
@@ -185,13 +187,18 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_START_TEST (ACE_TEXT ("Process_Manual_Event_Test"));
-      ACE_Process_Options options;
-      options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                            ACE_TEXT ("Process_Manual_Event_Test")
-                            ACE_PLATFORM_EXE_SUFFIX
-                            ACE_TEXT (" -c -i %d"),
-                            iterations);
+#if defined (ACE_WIN32)
+      const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" -c -i %d");
+#elif !defined (ACE_USES_WCHAR)
+const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s -c -i %d");
+#else
+const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls -c -i %d");
+#endif
 
+      ACE_Process_Options options;
+      options.command_line (cmdline_format,
+                            argv[0],
+                            iterations);
       // Spawn a child process that will contend for the
       // lock.
       ACE_Process child;
@@ -208,7 +215,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_exitcode child_status;
       // Wait for the child processes we created to exit.
-      ACE_ASSERT (child.wait (&child_status) != -1);
+      int wait_result = child.wait (&child_status);
+      ACE_ASSERT (wait_result != -1);
       if (child_status == 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Child %d finished ok\n"),

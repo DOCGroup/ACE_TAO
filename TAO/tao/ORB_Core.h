@@ -38,6 +38,16 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "ace/Array_Map.h"
 
+#include "ace/Thread_Manager.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/TSS_T.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Data_Block;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if TAO_HAS_INTERCEPTORS == 1
 
 namespace TAO
@@ -47,13 +57,6 @@ namespace TAO
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
-
-#include "ace/Thread_Manager.h"
-#include "ace/Lock_Adapter_T.h"
-#include "ace/TSS_T.h"
-
-// Forward declarations
-class ACE_Data_Block;
 
 class TAO_Adapter;
 class TAO_Acceptor;
@@ -357,11 +360,11 @@ public:
   /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
   static const char *iorinterceptor_adapter_factory_name (void);
 
-  /// Sets the value of TAO_ORB_Core::valuetype_adapter_name.
-  static void valuetype_adapter_name (const char *name);
+  /// Sets the value of TAO_ORB_Core::valuetype_adapter_factory_name.
+  static void valuetype_adapter_factory_name (const char *name);
 
-  /// Gets the value of TAO_ORB_Core::valuetype_adapter_name.
-  static const char *valuetype_adapter_name (void);
+  /// Gets the value of TAO_ORB_Core::valuetype_adapter_factory_name.
+  static const char *valuetype_adapter_factory_name (void);
 
 
   /// See if we have a collocated address, if yes, return the POA
@@ -564,8 +567,7 @@ public:
 
   /// End the event loop
   void shutdown (CORBA::Boolean wait_for_completion
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+                 ACE_ENV_ARG_DECL);
 
   /// Get the shutdown flag value
   int has_shutdown (void);
@@ -610,6 +612,11 @@ public:
   /// initialization.
   CORBA::Long initialize_object (TAO_Stub *the_stub,
                                  CORBA::Object_ptr obj);
+
+  /// Reinitialise a stub after the effective profile has changed.
+  /// This will happen after a location forward has been received
+  /// or if a location forward supplied new target subsequently fails.
+  CORBA::Long reinitialize_object (TAO_Stub *stub);
 
   /// Return ORBid string.
   const char *orbid (void) const;
@@ -788,6 +795,18 @@ public:
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
+  /// Register a client request interceptor with policies.
+  void add_interceptor (
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL);
+
+  /// Register a server request interceptor with policies.
+  void add_interceptor (
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL);
+
   /// Get the Client Request Interceptor adapter.
   /// Will not create a new one if not available yet.
   TAO::ClientRequestInterceptor_Adapter *clientrequestinterceptor_adapter (void);
@@ -805,7 +824,7 @@ public:
   //@}
 
   /// Return the valuetype adapter
-  TAO_Valuetype_Adapter *& valuetype_adapter (void);
+  TAO_Valuetype_Adapter *valuetype_adapter (void);
 
   /// Get the IOR Interceptor adapter. If not created, this method will try
   /// to create one.
@@ -867,6 +886,16 @@ public:
   /// This strategy is the default, no explicit queueing and no explicit
   /// flush
   TAO::Transport_Queueing_Strategy &default_transport_queueing_strategy (void);
+
+  /// Verify condition for  permanent forward is given,
+  /// both parameters must provide group attributes.
+  CORBA::Boolean is_permanent_forward_condition
+  (const CORBA::Object_ptr obj,
+   const TAO_Service_Context &service_context);
+
+  /// Get outgoing fragmentation strategy.
+  auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+  fragmentation_strategy (TAO_Transport * transport);
 
 protected:
 
@@ -941,6 +970,10 @@ protected:
   /// this ORB core.
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_i (void);
 
+  /// Common code from ::initialize_object and ::reinitialize_object
+  CORBA::Long initialize_object_i (TAO_Stub *the_stub,
+                                   const TAO_MProfile& mprofile);
+
 private:
 
   /// The ORB Core should not be copied.
@@ -967,6 +1000,8 @@ private:
   //@}
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+  bool use_local_memory_pool_;
 
 protected:
 
@@ -1321,14 +1356,14 @@ public:
   ACE_CString iorinterceptor_adapter_factory_name_;
 
   /**
-   * Name of the service object used to adapt function calls on
+   * Name of the factory object used to adapt function calls on
    * the valuetype-related interfaces.
-   * The default value is "Valuetype_Adapter". If the
+   * The default value is "Valuetype_Adapter_Factory". If the
    * Valuetype library is linked, the corresponding accessor
-   * function valuetype_adapter_name() will be called to set
-   * the value to "Concrete_Valuetype_Adapter".
+   * function valuetype_adapter_factory_name() will be called to set
+   * the value to "Concrete_Valuetype_Adapter_Factory".
    */
-  ACE_CString valuetype_adapter_name_;
+  ACE_CString valuetype_adapter_factory_name_;
 
   /**
    * Name of the service object used to create the RootPOA.  The
@@ -1368,8 +1403,10 @@ TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
 
 // ****************************************************************
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "ORB_Core.i"
+# include "tao/ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

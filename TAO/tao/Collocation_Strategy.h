@@ -14,6 +14,10 @@
 #define TAO_COLLOCATION_STRATEGY_H
 
 #include /**/ "ace/pre.h"
+#include "tao/orbconf.h"
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Define symbolic names for the ORB collocation strategies.
 namespace TAO
@@ -36,6 +40,8 @@ namespace TAO
       TAO_CS_LAST
     };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -26,6 +26,8 @@
 #undef optarg
 #undef opterr
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
  *  These definitions are for backward compatibility with previous versions.
  *  of ACE_Get_Arg_Opt.
@@ -40,7 +42,7 @@
  */
 
 template < typename CHAR_TYPE = char >
-class ACE_Get_Arg_Opt
+class ACE_Export ACE_Get_Arg_Opt
 {
 public:
   typedef CHAR_TYPE Char;
@@ -373,7 +375,7 @@ private:
                              int has_arg,
                              int val = 0);
 
-    /// Default dtor.
+    /// Dtor.
     ~ACE_Get_Opt_Long_Option (void);
 
     bool operator < (const ACE_Get_Opt_Long_Option &rhs);
@@ -412,6 +414,8 @@ private:
 
   /// Set last_option.
   void last_option (const String &s);
+
+private:
 
   /// Holds the option string.
   String *optstring_;
@@ -460,13 +464,19 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  // Disallow copying and assignment.
   ACE_UNIMPLEMENTED_FUNC (ACE_Get_Arg_Opt (const ACE_Get_Arg_Opt<CHAR_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Arg_Opt &operator= (const ACE_Get_Arg_Opt<CHAR_TYPE> &))
+    ACE_UNIMPLEMENTED_FUNC (ACE_Get_Arg_Opt &operator= (const ACE_Get_Arg_Opt<CHAR_TYPE> &))
 };
 
 typedef ACE_Get_Arg_Opt< ACE_TCHAR > ACE_Get_Opt;
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
 #include "ace/Get_Opt.inl"
+#endif /* __ACE_INLINE__ */
+
 
 #include /**/ "ace/post.h"
 #endif /* ACE_GET_OPT_H */

@@ -28,7 +28,7 @@
 
 // Use all available T1248 thread aware wrapper functions for providing
 // non-blocking I/O.
-// [Note: this causes a significant performance degradation]
+// [@note this causes a significant performance degradation]
 //#define ACE_TANDEM_T1248_PTHREADS_ALL_IO_WRAPPERS
 
 
@@ -316,9 +316,6 @@ extern int cma_sigwait  (sigset_t *);
 // Platform lacks malloc.h
 #define ACE_LACKS_MALLOC_H
 
-// <time.h> doesn't automatically #include /**/ <sys/time.h>
-#define ACE_LACKS_SYSTIME_H
-
 // Platform lacks the siginfo.h include file
 #define ACE_LACKS_SIGINFO_H
 
@@ -402,9 +399,6 @@ extern int cma_sigwait  (sigset_t *);
 // Platform lacks "signed char" type (broken!)
 // Following will not be needed if use standard c library (G06.20 and later)
 #define ACE_LACKS_SIGNED_CHAR
-
-// Compiler supports the new using keyword for C++ namespaces.
-#define ACE_HAS_USING_KEYWORD
 
 //=========================================================================
 // Build options

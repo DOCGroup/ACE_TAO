@@ -7,6 +7,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template < typename CHAR_TYPE > void
 ACE_TARGV<CHAR_TYPE>::dump (void) const
 {
@@ -340,3 +343,6 @@ ACE_TARGV<CHAR_TYPE>::operator[] (size_t i)
 
   return (const CHAR_TYPE *) this->argv ()[i];
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -38,13 +38,9 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
+#include "ace/If_Then_Else.h"
 
-#if !defined (_MSC_VER) || (_MSC_VER >= 1310)
-  // MSVC++ 6 can't handle partial template specializations so fall
-  // back on an unsigned char typedef.
-# include "ace/If_Then_Else.h"
-#endif  /* !_MSC_VER || _MSC_VER >= 1310 */
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Message_Block;
 
@@ -172,20 +168,14 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-# if (defined (_MSC_VER) && (_MSC_VER < 1310))
-  // MSVC++ 6 can't handle partial template specializations so fall
-  // back on an unsigned char typedef.
-  typedef unsigned char Boolean;
-# else
   typedef ACE::If_Then_Else<(sizeof (bool) == 1),
                             bool,
                             unsigned char>::result_type Boolean;
-# endif  /* _MSC_VER <= 1310 */
 
 # if !defined (ACE_CDR_WCHAR_OVERRIDE) || defined(ACE_USES_WCHAR)
 #  undef ACE_CDR_WCHAR_OVERRIDE
 #  define ACE_CDR_WCHAR_OVERRIDE wchar_t
-# endif 
+# endif
 
   typedef unsigned char Octet;
   typedef char Char;
@@ -308,6 +298,8 @@ public:
 #   define ACE_CDR_GIOP_MINOR_VERSION 2
 #endif /* ACE_CDR_GIOP_MINOR_VERSION */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/CDR_Base.inl"

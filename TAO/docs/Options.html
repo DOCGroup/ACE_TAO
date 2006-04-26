@@ -201,7 +201,7 @@ same host:
 % NameService.exe -ORBEndpoint iiop://localhost:12345
 </code></p>
 <p><code>
-% client.exe -ORBInitRef NameService=iiop://localhost:12345
+% client.exe -ORBInitRef NameService=corbaloc:iiop:localhost:12345/NameService
 </code></p>
 <p>An explanation of these command-line options appears below. </p>
 <p></p>
@@ -326,6 +326,12 @@ current message block contains enough space for it -- the octet
 sequence is copied instead of appended to the CDR stream. </td>
       </tr>
       <tr>
+        <td><code>-ORBMaxMessageSize</code> <em>maxsize</em></td>
+        <td><a name="-ORBMaxMessageSize"></a>Set maximum size of
+              outgoing GIOP request/reply.  The request or reply
+              being sent will be fragmented, if necessary.</td>
+      </tr>
+      <tr>
         <td><code>-ORBCollocation</code> <em>global/per-orb/no</em></td>
         <td><a name="-ORBCollocation"></a>Specifies the use of
 collocation object optimization. If <code>global</code> is specified
@@ -409,8 +415,7 @@ preferences over normal I/O, thereby causing priority inversion.</p>
         </td>
       </tr>
       <tr>
-       <td><code>-ORBDisableRTCollocation</code> <em>boolean
-       (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
+       <td><code>-ORBDisableRTCollocation</code> <em>boolean (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
        option controls whether the application wants to use or discard
        RT collocation decisions made by the RT ORB. A value of
        <CODE>1</CODE> (true) disables RT collocation decisions and falls back on the default
@@ -420,6 +425,24 @@ preferences over normal I/O, thereby causing priority inversion.</p>
        decisions for better performance. The default value is
        <code>0</code> (false). </td>
        </tr>
+      <tr>
+        <td><code>-ORBUseLocalMemoryPool</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseLocalMemoryPool"></a>TAO can use a local memory pool
+         to satisfy some of its needs for heap storage, as it is often more
+         efficient than using the platform's default memory allocator. The local
+         pool will always grow as large as necessary to satisfy memory allocations,
+         but it will never shrink. This means that sometimes a process can retain
+         memory that it no longer needs. If the default allocator is used then
+         TAO gives memory back as soon as it is not needed which allows for better
+         resource sharing at the expense of memory deallocation time.
+         <p>If this option is disabled (<code>0</code>), the ORB will use the
+        default allocator for the platform.</p>
+         <p>If this option is enabled (<code>1</code>), the orb will use the
+         local memory pool.</p>
+        <p> This option defaults to the compile-time option specified by
+        <code>TAO_USES_LOCAL_MEMORY_POOL</code>.</p>
+        </td>
+      </tr>
     </tbody>
   </table>
   </p>
@@ -498,15 +521,24 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         </tr>
       <tr>
         <td><code>-ORBEnforcePreferredInterfaces</code>
-        <em>Yes/No</em></td>
-        <td><a name="-ORBEnforcePreferredInterfaces"></a> If this option is specified, then TAO will only try to use the interfaces
-    specified by the -ORBPreferredInterfaces option. By default, if a connection
-    cannot be made using a preferred interface, then TAO will attempt to use
-    the default interface. (INADDR_ANY)
-    Note : If none of the preferred interfaces apply to an outgoing connection
-    then they will not be enforced. Therefore, for this option to have any effect,
-    the connection through a legal preferred interface must fail.
+        <em>boolean (0|1)</em></td>
+        <td><a name="-ORBEnforcePreferredInterfaces"></a> If this
+            option is set to <CODE>1</CODE> (true), then TAO will only try to use the
+            interfaces specified by the <CODE>-ORBPreferredInterfaces</CODE> option.
+            The default is <CODE>0</CODE> (false), in which case if a connection
+            cannot be made using a preferred interface, TAO will
+            attempt to use the default interface (<CODE>INADDR_ANY</CODE>).
+            Note: If none of the preferred interfaces apply to an outgoing connection
+            then they will not be enforced.  For this option to have
+            any effect, therefore, the connection through a legal preferred interface must fail.
         </tr>
+      <tr>
+        <td><code>-ORBKeepalive</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBKeepalive"></a>This option allows users to
+        specify that the SO_KEEPALIVE option is set on TCP sockets.
+        The default is <code>0</code> (false).
+        </td>
+      </tr>
       <tr>
         <td><code>-ORBLingerTimeout</code> <em>timeout</em></td>
         <td><a name="-ORBLingerTimeout"></a> This option allows users to
@@ -675,21 +707,21 @@ is set. The default is true. </td>
         </td>
       </tr>
       <tr>
-        <td><code>-ORBPreferIPV6Interfaces</code> <em>Yes/No</em></td>
+        <td><code>-ORBPreferIPV6Interfaces</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBPreferIPV6Interfaces"></a>
-          This option directs the default endpoint selector for client connections
-          to first attempt to connect any IIOP endpoints from a provided IOR specifying
-          IPv6 interfaces.
-          Only when none of these can be found or sucessfully connected IPv4
-          interfaces will be tried.
+          If option is <CODE>1</CODE> (true) it directs the default
+          endpoint selector for client connections to first attempt to
+          connect any IIOP endpoints from a provided IOR specifying
+          IPv6 interfaces.  Only when none of these can be found or sucessfully connected IPv4
+          interfaces will be tried.  The default is <CODE>0</CODE> (false).
           <p>
-          This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
+          This option is only available for IPv6 enabled builds of TAO (<CODE>ACE_HAS_IPV6</CODE>).
         </td>
       </tr>
       <tr>
-        <td><code>-ORBConnectIPV6Only</code> <em>Yes/No</em></td>
+        <td><code>-ORBConnectIPV6Only</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBConnectIPV6Only"></a>
-          This option directs a server ORB to:<br><p>
+          If this option is <CODE>1</CODE> (true) it directs a server ORB to:<br><p>
           <li>allow only IPv6 interfaces as listening endpoints</li>
           <li>encode only IPv6 interfaces in the IOR profile</li>
           <li>prevent (depending on availability of IPV6_V6ONLY socket option)
@@ -697,8 +729,8 @@ is set. The default is true. </td>
           <p>
           This option directs the default endpoint selector for client connections
           to only attempt to connect any IIOP endpoints from a provided IOR specifying
-          IPv6 interfaces.
-          Any available IPv4 interfaces will be ignored.
+          IPv6 interfaces.  Any available IPv4 interfaces will be
+              ignored.  The default setting is <CODE>0</CODE> (false).
           <p>
           This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
         </td>
@@ -894,7 +926,7 @@ can improve performance by reducing the number of kernel level locks. </td>
         <td><code>-ORBProtocolFactory</code> <em>factory</em></td>
         <td><a name="-ORBProtocolFactory"></a>Specify which pluggable
 protocol factory to load. By default, only the factory for the IIOP
-protocol (<code>IIOP_Factory</code> is loaded.
+protocol (<code>IIOP_Factory</code>) is loaded.
         <p>For example, if some protocol called <em><code>Foo</code></em>
 whose factory was called <em><code>Foo_Factory</code></em> was
 available, then it could be loaded into TAO by specifying <code>-ORBProtocolFactory
@@ -999,7 +1031,7 @@ until all the data is sent.
         </td>
       </tr>
       <tr>
-        <td><code>-ORBDropRepliesDuringShutdown</code> <em>0|1</em></td>
+        <td><code>-ORBDropRepliesDuringShutdown</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBDropRepliesDuringShutdown"></a> Strategy to
         make the ORB wait for replies to show up even if the ORB is
         shutdown. The default is to drop replies. For example, clients
@@ -1347,7 +1379,7 @@ allowed when no forwarding is used or only a single threaded client. </td>
         </em>
 </td>
         <td><em>Please note that these two options are synonymous and can be used interchangeably.</em>
-	<p><a name="-ORBClientConnectionHandler"></a><em>ST</em> means
+        <p><a name="-ORBClientConnectionHandler"></a><em>ST</em> means
 use the single-threaded client connection handler, i.e., the leader
 follower model will not be used. However, <em>ST</em> does support
 nested upcalls and handling of new requests while waiting for the reply
@@ -1361,7 +1393,8 @@ instead of waiting in the Reactor using the Leader/Followers
 pattern. The <em>RW</em> strategy only works when the application
 does not have to worry about new request showing up when waiting for a
 response. Further, this strategy cannot be used with Asynchronous
-Method Invocation (AMI) calls. Therefore, this strategy is appropriate
+Method Invocation (AMI) calls and when using BiDIR GIOP.
+Therefore, this strategy is appropriate
 only for "pure" synchronous clients. Note that applications that
 require nested upcalls are not "pure" synchronous clients. Also note that this
 strategy will only affect two way calls, since there is no waiting for
@@ -1382,6 +1415,32 @@ I'm not sure what the affect of AMI on this option is.
         <p>Default for this option is <em>MT</em>. </p>
         </td>
       </tr>
+
+      <tr>
+        <td><code>-ORBConnectionHandlerCleanup</code> <em>0 | 1</em><br>
+        </td>
+	<td><a name="-ORBConnectionHandlerCleanup"></a>Setting this
+        option to <em>1</em> lets the ORB know that connection
+        handlers setup for sending messages need to  be cleaned up
+        when errors occur. This option has an  effect only for
+        <em> -ORBClientConnectionHandler RW </em>. Rest of  the
+        options for <em> -ORBCleintConnectionHandler </em> have been
+        automatically set up for cleaning the connection
+        handlers. Setting the option to <em> 1 </em> has a side
+        effect of registering and unregistering the connection
+        handlers with the Reactor for  every invocation, which has a
+        negative impact on performance. Setting  the option to <em> 0
+        </em> prevents this performance impact but leads  to problems
+        outlined
+ <A
+ href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2186">
+ here</A> and  <a
+ href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2224">
+ here</A>
+        <p>Default for this option is <em>0</em>. </p>
+        </td>
+      </tr>
+
       <tr>
         <td><code>-ORBTransportMuxStrategy</code> <em>EXCLUSIVE | MUXED</em></td>
         <td><a name="ORBTransportMuxStrategy"></a><em>EXCLUSIVE</em>

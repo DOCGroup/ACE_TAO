@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,12 +27,23 @@
 #include "ace/CORBA_macros.h"
 #include "tao/SystemException.h"
 
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
+# include "tao/OctetSeqC.h"
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableInterceptor
 {
   class ServerRequestInterceptor;
   typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
 
   typedef CORBA::Short ReplyStatus;
+}
+
+namespace CORBA
+{
+  class PolicyList;
 }
 
 class TAO_ServerRequest;
@@ -141,6 +152,12 @@ namespace TAO
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor
       ACE_ENV_ARG_DECL) = 0;
 
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL) = 0;
+
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
     virtual TAO::PICurrent_Impl *allocate_pi_current (void) = 0;
@@ -158,9 +175,11 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Upcall_Command &command
         ACE_ENV_ARG_DECL) = 0;
-};
-
+  };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_SERVER_REQUEST_INTERCEPTOR_ADAPTER_H */

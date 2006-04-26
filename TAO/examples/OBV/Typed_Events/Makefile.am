@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,15 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.Typed_Events_Client.am
+## Makefile.Typed_Events_IDL.am
 
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   Event_TypesC.cpp \
   Event_TypesC.h \
   Event_TypesC.inl \
@@ -35,7 +31,7 @@ BUILT_SOURCES += \
   Event_TypesS_T.h \
   Event_TypesS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Event_Types-stamp \
   Event_TypesC.cpp \
   Event_TypesC.h \
@@ -50,8 +46,16 @@ CLEANFILES += \
 Event_TypesC.cpp Event_TypesC.h Event_TypesC.inl Event_TypesS.cpp Event_TypesS.h Event_TypesS.inl Event_TypesS_T.cpp Event_TypesS_T.h Event_TypesS_T.inl: Event_Types-stamp
 
 Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Event_Types.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Event_Types.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Event_Types.idl
+
+## Makefile.Typed_Events_Client.am
+
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -70,11 +74,6 @@ client_SOURCES = \
   client.cpp \
   ../Simple_util.h \
   Client_i.h \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.h \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl \
   Event_Types_impl.h
 
 client_LDADD = \
@@ -93,35 +92,6 @@ endif !BUILD_MINIMUM_CORBA
 
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  Event_TypesC.cpp \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.cpp \
-  Event_TypesS.h \
-  Event_TypesS.inl \
-  Event_TypesS_T.cpp \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl
-
-CLEANFILES += \
-  Event_Types-stamp \
-  Event_TypesC.cpp \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.cpp \
-  Event_TypesS.h \
-  Event_TypesS.inl \
-  Event_TypesS_T.cpp \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl
-
-Event_TypesC.cpp Event_TypesC.h Event_TypesC.inl Event_TypesS.cpp Event_TypesS.h Event_TypesS.inl Event_TypesS_T.cpp Event_TypesS_T.h Event_TypesS_T.inl: Event_Types-stamp
-
-Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Event_Types.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -138,11 +108,6 @@ server_SOURCES = \
   Server_i.cpp \
   server.cpp \
   ../Simple_util.h \
-  Event_TypesC.h \
-  Event_TypesC.inl \
-  Event_TypesS.h \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl \
   Event_Types_impl.h \
   Server_i.h
 

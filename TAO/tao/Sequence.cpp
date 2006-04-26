@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Sequence.h"
+#include "tao/Sequence.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence.i"
 #endif /* __ACE_INLINE__ */
 
-#include "SystemException.h"
+#include "tao/SystemException.h"
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 # include "ace/Message_Block.h"
@@ -22,6 +22,8 @@ ACE_RCSID (tao,
            Sequence,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // *************************************************************
 // Operations for class TAO_Base_Sequence
@@ -1110,3 +1112,5 @@ operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> & lhs,
 {
   return !(lhs == rhs);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

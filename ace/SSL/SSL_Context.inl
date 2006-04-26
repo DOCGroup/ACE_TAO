@@ -2,6 +2,7 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_SSL_Data_File::ACE_SSL_Data_File (void)
@@ -104,3 +105,5 @@ ACE_SSL_Context::have_trusted_ca (void) const
 {
   return this->have_ca_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

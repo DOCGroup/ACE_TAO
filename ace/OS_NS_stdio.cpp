@@ -14,8 +14,10 @@ ACE_RCSID (ace,
 
 # if defined (ACE_WIN32)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 OSVERSIONINFO ACE_OS::win32_versioninfo_;
 HINSTANCE ACE_OS::win32_resource_module_;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #   if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1) && !defined (ACE_HAS_WINCE)
 // This function is called by the OS when the ACE DLL is loaded. We
@@ -37,6 +39,8 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
 }
 #   endif /* ACE_HAS_DLL && ACE_HAS_DLL == 1 */
 # endif /* ACE_WIN32 */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_OS::ace_flock_t::dump (void) const
@@ -132,9 +136,9 @@ ACE_OS::fopen (const char *filename,
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
-          FILE *fp = ::_fdopen (fd, const_cast<char *> (mode));
+          FILE *fp = ::_fdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
-          FILE *fp = ::_wfdopen (fd, const_cast<wchar_t *> (mode));
+          FILE *fp = ::_wfdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, mode);
 #   else
@@ -390,3 +394,5 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 # endif /* XPG5 || ACE_HAS_DINKUM_STL */
 }
 
+
+ACE_END_VERSIONED_NAMESPACE_DECL

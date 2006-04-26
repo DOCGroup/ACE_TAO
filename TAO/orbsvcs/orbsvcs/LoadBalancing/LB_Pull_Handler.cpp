@@ -1,5 +1,5 @@
-#include "LB_Pull_Handler.h"
-#include "LB_LoadManager.h"
+#include "orbsvcs/LoadBalancing/LB_Pull_Handler.h"
+#include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 
 #include "tao/debug.h"
 
@@ -8,6 +8,8 @@ ACE_RCSID (LoadBalancing,
            LB_Pull_Handler,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_Pull_Handler::TAO_LB_Pull_Handler (void)
   : monitor_map_ (0),
@@ -78,3 +80,5 @@ TAO_LB_Pull_Handler::handle_timeout (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

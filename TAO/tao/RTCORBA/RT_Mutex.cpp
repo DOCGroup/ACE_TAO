@@ -1,18 +1,16 @@
 // $Id$
-#include "RT_Mutex.h"
+#include "tao/RTCORBA/RT_Mutex.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_ORB.h"
+#include "tao/RTCORBA/RT_ORB.h"
 #include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(RTCORBA,
           RT_Mutex,
           "$Id$")
 
-TAO_RT_Mutex::TAO_RT_Mutex (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Mutex::~TAO_RT_Mutex (void)
 {
@@ -78,7 +76,7 @@ TAO_RT_Mutex::name (void) const
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
   : name_ (name)
@@ -92,6 +90,8 @@ TAO_Named_RT_Mutex::name (void) const
 }
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

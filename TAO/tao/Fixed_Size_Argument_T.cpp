@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_FIXED_SIZE_ARGUMENT_T_C
-#define TAO_FIXED_SIZE_ARGUMENT_T_C
+#ifndef TAO_FIXED_SIZE_ARGUMENT_T_CPP
+#define TAO_FIXED_SIZE_ARGUMENT_T_CPP
 
 #include "tao/Fixed_Size_Argument_T.h"
 
@@ -9,9 +9,7 @@
 #include "tao/Fixed_Size_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Fixed_Size_Argument_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
          typename Insert_Policy>
@@ -108,4 +106,6 @@ interceptor_value (CORBA::Any *any) const
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_FIXED_SIZE_ARGUMENT_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_FIXED_SIZE_ARGUMENT_T_CPP */

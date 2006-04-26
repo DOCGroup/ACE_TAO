@@ -1,7 +1,7 @@
 // $Id$
 
-#include "XML_Loader.h"
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/XML_Loader.h"
+#include "orbsvcs/Notify/Topology_Object.h"
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/parser/parser/Parser.h"
@@ -18,6 +18,14 @@
 
 using namespace TAO_Notify;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO_Notify {
+  extern const char TOPOLOGY_ID_NAME[];
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
   {
@@ -26,7 +34,9 @@ namespace {
     {
       const ACE_TCHAR * name = attrs->getQName (i);
       const ACE_TCHAR * value = attrs->getValue (i);
-      if (ACE_OS::strcmp (name, TOPOLOGY_ID_NAME) == 0)
+      if (ACE_OS::strcmp (name,
+                          //TOPOLOGY_ID_NAME) == 0)
+                          TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
         id = ACE_OS::atoi (value);
       }
@@ -36,6 +46,8 @@ namespace {
     return id;
   }
 }
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -170,7 +182,7 @@ namespace TAO_Notify
     if (this->live_)
     {
       ACE_ASSERT (object_stack_.size () > 0);
-      Topology_Object* cur;
+      Topology_Object* cur = 0;
       if (object_stack_.top (cur) == 0)
       {
         ACE_DECLARE_NEW_ENV;
@@ -221,3 +233,5 @@ namespace TAO_Notify
   }
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

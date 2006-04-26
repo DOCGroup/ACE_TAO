@@ -25,6 +25,9 @@ ACE_RCSID (FT_FaultConsumer,
            FT_FaultConsumer,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Default constructor.
 TAO::FT_FaultConsumer::FT_FaultConsumer ()
   : poa_ (PortableServer::POA::_nil ())
@@ -290,3 +293,4 @@ void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
     ));
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

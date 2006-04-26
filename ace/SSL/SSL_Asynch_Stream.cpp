@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "SSL_Asynch_Stream.h"
 
 ACE_RCSID (ACE_SSL,
@@ -36,12 +34,14 @@ ACE_RCSID (ACE_SSL,
 
 #include <openssl/err.h>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ************************************************************
 //  SSL Asynchronous Write Result
 // ************************************************************
 
-class ACE_SSL_Export ACE_SSL_Asynch_Write_Stream_Result:
-  public AWS_RESULT
+class ACE_SSL_Asynch_Write_Stream_Result
+  : public AWS_RESULT
 {
   /// Factory class will have special permissions.
   friend class ACE_SSL_Asynch_Stream;
@@ -83,8 +83,8 @@ ACE_SSL_Asynch_Write_Stream_Result::ACE_SSL_Asynch_Write_Stream_Result
 // ************************************************************
 //  SSL Asynchronous Read Result
 // ************************************************************
-class ACE_SSL_Export ACE_SSL_Asynch_Read_Stream_Result:
-  public ARS_RESULT
+class ACE_SSL_Asynch_Read_Stream_Result
+  : public ARS_RESULT
 {
   /// Factory class will have special permissions.
   friend class ACE_SSL_Asynch_Stream;
@@ -223,7 +223,6 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)
                   ACE_LIB_TEXT("if proactor still handles events\n")));
 
   ::SSL_free (this->ssl_);
-  this->ssl_ = 0;
 
   // Was honestly copied from ACE_SSL_SOCK_Stream :)
 
@@ -348,7 +347,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                                this->proactor_) != 0)
     return -1;
 
-  this->bio_ = ::BIO_new_ACE_Asynch (this);
+  this->bio_ = ACE_SSL_make_BIO (this);
 
   if (this->bio_ == 0)
     ACE_ERROR_RETURN
@@ -783,15 +782,15 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
   if (ext_read_result_ == 0) //nothing to notify
     return 1;
 
-  ext_read_result_->set_bytes_transferred (bytes_transferred);
-  ext_read_result_->set_error (error);
+  this->ext_read_result_->set_bytes_transferred (bytes_transferred);
+  this->ext_read_result_->set_error (error);
 
-  int retval =  ext_read_result_->post_completion
-                   (proactor_->implementation());
+  int retval =
+    this->ext_read_result_->post_completion (proactor_->implementation ());
 
   if (retval == 0)
     {
-      ext_read_result_ = 0;
+      this->ext_read_result_ = 0;
       return 0;  // success
     }
 
@@ -1119,6 +1118,8 @@ ACE_SSL_Asynch_Stream::pending_BIO_count (void)
 
   return ret;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
            ACE_HAS_AIO_CALLS) */

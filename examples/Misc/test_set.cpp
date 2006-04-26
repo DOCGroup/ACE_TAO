@@ -55,10 +55,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<int>;
-template class ACE_Unbounded_Set_Iterator<int>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Set<int>
-#pragma instantiate ACE_Unbounded_Set_Iterator<int>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

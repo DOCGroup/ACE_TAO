@@ -34,7 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
-#include "IFR_BaseS.h"
+#include "orbsvcs/IFRService/IFR_BaseS.h"
 #include "tao/ParameterModeS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -47,6 +47,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CORBA
 {
@@ -7879,10 +7881,12 @@ namespace POA_CORBA
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:1072
 
-#include "IFR_BasicS_T.h"
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/IFRService/IFR_BasicS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "IFR_BasicS.inl"
+#include "orbsvcs/IFRService/IFR_BasicS.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

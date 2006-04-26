@@ -53,12 +53,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 2
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Task<ACE_MT_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-pragma instantiate ACE_Task<ACE_MT_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else  /* ACE_HAS_PTHREADS */
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

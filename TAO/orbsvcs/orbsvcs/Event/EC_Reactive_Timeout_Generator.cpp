@@ -1,11 +1,13 @@
 // $Id$
 
-#include "EC_Reactive_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
 #include "ace/Reactor.h"
 
 ACE_RCSID (Event,
            EC_Reactive_Timeout_Generator,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Reactive_Timeout_Generator::
       TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor)
@@ -50,3 +52,5 @@ TAO_EC_Reactive_Timeout_Generator::cancel_timer (
 
   return this->reactor_->cancel_timer (id, &vp);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

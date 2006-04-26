@@ -65,6 +65,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:62
 
@@ -153,7 +155,7 @@ namespace CORBA
     // be\be_visitor_exception/exception_ctor.cpp:66
 
     PolicyError (
-        ACE_NESTED_CLASS (CORBA, PolicyErrorCode) _tao_reason
+        ::CORBA::PolicyErrorCode _tao_reason
       );
 
     // TAO_IDL - Generated from
@@ -206,7 +208,7 @@ namespace CORBA
     // be\be_visitor_exception/exception_ctor.cpp:66
 
     InvalidPolicies (
-        const ACE_NESTED_CLASS (CORBA, UShortSeq) & _tao_indices
+        const ::CORBA::UShortSeq & _tao_indices
       );
 
     // TAO_IDL - Generated from
@@ -591,7 +593,7 @@ namespace TAO
       );
     static ::CORBA::Policy_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::Policy_ptr p,
+        const ::CORBA::Policy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -612,7 +614,7 @@ namespace TAO
       );
     static ::CORBA::PolicyManager_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::PolicyManager_ptr p,
+        const ::CORBA::PolicyManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -633,7 +635,7 @@ namespace TAO
       );
     static ::CORBA::PolicyCurrent_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::PolicyCurrent_ptr p,
+        const ::CORBA::PolicyCurrent_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -662,8 +664,10 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Policy_ptr &);
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "PolicyC.inl"
+#include "tao/PolicyC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

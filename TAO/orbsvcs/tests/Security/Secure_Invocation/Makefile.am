@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -50,6 +50,9 @@ Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Foo.idl
+
 ## Makefile.Secure_Invocation_Security_Client.am
 
 if BUILD_CORBA_MESSAGING
@@ -72,6 +75,8 @@ client_SOURCES = \
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -86,6 +91,7 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -111,8 +117,11 @@ server_LDFLAGS = \
 
 server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_SSLIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -120,6 +129,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING

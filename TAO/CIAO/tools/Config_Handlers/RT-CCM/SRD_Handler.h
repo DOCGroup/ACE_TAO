@@ -4,7 +4,7 @@
  *
  *   @author Lucas Seibert <lseibert@dre.vanderbilt.edu>
  *   @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * $Id$
  */
 //======================================
@@ -24,54 +24,54 @@
 
 namespace CIAO
 {
-    namespace Config_Handlers
+  namespace Config_Handlers
+  {
+    class ServerResourcesDef;
+
+    /*
+     * @class SRD_Handler
+     *
+     * @brief Handler class for <ServerResourcesDef
+     */
+
+    class RT_CCM_Handlers_Export SRD_Handler
     {
-      class ServerResourcesDef;
-      
-	/*
-	 * @class SRD_Handler
-	 *
-	 * @brief Handler class for <ServerResourcesDef
-	 */
+    public:
+      class NoSRD {};
 
-	class RT_CCM_Handlers_Export SRD_Handler
-	{
-	public:
-          class NoSRD {};
-	    
-          SRD_Handler (const ACE_TCHAR *file);
-          
-          SRD_Handler(ServerResourcesDef *srd);
-          
-          SRD_Handler(::CIAO::DAnCE::ServerResource *srd);
-          
-          ~SRD_Handler (void);
-          
-          ::CIAO::DAnCE::ServerResource const *srd_idl (void) const
-            throw (NoSRD);
-          
-          ::CIAO::DAnCE::ServerResource *srd_idl (void)
-            throw (NoSRD);
-          
-          ServerResourcesDef const *srd_xsc (void) const
-            throw (NoSRD);
-          
-          ServerResourcesDef *srd_xsc (void)
-            throw (NoSRD);
+      SRD_Handler (const ACE_TCHAR *file);
 
-	private:
-          bool build_srd ();
-          
+      SRD_Handler(ServerResourcesDef *srd);
 
-          bool build_xsc ();
-          	    
-          auto_ptr < ::CIAO::DAnCE::ServerResource > idl_srd_;
-          
-          auto_ptr <ServerResourcesDef> srd_;
-          
-          bool retval_;
-	};
-    }
+      SRD_Handler(::CIAO::DAnCE::ServerResource *srd);
+
+      ~SRD_Handler (void);
+
+      ::CIAO::DAnCE::ServerResource const *srd_idl (void) const
+        throw (NoSRD);
+
+      ::CIAO::DAnCE::ServerResource *srd_idl (void)
+        throw (NoSRD);
+
+      ServerResourcesDef const *srd_xsc (void) const
+        throw (NoSRD);
+
+      ServerResourcesDef *srd_xsc (void)
+        throw (NoSRD);
+
+    private:
+      bool build_srd ();
+
+
+      bool build_xsc ();
+
+      auto_ptr < ::CIAO::DAnCE::ServerResource > idl_srd_;
+
+      auto_ptr <ServerResourcesDef> srd_;
+
+      bool retval_;
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

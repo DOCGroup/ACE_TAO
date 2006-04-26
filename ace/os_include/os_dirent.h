@@ -27,7 +27,7 @@
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_limits.h"
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include "ace/os_include/os_unistd.h"  // VxWorks needs this to compile
 #endif /* VXWORKS */
 
@@ -70,6 +70,8 @@ struct dirent {
   ACE_TCHAR *d_name;
 };
 
+#define ACE_DIRENT dirent
+
 struct ACE_DIR {
   /// The name of the directory we are looking into
   ACE_TCHAR *directory_name_;
@@ -78,7 +80,7 @@ struct ACE_DIR {
   HANDLE current_handle_;
 
   /// The struct for the results
-  dirent *dirent_;
+  ACE_DIRENT *dirent_;
 
   /// The struct for intermediate results.
   ACE_TEXT_WIN32_FIND_DATA fdata_;
@@ -97,9 +99,16 @@ struct ACE_DIR
   /// The directory entry
   struct dirent   dirent;
 };
+
+#define ACE_DIRENT dirent
+
+#elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#define ACE_DIRENT wdirent
+typedef wDIR ACE_DIR;
 #else
+#define ACE_DIRENT dirent
 typedef DIR ACE_DIR;
-# endif /* ACE_LACKS_STRUCT_DIR */
+#endif /* ACE_LACKS_STRUCT_DIR */
 
 #if defined rewinddir
 # undef rewinddir
@@ -111,7 +120,7 @@ int scandir (const char *,
              int (*) (const struct dirent *),
              int (*) (const void *, const void *));
 #endif /* ACE_LACKS_SCANDIR_PROTOTYPE */
-    
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

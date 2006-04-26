@@ -41,6 +41,8 @@
 #include "ace/ACE_export.h"
 #include "ace/Basic_Types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
 //////////////////////////////////////////////////////////////
@@ -125,6 +127,7 @@ public:
   unsigned long operator () (unsigned char t) const;
 };
 
+#if 0
 // @@ ADD HASHES FOR ACE TYPES
 
 /**
@@ -193,6 +196,117 @@ public:
 };
 
 // @@ DONE ADDING HASHES FOR ACE TYPES
+#endif
+
+/**
+ * @class ACE_Hash<short>
+ *
+ * @brief Function object for hashing a short number
+ */
+template<>
+class ACE_Export ACE_Hash<short>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (short t) const;
+};
+
+/**
+ * @class ACE_Hash<unsigned short>
+ *
+ * @brief Function object for hashing an unsigned short number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned short>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned short t) const;
+};
+
+/**
+ * @class ACE_Hash<int>
+ *
+ * @brief Function object for hashing an int number
+ */
+template<>
+class ACE_Export ACE_Hash<int>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (int t) const;
+};
+
+/**
+ * @class ACE_Hash<unsigned int>
+ *
+ * @brief Function object for hashing an unsigned int number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned int>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned int t) const;
+};
+
+/**
+ * @class ACE_Hash<long>
+ *
+ * @brief Function object for hashing a long number
+ */
+template<>
+class ACE_Export ACE_Hash<long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (long t) const;
+};
+
+/**
+ * @class ACE_Hash<unsigned long>
+ *
+ * @brief Function object for hashing an unsigned long number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned long t) const;
+};
+
+#if !defined (ACE_LACKS_LONGLONG_T) && (ACE_SIZEOF_LONG < 8)
+/**
+ * @class ACE_Hash<ACE_INT64>
+ *
+ * @brief Function object for hashing a signed 64-bit number
+ */
+template<>
+class ACE_Export ACE_Hash<ACE_INT64>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (ACE_INT64 t) const;
+};
+#endif /* !ACE_LACKS_LONGLONG_T && ACE_SIZEOF_LONG < 8 */
+
+// We can do this even if ACE_LACKS_UNSIGNEDLONGLONG_T because there's an
+// emulation for it in ACE_U_LongLong.
+#if (ACE_SIZEOF_LONG < 8)
+/**
+ * @class ACE_Hash<ACE_UINT64>
+ *
+ * @brief Function object for hashing an unsigned 64-bit number
+ */
+template<>
+class ACE_Export ACE_Hash<ACE_UINT64>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (const ACE_UINT64 &t) const;
+};
+#endif /* ACE_SIZEOF_LONG < 8 */
 
 /**
  * @class ACE_Hash<const char *>
@@ -464,6 +578,9 @@ public:
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };
+
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor.inl"

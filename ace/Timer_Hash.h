@@ -24,6 +24,8 @@
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_List_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // The following typedef are here for ease of use
 
 typedef ACE_Timer_Hash_Upcall <ACE_Event_Handler *,
@@ -66,6 +68,8 @@ typedef ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *,
                                   ACE_SYNCH_RECURSIVE_MUTEX,
                                   ACE_Hash_Timer_Heap>
         ACE_Timer_Hash_Heap_Iterator;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_HASH_H */

@@ -25,8 +25,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Endpoint.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 #include "tao/IIOP_Profile.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // namespace TAO
 // {
@@ -43,7 +45,7 @@
      * This class extends TAO_IIOP_Profile to support secure
      * communication using SSL.
      */
-    class TAO_SSLIOP_Export TAO_SSLIOP_Profile : public TAO_IIOP_Profile
+    class TAO_SSLIOP_Profile : public TAO_IIOP_Profile
     {
     public:
       /// Profile constructor, same as above except the object_key has
@@ -170,6 +172,7 @@
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

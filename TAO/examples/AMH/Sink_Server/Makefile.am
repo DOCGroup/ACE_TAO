@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,78 +16,13 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.Sink_Server_Client.am
-
-if BUILD_CORBA_MESSAGING
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GH $(srcdir)/Test.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  Client_Task.cpp \
-  TestC.cpp \
-  client.cpp \
-  Client_Task.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_CORBA_MESSAGING
-
-## Makefile.Sink_Server_Mt_Server.am
+## Makefile.Sink_Server_IDL.am
 
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -98,7 +33,7 @@ BUILT_SOURCES += \
   TestS_T.h \
   TestS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -115,6 +50,51 @@ TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h Te
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GH $(srcdir)/Test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Test.idl
+
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.Sink_Server_Client.am
+
+if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  Client_Task.cpp \
+  TestC.cpp \
+  client.cpp \
+  Base_Server.inl \
+  Client_Task.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.Sink_Server_Mt_Server.am
+
+if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += mt_server
 
@@ -136,11 +116,6 @@ mt_server_SOURCES = \
   Base_Server.h \
   Base_Server.inl \
   MT_AMH_Server.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl \
   Timer_Handler.h
 
 mt_server_LDADD = \
@@ -154,40 +129,13 @@ mt_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Sink_Server_St_Server.am
 
 if BUILD_CORBA_MESSAGING
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GH $(srcdir)/Test.idl
-	@touch $@
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += st_server
 
@@ -207,11 +155,6 @@ st_server_SOURCES = \
   AMH_Servant.h \
   Base_Server.h \
   Base_Server.inl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl \
   Timer_Handler.h
 
 st_server_LDADD = \
@@ -225,6 +168,7 @@ st_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

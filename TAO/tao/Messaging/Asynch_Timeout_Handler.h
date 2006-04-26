@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
@@ -30,6 +30,8 @@
 
 #include "ace/Event_Handler.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Asynch_Reply_Dispatcher_Base;
 class TAO_Transport_Mux_Strategy;
 
@@ -38,7 +40,7 @@ class TAO_Transport_Mux_Strategy;
  *
  * @brief Handler registered with the reactor in case of AMI timeouts.
  */
-class TAO_Messaging_Export TAO_Asynch_Timeout_Handler
+class TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
 public:
@@ -72,6 +74,8 @@ public:
   /// Our reactor
   ACE_Reactor *reactor_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

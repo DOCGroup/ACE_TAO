@@ -54,12 +54,24 @@
 #  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #    define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 #    define ACE_HAS_TYPENAME_KEYWORD
+     // When using -qtempinc, we don't need to see template implementation
+     // source (though we do need a pragma to find the correct source file).
+     // However, without -qtempinc (either -qnotempinc or -qtemplateregistry)
+     // we do need to see the source.
+#    if defined (__TEMPINC__)
+#      if !defined ACE_TEMPLATES_REQUIRE_PRAGMA
+#        define ACE_TEMPLATES_REQUIRE_PRAGMA
+#      endif
+#    else
+#      if !defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#        define ACE_TEMPLATES_REQUIRE_SOURCE
+#      endif
+#    endif /* __TEMPINC__ */
+
 #    undef WIFEXITED
 #    undef WEXITSTATUS
+
 #    if (__IBMCPP__ >= 500)  /* Visual Age C++ 5 */
-#      if !defined (ACE_HAS_USING_KEYWORD)
-#        define ACE_HAS_USING_KEYWORD            1
-#      endif /* ACE_HAS_USING_KEYWORD */
 #      define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #    endif /* __IBMCPP__ >= 500 */
@@ -86,7 +98,9 @@
 # endif /* !ACE_MT_SAFE */
 
 #else  /* ! __xlC__ && ! __GNUG__ */
-# error unsupported compiler in ace/config-aix-4.x.h
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler in ace/config-aix-4.x.h
+#  endif  /* __cplusplus */
 #endif /* ! __xlC__ && ! __GNUG__ */
 
 
@@ -168,6 +182,7 @@
 #define ACE_HAS_H_ERRNO
 
 #define ACE_LACKS_STDINT_H
+#define ACE_LACKS_SYS_SYSCTL_H
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
@@ -214,7 +229,7 @@
 #endif /* ACE_AIX_VERS >= 403 */
 
 #define ACE_HAS_SIGWAIT
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_STRBUF_T
 
 // Compiler supports stropts.h

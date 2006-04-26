@@ -339,15 +339,15 @@ endif # shared_libs
 
 CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
 
-ifdef SRC
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(SRC))))
-endif # SRC
+ifdef OBJS
+  CLEANUP_OBJS += $(addprefix $(VDIR), $(OBJS))
+endif # OBJS
 ifneq ($(CLEANUP_BIN),)
   CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN))))
 endif # CLEANUP_BIN
-ifdef LSRC
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
-endif # LSRC
+ifdef VSHOBJS
+  CLEANUP_OBJS += $(VSHOBJS)
+endif # VSHOBJS
 
 clean.local: makefile_name.local
 ifdef DO_CLEANUP
@@ -356,7 +356,7 @@ ifdef DO_CLEANUP
 	GNUmakefile.old core-r $(CLEANUP_DIRS) \
 	cxx_repository ptrepository ti_files \
 	gcctemp.c gcctemp so_locations *.ics \
-	templateregistry ir.out core.* $(CLEANUP_OBJS)
+	templateregistry templateregistry.* ir.out core.* *.core $(CLEANUP_OBJS)
 endif # DO_CLEANUP
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
@@ -411,6 +411,14 @@ depend.local: $(DEPENDENCY_FILE)
 endif
 
 DEPGEN ?= $(ACE_ROOT)/bin/depgen.pl
+
+# Use findstring just in case the script was preceded by /usr/bin/perl
+ifeq ($(findstring depgen.pl, $(notdir $(DEPGEN))), depgen.pl)
+  DEPEND_CMD_ARGS += -i
+  ifeq ($(inline), 0)
+    DEPEND_CMD_ARGS += -n
+  endif
+endif
 
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IORInfoC.h"
+#include "tao/IORInterceptor/IORInfoC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,9 +31,10 @@
 #endif /* _MSC_VER */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations.
 class TAO_Root_POA;
-
 
 /**
  * @class TAO_IORInfo
@@ -112,7 +113,7 @@ public:
   /// IORInterceptor::components_established() interception point has
   /// been called.
   /**
-   * This method is used so to inform the IORInfo when the
+   * This method is used to inform the IORInfo object when the
    * add_ior_component() and add_ior_component_to_profile() methods
    * are invalid.  They are only valid in the
    * IORInterceptor::establish_components() interception point.
@@ -137,14 +138,13 @@ private:
 
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_IORInfo (const TAO_IORInfo &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_IORInfo &))
+  TAO_IORInfo (const TAO_IORInfo &);
+  void operator= (const TAO_IORInfo &);
 
 private:
 
   /// Pointer to POA
-  TAO_Root_POA *poa_;
+  TAO_Root_POA * poa_;
 
   /// True if the IORInterceptor::components_established()
   /// interception point was called.  False otherwise.
@@ -158,8 +158,10 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "IORInfo.inl"
+# include "tao/IORInterceptor/IORInfo.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

@@ -18,7 +18,7 @@ public:
                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void next_prime_excep (Test::AMI_HelloExceptionHolder * excep_holder
+  void next_prime_excep (::Messaging::ExceptionHolder * excep_holder
                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

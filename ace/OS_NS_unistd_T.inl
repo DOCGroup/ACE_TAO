@@ -6,6 +6,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/os_include/os_errno.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 template <typename CHAR_TYPE> int
 ACE_OS::string_to_argv (CHAR_TYPE *buf,

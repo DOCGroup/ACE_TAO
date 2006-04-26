@@ -17,6 +17,7 @@
 #include "ace/Null_Mutex.h"
 
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include "Bits.h"
 
@@ -239,7 +240,7 @@ namespace ACE_RMCast
   class Message;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Message, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<Message, Mutex>
   Message_ptr;
 
   class Message
@@ -308,7 +309,7 @@ namespace ACE_RMCast
     Profile const*
     find (u16 id) const
     {
-      Profiles::ENTRY* e;
+      Profiles::ENTRY* e = 0;
 
       if (profiles_.find (id, e) == -1) return 0;
 
@@ -633,7 +634,7 @@ namespace ACE_RMCast
     size (size_t s)
     {
       if (s > capacity_)
-        abort ();
+        ACE_OS::abort ();
 
       size_ = s;
 

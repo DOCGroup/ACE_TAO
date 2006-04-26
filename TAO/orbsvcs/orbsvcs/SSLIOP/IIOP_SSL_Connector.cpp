@@ -1,4 +1,4 @@
-#include "IIOP_SSL_Connector.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -17,6 +17,8 @@
 ACE_RCSID (SSLIOP,
            IIOP_SSL_Connector,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector (CORBA::Boolean flag)
   : TAO_IIOP_Connector (flag),
@@ -282,3 +284,5 @@ TAO::IIOP_SSL_Connector::cancel_svc_handler (
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

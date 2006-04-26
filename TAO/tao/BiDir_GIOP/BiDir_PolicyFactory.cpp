@@ -1,6 +1,6 @@
-#include "BiDir_PolicyFactory.h"
-#include "BiDirGIOP.h"
-#include "BiDir_Policy_i.h"
+#include "tao/BiDir_GIOP/BiDir_PolicyFactory.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -8,6 +8,8 @@
 ACE_RCSID (BiDir_GIOP,
            BiDir_PolicyFactory,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO_BiDir_PolicyFactory::create_policy (
@@ -46,3 +48,5 @@ TAO_BiDir_PolicyFactory::create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,12 +15,7 @@
 #define ACE_MEM_ADDR_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,13 +25,15 @@
 
 #include "ace/INET_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_MEM_Addr
  *
  * @brief Defines a C++ wrapper facade for the shared memory transport
  * address family format.
  */
-class ACE_Memory_Export ACE_MEM_Addr : public ACE_Addr
+class ACE_Export ACE_MEM_Addr : public ACE_Addr
 {
 public:
   // = Initialization methods.
@@ -60,7 +57,7 @@ public:
   /// Default initialization routine.
   int initialize_local (u_short port);
 
-  /// Check if @a sap designate an enpoint withing the same host.
+  /// Check if @a sap designates an endpoint on the same host.
   int same_host (const ACE_INET_Addr& sap);
 
   // These methods are useful after the object has been constructed.
@@ -146,6 +143,8 @@ private:
   /// Internal INET addr for accepting/connecting.
   ACE_INET_Addr internal_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Addr.inl"

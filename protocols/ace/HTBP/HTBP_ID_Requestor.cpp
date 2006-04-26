@@ -13,6 +13,8 @@ ACE_RCSID(HTBP,
           ACE_HTBP_ID_Requestor,
           "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_TString ACE::HTBP::ID_Requestor::htid_;
 ACE_SYNCH_MUTEX ACE::HTBP::ID_Requestor::htid_lock_;
 
@@ -63,7 +65,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
       host_ = url_.substr(host_start,port_sep - host_start);
     }
 
-  ACE_INET_Addr remote_addr (port_, host_.c_str());
+  ACE_INET_Addr remote_addr (static_cast<u_short> (port_), host_.c_str());
   ACE_SOCK_Connector con;
   if (con.connect (*cli_stream,
                    remote_addr) == -1)
@@ -133,3 +135,5 @@ ACE::HTBP::ID_Requestor::get_HTID ()
     }
   return htid;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

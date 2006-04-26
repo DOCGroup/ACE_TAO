@@ -10,12 +10,20 @@ ACE_RCSID (tao,
            Managed_Types,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // assignment from CORBA::String_var makes a copy
 TAO_String_Manager&
 TAO_String_Manager::operator= (const CORBA::String_var &var)
 {
-  CORBA::string_free (this->ptr_);
-  this->ptr_ = CORBA::string_dup (var.in ());
+  // Strongly exception safe by means of copy and non-throwing swap
+  // technique.
+  TAO_String_Manager tmp (var.in ());
+
+  char * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_  = old_ptr;
+
   return *this;
 }
 
@@ -38,8 +46,14 @@ TAO_SeqElem_String_Manager::operator= (const CORBA::String_var &var)
 TAO_WString_Manager&
 TAO_WString_Manager::operator= (const CORBA::WString_var &var)
 {
-  CORBA::wstring_free (this->ptr_);
-  this->ptr_ = CORBA::wstring_dup (var.in ());
+  // Strongly exception safe by means of copy and non-throwing swap
+  // technique.
+  TAO_WString_Manager tmp (var.in ());
+
+  CORBA::WChar * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_  = old_ptr;
+
   return *this;
 }
 
@@ -55,3 +69,5 @@ TAO_SeqElem_WString_Manager::operator= (const CORBA::WString_var &var)
   *this->ptr_ = CORBA::wstring_dup (var.in ());
   return *this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -13,6 +13,7 @@ ACE_RCSID (tao,
            Sequence_TypeCode_Static,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
@@ -145,3 +146,5 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
     CORBA::TypeCode::_duplicate (
       Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

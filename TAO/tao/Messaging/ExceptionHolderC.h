@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/ORB.h"
@@ -56,10 +56,10 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Messaging_Export
 
-#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace Messaging
 {
@@ -221,6 +221,11 @@ namespace OBV_Messaging
 
   protected:
     ExceptionHolder (void);
+    ExceptionHolder (
+      ::CORBA::Boolean _tao_init_is_system_exception,
+      ::CORBA::Boolean _tao_init_byte_order,
+      const ::CORBA::OctetSeq & _tao_init_marshaled_exception
+    );
     virtual ~ExceptionHolder (void);
 
   protected:
@@ -281,11 +286,11 @@ TAO_Messaging_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Exc
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
 
-#if defined (__ACE_INLINE__)
-#include "ExceptionHolderC.inl"
-#endif /* defined INLINE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif
+#if defined (__ACE_INLINE__)
+#include "tao/Messaging/ExceptionHolderC.inl"
+#endif /* defined INLINE */
 
 #include /**/ "ace/post.h"
 

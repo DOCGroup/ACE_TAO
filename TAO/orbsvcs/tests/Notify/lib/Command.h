@@ -19,14 +19,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Environment;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Command

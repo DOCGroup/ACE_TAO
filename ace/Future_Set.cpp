@@ -1,4 +1,3 @@
-// Future.cpp
 // $Id$
 
 #ifndef ACE_FUTURE_SET_CPP
@@ -10,9 +9,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID (ace, Future_Set, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
@@ -119,8 +118,8 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
 
   // Remove the hash map entry with the specified future rep from our map.
   FUTURE_HOLDER *future_holder;
-  if ( this->future_map_.find (future_rep,
-                               future_holder) != -1 )
+  if (this->future_map_.find (future_rep,
+                              future_holder) != -1)
     {
       future = future_holder->item_;
       this->future_map_.unbind (future_rep);
@@ -130,6 +129,8 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_SET_CPP */

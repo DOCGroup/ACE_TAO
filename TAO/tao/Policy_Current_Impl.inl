@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Policy_Current_Impl::TAO_Policy_Current_Impl (void)
@@ -22,3 +26,4 @@ TAO_Policy_Current_Impl::get_cached_policy (TAO_Cached_Policy_Type type
                                                 ACE_ENV_ARG_PARAMETER);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

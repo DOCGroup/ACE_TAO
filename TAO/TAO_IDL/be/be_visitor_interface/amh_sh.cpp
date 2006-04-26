@@ -121,8 +121,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "virtual ~" << class_name.c_str () << " (void);\n\n"
       << be_nl
       << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "const char* logical_type_id" << env_dflts << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
 //   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
@@ -133,47 +132,41 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _non_existent method.
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _interface method.
   *os << "static void _interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _component method.
   *os << "static void _component_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _repository_id method.
   *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void *servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "void *_servant_upcall" << env_decl << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   this->this_method (node);
@@ -384,7 +377,10 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
   // After having generated the operation we insert it into the
   // AMH node interface.
-  amh_node->be_add_operation (operation);
+  if (0 == amh_node->be_add_operation (operation))
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -431,7 +427,7 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
   // interfaces is "special", because the returned type is not exactly
   // the type of the class, but the original class that "implied" the
   // AMH one.
-  *os << non_amh_name.c_str () << " *_this (" << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+  *os << non_amh_name.c_str () << " *_this (" << be_idt << be_idt
+      << env_dflts << be_uidt_nl
       << ");\n" << be_uidt;
 }

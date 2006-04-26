@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -24,16 +25,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 
 #include "ace/Configuration.h"
 
-// Forward decl;
-class TAO_IOR_Multicast;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Configuration;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_IOR_Multicast;
 class TAO_Repository_i;
 class TAO_IDLType_i;
 class TAO_Container_i;
@@ -245,6 +250,8 @@ public:
   /// all over the place now that it's here.
   static TAO_Repository_i *repo_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

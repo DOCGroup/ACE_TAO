@@ -9,11 +9,10 @@
 
 
 #include "ace/Metrics_Cache.h"
-#include "Metrics_Utils.h"
-#include "Metrics_LocalCache.h"
+#include "orbsvcs/Metrics/Metrics_Utils.h"
+#include "orbsvcs/Metrics/Metrics_LocalCache.h"
 
-
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////
 // Class TAO_Metrics_Utils //
@@ -521,10 +520,10 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 #endif /* TAO_USES_REPORTING_METRICS */
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (__ACE_INLINE__)
-#include "Metrics_Utils.i"
+#include "orbsvcs/Metrics/Metrics_Utils.i"
 #endif /* __ACE_INLINE__ */
 
 #else

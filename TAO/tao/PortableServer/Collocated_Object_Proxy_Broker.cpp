@@ -1,9 +1,9 @@
 //$Id$
 // -- PortableServer Include --
-#include "Collocated_Object_Proxy_Broker.h"
-#include "Object_Adapter.h"
-#include "Servant_Upcall.h"
-#include "Servant_Base.h"
+#include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 
 // -- TAO Include --
@@ -16,6 +16,7 @@ ACE_RCSID (PortableServer,
            Collocated_Object_Proxy_Broker,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -306,11 +307,8 @@ the_tao_collocated_object_proxy_broker (void)
   return &the_broker;
 }
 
-TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (
-                               CORBA::Object_ptr obj
-                               )
+TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (void)
 {
-  ACE_UNUSED_ARG (obj);
   return the_tao_collocated_object_proxy_broker ();
 }
 
@@ -329,3 +327,5 @@ _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (
     reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer
       )
   );
+
+TAO_END_VERSIONED_NAMESPACE_DECL

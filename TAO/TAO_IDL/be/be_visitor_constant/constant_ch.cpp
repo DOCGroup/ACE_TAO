@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_constant, 
-           constant_ch, 
+ACE_RCSID (be_visitor_constant,
+           constant_ch,
            "$Id$")
 
 
@@ -89,7 +89,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       *os << " " << node->local_name ();
     }
   // We are nested inside an interface or a valuetype.
-  else 
+  else
     {
       if (snt != AST_Decl::NT_module)
         {
@@ -126,31 +126,22 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
     }
 
   // If this is true, can't generate inline constants.
-  bool forbidden_in_class = (snt != AST_Decl::NT_root 
-                             && snt != AST_Decl::NT_module 
+  bool forbidden_in_class = (snt != AST_Decl::NT_root
+                             && snt != AST_Decl::NT_module
                              && (etype == AST_Expression::EV_string
                                  || etype == AST_Expression::EV_wstring
                                  || etype == AST_Expression::EV_float
                                  || etype == AST_Expression::EV_double
                                  || etype == AST_Expression::EV_longdouble));
 
-  // (JP) Workaround for VC6's broken handling of inline constants
-  // until the day comes when we no longer support it. This won't
-  // work for cross-compiling - hopefully the whole issue will soon
-  // be moot.
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
   if (!node->is_nested ()
-      || (snt == AST_Decl::NT_module && be_global->gen_inline_constants ()))
-#else
-  if (!node->is_nested () 
       || (be_global->gen_inline_constants () && !forbidden_in_class))
-#endif
     {
       *os << " = " << node->constant_value ();
     }
 
   *os << ";";
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

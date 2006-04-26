@@ -1,7 +1,7 @@
 /**
  * @file CB_Handler.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * $Id$
  */
 
@@ -22,26 +22,26 @@
 
 namespace CIAO
 {
-    namespace Config_Handlers
+  namespace Config_Handlers
+  {
+    class ConnectionBandsDef;
+
+    /*
+     * @class CB_Handler
+     * A brief Handler class for <ConnectionBands>
+     */
+
+    class RT_CCM_Handlers_Export CB_Handler
     {
-	class ConnectionBandsDef;
+    public:
+      static bool connection_band (const ConnectionBandsDef &src,
+                                   ::CIAO::DAnCE::ORS_ConnectionBands &dest);
 
-	/*
-	 * @class CB_Handler
-	 * A brief Handler class for <ConnectionBands>
-	 */
+      static ConnectionBandsDef connection_band (const ::CIAO::DAnCE::ORS_ConnectionBands &src);
 
-	class RT_CCM_Handlers_Export CB_Handler
-	{
-        public:
-          static bool connection_band (const ConnectionBandsDef &src,
-                                       ::CIAO::DAnCE::ORS_ConnectionBands &dest);
-          
-          static ConnectionBandsDef connection_band (const ::CIAO::DAnCE::ORS_ConnectionBands &src);
-          
-          //          static IDREF_Base<::CIAO::DAnCE::ORS_ConnectionBands> IDREF;
-	};
-    }
+      //          static IDREF_Base<::CIAO::DAnCE::ORS_ConnectionBands> IDREF;
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

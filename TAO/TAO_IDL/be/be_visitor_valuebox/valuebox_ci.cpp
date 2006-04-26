@@ -65,18 +65,8 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // _tao_unmarshal_v method.  Generated because ValueBase interface
-  // requires it.  But there is nothing for it to do in the valuebox
-  // case.
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << node->name ()
-      << "::_tao_unmarshal_v (TAO_InputCDR &)" << be_nl
-      << "{" << be_idt_nl
-      << "return true;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   // Indicate that code is already generated for this node.
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
 
   return 0;
 }
@@ -84,7 +74,6 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
 int
 be_visitor_valuebox_ci::visit_array (be_array *node)
 {
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
@@ -119,8 +108,8 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->local_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
+      << ": ::CORBA::ValueBase (val)," << be_nl
+      << "  ::CORBA::DefaultValueRefCountBase (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name ()
@@ -191,30 +180,19 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "return this->_pd_value.out ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // _tao_marshal_v method
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << vb_node->name ()
-      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
-      << "{" << be_idt_nl
-      << node->name () << "_forany temp (this->_pd_value.ptr ());" << be_nl
-      << "return (strm << temp);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   return 0;
 }
 
 int
 be_visitor_valuebox_ci::visit_enum (be_enum *node)
 {
-  return this->emit_for_predef_enum (node, "", false,
-                                     "this->_pd_value");
+  return this->emit_for_predef_enum (node, "", false);
 }
 
 int
 be_visitor_valuebox_ci::visit_interface (be_interface *node)
 {
-  return this->emit_for_predef_enum (node, "_ptr", false,
-                                     "this->_pd_value");
+  return this->emit_for_predef_enum (node, "_ptr", false);
 }
 
 int
@@ -248,8 +226,10 @@ be_visitor_valuebox_ci::visit_predefined_type (be_predefined_type *node)
 
     default:
       marshal_arg = "this->_pd_value";
+      break;
     }
-  return this->emit_for_predef_enum (node, "", is_any, marshal_arg);
+
+  return this->emit_for_predef_enum (node, "", is_any);
 }
 
 int
@@ -264,7 +244,6 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   this->emit_default_constructor_alloc (node);
-  this->emit_destructor ();
   this->emit_constructor_one_arg_alloc (node);
   this->emit_copy_constructor_alloc (node);
   this->emit_assignment_alloc (node);
@@ -290,14 +269,6 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
       << vb_node->name () << "::length ( ::CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value->length (length);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  // _tao_marshal_v method
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << vb_node->name ()
-      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
-      << "{" << be_idt_nl
-      << "return (strm << this->_pd_value.in ());" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   return 0;
@@ -335,7 +306,6 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   this->emit_default_constructor ();
-  this->emit_destructor ();
   this->emit_constructor_one_arg (node, "");
   this->emit_copy_constructor ();
   this->emit_assignment (node, "");
@@ -440,15 +410,6 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "return this->_pd_value[slot];" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-
-  // _tao_marshal_v method
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << vb_node->name ()
-      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
-      << "{" << be_idt_nl
-      << "return (strm << this->_pd_value);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   return 0;
 }
 
@@ -464,7 +425,6 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   this->emit_default_constructor_alloc (node);
-  this->emit_destructor ();
   this->emit_constructor_one_arg_alloc (node);
   this->emit_copy_constructor_alloc (node);
   this->emit_assignment_alloc (node);
@@ -513,14 +473,6 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
         }
     }
 
-  // _tao_marshal_v method
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << vb_node->name ()
-      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
-      << "{" << be_idt_nl
-      << "return (strm << this->_pd_value.in ());" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   return 0;
 }
 
@@ -554,7 +506,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   this->emit_default_constructor_alloc (node);
-  this->emit_destructor ();
   this->emit_constructor_one_arg_alloc (node);
   this->emit_copy_constructor_alloc (node);
   this->emit_assignment_alloc (node);
@@ -629,15 +580,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
       << "return this->_pd_value->_d ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-
-  // _tao_marshal_v method
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << vb_node->name ()
-      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
-      << "{" << be_idt_nl
-      << "return (strm << this->_pd_value.in ());" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   return 0;
 }
 
@@ -646,8 +588,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 int
 be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
                                               const char * type_suffix,
-                                              bool is_any,
-                                              const char * marshal_arg)
+                                              bool is_any)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -656,8 +597,6 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  this->emit_destructor ();
 
   if (is_any)
     {
@@ -712,14 +651,6 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 
     }
 
-  // _tao_marshal_v method
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << vb_node->name ()
-      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
-      << "{" << be_idt_nl
-      << "return (strm << " << marshal_arg << ");" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   return 0;
 }
 
@@ -750,29 +681,13 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (void)"
       << be_nl << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " ());" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 }
-
-
-void
-be_visitor_valuebox_ci::emit_destructor (void)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Retrieve the node being visited by this be_visitor_valuebox_ci.
-  be_decl * vb_node = this->ctx_->node ();
-
-  // Protected destructor
-  *os << "ACE_INLINE " << be_nl
-      << vb_node->name () << "::~" << vb_node->local_name () << " (void)"
-      << be_nl << "{}" << be_nl << be_nl;
-}
-
 
 void
 be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
@@ -805,7 +720,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
@@ -825,8 +740,8 @@ be_visitor_valuebox_ci::emit_copy_constructor (void)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
+      << ": ::CORBA::ValueBase (val)," << be_nl
+      << "  ::CORBA::DefaultValueRefCountBase (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val._pd_value;" << be_uidt_nl
@@ -845,11 +760,11 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->full_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
+      << ": ::CORBA::ValueBase (val)," << be_nl
+      << "  ::CORBA::DefaultValueRefCountBase (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (val._pd_value.in ()));" << be_uidt_nl
@@ -890,7 +805,7 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
       << vb_node->name () << "::operator= (const "
       << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value)," << be_nl
@@ -928,7 +843,7 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
       << vb_node->name () << "::_value (const "
       << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl

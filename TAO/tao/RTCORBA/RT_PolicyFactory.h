@@ -21,7 +21,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,8 +37,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Policy factory for all RTCORBA related policies.
-class TAO_RTCORBA_Export TAO_RT_PolicyFactory
+class TAO_RT_PolicyFactory
   : public PortableInterceptor::PolicyFactory,
     public CORBA::LocalObject
 {
@@ -55,6 +57,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

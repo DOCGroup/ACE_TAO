@@ -92,8 +92,3 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
   return result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<ACE_Byte>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_Byte>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

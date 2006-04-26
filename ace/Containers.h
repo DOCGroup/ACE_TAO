@@ -21,15 +21,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template <class T>
-class ACE_Double_Linked_List;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class T>
-class ACE_Double_Linked_List_Iterator_Base;
-template <class T>
-class ACE_Double_Linked_List_Iterator;
-template <class T>
-class ACE_Double_Linked_List_Reverse_Iterator;
+template <class T> class ACE_Double_Linked_List;
+template <class T> class ACE_Double_Linked_List_Iterator_Base;
+template <class T> class ACE_Double_Linked_List_Iterator;
+template <class T> class ACE_Double_Linked_List_Reverse_Iterator;
 
 /**
  * @class ACE_DLList_Node
@@ -48,7 +45,6 @@ public:
   ACE_DLList_Node (void *&i,
                    ACE_DLList_Node *n = 0,
                    ACE_DLList_Node *p = 0);
-  ~ACE_DLList_Node (void);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -61,6 +57,8 @@ public:
 protected:
   ACE_DLList_Node (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Containers.inl"

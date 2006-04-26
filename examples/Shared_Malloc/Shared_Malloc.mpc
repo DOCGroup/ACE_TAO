@@ -2,6 +2,7 @@
 // $Id$
 
 project : aceexe {
+  avoids += ace_for_tao
   exename = malloc
   Source_Files {
     Malloc.cpp
@@ -10,6 +11,7 @@ project : aceexe {
   }
 }
 project(*multiple) : aceexe {
+  avoids += ace_for_tao
   exename = multiple
   Source_Files {
     Malloc.cpp
@@ -18,12 +20,14 @@ project(*multiple) : aceexe {
   }
 }
 project(*persistence) : aceexe {
+  avoids += ace_for_tao
   exename = persistence
   Source_Files {
     test_persistence.cpp
   }
 }
 project(*posind) : aceexe {
+  avoids += ace_for_tao
   exename = posind
   Source_Files {
     Malloc.cpp

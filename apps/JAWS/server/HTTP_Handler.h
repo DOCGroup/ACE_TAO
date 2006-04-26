@@ -47,11 +47,13 @@ class HTTP_Handler : protected JAWS_IO_Handler
 {
   // Friend I/O classes. Can call protected methods.
   friend class JAWS_Synch_IO;
+  friend class JAWS_Synch_IO_No_Cache;
   friend class JAWS_Asynch_IO;
 
   // Factories
   friend class Asynch_HTTP_Handler_Factory;
   friend class Synch_HTTP_Handler_Factory;
+  friend class No_Cache_Synch_HTTP_Handler_Factory;
 
 public:
   virtual void open (ACE_HANDLE handle,
@@ -162,6 +164,29 @@ public:
   // tell the factory to reap up the handler as it is now done with
   // the protocol
 };
+
+//--------------Added a factory for SYNCH IO without caching
+
+class No_Cache_Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
+  // = TITLE
+  //
+  //     This class is used to create new HTTP handlers that will use
+  //     Synch IO without caching
+  //
+  // = DESCRIPTION
+{
+public:
+  HTTP_Handler *create_http_handler (void);
+  // This creates a new HTTP_Handler
+
+  void destroy_http_handler (HTTP_Handler &handler,
+                             JAWS_IO &io);
+  // The HTTP handler will call this method from HTTP_Handler::done to
+  // tell the factory to reap up the handler as it is now done with
+  // the protocol
+};
+
+//--------------
 
 #if defined (ACE_WIN32)
 class Asynch_HTTP_Handler_Factory : public HTTP_Handler_Factory, public ACE_Service_Handler

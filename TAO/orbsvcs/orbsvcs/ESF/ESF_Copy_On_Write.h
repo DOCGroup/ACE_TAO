@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Copy_On_Write.h
  *
@@ -12,13 +13,15 @@
 #ifndef TAO_ESF_COPY_ON_WRITE_H
 #define TAO_ESF_COPY_ON_WRITE_H
 
-#include "ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR>
 class TAO_ESF_Copy_On_Write_Collection
@@ -164,12 +167,14 @@ private:
 
 // ****************************************************************
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ESF_Copy_On_Write.i"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Copy_On_Write.cpp"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

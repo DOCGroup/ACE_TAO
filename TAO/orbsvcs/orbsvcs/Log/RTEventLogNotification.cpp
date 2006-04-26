@@ -22,9 +22,12 @@ ACE_RCSID (Log,
            RTEventLogNotification,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTEventLogNotification::TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr ec)
-: TAO_LogNotification (), event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
+TAO_RTEventLogNotification::TAO_RTEventLogNotification (
+  RtecEventChannelAdmin::EventChannel_ptr ec)
+  : TAO_LogNotification (),
+    event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -84,4 +87,4 @@ TAO_RTEventLogNotification::send_notification (const CORBA::Any& any)
   consumer_->push(event);
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

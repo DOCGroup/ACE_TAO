@@ -101,6 +101,7 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "PushConsumer has been disconnected.\n"));
     consumer = 0;
@@ -120,6 +121,7 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer has been disconnected.\n"));
     consumer = 0;
@@ -139,6 +141,8 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer has been disconnected.\n"));
     consumer = 0;

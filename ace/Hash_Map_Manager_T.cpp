@@ -24,21 +24,11 @@
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Hash_Map_Manager_T.inl"
-#elif defined (__SUNPRO_CC) && (__SUNPRO_CC == 0x420)
-// If ACE_INLINE is on and we are on SunCC, undefine ACE_INLINE,
-// include ace/Hash_Map_Manager_T.i, and then redefine ACE_INLINE.
-// This nonsense is necessary since SunCC (version 4.2) cannot inline
-// the code in ace/Hash_Map_Manager_T.i (with the fast option).
-# undef ACE_INLINE
-# define ACE_INLINE
-# include "ace/Hash_Map_Manager_T.inl"
-# undef ACE_INLINE
-# define ACE_INLINE inline
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Malloc_Base.h"
 
-ACE_RCSID(ace, Hash_Map_Manager_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
@@ -517,5 +507,7 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
 
   return this->index_ >= 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HASH_MAP_MANAGER_T_CPP */

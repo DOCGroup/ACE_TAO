@@ -1,5 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,14 +21,16 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
-#include "tao/Profile.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "DIOP_Endpoint.h"
 
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
+#include "tao/Strategies/DIOP_Endpoint.h"
+#include "tao/Profile.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO DIOP_Profile concrete Profile definitions
 /**
@@ -121,6 +122,8 @@ protected:
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

@@ -56,9 +56,9 @@
 //
 // Implementation of generic single-linked lists
 
-#include	<stddef.h>
-#include	<utl_list.hh>
-#include	<idl_bool.hh>
+#include  <stddef.h>
+#include  <utl_list.hh>
+#include  <bool.hh>
 
 ACE_RCSID(utl_tmpl, utl_list, "$Id$")
 
@@ -68,8 +68,8 @@ ACE_RCSID(utl_tmpl, utl_list, "$Id$")
 
 template<class L, class T>
 UTL_List<L, T>::UTL_List(T *c, L *l)
-	: pd_car_data(c),
-	  pd_cdr_data(l)
+  : pd_car_data(c),
+    pd_cdr_data(l)
 {
 }
 
@@ -168,7 +168,7 @@ UTL_List<L, T>::length()
 
 template<class L, class T>
 UTL_ListActiveIterator<L, T>::UTL_ListActiveIterator(UTL_List<L, T> *s)
-		      : source(s)
+          : source(s)
 {
 }
 
@@ -185,7 +185,7 @@ template<class L, class T>
 long
 UTL_ListActiveIterator<L, T>::is_done()
 {
-  return (source == NULL) ? I_TRUE : I_FALSE;
+  return (source == NULL) ? true : false;
 }
 
 // Get current item

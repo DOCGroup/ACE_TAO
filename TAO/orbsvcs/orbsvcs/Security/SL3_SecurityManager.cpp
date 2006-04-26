@@ -1,14 +1,16 @@
 // $Id$
 
-#include "SL3_SecurityManager.h"
-#include "SL3_ContextEstablishmentPolicy.h"
-#include "SL3_ObjectCredentialsPolicy.h"
+#include "orbsvcs/Security/SL3_SecurityManager.h"
+#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
+#include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
 
 
 ACE_RCSID (Security,
            SL3_SecurityManager,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::SecurityManager::SecurityManager (
   SecurityLevel3::CredentialsCurator_ptr cc)
@@ -78,3 +80,5 @@ TAO::SL3::SecurityManager::create_object_creds_policy (
 
   return policy;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

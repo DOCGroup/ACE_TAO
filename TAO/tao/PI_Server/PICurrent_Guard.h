@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_server_export.h"
+#include "tao/PI_Server/pi_server_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 #include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_ServerRequest;
@@ -46,7 +48,7 @@ namespace TAO
    *
    * @note This Guard class is only used on the server side.
    */
-  class TAO_PI_Server_Export PICurrent_Guard
+  class PICurrent_Guard
   {
   public:
 
@@ -98,6 +100,8 @@ namespace TAO
     const bool tsc_to_rsc_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

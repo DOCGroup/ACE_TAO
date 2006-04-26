@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Servant_Base.h"
-#include "Root_POA.h"
-#include "Operation_Table.h"
-#include "POA_Current_Impl.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Operation_Table.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
@@ -23,7 +23,7 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "Servant_Base.i"
+# include "tao/PortableServer/Servant_Base.i"
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -45,6 +45,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
                                   TAO_SERVANT_BASE_FIND_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ServantBase::TAO_ServantBase (void)
   : TAO_Abstract_ServantBase ()
@@ -477,3 +479,4 @@ TAO_ServantBase_var::_retn (void)
   return retval;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Asynch_Queued_Message
  *
@@ -35,7 +37,7 @@ public:
   /**
    * @param contents The message block chain that must be sent.
    *
-   * @param alloc Allocator used for creating <this> object.
+   * @param alloc Allocator used for creating @c this object.
    *
    * @todo I'm almost sure this class will require a callback
    *       interface for AMIs sent with SYNC_NONE policy.  Those guys
@@ -96,6 +98,8 @@ private:
   /// The buffer containing the complete message.
   char *buffer_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_ASYNCH_QUEUED_MESSAGE_H */

@@ -1,6 +1,6 @@
-#include "Persistent_Naming_Context.h"
-#include "Persistent_Context_Index.h"
-#include "Bindings_Iterator_T.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Context_Index.h"
+#include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
 // The following #pragma is needed to disable a warning that occurs
@@ -19,6 +19,7 @@ ACE_RCSID (Naming,
            Persistent_Naming_Context,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Persistent_Bindings_Map::unbind (const char *id,
@@ -536,3 +537,5 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

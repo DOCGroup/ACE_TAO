@@ -11,10 +11,11 @@ ACE_RCSID (tao,
            Base_Transport_Property,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Base_Transport_Property::~TAO_Base_Transport_Property (void)
 {
 }
-
 
 TAO_Transport_Descriptor_Interface *
 TAO_Base_Transport_Property::duplicate (void)
@@ -53,3 +54,5 @@ TAO_Base_Transport_Property::hash (void) const
 {
   return this->endpoint_->hash ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

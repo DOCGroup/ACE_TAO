@@ -1,19 +1,19 @@
-#include "Invocation_Base.h"
-#include "Stub.h"
-#include "operation_details.h"
-#include "ORB_Core.h"
-#include "SystemException.h"
-#include "PortableInterceptor.h"  /* Must always be visible. */
+#include "tao/Invocation_Base.h"
+#include "tao/Stub.h"
+#include "tao/operation_details.h"
+#include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
+#include "tao/PortableInterceptor.h"  /* Must always be visible. */
 
 #include "ace/Dynamic_Service.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PortableInterceptorC.h"
-# include "ClientRequestInterceptor_Adapter_Factory.h"
+# include "tao/PortableInterceptorC.h"
+# include "tao/ClientRequestInterceptor_Adapter_Factory.h"
 #endif /* TAO_HAS_INTERCEPTORS == 1*/
 
 #if !defined (__ACE_INLINE__)
-# include "Invocation_Base.inl"
+# include "tao/Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 
@@ -22,13 +22,16 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Invocation_Base::Invocation_Base (CORBA::Object_ptr ot,
                                     CORBA::Object_ptr t,
                                     TAO_Stub *stub,
                                     TAO_Operation_Details &details,
-                                    bool response_expected)
+                                    bool response_expected,
+                                    bool request_is_remote)
     : details_ (details)
     , forwarded_to_ (0)
     , response_expected_ (response_expected)
@@ -41,8 +44,12 @@ namespace TAO
     , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
     , caught_exception_ (0)
+    , is_remote_request_ (request_is_remote)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   {
+#if TAO_HAS_INTERCEPTORS == 0
+    ACE_UNUSED_ARG (request_is_remote);
+#endif /*TAO_HAS_INTERCEPTORS == 0*/
   }
 
   Invocation_Base::~Invocation_Base (void)
@@ -269,3 +276,5 @@ namespace TAO
   }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

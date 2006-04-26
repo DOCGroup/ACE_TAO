@@ -1,12 +1,15 @@
-#include "Service_Callbacks.h"
-#include "ORB_Constants.h"
-#include "SystemException.h"
-#include "Environment.h"
-#include "Invocation_Utils.h"
+#include "tao/Service_Callbacks.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "tao/Environment.h"
+#include "tao/Invocation_Utils.h"
 
 ACE_RCSID (tao,
            Service_Callbacks,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Service_Callbacks::~TAO_Service_Callbacks (void)
 {
@@ -16,14 +19,14 @@ CORBA::Boolean
 TAO_Service_Callbacks::select_profile (TAO_MProfile * /*mprofile*/,
                                        TAO_Profile *& /*pfile*/)
 {
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 TAO_Service_Callbacks::reselect_profile (TAO_Stub * /*stub*/,
                                          TAO_Profile *& /*pfile*/)
 {
-  return 0;
+  return false;
 }
 
 
@@ -32,7 +35,7 @@ TAO_Service_Callbacks::object_is_nil (CORBA::Object_ptr /* obj */)
 {
   // We shouldn't be here at all. But in case if we are here,
   // something is wrong. So, we send a true for a is_nil () call
-  return 1;
+  return true;
 }
 
 void
@@ -54,6 +57,13 @@ TAO_Service_Callbacks::hash_ft (TAO_Profile *,
                                 CORBA::ULong )
 {
   return 0;
+}
+
+CORBA::Boolean
+TAO_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr,
+                                                       const TAO_Service_Context &) const
+{
+  return false;
 }
 
 TAO::Invocation_Status
@@ -83,3 +93,5 @@ TAO_Service_Callbacks::raise_transient_failure (
       CORBA::COMPLETED_MAYBE),
       TAO::TAO_INVOKE_FAILURE);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

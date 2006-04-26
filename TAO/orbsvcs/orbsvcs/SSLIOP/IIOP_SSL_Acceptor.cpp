@@ -1,4 +1,4 @@
-#include "IIOP_SSL_Acceptor.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -7,6 +7,8 @@
 ACE_RCSID (SSLIOP,
            IIOP_SSL_Acceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (CORBA::Boolean flag)
   : TAO_IIOP_Acceptor (flag),
@@ -33,3 +35,5 @@ TAO::IIOP_SSL_Acceptor::close (void)
 {
   return this->base_acceptor_.close ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

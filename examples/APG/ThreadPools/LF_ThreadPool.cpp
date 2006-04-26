@@ -239,18 +239,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Thread_Mutex>;
-template class ACE_Node<Follower*>;
-template class ACE_Unbounded_Queue<Follower*>;
-template class ACE_Unbounded_Queue_Iterator<Follower*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-#pragma instantiate ACE_Node<Follower*>
-#pragma instantiate ACE_Unbounded_Queue<Follower*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Follower*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"

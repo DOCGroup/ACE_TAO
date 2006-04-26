@@ -1,23 +1,24 @@
 // @(#) $Id$
 
-#include "POA_Policy_Set.h"
-#include "POA_Cached_Policies.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/POA_Policy_Set.h"
+#include "tao/PortableServer/POA_Cached_Policies.h"
+#include "tao/PortableServer/PortableServer.h"
 
 #include "tao/Policy_Validator.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "POA_Policy_Set.i"
+# include "tao/PortableServer/POA_Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,
            POA_Policy_Set,
            "$Id$")
 
-TAO_POA_Policy_Set::TAO_POA_Policy_Set ()
-  :
-    impl_ (TAO_POLICY_POA_SCOPE)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_POA_Policy_Set::TAO_POA_Policy_Set (void)
+  : impl_ (TAO_POLICY_POA_SCOPE)
 {
 }
 
@@ -89,3 +90,5 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

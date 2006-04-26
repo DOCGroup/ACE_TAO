@@ -14,6 +14,7 @@
 #include "ace/Lock_Adapter_T.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This constructor isn't inlined, because SunPRO C++ 4.2 + patch
 // 104631-07 has trouble compiling TAO with it inline.
@@ -110,5 +111,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_write_upgrade (void)
 {
   return this->lock_->tryacquire_write_upgrade ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LOCK_ADAPTER_T_CPP */

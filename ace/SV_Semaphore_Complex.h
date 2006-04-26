@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,6 +19,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_SV_Semaphore_Complex
@@ -61,32 +63,32 @@ public:
   // = Initialization and termination methods.
   ACE_SV_Semaphore_Complex (void);
   ACE_SV_Semaphore_Complex (key_t key,
-                            int create = ACE_SV_Semaphore_Complex::ACE_CREATE,
+                            short create = ACE_SV_Semaphore_Complex::ACE_CREATE,
                             int initial_value = 1,
                             u_short nsems = 1,
-                            int perms = ACE_DEFAULT_FILE_PERMS);
+                            mode_t perms = ACE_DEFAULT_FILE_PERMS);
   ACE_SV_Semaphore_Complex (const char *name,
-                            int create = ACE_SV_Semaphore_Complex::ACE_CREATE,
+                            short create = ACE_SV_Semaphore_Complex::ACE_CREATE,
                             int initial_value = 1,
                             u_short nsems = 1,
-                            int perms = ACE_DEFAULT_FILE_PERMS);
+                            mode_t perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Complex (void);
 
   /// Open or create an array of SV_Semaphores.  We return 0 if all is
   /// OK, else -1.
   int open (const char *name,
-            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
-            int perms = ACE_DEFAULT_FILE_PERMS);
+            mode_t perms = ACE_DEFAULT_FILE_PERMS);
 
   /// Open or create an array of SV_Semaphores.  We return 0 if all is
   /// OK, else -1.
   int open (key_t key,
-            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
-            int perms = ACE_DEFAULT_FILE_PERMS);
+            mode_t perms = ACE_DEFAULT_FILE_PERMS);
 
   /**
    * Close an ACE_SV_Semaphore. Unlike the <remove> method, this
@@ -100,28 +102,28 @@ public:
   // = Semaphore acquire and release methods.
 
   /// Acquire the semaphore.
-  int acquire (u_short n = 0, int flags = 0) const;
+  int acquire (u_short n = 0, short flags = 0) const;
 
   /// Acquire a semaphore for reading.
-  int acquire_read (u_short n = 0, int flags = 0) const;
+  int acquire_read (u_short n = 0, short flags = 0) const;
 
   /// Acquire a semaphore for writing
-  int acquire_write (u_short n = 0, int flags = 0) const;
+  int acquire_write (u_short n = 0, short flags = 0) const;
 
   /// Try to acquire the semaphore.
-  int tryacquire (u_short n = 0, int flags = 0) const;
+  int tryacquire (u_short n = 0, short flags = 0) const;
 
   /// Try to acquire the semaphore for reading.
-  int tryacquire_read (u_short n = 0, int flags = 0) const;
+  int tryacquire_read (u_short n = 0, short flags = 0) const;
 
   /// Try to acquire the semaphore for writing.
-  int tryacquire_write (u_short n = 0, int flags = 0) const;
+  int tryacquire_write (u_short n = 0, short flags = 0) const;
 
   /// Release the semaphore.
-  int release (u_short n = 0, int flags = 0) const;
+  int release (u_short n = 0, short flags = 0) const;
 
   // = Semaphore operation methods.
-  int op (int val, u_short n = 0, int flags = 0) const;
+  int op (short val, u_short n = 0, short flags = 0) const;
   int op (sembuf op_vec[], u_short n) const;
 
   // = Semaphore control methods.
@@ -129,8 +131,8 @@ public:
   int control (int cmd, int value = 0, u_short n = 0) const;
 
   // = Upgrade access control...
-  ACE_USING ACE_SV_Semaphore_Simple::get_id;
-  ACE_USING ACE_SV_Semaphore_Simple::remove;
+  using ACE_SV_Semaphore_Simple::get_id;
+  using ACE_SV_Semaphore_Simple::remove;
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -146,6 +148,8 @@ private:
   static sembuf op_close_[3];
   static sembuf op_unlock_[1];
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Semaphore_Complex.inl"

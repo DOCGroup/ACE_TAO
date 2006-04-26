@@ -69,7 +69,9 @@ AC_DEFUN([ACE_CHECK_TLS],
  dnl library.
  ace_save_LIBS="$LIBS"
  ace_save_CPPFLAGS="$CPPFLAGS"
+ CPPFLAGS="$CPPFLAGS $ace_TLS_CPPFLAGS"
  ace_save_LDFLAGS="$LDFLAGS"
+ LDFLAGS="$LDFLAGS $ace_TLS_LDFLAGS"
 
  dnl ---------------------------------------------------------
 
@@ -112,9 +114,9 @@ SSL_shutdown (ssl);
     ace_kerberos_dir=""
     for ace_kerberos in /usr /usr/local; do
      ace_kerberos_dir="${ace_kerberos}/kerberos/include"
-     ace_TLS_CPPFLAGS="-I${ace_kerberos_dir}"
+     ace_kerberos_CPPFLAGS="-I${ace_kerberos_dir}"
 
-     CPPFLAGS="$ace_TLS_CPPFLAGS $ace_save_CPPFLAGS"
+     CPPFLAGS="$ace_save_CPPFLAGS $ace_TLS_CPPFLAGS $ace_kerberos_CPPFLAGS"
 
      AC_COMPILE_IFELSE([
        AC_LANG_PROGRAM([
@@ -156,7 +158,7 @@ SSL_shutdown (ssl);
         AC_SUBST([ACE_KERBEROS_INCLUDES],[.])
        ],
        [
-        AC_SUBST([ACE_TLS_CPPFLAGS],[-I${ac_cv_kerberos_dir}])
+        ace_TLS_CPPFLAGS="$ace_TLS_CPPFLAGS -I${ac_cv_kerberos_dir}"
         AC_SUBST([ACE_KERBEROS_INCLUDES],[$ac_cv_kerberos_dir])
        ])
 

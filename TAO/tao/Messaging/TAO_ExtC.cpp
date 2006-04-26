@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:277
 
 
-#include "TAO_ExtC.h"
+#include "tao/Messaging/TAO_ExtC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -60,7 +62,7 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::release (
     TAO::ConnectionTimeoutPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO::ConnectionTimeoutPolicy_ptr
@@ -109,18 +111,18 @@ TAO::ConnectionTimeoutPolicy::_unchecked_narrow (
 TAO::ConnectionTimeoutPolicy_ptr
 TAO::ConnectionTimeoutPolicy::_duplicate (ConnectionTimeoutPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 TAO::ConnectionTimeoutPolicy::_tao_release (ConnectionTimeoutPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -166,3 +168,5 @@ TAO::ConnectionTimeoutPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

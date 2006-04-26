@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_INTRUSIVE_LIST_NODE_C
-#define ACE_INTRUSIVE_LIST_NODE_C
+#ifndef ACE_INTRUSIVE_LIST_NODE_CPP
+#define ACE_INTRUSIVE_LIST_NODE_CPP
 
 #include "ace/Intrusive_List_Node.h"
 
@@ -13,7 +13,7 @@
 #include "ace/Intrusive_List_Node.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Intrusive_List_Node, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class T>
 ACE_Intrusive_List_Node<T>::ACE_Intrusive_List_Node (void)
@@ -22,4 +22,6 @@ ACE_Intrusive_List_Node<T>::ACE_Intrusive_List_Node (void)
 {
 }
 
-#endif /* ACE_INTRUSIVE_LIST_NODE_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_INTRUSIVE_LIST_NODE_CPP */

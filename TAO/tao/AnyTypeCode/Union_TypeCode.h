@@ -25,6 +25,7 @@
 
 #include "tao/AnyTypeCode/TypeCode_Base_Attributes.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -159,6 +160,8 @@ namespace TAO
 
   }  // End namespace TypeCode
 }  // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #ifdef __ACE_INLINE__

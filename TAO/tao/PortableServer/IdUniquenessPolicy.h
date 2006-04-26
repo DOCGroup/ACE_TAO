@@ -14,13 +14,13 @@
 #define TAO_PORTABLESERVER_IDUNIQUENESSTPOLICY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IdUniquenessPolicyC.h"
+#include "tao/PortableServer/IdUniquenessPolicyC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -29,6 +29,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -64,6 +66,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,12 +1,16 @@
 // $Id$
 
-#include "ETCL_Filter.h"
+#include "orbsvcs/Notify/ETCL_Filter.h"
 
-ACE_RCSID(Notify, TAO_Notify_ETCL_Filter, "$Id$")
+ACE_RCSID(Notify,
+          TAO_Notify_ETCL_Filter,
+          "$Id$")
 
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
-#include "Notify_Constraint_Visitors.h"
+#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (void)
   :constraint_expr_ids_ (0)
@@ -289,7 +293,7 @@ TAO_Notify_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
       if (iter.next (entry) != 0)
         {
           // Why do we cast to a const object?
-          // We want to force the TAO_String_Manager to make a
+          // We want to force the TAO::String_Manager to make a
           // copy of the string. It wouldn't unless we coax it to use
           // the correct assignment operator.
           infoseq[index].constraint_expression =
@@ -440,3 +444,5 @@ TAO_Notify_ETCL_Filter::get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

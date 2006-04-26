@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // ================================================================
 /**
  *  @file   FIFO_Connection_Purging_Strategy.h
@@ -12,7 +14,7 @@
 #define TAO_FIFO_PURGING_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Connection_Purging_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -20,6 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_FIFO_Connection_Purging_Strategy
@@ -49,6 +53,8 @@ private:
   /// The ordering information for each transport in the cache
   unsigned long order_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FIFO_PURGING_STRATEGY_H */

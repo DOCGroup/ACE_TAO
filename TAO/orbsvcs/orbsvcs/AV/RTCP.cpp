@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 1994-1995 Regents of the University of California.
  * All rights reserved.
  *
@@ -33,16 +33,18 @@
  */
 
 // $Id$
-#include "ntp-time.h"
-#include "RTCP.h"
-#include "media_timer.h"
+#include "orbsvcs/AV/ntp-time.h"
+#include "orbsvcs/AV/RTCP.h"
+#include "orbsvcs/AV/media_timer.h"
 #include "tao/debug.h"
-#include "global.h"
-#include "md5.h"
+#include "orbsvcs/AV/global.h"
+#include "orbsvcs/AV/md5.h"
 
-#include "RTCP_Packet.h"
+#include "orbsvcs/AV/RTCP_Packet.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_strings.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
@@ -811,6 +813,7 @@ TAO_AV_RTCP_Callback::ts_offset (ACE_UINT32 offset)
   this->timestamp_offset_ = offset;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_RTCP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTCP_Flow_Factory,

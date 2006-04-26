@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_MT_Dispatching.h
  *
@@ -16,13 +17,15 @@
 #define TAO_EC_MT_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Dispatching.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Dispatching_Task.h"
+#include "orbsvcs/Event/EC_Dispatching_Task.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_MT_Dispatching
@@ -88,6 +91,8 @@ private:
   /// Service Object information
   TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_MT_DISPATCHING_H */

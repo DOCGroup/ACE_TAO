@@ -2,6 +2,8 @@
 //
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
     FT::TagFTGroupTaggedComponent &ft_group)
@@ -29,3 +31,5 @@ TAO_FT_IOGR_Property::reset_tagged_components (
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

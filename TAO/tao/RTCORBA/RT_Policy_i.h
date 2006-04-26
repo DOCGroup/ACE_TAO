@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #include "tao/LocalObject.h"
@@ -37,6 +37,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PriorityModelPolicy
@@ -892,9 +894,12 @@ public:
    */
   static RTCORBA::ProtocolProperties *create_orb_protocol_property (IOP::ProfileId id);
 
-protected:
+private:
+
   TAO_Protocol_Properties_Factory (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

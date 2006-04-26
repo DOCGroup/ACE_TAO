@@ -1,8 +1,8 @@
 
 // $Id$
 
-#include "PI_Server_Loader.h"
-#include "PortableServer_ORBInitializer.h"
+#include "tao/PI_Server/PI_Server_Loader.h"
+#include "tao/PI_Server/PortableServer_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -11,6 +11,8 @@
 ACE_RCSID (PI_Server,
            PI_Server_Loader,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PI_Server_Loader::TAO_PI_Server_Loader (void)
 {
@@ -27,13 +29,13 @@ TAO_PI_Server_Loader::init (int,
 {
   ACE_TRACE ("TAO_PI_Server_Loader::init");
 
-  static int initialized = 0;
+  static bool initialized = false;
 
   // Only allow initialization once.
   if (initialized)
     return 0;
 
-  initialized = 1;
+  initialized = true;
 
   // Register the ORB initializer.
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -62,13 +64,16 @@ TAO_PI_Server_Loader::init (int,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P | %t) Caught exception:");
+                           "Caught exception:");
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 

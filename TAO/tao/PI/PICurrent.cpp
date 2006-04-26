@@ -1,4 +1,4 @@
-#include "PICurrent.h"
+#include "tao/PI/PICurrent.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -8,16 +8,17 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "PICurrent.inl"
+# include "tao/PI/PICurrent.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Impl.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/SystemException.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
@@ -120,5 +121,6 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

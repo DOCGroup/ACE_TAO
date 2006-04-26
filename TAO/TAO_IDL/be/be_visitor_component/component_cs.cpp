@@ -97,7 +97,7 @@ be_visitor_component_cs::visit_component (be_component *node)
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
-          << node->name () << "_ptr p," << be_nl
+          << "const " << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
@@ -124,7 +124,7 @@ be_visitor_component_cs::visit_component (be_component *node)
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::Object_ptr obj = p;" << be_nl
-          << "return CORBA::is_nil (obj);" << be_uidt_nl
+          << "return ::CORBA::is_nil (obj);" << be_uidt_nl
           << "}";
     }
 
@@ -196,7 +196,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << "void" << be_nl
           << node->name () << "::_add_ref (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->ACE_NESTED_CLASS ( ::CORBA, Object)::_add_ref ();"
+          << "this->::CORBA::Object::_add_ref ();"
           << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -205,8 +205,7 @@ be_visitor_component_cs::visit_component (be_component *node)
   *os << node->full_name () << "_ptr" << be_nl << node->full_name ()
       << "::_narrow (" << be_idt << be_idt_nl
       << "::CORBA::Object_ptr"
-      << " _tao_objref" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << " _tao_objref" << env_decl << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -219,8 +218,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "\"" << node->repoID () << "\"," << be_nl
       << node->flat_client_enclosing_scope ()
       << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << "_Factory_function_pointer" << env_arg << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -230,7 +228,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << bt->nested_type_name (this->ctx_->scope ())
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "if (! CORBA::is_nil (obj))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (obj))" << be_idt_nl
       << "{" << be_idt_nl
       << "obj->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -240,8 +238,7 @@ be_visitor_component_cs::visit_component (be_component *node)
   // The is_a method.
   *os << "::CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
-      << "const char *value" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "const char *value" << env_decl << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (" << be_idt << be_idt_nl;
@@ -268,10 +265,9 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << "return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a ("
+      << "return this->::CORBA::Object::_is_a ("
       << be_idt << be_idt_nl
-      << "value" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << "value" << env_arg << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;

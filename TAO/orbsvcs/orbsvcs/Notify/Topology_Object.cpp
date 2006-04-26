@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/Topology_Object.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Topology_Object.inl"
+#include "orbsvcs/Notify/Topology_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 // question: is there a race_conditon with self_changed and children_changed?
@@ -12,6 +12,8 @@
 // self_changed and children_changed must be cleared before this object and its
 // children have been saved in Topology_Object::save_persistent ().
 // If these rules are followed, the only risk is a (harmless) extra save.
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -26,10 +28,10 @@ namespace TAO_Notify
 
   Topology_Object::Topology_Object ()
     : TAO_Notify_Object ()
-      , Topology_Savable ()
-      , self_changed_ (false)
-      , children_changed_ (false)
-      , topology_parent_ (0)
+    , Topology_Savable ()
+    , self_changed_ (false)
+    , children_changed_ (false)
+    , topology_parent_ (0)
   {
   }
 
@@ -40,7 +42,7 @@ namespace TAO_Notify
   void
   Topology_Object::initialize (Topology_Parent* topology_parent ACE_ENV_ARG_DECL_NOT_USED)
   {
-  	ACE_ASSERT (topology_parent != 0 && this->topology_parent_ == 0);
+    ACE_ASSERT (topology_parent != 0 && this->topology_parent_ == 0);
     this->topology_parent_ = topology_parent;
     TAO_Notify_Object::initialize (topology_parent);
   }
@@ -66,13 +68,13 @@ namespace TAO_Notify
   {
     bool result = false;
     if (this->qos_properties_.event_reliability().is_valid ())
-      {
-        result = CosNotification::Persistent == this->qos_properties_.event_reliability().value ();
-      }
+    {
+      result = CosNotification::Persistent == this->qos_properties_.event_reliability().value ();
+    }
     else if (this->topology_parent () != 0)
-      {
-        result = this->topology_parent ()->is_persistent ();
-      }
+    {
+      result = this->topology_parent ()->is_persistent ();
+    }
     return result;
   }
 
@@ -116,6 +118,7 @@ namespace TAO_Notify
     if (parent != 0)
     {
       result = parent->child_change(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
     }
     return result;
   }
@@ -142,4 +145,7 @@ namespace TAO_Notify
     // if it is called in a release build, provide 'em a value
     return -1;
   }
+
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL

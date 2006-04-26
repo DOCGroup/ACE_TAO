@@ -30,9 +30,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies_T.h"
 
-// Forward decl.
-class ACE_Thread_Manager;
-
 class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
   //     Reads and increments the count in a shared file.

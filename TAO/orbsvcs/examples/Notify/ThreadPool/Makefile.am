@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -17,6 +17,7 @@ noinst_PROGRAMS =
 
 ## Makefile.Notify_ThreadPool_Consumer.am
 
+if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
 
@@ -45,6 +46,11 @@ Consumer_SOURCES = \
 Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RT_Notification.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
@@ -65,9 +71,11 @@ Consumer_LDADD = \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Notify_ThreadPool_Supplier.am
 
+if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
 
@@ -96,6 +104,11 @@ Supplier_SOURCES = \
 Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RT_Notification.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
@@ -116,6 +129,7 @@ Supplier_LDADD = \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

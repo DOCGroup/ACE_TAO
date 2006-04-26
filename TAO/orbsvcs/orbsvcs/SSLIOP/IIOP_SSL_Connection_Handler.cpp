@@ -1,6 +1,6 @@
-#include "IIOP_SSL_Connection_Handler.h"
-#include "IIOP_SSL_Transport.h"
-#include "SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Transport.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -13,12 +13,12 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-#include "IIOP_SSL_Connection_Handler.inl"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_IIOP_SSL_Connect_Timeprobe_Description[] =
+static const char * const TAO_IIOP_SSL_Connect_Timeprobe_Description[] =
 {
   "IIOP_SSL_Connection_Handler::handle_input - start",
   "IIOP_SSL_Connection_Handler::handle_input - end",
@@ -50,6 +50,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_SSL_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   ACE_Thread_Manager *t)
   : TAO_IIOP_Connection_Handler (t)
@@ -68,14 +70,14 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   CORBA::Boolean /* flag */)
   : TAO_IIOP_Connection_Handler (orb_core, 0)
 {
+  // Delete the transport with TAO_IIOP_Connection_Handler.
+  delete this->transport ();
+
   IIOP_SSL_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
            IIOP_SSL_Transport (this,
                                orb_core,
                                0));
-
-  // Delete the transport with TAO_IIOP_Connection_Handler.
-  delete this->transport ();
 
   // store this pointer
   this->transport (specific_transport);
@@ -85,4 +87,4 @@ TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler (void)
 {
 }
 
-// ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL

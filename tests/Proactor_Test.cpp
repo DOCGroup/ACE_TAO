@@ -1362,7 +1362,7 @@ Client::initiate_read_stream (void)
   static const size_t complete_message_length =
     ACE_OS::strlen (complete_message);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0,
@@ -1923,18 +1923,18 @@ run_main (int argc, ACE_TCHAR *argv[])
 template class ACE_Asynch_Acceptor<Server>;
 template class ACE_Asynch_Connector<Client>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>;
+template class ACE_Atomic_Op<ACE_Thread_Mutex, size_t>;
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, unsigned long>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, size_t>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Asynch_Acceptor<Server>
 #pragma instantiate ACE_Asynch_Connector<Client>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, size_t
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, unsigned long>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, size_t>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

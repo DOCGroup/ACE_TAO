@@ -1,20 +1,20 @@
 // $Id$
 
-#include "ConsumerAdmin.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
 
 ACE_RCSID (RT_Notify,
            TAO_Notify_ConsumerAdmin,
            "$Id$")
 
-#include "Subscription_Change_Worker.h"
-#include "Proxy.h"
-#include "EventChannel.h"
-#include "Properties.h"
-#include "Factory.h"
-#include "Builder.h"
-#include "Find_Worker_T.h"
-#include "Seq_Worker_T.h"
-#include "ProxySupplier.h"
+#include "orbsvcs/Notify/Subscription_Change_Worker.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/EventChannel.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Factory.h"
+#include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/Find_Worker_T.h"
+#include "orbsvcs/Notify/Seq_Worker_T.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
 
 #include "tao/debug.h"
 
@@ -26,6 +26,8 @@ ACE_RCSID (RT_Notify,
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
                              , CosNotifyChannelAdmin::ProxySupplier
@@ -90,10 +92,10 @@ TAO_Notify_ConsumerAdmin::destroy (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
-    return;
-
+  int result = this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+  if ( result == 1)
+    return;
 
   this->ec_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -323,8 +325,10 @@ TAO_Notify_ConsumerAdmin::subscription_change (const CosNotification::EventTypeS
     TAO_Notify_Subscription_Change_Worker worker (added, removed);
 
     this->proxy_container().collection()->for_each (&worker ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 CosNotifyFilter::FilterID
@@ -480,3 +484,5 @@ TAO_Notify_ConsumerAdmin::find_proxy_supplier (
   }
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

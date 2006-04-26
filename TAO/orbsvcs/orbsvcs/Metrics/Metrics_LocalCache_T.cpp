@@ -3,14 +3,16 @@
 #ifndef METRICS_LOCAL_CACHE_T_CPP
 #define METRICS_LOCAL_CACHE_T_CPP
 
-#include "Metrics_LocalCache_T.h"
+#include "orbsvcs/Metrics/Metrics_LocalCache_T.h"
 
 #if defined VXWORKS
 #include <cacheLib.h>
 #endif
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////////////////////
-// Class TAO_Metrics_LocalTimeprobe //g
+// Class TAO_Metrics_LocalTimeprobe //
 //////////////////////////////////////
 
 // Default constructor.
@@ -481,8 +483,6 @@ flush_TAO_Metrics_LocalCache ()
 #endif
 }
 
-#if !defined (__ACE_INLINE__)
-#include "Metrics_LocalCache_T.i"
-#endif /* __ACE_INLINE__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* METRICS_LOCAL_CACHE_T_CPP */

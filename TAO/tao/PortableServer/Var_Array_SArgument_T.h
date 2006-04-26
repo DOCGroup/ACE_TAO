@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -170,6 +172,8 @@ namespace TAO
 
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Var_Array_SArgument_T.inl"

@@ -16,14 +16,27 @@ ifndef CIAO_ROOT
   CIAO_ROOT = $(TAO_ROOT)/CIAO
 endif
 
+ifeq (,$(findstring -L$(CIAO_ROOT)/ciao,$(LDFLAGS)))
+  LDFLAGS += -L$(CIAO_ROOT)/ciao
+endif
+ifeq (,$(findstring -I$(CIAO_ROOT),$(INCLDIRS)))
+  INCLDIRS += -I$(CIAO_ROOT)
+endif
+
 # Turn on symbol versioning. The scheme that we follow is to allow
 # applications dependent on libraries, with same version numbers (major,
 # minor and beta) to run, but applications with dependencies on libraries
 # with different minor or major or beta versions to fail.
 #
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+CIAO_MAJOR_VERSION := $(shell awk "/CIAO_MAJOR_VERSION/ { print $$3}" ${CIAO_ROOT}/ciao/Version.h)
+CIAO_MINOR_VERSION := $(shell awk "/CIAO_MINOR_VERSION/ { print $$3}" ${CIAO_ROOT}/ciao/Version.h)
+CIAO_BETA_VERSION := $(shell awk "/CIAO_BETA_VERSION/ { print $$3}" ${CIAO_ROOT}/ciao/Version.h)
+else
 CIAO_MAJOR_VERSION := $(shell awk '/CIAO_MAJOR_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
 CIAO_MINOR_VERSION := $(shell awk '/CIAO_MINOR_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
 CIAO_BETA_VERSION := $(shell awk '/CIAO_BETA_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
+endif
 
 # Version number of the libraries
 #

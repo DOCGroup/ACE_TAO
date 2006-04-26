@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr &
 TAO_UIPMC_Endpoint::object_addr (void) const
@@ -46,3 +49,4 @@ TAO_UIPMC_Endpoint::update_object_addr (void)
                           this->uint_ip_addr ());
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

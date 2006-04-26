@@ -29,12 +29,13 @@
 // be\be_codegen.cpp:291
 
 
-#include "WrongTransactionC.h"
+#include "tao/WrongTransactionC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 #include "tao/AnyTypeCode_Adapter.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -42,6 +43,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -75,7 +78,7 @@ CORBA::WrongTransaction::WrongTransaction (const ::CORBA::WrongTransaction &_tao
 CORBA::WrongTransaction&
 CORBA::WrongTransaction::operator= (const ::CORBA::WrongTransaction &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -186,3 +189,5 @@ CORBA::Boolean operator>> (
 {
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

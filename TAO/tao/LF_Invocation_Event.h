@@ -15,11 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "LF_Event.h"
+#include "tao/LF_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LF_Invocation_Event
@@ -76,6 +78,8 @@ private:
   /// Check whether we have reached the final state..
   int is_state_final (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

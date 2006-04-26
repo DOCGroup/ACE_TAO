@@ -1,22 +1,23 @@
 // $Id$
 
-#ifndef ACE_CONDITION_T_C
-#define ACE_CONDITION_T_C
+#ifndef ACE_CONDITION_T_CPP
+#define ACE_CONDITION_T_CPP
 
 #include "ace/Condition_T.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Condition_T, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
+
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Condition_T.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Condition)
 
@@ -190,6 +191,9 @@ ACE_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   return this->wait (this->mutex_, abstime);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_THREADS */
 
-#endif /* ACE_CONDITION_T_C */
+#endif /* ACE_CONDITION_T_CPP */

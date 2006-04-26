@@ -16,24 +16,20 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if !defined (ACE_LACKS_SYSV_SHMEM)
+
 #include "ace/ACE.h"
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
-
-#if !defined (ACE_LACKS_SYSV_SHMEM)
-
 #include "ace/os_include/sys/os_mman.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Shared_Memory_Pool_Options
@@ -43,7 +39,7 @@
  * This should be a nested class, but that breaks too many
  * compilers.
  */
-class ACE_Memory_Export ACE_Shared_Memory_Pool_Options
+class ACE_Export ACE_Shared_Memory_Pool_Options
 {
 public:
   /// Initialization method.
@@ -82,7 +78,7 @@ public:
  * provides more powerful features, such as persistent backing store
  * and greatly scalability.
  */
-class ACE_Memory_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
+class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 {
 public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
@@ -203,6 +199,9 @@ protected:
   /// properly.
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
 #include /**/ "ace/post.h"

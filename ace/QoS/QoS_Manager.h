@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,9 @@
 #include "ace/Containers_T.h"
 #include "ACE_QoS_Export.h"
 #include "QoS_Session.h"
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_QoS_Manager
@@ -64,6 +67,8 @@ private:
   /// Set of QoS sessions that this socket has joined.
   ACE_QOS_SESSION_SET qos_session_set_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_QOS_MANAGER_H */

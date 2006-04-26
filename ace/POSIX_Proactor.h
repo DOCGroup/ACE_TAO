@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -35,6 +35,8 @@
 
 #define ACE_AIO_MAX_SIZE     2048
 #define ACE_AIO_DEFAULT_SIZE 1024
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_POSIX_Proactor
@@ -92,8 +94,8 @@ public:
   };
 
   enum Opcode {
-    READ = 1,
-    WRITE = 2
+    ACE_OPCODE_READ = 1,
+    ACE_OPCODE_WRITE = 2
   };
 
   virtual Proactor_Type  get_impl_type (void);
@@ -105,7 +107,7 @@ public:
   virtual int close (void);
 
   /**
-   * Dispatch a single set of events.  If <wait_time> elapses before
+   * Dispatch a single set of events.  If @a wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
@@ -114,8 +116,7 @@ public:
 
   /**
    * Block indefinitely until at least one event is dispatched.
-   * Dispatch a single set of events.  If <wait_time> elapses before
-   * any events occur, return 0.  Return 1 on success i.e., when a
+   * Dispatch a single set of events.Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
@@ -648,6 +649,8 @@ protected:
   /// Time value requested by caller
   ACE_Time_Value time_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/POSIX_Proactor.inl"

@@ -17,32 +17,6 @@ ACE_RCSID(misc, test_upipe, "$Id$")
 
 #include "test_upipe.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>;
-template class ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<Server_Service>;
-template class ACE_Connector_Base<Client_Service>;
-template class ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>;
-template class ACE_Creation_Strategy<Server_Service>;
-template class ACE_Scheduling_Strategy<Server_Service>;
-template class ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
-template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
-template class ACE_NonBlocking_Connect_Handler<Client_Service>;
-template class ACE_Thread_Strategy<Server_Service>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>
-#pragma instantiate ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>
-#pragma instantiate ACE_Concurrency_Strategy<Server_Service>
-#pragma instantiate ACE_Connector_Base<Client_Service>
-#pragma instantiate ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>
-#pragma instantiate ACE_Creation_Strategy<Server_Service>
-#pragma instantiate ACE_Scheduling_Strategy<Server_Service>
-#pragma instantiate ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<Client_Service>
-#pragma instantiate ACE_Thread_Strategy<Server_Service>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 class Server : public ACE_Strategy_Acceptor <Server_Service, ACE_UPIPE_ACCEPTOR>
 {
   // = TITLE

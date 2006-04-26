@@ -1,9 +1,10 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "ProvidesDef_i.h"
-#include "IFR_ComponentsS.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ProvidesDef_i.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 

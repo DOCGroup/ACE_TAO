@@ -72,8 +72,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr <Magazine>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr <Magazine>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

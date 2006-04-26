@@ -1,31 +1,32 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request_Lookup.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
-
 #ifndef TAO_Notify_LOOKUP_METHOD_REQUEST_H
 #define TAO_Notify_LOOKUP_METHOD_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Method_Request_Event.h"
-#include "ProxySupplier.h"
-#include "ProxyConsumer.h"
-#include "Consumer_Map.h"
-#include "Delivery_Request.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/Notify/Method_Request_Event.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/Consumer_Map.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Lookup_Queueable;
 class TAO_Notify_Event;
@@ -101,7 +102,7 @@ public:
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
-  const TAO_Notify_Event::Ptr event_var_;
+  TAO_Notify_Event::Ptr event_var_;
   TAO_Notify_ProxyConsumer::Ptr proxy_guard_;
 };
 
@@ -132,6 +133,8 @@ public:
   /// Create a copy of this object.
   virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_LOOKUP_METHOD_REQUEST_H */

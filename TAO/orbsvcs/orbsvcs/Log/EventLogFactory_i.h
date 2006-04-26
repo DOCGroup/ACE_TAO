@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,8 +10,7 @@
  *
  *
  *  @author Rob Ruff <rruff@scires.com>
- *  @David A. Hanvey <d.hanvey@qub.ac.uk>
- *
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
 
@@ -31,12 +30,14 @@
 #include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
-#include "EventLog_i.h"
+#include "orbsvcs/Log/EventLog_i.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EventLog_i;
 class TAO_EventLogNotification;
@@ -140,6 +141,8 @@ protected:
   /// The ConsumerAdmin that the EventLogFactory supports.
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -13,6 +13,7 @@ project(*Client) : taoserver, ami, pi, interceptors {
 
 project(*server) : taoserver, ami, pi_server, interceptors {
   exename = server
+  after += *Client
   source_files {
     server.cpp
     Server_Interceptor.cpp

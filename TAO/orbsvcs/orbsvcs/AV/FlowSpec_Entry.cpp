@@ -4,16 +4,18 @@
 // TAO_FlowSpec_Entry
 //------------------------------------------------------------
 
-#include "FlowSpec_Entry.h"
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "tao/debug.h"
 
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "FlowSpec_Entry.i"
+#include "orbsvcs/AV/FlowSpec_Entry.i"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
@@ -238,7 +240,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                                    TAO_AV_Core::Flow_Component flow_comp)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address %s\n", address));
+    ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%s]\n", address));
 
   if (address == 0)
     return 0;
@@ -379,7 +381,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                 }
             }
 
-          short control_port = ACE_OS::atoi(port_tokenizer[0]) + 1;
+          short control_port = static_cast<short> (ACE_OS::atoi(port_tokenizer[0])) + 1;
           char control_port_str[6];
           sprintf (control_port_str, "%d", control_port);
 
@@ -545,7 +547,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Forward_FlowSpec_Entry::parse %s\n",
+                  "TAO_Forward_FlowSpec_Entry::parse [%s]\n",
                   flowSpec_entry));
 
   if (tokenizer [TAO_AV_DIRECTION] != 0)
@@ -898,7 +900,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_Reverse_FlowSpec_Entry::parse %s\n",
+                "TAO_Reverse_FlowSpec_Entry::parse [%s]\n",
                 flowSpec_entry));
 
   if (tokenizer [TAO_AV_ADDRESS] != 0)
@@ -1015,3 +1017,5 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %s\n",this->entry_.c_str() ));
   return this->entry_.c_str();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

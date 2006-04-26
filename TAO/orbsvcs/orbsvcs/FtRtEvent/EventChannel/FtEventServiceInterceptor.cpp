@@ -2,14 +2,16 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
-#include "FtEventServiceInterceptor.h"
-#include "Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            FtEventServiceInterceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 CachedRequestTable::is_new_request(const ACE_CString& client_id, CORBA::Long retention_id)
@@ -334,3 +336,5 @@ FtEventServiceInterceptor::set_state(const FtRtecEventChannelAdmin::CachedOption
 {
   request_table_.set_state(state);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

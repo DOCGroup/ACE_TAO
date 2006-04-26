@@ -9,6 +9,7 @@
 #include "tao/PortableServer/Fixed_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
          typename Insert_Policy>
@@ -109,4 +110,6 @@ TAO::Ret_Fixed_Size_SArgument_T<S,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_FIXED_SIZE_SARGUMENT_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_FIXED_SIZE_SARGUMENT_T_CPP */

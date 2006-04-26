@@ -1,8 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Global_Macros.h"
 #include "ace/ACE.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Pipe::~ACE_Pipe (void)
@@ -42,17 +45,17 @@ ACE_Pipe::sendv_n (const iovec iov[], int n) const
 
 ACE_INLINE ssize_t
 ACE_Pipe::send_n (const ACE_Message_Block *message_block,
-                     const ACE_Time_Value *timeout,
-                     size_t *bytes_transferred)
+                  const ACE_Time_Value *timeout,
+                  size_t *bytes_transferred)
 {
   ACE_TRACE ("ACE_Pipe::send_n");
-  ACE_UNUSED_ARG (timeout);
 #if defined (ACE_WIN32)
   return ACE::send_n (this->write_handle (),
                       message_block,
                       timeout,
                       bytes_transferred);
 #else
+  ACE_UNUSED_ARG (timeout);
   return ACE::write_n (this->write_handle (),
                       message_block,
                       bytes_transferred);
@@ -124,9 +127,9 @@ ACE_Pipe::send (const void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_Pipe::send");
 #if defined (ACE_WIN32)
-  return ACE_OS::send (this->write_handle (), (const char *) buf, n);
+  return ACE_OS::send (this->write_handle (), static_cast <const char *> (buf), n);
 #else
-  return ACE_OS::write (this->write_handle (), (const char *) buf, n);
+  return ACE_OS::write (this->write_handle (), static_cast <const char *> (buf), n);
 #endif /* ACE_WIN32 */
 }
 
@@ -135,9 +138,9 @@ ACE_Pipe::recv (void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_Pipe::recv");
 #if defined (ACE_WIN32)
-  return ACE_OS::recv (this->read_handle (), (char *) buf, n);
+  return ACE_OS::recv (this->read_handle (), static_cast <char *> (buf), n);
 #else
-  return ACE_OS::read (this->read_handle (), (char *) buf, n);
+  return ACE_OS::read (this->read_handle (), static_cast <char *> (buf), n);
 #endif /* ACE_WIN32 */
 }
 
@@ -165,19 +168,21 @@ ACE_Pipe::recv (iovec iov[], int n) const
 
 ACE_INLINE ssize_t
 ACE_Pipe::send (const void *buf, size_t n,
-                       ACE_OVERLAPPED *overlapped) const
+                ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_Pipe::send");
   return ACE_OS::write (this->write_handle (),
-                        (const char *) buf, n,
+                        static_cast <const char *> (buf), n,
                         overlapped);
 }
 
 ACE_INLINE ssize_t
 ACE_Pipe::recv (void *buf, size_t n,
-                       ACE_OVERLAPPED *overlapped) const
+                ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_Pipe::recv");
-  return ACE_OS::read (this->read_handle (), (char *) buf, n,
+  return ACE_OS::read (this->read_handle (), static_cast <char *> (buf), n,
                        overlapped);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

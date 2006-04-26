@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "PortableServer.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/Object_Argument_T.h"
@@ -41,6 +41,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -76,7 +78,7 @@ PortableServer::POAList::POAList (void)
 PortableServer::POAList::POAList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         PortableServer::POA,
         PortableServer::POA_var
       >
@@ -89,7 +91,7 @@ PortableServer::POAList::POAList (
     PortableServer::POA_ptr * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         PortableServer::POA,
         PortableServer::POA_var
       >
@@ -99,7 +101,7 @@ PortableServer::POAList::POAList (
 PortableServer::POAList::POAList (
     const POAList &seq
   )
-  : TAO_Unbounded_Object_Sequence<
+  : TAO::unbounded_object_reference_sequence<
         PortableServer::POA,
         PortableServer::POA_var
       >
@@ -138,7 +140,7 @@ TAO::Objref_Traits<PortableServer::POA>::release (
     PortableServer::POA_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::POA_ptr
@@ -182,7 +184,7 @@ PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (const ::Portabl
 PortableServer::POA::AdapterAlreadyExists&
 PortableServer::POA::AdapterAlreadyExists::operator= (const ::PortableServer::POA::AdapterAlreadyExists &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -277,7 +279,7 @@ PortableServer::POA::AdapterNonExistent::AdapterNonExistent (const ::PortableSer
 PortableServer::POA::AdapterNonExistent&
 PortableServer::POA::AdapterNonExistent::operator= (const ::PortableServer::POA::AdapterNonExistent &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -373,7 +375,7 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy (const ::PortableServer::POA::
 PortableServer::POA::InvalidPolicy&
 PortableServer::POA::InvalidPolicy::operator= (const ::PortableServer::POA::InvalidPolicy &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->index = _tao_excp.index;
   return *this;
 }
@@ -487,7 +489,7 @@ PortableServer::POA::NoServant::NoServant (const ::PortableServer::POA::NoServan
 PortableServer::POA::NoServant&
 PortableServer::POA::NoServant::operator= (const ::PortableServer::POA::NoServant &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -584,7 +586,7 @@ PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (const ::PortableS
 PortableServer::POA::ObjectAlreadyActive&
 PortableServer::POA::ObjectAlreadyActive::operator= (const ::PortableServer::POA::ObjectAlreadyActive &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -679,7 +681,7 @@ PortableServer::POA::ObjectNotActive::ObjectNotActive (const ::PortableServer::P
 PortableServer::POA::ObjectNotActive&
 PortableServer::POA::ObjectNotActive::operator= (const ::PortableServer::POA::ObjectNotActive &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -774,7 +776,7 @@ PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (const ::Portabl
 PortableServer::POA::ServantAlreadyActive&
 PortableServer::POA::ServantAlreadyActive::operator= (const ::PortableServer::POA::ServantAlreadyActive &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -869,7 +871,7 @@ PortableServer::POA::ServantNotActive::ServantNotActive (const ::PortableServer:
 PortableServer::POA::ServantNotActive&
 PortableServer::POA::ServantNotActive::operator= (const ::PortableServer::POA::ServantNotActive &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -964,7 +966,7 @@ PortableServer::POA::WrongAdapter::WrongAdapter (const ::PortableServer::POA::Wr
 PortableServer::POA::WrongAdapter&
 PortableServer::POA::WrongAdapter::operator= (const ::PortableServer::POA::WrongAdapter &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1059,7 +1061,7 @@ PortableServer::POA::WrongPolicy::WrongPolicy (const ::PortableServer::POA::Wron
 PortableServer::POA::WrongPolicy&
 PortableServer::POA::WrongPolicy::operator= (const ::PortableServer::POA::WrongPolicy &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1139,7 +1141,7 @@ PortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
     static_cast<POA *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 PortableServer::POA_ptr
@@ -1167,7 +1169,7 @@ PortableServer::POA::_unchecked_narrow (
 PortableServer::POA_ptr
 PortableServer::POA::_duplicate (POA_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -1178,7 +1180,7 @@ PortableServer::POA::_duplicate (POA_ptr obj)
 void
 PortableServer::POA::_tao_release (POA_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1220,3 +1222,5 @@ PortableServer::POA::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

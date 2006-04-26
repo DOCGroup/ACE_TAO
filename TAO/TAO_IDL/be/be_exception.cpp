@@ -25,8 +25,8 @@
 
 #include "global_extern.h"
 
-ACE_RCSID (be, 
-           be_exception, 
+ACE_RCSID (be,
+           be_exception,
            "$Id$")
 
 be_exception::be_exception (void)
@@ -45,8 +45,8 @@ be_exception::be_exception (void)
 }
 
 be_exception::be_exception (UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_except,

@@ -23,106 +23,143 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/String_Traits_Base_T.h"
 // For the (W)String_var and (W)String_out iostream operators.
 #include "ace/iosfwd.h"
 
-class TAO_String_Manager;
-class TAO_WString_Manager;
+#include <algorithm>
 
-namespace CORBA
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  template <typename charT> class String_Manager_T;  // Forward declaration.
+  typedef String_Manager_T<CORBA::Char> String_Manager;
+  typedef String_Manager_T<CORBA::WChar> WString_Manager;
+}
+
+namespace TAO
 {
   /**
-   * @name CORBA String Memory Management
-   *
-   * CORBA string memory management functions.
-   */
-  //@{
-  TAO_Export char * string_alloc (ULong len);
-  TAO_Export char * string_dup (const char *);
-  TAO_Export char * string_dup (const WChar *);
-  TAO_Export void string_free (char *);
-  //@}
-
-  /**
-   * @name CORBA Wide String Memory Management
-   *
-   * CORBA wide string memory management functions.
-   */
-  //@{
-  TAO_Export WChar * wstring_alloc (ULong len);
-  TAO_Export WChar * wstring_dup (const WChar *);
-  TAO_Export WChar * wstring_dup (const char *);
-  TAO_Export void wstring_free (WChar *);
-  //@}
-
-  /**
    * @class String_var
-   *
-   * @brief CORBA::String var class.
    *
    * Provides automatic deallocation of storage for the string once it
    * goes out of scope.
    */
-  class TAO_Export String_var
+  template <typename charT>
+  class String_var
   {
   public:
+    typedef charT character_type;
+    typedef TAO::details::string_traits_base <character_type> s_traits;
+
     /// Default constructor.
-    String_var (void);
+    inline String_var (void) : ptr_ (0)
+    {
+    }
 
     /// Constructor, owns p.
-    String_var (char *p);
+    inline String_var (character_type *p) : ptr_ (p)
+    {
+    }
 
-    /// constructor. Makes a copy of p.
-    String_var (const char *p);
+    /// Constructor. Makes a copy of p.
+    inline String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
+    {
+    }
 
-    /// copy constructor.
-    String_var (const String_var &s);
+    /// Copy constructor.
+    inline String_var (String_var<charT> const &s) : ptr_(s_traits::duplicate(s.ptr_))
+    {
+    }
 
-    /// destructor.
-    ~String_var (void);
+    /// Destructor.
+    inline ~String_var (void)
+    {
+      s_traits::release (this->ptr_);
+    }
 
-    /// assignment operator.
-    String_var &operator= (char *p);
+    /// Assignment operator.
+    inline String_var &operator= (character_type *p)
+    {
+      String_var <charT> tmp (p);
+      std::swap (this->ptr_, tmp.ptr_);
+      return *this;
+    }
 
-    /// assignment to a const char*.  Makes a copy.
-    String_var &operator= (const char *p);
+    /// Assignment to a const char*.  Makes a copy.
+    inline String_var &operator= (const character_type *p)
+    {
+      String_var <charT> tmp (p);
+      std::swap (this->ptr_, tmp.ptr_);
+      return *this;
+    }
 
-    /// assignment operator.
-    String_var &operator= (const String_var &s);
+    /// Assignment operator.
+    inline String_var &operator= (String_var<character_type> const &s)
+    {
+      String_var <charT> tmp (s);
+      std::swap (this->ptr_, tmp.ptr_);
+      return *this;
+    }
 
     /// Spec-defined read/write version.
-    operator char *&();
+    inline operator character_type *&()
+    {
+      return this->ptr_;
+    }
 
-    /// only read privileges.
-    operator const char *() const;
+    /// Only read privileges.
+    inline operator const character_type *() const
+    {
+      return this->ptr_;
+    }
 
-    /// allows access and modification using an slot.
-    char &operator[] (CORBA::ULong slot);
+    /// Allows access and modification using an slot.
+    inline character_type &operator[] (CORBA::ULong slot)
+    {
+      // We need to verify bounds else raise some exception.
+      return this->ptr_[slot];
+    }
 
-    /// allows only accessing thru an slot.
-    char operator[] (CORBA::ULong slot) const;
+    /// Allows only accessing thru an slot.
+    inline character_type operator[] (CORBA::ULong slot) const
+    {
+      // We need to verify bounds else raise some exception.
+      return this->ptr_[slot];
+    }
 
-    // = in, out, out, and _retn operations.
-    // ORBOS/97-05-15, Appendix C.2
+    /// For in parameter.
+    inline const character_type *in (void) const
+    {
+      return this->ptr_;
+    }
 
-    /// for in parameter.
-    const char *in (void) const;
+    /// For inout parameter.
+    inline character_type *&inout (void)
+    {
+      return this->ptr_;
+    }
 
-    /// for inout parameter.
-    char *&inout (void);
+    /// For out parameter.
+    inline character_type *&out (void)
+    {
+      s_traits::release (this->ptr_);
+      this->ptr_ = 0;
+      return this->ptr_;
+    }
 
-    /// for out parameter.
-    char *&out (void);
-
-    /// for string of return type.
-    char *_retn (void);
-
-    /// TAO extension.
-    char *ptr (void);
+    /// For string of return type.
+    inline character_type *_retn (void)
+    {
+      character_type *temp = this->ptr_;
+      this->ptr_ = 0;
+      return temp;
+    }
 
   private:
-    /// instance.
-    char *ptr_;
+    /// Instance.
+    character_type *ptr_;
   };
 
   /**
@@ -131,171 +168,78 @@ namespace CORBA
    * @brief String_out
    *
    * To support the memory management for "out" parameter passing
-   * mode.  ORBOS/97-05-15, Appendix C.2 defines a CORBA::String_out
-   * class
+   * mode.
    */
-  class TAO_Export String_out
+  template <typename charT>
+  class String_out
   {
   public:
+    typedef charT character_type;
+    typedef TAO::details::string_traits_base <character_type> s_traits;
+    typedef typename s_traits::string_mgr string_mgr;
 
     /// Construction from a reference to a string.
-    String_out (char *&p);
+    inline String_out (character_type *&p) : ptr_ (p)
+    {
+      this->ptr_ = 0;
+    }
 
     /// Construction from a var.
-    String_out (CORBA::String_var &p);
+    inline String_out (String_var <character_type> &p) : ptr_ (p.out ())
+    {
+    }
 
-    /// Construction from a TAO_String_Manager.
-    String_out (TAO_String_Manager &p);
+    /// Construction from a TAO::String_Manager.
+    inline String_out (string_mgr &p) : ptr_ (p.out ())
+    {
+    }
 
     /// Copy constructor.
-    String_out (const String_out &s);
+    inline String_out (const String_out<charT> &s) : ptr_ (s.ptr_)
+    {
+    }
 
     /// Assignment from a string_out.
-    String_out &operator= (const String_out &s);
+    inline String_out &operator= (String_out<charT> const &s)
+    {
+      this->ptr_ = s.ptr_;
+      return *this;
+    }
 
     /// Assignment from a string.
-    String_out &operator= (char *p);
+    inline String_out &operator= (character_type *p)
+    {
+      this->ptr_ = p;
+      return *this;
+    }
 
     /// Assignment from a constant char*.
-    String_out& operator= (const char* p);
+    inline String_out& operator= (const character_type* p)
+    {
+      this->ptr_ = s_traits::duplicate (p);
+      return *this;
+    }
 
     /// Cast.
-    operator char *&();
+    inline operator character_type *&()
+    {
+      return this->ptr_;
+    }
 
     /// Return underlying instance.
-    char *&ptr (void);
+    inline character_type *&ptr (void)
+    {
+      return this->ptr_;
+    }
 
   private:
     /// Instance.
-    char *&ptr_;
+    character_type *&ptr_;
 
-    // assignment from _var disallowed
-    void operator= (const CORBA::String_var &);
+    // Assignment from _var disallowed
+    void operator= (const typename s_traits::string_var &);
   };
 
-  // ****************************************************************
-
-  /**
-   * @class WString_var
-   *
-   * @brief CORBA::WString var class.
-   *
-   * Provides automatic deallocation of storage for wide strings.
-   */
-  class TAO_Export WString_var
-  {
-  public:
-    /// default constructor.
-    WString_var (void);
-
-    /// constructor, owns p.
-    WString_var (CORBA::WChar *p);
-
-    /// constructor. Makes a copy of p.
-    WString_var (const CORBA::WChar *p);
-
-    /// copy constructor.
-    WString_var (const WString_var &s);
-
-    /// destructor.
-    ~WString_var (void);
-
-    /// assignment operator.
-    WString_var &operator= (CORBA::WChar *p);
-
-    /// assignment to a const char*.  Makes a copy.
-    WString_var &operator= (const CORBA::WChar *p);
-
-    /// assignment operator.
-    WString_var &operator= (const WString_var &s);
-
-    /// access and modify.
-    operator CORBA::WChar *&();
-
-    /// only read privileges.
-    operator const CORBA::WChar *() const;
-
-    /// allows access and modification using an slot.
-    CORBA::WChar &operator[] (CORBA::ULong slot);
-
-    /// allows only accessing thru an slot.
-    CORBA::WChar operator[] (CORBA::ULong slot) const;
-
-    // = in, out, out, and _retn operations.
-    // ORBOS/97-05-15, Appendix C.2
-
-    /// for in parameter.
-    const CORBA::WChar *in (void) const;
-
-    /// for inout parameter.
-    CORBA::WChar *&inout (void);
-
-    /// for out parameter.
-    CORBA::WChar *&out (void);
-
-    /// for string of return type.
-    CORBA::WChar *_retn (void);
-
-    /// TAO extension.
-    CORBA::WChar *ptr (void);
-
-  private:
-    /// instance.
-    CORBA::WChar *ptr_;
-  };
-
-  /**
-   * @class WString_out
-   *
-   * @brief WString_out
-   *
-   * To support the memory management for "out" parameter passing
-   * mode.  ORBOS/97-05-15, Appendix C.2 defines a CORBA::WString_out
-   * class.
-   */
-  class TAO_Export WString_out
-  {
-  public:
-
-    /// Construction from a reference to a string.
-    WString_out (CORBA::WChar *&p);
-
-    /// Construction from a var.
-    WString_out (CORBA::WString_var &p);
-
-    /// Construction from a TAO_WString_Manager.
-    WString_out (TAO_WString_Manager &p);
-
-    /// Copy constructor.
-    WString_out (const WString_out &s);
-
-    /// Assignment from a string_out.
-    WString_out &operator= (const WString_out &s);
-
-    /// Assignment from a string.
-    WString_out &operator= (CORBA::WChar *p);
-
-    /// Assignment from a constant CORBA::WChar*.
-    WString_out& operator= (const CORBA::WChar *p);
-
-    /// Cast.
-    operator CORBA::WChar *&();
-
-    /// Return underlying instance.
-    CORBA::WChar *&ptr (void);
-
-  private:
-    /// Instance.
-    CORBA::WChar *&ptr_;
-
-    // assignment from _var disallowed
-    void operator= (const CORBA::WString_var &);
-  };
-
-}  // End CORBA namespace.
-
-namespace TAO
-{
   /**
    * @struct TAO-specific @c {W}String_var Equality Functor
    *
@@ -311,6 +255,15 @@ namespace TAO
                      CORBA::WString_var const & rhs) const;
   };
 }
+
+namespace CORBA
+{
+  typedef TAO::String_var <char> String_var;
+  typedef TAO::String_out <char> String_out;
+  typedef TAO::String_var <CORBA::WChar> WString_var;
+  typedef TAO::String_out <CORBA::WChar> WString_out;
+}
+
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
@@ -332,6 +285,8 @@ TAO_Export istream &
 operator>> (istream &, CORBA::WString_out &);
 
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/CORBA_String.inl"

@@ -1,5 +1,5 @@
-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   HTIOP_Connector_Impl.h
@@ -14,7 +14,7 @@
 #define HTIOP_CONNECTOR_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +23,13 @@
 #include "tao/corbafwd.h"
 #include "ace/Strategies_T.h"
 
-class TAO_ORB_Core;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Thread_Manager;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_ORB_Core;
 
 namespace TAO
 {
@@ -109,8 +114,10 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "HTIOP_Connector_Impl.cpp"
+#include "orbsvcs/HTIOP/HTIOP_Connector_Impl.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

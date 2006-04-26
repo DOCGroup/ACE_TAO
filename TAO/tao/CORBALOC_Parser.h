@@ -27,8 +27,9 @@
 #include "tao/Profile.h"
 #include "ace/SString.h"
 
-class TAO_MProfile;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_MProfile;
 
 /**
  * @class TAO_CORBALOC_Parser
@@ -40,7 +41,7 @@ class TAO_MProfile;
  * string to separate the individual <obj_addr> from the list of object
  * addresses <obj_addr_list>.
  */
-class TAO_Export TAO_CORBALOC_Parser : public TAO_IOR_Parser
+class TAO_CORBALOC_Parser : public TAO_IOR_Parser
 {
 public:
   /// Constructor
@@ -92,8 +93,10 @@ private:
   };
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "CORBALOC_Parser.i"
+# include "tao/CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBALOC_Parser)

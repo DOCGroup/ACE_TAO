@@ -60,7 +60,9 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+
+  *os << be_global->core_versioning_begin () << be_nl;
 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
@@ -137,8 +139,10 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "_Factory_function_pointer" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 
-  *os << "return 1;" << be_uidt_nl
-      << "}";
+  *os << "return true;" << be_uidt_nl
+      << "}" << be_nl;
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   node->cli_stub_cdr_op_gen (1);
   return 0;

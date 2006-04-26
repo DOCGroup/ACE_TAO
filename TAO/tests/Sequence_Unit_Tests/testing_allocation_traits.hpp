@@ -11,10 +11,10 @@
  * @author Carlos O'Ryan
  */
 
-#include "unbounded_value_allocation_traits.hpp"
-#include "bounded_value_allocation_traits.hpp"
-#include "unbounded_reference_allocation_traits.hpp"
-#include "bounded_reference_allocation_traits.hpp"
+#include "tao/Unbounded_Value_Allocation_Traits_T.h"
+#include "tao/Bounded_Value_Allocation_Traits_T.h"
+#include "tao/Unbounded_Reference_Allocation_Traits_T.h"
+#include "tao/Bounded_Reference_Allocation_Traits_T.h"
 #include "testing_exception.hpp"
 #include "testing_counters.hpp"
 
@@ -54,6 +54,7 @@ testing_allocation_traits<T,base>::freebuf_calls;
 template<typename T, class base> call_counter
 testing_allocation_traits<T,base>::default_buffer_allocation_calls;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 namespace details
@@ -85,5 +86,6 @@ struct bounded_reference_allocation_traits<T,reference_traits,MAX,true>
 
 } // namespace details
 } // namespace TAO
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_testing_allocation_traits_hpp

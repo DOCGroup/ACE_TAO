@@ -1,19 +1,21 @@
 // $Id$
 
-#include "EC_Timeout_Filter.h"
-#include "EC_Timeout_Generator.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Timeout_Filter.h"
+#include "orbsvcs/Event/EC_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Timeout_Filter.i"
+#include "orbsvcs/Event/EC_Timeout_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event, 
            EC_Timeout_Filter, 
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
       TAO_EC_Event_Channel_Base *event_channel,
@@ -165,3 +167,5 @@ TAO_EC_Timeout_Filter::add_dependencies (
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

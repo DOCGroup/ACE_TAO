@@ -25,6 +25,7 @@
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_NS_WString;
 
@@ -138,6 +139,8 @@ private:
   /// Interface to Name server process for NET_LOCAL namespace.
   ACE_Name_Proxy ns_proxy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

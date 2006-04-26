@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 //$Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
 TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
@@ -31,3 +35,5 @@ TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

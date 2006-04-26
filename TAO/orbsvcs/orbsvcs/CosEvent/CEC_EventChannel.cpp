@@ -1,19 +1,21 @@
 // $Id$
 
-#include "CEC_EventChannel.h"
-#include "CEC_Dispatching.h"
-#include "CEC_Pulling_Strategy.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_SupplierAdmin.h"
-#include "CEC_ConsumerControl.h"
-#include "CEC_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_Pulling_Strategy.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
+#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_EventChannel.i"
+#include "orbsvcs/CosEvent/CEC_EventChannel.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(CosEvent, CEC_EventChannel, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_EventChannel::
 TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attr,
@@ -229,3 +231,5 @@ TAO_CEC_EventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,11 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::getrlimit (int resource, struct rlimit *rl)
@@ -52,8 +55,8 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 #   endif /* ACE_HAS_RUSAGE_WHO_ENUM */
 # endif /* ACE_WIN32 */
 #else
-  who = who;
-  ru = ru;
+  ACE_UNUSED_ARG (who);
+  ACE_UNUSED_ARG (ru);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SYSCALL_GETRUSAGE */
 }
@@ -76,9 +79,9 @@ ACE_OS::setrlimit (int resource, const struct rlimit *rl)
                                   ), int, -1);
 # else
   ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
-                                  resource,
+                                  rl
                                   ), int, -1);
-#  endif /* ACE_HAS_NONCONST_SETRLIMIT */				  
+#  endif /* ACE_HAS_NONCONST_SETRLIMIT */
 # else /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
 #  if defined (ACE_HAS_NONCONST_SETRLIMIT)
   ACE_OSCALL_RETURN (::setrlimit (resource, const_cast<struct rlimit *>(rl)
@@ -86,7 +89,8 @@ ACE_OS::setrlimit (int resource, const struct rlimit *rl)
 #  else
   ACE_OSCALL_RETURN (::setrlimit (resource, rl), int, -1);
 #  endif /* ACE_HAS_NONCONST_SETRLIMIT */
-# endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */  
+# endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
 #endif /* ACE_LACKS_RLIMIT */
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

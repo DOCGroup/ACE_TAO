@@ -1,8 +1,6 @@
-// -*- C++ -*-
-//
 // $Id$
 
-#include "CDR_Encaps_Codec.h"
+#include "tao/CodecFactory/CDR_Encaps_Codec.h"
 
 #include "tao/CDR.h"
 #include "tao/OctetSeqC.h"
@@ -14,22 +12,29 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
+#include "tao/Codeset_Translator_Base.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (CodecFactory,
            CDR_Encaps_Codec,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (CORBA::Octet major,
-                                            CORBA::Octet minor,
-                                            TAO_ORB_Core * orb_core)
+TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (
+  CORBA::Octet major,
+  CORBA::Octet minor,
+  TAO_ORB_Core * orb_core,
+  TAO_Codeset_Translator_Base * char_trans,
+  TAO_Codeset_Translator_Base * wchar_trans)
   : major_ (major),
     minor_ (minor),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    char_translator_ (char_trans),
+    wchar_translator_ (wchar_trans)
 {
 }
 
@@ -57,6 +62,15 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
                      0,                     // memcpy_tradeoff
                      this->major_,
                      this->minor_);
+
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       && (cdr << data))
@@ -123,6 +137,15 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
                     this->minor_,
                     this->orb_core_);
 
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
+
   CORBA::Boolean byte_order;
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
@@ -167,6 +190,15 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
                      0,                     // memcpy_tradeoff
                      this->major_,
                      this->minor_);
+
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
@@ -276,6 +308,15 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                     this->minor_,
                     this->orb_core_);
 
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
+
   CORBA::Boolean byte_order;
 
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
@@ -323,3 +364,5 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (
       && typecode->equivalent (CORBA::_tc_wstring ACE_ENV_ARG_PARAMETER))
     ACE_THROW (IOP::Codec::InvalidTypeForEncoding ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

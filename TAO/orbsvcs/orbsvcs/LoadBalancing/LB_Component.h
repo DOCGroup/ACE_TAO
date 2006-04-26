@@ -26,6 +26,8 @@
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_LB_Component
  *
@@ -56,6 +58,7 @@ protected:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_LoadBalancing, TAO_LB_Component)
 ACE_STATIC_SVC_REQUIRE (TAO_LB_Component)

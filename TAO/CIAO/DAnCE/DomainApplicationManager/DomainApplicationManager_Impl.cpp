@@ -1,14 +1,12 @@
 // $Id$
 
 #include "DomainApplicationManager_Impl.h"
-#include "NodeManager/NodeManagerC.h"
+#include "ExecutionManager/Execution_Manager_Impl.h"
+#include "ciao/NodeApplicationManagerC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
-//#include "DnC_Dump.h"
-//#include "Config_Handlers/RT-CCM/SRD_Handler.h"
-//#include "Config_Handlers/Utils/XML_Helper.h"
-//#include "Config_Handlers/RT-CCM/CIAOServerResources.hpp"
+#include "ace/Assert.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -18,12 +16,14 @@ CIAO::DomainApplicationManager_Impl::
 DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
+                               Execution_Manager::Execution_Manager_Impl * em,
                                const Deployment::DeploymentPlan & plan,
                                const char * deployment_file)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    target_manager_ (Deployment::TargetManager::_duplicate (manager)),
+    execution_manager_ (em), // a plain C++ pointer
+    target_manager_ (Deployment::TargetManager::_duplicate (manager)), // object ref
     plan_ (plan),
     num_child_plans_ (0),
   // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
@@ -36,13 +36,36 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   // Need to initialize chained artifacts here.
   //
     deployment_file_ (CORBA::string_dup (deployment_file)),
-    deployment_config_ (orb)
+    deployment_config_ (orb),
+    is_redeployment_ (false),
+    esd_ (0)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_NEW_THROW_EX (this->all_connections_,
                     Deployment::Connections (),
                     CORBA::NO_MEMORY ());
+
+  ACE_NEW_THROW_EX (this->shared_,
+                    Deployment::ComponentPlans (),
+                    CORBA::NO_MEMORY ());
   ACE_CHECK;
+
+  ACE_NEW_THROW_EX (this->esd_,
+                    CIAO::DAnCE::EventServiceDeploymentDescriptions (),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
+  for (CORBA::ULong i = 0; i < this->plan_.infoProperty.length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->plan_.infoProperty[i].name.in (),
+                          "CIAOEvents") != 0)
+        continue;
+
+      // Note, we should do a sanity check here to make
+      // sure we didn't pick up the wrong infoProperty!!
+      this->plan_.infoProperty[0].value >>= this->esd_;
+      break;
+    }
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
@@ -51,6 +74,32 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
     {
       ACE_DEBUG ((LM_DEBUG, "DomainApplicationManager destroyed\n"));
     }
+}
+
+Deployment::NodeApplication_ptr
+CIAO::DomainApplicationManager_Impl::
+get_node_app (const char * node_name)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::NoSuchName))
+{
+  // Get the NodeApplication object reference.
+  ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+  if (this->artifact_map_.find (node_name,
+                                entry) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_Impl::get_node_app -"
+                  "ERROR while finding the node application "
+                  "for the node [%s] \n",
+                  node_name));
+      ACE_THROW (Deployment::NoSuchName ());
+    }
+
+  return
+    Deployment::NodeApplication::_duplicate (
+      entry->int_id_.node_application_.in ());
 }
 
 void
@@ -72,16 +121,16 @@ init (ACE_ENV_SINGLE_ARG_DECL)
       {
         CIAO::DAnCE::ServerResource *sr = 0;
         this->plan_.infoProperty[0].value >>= sr;
-      
+
         Config_Handlers::SRD_Handler reverse_handler (sr);
-          
+
         Config_Handlers::XML_Helper the_helper;
-        xercesc::DOMDocument *the_xsc 
+        xercesc::DOMDocument *the_xsc
               (the_helper.create_dom ("CIAO:ServerResources",
                "http://www.dre.vanderbilt.edu/ServerResources"));
-        
+
         ServerResources (*reverse_handler.srd_xsc (), the_xsc);
-        
+
         // write out the result
         the_helper.write_DOM (the_xsc, "output.srd");
       }
@@ -96,7 +145,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
                       "CIAO::DomainApplicationManager_Impl::init -"
-                      "ERROR while calling get_plan_info () \n"));             
+                      "ERROR while calling get_plan_info () \n"));
           ACE_TRY_THROW (Deployment::PlanError ());
         }
 
@@ -106,11 +155,11 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
                       "CIAO::DomainApplicationManager_Impl::init -"
-                      "ERROR while calling split_plan () \n"));             
+                      "ERROR while calling split_plan () \n"));
           ACE_TRY_THROW (Deployment::PlanError ());
         }
 
-      // Invoke preparePlan for each child deployment plan.
+      // Invoke preparePlan on each NodeManager by giving child plan.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeManager object reference.
@@ -135,9 +184,6 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 
           Chained_Artifacts & artifacts = entry->int_id_;
 
-          // The dump() function is broken.
-          //Deployment::DnC_Dump::dump (artifacts.child_plan_);
-
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.
@@ -147,7 +193,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           ACE_TRY_CHECK;
 
           Deployment::NodeApplicationManager_var app_manager =
-            Deployment::NodeApplicationManager::_narrow 
+            Deployment::NodeApplicationManager::_narrow
               (tmp_app_manager.in ()
                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -163,9 +209,9 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 
               ACE_CString error ("DomainAppMgr::init () received a nil \
                                  reference for NodeApplicationManager\n");
-              
+
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
-              ACE_TRY_THROW 
+              ACE_TRY_THROW
                  (Deployment::StartError ("DomainApplicationManager_Impl:init",
                                           error.c_str ()));
             }
@@ -190,7 +236,7 @@ CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_plan_info");
-  
+
   // Read the deployment.dat file and get to know the different nodes
   // that are present in the deployment domain.
   // We should be able to replace this way, by parsing the domain
@@ -230,11 +276,13 @@ get_plan_info (void)
   // node_manager_map.
   //
   int num_plans = 0;
+  this->node_manager_names_.clear ();
+
   for (CORBA::ULong index = 0; index < length; index ++)
     {
       bool matched = false;
 
-      const CORBA::ULong number_node_managers = 
+      const CORBA::ULong number_node_managers =
            this->node_manager_names_.size ();
 
       for (CORBA::ULong i = 0; i < number_node_managers; ++i)
@@ -257,13 +305,13 @@ get_plan_info (void)
                (this->plan_.instance [index].node.in ());
 
           if (CORBA::is_nil (mgr.in ()))
-            return 0; /* Failure */
+            return false; /* Failure */
 
           // Add this unique node_name to the list of NodeManager names
           this->node_manager_names_.push_back (this->plan_.instance [index].node.in ());
 
           // Increment the number of plans
-          ++ num_plans;
+          ++num_plans;
         }
     }
 
@@ -295,12 +343,13 @@ split_plan (void)
     ACE_NEW_RETURN (tmp_plan,
                     ::Deployment::DeploymentPlan,
                     0);
-    
-    // Construct the UUID for the child plan.  
+
+    // Construct the UUID for the child plan.
     // Currently, this UUID consists of:
     // The global UUID for the parent plan + the name of the node the
-    // child plan is to be installed on. 
+    // child plan is to be installed on.
     ACE_CString child_uuid (this->plan_.UUID.in ());
+    child_uuid += "@";
     child_uuid += this->node_manager_names_[i];
 
     tmp_plan->UUID = CORBA::string_dup (child_uuid.c_str ());
@@ -328,7 +377,19 @@ split_plan (void)
       this->deployment_config_.get_node_manager
               (this->node_manager_names_[i].c_str ());
 
-    this->artifact_map_.bind (node_manager_names_[i], artifacts);
+    ACE_Hash_Map_Entry
+      <ACE_CString,
+      Chained_Artifacts> *entry = 0;
+
+    if (this->artifact_map_.find
+        (node_manager_names_[i], entry) == 0)
+      artifacts.old_child_plan_ = (entry->int_id_).child_plan_;
+    else
+      artifacts.old_child_plan_ = 0;
+
+    // In case we are doing redeployment, rebind will help replace the
+    // old child plan with the new child plan.
+    this->artifact_map_.rebind (node_manager_names_[i], artifacts);
   }
 
   // (1) Iterate over the <instance> field of the global DeploymentPlan
@@ -337,7 +398,12 @@ split_plan (void)
   //     plans one by one.
   for ( i = 0; i < (this->plan_.instance).length (); ++i)
     {
-      // Fill in the child deployment plan in the map.
+      // @@TODO Fill in the child deployment plan in the map.
+      // If the component instance already exists in the child plan,
+      // then we overwrite the existing instance, since the new instance
+      // might have different resource usage requirements.
+
+
 
       // Get the instance deployment description
       const ::Deployment::InstanceDeploymentDescription & my_instance =
@@ -357,7 +423,7 @@ split_plan (void)
       // Get the child plan.
       ::Deployment::DeploymentPlan_var &child_plan =
           (entry->int_id_).child_plan_;
-      
+
       // Fill in the contents of the child plan entry.
 
       // Append the "MonolithicDeploymentDescriptions implementation"
@@ -427,7 +493,7 @@ add_connections (const Deployment::Connections & incoming_conn)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::add_connections");
 
-  CORBA::ULong old_len = this->all_connections_->length ();
+  CORBA::ULong const old_len = this->all_connections_->length ();
 
   // Expand the length of the <all_connection_> sequence.
   this->all_connections_->length (old_len + incoming_conn.length ());
@@ -455,14 +521,17 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
   ACE_TRY
     {
+      // Clean up all cached connections first
+      this->all_connections_->length (0);
+
       // Invoke startLaunch() operations on each cached NodeApplicationManager
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplicationManager object reference.
           ACE_Hash_Map_Entry
             <ACE_CString,
-            Chained_Artifacts> *entry;
-          
+            Chained_Artifacts> *entry = 0;
+
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
             {
@@ -473,19 +542,19 @@ startLaunch (const ::Deployment::Properties & configProperty,
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                  ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW 
-                 (Deployment::StartError 
+
+              ACE_TRY_THROW
+                 (Deployment::StartError
                     ("DomainApplicationManager_Impl:startLaunch",
                      error.c_str ()));
             }
-          
+
           ::Deployment::NodeApplicationManager_ptr my_nam =
             (entry->int_id_).node_application_manager_.in ();
-          
+
           if (CORBA::is_nil (my_nam))
             {
               ACE_ERROR ((LM_ERROR,
@@ -495,13 +564,13 @@ startLaunch (const ::Deployment::Properties & configProperty,
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                  ("While starting launch, the DomainApplicationManager\
                   has a nil reference for NodeApplicationManager\n");
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
-                                     
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("DomainApplicationManager_Impl::startLaunch",
                      error.c_str ()));
             }
@@ -512,10 +581,28 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
           // Obtained the returned NodeApplication object reference
           // and the returned Connections variable.
-          ::Deployment::Application_var temp_application =
-            my_nam->startLaunch (configProperty,
-                                 retn_connections.out (),
-                                 0);
+          ::Deployment::Application_var temp_application;
+          if (!is_redeployment_)
+            {
+              temp_application =
+                my_nam->startLaunch (configProperty,
+                                     retn_connections.out (),
+                                     0);
+            }
+          else
+            {
+              //=============================================================
+              //                  Add New Components Logic
+              //=============================================================
+              // Let's add new components only now, the to-be-removed
+              // components should be removed AFTER the connections
+              // are removed.
+              temp_application =
+                my_nam->perform_redeployment (configProperty,
+                                              retn_connections.out (),
+                                              true, // add new components only now
+                                              0);
+            }
 
           // Narrow down to NodeApplication object reference
           ::Deployment::NodeApplication_var my_na =
@@ -532,14 +619,14 @@ startLaunch (const ::Deployment::Properties & configProperty,
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
-                ("The DomainApplicationManager receives a nil\
-                 reference of NodeApplication after calling\
-                 startLaunch on NodeApplicationManager.\n");
+              ACE_CString error
+                ("The DomainApplicationManager receives a nil "
+                 "reference of NodeApplication after calling "
+                 "startLaunch on NodeApplicationManager.\n");
               ACE_ERROR ((LM_ERROR, error.c_str ()));
-              
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("DomainApplicationManager_Impl::startLaunch",
                      error.c_str ()));
             }
@@ -552,6 +639,14 @@ startLaunch (const ::Deployment::Properties & configProperty,
           // the hash table.
           (entry->int_id_).node_application_ = my_na._retn ();
         }
+
+      this->synchronize_shared_components_with_node_managers ();
+    }
+  ACE_CATCH (Deployment::StartError,ex)
+    {
+      ACE_DEBUG ((LM_DEBUG, "DAM_Impl:StartError: %s, %s\n",
+      ex.name.in (),
+      ex.reason.in ()));
     }
   ACE_CATCHANY
     {
@@ -564,9 +659,105 @@ startLaunch (const ::Deployment::Properties & configProperty,
   ACE_CHECK;
 }
 
+
 void
 CIAO::DomainApplicationManager_Impl::
-finishLaunch (::CORBA::Boolean start
+install_all_es (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      for (CORBA::ULong j = 0; j < this->esd_->length (); ++j)
+        {
+          // Construct the ESInstallationInfos data
+          Deployment::ESInstallationInfos_var es_infos;
+          ACE_NEW (es_infos,
+                   Deployment::ESInstallationInfos);
+
+          es_infos->length (1);
+          (*es_infos)[0].id = this->esd_[j].name.in ();
+          (*es_infos)[0].type = CIAO::RTEC;  //only RTEC is supported so far
+          (*es_infos)[0].svcconf = this->esd_[j].svc_cfg_file.in ();
+
+          // Find NA, and then invoke operation on it
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+          if (this->artifact_map_.find (this->esd_[j].node.in (),
+                                        entry) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_Impl::install_all_es -"
+                          "ERROR while finding the node specific plan "
+                          "for the node [%s] \n",
+                           this->esd_[j].node.in ()));
+
+              ACE_CString error
+                ("Unable to resolve a reference to NodeManager: ");
+              error += this->esd_[j].node.in ();
+
+              ACE_TRY_THROW
+                (Deployment::StartError
+                  ("DomainApplicationManager_Impl::install_all_es",
+                    error.c_str ()));
+            }
+
+          // Invoke install_es () operation on each cached NodeApplication object.
+          ::Deployment::NodeApplication_ptr my_na =
+              (entry->int_id_).node_application_.in ();
+
+          ::Deployment::CIAO_Event_Services_var event_services =
+              my_na->install_es (es_infos);
+
+          // Add these returned ES objects into the cached map
+          this->add_es_to_map (es_infos, event_services);
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::post_finishLaunch.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+add_es_to_map (Deployment::ESInstallationInfos * es_infos,
+               Deployment::CIAO_Event_Services * event_services)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      CORBA::ULong es_length = event_services->length ();
+
+      for (CORBA::ULong i = 0; i < es_length; ++i)
+        {
+          this->es_map_.bind (
+            (*es_infos)[i].id.in (),
+            CIAO::CIAO_Event_Service::_duplicate ((*event_services)[i]));
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::add_es_to_map.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+finishLaunch (CORBA::Boolean start,
+              CORBA::Boolean is_ReDaC
               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
@@ -574,7 +765,14 @@ finishLaunch (::CORBA::Boolean start
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::finishLaunch");
   ACE_TRY
     {
+      // Install all the CIAO_Event_Services within the Deployment Plan
+      this->install_all_es ();
+
       // Invoke finishLaunch() operation on each cached NodeApplication object.
+      // This will establish bindings for only those internal components, but
+      // NOT for those external/shared components, which requires special
+      // handling, since these components are outside the control of this
+      // DomainApplicationManager.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplication object reference.
@@ -590,34 +788,40 @@ finishLaunch (::CORBA::Boolean start
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                  ("Unable to resolve a reference to NodeManager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("DomainApplicationManager_Impl::finishLaunch",
                      error.c_str ()));
             }
-          
 
           //@@ Note: Don't delete the below debugging helpers.
           // Dump the connections for debug purpose.
           if (CIAO::debug_level () > 9)
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                  "==============================================\n"));
-              ACE_DEBUG ((LM_DEBUG, 
-                 "dump incoming connections for child plan:%d\n", i));
+              ACE_DEBUG ((LM_DEBUG,
+                 "dump incoming connections for child plan:%s\n",
+                 (entry->int_id_).child_plan_->UUID.in ()));
               dump_connections (this->all_connections_.in ());
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                   "==============================================\n"));
             }
 
-          // Get the Connections variable.
+          // Get the Connections variable, if ReDaC is true, then we get
+          // those new connections only. NOTE: get_outgoing_connections
+          // by default will get *all* connections.
           Deployment::Connections * my_connections =
-            this->get_outgoing_connections ((entry->int_id_).child_plan_.in ()
-					    ACE_ENV_ARG_PARAMETER);
+            this->get_outgoing_connections (
+              (entry->int_id_).child_plan_.in (),
+              !is_ReDaC,
+              true,  // we search *new* plan
+              DomainApplicationManager_Impl::Internal_Connections
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (my_connections == 0)
@@ -629,34 +833,129 @@ finishLaunch (::CORBA::Boolean start
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_TRY_THROW 
-                (Deployment::StartError 
-                   ("DomainApplicationManager_Impl::finish_launch",
+              ACE_TRY_THROW
+                (Deployment::StartError
+                  ("DomainApplicationManager_Impl::finish_launch",
                     "There was some error establishing connections."));
             }
-
-          Deployment::Connections_var safe (my_connections);
 
           // Dump the connections for debug purpose.
           if (CIAO::debug_level () > 1)
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                   "==============================================\n"));
-              ACE_DEBUG ((LM_DEBUG, 
-                  "dump outgoing connections for child plan:%d\n", i));
-              dump_connections (safe.in ());
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
+                  "dump outgoing connections for child plan:%s\n",
+                 (entry->int_id_).child_plan_->UUID.in ()));
+              dump_connections (*my_connections);
+              ACE_DEBUG ((LM_DEBUG,
                   "==============================================\n"));
             }
 
           // Invoke finishLaunch() operation on NodeApplication.
-          entry->int_id_.node_application_->finishLaunch 
-             (safe.in (),
-              start
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (my_connections->length () != 0)
+            {
+              entry->int_id_.node_application_->finishLaunch
+                 (*my_connections,
+                  start,
+                  true // "true" => establish new connections only
+                  ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+
+          //=============================================================
+          //                  Remove Old Connections Logic
+          //=============================================================
+
+          if (is_ReDaC) // We should also *REMOVE* unnecessary connections
+            {
+              // If this is a brand new child plan, then continue.
+              if ((entry->int_id_).old_child_plan_ == 0)
+                continue;
+
+              // Get all the connections in the old deployment plan
+              Deployment::Connections * connections_in_old_plan =
+                this->get_outgoing_connections (
+                        (entry->int_id_).old_child_plan_.in (),
+                        true, // yes, get *all* the connections
+                        false, // search in the *old* plan
+                        DomainApplicationManager_Impl::Internal_Connections
+                                                      ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              // Pass in the "false" parameter to get *all* the connections in
+              // the new deployment plan, regardless those in old plan
+              Deployment::Connections * connections_in_new_plan =
+                this->get_outgoing_connections (
+                        (entry->int_id_).child_plan_.in (),
+                        true, // yes, get *all* the connections
+                        true,  // search in the *new* plan
+                        DomainApplicationManager_Impl::Internal_Connections
+                                                      ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              Deployment::Connections * unnecessary_connections =
+                this->subtract_connections (*connections_in_old_plan,
+                                            *connections_in_new_plan);
+
+              delete connections_in_old_plan;
+              delete connections_in_new_plan;
+
+              // Dump the connections for debug purpose.
+              if (CIAO::debug_level () > 1)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                      "==============================================\n"));
+                  ACE_DEBUG ((LM_DEBUG,
+                      "dump to-be-removed connections for child plan:%s\n",
+                      (entry->int_id_).child_plan_->UUID.in ()));
+                  dump_connections (*unnecessary_connections);
+                  ACE_DEBUG ((LM_DEBUG,
+                      "==============================================\n"));
+                }
+
+              // Invoke finishLaunch() operation on NodeApplication.
+              if (unnecessary_connections->length () != 0)
+                {
+                  if (CORBA::is_nil (entry->int_id_.node_application_.in ()))
+                    throw Deployment::StartError ();
+
+                  entry->int_id_.node_application_->finishLaunch
+                    (*unnecessary_connections,
+                     start,
+                     false  // false ==> remove unnecessary connections
+                     ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                }
+
+              //=============================================================
+              //                  Remove Old Components
+              //=============================================================
+              // Finally we need to remove those to-be-removed components
+              ::Deployment::Properties_var configProperty;
+              ACE_NEW (configProperty,
+                       Deployment::Properties);
+
+              ::Deployment::Connections_var retn_connections;
+
+              Deployment::Application_var temp_application =
+                entry->int_id_.node_application_manager_->
+                   perform_redeployment (configProperty,
+                                         retn_connections.out (),
+                                         false, // remove old components only
+                                         false);// do not "start"
+            }
         }
+
+      // Establish bindings on external/shared components of this deployment plan.
+      this->post_finishLaunch ();
     }
+  ACE_CATCH (Deployment::StartError, ex)
+    {
+      ACE_ERROR ((LM_ERROR, "DAM_Impl::finishLaunch - StartError: %s, %s\n",
+      ex.name.in (),
+      ex.reason.in ()));
+   }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
@@ -668,16 +967,16 @@ finishLaunch (::CORBA::Boolean start
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeManager and NodeApplicationManager object references.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry = 0;
           this->artifact_map_.find (this->node_manager_names_[i],entry);
 
-          ::Deployment::NodeApplicationManager_ptr 
+          ::Deployment::NodeApplicationManager_ptr
               my_node_application_manager =
                   (entry->int_id_).node_application_manager_.in ();
 
           // Invoke destoryApplication() operation on the NodeApplicationManger.
           // Since we have the first arg is not used by NAM anyway.
-          my_node_application_manager->destroyApplication 
+          my_node_application_manager->destroyApplication
              (0
               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -687,6 +986,480 @@ finishLaunch (::CORBA::Boolean start
   ACE_ENDTRY;
 
   ACE_CHECK;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+post_finishLaunch (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      // For each "external" component...
+      CORBA::ULong length = this->shared_->length ();
+      for (CORBA::ULong j = 0; j < length; ++j)
+        {
+          // Construct <Component_Binding_Info> struct for the component
+          CIAO::Component_Binding_Info *
+              binding = this->populate_binding_info (
+                this->shared_[j].name.in (),
+                this->shared_[j].plan_uuid.in ());
+
+          // Invoke <finalize_global_binding> on ExecutionManager
+          this->execution_manager_->finalize_global_binding (
+            *binding, true);
+
+          delete binding;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::post_finishLaunch.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+CIAO::Component_Binding_Info *
+CIAO::DomainApplicationManager_Impl::
+populate_binding_info (const ACE_CString& name,
+                       const ACE_CString& child_uuid)
+{
+  CIAO::Component_Binding_Info * retv;
+  ACE_NEW_RETURN (retv,
+                  CIAO::Component_Binding_Info (),
+                  0);
+
+  retv->name_ = name;
+
+  // Parse the child_uuid string and populate the "node" name and "plan_uuid" fields.
+  // Our protocol here is searching for the "@", the substring *before* that is the
+  // global plan uuid, and the substring *after* that is the node name.
+  size_t pos = child_uuid.find ('@');
+
+  retv->plan_uuid_ =
+    child_uuid.substring (0, pos);
+
+  retv->node_ =
+    child_uuid.substring (pos+1, -1); // get the rest of the string
+
+  Deployment::Connections_var connections;
+  ACE_NEW_RETURN (connections,
+                  Deployment::Connections,
+                  0);
+
+  this->get_outgoing_connections_i (name.c_str (),
+                                    connections.inout (),
+                                    false,  // get *all* connections
+                                    true);  // search current plan
+
+  retv->providedReference_ = connections._retn ();
+
+  return retv;
+}
+
+CIAO::Component_Binding_Info *
+CIAO::DomainApplicationManager_Impl::
+populate_binding_info (const ACE_CString& name)
+{
+  CIAO::Component_Binding_Info * retv;
+  ACE_NEW_RETURN (retv,
+                  CIAO::Component_Binding_Info (),
+                  0);
+
+  // Looking for the child plan uuid through the shared compoonent list
+  for (CORBA::ULong i = 0; i < this->shared_->length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->shared_[i].name.in (),
+                          name.c_str ()) == 0)
+        {
+          ACE_CString child_uuid = this->shared_[i].plan_uuid.in ();
+          retv = this->populate_binding_info (name, child_uuid);
+          return retv;
+        }
+    }
+
+  return 0; // If no matching is found (should never happen).
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+add_shared_components (const Deployment::ComponentPlans & shared)
+{
+  for (CORBA::ULong i = 0; i < shared.length (); ++i)
+    {
+      CORBA::ULong curr_len = this->shared_->length ();
+      this->shared_->length (curr_len + 1);
+      this->shared_[curr_len] = shared[i];
+    }
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+is_shared_component (const char * name)
+{
+  for (CORBA::ULong i = 0; i < this->shared_->length (); ++i)
+    {
+      if (ACE_OS::strcmp (this->shared_[i].name.in (),
+                          name) == 0)
+        return true;
+    }
+
+  return false;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+synchronize_shared_components_with_node_managers (void)
+{
+  for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+    {
+      // Get the NodeManager object reference.
+      ACE_Hash_Map_Entry
+        <ACE_CString,
+        Chained_Artifacts> *entry = 0;
+
+      if (this->artifact_map_.find (this->node_manager_names_[i],
+                                    entry) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                      "CIAO::DomainApplicationManager_Impl::startLaunch -"
+                      "ERROR while finding the node specific plan "
+                      "for the node [%s] \n",
+                      this->node_manager_names_[i].c_str ()));
+
+          ACE_CString error
+              ("Unable to resolve a reference to node manager: ");
+          error += this->node_manager_names_[i];
+
+          ACE_TRY_THROW
+              (Deployment::StartError
+                ("DomainApplicationManager_Impl:startLaunch",
+                  error.c_str ()));
+        }
+
+      // Update the shared components  list
+      ::Deployment::NodeManager_ptr
+          my_node_manager = (entry->int_id_).node_manager_.in ();
+
+      Deployment::ComponentPlans_var
+        shared = my_node_manager->get_shared_components ();
+
+      this->add_shared_components (shared.in ());
+    }
+}
+
+
+Deployment::Connections *
+CIAO::DomainApplicationManager_Impl::
+get_outgoing_connections (const Deployment::DeploymentPlan &plan,
+                          bool is_getting_all_connections,
+                          bool is_search_new_plan,
+                          Connection_Search_Type t
+                          ACE_ENV_ARG_DECL)
+{
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
+  Deployment::Connections_var connections;
+  ACE_NEW_RETURN (connections,
+                  Deployment::Connections,
+                  0);
+
+  // For each component instance in the child plan ...
+  CORBA::ULong number = plan.instance.length ();
+  for (CORBA::ULong i = 0; i < number; ++i)
+  {
+
+    if (t == Internal_Connections &&
+        this->is_shared_component (plan.instance[i].name.in ()))
+      continue;
+
+    // Get the outgoing connections of the component
+    if (!get_outgoing_connections_i (plan.instance[i].name.in (),
+                                     connections.inout (),
+                                     is_getting_all_connections,
+                                     is_search_new_plan
+                                     ACE_ENV_ARG_PARAMETER))
+      return 0;
+  }
+  return connections._retn ();
+}
+
+
+// Get outgoing connections for particular instance
+bool
+CIAO::DomainApplicationManager_Impl::
+get_outgoing_connections_i (const char * instname,
+                            Deployment::Connections & retv,
+                            bool is_getting_all_connections,
+                            bool is_search_new_plan
+                            ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((Deployment::StartError))
+{
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
+
+  Deployment::DeploymentPlan tmp_plan;
+  if (is_search_new_plan)
+    tmp_plan = this->plan_;
+  else
+    tmp_plan = this->old_plan_;
+
+  // Search for all the bindings in the plan.
+  const CORBA::ULong total_length = tmp_plan.connection.length();
+  for (CORBA::ULong i = 0; i < total_length; ++i)
+    {
+      // Current binding that we are looking at.
+      const Deployment::PlanConnectionDescription & binding =
+        tmp_plan.connection[i];
+
+      // If this is a ReDaC case, then we ignore the connection if it
+      // already exists in the old_plan
+      if (already_exists (binding) &&
+          !is_getting_all_connections)
+        continue;
+
+      this->populate_connection_for_binding (instname,
+                                             binding,
+                                             tmp_plan,
+                                             retv);
+    }
+  return true;
+}
+
+// Search the current binding to see whether a connection of this
+// component needs to be populated
+bool
+CIAO::DomainApplicationManager_Impl::
+populate_connection_for_binding (
+     const char * instname,
+     const Deployment::PlanConnectionDescription & binding,
+     const Deployment::DeploymentPlan & plan,
+     Deployment::Connections & retv)
+  ACE_THROW_SPEC ((Deployment::StartError))
+{
+  const CORBA::ULong binding_len = binding.internalEndpoint.length ();
+
+  // If only 1 internalEndpoint, then we know it's through event service.
+  if (binding_len == 1)
+    {
+      return
+        this->handle_es_connection (instname,
+                                    binding,
+                                    plan,
+                                    retv);
+    }
+  else if (binding_len == 2)
+    {
+      return this->handle_direct_connection (instname,
+                                             binding,
+                                             plan,
+                                             retv);
+    }
+  else // invalid binding encounted...
+    return false;
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+handle_es_connection (
+     const char * instname,
+     const Deployment::PlanConnectionDescription & binding,
+     const Deployment::DeploymentPlan & plan,
+     Deployment::Connections & retv)
+  ACE_THROW_SPEC ((Deployment::StartError))
+{
+  // The initial retv might have something inside
+  CORBA::ULong len = retv.length ();
+
+  const Deployment::PlanSubcomponentPortEndpoint & endpoint =
+    binding.internalEndpoint[0];
+
+  // If the instance name does NOT match one of the names in the binding
+  // Then thsi binding has nothing related to myself (an instance)
+  if (ACE_OS::strcmp (instname,
+                      plan.instance[endpoint.instanceRef].name.in ()) != 0)
+    return false;
+
+  if (binding.externalReference.length () != 1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_Impl::"
+                  "handle_publisher_es_connection -"
+                  "externalReference must have length of 1.\n"));
+      return false;
+    }
+
+  retv.length (len+1);
+  retv[len].instanceName = instname;
+  retv[len].portName = endpoint.portName.in ();
+  retv[len].kind = endpoint.kind;
+
+  ACE_CString es_id = binding.externalReference[0].location.in ();
+
+  retv[len].endpointInstanceName = es_id.c_str ();
+  retv[len].endpointPortName = "CIAO_ES";
+
+  // We need to populate the actual filter and store it into
+  // the <connection.config> field
+  if (binding.deployRequirement.length () != 0)
+    {
+      retv[len].config =
+        this->get_connection_QoS_configuration (binding.deployRequirement[0]);
+    }
+
+  // If we didnt find the objref of the connection ...
+  CIAO::CIAO_Event_Service_var es;
+
+  if (this->es_map_.find (es_id.c_str (), es) != 0)
+    {
+      ACE_CString error ("Creating connections for ");
+      error += instname;
+      error += ": unable to find object reference for connection ";
+      error += binding.name.in ();
+      ACE_THROW_RETURN (Deployment::StartError
+        ("DomainApplicationManager_Impl::create_connections_i",
+                      error.c_str ()),
+                      false);
+    }
+
+  retv[len].event_service = es._retn ();
+
+  // One more thing needs to be done if this is a es_consumer connection
+  // We need to populate the <endpoint> field of this connection, which
+  // is the object reference of this event consumer port.
+  if (endpoint.kind == Deployment::EventConsumer)
+    {
+      // Now we search in the received connections to get the objRef of event sink
+      bool found = false;
+      const CORBA::ULong all_conn_len = this->all_connections_->length ();
+      for (CORBA::ULong j = 0; j < all_conn_len; ++j)
+        {
+          const Deployment::Connection & curr_recv_conn =
+              this->all_connections_[j];
+
+          // We need to look at the instance name and the port name to confirm.
+          if (ACE_OS::strcmp (curr_recv_conn.instanceName.in (),
+                              instname) == 0 &&
+              ACE_OS::strcmp (curr_recv_conn.portName.in (),
+                              endpoint.portName.in ()) == 0)
+            {
+              retv[len].endpoint =
+                  CORBA::Object::_duplicate(curr_recv_conn.endpoint.in ());
+              found = true;
+            }
+        } // End of searching received connections
+
+      if (!found)
+        {
+          ACE_CString error ("Creating connections for ");
+          error += instname;
+          error += ": unable to find object reference for connection ";
+          error += binding.name.in ();
+          ACE_THROW_RETURN (Deployment::StartError
+            ("DomainApplicationManager_Impl::handle_es_connection",
+                          error.c_str ()),
+                          false);
+        }
+    }
+
+  return true;
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+handle_direct_connection (
+     const char * instname,
+     const Deployment::PlanConnectionDescription & binding,
+     const Deployment::DeploymentPlan & plan,
+     Deployment::Connections & retv)
+  ACE_THROW_SPEC ((Deployment::StartError))
+{
+  // The initial retv might have something inside
+  CORBA::ULong len = retv.length ();
+
+  const CORBA::ULong binding_len = binding.internalEndpoint.length ();
+  for (CORBA::ULong i = 0; i < binding_len; ++i)
+    {
+      const Deployment::PlanSubcomponentPortEndpoint & endpoint =
+        binding.internalEndpoint[i];
+
+      // If the instance name does NOT match one of the names in the binding
+      if (ACE_OS::strcmp (instname,
+                          plan.instance[endpoint.instanceRef].name.in ()) != 0)
+        continue;
+
+      // We are only interested when we are the "client" of the endpoint objref
+      if (endpoint.kind == Deployment::EventPublisher ||
+          endpoint.kind == Deployment::EventEmitter ||
+          endpoint.kind == Deployment::SimplexReceptacle ||
+          endpoint.kind == Deployment::MultiplexReceptacle )
+        {
+          // Obtain the index of the "real" endpoint which has an objref. It
+          // is the opposite side of myself.
+          CORBA::ULong e_index = (i + 1) % 2;
+
+          ACE_CString source_port =
+            binding.internalEndpoint[i].portName.in ();
+
+          ACE_CString endpoint_inst =
+            plan.instance[binding.internalEndpoint[e_index]
+              .instanceRef].name.in ();
+
+          ACE_CString endpoint_port =
+            binding.internalEndpoint[e_index].portName.in ();
+
+          bool found = false;
+
+          // Now we search in the received connections to get the objRef.
+          const CORBA::ULong all_conn_len = this->all_connections_->length ();
+          for (CORBA::ULong j = 0; j < all_conn_len; ++j)
+            {
+              const Deployment::Connection & curr_recv_conn =
+                  this->all_connections_[j];
+
+              // We need to look at the instance name and the port name to confirm.
+              if (ACE_OS::strcmp (curr_recv_conn.instanceName.in (),
+                                  endpoint_inst.c_str ()) == 0 &&
+                  ACE_OS::strcmp (curr_recv_conn.portName.in (),
+                                  endpoint_port.c_str ()) == 0)
+                  {
+                    retv.length (len+1);
+                    retv[len].instanceName = instname;
+                    retv[len].portName = source_port.c_str ();
+                    retv[len].endpointInstanceName = endpoint_inst.c_str ();
+                    retv[len].endpointPortName = endpoint_port.c_str ();
+
+                    retv[len].endpoint =
+                      CORBA::Object::_duplicate(curr_recv_conn.endpoint.in ());
+                    retv[len].kind = binding.internalEndpoint[i].kind;
+
+                    ++len;
+                    found = true;
+                    break;
+                  }
+              } // End of searching received connections
+
+          // We didnt find the objref of the connection ...
+          if (!found)
+            {
+              ACE_CString error ("Creating connections for ");
+              error += instname;
+              error += ": unable to find object reference for connection ";
+              error += binding.name.in ();
+              ACE_THROW_RETURN (Deployment::StartError
+                ("DomainApplicationManager_Impl::create_connections_i",
+                              error.c_str ()),
+                              false);
+            }
+          break;
+        }
+    }
+  return true;
 }
 
 void
@@ -716,11 +1489,11 @@ start (ACE_ENV_SINGLE_ARG_DECL)
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                 ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW (Deployment::StartError 
+
+              ACE_TRY_THROW (Deployment::StartError
                 ("DomainApplicationManager_Impl:startLaunch",
                   error.c_str ()));
             }
@@ -757,8 +1530,8 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           my_na->start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      
-     // Invoke ciao_postctivate () operation on each 
+
+     // Invoke ciao_postctivate () operation on each
      // cached NodeApplication object.
 
       for (i = 0; i < this->num_child_plans_; ++i)
@@ -776,11 +1549,11 @@ start (ACE_ENV_SINGLE_ARG_DECL)
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                 ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW (Deployment::StartError 
+
+              ACE_TRY_THROW (Deployment::StartError
                   ("DomainApplicationManager_Impl:startLaunch",
                     error.c_str ()));
             }
@@ -812,65 +1585,124 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyApplication");
   ACE_TRY
     {
-      CORBA::ULong i;
+      // Passivate shared components also, which should delegate to EM to handle
+      this->passivate_shared_components ();
 
-      // Invoke ciao_passivate () operation on each cached NodeApplication object.
-      for (i = 0; i < this->num_child_plans_; ++i)
+      // Passivate all components associated with the plan
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
-          // Get the NodeApplication object references.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                    "CIAO::DomainApplicationManager_Impl::destroyApplication -"
+                          "CIAO::DomainApplicationManager_Impl::destroyApplication -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_TRY_THROW (Deployment::StopError ());
+              ACE_CString error
+                 ("Unable to resolve a reference to NodeManager: ");
+              error += this->node_manager_names_[i];
+
+              ACE_TRY_THROW
+                (Deployment::StopError
+                   ("DomainApplicationManager_Impl::destroyApplication",
+                     error.c_str ()));
             }
-          
+      ACE_DEBUG ((LM_DEBUG, "DAM_Impl: Invoking passivate on %s\n",
+                  this->node_manager_names_[i].c_str ()));
+
+          // Invoke ciao_passivate () operation on each cached NodeApplication object.
           ::Deployment::NodeApplication_ptr my_na =
               (entry->int_id_).node_application_.in ();
 
           my_na->ciao_passivate ();
-          ACE_TRY_CHECK;
         }
 
-      // Invoke destroyManager() operation on each cached
-      // NodeManager object.
-      for (i = 0; i < this->num_child_plans_; ++i)
+      // Remove all connections associated with the plan
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
-          // Get the NodeManager and NodeApplicationManager object references.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
-          if (this->artifact_map_.find (this->node_manager_names_[i],
-                                        entry) != 0)
+          this->artifact_map_.find (this->node_manager_names_[i], entry);
+
+          Deployment::Connections_var connections =
+            this->get_outgoing_connections (
+              (entry->int_id_).child_plan_.in (),
+              true,  // yes, get *all* the connections
+              true,  // yes, we search the current plan
+              DomainApplicationManager_Impl::External_Connections
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // Invoke finishLaunch() on NodeApplication to remove bindings.
+          // If this NodeApplication is not within the control of this DAM,
+          // then we should delegate the call to the correct DAM through EM.
+
+          // Iterave over the returned connection list in <connections>,
+          // (1) If this is a shared component, then we remove this connection
+          //     from <connections> list, and then populate a "Component_Binding_Info"
+          //     struct for it and send to EM for remove.
+          // (2) For the rest of the connections, we send them to the NAs
+          //     managed by the local DAM to remove.
+
+          for (CORBA::ULong j = 0; j < connections->length (); ++j)
             {
-              ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                    "CIAO::DomainApplicationManager_Impl::destroyApplication -"
-                          "ERROR while finding the node specific plan "
-                          "for the node [%s] \n",
-                          this->node_manager_names_[i].c_str ()));
+              if (this->is_shared_component (connections[j].instanceName.in ()))
+                {
+                  // ask EM to remove the binding for us
+                  ACE_CString inst_name = connections[j].instanceName.in ();
+                  CIAO::Component_Binding_Info *
+                    binding = this->populate_binding_info (inst_name.c_str ());
 
-              ACE_TRY_THROW (Deployment::StopError ());
+                  this->execution_manager_->finalize_global_binding (
+                    *binding, false);
+
+                  // Remove all the connections whose "source" component
+                  // is this component instance from the <connections> list
+                  this->purge_connections (connections,
+                                           inst_name.c_str ());
+                }
             }
 
-          ::Deployment::NodeApplicationManager_ptr 
-              my_node_application_manager =
-                  (entry->int_id_).node_application_manager_.in ();
+          if (connections->length () > 0)
+            {
+              entry->int_id_.node_application_->finishLaunch
+                (connections.in (),
+                 true, // "true" ==> start the components
+                 false // "false" => remove connections
+                 ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
 
-          // Invoke destoryApplication() operation on the NodeApplicationManger.
-          // Since we have the first arg is not used by NAM anyway.
-          my_node_application_manager->destroyApplication 
-              (0
-               ACE_ENV_ARG_PARAMETER);
+        }
+
+      // After all the connections are removed, we actually destroy
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+        {
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
+
+          this->artifact_map_.find (this->node_manager_names_[i], entry);
+
+          // Invoke destroyPlan() operation on the NodeManager
+          Deployment::NodeManager_var
+              my_node_manager = (entry->int_id_).node_manager_;
+
+          my_node_manager->destroyPlan ((entry->int_id_).child_plan_
+                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+
+      // ??
+      // Shall we invoke destroyManager () operation on the NodeManager, since we need
+      // to clean up all the NodeApplicationManagers associated with this deployment
+      // plan (one NodeApplicationManager per Node per plan).
+
+      // We should again activate those shared components
+      this->activate_shared_components ();
     }
   ACE_CATCHANY
     {
@@ -897,7 +1729,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
           // Get the NodeManager and NodeApplicationManager object references.
           ACE_Hash_Map_Entry
             <ACE_CString,
-            Chained_Artifacts> *entry;
+            Chained_Artifacts> *entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
@@ -905,10 +1737,10 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
           ::Deployment::NodeManager_var my_node_manager =
              (entry->int_id_).node_manager_;
-          
-          ::Deployment::NodeApplicationManager_var my_nam = 
+
+          ::Deployment::NodeApplicationManager_var my_nam =
               (entry->int_id_).node_application_manager_;
-          
+
           my_node_manager->destroyManager (my_nam.in ()
                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -924,6 +1756,67 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_CHECK;
 }
+
+void
+CIAO::DomainApplicationManager_Impl::
+perform_redeployment (
+  const Deployment::DeploymentPlan & plan
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                    Deployment::PlanError,
+                    Deployment::InstallationFailure,
+                    Deployment::UnknownImplId,
+                    Deployment::ImplEntryPointNotFound,
+                    Deployment::InvalidConnection,
+                    ::Components::RemoveFailure))
+{
+  // Currently we could dynamically update the NodeManagerMap topology,
+  // but later maybe we could add another parameter to this operation,
+  // which allows the user to specify the new NodeManagerMap data file.
+  this->old_plan_ = this->plan_;
+  this->is_redeployment_ = true;
+  this->plan_ = plan;
+
+  ACE_TRY
+    {
+      // Call init() on the myself, which will validate/split the plan and
+      // call preparePlan on each NodeManager, by this, we shall get
+      // all the object references of NM and NAM associated with each
+      // component instance populated.
+      this->init ();
+
+      // Call startLaunch on each NM for each child plan, this should not only
+      // install all the new components specified, but should also remove
+      // the components that are no longer in the new deployment plan.
+      // Meanwhile, we should set up the container configurations appropriately,
+      // whose information is fully captured in the node-level deployment plan.
+      ::Deployment::Properties_var properties;
+      ACE_NEW (properties,
+               Deployment::Properties);
+
+      this->startLaunch (properties.in (), false);
+
+      // finishLaunch will (1) establish new connections, and (2)
+      // get rid of those non-existing connections. As we know, in the
+      // node level, the connections are cached within the NodeApplication *and*
+      // Container, then we should modify the implementation of the
+      // <finishLaunch> on the NodeApplication to accomplish this.
+      this->finishLaunch (true, true);  // true means start activation also.
+                                        // ture means "ReDaC" is desired
+
+      this->start ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::perform_redeployment\t\n");
+      this->plan_ = this->old_plan_;
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
 
 // Returns the DeploymentPlan associated with this ApplicationManager.
 ::Deployment::DeploymentPlan *
@@ -942,141 +1835,6 @@ getPlan (ACE_ENV_SINGLE_ARG_DECL)
   return plan._retn ();
 }
 
-Deployment::Connections *
-CIAO::DomainApplicationManager_Impl::
-get_outgoing_connections (const Deployment::DeploymentPlan &plan
-			  ACE_ENV_ARG_DECL)
-{
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
-  Deployment::Connections_var connections;
-  ACE_NEW_RETURN (connections,
-                  Deployment::Connections,
-                  0);
-
-  // For each component instance in the child plan ...
-  for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
-  {
-    // Get the component instance name
-    if (!get_outgoing_connections_i (plan.instance[i].name.in (),
-                                     connections.inout ()
-				     ACE_ENV_ARG_PARAMETER))
-      return 0;
-  }
-  return connections._retn ();
-}
-
-bool
-CIAO::DomainApplicationManager_Impl::
-get_outgoing_connections_i (const char * instname,
-                            Deployment::Connections & retv
-			    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((Deployment::StartError))
-{
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
-
-  // Search in all the connections in the plan.
-  for (CORBA::ULong i = 0; i < this->plan_.connection.length(); ++i)
-  {
-    CORBA::ULong len = retv.length ();
-
-    // Current connection that we are looking at.
-    const Deployment::PlanConnectionDescription & curr_conn =
-      this->plan_.connection[i];
-
-    //The modeling tool should make sure there are always 2 endpoints
-    //in a connection.
-    const CORBA::ULong curr_conn_len = curr_conn.internalEndpoint.length ();
-    for (CORBA::ULong p_index = 0;
-         p_index < curr_conn_len;
-         ++p_index)
-    {
-      const Deployment::PlanSubcomponentPortEndpoint & endpoint =
-        curr_conn.internalEndpoint[p_index];
-
-      // If the component name matches the name of one of the
-      // endpoints in the connection.
-      if (ACE_OS::strcmp (this->plan_.instance[endpoint.instanceRef].name.in (),
-                          instname) == 0 )
-      {
-        //Look at the port kind to make sure it's what we are interested in.
-        if (endpoint.kind != Deployment::Facet &&
-            endpoint.kind != Deployment::EventConsumer)
-          {
-            // The other endpoints in this connection is what we want.
-            CORBA::ULong index = (p_index +1)%2;
-
-            //Cache the name of the other component for later usage (search).
-            ACE_CString name =
-              this->plan_.instance[curr_conn.internalEndpoint[index].
-                 instanceRef].name.in ();
-
-            // Cache the name of the port from the 
-            // other component for searching later.
-
-            ACE_CString port_name =
-              curr_conn.internalEndpoint[index].portName.in ();
-            
-            ACE_DEBUG ((LM_ERROR, "Looking: %s,%s \n",
-                        name.c_str (),
-                        port_name.c_str ()));
-            
-            bool found = false;
-
-            // Now we have to search in the received 
-            // connections to get the objRef.
-
-            const CORBA::ULong all_conn_len = this->all_connections_->length ();
-            for (CORBA::ULong conn_index = 0;
-                conn_index < all_conn_len;
-                ++conn_index)
-              {
-                const Deployment::Connection curr_rev_conn = 
-                    this->all_connections_[conn_index];
-
-                // We need to look at the instance name and the 
-                // port name to confirm.
-                if (ACE_OS::strcmp (curr_rev_conn.instanceName.in (),
-                                    name.c_str ()) == 0 &&
-                    ACE_OS::strcmp (curr_rev_conn.portName.in (),
-                                    port_name.c_str ()) == 0)
-                  {
-                    //ACE_DEBUG ((LM_DEBUG, "step5\n"));
-
-                    retv.length (len+1);
-                    retv[len].instanceName = instname;
-                    retv[len].portName = endpoint.portName.in ();
-                    retv[len].kind = endpoint.kind;
-                    retv[len].endpoint = 
-                       CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
-                    ++len;
-                    found = true;
-                    break;
-                  }
-              }
-
-              // We didnt find the counter part connection even 
-              // we are sure there must be 1.
-
-              if (!found) 
-                {
-                  ACE_CString error ("Creating connections for ");
-                  error += instname;
-                  error += ": unable to find object reference for connection ";
-                  error += curr_conn.name.in ();
-                  ACE_THROW_RETURN (Deployment::StartError 
-                    ("DomainApplicationManager_Impl::create_connections_i",
-		      error.c_str ()),
-		      false);
-                }
-                  
-              break;
-          }
-      }
-    }
-  }
-  return 1;
-}
-
 void
 CIAO::DomainApplicationManager_Impl::
 dump_connections (const ::Deployment::Connections & connections)
@@ -1084,45 +1842,271 @@ dump_connections (const ::Deployment::Connections & connections)
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::dump_connections");
   const CORBA::ULong conn_len = connections.length ();
   for (CORBA::ULong i = 0; i < conn_len; ++i)
-  {
-    ACE_DEBUG ((LM_DEBUG, 
-                "instanceName: %s\n", connections[i].instanceName.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "instanceName: %s\n", connections[i].instanceName.in ()));
 
-    ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
+      ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
 
-    ACE_DEBUG ((LM_DEBUG, "portkind: "));
+      ACE_DEBUG ((LM_DEBUG, "portkind: "));
 
-    switch (connections[i].kind) 
-      {
-        case Deployment::Facet: 
+      switch (connections[i].kind)
+        {
+          case Deployment::Facet:
 
-           ACE_DEBUG ((LM_DEBUG, "Facet\n")); 
-           break;
+            ACE_DEBUG ((LM_DEBUG, "Facet\n"));
+            break;
 
-        case Deployment::SimplexReceptacle: 
+          case Deployment::SimplexReceptacle:
 
-           ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); 
-           break;
+            ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n"));
+            break;
 
-        case Deployment::MultiplexReceptacle: 
+          case Deployment::MultiplexReceptacle:
 
-           ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); 
-           break;
+            ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n"));
+            break;
 
-        case Deployment::EventEmitter: 
+          case Deployment::EventEmitter:
 
-           ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); 
-           break;
+            ACE_DEBUG ((LM_DEBUG, "EventEmitter\n"));
+            break;
 
-        case Deployment::EventPublisher: 
+          case Deployment::EventPublisher:
 
-           ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); 
-           break;
+            ACE_DEBUG ((LM_DEBUG, "EventPublisher\n"));
+            break;
 
-        case Deployment::EventConsumer: 
+          case Deployment::EventConsumer:
 
-           ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); 
-           break;
-      }
-  }
+            ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
+            break;
+
+          case Deployment::rtecEventPublisher:
+
+            ACE_DEBUG ((LM_DEBUG, "rtecEventPublisher\n"));
+            break;
+
+          case Deployment::rtecEventConsumer:
+
+            ACE_DEBUG ((LM_DEBUG, "rtecEventConsumer\n"));
+            break;
+
+        default:
+          ACE_DEBUG ((LM_DEBUG, "Unknown port kind.\n"));
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "endpointInstanceName: %s\n",
+                  connections[i].endpointInstanceName.in ()));
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "endpointPortName: %s\n",
+                 connections[i].endpointPortName.in ()));
+      ACE_DEBUG ((LM_DEBUG, "---------------------\n"));
+    }
+}
+
+bool
+CIAO::DomainApplicationManager_Impl::
+already_exists (const Deployment::PlanConnectionDescription & conn)
+{
+  const CORBA::ULong conn_len = this->old_plan_.connection.length();
+  for(CORBA::ULong i = 0; i < conn_len; ++i)
+    {
+      if (ACE_OS::strcmp (this->old_plan_.connection[i].name.in (),
+                          conn.name.in ()) == 0)
+        return true;
+    }
+
+  return false;
+}
+
+Deployment::Connections *
+CIAO::DomainApplicationManager_Impl::
+subtract_connections (const Deployment::Connections & left,
+                      const Deployment::Connections & right)
+{
+  Deployment::Connections_var retv;
+  ACE_NEW_RETURN (retv,
+                  Deployment::Connections,
+                  0);
+
+  CORBA::ULong left_length = left.length ();
+  CORBA::ULong right_length = right.length ();
+  for (CORBA::ULong i = 0; i < left_length; ++i)
+    {
+      bool found = false;
+      for (CORBA::ULong j = 0; j < right_length; ++j)
+        {
+          if (ACE_OS::strcmp (left[i].instanceName.in (),
+                              right[j].instanceName.in ()) == 0 &&
+              ACE_OS::strcmp (left[i].portName.in (),
+                              right[j].portName.in ()) == 0 &&
+              left[i].kind == right[j].kind &&
+              left[i].endpoint->_is_equivalent (right[j].endpoint.in ()))
+            {
+              found = true;
+              break;
+            }
+        }
+
+        if (!found)
+          {
+            CORBA::ULong curr_length = retv->length ();
+            retv->length (curr_length + 1);
+            retv[curr_length] = left[i];
+          }
+    }
+  return retv._retn ();
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+passivate_shared_components (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      // For each "external" component...
+      CORBA::ULong length = this->shared_->length ();
+      for (CORBA::ULong j = 0; j < length; ++j)
+        {
+          // Construct <Component_Binding_Info> struct for the component
+          CIAO::Component_Binding_Info *
+              binding = this->populate_binding_info (
+                this->shared_[j].name.in (),
+                this->shared_[j].plan_uuid.in ());
+
+          // Invoke <finalize_global_binding> on ExecutionManager
+          this->execution_manager_->passivate_shared_components (
+            *binding);
+
+          delete binding;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::passivate_shared_components.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+activate_shared_components (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  ACE_TRY
+    {
+      // For each "external" component...
+      CORBA::ULong length = this->shared_->length ();
+      for (CORBA::ULong j = 0; j < length; ++j)
+        {
+          // Construct <Component_Binding_Info> struct for the component
+          CIAO::Component_Binding_Info *
+              binding = this->populate_binding_info (
+                this->shared_[j].name.in (),
+                this->shared_[j].plan_uuid.in ());
+
+          // Invoke <finalize_global_binding> on ExecutionManager
+          this->execution_manager_->activate_shared_components (
+            *binding);
+
+          delete binding;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::activate_shared_components.\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::
+purge_connections (Deployment::Connections_var & connections,
+                   const char * inst)
+{
+  CORBA::ULong total_len = connections->length ();
+
+  for (CORBA::ULong i = 0; i < total_len; ++i)
+    {
+      bool found = false;
+
+      // Remove all the connections whose "source" component
+      // name is <inst>
+      if (ACE_OS::strcmp (connections[i].instanceName.in (),
+                          inst) == 0)
+        {
+          found = true;
+
+          for (CORBA::ULong j = i; j < total_len - 1; ++j)
+            {
+              connections[j] = connections[j + 1];
+            }
+          connections->length (total_len - 1);
+        }
+
+      if (found)
+        this->purge_connections (connections, inst);
+    }
+}
+
+const Deployment::Properties &
+CIAO::DomainApplicationManager_Impl::
+get_connection_QoS_configuration (const Deployment::Requirement & requirement)
+{
+  // Get the name/identifier of the filter associated with
+  // this connection
+  Deployment::Properties_var retv;
+  ACE_NEW_NORETURN (retv, Deployment::Properties);
+
+  CORBA::ULong len = retv->length ();
+
+  for (CORBA::ULong i = 0;
+       i < requirement.property.length ();
+       ++i)
+    {
+      const char *filter_name;
+      if (ACE_OS::strcmp ("EventFilter",
+                          requirement.property[i].name) == 0)
+        {
+
+          if ((requirement.property[i].value >>= filter_name) == false)
+            ACE_ERROR ((LM_ERROR,
+                        "ERROR: DomainApplicationManager_Impl::"
+                        "get_connection_QoS_configuration unable to "
+                        "extract event filter information\n"));
+        }
+
+      // Search for the desired filter
+      for (CORBA::ULong j = 0; j < this->esd_->length (); ++j)
+        {
+          // Populate the "filters" info, in case this CIAO_Event_Service has
+          // one or more filters specified through descriptors
+          for (CORBA::ULong k = 0; k < this->esd_[j].filters.length (); ++k)
+            {
+              if (ACE_OS::strcmp (this->esd_[j].filters[k].name.in (),
+                                  filter_name) == 0)
+                {
+                  retv->length (len + 1);
+                  retv[len].name =  CORBA::string_dup ("EventFilter");
+                  retv[len].value <<= this->esd_[j].filters[k];
+                  break;
+                }
+            }
+        }
+    }
+  return retv.inout ();
 }

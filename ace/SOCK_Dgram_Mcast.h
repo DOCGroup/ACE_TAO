@@ -19,12 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_SOCKETS_BUILD_DLL
-# include "ace/ACE_Sockets_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Sockets_Export ACE_Export
-#endif  /* ACE_SOCKETS_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,6 +36,8 @@
 #  define ACE_SDM_LOCK ACE_SYNCH_MUTEX
 # endif /* ACE_SDM_LOCK */
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_SOCK_Dgram_Mcast
@@ -94,7 +91,7 @@
  *   alphanumeric form and <subscribe> will convert them into numbers via
  *   <ACE_OS::atoi>.
  */
-class ACE_Sockets_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
+class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
 public:
 
@@ -103,7 +100,7 @@ public:
    *
    * These control per-instance optional functionality.  They are set via
    * optional constructor arguments.
-   * Note: Certain option values are not valid for all environments (see
+   * @note Certain option values are not valid for all environments (see
    * comments in source file for environment-specific restrictions).  Default
    * values are always valid values for the compilation environment.
    */
@@ -409,6 +406,8 @@ private:
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Mcast.inl"

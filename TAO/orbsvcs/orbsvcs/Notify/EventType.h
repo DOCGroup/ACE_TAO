@@ -14,14 +14,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_EventType
@@ -93,8 +96,10 @@ protected:
   // The hash value computed.
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EventType.inl"
+#include "orbsvcs/Notify/EventType.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

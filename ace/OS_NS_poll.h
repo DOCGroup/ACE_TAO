@@ -33,9 +33,12 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
-namespace ACE_OS {
+namespace ACE_OS
+{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
@@ -48,6 +51,8 @@ namespace ACE_OS {
             const ACE_Time_Value &tv);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

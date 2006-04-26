@@ -5,10 +5,6 @@
 
 void Graph::graph (char *filename, Graphable_Element_List &data)
 {
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  ACE_UNUSED_ARG (filename);
-  ACE_UNUSED_ARG (data);
-#else
   data.sort ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Save graph to %C\n"), filename));
@@ -48,5 +44,4 @@ void Graph::graph (char *filename, Graphable_Element_List &data)
         }
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("\n")));
     }
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 }

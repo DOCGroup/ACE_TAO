@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "tao/CodecFactory/CodecFactory.h"
+#include "tao/Codeset/Codeset.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Argv_Type_Converter.h"
@@ -72,9 +73,122 @@ verify_data (Foo::Bar *original, Foo::Bar *extracted)
 }
 
 int
+test_codec (IOP::Codec_ptr codec)
+{
+  // ----------------------------------------------------------
+
+  // Test values to be placed in the test structure.
+  const CORBA::Long A = 1010;
+  const CORBA::Long B = -3427;
+  const CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
+  const CORBA::Char D[] = "I'm Batman.";
+  const CORBA::WChar* E = gen_wstring (25);
+
+  // Create the structure to be encoded.
+  Foo::Bar value;
+  value.A = A;
+  value.B = B;
+  value.C = C;
+  value.D = CORBA::string_dup (D);
+  value.E = CORBA::wstring_dup (E);
+
+  CORBA::Any data;
+  data <<= value;
+
+  // ----------------------------------------------------------
+
+  CORBA::OctetSeq_var encoded_data;
+  CORBA::Any_var decoded_data;
+  Foo::Bar *extracted_value = 0;
+
+  // Encode the structure into an octet sequence using the CDR
+  // enscapsulation Codec.
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Testing CDR encapsulation Codec encode()/decode()\n"
+              "=================================================\n"));
+
+  // Start out with the encode() method, i.e. the one that
+  // includes the TypeCode in the CDR encapsulation.
+  encoded_data = codec->encode (data
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
+          % ACE_CDR::MAX_ALIGNMENT) == 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nData for decoding are already aligned "
+                    "on MAX_ALIGNMENT.\n\n"));
+  // Extract the data from the octet sequence.
+  decoded_data = codec->decode (encoded_data.in ()
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  if (!(decoded_data.in() >>= extracted_value))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                        "ERROR: Unable to extract decoded data "
+                        "from Any\n"),
+                      -1);
+
+  // Verify that the extracted data matches the data that was
+  // originally encoded into the octet sequence.
+  if (::verify_data (&value, extracted_value) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                        "ERROR: Data extracted using "
+                        "IOP::Codec::decode() does not match "
+                        "original data.\n"),
+                      -1);
+
+      ACE_DEBUG ((LM_DEBUG,
+              "Testing CDR encapsulation Codec "
+              "encode_value()/decode_value()\n"
+              "================================"
+              "=============================\n"));
+
+  // Now use the encode_value() method, i.e. the one that does
+  // *not* include the TypeCode in the CDR encapsulation.
+  encoded_data = codec->encode_value (data
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
+          % ACE_CDR::MAX_ALIGNMENT) == 0)
+        ACE_DEBUG ((LM_WARNING,
+                    "\n"
+                    "WARNING: Data to be decoded is already aligned "
+                    "on MAX_ALIGNMENT.\n\n"));
+
+  // Extract the data from the octet sequence.
+  decoded_data = codec->decode_value (encoded_data.in (),
+                                      Foo::_tc_Bar
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  if (!(decoded_data.in() >>= extracted_value))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                        "ERROR: Unable to extract decoded data "
+                        "from Any\n"),
+                      -1);
+
+  // Verify that the extracted data matches the data that was
+  // originally encoded into the octet sequence.
+  if (::verify_data (&value, extracted_value) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                        "ERROR: Data extracted using "
+                        "IOP::Codec::decode_value() does not match "
+                        "original data.\n"),
+                      -1);
+
+  return 0;
+}
+
+int
+//main (int argc, char *argv[])
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter convert (argc, argv);
+
+  int retval = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -97,6 +211,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Set up a structure that contains information necessary to
+      // create a GIOP 1.1 CDR encapsulation Codec.
+      IOP::Encoding_1_2 encoding_1_2;
+      encoding_1_2.format = IOP::ENCODING_CDR_ENCAPS;
+      encoding_1_2.major_version = 1;
+      encoding_1_2.minor_version = 2;
+      encoding_1_2.char_codeset = 0x00010001U;
+      encoding_1_2.wchar_codeset = 0x00010109U;
+
+      // Obtain the CDR encapsulation Codec.
+      IOP::Codec_var codec_1_2 =
+        codec_factory->create_codec_with_codesets (encoding_1_2
+                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      retval = test_codec (codec_1_2.in ());
+
       // ----------------------------------------------------------
 
       // Set up a structure that contains information necessary to
@@ -112,110 +243,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // ----------------------------------------------------------
-
-      // Test values to be placed in the test structure.
-      const CORBA::Long A = 1010;
-      const CORBA::Long B = -3427;
-      const CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
-      const CORBA::Char D[] = "I'm Batman.";
-      const CORBA::WChar* E = gen_wstring (25);
-
-      // Create the structure to be encoded.
-      Foo::Bar value;
-      value.A = A;
-      value.B = B;
-      value.C = C;
-      value.D = CORBA::string_dup (D);
-      value.E = CORBA::wstring_dup (E);
-
-      CORBA::Any data;
-      data <<= value;
-
-      // ----------------------------------------------------------
-
-      CORBA::OctetSeq_var encoded_data;
-      CORBA::Any_var decoded_data;
-      Foo::Bar *extracted_value;
-
-      // Encode the structure into an octet sequence using the CDR
-      // enscapsulation Codec.
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Testing CDR encapsulation Codec encode()/decode()\n"
-                  "=================================================\n"));
-
-      // Start out with the encode() method, i.e. the one that
-      // includes the TypeCode in the CDR encapsulation.
-      encoded_data = codec->encode (data
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
-             % ACE_CDR::MAX_ALIGNMENT) == 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "\nData for decoding are already aligned "
-                        "on MAX_ALIGNMENT.\n\n"));
-      // Extract the data from the octet sequence.
-      decoded_data = codec->decode (encoded_data.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (!(decoded_data.in() >>= extracted_value))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Unable to extract decoded data "
-                           "from Any\n"),
-                          -1);
-
-      // Verify that the extracted data matches the data that was
-      // originally encoded into the octet sequence.
-      if (::verify_data (&value, extracted_value) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Data extracted using "
-                           "IOP::Codec::decode() does not match "
-                           "original data.\n"),
-                          -1);
-
-          ACE_DEBUG ((LM_DEBUG,
-                  "Testing CDR encapsulation Codec "
-                  "encode_value()/decode_value()\n"
-                  "================================"
-                  "=============================\n"));
-
-      // Now use the encode_value() method, i.e. the one that does
-      // *not* include the TypeCode in the CDR encapsulation.
-      encoded_data = codec->encode_value (data
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
-             % ACE_CDR::MAX_ALIGNMENT) == 0)
-            ACE_DEBUG ((LM_WARNING,
-                        "\n"
-                        "WARNING: Data to be decoded is already aligned "
-                        "on MAX_ALIGNMENT.\n\n"));
-
-      // Extract the data from the octet sequence.
-      decoded_data = codec->decode_value (encoded_data.in (),
-                                          Foo::_tc_Bar
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (!(decoded_data.in() >>= extracted_value))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Unable to extract decoded data "
-                           "from Any\n"),
-                          -1);
-
-      // Verify that the extracted data matches the data that was
-      // originally encoded into the octet sequence.
-      if (::verify_data (&value, extracted_value) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Data extracted using "
-                           "IOP::Codec::decode_value() does not match "
-                           "original data.\n"),
-                          -1);
-        }
+      retval = test_codec (codec.in ());
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -226,5 +255,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Codec test passed.\n"));
 
-  return 0;
+  return retval;
 }

@@ -19,23 +19,25 @@
 
 #include /**/ "ace/pre.h"
 
-#include "UserException.h"
+#include "tao/UserException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orb_typesC.h"
-#include "objectid.h"
-#include "CORBA_methods.h"
-#include "VarOut_T.h"
-#include "Seq_Var_T.h"
-#include "Seq_Out_T.h"
-#include "Sequence_T.h"
-#include "Policy_ForwardC.h"
+#include "tao/orb_typesC.h"
+#include "tao/objectid.h"
+#include "tao/CORBA_methods.h"
+#include "tao/VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/Sequence_T.h"
+#include "tao/Policy_ForwardC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef enum
 {
@@ -55,7 +57,6 @@ class TAO_OutputCDR;
 class TAO_Stub;
 class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
-class TAO_SeqElem_String_Manager;
 
 // ****************************************************************
 
@@ -90,17 +91,14 @@ namespace CORBA
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
 
   typedef
-    TAO_MngSeq_Var_T<
-        ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
+    TAO_VarSeq_Var_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        ORB_ObjectIdList,
-        ORB_ObjectIdList_var,
-        TAO_SeqElem_String_Manager
+    TAO_Seq_Out_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
 
@@ -135,6 +133,30 @@ namespace CORBA
   typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
 
   typedef CORBA::Short ValueModifier;
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
+    // Typedefs for CORBA::RequestSeq, which is an argument of
+    // send_multiple_requests_*().
+
+    typedef
+      TAO::unbounded_object_reference_sequence<
+          CORBA::Request, CORBA::Request_var
+        >
+      RequestSeq;
+
+    typedef
+      TAO_VarSeq_Var_T<
+          RequestSeq
+        >
+      RequestSeq_var;
+
+    typedef
+      TAO_Seq_Out_T<
+          RequestSeq
+        >
+      RequestSeq_out;
+#endif
 
   /**
    * @class ORB
@@ -231,34 +253,6 @@ namespace CORBA
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-    // Typedefs for CORBA::ORB::RequestSeq, which is an argument of
-    // send_multiple_requests_*().
-
-    typedef
-      TAO_Unbounded_Pseudo_Sequence<
-          CORBA::Request
-        >
-      RequestSeq;
-
-    typedef
-      TAO_VarSeq_Var_T<
-          RequestSeq,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
-        >
-      RequestSeq_var;
-
-    typedef
-      TAO_Seq_Out_T<
-          RequestSeq,
-          RequestSeq_var,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
-        >
-      RequestSeq_out;
-
     void create_list (CORBA::Long count,
                       CORBA::NVList_ptr &new_list
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -290,10 +284,10 @@ namespace CORBA
       CORBA::ServiceInformation_out service_information
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    void send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &req
+    void send_multiple_requests_oneway (const CORBA::RequestSeq &req
                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    void send_multiple_requests_deferred (const CORBA::ORB::RequestSeq &req
+    void send_multiple_requests_deferred (const CORBA::RequestSeq &req
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     void get_next_response (CORBA::Request_ptr &req
@@ -481,9 +475,9 @@ namespace CORBA
      * appropriate @c ACE_Time_Value as described in run().
      **/
     void perform_work (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value &
+    void perform_work (ACE_Time_Value &tv
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value *
+    void perform_work (ACE_Time_Value *tv
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /**
@@ -494,7 +488,7 @@ namespace CORBA
      * deactivation or other operations associated with object adapters)
      * has completed.
      */
-    void shutdown (CORBA::Boolean wait_for_completion = 0
+    void shutdown (CORBA::Boolean wait_for_completion = false
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /**
@@ -645,7 +639,7 @@ namespace CORBA
     CORBA::ULong refcount_;
 
     /// The ORB_Core that created us....
-    TAO_ORB_Core *orb_core_;
+    TAO_ORB_Core * orb_core_;
 
     /// Decides whether to use the URL notation or to use IOR notation.
     CORBA::Boolean use_omg_ior_format_;
@@ -670,6 +664,7 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"

@@ -1,3 +1,5 @@
+// -*- IDL -*-
+
 /**
  * @file Domain.pidl
  *
@@ -19,6 +21,8 @@
  *          -Wb,export_include=TAO_Export.h
  *          -Wb,pre_include="ace/pre.h"
  *          -Wb,post_include="ace/post.h"
+ *          -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ *          -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
  *          Domain.pidl
  *
  *   2. Then patch the generated code.  This patch (a) eliminates
@@ -43,8 +47,8 @@
 #ifndef TAO_CORBA_DOMAIN_PIDL
 #define TAO_CORBA_DOMAIN_PIDL
 
-#include <Policy.pidl>
-#include <InterfaceDef.pidl>
+#include "tao/Policy.pidl"
+#include "tao/InterfaceDef.pidl"
 
 #pragma prefix "omg.org"
 

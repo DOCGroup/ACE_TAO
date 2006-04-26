@@ -26,19 +26,26 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
-#include "PS_CurrentC.h"
+#include "tao/PortableServer/PS_CurrentC.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -64,7 +71,7 @@ TAO::Objref_Traits<PortableServer::Current>::release (
     PortableServer::Current_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::Current_ptr
@@ -73,20 +80,20 @@ TAO::Objref_Traits<PortableServer::Current>::nil (void)
   return PortableServer::Current::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<PortableServer::Current>::marshal (
     PortableServer::Current_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::Current::NoContext::NoContext (void)
-  : CORBA::UserException (
+  : ::CORBA::UserException (
         "IDL:omg.org/PortableServer/Current/NoContext:2.3",
         "NoContext"
       )
@@ -98,7 +105,7 @@ PortableServer::Current::NoContext::~NoContext (void)
 }
 
 PortableServer::Current::NoContext::NoContext (const ::PortableServer::Current::NoContext &_tao_excp)
-  : CORBA::UserException (
+  : ::CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -108,7 +115,7 @@ PortableServer::Current::NoContext::NoContext (const ::PortableServer::Current::
 PortableServer::Current::NoContext&
 PortableServer::Current::NoContext::operator= (const ::PortableServer::Current::NoContext &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -120,28 +127,28 @@ void PortableServer::Current::NoContext::_tao_any_destructor (void *_tao_void_po
 }
 
 PortableServer::Current::NoContext *
-PortableServer::Current::NoContext::_downcast (CORBA::Exception *_tao_excp)
+PortableServer::Current::NoContext::_downcast ( ::CORBA::Exception *_tao_excp)
 {
   return dynamic_cast<NoContext *> (_tao_excp);
 }
 
 const PortableServer::Current::NoContext *
-PortableServer::Current::NoContext::_downcast (CORBA::Exception const *_tao_excp)
+PortableServer::Current::NoContext::_downcast ( ::CORBA::Exception const *_tao_excp)
 {
   return dynamic_cast<const NoContext *> (_tao_excp);
 }
 
-CORBA::Exception *PortableServer::Current::NoContext::_alloc (void)
+::CORBA::Exception *PortableServer::Current::NoContext::_alloc (void)
 {
-  CORBA::Exception *retval = 0;
+  ::CORBA::Exception *retval = 0;
   ACE_NEW_RETURN (retval, ::PortableServer::Current::NoContext, 0);
   return retval;
 }
 
-CORBA::Exception *
+::CORBA::Exception *
 PortableServer::Current::NoContext::_tao_duplicate (void) const
 {
-  CORBA::Exception *result = 0;
+  ::CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::PortableServer::Current::NoContext (*this),
@@ -160,7 +167,7 @@ void PortableServer::Current::NoContext::_tao_encode (
     ACE_ENV_ARG_DECL
   ) const
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  ACE_THROW ( ::CORBA::MARSHAL ());
 }
 
 void PortableServer::Current::NoContext::_tao_decode (
@@ -168,14 +175,32 @@ void PortableServer::Current::NoContext::_tao_decode (
     ACE_ENV_ARG_DECL
   )
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  ACE_THROW ( ::CORBA::MARSHAL ());
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::Current::NoContext::_tao_type (void) const
+::CORBA::TypeCode_ptr PortableServer::Current::NoContext::_tao_type (void) const
 {
   return ::PortableServer::Current::_tc_NoContext;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:89
+
+static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableServer_Current_NoContext = 0;
+static TAO::TypeCode::Struct<char const *,
+                      ::CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_Current_NoContext (
+    ::CORBA::tk_except,
+    "IDL:omg.org/PortableServer/Current/NoContext:2.3",
+    "NoContext",
+    _tao_fields_PortableServer_Current_NoContext,
+    0);
+
+::CORBA::TypeCode_ptr const PortableServer::Current::_tc_NoContext =
+  &_tao_tc_PortableServer_Current_NoContext;
 
 PortableServer::Current::Current (void)
 {}
@@ -183,17 +208,9 @@ PortableServer::Current::Current (void)
 PortableServer::Current::~Current (void)
 {}
 
-void 
-PortableServer::Current::_tao_any_destructor (void *_tao_void_pointer)
-{
-  Current *_tao_tmp_pointer =
-    static_cast<Current *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 PortableServer::Current_ptr
 PortableServer::Current::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -204,7 +221,7 @@ PortableServer::Current::_narrow (
 
 PortableServer::Current_ptr
 PortableServer::Current::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -216,21 +233,21 @@ PortableServer::Current::_unchecked_narrow (
 PortableServer::Current_ptr
 PortableServer::Current::_duplicate (Current_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::Current::_tao_release (Current_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableServer::Current::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -268,8 +285,27 @@ const char* PortableServer::Current::_interface_repository_id (void) const
   return "IDL:omg.org/PortableServer/Current:2.3";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableServer::Current::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_Current (
+    ::CORBA::tk_local_interface,
+    "IDL:omg.org/PortableServer/Current:2.3",
+    "Current");
+
+namespace PortableServer
+{
+  ::CORBA::TypeCode_ptr const _tc_Current =
+    &_tao_tc_PortableServer_Current;
+}
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL

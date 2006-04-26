@@ -64,6 +64,9 @@ Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
           this->callback_->callback_method (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
+          // If the cache size has gotten larger this indicates that
+          // the connection isn't being shared properly, i.e., a new
+          // connection was created, so we'll abort.
           if (this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size () > 1)
             {
               ACE_ERROR ((LM_ERROR,

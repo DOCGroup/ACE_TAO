@@ -109,6 +109,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
+      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::ULong number_called =
         Echo_Server_Request_Interceptor::server_interceptor_check_;
 

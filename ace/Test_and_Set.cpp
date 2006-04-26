@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_TEST_AND_SET_C
-#define ACE_TEST_AND_SET_C
+#ifndef ACE_TEST_AND_SET_CPP
+#define ACE_TEST_AND_SET_CPP
 
 #include "ace/Test_and_Set.h"
 #include "ace/Guard_T.h"
@@ -10,7 +10,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Test_and_Set, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class TYPE>
 ACE_Test_and_Set<ACE_LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
@@ -46,4 +46,6 @@ ACE_Test_and_Set<ACE_LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
   return 0;
 }
 
-#endif /* ACE_TEST_AND_SET_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_TEST_AND_SET_CPP */

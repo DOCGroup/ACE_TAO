@@ -1,4 +1,4 @@
-#include "Hash_Iterator_i.h"
+#include "orbsvcs/Log/Hash_Iterator_i.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 #include "orbsvcs/DsLogAdminC.h"
@@ -7,14 +7,18 @@ ACE_RCSID (Log,
            Hash_Iterator_i,
            "$Id$")
 
-TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (ACE_Reactor* reactor,
-                                          TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
-                                          TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
-                                          CORBA::ULong start,
-                                          const char *constraint,
-                                          CORBA::ULong max_rec_list_len
-                                          )
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
+  ACE_Reactor* reactor,
+  TAO_Hash_LogRecordStore* recordstore,
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
+  CORBA::ULong start,
+  const char *constraint,
+  CORBA::ULong max_rec_list_len)
   : TAO_Iterator_i(reactor),
+    recordstore_ (recordstore),
     iter_ (iter),
     iter_end_ (iter_end),
     current_position_(start),
@@ -36,6 +40,12 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   if (position < current_position_)
     {
       ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
@@ -95,3 +105,5 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
 
   return rec_list;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

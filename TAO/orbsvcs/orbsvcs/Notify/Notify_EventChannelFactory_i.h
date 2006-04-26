@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  * @file Notify_EventChannelFactory_i.h
@@ -14,11 +16,13 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_EventChannelFactory_i
@@ -33,6 +37,8 @@ public:
   /// Also creates a resource factory and assigns it this default_POA.
   static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* NOTIFY_EVENTCHANNELFACTORY_I_H */

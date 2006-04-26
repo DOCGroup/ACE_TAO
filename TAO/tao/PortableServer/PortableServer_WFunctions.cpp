@@ -1,10 +1,12 @@
-#include "PortableServer_WFunctions.h"
+#include "tao/PortableServer/PortableServer_WFunctions.h"
 
 ACE_RCSID (PortableServer,
            PortableServer_WFunctions,
            "$Id$")
 
 #include "ace/OS_NS_string.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -66,3 +68,4 @@ namespace PortableServer
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

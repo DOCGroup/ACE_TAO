@@ -131,11 +131,13 @@ virtual int register_handler (ACE_HANDLE handle,
 
 </file>
 
+<!-- 
 <file name="Select_Reactor_T.inl">
 
 <remove>#include "ace/Reactor.h"</remove>
 
 </file>
+-->
 
 <!-- Transformations to Reactor_Token_T.h -->
 <file name="Reactor_Token_T.h">

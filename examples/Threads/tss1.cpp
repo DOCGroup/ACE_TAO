@@ -108,14 +108,6 @@ int Tester<ACE_SYNCH_USE>::close (u_long)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<Errno>;
-template class Tester<ACE_MT_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<Errno>
-#pragma instantiate Tester<ACE_MT_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {

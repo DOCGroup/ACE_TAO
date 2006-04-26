@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Timeout_Filter.h
  *
@@ -17,13 +18,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter.h"
+#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
@@ -82,10 +85,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Timeout_Filter
-                              (const TAO_EC_Timeout_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Timeout_Filter& operator=
-                              (const TAO_EC_Timeout_Filter&))
+  TAO_EC_Timeout_Filter (const TAO_EC_Timeout_Filter&);
+  TAO_EC_Timeout_Filter& operator= (const TAO_EC_Timeout_Filter&);
 
 private:
   /// The event channel.
@@ -108,8 +109,10 @@ private:
   long id_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Timeout_Filter.i"
+#include "orbsvcs/Event/EC_Timeout_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

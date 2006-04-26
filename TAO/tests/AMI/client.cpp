@@ -112,10 +112,10 @@ public:
                       out_l));
         }
 
-      number_of_replies--;
+      --number_of_replies;
     };
 
-   void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder
+   void foo_excep (::Messaging::ExceptionHolder * excep_holder
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -124,7 +124,7 @@ public:
                   "Callback method <foo_excep> called: \n"));
       ACE_TRY
         {
-          excep_holder->raise_foo (ACE_ENV_SINGLE_ARG_PARAMETER);
+          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -145,7 +145,7 @@ public:
                   result));
     };
 
-  void get_yadda_excep (A::AMI_AMI_TestExceptionHolder *
+  void get_yadda_excep (::Messaging::ExceptionHolder *
                         ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -160,7 +160,7 @@ public:
                   "Callback method <set_yadda> called: \n"));
     };
 
-  void set_yadda_excep (A::AMI_AMI_TestExceptionHolder *
+  void set_yadda_excep (::Messaging::ExceptionHolder *
                         ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -179,7 +179,7 @@ public:
                 "Callback method <set_yadda_excep> called: \n"));
   }
 
-  void inout_arg_test_excep (A::AMI_AMI_TestExceptionHolder *
+  void inout_arg_test_excep (::Messaging::ExceptionHolder *
                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {

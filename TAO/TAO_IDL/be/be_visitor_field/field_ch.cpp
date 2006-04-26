@@ -22,8 +22,8 @@
 #include "be_visitor_sequence/sequence_ch.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be_visitor_field, 
-           field_ch, 
+ACE_RCSID (be_visitor_field,
+           field_ch,
            "$Id$")
 
 // **********************************************
@@ -281,12 +281,12 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
     {
       bt = node;
     }
-  
+
   // If we are a typedef of a basic type, ACE_NESTED_CLASS might
   // be emitted as part of the type name, in which case the '::'
-  // would be incorrect for certain expansions of the macro. 
+  // would be incorrect for certain expansions of the macro.
   if (td == 0)
-    {  
+    {
       *os << "::";
     }
 
@@ -362,7 +362,7 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
     {
       // Put the field node into the (anonymous) sequence node, to be
       // used later for unique name generation.
-      be_field *member_node = 
+      be_field *member_node =
         be_field::narrow_from_decl (this->ctx_->node ());
       node->field_node (member_node);
 
@@ -430,11 +430,11 @@ be_visitor_field_ch::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "TAO_String_Manager";
+      *os << "TAO::String_Manager";
     }
   else
     {
-      *os << "TAO_WString_Manager";
+      *os << "TAO::WString_Manager";
     }
 
   return 0;
@@ -603,5 +603,3 @@ be_visitor_field_ch::visit_eventtype_fwd (
 {
   return this->visit_valuetype_fwd (node);
 }
-
-

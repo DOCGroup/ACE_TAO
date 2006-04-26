@@ -16,8 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Naming_Context_Interface.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/SString.h"
@@ -34,6 +34,8 @@
 #if defined (interface)
 #undef interface
 #endif  // interface
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Bindings_Map
@@ -270,6 +272,8 @@ protected:
    */
   ACE_CString poa_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

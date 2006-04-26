@@ -9,6 +9,7 @@ project(POA_server*): taoserver {
 
 project(POA_client*): taoserver {
   exename = client
+  after += POA_server*
   Source_Files {
     client.cpp
   }

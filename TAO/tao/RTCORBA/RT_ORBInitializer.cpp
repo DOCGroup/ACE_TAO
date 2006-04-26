@@ -1,4 +1,4 @@
-#include "RT_ORBInitializer.h"
+#include "tao/RTCORBA/RT_ORBInitializer.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -11,21 +11,21 @@ ACE_RCSID (RTCORBA,
 #include "tao/RTCORBA/RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
-#include "RT_Policy_i.h"
-#include "RT_PolicyFactory.h"
-#include "RT_Protocols_Hooks.h"
-#include "Priority_Mapping_Manager.h"
-#include "Network_Priority_Mapping_Manager.h"
-#include "RT_ORB_Loader.h"
-#include "RT_Stub_Factory.h"
-#include "RT_Endpoint_Selector_Factory.h"
-#include "Continuous_Priority_Mapping.h"
-#include "Linear_Priority_Mapping.h"
-#include "Direct_Priority_Mapping.h"
-#include "Linear_Network_Priority_Mapping.h"
-#include "RT_ORB.h"
-#include "RT_Current.h"
-#include "RT_Thread_Lane_Resources_Manager.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
+#include "tao/RTCORBA/RT_PolicyFactory.h"
+#include "tao/RTCORBA/RT_Protocols_Hooks.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/RT_ORB_Loader.h"
+#include "tao/RTCORBA/RT_Stub_Factory.h"
+#include "tao/RTCORBA/RT_Endpoint_Selector_Factory.h"
+#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Priority_Mapping.h"
+#include "tao/RTCORBA/Direct_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Network_Priority_Mapping.h"
+#include "tao/RTCORBA/RT_ORB.h"
+#include "tao/RTCORBA/RT_Current.h"
+#include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
@@ -36,24 +36,28 @@ ACE_RCSID (RTCORBA,
 #include "ace/Svc_Conf.h"
 #include "ace/Sched_Params.h"
 
-static const char *rt_poa_factory_name = "TAO_RT_Object_Adapter_Factory";
-static const ACE_TCHAR *rt_poa_factory_directive =
+static const char rt_poa_factory_name[] = "TAO_RT_Object_Adapter_Factory";
+static const ACE_TCHAR rt_poa_factory_directive[] =
   ACE_DYNAMIC_SERVICE_DIRECTIVE(
     "TAO_RT_Object_Adapter_Factory",
     "TAO_RTPortableServer",
     "_make_TAO_RT_Object_Adapter_Factory",
     "");
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
                                               int network_priority_mapping_type,
                                               int ace_sched_policy,
                                               long sched_policy,
-                                              long scope_policy)
+                                              long scope_policy,
+                                              ACE_Time_Value const &dynamic_thread_idle_timeout)
   : priority_mapping_type_ (priority_mapping_type),
     network_priority_mapping_type_ (network_priority_mapping_type),
     ace_sched_policy_ (ace_sched_policy),
     sched_policy_ (sched_policy),
-    scope_policy_ (scope_policy)
+    scope_policy_ (scope_policy),
+    dynamic_thread_idle_timeout_ (dynamic_thread_idle_timeout)
 {
 }
 
@@ -117,7 +121,6 @@ TAO_RT_ORBInitializer::pre_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
-
 
   TAO_Priority_Mapping_Manager_var safe_manager = manager;
 
@@ -184,7 +187,8 @@ TAO_RT_ORBInitializer::pre_init (
   // Create the RT_ORB.
   CORBA::Object_ptr rt_orb = CORBA::Object::_nil ();
   ACE_NEW_THROW_EX (rt_orb,
-                    TAO_RT_ORB (tao_info->orb_core ()),
+                    TAO_RT_ORB (tao_info->orb_core (),
+                    dynamic_thread_idle_timeout_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
@@ -257,7 +261,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all RTCORBA related policy
   // types since a single policy factory is used to create each of
   // the different types of RTCORBA policies.
-  CORBA::PolicyType type[] = {
+  static CORBA::PolicyType const type[] = {
     RTCORBA::PRIORITY_MODEL_POLICY_TYPE,
     RTCORBA::THREADPOOL_POLICY_TYPE,
     RTCORBA::SERVER_PROTOCOL_POLICY_TYPE,
@@ -269,7 +273,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
   const CORBA::PolicyType *end =
     type + sizeof (type) / sizeof (type[0]);
 
-  for (CORBA::PolicyType *i = type;
+  for (CORBA::PolicyType const * i = type;
        i != end;
        ++i)
     {
@@ -302,5 +306,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

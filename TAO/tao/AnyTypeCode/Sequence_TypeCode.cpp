@@ -11,6 +11,7 @@
 # include "tao/AnyTypeCode/Sequence_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename TypeCodeType, class RefCountPolicy>
 bool
@@ -144,5 +145,6 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::content_type_i (
       Traits<TypeCodeType>::get_typecode (this->content_type_));
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_SEQUENCE_TYPECODE_CPP */

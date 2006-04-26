@@ -8,7 +8,9 @@ ACE_RCSID (orbsvcs,
            Runtime_Scheduler,
            "$Id$")
 
-  // Constructor. Initialize the data from the POD_RT_Info array.
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Constructor. Initialize the data from the POD_RT_Info array.
 
 ACE_Runtime_Scheduler::
 ACE_Runtime_Scheduler (int config_count,
@@ -99,17 +101,17 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle
 // Set characteristics of the RT_Info corresponding to the passed handle.
 
 void
-ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
-                                 RtecScheduler::Criticality_t criticality,
-                                 RtecScheduler::Time time,
-                                 RtecScheduler::Time typical_time,
-                                 RtecScheduler::Time cached_time,
-                                 RtecScheduler::Period_t period,
-                                 RtecScheduler::Importance_t importance,
-                                 RtecScheduler::Quantum_t quantum,
-                                 CORBA::Long threads,
-                                 RtecScheduler::Info_Type_t info_type
-                                 ACE_ENV_ARG_DECL)
+ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
+                            ::RtecScheduler::Criticality_t criticality,
+                            ::RtecScheduler::Time time,
+                            ::RtecScheduler::Time typical_time,
+                            ::RtecScheduler::Time cached_time,
+                            ::RtecScheduler::Period_t period,
+                            ::RtecScheduler::Importance_t importance,
+                            ::RtecScheduler::Quantum_t quantum,
+                            ::RtecScheduler::Threads_t threads,
+                            ::RtecScheduler::Info_Type_t info_type
+                            ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
 {
@@ -147,7 +149,7 @@ ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
                               RtecScheduler::Period_t period,
                               RtecScheduler::Importance_t importance,
                               RtecScheduler::Quantum_t quantum,
-                              CORBA::Long threads,
+                              RtecScheduler::Threads_t threads,
                               RtecScheduler::Info_Type_t info_type
                               ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
@@ -548,3 +550,5 @@ ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*co
   // or a proprietary ACE_NOTSUP; -- Bala
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

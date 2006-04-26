@@ -1,9 +1,9 @@
-// SOCK_Acceptor.cpp
 // $Id$
 
 #include "ace/SOCK_Acceptor.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_Errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_fcntl.h"
@@ -17,6 +17,8 @@
 #endif  // ACE_HAS_WINCE
 
 ACE_RCSID(ace, SOCK_Acceptor, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Acceptor)
 
@@ -285,6 +287,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
       || ACE_OS::listen (this->get_handle (),
                          backlog) == -1)
     {
+      ACE_Errno_Guard g (errno);    // Preserve across close() below.
       error = 1;
       this->close ();
     }
@@ -401,3 +404,5 @@ ACE_SOCK_Acceptor::close (void)
 {
   return ACE_SOCK::close ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

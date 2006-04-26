@@ -70,23 +70,6 @@ public:
       PortableInterceptor::IORInfo_ptr info
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void adapter_manager_state_changed (
-      PortableInterceptor::AdapterManagerId id,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void adapter_state_changed (
-      const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
 protected:

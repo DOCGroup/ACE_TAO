@@ -1,4 +1,4 @@
-#include "RT_Policy_Validator.h"
+#include "tao/RTPortableServer/RT_Policy_Validator.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -17,6 +17,9 @@
 ACE_RCSID (RTPortableServer,
            RT_Policy_Validator,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POA_RT_Policy_Validator::TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core),
@@ -593,5 +596,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
 
   return thread_pool;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */

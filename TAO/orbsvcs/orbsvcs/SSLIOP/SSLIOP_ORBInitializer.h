@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,6 +35,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SSLIOP
@@ -47,9 +49,9 @@ namespace TAO
      * ORB initializer that registers all SSLIOP-specific interceptors and
      * object references.
      */
-    class TAO_SSLIOP_Export ORBInitializer :
-      public virtual PortableInterceptor::ORBInitializer,
-      public virtual TAO_Local_RefCounted_Object
+    class ORBInitializer
+      : public virtual PortableInterceptor::ORBInitializer,
+        public virtual TAO_Local_RefCounted_Object
     {
     public:
 
@@ -86,6 +88,8 @@ namespace TAO
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 //=============================================================================
@@ -16,13 +17,13 @@
 #define TAO_DYNSEQUENCE_I_H
 #include /**/ "ace/pre.h"
 
-#include "DynamicAny.h"
+#include "tao/DynamicAny/DynamicAny.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DynCommon.h"
+#include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
 #include "ace/Containers.h"
 
@@ -30,6 +31,8 @@
 # pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_DynSequence_i
@@ -171,6 +174,8 @@ private:
   /// Each component is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 # pragma warning(pop)

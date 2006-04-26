@@ -51,7 +51,7 @@ public:
     ACE_NEW_RETURN (out_ptr,
                     CORBA::Any,
                     0);
-    (*out_ptr) <<= CORBA::string_dup (any_str);
+    (*out_ptr) <<= any_str;
     outany = out_ptr;
 
     return CORBA::string_dup (name);

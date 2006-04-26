@@ -528,17 +528,6 @@ AH_TEMPLATE([ACE_HAS_POWERPC_TIMER],
 
 AH_TEMPLATE([ACE_HAS_PRUSAGE_T],[Platform supports the prusage_t struct])
 
-AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT4],
-[Platform supports POSIX Threads .4a Draft 4])
-
-AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT6],
-[Platform supports POSIX Threads .4a Draft 6])
-
-AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT7],a
-[Platform supports POSIX Threads .1c Draft 7])
-
-AH_TEMPLATE([ACE_HAS_PTHREADS_STD],[Platform supports POSIX.1c-1995 threads])
-
 AH_TEMPLATE([ACE_HAS_PTHREADS_UNIX98_EXT],
 [Platform has the UNIX98 extensions to Pthreads (rwlocks)])
 
@@ -613,9 +602,6 @@ AH_TEMPLATE([ACE_HAS_REGEX],
 AH_TEMPLATE([ACE_HAS_SEMUN],
 [Compiler/platform defines a union semun for SysV shared memory ])
 
-AH_TEMPLATE([ACE_HAS_SET_T_ERRNO],
-[Platform has a function to set t_errno (e.g., Tandem).])
-
 AH_TEMPLATE([ACE_HAS_SHM_OPEN],[Platform has shm_open()])
 
 AH_TEMPLATE([ACE_HAS_SIGISMEMBER_BUG],
@@ -631,8 +617,6 @@ AH_TEMPLATE([ACE_HAS_SIGNAL_OBJECT_AND_WAIT],
 
 AH_TEMPLATE([ACE_HAS_SIG_C_FUNC],
 [Compiler requires extern "C" functions for signals.])
-
-AH_TEMPLATE([ACE_HAS_SIN_LEN],[Platform supports new BSD inet_addr len field.])
 
 AH_TEMPLATE([ACE_HAS_SIZET_SOCKET_LEN],
 [OS/compiler uses size_t * rather than int * for socket lengths])
@@ -653,9 +637,6 @@ AH_TEMPLATE([ACE_HAS_STANDARD_CPP_LIBRARY],
 [Platform/compiler supports Standard C++ Library])
 
 AH_TEMPLATE([ACE_HAS_STRBUF_T],[Compiler/platform supports struct strbuf])
-
-AH_TEMPLATE([ACE_HAS_STRDUP_EMULATION],
-[Platform/compiler lacks strdup() (e.g., VxWorks, Chorus, WinCE)])
 
 AH_TEMPLATE([ACE_HAS_STRPTIME],[Compile ACE_OS::strptime() wrapper into ACE.])
 
@@ -1016,9 +997,6 @@ AH_TEMPLATE([ACE_LACKS_UNIX_SIGNALS],
 AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
 [Platform lacks struct utsname (e.g., Win32 and VxWorks)])
 
-AH_TEMPLATE([ACE_HAS_3_PARAM_WCSTOK],
-[Platform's wcstok() takes 3 arguments])
-
 AH_TEMPLATE([ACE_LACKS_WILDCARD_BIND],
 [The bind() call will not select the port if it's 0.])
 
@@ -1047,9 +1025,6 @@ AH_TEMPLATE([ACE_NEEDS_REGEXPR_H],
 
 AH_TEMPLATE([ACE_NEEDS_SCHED_H],
 [Platform needs to #include <sched.h> to get thread scheduling defs.])
-
-AH_TEMPLATE([ACE_LACKS_SYSTIME_H],
-[<time.h> doesn't automatically #include <sys/time.h>])
 
 AH_TEMPLATE([ACE_NEW_THROWS_EXCEPTIONS],
 [Compiler's 'new' throws exception on failure (ANSI C++ behavior).])

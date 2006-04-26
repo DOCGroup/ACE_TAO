@@ -6,6 +6,7 @@
 //
 // $Id$
 
+#include "ace/Init_ACE.h"
 #include "pch.h"
 #include "wx/resource.h"
 #include "wxNamingViewerFrame.h"

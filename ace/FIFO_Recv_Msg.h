@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls
 class ACE_Str_Buf;
@@ -50,14 +52,14 @@ public:
   /// Open up a record-oriented named pipe for reading.
   ACE_FIFO_Recv_Msg (const ACE_TCHAR *rendezvous,
                      int flags = O_CREAT | O_RDONLY,
-                     int perms = ACE_DEFAULT_FILE_PERMS,
+                     mode_t perms = ACE_DEFAULT_FILE_PERMS,
                      int persistent = 1,
                      LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a record-oriented named pipe for reading.
   int open (const ACE_TCHAR *rendezvous,
             int flags = O_CREAT | O_RDONLY,
-            int perms = ACE_DEFAULT_FILE_PERMS,
+            mode_t perms = ACE_DEFAULT_FILE_PERMS,
             int persistent = 1,
             LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -125,6 +127,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO_Recv_Msg.inl"

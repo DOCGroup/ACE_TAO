@@ -6,6 +6,8 @@
 #include "ace/OS_Errno.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
+/* Need to see if ACE_HAS_BUILTIN_ATOMIC_OP defined */
+#include "ace/Atomic_Op.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Event_Handler.inl"
@@ -13,15 +15,17 @@
 
 ACE_RCSID(ace, Event_Handler, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Implement conceptually abstract virtual functions in the base class
 // so derived classes don't have to implement unused ones.
 
 ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
                                       int p)
-  : reference_count_ (1)
-  , priority_ (p)
-  , reactor_ (r)
-  , reference_counting_policy_ (Reference_Counting_Policy::DISABLED)
+  : reference_count_ (1),
+    priority_ (p),
+    reactor_ (r),
+    reference_counting_policy_ (Reference_Counting_Policy::DISABLED)
 {
   // ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
 }
@@ -244,23 +248,21 @@ ACE_Event_Handler::reference_counting_policy (void)
   return this->reference_counting_policy_;
 }
 
-#if !defined (ACE_HAS_WINCE)
+//#if !defined (ACE_HAS_WINCE)
 
 ACE_THR_FUNC_RETURN
 ACE_Event_Handler::read_adapter (void *args)
 {
   ACE_Event_Handler *this_ptr = static_cast<ACE_Event_Handler *> (args);
+  ACE_Reactor *r = this_ptr->reactor ();
 
-  ACE_HANDLE handle = this_ptr->get_handle ();
-  if (handle == ACE_INVALID_HANDLE)
-    handle = ACE_STDIN;
-
-  while (this_ptr->handle_input (handle) != -1)
+  while (this_ptr->handle_input (ACE_STDIN) != -1)
     continue;
 
-  this_ptr->handle_close (handle,
-                          ACE_Event_Handler::READ_MASK);
-  this_ptr->reactor ()->notify ();
+  this_ptr->handle_close (ACE_STDIN, ACE_Event_Handler::READ_MASK);
+  // It's possible for handle_close() to "delete this" so we need to
+  // cache the reactor pointer and use it here.
+  r->notify ();
 
   return 0;
 }
@@ -304,7 +306,7 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 #endif /* ACE_WIN32 */
 }
 
-#endif /* ACE_HAS_WINCE */
+//#endif /* ACE_HAS_WINCE */
 
 ACE_Event_Handler_var::ACE_Event_Handler_var (void)
   : ptr_ (0)
@@ -404,3 +406,5 @@ ACE_Notification_Buffer::ACE_Notification_Buffer (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

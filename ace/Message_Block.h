@@ -26,6 +26,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 class ACE_Allocator;
 class ACE_Data_Block;
@@ -521,25 +523,25 @@ public:
   size_t space (void) const;
   //@}
 
-  // = <ACE_Data_Block> methods.
+  // = ACE_Data_Block methods.
 
   /**
-   * Get a pointer to the data block. Note that the <ACE_Message_Block>
+   * Get a pointer to the data block. Note that the ACE_Message_Block
    * still references the block; this call does not change the reference
    * count.
    */
   ACE_Data_Block *data_block (void) const;
 
   /**
-   * Set a new data block pointer. The original <ACE_Data_Block> is released
+   * Set a new data block pointer. The original ACE_Data_Block is released
    * as a result of this call. If you need to keep the original block, call
-   * <replace_data_block> instead. Upon return, this <ACE_Message_Block>
-   * holds a pointer to the new <ACE_Data_Block>, taking over the reference
+   * <replace_data_block> instead. Upon return, this ACE_Message_Block
+   * holds a pointer to the new ACE_Data_Block, taking over the reference
    * you held on it prior to the call.
    */
   void data_block (ACE_Data_Block *);
 
-  /// Set a new data block pointer. A pointer to the original <ACE_Data_Block>
+  /// Set a new data block pointer. A pointer to the original ACE_Data_Block
   /// is returned, and not released (as it is with <data_block>).
   ACE_Data_Block *replace_data_block (ACE_Data_Block*);
 
@@ -550,14 +552,14 @@ public:
   /// Set the continuation field.
   void cont (ACE_Message_Block *);
 
-  // = Pointer to the <Message_Block> directly ahead in the <ACE_Message_Queue>.
+  // = Pointer to the <Message_Block> directly ahead in the ACE_Message_Queue.
   /// Get link to next message.
   ACE_Message_Block *next (void) const;
 
   /// Set link to next message.
   void next (ACE_Message_Block *);
 
-  // = Pointer to the <Message_Block> directly behind in the <ACE_Message_Queue>.
+  // = Pointer to the <Message_Block> directly behind in the ACE_Message_Queue.
   /// Get link to prev message.
   ACE_Message_Block *prev (void) const;
 
@@ -664,7 +666,7 @@ private:
  * @class ACE_Data_Block
  *
  * @brief Stores the data payload that is accessed via one or more
- * <ACE_Message_Block>s.
+ * ACE_Message_Block's.
  *
  * This data structure is reference counted to maximize
  * sharing.  It also contains the <locking_strategy_> (which
@@ -822,25 +824,25 @@ protected:
 
   // = Strategies.
   /**
-   * Pointer to the allocator defined for this <ACE_Data_Block>.  Note
+   * Pointer to the allocator defined for this ACE_Data_Block.  Note
    * that this pointer is shared by all owners of this
-   * <ACE_Data_Block>.
+   * ACE_Data_Block.
    */
   ACE_Allocator *allocator_strategy_;
 
   /**
    * Pointer to the locking strategy defined for this
-   * <ACE_Data_Block>.  This is used to protect regions of code that
-   * access shared <ACE_Data_Block> state.  Note that this lock is
-   * shared by all owners of the <ACE_Data_Block>'s data.
+   * ACE_Data_Block.  This is used to protect regions of code that
+   * access shared ACE_Data_Block state.  Note that this lock is
+   * shared by all owners of the ACE_Data_Block's data.
    */
   ACE_Lock *locking_strategy_;
 
   /**
-   * Reference count for this <ACE_Data_Block>, which is used to avoid
+   * Reference count for this ACE_Data_Block, which is used to avoid
    * deep copies (i.e., <clone>).  Note that this pointer value is
    * shared by all owners of the <Data_Block>'s data, i.e., all the
-   * <ACE_Message_Block>s.
+   * ACE_Message_Blocks.
    */
   int reference_count_;
 
@@ -857,9 +859,9 @@ private:
  * @class ACE_Dynamic_Message_Strategy
  *
  * @brief An abstract base class which provides dynamic priority
- * evaluation methods for use by the <ACE_Dynamic_Message_Queue>
+ * evaluation methods for use by the ACE_Dynamic_Message_Queue
  * class or any other class which needs to manage the priorities
- * of a collection of <ACE_Message_Block>s dynamically.
+ * of a collection of ACE_Message_Block's dynamically.
  *
  * Methods for deadline and laxity based priority evaluation are
  * provided.  These methods assume a specific partitioning of
@@ -1032,6 +1034,8 @@ public:
   /// Dump the state of the strategy.
   virtual void dump (void) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Block.inl"

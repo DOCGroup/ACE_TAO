@@ -15,8 +15,8 @@
 
 #include "ace/streams.h"
 
-ACE_RCSID (ast, 
-           ast_valuetype, 
+ACE_RCSID (ast,
+           ast_valuetype,
            "$Id$")
 
 AST_ValueType::AST_ValueType (void)
@@ -29,8 +29,8 @@ AST_ValueType::AST_ValueType (void)
     pd_n_supports (0),
     pd_inherits_concrete (0),
     pd_supports_concrete (0),
-    pd_truncatable (I_FALSE),
-    pd_custom (I_FALSE)
+    pd_truncatable (false),
+    pd_custom (false)
 {
 }
 
@@ -43,10 +43,10 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                               AST_Interface **supports,
                               long n_supports,
                               AST_Interface *supports_concrete,
-                              idl_bool abstract,
-                              idl_bool truncatable,
-                              idl_bool custom)
-  : COMMON_Base (I_FALSE,
+                              bool abstract,
+                              bool truncatable,
+                              bool custom)
+  : COMMON_Base (false,
                  abstract),
     AST_Decl (AST_Decl::NT_valuetype,
               n),
@@ -58,7 +58,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                    n_inherits,
                    inherits_flat,
                    n_inherits_flat,
-                   I_FALSE,
+                   false,
                    abstract),
     pd_supports (supports),
     pd_n_supports (n_supports),
@@ -117,28 +117,28 @@ AST_ValueType::supports_concrete (void) const
   return this->pd_supports_concrete;
 }
 
-idl_bool
+bool
 AST_ValueType::truncatable (void) const
 {
   return this->pd_truncatable;
 }
 
-idl_bool
+bool
 AST_ValueType::custom (void) const
 {
   return this->pd_custom;
 }
 
-idl_bool
+bool
 AST_ValueType::will_have_factory (void)
 {
-  return I_FALSE;
+  return false;
 }
 
 // Look through supported interface list.
 AST_Decl *
 AST_ValueType::look_in_supported (UTL_ScopedName *e,
-                                  idl_bool treat_as_ref)
+                                  bool treat_as_ref)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
@@ -214,10 +214,10 @@ AST_ValueType::legal_for_primary_key (void) const
     {
       return false;
     }
-    
+
   bool has_public_member = false;
   bool retval = true;
-  
+
   if (!this->recursing_in_legal_pk_)
     {
       this->recursing_in_legal_pk_ = true;
@@ -228,14 +228,14 @@ AST_ValueType::legal_for_primary_key (void) const
           i.next ())
         {
           AST_Field *f = AST_Field::narrow_from_decl (i.item ());
-          
+
           // We're not interested in any valuetype decls that aren't fields.
           if (f == 0)
             {
               continue;
             }
-          
-          // Private members are not allowed in primary keys.  
+
+          // Private members are not allowed in primary keys.
           if (f->visibility () == AST_Field::vis_PRIVATE)
             {
               retval = false;
@@ -256,7 +256,7 @@ AST_ValueType::legal_for_primary_key (void) const
               has_public_member = true;
             }
         }
-        
+
         this->recursing_in_legal_pk_ = false;
     }
 
@@ -349,7 +349,7 @@ AST_ValueType::fe_add_factory (AST_Factory *f)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (f, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (f, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -382,7 +382,7 @@ AST_ValueType::fe_add_factory (AST_Factory *f)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (f,
-                           I_FALSE,
+                           false,
                            f->local_name ());
 
   return f;
@@ -401,20 +401,20 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
     {
       return true;
     }
-    
+
   AST_ValueType *concrete_parent = node->inherits_concrete ();
-  
+
   if (this->derived_from_primary_key_base (concrete_parent, pk_base))
     {
       return true;
     }
-  
+
   AST_Interface **v = node->pd_inherits;
-    
+
   for (long i = 0; i < node->pd_n_inherits; ++i)
     {
       AST_ValueType *tmp = AST_ValueType::narrow_from_decl (v[i]);
-      
+
       if (this->derived_from_primary_key_base (tmp, pk_base))
         {
           return true;
@@ -428,17 +428,17 @@ AST_ValueType *
 AST_ValueType::lookup_primary_key_base (void) const
 {
   AST_ValueType *retval = idl_global->primary_key_base ();
-  
+
   if (retval == 0)
     {
       Identifier local_id ("PrimaryKeyBase");
       UTL_ScopedName local_name (&local_id, 0);
-      
+
       Identifier scope_name ("Components");
       UTL_ScopedName pk_name (&scope_name, &local_name);
       AST_Decl *d =
-        const_cast<AST_ValueType *> (this)->lookup_by_name (&pk_name, I_TRUE);
-      
+        const_cast<AST_ValueType *> (this)->lookup_by_name (&pk_name, true);
+
       local_id.destroy ();
       scope_name.destroy ();
 
@@ -455,7 +455,7 @@ AST_ValueType::lookup_primary_key_base (void) const
           idl_global->err ()->valuetype_expected (d);
           return 0;
         }
-        
+
       idl_global->primary_key_base (retval);
     }
 

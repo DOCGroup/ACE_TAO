@@ -1,29 +1,192 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. (JTC/Ossama) autoconf support for TAO tests and examples
+. (JTC) provide example Telecom Log Service Persistance Strategies that
+  use BerkeleyDB, ODBC, etc.  Refine Strategy interface as required.
 
-. (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
+. (JTC) autoconf support for tests and examples subdirectories.
 
-. Reenable support in the Notification service for BlockingPolicy,
+. (OCI) Reenable support in the Notification service for BlockingPolicy,
   DiscardPolicy, and OrderPolicy. (Note: BlockingPolicy requires -ORBWaitStrategy rw)
 
-. Fix various memory and thread leaks in the Notification Service.
+. (OCI) Fix various memory and thread leaks in the Notification Service.
 
-. Fix Notification Service use of PacingInterval and MaximumBatchSize.
+. (OCI) Fix Notification Service use of PacingInterval and MaximumBatchSize.
 
-. Fix Notification Service detection of dead consumers.
+. (OCI) Fix Notification Service detection of dead consumers.
 
-PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.9
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 ====================================================
 
-. (Remedy) Add possibility to set customer allocators to be used by the ORB for
-  marshaling and demarshaling
+. (Remedy/Ossama) Add the ability to use the sendfile API to send out data
+  on the transport
 
-. (Remedy) Improve CORBA compliance by fixing bugzilla bugs 1917 and 1271.
+. (OCI) Make TAO compilable when ACE_USES_WCHAR is set
 
-. (Remedy) Support the latest AMI mapping, the old mapping will be kept working
-  until 1.5.1 has been released.
+USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
+====================================================
+
+. Integrate new sequence implementation made by Carlos O'Ryan. This
+  also includes a rework of the TAO_String_Managers and CORBA::(W)String
+  implementations.
+
+. Store Value Factories per orb instead of per process and made the
+  storage thread safe.
+
+. Add on demand write functionality that writes out GIOP fragments to
+  reduce the memory usage
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5 and TAO-1.5.1
+====================================================
+
+. Fixed LOCATION_FORWARD_PERM handling. See bugzilla #1777 for full details.
+
+. Fixed bug in detecting name clashes between existing identifiers and
+  extra code generated for AMI and AMH.
+
+. Fixed bug in connection closure. See bugzilla # 2391
+
+. Added support for the --enable-fl-reactor configure option to the
+  autoconf build infrastructure to build the TAO_FlResource library.
+
+. Added support for the --enable-qt-reactor configure option to the
+  autoconf build infrastructure to build the TAO_QtResource library.
+
+. Added support for the --enable-xt-reactor configure option to the
+  autoconf build infrastructure to build the TAO_XtResource library.
+
+. Fixed a race condition involving two threads active in the same
+  connection handler at the same time. See bug# 1647 for details.
+
+. Changed #include "..." preprocessor directives to use fully
+  qualified (from $(ACE_ROOT), $(TAO_ROOT), or $(TAO_ROOT)/orbsvcs)
+  paths.  We had been depending on non-standard behavior where files
+  #included with "..." are first looked for in the current directory
+  and then in the same directories used by #include <...>.  See bug
+  #2448 for details.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.10 and TAO-1.5.0
+====================================================
+
+. Fixed Transport to handle incoming fragmented messages propperly, abstract
+  interfaces TAO_Pluggable_Messaging and TAO_Transport have been
+  modified. Custom transport/messaging implementations require
+  interface modification.
+
+. Fix collocation optimisation when a location forward is received directing a
+  client to a collocated object.
+
+. Prevent an OBJ_ADAPTER exception when using an object reference containing
+  an ObjectID that corresponds to a collocated IORTable entry.
+
+. Reverted solution that allowed POA-level control over access to
+  security-enabled objects due to conflicts with the specification,
+  i.e. the  Security::SecQoP* are not server-side policies.
+
+. When suppressing any and typecodes during IDL compilation this will not
+  trigger compile errors due to missing any insert operations
+
+. Bug fix in IFR when creating typecodes for nested structs and unions.
+
+. Added support for the --enable-tk-reactor configure option to the
+  autoconf build infrastructure to build the TAO_TkResource library.
+
+IDL COMPILER
+------------
+
+. Fix problem with missing includes in the skeleton files for imported arg
+  trait declarations.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.9 and TAO-1.4.10
+====================================================
+
+. Fixed a bug, which allowed security unaware clients to make
+  invocations on secure objects, when the ORB was configured with
+  support for Security::SecQoPNoProtection.
+
+. Fixed Bugzilla #2145, which was preventing the building of
+  the IDL compiler on HPUX.
+
+. Added boxed valuetype support to the Interface Repository
+  loader.
+
+. Fixed several bugs in the PICurrent implementation
+
+. Fixed GOA factory name
+
+. Fixed -ORBConnectionHandlerCleanup arguments to accept 0 and 1.
+
+. Improved Portable Interceptor implementation.
+
+. Autoconfig improvements.
+
+. Improved Real-time CORBA support for dynamic threads.
+
+IDL COMPILER:
+-------------
+
+. Some bug fixes. See bug #2375 and #2390.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
+====================================================
+
+. Added new endpoint selector implementation - Optimized
+  Connection Endpoint Selector. A member of the tao/Strategies library,
+  use svc.conf file to load the OC_Endpoint_Factory object. See
+  tests/AlternateIIOP/svc.conf for an example.
+
+. Continued splitting ORB Services into stub, skeleton, and
+  implementation libraries.  Changes to the Concurrency Service,
+  Property Service, and RTEventLog Admin Service (TAO's RTEvent
+  varient of the OMG Telecom Log Service) have been committed.
+
+. Added a new ORB run-time option "-ORBUseLocalMemoryPool [0|1]" which
+  controls an individual application's use of TAO's Local Memory Pool.
+  TAO can use a local memory pool to satisfy some of its needs for
+  heap storage, as it is often more efficient than using the
+  platform's default memory allocator. The pool will always grow as
+  large as necessary to satisfy memory allocations, but it will never
+  shrink. This means that sometimes a process can retain memory that
+  it no longer needs. If the default allocator is used then TAO gives
+  memory back as soon as it is not needed.
+  The UseLocalMemoryPool option selects between using the local memory
+  pool or using the default allocator, where 0 means don't use the pool,
+  1 means use the pool. The default is still controlled by the original
+  compile-time option controlled by the #define TAO_USE_LOCAL_MEMORY_POOL
+  which defaults to 1 if not specified.
+
+. Add a property -ORBKeepalive to allow a user to specify that
+  SO_KEEPALIVE is set on IIOP connections. See docs/Options.html
+  and Bugzilla #2374.
+
+. Add support for RTCORBA::TCPPrototocolProperties::keep_alive, when
+  RTCORBA is used, and the application is using a Server or Client
+  ProtocolPolicy.
+
+. Refined the Telecom Log Service Strategy Interface.  Added methods
+  to fetch/store capacity alarm thresholds, log QoS, and "week mask".
+  Rework locking to avoid race conditions and to improve performance.
+
+IDL COMPILER:
+-------------
+
+. Fixed bug in computation of repository ids for predefined types.
+
+. Fixed bug in the handling of TAO_IDL_INCLUDE_DIR.
+
+Interface Repository:
+---------------------
+
+. Fixed bug in the lookup of a valuetype member's type using its
+  repository id.
+
+. Fixed bug in IFR loader in checking for pre-existence before
+  creating an entry corresponding to an IDL typedef.
+
+. Fixed bug in lookup when checking for a local name clash.
+
+. Fixed bug in the describe_interface() operation when the IDL
+  interface being described has multiple parents.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.7 and TAO-1.4.8
 ====================================================
@@ -52,6 +215,84 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.7 and TAO-1.4.8
   the macros in the TAO code until x.5.1 is out, if nobody sponsors
   maintenance at that moment the macros will be removed from TAO.
   See also http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2256
+
+. Support the latest AMI mapping, the old mapping will be kept working
+  until 1.5.1 has been released. If you need the old mapping add
+  the define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER to your config.h
+  file before you build TAO and the TAO_IDL compiler
+
+. Added CodecFactory::create_codec_with_codesets to create a codec with
+  a specific codeset. See OMG issue 6050 for the background.
+
+. PortableInterceptor::IORInterceptor has been splitted in IORInterceptor
+  and IORInterceptor_3_0. If you use IORInterceptors read the ChangeLog for
+  the details, maybe you have to update your code!
+
+. Added the new Custom Servant Dispatching (CSD) feature to provide user
+  applications with the ability to implement and "plug-in" custom strategies
+  to handle the dispatching of requests to servants. This new feature is not
+  currently tested for VxWorks. See TAO release notes for more information.
+
+. Added support for an TAO "versioned" namespace.  When enabled, TAO
+  library sources will be placed within a namespace of the user's
+  choice or a namespace of the form TAO_1_4_7 by default, where
+  "1_4_7" is the TAO major, minor and beta versions.  The default may
+  be overridden by defining the TAO_VERSIONED_NAMESPACE_NAME
+  preprocessor symbol.  Enable overall versioned namespace support by
+  adding "versioned_namespace=1" to your MPC default.features file.
+
+. Changed generated signatures of some valuetype member
+  accessor/mutator pairs to be consistent with IN
+  parameter semantics.
+
+. Added spec-required generation of member-initializing
+  constructor for valuetypes. See C++ mapping (03-06-03)
+  section 1.17.2. Closes Bugzilla #2270.
+
+. Added default include paths $TAO_ROOT, $TAO_ROOT/tao,
+  $TAO_ROOT/orbsvcs, and $CIAO_ROOT/ciao to IDL compiler
+  execution, eliminating the need to add them explicitly
+  to the command line.
+
+. Added immediate exits to IDL compiler when some name clash
+  errors are encountered, avoiding a crash if parsing is
+  continued. Closes Bugzilla #2281.
+
+. Changed the behavior of the _default() method (generated
+  for IDL unions that have an explicit or implicit default
+  case label) to clean up memory used by the freed member,
+  if necessary.
+
+. Fixed bug in IDL compiler when handling a native exception
+  in an operation declared in Messaging::ExceptionHolder.
+
+. Although not presently supported by CIAO, added error
+  checking to the IDL compiler's parsing of IDL home
+  primary keys, which constrain the basic valuetype
+  syntax in several ways.
+
+. Fixed order of generated base class stub constructor calls
+  when the IDL interface has both concrete and abstract parents.
+
+. Fixed a bug in the handling of forward declared interfaces
+  that have both concrete and abstract parents.
+
+. Fixed the command line parsing to preserve the literal
+  quotes if they are used in an include path that has a space.
+  Closes Bugzilla #2219.
+
+. Many changes related to refactoring of Anys and Typecodes
+  into a separate library (POC is Johnny Willemsen
+  <jwillemsen@remedy.nl>).
+
+. Merging of many Notification Service changes/fixes from OCITAO to
+  the DOC version.  These generally addressed stability issues such as
+  memory leaks, thread leaks, etc.
+
+. Introduction of the versioned namespaces changed the name of the
+  factory function used for dynamically loading the Notification
+  Service persistence mechanisms.  See the service configurator file
+  in orbsvcs/tests/Notify/XML_Persistence for an example.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
 ====================================================
@@ -429,8 +670,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
 . Added CPU utilization load monitor to TAO's Cygnus load balancer.
 
 . Added basic CSIv2 support, which is the latest CORBA Security
-  architecture specification.  Advanced CSIv2 features will be
-  available in the next beta.
+  architecture specification.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4 and TAO-1.4.1
 ==================================================

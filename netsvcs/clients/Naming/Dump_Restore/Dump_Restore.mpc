@@ -2,6 +2,7 @@
 // $Id$
 
 project(Netsvcs_Dump_Restore_Lib): acelib {
+  avoids       += ace_for_tao
   sharedname    = Dump_Restore
   dynamicflags += ACE_BUILD_SVC_DLL
   Source_Files {
@@ -10,7 +11,8 @@ project(Netsvcs_Dump_Restore_Lib): acelib {
 }
 
 project(Netsvcs_Dump_Restore) : aceexe {
-  exename = main
+  avoids  += ace_for_tao
+  exename  = main
   libs    += Dump_Restore
   after   += Netsvcs_Dump_Restore_Lib
   Source_Files {

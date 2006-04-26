@@ -31,10 +31,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// RTCORBA ORB initializer.
-class FTRT_ClientORB_Initializer :
-  public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+class FTRT_ClientORB_Initializer
+  : public virtual PortableInterceptor::ORBInitializer,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
   /// Priority mapping types
@@ -50,6 +52,8 @@ public:
 private:
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           tie_sh, 
+ACE_RCSID (be_visitor_interface,
+           tie_sh,
            "$Id$")
 
 // ************************************************************
@@ -91,37 +91,37 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   *os << "class " << " " << tiename << " : public " << namebuf << be_nl;
   *os << "{" << be_nl
       << "public:" << be_idt_nl
+      << "/// the T& ctor" << be_nl
       << tiename << " (T &t);" << be_nl
-      << "// the T& ctor" << be_nl
+      << "/// ctor taking a POA" << be_nl
       << tiename << " (T &t, PortableServer::POA_ptr poa);" << be_nl
-      << "// ctor taking a POA" << be_nl
-      << tiename << " (T *tp, ::CORBA::Boolean release = 1);" << be_nl
-      << "// ctor taking pointer and an ownership flag" << be_nl
+      << "/// ctor taking pointer and an ownership flag" << be_nl
+      << tiename << " (T *tp, ::CORBA::Boolean release = true);" << be_nl
+      << "/// ctor with T*, ownership flag and a POA" << be_nl
       << tiename << " (" << be_idt << be_idt_nl
       << "T *tp," << be_nl
       << "PortableServer::POA_ptr poa," << be_nl
-      << "::CORBA::Boolean release = 1" << be_uidt_nl
+      << "::CORBA::Boolean release = true" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "// ctor with T*, ownership flag and a POA" << be_nl
+      << "/// dtor" << be_nl << be_nl
       << "~" << tiename << " (void);" << be_nl
-      << "// dtor" << be_nl << be_nl
       << "// TIE specific functions" << be_nl
+      << "/// return the underlying object" << be_nl
       << "T *_tied_object (void);" << be_nl
-      << "// return the underlying object" << be_nl
+      << "/// set the underlying object" << be_nl
       << "void _tied_object (T &obj);" << be_nl
-      << "// set the underlying object" << be_nl
-      << "void _tied_object (T *obj, ::CORBA::Boolean release = 1);" << be_nl
-      << "// set the underlying object and the ownership flag" << be_nl
+      << "/// set the underlying object and the ownership flag" << be_nl
+      << "void _tied_object (T *obj, ::CORBA::Boolean release = true);" << be_nl
+      << "/// do we own it" << be_nl
       << "::CORBA::Boolean _is_owner (void);" << be_nl
-      << "// do we own it" << be_nl
+      << "/// set the ownership" << be_nl << be_nl
       << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
-      << "// set the ownership" << be_nl << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt
+      << env_sngl_dflts << be_uidt_nl
       << ");" << be_uidt;
 
-  int status = 
+  int status =
     node->traverse_inheritance_graph (
               be_visitor_interface_tie_sh::method_helper,
               os
@@ -161,7 +161,7 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
                                             TAO_OutStream *os)
 {
   // Any methods from abstract parents have already been
-  // "added" to the derived interface scope by the overridden 
+  // "added" to the derived interface scope by the overridden
   // visit_scope() method in be_visitor_interface, so we can skip
   // this base interface, if it is abstract.
   if (node->is_abstract ())
@@ -178,7 +178,7 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh::"
-                         "method_helper\n"), 
+                         "method_helper\n"),
                         -1);
     }
 

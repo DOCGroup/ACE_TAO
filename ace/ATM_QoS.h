@@ -24,17 +24,27 @@
 #if defined (ACE_HAS_ATM)
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // just map to WS2 GQOS struct
 typedef ACE_QoS ATM_QoS;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_FORE_ATM_XTI)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct netbuf ATM_QoS;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_LINUX_ATM)
 #include /**/ "atm.h"
 #include "ace/ATM_Params.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct atm_qos ATM_QoS;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #else
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef int ATM_QoS;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_HAS_FORE_ATM_WS2 || ACE_HAS_FORE_ATM_XTI || ACE_HAS_LINUX_ATM */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_ATM_QoS
@@ -93,6 +103,8 @@ protected:
 private:
   ATM_QoS qos_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_QoS.inl"

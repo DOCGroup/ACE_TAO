@@ -1,24 +1,24 @@
 // $Id$
 
-#include "TAO_Internal.h"
-#include "default_server.h"
-#include "default_client.h"
-#include "default_resource.h"
-#include "IIOP_Factory.h"
-#include "MCAST_Parser.h"
-#include "CORBANAME_Parser.h"
-#include "CORBALOC_Parser.h"
-#include "FILE_Parser.h"
-#include "DLL_Parser.h"
-#include "ORB_Core.h"
-#include "Adapter_Factory.h"
-#include "Default_Stub_Factory.h"
-#include "Default_Endpoint_Selector_Factory.h"
-#include "Default_Protocols_Hooks.h"
-#include "Default_Thread_Lane_Resources_Manager.h"
-#include "Default_Collocation_Resolver.h"
-#include "debug.h"
-#include "StringSeqC.h"
+#include "tao/TAO_Internal.h"
+#include "tao/default_server.h"
+#include "tao/default_client.h"
+#include "tao/default_resource.h"
+#include "tao/IIOP_Factory.h"
+#include "tao/MCAST_Parser.h"
+#include "tao/CORBANAME_Parser.h"
+#include "tao/CORBALOC_Parser.h"
+#include "tao/FILE_Parser.h"
+#include "tao/DLL_Parser.h"
+#include "tao/ORB_Core.h"
+#include "tao/Adapter_Factory.h"
+#include "tao/Default_Stub_Factory.h"
+#include "tao/Default_Endpoint_Selector_Factory.h"
+#include "tao/Default_Protocols_Hooks.h"
+#include "tao/Default_Thread_Lane_Resources_Manager.h"
+#include "tao/Default_Collocation_Resolver.h"
+#include "tao/debug.h"
+#include "tao/StringSeqC.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -86,6 +86,8 @@ namespace
   char const * client_strategy_factory_args =
     TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
 }
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
@@ -161,7 +163,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           ACE::debug (1);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT ("-ORBDebugLevel"))))
         {
           TAO_debug_level =
@@ -181,7 +183,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           arg_shifter.consume_arg ();
         }
       // Continue with flags that accept parameters.
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -195,7 +197,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
         {
           // Specify the name of the svc.conf file to be used.
 
@@ -229,7 +231,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -278,6 +280,8 @@ TAO::ORB::default_svc_conf_entries (char const * rf_args,
   client_strategy_factory_args = csf_args;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // -----------------------------------------------------
 namespace
 {
@@ -317,8 +321,10 @@ namespace
     //
     // where PN is the name of your protocol and LIB is the base
     // name of the shared library that implements the protocol.
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
     ACE_Service_Config::process_directive (
       ace_svc_desc_TAO_IIOP_Protocol_Factory);
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
     // add descriptor to list of static objects.
     ACE_Service_Config::process_directive (
@@ -436,3 +442,4 @@ namespace
   }
 }
 
+// TAO_BEGIN_VERSIONED_NAMESPACE_DECL -- ended prior to anonymous namespace.

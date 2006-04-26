@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Service_Callbacks.h
@@ -7,7 +9,6 @@
  * This is a generic interface that would be used to override many
  * of the default functionalities that the ORB provides by the
  * services if they have been loaded in to the ORB_Core
- *
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
@@ -26,6 +27,10 @@
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/Object.h"
+#include "tao/Service_Context.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_MProfile;
@@ -58,14 +63,14 @@ class TAO_Export TAO_Service_Callbacks
 {
 
 public:
-  
+
   enum Profile_Equivalence
   {
     EQUIVALENT,
     NOT_EQUIVALENT,
     DONT_KNOW
   };
-    
+
 
   /// Dtor
   virtual ~TAO_Service_Callbacks (void);
@@ -95,6 +100,12 @@ public:
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
                                 CORBA::ULong m);
 
+  // Verify if condition is given for LOCATION_FORWARD_PERM reply
+  virtual CORBA::Boolean is_permanent_forward_condition (const CORBA::Object_ptr obj,
+                                                           const TAO_Service_Context &service_context) const;
+
+
+
   /// Allow the service layer to decide whether the COMM_FAILURE
   /// exception should be thrown or a reinvocation is needed
   virtual TAO::Invocation_Status raise_comm_failure (
@@ -109,6 +120,8 @@ public:
       TAO_Profile *profile
       ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

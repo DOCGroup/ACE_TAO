@@ -1,19 +1,21 @@
 // $Id$
 
-#include "POAManager.h"
-#include "Root_POA.h"
-#include "poa_macros.h"
+#include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/poa_macros.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/IORInterceptor_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-# include "POAManager.i"
+# include "tao/PortableServer/POAManager.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,
            POAManager,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
   : state_ (PortableServer::POAManager::HOLDING),
@@ -51,6 +53,15 @@ TAO_POA_Manager::activate_i (ACE_ENV_SINGLE_ARG_DECL)
   else
     {
       this->state_ = PortableServer::POAManager::ACTIVE;
+      // Find the poas that applied the custom servant dispatching
+      // strategy to launch the dispatching threads.
+
+      for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
+       iterator != this->poa_collection_.end ();
+       ++iterator)
+        {
+          (*iterator)->poa_activated_hook ();
+        }
     }
 
   this->adapter_manager_state_changed (this->state_
@@ -117,6 +128,10 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
        ++iterator)
     {
       TAO_Root_POA *poa = *iterator;
+      // Notify the poas that applied the custom servant dispatching
+      // strategy to stop the dispatching threads.
+      poa->poa_deactivated_hook ();
+
       poa->deactivate_all_objects_i (etherealize_objects,
                                      wait_for_completion
                                      ACE_ENV_ARG_PARAMETER);
@@ -139,7 +154,8 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableInterceptor::AdapterState adapter_state = state;
+  PortableInterceptor::AdapterState adapter_state =
+    static_cast<PortableInterceptor::AdapterState> (state);
 
   TAO_IORInterceptor_Adapter *ior_adapter =
     this->object_adapter_.orb_core ().ior_interceptor_adapter ();
@@ -287,7 +303,7 @@ TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
     {
       if (this->poa_collection_.is_empty ())
         {
-          CORBA::release (this);
+          ::CORBA::release (this);
         }
     }
 
@@ -376,3 +392,4 @@ TAO_POA_Manager::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::ORB::_duplicate (this->object_adapter_.orb_core ().orb ());
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

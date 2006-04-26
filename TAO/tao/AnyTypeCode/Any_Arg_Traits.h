@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,8 @@
 #include "tao/Var_Size_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Any;
@@ -46,6 +48,8 @@ namespace TAO
   {
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

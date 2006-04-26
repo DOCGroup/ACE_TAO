@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -20,20 +21,22 @@
 #ifndef TAO_COMPONENTDEF_I_H
 #define TAO_COMPONENTDEF_I_H
 
-#include "ExtInterfaceDef_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ExtInterfaceDef_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ComponentsS.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_ComponentDef_i
   : public virtual TAO_ExtInterfaceDef_i
@@ -233,6 +236,8 @@ public:
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are a base component.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_AUTO_INCDEC_T_C
-#define ACE_AUTO_INCDEC_T_C
+#ifndef ACE_AUTO_INCDEC_T_CPP
+#define ACE_AUTO_INCDEC_T_CPP
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -10,11 +10,11 @@
 #include "ace/Auto_IncDec_T.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Auto_IncDec_T, "Auto_IncDec_T.cpp, by Edan Ayal")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Auto_IncDec_T.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_IncDec)
 
@@ -29,4 +29,6 @@ ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#endif /* ACE_AUTO_INCDEC_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_AUTO_INCDEC_T_CPP */

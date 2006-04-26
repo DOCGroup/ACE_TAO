@@ -1,6 +1,8 @@
+// -*- C++ -*-
+
 // $Id$
 
-// ===========================================================================================
+// ============================================================================
 // FILENAME
 //   Naming_Loader.h
 //
@@ -11,7 +13,7 @@
 // AUTHORS
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 //
-// ==========================================================================================
+// ============================================================================
 
 #ifndef TAO_NAMING_LOADER_H
 #define TAO_NAMING_LOADER_H
@@ -23,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Naming/Naming_Server.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 {
@@ -56,9 +60,11 @@ public:
   TAO_Naming_Server naming_server_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Naming_Loader (const TAO_Naming_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Naming_Loader &operator = (const TAO_Naming_Loader &))
+  TAO_Naming_Loader (const TAO_Naming_Loader &);
+  TAO_Naming_Loader &operator = (const TAO_Naming_Loader &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_Naming_Serv, TAO_Naming_Loader)
 

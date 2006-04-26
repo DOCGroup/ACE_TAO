@@ -48,12 +48,6 @@
 #  include "ace/Thread.h"
 #endif
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_RCSID(Misc, pingpong, "$Id$")
 
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
@@ -197,7 +191,7 @@ Ping_Pong::handle_timeout (const ACE_Time_Value &,
 static ACE_TCHAR *string_name;
 
 // Wait for 10 seconds and then shut down.
-static const int SHUTDOWN_TIME = 10;
+static const ACE_Time_Value SHUTDOWN_TIME (10);
 
 static void
 run_svc (ACE_HANDLE handle)

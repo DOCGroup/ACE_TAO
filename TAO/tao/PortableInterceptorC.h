@@ -52,6 +52,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
@@ -128,6 +130,8 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1028
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

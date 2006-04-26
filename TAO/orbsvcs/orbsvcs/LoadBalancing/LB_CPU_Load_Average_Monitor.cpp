@@ -1,4 +1,4 @@
-#include "LB_CPU_Load_Average_Monitor.h"
+#include "orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -14,9 +14,11 @@ ACE_RCSID (LoadBalancing,
            LB_CPU_Load_Average_Monitor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (const char * location_id,
-                                                                  const char * location_kind)
+TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
+  const char * location_id,
+  const char * location_kind)
   : location_ (1)
 {
   this->location_.length (1);
@@ -238,3 +240,5 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 #endif  /* linux || sun || __hpux  || __NetBSD__ || __APPLE__ */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

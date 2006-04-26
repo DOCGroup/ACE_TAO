@@ -32,8 +32,8 @@
 #ifndef _PI_FORWARD_IDL_
 #define _PI_FORWARD_IDL_
 
-#include <OctetSeq.pidl>
-#include <StringSeq.pidl>
+#include "tao/OctetSeq.pidl"
+#include "tao/StringSeq.pidl"
 
 module PortableInterceptor
 {

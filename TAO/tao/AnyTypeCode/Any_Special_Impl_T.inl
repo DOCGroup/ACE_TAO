@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T, typename from_T, typename to_T> 
 ACE_INLINE 
@@ -28,3 +32,4 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::value (void) const
   return this->value_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

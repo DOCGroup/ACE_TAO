@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,7 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UIPMC_Wait_Never
@@ -49,6 +51,8 @@ public:
   virtual bool non_blocking (void) const;
   virtual bool can_process_upcalls (void) const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_WAIT_NEVER_H */

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "tao/Parser_Registry.h"
@@ -14,6 +13,8 @@
 ACE_RCSID (tao,
            Parser_Registry,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Parser_Registry::TAO_Parser_Registry (void)
   : parsers_ (0),
@@ -73,3 +74,4 @@ TAO_Parser_Registry::match_parser (const char *ior_string)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

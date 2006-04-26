@@ -23,19 +23,22 @@
 <H4><A NAME="build">Building and Installing TAO from a distribution</H4>
 
 
-<p>The following table summarizes platforms on which TAO runs:<P>
+<p>The following table summarizes platforms on which TAO runs, see the 
+<a href="../ACE-INSTALL.html#platforms">ACE installation notes</A> for an 
+overview of all the platforms ACE runs on, these are all candidates
+to run TAO on:<P>
 
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
     <td>Solaris 7, 8 and 9, Windows 2000/XP (6.x, and 7.1 and
-        Borland C++ Builder 6), and Linux/Intel (Redhat,
-        Debian and SuSe),  Linux/Alpha (SuSe).
+        Borland C++ Builder 6/2006), and Linux/Intel (Redhat,
+        Debian and SuSe), Linux/Alpha (SuSe), VxWorks 5.5.1
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 9x/ME, HP/UX 11.x, VxWorks 5.5.1, LynxOS, and AIX 4.x
+   <td>Windows 9x/ME, HP/UX 11.x, LynxOS, and AIX 4.x
    </td>
   </tr>
   <tr valign=top>
@@ -137,7 +140,7 @@ bundle as a single piece instead of trying to mix and match things up.<P>
           the right places (4) Delete all the GNUmakefiles (or dsp and
           dsw file as the case may be) from the TAO distrbution using
           the 'find' command. (5) Change directory to $TAO_ROOT. (6)
-          Run MPC like this, $ACE_ROOT/bin/mwc.pl TAOACE.mwc. (7) Run
+          Run MPC like this, $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc. (7) Run
           'make'. This will create all the required libraries for TAO
           and TAO orbsvcs. In step 6, use -type vc6 if you want to
           generate VC6 project and workspace files for Win32. Please
@@ -204,27 +207,22 @@ href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
     <H4>Modifying the default location for the IDL compiler</H4>
 
     <P>By default TAO assumes that the IDL compiler is located in:
-      <CODE>$TAO_ROOT/TAO_IDL/tao_idl</CODE> and that the GPERF tool
+      <CODE>$TAO_ROOT/bin/tao_idl</CODE> and that the GPERF tool
       is located in <CODE>$ACE_ROOT/bin/gperf</CODE>, this is fine for
       hosted builds, but not for cross-compilation.
       Unfortunately there is no good default for cross-compilation
       builds because different sites choose a different location for
       their tools.
     </P>
-    <P>You can override the default values by adding two lines in your
-      platform_macros.GNU file, as follows:
+    <P>You can override the default values by adding several new lines in your
+      platform_macros.GNU file assuming $(HOST_ROOT) is set to the location
+      of your host build where you have build gperf and tao_idl, as follows:
 <PRE>
-$ echo 'TAO_IDL := /your/path/tao_idl' \
+$ echo 'TAO_IDL := $(HOST_ROOT)/bin/tao_idl' \
+$ echo 'TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf' \
+$ echo 'TAO_IDL_DEP := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)' \
      >> platform_macros.GNU
-$ echo 'TAO_IDLFLAGS := -g /your/path/gperf' \
 </PRE>
-    <P>You could even use:
-<PRE>
-$ echo 'TAO_IDL := tao_idl' \
-     >> platform_macros.GNU
-$ echo 'TAO_IDLFLAGS := -g gperf' \
-</PRE>
-    if the tools are in your path.
 
     <P>Obviously you must first build the tools for the host platform,
       typically you would do this as follows:
@@ -290,9 +288,9 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
   <li><code>cd ACE_wrappers</code>
   <li><code>bin/create_ace_build SunOS5_g++</code>
   <li><code>bin/create_ace_build vxworks</code>
-  <li><code>cd build/vxworks/TAO</code>
-  <li><code>/bin/rm -r TAO_IDL</code>
-  <li><code>ln -s ../../SunOS5_g++/TAO/TAO_IDL</code>
+  <li><code>cd build/vxworks/bin</code>
+  <li><code>/bin/rm -r tao_idl</code>
+  <li><code>ln -s ../../SunOS5_g++/bin/tao_idl</code>
 </ol>
 
       <P>To build on the host:
@@ -414,7 +412,7 @@ make -f Makefile.bor
 
 For more detailed information on building and using TAO with Borland's
 C++ Builder environment, please see the <A
-HREF="http://www.tenermerx.com/tao_bcb/index.html">online</A> help
+HREF="http://www.tenermerx.com/programming/corba/tao_bcb/index.html">online</A> help
 provided by <A HREF="mailto:chris@kohlhoff.com">Christopher
 Kohlhoff</A>. <P>
 
@@ -533,12 +531,12 @@ quickly.
   VC71 project and solution files.<p>
    <LI> Build ACE+TAO together in one shot. To do that please issue
   the following commands: <p>
-  <CODE> $ACE_ROOT/bin/mwc.pl TAOACE.mwc </CODE> <p>
+  <CODE> $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc </CODE> <p>
    from <CODE>$TAO_ROOT</CODE>. This will generate GNUmakefiles for
   ACE, gperf, and core ACE+TAO libraries. Issuing a
   <CODE>'make'</CODE> from <CODE>$TAO_ROOT </CODE> will build all of
   the above in one shot. You can use <CODE> -type vc6 </CODE> to
-  generate VC6 project and workspace files. <CODE>TAOACE.dsw</CODE>
+  generate VC6 project and workspace files. <CODE>TAO_ACE.dsw</CODE>
   can be used by users to build ACE+TAO from a single workspace
   file. Users can use <CODE> -type vc71 </CODE> to generate the VC71
   solutions files. <p>

@@ -2,14 +2,14 @@
 //
 // $Id$
 
-// FIFO_Recv_Msg.i
-
 #include "ace/Min_Max.h"
 #include "ace/OS_NS_stropts.h"
 
 #if !defined (ACE_HAS_STREAM_PIPES)
 #include "ace/OS_NS_unistd.h"
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
@@ -26,8 +26,8 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
     return recv_msg.len;
 #else /* Do the ol' 2-read trick... */
   if (ACE_OS::read (this->get_handle (),
-		    (char *) &recv_msg.len,
-		    sizeof recv_msg.len) != sizeof recv_msg.len)
+                    (char *) &recv_msg.len,
+                    sizeof recv_msg.len) != sizeof recv_msg.len)
     return -1;
   else
     {
@@ -77,8 +77,8 @@ ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 #if defined (ACE_HAS_STREAM_PIPES)
 ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
-			 ACE_Str_Buf *cntl,
-			 int *flags)
+                         ACE_Str_Buf *cntl,
+                         int *flags)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
   if (ACE_OS::getmsg (this->get_handle (),
@@ -92,9 +92,9 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
 
 ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (int *band,
-			 ACE_Str_Buf *data,
-			 ACE_Str_Buf *cntl,
-			 int *flags)
+                         ACE_Str_Buf *data,
+                         ACE_Str_Buf *cntl,
+                         int *flags)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
   if (ACE_OS::getpmsg (this->get_handle (),
@@ -107,3 +107,5 @@ ACE_FIFO_Recv_Msg::recv (int *band,
     return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
 }
 #endif /* ACE_HAS_STREAM_PIPES */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

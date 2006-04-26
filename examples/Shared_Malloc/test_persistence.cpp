@@ -69,9 +69,18 @@ public:
   {
     return shmem_allocator->malloc (sizeof (Employee));
   }
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+  void operator delete (void *p, const ACE_nothrow_t&) throw ()
+  {
+    shmem_allocator->free (p);
+  }
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
 
-  void operator delete (void *pointer) { shmem_allocator->free (pointer); }
+  void operator delete (void *pointer)
+  {
+    shmem_allocator->free (pointer);
+  }
 
 private:
   char *name_;
@@ -199,7 +208,7 @@ GUI_Handler::insert_employee (const char *name,
 int
 GUI_Handler::find_employee (const char *name)
 {
-  void *temp;
+  void *temp = 0;
 
   if (shmem_allocator->find (name,
                              temp) == 0)
@@ -263,7 +272,7 @@ GUI_Handler::list_employees (void)
 int
 GUI_Handler::delete_employee (const char *name)
 {
-  void *temp;
+  void *temp = 0;
 
   if (shmem_allocator->unbind (name,
                                temp) == 0)
@@ -339,18 +348,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// The following instantiation is in ace/System_Time.cpp:
-// template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_FIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-template class ACE_Malloc_LIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// The following instantiation is in ace/System_Time.cpp:
-// #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_FIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#pragma instantiate ACE_Malloc_LIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

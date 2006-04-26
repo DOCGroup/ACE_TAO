@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Dynamic
  *
@@ -46,8 +48,8 @@ public:
    */
   void set (void);
 
-  /// 1 if we were allocated dynamically, else 0.
-  int is_dynamic (void);
+  /// @c true if we were allocated dynamically, else @c false.
+  bool is_dynamic (void);
 
   /// Resets state flag.
   void reset (void);
@@ -60,8 +62,10 @@ private:
    * method is usually called in operator new and then checked and
    * reset in the constructor.
    */
-  int is_dynamic_;
+  bool is_dynamic_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Dynamic.inl"

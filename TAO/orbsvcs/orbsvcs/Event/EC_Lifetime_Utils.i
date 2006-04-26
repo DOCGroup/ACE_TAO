@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_EC_Object_Deactivator::TAO_EC_Object_Deactivator (void)
@@ -171,3 +175,5 @@ TAO_EC_Event_Channel_Holder::init (
 {
   this->ec_ = ec_var;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

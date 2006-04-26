@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 // =================================================================
 /**
@@ -11,11 +11,11 @@
  */
 // =================================================================
 
-#include "ClientRequestInterceptor_Factory_Impl.h"
+#include "tao/PI/ClientRequestInterceptor_Factory_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ClientRequestInterceptor_Adapter_Impl.h"
+#include "tao/PI/ClientRequestInterceptor_Adapter_Impl.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"
@@ -23,6 +23,8 @@
 ACE_RCSID (PI,
            ClientRequestInterceptor_Factory_Impl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ClientRequestInterceptor_Adapter*
 TAO_ClientRequestInterceptor_Adapter_Factory_Impl::create (void)
@@ -33,6 +35,8 @@ TAO_ClientRequestInterceptor_Adapter_Factory_Impl::create (void)
                   0);
   return obj;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_ClientRequestInterceptor_Adapter_Factory_Impl,
                        ACE_TEXT ("ClientRequestInterceptor_Adapter_Factory"),

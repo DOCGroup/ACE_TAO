@@ -1,13 +1,13 @@
 // $Id$
 
-#ifndef TAO_OFFER_DATABASE_C
-#define TAO_OFFER_DATABASE_C
+#ifndef TAO_OFFER_DATABASE_CPP
+#define TAO_OFFER_DATABASE_CPP
 
-#include "Offer_Database.h"
+#include "orbsvcs/Trader/Offer_Database.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Trader, Offer_Database, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class LOCK_TYPE>
 TAO_Offer_Database<LOCK_TYPE>::TAO_Offer_Database (void)
@@ -384,4 +384,6 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::next_offer (void)
     this->offer_iter_->advance ();
 }
 
-#endif /* TAO_OFFER_DATABASE_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_OFFER_DATABASE_CPP */

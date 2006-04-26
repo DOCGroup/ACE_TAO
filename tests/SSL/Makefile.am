@@ -20,8 +20,7 @@ noinst_PROGRAMS += Thread_Pool_Reactor_SSL_Test
 Thread_Pool_Reactor_SSL_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
+  @ACE_TLS_CPPFLAGS@ \
   -DACE_HAS_SSL=1
 
 Thread_Pool_Reactor_SSL_Test_SOURCES = \
@@ -30,7 +29,7 @@ Thread_Pool_Reactor_SSL_Test_SOURCES = \
   Thread_Pool_Reactor_SSL_Test.h
 
 Thread_Pool_Reactor_SSL_Test_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/tests/libTest_Output.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+ $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/tests/libTest_Output.la $(top_builddir)/ace/libACE.la @ACE_TLS_LDFLAGS@ @ACE_TLS_LIBS@
 
 endif BUILD_SSL
 

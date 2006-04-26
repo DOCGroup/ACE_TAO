@@ -24,6 +24,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Service_Type;
 
@@ -75,10 +76,10 @@ public:
   /// dynamically allocated services.
   int fini (void);
 
-  /// Get pointer to a process-wide <ACE_Service_Repository>.
+  /// Get pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository *instance (int size = ACE_Service_Repository::DEFAULT_SIZE);
 
-  /// Set pointer to a process-wide <ACE_Service_Repository> and return
+  /// Set pointer to a process-wide ACE_Service_Repository and return
   /// existing pointer.
   static ACE_Service_Repository *instance (ACE_Service_Repository *);
 
@@ -145,7 +146,7 @@ private:
   /// Maximum number of services.
   int total_size_;
 
-  /// Pointer to a process-wide <ACE_Service_Repository>.
+  /// Pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository *svc_rep_;
 
   /// Must delete the <svc_rep_> if non-0.
@@ -160,7 +161,7 @@ private:
 /**
  * @class ACE_Service_Repository_Iterator
  *
- * @brief Iterate through the <ACE_Service_Repository>.
+ * @brief Iterate through the ACE_Service_Repository.
  *
  * Make sure not to delete entries as the iteration is going on
  * since this class is not designed as a robust iterator.
@@ -205,6 +206,8 @@ private:
   /// Are we ignoring suspended services?
   int ignore_suspended_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Repository.inl"

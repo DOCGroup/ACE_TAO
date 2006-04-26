@@ -118,7 +118,7 @@ template <class BARRIER> int
 Worker_Task<BARRIER>::service (ACE_Message_Block *mb,
                                int iter)
 {
-  int length = mb->length ();
+  size_t length = mb->length ();
 
   if (length > 0)
     {
@@ -162,7 +162,7 @@ Worker_Task<BARRIER>::svc (void)
 	  break;
 	}
 
-      int length = mb->length ();
+      size_t length = mb->length ();
       this->service (mb,iter);
 
       if (length == 0)
@@ -223,7 +223,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
   char str[] = "kalle";
   ACE_OS::strcpy (mb->rd_ptr (), str);
 
-  int n = ACE_OS::strlen (str);
+  size_t n = ACE_OS::strlen (str);
 
   if (l == 1000)
     n = 1;
@@ -306,11 +306,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Worker_Task<ACE_Null_Barrier>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Worker_Task<ACE_Null_Barrier>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #else
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

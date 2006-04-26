@@ -1,26 +1,23 @@
 /* -*-C++-*- */
-// $Id$
 #ifndef SNMP_CLS_
 #define SNMP_CLS_
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    snmp.h
-//
-// = DESCRIPTION
-//   SNMP class defintion. The Snmp class provides an object oriented
-//   approach to SNMP. The SNMP class is an encapsulation of SNMP
-//   sessions, gets, sets, etc. The class manages all SNMP
-//   resources and provides complete retry and timeout capability.
-//
-// = AUTHOR
-//    Peter E Mellquist  design, first implementation
-//    Michael R. MacFaden port to ACE / use Reactor pattern
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    snmp.h
+ *
+ *  $Id$
+ *
+ * SNMP class defintion. The Snmp class provides an object oriented
+ * approach to SNMP. The SNMP class is an encapsulation of SNMP
+ * sessions, gets, sets, etc. The class manages all SNMP
+ * resources and provides complete retry and timeout capability.
+ *
+ *
+ *  @author Peter E Mellquist  design
+ *  @author first implementation Michael R. MacFaden port to ACE / use Reactor pattern
+ */
+//=============================================================================
+
 /*===================================================================
    Copyright (c) 1996
    Hewlett-Packard Company
@@ -63,10 +60,13 @@ class ASNMP_Export Snmp_Result
 };
 
 // Snmp session class - supports Version 1 operations in blocking mode
+/**
+ * @class Snmp
+ *
+ * @brief Concrete class Snmp defined the session and interface to
+ * communicate with another SNMP Version 1 agent
+ */
 class ASNMP_Export Snmp : public transaction_result
-  // = TITLE
-  //      Concrete class Snmp defined the session and interface to
-  //      communicate with another SNMP Version 1 agent
 {
   Snmp_Result * result_;
   Pdu * pdu_;
@@ -75,39 +75,41 @@ public:
   Snmp(unsigned short port = INADDR_ANY);
   virtual ~Snmp();
 
+  /// retrieve data from a peer agent for a given list of oid values
+  /// default port 161
   int get( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
-  // retrieve data from a peer agent for a given list of oid values
-  // default port 161
 
+  /**
+   * retrieve data lexically adjacent to the oids specified in the pdu
+   * from the peer agent
+   * default port 161
+   */
   int get_next( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
-  // retrieve data lexically adjacent to the oids specified in the pdu
-  // from the peer agent
-  // default port 161
 
+  /// set data in the agent from the list of oids in the pdu
+  /// default port 161
   int set( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
-  // set data in the agent from the list of oids in the pdu
-  // default port 161
 
+  /// send an SNMPv1 trap (unreliable) to a remote system (def port 162)
   int trap( Pdu &pdu, UdpTarget &target);
-  // send an SNMPv1 trap (unreliable) to a remote system (def port 162)
 
+  /// status of object after construction
   int valid() const;
-  // status of object after construction
 
+  /// given error code, return string reason
   static const char * error_string(int code);
-  // given error code, return string reason
 
+  /// retrieve a reason string if any of the above commands fail
   const char * error_string();
-  // retrieve a reason string if any of the above commands fail
 
+  /// for async transaction results
   void result(transaction * t, int rc);
-  // for async transaction results
 
+  /// allow the host name to be overriden
   static void override_host_name(const char* name);
-  // allow the host name to be overriden
 
+  /// returns the overriden host name
   static void get_host_name(char* name, int len);
-  // returns the overriden host name
 
 protected:
   void check_default_port(UdpTarget& target,unsigned short port=DEF_AGENT_PORT);
@@ -117,17 +119,17 @@ protected:
 
   Snmp(const Snmp&);
 
+  /// io object
   ACE_SOCK_Dgram iv_snmp_session_;
-  // io object
 
+  /// status of construction
   int construct_status_;
-  // status of construction
 
+  /// result code from last transaction
   int last_transaction_status_;
-  // result code from last transaction
 
+  /// transaction request id
   unsigned req_id_;
-  // transaction request id
 
   static char host_name_[MAXHOSTNAMELEN];
 };

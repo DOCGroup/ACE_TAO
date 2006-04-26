@@ -93,7 +93,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
   // The Service Object.
-  TAO_Notify_Service* notify_service;
+  TAO_Notify_Service* notify_service = 0;
 
   notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
 
@@ -205,17 +205,21 @@ TAO_Notify_Tests_EventChannel_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == CREATE)
     {
       this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == DESTROY)
     {
       this->handle_destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SET_QOS)
     {
       this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == DUMP_STATE)
     {
       this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }

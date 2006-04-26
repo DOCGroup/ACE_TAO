@@ -76,7 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       public virtual inheritance.
 
 #include "TAO_IDL_FE_Export.h"
-#include "idl_bool.h"
+
 
 // Forward declare active iterator for UTL_List.
 class  UTL_ListActiveIterator;
@@ -130,7 +130,7 @@ public:
   virtual void next (void);
 
   // Are we at the end of this list?
-  virtual idl_bool is_done (void);
+  virtual bool is_done (void);
 
 protected:
   // On what to iterate?

@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Scheduling_Strategy.h"
+#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -47,14 +47,12 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Null_Scheduling
-                              (const TAO_EC_Null_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Null_Scheduling& operator=
-                              (const TAO_EC_Null_Scheduling&))
+  TAO_EC_Null_Scheduling (const TAO_EC_Null_Scheduling&);
+  TAO_EC_Null_Scheduling& operator= (const TAO_EC_Null_Scheduling&);
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Null_Scheduling.i"
+#include "orbsvcs/Event/EC_Null_Scheduling.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

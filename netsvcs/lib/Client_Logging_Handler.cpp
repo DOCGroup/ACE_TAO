@@ -228,9 +228,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
           int remainder = length - retrieved;
 
-          int secondtry = ACE_OS::recv (handle,
-                                        ((char *) &log_record) + retrieved,
-                                        remainder);
+          ssize_t secondtry = ACE_OS::recv (handle,
+                                            ((char *) &log_record) + retrieved,
+                                            remainder);
           if (secondtry != remainder)
             {
               ACE_ERROR ((LM_ERROR,
@@ -553,10 +553,3 @@ ACE_Client_Logging_Acceptor::resume (void)
 
 ACE_SVC_FACTORY_DEFINE (ACE_Client_Logging_Acceptor)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>;
-template class ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

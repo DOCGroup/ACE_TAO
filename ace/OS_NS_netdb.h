@@ -15,7 +15,7 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_NETDB_H
-# define ACE_OS_NS_NETDB_H
+#define ACE_OS_NS_NETDB_H
 
 # include /**/ "ace/pre.h"
 
@@ -33,22 +33,25 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (VXWORKS)
-  extern ACE_Export 
+namespace ACE_OS
+{
+
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
   struct hostent *gethostbyaddr (const char *addr,
                                  int length,
                                  int type);
 
-#if defined (VXWORKS)
-  extern ACE_Export 
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
   struct hostent *gethostbyaddr_r (const char *addr,
                                    int length,
                                    int type,
@@ -56,37 +59,29 @@ namespace ACE_OS {
                                    ACE_HOSTENT_DATA buffer,
                                    int *h_errnop);
 
-#if defined (VXWORKS)
-  extern ACE_Export 
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
   struct hostent *gethostbyname (const char *name);
 
-#if defined (VXWORKS)
-  extern ACE_Export 
+#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
   struct hostent *gethostbyname_r (const char *name,
                                    struct hostent *result,
                                    ACE_HOSTENT_DATA buffer,
                                    int *h_errnop);
 
 
-#if defined (VXWORKS)
-  extern ACE_Export 
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
   struct hostent *getipnodebyaddr (const void *src, size_t len,
                                    int family);
 
-#if defined (VXWORKS)
-  extern ACE_Export 
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
   struct hostent *getipnodebyname (const char *name, int family,
                                    int flags = 0);
 
@@ -98,7 +93,7 @@ namespace ACE_OS {
     unsigned char node[6];
   };
 
-  extern ACE_Export 
+  extern ACE_Export
   int getmacaddress (struct macaddr_node_t *node);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -128,14 +123,16 @@ namespace ACE_OS {
                                    ACE_SERVENT_DATA buf);
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-  extern ACE_Export 
+  extern ACE_Export
   int netdb_acquire (void);
 
-  extern ACE_Export 
+  extern ACE_Export
   int netdb_release (void);
 # endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -29,17 +29,19 @@
 // be\be_codegen.cpp:288
 
 
-#include "GIOPC.h"
+#include "tao/GIOPC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "GIOPC.inl"
+#include "tao/GIOPC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -141,7 +143,7 @@ GIOP::TargetAddress::TargetAddress (const ::GIOP::TargetAddress &u)
 GIOP::TargetAddress::~TargetAddress (void)
 {
   // Finalize.
-  this->_reset (this->disc_, 1);
+  this->_reset ();
 }
 
 void GIOP::TargetAddress::_tao_any_destructor (void *_tao_void_pointer)
@@ -159,7 +161,7 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
       return *this;
     }
 
-  this->_reset (u.disc_, 0);
+  this->_reset ();
   this->disc_ = u.disc_;
 
   switch (this->disc_)
@@ -220,7 +222,7 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
 }
 
 // Reset method to reset old values of a union.
-void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
+void GIOP::TargetAddress::_reset (void)
 {
   switch (this->disc_)
   {
@@ -385,3 +387,5 @@ CORBA::Boolean operator>> (
 
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

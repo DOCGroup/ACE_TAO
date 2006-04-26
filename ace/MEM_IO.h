@@ -15,19 +15,7 @@
 #define ACE_MEM_IO_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
-
-#include "ace/SOCK.h"
-#include "ace/MEM_SAP.h"
-#include "ace/Memory_Pool.h"
-#include "ace/Message_Block.h"
-#include "ace/Process_Semaphore.h"
-#include "ace/Process_Mutex.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +23,16 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-class ACE_Memory_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
+#include "ace/SOCK.h"
+#include "ace/MEM_SAP.h"
+#include "ace/Message_Block.h"
+#include "ace/Process_Semaphore.h"
+#include "ace/Process_Mutex.h"
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 {
 public:
   ACE_Reactive_MEM_IO (void);
@@ -55,7 +52,7 @@ public:
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
-   * using ACE::recv, <timeout> only applies to ACE::recv.
+   * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,
@@ -78,7 +75,7 @@ public:
 };
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
-class ACE_Memory_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
+class ACE_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
 {
 public:
   typedef struct
@@ -170,7 +167,7 @@ private:
  * the other end.  The receiving side then reverses the
  * procedures and copies the information into user buffer.
  */
-class ACE_Memory_Export ACE_MEM_IO : public ACE_SOCK
+class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
   // = Initialization and termination methods.
@@ -300,6 +297,8 @@ private:
   /// Record the current read pointer location in <recv_buffer_>.
   ssize_t cur_offset_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_IO.inl"

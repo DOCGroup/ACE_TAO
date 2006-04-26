@@ -18,6 +18,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 
 ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
@@ -586,7 +588,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
-                                      (ACE_THR_C_FUNC) ace_thread_adapter,
+                                      (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                                       this,
                                       new_thr_desc.get (),
                                       ACE_OS_Object_Manager::seh_except_selector(),
@@ -596,7 +598,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
-                                      (ACE_THR_C_FUNC) ace_thread_adapter,
+                                      (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                                       this,
                                       new_thr_desc.get ()),
                   -1);
@@ -636,15 +638,15 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // removing this Thread Descriptor before it gets put into our
   // thread table.
 
-  int result = ACE_Thread::spawn (func,
-                                  args,
-                                  flags,
-                                  t_id,
-                                  &thr_handle,
-                                  priority,
-                                  stack,
-                                  stack_size,
-                                  thread_args);
+  int const result = ACE_Thread::spawn (func,
+                                        args,
+                                        flags,
+                                        t_id,
+                                        &thr_handle,
+                                        priority,
+                                        stack,
+                                        stack_size,
+                                        thread_args);
 
   if (result != 0)
     {
@@ -1029,7 +1031,7 @@ ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_thr");
 
-  int result = ACE_Thread::suspend (td->thr_handle_);
+  int const result = ACE_Thread::suspend (td->thr_handle_);
   if (result == -1) {
     if (errno != ENOTSUP)
       this->thr_to_be_removed_.enqueue_tail (td);
@@ -1046,7 +1048,7 @@ ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_thr");
 
-  int result = ACE_Thread::resume (td->thr_handle_);
+  int const result = ACE_Thread::resume (td->thr_handle_);
   if (result == -1) {
     if (errno != ENOTSUP)
       this->thr_to_be_removed_.enqueue_tail (td);
@@ -1085,7 +1087,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   tid += tid[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
 #endif /* VXWORKS */
 
-  int result = ACE_Thread::kill (tid, signum);
+  int const result = ACE_Thread::kill (tid, signum);
 
   if (result != 0)
     {
@@ -2329,47 +2331,4 @@ ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-# if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-template class ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
-# endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-template class auto_ptr<ACE_Thread_Descriptor>;
-template class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
-template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>;
-template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
-template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-template class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>;
-template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
-template class ACE_Node<ACE_Thread_Descriptor*>;
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
-template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
-template class ACE_Free_List<ACE_Thread_Descriptor>;
-template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-#    pragma instantiate ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>
-#   endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#    pragma instantiate ACE_Auto_Basic_Ptr<ACE_Thread_Descriptor>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-#  pragma instantiate auto_ptr<ACE_Thread_Descriptor>
-#  pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>
-#  pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>
-#  pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>
-#  pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-#  pragma instantiate ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor>
-#  pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-#  pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
-#  pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
-#  pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
-#  pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
-#  pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

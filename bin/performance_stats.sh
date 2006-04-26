@@ -42,9 +42,9 @@ sleep 10
 )
 if grep -q 'Total throughput: ' Default.log; then
   (
-    echo -n $DATE " "; 
+    echo -n $DATE " ";
     awk '/^Total throughput:/ {print $3}' Default.log
-  ) >> Default.txt 
+  ) >> Default.txt
 fi
 
 /bin/sync
@@ -57,9 +57,9 @@ sleep 2
        ./default_configuration.pl -t $i > $DEST/source/Sequence_Default_${i}.log 2>&1
        if grep -q 'Total throughput: ' $DEST/source/Sequence_Default_${i}.log; then
          (
-           echo -n $DATE " "; 
+           echo -n $DATE " ";
            awk '/^Total throughput:/ {print $3}' $DEST/source/Sequence_Default_${i}.log
-         ) >> $DEST/source/Sequence_Default_${i}.txt 
+         ) >> $DEST/source/Sequence_Default_${i}.txt
        fi
      )
    done
@@ -75,9 +75,9 @@ for i in $COMMON_TESTS; do
   )
   if grep -q 'Total throughput: ' ${i}.log; then
     (
-       echo -n $DATE " "; 
+       echo -n $DATE " ";
        awk '/^Total throughput:/ {print $3}' $DEST/source/${i}.log
-    ) >> ${i}.txt 
+    ) >> ${i}.txt
   fi
 done
 
@@ -89,12 +89,12 @@ for i in $SEQUENCE_TESTS; do
      for j in $SEQ_TEST_TYPE; do
          (
              ./run_test.pl -t $j > $DEST/source/Sequence_${i}_${j}.log 2>&1
-             
+
              if grep -q 'Total throughput: ' $DEST/source/Sequence_${i}_${j}.log; then
                  (
-                     echo -n $DATE " "; 
+                     echo -n $DATE " ";
                      awk '/^Total throughput:/ {print $3}' $DEST/source/Sequence_${i}_${j}.log
-                 ) >> $DEST/source/Sequence_${i}_${j}.txt 
+                 ) >> $DEST/source/Sequence_${i}_${j}.txt
              fi
          )
      done
@@ -131,9 +131,10 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xlabel 'Date (YYYYMMDD)'
     set ylabel 'Throughput (Requests/Second)'
     set yrange [0:]
-    set terminal png small color
+    set terminal png small size 800,600 color
     set output "/dev/null"
-    plot 'DII.txt' using 1:2 title 'DII' w l
+    plot 'AMI.txt' using 1:2 title 'AMI' w l
+    replot 'DII.txt' using 1:2 title 'DII' w l
     replot 'DSI.txt' using 1:2 title 'DSI' w l
     replot 'Deferred.txt' using 1:2 title 'Deferred' w l
     replot 'Single_Threaded.txt' using 1:2 title 'Single_Threaded' w l
@@ -153,9 +154,10 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set xlabel 'Date (YYYYMMDD)'
     set ylabel 'Throughput (Requests/Second)'
     set yrange [0:35000]
-    set terminal png small color
+    set terminal png small size 800,600 color
     set output "/dev/null"
-    plot 'DII.txt' using 1:2 title 'DII' w l
+    plot 'AMI.txt' using 1:2 title 'AMI' w l
+    replot 'DII.txt' using 1:2 title 'DII' w l
     replot 'DSI.txt' using 1:2 title 'DSI' w l
     replot 'Deferred.txt' using 1:2 title 'Deferred' w l
     replot 'Single_Threaded.txt' using 1:2 title 'Single_Threaded' w l
@@ -186,9 +188,12 @@ fi
 cd $DEST/data
 /bin/uname -a > uname.txt
 /usr/bin/gcc -v > gcc.txt 2>&1
+/usr/bin/gcc -dumpversion > gccversion.txt 2>&1
 /lib/libc.so.6 | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g' > libc.txt
 cat /proc/cpuinfo > cpuinfo.txt
 cat /proc/meminfo > meminfo.txt
+cat /etc/SuSE-release > linuxversion.txt
 
 cat $ACE_ROOT/ace/config.h > config.h.txt
 cat $ACE_ROOT/include/makeinclude/platform_macros.GNU > platform_macros.GNU.txt
+cp $ACE_ROOT/html/Stats/* $DEST

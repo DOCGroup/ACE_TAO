@@ -2,9 +2,14 @@
 // $Id$
 
 project(*Server): taoserver, minimum_corba {
-   includes += ../Generic_Servant
    libs += Generic_Servant
    after += POA_Generic_Servant_Lib
+
+   specific(automake) {
+     includes += $(srcdir)/../Generic_Servant
+   }
+   includes += ../Generic_Servant
+
    Source_Files {
     server.cpp
   }

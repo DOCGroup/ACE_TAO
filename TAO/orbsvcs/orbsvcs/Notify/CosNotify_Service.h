@@ -13,15 +13,17 @@
 #define TAO_Notify_COSNOTIFY_SERVICE_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Service.h"
-#include "Builder.h"
-#include "Factory.h"
+#include "orbsvcs/Notify/Service.h"
+#include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/Factory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Properties;
 class TAO_Notify_EventChannelFactory;
@@ -81,6 +83,8 @@ private:
   /// Service component for building NS participants.
   ACE_Auto_Ptr< TAO_Notify_Builder > builder_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_CosNotify_Service)
 ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_CosNotify_Service)

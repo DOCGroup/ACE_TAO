@@ -13,6 +13,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 bool
 TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_marshal (
   TAO_OutputCDR & cdr,
@@ -82,3 +84,5 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::length_i (
 {
   return this->length_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

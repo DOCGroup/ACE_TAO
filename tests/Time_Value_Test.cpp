@@ -49,6 +49,17 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
 
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+// some platforms pollute the namespace by defining max() and min() macros
+#ifdef max
+#undef max
+#endif
+#ifdef min
+#undef min
+#endif
+#include <limits>
+#endif /* ACE_LACKS_NUMERIC_LIMITS */
+
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
 static
 u_long
@@ -237,24 +248,32 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= -10.0;
   ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
+#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
+  const time_t max_time_t = std::numeric_limits<time_t>::max ();
+  const time_t min_time_t = std::numeric_limits<time_t>::min ();
+#else
+  const time_t max_time_t = LONG_MAX;
+  const time_t min_time_t = LONG_MIN;
+#endif
+
   // test results near limits
-  tv1.set ((ACE_INT32_MAX >> 1), 499999);
-  tv2.set ((-(ACE_INT32_MAX >> 1) << 1), -999998);
+  tv1.set ((max_time_t >> 1), 499999);
+  tv2.set ((-(max_time_t >> 1) << 1), -999998);
   tv1 *= -2.0;
   ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
-  tv1.set (ACE_INT32_MAX >> 1, 499999);
-  tv2.set (((ACE_INT32_MAX >> 1) << 1), 999998);
+  tv1.set (max_time_t >> 1, 499999);
+  tv2.set (((max_time_t >> 1) << 1), 999998);
   tv1 *= 2.0;
   ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
   // test saturated result
-  tv1.set (ACE_INT32_MAX - 1, 499999);
-  tv2.set (ACE_INT32_MAX, 999999);
-  tv1 *= ACE_INT32_MAX;
+  tv1.set (max_time_t - 1, 499999);
+  tv2.set (max_time_t, 999999);
+  tv1 *= max_time_t;
   ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
-  tv1.set (ACE_INT32_MAX - 1, 499999);
-  tv2.set (ACE_INT32_MIN, -999999);
-  tv1 *= ACE_INT32_MIN;
+  tv1.set (max_time_t - 1, 499999);
+  tv2.set (min_time_t, -999999);
+  tv1 *= min_time_t;
   ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)

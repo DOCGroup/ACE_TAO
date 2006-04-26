@@ -16,6 +16,8 @@ ACE_RCSID (ace,
            Message_Block,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Message_Block)
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -582,10 +584,14 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
                         mb.message_block_allocator_) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("ACE_Message_Block")));
-
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Align ourselves
       char *start = ACE_ptr_align_binary (this->base (),
                                           align);
+#else
+      char *start = this->base ();
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
+
       // Set our rd & wr pointers
       this->rd_ptr (start);
       this->wr_ptr (start);
@@ -609,21 +615,29 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("ACE_Message_Block")));
 
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Align ourselves
       char *start = ACE_ptr_align_binary (this->base (),
                                           align);
+#else
+      char *start = this->base ();
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
+
       // Set our rd & wr pointers
       this->rd_ptr (start);
       this->wr_ptr (start);
 
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Get the alignment offset of the incoming ACE_Message_Block
       start = ACE_ptr_align_binary (mb.base (),
                                     align);
-
+#else
+      start = mb.base ();
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
 
       // Actual offset for the incoming message block assuming that it
       // is also aligned to the same "align" byte
-      size_t wr_offset = mb.wr_ptr_ - (start - mb.base ());
+      size_t const wr_offset = mb.wr_ptr_ - (start - mb.base ());
 
       // Copy wr_offset amount of data in to <this->data_block>
       (void) ACE_OS::memcpy (this->wr_ptr (),
@@ -634,6 +648,9 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
       // to do what it wants
 
     }
+#if defined (ACE_LACKS_CDR_ALIGNMENT)
+  ACE_UNUSED_ARG (align);
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
 }
 
 int
@@ -736,7 +753,7 @@ ACE_Data_Block::release_i (void)
   ACE_Data_Block *result = 0;
 
   // decrement reference count
-  this->reference_count_--;
+  --this->reference_count_;
 
   if (this->reference_count_ == 0)
     // this will cause deletion of this
@@ -948,10 +965,10 @@ ACE_Data_Block::duplicate (void)
     {
       // We need to acquire the lock before incrementing the count.
       ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
-      this->reference_count_++;
+      ++this->reference_count_;
     }
   else
-    this->reference_count_++;
+    ++this->reference_count_;
 
   return this;
 }
@@ -1203,6 +1220,7 @@ ACE_Data_Block::base (char *msg_data,
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE))
     this->allocator_strategy_->free (this->base_);
+
   this->max_size_ = msg_length;
   this->cur_size_ = msg_length;
   this->base_ = msg_data;
@@ -1350,18 +1368,4 @@ ACE_Laxity_Message_Strategy::dump (void) const
 }
   // Dump the state of the strategy.
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Guard <ACE_Lock>;
-// These specializations aren't needed for the ACE library because
-// Service_Config.cpp has them:
-//
-// template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
-// template class ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Guard <ACE_Lock>
-// These specializations aren't needed for the ACE library because
-// Service_Config.cpp has them:
-//
-// #pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
-// #pragma instantiate ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

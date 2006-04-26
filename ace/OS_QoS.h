@@ -5,9 +5,9 @@
  *  @file   OS_QoS.h
  *
  *  $Id$
- *  
+ *
  *  @brief  Contains OS specific data structures for QoS networking.
- *  
+ *
  *  @author Craig Rodrigues  <crodrigu@bbn.com>
  */
 //=============================================================================
@@ -24,6 +24,8 @@
 
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/OS_NS_stropts.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #if defined (ACE_HAS_WINSOCK2_GQOS)
@@ -384,6 +386,7 @@ private:
   unsigned long callback_data_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* ACE_OS_QOS_H */

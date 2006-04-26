@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,6 +34,9 @@
 #include "ace/SSL/SSL_SOCK_Stream.h"
 
 #include "ace/Svc_Handler.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class TAO_ORB_Core;
@@ -149,6 +152,8 @@ namespace TAO
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_SSLIOP_TRANSPORT_H */

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -22,6 +22,7 @@ noinst_PROGRAMS =
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
@@ -54,7 +55,11 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
 
@@ -62,6 +67,7 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
@@ -101,6 +107,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
 
@@ -108,6 +115,7 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -149,6 +157,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
 

@@ -1,21 +1,16 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    SHMIOP_Acceptor.h
-//
-// = DESCRIPTION
-//    SHMIOP specific acceptor processing
-//
-// = AUTHOR
-//    Nanbor Wang
-//
-// ============================================================================
+// $Id$
+// ===================================================================
+/**
+ *  @file   SHMIOP_Acceptor.h
+ *
+ *  @brief  SHMIOP specific acceptor processing
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_SHMIOP_ACCEPTOR_H
 #define TAO_SHMIOP_ACCEPTOR_H
@@ -31,12 +26,14 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Transport_Acceptor.h"
-#include "SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
 // TAO SHMIOP_Acceptor concrete call definitions
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SHMIOP_Acceptor
@@ -147,6 +144,8 @@ private:
   /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

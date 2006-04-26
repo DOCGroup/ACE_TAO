@@ -21,13 +21,13 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
   ACE_URL_Record *item = 0;
 
   ACE_NEW_RETURN (offer, ACE_URL_Offer_Seq (how_many), -1);
-  
+
   if (how >= ACE_URL_Locator::INVALID_SELECTION)
     {
       errno = ACE_URL_Locator::INVALID_ARGUMENT;
       return -1;
     }
-  
+
   num_query = 0;
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
        iter.next (item) != 0;
@@ -75,7 +75,7 @@ ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
 
   // First check if we have registered this URL already.
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
-       iter.next (item) != 0; 
+       iter.next (item) != 0;
        iter.advance ())
     if (*item->offer_->url () == *offer->url ())
       {
@@ -99,7 +99,7 @@ int
 ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
 {
   ACE_URL_Record *item = 0;
-  
+
   // Iterate thru repository and remove offer with <offer_id>.
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
        iter.next (item) != 0;
@@ -124,7 +124,7 @@ ACE_URL_Local_Locator::describe_offer (const ACE_WString &offer_id,
 				       ACE_URL_Offer *offer)
 {
   ACE_URL_Record *item = 0;
-  
+
   // Iterate thru the repository and produce a copy of offer's
   // description.
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
@@ -161,7 +161,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
 	}
       if (offer_id == *item->id_)
 	target = item;
-    }	  
+    }
 
   if (target != 0)		// Aha, we found a target to work on
     {
@@ -169,7 +169,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
 	{
 	  // We need to make a copy of the original property sequence
 	  // so if any error occurs, we can revert our change easily.
-	  
+
 	  // First we need to calculate the maximum number of perperties.
 	  int psize = target->offer_->url_properties ().size ();
 	  if (del != 0)
@@ -195,7 +195,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
 	      // Argh, this is really a stupid design.
 	      // Go thru every property we want to delete
 	      for (size_t i = 0; i < del->size () && sz > 0; i++)
-		// For earch, go thru our property sequence and 
+		// For earch, go thru our property sequence and
 		// search for the property.
 		for (size_t j = 0; j < sz; j++)
 		  if ((*del)[i].name () == working[j].name ())
@@ -245,13 +245,4 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
   return -1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<ACE_URL_Record>;
-template class ACE_Unbounded_Set_Iterator<ACE_URL_Record>;
-template class ACE_Node<ACE_URL_Record>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Set<ACE_URL_Record>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_URL_Record>
-#pragma instantiate ACE_Node<ACE_URL_Record>
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_LOCAL_LOCATOR_C */

@@ -14,13 +14,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 #include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -59,12 +62,14 @@ protected:
   PROXY proxy_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Method_Request_Updates_T.inl"
+#include "orbsvcs/Notify/Method_Request_Updates_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Method_Request_Updates_T.cpp"
+#include "orbsvcs/Notify/Method_Request_Updates_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

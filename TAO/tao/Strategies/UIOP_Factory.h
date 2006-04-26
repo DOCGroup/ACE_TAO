@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 // $Id$
 // ============================================================================
 //
@@ -28,8 +29,10 @@
 # if TAO_HAS_UIOP == 1
 
 #include "tao/Protocol_Factory.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -74,6 +77,8 @@ private:
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_UIOP_Protocol_Factory)

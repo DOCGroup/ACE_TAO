@@ -1,7 +1,7 @@
 //$Id$
 
-#ifndef CACHED_CONNECT_STRATEGY_T_C
-#define CACHED_CONNECT_STRATEGY_T_C
+#ifndef ACE_CACHED_CONNECT_STRATEGY_T_CPP
+#define ACE_CACHED_CONNECT_STRATEGY_T_CPP
 
 #include "ace/Cached_Connect_Strategy_T.h"
 
@@ -16,10 +16,10 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pair_T.h"
 
-ACE_RCSID(ace, Cached_Connect_Strategy_T, "$Id$")
-
 #define ACE_T1 class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX
 #define ACE_T2 SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_T1>
 ACE_Cached_Connect_Strategy_Ex<ACE_T2>::ACE_Cached_Connect_Strategy_Ex
@@ -275,7 +275,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
       // for the <Connector> to notify the cache of the completion of
       // connect().
 
-      if (errno == EWOULDBLOCK)
+      if (errno == EWOULDBLOCK || errno == ETIMEDOUT)
         errno = ENOTSUP;
       else if (ACE::out_of_handles (errno) || errno == EADDRINUSE)
         {
@@ -296,7 +296,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
                                     flags,
                                     perms) == -1)
             {
-              if (errno == EWOULDBLOCK)
+              if (errno == EWOULDBLOCK || errno == ETIMEDOUT)
                 errno = ENOTSUP;
               return -1;
             }
@@ -726,7 +726,9 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Cached_Connect_Strategy)
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #undef ACE_T1
 #undef ACE_T2
 
-#endif /* CACHED_CONNECT_STRATEGY_T_C */
+#endif /* ACE_CACHED_CONNECT_STRATEGY_T_CPP */

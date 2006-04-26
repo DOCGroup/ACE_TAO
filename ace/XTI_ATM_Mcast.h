@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,8 @@
 
 #include "ace/TLI_Connector.h"
 #include "ace/ATM_Addr.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_XTI_ATM_Mcast
@@ -122,10 +124,14 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/XTI_ATM_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_XTI_ATM */
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_XTI_ATM_MCAST_H */

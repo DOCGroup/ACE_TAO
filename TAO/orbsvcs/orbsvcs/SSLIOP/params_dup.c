@@ -1,18 +1,19 @@
 // $Id$
 
+#include "params_dup.h"
+
 #include <openssl/asn1.h>
-#include <openssl/dsa.h>
-#include <openssl/dh.h>
 
 
 DSA *
-DSAparams_dup_wrapper (DSA *dsa)
+DSAPARAMS_DUP_WRAPPER_NAME (DSA * dsa)
 {
-	return DSAparams_dup (dsa);
+  return DSAparams_dup (dsa);
 }
 
 DH *
-DHparams_dup_wrapper (DH *dh)
+DHPARAMS_DUP_WRAPPER_NAME (DH * dh)
 {
-	return DHparams_dup (dh);
+  return DHparams_dup (dh);
 }
+

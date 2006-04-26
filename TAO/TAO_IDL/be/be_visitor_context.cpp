@@ -42,8 +42,8 @@
 
 #include "be_visitor_context.h"
 
-ACE_RCSID (be, 
-           be_visitor_context, 
+ACE_RCSID (be,
+           be_visitor_context,
            "$Id$")
 
 
@@ -216,24 +216,24 @@ be_visitor_context::attribute (void)
 }
 
 void
-be_visitor_context::exception (idl_bool ib)
+be_visitor_context::exception (bool ib)
 {
   this->exception_ = ib;
 }
 
-idl_bool
+bool
 be_visitor_context::exception (void)
 {
   return this->exception_;
 }
 
 void
-be_visitor_context::comma (idl_bool ib)
+be_visitor_context::comma (bool ib)
 {
   this->comma_ = ib;
 }
 
-idl_bool
+bool
 be_visitor_context::comma (void)
 {
   return this->comma_;
@@ -648,7 +648,7 @@ const char *
 be_visitor_context::non_null_export_macro (void) const
 {
   const char *anyop_export = be_global->anyop_export_macro ();
-  
+
   return (ACE_OS::strcmp (anyop_export, "") == 0
           ? be_global->stub_export_macro ()
           : anyop_export);

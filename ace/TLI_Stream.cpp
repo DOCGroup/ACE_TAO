@@ -15,6 +15,8 @@ ACE_RCSID(ace, TLI_Stream, "$Id$")
 #include "ace/TLI_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Stream)
 
 void
@@ -221,5 +223,7 @@ ACE_TLI_Stream::recv_n (void *buf,
                        timeout,
                        bytes_transferred);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TLI */

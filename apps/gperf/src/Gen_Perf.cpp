@@ -102,7 +102,7 @@ Gen_Perf::sort_set (char *union_set, int len)
            curr--)
         union_set[curr] = union_set[curr - 1];
 
-      union_set[curr] = tmp;
+      union_set[curr] = static_cast<char> (tmp);
     }
 }
 

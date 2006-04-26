@@ -1,8 +1,8 @@
 // $Id$
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "TypeCodeFactory_Adapter_Impl.h"
-#include "TypeCodeFactory_i.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
 
 #include "tao/ORB_Core.h"
 
@@ -11,6 +11,8 @@ ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_Adapter_Impl,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl (void)
 {
@@ -406,6 +408,8 @@ TAO_TypeCodeFactory_Adapter_Impl::Initializer (void)
 
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_TypeCodeFactory_Adapter_Impl);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_TypeCodeFactory_Adapter_Impl,

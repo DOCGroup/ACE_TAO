@@ -118,7 +118,7 @@ run_test (PortableServer::POA_ptr poa,
   ACE_NEW (consumer, CEC_Counting_Consumer*[n]);
   ACE_NEW (supplier, CEC_Counting_Supplier*[n]);
 
-  int i;
+  int i = 0;
   for (i = 0; i != n; ++i)
     {
       char consumer_name[64];

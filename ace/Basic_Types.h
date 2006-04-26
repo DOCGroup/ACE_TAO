@@ -32,7 +32,7 @@
  *    - ACE_INT32
  *    - ACE_UINT32
  *    - ACE_UINT64
- *  (Note: ACE_INT64 is partly defined, there is no ACE_LongLong for
+ *  (@note ACE_INT64 is partly defined, there is no ACE_LongLong for
  *   platforms that don't have a native 8-byte integer type.)
  *
  *  Byte-order (endian-ness) determination:
@@ -151,97 +151,99 @@
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // The sizes of the commonly implemented types are now known.  Set up
 // typedefs for whatever we can.  Some of these are needed for certain
 // cases of ACE_UINT64, so do them before the 64-bit stuff.
 
 #if defined (ACE_INT8_TYPE)
-  typedef ACE_INT8_TYPE		ACE_INT8;
+  typedef ACE_INT8_TYPE         ACE_INT8;
 #elif defined (ACE_HAS_INT8_T)
-  typedef int8_t		ACE_INT8;
+  typedef int8_t                ACE_INT8;
 #elif !defined (ACE_LACKS_SIGNED_CHAR)
-  typedef signed char		ACE_INT8;
+  typedef signed char           ACE_INT8;
 #else
-  typedef char			ACE_INT8;
+  typedef char                  ACE_INT8;
 #endif /* defined (ACE_INT8_TYPE) */
 
 #if defined (ACE_UINT8_TYPE)
-  typedef ACE_UINT8_TYPE	ACE_UINT8;
+  typedef ACE_UINT8_TYPE        ACE_UINT8;
 #elif defined (ACE_HAS_UINT8_T)
-  typedef uint8_t		ACE_UINT8;
+  typedef uint8_t               ACE_UINT8;
 #else
-  typedef unsigned char		ACE_UINT8;
+  typedef unsigned char         ACE_UINT8;
 #endif /* defined (ACE_UINT8_TYPE) */
 
 #if defined (ACE_INT16_TYPE)
-  typedef ACE_INT16_TYPE	ACE_INT16;
+  typedef ACE_INT16_TYPE        ACE_INT16;
 #elif defined (ACE_HAS_INT16_T)
-  typedef int16_t		ACE_INT16;
+  typedef int16_t               ACE_INT16;
 #elif ACE_SIZEOF_SHORT == 2
-  typedef short			ACE_INT16;
+  typedef short                 ACE_INT16;
 #elif ACE_SIZEOF_INT == 2
-  typedef int			ACE_INT16;
+  typedef int                   ACE_INT16;
 #else
 # error Have to add to the ACE_INT16 type setting
 #endif  /* defined (ACE_INT16_TYPE) */
 
 #if defined (ACE_UINT16_TYPE)
-  typedef ACE_UINT16_TYPE	ACE_UINT16;
+  typedef ACE_UINT16_TYPE       ACE_UINT16;
 #elif defined (ACE_HAS_UINT16_T)
-  typedef uint16_t		ACE_UINT16;
+  typedef uint16_t              ACE_UINT16;
 #elif ACE_SIZEOF_SHORT == 2
-  typedef unsigned short	ACE_UINT16;
+  typedef unsigned short        ACE_UINT16;
 #elif ACE_SIZEOF_INT == 2
-  typedef unsigned int		ACE_UINT16;
+  typedef unsigned int          ACE_UINT16;
 #else
 # error Have to add to the ACE_UINT16 type setting
 #endif /* defined (ACE_UINT16_TYPE) */
 
 #if defined (ACE_INT32_TYPE)
-  typedef ACE_INT32_TYPE	ACE_INT32;
+  typedef ACE_INT32_TYPE        ACE_INT32;
 #elif defined (ACE_HAS_INT32_T)
-  typedef int32_t		ACE_INT32;
+  typedef int32_t               ACE_INT32;
 #elif ACE_SIZEOF_INT == 4
-  typedef int			ACE_INT32;
+  typedef int                   ACE_INT32;
 #elif ACE_SIZEOF_LONG == 4
-  typedef long			ACE_INT32;
+  typedef long                  ACE_INT32;
 #else
 # error Have to add to the ACE_INT32 type setting
 #endif /* defined (ACE_INT32_TYPE) */
 
 #if defined (ACE_UINT32_TYPE)
-  typedef ACE_UINT32_TYPE	ACE_UINT32;
+  typedef ACE_UINT32_TYPE       ACE_UINT32;
 #elif defined (ACE_HAS_UINT32_T)
-  typedef uint32_t		ACE_UINT32;
+  typedef uint32_t              ACE_UINT32;
 #elif ACE_SIZEOF_INT == 4
-  typedef unsigned int		ACE_UINT32;
+  typedef unsigned int          ACE_UINT32;
 #elif ACE_SIZEOF_LONG == 4
-  typedef unsigned long		ACE_UINT32;
+  typedef unsigned long         ACE_UINT32;
 #else
 # error Have to add to the ACE_UINT32 type setting
 #endif /* defined (ACE_UINT32_TYPE) */
 
 #if defined (ACE_INT64_TYPE)
-  typedef ACE_INT64_TYPE	ACE_INT64;
+  typedef ACE_INT64_TYPE        ACE_INT64;
 #elif defined (ACE_HAS_INT64_T)
-  typedef int64_t		ACE_INT64;
+  typedef int64_t               ACE_INT64;
 #elif ACE_SIZEOF_LONG == 8
-  typedef long			ACE_INT64;
+  typedef long                  ACE_INT64;
 #elif !defined (ACE_LACKS_LONGLONG_T) && ACE_SIZEOF_LONG_LONG == 8
-  typedef long long		ACE_INT64;
+  typedef long long             ACE_INT64;
 #endif /* defined (ACE_INT64_TYPE) */
 
 #if !(defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T))
 /* See matching #if around ACE_U_LongLong class declaration below */
 
 #  if defined (ACE_UINT64_TYPE)
-  typedef ACE_UINT64_TYPE	ACE_UINT64;
+  typedef ACE_UINT64_TYPE       ACE_UINT64;
 #  elif defined (ACE_HAS_UINT64_T)
-  typedef uint64_t		ACE_UINT64;
+  typedef uint64_t              ACE_UINT64;
 #  elif ACE_SIZEOF_LONG == 8
-  typedef unsigned long		ACE_UINT64;
+  typedef unsigned long         ACE_UINT64;
 #  elif ACE_SIZEOF_LONG_LONG == 8
-  typedef unsigned long	long	ACE_UINT64;
+  typedef unsigned long long    ACE_UINT64;
 #  endif /* defined (ACE_UINT64_TYPE) */
 #endif /* !(ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T) */
 
@@ -259,14 +261,11 @@ typedef unsigned char ACE_Byte;
 // Type for doing arithmetic on pointers ... as elsewhere, we assume
 // that unsigned versions of a type are the same size as the signed
 // version of the same type.
-// NOTE! ptr_arith_t is an ACE-defined type and should not be used.
-// It has been superseded by the standard type ptrdiff_t. This definition
-// is simply a placeholder til all ptr_arith_t usage can be expunged from
-// ACE and TAO.
 # if defined (ACE_HAS_WINCE) && (_WIN32_WCE < 400)
-typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
+typedef unsigned long ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
 # endif
-typedef ptrdiff_t ptr_arith_t;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Byte-order (endian-ness) determination.
 # if defined (BYTE_ORDER)
@@ -357,6 +356,8 @@ typedef ptrdiff_t ptr_arith_t;
 #if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 // Forward declaration for streams
 #   include "ace/iosfwd.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_U_LongLong
@@ -507,7 +508,7 @@ typedef ptrdiff_t ptr_arith_t;
       double for_alignment_;
     };
 
-    // NOTE:  the following four accessors are inlined here in
+    // @note  the following four accessors are inlined here in
     // order to minimize the extent of the data_ struct.  It's
     // only used here; the .i and .cpp files use the accessors.
 
@@ -523,7 +524,7 @@ typedef ptrdiff_t ptr_arith_t;
     /// Internal utility function to hide access through struct.
     ACE_UINT32 &l_ () { return data_.lo_; }
 
-    // NOTE:  the above four accessors are inlined here in
+    // @note  the above four accessors are inlined here in
     // order to minimize the extent of the data_ struct.  It's
     // only used here; the .i and .cpp files use the accessors.
 
@@ -548,6 +549,8 @@ typedef ptrdiff_t ptr_arith_t;
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   ostream &operator<< (ostream &, const ACE_U_LongLong &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # endif /* ACE_LACKS_LONGLONG_T */
 

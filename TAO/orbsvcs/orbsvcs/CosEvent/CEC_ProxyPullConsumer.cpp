@@ -1,20 +1,22 @@
 // $Id$
 
-#include "CEC_ProxyPullConsumer.h"
-#include "CEC_EventChannel.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_SupplierControl.h"
-#include "CEC_ProxyPullSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_ProxyPullConsumer.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_ProxyPullConsumer,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
@@ -389,3 +391,5 @@ TAO_CEC_ProxyPullConsumer::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

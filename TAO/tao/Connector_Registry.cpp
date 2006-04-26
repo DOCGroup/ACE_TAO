@@ -20,6 +20,7 @@ ACE_RCSID (tao,
            Connector_Registry,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : connectors_ (0),
@@ -53,7 +54,7 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 int
 TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 {
-  TAO_ProtocolFactorySet *pfs =
+  TAO_ProtocolFactorySet * const pfs =
     orb_core->protocol_factories ();
 
   // The array containing the TAO_Connectors will never contain more
@@ -266,3 +267,5 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
   // against the provided string.
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,7 +24,9 @@
 #include "ace/SString.h"
 
 #include "orbsvcs/CosNamingC.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_IntId
@@ -130,6 +132,8 @@ public:
   /// Return <kind_> in a const char * format.
   const char * kind (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ENTRIES_H */

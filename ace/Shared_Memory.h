@@ -16,18 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Shared_Memory
@@ -40,7 +37,7 @@
  * memory.  For a much more sophisticated version, please check
  * out the <ACE_Malloc> class.
  */
-class ACE_Memory_Export ACE_Shared_Memory
+class ACE_Export ACE_Shared_Memory
 {
 public:
   virtual ~ACE_Shared_Memory (void);
@@ -53,6 +50,8 @@ public:
   virtual int get_segment_size (void) const = 0;
   virtual ACE_HANDLE get_id (void) const = 0;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

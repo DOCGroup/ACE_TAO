@@ -1,16 +1,18 @@
 // $Id$
 
-#include "StructuredProxyPushConsumer.h"
+#include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
 
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushConsumer, "$Id$")
 
 #include "ace/Bound_Ptr.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
-#include "StructuredPushSupplier.h"
-#include "StructuredEvent.h"
-#include "../AdminProperties.h"
-#include "../Properties.h"
+#include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
+#include "orbsvcs/Notify/Structured/StructuredEvent.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Properties.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredProxyPushConsumer::TAO_Notify_StructuredProxyPushConsumer (void)
 {
@@ -87,8 +89,8 @@ TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (ACE
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-
 }
+
 const char *
 TAO_Notify_StructuredProxyPushConsumer::get_proxy_type_name (void) const
 {
@@ -100,17 +102,21 @@ TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& a
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
-  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
+  if (attrs.load("PeerIOR", ior))
   {
     CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
     {
-      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CosNotifyComm::StructuredPushSupplier_var ps =
-        CosNotifyComm::StructuredPushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CosNotifyComm::StructuredPushSupplier_var ps = CosNotifyComm::StructuredPushSupplier::_nil();
+      if ( ior.length() > 0 )
+      {
+        CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        ps = CosNotifyComm::StructuredPushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
       // minor hack: suppress generating subscription updates during reload.
       bool save_updates = this->updates_off_;
       this->updates_off_ = true;
@@ -125,3 +131,5 @@ TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& a
     ACE_ENDTRY;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

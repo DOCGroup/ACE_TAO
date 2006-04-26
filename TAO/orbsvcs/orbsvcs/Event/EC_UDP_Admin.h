@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_UDP_Admin.h
  *
@@ -17,7 +18,9 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Simple_AddrServer
@@ -50,6 +53,8 @@ public:
 private:
   CORBA::UShort port_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_UDP_ADMIN_H */

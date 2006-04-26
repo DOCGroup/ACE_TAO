@@ -41,7 +41,7 @@ be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist (void)
 {
 }
 
-idl_bool
+bool
 be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 {
   UTL_Scope *scope = node->defined_in ();
@@ -56,18 +56,18 @@ be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
           if (last_E != 0
               && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
             {
-              return I_TRUE;
+              return true;
             }
         }
     }
 
-  return I_FALSE;
+  return false;
 }
 
 int
 be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 {
-  idl_bool amh_valuetype = this->is_amh_exception_holder (node);
+  bool amh_valuetype = this->is_amh_exception_holder (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << " (";
@@ -99,7 +99,9 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
           /***********************************************************/
           if (amh_valuetype)
             {
-              *os << "ACE_ENV_SINGLE_ARG_DECL";
+              *os << (be_global->use_raw_throw ()
+                        ? ""
+                        : "ACE_ENV_SINGLE_ARG_DECL");
             }
           /***********************************************************/
           else
@@ -109,11 +111,15 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 
               if (node->argument_count () == 0)
                 {
-                  *os << " ACE_ENV_SINGLE_ARG_DECL";
+                  *os << (be_global->use_raw_throw ()
+                            ? ""
+                            : " ACE_ENV_SINGLE_ARG_DECL");
                 }
               else
                 {
-                  *os << " ACE_ENV_ARG_DECL";
+                  *os << (be_global->use_raw_throw ()
+                            ? ""
+                            : " ACE_ENV_ARG_DECL");
                 }
             }
 
@@ -123,7 +129,9 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                 {
                 case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
                   // Last argument - is always ACE_ENV_ARG_DECL.
-                  *os << "_WITH_DEFAULTS";
+                  *os << (be_global->use_raw_throw ()
+                            ? ""
+                            : "_WITH_DEFAULTS");
                   break;
                 default:
                   break;

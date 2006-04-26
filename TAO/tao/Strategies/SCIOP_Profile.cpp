@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // SCIOP_Profile.cpp
 
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -11,7 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/StringSeqC.h"
-#include "sciop_endpointsC.h"
+#include "tao/Strategies/sciop_endpointsC.h"
 
 ACE_RCSID(Strategies,
           SCIOP_Profile,
@@ -21,13 +21,13 @@ static const char prefix_[] = "sciop";
 
 const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 char
 TAO_SCIOP_Profile::object_key_delimiter (void) const
 {
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }
-
-
 
 TAO_SCIOP_Profile::TAO_SCIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO::ObjectKey &object_key,
@@ -106,7 +106,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       TAO_SCIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,
-                      TAO_SCIOP_Endpoint (endpointSeq[i].in(),
+                      TAO_SCIOP_Endpoint (endpointSeq[i],
                                           this->endpoint_.port_,
                                           this->endpoint_.priority()),
                       -1);
@@ -512,5 +512,7 @@ TAO_SCIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

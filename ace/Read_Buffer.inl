@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Accessor to the number of bytes in the buffer.
 
@@ -26,3 +29,4 @@ ACE_Read_Buffer::alloc (void) const
   return this->allocator_;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Recursive_TypeCode.h"
-#include "TypeCodeFactory_i.h"
+#include "tao/TypeCodeFactory/Recursive_TypeCode.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -44,6 +44,7 @@ ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TCF
 {
@@ -687,15 +688,8 @@ TAO_TypeCodeFactory_i::create_enum_tc (
                             tc);
         }
 
-      enumerators[index] = members[index].in ();
-
-//       cdr << members[index].in ();
+      enumerators[index] = members[index];
     }
-
-//   return this->assemble_tc (cdr,
-//                             CORBA::tk_enum,
-//                             0
-//                             ACE_ENV_ARG_PARAMETER);
 
   typedef TAO::TypeCode::Enum<
     CORBA::String_var,
@@ -2097,3 +2091,5 @@ TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind,
   return tc;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

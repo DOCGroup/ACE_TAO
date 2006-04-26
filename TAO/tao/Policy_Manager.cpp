@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Policy_Manager.h"
+#include "tao/Policy_Manager.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -13,6 +13,7 @@ ACE_RCSID (tao,
            Policy_Manager,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::PolicyList *
 TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts
@@ -33,5 +34,7 @@ TAO_Policy_Manager::set_policy_overrides (const CORBA::PolicyList & policies,
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->impl_.set_policy_overrides (policies, set_add ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

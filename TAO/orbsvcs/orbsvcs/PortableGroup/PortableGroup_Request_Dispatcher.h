@@ -20,9 +20,11 @@
 
 #include "tao/Request_Dispatcher.h"
 
-#include "portablegroup_export.h"
-#include "Portable_Group_Map.h"
-#include "PortableGroup_Acceptor_Registry.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "orbsvcs/PortableGroup/Portable_Group_Map.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_PortableGroup_Loader;
@@ -60,6 +62,8 @@ private:
   TAO_PortableGroup_Acceptor_Registry acceptor_registry_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

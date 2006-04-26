@@ -30,6 +30,8 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 template <class T> class ACE_Future_Holder;
 template <class T> class ACE_Future_Observer;
@@ -122,7 +124,7 @@ private:
   /**
    * Attaches the specified observer to a subject (i.e., the <ACE_Future_Rep>).
    * The update method of the specified subject will be invoked with a copy of
-   * the written-to <ACE_Future> as input when the result gets set.
+   * the written-to ACE_Future as input when the result gets set.
    *
    * Returns 0 if the observer is successfully attached, 1 if the
    * observer is already attached, and -1 if failures occur.
@@ -206,7 +208,7 @@ private:
   int ref_count_;
 
   typedef ACE_Future_Observer<T>
-	    OBSERVER;
+            OBSERVER;
 
   typedef ACE_Unbounded_Set<OBSERVER *>
         OBSERVER_COLLECTION;
@@ -370,6 +372,8 @@ private:
   typedef ACE_Future_Rep<T> FUTURE_REP;
   FUTURE_REP *future_rep_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Future.cpp"

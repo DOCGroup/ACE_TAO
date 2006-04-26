@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:277
 
 
-#include "Messaging_SyncScope_PolicyC.h"
+#include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -60,7 +62,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::release (
     Messaging::SyncScopePolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::SyncScopePolicy_ptr
@@ -109,18 +111,18 @@ Messaging::SyncScopePolicy::_unchecked_narrow (
 Messaging::SyncScopePolicy_ptr
 Messaging::SyncScopePolicy::_duplicate (SyncScopePolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::SyncScopePolicy::_tao_release (SyncScopePolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -166,3 +168,5 @@ Messaging::SyncScopePolicy::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -23,7 +23,11 @@
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // For Intel platforms, a scale factor is required for
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
@@ -36,22 +40,33 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 # include "ace/Recursive_Thread_Mutex.h"
 # include "ace/Object_Manager.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
   // Initialize the global_scale_factor_ to 1.  The first
   // ACE_High_Res_Timer instance construction will override this
   // value.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #else  /* ! (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
              ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
   // A scale_factor of 1000 converts nanosecond ticks to microseconds.
   // That is, on these platforms, 1 tick == 1 nanosecond.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1000u;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ! (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
              ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is used to tell if the global_scale_factor_ has been
 // set, and if high resolution timers are supported.
@@ -371,15 +386,9 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
   // Get just the microseconds (dropping any left over nanoseconds).
   ACE_UINT32 useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
 
-#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
   // Transforms one second in microseconds into nanoseconds.
   elapsed_time.tv_nsec = (time_t) ((useconds % ACE_ONE_SECOND_IN_USECS) * 1000u + nseconds);
-#else
-  elapsed_time.ts_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
-  // Transforms one second in microseconds into nanoseconds.
-  elapsed_time.ts_nsec = (time_t) ((useconds % ACE_ONE_SECOND_IN_USECS) * 1000u + nseconds);
-#endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
 }
 #endif /* ACE_HAS_POSIX_TIME */
 
@@ -533,3 +542,5 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const char *env)
 #endif /* !ACE_HAS_WINCE */
   return -1;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

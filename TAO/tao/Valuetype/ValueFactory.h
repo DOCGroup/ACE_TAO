@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,14 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Value_VarOut_T.h"
+#include "tao/Valuetype/Value_VarOut_T.h"
 
+#include "tao/Environment.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 #include "ace/Synch_Traits.h"
@@ -30,7 +31,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Atomic_Op.h"
-#include "tao/Environment.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -48,7 +50,6 @@ namespace CORBA
     ValueFactoryBase_var;
 
   typedef ValueFactoryBase_var ValueFactory_var;
-
 
   class TAO_Valuetype_Export ValueFactoryBase
   {
@@ -93,7 +94,10 @@ namespace TAO
     static void release (CORBA::ValueFactoryBase *);
   };
 }
-// Use this macro for writing code that is independend from
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+// Use this macro for writing code that is independent from
 // the compiler support of covariant return types of pointers to
 // virtual inherited classes.
 // (e.g. in egcs-2.90.29 980515 (egcs-1.0.3 release) its not yet implemented)

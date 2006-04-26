@@ -28,10 +28,15 @@
 #include "ace/Intrusive_List_Node.h"
 #include "ace/OS_NS_Thread.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LF_Event;
 class TAO_Transport;
 class TAO_ORB_Core;
-class ACE_Reactor;
 class TAO_ORB_Core_TSS_Resources;
 
 /**
@@ -282,6 +287,8 @@ private:
   /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Leader_Follower.i"

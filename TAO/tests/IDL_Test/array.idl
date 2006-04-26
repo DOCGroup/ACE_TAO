@@ -9,7 +9,7 @@
 //    array.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -40,16 +40,16 @@ typedef wrap outside_array[10];
 // Once a problem with expressions in the brackets,
 // as well as the typedef'd/anonymous thing.
 
-interface tdef 
+interface tdef
 {
   const short byteslen = 12;
   typedef octet Bytes[byteslen + 1];
 
-  struct bytes_or_longs 
+  struct bytes_or_longs
     {
       Bytes the_bytes;	          // typedef'd
       long Longs[byteslen];       // anonymous
-    }; 
+    };
 };
 
 // To test that all the octet arrays build and link as
@@ -61,7 +61,7 @@ module ABCModule
     octet rmtNodeId[22];
     octet rmtDetails[22];
   };
-  
+
   struct bbbBubBubBubBaby
   {
     octet rmtNodeId[22];
@@ -91,20 +91,22 @@ module string_array
 
 // Checks code generation for arrays and typedefs of arrays
 // when they are not declared globally or inside a module.
-interface testdata 
+interface testdata
 {
   typedef char Arraychar[2];
   typedef Arraychar ArrayDeChar;
 
-  struct struct2 
+  struct struct2
   {
     Arraychar field_1;
     ArrayDeChar field_2;
   };
 
   typedef sequence<Arraychar> ArraycharList;
+  typedef sequence<Arraychar,10> BdArraycharList;
 
   typedef sequence<ArrayDeChar> ArrayDeCharList;
+  typedef sequence<ArrayDeChar,10> BdArrayDeCharList;
 };
 
 // Tests for explicit conversion of slice pointer to the
@@ -144,6 +146,19 @@ module bug_2126
   union SecondUnion switch (boolean)
   {
     case TRUE: MyStruct second_union_struct_member;
+    case FALSE: long wibble;
+  };
+
+  typedef FirstUnion BdFirstUnionArray[2];
+
+  struct BdMyStruct
+  {
+    BdFirstUnionArray my_struct_foo;
+  };
+
+  union BdSecondUnion switch (boolean)
+  {
+    case TRUE: BdMyStruct second_union_struct_member;
     case FALSE: long wibble;
   };
 };

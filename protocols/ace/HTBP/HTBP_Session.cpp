@@ -13,7 +13,9 @@
 #include "HTBP_Session.inl"
 #endif
 
-ACE_RCSID(HTBP,ACE_HTBP_Session," $")
+ACE_RCSID(HTBP,HTBP_Session,"$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE::HTBP::Session::Session_Map ACE::HTBP::Session::session_map_;
 ACE_UINT32 ACE::HTBP::Session::last_session_id_ = 0;
@@ -44,7 +46,7 @@ ACE::HTBP::Session::remove_session (ACE::HTBP::Session *s)
 int
 ACE::HTBP::Session::find_session (const ACE::HTBP::Session_Id_t &sid, ACE::HTBP::Session *&out)
 {
-  ACE::HTBP::Session::Map_Entry *e;
+  ACE::HTBP::Session::Map_Entry *e = 0;
   if (session_map_.find (sid,e) == -1)
     {
       out = 0;
@@ -284,18 +286,4 @@ ACE::HTBP::Session::stream (ACE::HTBP::Stream *s)
   this->stream_ = s;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*>;
-template class ACE_Hash<ACE::HTBP::Session_Id_t>;
-template class ACE_Equal_To<ACE::HTBP::Session_Id_t>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager <ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry <ACE::HTBP::Session_Id_t, ACE::HTBP::Session*>
-#pragma instantiate ACE_Hash<ACE::HTBP::Session_Id_t>;
-
-#pragma instantiate ACE_Equal_To<ACE::HTBP::Session_Id_t>
-#endif
+ACE_END_VERSIONED_NAMESPACE_DECL

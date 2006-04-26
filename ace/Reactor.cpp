@@ -2,7 +2,6 @@
 
 #include "ace/Reactor.h"
 
-
 //#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
@@ -59,6 +58,8 @@ ACE_RCSID (ace,
            Reactor,
            "$Id$")
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
@@ -327,8 +328,6 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
       else if (result <= 0)
         return result;
     }
-
-  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -944,8 +943,4 @@ ACE_Reactor::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Framework_Component_T<ACE_Reactor>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Framework_Component_T<ACE_Reactor>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

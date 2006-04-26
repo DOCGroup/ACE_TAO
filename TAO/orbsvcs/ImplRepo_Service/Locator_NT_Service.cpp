@@ -62,11 +62,11 @@ Locator_NT_Service::svc (void)
   ImR_Locator_i server;
   Options opts;
 
-  if (opts.init_from_registry() != 0)
-  {
-    report_status (SERVICE_STOPPED);
-    return -1;
-  }
+  if (opts.init_from_registry () != 0)
+    {
+      report_status (SERVICE_STOPPED);
+      return -1;
+    }
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

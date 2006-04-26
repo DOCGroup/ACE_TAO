@@ -16,6 +16,8 @@
 # endif /* ! METRICS_USES_OP_CANCELLATION */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ////////////////////////////////////////////
 // class TAO_Metrics_UpcallMonitorAdapter //
 ////////////////////////////////////////////
@@ -33,7 +35,7 @@ TAO_Metrics_UpcallMonitorAdapter (
   TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR> &cache,
   TAO_Metrics_FrameManager<ACE_LOCK> &frame_manager,
   POA_RtecEventComm::PushConsumer & consumer,
-  TAO_String_Manager entry_point,
+  TAO::String_Manager entry_point,
   RtecScheduler::handle_t handle,
   RtecScheduler::Period_t period,
   RtecScheduler::Time wcet,
@@ -227,7 +229,7 @@ TAO_Metrics_ReportingUpcallMonitorAdapter (
   TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR> &cache,
   TAO_Metrics_FrameManager<ACE_LOCK> &frame_manager,
   POA_RtecEventComm::PushConsumer & consumer,
-  TAO_String_Manager entry_point,
+  TAO::String_Manager entry_point,
   RtecScheduler::handle_t handle,
   RtecScheduler::Period_t period,
   RtecScheduler::Time wcet,
@@ -255,5 +257,7 @@ TAO_Metrics_ReportingUpcallMonitorAdapter (
                                      this->is_critical_,
                                      this->logger_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* METRICS_UPCALL_MONITOR_T_I */

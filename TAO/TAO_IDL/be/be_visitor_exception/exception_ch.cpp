@@ -99,12 +99,10 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       << "_tao_duplicate (void) const;\n" << be_nl
       << "virtual void _raise (void) const;\n" << be_nl
       << "virtual void _tao_encode (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "TAO_OutputCDR &cdr" << env_decl << be_uidt_nl
       << ") const;" << be_uidt_nl << be_nl
       << "virtual void _tao_decode (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << "TAO_InputCDR &cdr" << env_decl << be_uidt_nl
       << ");" << be_uidt;
 
   // Generate constructor that takes each member as a parameter. We need a

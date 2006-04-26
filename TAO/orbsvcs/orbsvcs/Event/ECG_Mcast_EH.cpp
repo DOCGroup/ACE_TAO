@@ -10,22 +10,24 @@
 #include "ace/os_include/os_fcntl.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_Mcast_EH.i"
+#include "orbsvcs/Event/ECG_Mcast_EH.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_Mcast_EH, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
                                     const ACE_TCHAR *net_if,
                                     CORBA::ULong sz)
-  : net_if_ (net_if?ACE_OS::strdup (net_if):0)
-    , subscriptions_ ()
-    , receiver_ (recv)
-    , recvbuf_size_ (sz)
-    , observer_ ()
-    , auto_observer_disconnect_ ()
+  : net_if_ (net_if ? ACE_OS::strdup (net_if) : 0)
+  , subscriptions_ ()
+  , receiver_ (recv)
+  , recvbuf_size_ (sz)
+  , observer_ ()
+  , auto_observer_disconnect_ ()
 {
-    ACE_ASSERT (this->receiver_);
+  ACE_ASSERT (this->receiver_);
 }
 
 TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
@@ -285,3 +287,5 @@ TAO_ECG_Mcast_EH::Observer::shutdown (void)
   this->eh_ = 0;
   this->deactivator_.deactivate ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

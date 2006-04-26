@@ -8,6 +8,8 @@
 #  include "ace/Log_Msg.h"
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
 ACE_Bound_Ptr_Counter<ACE_LOCK>::internal_create (int init_obj_ref_count)
 {
@@ -482,3 +484,5 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::remove_ref ()
     }
   return new_obj_ref_count;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

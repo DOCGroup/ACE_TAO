@@ -1,7 +1,7 @@
-#include "Environment.h"
-#include "ORB_Core.h"
-#include "SystemException.h"
-#include "default_environment.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
+#include "tao/default_environment.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            Environment,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Environment::Environment (void)
   : exception_ (0)
@@ -207,3 +209,4 @@ CORBA::Environment::print_exception (const char *info,
                 ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), ACE_TEXT_TO_TCHAR_IN (info)));
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

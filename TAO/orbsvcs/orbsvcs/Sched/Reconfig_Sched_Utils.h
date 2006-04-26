@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -26,11 +27,13 @@
 
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
-#include "sched_export.h"
+#include "orbsvcs/Sched/sched_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct TAO_RTSched_Export TAO_RT_Info_Ex
   : public RtecScheduler::RT_Info
@@ -657,8 +660,10 @@ public:
   // on the operation characteristics of a representative scheduling entry.
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // Include the templates here.
-#include "Reconfig_Sched_Utils_T.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_H */

@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Set the exit status.
 
@@ -40,3 +43,4 @@ ACE_Thread_Control::thr_mgr (ACE_Thread_Manager *tm)
   return o_tm;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

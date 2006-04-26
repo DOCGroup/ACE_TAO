@@ -9,7 +9,7 @@
 //    including.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -24,12 +24,12 @@
 
 #include "included.idl"
 
-enum choice 
+enum choice
 {
   dog
 };
 
-union myUnion switch (choice) 
+union myUnion switch (choice)
 {
   // Typedef is in included file
   case dog: Aok::Seq1Type cat;
@@ -50,19 +50,23 @@ union Bog switch (Agog)
 // scope doesn't apply here, because Me is not
 // defined in the struct, only referenced.
 interface iface
-{   
+{
   enum postal
   {
     ME,
-    TAO_FE	// FE is #defined on HP-UX 10.20, so I prefix it with TAO
+    TAO_FE  // FE is #defined on HP-UX 10.20, so I prefix it with TAO
   };
-    
+
   struct using_incl
   {
     Aok::Me field1;
-  };    
+  };
 };
 
+module VT_Test
+{
+  typedef sequence<VT_Def::VT> VTSeq;
+};
 
 #endif /* IDL_TEST_INCLUDING_IDL */
 

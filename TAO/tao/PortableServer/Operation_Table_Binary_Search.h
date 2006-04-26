@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,13 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Operation_Table.h"
+#include "tao/PortableServer/Operation_Table.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Binary_Search_OpTable
@@ -38,8 +40,6 @@ class TAO_PortableServer_Export TAO_Binary_Search_OpTable
   : public TAO_Operation_Table
 {
 public:
-  /// Do nothing constructor.
-  TAO_Binary_Search_OpTable (void);
 
   /// Do nothing destrctor.
   virtual ~TAO_Binary_Search_OpTable (void);
@@ -62,6 +62,8 @@ private:
   /// will generate this routine routines.
   virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPERATION_TABLE_BINARY_SEARCH_H */

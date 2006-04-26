@@ -3,6 +3,8 @@
 // $Id$
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  policy_list_ (0),
@@ -74,7 +76,7 @@ TAO_MProfile::get_cprev (void)
   else if (last_ == 1)
     current_=1;
   else if (current_ > 1)
-    current_--;
+    --current_;
   else // current_ == 0 or 1, 0 => list never read before and == 1
     current_ = last_;
 
@@ -88,7 +90,7 @@ TAO_MProfile::get_prev (void)
     // No List of BeginningOfList
     return 0;
   if (current_ > 1)
-    current_--;
+    --current_;
 
   return pfiles_[current_ - 1];
 }
@@ -196,3 +198,5 @@ TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 {
   this->policy_list_ = policy_list;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

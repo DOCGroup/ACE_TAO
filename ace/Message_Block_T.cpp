@@ -1,9 +1,7 @@
 // $Id$
 
-#if !defined (ACE_MESSAGE_BLOCK_T_C)
-#define ACE_MESSAGE_BLOCK_T_C
-
-ACE_RCSID(ace, Message_Block_T, "$Id$")
+#ifndef ACE_MESSAGE_BLOCK_T_CPP
+#define ACE_MESSAGE_BLOCK_T_CPP
 
 #include "ace/Malloc_Base.h"     /* Need ACE_Allocator */
 
@@ -12,6 +10,8 @@ ACE_RCSID(ace, Message_Block_T, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_errno.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class L>
 ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
@@ -28,7 +28,7 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
   const ACE_Message_Block::Message_Flags always_clear =
     ACE_Message_Block::DONT_DELETE;
 
-  ACE_Locked_Data_Block<ACE_LOCK> *nb;
+  ACE_Locked_Data_Block<ACE_LOCK> *nb = 0;
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Locked_Data_Block<ACE_LOCK>*> (
@@ -46,4 +46,6 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
   return nb;
 }
 
-#endif /* ACE_MESSAGE_BLOCK_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_MESSAGE_BLOCK_T_CPP */

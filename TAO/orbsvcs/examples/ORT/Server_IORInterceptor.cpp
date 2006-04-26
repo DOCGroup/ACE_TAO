@@ -49,7 +49,7 @@ Server_IORInterceptor::components_established (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Gateway_ObjRef_Factory *my_factory;
+  Gateway_ObjRef_Factory *my_factory = 0;
 
   PortableInterceptor::ObjectReferenceFactory_var current_factory =
     ior_info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -104,6 +104,9 @@ namespace
 
 #define COMPUTE(var, ch) (var) = (crc_table[(var ^ ch) & 0xFF] ^ (var >> 8))
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_UINT32
 ACE::crc32 (const char *string)
 {
@@ -143,7 +146,7 @@ ACE::crc32 (const iovec *iov, int len, ACE_UINT32 crc)
   for (int i = 0; i < len; ++i)
     {
       for (const char *p = (const char *) iov[i].iov_base,
-	              *e = (const char *) iov[i].iov_base + iov[i].iov_len;
+                      *e = (const char *) iov[i].iov_base + iov[i].iov_len;
            p != e;
            ++p)
         COMPUTE (crc, *p);
@@ -151,5 +154,8 @@ ACE::crc32 (const iovec *iov, int len, ACE_UINT32 crc)
 
   return ~crc;
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #undef COMPUTE

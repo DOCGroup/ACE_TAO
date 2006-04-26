@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ORBInitInfo.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
@@ -11,7 +11,7 @@
 #include "ace/Service_Config.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "PICurrent.h"
+#include "tao/PI/PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 ACE_RCSID (TAO,
@@ -19,10 +19,12 @@ ACE_RCSID (TAO,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ORBInitInfo.inl"
+#include "tao/PI/ORBInitInfo.inl"
 #endif /* defined INLINE */
 
 #include "ace/OS_NS_string.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Traits specializations for TAO_ORBInitInfo.
 
@@ -39,7 +41,7 @@ TAO::Objref_Traits<TAO_ORBInitInfo>::release (
     TAO_ORBInitInfo_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_ORBInitInfo_ptr
@@ -138,11 +140,11 @@ TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
 
       if (loader != 0)
         {
-          CORBA::Object_ptr cf =
+          CORBA::Object_var cf =
             loader->create_object (this->orb_core_->orb (), 0, 0 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
 
-          this->codec_factory_ = IOP::CodecFactory::_narrow (cf);
+          this->codec_factory_ = IOP::CodecFactory::_narrow (cf.in ());
         }
     }
 
@@ -256,6 +258,86 @@ TAO_ORBInitInfo::add_ior_interceptor (
 
   this->orb_core_->add_interceptor (interceptor
                                      ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ORBInitInfo::DuplicateName,
+                   CORBA::PolicyError))
+{
+# if TAO_HAS_INTERCEPTORS == 1
+  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->orb_core_->add_interceptor (interceptor,
+                                    policies
+                                    ACE_ENV_ARG_PARAMETER);
+#else
+  ACE_UNUSED_ARG (interceptor);
+  ACE_UNUSED_ARG (policies);
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA::SystemException::_tao_minor_code (
+                 0,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+}
+
+void
+TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ORBInitInfo::DuplicateName,
+                   CORBA::PolicyError))
+{
+# if TAO_HAS_INTERCEPTORS == 1
+  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->orb_core_->add_interceptor (interceptor,
+                                    policies
+                                    ACE_ENV_ARG_PARAMETER);
+
+#else
+  ACE_UNUSED_ARG (interceptor);
+  ACE_UNUSED_ARG (policies);
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA::SystemException::_tao_minor_code (
+                 0,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+}
+
+void
+TAO_ORBInitInfo::add_ior_interceptor_with_policy (
+    PortableInterceptor::IORInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ORBInitInfo::DuplicateName,
+                   CORBA::PolicyError))
+{
+  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Since there are currently no PI Policies that pertain to
+  // IOR Interceptors, we will always raise the NO_IMPLEMENT
+  // CORBA System Exception here to indicate that this method
+  // is currently not implemented/supported.
+  ACE_UNUSED_ARG (interceptor);
+  ACE_UNUSED_ARG (policies);
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA::SystemException::_tao_minor_code (
+                 0,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
 }
 
 PortableInterceptor::SlotId
@@ -383,3 +465,4 @@ const char* TAO_ORBInitInfo::_interface_repository_id (void) const
   return "IDL:TAO_ORBInitInfo:1.0";
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

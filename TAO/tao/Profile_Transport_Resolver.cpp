@@ -1,27 +1,32 @@
 // $Id$
 
-#include "Profile_Transport_Resolver.h"
-#include "Profile.h"
-#include "Transport.h"
-#include "Stub.h"
-#include "Invocation_Endpoint_Selectors.h"
-#include "ORB_Core.h"
-#include "Endpoint_Selector_Factory.h"
-#include "Codeset_Manager.h"
-#include "Connector_Registry.h"
-#include "Transport_Connector.h"
-#include "Endpoint.h"
-#include "SystemException.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Profile.h"
+#include "tao/Stub.h"
+#include "tao/Transport.h"
+#include "tao/Invocation_Endpoint_Selectors.h"
+#include "tao/ORB_Core.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Endpoint_Selector_Factory.h"
+#include "tao/Codeset_Manager.h"
+#include "tao/Connector_Registry.h"
+#include "tao/Transport_Connector.h"
+#include "tao/Endpoint.h"
+#include "tao/SystemException.h"
 
 #include "ace/Countdown_Time.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Profile_Transport_Resolver.inl"
+# include "tao/Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            Profile_Transport_Resolver,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -107,7 +112,7 @@ namespace TAO
 
     if (!this->transport_->is_tcs_set ())
       {
-        TAO_Codeset_Manager *tcm =
+        TAO_Codeset_Manager * const tcm =
           this->stub_->orb_core ()->codeset_manager ();
         if (tcm)
           tcm->set_tcs (*this->profile_, *this->transport_);
@@ -139,7 +144,7 @@ namespace TAO
 
     ACE_Time_Value connection_timeout;
 
-    const bool is_conn_timeout =
+    bool const is_conn_timeout =
       this->get_connection_timeout (connection_timeout);
 
 
@@ -215,4 +220,21 @@ namespace TAO
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   }
+
+
+  int
+  Profile_Transport_Resolver::find_transport (TAO_Transport_Descriptor_Interface *desc)
+  {
+    TAO::Transport_Cache_Manager & cache =
+      this->profile_->orb_core()->lane_resources ().transport_cache();
+
+    // the cache increments the reference count on the transport if the
+    // find is successful. Find_transport uses negative logic in its return,
+    // 0 for success
+    return (cache.find_transport(desc,this->transport_) == 0);
+  }
+
+
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -30,14 +30,17 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "Interceptor_List_T.h"
-#include "ClientRequestInterceptorC.h"
+#include "tao/PI/Interceptor_List_T.h"
+#include "tao/PI/ClientRequestInterceptorC.h"
+#include "tao/PI/ClientRequestDetails.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
+  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor,
+                            ClientRequestDetails>
     ClientRequestInterceptor_List;
 }
 
@@ -99,6 +102,12 @@ namespace TAO
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
       ACE_ENV_ARG_DECL);
 
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL);
+
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
 
     virtual PortableInterceptor::ReplyStatus reply_status (
@@ -120,8 +129,10 @@ namespace TAO
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ClientRequestInterceptor_Adapter_Impl.inl"
+#include "tao/PI/ClientRequestInterceptor_Adapter_Impl.inl"
 #endif  /* __ACE_INLINE__ */
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

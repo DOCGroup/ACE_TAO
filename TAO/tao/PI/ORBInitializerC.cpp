@@ -26,19 +26,17 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
-#include "ORBInitializerC.h"
+#include "tao/PI/ORBInitializerC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -64,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::release (
     PortableInterceptor::ORBInitializer_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::ORBInitializer_ptr
@@ -73,13 +71,13 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::nil (void)
   return PortableInterceptor::ORBInitializer::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::marshal (
     PortableInterceptor::ORBInitializer_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 PortableInterceptor::ORBInitializer::ORBInitializer (void)
@@ -88,17 +86,9 @@ PortableInterceptor::ORBInitializer::ORBInitializer (void)
 PortableInterceptor::ORBInitializer::~ORBInitializer (void)
 {}
 
-void 
-PortableInterceptor::ORBInitializer::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ORBInitializer *_tao_tmp_pointer =
-    static_cast<ORBInitializer *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 PortableInterceptor::ORBInitializer_ptr
 PortableInterceptor::ORBInitializer::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -109,7 +99,7 @@ PortableInterceptor::ORBInitializer::_narrow (
 
 PortableInterceptor::ORBInitializer_ptr
 PortableInterceptor::ORBInitializer::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -121,21 +111,21 @@ PortableInterceptor::ORBInitializer::_unchecked_narrow (
 PortableInterceptor::ORBInitializer_ptr
 PortableInterceptor::ORBInitializer::_duplicate (ORBInitializer_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::ORBInitializer::_tao_release (ORBInitializer_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::ORBInitializer::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -169,8 +159,10 @@ const char* PortableInterceptor::ORBInitializer::_interface_repository_id (void)
   return "IDL:omg.org/PortableInterceptor/ORBInitializer:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::ORBInitializer::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

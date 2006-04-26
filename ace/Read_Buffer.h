@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_stdio.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Allocator;
 
 /**
@@ -80,7 +82,7 @@ public:
   size_t replaced (void) const;
 
   /// Returns the size of the allocated buffer obtained during a
-  /// <read>, not including the null terminator.
+  /// @c read, not including the null terminator.
   size_t size (void) const;
 
   /// Returns a pointer to its allocator.
@@ -88,6 +90,12 @@ public:
 
   /// Dump the state of the object.
   void dump (void) const;
+
+private:
+
+  // Disallow copying and assignment...
+  void operator= (const ACE_Read_Buffer &);
+  ACE_Read_Buffer (const ACE_Read_Buffer &);
 
 private:
   /// Recursive helper method that does the work...
@@ -109,10 +117,9 @@ private:
   /// Pointer to the allocator.
   ACE_Allocator *allocator_;
 
-  // = Disallow copying and assignment...
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Read_Buffer &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Read_Buffer (const ACE_Read_Buffer &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Read_Buffer.inl"

@@ -1,5 +1,5 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Dispatching.h
@@ -18,11 +18,13 @@
 
 #include "orbsvcs/CosEventCommC.h"
 
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_ProxyPushSupplier;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -109,6 +111,8 @@ public:
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

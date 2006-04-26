@@ -18,25 +18,27 @@
 //
 // ============================================================================
 
-#include "ace/Codeset_Registry.h"
-#include "ace/Get_Opt.h"
-#include "ace/streams.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/Argv_Type_Converter.h"
-#include "tao/corba.h"
-#include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/AnyTypeCode/Marshal.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/ORB_Constants.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/IIOP_EndpointsC.h"
+#include "tao/CDR.h"
+#include "ace/Codeset_Registry.h"
+#include "ace/Get_Opt.h"
+#include "ace/streams.h"
+#include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
+#include "ace/Log_Msg.h"
+#include "orbsvcs/CosNamingC.h"
 
-
-static CORBA::Boolean
+CORBA::Boolean
 catiiop (char* string
          ACE_ENV_ARG_DECL)
 {
@@ -81,7 +83,6 @@ catiiop (char* string
   // Pull off the "hostname:port/" part of the objref Get host and
   // port.
   CORBA::UShort port_number;
-  char* hostname;
   char *cp = ACE_OS::strchr (string, ':');
 
   if (cp == 0)
@@ -89,9 +90,9 @@ catiiop (char* string
       ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
-  hostname = CORBA::string_alloc (1 + cp - string);
+  CORBA::String_var hostname = CORBA::string_alloc (1 + cp - string);
 
-  for (cp = hostname;
+  for (cp = hostname.inout ();
        *string != ':';
        *cp++ = *string++)
     continue;
@@ -103,7 +104,6 @@ catiiop (char* string
 
   if (cp == 0)
     {
-      CORBA::string_free (hostname);
       ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
@@ -112,11 +112,10 @@ catiiop (char* string
 
   ACE_DEBUG ((LM_DEBUG,
               "Host Name:\t%s\n",
-              hostname));
+              hostname.in ()));
   ACE_DEBUG ((LM_DEBUG,
               "Port Number:\t%d\n",
               port_number));
-  CORBA::string_free (hostname);
 
   // Parse the object key.
   // dump the object key to stdout
@@ -128,32 +127,32 @@ catiiop (char* string
   return 1;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_iiop_profile (TAO_InputCDR& cdr);
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& cdr);
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_shmiop_profile (TAO_InputCDR& cdr);
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_nskpw_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
 cat_nskfs_profile (TAO_InputCDR& cdr);
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream);
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_profile_helper(TAO_InputCDR& stream, const char *protocol);
 
-static CORBA::Boolean
+CORBA::Boolean
 catior (char* str
         ACE_ENV_ARG_DECL_NOT_USED)
 {
@@ -205,9 +204,9 @@ catior (char* str
 
   // First, read the type hint. This will be the type_id encoded in an
   // object reference.
-  char* type_hint;
+  CORBA::String_var type_hint;
 
-  if (!(stream >> type_hint))
+  if (!(stream >> type_hint.inout ()))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read type id\n"));
@@ -216,10 +215,7 @@ catior (char* str
 
   ACE_DEBUG ((LM_DEBUG,
               "The Type Id:\t\"%s\"\n",
-              type_hint));
-
-  // Release any memory associated with the type_hint.
-  CORBA::string_free (type_hint);
+              type_hint.in ()));
 
   // Read the profiles, discarding all until an IIOP profile comes by.
   // Once we see an IIOP profile, ignore any further ones.
@@ -336,7 +332,7 @@ catior (char* str
 // : IR_server
 // : interface_marker
 
-static CORBA::Boolean
+CORBA::Boolean
 catpoop (char* string
         ACE_ENV_ARG_DECL)
 {
@@ -461,6 +457,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                              argcon.get_ASCII_argv (),
                                              "TAO" ACE_ENV_ARG_PARAMETER);
   CORBA::Boolean b = 0;
+  CORBA::Boolean have_argument = 0;
   int opt;
 
   ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argcon.get_argc (), argcon.get_TCHAR_argv (),
@@ -468,19 +465,185 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
   while ((opt = get_opt ()) != EOF)
     {
+      // some arguments have been supplied
+      have_argument = 1;
       switch (opt)
         {
         case 'n':
-          //  Read the CosName from the NamingService convert the
-          //  object_ptr to a CORBA::String_var via the call to
-          //  object_to_string.
-          ACE_DEBUG ((LM_DEBUG,
-                      "opening a connection to the NamingService\n"
-                      "resolving the CosName %s\n",
-                      get_opt.opt_arg ()));
-          break;
+          {
+            //  Read the CosName from the NamingService convert the
+            //  object_ptr to a CORBA::String_var via the call to
+            //  object_to_string.
+            ACE_DEBUG ((LM_DEBUG,
+                        "opening a connection to the NamingService\n"
+                        "resolving the CosName %s\n",
+                        get_opt.opt_arg ()));
+
+            CORBA::Object_var server_object;
+
+            ACE_TRY
+              {
+                // Find the Naming Service.
+                CORBA::Object_var naming_context_object =
+                  orb_var->resolve_initial_references ("NameService"
+                                                       ACE_ENV_ARG_PARAMETER);
+                CosNaming::NamingContextExt_var naming_context =
+                  CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
+                                                        ACE_ENV_ARG_PARAMETER);
+
+                if (CORBA::is_nil (naming_context.in ()))
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                    "NameService cannot be resolved\n"),
+                                   -1);
+                }
+
+                CosNaming::Name *name =
+                  naming_context->to_name (get_opt.opt_arg ()
+                                           ACE_ENV_ARG_PARAMETER);
+
+                ACE_TRY_EX (RESOLUTION)
+                  {
+                    server_object = naming_context->resolve (*name
+                                                         ACE_ENV_ARG_PARAMETER);
+                      if (CORBA::is_nil (server_object.in ()))
+                      {
+                        ACE_ERROR_RETURN ((LM_ERROR,
+                              "name %s is not resolved to a valid object\n"),
+                                          -1);
+                      }
+                  }
+                ACE_CATCH (const CosNaming::NamingContext::NotFound, nf)
+                  {
+                    const char     *reason;
+
+                    switch (nf.why)
+                      {
+                        case CosNaming::NamingContext::missing_node:
+                          reason = "missing node";
+                          break;
+                        case CosNaming::NamingContext::not_context:
+                          reason = "not context";
+                          break;
+                        case CosNaming::NamingContext::not_object:
+                          reason = "not object";
+                          break;
+                        default:
+                          reason = "not known";
+                          break;
+                      }
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                              "%s cannot be resolved, exception reason = %s\n",
+                                      get_opt.opt_arg (),
+                                      reason),
+                                     -1);
+                  }
+                ACE_CATCH (const CosNaming::NamingContext::InvalidName, in)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%s cannot be resolved, exception reason = "
+                                      "Invalid Name"
+                                      "\n",
+                                      get_opt.opt_arg ()),
+                                     -1);
+                  }
+                ACE_CATCH (const CosNaming::NamingContext::CannotProceed, cp)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%s cannot be resolved, exception reason = "
+                                      "Cannot Proceed"
+                                      "\n",
+                                      get_opt.opt_arg ()),
+                                     -1);
+                  }
+                ACE_CATCHANY
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%s cannot be resolved, exception reason = "
+                                       "Unexpected Exception"
+                                       "\n",
+                                       argvw[0]),
+                                      -1);
+                  }
+                ACE_ENDTRY;
+
+                ACE_CString aString;
+
+                aString = orb_var->object_to_string (server_object.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
+
+                ACE_DEBUG ((LM_DEBUG,
+                            "\nhere is the IOR\n%s\n\n",
+                            aString.rep ()));
+
+                char* str;
+                if (aString.find ("IOR:") == 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "decoding an IOR:\n"));
+
+                    // Strip the IOR: off the string.
+                    ACE_CString prefix = "IOR:";
+                    size_t prefixLength = prefix.length ();
+
+                    ACE_CString subString =
+                      aString.substring (prefixLength,
+                                         aString.length () - prefixLength);
+                    subString[subString.length ()] = '\0';
+                    str = subString.rep ();
+                    b = catior (str ACE_ENV_ARG_PARAMETER);
+                  }
+                else if (aString.find ("iiop:") == 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "decoding an IIOP URL IOR\n"));
+
+                    ACE_CString prefix = "IIOP:";
+                    size_t prefixLength = prefix.length ();
+
+                    ACE_CString subString =
+                      aString.substring (prefixLength,
+                                         aString.length () - prefixLength);
+                    //subString[subString.length () - 1] = '\0';
+                    str = subString.rep ();
+                    b = catiiop (str ACE_ENV_ARG_PARAMETER);
+                  }
+                else if (aString.find (":IR:") > 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "decoding an POOP IOR\n"));
+
+                    str = aString.rep ();
+                    b = catpoop (str ACE_ENV_ARG_PARAMETER);
+                  }
+                else
+                  ACE_ERROR ((LM_ERROR,
+                             "Don't know how to decode this IOR\n"));
+              }
+            ACE_CATCHANY
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%s cannot be resolved, exception reason = "
+                                   "Unexpected Exception"
+                                   "\n",
+                                   argvw[0]),
+                                  -1);
+              }
+            ACE_ENDTRY;
+
+            if (b == 1)
+              ACE_DEBUG ((LM_DEBUG,
+                          "catior returned true\n"));
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "catior returned false\n"));
+            break;
+          }
         case 'f':
           {
+            int have_some_input = 0;
+            int decode_pass_count = 0;
+
             //  Read the file into a CORBA::String_var.
             ACE_DEBUG ((LM_DEBUG,
                         "reading the file %s\n",
@@ -492,50 +655,92 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             if (!ifstr.good ())
               {
                 ifstr.close ();
-                return -1;
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%s "
+                                   "-f %s "
+                                   "\n"
+                                   "Invalid IOR file nominated"
+                                   "\n",
+                                   argvw[0],
+                                   get_opt.opt_arg ()),
+                                  -1);
               }
 
-            int have_some_input = 0;
             while (!ifstr.eof())
               {
                 char ch;
                 ACE_CString aString;
 
+                have_some_input = 0;
+
                 while (!ifstr.eof ())
                   {
                     ifstr.get (ch);
-                    if (ch == '\n' || ifstr.eof ())
+                    if (ifstr.eof () || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input = 1;
+                    have_some_input++;
                   }
 #else
             FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), ACE_TEXT ("r"));
 
-            if (ifstr && !ferror (ifstr))
+            if (!ifstr || ferror (ifstr))
               {
                 if (ifstr)
+                  {
                   ACE_OS::fclose (ifstr);
-                return -1;
+                  }
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "%s "
+                                     "-f %s "
+                                     "\n"
+                                     "Invalid IOR file nominated"
+                                     "\n",
+                                     argvw[0],
+                                     get_opt.opt_arg ()),
+                                    -1);
               }
 
-            int have_some_input = 0;
             while (!feof (ifstr))
               {
                 char ch;
                 ACE_CString aString;
 
+                have_some_input = 0;
+
                 while (!feof (ifstr))
                   {
                     ch = ACE_OS::fgetc (ifstr);
-                    if (ch == '\n' || ch == EOF)
+                    if (ch == EOF || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input = 1;
+                    have_some_input++;
                   }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
                 if (have_some_input == 0 || !aString.length())
-                  break;
+                  {
+                    if (!decode_pass_count)
+                      {
+                          ACE_ERROR_RETURN ((LM_ERROR,
+                                             "%s "
+                                             "-f %s "
+                                             "\n"
+                                             "Empty IOR file nominated"
+                                             "\n",
+                                             argvw[0],
+                                             get_opt.opt_arg ()),
+                                            -1);
+                      }
+                    else
+                      {
+                        ACE_DEBUG ((LM_DEBUG,
+                                    "catior returned true\n"));
+                        return 0;               // All done now
+                      }
+                  }
+
+                decode_pass_count++;
+
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
                             aString.rep ()));
@@ -599,58 +804,98 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           break;
         case 'x':
           {
-            //  Read the file into a CORBA::String_var.
+            int have_some_input = 0;
+            int decode_pass_count = 0;
+
+            //  Read the input into a CORBA::String_var.
             ACE_DEBUG ((LM_DEBUG,
                         "reading from stdin\n"));
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
             if (!cin.good ())
               {
-                return -1;
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%s "
+                                   "-x"
+                                   "\n"
+                                   "Invalid input stream"
+                                   "\n",
+                                   argvw[0]),
+                                  -1);
               }
 
-            int have_some_input = 0;
             while (!cin.eof())
               {
                 char ch;
                 ACE_CString aString;
 
+                have_some_input = 0;
+
                 while (!cin.eof ())
                   {
                     cin.get (ch);
-                    if (ch == '\n' || cin.eof ())
+                    if (cin.eof () || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input = 1;
+                    have_some_input++;
                   }
 #else
             FILE* ifstr = stdin;
 
-            if (ifstr && !ferror (ifstr))
+            if (!ifstr || ferror (ifstr))
               {
                 if (ifstr)
+                  {
                   ACE_OS::fclose (ifstr);
-                return -1;
+                  }
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%s "
+                                   "-x"
+                                   "\n"
+                                   "Invalid input stream"
+                                   "\n",
+                                   argvw[0]),
+                                  -1);
               }
 
-            int have_some_input = 0;
             while (!feof (ifstr))
               {
                 char ch;
                 ACE_CString aString;
 
+                have_some_input = 0;
+
                 while (!feof (ifstr))
                   {
                     ch = ACE_OS::fgetc (ifstr);
-                    if (ch == '\n' || ch == EOF)
+                    if (ch == EOF || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input = 1;
+                    have_some_input++;
                   }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
 
                 if (have_some_input == 0)
-                  break;
+                  {
+                    if (!decode_pass_count)
+                      {
+                        ACE_ERROR_RETURN ((LM_ERROR,
+                                           "%s "
+                                           "-x"
+                                           "\n"
+                                           "Empty input stream"
+                                           "\n",
+                                           argvw[0]),
+                                          -1);
+                      }
+                    else
+                      {
+                        return 0;               // All done now
+                      }
+                  }
+
+                decode_pass_count++;
+
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
                             aString.rep ()));
@@ -723,11 +968,23 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         }
     }
 
+    // check that some relevant arguments have been supplied
+    if (have_argument == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Usage: %s "
+                             "-f filename "
+                             "-n CosName "
+                             "\n"
+                             "Reads an IOR "
+                             "and dumps the contents to stdout "
+                             "\n",
+                             argvw[0]),
+                            1);
   return 0;
 }
 
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_tag_orb_type (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
   if (stream.read_ulong (length) == 0)
@@ -738,23 +995,29 @@ cat_tag_orb_type (TAO_InputCDR& stream) {
 
   CORBA::ULong orbtype;
 
-  stream2 >> orbtype;
-  if (orbtype == TAO_ORB_TYPE) {
-    ACE_DEBUG ((LM_DEBUG,
-                "%I ORB Type: %d (TAO)\n",
-                orbtype));
-  } else {
-    ACE_DEBUG ((LM_DEBUG,
-                "%I ORB Type: %d\n",
-                orbtype));
-  }
+  if (!(stream2 >> orbtype))
+    return false;
 
-  return 1;
+  if (orbtype == TAO_ORB_TYPE)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I ORB Type: 0x%x (TAO)\n",
+                  orbtype));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I ORB Type: 0x%x\n",
+                  orbtype));
+    }
+
+  return true;
 }
 
 
-static CORBA::Boolean
-cat_tao_tag_endpoints (TAO_InputCDR& stream) {
+CORBA::Boolean
+cat_tao_tag_endpoints (TAO_InputCDR& stream)
+{
   CORBA::ULong length = 0;
   if (stream.read_ulong (length) == 0)
     return 1;
@@ -781,7 +1044,7 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   return 1;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
   if (stream.read_ulong (length) == 0)
@@ -800,7 +1063,7 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   return 1;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
   if (stream.read_ulong (length) == 0)
@@ -941,7 +1204,7 @@ cat_tag_policies (TAO_InputCDR& stream) {
   return 1;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream)
 {
@@ -989,7 +1252,7 @@ cat_octet_seq (const char *object_name,
     {
       char c = objKey[i];
       int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
-      if (ACE_OS::ace_isprint (tmp))
+      if (ACE_OS::ace_isprint (static_cast<ACE_TCHAR> (tmp)))
         ACE_DEBUG ((LM_DEBUG, "%c", c));
       else
         ACE_DEBUG ((LM_DEBUG, "."));
@@ -1001,7 +1264,7 @@ cat_octet_seq (const char *object_name,
   return 1;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_object_key (TAO_InputCDR& stream)
 {
   // ... and object key.
@@ -1012,110 +1275,126 @@ cat_object_key (TAO_InputCDR& stream)
 ACE_CString
  _find_info (CORBA::ULong id)
 {
-    ACE_CString locale="";
-    ACE_Codeset_Registry::registry_to_locale(id, locale, NULL, NULL);
-    return locale;
+  ACE_CString locale = "";
+  ACE_Codeset_Registry::registry_to_locale (id, locale, 0, 0);
+  return locale;
 }
 
-void displayHex( TAO_InputCDR &str )
+void displayHex (TAO_InputCDR & str)
 {
-  if (str.good_bit () == 0 )
+  if (str.good_bit () == 0)
     return;
 
-  TAO_InputCDR clone_str( str );
+  TAO_InputCDR clone_str (str);
   CORBA::ULong theSetId ;
-  str.read_ulong(theSetId);
+  if (!str.read_ulong (theSetId))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Unable to read codeset ID.\n"));
+      return;
+    }
   ACE_DEBUG ((LM_DEBUG," Hex - %x", theSetId));
-  ACE_DEBUG ((LM_DEBUG," Description - "));
-  ACE_CString theDescr = _find_info ( theSetId );
+  ACE_DEBUG ((LM_DEBUG,"\tDescription - "));
+  ACE_CString theDescr = _find_info (theSetId);
 
-  if( theDescr.length() == 0 )
-  {
-     ACE_DEBUG ((LM_DEBUG," Unknown CodeSet \n "));
-     return;
-  }
-
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %s \n"), theDescr.c_str()));
+  if (theDescr.length () == 0)
+    ACE_DEBUG ((LM_DEBUG," Unknown CodeSet \n "));
+  else
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %s \n"), theDescr.c_str ()));
 }
 
-static CORBA::Boolean
-cat_codeset_info(TAO_InputCDR& stream)
+CORBA::Boolean
+cat_codeset_info (TAO_InputCDR& cdr)
 {
-     // Component Length
-     CORBA::ULong compLen=0L;
-     stream >> compLen;
-     ACE_DEBUG ((LM_DEBUG, "\tComponent Length %u \n", compLen));
+  CORBA::ULong length = 0;
+  if (cdr.read_ulong (length) == 0)
+    return false;
 
-     // Byte Order
-     CORBA::ULong byteOrder;
-     stream >> byteOrder;
+  TAO_InputCDR stream (cdr, length);
+  cdr.skip_bytes(length);
 
-     if (byteOrder)
-     {
-        ACE_DEBUG ((LM_DEBUG,
-            "\tThe Component Byte Order:\tLittle Endian\n"));
-     }
-     else
-        ACE_DEBUG ((LM_DEBUG,
-                "\tThe Component Byte Order:\tBig Endian\n"));
+  ACE_DEBUG ((LM_DEBUG, "\tComponent length: %u \n", length));
 
-     // CodesetId for char
-     // CORBA::ULong c_ncsId;
-     ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for char: "));
-     displayHex (stream);
+  ACE_DEBUG ((LM_DEBUG,
+               "\tComponent byte order:\t%s Endian\n",
+              (stream.byte_order () ? "Little" : "Big")));
 
-     // number of Conversion Codesets for char
-     CORBA::ULong c_ccslen=0;
-     stream >> c_ccslen;
-     ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for char %u \n", c_ccslen));
+  // CodesetId for char
+  // CORBA::ULong c_ncsId;
+  ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for char: "));
+  displayHex (stream);
 
-     if (c_ccslen)
-        ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for char are: \n"));
+  // number of Conversion Codesets for char
+  CORBA::ULong c_ccslen = 0;
 
-     //  Loop through and display them
-     CORBA::ULong index = 0;
-     for ( ; index < c_ccslen; ++index)
-     {
-        // CodesetId for char
-        ACE_DEBUG ((LM_DEBUG, "\t%u) ", index + 1L));
-        displayHex (stream);
-     }
+  if (!(stream >> c_ccslen))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to read number of conversion codesets "
+                       "for char.\n"),
+                      false);
 
-     // CodesetId for wchar
-     ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for wchar: "));
-     displayHex (stream);
+  ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for char %u \n", c_ccslen));
 
-     // number of Conversion Codesets for char
-     CORBA::ULong w_ccslen=0;
-     stream >> w_ccslen;
-     ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for wchar %u \n", w_ccslen));
+  if (c_ccslen)
+    ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for char are: \n"));
 
-     if (w_ccslen)
-       ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for wchar are: \n"));
+  //  Loop through and display them
+  CORBA::ULong index = 0;
+  for ( ; index < c_ccslen; ++index)
+    {
+      // CodesetId for char
+      ACE_DEBUG ((LM_DEBUG, "\t%u) ", index + 1L));
+      displayHex (stream);
+    }
 
-     //  Loop through and display them
-     for (index = 0; index < w_ccslen; ++index)
-     {
-       ACE_DEBUG ((LM_DEBUG, "\t %u) ", index + 1L));
-       displayHex (stream);
-     }
-     return 1;
+  // CodesetId for wchar
+  ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for wchar: "));
+  displayHex (stream);
+
+  // number of Conversion Codesets for wchar
+  CORBA::ULong w_ccslen=0;
+
+  if (!(stream >> w_ccslen))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to read number of conversion codesets "
+                       "for wchar.\n"),
+                      false);
+
+  ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for wchar %u \n", w_ccslen));
+
+  if (w_ccslen)
+    ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for wchar are: \n"));
+
+  //  Loop through and display them
+  for (index = 0; index < w_ccslen; ++index)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\t %u) ", index + 1L));
+      displayHex (stream);
+    }
+  return true;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_tagged_components (TAO_InputCDR& stream)
 {
   // ... and object key.
 
   CORBA::ULong len;
-  stream >> len;
+  if (!(stream >> len))
+    return false;
 
   for (CORBA::ULong i = 0;
        i != len;
        ++i)
     {
       CORBA::ULong tag;
-      stream >> tag;
+      if (!(stream >> tag))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to read component tag.\n"),
+                            false);
+        }
+
       ACE_DEBUG ((LM_DEBUG,
                   "%I The component <%d> ID is ", i+1, tag));
 
@@ -1157,7 +1436,7 @@ cat_tagged_components (TAO_InputCDR& stream)
   return 1;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_profile_helper (TAO_InputCDR& stream,
                     const char *protocol)
 {
@@ -1186,7 +1465,8 @@ cat_profile_helper (TAO_InputCDR& stream,
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet iiop_version_major, iiop_version_minor;
+  CORBA::Octet iiop_version_major;
+  CORBA::Octet iiop_version_minor = CORBA::Octet();
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1208,23 +1488,23 @@ cat_profile_helper (TAO_InputCDR& stream,
 
   // Get host and port.
   CORBA::UShort port_number;
-  char* hostname;
-  if ((str >> hostname) == 0)
+  CORBA::String_var hostname;
+  if (!(str >> hostname.inout ()))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I problem decoding hostname\n"));
       return 1;
     }
 
-  str >> port_number;
+  if (!(str >> port_number))
+    return false;
 
   ACE_DEBUG ((LM_DEBUG,
               "%I Host Name:\t%s\n",
-              hostname));
+              hostname.in ()));
   ACE_DEBUG ((LM_DEBUG,
               "%I Port Number:\t%d\n",
               port_number));
-  CORBA::string_free (hostname);
 
   if (cat_object_key (str) == 0)
     return 0;
@@ -1241,19 +1521,19 @@ cat_profile_helper (TAO_InputCDR& stream,
     return 0;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_iiop_profile (TAO_InputCDR& stream)
 {
   return cat_profile_helper (stream, "IIOP");
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_shmiop_profile (TAO_InputCDR& stream)
 {
   return cat_profile_helper (stream, "SHMIOP");
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& stream)
 {
   // OK, we've got a UIOP profile.  It's going to be encapsulated
@@ -1277,7 +1557,8 @@ cat_uiop_profile (TAO_InputCDR& stream)
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet uiop_version_major, uiop_version_minor;
+  CORBA::Octet uiop_version_major;
+  CORBA::Octet uiop_version_minor = CORBA::Octet();
   // It appears that as of April 2002 UIOP version is 1.2
   if (! (str.read_octet (uiop_version_major)
          && uiop_version_major == 1
@@ -1314,7 +1595,7 @@ cat_uiop_profile (TAO_InputCDR& stream)
   return 1;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& stream)
 {
   // OK, we've got an SCIOP profile.
@@ -1339,7 +1620,8 @@ cat_sciop_profile (TAO_InputCDR& stream)
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet iiop_version_major, iiop_version_minor;
+  CORBA::Octet iiop_version_major;
+  CORBA::Octet iiop_version_minor = CORBA::Octet();
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1360,53 +1642,57 @@ cat_sciop_profile (TAO_InputCDR& stream)
   // Get host and port.
   CORBA::UShort port_number;
   CORBA::UShort max_streams;
-  char* hostname;
   CORBA::ULong addresses;
 
-  str >> addresses;
+  if (!(str >> addresses))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to decode number of addresses\n."),
+                      false);
 
   ACE_DEBUG ((LM_DEBUG,
               "%I Addresses:\t%d\n",
               addresses));
 
-  for (unsigned int i=0; i< addresses; i++) {
-    if ((str >> hostname) == 0)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "%I problem decoding hostname\n"));
-        return 1;
-      }
-    ACE_DEBUG ((LM_DEBUG,
-                "%I Host Name:\t%s\n",
-                hostname));
-    CORBA::string_free (hostname);
-  }
+  for (CORBA::ULong i = 0; i < addresses; ++i)
+    {
+      CORBA::String_var hostname;
+      if (!(str >> hostname.inout ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%I problem decoding hostname\n"),
+                            false);
+        }
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I Host Name:\t%s\n",
+                  hostname.in ()));
+    }
 
 
-  str >> port_number;
+  if (!(str >> port_number))
+    return false;
 
   ACE_DEBUG ((LM_DEBUG,
               "%I Port Number:\t%d\n",
               port_number));
 
-  str >> max_streams;
+  if (!(str >> max_streams))
+    return false;
 
   ACE_DEBUG ((LM_DEBUG,
               "%I Max Streams:\t%d\n",
               max_streams));
 
-  if (cat_object_key (str) == 0)
-    return 0;
+  if (cat_object_key (str) == 0
+      || // Unlike IIOP (1.0), SCIOP always has tagged_components.
+      cat_tagged_components (str) == 0)
+    return false;
 
-  // Unlike IIOP (1.0), SCIOP always has tagged_components.
-  if (cat_tagged_components (str) == 0)
-    return 0;
-
-  return 1;
+  return true;
 }
 
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_nsk_profile_helper (TAO_InputCDR& stream,
                         const char *protocol)
 {
@@ -1435,7 +1721,8 @@ cat_nsk_profile_helper (TAO_InputCDR& stream,
   //
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
-  CORBA::Octet iiop_version_major, iiop_version_minor;
+  CORBA::Octet iiop_version_major;
+  CORBA::Octet iiop_version_minor = CORBA::Octet();
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1485,13 +1772,13 @@ cat_nsk_profile_helper (TAO_InputCDR& stream,
     return 0;
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_nskpw_profile (TAO_InputCDR& stream)
 {
   return cat_nsk_profile_helper (stream, "NSKPW");
 }
 
-static CORBA::Boolean
+CORBA::Boolean
 cat_nskfs_profile (TAO_InputCDR& stream)
 {
   return cat_nsk_profile_helper (stream, "NSKFS");

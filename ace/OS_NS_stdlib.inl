@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/config-all.h"           /* Need ACE_TRACE */
@@ -15,6 +16,8 @@
 #else
 # define ACE_WCHAR_STD_NAMESPACE ACE_STD_NAMESPACE
 #endif /* ACE_WCHAR_IN_STD_NAMESPACE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Doesn't need a macro since it *never* returns!
 
@@ -131,9 +134,6 @@ ACE_OS::getenv (const char *symbol)
 {
   ACE_OS_TRACE ("ACE_OS::getenv");
 #if defined (ACE_LACKS_ENV)
-  ACE_UNUSED_ARG (symbol);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_PSOS)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
 #else /* ACE_PSOS */
@@ -260,7 +260,7 @@ ACE_OS::putenv (const char *string)
   // WinCE and pSOS don't have the concept of environment variables.
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_ENV)
+#elif defined (ACE_LACKS_ENV) || defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
@@ -505,7 +505,7 @@ ACE_INLINE int
 ACE_OS::system (const ACE_TCHAR *s)
 {
   // ACE_OS_TRACE ("ACE_OS::system");
-#if defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS)
+#if defined (ACE_LACKS_SYSTEM)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
@@ -514,5 +514,7 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_OSCALL_RETURN (::spt_system (s), int, -1);
 #else
   ACE_OSCALL_RETURN (::system (ACE_TEXT_TO_CHAR_IN (s)), int, -1);
-#endif /* !CHORUS */
+#endif /* ACE_LACKS_SYSTEM */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

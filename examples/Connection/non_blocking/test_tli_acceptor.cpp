@@ -31,20 +31,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return peer_acceptor.svc ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Concurrency_Strategy<SVC_HANDLER>;
-template class ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_TLI_ACCEPTOR>;
-template class ACE_Svc_Handler<ACE_TLI_STREAM, ACE_NULL_SYNCH>;
-template class IPC_Server<SVC_HANDLER, ACE_TLI_ACCEPTOR>;
-template class Svc_Handler<ACE_TLI_STREAM>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Concurrency_Strategy<SVC_HANDLER>
-#pragma instantiate ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_TLI_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler<ACE_TLI_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate IPC_Server<SVC_HANDLER, ACE_TLI_ACCEPTOR>
-#pragma instantiate Svc_Handler<ACE_TLI_STREAM>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

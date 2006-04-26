@@ -1,5 +1,10 @@
+// -*- C++ -*-
+//
 // $Id$
+
 #include "ace/OS_Memory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 Safe_InputCDR::Safe_InputCDR(const char* buf, int size)
@@ -14,3 +19,5 @@ Safe_InputCDR::Safe_InputCDR(const char* buf, int size)
     this->start_.wr_ptr(size);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

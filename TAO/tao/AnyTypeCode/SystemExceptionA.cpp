@@ -1,14 +1,14 @@
 // $Id$
 
-#include "SystemExceptionA.h"
-#include "Any_SystemException.h"
-#include "Any_Dual_Impl_T.h"
-#include "TypeCode.h"
-#include "TypeCode_Constants.h"
-#include "Enum_TypeCode_Static.h"
-#include "TypeCode_Struct_Field.h"
-#include "Struct_TypeCode_Static.h"
-#include "Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/SystemExceptionA.h"
+#include "tao/AnyTypeCode/Any_SystemException.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 #include "tao/CORBA_String.h"
 
@@ -16,9 +16,12 @@ ACE_RCSID (tao,
            SystemExceptionA,
            "$Id$")
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 // List of standard/system exceptions ... used to create static
 // storage for their typecodes.
@@ -178,3 +181,5 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
 
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
+
+TAO_END_VERSIONED_NAMESPACE_DECL

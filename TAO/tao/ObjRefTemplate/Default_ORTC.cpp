@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "Default_ORTC.h"
+#include "tao/ObjRefTemplate/Default_ORTC.h"
 #include "tao/CDR.h"
 #include "tao/Valuetype/ValueFactory.h"
 
@@ -38,11 +38,13 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "Default_ORTC.inl"
+#include "tao/ObjRefTemplate/Default_ORTC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -239,3 +241,5 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
     true
   );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

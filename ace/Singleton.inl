@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructors.
 //
@@ -35,3 +38,5 @@ template <class TYPE, class ACE_LOCK>
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::~ACE_DLL_Singleton_T (void)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

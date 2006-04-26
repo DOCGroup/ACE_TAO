@@ -1,8 +1,9 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "UsesDef_i.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/UsesDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
@@ -11,6 +12,7 @@ ACE_RCSID (IFRService,
            UsesDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UsesDef_i::TAO_UsesDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -208,3 +210,5 @@ TAO_UsesDef_i::is_multiple_i (
                                              "is_multiple",
                                              is_multiple);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

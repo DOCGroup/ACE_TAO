@@ -23,6 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace TypeCode
@@ -115,6 +118,7 @@ namespace TAO
   }  // End namespace TypeCode
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Sequence_TypeCode.inl"

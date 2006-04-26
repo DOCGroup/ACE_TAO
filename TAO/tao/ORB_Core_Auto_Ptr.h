@@ -18,6 +18,14 @@
 
 #include "tao/TAO_Export.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 
 /**
@@ -60,8 +68,10 @@ protected:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "ORB_Core_Auto_Ptr.inl"
+# include "tao/ORB_Core_Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

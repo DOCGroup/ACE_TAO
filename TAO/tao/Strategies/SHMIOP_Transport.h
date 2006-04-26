@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author Originally by Nanbor Wang <nanbor@cs.wustl.edu>
- *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -24,10 +24,16 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "ace/Svc_Handler.h"
 #include "ace/MEM_Stream.h"
 #include "tao/Transport.h"
+
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class TAO_Strategies_Export ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SHMIOP_Connection_Handler;
 class TAO_Pluggable_Messaging;
@@ -36,10 +42,6 @@ class Tao_Operation_Details;
 
 typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
          TAO_SHMIOP_SVC_HANDLER;
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Strategies_Export ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
  * @class TAO_SHMIOP_Transport
@@ -82,11 +84,9 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
-  virtual int consolidate_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time);
-
+  virtual int handle_input (TAO_Resume_Handle &rh,
+                            ACE_Time_Value *max_wait_time,
+                            int block = 0);
   //@}
 
 public:
@@ -115,6 +115,8 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

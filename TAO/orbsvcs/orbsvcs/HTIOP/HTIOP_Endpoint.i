@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE::HTBP::Addr &
 TAO::HTIOP::Endpoint::object_addr (void) const
@@ -72,3 +75,5 @@ TAO::HTIOP::Endpoint::port (CORBA::UShort p)
 {
   return this->port_ = p;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

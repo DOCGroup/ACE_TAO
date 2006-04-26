@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "PolicyC.h"
+#include "tao/PolicyC.h"
 #include "tao/CDR.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
@@ -44,11 +44,13 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "PolicyC.inl"
+#include "tao/PolicyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO specific stuff.
 namespace CORBA
@@ -119,7 +121,7 @@ CORBA::PolicyError::PolicyError (const ::CORBA::PolicyError &_tao_excp)
 CORBA::PolicyError&
 CORBA::PolicyError::operator= (const ::CORBA::PolicyError &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->reason = _tao_excp.reason;
   return *this;
 }
@@ -255,7 +257,7 @@ CORBA::InvalidPolicies::InvalidPolicies (const ::CORBA::InvalidPolicies &_tao_ex
 CORBA::InvalidPolicies&
 CORBA::InvalidPolicies::operator= (const ::CORBA::InvalidPolicies &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->indices = _tao_excp.indices;
   return *this;
 }
@@ -382,7 +384,7 @@ TAO::Objref_Traits<CORBA::Policy>::release (
     CORBA::Policy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::Policy_ptr
@@ -393,7 +395,7 @@ TAO::Objref_Traits<CORBA::Policy>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Policy>::marshal (
-    CORBA::Policy_ptr p,
+    const CORBA::Policy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -418,7 +420,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
@@ -460,7 +462,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
@@ -502,7 +504,7 @@ void CORBA::Policy::destroy (
 {
   if (!this->is_evaluated ())
     {
-      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+      ::CORBA::Object::tao_object_initialize (this);
     }
 
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
@@ -554,7 +556,7 @@ CORBA::Policy::_tao_any_destructor (void *_tao_void_pointer)
 {
   Policy *_tao_tmp_pointer =
     static_cast<Policy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::Policy_ptr
@@ -590,7 +592,7 @@ CORBA::Policy::_unchecked_narrow (
 CORBA::Policy_ptr
 CORBA::Policy::_duplicate (Policy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -601,7 +603,7 @@ CORBA::Policy::_duplicate (Policy_ptr obj)
 void
 CORBA::Policy::_tao_release (Policy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -625,7 +627,7 @@ CORBA::Policy::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->::CORBA::Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -661,7 +663,7 @@ TAO::Objref_Traits<CORBA::PolicyManager>::release (
     CORBA::PolicyManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::PolicyManager_ptr
@@ -672,7 +674,7 @@ TAO::Objref_Traits<CORBA::PolicyManager>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PolicyManager>::marshal (
-    CORBA::PolicyManager_ptr p,
+    const CORBA::PolicyManager_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -690,7 +692,7 @@ CORBA::PolicyManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyManager *_tao_tmp_pointer =
     static_cast<PolicyManager *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::PolicyManager_ptr
@@ -718,7 +720,7 @@ CORBA::PolicyManager::_unchecked_narrow (
 CORBA::PolicyManager_ptr
 CORBA::PolicyManager::_duplicate (PolicyManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -729,7 +731,7 @@ CORBA::PolicyManager::_duplicate (PolicyManager_ptr obj)
 void
 CORBA::PolicyManager::_tao_release (PolicyManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -790,7 +792,7 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::release (
     CORBA::PolicyCurrent_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::PolicyCurrent_ptr
@@ -801,7 +803,7 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PolicyCurrent>::marshal (
-    CORBA::PolicyCurrent_ptr p,
+    const CORBA::PolicyCurrent_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -819,7 +821,7 @@ CORBA::PolicyCurrent::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyCurrent *_tao_tmp_pointer =
     static_cast<PolicyCurrent *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::PolicyCurrent_ptr
@@ -847,7 +849,7 @@ CORBA::PolicyCurrent::_unchecked_narrow (
 CORBA::PolicyCurrent_ptr
 CORBA::PolicyCurrent::_duplicate (PolicyCurrent_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
@@ -858,7 +860,7 @@ CORBA::PolicyCurrent::_duplicate (PolicyCurrent_ptr obj)
 void
 CORBA::PolicyCurrent::_tao_release (PolicyCurrent_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1038,3 +1040,5 @@ CORBA::Boolean operator>> (
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

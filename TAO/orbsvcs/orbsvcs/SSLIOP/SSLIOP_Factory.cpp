@@ -1,7 +1,7 @@
-#include "SSLIOP_Factory.h"
-#include "SSLIOP_Acceptor.h"
-#include "SSLIOP_Connector.h"
-#include "SSLIOP_ORBInitializer.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Factory.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
+#include "orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h"
 #include "ace/OS_NS_strings.h"
 
 #include "orbsvcs/Security/Security_ORBInitializer.h"  /// @todo should go away
@@ -23,15 +23,17 @@ static const unsigned char session_id_context_[] =
   "$Id$";
 
 // Protocol name prefix
-static const char *prefix_[] = {"iiop", "ssliop"};
+static const char * const the_prefix[] = {"iiop", "ssliop"};
 
 // An OS-dependent path separator character
-static const char *TAO_PATH_SEPARATOR_STRING =
+static ACE_TCHAR const TAO_PATH_SEPARATOR_STRING[] =
 #if defined(ACE_WIN32)
   ACE_TEXT (";");
 #else
   ACE_TEXT (":");
 #endif
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -57,8 +59,8 @@ int
 TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[0]) == 0)
-     || (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[1]) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix[0]) == 0)
+     || (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix[1]) == 0);
 }
 
 const char *
@@ -68,7 +70,7 @@ TAO::SSLIOP::Protocol_Factory::prefix (void) const
    // keeping it may make things more confusing - a Factory can
    // well be handling multiple protocol prefixes, not just one!
    // Shouldn't it be deprecated?
-  return ::prefix_[0];
+  return ::the_prefix[0];
 }
 
 char
@@ -95,10 +97,10 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 // the buffer pointed to by arg!
 int
 TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg,
-                                                   char **path)
+                                                char **path)
 {
-  ACE_ASSERT (arg!= 0);
-  ACE_ASSERT (path!= 0);
+  ACE_ASSERT (arg != 0);
+  ACE_ASSERT (path != 0);
 
   char *lst = 0;
   const char *type_name = ACE_OS::strtok_r (arg, ":", &lst);
@@ -599,6 +601,7 @@ TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint (void) const
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
                        ACE_TEXT ("SSLIOP_Factory"),

@@ -1,29 +1,32 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Timer.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_TIMER_H
 #define TAO_Notify_TIMER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Refcountable.h"
+#include "orbsvcs/Notify/Refcountable.h"
 
 #include "ace/Time_Value.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Event_Handler;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Timer
@@ -46,6 +49,8 @@ public:
   /// Cancel Timer
   virtual int cancel_timer (long timer_id) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_TIMER_H */

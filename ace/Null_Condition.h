@@ -26,12 +26,14 @@
 
 #include "ace/os_include/os_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
 /**
  * @class ACE_Null_Condition
  *
- * @brief Implement a do nothing <ACE_Condition> variable wrapper,
+ * @brief Implement a do nothing ACE_Condition variable wrapper,
  * i.e., all methods are no ops.  This class is necessary since
  * some C++ compilers are *very* lame...
  */
@@ -76,6 +78,8 @@ private:
   void operator= (const ACE_Null_Condition &);
   ACE_Null_Condition (const ACE_Null_Condition &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NULL_CONDITION_H */

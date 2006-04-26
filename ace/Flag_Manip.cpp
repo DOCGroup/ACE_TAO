@@ -19,6 +19,8 @@ ACE_RCSID (ace,
            Flag_Manip,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Flags are file status flags to turn on.
 
 int
@@ -32,7 +34,7 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
       // nonblocking argument (1)
       // blocking:            (0)
       {
-        u_long nonblock = 1;
+        int nonblock = 1;
         return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
       }
     default:
@@ -68,7 +70,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
       // nonblocking argument (1)
       // blocking:            (0)
       {
-        u_long nonblock = 0;
+        int nonblock = 0;
         return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
       }
     default:
@@ -89,3 +91,5 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
     return 0;
 #endif /* ACE_LACKS_FCNTL */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

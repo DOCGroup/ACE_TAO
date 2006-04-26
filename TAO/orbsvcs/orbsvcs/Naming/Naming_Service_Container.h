@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Naming_Service_Container.h
@@ -21,16 +22,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+#include "tao/orbconf.h"
+
 // Need by ACE_DLList_Node.
 #include "ace/Containers.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward declarations.
 template <class T> class ACE_Unbounded_List;
 template <class T> class ACE_Unbounded_List_Iterator;
-
 
 /**
  * @class ACE_NS_Node
@@ -43,8 +48,6 @@ class ACE_NS_Node
 public:
   friend class ACE_Unbounded_List<T>;
   friend class ACE_Unbounded_List_Iterator<T>;
-
-
 
 # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   /// This isn't necessary, but it keeps some compilers happy.
@@ -63,10 +66,6 @@ private:
   /// Current value of the item in this node.
   T item_;
 };
-
-
-
-
 
 /**
  * @class ACE_Unbounded_List_Iterator
@@ -221,9 +220,10 @@ private:
   ACE_Allocator *allocator_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Naming_Service_Container.cpp"
+#include "orbsvcs/Naming/Naming_Service_Container.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

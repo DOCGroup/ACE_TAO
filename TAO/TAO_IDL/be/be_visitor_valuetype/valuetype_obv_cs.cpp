@@ -33,7 +33,7 @@ ACE_RCSID (be_visitor_valuetype,
 be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
     be_visitor_context *ctx
   )
-  : be_visitor_scope (ctx)
+  : be_visitor_valuetype (ctx)
 {
 }
 
@@ -57,6 +57,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Default constructor.
   *os << node->full_obv_skel_name () << "::";
 
   if (! node->is_nested ())
@@ -67,6 +68,32 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << node->local_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
 
+  // Initializing constructor.
+  if (node->has_member ())
+    {
+      *os << node->full_obv_skel_name () << "::";
+
+      if (! node->is_nested ())
+        {
+          *os << "OBV_";
+        }
+
+      *os << node->local_name () << " (" << be_idt << be_idt;
+
+      unsigned long index = 0;
+      this->gen_obv_init_constructor_args (node, index);
+
+      *os << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << "{" << be_idt;
+
+      this->gen_obv_init_constructor_inits (node);
+
+      *os << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
+
+  // Destructor.
   *os << node->full_obv_skel_name () << "::~";
 
   if (! node->is_nested ())
@@ -116,7 +143,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name ()
               << "::_add_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->ACE_NESTED_CLASS ( ::CORBA,DefaultValueRefCountBase)::_add_ref ();"
+              << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
               << be_uidt_nl
               << "}" << be_nl;
 
@@ -124,7 +151,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name ()
               << "::_remove_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->ACE_NESTED_CLASS ( ::CORBA,DefaultValueRefCountBase)::_remove_ref ();"
+              << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
               << be_uidt_nl
               << "}";
         }
@@ -157,3 +184,74 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 
   return 0;
 }
+
+void
+be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
+    be_valuetype *node,
+    unsigned long &index
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  AST_ValueType *parent = node->inherits_concrete ();
+
+  // Generate for inherited members first.
+  if (parent != 0)
+    {
+      be_valuetype *be_parent =
+        be_valuetype::narrow_from_decl (parent);
+      this->gen_obv_init_base_constructor_args (be_parent, index);
+    }
+    
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      // be_attribute doesn't inherit from be_field (unlike the
+      // AST_* counterparts, so this screens attributes and operations.
+      be_field *f = be_field::narrow_from_decl (si.item ());
+      
+      if (f == 0)
+        {
+          continue;
+        }
+        
+      *os << (index++ != 0 ? "," : "") << be_nl
+          << "_tao_init_" << f->local_name ();          
+    }
+}
+
+void
+be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
+    be_valuetype *node
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  AST_ValueType *parent = node->inherits_concrete ();
+
+  // Generate for inherited members first.
+  if (parent != 0)
+    {
+      be_valuetype *be_parent = be_valuetype::narrow_from_decl (parent);
+      this->gen_obv_init_constructor_inits (be_parent);
+    }
+    
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      be_field *f = be_field::narrow_from_decl (si.item ());
+      
+      // be_attribute doesn't inherit from be_field (unlike the
+      // AST_* counterparts, so this screens attributes and operations.
+      if (f == 0)
+        {
+          continue;
+        }
+        
+      *os << be_nl
+          << f->local_name () << " (_tao_init_" << f->local_name ()
+          << ");";
+    }
+}
+
+

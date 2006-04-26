@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -17,16 +17,19 @@
 #ifndef ROUTING_SLIP_PERSISTENCE_MANAGER_H
 #define ROUTING_SLIP_PERSISTENCE_MANAGER_H
 #include /**/ "ace/pre.h"
-#include /**/ "ace/config-all.h"
+
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/Message_Block.h"
 #include "ace/Synch_T.h"
 #include "ace/Containers_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -257,6 +260,8 @@ private:
 };
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ROUTING_SLIP_PERSISTENCE_MANAGER_H */

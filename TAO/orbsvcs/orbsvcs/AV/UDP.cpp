@@ -1,19 +1,21 @@
 // $Id$
 
-#include "UDP.h"
-#include "AVStreams_i.h"
-#include "MCast.h"
+#include "orbsvcs/AV/UDP.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/MCast.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "UDP.i"
+#include "orbsvcs/AV/UDP.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (AV,
            UDP,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
@@ -1071,6 +1073,8 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 
   return object;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_UDP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_Flow_Factory,

@@ -1,17 +1,20 @@
 // $Id$
 
-#ifndef TAO_VALUETYPE_SEQUENCE_T_C
-#define TAO_VALUETYPE_SEQUENCE_T_C
+#ifndef TAO_VALUETYPE_SEQUENCE_T_CPP
+#define TAO_VALUETYPE_SEQUENCE_T_CPP
 
-#include "Sequence_T.h"
+#include "tao/Valuetype/Sequence_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Sequence_T.inl"
+#include "tao/Valuetype/Sequence_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Valuetype,
            Sequence_T,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // *************************************************************
 // class TAO_Valuetype_Manager
@@ -496,4 +499,6 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::_shrink_buffer (
     }
 }
 
-#endif /* TAO_VALUETYPE_SEQUENCE_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_VALUETYPE_SEQUENCE_T_CPP */

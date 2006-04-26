@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,7 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Thread_Manager.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Task_Flags
@@ -32,9 +35,8 @@
  *    code defined here, so we don't have to worry about multiple
  *    definitions.
  */
-class ACE_Export ACE_Task_Flags
+namespace ACE_Task_Flags
 {
-public:
   enum
   {
     /// Identifies a Task as being the "reader" in a Module.
@@ -50,7 +52,7 @@ public:
     /// Flush both queues
     ACE_FLUSHRW    = 030
   };
-};
+}
 
 /**
  * @class ACE_Task_Base
@@ -267,7 +269,7 @@ public:
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Protect the state of a Task during concurrent operations, but
   /// only if we're configured as MT safe...
-  ACE_Thread_Mutex lock_;
+  ACE_Recursive_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 
 private:
@@ -276,6 +278,8 @@ private:
   ACE_Task_Base &operator= (const ACE_Task_Base &);
   ACE_Task_Base (const ACE_Task_Base &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Task.inl"

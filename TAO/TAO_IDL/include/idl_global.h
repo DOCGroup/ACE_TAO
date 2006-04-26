@@ -73,7 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Containers_T.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
-#include "idl_bool.h"
+
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
 #include "ast_component.h"
@@ -306,6 +306,7 @@ public:
   bool short_seq_seen_;
   bool special_basic_arg_seen_;
   bool string_seen_;
+  bool string_member_seen_;
   bool string_seq_seen_;
   bool typecode_seen_;
   bool ub_string_arg_seen_;
@@ -321,6 +322,9 @@ public:
   bool vt_seq_seen_;
   bool wchar_seq_seen_;
   bool wstring_seq_seen_;
+
+  // flag to force generation of skeleton includes (see bug #2419).
+  bool need_skeleton_includes_;
 
   // Constructor
   IDL_GlobalData (void);
@@ -364,12 +368,12 @@ public:
   virtual UTL_String       *stripped_filename (void);   // Stripped filename
   virtual void             set_stripped_filename (UTL_String *);  // Set it
 
-  virtual idl_bool         imported (void);             // Are we imported?
-  virtual idl_bool         import (void);               // Is import on?
-  virtual void             set_import (idl_bool);       // Set it
+  virtual bool             imported (void);             // Are we imported?
+  virtual bool             import (void);               // Is import on?
+  virtual void             set_import (bool);       // Set it
 
-  virtual idl_bool         in_main_file (void);         // Are we?
-  virtual void             set_in_main_file (idl_bool); // Set it
+  virtual bool             in_main_file (void);         // Are we?
+  virtual void             set_in_main_file (bool); // Set it
 
   virtual const char       *prog_name (void);           // Invoked as..
   virtual void             set_prog_name (const char *);  // Set it
@@ -413,7 +417,7 @@ public:
   // FE calls when #pragma DCPS_DATA_TYPE is processed
   virtual void add_dcps_data_type(const char* id);
   // FE calls when #pragma DCPS_DATA_KEY is processed
-  virtual idl_bool add_dcps_data_key(const char* id, const char* key);
+  virtual bool add_dcps_data_key(const char* id, const char* key);
   // returns null if not matching; otherwise pointer to the info
   virtual DCPS_Data_Type_Info* is_dcps_type(UTL_ScopedName* target);
 
@@ -481,17 +485,17 @@ public:
   virtual const char *ident_string (void) const;
   // Get the value of the #ident string.
 
-  virtual void case_diff_error (idl_bool);
+  virtual void case_diff_error (bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
 
-  virtual idl_bool case_diff_error (void);
+  virtual bool case_diff_error (void);
   // are we strict about case-only differences or not?
 
-  virtual void nest_orb (idl_bool);
+  virtual void nest_orb (bool);
   // Set on or off whether we are using the NEST ORB.
 
-  virtual idl_bool nest_orb (void);
+  virtual bool nest_orb (void);
   // are we beIng used with the NEST ORB?
 
   virtual void destroy (void);
@@ -523,8 +527,8 @@ public:
   void last_seen_index (long val);
   // Accessors for last_seen_index_ member.
 
-  idl_bool repeat_include (void) const;
-  void repeat_include (idl_bool val);
+  bool repeat_include (void) const;
+  void repeat_include (bool val);
   // Accessors for repeat_include_ member.
 
   const char *stripped_preproc_include (const char *name);
@@ -532,12 +536,12 @@ public:
   // strips off any command line -I prefix that may have been
   // prepended.
 
-  virtual idl_bool preserve_cpp_keywords (void);
+  virtual bool preserve_cpp_keywords (void);
   // Whether we should not mung idl element names that are
   // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Should be true when being used by the IFR Service
 
-  virtual void preserve_cpp_keywords (idl_bool);
+  virtual void preserve_cpp_keywords (bool);
   // Set whether we should not mung idl element names that are C++
   // keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Is set by the IFR Service.
@@ -549,8 +553,8 @@ public:
   file_prefixes (void);
   // Accessor for the IDL file prefix container.
 
-  idl_bool pass_orb_idl (void) const;
-  void pass_orb_idl (idl_bool val);
+  bool pass_orb_idl (void) const;
+  void pass_orb_idl (bool val);
   // Accessor for the pass_orb_idl_ member.
 
   bool using_ifr_backend (void) const;
@@ -574,18 +578,22 @@ public:
 
   int path_cmp (const char *s, const char *t);
   // Case insensitive for Windows, otherwise not.
-  
+
   bool hasspace (const char *s);
   // To tell if we have to handle a Windows path with spaces.
-  
+
   ACE_Unbounded_Queue<AST_ValueType *> &primary_keys (void);
   // Accessor for the member.
-  
+
   void check_primary_keys (void);
   // Called affer yy_parse() returns - iterates over our list
   // of primary keys. Must be called this late so that we can
   // be sure that all forward declared stucts or unions that
   // might be used in such a valuetype are fully defined.
+
+  const char *recursion_start (void) const;
+  void recursion_start (const char *val);
+  // Accessors for the member.
 
 private:
   // Data
@@ -600,8 +608,8 @@ private:
   UTL_String                 *pd_main_filename;      // What main filename
   UTL_String                 *pd_real_filename;      // What real filename
   UTL_String                 *pd_stripped_filename;  // Stripped filename
-  idl_bool                   pd_import;              // Is import on?
-  idl_bool                   pd_in_main_file;        // Are we in it?
+  bool                   pd_import;              // Is import on?
+  bool                   pd_in_main_file;        // Are we in it?
   const char                 *pd_prog_name;          // Argv[0]
   const char                 *pd_cpp_location;       // Where to find CPP
   long                       pd_compile_flags;       // Compile flags
@@ -640,11 +648,11 @@ private:
   // Holds a string that begins with #ident, to be passed from the IDL
   // file to the generated files.
 
-  idl_bool case_diff_error_;
+  bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
 
-  idl_bool nest_orb_;
+  bool nest_orb_;
   // Is this front end being used for the NEST ORB?
 
   ACE_CString idl_flags_;
@@ -656,10 +664,10 @@ private:
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
 
-  idl_bool repeat_include_;
+  bool repeat_include_;
   // Has this IDL file been included before?
 
-  idl_bool preserve_cpp_keywords_;
+  bool preserve_cpp_keywords_;
   // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
   ACE_Unbounded_Queue<char *> include_paths_;
@@ -668,7 +676,7 @@ private:
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
 
-  idl_bool pass_orb_idl_;
+  bool pass_orb_idl_;
   // Treat orb.idl like any other included IDL file.
 
   bool using_ifr_backend_;
@@ -679,9 +687,13 @@ private:
   // we don't want to try to generate another event consumer.
   DCPS_Type_Info_Map dcps_type_info_map_ ;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
-  
+
   ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
   // List of valuetypes used as a primary key.
+
+  char *recursion_start_;
+  // Path to directory subtree we are iterating/recursing over.
+  // Not used by all backends.
 };
 
 

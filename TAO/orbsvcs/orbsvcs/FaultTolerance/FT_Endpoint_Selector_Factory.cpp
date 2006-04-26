@@ -1,7 +1,7 @@
 // $Id$
 
-#include "FT_Endpoint_Selector_Factory.h"
-#include "FT_Invocation_Endpoint_Selectors.h"
+#include "orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h"
+#include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 
@@ -10,16 +10,16 @@ ACE_RCSID (FaultTolerance,
            FT_Endpoint_Selector_Factory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory (void)
-  :ft_endpoint_selector_ (0)
+  : ft_endpoint_selector_ (0)
 {
 }
 
 TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory (void)
 {
-  if (this->ft_endpoint_selector_)
-    delete this->ft_endpoint_selector_;
+  delete this->ft_endpoint_selector_;
 }
 
 
@@ -46,6 +46,8 @@ TAO_FT_Endpoint_Selector_Factory::get_selector (
 
   return this->ft_endpoint_selector_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

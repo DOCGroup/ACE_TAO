@@ -2,6 +2,7 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename StringType,
          typename TypeCodeType,
@@ -20,9 +21,11 @@ TAO::TypeCode::Alias<StringType,
 #else
   TypeCodeType const & tc)
 #endif
-  : CORBA::TypeCode (kind)
+  : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , attributes_ (id, name)
   , content_type_ (tc)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

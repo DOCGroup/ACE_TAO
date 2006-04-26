@@ -52,6 +52,8 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
@@ -60,6 +62,8 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       << node->name () << " *&); // deprecated\n";
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (this->visit_scope (node) == -1)
     {

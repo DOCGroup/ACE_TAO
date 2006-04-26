@@ -1,8 +1,8 @@
-#include "UIOP_Connector.h"
+#include "tao/Strategies/UIOP_Connector.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
@@ -20,6 +20,8 @@
 ACE_RCSID(Strategies,
           UIOP_Connector,
           "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Connector::TAO_UIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
@@ -395,7 +397,7 @@ TAO_UIOP_Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
 {
   TAO_UIOP_Connection_Handler* handler=
-    dynamic_cast<TAO_UIOP_Connection_Handler*>(svc_handler);
+    dynamic_cast<TAO_UIOP_Connection_Handler*> (svc_handler);
 
   if (handler)
     // Cancel from the connector
@@ -403,5 +405,7 @@ TAO_UIOP_Connector::cancel_svc_handler (
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_UIOP == 1 */

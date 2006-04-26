@@ -1,6 +1,6 @@
-#include "BiDir_ORBInitializer.h"
-#include "BiDirGIOP.h"
-#include "BiDirPolicy_Validator.h"
+#include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -9,6 +9,7 @@ ACE_RCSID (BiDir_GIOP,
            BiDirGIOP,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Set the flag to zero to start with
 int TAO_BiDirGIOP_Loader::is_activated_ = 0;
@@ -58,7 +59,7 @@ TAO_BiDirGIOP_Loader::init (int,
           if (TAO_debug_level > 0)
             {
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "(%P | %t) Caught exception:");
+                                   "Caught exception:");
             }
           return -1;
         }
@@ -87,12 +88,14 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
                         CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  // We may be adding another TAO_BiDirPolicy_Validator instance for the
-  // same ORB (different POA). In cases where huge numbers of bi-directional POA instances
-  // are created, having a validator instance per POA may introduce additional delays in
-  // policy validation and hence, the overal policy creation time. Since this is out of the
-  // critical invocation processing path, I plan to keep the design simple and not try to
-  // avoid an ineficiency of such small proportions.
+  // We may be adding another TAO_BiDirPolicy_Validator instance for
+  // the same ORB (different POA). In cases where huge numbers of
+  // bi-directional POA instances are created, having a validator
+  // instance per POA may introduce additional delays in policy
+  // validation and hence, the overal policy creation time. Since this
+  // is out of the critical invocation processing path, I plan to keep
+  // the design simple and not try to avoid an ineficiency of such
+  // small proportions.
   val.add_validator (validator);
 }
 
@@ -101,6 +104,8 @@ TAO_BiDirGIOP_Loader::Initializer (void)
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_BiDirGIOP_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_BiDirGIOP_Loader,
                        ACE_TEXT ("BiDirGIOP_Loader"),

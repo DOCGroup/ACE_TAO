@@ -27,23 +27,23 @@
 
 // To force execution of the static constructor
 // that registers the dynamic service object.
-#include "Dynamic_Adapter_Impl.h"
+#include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
 
-#include "ExceptionList.h"
+#include "tao/DynamicInterface/ExceptionList.h"
 
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/NVList.h"
 
 #include "ace/SString.h"
 
-
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -266,8 +266,10 @@ namespace CORBA
   };
 } // End CORBA namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Request.inl"
+# include "tao/DynamicInterface/Request.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

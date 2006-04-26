@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ForwardRequestC.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
@@ -39,13 +39,15 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::ForwardRequest::ForwardRequest (void)
@@ -72,7 +74,7 @@ PortableServer::ForwardRequest::ForwardRequest (const ::PortableServer::ForwardR
 PortableServer::ForwardRequest&
 PortableServer::ForwardRequest::operator= (const ::PortableServer::ForwardRequest &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
   return *this;
 }
@@ -129,7 +131,7 @@ void PortableServer::ForwardRequest::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -142,7 +144,7 @@ void PortableServer::ForwardRequest::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -196,5 +198,7 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.forward_reference.out ())
   );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

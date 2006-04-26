@@ -151,7 +151,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       r));
         }
 
-      // Shtdown the server
+      // Shutdown the server
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

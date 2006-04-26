@@ -14,14 +14,22 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+// #undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #define ACE_SIZE_T_FORMAT_SPECIFIER_A "%lu"
 #define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_SIZE_T_FORMAT_SPECIFIER_A)
 
-// Proper size of long double on both G4/G5 is 16
-#define ACE_SIZEOF_LONG_DOUBLE 16
+#if !defined (ACE_SIZEOF_LONG_DOUBLE)
+# if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
+   // Size of long double in GCC 3.3 is 8.
+#  define ACE_SIZEOF_LONG_DOUBLE 8
+# else // Else, the compiler is GCC4
+   // For GCC4, the size is 16.
+#  define ACE_SIZEOF_LONG_DOUBLE 16
+# endif // GCC 3.3
+#endif // ACE_SIZEOF_LONG_DOUBLE
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
@@ -40,7 +48,19 @@
 #define ACE_HAS_MEMCHR
 
 #define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_WCHAR_H
+
+// Wcharness....
+//#define ACE_LACKS_WCHAR_H
+#define ACE_HAS_WCHAR
+#define ACE_SIZEOF_WCHAR 4
+
+
+#define ACE_HAS_3_PARAM_WCSTOK
+#define ACE_LACKS_ITOW
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_WCSDUP
+// #define ACE_LACKS_WCSLEN
 
 // Mac lacks the following pthread features
 #define ACE_LACKS_MUTEXATTR_PSHARED
@@ -54,6 +74,8 @@
 
 //Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
+
+#define ACE_HAS_AIO_CALLS
 
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
@@ -89,7 +111,7 @@
 
 #define ACE_LACKS_STRRECVFD
 
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -160,11 +182,9 @@
 #endif /* ! ACE_MT_SAFE */
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
-#define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_DIRENT
-#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_SEARCH_H
 
@@ -173,7 +193,7 @@
 //#define ACE_HAS_RECURSIVE_MUTEXES
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 #define ACE_HAS_SEMUN
 #define ACE_HAS_SIGINFO_T

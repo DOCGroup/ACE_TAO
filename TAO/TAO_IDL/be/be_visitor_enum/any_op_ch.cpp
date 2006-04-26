@@ -51,12 +51,16 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   // Generate the Any <<= and >>= operators.
   *os << be_nl << be_nl
       << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << ");" << be_nl;
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << " &);";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   node->cli_hdr_any_op_gen (1);
   return 0;

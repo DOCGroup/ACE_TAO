@@ -104,7 +104,9 @@ argv = force_argv;
 // A constant to avoid the utility thread blocking the machine and to
 // bound its  number of computations.
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Globals
 {

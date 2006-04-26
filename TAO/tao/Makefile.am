@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 includedir = @includedir@/tao
 pkgconfigdir = @libdir@/pkgconfig
@@ -87,6 +87,7 @@ libTAO_la_SOURCES = \
   FloatSeqC.cpp \
   Flushing_Strategy.cpp \
   GIOPC.cpp \
+  GIOP_Fragmentation_Strategy.cpp \
   GIOP_Message_Base.cpp \
   GIOP_Message_Generator_Parser.cpp \
   GIOP_Message_Generator_Parser_10.cpp \
@@ -116,6 +117,7 @@ libTAO_la_SOURCES = \
   IORInterceptor_Adapter_Factory.cpp \
   IOR_Parser.cpp \
   Incoming_Message_Queue.cpp \
+  Incoming_Message_Stack.cpp \
   Invocation_Adapter.cpp \
   Invocation_Base.cpp \
   Invocation_Endpoint_Selectors.cpp \
@@ -141,12 +143,12 @@ libTAO_la_SOURCES = \
   LongSeqC.cpp \
   MCAST_Parser.cpp \
   MProfile.cpp \
-  Managed_Types.cpp \
   Messaging_PolicyValueC.cpp \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
   NVList_Adapter.cpp \
   New_Leader_Generator.cpp \
+  Null_Fragmentation_Strategy.cpp \
   ORB.cpp \
   ORBInitializer_Registry.cpp \
   ORBInitializer_Registry_Adapter.cpp \
@@ -162,6 +164,7 @@ libTAO_la_SOURCES = \
   Object_Proxy_Broker.cpp \
   Object_Ref_Table.cpp \
   OctetSeqC.cpp \
+  On_Demand_Fragmentation_Strategy.cpp \
   PI_ForwardC.cpp \
   ParameterModeC.cpp \
   Parser_Registry.cpp \
@@ -192,7 +195,6 @@ libTAO_la_SOURCES = \
   Request_Dispatcher.cpp \
   Resource_Factory.cpp \
   Resume_Handle.cpp \
-  Sequence.cpp \
   ServerRequestInterceptor_Adapter.cpp \
   ServerRequestInterceptor_Adapter_Factory.cpp \
   Server_Strategy_Factory.cpp \
@@ -202,6 +204,7 @@ libTAO_la_SOURCES = \
   Services_Activate.cpp \
   ShortSeqC.cpp \
   StringSeqC.cpp \
+  String_Alloc.cpp \
   Stub.cpp \
   Stub_Factory.cpp \
   Synch_Invocation.cpp \
@@ -234,6 +237,7 @@ libTAO_la_SOURCES = \
   UShortSeqC.cpp \
   UserException.cpp \
   Valuetype_Adapter.cpp \
+  Valuetype_Adapter_Factory.cpp \
   WCharSeqC.cpp \
   WStringSeqC.cpp \
   Wait_On_LF_No_Upcall.cpp \
@@ -309,7 +313,6 @@ nobase_include_HEADERS = \
   CORBALOC_Parser.h \
   CORBALOC_Parser.i \
   CORBANAME_Parser.h \
-  CORBANAME_Parser.i \
   CORBA_String.h \
   CORBA_String.inl \
   CORBA_methods.h \
@@ -347,7 +350,6 @@ nobase_include_HEADERS = \
   CurrentC.h \
   CurrentS.h \
   DLL_Parser.h \
-  DLL_Parser.i \
   Default_Collocation_Resolver.h \
   Default_Endpoint_Selector_Factory.h \
   Default_Protocols_Hooks.h \
@@ -370,7 +372,6 @@ nobase_include_HEADERS = \
   Exception_Data.h \
   Exclusive_TMS.h \
   FILE_Parser.h \
-  FILE_Parser.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
   Fixed_Array_Argument_T.cpp \
@@ -387,6 +388,7 @@ nobase_include_HEADERS = \
   GIOPC.h \
   GIOPC.inl \
   GIOPS.h \
+  GIOP_Fragmentation_Strategy.h \
   GIOP_Message_Base.h \
   GIOP_Message_Generator_Parser.h \
   GIOP_Message_Generator_Parser_10.h \
@@ -428,7 +430,15 @@ nobase_include_HEADERS = \
   IOR_Parser.h \
   Incoming_Message_Queue.h \
   Incoming_Message_Queue.inl \
+  Incoming_Message_Stack.h \
+  Incoming_Message_Stack.inl \
   InterfaceDef.pidl \
+  Intrusive_Ref_Count_Base_T.cpp \
+  Intrusive_Ref_Count_Base_T.h \
+  Intrusive_Ref_Count_Base_T.inl \
+  Intrusive_Ref_Count_Handle_T.cpp \
+  Intrusive_Ref_Count_Handle_T.h \
+  Intrusive_Ref_Count_Handle_T.inl \
   InvalidName.pidl \
   Invocation_Adapter.h \
   Invocation_Adapter.inl \
@@ -453,7 +463,6 @@ nobase_include_HEADERS = \
   LF_Invocation_Event.h \
   LF_Strategy.h \
   LF_Strategy_Complete.h \
-  LF_Strategy_Complete.inl \
   LRU_Connection_Purging_Strategy.h \
   Leader_Follower.h \
   Leader_Follower.i \
@@ -475,8 +484,6 @@ nobase_include_HEADERS = \
   MCAST_Parser.i \
   MProfile.h \
   MProfile.i \
-  Managed_Types.h \
-  Managed_Types.i \
   Messaging_PolicyValue.pidl \
   Messaging_PolicyValueC.h \
   Messaging_SyncScope.pidl \
@@ -484,6 +491,7 @@ nobase_include_HEADERS = \
   Muxed_TMS.h \
   NVList_Adapter.h \
   New_Leader_Generator.h \
+  Null_Fragmentation_Strategy.h \
   ORB.h \
   ORB.i \
   ORBInitializer_Registry.h \
@@ -517,6 +525,7 @@ nobase_include_HEADERS = \
   OctetSeq.pidl \
   OctetSeqC.h \
   OctetSeqS.h \
+  On_Demand_Fragmentation_Strategy.h \
   PI_Forward.pidl \
   PI_ForwardC.h \
   ParameterMode.pidl \
@@ -579,11 +588,6 @@ nobase_include_HEADERS = \
   Seq_Var_T.cpp \
   Seq_Var_T.h \
   Seq_Var_T.inl \
-  Sequence.h \
-  Sequence.i \
-  Sequence_T.cpp \
-  Sequence_T.h \
-  Sequence_T.i \
   ServerRequestInterceptor_Adapter.h \
   ServerRequestInterceptor_Adapter_Factory.h \
   Server_Strategy_Factory.h \
@@ -604,6 +608,7 @@ nobase_include_HEADERS = \
   StringSeq.pidl \
   StringSeqC.h \
   StringSeqS.h \
+  String_Alloc.h \
   Stub.h \
   Stub.i \
   Stub_Factory.h \
@@ -670,6 +675,7 @@ nobase_include_HEADERS = \
   UserException.h \
   UserException.inl \
   Valuetype_Adapter.h \
+  Valuetype_Adapter_Factory.h \
   VarOut_T.cpp \
   VarOut_T.h \
   VarOut_T.inl \
@@ -680,6 +686,7 @@ nobase_include_HEADERS = \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Version.h \
+  Versioned_Namespace.h \
   WCharSeq.pidl \
   WCharSeqC.h \
   WCharSeqS.h \
@@ -1052,7 +1059,6 @@ libTAO_CodecFactory_la_SOURCES = \
   CodecFactory/CDR_Encaps_Codec.cpp \
   CodecFactory/CodecFactory.cpp \
   CodecFactory/CodecFactory_impl.cpp \
-  CodecFactory/IOP_CodecA.cpp \
   CodecFactory/IOP_CodecC.cpp
 
 libTAO_CodecFactory_la_LDFLAGS = \
@@ -1071,6 +1077,7 @@ nobase_include_HEADERS += \
   CodecFactory/IOP_CodecC.h \
   CodecFactory/IOP_CodecS.h \
   CodecFactory/IOP_Codec_include.pidl \
+  CodecFactory/IOP_Codec_includeA.h \
   CodecFactory/IOP_Codec_includeC.h \
   CodecFactory/IOP_Codec_includeS.h \
   CodecFactory/codecfactory_export.h
@@ -1101,6 +1108,7 @@ libTAO_PI_la_CPPFLAGS = \
   -DTAO_PI_BUILD_DLL
 
 libTAO_PI_la_SOURCES = \
+  PI/ClientRequestDetails.cpp \
   PI/ClientRequestInfo.cpp \
   PI/ClientRequestInfoA.cpp \
   PI/ClientRequestInfoC.cpp \
@@ -1113,7 +1121,6 @@ libTAO_PI_la_SOURCES = \
   PI/InvalidSlotA.cpp \
   PI/InvalidSlotC.cpp \
   PI/ORBInitInfo.cpp \
-  PI/ORBInitInfoA.cpp \
   PI/ORBInitInfoC.cpp \
   PI/ORBInitializerA.cpp \
   PI/ORBInitializerC.cpp \
@@ -1127,10 +1134,14 @@ libTAO_PI_la_SOURCES = \
   PI/PICurrent_Loader.cpp \
   PI/PIForwardRequestA.cpp \
   PI/PIForwardRequestC.cpp \
+  PI/PI_ORBInitializer.cpp \
+  PI/PI_PolicyFactory.cpp \
   PI/PolicyFactoryA.cpp \
   PI/PolicyFactoryC.cpp \
   PI/PolicyFactory_Loader.cpp \
   PI/PolicyFactory_Registry.cpp \
+  PI/ProcessingModePolicy.cpp \
+  PI/ProcessingModePolicyC.cpp \
   PI/RequestInfoA.cpp \
   PI/RequestInfoC.cpp \
   PI/RequestInfo_Util.cpp
@@ -1145,17 +1156,22 @@ libTAO_PI_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  PI/ClientRequestDetails.h \
+  PI/ClientRequestDetails.inl \
   PI/ClientRequestInfo.h \
   PI/ClientRequestInfo.pidl \
+  PI/ClientRequestInfoA.h \
   PI/ClientRequestInfoC.h \
   PI/ClientRequestInfoS.h \
   PI/ClientRequestInterceptor.pidl \
+  PI/ClientRequestInterceptorA.h \
   PI/ClientRequestInterceptorC.h \
   PI/ClientRequestInterceptorS.h \
   PI/ClientRequestInterceptor_Adapter_Impl.h \
   PI/ClientRequestInterceptor_Adapter_Impl.inl \
   PI/ClientRequestInterceptor_Factory_Impl.h \
   PI/Interceptor.pidl \
+  PI/InterceptorA.h \
   PI/InterceptorC.h \
   PI/InterceptorS.h \
   PI/Interceptor_List_T.cpp \
@@ -1170,6 +1186,7 @@ nobase_include_HEADERS += \
   PI/ORBInitInfoC.h \
   PI/ORBInitInfoS.h \
   PI/ORBInitializer.pidl \
+  PI/ORBInitializerA.h \
   PI/ORBInitializerC.h \
   PI/ORBInitializerS.h \
   PI/ORBInitializer_Registry_Impl.h \
@@ -1185,14 +1202,23 @@ nobase_include_HEADERS += \
   PI/PICurrent_Impl.inl \
   PI/PICurrent_Loader.h \
   PI/PIForwardRequest.pidl \
+  PI/PIForwardRequestA.h \
   PI/PIForwardRequestC.h \
   PI/PIForwardRequestS.h \
+  PI/PI_ORBInitializer.h \
+  PI/PI_PolicyFactory.h \
   PI/PolicyFactory.pidl \
+  PI/PolicyFactoryA.h \
   PI/PolicyFactoryC.h \
   PI/PolicyFactoryS.h \
   PI/PolicyFactory_Loader.h \
   PI/PolicyFactory_Registry.h \
+  PI/ProcessingModePolicy.h \
+  PI/ProcessingModePolicy.pidl \
+  PI/ProcessingModePolicyC.h \
+  PI/ProcessingModePolicyS.h \
   PI/RequestInfo.pidl \
+  PI/RequestInfoA.h \
   PI/RequestInfoC.h \
   PI/RequestInfoS.h \
   PI/RequestInfo_Util.h \
@@ -1324,7 +1350,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/LifespanStrategyTransientFactoryImpl.cpp \
   PortableServer/Local_Servant_Base.cpp \
   PortableServer/Non_Servant_Upcall.cpp \
-  PortableServer/ORT_Adapter.cpp \
   PortableServer/ORT_Adapter_Factory.cpp \
   PortableServer/Object_Adapter.cpp \
   PortableServer/Object_Adapter_Factory.cpp \
@@ -1341,7 +1366,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/POA_Current_Impl.cpp \
   PortableServer/POA_Guard.cpp \
   PortableServer/POA_Policy_Set.cpp \
-  PortableServer/PS_CurrentA.cpp \
   PortableServer/PS_CurrentC.cpp \
   PortableServer/PS_ForwardA.cpp \
   PortableServer/PS_ForwardC.cpp \
@@ -1504,7 +1528,6 @@ nobase_include_HEADERS += \
   PortableServer/POA_Cached_Policies.h \
   PortableServer/POA_Cached_Policies.i \
   PortableServer/POA_Current.h \
-  PortableServer/POA_Current.inl \
   PortableServer/POA_Current_Factory.h \
   PortableServer/POA_Current_Impl.h \
   PortableServer/POA_Current_Impl.inl \
@@ -1622,6 +1645,179 @@ TAO_PortableServer.pc: ${top_builddir}/config.status ${srcdir}/PortableServer/TA
 EXTRA_DIST += \
   PortableServer/TAO_PortableServer.pc.in \
   PortableServer/TAO_PortableServer.rc
+
+
+## Makefile.CSD_Framework.am
+
+lib_LTLIBRARIES += libTAO_CSD_Framework.la
+
+libTAO_CSD_Framework_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/tao \
+  -DTAO_CSD_FW_BUILD_DLL
+
+libTAO_CSD_Framework_la_SOURCES = \
+  CSD_Framework/CSD_Default_Servant_Dispatcher.cpp \
+  CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp \
+  CSD_Framework/CSD_FrameworkA.cpp \
+  CSD_Framework/CSD_FrameworkC.cpp \
+  CSD_Framework/CSD_Framework_Loader.cpp \
+  CSD_Framework/CSD_ORBInitializer.cpp \
+  CSD_Framework/CSD_Object_Adapter.cpp \
+  CSD_Framework/CSD_Object_Adapter_Factory.cpp \
+  CSD_Framework/CSD_POA.cpp \
+  CSD_Framework/CSD_Strategy_Base.cpp \
+  CSD_Framework/CSD_Strategy_Proxy.cpp \
+  CSD_Framework/CSD_Strategy_Repository.cpp
+
+libTAO_CSD_Framework_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CSD_Framework_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CSD_Framework/CSD_Default_Servant_Dispatcher.h \
+  CSD_Framework/CSD_FW_Export.h \
+  CSD_Framework/CSD_FW_Server_Request_Wrapper.h \
+  CSD_Framework/CSD_FW_Server_Request_Wrapper.inl \
+  CSD_Framework/CSD_Framework.pidl \
+  CSD_Framework/CSD_FrameworkA.h \
+  CSD_Framework/CSD_FrameworkC.h \
+  CSD_Framework/CSD_Framework_Loader.h \
+  CSD_Framework/CSD_ORBInitializer.h \
+  CSD_Framework/CSD_Object_Adapter.h \
+  CSD_Framework/CSD_Object_Adapter_Factory.h \
+  CSD_Framework/CSD_POA.h \
+  CSD_Framework/CSD_POA.inl \
+  CSD_Framework/CSD_Strategy_Base.h \
+  CSD_Framework/CSD_Strategy_Base.inl \
+  CSD_Framework/CSD_Strategy_Proxy.h \
+  CSD_Framework/CSD_Strategy_Proxy.inl \
+  CSD_Framework/CSD_Strategy_Repository.h
+
+pkgconfig_DATA += \
+  TAO_CSD_Framework.pc
+
+CLEANFILES += \
+  TAO_CSD_Framework.pc
+
+TAO_CSD_Framework.pc: ${top_builddir}/config.status ${srcdir}/CSD_Framework/TAO_CSD_Framework.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/CSD_Framework/TAO_CSD_Framework.pc.in
+
+EXTRA_DIST += \
+  CSD_Framework/TAO_CSD_Framework.pc.in
+
+
+## Makefile.CSD_ThreadPool.am
+
+lib_LTLIBRARIES += libTAO_CSD_ThreadPool.la
+
+libTAO_CSD_ThreadPool_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/tao \
+  -DTAO_CSD_TP_BUILD_DLL
+
+libTAO_CSD_ThreadPool_la_SOURCES = \
+  CSD_ThreadPool/CSD_TP_Cancel_Visitor.cpp \
+  CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Corba_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Request_Operation.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Synch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.cpp \
+  CSD_ThreadPool/CSD_TP_Queue.cpp \
+  CSD_ThreadPool/CSD_TP_Queue_Visitor.cpp \
+  CSD_ThreadPool/CSD_TP_Remote_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Servant_State.cpp \
+  CSD_ThreadPool/CSD_TP_Servant_State_Map.cpp \
+  CSD_ThreadPool/CSD_TP_Strategy.cpp \
+  CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp \
+  CSD_ThreadPool/CSD_TP_Synch_Helper.cpp \
+  CSD_ThreadPool/CSD_TP_Task.cpp \
+  CSD_ThreadPool/CSD_ThreadPool.cpp
+
+libTAO_CSD_ThreadPool_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CSD_ThreadPool_la_LIBADD = \
+  libTAO_CSD_Framework.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CSD_ThreadPool/CSD_TP_Cancel_Visitor.h \
+  CSD_ThreadPool/CSD_TP_Cancel_Visitor.inl \
+  CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h \
+  CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.inl \
+  CSD_ThreadPool/CSD_TP_Corba_Request.h \
+  CSD_ThreadPool/CSD_TP_Corba_Request.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h \
+  CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Request.h \
+  CSD_ThreadPool/CSD_TP_Custom_Request.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h \
+  CSD_ThreadPool/CSD_TP_Custom_Request_Operation.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Synch_Request.h \
+  CSD_ThreadPool/CSD_TP_Custom_Synch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h \
+  CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.inl \
+  CSD_ThreadPool/CSD_TP_Export.h \
+  CSD_ThreadPool/CSD_TP_Queue.h \
+  CSD_ThreadPool/CSD_TP_Queue.inl \
+  CSD_ThreadPool/CSD_TP_Queue_Visitor.h \
+  CSD_ThreadPool/CSD_TP_Queue_Visitor.inl \
+  CSD_ThreadPool/CSD_TP_Remote_Request.h \
+  CSD_ThreadPool/CSD_TP_Remote_Request.inl \
+  CSD_ThreadPool/CSD_TP_Request.h \
+  CSD_ThreadPool/CSD_TP_Request.inl \
+  CSD_ThreadPool/CSD_TP_Servant_State.h \
+  CSD_ThreadPool/CSD_TP_Servant_State.inl \
+  CSD_ThreadPool/CSD_TP_Servant_State_Map.h \
+  CSD_ThreadPool/CSD_TP_Servant_State_Map.inl \
+  CSD_ThreadPool/CSD_TP_Strategy.h \
+  CSD_ThreadPool/CSD_TP_Strategy.inl \
+  CSD_ThreadPool/CSD_TP_Strategy_Factory.h \
+  CSD_ThreadPool/CSD_TP_Synch_Helper.h \
+  CSD_ThreadPool/CSD_TP_Synch_Helper.inl \
+  CSD_ThreadPool/CSD_TP_Task.h \
+  CSD_ThreadPool/CSD_TP_Task.inl \
+  CSD_ThreadPool/CSD_ThreadPool.h
+
+pkgconfig_DATA += \
+  TAO_CSD_ThreadPool.pc
+
+CLEANFILES += \
+  TAO_CSD_ThreadPool.pc
+
+TAO_CSD_ThreadPool.pc: ${top_builddir}/config.status ${srcdir}/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+
+EXTRA_DIST += \
+  CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
 
 
 ## Makefile.IFR_Client.am
@@ -1808,6 +2004,7 @@ libTAO_Valuetype_la_SOURCES = \
   Valuetype/ValueBase.cpp \
   Valuetype/ValueFactory.cpp \
   Valuetype/ValueFactory_Map.cpp \
+  Valuetype/Valuetype_Adapter_Factory_Impl.cpp \
   Valuetype/Valuetype_Adapter_Impl.cpp
 
 libTAO_Valuetype_la_LDFLAGS = \
@@ -1824,11 +2021,13 @@ nobase_include_HEADERS += \
   Valuetype/AbstractBase_Invocation_Adapter.h \
   Valuetype/AbstractBase_T.cpp \
   Valuetype/AbstractBase_T.h \
-  Valuetype/Sequence_T.cpp \
+  Valuetype/Bounded_Valuetype_Allocation_Traits_T.h \
+  Valuetype/Bounded_Valuetype_Sequence_T.h \
   Valuetype/Sequence_T.h \
-  Valuetype/Sequence_T.inl \
   Valuetype/StringValueC.h \
   Valuetype/StringValueC.inl \
+  Valuetype/Unbounded_Valuetype_Allocation_Traits_T.h \
+  Valuetype/Unbounded_Valuetype_Sequence_T.h \
   Valuetype/ValueBase.h \
   Valuetype/ValueBase.inl \
   Valuetype/ValueFactory.h \
@@ -1836,7 +2035,11 @@ nobase_include_HEADERS += \
   Valuetype/Value_CORBA_methods.h \
   Valuetype/Value_VarOut_T.cpp \
   Valuetype/Value_VarOut_T.h \
+  Valuetype/Valuetype_Adapter_Factory_Impl.h \
   Valuetype/Valuetype_Adapter_Impl.h \
+  Valuetype/Valuetype_Sequence_Element_T.h \
+  Valuetype/Valuetype_Traits_Base_T.h \
+  Valuetype/Valuetype_Traits_T.h \
   Valuetype/valuetype_export.h
 
 pkgconfig_DATA += \
@@ -1873,6 +2076,7 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Connection_Timeout_Policy_i.cpp \
   Messaging/ExceptionHolderA.cpp \
   Messaging/ExceptionHolderC.cpp \
+  Messaging/ExceptionHolder_i.cpp \
   Messaging/Messaging.cpp \
   Messaging/MessagingA.cpp \
   Messaging/MessagingC.cpp \
@@ -1887,8 +2091,6 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Messaging_RT_PolicyC.cpp \
   Messaging/Messaging_SyncScope_PolicyA.cpp \
   Messaging/Messaging_SyncScope_PolicyC.cpp \
-  Messaging/OldExceptionHolderA.cpp \
-  Messaging/OldExceptionHolderC.cpp \
   Messaging/PollableC.cpp \
   Messaging/TAO_ExtA.cpp \
   Messaging/TAO_ExtC.cpp
@@ -1917,6 +2119,7 @@ nobase_include_HEADERS += \
   Messaging/ExceptionHolderC.h \
   Messaging/ExceptionHolderC.inl \
   Messaging/ExceptionHolderS.h \
+  Messaging/ExceptionHolder_i.h \
   Messaging/Messaging.h \
   Messaging/Messaging.pidl \
   Messaging/MessagingA.h \
@@ -1940,11 +2143,6 @@ nobase_include_HEADERS += \
   Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/Messaging_SyncScope_PolicyA.h \
   Messaging/Messaging_SyncScope_PolicyC.h \
-  Messaging/OldExceptionHolder.pidl \
-  Messaging/OldExceptionHolderA.h \
-  Messaging/OldExceptionHolderC.h \
-  Messaging/OldExceptionHolderC.inl \
-  Messaging/OldExceptionHolderS.h \
   Messaging/Pollable.pidl \
   Messaging/PollableC.h \
   Messaging/PollableS.h \
@@ -2121,7 +2319,8 @@ libTAO_IORInterceptor_la_SOURCES = \
   IORInterceptor/IORInfoC.cpp \
   IORInterceptor/IORInterceptorC.cpp \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp \
-  IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+  IORInterceptor/IORInterceptor_Adapter_Impl.cpp \
+  IORInterceptor/IORInterceptor_Details.cpp
 
 libTAO_IORInterceptor_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2146,6 +2345,7 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInterceptorC.h \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
+  IORInterceptor/IORInterceptor_Details.h \
   IORInterceptor/iorinterceptor_export.h
 
 pkgconfig_DATA += \
@@ -2329,6 +2529,7 @@ libTAO_PI_Server_la_SOURCES = \
   PI_Server/PortableServer_ORBInitializer.cpp \
   PI_Server/PortableServer_PolicyFactory.cpp \
   PI_Server/ServerInterceptorAdapter.cpp \
+  PI_Server/ServerRequestDetails.cpp \
   PI_Server/ServerRequestInfo.cpp \
   PI_Server/ServerRequestInfoA.cpp \
   PI_Server/ServerRequestInfoC.cpp \
@@ -2359,12 +2560,16 @@ nobase_include_HEADERS += \
   PI_Server/PortableServer_ORBInitializer.h \
   PI_Server/PortableServer_PolicyFactory.h \
   PI_Server/ServerInterceptorAdapter.h \
+  PI_Server/ServerRequestDetails.h \
+  PI_Server/ServerRequestDetails.inl \
   PI_Server/ServerRequestInfo.h \
   PI_Server/ServerRequestInfo.inl \
   PI_Server/ServerRequestInfo.pidl \
+  PI_Server/ServerRequestInfoA.h \
   PI_Server/ServerRequestInfoC.h \
   PI_Server/ServerRequestInfoS.h \
   PI_Server/ServerRequestInterceptor.pidl \
+  PI_Server/ServerRequestInterceptorA.h \
   PI_Server/ServerRequestInterceptorC.h \
   PI_Server/ServerRequestInterceptorS.h \
   PI_Server/ServerRequestInterceptor_Factory_Impl.h \
@@ -2615,6 +2820,7 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler_include.pidl \
   RTScheduling/RTScheduler_includeA.h \
   RTScheduling/RTScheduler_includeC.h \
+  RTScheduling/RTScheduler_includeS.h \
   RTScheduling/Request_Interceptor.h \
   RTScheduling/ThreadAction.h \
   RTScheduling/rtscheduler_export.h
@@ -2678,6 +2884,8 @@ EXTRA_DIST += \
 
 ## Makefile.Strategies.am
 
+if !BUILD_ACE_FOR_TAO
+
 lib_LTLIBRARIES += libTAO_Strategies.la
 
 libTAO_Strategies_la_CPPFLAGS = \
@@ -2699,6 +2907,9 @@ libTAO_Strategies_la_SOURCES = \
   Strategies/LFU_Connection_Purging_Strategy.cpp \
   Strategies/LF_Strategy_Null.cpp \
   Strategies/NULL_Connection_Purging_Strategy.cpp \
+  Strategies/OC_Endpoint_Selector_Factory.cpp \
+  Strategies/OC_Endpoint_Selector_Loader.cpp \
+  Strategies/Optimized_Connection_Endpoint_Selector.cpp \
   Strategies/SCIOP_Acceptor.cpp \
   Strategies/SCIOP_Connection_Handler.cpp \
   Strategies/SCIOP_Connector.cpp \
@@ -2749,6 +2960,9 @@ nobase_include_HEADERS += \
   Strategies/LF_Strategy_Null.h \
   Strategies/LF_Strategy_Null.inl \
   Strategies/NULL_Connection_Purging_Strategy.h \
+  Strategies/OC_Endpoint_Selector_Factory.h \
+  Strategies/OC_Endpoint_Selector_Loader.h \
+  Strategies/Optimized_Connection_Endpoint_Selector.h \
   Strategies/SCIOP_Acceptor.h \
   Strategies/SCIOP_Acceptor.i \
   Strategies/SCIOP_Connection_Handler.h \
@@ -2792,6 +3006,8 @@ CLEANFILES += \
 TAO_Strategies.pc: ${top_builddir}/config.status ${srcdir}/Strategies/TAO_Strategies.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/Strategies/TAO_Strategies.pc.in
 
+endif !BUILD_ACE_FOR_TAO
+
 EXTRA_DIST += \
   Strategies/TAO_Strategies.pc.in \
   Strategies/TAO_Strategies.rc
@@ -2811,6 +3027,7 @@ libTAO_FlResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  $(ACE_FLTK_CPPFLAGS) \
   -DTAO_FLRESOURCE_BUILD_DLL
 
 libTAO_FlResource_la_SOURCES = \
@@ -2818,12 +3035,13 @@ libTAO_FlResource_la_SOURCES = \
   FlResource_Loader.cpp
 
 libTAO_FlResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_FLTK_LDFLAGS)
 
 libTAO_FlResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
   libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_FLTK_LIBS)
 
 nobase_include_HEADERS += \
   FlResource_Factory.h \
@@ -2847,8 +3065,7 @@ libTAO_QtResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(QTDIR)/include \
-  -DQT_THREAD_SUPPORT \
+  $(ACE_QT_CPPFLAGS) \
   -DTAO_QTRESOURCE_BUILD_DLL
 
 libTAO_QtResource_la_SOURCES = \
@@ -2856,13 +3073,13 @@ libTAO_QtResource_la_SOURCES = \
   QtResource_Loader.cpp
 
 libTAO_QtResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_QT_LDFLAGS)
 
 libTAO_QtResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_QtReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  -lqt-mt
+  $(ACE_QT_LIBS)
 
 nobase_include_HEADERS += \
   QtResource_Factory.h \
@@ -2884,6 +3101,8 @@ libTAO_TkResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  $(ACE_TK_CPPFLAGS) \
+  $(ACE_TCL_CPPFLAGS) \
   -DTAO_TKRESOURCE_BUILD_DLL
 
 libTAO_TkResource_la_SOURCES = \
@@ -2891,12 +3110,14 @@ libTAO_TkResource_la_SOURCES = \
   TkResource_Loader.cpp
 
 libTAO_TkResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
 
 libTAO_TkResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_TkReactor.la \
   libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_TK_LIBS) \
+  $(ACE_TCL_LIBS)
 
 nobase_include_HEADERS += \
   TAO_TkResource_Export.h \
@@ -2919,6 +3140,8 @@ libTAO_XtResource_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  $(ACE_X11_CPPFLAGS) \
+  $(ACE_XT_CPPFLAGS) \
   -DTAO_XTRESOURCE_BUILD_DLL
 
 libTAO_XtResource_la_SOURCES = \
@@ -2926,12 +3149,14 @@ libTAO_XtResource_la_SOURCES = \
   XtResource_Loader.cpp
 
 libTAO_XtResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
 
 libTAO_XtResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
   libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_XT_LIBS) \
+  $(ACE_X11_LIBS)
 
 nobase_include_HEADERS += \
   TAO_XtResource_Export.h \

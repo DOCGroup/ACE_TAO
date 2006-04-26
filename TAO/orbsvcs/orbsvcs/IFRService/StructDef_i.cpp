@@ -1,9 +1,9 @@
 // $Id$
 
-#include "StructDef_i.h"
-#include "RecursDef_i.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/StructDef_i.h"
+#include "orbsvcs/IFRService/RecursDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -13,6 +13,7 @@ ACE_RCSID (IFRService,
            StructDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -207,6 +208,9 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_Configuration_Section_Key member_key;
   TAO_IDLType_i *impl = 0;
 
+  // Store to replace below.
+  ACE_Configuration_Section_Key key_holder = this->section_key_;
+
   for (CORBA::ULong k = 0; k < size; ++k)
     {
       name_queue.dequeue_head (name);
@@ -238,6 +242,11 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 
       retval[k].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+
+      // If this struct contains a nested struct (of another type) at
+      // some level, the above code will have changed the section key
+      // so we have to replace it with the value we stored above.
+      this->section_key (key_holder);
     }
 
   return retval._retn ();
@@ -304,3 +313,5 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
                                              "count",
                                              count);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

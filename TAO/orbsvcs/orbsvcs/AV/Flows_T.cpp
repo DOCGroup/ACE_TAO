@@ -1,11 +1,12 @@
 //$Id$
 
-#ifndef TAO_AV_FLOWS_T_C
-#define TAO_AV_FLOWS_T_C
+#ifndef TAO_AV_FLOWS_T_CPP
+#define TAO_AV_FLOWS_T_CPP
 
-#include "Flows_T.h"
+#include "orbsvcs/AV/Flows_T.h"
 #include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ------------------------------------------------------------
 // TAO_FDev
@@ -246,4 +247,6 @@ TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_StreamEndPoint::destroy failed\n"));
 }
 
-#endif /* TAO_AV_FLOWS_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_AV_FLOWS_T_CPP */

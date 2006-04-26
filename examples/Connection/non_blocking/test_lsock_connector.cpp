@@ -43,20 +43,4 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return peer_connector.svc ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Connector_Base<PEER_HANDLER>;
-template class ACE_Connector<PEER_HANDLER, ACE_LSOCK_CONNECTOR>;
-template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_SYNCH>;
-template class ACE_NonBlocking_Connect_Handler<PEER_HANDLER>;
-template class IPC_Client<PEER_HANDLER, ACE_LSOCK_CONNECTOR>;
-template class Peer_Handler<ACE_LSOCK_STREAM>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Connector_Base<PEER_HANDLER>
-#pragma instantiate ACE_Connector<PEER_HANDLER, ACE_LSOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_SYNCH>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<PEER_HANDLER>
-#pragma instantiate IPC_Client<PEER_HANDLER, ACE_LSOCK_CONNECTOR>
-#pragma instantiate Peer_Handler<ACE_LSOCK_STREAM>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ! ACE_LACKS_UNIX_DOMAIN_SOCKETS */

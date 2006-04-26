@@ -26,6 +26,7 @@
 #include "tao/AnyTypeCode/TypeCode_Base_Attributes.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -127,6 +128,7 @@ namespace TAO
   }  // End namespace TypeCode
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode_Static.inl"

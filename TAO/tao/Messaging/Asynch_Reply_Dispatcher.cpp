@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Asynch_Reply_Dispatcher.h"
+#include "tao/Messaging/Asynch_Reply_Dispatcher.h"
 
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
@@ -11,6 +11,8 @@
 #include "ace/CORBA_macros.h"
 
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
@@ -108,6 +110,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
       break;
     default:
     case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
       // @@ Michael: Not even the spec mentions this case.
       //             We have to think about this case.
       // Handle the forwarding and return so the stub restarts the
@@ -276,3 +279,5 @@ TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
       request_id,
       max_wait_time);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

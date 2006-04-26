@@ -1,4 +1,3 @@
-// MEM_Acceptor.cpp
 // $Id$
 
 #include "ace/MEM_Acceptor.h"
@@ -15,6 +14,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, MEM_Acceptor, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Acceptor)
 
@@ -175,7 +176,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // Protocol negociation:
   //   Tell the client side what level of signaling strategy
   //   we support.
-  ACE_INT16 client_signaling =
+  ACE_MEM_IO::Signal_Strategy client_signaling =
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
     this->preferred_strategy_;
 #else
@@ -259,5 +260,7 @@ ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

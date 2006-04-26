@@ -10,6 +10,8 @@ ACE_RCSID(ace, TLI_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Put the actual definitions of the ACE_TLI_Request and
 // ACE_TLI_Request_Queue classes here to hide them from clients...
 
@@ -551,5 +553,7 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
   new_tli_sap.set_rwflag (rwf);
   return new_tli_sap.get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TLI */

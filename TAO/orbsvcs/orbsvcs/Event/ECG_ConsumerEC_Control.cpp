@@ -1,8 +1,10 @@
 // $Id$
 
-#include "ECG_ConsumerEC_Control.h"
+#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
 
 ACE_RCSID(Event, ECG_ConsumerEventChannelControl, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_ConsumerEC_Control::TAO_ECG_ConsumerEC_Control (void)
 {
@@ -37,3 +39,4 @@ TAO_ECG_ConsumerEC_Control::system_exception (TAO_EC_Gateway_IIOP *,
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

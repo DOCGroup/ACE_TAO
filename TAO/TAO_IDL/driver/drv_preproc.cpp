@@ -66,7 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
-#include "idl_bool.h"
+
 #include "idl_defines.h"
 #include "global_extern.h"
 #include "fe_extern.h"
@@ -78,6 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
 #include "ace/UUID.h"
+#include "ace/Dirent.h"
+#include "ace/OS_NS_sys_stat.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -95,6 +97,18 @@ static long argcount = 0;
 static const char *arglist[128];
 static const char *output_arg_format = 0;
 static long output_arg_index = 0;
+
+const char *DIR_DOT = ".";
+const char *DIR_DOT_DOT = "..";
+
+// File names.
+static char tmp_file [MAXPATHLEN + 1] = { 0 };
+static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
+
+// Lines can be 1024 chars long intially - it will expand as required.
+#define LINEBUF_SIZE 1024
+static char* drv_line = 0;
+static size_t drv_line_size = LINEBUF_SIZE + 1;
 
 // Push the new CPP location if we got a -Yp argument.
 void
@@ -145,48 +159,72 @@ DRV_cpp_expand_output_arg (const char *filename)
     }
 }
 
-// Lines can be 1024 chars long.
-#define LINEBUF_SIZE 1024
-static char drv_line[LINEBUF_SIZE + 1];
-
 // Get a line from stdin.
 static long
 DRV_get_line (FILE *f)
 {
     char *l = fgets (drv_line,
-                     LINEBUF_SIZE,
+                     drv_line_size,
                      f);
-    size_t i = 0;
 
     if (l == 0)
       {
-        return I_FALSE;
+        return false;
       }
 
     if (*l == '\0' && feof (f))
       {
-        return I_FALSE;
+        return false;
       }
 
     if (*l == '\0')
       {
-        return I_TRUE;
+        return true;
       }
 
-    i = strlen(l) - 1;
-
-    if (l[i] == '\n')
+    while (strchr(drv_line, '\n') == NULL)
       {
-        l[i] = '\0';
+        // Haven't got to a newline yet
+        // Create a bigger buffer and keep reading
+        size_t temp_size;
+        temp_size = drv_line_size * 2;
+        char *temp = 0;
+        ACE_NEW_RETURN (temp,
+                        char[temp_size],
+                        false);
+        strcpy (temp, drv_line);
+        delete [] drv_line;
+        drv_line = temp;
+        drv_line_size = temp_size;
+
+        l = fgets (drv_line + strlen (drv_line),
+                   drv_line_size - strlen(drv_line),
+                   f);
+
+        if (l == 0 || *l == '\0')
+          {
+            break;
+          }
       }
 
-    return I_TRUE;
+    size_t i = strlen (drv_line) - 1;
+
+    if (drv_line[i] == '\n')
+      {
+        drv_line[i] = '\0';
+      }
+
+    return true;
 }
 
 // Initialize the cpp argument list.
 void
 DRV_cpp_init (void)
 {
+  // Create the line buffer
+  ACE_NEW (drv_line,
+           char [drv_line_size]);
+
   const char *cpp_loc = FE_get_cpp_loc_from_env ();
   DRV_cpp_putarg (cpp_loc);
 
@@ -199,7 +237,7 @@ DRV_cpp_init (void)
                    ACE_MAJOR_VERSION,
                    ACE_MINOR_VERSION,
                    ACE_BETA_VERSION);
-                   
+
   DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
   const char *cpp_args = FE_get_cpp_args_from_env ();
@@ -220,12 +258,12 @@ DRV_cpp_init (void)
 #endif /* TAO_IDL_PREPROCESSOR_ARGS */
 
       // So we can find OMG IDL files, such as `orb.idl'.
-      
+
       ACE_OS::strcpy (option1, "-I");
       ACE_OS::strcpy (option2, "-I");
       char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
       size_t len = 0;
-      
+
       if (TAO_ROOT != 0)
         {
           len = ACE_OS::strlen (TAO_ROOT);
@@ -261,8 +299,10 @@ DRV_cpp_init (void)
               ACE_OS::strcat (option1, ACE_ROOT);
               ACE_OS::strcat (option2, ACE_ROOT);
 #if defined (ACE_WIN32)
+              ACE_OS::strcat (option1, "\\TAO");
               ACE_OS::strcat (option2, "\\TAO\\tao");
 #else
+              ACE_OS::strcat (option1, "/TAO");
               ACE_OS::strcat (option2, "/TAO/tao");
 #endif
             }
@@ -271,8 +311,8 @@ DRV_cpp_init (void)
 #if defined (TAO_IDL_INCLUDE_DIR)
               // TAO_IDL_INCLUDE_DIR should be in quotes,
               // e.g. "/usr/local/include/tao"
-              ACE_OS::strcat (option1,
-                              TAO_IDL_INCLUDE_DIR);
+              ACE_OS::strcat (option1, TAO_IDL_INCLUDE_DIR);
+              ACE_OS::strcat (option2, ".");
 #else
               ACE_ERROR ((LM_WARNING,
                           "NOTE: The environment variables "
@@ -281,14 +321,13 @@ DRV_cpp_init (void)
                           "locate orb.idl\n"));
 
               ACE_OS::strcat (option1, ".");
-              ACE_OS::strcat (option2, ".");
 #endif  /* TAO_IDL_INCLUDE_DIR */
             }
         }
 
       DRV_cpp_putarg (option1);
-      DRV_cpp_putarg (option2);
       idl_global->add_include_path (ACE_CString (option1 + 2).c_str ());
+      DRV_cpp_putarg (option2);
       idl_global->add_include_path (ACE_CString (option2 + 2).c_str ());
       idl_global->tao_root (option1 + 2);
     }
@@ -313,6 +352,96 @@ DRV_cpp_init (void)
     }
 }
 
+int
+DRV_sweep_dirs (const char *rel_path,
+                const char *base_path)
+{
+  // Zero rel_path means we're not using this option, and
+  // so we become a no-op.
+  if (rel_path == 0)
+    {
+      return 0;
+    }
+
+  if (ACE_OS::chdir (rel_path) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "DRV_sweep_dirs: chdir %s failed\n",
+                         rel_path),
+                        -1);
+    }
+
+  ACE_Dirent dir (DIR_DOT);
+  ACE_CString bname (base_path);
+  bname += (bname.length () > 0 ? "/" : "");
+  bname += rel_path;
+  bool include_added = false;
+
+  for (dirent *dir_entry; (dir_entry = dir.read ()) != 0;)
+    {
+      // Skip the ".." and "." files in each directory.
+      if (ACE_OS::strcmp (dir_entry->d_name, DIR_DOT) == 0
+          || ACE_OS::strcmp (dir_entry->d_name, DIR_DOT_DOT) == 0)
+        {
+          continue;
+        }
+
+      ACE_CString lname (dir_entry->d_name);
+      ACE_stat stat_buf;
+
+      if (ACE_OS::lstat (lname.c_str (), &stat_buf) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DRV_sweep_dirs: ACE_OS::lstat (%s) failed\n",
+                             lname.c_str ()),
+                            -1);
+        }
+
+      size_t len = 0;
+
+      switch (stat_buf.st_mode & S_IFMT)
+        {
+        case S_IFREG: // Either a regular file or an executable.
+          len = lname.length ();
+
+          if (len > 4 && lname.substr (len - 4) == ".idl")
+            {
+              if (!include_added)
+                {
+                  ACE_CString incl_arg ("-I");
+                  incl_arg += bname;
+                  DRV_cpp_putarg (incl_arg.c_str ());
+                  include_added = true;
+                }
+
+              ACE_CString fname (bname);
+              fname += "/";
+              fname += lname;
+              DRV_push_file (fname.c_str ());
+            }
+
+          break;
+        case S_IFDIR: // Subdirectory.
+          DRV_sweep_dirs (lname.c_str (), bname.c_str ());
+          break;
+        case S_IFLNK: // Either a file link or directory link.
+        default: // Some other type of file (PIPE/FIFO/device).
+          break;
+        }
+    }
+
+  // Move back up a level.
+  if (ACE_OS::chdir (DIR_DOT_DOT) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "DRV_sweep_dirs: chdir .. (from %s) failed\n",
+                         rel_path),
+                        -1);
+    }
+
+  return 0;
+}
+
 // Adds additional include paths, but after parse_args() has
 // added user-defined include paths.
 void
@@ -321,14 +450,14 @@ DRV_cpp_post_init (void)
   char option3[BUFSIZ];
   char option4[BUFSIZ];
   char option5[BUFSIZ];
-  
+
   ACE_OS::strcpy (option3, "-I");
   ACE_OS::strcpy (option4, "-I");
   ACE_OS::strcpy (option5, "-I");
 
   char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
   size_t len = 0;
-  
+
   if (TAO_ROOT != 0)
     {
       len = ACE_OS::strlen (TAO_ROOT);
@@ -381,21 +510,51 @@ DRV_cpp_post_init (void)
         }
       else
         {
-#if !defined (TAO_IDL_INCLUDE_DIR)
           ACE_OS::strcat (option3, ".");
           ACE_OS::strcat (option4, ".");
           ACE_OS::strcat (option5, ".");
-#endif
         }
     }
 
   DRV_cpp_putarg (option3);
   DRV_cpp_putarg (option4);
   DRV_cpp_putarg (option5);
-  
+
   idl_global->add_include_path (ACE_CString (option3 + 2).c_str ());
   idl_global->add_include_path (ACE_CString (option4 + 2).c_str ());
   idl_global->add_include_path (ACE_CString (option5 + 2).c_str ());
+
+  // Save path of current directory, in case the call to DRV_sweep_dirs()
+  // below is not a no-op - then the current working directory will
+  // have to be restored.
+  char cwd_path[MAXPATHLEN];
+  if (ACE_OS::getcwd (cwd_path, sizeof (cwd_path)) == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DRV_cpp_post_init: ACE_OS::getcwd failed\n"));
+      return;
+    }
+
+  // If first arg is non-zero, adds an include path and filename
+  // for every IDL file found in all subdirectories. This is a
+  // no-op for most backends.
+  if (DRV_sweep_dirs (idl_global->recursion_start (), "") == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DRV_cpp_post_init: DRV_sweep_dirs (%s) failed\n",
+                  idl_global->recursion_start ()));
+
+      return;
+    }
+
+  // This is redundant for most backends, but not if the call to
+  // DRV_sweep_dirs() above is more than a no-op.
+  if (ACE_OS::chdir (cwd_path) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DRV_cpp_post_init: ACE_OS::chdir (%s) failed\n",
+                  cwd_path));
+    }
 }
 
 // We really need to know whether this line is a "#include ...". If
@@ -478,7 +637,7 @@ DRV_check_for_include (const char* buf)
   if (*h == '\0')
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("IDL: No input files\n")));
+                  ACE_TEXT ("IDL: No friggin' input files\n")));
 
       ACE_OS::exit (99);
     }
@@ -520,7 +679,7 @@ DRV_check_for_include (const char* buf)
 
   // Terminate this string.
   file_name [i] = '\0';
-  
+
   size_t len = ACE_OS::strlen (file_name);
   ACE_CString name_str (file_name);
   ACE_CString simple ("orb.idl");
@@ -554,6 +713,93 @@ DRV_check_for_include (const char* buf)
   else
     {
       idl_global->add_to_included_idl_files (file_name);
+    }
+}
+
+// This method turns a line like '#include "a.idl"' into the
+// line '#include <a.idl>'
+void
+DRV_convert_includes (const char* buf)
+{
+  // Remove constness
+  char* r = const_cast<char*> (buf);
+
+  // Skip the tabs and spaces.
+  while (*r == ' ' || *r == '\t')
+    {
+      ++r;
+    }
+
+  // Skip initial '#'.
+  if (*r != '#')
+    {
+      return;
+    }
+  else
+    {
+      r++;
+    }
+
+  // Skip the tabs and spaces.
+  while (*r == ' ' || *r == '\t')
+    {
+      ++r;
+    }
+
+  // Probably we are at the word `include`. If not return.
+  if (*r != 'i')
+    {
+      return;
+    }
+
+  // Check whether this word is `include` or no.
+  const char* include_str = "include";
+
+  for (size_t ii = 0;
+       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
+       ++r, ++ii)
+    {
+      // Return if it doesn't match.
+      if (include_str [ii] != *r)
+        {
+          return;
+        }
+    }
+
+  // Next thing is finding the file that has been `#include'd. Skip
+  // all the blanks and tabs and reach the startng " character.
+  for (; (*r != '"'); ++r)
+    {
+      if (*r == '\n' || *r == '\0')
+        {
+          return;
+        }
+    }
+
+  // Replace the opening quote with an angle bracket.
+  *r = '<';
+
+  // We're not handling redirection from stdin.
+  // n.b. I neither know nor care what all this is about.
+  // It came free with the cut-and-paste of DRV_check_for_include. sm.
+  if (*r == '\0')
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("IDL: No friggin' input files\n")));
+
+      ACE_OS::exit (99);
+    }
+
+  // Find the closing '"' character.
+  for (; *r != '"'; ++r)
+    {
+      continue;
+    }
+
+  // Swap it for a '>'
+  if (*r == '"')
+    {
+      *r = '>';
     }
 }
 
@@ -640,6 +886,8 @@ DRV_copy_input (FILE *fin,
 
   while (DRV_get_line (fin))
     {
+      DRV_convert_includes (drv_line);
+
       // Print the line to the temporary file.
       ACE_OS::fprintf (f,
                        "%s\n",
@@ -686,10 +934,6 @@ DRV_stripped_name (char *fn)
 
     return n;
 }
-
-// File names.
-static char tmp_file [MAXPATHLEN + 1] = { 0 };
-static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
 
 // Pass input through preprocessor.
 void

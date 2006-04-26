@@ -2,7 +2,8 @@
 // $Id$
 
 project(direct logging) : aceexe {
-  exename = direct_logging
+  avoids  += ace_for_tao
+  exename  = direct_logging
   libs    += netsvcs
   after   += netsvcs
   Source_Files {
@@ -11,7 +12,8 @@ project(direct logging) : aceexe {
 }
 
 project(indirect logging) : aceexe {
-  exename = indirect_logging
+  avoids  += ace_for_tao
+  exename  = indirect_logging
   libs    += netsvcs
   after   += netsvcs
   Source_Files {

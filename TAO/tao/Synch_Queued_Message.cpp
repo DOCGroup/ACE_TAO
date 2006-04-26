@@ -1,8 +1,8 @@
 // "$Id$"
 
-#include "Synch_Queued_Message.h"
-#include "debug.h"
-#include "ORB_Core.h"
+#include "tao/Synch_Queued_Message.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Malloc_T.h"
 #include "ace/Message_Block.h"
@@ -11,11 +11,13 @@ ACE_RCSID (tao,
            Synch_Queued_Message,
            "$Id$")
 
-TAO_Synch_Queued_Message::
-    TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
-                              TAO_ORB_Core *oc,
-                              ACE_Allocator *alloc,
-                              int is_heap_allocated)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (
+  const ACE_Message_Block *contents,
+  TAO_ORB_Core *oc,
+  ACE_Allocator *alloc,
+  int is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , contents_ (const_cast<ACE_Message_Block*> (contents))
   , current_block_ (contents_)
@@ -61,7 +63,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
        message_block != 0 && iovcnt < iovcnt_max;
        message_block = message_block->cont ())
     {
-      size_t message_block_length = message_block->length ();
+      size_t const message_block_length = message_block->length ();
 
       // Check if this block has any data to be sent.
       if (message_block_length > 0)
@@ -149,7 +151,7 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
   // Set the flag to indicate that <qm> is created on the heap.
   if (qm)
     {
-      qm->is_heap_created_ = 1;
+      qm->is_heap_created_ = true;
     }
 
   return qm;
@@ -178,3 +180,5 @@ TAO_Synch_Queued_Message::destroy (void)
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

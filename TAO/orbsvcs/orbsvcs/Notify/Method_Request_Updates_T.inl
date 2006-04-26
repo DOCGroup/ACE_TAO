@@ -1,7 +1,11 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #include "tao/debug.h"
-#include "Peer.h"
+#include "orbsvcs/Notify/Peer.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM> ACE_INLINE int
 TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::execute_i (ACE_ENV_SINGLE_ARG_DECL)
@@ -28,3 +32,5 @@ TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::execute
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

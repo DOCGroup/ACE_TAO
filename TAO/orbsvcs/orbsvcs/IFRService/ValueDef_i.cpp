@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "ValueDef_i.h"
-#include "AttributeDef_i.h"
-#include "OperationDef_i.h"
-#include "IFR_Service_Utils.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ValueDef_i.h"
+#include "orbsvcs/IFRService/AttributeDef_i.h"
+#include "orbsvcs/IFRService/OperationDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 
@@ -14,6 +14,7 @@ ACE_RCSID (IFRService,
            ValueDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueDef_i::TAO_ValueDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -248,7 +249,7 @@ TAO_ValueDef_i::supported_interfaces_i (
     {
       supported_path =
         TAO_IFR_Service_Utils::reference_to_path (
-            supported_interfaces[i].in ()
+            supported_interfaces[i]
           );
 
       // Get the servant's key into the temporary key holder, because
@@ -641,7 +642,7 @@ TAO_ValueDef_i::abstract_base_values_i (
     {
       base_path =
         TAO_IFR_Service_Utils::reference_to_path (
-            abstract_base_values[i].in ()
+            abstract_base_values[i]
           );
 
       // Get the servant's key into the temporary key holder, because
@@ -1760,7 +1761,7 @@ TAO_ValueDef_i::create_operation_i (
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (contexts_key,
                                                     stringified,
-                                                    contexts[i].in ());
+                                                    contexts[i]);
         }
     }
 
@@ -1852,3 +1853,5 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
                                             holder);
   desc.base_value = holder.fast_rep ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

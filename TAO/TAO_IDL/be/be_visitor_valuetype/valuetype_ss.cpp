@@ -91,7 +91,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       << local_name_prefix << node_local_name
       << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-      
+
 // @@@ (JP) I'm commenting out the copy constructor for now. The
 // declaration in the skeleton header file has been made private. These
 // valuetypes (only if a concrete interface is supported) inherit
@@ -113,8 +113,8 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     {
       AST_Decl *scope = ScopeAsDecl (concrete->defined_in ());
 
-      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", "
-          << concrete->local_name () << ") (rhs)," << be_nl;
+      *os << "POA_" << scope->name () << "::"
+          << concrete->local_name () << " (rhs)," << be_nl;
     }
   else
     {

@@ -23,6 +23,8 @@
 
 #include "ace/ACE.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SOCK_IO
  *
@@ -68,6 +70,12 @@ public:
                 const ACE_Time_Value *timeout = 0) const;
 
   /// Recv an <iovec> of size <n> from the connected socket.
+  /**
+   * @note The value of @a n will be silently reduced to the maximum
+   * value an @c int can hold if needed. This is due to the underlying
+   * system calls on many OSes limiting the number of @c iovec structures
+   * that can be passed in one call.
+   */
   ssize_t recvv (iovec iov[],
                  size_t n,
                  const ACE_Time_Value *timeout = 0) const;
@@ -113,6 +121,12 @@ public:
                 const ACE_Time_Value *timeout = 0) const;
 
   /// Send an <iovec> of size <n> to the connected socket.
+  /**
+   * @note The value of @a n will be silently reduced to the maximum
+   * value an @c int can hold if needed. This is due to the underlying
+   * system calls on many OSes limiting the number of @c iovec structures
+   * that can be passed in one call.
+   */
   ssize_t sendv (const iovec iov[],
                  size_t n,
                  const ACE_Time_Value *timeout = 0) const;
@@ -137,6 +151,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_IO.inl"

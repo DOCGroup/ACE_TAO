@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ACE_INLINE
@@ -9,3 +11,5 @@ namespace TAO
   {
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

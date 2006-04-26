@@ -1,7 +1,7 @@
-#include "SSLIOP_Connector.h"
-#include "SSLIOP_OwnCredentials.h"
-#include "SSLIOP_Profile.h"
-#include "SSLIOP_X509.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
+#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 
@@ -24,6 +24,8 @@ ACE_RCSID (SSLIOP,
            SSLIOP_Connector,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
@@ -43,7 +45,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
 
-  if (this->ACE_NESTED_CLASS (TAO, IIOP_SSL_Connector)::open (orb_core) == -1)
+  if (this->TAO::IIOP_SSL_Connector::open (orb_core) == -1)
     return -1;
 
   // Our connect creation strategy
@@ -75,7 +77,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO::SSLIOP::Connector::close (void)
 {
-  (void) this->ACE_NESTED_CLASS (TAO, IIOP_SSL_Connector)::close ();
+  (void) this->TAO::IIOP_SSL_Connector::close ();
 
   delete this->base_connector_.creation_strategy ();
   delete this->base_connector_.concurrency_strategy ();
@@ -219,7 +221,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 TAO_Profile *
 TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile;
+  TAO_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
                   TAO_SSLIOP_Profile (this->orb_core ()),
                   0);
@@ -404,7 +406,7 @@ TAO::SSLIOP::Connector::iiop_connect (
 
   // Note that the IIOP-only transport descriptor is used!
   return
-    this->ACE_NESTED_CLASS (TAO, IIOP_SSL_Connector)::connect (
+    this->TAO::IIOP_SSL_Connector::connect (
       resolver,
       &iiop_desc,
       timeout
@@ -483,7 +485,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
   // profile does not (and cannot) contain the desired QOP, trust, or
   // credential information which is necesary to uniquely identify
   // this connection.
-  if (!ssl_endpoint->credentials_set())
+  if (!ssl_endpoint->credentials_set ())
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_ERROR,
@@ -856,3 +858,5 @@ TAO::SSLIOP::Connector::cancel_svc_handler (
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

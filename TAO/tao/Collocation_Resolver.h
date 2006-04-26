@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Collocation_Resolver.h
@@ -12,16 +14,19 @@
 #define TAO_COLLOCATION_RESOLVER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
+
+#include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
 
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -51,6 +56,8 @@ public:
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
                                         ACE_ENV_ARG_DECL) const = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -10,6 +10,8 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_stdlib.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Get_Arg_Opt)
 
 template < typename CHAR_TYPE >
@@ -739,3 +741,5 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::opt_ind (void)
 {
   return this->optind;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

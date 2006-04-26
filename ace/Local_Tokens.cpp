@@ -17,6 +17,8 @@ ACE_RCSID (ace,
            Local_Tokens,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Tokens::dump (void) const
 {
@@ -1621,21 +1623,6 @@ ACE_Local_WLock::clone (void) const
   return temp;
 }
 
-// ************************************************************
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if !defined (ACE_NO_TSS_TOKENS)
-template class ACE_TSS <ACE_TPQ_Entry>;
-#endif /* ACE_NO_TSS_TOKENS */
-template class ACE_Unbounded_Stack <ACE_TPQ_Entry *>;
-template class ACE_Node <ACE_TPQ_Entry *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if !defined (ACE_NO_TSS_TOKENS)
-#pragma instantiate ACE_TSS <ACE_TPQ_Entry>
-#endif /* ACE_NO_TSS_TOKENS */
-#pragma instantiate ACE_Unbounded_Stack <ACE_TPQ_Entry *>
-#pragma instantiate ACE_Node <ACE_TPQ_Entry *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

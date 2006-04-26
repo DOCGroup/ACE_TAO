@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -17,6 +17,7 @@ bin_PROGRAMS =
 
 ## Makefile.IFR_Service.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 bin_PROGRAMS += IFR_Service
@@ -50,6 +51,7 @@ IFR_Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.TAO_IFR_BE.am
 
@@ -102,6 +104,7 @@ tao_ifr_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs/IFR_Service \
   -I$(TAO_ROOT)/TAO_IDL/include \
   -I$(TAO_ROOT)/TAO_IDL/fe \
   -DTAO_IDL_INCLUDE_DIR="\"$(includedir)/tao\""

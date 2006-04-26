@@ -1,7 +1,9 @@
 //$Id$
+
+
 #include "Activity.h"
-#include "Thread_Task.h"
 #include "Job_i.h"
+#include "Thread_Task.h"
 #include "POA_Holder.h"
 #include "Builder.h"
 
@@ -12,7 +14,7 @@
 #include "ace/Barrier.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Service_Config.h"
-#include "ace/Arg_Shifter.h"
+//#include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Signal.h"

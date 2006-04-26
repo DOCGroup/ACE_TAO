@@ -44,13 +44,15 @@
 #  include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */
 
-#if defined (VXWORKS)
-// for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(),
-// getwd(), and isatty()
-#  include /**/ <ioLib.h>
+#if defined (ACE_VXWORKS)
+#  if !defined (__RTP__)
+    // for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(),
+   // getwd(), and isatty()
+   #  include /**/ <ioLib.h>
+#  endif
 // for gethostname()
 #  include /**/ <hostLib.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -134,11 +136,11 @@ extern "C"
 #endif  /* _LARGEFILE64_SOURCE */
 
 #if defined (__BORLANDC__)
-#  define _chdir chdir
-#  undef _access
-#  define _access access
 #  if (__BORLANDC__ <= 0x540)
 #    define _getcwd getcwd
+#    define _chdir chdir
+#    undef _access
+#    define _access access
 #  endif
 #  define _isatty isatty
 #endif /* __BORLANDC__ */
@@ -169,11 +171,11 @@ extern "C"
 #if defined (ACE_LACKS_SWAB_PROTOTYPE)
   void swab(const void *, void *, ssize_t);
 #endif /* ACE_LACKS_SWAB_PROTOTYPE */
-  
+
 #if defined (ACE_LACKS_GETOPT_PROTOTYPE)
   int getopt(int, char * const [], const char *);
 #endif /* ACE_LACKS_GETOPT_PROTOTYPE */
-  
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

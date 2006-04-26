@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_TPC_ProxySupplier.h
  *
@@ -12,11 +12,13 @@
 #define TAO_EC_TPC_PROXYSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Default_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Default_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Dispatching;
 class TAO_EC_TPC_Dispatching;
@@ -51,8 +53,10 @@ private:
   TAO_EC_TPC_Dispatching* tpc_dispatching ();
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_TPC_ProxySupplier.i"
+#include "orbsvcs/Event/EC_TPC_ProxySupplier.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

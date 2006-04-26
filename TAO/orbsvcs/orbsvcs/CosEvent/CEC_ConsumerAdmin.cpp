@@ -1,20 +1,22 @@
 // $Id$
 
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_ProxyPushSupplier.h"
-#include "CEC_ProxyPullSupplier.h"
-#include "CEC_ProxyPushConsumer.h"
-#include "CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_ConsumerAdmin.i"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_ConsumerAdmin,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_ConsumerAdmin::TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel *ec)
   :  event_channel_ (ec),
@@ -135,3 +137,5 @@ TAO_CEC_Propagate_Event_Pull::work (TAO_CEC_ProxyPullSupplier *supplier
 {
   supplier->push (this->event_ ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

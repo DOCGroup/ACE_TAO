@@ -53,6 +53,8 @@
 #define ACE_DEFAULT_CONFIG_SECTION_SIZE 16
 #endif /* ACE_DEFAULT_CONFIG_SECTION_SIZE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Section_Key_Internal
  *
@@ -698,8 +700,8 @@ public:
   ACE_Configuration_Section_IntId (void);
 
   /// Named ctor
-  explicit ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
-                                                SUBSECTION_MAP* section_hash_map);
+  ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
+                                   SUBSECTION_MAP* section_hash_map);
 
   /// Copy ctor
   ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
@@ -775,7 +777,7 @@ protected:
  * representation of a configuraiton database. A persistent heap
  * may be used to store configurations persistently
  *
- * Note: Before using this class you must call one of the open methods.
+ * @note Before using this class you must call one of the open methods.
  *
  * @todo
  *  - Need to investigate what happens if memory mapped file gets mapped to
@@ -883,6 +885,8 @@ private:
   SECTION_MAP *index_;
   size_t default_map_size_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIGURATION_H */

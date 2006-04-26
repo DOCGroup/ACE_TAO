@@ -12,6 +12,8 @@ ACE_RCSID (tao,
            Wait_On_Reactor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
 {
@@ -30,7 +32,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   ACE_Countdown_Time countdown (max_wait_time);
 
   // Reactor does not change inside the loop.
-  ACE_Reactor* reactor =
+  ACE_Reactor* const reactor =
     this->transport_->orb_core ()->reactor ();
 
   // Do the event loop, till we fully receive a reply.
@@ -115,3 +117,5 @@ TAO_Wait_On_Reactor::can_process_upcalls (void) const
 {
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

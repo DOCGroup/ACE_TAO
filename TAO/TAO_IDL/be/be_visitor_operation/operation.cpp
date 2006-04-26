@@ -315,64 +315,6 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
 }
 
 int
-be_visitor_operation::gen_check_exception (be_type *return_type)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (return_type == 0 || this->void_return_type (return_type))
-    {
-      *os << "ACE_CHECK;" << be_nl;
-      return 0;
-    }
-
-  // Non-void return type....
-  *os << "ACE_CHECK_RETURN (";
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_operation_rettype_return_cs visitor (&ctx);
-
-  if (return_type->accept (&visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation::"
-                         "gen_check_exception - "
-                         "codegen for return var failed\n"),
-                        -1);
-    }
-
-  *os << ");" << be_nl;
-  return 0;
-}
-
-int
-be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (return_type == 0 || this->void_return_type (return_type))
-    {
-      *os << "TAO_INTERCEPTOR_CHECK;\n";
-      return 0;
-    }
-
-  // Non-void return type.
-  *os << "TAO_INTERCEPTOR_CHECK_RETURN (";
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_operation_rettype_return_cs visitor (&ctx);
-
-  if (return_type->accept (&visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation::"
-                         "gen_check_exception - "
-                         "codegen for return var failed\n"),
-                        -1);
-    }
-
-  *os << ");\n";
-  return 0;
-}
-
-int
 be_visitor_operation::gen_stub_operation_body (
     be_operation *node,
     be_type *return_type
@@ -423,7 +365,7 @@ be_visitor_operation::gen_stub_operation_body (
       // be null.  Initialize it now.
       *os << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);"
+          << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
@@ -528,24 +470,23 @@ be_visitor_operation::gen_stub_operation_body (
       *os << "_tao_call.invoke (" << be_idt << be_idt_nl
           << "_tao_" << node->flat_name ()
           << "_exceptiondata," << be_nl
-          << node->exceptions ()->length () << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << node->exceptions ()->length () << env_arg << be_uidt_nl
           << ");" << be_uidt;
     }
   else
     {
-      *os << "_tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);";
+      *os << "_tao_call.invoke (0, 0"
+          << (be_global->use_raw_throw () ? "" : " ACE_ENV_ARG_PARAMETER")
+          << ");";
     }
-
-  *os << be_nl;
 
   if (this->void_return_type (return_type))
     {
-      *os << "ACE_CHECK;";
+      *os << TAO_ACE_CHECK ();
     }
   else
     {
-      *os << "ACE_CHECK_RETURN (_tao_retval.excp ());";
+      *os << TAO_ACE_CHECK ("_tao_retval.excp ()");
     }
 
   if (!this->void_return_type (return_type))
@@ -633,7 +574,7 @@ be_visitor_operation::gen_raise_interceptor_exception (
 void
 be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              TAO_OutStream *os,
-                                             idl_bool ami)
+                                             bool ami)
 {
   AST_Argument *arg = 0;
   UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);

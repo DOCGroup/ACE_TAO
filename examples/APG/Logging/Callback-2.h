@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef APG_CALLBACK2_H
+#define APG_CALLBACK2_H
+
 #include "ace/OS_NS_time.h"
 #include "ace/streams.h"
 #include "ace/Log_Msg_Callback.h"
@@ -38,3 +41,4 @@ public:
     }
 };
 
+#endif /* APG_CALLBACK2_H */

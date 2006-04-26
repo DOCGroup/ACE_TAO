@@ -1,17 +1,14 @@
 // -*- C++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   SHMIOP_Factory.h
-//
-// = AUTHOR
-//   Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ * @file SHMIOP_Factory.h
+ *
+ * $Id$
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_SHMIOP_FACTORY_H
 #define TAO_SHMIOP_FACTORY_H
@@ -27,14 +24,17 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Protocol_Factory.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_Strategies_Export TAO_SHMIOP_Protocol_Factory : public TAO_Protocol_Factory
+class TAO_Strategies_Export TAO_SHMIOP_Protocol_Factory
+  : public TAO_Protocol_Factory
 {
 public:
   /// Constructor.
@@ -86,6 +86,8 @@ private:
   /// Minimum bytes of the mmap files.
   off_t min_bytes_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_SHMIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SHMIOP_Protocol_Factory)

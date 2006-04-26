@@ -20,7 +20,7 @@ public:
                         CommandLine const& cl,
                         std::string export_macro,
                         fs::path const& file);
-                        
+
   virtual ~ServantHeaderEmitter () {}
 
   virtual void

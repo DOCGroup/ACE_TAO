@@ -32,17 +32,10 @@
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #endif
 
-// Win64 SDK compiler claims std::auto_ptr<>::reset not available.
-#if defined (_WIN64) || defined (WIN64)
-#define ACE_AUTO_PTR_LACKS_RESET
-#endif
-
 #define ACE_HAS_TYPENAME_KEYWORD
-#define ACE_HAS_USING_KEYWORD
 
 #define ACE_HAS_ITOA
 
-#define ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 #define ACE_ITOA_EQUIVALENT ::_itoa
@@ -50,15 +43,13 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
-//#if defined (_WIN32_WCE) && (_WIN32_WCE < 0x500)
-//#  define ACE_LACKS_RTTI
-//#else
-#  define ACE_HAS_EXCEPTIONS
+#define ACE_HAS_EXCEPTIONS
+#define ACE_HAS_NEW_NOTHROW
+
 // Windows Mobile 5 doesn't do sig_atomic_t, but maybe future versions will.
 #  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x501)
 #    define ACE_HAS_SIG_ATOMIC_T
 #  endif /* !Win CE 5.0 or less */
-//#endif /* _WIN32_WCE && _WIN32_WCE < 500 */
 
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME

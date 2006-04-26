@@ -29,6 +29,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_ci.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if !defined (_CORBA_IROBJECT___CI_)
 #define _CORBA_IROBJECT___CI_
 
@@ -39,7 +41,7 @@ CORBA::IRObject::IRObject (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -55,7 +57,7 @@ CORBA::IRObject::IRObject (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_IRObject_Proxy_Broker_ (0)
 {
 }
@@ -75,7 +77,7 @@ CORBA::Contained::Contained (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -91,7 +93,7 @@ CORBA::Contained::Contained (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_Contained_Proxy_Broker_ (0)
 {
 }
@@ -111,7 +113,7 @@ CORBA::Container::Container (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -127,7 +129,7 @@ CORBA::Container::Container (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_Container_Proxy_Broker_ (0)
 {
 }
@@ -147,7 +149,7 @@ CORBA::IDLType::IDLType (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -163,7 +165,7 @@ CORBA::IDLType::IDLType (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_IDLType_Proxy_Broker_ (0)
 {
 }
@@ -183,7 +185,7 @@ CORBA::TypedefDef::TypedefDef (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -199,9 +201,11 @@ CORBA::TypedefDef::TypedefDef (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_TypedefDef_Proxy_Broker_ (0)
 {
 }
 
 #endif /* end #if !defined */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

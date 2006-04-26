@@ -16,7 +16,7 @@ else {
 }
 print STDERR "\n==== Running Register_Initial_References test ====\n";
 
-$server = $SV->SpawnWaitKill (5);
+$server = $SV->SpawnWaitKill (30);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

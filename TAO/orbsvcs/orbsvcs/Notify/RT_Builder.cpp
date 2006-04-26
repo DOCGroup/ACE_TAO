@@ -1,18 +1,20 @@
 // $Id$
 
-#include "RT_Builder.h"
+#include "orbsvcs/Notify/RT_Builder.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
-#include "ETCL_FilterFactory.h"
-#include "RT_POA_Helper.h"
-#include "Properties.h"
+#include "orbsvcs/Notify/ETCL_FilterFactory.h"
+#include "orbsvcs/Notify/RT_POA_Helper.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/NotifyExtC.h"
-#include "Object.h"
+#include "orbsvcs/Notify/Object.h"
 
 ACE_RCSID (RT_Notify,
            TAO_Notify_RT_Builder,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_Builder::TAO_Notify_RT_Builder (void)
 {
@@ -66,5 +68,6 @@ TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
 
   // Give ownership of proxy_poa
   object.set_proxy_poa (auto_proxy_poa.release ());
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

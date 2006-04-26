@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#include "Messaging.h"
-#include "Messaging_Loader.h"
+#include "tao/Messaging/Messaging.h"
+#include "tao/Messaging/Messaging_Loader.h"
 
 #include "tao/Exception_Data.h"
 #include "tao/debug.h"
@@ -16,6 +16,9 @@
 ACE_RCSID (Messaging,
            Messaging,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Messaging_Initializer::init (void)
@@ -56,7 +59,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
                                    CORBA::COMPLETED_MAYBE));
 
       CORBA::SystemException* exception =
-        TAO_Exceptions::create_system_exception (type_id.in ());
+        TAO::create_system_exception (type_id.in ());
 
       if (exception == 0)
         {
@@ -85,7 +88,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
       if (ACE_OS::strcmp (type_id.in (), exception_data[i].id) != 0)
         continue;
 
-      CORBA::Exception *exception = exception_data[i].alloc ();
+      CORBA::Exception * const exception = exception_data[i].alloc ();
 
       if (exception == 0)
         ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
@@ -95,7 +98,7 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
 
       // Raise the exception.
 #if defined (TAO_HAS_EXCEPTIONS)
-      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(exception);
+      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
 #endif
       ACE_ENV_RAISE (exception);
 
@@ -111,3 +114,5 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
   ACE_THROW (CORBA::UNKNOWN (TAO::VMCID,
                              CORBA::COMPLETED_YES));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

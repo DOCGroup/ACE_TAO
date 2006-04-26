@@ -13,6 +13,7 @@
 #include "ace/Reverse_Lock_T.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCKING_MECHANISM>
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
@@ -86,5 +87,7 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write_upgrade (void)
 {
   ACE_NOTSUP_RETURN (-1);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_REVERSE_LOCK_T_CPP */

@@ -24,6 +24,8 @@ dnl Macros that add ACE configuration options to a `configure' script.
 dnl ACE_CONFIGURATION_OPTIONS
 AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 [
+ AM_CONDITIONAL([BUILD_ACE_FOR_TAO], false)
+
  AC_ARG_ENABLE([ace-codecs],
   AS_HELP_STRING(--enable-ace-codecs,build ACE with codecs support [[[yes]]]),
   [
@@ -458,21 +460,15 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_TK_REACTOR
  ACE_ENABLE_XT_REACTOR
 
- AC_ARG_WITH([gperf],
-  AS_HELP_STRING(--with-gperf,compile the gperf program [[[yes]]]),
+ AC_ARG_ENABLE([gperf],
+  AS_HELP_STRING(--enable-gperf,compile the gperf program [[[yes]]]),
   [
-   case "${withval}" in
+   case "${enableval}" in
     yes)
-      ace_user_with_gperf=yes
-      AC_DEFINE([ACE_HAS_GPERF])
-      AS_IF([test -n "$GPERF"],
-        [
-         AC_MSG_WARN([gperf program already exists])
-         AC_MSG_WARN([existing gperf may be overwritten during installation])
-        ],[])
+      ace_user_enable_gperf=yes
       ;;
     no)
-      ace_user_with_gperf=no
+      ace_user_enable_gperf=no
       ;;
     *)
       AC_MSG_ERROR([bad value ${withval} for --with-gperf])
@@ -480,15 +476,17 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],
   [
-   ace_user_with_gperf=yes
+   ace_user_enable_gperf=yes
+  ])
+ if test "$ace_user_enable_gperf" = yes; then
    AC_DEFINE([ACE_HAS_GPERF])
    AS_IF([test -n "$GPERF"],
     [
      AC_MSG_WARN([gperf program already exists])
      AC_MSG_WARN([existing gperf may be overwritten during installation])
     ],[])
-  ])
- AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
+ fi 
+ AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_enable_gperf = Xyes])
 
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
@@ -551,7 +549,51 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    ace_user_enable_reentrant_funcs=yes
   ])
 
+ AC_ARG_ENABLE([ace-examples],
+  AS_HELP_STRING(--enable-ace-examples,build ACE examples [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_build_examples=yes
+      ;;
+    no)
+      ace_build_examples=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ace-examples])
+      ;;
+   esac
+  ],
+  [
+   ace_build_examples=yes
+  ])
+  AM_CONDITIONAL([BUILD_EXAMPLES], [test X$ace_build_examples = Xyes])
 
+ AC_ARG_ENABLE([ace-tests],
+  AS_HELP_STRING(--enable-ace-tests,build ACE tests [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_build_tests=yes
+      ;;
+    no)
+      ace_build_tests=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ace-tests])
+      ;;
+   esac
+  ],
+  [
+   ace_build_tests=yes
+  ])
+ AM_CONDITIONAL([BUILD_TESTS], [test X$ace_build_tests = Xyes])
+
+ ACE_ENABLE_CDR_SWAP_ON_READ
+ ACE_ENABLE_CDR_SWAP_ON_WRITE
+ ACE_ENABLE_CDR_ALIGNMENT
+ ACE_ENABLE_STRDUP_EMULATION
+ ACE_ENABLE_WCSDUP_EMULATION
 ])
 
 
@@ -859,6 +901,131 @@ dnl    fi
 
 ])
 
+# ACE_ENABLE_CDR_SWAP_ON_READ
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_CDR_SWAP_ON_READ],
+[AC_ARG_ENABLE([ace-cdr-swap-on-read],
+               AS_HELP_STRING([--enable-ace-cdr-swap-on-read],
+                              [configure CDR to support swap on read [[yes]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_cdr_swap_on_read=yes
+		  ;;
+		 no)
+		  ace_user_cdr_swap_on_read=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-cdr-swap-on-read)
+		  ;;
+		esac],[
+		  ace_user_cdr_swap_on_read=yes
+		])
+if test X$ace_user_cdr_swap_on_read = Xno; then
+  AC_DEFINE(ACE_DISABLE_SWAP_ON_READ, 1,
+	    [Define to 1 to disable swapping swapping CDR on read])
+fi
+])
+
+# ACE_ENABLE_CDR_SWAP_ON_WRITE
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_CDR_SWAP_ON_WRITE],
+[AC_ARG_ENABLE([ace-cdr-swap-on-write],
+               AS_HELP_STRING([--enable-ace-cdr-swap-on-write],
+                              [configure CDR to support swap on write [[no]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_cdr_swap_on_write=yes
+		  ;;
+		 no)
+		  ace_user_cdr_swap_on_write=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-cdr-swap-on-write)
+		  ;;
+		esac],[
+		  ace_user_cdr_swap_on_write=no
+		])
+if test X$ace_user_cdr_swap_on_write = Xyes; then
+  AC_DEFINE(ACE_ENABLE_SWAP_ON_WRITE, 1,
+	    [Define to 1 to enable swapping swapping CDR on write])
+fi
+])
+
+# ACE_ENABLE_CDR_ALIGNMENT
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_CDR_ALIGNMENT],
+[AC_ARG_ENABLE([ace-cdr-alignment],
+               AS_HELP_STRING([--enable-ace-cdr-alignment],
+                              [configure CDR to require aligned access [[yes]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_cdr_alignment=yes
+		  ;;
+		 no)
+		  ace_user_cdr_alignment=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-cdr-alignment)
+		  ;;
+		esac],[
+		  ace_user_cdr_alignment=yes
+		])
+if test X$ace_user_cdr_alignment = Xno; then
+  AC_DEFINE(ACE_LACKS_CDR_ALIGNMENT, 1,
+	    [Define to 1 to support unaligned CDR])
+fi
+])
+
+# ACE_ENABLE_STRDUP_EMULATION
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_STRDUP_EMULATION],
+[AC_ARG_ENABLE([ace-strdup-emulation],
+               AS_HELP_STRING([--enable-ace-strdup-emulation],
+                              [use ACE's strdup emulation [[no]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_strdup_emulation=yes
+		  ;;
+		 no)
+		  ace_user_strdup_emulation=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-strdup-emulation)
+		  ;;
+		esac],[
+		  ace_user_strdup_emulation=no
+		])
+if test X$ace_user_strdup_emulation = Xyes; then
+  AC_DEFINE(ACE_HAS_STRDUP_EMULATION, 1,
+	    [Define to 1 use ACE's strdup() emulation])
+fi
+])
+
+# ACE_ENABLE_WCSDUP_EMULATION
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_WCSDUP_EMULATION],
+[AC_ARG_ENABLE([ace-wcsdup-emulation],
+               AS_HELP_STRING([--enable-ace-wcsdup-emulation],
+                              [use ACE's wcsdup emulation [[no]]]),
+	       [case "${enableval}" in
+		 yes)
+		  ace_user_wcsdup_emulation=yes
+		  ;;
+		 no)
+		  ace_user_wcsdup_emulation=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ace-wcsdup-emulation)
+		  ;;
+		esac],[
+		  ace_user_wcsdup_emulation=no
+		])
+if test X$ace_user_wcsdup_emulation = Xyes; then
+  AC_DEFINE(ACE_HAS_WCSDUP_EMULATION, 1,
+	    [Define to 1 use ACE's wcsdup() emulation])
+fi
+])
+
 AC_DEFUN([ACE_ENABLE_QOS],
 [AC_ARG_ENABLE([qos],
 	       AS_HELP_STRING([--enable-qos],
@@ -929,7 +1096,6 @@ AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_enable_acexml = Xyes])
 # Find OpenGL Libraries, flags, etc.
 AC_DEFUN([ACE_PATH_GL],
 [
-AM_CONDITIONAL([BUILD_GL], [false])
 ])
 
 
@@ -938,6 +1104,28 @@ AM_CONDITIONAL([BUILD_GL], [false])
 # Find FL/TK Libraries, flags, etc.
 AC_DEFUN([ACE_PATH_FL],
 [AC_REQUIRE([ACE_PATH_GL])
+ AC_ARG_WITH([fltkconfig],
+ AS_HELP_STRING([--with-fltkconfig=DIR],
+                [path to fltk-config [[automatic]]]),
+ [ ac_fltkconfig_dir="${withval}" ])
+ if test X"${ac_fltkconfig_dir}" = X; then
+   AC_PATH_PROG([FLTKCONFIG], [fltk-config], [])
+ else
+   AC_MSG_CHECKING([whether fltk-config exists in ${ac_fltkconfig_dir}])
+   if test -f "${ac_fltkconfig_dir}/fltk-config"; then
+     FLTKCONFIG="${ac_fltkconfig_dir}/fltk-config"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${FLTKCONFIG}" != X; then
+   ACE_FLTK_CPPFLAGS=`$FLTKCONFIG --use-gl --cxxflags 2>/dev/null`
+   ACE_FLTK_LIBS=`$FLTKCONFIG --use-gl --ldflags 2>/dev/null`
+
+   AC_SUBST(ACE_FLTK_CPPFLAGS)
+   AC_SUBST(ACE_FLTK_LIBS)
+ fi
 ])
 
 
@@ -946,14 +1134,126 @@ AC_DEFUN([ACE_PATH_FL],
 # Find Qt Libraries, flags, etc.
 AC_DEFUN([ACE_PATH_QT],
 [
+ ac_qt_found=no
+ PKG_CHECK_MODULES([Qt], [qt-mt],
+                   [ac_qt_found=yes],
+                   [AC_MSG_RESULT([not found])])
+ if test X"${ac_qt_found}" = Xyes; then
+   ACE_QT_CPPFLAGS="${Qt_CFLAGS}"
+   ACE_QT_LIBS="${Qt_LIBS}"
+   AC_SUBST(ACE_QT_CPPFLAGS)
+   AC_SUBST(ACE_QT_LIBS)
+
+   AS_IF([test -n "$QTDIR"],
+         [],
+         [QTDIR=`$PKG_CONFIG --variable=prefix qt-mt 2>/dev/null`])
+   AC_SUBST(QTDIR)
+ fi
+])
+
+
+# ACE_PATH_TCL
+#---------------------------------------------------------------------------
+# Find Tcl Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_TCL], 
+[AC_ARG_WITH([tclconfig],
+ AS_HELP_STRING([--with-tclconfig=DIR],
+                [path to tclConfig.sh [[automatic]]]),
+ [ ac_tclconfig_dir="${withval}" ])
+ if test X"${ac_tclconfig_dir}" = X; then
+   AC_PATH_PROG([TCLCONFIG], [tclConfig.sh], [],
+                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tcl8.4:/usr/lib/tcl8.3:/usr/lib])
+ else
+  AC_MSG_CHECKING([whether tclConfig.sh exists in ${ac_tclconfig_dir}])
+   if test -f "${ac_tclconfig_dir}/tclConfig.sh"; then
+     TCLCONFIG="${ac_tclconfig_dir}/tclConfig.sh"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${TCLCONFIG}" != X; then
+   . ${TCLCONFIG}
+
+   ACE_TCL_CPPFLAGS="${TCL_INCLUDE_SPEC}"
+   eval "ACE_TCL_LIBS=\"${TCL_LIB_SPEC}\""
+
+   AC_SUBST(ACE_TCL_CPPFLAGS)
+   AC_SUBST(ACE_TCL_LIBS)
+ fi
 ])
 
 
 # ACE_PATH_TK
 #---------------------------------------------------------------------------
 # Find Tk Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TK],
-[
+AC_DEFUN([ACE_PATH_TK], 
+[AC_REQUIRE([ACE_PATH_TCL])
+ AC_ARG_WITH([tkconfig],
+ AS_HELP_STRING([--with-tkconfig=DIR],
+                [path to tkConfig.sh [[automatic]]]),
+ [ ac_tkconfig_dir="${withval}" ])
+ if test X"${ac_tkconfig_dir}" = X; then
+   AC_PATH_PROG([TKCONFIG], [tkConfig.sh], [],
+                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tk8.4:/usr/lib/tk8.3:/usr/lib])
+ else
+   AC_MSG_CHECKING([whether tkConfig.sh exists in ${ac_tkconfig_dir}])
+   if test -f "${ac_tkconfig_dir}/tkConfig.sh"; then
+     TKCONFIG="${ac_tkconfig_dir}/tkConfig.sh"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${TKCONFIG}" != X; then
+   . ${TKCONFIG}
+
+   ACE_TK_CPPFLAGS="${TK_INCLUDE_SPEC} ${TK_XINCLUDES}"
+   ACE_TK_LIBS="${TK_LIB_SPEC} ${TK_XLIBSW}"
+
+   AC_SUBST(ACE_TK_CPPFLAGS)
+   AC_SUBST(ACE_TK_LIBS)
+ fi
+])
+
+
+# ACE_PATH_XT
+#---------------------------------------------------------------------------
+# Find Xt libraries, flags, etc.
+AC_DEFUN([ACE_PATH_XT],
+[AC_REQUIRE([ACE_PATH_X11])
+
+if test "$no_x" != yes; then
+   ACE_XT_CPPFLAGS=""
+   ACE_XT_LDFLAGS=""
+   ACE_XT_LIBS="-lXt"
+
+   AC_SUBST(ACE_XT_CPPFLAGS)
+   AC_SUBST(ACE_XT_LDFLAGS)
+   AC_SUBST(ACE_XT_LIBS)
+fi
+AM_CONDITIONAL([BUILD_ATHENA], true)
+AM_CONDITIONAL([BUILD_MOTIF], false)
+])
+
+
+# ACE_PATH_X11
+#---------------------------------------------------------------------------
+# Find X11 libraries, flags, etc.
+AC_DEFUN([ACE_PATH_X11],
+[AC_REQUIRE([AC_PATH_XTRA])
+
+if test "$no_x" != yes; then
+   ACE_X11_CPPFLAGS="${X_CFLAGS}"
+   ACE_X11_LDFLAGS="${X_LIBS}"
+   ACE_X11_LIBS="${X_PRE_LIBS} -lX11 ${X_EXTRA_LIBS}"
+
+   AC_SUBST(ACE_X11_CPPFLAGS)
+   AC_SUBST(ACE_X11_LDFLAGS)
+   AC_SUBST(ACE_X11_LIBS)
+fi
+
+AM_CONDITIONAL([BUILD_X11], [test X$no_x != Xyes])
 ])
 
 
@@ -961,16 +1261,17 @@ AC_DEFUN([ACE_PATH_TK],
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_FL_REACTOR],
 [AC_REQUIRE([ACE_PATH_FL])
+AC_REQUIRE([ACE_PATH_X11])
 AC_ARG_ENABLE([fl-reactor],
   	       AS_HELP_STRING([--enable-fl-reactor],
 		              [build support for the FlReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
-		  ace_user_enable_fl_reactor=yes
+                  AS_IF([test X"${FLTKCONFIG}" != X],
+                        [ace_user_enable_fl_reactor=yes],
+                        [AC_MSG_ERROR([ACE_FlReactor cannot be enabled: fltk-config not found.])])
 		  ;;
 		no)
-		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
 		  ace_user_enable_fl_reactor=no
 		  ;;
 		*)
@@ -980,11 +1281,12 @@ AC_ARG_ENABLE([fl-reactor],
                 [
                  ace_user_enable_fl_reactor=no
                 ])
-AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
+AM_CONDITIONAL([BUILD_GL], [test X$ace_user_enable_fl_reactor = Xyes])
+AM_CONDITIONAL([BUILD_FL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
-               [test X$ace_enable_fl_reactor = Xyes])
+               [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_FLRESOURCE],
-               [test X$ace_enable_fl_reactor = Xyes])
+               [test X$ace_user_enable_fl_reactor = Xyes])
 ])
 
 
@@ -997,11 +1299,11 @@ AC_ARG_ENABLE([qt-reactor],
 		              [build support for the QtReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
-		  ace_user_enable_qt_reactor=yes
+                  AS_IF([test X"${ac_qt_found}" = Xyes],
+                        [ace_user_enable_qt_reactor=yes],
+                        [AC_MSG_ERROR([ACE_QtReactor cannot be enabled: Qt not found.])])
 		  ;;
 		no)
-		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
 		  ace_user_enable_qt_reactor=no
 		  ;;
 		*)
@@ -1011,11 +1313,11 @@ AC_ARG_ENABLE([qt-reactor],
                 [
                  ace_user_enable_qt_reactor=no
                 ])
-AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_QT], [test X$ace_user_enable_qt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_QTREACTOR],
-               [test X$ace_enable_qt_reactor = Xyes])
+               [test X$ace_user_enable_qt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_QTRESOURCE],
-               [test X$ace_enable_qt_reactor = Xyes])
+               [test X$ace_user_enable_qt_reactor = Xyes])
 ])
 
 
@@ -1028,11 +1330,13 @@ AC_ARG_ENABLE([tk-reactor],
 		              [build support for the TkReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
-		  ace_user_enable_tk_reactor=yes
+                  AS_IF([test X"${TCLCONFIG}" != X],
+                        [AS_IF([test X"${TKCONFIG}" != X],
+                               [ace_user_enable_tk_reactor=yes],
+                               [AC_MSG_ERROR([ACE_TkReactor cannot be enabled: tkConfig not found.])])],
+                        [AC_MSG_ERROR([ACE_TkReactor cannot be enabled: tclConfig not found.])])
 		  ;;
 		no)
-		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
 		  ace_user_enable_tk_reactor=no
 		  ;;
 		*)
@@ -1042,38 +1346,35 @@ AC_ARG_ENABLE([tk-reactor],
                 [
                  ace_user_enable_tk_reactor=no
                 ])
-AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TK], [test X$ace_user_enable_tk_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_TKREACTOR],
-               [test X$ace_enable_tk_reactor = Xyes])
+               [test X$ace_user_enable_tk_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_TKRESOURCE],
-               [test X$ace_enable_tk_reactor = Xyes])
+               [test X$ace_user_enable_tk_reactor = Xyes])
 ])
 
 
 # ACE_ENABLE_XT_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_XT_REACTOR],
-[AC_ARG_ENABLE([xt-reactor],
+[AC_REQUIRE([ACE_PATH_XT])
+AC_ARG_ENABLE([xt-reactor],
                AS_HELP_STRING([--enable-xt-reactor],
                               [build support for the XtReactor [[no]]]),
                [case "${enableval}" in
                  yes)
-                  AC_PATH_XTRA
 dnl Here, if X isn't found or the user sets "--without-x" on the command
 dnl line, then "no_x" is set to "yes."
                   AS_IF([test "$no_x" != yes],
-                        [
-		          ACE_XLIBS="-lX11 -lXt"
+			[
                           ace_user_enable_xt_reactor=yes
                         ],[
-                          ACE_XLIBS=""
                           ace_user_enable_xt_reactor=no
                           AC_MSG_WARN([X was not found or it was disabled.])
                           AC_MSG_WARN([ACE_XtReactor will not be enabled.])
                         ])
                   ;;
                  no)
-                  ACE_XLIBS=""
                   ace_user_enable_xt_reactor=no
                   ;;
                  *)
@@ -1081,13 +1382,11 @@ dnl line, then "no_x" is set to "yes."
 		  ;;
                 esac],
 		[
-                  ACE_XLIBS=""
                   ace_user_enable_xt_reactor=no
 		])
-AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
-AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_XT], [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
-               [test X$ace_enable_xt_reactor = Xyes])
+               [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
-               [test X$ace_enable_xt_reactor = Xyes])
+               [test X$ace_user_enable_xt_reactor = Xyes])
 ])

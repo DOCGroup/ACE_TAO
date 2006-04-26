@@ -33,7 +33,7 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
                        const char *child_poa_name,
                        int activate)
 {
-  int expected_exception_raised = 0;
+  bool expected_exception_raised = false;
 
   // New environment.
   ACE_TRY_NEW_ENV
@@ -47,14 +47,14 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
     }
   ACE_CATCH (PortableServer::POA::AdapterNonExistent, foo)
     {
-      expected_exception_raised = 1;
+      expected_exception_raised = true;
     }
   ACE_ENDTRY;
 
-  ACE_ASSERT (expected_exception_raised);
-
-  // In non-debug compiles, asserts will disappear.
-  ACE_UNUSED_ARG (expected_exception_raised);
+  if (!expected_exception_raised)
+    ACE_ERROR ((LM_ERROR, "ERROR: Caught incorrect exception\n"));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
 }
 
 int

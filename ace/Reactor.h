@@ -30,6 +30,8 @@
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Reactor_Impl;
 class ACE_Handle_Set;
 class ACE_Sig_Action;
@@ -38,7 +40,7 @@ class ACE_Sig_Set;
 
 /*
  * Hook to specialize the Reactor implementation with the concrete
- * Reactor type, for exmaple, select, thread pool reactor known 
+ * Reactor type, for exmaple, select, thread pool reactor known
  * at compile time.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
@@ -48,7 +50,7 @@ class ACE_Sig_Set;
  *
  * @brief The responsibility of this class is to forward all methods to
  * its delegation/implementation class, e.g.,
- * <ACE_Select_Reactor> or <ACE_WFMO_Reactor>.
+ * ACE_Select_Reactor or ACE_WFMO_Reactor.
  */
 class ACE_Export ACE_Reactor : public ACE_Reactor_Timer_Interface
 {
@@ -78,11 +80,11 @@ public:
    */
   typedef int (*REACTOR_EVENT_HOOK)(ACE_Reactor *);
 
-  /// Get pointer to a process-wide <ACE_Reactor>.
+  /// Get pointer to a process-wide ACE_Reactor.
   static ACE_Reactor *instance (void);
 
   /**
-   * Set pointer to a process-wide <ACE_Reactor> and return existing
+   * Set pointer to a process-wide ACE_Reactor and return existing
    * pointer.  If <delete_reactor> != 0 then we'll delete the Reactor
    * at destruction time.
    */
@@ -162,7 +164,7 @@ public:
   static void reset_event_loop (void);
 
   /**
-   * The singleton reactor is used by the <ACE_Service_Config>.
+   * The singleton reactor is used by the ACE_Service_Config.
    * Therefore, we must check for the reconfiguration request and
    * handle it after handling an event.
    */
@@ -211,9 +213,9 @@ public:
   virtual void reset_reactor_event_loop (void);
 
   /**
-   * Create the Reactor using <implementation>.  The flag
-   * <delete_implementation> tells the Reactor whether or not to
-   * delete the <implementation> on destruction.
+   * Create the Reactor using @a implementation.  The flag
+   * @a delete_implementation tells the Reactor whether or not to
+   * delete the @a implementation on destruction.
    */
   ACE_Reactor (ACE_Reactor_Impl *implementation = 0,
                int delete_implementation = 0);
@@ -226,8 +228,8 @@ public:
   virtual ~ACE_Reactor (void);
 
   /**
-   * Initialize the <ACE_Reactor> to manage <max_number_of_handles>.
-   * If <restart> is non-0 then the <ACE_Reactor>'s <handle_events>
+   * Initialize the ACE_Reactor to manage <max_number_of_handles>.
+   * If <restart> is non-0 then the ACE_Reactor's <handle_events>
    * method will be restarted automatically when <EINTR> occurs.  If
    * <signal_handler> or <timer_queue> are non-0 they are used as the
    * signal handler and timer queue, respectively.
@@ -271,7 +273,7 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * Returns the total number of timers and I/O <ACE_Event_Handler>s
+   * Returns the total number of timers and I/O ACE_Event_Handlers
    * that were dispatched, 0 if the <max_wait_time> elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
@@ -382,12 +384,12 @@ public:
   /**
    * Register handler for signals.
    *
-   * Register <new_sh> to handle the signal <signum> using the
-   * <new_disp>.  Returns the <old_sh> that was previously registered
-   * (if any), along with the <old_disp> of the signal handler.
+   * Register @a new_sh to handle the signal @a signum using the
+   * @a new_disp.  Returns the @a old_sh that was previously registered
+   * (if any), along with the @a old_disp of the signal handler.
    *
-   * Reactor will call ACE_Event_Handler::add_reference() on <new_sh>
-   * and ACE_Event_Handler::remove_reference() on <old_sh>.
+   * Reactor will call ACE_Event_Handler::add_reference() on @a new_sh
+   * and ACE_Event_Handler::remove_reference() on @a old_sh.
    */
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
@@ -546,16 +548,19 @@ public:
    * @see cancel_timer()
    * @see reset_timer_interval()
    *
-   * @param event_handler  event handler to schedule on reactor
-   * @param arg  argument passed to the handle_timeout() method of  event_handler
-   * @param delay  time interval after which the timer will expire
-   * @param interval  time interval after which the timer will be automatically rescheduled
+   * @param event_handler Event handler to schedule on reactor
+   * @param arg Argument passed to the handle_timeout() method of
+   * event_handler
+   * @param delay Time interval after which the timer will expire
+   * @param interval Time interval after which the timer will be automatically
+   * rescheduled
    * @return -1 on failure, a timer_id value on success
    */
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                               const ACE_Time_Value &interval =
+                                ACE_Time_Value::zero);
 
   /**
    * Reset recurring timer interval.
@@ -574,12 +579,12 @@ public:
   /**
    * Cancel timer.
    *
-   * Cancel timer associated with <timer_id> that was returned from
+   * Cancel timer associated with @a timer_id that was returned from
    * the schedule_timer() method.  If arg is non-NULL then it will be
    * set to point to the ``magic cookie'' argument passed in when the
    * handler was registered.  This makes it possible to free up the
    * memory and avoid memory leaks.  Returns 1 if cancellation
-   * succeeded and 0 if the <timer_id> wasn't found.
+   * succeeded and 0 if the @a timer_id wasn't found.
    *
    * On successful cancellation, ACE_Event_Handler::handle_close()
    * will be called with <ACE_Event_Handler::TIMER_MASK>.
@@ -619,8 +624,8 @@ public:
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added);
 
-  /// Add <masks_to_be_added> to the <handle>'s entry.  <event_handler>
-  /// associated with <handle> must already have been registered.
+  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// associated with @a handle must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
@@ -715,13 +720,14 @@ public:
    * be called.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler *eh,
-                                           ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                                           ACE_Reactor_Mask =
+                                            ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // = Assorted helper methods.
 
   /**
-   * Return the Event_Handler associated with <handle>.  Return 0 if
-   * <handle> is not registered.
+   * Return the Event_Handler associated with @a handle.  Return 0 if
+   * @a handle is not registered.
    *
    * Reactor will call ACE_Event_Handler::add_reference() on the
    * handler before returning it.
@@ -729,12 +735,12 @@ public:
   virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle);
 
   /**
-   * Check to see if <handle> is associated with a valid Event_Handler
-   * bound to <mask>.  Return the <event_handler> associated with this
-   * <handler> if <event_handler> != 0.
+   * Check to see if @a handle is associated with a valid Event_Handler
+   * bound to @a mask.  Return the @c event_handler associated with this
+   * @a handler if @a event_handler != 0.
    *
    * Reactor will call ACE_Event_Handler::add_reference() on the
-   * handler before returning it if <event_handler> != 0.
+   * handler before returning it if @a event_handler != 0.
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
@@ -743,7 +749,7 @@ public:
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
-   * this <handler> if <event_handler> != 0.
+   * this <handler> if @a event_handler != 0.
    */
   virtual int handler (int signum,
                        ACE_Event_Handler **event_handler = 0);
@@ -784,13 +790,13 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
-  /// <event_handler> and <mask>.
+  /// @a event_handler and @a mask.
   virtual int mask_ops (ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask,
                         int ops);
 
-  /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the <handle>
-  /// and <mask>.
+  /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the @a handle
+  /// and @a mask.
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
                         int ops);
@@ -841,7 +847,7 @@ protected:
   /// the implementation instance
   int delete_implementation_;
 
-  /// Pointer to a process-wide <ACE_Reactor> singleton.
+  /// Pointer to a process-wide ACE_Reactor singleton.
   static ACE_Reactor *reactor_;
 
   /// Must delete the <reactor_> singleton if non-0.
@@ -851,6 +857,9 @@ protected:
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/Reactor.inl"

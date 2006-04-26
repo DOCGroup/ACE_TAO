@@ -1,15 +1,15 @@
 // $Id$
 
-#include "FTEC_Event_Channel_Impl.h"
-#include "FTEC_Factory.h"
-#include "FTEC_SupplierAdmin.h"
-#include "FTEC_ConsumerAdmin.h"
-#include "FTEC_ProxyConsumer.h"
-#include "FTEC_ProxySupplier.h"
-#include "FtEventServiceInterceptor.h"
-#include "FT_ProxyAdmin_Base.h"
-#include "IOGR_Maker.h"
-#include "Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Factory.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/FtRtecEventCommC.h"
 
@@ -17,6 +17,8 @@
 ACE_RCSID (EventChannel,
            FTEC_Event_Channel_Impl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void obtain_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
                           FtRtecEventChannelAdmin::Operation& op
@@ -215,7 +217,7 @@ typedef void (*Set_update_fun)(TAO_FTEC_Event_Channel_Impl* ec,
                                FtRtecEventChannelAdmin::Operation& op
                                ACE_ENV_ARG_DECL);
 
-Set_update_fun update_table[] = {
+Set_update_fun const update_table[] = {
     &obtain_push_supplier,
     &obtain_push_consumer,
     &disconnect_push_supplier,
@@ -576,3 +578,5 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
   ACE_ENDTRY;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

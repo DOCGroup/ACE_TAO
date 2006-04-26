@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -24,8 +24,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "HTIOP_Export.h"
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 // ****************************************************************
@@ -90,6 +92,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* HTIOP_COMPLETION_HANDLER_H */

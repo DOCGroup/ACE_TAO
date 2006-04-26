@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,16 +15,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Operation_Table.h"
+#include "tao/PortableServer/Operation_Table.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Dynamic_Hash_OpTable
@@ -75,6 +77,8 @@ private:
   /// The hash table data structure.
   OP_MAP_MANAGER hash_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPERATION_TABLE_DYNAMIC_HASH_H */

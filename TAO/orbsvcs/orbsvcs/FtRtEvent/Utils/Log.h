@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Log.h
@@ -12,9 +13,12 @@
 #define FTRTEC_LOG_H
 
 #include /**/ "ace/pre.h"
-#include "ftrtevent_export.h"
+#include "orbsvcs/FtRtEvent/Utils/ftrtevent_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
 
@@ -34,8 +38,10 @@ namespace TAO_FTRTEC {
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "Log.inl"
+#include "orbsvcs/FtRtEvent/Utils/Log.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -75,9 +75,9 @@ ACE_RCSID(Misc, childbirth_time, "$Id$")
 
 #define MAX_NO_ITERATION  10000
 #if defined (ACE_WIN32)
-#define SUBPROGRAM "date.exe"
+#define SUBPROGRAM ACE_TEXT ("date.exe")
 #else
-#define SUBPROGRAM "date"
+#define SUBPROGRAM ACE_TEXT ("date")
 #endif
 
 size_t MULTIPLY_FACTOR = 10;

@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_IORINFOC_H_
-#define _TAO_IDL_ORIG_IORINFOC_H_
+#ifndef _TAO_IDL_IORINFOC_H_
+#define _TAO_IDL_IORINFOC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "iorinterceptor_export.h"
+#include "tao/IORInterceptor/iorinterceptor_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -48,6 +48,8 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PortableInterceptorC.h"
+#include "tao/Policy_ForwardC.h"
+#include "tao/IOP_IORC.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_includeC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -55,23 +57,16 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_IORInterceptor_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_PORTABLEINTERCEPTOR_IORINFO__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_IORINFO__VAR_OUT_CH_
@@ -100,7 +95,7 @@ namespace PortableInterceptor
 #define _PORTABLEINTERCEPTOR_IORINFO_CH_
   
   class TAO_IORInterceptor_Export IORInfo
-    : public virtual CORBA::Object
+    : public virtual ::CORBA::Object
   {
   public:
     typedef IORInfo_ptr _ptr_type;
@@ -112,12 +107,12 @@ namespace PortableInterceptor
     static void _tao_release (IORInfo_ptr obj);
     
     static IORInfo_ptr _narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static IORInfo_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -136,7 +131,7 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -147,7 +142,7 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -159,27 +154,27 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual PortableInterceptor::AdapterManagerId manager_id (
+    virtual ::PortableInterceptor::AdapterManagerId manager_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual PortableInterceptor::AdapterState state (
+    virtual ::PortableInterceptor::AdapterState state (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -189,7 +184,7 @@ namespace PortableInterceptor
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -199,7 +194,7 @@ namespace PortableInterceptor
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -210,19 +205,19 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
     
-    virtual CORBA::Boolean _is_a (
+    virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
     // Abstract or local interface only.
@@ -240,7 +235,7 @@ namespace PortableInterceptor
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableInterceptor
 
@@ -251,8 +246,8 @@ namespace PortableInterceptor
 namespace TAO
 {
 
-#if !defined (_PORTABLEINTERCEPTOR_IORINFO__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_IORINFO__TRAITS_CH_
+#if !defined (_PORTABLEINTERCEPTOR_IORINFO__TRAITS_)
+#define _PORTABLEINTERCEPTOR_IORINFO__TRAITS_
   
   template<>
   struct TAO_IORInterceptor_Export Objref_Traits< ::PortableInterceptor::IORInfo>
@@ -264,7 +259,7 @@ namespace TAO
         ::PortableInterceptor::IORInfo_ptr
       );
     static ::PortableInterceptor::IORInfo_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::PortableInterceptor::IORInfo_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -274,15 +269,9 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1040
 
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

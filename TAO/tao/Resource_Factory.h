@@ -15,17 +15,27 @@
 #define TAO_RESOURCE_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+#include "tao/Basic_Types.h"
+
+#include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
-#include "tao/TAO_Export.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Protocol_Factory;
 class TAO_Acceptor_Registry;
@@ -35,8 +45,8 @@ class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
 class TAO_Codeset_Manager;
-
-class ACE_Lock;
+class TAO_GIOP_Fragmentation_Strategy;
+class TAO_Transport;
 
 // ****************************************************************
 
@@ -62,9 +72,10 @@ public:
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
-  // Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Protocol_Item (const TAO_Protocol_Item&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Protocol_Item&))
+
+  // Disallow copying and assignment.
+  TAO_Protocol_Item (const TAO_Protocol_Item&);
+  void operator= (const TAO_Protocol_Item&);
 
 private:
   /// Protocol factory name.
@@ -144,6 +155,9 @@ public:
 
   /// Return a connector to be utilized.
   virtual TAO_Connector_Registry *get_connector_registry (void);
+
+  /// Return the Allocator's memory pool type
+  virtual void use_local_memory_pool (bool);
 
   /// @name Access the input CDR allocators.
   //@{
@@ -228,6 +242,11 @@ public:
   /// caller.
   virtual TAO_LF_Strategy *create_lf_strategy (void) = 0;
 
+  /// Outgoing fragment creation strategy.
+  virtual auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+    create_fragmentation_strategy (TAO_Transport * transport,
+                                   CORBA::ULong max_message_size) const = 0;
+
   /// Disables the factory.  When a new factory is installed and used,
   /// this function should be called on the previously used (default)
   /// factory.  This should result in proper error reporting if the
@@ -252,6 +271,8 @@ protected:
   virtual int load_default_protocols (void);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

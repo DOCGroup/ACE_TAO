@@ -1,4 +1,5 @@
-//$Id$
+// $Id$
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -6,6 +7,7 @@
  *  @file    NodeApplicationManager_Impl.h
  *
  *  @author  Tao Lu <lu@dre.vanderbilt.edu>
+ *  @author  Gan Deng <dengg@dre.vanderbilt.edu>
  *
  *  This file contains implementation for the servant of
  *  Deployment::NodeApplicationManager.
@@ -25,36 +27,45 @@
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/OS_NS_sys_wait.h"
+#include "ace/Process_Manager.h"
 #include "ciao/NodeApp_CB_Impl.h"
-#include "ciao/DeploymentS.h"
+#include "ciao/NodeApplicationManagerS.h"
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"
+#include "NodeManager/NodeManager_Impl.h"
+#include "NodeApplication/NodeApplication_Core.h"
 
 namespace CIAO
 {
+
   /**
-   * @class NodeApplicationManager_Impl
+   * @class NodeApplicationManager_Impl_Base
    */
-  class CIAO_NAM_Export NodeApplicationManager_Impl
+  class CIAO_NAM_Export NodeApplicationManager_Impl_Base
     : public virtual POA_Deployment::NodeApplicationManager
   {
   public:
     /// Constructor
-    NodeApplicationManager_Impl (CORBA::ORB_ptr o,
-                                 PortableServer::POA_ptr p);
+    NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
+                                      PortableServer::POA_ptr p);
 
     /*===========================================================
      * Below are operations from the NodeApplicationManager
      *
      *============================================================*/
 
-    //@@ The return type is NodeApplication_ptr actually.
+    /// The return type is NodeApplication_ptr actually.
+    /// For "external/shared" components of this child plan, they are
+    /// not actaully installed, however, the object references
+    /// of the ports of these external components are returned
+    /// through <providedReference>.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
-                    Deployment::Connections_out providedReference,
-                                 CORBA::Boolean start
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                 Deployment::Connections_out providedReference,
+                 CORBA::Boolean start
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                               Deployment::ResourceNotAvailable,
                               Deployment::StartError,
@@ -65,6 +76,31 @@ namespace CIAO
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                               Deployment::StopError));
+
+    virtual Deployment::Application_ptr
+    perform_redeployment (const Deployment::Properties & configProperty,
+                          Deployment::Connections_out providedReference,
+                          CORBA::Boolean add_or_remove,
+                          CORBA::Boolean start
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Deployment::PlanError,
+                       ::Deployment::InstallationFailure,
+                       ::Deployment::UnknownImplId,
+                       ::Deployment::ImplEntryPointNotFound,
+                       ::Deployment::InvalidConnection,
+                       ::Deployment::InvalidProperty,
+                       ::Components::RemoveFailure));
+
+    virtual void
+    reset_plan (const ::Deployment::DeploymentPlan & plan
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
+
+    virtual void
+    set_shared_components (const Deployment::ComponentPlans & shared
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
     /**
      * A factory operation to create NodeApplicationManager interface, and return
@@ -81,7 +117,7 @@ namespace CIAO
      *
      * @param nodeapp_options A null-terminated char * string
      * containing command line options to be passed to the
-     * NodeApplication. 
+     * NodeApplication.
      *
      * @param delay instructs how long (in second) a CIAO_NodeApplicationManager
      *   should wait for a newly spawned NodeApplication to pass back
@@ -93,6 +129,8 @@ namespace CIAO
      *
      * @param callback_poa contains child poa created for the callback interface.
      *
+     * @para nm Pointer to the NodeManager_Impl servant object
+     *
      * @return NodeApplicationManager_ptr.
      **/
     virtual PortableServer::ObjectId
@@ -100,28 +138,59 @@ namespace CIAO
           const char *nodeapp_options,
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
-          const PortableServer::POA_ptr callback_poa
+          const PortableServer::POA_ptr callback_poa,
+          NodeManager_Impl_Base * nm
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidProperty));
+                       Deployment::InvalidProperty))=0;
 
-    //@@ Note: This method doesn't do duplicate.
+    /// @note This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nodeapp_manager (void);
+
+    /// Set the priority of the NodeApplication process which this NAM manages
+    virtual ::CORBA::Long set_priority (
+        const char * cid,
+        const ::Deployment::Sched_Params & params
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException ));
 
   protected:
     /// Destructor
-    virtual ~NodeApplicationManager_Impl (void);
+    virtual ~NodeApplicationManager_Impl_Base (void);
 
-    // Internal help function to create new NodeApplicationProcess
+    /// Add new components
+    virtual void
+    add_new_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      ::Deployment::PlanError,
+                      ::Deployment::InstallationFailure,
+                      ::Deployment::UnknownImplId,
+                      ::Deployment::ImplEntryPointNotFound,
+                      ::Deployment::InvalidConnection,
+                      ::Deployment::InvalidProperty));
+
+    /// Remove existing components
+    virtual void
+    remove_existing_components (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Deployment::PlanError,
+                   ::Components::RemoveFailure));
+
+    /// Determine whether a component is absent in the new_plan
+    /// Return true if absent
+    virtual bool
+    is_to_be_removed (const char * name);
+
+    /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::ResourceNotAvailable,
                        Deployment::StartError,
-                       Deployment::InvalidProperty));
+                       Deployment::InvalidProperty))=0;
 
-    // Helper function to get the connection.
+    /// Helper function to get the connection.
     virtual Deployment::Connections *
     create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -138,38 +207,58 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidProperty));
 
+    /// Helper function to check wheather a component instance
+    /// is in the "shared components list".
+    bool is_shared_component (ACE_CString & name);
+
+    /// Helper function to check wheather a component instance
+    /// is in the "shared components list".
+    bool is_external_component (ACE_CString & name);
+
   protected:
-    // location of the Nodeapplication
+    /// location of the Nodeapplication
     ACE_CString nodeapp_path_;
 
-    // Keep a pointer to the managing ORB serving this servant.
+    /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
-    // Keep a pointer to the managing POA.
+    /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    // ObjectRef of ourself which will be needed by the callback
+    /// Pointer to the NodeManager_Impl servant object
+    /// We could do this because NodeManager and NodeApplicationManager
+    /// are always collocated in the same process, so we don't have
+    /// to pass CORBA object reference back and forth.
+    NodeManager_Impl_Base * node_manager_;
+
+    /// ObjectRef of ourself which will be needed by the callback
     Deployment::NodeApplicationManager_var objref_;
 
-    // Child poa that uses active object map.
+    /// Child poa that uses active object map.
     PortableServer::POA_var callback_poa_;
 
-    // Cache a object reference of the underlying NodeApplication
-    // Since I have decided to have only 1 NA in NAM so no map is needed.
+    /// Cache a object reference of the underlying NodeApplication
+    /// Since I have decided to have only 1 NA in NAM so no map is needed.
     Deployment::NodeApplication_var nodeapp_;
 
-    // Cached plan (This should be the part of the whole plan local to this node)
-    // The plan will be initialized when init is called.
+    /// Cached plan (This should be the part of the whole plan local to this node)
+    /// The plan will be initialized when init is called.
     Deployment::DeploymentPlan plan_;
 
-    // Specify the time in second NodeApplicationManager will wait for a
-    // child NodeApplication to callback.  Default is 5 second.
+    /// Specify the time in second NodeApplicationManager will wait for a
+    /// child NodeApplication to callback.  Default is 5 second.
     CORBA::ULong spawn_delay_;
 
-    // Extracted commandline options to pass to the NodeApplication.
+    /// Extracted commandline options to pass to the NodeApplication.
     CORBA::String_var nodeapp_command_op_;
 
-    // A map of the component created on this node.
+    /// A list of components shared across deployment plans
+    Deployment::ComponentPlans shared_components_;
+
+    /// A list of components that are "external" to this plan
+    Deployment::ComponentPlans external_components_;
+
+    /// A map of the component created on this node.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMObject_var,
                                     ACE_Hash<ACE_CString>,
@@ -178,8 +267,146 @@ namespace CIAO
     typedef CCMComponent_Map::iterator Component_Iterator;
     CCMComponent_Map component_map_;
 
-    // Synchronize access to the object set.
+    /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
+
+    /// The Process Manager for this NodeApplicationManager
+    ACE_Process_Manager node_app_process_manager_;
+
+    /// The process id of the NA associated with the NAM,
+    /// Each NAM will only have one NA associated with it,
+    /// so we have only one process associated with it.
+
+    // this is UNIX specific .... not portable
+    pid_t process_id_;
+  };
+
+
+  /**
+   * @class NAM_Handler
+   * @brief The signal handler class for the SIGCHLD
+   * handling to avoid zombies
+   *
+   */
+  class NAM_Handler : public ACE_Event_Handler
+    {
+    public:
+      virtual int handle_signal (int sig,
+                                 siginfo_t *,
+                                 ucontext_t *)
+        {
+          ACE_UNUSED_ARG (sig);
+
+          // @@ Note that this code is not portable to all OS platforms
+          // since it uses print statements within signal handler context.
+          //ACE_DEBUG ((LM_DEBUG,
+          //            "Executed ACE signal handler for signal %S \n",
+          //            sig));
+
+          ACE_exitcode status;
+          // makes a claal to the underlying os system call
+          // -1 to wait for any child process
+          // and WNOHANG so that it retuurns immediately
+          ACE_OS::waitpid (-1 ,&status, WNOHANG, 0);
+
+          return 0;
+        }
+    };
+
+
+  /**
+   * @class NodeApplicationManager_Impl
+   */
+  class CIAO_NAM_Export NodeApplicationManager_Impl
+    : public virtual NodeApplicationManager_Impl_Base
+  {
+  public:
+    /// Constructor
+    NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+                                 PortableServer::POA_ptr p);
+
+    virtual PortableServer::ObjectId
+    init (const char *nodeapp_location,
+          const char *nodeapp_options,
+          const CORBA::ULong delay,
+          const Deployment::DeploymentPlan & plan,
+          const PortableServer::POA_ptr callback_poa,
+          NodeManager_Impl_Base * nm
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InvalidProperty));
+
+  protected:
+    /// Destructor
+    virtual ~NodeApplicationManager_Impl (void);
+
+    // Internal help function to create new NodeApplicationProcess
+    // Here we override it to create an in-process NodeApplication object
+    virtual Deployment::NodeApplication_ptr
+    create_node_application (const ACE_CString & options
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::ResourceNotAvailable,
+                       Deployment::StartError,
+                       Deployment::InvalidProperty));
+
+
+    /**
+     * @operation push_component_info
+     * @brief pushes component info to the NodeManager
+     *
+     * @param process_id The id of the process of NodeApplication
+     */
+    void push_component_info (pid_t process_id);
+
+    /// The signal handler
+    NAM_Handler child_handler_;
+  };
+
+
+
+  struct Static_Config_EntryPoints_Maps;
+
+  /**
+   * @class Static_NodeApplicationManager_Impl
+   */
+  class CIAO_NAM_Export Static_NodeApplicationManager_Impl
+    : public virtual NodeApplicationManager_Impl_Base
+  {
+  public:
+    /// Constructor
+    Static_NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+                                        PortableServer::POA_ptr p,
+                                        Static_Config_EntryPoints_Maps* static_config_entrypoints_maps);
+
+    virtual PortableServer::ObjectId
+    init (const char *nodeapp_location,
+          const char *nodeapp_options,
+          const CORBA::ULong delay,
+          const Deployment::DeploymentPlan & plan,
+          const PortableServer::POA_ptr callback_poa,
+          NodeManager_Impl_Base * nm
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InvalidProperty));
+
+  protected:
+    /// Destructor
+    virtual ~Static_NodeApplicationManager_Impl (void);
+
+    // Internal help function to create new NodeApplicationProcess
+    // Here we override it to create an in-process NodeApplication object
+    virtual Deployment::NodeApplication_ptr
+    create_node_application (const ACE_CString & options
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::ResourceNotAvailable,
+                       Deployment::StartError,
+                       Deployment::InvalidProperty));
+
+    Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;
+
+    CIAO::NoOp_Configurator configurator_;
   };
 }
 

@@ -16,7 +16,10 @@
 #include "tao/ORB.h"
 
 class Sender_i;
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Manual_Event;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /// Implement a Task to run the experiments using multiple threads.
 class Server_Task : public ACE_Task_Base

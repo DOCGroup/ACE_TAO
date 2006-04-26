@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -18,6 +18,7 @@ noinst_PROGRAMS =
 ## Makefile.CosEC_RtEC_Based_Mult_Cons.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Consumer
@@ -40,6 +41,8 @@ Consumer_SOURCES = \
 
 Consumer_LDADD = \
   $(top_builddir)/orbsvcs/examples/CosEC/RtEC_Based/lib/libCosEC_RtEC_Based.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
@@ -56,11 +59,13 @@ Consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.CosEC_RtEC_Based_Mult_Supp.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Supplier
@@ -83,6 +88,8 @@ Supplier_SOURCES = \
 
 Supplier_LDADD = \
   $(top_builddir)/orbsvcs/examples/CosEC/RtEC_Based/lib/libCosEC_RtEC_Based.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
@@ -99,6 +106,7 @@ Supplier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

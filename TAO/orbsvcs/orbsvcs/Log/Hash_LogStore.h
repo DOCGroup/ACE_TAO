@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,7 +8,7 @@
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
 
@@ -27,9 +27,14 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LogMgr_i;
 class TAO_Hash_LogRecordStore;
 
@@ -119,6 +124,8 @@ private:
 
   TAO_LogMgr_i*         mgr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

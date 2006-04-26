@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,8 +14,8 @@
 #define XML_TOPOLOGY_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "Topology_Factory.h"
-#include "notify_persist_export.h"
+#include "orbsvcs/Notify/Topology_Factory.h"
+#include "orbsvcs/Notify/notify_persist_export.h"
 
 #include "tao/corba.h"
 #include "ace/SString.h"
@@ -25,8 +25,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
+  extern const char TOPOLOGY_ID_NAME[];
 
   /**
    * \brief Create XML topology savers and loaders
@@ -51,6 +54,7 @@ namespace TAO_Notify
   public:
     /// The constructor.
     XML_Topology_Factory ();
+    virtual ~XML_Topology_Factory ();
 
     ////////////////////////////////////
     // Override Topology_Factory methods
@@ -71,8 +75,11 @@ namespace TAO_Notify
     bool timestamp_;
   };
 
-  ACE_FACTORY_DECLARE (TAO_Notify_Persist, XML_Topology_Factory)
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_DECLARE (TAO_Notify_Persist, TAO_Notify_XML_Topology_Factory)
 
 #include /**/ "ace/post.h"
 #endif /* XML_TOPOLOGY_FACTORY_H */

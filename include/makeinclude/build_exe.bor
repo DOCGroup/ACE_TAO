@@ -43,7 +43,7 @@ $(TARGET): $(OBJFILES) $(RESOURCE)
 	@$(MAKE_BINDIR)
 	$(LD) @&&!
 	$(COMMON_LFLAGS) $(EXE_LFLAGS) $(LFLAGS) +
-	$(EXE_STARTUP_OBJ) $(LIBFILES) $(OBJFILES),	+
+	$(EXE_STARTUP_OBJ) $(PACKAGES) $(LIBFILES) $(OBJFILES),    +
 	$(TARGET),, +
 	$(COMMON_LIBS),, +
 	$(RESOURCE)
@@ -109,6 +109,6 @@ USE_FULL_PATH = 1
 
 .rc.res:
 	@$(MAKE_OBJDIR)
-	$(RC) -fo$@ $<
+        $(RC) $(RC_FLAGS) -fo$@ $<
 
 .autodepend

@@ -61,6 +61,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
@@ -77,22 +79,19 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        LongLongSeq,
-        CORBA::LongLong
+        LongLongSeq
       >
     LongLongSeq_var;
 
   typedef
     TAO_Seq_Out_T<
-        LongLongSeq,
-        LongLongSeq_var,
-        CORBA::LongLong
+        LongLongSeq
       >
     LongLongSeq_out;
 
   class TAO_Export LongLongSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::LongLong
           >
   {
@@ -103,7 +102,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::LongLong* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     LongLongSeq (const LongLongSeq &);
     ~LongLongSeq (void);
@@ -147,6 +146,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

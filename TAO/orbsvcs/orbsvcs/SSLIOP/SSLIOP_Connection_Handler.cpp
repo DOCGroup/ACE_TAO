@@ -1,6 +1,6 @@
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Endpoint.h"
-#include "SSLIOP_Util.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
 
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
@@ -15,7 +15,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Connection_Handler.i"
+# include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (SSLIOP,
@@ -23,6 +23,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
@@ -440,3 +442,4 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
                             setup_done);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

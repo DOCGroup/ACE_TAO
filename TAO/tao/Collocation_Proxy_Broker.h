@@ -22,10 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Collocation_Strategy.h"
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/CORBA_macros.h"
 #include "ace/os_include/os_stddef.h"
-#include "tao/Collocation_Strategy.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T> class TAO_Pseudo_Var_T;
 template <typename T, typename T_var> class TAO_Pseudo_Out_T;
@@ -65,6 +68,8 @@ namespace TAO
                            Collocation_Strategy strategy
                            ACE_ENV_ARG_DECL) = 0;
   };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 }
 
 #include /**/ "ace/post.h"

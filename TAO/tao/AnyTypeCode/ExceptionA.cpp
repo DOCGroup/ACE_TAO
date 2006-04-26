@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ExceptionA.h"
-#include "Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/ExceptionA.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
@@ -19,6 +19,8 @@ ACE_RCSID (tao,
            Exception,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Specializations for CORBA::Exception Any operators.
 namespace TAO
@@ -42,14 +44,14 @@ namespace TAO
                                    ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        return 1;
+        return true;
       }
     ACE_CATCHANY
       {
       }
     ACE_ENDTRY;
 
-    return 0;
+    return false;
   }
 
   template<>
@@ -62,14 +64,14 @@ namespace TAO
                                    ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        return 1;
+        return true;
       }
     ACE_CATCHANY
       {
       }
     ACE_ENDTRY;
 
-    return 0;
+    return false;
   }
 
   // This should never get called since we don't have extraction operators
@@ -85,7 +87,7 @@ namespace TAO
       const CORBA::Exception *&
     )
   {
-    return 0;
+    return false;
   }
 }
 
@@ -116,3 +118,5 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
     );
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

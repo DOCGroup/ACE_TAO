@@ -1,4 +1,3 @@
-// Name_Proxy.cpp
 // $Id$
 
 #include "ace/Name_Proxy.h"
@@ -6,6 +5,8 @@
 #include "ace/os_include/arpa/os_inet.h"
 
 ACE_RCSID(ace, Name_Proxy, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Name_Proxy::dump (void) const
@@ -33,7 +34,7 @@ ACE_Name_Proxy::ACE_Name_Proxy (void)
 
 int
 ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
-		      ACE_Synch_Options& options)
+                      ACE_Synch_Options& options)
 {
   ACE_TRACE ("ACE_Name_Proxy::open");
   ACE_Time_Value *timeout = 0;
@@ -154,7 +155,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
     default:
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("%p got %d bytes, expected %d bytes\n"),
-		  ACE_LIB_TEXT ("recv failed"),
+                  ACE_LIB_TEXT ("recv failed"),
                   n,
                   sizeof (ACE_UINT32)));
       // FALLTHROUGH
@@ -171,14 +172,14 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
         // @@ beware of blocking read!!!.
         n = this->peer_.recv ((void *) (((char *) &reply)
                                         + sizeof (ACE_UINT32)),
-			      length - sizeof (ACE_UINT32));
+                              length - sizeof (ACE_UINT32));
 
         // Subtract off the size of the part we skipped over...
         if (n != ssize_t (length - sizeof (ACE_UINT32)))
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_LIB_TEXT ("%p expected %d, got %d\n"),
-			ACE_LIB_TEXT ("invalid length"),
+                        ACE_LIB_TEXT ("invalid length"),
                         length,
                         n));
             return -1;
@@ -204,3 +205,5 @@ ACE_Name_Proxy::~ACE_Name_Proxy (void)
   ACE_TRACE ("ACE_Name_Proxy::~ACE_Name_Proxy");
   this->peer_.close ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

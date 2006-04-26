@@ -27,14 +27,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//////////////////////////////////
-// Classes declared in this header
-namespace TAO
-{
-  class  FT_FaultNotifier_i;
-}
-
-
 #include <orbsvcs/FT_NotifierS.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
@@ -43,6 +35,7 @@ namespace TAO
 /////////////////////
 // Forward references
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class  FT_FaultNotifier_i : public virtual POA_FT::FaultNotifier
@@ -272,6 +265,8 @@ namespace TAO
 
   };
 } // namespace TAO
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_FT_NOTIFIER_I_H_  */

@@ -4,7 +4,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "Reactor_Logging_Server.h"
+#include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 #include "ace/Log_Msg.h"
 
@@ -27,8 +27,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Reactor_Logging_Server<Logging_Acceptor_Ex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Reactor_Logging_Server<Logging_Acceptor_Ex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

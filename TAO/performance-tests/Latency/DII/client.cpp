@@ -2,7 +2,8 @@
 
 #include "tao/DynamicInterface/Request.h"
 #include "tao/Strategies/advanced_resource.h"
-#include "tao/AnyTypeCode/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -129,7 +130,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          request->add_in_arg("send_time") <<= start;
+          CORBA::ULongLong start_time = static_cast <CORBA::ULongLong> (start);
+          request->add_in_arg("send_time") <<= start_time;
 
           request->set_return_type (CORBA::_tc_ulonglong);
           request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);

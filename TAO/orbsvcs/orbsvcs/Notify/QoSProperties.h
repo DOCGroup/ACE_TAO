@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file QoSProperties.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_QOSPROPERTIES_H
@@ -14,16 +13,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PropertySeq.h"
-#include "Property_T.h"
-#include "Property_Boolean.h"
-#include "Property.h"
+#include "orbsvcs/Notify/PropertySeq.h"
+#include "orbsvcs/Notify/Property_T.h"
+#include "orbsvcs/Notify/Property_Boolean.h"
+#include "orbsvcs/Notify/Property.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_QoSProperties
@@ -108,8 +109,10 @@ protected:
   TAO_Notify_Property_Time blocking_policy_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "QoSProperties.inl"
+#include "orbsvcs/Notify/QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

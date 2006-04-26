@@ -49,30 +49,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr<Widget>;
-template class auto_ptr<Widget>;
-template class ACE_Auto_Basic_Ptr<Widget_Part>;
-template class auto_ptr<Widget_Part>;
-template class ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX>;
-template class ACE_Node<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> >;
-template class ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> >;
-template class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> >;
-template class ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex>;
-template class ACE_Node<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >;
-template class ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >;
-template class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr<Widget>
-#pragma instantiate auto_ptr<Widget>
-#pragma instantiate ACE_Auto_Basic_Ptr<Widget_Part>
-#pragma instantiate auto_ptr<Widget_Part>
-#pragma instantiate ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Node<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> >
-#pragma instantiate ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> >
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> >
-#pragma instantiate ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex>
-#pragma instantiate ACE_Node<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >
-#pragma instantiate ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

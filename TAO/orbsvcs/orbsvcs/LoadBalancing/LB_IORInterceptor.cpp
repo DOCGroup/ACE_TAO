@@ -1,6 +1,6 @@
-#include "LB_IORInterceptor.h"
-#include "LB_ObjectReferenceFactory.h"
-#include "LB_LoadAlert.h"
+#include "orbsvcs/LoadBalancing/LB_IORInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -8,6 +8,8 @@
 ACE_RCSID (LoadBalancing,
            LB_IORInterceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
   const CORBA::StringSeq & object_groups,
@@ -183,3 +185,5 @@ TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

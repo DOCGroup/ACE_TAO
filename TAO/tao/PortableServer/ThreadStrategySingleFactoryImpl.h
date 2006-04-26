@@ -14,7 +14,7 @@
 #define TAO_PORTABLESERVER_THREADPOLICYSINGLESTRATEGYFACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 #include "tao/PortableServer/ThreadStrategyFactory.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -41,11 +43,13 @@ namespace TAO
         ThreadStrategy *strategy
         ACE_ENV_ARG_DECL);
     };
-
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategySingleFactoryImpl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategySingleFactoryImpl)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategySingleFactoryImpl)
+ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategySingleFactoryImpl)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

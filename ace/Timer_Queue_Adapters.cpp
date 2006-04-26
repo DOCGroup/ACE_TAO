@@ -1,13 +1,13 @@
 // $Id$
 
+#ifndef ACE_TIMER_QUEUE_ADAPTERS_CPP
+#define ACE_TIMER_QUEUE_ADAPTERS_CPP
+
 #include "ace/Timer_Queue_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#ifndef ACE_TIMER_QUEUE_ADAPTERS_CPP
-#define ACE_TIMER_QUEUE_ADAPTERS_CPP
 
 # if !defined (__ACE_INLINE__)
 #  include "ace/Timer_Queue_Adapters.inl"
@@ -15,6 +15,8 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TQ> TQ &
 ACE_Async_Timer_Queue_Adapter<TQ>::timer_queue (void)
@@ -256,11 +258,19 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
         {
           // Compute the remaining time, being careful not to sleep
           // for "negative" amounts of time.
-          ACE_Time_Value tv = this->timer_queue_->earliest_time ();
-
-          // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting until %u.%3.3u secs\n"),
-          // tv.sec(), tv.msec()));
-          this->condition_.wait (&tv);
+          const ACE_Time_Value tv_curr = this->timer_queue_->gettimeofday ();
+          const ACE_Time_Value tv_earl = this->timer_queue_->earliest_time ();
+ 
+          if (tv_earl > tv_curr)
+            {
+              // The earliest time on the Timer_Queue is in future, so
+              // use ACE_OS::gettimeofday() to convert the tv to the
+              // absolute time.
+              const ACE_Time_Value tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);  
+              // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting until %u.%3.3u secs\n"),
+              // tv.sec(), tv.msec()));
+              this->condition_.wait (&tv);
+            }
         }
 
       // Expire timers anyway, at worst this is a no-op.
@@ -289,6 +299,9 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
 {
   // Macros to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (thread_handles);
+
+  // Make sure to set this flag in case we were deactivated earlier.
+  this->active_ = 1;
 
   // Make sure that we only allow a single thread to be spawned for
   // our adapter.  Otherwise, too many weird things can happen.
@@ -339,5 +352,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
 }
 
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_CPP */

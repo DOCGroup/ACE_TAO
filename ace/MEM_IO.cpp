@@ -12,9 +12,11 @@
 
 ACE_RCSID(ace, MEM_IO, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
 
-ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO ()
+ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO (void)
 {
 }
 
@@ -271,8 +273,6 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
       return buf->size ();
     return -1;
   }
-
-  ACE_NOTREACHED (return 0;)
 }
 
 ssize_t
@@ -432,11 +432,11 @@ ACE_MEM_IO::recvv (iovec *io_vec,
       break;
     }
 
-  u_long inlen;
+  int inlen;
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-                     (u_long *) &inlen) == -1)
+                     &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
@@ -535,5 +535,7 @@ ACE_MEM_IO::recv (size_t n, ...) const
   return result;
 }
 #endif /* 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

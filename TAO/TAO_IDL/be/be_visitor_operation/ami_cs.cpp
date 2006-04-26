@@ -160,7 +160,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       *os << be_nl
           << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);"
+          << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
@@ -176,7 +176,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << "TAO::Arg_Traits<void>::ret_val _tao_retval;";
 
   // Declare the argument helper classes.
-  this->gen_stub_body_arglist (ami_op, os, I_TRUE);
+  this->gen_stub_body_arglist (ami_op, os, true);
 
   // Assemble the arg helper class pointer array.
   *os << be_nl << be_nl
@@ -255,10 +255,9 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   *os << "AMI_" << parent->local_name () << "Handler::"
       << opname.fast_rep () + (this->ctx_->attribute () != 0)
-      << "_reply_stub" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_CHECK;";
+      << "_reply_stub" << env_arg << be_uidt_nl
+      << ");" << be_uidt
+      << TAO_ACE_CHECK ();
 
   *os << be_uidt_nl
       << "}";

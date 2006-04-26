@@ -3,10 +3,10 @@
 #ifndef TAO_Notify_EVENT_MAP_ENTRY_CPP
 #define TAO_Notify_EVENT_MAP_ENTRY_CPP
 
-#include "Event_Map_Entry_T.h"
+#include "orbsvcs/Notify/Event_Map_Entry_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Event_Map_Entry_T.inl"
+#include "orbsvcs/Notify/Event_Map_Entry_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify, 
@@ -14,8 +14,10 @@ ACE_RCSID (Notify,
            "$Id$")
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
-#include "Properties.h"
-#include "Factory.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Factory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY>
 TAO_Notify_Event_Map_Entry_T<PROXY>::TAO_Notify_Event_Map_Entry_T (void)
@@ -50,5 +52,7 @@ TAO_Notify_Event_Map_Entry_T<PROXY>::disconnected (PROXY* proxy ACE_ENV_ARG_DECL
   this->collection_->disconnected (proxy ACE_ENV_ARG_PARAMETER);
   --count_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_Notify_EVENT_MAP_ENTRY_CPP */

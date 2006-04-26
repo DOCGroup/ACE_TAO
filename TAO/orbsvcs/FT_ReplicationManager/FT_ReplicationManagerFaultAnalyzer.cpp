@@ -26,6 +26,8 @@ ACE_RCSID (FT_ReplicationManagerFaultAnalyzer,
            FT_ReplicationManagerFaultAnalyzer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Constructor.
 TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
   const TAO::FT_ReplicationManager * replication_manager)
@@ -1084,3 +1086,5 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
 
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

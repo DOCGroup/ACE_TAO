@@ -4,22 +4,23 @@
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-#include "TAOC.h"
-#include "SystemException.h"
+#include "tao/TAOC.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Buffering_Constraint_Policy,
            "$Id$")
 
-
 #if ! defined (__ACE_INLINE__)
 #include "tao/Buffering_Constraint_Policy.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , TAO::BufferingConstraintPolicy ()
   , TAO_Local_RefCounted_Object ()
   , buffering_constraint_ (buffering_constraint)
@@ -28,9 +29,9 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
 
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::CORBA::LocalObject ()
   , TAO::BufferingConstraintPolicy ()
   , TAO_Local_RefCounted_Object ()
   , buffering_constraint_ (rhs.buffering_constraint_)
@@ -85,5 +86,7 @@ TAO_Buffering_Constraint_Policy::_tao_cached_type (void) const
 {
   return TAO_CACHED_POLICY_BUFFERING_CONSTRAINT;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

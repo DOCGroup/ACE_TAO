@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -44,6 +44,9 @@
 #endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Atomic_Op<ACE_Thread_Mutex, long>
  *
@@ -61,7 +64,7 @@ public:
   ACE_Atomic_Op (void);
 
   /// Initialize <value_> to c.
-  ACE_Atomic_Op (long c);
+  ACE_Atomic_Op (const long &c);
 
   /// Manage copying...
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
@@ -125,10 +128,13 @@ public:
   static void init_functions (void);
 
 private:
+
   // This function cannot be supported by this template specialization.
   // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
   // template instead.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex &mutex (void))
+  ACE_Thread_Mutex &mutex (void);
+
+private:
 
   /// Current object decorated by the atomic op.
   volatile long value_;
@@ -157,7 +163,7 @@ public:
   ACE_Atomic_Op (void);
 
   /// Initialize <value_> to c.
-  ACE_Atomic_Op (unsigned long c);
+  ACE_Atomic_Op (const unsigned long &c);
 
   /// Manage copying...
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
@@ -221,10 +227,13 @@ public:
   static void init_functions (void);
 
 private:
+
   // This function cannot be supported by this template specialization.
   // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
   // template instead.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex &mutex (void))
+  ACE_Thread_Mutex &mutex (void);
+
+private:
 
   /// Current object decorated by the atomic op.
   volatile unsigned long value_;
@@ -235,6 +244,8 @@ private:
   static long (*exchange_fn_) (volatile long *, long);
   static long (*exchange_add_fn_) (volatile long *, long);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 

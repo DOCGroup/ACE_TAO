@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,9 +25,11 @@
 
 #include "orbsvcs/TimeBaseC.h"
 
-#include "Property.h"
-#include "Property_T.h"
-#include "AdminProperties.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Property_T.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Queueable;
 class TAO_Notify_QoSProperties;
@@ -44,8 +46,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Buffering_Strategy
 {
 public:
   TAO_Notify_Buffering_Strategy (
-      TAO_Notify_Message_Queue& msg_queue,
-    TAO_Notify_AdminProperties::Ptr& admin_properties);
+    TAO_Notify_Message_Queue& msg_queue,
+    const TAO_Notify_AdminProperties::Ptr& admin_properties);
 
   ~TAO_Notify_Buffering_Strategy ();
 
@@ -53,12 +55,11 @@ public:
   /// Order Policy
   /// Discard Policy
   /// MaxEventsPerConsumer
-  /// TAO_Notify_Extensions::BlockingPolicy
   void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Enqueue according the enqueing strategy.
   /// Return -1 on error else the number of items in the queue.
-  int enqueue (TAO_Notify_Method_Request_Queueable& method_request);
+  int enqueue (TAO_Notify_Method_Request_Queueable* method_request);
 
   /// Dequeue batch. This method will block for @a abstime if non-zero or else blocks till an item is available.
   /// Return -1 on error or if nothing is available, else the number of items actually dequeued (1).
@@ -71,10 +72,10 @@ public:
 private:
 
   /// Apply the Order Policy and queue. return -1 on error.
-  int queue (TAO_Notify_Method_Request_Queueable& method_request);
+  int queue (TAO_Notify_Method_Request_Queueable* method_request);
 
   /// Discard as per the Discard Policy.
-  bool discard (TAO_Notify_Method_Request_Queueable& method_request);
+  bool discard (TAO_Notify_Method_Request_Queueable* method_request);
 
   ///= Data Members
 
@@ -112,6 +113,8 @@ private:
   /// Flag to shutdown.
   bool shutdown_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

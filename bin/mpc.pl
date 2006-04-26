@@ -13,16 +13,17 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # ******************************************************************
 
 use strict;
-use Cwd;
 use Config;
+use FindBin;
+use File::Spec;
 use File::Basename;
 
-if ( $^O eq 'VMS' ) {
-  require VMS::Filespec;
-  import VMS::Filespec qw(unixpath);
+my($basePath) = $FindBin::Bin;
+if ($^O eq 'VMS') {
+  $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
+  $basePath = VMS::Filespec::unixify($basePath);
 }
-
-my($basePath) = getExecutePath($0) . '/MakeProjectCreator';
+$basePath .= '/MakeProjectCreator';
 unshift(@INC, $basePath . '/modules');
 
 my($mpcroot) = $ENV{MPC_ROOT};
@@ -65,58 +66,6 @@ sub getBasePath {
   return $mpcpath;
 }
 
-
-sub which {
-  my($prog) = shift;
-  my($exec) = $prog;
-
-  if (defined $ENV{'PATH'}) {
-    my($part)   = '';
-    my($envSep) = $Config{'path_sep'};
-    foreach $part (split(/$envSep/, $ENV{'PATH'})) {
-      $part .= "/$prog";
-      if ( -x $part ) {
-        $exec = $part;
-        last;
-      }
-    }
-  }
-
-  return $exec;
-}
-
-
-sub getExecutePath {
-  my($prog) = shift;
-  my($loc)  = '';
-
-  if ($prog ne basename($prog)) {
-    my($dir) = ($^O eq 'VMS' ? unixpath(dirname($prog)) : dirname($prog));
-    if ($prog =~ /^[\/\\]/ ||
-        $prog =~ /^[A-Za-z]:[\/\\]?/) {
-      $loc = $dir;
-    }
-    else {
-      $loc = ($^O eq 'VMS' ? unixpath(getcwd()) : getcwd()) . '/' . $dir;
-    }
-  }
-  else {
-    $loc = dirname(which($prog));
-    if ($^O eq 'VMS') {
-      $loc = unixpath($loc);
-    }
-  }
-
-  $loc =~ s/\/\.$//;
-
-  if ($loc eq '.') {
-    $loc = ($^O eq 'VMS' ? unixpath(getcwd()) : getcwd());
-  }
-
-  return $loc;
-}
-
-
 # ************************************************************
 # Main Section
 # ************************************************************
@@ -128,9 +77,11 @@ my($driver) = new MPC();
 my($creators) = $driver->getCreatorList();
 unshift(@$creators, @creators);
 
-## Add the mpc path to the include paths
-unshift(@ARGV, '-include', "$mpcpath/config",
-               '-include', "$mpcpath/templates");
+## Add the mpc path to the include paths, but preserve
+## the original @ARGV as it is included in the output of
+## most of the workspace creators.
+my(@args) = ('-include', "$mpcpath/config",
+             '-include', "$mpcpath/templates", @ARGV);
 
 ## Execute the driver
-exit($driver->execute($basePath, basename($0), \@ARGV));
+exit($driver->execute($basePath, basename($0), \@args));

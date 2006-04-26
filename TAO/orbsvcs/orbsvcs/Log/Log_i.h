@@ -32,7 +32,9 @@
 #include "orbsvcs/Log/LogRecordStore.h"
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 
@@ -323,7 +325,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+  /// Get the availability status
+  /// @note must be called with locks held
+  DsLogAdmin::AvailabilityStatus
+  get_availability_status_i (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Tells if the Log is scheduled to run now.
+  /// @note must be called with locks held
   CORBA::Boolean scheduled (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -346,18 +355,52 @@ protected:
    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-protected:
+  /// Reset Log QoS
+  void reset_log_qos (const DsLogAdmin::QoSList& qos
+		      ACE_ENV_ARG_DECL);
 
-  /// The factory of the log
+  /// Validate log QoS
+  void validate_log_qos (const DsLogAdmin::QoSList& qos
+			 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((DsLogAdmin::UnsupportedQoS));
+
+  /// Reset Week Mask
+  ///
+  /// Used to initialize internal data structures that represent the
+  /// week mask list when the log service starts, and to reinitialize
+  /// them when they are changed.
+  ///
+  void reset_week_mask (const DsLogAdmin::WeekMask& masks
+			ACE_ENV_ARG_DECL);
+
+  /// Validate Week Mask
+  ///
+  /// Used to check whether week mask is valid.  If not, throws an
+  /// InvalidTime, InvalidTimeInterval, or InvalidMask exception.
+  ///
+  void validate_week_mask (const DsLogAdmin::WeekMask& masks
+			   ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((DsLogAdmin::InvalidTime,
+                     DsLogAdmin::InvalidTimeInterval,
+                     DsLogAdmin::InvalidMask));
+
+protected:
+  /// Reference to the LogMgr servant
+  TAO_LogMgr_i& logmgr_i_;
+
+  /// The log's object reference
+  DsLogAdmin::Log_var log_;
+
+  /// The log's factory's object reference
   DsLogAdmin::LogMgr_var factory_;
 
-  /// The id of the log
+  /// The log's id 
   DsLogAdmin::LogId logid_;
 
-  /// The operational state of the log
+  /// The log's operational state
   DsLogAdmin::OperationalState op_state_;
 
-  /// The availability of the log
+  /// The log's availability status
   DsLogAdmin::AvailabilityStatus avail_status_;
 
   /// The list of points at which the log should generate events
@@ -367,11 +410,8 @@ protected:
   /// The next capacity alarm threshold.
   CORBA::ULong current_threshold_;
 
-  /// The days of the week that the log should be operational
-  DsLogAdmin::WeekMask weekmask_;
-
   /// A Sequence of the weekly intervals when the log is in operation.
-  TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval> weekly_intervals_;
+  DsLogAdmin::TimeIntervalSeq weekly_intervals_;
 
   /// The QoS type of the log
   DsLogAdmin::QoSType qostype_;
@@ -397,6 +437,72 @@ protected:
   /// Log Flush Interval
   static const ACE_Time_Value	log_flush_interval_;
 };
+
+bool TAO_Log_Serv_Export 
+operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs);
+	
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs);
+	
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::WeekMask& rhs,
+           const DsLogAdmin::WeekMask& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::WeekMask& rhs,
+           const DsLogAdmin::WeekMask& lhs);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

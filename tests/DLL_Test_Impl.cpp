@@ -70,6 +70,16 @@ Hello_Impl::operator new (size_t bytes, const ACE_nothrow_t &nt)
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
   return ::new (nt) char[bytes];
 }
+
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+void
+Hello_Impl::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
+{
+  ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
+  ::delete [] static_cast<char *> (ptr);
+}
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
+
 #endif /* ACE_HAS_NEW_NOTHROW */
 
 void
@@ -133,5 +143,5 @@ dynamic_cast_test (Parent *target)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynamic_cast_test: parent %@; child %@\n"),
               target, c));
   return target == c ? 0 : -1;
-}  
+}
 #endif /* !ACE_LACKS_RTTI */

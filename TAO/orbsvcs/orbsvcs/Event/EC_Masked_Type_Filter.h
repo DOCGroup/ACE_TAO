@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Masked_Type_Filter.h
  *
@@ -16,11 +17,13 @@
 #define TAO_EC_MASKED_TYPE_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter.h"
+#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Masked_Type_Filter
@@ -71,10 +74,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Masked_Type_Filter
-                              (const TAO_EC_Masked_Type_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Masked_Type_Filter& operator=
-                              (const TAO_EC_Masked_Type_Filter&))
+  TAO_EC_Masked_Type_Filter (const TAO_EC_Masked_Type_Filter&);
+  TAO_EC_Masked_Type_Filter& operator= (const TAO_EC_Masked_Type_Filter&);
 
 private:
   /// The bitmasks
@@ -85,6 +86,8 @@ private:
   CORBA::ULong source_value_;
   CORBA::ULong type_value_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_MASKED_TYPE_FILTER_H */

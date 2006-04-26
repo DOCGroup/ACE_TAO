@@ -1,24 +1,25 @@
 // $Id$
 
-#include "Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 
-#include "ProxySupplier.h"
-#include "Consumer.h"
-#include "Admin.h"
-#include "ConsumerAdmin.h"
-#include "EventChannelFactory.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Consumer.h"
+#include "orbsvcs/Notify/Admin.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
 
 #include "tao/debug.h"
-#include "tao/corba.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_stdio.h"
 
-//#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constuct from event
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
@@ -77,6 +78,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
                                                                   parent.filter_admin (),
                                                                   parent.filter_operator ()
                                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
 
       if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",&this->proxy_supplier_ , val));
@@ -299,3 +301,4 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
   return request;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,22 +1,19 @@
 /* -*-C++-*- */
-// $Id$
 #ifndef CTR64_
 #define CTR64_
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    ctr64.h
-//
-// = DESCRIPTION
-//  SNMP Counter64 class definition.
-//
-// = AUTHOR
-//    Peter E Mellquist
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ctr64.h
+ *
+ *  $Id$
+ *
+ *  SNMP Counter64 class definition.
+ *
+ *
+ *  @author Peter E Mellquist
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -44,65 +41,68 @@
 // a single entity. This type has is available in SNMPv2 but
 // may be used anywhere where needed.
 //
-class ASNMP_Export Counter64: public  SnmpSyntax
-  // = TITLE
-  //     Defines the member functions for the Counter64 concrete class
-  //     This class implements RFC 1902 64 bit Counter Object.
+/**
+ * @class Counter64
+ *
+ * @brief Defines the member functions for the Counter64 concrete class
+ * This class implements RFC 1902 64 bit Counter Object.
+ */
+class ASNMP_Export Counter64 : public  SnmpSyntax
 {
 public:
+  /// default constructor
   Counter64( ACE_UINT64 llw = 0);
-  // default constructor
 
+  /// constructor with values
   Counter64( unsigned long hiparm, unsigned long loparm);
-  // constructor with values
 
+  /// copy constructor
   Counter64( const Counter64 &ctr64);
-  // copy constructor
 
+  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
   ~Counter64();
-  // destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
 
+  /// syntax type
   SmiUINT32 get_syntax();
-  // syntax type
 
+  /// return a long double representation
   long double to_long_double() const;
-  // return a long double representation
 
+  /// assign a long double to a counter64
   Counter64& assign( long double ld);
-  // assign a long double to a counter64
 
+  /// return the high part
   unsigned long high() const;
-  // return the high part
 
+  /// return the low part
   unsigned long low() const;
-  // return the low part
 
+  /// set the high part
   void set_high( const unsigned long h);
-  // set the high part
 
+  /// set the low part
   void set_low( const unsigned long l);
-  // set the low part
 
+  /// overloaded assignment
   Counter64& operator=( const ACE_UINT64 rhs);
-  // overloaded assignment
 
+  /// overloaded assignment
   Counter64& operator=( const Counter64 &rhs);
-  // overloaded assignment
 
+  /// get a printable ASCII representation
   const char *to_string();
-  // get a printable ASCII representation
 
+  /// create a new instance of this Value
   SnmpSyntax *clone() const;
-  // create a new instance of this Value
 
+  /// copy an instance of this Value
   SnmpSyntax& operator=( SnmpSyntax &val);
-  // copy an instance of this Value
 
+  /// general validity test, always true
   int valid() const;
-  // general validity test, always true
 
+  /// otherwise, behave like an ACE_UINT64
   operator ACE_UINT64();
-  // otherwise, behave like an ACE_UINT64
 
 protected:
   char output_buffer[CTR64OUTBUF];

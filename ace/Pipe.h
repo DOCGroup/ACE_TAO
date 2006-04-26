@@ -26,6 +26,8 @@
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 class ACE_Message_Block;
 class ACE_Time_Value;
@@ -37,7 +39,7 @@ class ACE_Time_Value;
  *
  * This class is designed to work with select()-based demuxers, such
  * as the ACE_Select_Reactor, which is why it uses sockets on Windows
- * rather than Win32 pipes (which aren't select()'able). 
+ * rather than Win32 pipes (which aren't select()'able).
  */
 class ACE_Export ACE_Pipe
 {
@@ -151,6 +153,8 @@ public:
 private:
   ACE_HANDLE handles_[2];
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Pipe.inl"

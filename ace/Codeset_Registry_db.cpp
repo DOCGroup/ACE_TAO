@@ -12,7 +12,9 @@
 
 #include "ace/Codeset_Registry.h"
 
-ACE_Codeset_Registry::registry_entry
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_Codeset_Registry::registry_entry const
 ACE_Codeset_Registry::registry_db_[] =
 {
   {"ISO 8859-1:1987; Latin Alphabet No. 1","ASCII",0x00010001,1,{0x0011},1},
@@ -21,4 +23,6 @@ ACE_Codeset_Registry::registry_db_[] =
   {"ISO/IEC 10646-1:1993; UTF-16, UCS Transformation Format 16-bit form","Unicode",0x00010109,1,{0x1000},2}
 };
 
-size_t ACE_Codeset_Registry::num_registry_entries_ = 4;
+size_t const ACE_Codeset_Registry::num_registry_entries_ = 4;
+
+ACE_END_VERSIONED_NAMESPACE_DECL

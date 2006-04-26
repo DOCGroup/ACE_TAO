@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#include "Endpoint_Strategy.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -22,6 +22,8 @@
 #include "ace/Process_Semaphore.h"
 
 ACE_RCSID(AV, Endpoint_Strategy, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Strategy
@@ -429,3 +431,5 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL
   ACE_CHECK_RETURN (-1);
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

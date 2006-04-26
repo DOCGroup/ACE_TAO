@@ -26,6 +26,8 @@
 
 #include "tao/Exception.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   /**
@@ -70,13 +72,14 @@ namespace CORBA
     /// function is not CORBA compliant.
     virtual ACE_CString _info (void) const;
 
-    //protected: // when msvc6 is dropped we can make this protected
+  protected:
     /// Default constructor.
     UserException (void);
-
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/UserException.inl"

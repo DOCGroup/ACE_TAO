@@ -1,8 +1,10 @@
 // $Id$
 
-#include "EC_Type_Filter.h"
+#include "orbsvcs/Event/EC_Type_Filter.h"
 
 ACE_RCSID(Event, EC_Type_Filter, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Type_Filter::TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header)
   : header_ (header)
@@ -145,3 +147,4 @@ TAO_EC_Type_Filter::filter_set (const RtecEventComm::EventSet& event,
   return 1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

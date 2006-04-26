@@ -23,8 +23,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T> class ACE_Array_Base;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -190,6 +193,7 @@ namespace TAO
   }  // End namespace TypeCodeFactory
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

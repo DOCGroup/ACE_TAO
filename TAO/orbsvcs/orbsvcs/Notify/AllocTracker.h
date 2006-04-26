@@ -3,7 +3,7 @@
 #define ALLOC_TRACKER_H
 #include /**/"ace/pre.h"
 
-#include "notify_export.h"
+#include "orbsvcs/Notify/notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -72,7 +72,7 @@ private:
 };
 } //namespace
 #define ACE_WIN32_HEAP_MONITOR(name) \
-  CrtHeapDumper heap_check___(name); \
+  CRT::CrtHeapDumper heap_check___(name); \
   ACE_UNUSED_ARG (heap_check___)
 #else // _MSC_VER etc
  #define ACE_WIN32_HEAP_MONITOR(name)

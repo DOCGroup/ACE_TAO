@@ -5,6 +5,7 @@
 
 #include "ace/SString.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Compare two addresses for equality.
 
@@ -20,7 +21,7 @@ ACE_SPIPE_Addr::operator == (const ACE_SPIPE_Addr &sap) const
 ACE_INLINE bool
 ACE_SPIPE_Addr::operator != (const ACE_SPIPE_Addr &sap) const
 {
-  return !((*this) == sap);	// This is lazy, of course... ;-)
+  return !((*this) == sap);     // This is lazy, of course... ;-)
 }
 
 // Return the path name used for the rendezvous point.
@@ -54,3 +55,5 @@ ACE_SPIPE_Addr::group_id (gid_t gid)
 {
   this->SPIPE_addr_.gid_ = gid;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

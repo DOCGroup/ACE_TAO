@@ -26,6 +26,8 @@
 #include "ace/Default_Constants.h"
 #include "ace/Asynch_IO.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations
 class ACE_Message_Block;
 class ACE_INET_Addr;
@@ -70,7 +72,7 @@ public:
    *                associated @c ACE_Service_Handler::addresses() method
    *                after any call to @c validate_new_connection() and prior
    *                to the @c open() hook method call.
-   * @param backlog Optional, defaulting to @c ACE_DEFAULT_BACKLOG (which
+   * @param backlog Optional, defaulting to @c ACE_DEFAULT_ASYNCH_BACKLOG (which
    *                can be adjusted in your platform's @c config.h file).
    *                Specifies the listening backlog for the listening socket.
    * @param reuse_addr Optional, indicates whether the @c SO_REUSEADDR
@@ -107,7 +109,7 @@ public:
   virtual int open (const ACE_INET_Addr &address,
                     size_t bytes_to_read = 0,
                     int pass_addresses = 0,
-                    int backlog = ACE_DEFAULT_BACKLOG,
+                    int backlog = ACE_DEFAULT_ASYNCH_BACKLOG,
                     int reuse_addr = 1,
                     ACE_Proactor *proactor = 0,
                     int validate_new_connection = 0,
@@ -123,7 +125,7 @@ public:
    * closed and the all outstanding asynchronous operations have
    * either completed or have been canceled on the old listen handle.
    */
-  virtual void set_handle (ACE_HANDLE handle);
+  virtual int set_handle (ACE_HANDLE handle);
 
   /// This initiates a new asynchronous accept operation.
   /**
@@ -278,6 +280,8 @@ private:
   /// to @c open().
   int addr_family_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Asynch_Acceptor.cpp"

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Continuous_Priority_Mapping.h
@@ -21,8 +23,10 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "rtcorba_export.h"
-#include "Priority_Mapping.h"
+#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/RTCORBA/Priority_Mapping.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Continuous_Priority_Mapping
@@ -42,7 +46,6 @@
  * This class was previously called Direct_Priority_Mapping.
  *
  * \nosubgrouping
- *
  **/
 class TAO_RTCORBA_Export TAO_Continuous_Priority_Mapping
   : public TAO_Priority_Mapping
@@ -68,6 +71,8 @@ private:
   int min_;
   int max_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

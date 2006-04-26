@@ -7,9 +7,10 @@ ACE_RCSID (Log,
            NotifyLogFactory_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (void)
 {
-  // No-Op.
 }
 
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf)
@@ -457,3 +458,5 @@ TAO_NotifyLogFactory_i::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 {
   consumer_admin_->remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -7,6 +7,8 @@
 
 ACE_RCSID(ace, Thread_Exit, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 u_int ACE_Thread_Exit::is_constructed_ = 0;
 
 void
@@ -118,14 +120,4 @@ ACE_Thread_Exit_Maybe::instance (void) const
   return this->instance_;
 }
 
-#if (defined (ACE_HAS_THREADS) && \
-      (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
-       defined (ACE_HAS_TSS_EMULATION)))
-
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_TSS<ACE_Thread_Exit>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<ACE_Thread_Exit>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
+ACE_END_VERSIONED_NAMESPACE_DECL

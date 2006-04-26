@@ -1,9 +1,11 @@
-#include "PG_Property_Utils.h"
-#include "PG_Operators.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
 ACE_RCSID (PortableGroup,
            PG_Property_Utils,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_PG::get_property_value (const PortableGroup::Name & property_name,
@@ -76,3 +78,5 @@ TAO_PG::override_properties (
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -41,7 +41,10 @@
 extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);
 #endif /* ACE_NEEDS_FTRUNCATE */
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int access (const char *path, int amode);
@@ -53,7 +56,7 @@ namespace ACE_OS {
   unsigned int alarm (u_int secs);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int allocation_granularity (void);
+  long allocation_granularity (void);
 
   // used by ARGV::argv_to_string() and ACE_OS::fork_exec()
   extern ACE_Export
@@ -142,6 +145,9 @@ namespace ACE_OS {
   gid_t getgid (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  gid_t getegid (void);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int getopt (int argc,
               char *const *argv,
               const char *optstring);
@@ -160,6 +166,9 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   uid_t getuid (void);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  uid_t geteuid (void);
 
   // should call gethostname()
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -242,10 +251,13 @@ namespace ACE_OS {
                     size_t bufsiz);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void *sbrk (int brk);
+  void *sbrk (ptrdiff_t brk);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setgid (gid_t);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int setegid (gid_t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setpgid (pid_t pid, pid_t pgid);
@@ -261,6 +273,9 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setuid (uid_t);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int seteuid (uid_t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sleep (u_int seconds);
@@ -291,12 +306,12 @@ namespace ACE_OS {
   int truncate (const ACE_TCHAR *filename, off_t length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_int ualarm (u_int usecs,
-                u_int interval = 0);
+  u_long ualarm (u_long usecs,
+                 u_long interval = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_int ualarm (const ACE_Time_Value &tv,
-                const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  u_long ualarm (const ACE_Time_Value &tv,
+                 const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (const char *path);
@@ -329,6 +344,8 @@ namespace ACE_OS {
                    size_t *bytes_transferred = 0);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

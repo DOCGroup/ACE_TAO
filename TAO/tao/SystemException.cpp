@@ -1,12 +1,12 @@
 // $Id$
 
-#include "SystemException.h"
-#include "Environment.h"
-#include "ORB_Constants.h"
-#include "CORBA_String.h"
-#include "CDR.h"
-#include "debug.h"
-#include "AnyTypeCode_Adapter.h"
+#include "tao/SystemException.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Constants.h"
+#include "tao/CORBA_String.h"
+#include "tao/CDR.h"
+#include "tao/debug.h"
+#include "tao/AnyTypeCode_Adapter.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
@@ -29,6 +29,8 @@ ACE_RCSID (tao,
            SystemException,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @name @c errno Encoding
@@ -814,9 +816,11 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   return "*unknown description*";
 }
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 // List of standard/system exceptions ... used to create static
 // storage for their typecodes, then later to initialize that storage
@@ -877,6 +881,7 @@ static const char *repo_id_array[] = {
 static const CORBA::ULong array_sz =
   (sizeof (repo_id_array) / sizeof (char const *)) - 1;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::excp_factory excp_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -931,7 +936,7 @@ STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
 CORBA::SystemException *
-TAO_Exceptions::create_system_exception (const char *id)
+TAO::create_system_exception (const char *id)
 {
   for (CORBA::ULong i = 0; i < array_sz; ++i)
     {
@@ -975,3 +980,5 @@ CORBA::name ::_tao_create (void) \
 
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
+
+TAO_END_VERSIONED_NAMESPACE_DECL

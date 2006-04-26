@@ -36,6 +36,8 @@
 #define ACE_DEV_STREAM ACE_DEV_IO, ACE_DEV_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_DEV
  *
@@ -65,6 +67,8 @@ protected:
   /// Ensure that this class is an abstract base class
   ACE_DEV (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/DEV.inl"

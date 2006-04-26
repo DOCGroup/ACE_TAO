@@ -4,6 +4,7 @@
 
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename STRING_TYPE>
 ACE_INLINE
@@ -49,3 +50,5 @@ TAO::TypeCode::Base_Attributes<STRING_TYPE>::name (char const * the_name)
 
   this->name_ = the_name;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file SupplierAdmin.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SUPPLIERADMIN_H
@@ -14,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
-#include "Admin.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Admin.h"
 
 #include "orbsvcs/NotifyExtS.h"
 
@@ -23,12 +22,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Notify_ProxyConsumer;
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Notify_ProxyConsumer;
 
 /**
  * @class TAO_Notify_SupplierAdmin
@@ -206,6 +207,8 @@ private:
   /// Release
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

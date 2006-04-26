@@ -29,6 +29,8 @@
 // For linkers that cant grok long names.
 #define ACE_Caching_Strategy ACS
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Caching_Strategy
  *
@@ -530,6 +532,8 @@ private:
   /// from the cache.
   CACHING_UTILITY caching_utility_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Caching_Strategies_T.inl"

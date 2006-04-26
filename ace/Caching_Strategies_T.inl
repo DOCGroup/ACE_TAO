@@ -1,9 +1,12 @@
-/* -*-C++-*- */
+// -*-C++-*-
+//
 //$Id$
 
 //////////////////////////////////////////////////////////////////////////////////
 
 #include "ace/OS_Memory.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
@@ -456,5 +459,7 @@ ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Empty_Param_TypeCode.h"
+#include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "Empty_Param_TypeCode.inl"
+# include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 
@@ -11,6 +11,8 @@ ACE_RCSID (tao,
            Empty_Param_TypeCode,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &,
@@ -44,7 +46,7 @@ TAO::TypeCode::Empty_Param::equal_i (CORBA::TypeCode_ptr
   // Equality has already been established in the
   // CORBA::TypeCode base class.
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -60,12 +62,12 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc
   CORBA::TCKind const tc_kind =
     TAO::unaliased_kind (tc
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_kind != this->kind_)
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
 
 CORBA::TypeCode_ptr
@@ -81,3 +83,5 @@ TAO::TypeCode::Empty_Param::get_compact_typecode_i (
 
   return &compact_typecode;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

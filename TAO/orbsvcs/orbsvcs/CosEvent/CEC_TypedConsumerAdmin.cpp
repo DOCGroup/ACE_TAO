@@ -2,13 +2,16 @@
 //
 // $Id$
 
-#include "CEC_TypedConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
 
-#include "CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_TypedConsumerAdmin.i"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_CEC_TypedConsumerAdmin::TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel *ec)
@@ -128,3 +131,5 @@ TAO_CEC_Propagate_Typed_Event::work (TAO_CEC_ProxyPushSupplier *supplier
 {
   supplier->invoke (this->typed_event_ ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

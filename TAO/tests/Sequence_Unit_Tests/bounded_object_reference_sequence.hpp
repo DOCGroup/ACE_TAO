@@ -14,18 +14,21 @@
 #include "generic_sequence.hpp"
 #include "object_reference_sequence_element.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
-template<typename object_t, CORBA::ULong MAX>
+template<typename object_t, typename object_t_var, CORBA::ULong MAX>
 class bounded_object_reference_sequence
 {
 public:
   typedef object_t object_type;
   typedef object_type * value_type;
   typedef object_type const * const_value_type;
+  typedef object_t_var object_type_var;
 
-  typedef details::object_reference_traits<object_type,true> element_traits;
+  typedef details::object_reference_traits<object_type,object_type_var,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
 
   typedef details::object_reference_sequence_element<element_traits> element_type;
@@ -95,4 +98,5 @@ private:
 
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_bounded_object_reference_sequence_hpp

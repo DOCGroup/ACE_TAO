@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype_init, 
-           arglist_ch, 
+ACE_RCSID (be_visitor_valuetype_init,
+           arglist_ch,
            "$Id$")
 
 be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
@@ -42,9 +42,9 @@ be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)
   TAO_OutStream& os = *(this->ctx_->stream ());
 
   os << " (";
-  
+
   if (node->nmembers () > 0)
-    {  
+    {
       os << be_idt << be_idt_nl;
 
       // All we do is hand over code generation to our scope.
@@ -121,20 +121,21 @@ be_visitor_valuetype_init_arglist_ch::gen_throw_spec (be_factory *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  const char *throw_spec_open = "throw (";
-  const char *throw_spec_close = ")";
-
-  if (!be_global->use_raw_throw ())
-    {
-      throw_spec_open = "ACE_THROW_SPEC ((";
-      throw_spec_close = "))";
-    }
-
-  *os << be_nl << throw_spec_open;
-  *os << be_idt_nl << "::CORBA::SystemException";
-
   if (node->exceptions ())
     {
+      const char *throw_spec_open = "throw (";
+      const char *throw_spec_close = ")";
+
+      if (!be_global->use_raw_throw ())
+        {
+          throw_spec_open = "ACE_THROW_SPEC ((";
+          throw_spec_close = "))";
+        }
+
+      *os << be_nl << throw_spec_open << be_idt;
+      
+      bool first = true;
+
       // Initialize an iterator to iterate thru the exception list.
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();
@@ -153,12 +154,14 @@ be_visitor_valuetype_init_arglist_ch::gen_throw_spec (be_factory *node)
 
             }
 
-          *os << "," << be_nl;
-          *os << excp->name ();
+          *os << (first ? "" : ",") << be_nl
+              << excp->name ();
+              
+           first = false;
         }
+        
+      *os << be_uidt_nl << throw_spec_close << be_uidt;
     }
-
-  *os << be_uidt_nl << throw_spec_close << be_uidt;
 
   return 0;
 }

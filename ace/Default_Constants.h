@@ -75,6 +75,10 @@
 #   define ACE_DEFAULT_BACKLOG 5
 # endif /* ACE_DEFAULT_BACKLOG */
 
+# if !defined (ACE_DEFAULT_ASYNCH_BACKLOG)
+#   define ACE_DEFAULT_ASYNCH_BACKLOG 5
+# endif /* ACE_DEFAULT_ASYNCH_BACKLOG */
+
 # if !defined (ACE_DEFAULT_THREADS)
 #   define ACE_DEFAULT_THREADS 1
 # endif /* ACE_DEFAULT_THREADS */
@@ -452,7 +456,7 @@
 #  define ACE_MAX_DEFAULT_PORT 65535
 #endif /* ACE_MAX_DEFAULT_PORT */
 
-// Default number of <ACE_Event_Handler>s supported by
+// Default number of ACE_Event_Handlers supported by
 // <ACE_Timer_Heap>.
 # if !defined (ACE_DEFAULT_TIMERS)
 #   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX

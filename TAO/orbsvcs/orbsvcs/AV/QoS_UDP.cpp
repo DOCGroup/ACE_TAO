@@ -1,11 +1,11 @@
 // $Id$
 
 
-#include "QoS_UDP.h"
+#include "orbsvcs/AV/QoS_UDP.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-#include "UDP.h"
+#include "orbsvcs/AV/UDP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/Fill_ACE_QoS.h"
@@ -20,6 +20,8 @@
 
 static int resv_error = 0;
 static int resv_confirm = 0;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 FillQoSParams (ACE_QoS_Params &qos_params,
@@ -1510,6 +1512,8 @@ TAO_AV_UDP_QoS_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                  object);
   return object;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_UDP_QoS_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Flow_Factory,

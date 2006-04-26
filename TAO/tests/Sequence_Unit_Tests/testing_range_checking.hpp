@@ -11,7 +11,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "range_checking.hpp"
+#include "tao/Range_Checking_T.h"
 
 #include <sstream>
 #include <stdexcept>
@@ -53,6 +53,7 @@ struct testing_range_checking
   }
 };
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 namespace details
@@ -67,4 +68,5 @@ struct range_checking<T,true>
 } // namespace details
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_testing_range_checking_hpp

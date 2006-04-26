@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -73,6 +73,10 @@ int WSAEnumNetworkEvents (SOCKET s,
 
 #endif /* !defined ACE_HAS_WINSOCK2 */
 
+class ACE_WFMO_Reactor_Test;  // Must be out of versioned namespace.
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 class ACE_WFMO_Reactor;
 class ACE_Handle_Set;
@@ -93,8 +97,8 @@ public:
 /**
  * @class ACE_WFMO_Reactor_Handler_Repository
  *
- * @brief Used to map <ACE_HANDLE>s onto the appropriate
- * <ACE_Event_Handler> * and other information.
+ * @brief Used to map ACE_HANDLEs onto the appropriate
+ * ACE_Event_Handler * and other information.
  */
 class ACE_Export ACE_WFMO_Reactor_Handler_Repository
 {
@@ -304,7 +308,7 @@ public:
 
   // = Search structure operations.
 
-  /// Bind the <ACE_Event_Handler *> to the <ACE_HANDLE>. This is for
+  /// Bind the <ACE_Event_Handler *> to the ACE_HANDLE. This is for
   /// the simple event entry.
   int bind (ACE_HANDLE, ACE_Event_Handler *);
 
@@ -317,7 +321,7 @@ public:
               ACE_HANDLE event_handle,
               int delete_event);
 
-  /// Remove the binding of <ACE_HANDLE> in accordance with the <mask>.
+  /// Remove the binding of ACE_HANDLE in accordance with the <mask>.
   int unbind (ACE_HANDLE,
               ACE_Reactor_Mask mask);
 
@@ -338,12 +342,12 @@ public:
   /// Maximum ACE_HANDLE value, plus 1.
   DWORD max_handlep1 (void) const;
 
-  /// Pointer to the beginning of the current array of <ACE_HANDLE>
+  /// Pointer to the beginning of the current array of ACE_HANDLE
   /// *'s.
   ACE_HANDLE *handles (void) const;
 
   /// Pointer to the beginning of the current array of
-  /// <ACE_Event_Handler> *'s.
+  /// ACE_Event_Handler *'s.
   Current_Info *current_info (void) const;
 
   /// Check if changes to the handle set are required.
@@ -393,15 +397,15 @@ public:
   /// current_suspended_info_ from to_be_added_info_
   int make_changes_in_to_be_added_infos (void);
 
-  /// Removes the <ACE_Event_Handler> at <slot> from the table.
+  /// Removes the ACE_Event_Handler at <slot> from the table.
   int remove_handler_i (size_t slot,
                         ACE_Reactor_Mask mask);
 
-  /// Removes the <ACE_Event_Handler> at <slot> from the table.
+  /// Removes the ACE_Event_Handler at <slot> from the table.
   int remove_suspended_handler_i (size_t slot,
                                   ACE_Reactor_Mask mask);
 
-  /// Removes the <ACE_Event_Handler> at <slot> from the table.
+  /// Removes the ACE_Event_Handler at <slot> from the table.
   int remove_to_be_added_handler_i (size_t slot,
                                     ACE_Reactor_Mask to_be_removed_masks);
 
@@ -477,7 +481,7 @@ protected:
  * @class ACE_WFMO_Reactor_Notify
  *
  * @brief Unblock the <ACE_WFMO_Reactor> from its event loop, passing
- * it an optional <ACE_Event_Handler> to dispatch.
+ * it an optional ACE_Event_Handler to dispatch.
  *
  * This implementation is necessary for cases where the
  * <ACE_WFMO_Reactor> is run in a multi-threaded program.  In
@@ -485,7 +489,7 @@ protected:
  * <WaitForMultipleObjects> when updates occur other than in the
  * main <ACE_WFMO_Reactor> thread.  To do this, we signal an
  * auto-reset event the <ACE_WFMO_Reactor> is listening on.  If
- * an <ACE_Event_Handler> and <ACE_Reactor_Mask> is passed to
+ * an ACE_Event_Handler and <ACE_Reactor_Mask> is passed to
  * <notify>, the appropriate <handle_*> method is dispatched.
  */
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
@@ -505,7 +509,7 @@ public:
   /**
    * Special trick to unblock <WaitForMultipleObjects> when updates
    * occur.  All we do is enqueue <event_handler> and <mask> onto the
-   * <ACE_Message_Queue> and wakeup the <WFMO_Reactor> by signaling
+   * ACE_Message_Queue and wakeup the <WFMO_Reactor> by signaling
    * its <ACE_Event> handle.  The <ACE_Time_Value> indicates how long
    * to blocking trying to notify the <WFMO_Reactor>.  If <timeout> ==
    * 0, the caller will block until action is possible, else will wait
@@ -564,7 +568,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. If <eh> == 0, all notifications for all
+   * ACE_Event_Handler object. If <eh> == 0, all notifications for all
    * handlers are removed (but not any notifications posted just to wake up
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
@@ -732,7 +736,7 @@ public:
    *
    * <WaitForMultipleObjects> is used as the demultiplexing call
    *
-   * Returns the total number of I/O and timer <ACE_Event_Handler>s
+   * Returns the total number of I/O and timer ACE_Event_Handlers
    * that were dispatched, 0 if the <max_wait_time> elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
@@ -775,7 +779,7 @@ public:
   // = Register and remove Handlers.
 
   /**
-   * Register an <ACE_Event_Handler> <event_handler>.  Since no Event
+   * Register an ACE_Event_Handler <event_handler>.  Since no Event
    * Mask is passed through this interface, it is assumed that the
    * <handle> being passed in is an event handle and when the event
    * becomes signaled, <WFMO_Reactor> will call handle_signal on
@@ -787,7 +791,7 @@ public:
                                 ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
 
   /**
-   * Register an <ACE_Event_Handler> <event_handle>.  <mask> specifies
+   * Register an ACE_Event_Handler <event_handle>.  <mask> specifies
    * the network events that the <event_handler> is interested in.  If
    * <io_handle> == <ACE_INVALID_HANDLE> the <ACE_WFMO_Reactor> will
    * call the <get_handle> method of <event_handler> to extract the
@@ -1059,7 +1063,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. Returns the number of notifications
+   * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
@@ -1341,6 +1345,8 @@ private:
   ACE_WFMO_Reactor (const ACE_WFMO_Reactor &);
   ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/WFMO_Reactor.inl"

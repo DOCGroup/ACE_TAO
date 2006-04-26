@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "iorinterceptor_export.h"
+#include "tao/IORInterceptor/iorinterceptor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,10 +25,14 @@
 #include "tao/IORInterceptor/IORInterceptor.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/PI/Interceptor_List_T.h"
+#include "tao/IORInterceptor/IORInterceptor_Details.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor>
+  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor,
+                            IORInterceptor_Details>
     IORInterceptor_List;
 }
 
@@ -43,7 +47,7 @@ class TAO_Root_POA;
  * interfaces IORInfo and IORInterceptor. This is the derived class
  * that contains the actual implementations.
  */
-class TAO_IORInterceptor_Export TAO_IORInterceptor_Adapter_Impl
+class TAO_IORInterceptor_Adapter_Impl
   : public TAO_IORInterceptor_Adapter
 {
 public:
@@ -51,6 +55,11 @@ public:
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor
+      ACE_ENV_ARG_DECL);
+
+  virtual void add_interceptor (
+      PortableInterceptor::IORInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
       ACE_ENV_ARG_DECL);
 
   virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
@@ -80,6 +89,8 @@ private:
   /// List of IOR interceptors maintained
   TAO::IORInterceptor_List ior_interceptor_list_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

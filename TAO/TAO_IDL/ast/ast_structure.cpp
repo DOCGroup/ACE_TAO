@@ -74,11 +74,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum.h"
 #include "ast_enum_val.h"
 #include "ast_visitor.h"
+#include "utl_string.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
 
-ACE_RCSID (ast, 
-           ast_structure, 
+ACE_RCSID (ast,
+           ast_structure,
            "$Id$")
 
 AST_Structure::AST_Structure (void)
@@ -93,8 +94,8 @@ AST_Structure::AST_Structure (void)
 }
 
 AST_Structure::AST_Structure (UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_struct,
@@ -111,8 +112,8 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
 
 AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                               UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (nt,
@@ -132,7 +133,7 @@ AST_Structure::~AST_Structure (void)
 }
 
 // Are we or the parameter node involved in any recursion?
-idl_bool
+bool
 AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
   // We should calculate this only once. If it has already been
@@ -147,11 +148,11 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     {
       ACE_Unbounded_Queue<AST_Type *> scope_list = list;
       scope_list.enqueue_tail (this);
-        
+
       // Initialize an iterator to iterate over our scope.
       // Continue until each element is visited.
-      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls); 
-           !si.is_done (); 
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
            si.next ())
         {
           AST_Field *field = AST_Field::narrow_from_decl (si.item ());
@@ -179,7 +180,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                                  ACE_TEXT ("bad field type\n")),
                                 0);
             }
-            
+
           if (type->in_recursion (scope_list))
             {
               this->in_recursion_ = 1;
@@ -220,7 +221,7 @@ AST_Structure::field (AST_Field **&result,
                             slot);
 }
 
-idl_bool
+bool
 AST_Structure::is_local (void)
 {
   if (this->local_struct_ == -1)
@@ -242,7 +243,7 @@ AST_Structure::is_local (void)
                 {
                   if (si.item ()->is_local ())
                     {
-                      this->local_struct_ = I_TRUE;
+                      this->local_struct_ = true;
                       break;
                     }
                 }
@@ -290,17 +291,17 @@ AST_Structure::legal_for_primary_key (void) const
           si.next ())
         {
           AST_Field *f = AST_Field::narrow_from_decl (si.item ());
-        
+
           if (f != 0 && !f->field_type ()->legal_for_primary_key ())
             {
               retval = false;
               break;
             }
         }
-        
+
       this->recursing_in_legal_pk_ = false;
     }
-    
+
   return retval;
 }
 
@@ -313,7 +314,7 @@ AST_Structure::fe_add_field (AST_Field *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -346,7 +347,7 @@ AST_Structure::fe_add_field (AST_Field *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   AST_Type *ft = t->field_type ();
@@ -355,7 +356,7 @@ AST_Structure::fe_add_field (AST_Field *t)
   if (mru != 0)
     {
       this->add_to_referenced (ft,
-                               I_FALSE,
+                               false,
                                mru->first_component ());
     }
 
@@ -371,7 +372,7 @@ AST_Structure::fe_add_structure (AST_Structure *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -404,7 +405,7 @@ AST_Structure::fe_add_structure (AST_Structure *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -417,7 +418,7 @@ AST_Structure::fe_add_union (AST_Union *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -450,7 +451,7 @@ AST_Structure::fe_add_union (AST_Union *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -463,7 +464,7 @@ AST_Structure::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -496,7 +497,7 @@ AST_Structure::fe_add_enum (AST_Enum *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -512,7 +513,7 @@ AST_Structure::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -545,7 +546,7 @@ AST_Structure::fe_add_enum_val (AST_EnumVal *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -692,7 +693,7 @@ AST_Structure::redefine (AST_Structure *from)
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ());
+  this->set_file_name (idl_global->filename ()->get_string ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
   this->fields_ = from->fields_;

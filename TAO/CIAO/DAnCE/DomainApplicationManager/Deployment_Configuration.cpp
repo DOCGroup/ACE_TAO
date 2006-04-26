@@ -23,14 +23,14 @@ CIAO::Deployment_Configuration::init (const char *filename)
 
   if (filename == 0)
     {
-      ACE_ERROR ((LM_ERROR, "CIAO (%P|%t) Deployment_Configuration.cpp"
+      ACE_ERROR ((LM_ERROR, "DANCE (%P|%t) Deployment_Configuration.cpp"
                             ": Unable to identify the file name \n"));
       return -1;
     }
 
   FILE *inf = ACE_OS::fopen (filename, "r");
 
-  if (inf == NULL)
+  if (inf == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DAnCE (%P|%t) Deployment_Configuration.cpp:"
@@ -48,11 +48,10 @@ CIAO::Deployment_Configuration::init (const char *filename)
       //
       if (this->deployment_info_.bind (destination, ior) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                             "Failed to bind destination [%s] : \n",
-                             destination),
-                             -1);
+          ACE_DEBUG ((LM_ERROR,
+                      "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                      "Reuse existing node in the cached map: [%s]\n",
+                      destination));
         }
 
       if (first)
@@ -61,11 +60,12 @@ CIAO::Deployment_Configuration::init (const char *filename)
           first = 0;
         }
     }
+  ACE_OS::fclose (inf);
   return 0;
 }
 
 const char *
-CIAO::Deployment_Configuration::get_node_manager_ior (const char *name)
+CIAO::Deployment_Configuration::get_node_manager_ior (const char *name) const
 {
   if (name == 0)
     return get_default_node_manager_ior ();
@@ -88,7 +88,7 @@ CIAO::Deployment_Configuration::get_node_manager_ior (const char *name)
 }
 
 const char *
-CIAO::Deployment_Configuration::get_default_node_manager_ior (void)
+CIAO::Deployment_Configuration::get_default_node_manager_ior (void) const
 {
   if (this->default_node_manager_.IOR_.length () == 0)
     return 0;
@@ -118,14 +118,25 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
 
   if (CORBA::is_nil (entry->int_id_.node_manager_.in ()))
     {
-      CORBA::Object_var temp = this->orb_->string_to_object
-        (entry->int_id_.IOR_.c_str ()
-         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_TRY
+        {
 
-      entry->int_id_.node_manager_ =
-        ::Deployment::NodeManager::_narrow (temp.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+          CORBA::Object_var temp = this->orb_->string_to_object
+                                   (entry->int_id_.IOR_.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
+          entry->int_id_.node_manager_ =
+            ::Deployment::NodeManager::_narrow (temp.in ()
+                                                ACE_ENV_ARG_PARAMETER);
+        }
+      ACE_CATCHANY
+        {
+          ACE_ERROR ((LM_ERROR, "DANCE (%P|%t) Deployment_Configuration.cpp: "
+                      "Error while contacting NodeManager %s\n", name));
+          ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
       ACE_CHECK_RETURN (0);
     }
   return ::Deployment::NodeManager::_duplicate

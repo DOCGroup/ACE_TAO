@@ -66,6 +66,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace Dynamic
 {
 
@@ -120,6 +122,8 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Param
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

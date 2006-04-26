@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PI.h"
+#include "tao/PI/PI.h"
 
 #include "tao/CORBA_methods.h"
 #include "tao/Objref_VarOut_T.h"
@@ -31,6 +31,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -39,7 +41,7 @@ namespace TAO
    * @brief Global list that contains all portable interceptor ORB
    *        initializers.
    */
-  class TAO_PI_Export ORBInitializer_Registry
+  class ORBInitializer_Registry
     : public ORBInitializer_Registry_Adapter
   {
     public:
@@ -86,6 +88,8 @@ namespace TAO
     ACE_Array_Base<PortableInterceptor::ORBInitializer_var> initializers_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (ORBInitializer_Registry)
 ACE_FACTORY_DECLARE (TAO_PI, ORBInitializer_Registry)

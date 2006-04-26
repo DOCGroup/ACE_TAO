@@ -68,7 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _STRING_STRING_HH
 
 #include "TAO_IDL_FE_Export.h"
-#include "idl_bool.h"
+
 #include "ace/iosfwd.h"
   /* Basic_Types.h are needed in QNX for size_t type. */
 #include "ace/Basic_Types.h"
@@ -98,7 +98,7 @@ public:
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string.
 
-  idl_bool compare (UTL_String *s);
+  bool compare (UTL_String *s);
   // Compare two UTL_String *
 
   long compare_quiet (UTL_String *s);

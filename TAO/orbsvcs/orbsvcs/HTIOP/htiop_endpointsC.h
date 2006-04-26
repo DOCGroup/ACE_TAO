@@ -40,13 +40,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+#include "tao/String_Manager_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -61,6 +62,8 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_type.cpp:258
@@ -86,11 +89,11 @@ typedef
 struct HTIOP_Export HTIOP_Endpoint_Info
 {
   typedef HTIOP_Endpoint_Info_var _var_type;
-  
-  
-  TAO_String_Manager host;
+
+
+  TAO::String_Manager host;
   CORBA::Short port;
-  TAO_String_Manager htid;
+  TAO::String_Manager htid;
 };
 
 // TAO_IDL - Generated from
@@ -108,22 +111,19 @@ class HTIOPEndpointSequence;
 
 typedef
   TAO_VarSeq_Var_T<
-      HTIOPEndpointSequence,
-      HTIOP_Endpoint_Info
+      HTIOPEndpointSequence
     >
   HTIOPEndpointSequence_var;
 
 typedef
   TAO_Seq_Out_T<
-      HTIOPEndpointSequence,
-      HTIOPEndpointSequence_var,
-      HTIOP_Endpoint_Info
+      HTIOPEndpointSequence
     >
   HTIOPEndpointSequence_out;
 
 class HTIOP_Export HTIOPEndpointSequence
   : public
-      TAO_Unbounded_Sequence<
+      TAO::unbounded_value_sequence<
           HTIOP_Endpoint_Info
         >
 {
@@ -133,12 +133,12 @@ public:
   HTIOPEndpointSequence (
       CORBA::ULong max,
       CORBA::ULong length,
-      HTIOP_Endpoint_Info* buffer, 
-      CORBA::Boolean release = 0
+      HTIOP_Endpoint_Info* buffer,
+      CORBA::Boolean release = false
     );
   HTIOPEndpointSequence (const HTIOPEndpointSequence &);
   ~HTIOPEndpointSequence (void);
-  
+
   typedef HTIOPEndpointSequence_var _var_type;
 };
 
@@ -179,6 +179,8 @@ HTIOP_Export CORBA::Boolean operator>> (
   );
 
 #endif /* _TAO_CDR_OP_HTIOPEndpointSequence_H_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

@@ -1,11 +1,10 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Test_and_Set.h
  *
  *  $Id$
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================
 
@@ -20,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Test_and_Set
  *
@@ -28,7 +29,7 @@
  *
  *     This class keeps track of the status of <is_set_>, which can
  *     be set based on various events (such as receipt of a
- *     signal).  This class is derived from <ACE_Event_Handler> so
+ *     signal).  This class is derived from ACE_Event_Handler so
  *     that it can be "signaled" by a Reactor when a signal occurs.
  *     We assume that <TYPE> is a data type that can be assigned the
  *     value 0 or 1.
@@ -59,6 +60,8 @@ private:
   /// Protect the state from race conditions.
   ACE_LOCK lock_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Test_and_Set.cpp"

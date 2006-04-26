@@ -3,13 +3,15 @@
 #include "tao/Muxed_TMS.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
-#include "Transport.h"
-#include "ORB_Core.h"
-#include "Client_Strategy_Factory.h"
+#include "tao/Transport.h"
+#include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
 
 ACE_RCSID (tao,
            Muxed_TMS,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
@@ -201,7 +203,7 @@ TAO_Muxed_TMS::clear_cache (void)
   if (this->dispatcher_table_.current_size () == 0)
     return -1;
 
-  REQUEST_DISPATCHER_TABLE::ITERATOR end =
+  REQUEST_DISPATCHER_TABLE::ITERATOR const end =
     this->dispatcher_table_.end ();
 
   ACE_Unbounded_Stack <TAO_Reply_Dispatcher *> ubs;
@@ -213,7 +215,7 @@ TAO_Muxed_TMS::clear_cache (void)
       ubs.push ((*i).int_id_);
 
   this->dispatcher_table_.unbind_all ();
-  size_t sz =  ubs.size ();
+  size_t const sz = ubs.size ();
 
   for (size_t k = 0 ; k != sz ; ++k)
     {
@@ -227,3 +229,4 @@ TAO_Muxed_TMS::clear_cache (void)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

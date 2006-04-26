@@ -19,22 +19,22 @@ typedef ACE_Allocator_Adapter<ACE_Malloc_T <ACE_MMAP_MEMORY_POOL,
                                             ACE_Process_Mutex,
                                             ACE_Control_Block>
                              > ALLOCATOR;
-typedef ACE_Hash_Map_With_Allocator<int, Record> MAP;
+typedef ACE_Hash_Map_With_Allocator<int, Record> HASH_MAP;
 
 ACE_Process_Mutex coordMutex("Coord-Mutex");
 // Listing 1
 
 // Listing 2 code/ch17
-MAP* smap (ALLOCATOR *shmem_allocator)
+HASH_MAP* smap (ALLOCATOR *shmem_allocator)
 {
   void *db = 0;
   if (shmem_allocator->find (MAP_NAME, db) == 0)
-    return (MAP *) db;
-  size_t hash_table_size = sizeof (MAP);
+    return (HASH_MAP *) db;
+  size_t hash_table_size = sizeof (HASH_MAP);
   void *hash_map = shmem_allocator->malloc (hash_table_size);
   if (hash_map == 0)
     return 0;
-  new (hash_map) MAP (hash_table_size, shmem_allocator);
+  new (hash_map) HASH_MAP (hash_table_size, shmem_allocator);
   if (shmem_allocator->bind (MAP_NAME, hash_map) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -42,11 +42,11 @@ MAP* smap (ALLOCATOR *shmem_allocator)
       shmem_allocator->remove ();
       return 0;
     }
-  return (MAP*)hash_map;
+  return (HASH_MAP*)hash_map;
 }
 // Listing 2
 // Listing 6 code/ch17
-int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
+int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
 {
   ACE_TRACE ("processRecords");
 
@@ -58,7 +58,7 @@ int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
   int *todelete = new int[mapLength];
   int i = 0;
 
-  for (MAP::iterator iter = map->begin ();
+  for (HASH_MAP::iterator iter = map->begin ();
       iter != map->end ();
       iter++)
     {
@@ -105,7 +105,7 @@ int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
 }
 // Listing 6
 // Listing 4 code/ch17
-int addRecords(MAP *map, ALLOCATOR *shmem_allocator)
+int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
 {
   ACE_TRACE ("addRecords");
 
@@ -151,7 +151,7 @@ int handle_child (void)
                              &options),
                   -1);
 
-  MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Map has %d entries\n"),
@@ -182,7 +182,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
      ALLOCATOR (BACKING_STORE, BACKING_STORE, &options),
      -1);
 
-  MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator);
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
@@ -248,30 +248,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 // Listing 3
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Allocator_Adapter<ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block> >;
-template class ACE_Hash_Map_Entry<int,Record>;
-template class ACE_Hash_Map_Manager_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_With_Allocator<int,Record>;
-// The following instantiation is in ace/System_Time.cpp:
-// template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block>;
-template class ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_FIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-template class ACE_Malloc_LIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block> >
-#pragma instantiate ACE_Hash_Map_Entry<int,Record>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int,Record,ACE_Hash<int>,ACE_Equal_To<int>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_With_Allocator<int,Record>
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,ACE_Process_Mutex,ACE_Control_Block>
-// The following instantiation is in ace/System_Time.cpp:
-// #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_FIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#pragma instantiate ACE_Malloc_LIFO_Iterator_T <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

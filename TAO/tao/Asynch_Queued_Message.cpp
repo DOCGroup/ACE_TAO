@@ -1,6 +1,6 @@
-#include "Asynch_Queued_Message.h"
-#include "debug.h"
-#include "ORB_Core.h"
+#include "tao/Asynch_Queued_Message.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
@@ -14,6 +14,7 @@ ACE_RCSID (tao,
            Asynch_Queued_Message,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   const ACE_Message_Block *contents,
@@ -155,7 +156,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 
   // Set the flag to indicate that <qm> is created on the heap.
   if (qm)
-    qm->is_heap_created_ = 1;
+    qm->is_heap_created_ = true;
 
   return qm;
 }
@@ -181,3 +182,5 @@ TAO_Asynch_Queued_Message::destroy (void)
     }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

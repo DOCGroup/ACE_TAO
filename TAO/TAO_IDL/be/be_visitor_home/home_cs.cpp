@@ -59,6 +59,6 @@ be_visitor_home_cs::visit_home (be_home *node)
           }
       }
 
-  node->cli_stub_gen (I_TRUE);
+  node->cli_stub_gen (true);
   return 0;
 }

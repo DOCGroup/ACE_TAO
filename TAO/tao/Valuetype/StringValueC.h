@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/CDR.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
@@ -65,6 +65,8 @@
 
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:48
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -305,8 +307,10 @@ TAO_Valuetype_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WStringVa
 // TAO_IDL - Generated from
 // .\be\be_codegen.cpp:955
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "StringValueC.inl"
+#include "tao/Valuetype/StringValueC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

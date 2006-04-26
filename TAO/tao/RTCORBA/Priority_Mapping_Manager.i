@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // *************************************************************
 // Inline operations for class TAO_Priority_Mapping_Manager_var
@@ -207,14 +211,14 @@ TAO_Priority_Mapping_Manager::TAO_Priority_Mapping_Manager (RTCORBA::PriorityMap
 ACE_INLINE RTCORBA::PriorityMapping *
 TAO_Priority_Mapping_Manager::mapping (void)
 {
-  return mapping_;
+  return this->mapping_;
 }
 
 ACE_INLINE void
 TAO_Priority_Mapping_Manager::mapping (RTCORBA::PriorityMapping *mapping)
 {
-  delete mapping_;
-  mapping_ = mapping;
+  delete this->mapping_;
+  this->mapping_ = mapping;
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

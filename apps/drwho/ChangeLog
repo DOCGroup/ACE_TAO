@@ -1,39 +1,68 @@
+Thu Jan  5 00:43:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Untabify.
+          Delete-trailing-whitespace.
+
+Wed Jan  4 22:57:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Added "Local Variables" section defining "add-log-time-format"
+          to a really ugly lambda expression that formats changelog
+          timestamps in UTC and works with both GNU Emacs and XEmacs.
+
+Mon Nov 28 07:24:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * drwho.mpc:
+
+          Added missing "avoid += ace_for_tao" for "server" project.
+
+Sat Nov 26 06:58:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * drwho.mpc:
+
+          Added "avoids += ace_for_tao" since this project requires
+          features of ACE not found in the ace_for_tao subset.  Addresses
+          build errors.
+
 Sat Apr 30 08:16:42 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Select_Manager.cpp:
+        * Select_Manager.cpp:
 
-	  Fixed syntax error due to missing ACE_RCSID macro definition.
+          Fixed syntax error due to missing ACE_RCSID macro definition.
 
 Fri Apr 29 23:54:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Comm_Manager.h:
-	* Select_Manager.h:
+        * Comm_Manager.h:
+        * Select_Manager.h:
 
-	  Added virtual destructor to silence g++ 4.0 warnings.
+          Added virtual destructor to silence g++ 4.0 warnings.
 
-	* Comm_Manager.cpp:
-	* Select_Manager.cpp:
+        * Comm_Manager.cpp:
+        * Select_Manager.cpp:
 
-	  New files containing virtual destructor definition.
+          New files containing virtual destructor definition.
 
-	* Makefile.am:
-	* drwho.mpc:
+        * Makefile.am:
+        * drwho.mpc:
 
-	  Added new Comm_Manager.cpp and Select_Manager.cpp files to the
-	  source file list.
+          Added new Comm_Manager.cpp and Select_Manager.cpp files to the
+          source file list.
 
 Sat Feb 17 08:33:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* File_Manager.cpp: Fixed several unreachable statements.
+        * File_Manager.cpp: Fixed several unreachable statements.
 
 Thu Feb 15 06:00:12 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* server.cpp: Renamed tstamp to time_stamp to avoid conflicts with
-	  the pre-processor on the Forte 5.2 compiler.  Thanks to Mike
- 	  Curtis for reporting this.
+        * server.cpp: Renamed tstamp to time_stamp to avoid conflicts with
+          the pre-processor on the Forte 5.2 compiler.  Thanks to Mike
+          Curtis for reporting this.
 
-	* File_Manager.cpp: Fixed "unreachable code" errors reported by
-	  Compaq C++.
+        * File_Manager.cpp: Fixed "unreachable code" errors reported by
+          Compaq C++.
 
 Thu Nov 16 17:58:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -362,3 +391,9 @@ Wed Sep  4 10:14:51 1991  Douglas C. Schmidt  (schmidt at net4.ics.uci.edu)
           * Add timeout stuff in case hosts are down!
           * Talk to support about making a standard daemon.
           * Fix the problem with returning the number of friends.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "tao/CORBA_String.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"

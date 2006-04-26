@@ -84,11 +84,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
-ACE_RCSID (ast, 
-           ast_recursive, 
+ACE_RCSID (ast,
+           ast_recursive,
            "$Id$")
 
-idl_bool
+bool
 AST_illegal_interface_recursion (AST_Decl *t)
 {
   // Can't be 0 since we know we have an interface or valuetype.
@@ -100,34 +100,34 @@ AST_illegal_interface_recursion (AST_Decl *t)
        i.next ())
     {
       d = ScopeAsDecl (i.item ());
-      
+
       // Exceptions cannot be recursive, but may contain a reference
       // to the interface they are defined in.
       if (d->node_type () == AST_Decl::NT_except)
         {
-          return I_FALSE;
+          return false;
         }
-      
+
       if (d == t)
         {
-          return I_TRUE;
+          return true;
         }
     }
 
-  return I_FALSE;
+  return false;
 }
 
-idl_bool
+bool
 AST_illegal_recursive_type (AST_Decl *t)
 {
   if (t == 0)
     {
-      return I_FALSE;
+      return false;
     }
-  
+
   AST_Decl::NodeType nt;
   AST_Type *ut = AST_Type::narrow_from_decl (t);
-  
+
   if (ut != 0)
     {
       ut = ut->unaliased_type ();
@@ -137,7 +137,7 @@ AST_illegal_recursive_type (AST_Decl *t)
     {
       nt = t->node_type ();
     }
-    
+
   if (nt == AST_Decl::NT_interface)
     {
       // Check for interface->struct/union->....->interface nesting.
@@ -146,37 +146,37 @@ AST_illegal_recursive_type (AST_Decl *t)
   else if (nt != AST_Decl::NT_struct && nt != AST_Decl::NT_union)
     {
       // Structs and unions fall through to the check below.
-      return I_FALSE;	// NOT ILLEGAL.
+      return false;  // NOT ILLEGAL.
     }
 
-  idl_bool check_for_struct = I_FALSE;
-	idl_bool check_for_union = I_FALSE;
-  AST_Structure	*st1 = 0;
-  AST_Union	*un1 = 0;
+  bool check_for_struct = false;
+  bool check_for_union = false;
+  AST_Structure  *st1 = 0;
+  AST_Union  *un1 = 0;
 
   // Narrow the type appropriately so comparison will work.
   if (t->node_type () == AST_Decl::NT_struct)
     {
-      check_for_struct = I_TRUE;
+      check_for_struct = true;
       st1 = AST_Structure::narrow_from_decl (t);
 
       if (st1 == 0)
         {
-          return I_FALSE;	// NOT ILLEGAL.
+          return false;  // NOT ILLEGAL.
         }
     }
   else if (t->node_type () == AST_Decl::NT_union)
     {
-      check_for_union = I_TRUE;
+      check_for_union = true;
       un1 = AST_Union::narrow_from_decl (t);
 
       if (un1 == 0)
         {
-          return I_FALSE;	// NOT ILLEGAL.
+          return false;  // NOT ILLEGAL.
         }
     }
 
-  UTL_Scope	*s = 0;
+  UTL_Scope  *s = 0;
   AST_Structure *st2 = 0;
   AST_Union *un2 = 0;
 
@@ -191,33 +191,33 @@ AST_illegal_recursive_type (AST_Decl *t)
       // a sequence, where recursive types may be used.
       if (s == 0)
         {
-          return I_FALSE;	// NOT ILLEGAL.
+          return false;  // NOT ILLEGAL.
         }
 
       // OK, must check this scope.
       if (s->scope_node_type () == AST_Decl::NT_struct
-          && check_for_struct == I_TRUE)
+          && check_for_struct == true)
         {
           st2 = AST_Structure::narrow_from_scope (s);
 
           if (st2 != 0 && st2 == st1)
             {
-              return I_TRUE;	// ILLEGAL RECURSIVE TYPE USE.
+              return true;  // ILLEGAL RECURSIVE TYPE USE.
             }
         }
       else if (s->scope_node_type () == AST_Decl::NT_union
-               && check_for_union == I_TRUE)
+               && check_for_union == true)
         {
           un2 = AST_Union::narrow_from_scope (s);
 
           if (un2 != 0 && un2 == un1)
             {
-	            return I_TRUE;	// ILLEGAL RECURSIVE TYPE USE.
+              return true;  // ILLEGAL RECURSIVE TYPE USE.
             }
         }
     }
 
   // No more scopes to check. This type was used legally.
-  return I_FALSE;		// NOT ILLEGAL.
+  return false;    // NOT ILLEGAL.
 }
 

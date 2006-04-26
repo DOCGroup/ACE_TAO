@@ -18,13 +18,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IIOP_SSL_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IIOP_Acceptor.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -76,6 +78,8 @@ namespace TAO
   };
 
 } // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,17 +1,17 @@
 //$Id$
 
-#include "Invocation_Adapter.h"
-#include "Profile_Transport_Resolver.h"
-#include "operation_details.h"
-#include "Stub.h"
-#include "ORB_Core.h"
-#include "Synch_Invocation.h"
-#include "debug.h"
-#include "Collocated_Invocation.h"
-#include "Transport.h"
-#include "Transport_Mux_Strategy.h"
-#include "Collocation_Proxy_Broker.h"
-
+#include "tao/Invocation_Adapter.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/operation_details.h"
+#include "tao/Stub.h"
+#include "tao/ORB_Core.h"
+#include "tao/Synch_Invocation.h"
+#include "tao/debug.h"
+#include "tao/Collocated_Invocation.h"
+#include "tao/Transport.h"
+#include "tao/Transport_Mux_Strategy.h"
+#include "tao/Collocation_Proxy_Broker.h"
+#include "tao/GIOP_Utils.h"
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
@@ -20,6 +20,8 @@
 ACE_RCSID (tao,
            Invocation_Adapter,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -189,8 +191,16 @@ namespace TAO
         effective_target =
             coll_inv.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
+        const bool is_permanent_forward =
+            (coll_inv.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+        const bool is_permanent_forward = false;
+#endif
+
         (void) this->object_forwarded (effective_target,
-                                       stub
+                                       stub,
+                                       is_permanent_forward
                                        ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -266,8 +276,6 @@ namespace TAO
     // Update the request id now that we have a transport
     details.request_id (resolver.transport ()->tms ()->request_id ());
 
-    Invocation_Status s = TAO_INVOKE_FAILURE;
-
     if (this->type_ == TAO_ONEWAY_INVOCATION)
       {
         return this->invoke_oneway (details,
@@ -285,7 +293,7 @@ namespace TAO
                                     ACE_ENV_ARG_PARAMETER);
       }
 
-    return s;
+    return TAO_INVOKE_FAILURE;
   }
 
   Invocation_Status
@@ -322,8 +330,16 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
+        const bool is_permanent_forward =
+            (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+        const bool is_permanent_forward = false;
+#endif
+
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                is_permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -353,8 +369,15 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
+        const bool is_permanent_forward =
+            (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+        const bool is_permanent_forward = false;
+#endif
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                is_permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -364,7 +387,8 @@ namespace TAO
 
   void
   Invocation_Adapter::object_forwarded (CORBA::Object_var &effective_target,
-                                        TAO_Stub *stub
+                                        TAO_Stub *stub,
+                                        CORBA::Boolean permanent_forward
                                         ACE_ENV_ARG_DECL)
   {
     // The object pointer has to be changed to a TAO_Stub pointer
@@ -381,7 +405,7 @@ namespace TAO
 
 
     // Reset the profile in the stubs
-    stub->add_forward_profiles (stubobj->base_profiles ());
+    stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
 
     if (stub->next_profile () == 0)
       ACE_THROW (CORBA::TRANSIENT (
@@ -393,3 +417,5 @@ namespace TAO
     return;
   }
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

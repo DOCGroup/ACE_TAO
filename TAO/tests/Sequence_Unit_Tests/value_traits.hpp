@@ -10,8 +10,11 @@
  *
  * @author Carlos O'Ryan
  */
+#include "tao/Basic_Types.h"
 
 #include <algorithm>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -25,12 +28,16 @@ struct value_traits
   typedef T const const_value_type;
 
   inline static void zero_range(
-      value_type * /* begin */, value_type * /* end */)
-  {}
+      value_type * begin , value_type * end)
+  {
+    std::fill(begin, end, value_type ());
+  }
 
   inline static void initialize_range(
-      value_type * /* begin */, value_type * /* end */)
-  {}
+      value_type * begin, value_type * end)
+  {
+    std::fill(begin, end, value_type ());
+  }
 
   inline static void copy_range(
       value_type * begin, value_type * end, value_type *dst)
@@ -41,5 +48,7 @@ struct value_traits
 
 } // namespace details
 } // namespace CORBA
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_value_traits_hpp

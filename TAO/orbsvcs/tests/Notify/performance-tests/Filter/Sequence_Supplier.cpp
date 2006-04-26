@@ -151,8 +151,16 @@ SendEvents (int id ACE_ENV_ARG_DECL)
     events[z].filterable_data[0].value <<= type;
   }
 
-  supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_TRY_NEW_ENV
+  {
+    supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCH (CORBA::Exception, e)
+  {
+    ACE_PRINT_EXCEPTION (e, "Error: Supplier exception: ");
+  }
+  ACE_ENDTRY;
 }
 
 static void

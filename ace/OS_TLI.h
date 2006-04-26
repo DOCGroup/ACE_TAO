@@ -147,6 +147,25 @@ extern "C" {
 
 # endif /* ACE_HAS_XTI || ACE_HAS_TLI */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// This hack is needed to get around an odd and hard-to-reproduce problem
+// with HP aC++. If struct sigaction is defined extern "C" and the sigaction
+// function in namespace ACE_OS, the compiler sometimes gets confused.
+// If we help it with this typedef, it's fine. User code should not use
+// the ACE typedef - it will be removed without warning as soon as we can
+// either drop support for the broken compilers or figure out how to reproduce
+// it so it can be reported to HP and fixed.
+// There's a similar hack in OS_TLI.h for struct t_optmgmt.
+// Also see ChangeLog entries:
+// Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
+// Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
+#if defined (__HP_aCC) && (__HP_aCC <= 36500)
+typedef extern "C" struct t_optmgmt  ACE_TOPTMGMT;
+#else
+typedef struct t_optmgmt ACE_TOPTMGMT;
+#endif
+
 /**
  * @namespace ACE_OS
  *
@@ -214,8 +233,8 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_optmgmt (ACE_HANDLE handle,
-                 struct t_optmgmt *req,
-                 struct t_optmgmt *ret);
+                 ACE_TOPTMGMT *req,
+                 ACE_TOPTMGMT *ret);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_rcv (ACE_HANDLE fildes,
@@ -259,6 +278,8 @@ namespace ACE_OS
   int t_unbind (ACE_HANDLE fildes);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

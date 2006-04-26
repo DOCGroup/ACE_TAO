@@ -3,6 +3,8 @@
 // cvs-id    : $Id$
 
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h" // gettimeofday
@@ -183,7 +185,7 @@ namespace ACE_RMCast
       Message_ptr m;
 
       if (queue_.dequeue_head (m) == -1)
-        abort ();
+        ACE_OS::abort ();
 
 
       if (queue_.is_empty ())
@@ -196,8 +198,8 @@ namespace ACE_RMCast
 
               if (signal_pipe_.recv (&c, 1) != 1)
                 {
-                  perror ("read: ");
-                  abort ();
+                  ACE_OS::perror ("read: ");
+                  ACE_OS::abort ();
                 }
             }
         }
@@ -252,10 +254,10 @@ namespace ACE_RMCast
       Message_ptr m;
 
       if (queue_.dequeue_head (m) == -1)
-        abort ();
+        ACE_OS::abort ();
 
       if (queue_.enqueue_head (m) == -1)
-        abort ();
+        ACE_OS::abort ();
 
       if (m->find (NoData::id) != 0)
         {
@@ -315,7 +317,7 @@ namespace ACE_RMCast
                   if (signal_pipe_.send (&c, 1) != 1)
                     {
                       // perror ("write: ");
-                      abort ();
+                      ACE_OS::abort ();
                     }
                 }
 

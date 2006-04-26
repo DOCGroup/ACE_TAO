@@ -3,16 +3,13 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
 
-// Fixes the VC6 warning 4786.
-#include "vc6-4786.h"
- 
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -47,7 +44,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 namespace CIAO
@@ -60,7 +57,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // cmdline
-      // 
+      //
       public:
       bool cmdline_p () const;
       ::CIAO::Config_Handlers::ServerCmdlineOptions const& cmdline () const;
@@ -70,7 +67,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ServerCmdlineOptions > cmdline_;
 
       // svcconf
-      // 
+      //
       public:
       bool svcconf_p () const;
       ::CIAO::Config_Handlers::ACESvcConf const& svcconf () const;
@@ -80,7 +77,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ACESvcConf > svcconf_;
 
       // orbConfigs
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ORBConfigs const& orbConfigs () const;
       void orbConfigs (::CIAO::Config_Handlers::ORBConfigs const& );
@@ -89,7 +86,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ORBConfigs > orbConfigs_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -119,10 +116,10 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // arg
-      // 
+      //
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator arg_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator arg_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator arg_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator arg_const_iterator;
       arg_iterator begin_arg ();
       arg_iterator end_arg ();
       arg_const_iterator begin_arg () const;
@@ -131,7 +128,7 @@ namespace CIAO
       size_t count_arg (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > arg_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > arg_;
 
       public:
       ServerCmdlineOptions ();
@@ -153,7 +150,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // uri
-      // 
+      //
       public:
       bool uri_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& uri () const;
@@ -182,7 +179,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // resources
-      // 
+      //
       public:
       bool resources_p () const;
       ::CIAO::Config_Handlers::ORBResources const& resources () const;
@@ -192,10 +189,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ORBResources > resources_;
 
       // policySet
-      // 
+      //
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::PolicySet >::iterator policySet_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::PolicySet >::const_iterator policySet_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PolicySet >::iterator policySet_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PolicySet >::const_iterator policySet_const_iterator;
       policySet_iterator begin_policySet ();
       policySet_iterator end_policySet ();
       policySet_const_iterator begin_policySet () const;
@@ -204,7 +201,7 @@ namespace CIAO
       size_t count_policySet (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::PolicySet > policySet_;
+      ::std::list< ::CIAO::Config_Handlers::PolicySet > policySet_;
 
       public:
       ORBConfigs ();
@@ -226,10 +223,10 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // threadpool
-      // 
+      //
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ThreadpoolDef >::iterator threadpool_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ThreadpoolDef >::const_iterator threadpool_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ThreadpoolDef >::iterator threadpool_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ThreadpoolDef >::const_iterator threadpool_const_iterator;
       threadpool_iterator begin_threadpool ();
       threadpool_iterator end_threadpool ();
       threadpool_const_iterator begin_threadpool () const;
@@ -238,13 +235,13 @@ namespace CIAO
       size_t count_threadpool (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ThreadpoolDef > threadpool_;
+      ::std::list< ::CIAO::Config_Handlers::ThreadpoolDef > threadpool_;
 
       // threadpoolWithLanes
-      // 
+      //
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >::iterator threadpoolWithLanes_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >::const_iterator threadpoolWithLanes_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >::iterator threadpoolWithLanes_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >::const_iterator threadpoolWithLanes_const_iterator;
       threadpoolWithLanes_iterator begin_threadpoolWithLanes ();
       threadpoolWithLanes_iterator end_threadpoolWithLanes ();
       threadpoolWithLanes_const_iterator begin_threadpoolWithLanes () const;
@@ -253,13 +250,13 @@ namespace CIAO
       size_t count_threadpoolWithLanes (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef > threadpoolWithLanes_;
+      ::std::list< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef > threadpoolWithLanes_;
 
       // connectionBands
-      // 
+      //
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ConnectionBandsDef >::iterator connectionBands_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ConnectionBandsDef >::const_iterator connectionBands_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionBandsDef >::iterator connectionBands_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionBandsDef >::const_iterator connectionBands_const_iterator;
       connectionBands_iterator begin_connectionBands ();
       connectionBands_iterator end_connectionBands ();
       connectionBands_const_iterator begin_connectionBands () const;
@@ -268,7 +265,7 @@ namespace CIAO
       size_t count_connectionBands (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ConnectionBandsDef > connectionBands_;
+      ::std::list< ::CIAO::Config_Handlers::ConnectionBandsDef > connectionBands_;
 
       public:
       ORBResources ();
@@ -309,7 +306,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // stacksize
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& stacksize () const;
       void stacksize (::XMLSchema::unsignedLong const& );
@@ -318,7 +315,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > stacksize_;
 
       // static_threads
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& static_threads () const;
       void static_threads (::XMLSchema::unsignedLong const& );
@@ -327,7 +324,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > static_threads_;
 
       // dynamic_threads
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& dynamic_threads () const;
       void dynamic_threads (::XMLSchema::unsignedLong const& );
@@ -336,7 +333,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > dynamic_threads_;
 
       // default_priority
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Priority const& default_priority () const;
       void default_priority (::CIAO::Config_Handlers::Priority const& );
@@ -345,7 +342,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > default_priority_;
 
       // allow_request_buffering
-      // 
+      //
       public:
       ::XMLSchema::boolean const& allow_request_buffering () const;
       void allow_request_buffering (::XMLSchema::boolean const& );
@@ -354,7 +351,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > allow_request_buffering_;
 
       // max_buffered_requests
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& max_buffered_requests () const;
       void max_buffered_requests (::XMLSchema::unsignedLong const& );
@@ -363,7 +360,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > max_buffered_requests_;
 
       // max_request_buffered_size
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& max_request_buffered_size () const;
       void max_request_buffered_size (::XMLSchema::unsignedLong const& );
@@ -372,7 +369,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > max_request_buffered_size_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -384,12 +381,12 @@ namespace CIAO
 
       public:
       ThreadpoolDef (::XMLSchema::unsignedLong const& stacksize__,
-      ::XMLSchema::unsignedLong const& static_threads__,
-      ::XMLSchema::unsignedLong const& dynamic_threads__,
-      ::CIAO::Config_Handlers::Priority const& default_priority__,
-      ::XMLSchema::boolean const& allow_request_buffering__,
-      ::XMLSchema::unsignedLong const& max_buffered_requests__,
-      ::XMLSchema::unsignedLong const& max_request_buffered_size__);
+                     ::XMLSchema::unsignedLong const& static_threads__,
+                     ::XMLSchema::unsignedLong const& dynamic_threads__,
+                     ::CIAO::Config_Handlers::Priority const& default_priority__,
+                     ::XMLSchema::boolean const& allow_request_buffering__,
+                     ::XMLSchema::unsignedLong const& max_buffered_requests__,
+                     ::XMLSchema::unsignedLong const& max_request_buffered_size__);
 
       ThreadpoolDef (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ThreadpoolDef (ThreadpoolDef const& s);
@@ -408,10 +405,10 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // threadpoolLane
-      // 
+      //
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ThreadpoolLaneDef >::iterator threadpoolLane_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ThreadpoolLaneDef >::const_iterator threadpoolLane_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ThreadpoolLaneDef >::iterator threadpoolLane_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ThreadpoolLaneDef >::const_iterator threadpoolLane_const_iterator;
       threadpoolLane_iterator begin_threadpoolLane ();
       threadpoolLane_iterator end_threadpoolLane ();
       threadpoolLane_const_iterator begin_threadpoolLane () const;
@@ -420,10 +417,10 @@ namespace CIAO
       size_t count_threadpoolLane (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ThreadpoolLaneDef > threadpoolLane_;
+      ::std::list< ::CIAO::Config_Handlers::ThreadpoolLaneDef > threadpoolLane_;
 
       // stacksize
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& stacksize () const;
       void stacksize (::XMLSchema::unsignedLong const& );
@@ -432,7 +429,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > stacksize_;
 
       // allow_borrowing
-      // 
+      //
       public:
       ::XMLSchema::boolean const& allow_borrowing () const;
       void allow_borrowing (::XMLSchema::boolean const& );
@@ -441,7 +438,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > allow_borrowing_;
 
       // allow_request_buffering
-      // 
+      //
       public:
       ::XMLSchema::boolean const& allow_request_buffering () const;
       void allow_request_buffering (::XMLSchema::boolean const& );
@@ -450,7 +447,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > allow_request_buffering_;
 
       // max_buffered_requests
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& max_buffered_requests () const;
       void max_buffered_requests (::XMLSchema::unsignedLong const& );
@@ -459,7 +456,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > max_buffered_requests_;
 
       // max_request_buffered_size
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& max_request_buffered_size () const;
       void max_request_buffered_size (::XMLSchema::unsignedLong const& );
@@ -468,7 +465,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > max_request_buffered_size_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -480,10 +477,10 @@ namespace CIAO
 
       public:
       ThreadpoolWithLanesDef (::XMLSchema::unsignedLong const& stacksize__,
-      ::XMLSchema::boolean const& allow_borrowing__,
-      ::XMLSchema::boolean const& allow_request_buffering__,
-      ::XMLSchema::unsignedLong const& max_buffered_requests__,
-      ::XMLSchema::unsignedLong const& max_request_buffered_size__);
+                              ::XMLSchema::boolean const& allow_borrowing__,
+                              ::XMLSchema::boolean const& allow_request_buffering__,
+                              ::XMLSchema::unsignedLong const& max_buffered_requests__,
+                              ::XMLSchema::unsignedLong const& max_request_buffered_size__);
 
       ThreadpoolWithLanesDef (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ThreadpoolWithLanesDef (ThreadpoolWithLanesDef const& s);
@@ -502,7 +499,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // static_threads
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& static_threads () const;
       void static_threads (::XMLSchema::unsignedLong const& );
@@ -511,7 +508,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > static_threads_;
 
       // dynamic_threads
-      // 
+      //
       public:
       ::XMLSchema::unsignedLong const& dynamic_threads () const;
       void dynamic_threads (::XMLSchema::unsignedLong const& );
@@ -520,7 +517,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > dynamic_threads_;
 
       // priority
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Priority const& priority () const;
       void priority (::CIAO::Config_Handlers::Priority const& );
@@ -530,8 +527,8 @@ namespace CIAO
 
       public:
       ThreadpoolLaneDef (::XMLSchema::unsignedLong const& static_threads__,
-      ::XMLSchema::unsignedLong const& dynamic_threads__,
-      ::CIAO::Config_Handlers::Priority const& priority__);
+                         ::XMLSchema::unsignedLong const& dynamic_threads__,
+                         ::CIAO::Config_Handlers::Priority const& priority__);
 
       ThreadpoolLaneDef (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ThreadpoolLaneDef (ThreadpoolLaneDef const& s);
@@ -550,10 +547,10 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // band
-      // 
+      //
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::PriorityBandDef >::iterator band_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::PriorityBandDef >::const_iterator band_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PriorityBandDef >::iterator band_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PriorityBandDef >::const_iterator band_const_iterator;
       band_iterator begin_band ();
       band_iterator end_band ();
       band_const_iterator begin_band () const;
@@ -562,10 +559,10 @@ namespace CIAO
       size_t count_band (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::PriorityBandDef > band_;
+      ::std::list< ::CIAO::Config_Handlers::PriorityBandDef > band_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -595,7 +592,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // low
-      // 
+      //
       public:
       ::XMLSchema::int_ const& low () const;
       void low (::XMLSchema::int_ const& );
@@ -604,7 +601,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::int_ > low_;
 
       // high
-      // 
+      //
       public:
       ::XMLSchema::int_ const& high () const;
       void high (::XMLSchema::int_ const& );
@@ -614,7 +611,7 @@ namespace CIAO
 
       public:
       PriorityBandDef (::XMLSchema::int_ const& low__,
-      ::XMLSchema::int_ const& high__);
+                       ::XMLSchema::int_ const& high__);
 
       PriorityBandDef (::XSCRT::XML::Element< ACE_TCHAR > const&);
       PriorityBandDef (PriorityBandDef const& s);
@@ -633,10 +630,10 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // priorityModel
-      // 
+      //
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::PriorityModelPolicyDef >::iterator priorityModel_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::PriorityModelPolicyDef >::const_iterator priorityModel_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PriorityModelPolicyDef >::iterator priorityModel_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PriorityModelPolicyDef >::const_iterator priorityModel_const_iterator;
       priorityModel_iterator begin_priorityModel ();
       priorityModel_iterator end_priorityModel ();
       priorityModel_const_iterator begin_priorityModel () const;
@@ -645,13 +642,13 @@ namespace CIAO
       size_t count_priorityModel (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::PriorityModelPolicyDef > priorityModel_;
+      ::std::list< ::CIAO::Config_Handlers::PriorityModelPolicyDef > priorityModel_;
 
       // threadpool
-      // 
+      //
       public:
-      typedef ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator threadpool_iterator;
-      typedef ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator threadpool_const_iterator;
+      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator threadpool_iterator;
+      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator threadpool_const_iterator;
       threadpool_iterator begin_threadpool ();
       threadpool_iterator end_threadpool ();
       threadpool_const_iterator begin_threadpool () const;
@@ -660,13 +657,13 @@ namespace CIAO
       size_t count_threadpool (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > threadpool_;
+      ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > > threadpool_;
 
       // priorityBandedConnection
-      // 
+      //
       public:
-      typedef ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator priorityBandedConnection_iterator;
-      typedef ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator priorityBandedConnection_const_iterator;
+      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator priorityBandedConnection_iterator;
+      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator priorityBandedConnection_const_iterator;
       priorityBandedConnection_iterator begin_priorityBandedConnection ();
       priorityBandedConnection_iterator end_priorityBandedConnection ();
       priorityBandedConnection_const_iterator begin_priorityBandedConnection () const;
@@ -675,10 +672,10 @@ namespace CIAO
       size_t count_priorityBandedConnection (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > priorityBandedConnection_;
+      ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > > priorityBandedConnection_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< ACE_TCHAR > const& id () const;
@@ -720,10 +717,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool RT_CCM_Handlers_Export 
+      friend bool RT_CCM_Handlers_Export
       operator== (PriorityModel const& a, PriorityModel const& b);
 
-      friend bool RT_CCM_Handlers_Export 
+      friend bool RT_CCM_Handlers_Export
       operator!= (PriorityModel const& a, PriorityModel const& b);
 
       private:
@@ -743,7 +740,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // priority_model
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::PriorityModel const& priority_model () const;
       void priority_model (::CIAO::Config_Handlers::PriorityModel const& );
@@ -752,7 +749,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::PriorityModel > priority_model_;
 
       // server_priority
-      // 
+      //
       public:
       bool server_priority_p () const;
       ::CIAO::Config_Handlers::Priority const& server_priority () const;
@@ -1593,14 +1590,13 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct ServerResourcesDef : Traversal::ServerResourcesDef, 
+      struct ServerResourcesDef : Traversal::ServerResourcesDef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ServerResourcesDef Type;
         ServerResourcesDef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -1608,13 +1604,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         cmdline (Type &o)
         {
 
@@ -1622,13 +1615,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         cmdline (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         svcconf (Type &o)
         {
 
@@ -1636,13 +1626,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         svcconf (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         orbConfigs (Type &o)
         {
 
@@ -1650,13 +1637,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         orbConfigs (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         id (Type &o)
         {
 
@@ -1664,7 +1648,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -1672,14 +1655,13 @@ namespace CIAO
         ServerResourcesDef ();
       };
 
-      struct ServerCmdlineOptions : Traversal::ServerCmdlineOptions, 
+      struct ServerCmdlineOptions : Traversal::ServerCmdlineOptions,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ServerCmdlineOptions Type;
         ServerCmdlineOptions (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -1687,13 +1669,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         arg_pre (Type &o)
         {
 
@@ -1701,13 +1680,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         arg_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         arg_next (Type &o)
         {
 
@@ -1715,13 +1691,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         arg_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         arg_post (Type &o)
         {
 
@@ -1729,7 +1702,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         arg_post (Type const&);
 
@@ -1737,14 +1709,13 @@ namespace CIAO
         ServerCmdlineOptions ();
       };
 
-      struct ACESvcConf : Traversal::ACESvcConf, 
+      struct ACESvcConf : Traversal::ACESvcConf,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ACESvcConf Type;
         ACESvcConf (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -1752,13 +1723,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         uri (Type &o)
         {
 
@@ -1766,7 +1734,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         uri (Type const&);
 
@@ -1774,14 +1741,13 @@ namespace CIAO
         ACESvcConf ();
       };
 
-      struct ORBConfigs : Traversal::ORBConfigs, 
+      struct ORBConfigs : Traversal::ORBConfigs,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ORBConfigs Type;
         ORBConfigs (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -1789,13 +1755,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         resources (Type &o)
         {
 
@@ -1803,13 +1766,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resources (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         policySet_pre (Type &o)
         {
 
@@ -1817,13 +1777,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         policySet_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         policySet_next (Type &o)
         {
 
@@ -1831,13 +1788,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         policySet_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         policySet_post (Type &o)
         {
 
@@ -1845,7 +1799,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         policySet_post (Type const&);
 
@@ -1853,14 +1806,13 @@ namespace CIAO
         ORBConfigs ();
       };
 
-      struct ORBResources : Traversal::ORBResources, 
+      struct ORBResources : Traversal::ORBResources,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ORBResources Type;
         ORBResources (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -1868,13 +1820,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpool_pre (Type &o)
         {
 
@@ -1882,13 +1831,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpool_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpool_next (Type &o)
         {
 
@@ -1896,13 +1842,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpool_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpool_post (Type &o)
         {
 
@@ -1910,13 +1853,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpool_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpoolWithLanes_pre (Type &o)
         {
 
@@ -1924,13 +1864,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpoolWithLanes_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpoolWithLanes_next (Type &o)
         {
 
@@ -1938,13 +1875,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpoolWithLanes_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpoolWithLanes_post (Type &o)
         {
 
@@ -1952,13 +1886,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpoolWithLanes_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         connectionBands_pre (Type &o)
         {
 
@@ -1966,13 +1897,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         connectionBands_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         connectionBands_next (Type &o)
         {
 
@@ -1980,13 +1908,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         connectionBands_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         connectionBands_post (Type &o)
         {
 
@@ -1994,7 +1919,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         connectionBands_post (Type const&);
 
@@ -2002,22 +1926,20 @@ namespace CIAO
         ORBResources ();
       };
 
-      struct Priority : Traversal::Priority, 
-//      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
+      struct Priority : Traversal::Priority,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Priority Type;
         Priority (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
+
           this->traverse (const_cast <Type const &> (o));
         }
 
-        #endif /* __BORLANDC__ */
+
         virtual void
         traverse (Type const&);
 
@@ -2025,14 +1947,13 @@ namespace CIAO
         Priority ();
       };
 
-      struct ThreadpoolDef : Traversal::ThreadpoolDef, 
+      struct ThreadpoolDef : Traversal::ThreadpoolDef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolDef Type;
         ThreadpoolDef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -2040,13 +1961,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         stacksize (Type &o)
         {
 
@@ -2054,13 +1972,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         stacksize (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         static_threads (Type &o)
         {
 
@@ -2068,13 +1983,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         static_threads (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         dynamic_threads (Type &o)
         {
 
@@ -2082,13 +1994,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         dynamic_threads (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         default_priority (Type &o)
         {
 
@@ -2096,13 +2005,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         default_priority (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         allow_request_buffering (Type &o)
         {
 
@@ -2110,13 +2016,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         allow_request_buffering (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         max_buffered_requests (Type &o)
         {
 
@@ -2124,13 +2027,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         max_buffered_requests (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         max_request_buffered_size (Type &o)
         {
 
@@ -2138,13 +2038,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         max_request_buffered_size (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         id (Type &o)
         {
 
@@ -2152,7 +2049,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -2160,14 +2056,13 @@ namespace CIAO
         ThreadpoolDef ();
       };
 
-      struct ThreadpoolWithLanesDef : Traversal::ThreadpoolWithLanesDef, 
+      struct ThreadpoolWithLanesDef : Traversal::ThreadpoolWithLanesDef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolWithLanesDef Type;
         ThreadpoolWithLanesDef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -2175,13 +2070,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpoolLane_pre (Type &o)
         {
 
@@ -2189,13 +2081,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpoolLane_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpoolLane_next (Type &o)
         {
 
@@ -2203,13 +2092,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpoolLane_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpoolLane_post (Type &o)
         {
 
@@ -2217,13 +2103,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpoolLane_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         stacksize (Type &o)
         {
 
@@ -2231,13 +2114,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         stacksize (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         allow_borrowing (Type &o)
         {
 
@@ -2245,13 +2125,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         allow_borrowing (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         allow_request_buffering (Type &o)
         {
 
@@ -2259,13 +2136,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         allow_request_buffering (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         max_buffered_requests (Type &o)
         {
 
@@ -2273,13 +2147,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         max_buffered_requests (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         max_request_buffered_size (Type &o)
         {
 
@@ -2287,13 +2158,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         max_request_buffered_size (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         id (Type &o)
         {
 
@@ -2301,7 +2169,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -2309,14 +2176,13 @@ namespace CIAO
         ThreadpoolWithLanesDef ();
       };
 
-      struct ThreadpoolLaneDef : Traversal::ThreadpoolLaneDef, 
+      struct ThreadpoolLaneDef : Traversal::ThreadpoolLaneDef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolLaneDef Type;
         ThreadpoolLaneDef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -2324,13 +2190,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         static_threads (Type &o)
         {
 
@@ -2338,13 +2201,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         static_threads (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         dynamic_threads (Type &o)
         {
 
@@ -2352,13 +2212,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         dynamic_threads (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priority (Type &o)
         {
 
@@ -2366,7 +2223,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priority (Type const&);
 
@@ -2374,14 +2230,13 @@ namespace CIAO
         ThreadpoolLaneDef ();
       };
 
-      struct ConnectionBandsDef : Traversal::ConnectionBandsDef, 
+      struct ConnectionBandsDef : Traversal::ConnectionBandsDef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ConnectionBandsDef Type;
         ConnectionBandsDef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -2389,13 +2244,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         band_pre (Type &o)
         {
 
@@ -2403,13 +2255,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         band_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         band_next (Type &o)
         {
 
@@ -2417,13 +2266,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         band_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         band_post (Type &o)
         {
 
@@ -2431,13 +2277,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         band_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         id (Type &o)
         {
 
@@ -2445,7 +2288,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -2453,14 +2295,13 @@ namespace CIAO
         ConnectionBandsDef ();
       };
 
-      struct PriorityBandDef : Traversal::PriorityBandDef, 
+      struct PriorityBandDef : Traversal::PriorityBandDef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PriorityBandDef Type;
         PriorityBandDef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -2468,13 +2309,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         low (Type &o)
         {
 
@@ -2482,13 +2320,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         low (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         high (Type &o)
         {
 
@@ -2496,7 +2331,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         high (Type const&);
 
@@ -2504,14 +2338,13 @@ namespace CIAO
         PriorityBandDef ();
       };
 
-      struct PolicySet : Traversal::PolicySet, 
+      struct PolicySet : Traversal::PolicySet,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PolicySet Type;
         PolicySet (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -2519,13 +2352,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priorityModel_pre (Type &o)
         {
 
@@ -2533,13 +2363,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priorityModel_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priorityModel_next (Type &o)
         {
 
@@ -2547,13 +2374,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priorityModel_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priorityModel_post (Type &o)
         {
 
@@ -2561,13 +2385,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priorityModel_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpool_pre (Type &o)
         {
 
@@ -2575,13 +2396,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpool_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpool_next (Type &o)
         {
 
@@ -2589,13 +2407,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpool_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         threadpool_post (Type &o)
         {
 
@@ -2603,13 +2418,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         threadpool_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priorityBandedConnection_pre (Type &o)
         {
 
@@ -2617,13 +2429,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priorityBandedConnection_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priorityBandedConnection_next (Type &o)
         {
 
@@ -2631,13 +2440,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priorityBandedConnection_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priorityBandedConnection_post (Type &o)
         {
 
@@ -2645,13 +2451,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priorityBandedConnection_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         id (Type &o)
         {
 
@@ -2659,7 +2462,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -2667,19 +2469,17 @@ namespace CIAO
         PolicySet ();
       };
 
-      struct PriorityModel : Traversal::PriorityModel, 
+      struct PriorityModel : Traversal::PriorityModel,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         PriorityModel (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void PriorityModel::
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
         }
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
@@ -2687,14 +2487,13 @@ namespace CIAO
         PriorityModel ();
       };
 
-      struct PriorityModelPolicyDef : Traversal::PriorityModelPolicyDef, 
+      struct PriorityModelPolicyDef : Traversal::PriorityModelPolicyDef,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PriorityModelPolicyDef Type;
         PriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         traverse (Type &o)
         {
 
@@ -2702,13 +2501,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         priority_model (Type &o)
         {
 
@@ -2716,13 +2512,10 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         priority_model (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
+        virtual void
         server_priority (Type &o)
         {
 
@@ -2730,7 +2523,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         server_priority (Type const&);
 

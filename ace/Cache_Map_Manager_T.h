@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Pair_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 class ACE_Allocator;
 
@@ -55,7 +57,7 @@ class ACE_Cache_Map_Reverse_Iterator;
  * isn't efficient.  Locking has to be provided by the
  * application.
  */
-template <class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Manager
 {
 public:
@@ -63,7 +65,7 @@ public:
   // = Traits.
   typedef KEY key_type;
   typedef VALUE mapped_type;
-  typedef MAP map_type;
+  typedef CMAP_TYPE map_type;
   typedef CACHING_STRATEGY caching_strategy_type;
 
   typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
@@ -111,7 +113,7 @@ public:
   int close (void);
 
   /**
-   * Associate <key> with <value>.  If <key> is already in the MAP
+   * Associate <key> with <value>.  If <key> is already in the CMAP_TYPE
    * then the ENTRY is not changed.  Returns 0 if a new entry is bound
    * successfully, returns 1 if an attempt is made to bind an existing
    * entry, and returns -1 if failures occur.
@@ -121,7 +123,7 @@ public:
 
   /**
    * Lookup entry<key,value> in the cache. If it is not found, returns -1.
-   * If the <key> is located in the MAP object, the CACHING_STRATEGY is
+   * If the <key> is located in the CMAP_TYPE object, the CACHING_STRATEGY is
    * notified of it via notify_find (int result, ATTRIBUTES &attribute).
    * If notify_find also returns 0 (success), then this function returns
    * 0 (success) and sets the cached value in <value>.
@@ -131,7 +133,7 @@ public:
 
   /**
    * Lookup entry<key,value> in the cache. If it is not found, returns -1.
-   * If the <key> is located in the MAP object, the CACHING_STRATEGY is
+   * If the <key> is located in the CMAP_TYPE object, the CACHING_STRATEGY is
    * notified of it via notify_find (int result, ATTRIBUTES &attribute).
    * If notify_find also returns 0 (success), then this function returns
    * 0 (success).
@@ -212,7 +214,7 @@ public:
   REVERSE_ITERATOR rend (void);
 
   /// The map managed by the Cache_Map_Manager.
-  MAP &map (void);
+  CMAP_TYPE &map (void);
 
   /// The caching strategy used on the cache.
   CACHING_STRATEGY &caching_strategy (void);
@@ -220,7 +222,7 @@ public:
 protected:
 
   /// The underlying map which needs to be cached.
-  MAP map_;
+  CMAP_TYPE map_;
 
   /// The strategy to be followed for caching entries in the map.
   CACHING_STRATEGY &caching_strategy_;
@@ -228,8 +230,8 @@ protected:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
 
 };
 
@@ -383,6 +385,8 @@ protected:
   /// belonging to the Cache_Map_Manager.
   REVERSE_IMPLEMENTATION reverse_iterator_implementation_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.inl"

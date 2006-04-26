@@ -10,6 +10,8 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient, anytypecode {
+  avoids += ace_for_tao
+  after  += *Server
   Source_Files {
     TestC.cpp
     client.cpp

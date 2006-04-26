@@ -27,11 +27,11 @@ TAO_IMR_i::~TAO_IMR_i (void)
 int
 TAO_IMR_i::run ()
 {
-  if (this->op_.get() == 0)
-  {
-    ACE_ERROR ((LM_ERROR, "Unknown operation"));
-    return TAO_IMR_Op::UNKNOWN;
-  }
+  if (this->op_.get () == 0)
+    {
+      ACE_ERROR ((LM_ERROR, "Unknown operation"));
+      return TAO_IMR_Op::UNKNOWN;
+    }
 
   return this->op_->run ();
 }
@@ -47,7 +47,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
   ACE_TRY
   {
     // Retrieve the ORB.
-    this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 
+    this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                     "tao_imr_i" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -60,32 +60,32 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
       orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (CORBA::is_nil (obj.in ()))
-    {
-      ACE_ERROR ((LM_ERROR, "Unable to resolve the ImR.\n"));
-      return -1;
+      if (CORBA::is_nil (obj.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Unable to resolve the ImR.\n"));
+          return -1;
+        }
+
+      exception_message = "While narrowing ImR";
+
+      this->imr_ =
+        ImplementationRepository::Administration::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (imr_.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Unable to narrow the ImR.\n"));
+          return -1;
+        }
+
+      this->op_->set_imr (this->imr_.in ());
     }
-
-    exception_message = "While narrowing ImR";
-
-    this->imr_ =
-      ImplementationRepository::Administration::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    if (CORBA::is_nil (imr_.in ()))
-    {
-      ACE_ERROR ((LM_ERROR, "Unable to narrow the ImR.\n"));
-      return -1;
-    }
-
-    this->op_->set_imr(this->imr_.in ());
-  }
   ACE_CATCHANY
-  {
-    ACE_ERROR ((LM_ERROR, "TAO_IMR_i::init - %s\n", exception_message));
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
-    return -1;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "TAO_IMR_i::init - %s\n", exception_message));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      return -1;
+    }
   ACE_ENDTRY;
 
   return 0;
@@ -148,10 +148,10 @@ TAO_IMR_Op *
 TAO_IMR_Op::make_op (const ACE_TCHAR *op_name)
 {
   if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("activate")) == 0)
-  {
-    ACE_ERROR((LM_ERROR, "Warning: The activate option has been renamed to start.\n"));
-    return new TAO_IMR_Op_Activate ();
-  }
+    {
+      ACE_ERROR((LM_ERROR, "Warning: The activate option has been renamed to start.\n"));
+      return new TAO_IMR_Op_Activate ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("start")) == 0)
     return new TAO_IMR_Op_Activate ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("add")) == 0)
@@ -207,10 +207,10 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
 
   int limit = info.startup.start_limit;
   if (info.startup.start_limit < 0)
-  {
-    limit = -limit;
-    locked_out = "  Locked Out\n";
-  }
+    {
+      limit = -limit;
+      locked_out = "  Locked Out\n";
+    }
 
   ACE_DEBUG ((LM_DEBUG,
     "  Activator: %s\n"
@@ -231,14 +231,15 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     info.startup.environment[i].value.in ()));
 
   if (info.startup.activation == ImplementationRepository::PER_CLIENT)
-    ACE_DEBUG ((LM_DEBUG, "  No running info available for PER_CLIENT mode\n"));
-  else if (ACE_OS::strlen (info.partial_ior.in()) > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "  Running at endpoint: %s\n",
-    info.partial_ior.in ()));
+                "  No running info available for PER_CLIENT mode\n"));
+  else if (ACE_OS::strlen (info.partial_ior.in ()) > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "  Running at endpoint: %s\n",
+                info.partial_ior.in ()));
   else   // I am assuming that a blank partial_ior means currently not running.
     ACE_DEBUG ((LM_DEBUG,
-    "  Not currently running\n"));
+                "  Not currently running\n"));
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
 }
@@ -279,10 +280,10 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 2)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "activate" command
   ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("h"));
@@ -291,17 +292,18 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'h':
-      this->print_usage ();
-      return -1;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
+    {
+      switch (c)
+      {
+      case 'h':
+        this->print_usage ();
+        return -1;
+      default:
+        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
     }
-
   return 0;
 }
 
@@ -322,17 +324,18 @@ TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'h':  // display help
-      this->print_usage ();
-      return -1;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
-  }
-
+    {
+      switch (c)
+      {
+      case 'h':  // display help
+        this->print_usage ();
+        return -1;
+      default:
+        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
+    }
   return 0;
 }
 
@@ -356,38 +359,40 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 2)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "ior" command
   ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("hf:"));
 
   this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   if (this->server_name_.length() == 0 || this->server_name_[0] == '-')
-  {
-    ACE_ERROR((LM_ERROR, "ERROR : name is required.\n"));
-    this->print_usage ();
-    return -1;
-  }
+    {
+      ACE_ERROR((LM_ERROR, "ERROR : name is required.\n"));
+      this->print_usage ();
+      return -1;
+    }
 
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'f':  // File name
-      this->filename_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
-      break;
-    case 'h':  // display help
-      this->print_usage();
-      return -1;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
-  }
+    {
+      switch (c)
+        {
+        case 'f':  // File name
+          this->filename_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
+          break;
+        case 'h':  // display help
+          this->print_usage();
+          return -1;
+        default:
+          ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+          this->print_usage ();
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -423,20 +428,21 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'v': // verbose server display
-      this->verbose_server_information_ = 1;
-      break;
-    case 'h':  // display help
-      this->print_usage ();
-      return -1;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
-  }
-
+    {
+      switch (c)
+      {
+      case 'v': // verbose server display
+        this->verbose_server_information_ = 1;
+        break;
+      case 'h':  // display help
+        this->print_usage ();
+        return -1;
+      default:
+        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
+    }
   return 0;
 }
 
@@ -456,10 +462,10 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 2)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "remove" command
   ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("h"));
@@ -468,17 +474,18 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'h':
-      this->print_usage ();
-      return -1;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
-  }
-
+    {
+      switch (c)
+      {
+      case 'h':
+        this->print_usage ();
+        return -1;
+      default:
+        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
+    }
   return 0;
 }
 
@@ -498,10 +505,10 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 2)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "shutdown" command
   ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("h"));
@@ -510,17 +517,18 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'h':
-      this->print_usage ();
-      return -1;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
-  }
-
+    {
+      switch (c)
+      {
+      case 'h':
+        this->print_usage ();
+        return -1;
+      default:
+        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
+    }
   return 0;
 }
 
@@ -545,10 +553,10 @@ TAO_IMR_Op_ShutdownRepo::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "shutdown-repo" command
   ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("ha"));
@@ -556,21 +564,21 @@ TAO_IMR_Op_ShutdownRepo::parse (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-  {
-    switch (c)
     {
-    case 'h':
-      this->print_usage ();
-      return -1;
-    case 'a':
-      activators_ = true;
-      break;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
+      switch (c)
+      {
+      case 'h':
+        this->print_usage ();
+        return -1;
+      case 'a':
+        activators_ = true;
+        break;
+      default:
+        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
     }
-  }
 
   return 0;
 }
@@ -614,11 +622,11 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 2)
-  {
-    ACE_ERROR((LM_ERROR, "Error: Must supply at least a server name.\n"));
-    this->print_usage ();
-    return -1;
-  }
+    {
+      ACE_ERROR((LM_ERROR, "Error: Must supply at least a server name.\n"));
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "update" command
   ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("hc:w:a:e:r:R:l:"));
@@ -627,58 +635,60 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'c':  // Command line arguments
-      this->set_command_line_ = true;
-      this->command_line_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
-      break;
-    case 'e':  // set environment variables
-      this->set_environment_vars_ = true;
-      this->addenv( get_opts.opt_arg () );
-      break;
-    case 'w':  // Working Directory
-      this->set_working_dir_ = true;
-      this->working_dir_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
-      break;
-    case 'a':  // Activation Mode
-      this->set_activation_ = true;
-      if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("NORMAL")) == 0)
-        this->activation_ = ImplementationRepository::NORMAL;
-      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("MANUAL")) == 0)
-        this->activation_ = ImplementationRepository::MANUAL;
-      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("PER_CLIENT")) == 0)
-        this->activation_ = ImplementationRepository::PER_CLIENT;
-      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("AUTO_START")) == 0)
-        this->activation_ = ImplementationRepository::AUTO_START;
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-        "Unknown Activation Mode <%s>.\n",
-        get_opts.opt_arg ()),
-        -1);
-      break;
-    case 'r':
-    case 'R':   // startup/ping Retry Count
-      {
-        this->set_retry_count_ = true;
-        int rc = ACE_OS::atoi(get_opts.optarg);
-        if (rc > 0)
-          this->retry_count_ = rc;
-      }
-      break;
-    case 'l': /// hostname of the activator
-      this->activator_.set (ACE_TEXT_TO_CHAR_IN (get_opts.optarg));
-      this->set_activator_ = true;
-      break;
-    case 'h':  // display help
-      this->print_usage ();
-      return -1;
-    default:
-      ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
-      this->print_usage ();
-      return -1;
-  }
+    {
+      switch (c)
+        {
+        case 'c':  // Command line arguments
+          this->set_command_line_ = true;
+          this->command_line_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
+          break;
+        case 'e':  // set environment variables
+          this->set_environment_vars_ = true;
+          this->addenv( get_opts.opt_arg () );
+          break;
+        case 'w':  // Working Directory
+          this->set_working_dir_ = true;
+          this->working_dir_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
+          break;
+        case 'a':  // Activation Mode
+          this->set_activation_ = true;
+          if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("NORMAL")) == 0)
+            this->activation_ = ImplementationRepository::NORMAL;
+          else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("MANUAL")) == 0)
+            this->activation_ = ImplementationRepository::MANUAL;
+          else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("PER_CLIENT")) == 0)
+            this->activation_ = ImplementationRepository::PER_CLIENT;
+          else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("AUTO_START")) == 0)
+            this->activation_ = ImplementationRepository::AUTO_START;
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unknown Activation Mode <%s>.\n",
+                               get_opts.opt_arg ()),
+                              -1);
+          break;
+        case 'r':
+        case 'R':   // startup/ping Retry Count
+          {
+            this->set_retry_count_ = true;
+            int rc = ACE_OS::atoi(get_opts.optarg);
+            if (rc > 0)
+            this->retry_count_ = rc;
+          }
+          break;
+        case 'l': /// hostname of the activator
+          this->activator_.set (ACE_TEXT_TO_CHAR_IN (get_opts.optarg));
+          this->set_activator_ = true;
+          break;
+        case 'h':  // display help
+          this->print_usage ();
+          return -1;
+        default:
+          ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+          this->print_usage ();
+          return -1;
+        }
 
+    }
   return 0;
 }
 
@@ -693,34 +703,34 @@ TAO_IMR_Op_Activate::run (void)
   ACE_ASSERT(! CORBA::is_nil(imr_));
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    this->imr_->activate_server (this->server_name_.c_str() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    ACE_DEBUG ((LM_DEBUG,
-      "Successfully Activated server <%s>\n",
-      this->server_name_.c_str ()));
-  }
+    {
+      this->imr_->activate_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG,
+        "Successfully Activated server <%s>\n",
+        this->server_name_.c_str ()));
+    }
   ACE_CATCH (ImplementationRepository::CannotActivate, ex)
-  {
-    ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n",
-      this->server_name_.c_str (),
-      ex.reason.in ()));
-    return TAO_IMR_Op::CANNOT_ACTIVATE;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n",
+        this->server_name_.c_str (),
+        ex.reason.in ()));
+      return TAO_IMR_Op::CANNOT_ACTIVATE;
+    }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
-  {
-    ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
-    return TAO_IMR_Op::NOT_FOUND;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
+      return TAO_IMR_Op::NOT_FOUND;
+    }
   ACE_CATCH (PortableServer::ForwardRequest, ex)
-  {
-    ACE_RE_THROW;
-  }
+    {
+      ACE_RE_THROW;
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Activating Server");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Activating Server");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
@@ -729,43 +739,43 @@ TAO_IMR_Op_Activate::run (void)
 int
 TAO_IMR_Op_Autostart::run (void)
 {
-  ACE_ASSERT(! CORBA::is_nil(imr_));
+  ACE_ASSERT(! CORBA::is_nil (imr_));
 
   ImplementationRepository::ServerInformationList_var server_list;
   ImplementationRepository::ServerInformationIterator_var server_iter;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    this->imr_->list (0,
-      server_list,
-      server_iter
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    ACE_ASSERT(CORBA::is_nil(server_iter.in()));
-
-    CORBA::ULong len = server_list->length ();
-    for (CORBA::ULong i = 0; i < len; ++i)
     {
-      ACE_TRY_EX (inside)
-      {
-        this->imr_->activate_server(server_list[i].server.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK_EX (inside);
-      }
-      ACE_CATCHANY
-      {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, server_list[i].server.in ());
-        // Ignore exception
-      }
-      ACE_ENDTRY;
+      this->imr_->list (0,
+        server_list,
+        server_iter
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_ASSERT(CORBA::is_nil (server_iter.in ()));
+
+      CORBA::ULong len = server_list->length ();
+      for (CORBA::ULong i = 0; i < len; ++i)
+        {
+          ACE_TRY_EX (inside)
+            {
+              this->imr_->activate_server (server_list[i].server.in () ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK_EX (inside);
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, server_list[i].server.in ());
+              // Ignore exception
+            }
+          ACE_ENDTRY;
+        }
     }
-  }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "autostart");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "autostart");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
@@ -774,79 +784,79 @@ TAO_IMR_Op_Autostart::run (void)
 int
 TAO_IMR_Op_IOR::run (void)
 {
-  ACE_ASSERT(! CORBA::is_nil(imr_));
+  ACE_ASSERT (! CORBA::is_nil(imr_));
 
   // Create a corbaloc string
   // Todo : Most of this logic duplicates that in the POA.cpp
   ACE_TRY_NEW_ENV
-  {
-    if (CORBA::is_nil (this->imr_)
-      || !this->imr_->_stubobj ()
-      || !this->imr_->_stubobj ()->profile_in_use ())
     {
-      ACE_ERROR_RETURN ((
-        LM_ERROR,
-        ACE_TEXT ("Invalid ImR IOR.\n")
-        ), -1);
-    }
-
-    CORBA::String_var imr_str =
-      this->imr_->_stubobj ()->
-      profile_in_use ()->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    // Search for "corbaloc:" alone, without the protocol.  This code
-    // should be protocol neutral.
-    const char corbaloc[] = "corbaloc:";
-    char *pos = ACE_OS::strstr (imr_str.inout (), corbaloc);
-
-    if (pos == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
-    }
-    else
-    {
-      pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-      pos = ACE_OS::strchr (pos + 1,
-        this->imr_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
-
-      if (pos)
+      if (CORBA::is_nil (this->imr_)
+        || !this->imr_->_stubobj ()
+        || !this->imr_->_stubobj ()->profile_in_use ())
       {
-        *(pos + 1) = 0;  // Crop the string
+        ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("Invalid ImR IOR.\n")
+          ), -1);
       }
-      else
+
+      CORBA::String_var imr_str =
+        this->imr_->_stubobj ()->
+        profile_in_use ()->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Search for "corbaloc:" alone, without the protocol.  This code
+      // should be protocol neutral.
+      const char corbaloc[] = "corbaloc:";
+      char *pos = ACE_OS::strstr (imr_str.inout (), corbaloc);
+
+      if (pos == 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
       }
-    }
-    ACE_CString ior (imr_str.in ());
-
-    // Add the key
-    ior += this->server_name_;
-
-    ACE_DEBUG ((LM_DEBUG, "%s\n", ior.c_str ()));
-
-    if (this->filename_.length () > 0)
-    {
-      FILE *file = ACE_OS::fopen (this->filename_.c_str (), ACE_TEXT("w"));
-
-      if (file == 0)
+      else
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
-          "Error: Unable to open %s for writing: %p\n",
-          this->filename_.c_str ()),
-          -1);
-      }
+        pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
+        pos = ACE_OS::strchr (pos + 1,
+          this->imr_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
-      ACE_OS::fprintf (file, "%s", ior.c_str ());
-      ACE_OS::fclose (file);
+        if (pos)
+        {
+          *(pos + 1) = 0;  // Crop the string
+        }
+        else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
+        }
+      }
+      ACE_CString ior (imr_str.in ());
+
+      // Add the key
+      ior += this->server_name_;
+
+      ACE_DEBUG ((LM_DEBUG, "%s\n", ior.c_str ()));
+
+      if (this->filename_.length () > 0)
+        {
+          FILE *file = ACE_OS::fopen (this->filename_.c_str (), ACE_TEXT("w"));
+
+          if (file == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Error: Unable to open %s for writing: %p\n",
+                                 this->filename_.c_str ()),
+                                -1);
+            }
+
+        ACE_OS::fprintf (file, "%s", ior.c_str ());
+        ACE_OS::fclose (file);
+      }
     }
-  }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "IOR");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "IOR");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
@@ -855,57 +865,57 @@ TAO_IMR_Op_IOR::run (void)
 int
 TAO_IMR_Op_List::run (void)
 {
-  ACE_ASSERT(! CORBA::is_nil(imr_));
+  ACE_ASSERT (! CORBA::is_nil(imr_));
 
   ImplementationRepository::ServerInformationList_var server_list;
   ImplementationRepository::ServerInformationIterator_var server_iter;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    // If there is a server name, list only that server.  Otherwise, look
-    // at all of them.
-    if (this->server_name_.length () == 0)
     {
-      this->imr_->list (0,
-        server_list.out(),
-        server_iter.out()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // If there is a server name, list only that server.  Otherwise, look
+      // at all of them.
+      if (this->server_name_.length () == 0)
+        {
+          this->imr_->list (0,
+            server_list.out(),
+            server_iter.out()
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      if (server_list->length() == 0)
-      {
-        ACE_DEBUG((LM_DEBUG, "No servers found.\n"));
-        return TAO_IMR_Op::NORMAL;
-      }
+          if (server_list->length() == 0)
+          {
+            ACE_DEBUG((LM_DEBUG, "No servers found.\n"));
+            return TAO_IMR_Op::NORMAL;
+          }
 
-      for (CORBA::ULong i = 0; i < server_list->length (); i++)
-        this->display_server_information (server_list[i]);
+          for (CORBA::ULong i = 0; i < server_list->length (); i++)
+            this->display_server_information (server_list[i]);
 
-      ACE_ASSERT (CORBA::is_nil (server_iter.in ()));
+          ACE_ASSERT (CORBA::is_nil (server_iter.in ()));
+        }
+      else
+        {
+          ImplementationRepository::ServerInformation_var si;
+
+          this->imr_->find (this->server_name_.c_str (), si ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          this->verbose_server_information_ = 1;
+
+          this->display_server_information (si.in ());
+        }
     }
-    else
-    {
-      ImplementationRepository::ServerInformation_var si;
-
-      this->imr_->find (this->server_name_.c_str (), si ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      this->verbose_server_information_ = 1;
-
-      this->display_server_information (si.in ());
-    }
-  }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
-  {
-    ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
-    return TAO_IMR_Op::NOT_FOUND;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
+      return TAO_IMR_Op::NOT_FOUND;
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "List");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "List");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
@@ -914,33 +924,33 @@ TAO_IMR_Op_List::run (void)
 int
 TAO_IMR_Op_Remove::run (void)
 {
-  ACE_ASSERT(! CORBA::is_nil(imr_));
+  ACE_ASSERT (! CORBA::is_nil(imr_));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    this->imr_->remove_server (this->server_name_.c_str() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    {
+      this->imr_->remove_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%s>\n",
-      this->server_name_.c_str ()));
-  }
+      ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%s>\n",
+        this->server_name_.c_str ()));
+    }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
-  {
-    ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n",
-      this->server_name_.c_str ()));
-    return TAO_IMR_Op::NOT_FOUND;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n",
+        this->server_name_.c_str ()));
+      return TAO_IMR_Op::NOT_FOUND;
+    }
   ACE_CATCH (CORBA::NO_PERMISSION, ex)
-  {
-    ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
-    return TAO_IMR_Op::NO_PERMISSION;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      return TAO_IMR_Op::NO_PERMISSION;
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Removing Server");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Removing Server");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
@@ -949,32 +959,32 @@ TAO_IMR_Op_Remove::run (void)
 int
 TAO_IMR_Op_Shutdown::run (void)
 {
-  ACE_ASSERT(! CORBA::is_nil(imr_));
+  ACE_ASSERT (! CORBA::is_nil(imr_));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    this->imr_->shutdown_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    {
+      this->imr_->shutdown_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%s>\n",
-      this->server_name_.c_str ()));
-  }
+      ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%s>\n",
+        this->server_name_.c_str ()));
+    }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
-  {
-    ACE_ERROR ((LM_ERROR, "Server <%s> already shut down.\n", this->server_name_.c_str ()));
-    return TAO_IMR_Op::NOT_FOUND;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Server <%s> already shut down.\n", this->server_name_.c_str ()));
+      return TAO_IMR_Op::NOT_FOUND;
+    }
   ACE_CATCH(CORBA::TIMEOUT, ex)
-  {
-    ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%s> to shutdown.\n",
-      this->server_name_.c_str ()));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%s> to shutdown.\n",
+        this->server_name_.c_str ()));
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down Server");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down Server");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
@@ -987,22 +997,22 @@ TAO_IMR_Op_ShutdownRepo::run (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    bool servers = false; // not implemented yet, if ever
-    this->imr_->shutdown(activators_, servers ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    {
+      bool servers = false; // not implemented yet, if ever
+      this->imr_->shutdown (activators_, servers ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
-  }
+      ACE_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
+    }
   ACE_CATCH(CORBA::TIMEOUT, ex)
-  {
-    ACE_DEBUG ((LM_DEBUG, "Timeout waiting for ImR shutdown.\n"));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "Timeout waiting for ImR shutdown.\n"));
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down ImR");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down ImR");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
@@ -1011,7 +1021,7 @@ TAO_IMR_Op_ShutdownRepo::run (void)
 int
 TAO_IMR_Op_Register::run (void)
 {
-  ACE_ASSERT(! CORBA::is_nil(imr_));
+  ACE_ASSERT (! CORBA::is_nil(imr_));
 
   ImplementationRepository::ServerInformation_var server_information;
   ImplementationRepository::StartupOptions  local;
@@ -1019,67 +1029,73 @@ TAO_IMR_Op_Register::run (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    this->imr_->find(this->server_name_.c_str (),
-      server_information.out() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    if (server_name_ == server_information->server.in())
     {
-      if (is_add_)
-      {
-        ACE_DEBUG((LM_DEBUG, "Server <%s> already registered.\n", this->server_name_.c_str()));
-        return ALREADY_REGISTERED;
-      }
-      options = &server_information->startup;
+      this->imr_->find(this->server_name_.c_str (),
+        server_information.out() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (server_name_ == server_information->server.in())
+        {
+          if (is_add_)
+            {
+              ACE_DEBUG((LM_DEBUG, "Server <%s> already registered.\n", this->server_name_.c_str ()));
+              return ALREADY_REGISTERED;
+            }
+          options = &server_information->startup;
+        }
+      else // not found
+        {
+          if (!is_add_)
+          {
+            ACE_DEBUG((LM_DEBUG, "Adding Server <%s> on update command.\n", this->server_name_.c_str ()));
+            is_add_ = true;
+          }
+          options = &local;
+        }
+
+      if (this->set_command_line_)
+        options->command_line = CORBA::string_dup (this->command_line_.c_str ());
+
+      if (this->set_environment_vars_)
+        options->environment = this->environment_vars_;
+
+      if (this->set_working_dir_)
+        options->working_directory = CORBA::string_dup (this->working_dir_.c_str ());
+
+      if (this->set_activation_ || is_add_)
+        options->activation = this->activation_;
+
+      if (this->set_retry_count_ || is_add_)
+        options->start_limit = this->retry_count_ + 1;
+
+      if (this->set_activator_)
+        options->activator = CORBA::string_dup(this->activator_.c_str ());
+      // If the command line is set, we must have an activator
+      else if (this->set_command_line_ &&
+              (options->activator.in () == 0 || *options->activator.in () == 0))
+        {
+          char host_name[MAXHOSTNAMELEN + 1];
+          ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
+          options->activator = CORBA::string_dup (host_name);
+          ACE_DEBUG ((LM_DEBUG, "Updating Server <%s> with default activator of <%s>.\n",
+            this->server_name_.c_str (), options->activator.in ()));
+        }
+
+      this->imr_->add_or_update_server (this->server_name_.c_str (), *options ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG((LM_DEBUG, "Successfully registered <%s>.\n", this->server_name_.c_str ()));
     }
-    else
-    {
-      is_add_ = true;
-      options = &local;
-    }
-
-    if (this->set_command_line_)
-      options->command_line = CORBA::string_dup (this->command_line_.c_str ());
-
-    if (this->set_environment_vars_)
-      options->environment = this->environment_vars_;
-
-    if (this->set_working_dir_)
-      options->working_directory = CORBA::string_dup (this->working_dir_.c_str ());
-
-    if (this->set_activation_ || is_add_)
-      options->activation = this->activation_;
-
-    if (this->set_retry_count_ || is_add_)
-      options->start_limit = this->retry_count_ + 1;
-
-    if (this->set_activator_)
-  {
-      options->activator = CORBA::string_dup(this->activator_.c_str());
-  }
-    else if (is_add_)
-  {
-      char host_name[MAXHOSTNAMELEN + 1];
-      ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
-      options->activator = CORBA::string_dup (host_name);
-    }
-
-    this->imr_->add_or_update_server (this->server_name_.c_str (), *options ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    ACE_DEBUG((LM_DEBUG, "Successfully registered <%s>.\n", this->server_name_.c_str ()));
-  }
   ACE_CATCH (CORBA::NO_PERMISSION, ex)
-  {
-    ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
-    return TAO_IMR_Op::NO_PERMISSION;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      return TAO_IMR_Op::NO_PERMISSION;
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Updating server");
-    return TAO_IMR_Op::UNKNOWN;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Updating server");
+      return TAO_IMR_Op::UNKNOWN;
+    }
   ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;

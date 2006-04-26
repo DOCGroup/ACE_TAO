@@ -70,9 +70,13 @@ namespace
     virtual void
     traverse (SemanticGraph::Struct& s)
     {
+      std::string n (s.scoped_name ().str ());
       if (s.context ().count (STRS[VAR_SIZE]))
       {
-        top () = s.context ().get<bool> (STRS[VAR_SIZE]);
+        // Never set 'top' to false (except in pre() above),
+        // so a 'true' value will propagate up the scopes.
+        bool r = s.context ().get<bool> (STRS[VAR_SIZE]);
+        if (r) top () = r;
       }
       else
       {
@@ -83,13 +87,8 @@ namespace
     virtual void
     post (SemanticGraph::Struct& s)
     {
-      bool r (top ());
-
-      s.context ().set (STRS[VAR_SIZE], r);
-
-      pop ();
-
-      if (r) top () = r;
+      // Set our context to the result of nested scope traversal.
+      s.context ().set (STRS[VAR_SIZE], top ());
     }
 
     virtual void
@@ -103,7 +102,10 @@ namespace
     {
       if (u.context ().count (STRS[VAR_SIZE]))
       {
-        top () = u.context ().get<bool> (STRS[VAR_SIZE]);
+        // Never set 'top' to false (except in pre() above),
+        // so a 'true' value will propagate up the scopes.
+        bool r = u.context ().get<bool> (STRS[VAR_SIZE]);
+        if (r) top () = r;
       }
       else
       {
@@ -114,13 +116,8 @@ namespace
     virtual void
     post (SemanticGraph::Union& u)
     {
-      bool r (top ());
-
-      u.context ().set (STRS[VAR_SIZE], r);
-
-      pop ();
-
-      if (r) top () = r;
+      // Set our context to the result of nested scope traversal.
+      u.context ().set (STRS[VAR_SIZE], top ());
     }
 
   private:
@@ -166,12 +163,12 @@ calculate (SemanticGraph::TranslationUnit& u)
   //
   Traversal::ContainsRoot contains_root;
   Traversal::Includes includes;
-  
+
   region.edge_traverser (includes);
   region.edge_traverser (contains_root);
-  
+
   //--
-  Traversal::Root root;  
+  Traversal::Root root;
   includes.node_traverser (region);
   contains_root.node_traverser (root);
 
@@ -186,15 +183,15 @@ calculate (SemanticGraph::TranslationUnit& u)
   Traversal::UnconstrainedInterface uinterface;
   Traversal::ValueType vtype;
   Traversal::Home component_home;
-  
+
   Calculator calculator;
-  
+
   defines.node_traverser (module);
   defines.node_traverser (uinterface);
   defines.node_traverser (vtype);
   defines.node_traverser (component_home);
   defines.node_traverser (calculator);
-  
+
   // Layer 4
   //
   Traversal::Defines struct_defines;
@@ -203,16 +200,16 @@ calculate (SemanticGraph::TranslationUnit& u)
   vtype.edge_traverser (defines);
   component_home.edge_traverser (defines);
   calculator.edge_traverser (struct_defines);
-  
+
   //--
   Traversal::Member member;
   struct_defines.node_traverser (member);
-  
+
   // Layer 5
   //
   Traversal::Belongs belongs;
   member.edge_traverser (belongs);
-  
+
   //--
   belongs.node_traverser (calculator);
 

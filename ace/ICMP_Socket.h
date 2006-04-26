@@ -28,8 +28,10 @@
 #include "ace/Time_Value.h"
 #include "ace/os_include/netinet/os_in.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
- * @class ICMP_Socket
+ * @class ACE_ICMP_Socket
  *
  * @brief An abstract class that forms the basis for usage of the ICMP
  * protocol (that is, support for things such as ping).
@@ -38,8 +40,6 @@ class ACE_Export ACE_ICMP_Socket : public ACE_SOCK
 {
 public:
   // = Initialization methods.
-
-  ~ACE_ICMP_Socket (void);
 
   /**
    * @name Data transfer routines.
@@ -101,9 +101,7 @@ protected:
                                      int len);
 };
 
-#if defined (__ACE_INLINE__)
-# include "ace/ICMP_Socket.inl"
-#endif /* __ACE_INLINE__ */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */
 

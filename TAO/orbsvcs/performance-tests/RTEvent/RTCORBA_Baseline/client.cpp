@@ -28,9 +28,9 @@ class Roundtrip_Task : public ACE_Task_Base
 {
 public:
   Roundtrip_Task (Test::Roundtrip_ptr roundtrip,
-                  ACE_Barrier *barrier)
+                  ACE_Barrier *the_barrier)
     : roundtrip_ (Test::Roundtrip::_duplicate (roundtrip))
-    , barrier_ (barrier)
+    , barrier_ (the_barrier)
   {
   }
 
@@ -64,11 +64,11 @@ class High_Priority_Task : public Roundtrip_Task
 {
 public:
   High_Priority_Task (Test::Roundtrip_ptr roundtrip,
-                      ACE_Barrier *barrier,
+                      ACE_Barrier *the_barrier,
                       int iterations,
                       int period_in_usecs,
                       int workload)
-    : Roundtrip_Task (roundtrip, barrier)
+    : Roundtrip_Task (roundtrip, the_barrier)
     , sample_history (iterations)
     , iterations_ (iterations)
     , period_in_usecs_ (period_in_usecs)
@@ -112,10 +112,10 @@ class Low_Priority_Task : public Roundtrip_Task
 {
 public:
   Low_Priority_Task (Test::Roundtrip_ptr roundtrip,
-                     ACE_Barrier *barrier,
+                     ACE_Barrier *the_barrier,
                      int period_in_usecs,
                      int workload)
-    : Roundtrip_Task (roundtrip, barrier)
+    : Roundtrip_Task (roundtrip, the_barrier)
     , stopped_ (0)
     , period_in_usecs_ (period_in_usecs)
     , workload_ (workload)
@@ -216,7 +216,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TRY_CHECK;
 
       int thread_count = 1 + options.nthreads;
-      ACE_Barrier barrier (thread_count);
+      ACE_Barrier the_barrier (thread_count);
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
@@ -227,7 +227,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int per_thread_period = options.low_priority_period;
       if (options.global_low_priority_rate)
         per_thread_period = options.low_priority_period * options.nthreads;
-      Low_Priority_Task low_priority (roundtrip.in (), &barrier,
+      Low_Priority_Task low_priority (roundtrip.in (), &the_barrier,
                                       per_thread_period,
                                       options.low_priority_workload);
       low_priority.activate (rt_class.thr_sched_class ()
@@ -235,7 +235,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              options.nthreads, 1,
                              rt_class.priority_low ());
 
-      High_Priority_Task high_priority (roundtrip.in (), &barrier,
+      High_Priority_Task high_priority (roundtrip.in (), &the_barrier,
                                         options.iterations,
                                         options.high_priority_period,
                                         options.high_priority_workload);

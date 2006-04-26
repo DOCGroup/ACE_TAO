@@ -1,4 +1,5 @@
-/* -*- c++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -21,11 +22,12 @@
 #define _BE_GLOBAL_H
 
 #include "TAO_IDL_BE_Export.h"
-#include "idl_bool.h"
+
 #include "ace/Unbounded_Queue.h"
 #include "ace/SString.h"
 
 class be_interface;
+class be_valuetype;
 class be_interface_fwd;
 class UTL_String;
 class AST_PredefinedType;
@@ -205,6 +207,26 @@ public:
   // set the name of the include file to be put at the bottom of every
   // header file.
 
+  /// Set text that opens a "versioned" namespace.
+  void versioning_begin (const char* s);
+
+  /// Get text that opens a "versioned" namespace.
+  const char * versioning_begin (void) const;
+
+  /// Get text that opens a "versioned" namespace for core TAO/orbsvcs
+  /// related code.
+  const char * core_versioning_begin (void) const;
+
+  /// Set text that closes a "versioned" namespace.
+  void versioning_end (const char* s);
+
+  /// Get text that closes a "versioned" namespace.
+  const char * versioning_end (void) const;
+
+  /// Get text that closes a "versioned" namespace for core TAO/orbsvcs
+  /// related code.
+  const char * core_versioning_end (void) const;
+
   // = Set and get methods for different file name endings.
 
   void client_hdr_ending (const char* s);
@@ -287,13 +309,13 @@ public:
 
   void anyop_header_ending (const char* s);
   // Set the anyop_header_ending.
-  
+
   const char* anyop_header_ending (void) const;
   // Get the anyop_header_ending.
-  
+
   void anyop_source_ending (const char* s);
   // Set the anyop_source_ending.
-    
+
   const char* anyop_source_ending (void) const;
   // Get the anyop_source_ending.
 
@@ -317,117 +339,117 @@ public:
   // to be kept. Default  is current directory from which the
   // <tao_idl> is called.
 
-  void any_support (idl_bool);
+  void any_support (bool);
   // Set any support.
 
-  idl_bool any_support (void) const;
+  bool any_support (void) const;
   // Check Any support.
 
-  void tc_support (idl_bool);
+  void tc_support (bool);
   // Set TypeCode support.
 
-  idl_bool tc_support (void) const;
+  bool tc_support (void) const;
   // Check TypeCode support
 
-  void obv_opt_accessor (idl_bool);
+  void obv_opt_accessor (bool);
   // Set optimized valuetype member accessor generation.
 
-  idl_bool obv_opt_accessor (void) const;
+  bool obv_opt_accessor (void) const;
   // Check optimized valuetype member accessor generation.
 
-  void gen_impl_files (idl_bool);
+  void gen_impl_files (bool);
   // Set generation of implementation files.
 
-  idl_bool gen_impl_files (void) const;
+  bool gen_impl_files (void) const;
   // Check if we want to generate implementation files.
 
-  void gen_impl_debug_info (idl_bool);
+  void gen_impl_debug_info (bool);
   // Set generation of source file and line number for implementation files.
 
-  idl_bool gen_impl_debug_info (void) const;
+  bool gen_impl_debug_info (void) const;
   // Check generation of source file and line number implementation files.
 
-  void gen_copy_ctor (idl_bool);
+  void gen_copy_ctor (bool);
   // Set generation of copy constructor.
 
-  idl_bool gen_copy_ctor (void) const;
+  bool gen_copy_ctor (void) const;
   // Check if we want to generate the copy constructor.
 
-  void gen_assign_op (idl_bool);
+  void gen_assign_op (bool);
   // Set the generation of the assignment operator.
 
-  idl_bool gen_assign_op (void) const;
+  bool gen_assign_op (void) const;
   // Check if we want to generate the assignment operator.
 
-  void gen_thru_poa_collocation (idl_bool);
+  void gen_thru_poa_collocation (bool);
   // Set whether we want to generate Thru_POA collocation stubs.
 
-  idl_bool gen_thru_poa_collocation (void) const;
+  bool gen_thru_poa_collocation (void) const;
   // Check if we want to generate Thru_POA collocation stubs.
 
-  void gen_direct_collocation (idl_bool);
+  void gen_direct_collocation (bool);
   // Set whether we want to generate Direct collocation stubs.
 
-  idl_bool gen_direct_collocation (void) const;
+  bool gen_direct_collocation (void) const;
   // Check if we want to generate Direct collocation stubs.
 
-  void exception_support (idl_bool);
+  void exception_support (bool);
   // Set real C++ exception support.
 
-  idl_bool exception_support (void) const;
+  bool exception_support (void) const;
   // Check if real C++ exception support is enabled.
 
-  void use_raw_throw (idl_bool);
+  void use_raw_throw (bool);
   // Set replacement of 'ACE_THROW_SPEC' with 'throw'.
 
-  idl_bool use_raw_throw (void) const;
+  bool use_raw_throw (void) const;
   // Check if raw 'throw' generation option is set.
 
-  void opt_tc (idl_bool);
+  void opt_tc (bool);
   // Set optimized typecodes.
 
-  idl_bool opt_tc (void) const;
+  bool opt_tc (void) const;
   // Check if TypeCodes are optimized.
 
-  void ami_call_back (idl_bool value);
+  void ami_call_back (bool value);
   // To enable or disable AMI call back feature of the Messaging
   // specification in the generated code.
 
-  idl_bool ami_call_back (void) const;
+  bool ami_call_back (void) const;
   // Return the flag.
 
-  void gen_amh_classes (idl_bool value);
+  void gen_amh_classes (bool value);
   // To enable or disable AMH in the generated code.
 
-  idl_bool gen_amh_classes (void) const;
+  bool gen_amh_classes (void) const;
   // Return the flag.
 
-  void gen_tie_classes (idl_bool value);
+  void gen_tie_classes (bool value);
   // Set the generation of tie classes and files.
 
-  idl_bool gen_tie_classes (void) const;
+  bool gen_tie_classes (void) const;
   // Return the flag.
 
-  void gen_smart_proxies (idl_bool value);
+  void gen_smart_proxies (bool value);
   // To enable or disable AMI call back feature of the Messaging
   // specification in the generated code.
 
-  idl_bool gen_smart_proxies (void) const;
+  bool gen_smart_proxies (void) const;
   // Return the flag.
 
-  void gen_inline_constants (idl_bool value);
+  void gen_inline_constants (bool value);
   // Set the flag.
 
-  idl_bool gen_inline_constants (void) const;
+  bool gen_inline_constants (void) const;
   // Return the flag.
 
-  void gen_dcps_type_support (idl_bool value);
+  void gen_dcps_type_support (bool value);
   // Set the flag.
 
-  idl_bool gen_dcps_type_support (void) const;
+  bool gen_dcps_type_support (void) const;
   // Return the flag.
 
-  idl_bool gen_tmplinst (void) const;
+  bool gen_tmplinst (void) const;
   // Return the flag.
 
   void lookup_strategy (LOOKUP_STRATEGY s);
@@ -461,20 +483,24 @@ public:
   void ccmobject (be_interface *val);
   // Accessors for the member.
 
-  idl_bool gen_anyop_files (void) const;
-  void gen_anyop_files (idl_bool val);
+  be_valuetype *exceptionholder (void) const;
+  void exceptionholder (be_valuetype *val);
   // Accessors for the member.
 
-  idl_bool gen_skel_files (void) const;
-  void gen_skel_files (idl_bool val);
+  bool gen_anyop_files (void) const;
+  void gen_anyop_files (bool val);
+  // Accessors for the member.
+
+  bool gen_skel_files (void) const;
+  void gen_skel_files (bool val);
   // Accessors for the member gen_skel_files_.
 
-  idl_bool gen_client_inline (void) const;
-  void gen_client_inline (idl_bool val);
+  bool gen_client_inline (void) const;
+  void gen_client_inline (bool val);
   // Accessors for the member gen_client_inline_.
 
-  idl_bool gen_server_inline (void) const;
-  void gen_server_inline (idl_bool val);
+  bool gen_server_inline (void) const;
+  void gen_server_inline (bool val);
   // Accessors for the member gen_server_inline_.
 
   ACE_CString spawn_options (void);
@@ -507,7 +533,7 @@ private:
   char* skel_export_include_;
   char* stub_export_macro_;
   char* stub_export_include_;
-  
+
   // Macro and include used on ORB .pidl files generating to the
   // AnyTypeCode library.
   char* anyop_export_macro_;
@@ -516,6 +542,20 @@ private:
   char* pch_include_;
   char* pre_include_;
   char* post_include_;
+
+  /// Text that opens a "versioned" namespace for core TAO and orbsvcs
+  /// related code.
+  ACE_CString core_versioning_begin_;
+
+  /// Text that closes a "versioned" namespace for core TAO and
+  /// orbsvcs related code.
+  ACE_CString core_versioning_end_;
+
+  /// Text that opens a "versioned" namepace.
+  ACE_CString versioning_begin_;
+
+  /// Text that closes a "versioned" namepace.
+  ACE_CString versioning_end_;
 
   // Client's header file name ending. Default is "C.h".
   char* client_hdr_ending_;
@@ -559,7 +599,7 @@ private:
 
   // Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;
-  
+
   // Anyop source file name ending. Default is "A.cpp".
   char* anyop_src_ending_;
 
@@ -573,63 +613,63 @@ private:
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_idl> is called.
 
-  idl_bool any_support_;
+  bool any_support_;
   // do we support Any operators?
 
-  idl_bool tc_support_;
+  bool tc_support_;
   // do we support typecodes?
 
-  idl_bool obv_opt_accessor_;
+  bool obv_opt_accessor_;
   // do we optimize valuetype accessors?
 
-  idl_bool gen_impl_files_;
+  bool gen_impl_files_;
   // are we generating implementation files?
 
-  idl_bool gen_impl_debug_info_;
+  bool gen_impl_debug_info_;
   // are we generating source file and line numbers for implementation files?
 
-  idl_bool gen_copy_ctor_;
+  bool gen_copy_ctor_;
   // are we generating the copy constructor?
 
-  idl_bool gen_assign_op_;
+  bool gen_assign_op_;
   // are we generating the assignment operator?
 
-  idl_bool gen_thru_poa_collocation_;
+  bool gen_thru_poa_collocation_;
   // are we generating Thru_POA collocated stubs?
 
-  idl_bool gen_direct_collocation_;
+  bool gen_direct_collocation_;
   // are we generating Direct collocated stubs?
 
-  idl_bool exception_support_;
+  bool exception_support_;
   // do we support real C++ exceptions (strict mapping) for stubs/skeletons?
 
-  idl_bool use_raw_throw_;
+  bool use_raw_throw_;
   // Another possible option if the above is TRUE.
 
-  idl_bool opt_tc_;
+  bool opt_tc_;
   // do we generate optimized typecodes?
 
-  idl_bool ami_call_back_;
+  bool ami_call_back_;
   // Flag to indicate whether the AMI Call back feature of the
   // Messaging specification should be enabled for the generated files
   // or not.
 
-  idl_bool gen_amh_classes_;
+  bool gen_amh_classes_;
   // Flag for generating AMH classes.
 
-  idl_bool gen_tie_classes_;
+  bool gen_tie_classes_;
   // Flag to indicate whether we generate the tie classes and
   // files or not.
 
-  idl_bool gen_smart_proxies_;
+  bool gen_smart_proxies_;
   // Flag to indicate whether smart proxies classes will be generated
   // or not.
 
-  idl_bool gen_inline_constants_;
+  bool gen_inline_constants_;
   // Flag to indicate whether we are using an inline form of constant
   // generation that pleases the C++ compiler better on some platforms.
 
-  idl_bool gen_dcps_type_support_;
+  bool gen_dcps_type_support_;
   // Flag to indicate whether we are supporting DDS DCPS type definitions.
   // Includes Serializer operators (like TAO_Input/OutuptCDR).
 
@@ -642,18 +682,21 @@ private:
   be_interface *ccmobject_;
   // Reference holder for component skeleton visitors.
 
-  idl_bool gen_anyop_files_;
+  be_valuetype *exceptionholder_;
+  // Reference holder for the exceptionholder.
+
+  bool gen_anyop_files_;
   // Separate files for generated Any operators?
 
-  idl_bool gen_skel_files_;
+  bool gen_skel_files_;
   // True by default, but a command line option can turn this off so
   // we generate only an empty *S.h file on the skeleton side.
 
-  idl_bool gen_client_inline_;
+  bool gen_client_inline_;
   // True by default, but a command line option can turn this off so
   // that we don't generate a client inline file
 
-  idl_bool gen_server_inline_;
+  bool gen_server_inline_;
   // True by default, but a command line option can turn this off so
   // that we don't generate a server inline file
 };

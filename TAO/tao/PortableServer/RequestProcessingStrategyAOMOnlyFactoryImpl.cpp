@@ -1,13 +1,16 @@
 // $Id$
 
-#include "RequestProcessingStrategyAOMOnlyFactoryImpl.h"
-#include "RequestProcessingStrategy.h"
-#include "RequestProcessingStrategyAOMOnly.h"
+#include "tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingStrategyAOMOnlyFactoryImpl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -47,17 +50,20 @@ namespace TAO
 
       delete strategy;
     }
-
-    ACE_STATIC_SVC_DEFINE (
-        RequestProcessingStrategyAOMOnlyFactoryImpl,
-        ACE_TEXT ("RequestProcessingStrategyAOMOnlyFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (RequestProcessingStrategyAOMOnlyFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, RequestProcessingStrategyAOMOnlyFactoryImpl)
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DEFINE (
+  RequestProcessingStrategyAOMOnlyFactoryImpl,
+  ACE_TEXT ("RequestProcessingStrategyAOMOnlyFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (RequestProcessingStrategyAOMOnlyFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  RequestProcessingStrategyAOMOnlyFactoryImpl,
+  TAO::Portable_Server::RequestProcessingStrategyAOMOnlyFactoryImpl)

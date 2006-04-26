@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ECG_CDR_Message_Receiver.h"
-#include "ECG_CDR_Message_Sender.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
 
 #include "tao/Exception.h"
 
@@ -10,13 +10,14 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_CDR_Message_Receiver.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,
            ECG_CDR_Message_Receiver,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor (void)
 {
@@ -603,3 +604,5 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

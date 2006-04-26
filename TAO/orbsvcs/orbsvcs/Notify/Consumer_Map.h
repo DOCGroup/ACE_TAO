@@ -14,15 +14,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "Event_Map_T.h"
-#include "ProxySupplier.h"
+#include "orbsvcs/Notify/Event_Map_T.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Consumer_Map
@@ -30,10 +32,11 @@
  * @brief The Event Map for Consumers.
  *
  */
-
 typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier, 
                                TAO_SYNCH_RW_MUTEX> 
   TAO_Notify_Consumer_Map;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

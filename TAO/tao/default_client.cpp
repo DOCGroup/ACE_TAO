@@ -1,16 +1,16 @@
 // $Id$
 
-#include "default_client.h"
-#include "Wait_On_Read.h"
-#include "Wait_On_Reactor.h"
-#include "Wait_On_Leader_Follower.h"
-#include "Wait_On_LF_No_Upcall.h"
-#include "Exclusive_TMS.h"
-#include "Muxed_TMS.h"
-#include "Blocked_Connect_Strategy.h"
-#include "Reactive_Connect_Strategy.h"
-#include "LF_Connect_Strategy.h"
-#include "orbconf.h"
+#include "tao/default_client.h"
+#include "tao/Wait_On_Read.h"
+#include "tao/Wait_On_Reactor.h"
+#include "tao/Wait_On_Leader_Follower.h"
+#include "tao/Wait_On_LF_No_Upcall.h"
+#include "tao/Exclusive_TMS.h"
+#include "tao/Muxed_TMS.h"
+#include "tao/Blocked_Connect_Strategy.h"
+#include "tao/Reactive_Connect_Strategy.h"
+#include "tao/LF_Connect_Strategy.h"
+#include "tao/orbconf.h"
 
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -22,6 +22,8 @@ ACE_RCSID (tao,
            default_client,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   : profile_lock_type_ (TAO_THREAD_LOCK)
@@ -104,6 +106,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("null")) == 0)
                 this->profile_lock_type_ = TAO_NULL_LOCK;
+	      else
+		this->report_option_value_error (ACE_TEXT("-ORBIIOPProfileLock"), name);
             }
         }
 
@@ -208,9 +212,14 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              {
                ACE_TCHAR* name = argv[curarg];
 
-               if (ACE_OS::strcasecmp (name,
-                                       ACE_TEXT("false")) == 0)
+               if (ACE_OS::strcmp (name, ACE_TEXT("0")) == 0 ||
+                   ACE_OS::strcasecmp (name, ACE_TEXT("false")) == 0)
                  this->use_cleanup_options_ = false;
+               else if (ACE_OS::strcmp (name, ACE_TEXT("1")) == 0 ||
+                        ACE_OS::strcasecmp (name, ACE_TEXT("true")) == 0)
+                 this->use_cleanup_options_ = true;
+               else 
+                 this->report_option_value_error (ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
              }
          }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)
@@ -382,6 +391,8 @@ TAO_Default_Client_Strategy_Factory::use_cleanup_options (void) const
 {
   return this->use_cleanup_options_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

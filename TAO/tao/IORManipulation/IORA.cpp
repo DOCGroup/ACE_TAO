@@ -32,11 +32,13 @@
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "IORManip_Loader.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:74
@@ -900,3 +902,5 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

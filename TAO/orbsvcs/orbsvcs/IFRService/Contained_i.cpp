@@ -1,8 +1,8 @@
 // $Id$
 
-#include "concrete_classes.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/concrete_classes.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
@@ -11,6 +11,8 @@ ACE_RCSID (IFRService,
            Contained_i,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char *TAO_Contained_i::tmp_name_holder_ = 0;
 
@@ -1253,3 +1255,5 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

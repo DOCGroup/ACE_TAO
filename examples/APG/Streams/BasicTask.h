@@ -54,14 +54,13 @@ public:
         // Listing 1021 code/ch18
         if (message->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
-            if (this->putq (message->duplicate ()) == -1)
+            if (this->putq (message) == -1)
               {
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("%p\n"),
-                                   ACE_TEXT ("Task::svc() putq")),
-                                  -1);
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("Task::svc() putq")));
+                message->release ();
               }
-            message->release ();
             break;
           }
         // Listing 1021
@@ -84,14 +83,14 @@ public:
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("BasicTask::svc() - ")
                     ACE_TEXT ("Continue to next stage\n" )));
-
-        if (this->next_step (message->duplicate ()) < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("put_next failed")),
-                            -1);
-
-        message->release ();
+        if (this->next_step (message) < 0)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("put_next failed")));
+            message->release ();
+            break;
+          }
         // Listing 1023
       }
 
@@ -107,15 +106,15 @@ public:
       {
         ACE_Message_Block *hangup = new ACE_Message_Block ();
         hangup->msg_type (ACE_Message_Block::MB_HANGUP);
-        if (this->putq (hangup->duplicate ()) == -1)
+        if (this->putq (hangup) == -1)
           {
+            hangup->release ();
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("Task::close() putq")),
                               -1);
           }
 
-        hangup->release ();
         rval = this->wait ();
       }
 
@@ -127,7 +126,7 @@ public:
 protected:
   virtual int next_step (ACE_Message_Block *message_block)
   {
-    return this->put_next (message_block->duplicate ());
+    return this->put_next (message_block);
   }
   // Listing 105
 

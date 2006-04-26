@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-#include "Codeset_Descriptor.h"
-#include "Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Descriptor.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
 #include "ace/Codeset_Registry.h"
 #include "ace/Log_Msg.h"
@@ -27,6 +27,8 @@
 ACE_RCSID (Codeset,
            Codeset_Manager_i,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Descriptor::TAO_Codeset_Descriptor ()
   :ncs_ (0),
@@ -129,3 +131,5 @@ TAO_Codeset_Descriptor::translators (void)
 {
   return this->trans_base_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

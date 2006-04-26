@@ -48,6 +48,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace POA_CORBA
 {
   
@@ -1242,10 +1244,12 @@ namespace POA_CORBA
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:1072
 
-#include "IFR_BaseS_T.h"
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/IFRService/IFR_BaseS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "IFR_BaseS.inl"
+#include "orbsvcs/IFRService/IFR_BaseS.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

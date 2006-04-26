@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,6 +34,8 @@
 #endif /* _MSC_VER */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SSLIOP
@@ -47,7 +49,7 @@ namespace TAO
      * invocations if the effective target object policy requires
      * secure invocations.
      */
-    class TAO_SSLIOP_Export Server_Invocation_Interceptor
+    class Server_Invocation_Interceptor
       : public virtual PortableInterceptor::ServerRequestInterceptor,
         public virtual TAO_Local_RefCounted_Object
     {
@@ -134,6 +136,8 @@ namespace TAO
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (_MSC_VER)
 #pragma warning(pop)

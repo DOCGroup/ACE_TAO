@@ -17,6 +17,8 @@ ACE_RCSID (tao,
            Tagged_Profile,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Boolean
 TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
 {
@@ -192,3 +194,5 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
 
   return hdr_status;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  * @file Condition_Recursive_Thread_Mutex.cpp
  *
@@ -16,6 +17,8 @@
 #if defined (ACE_HAS_DUMP)
 #  include "ace/Log_Msg.h"
 #endif /* ACE_HAS_DUMP */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
@@ -121,4 +124,6 @@ ACE_Condition_Recursive_Thread_Mutex::ACE_Condition_Recursive_Thread_Mutex (
 {
 }
 
-#endif /* ACD_HAS_THREADS */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_THREADS */

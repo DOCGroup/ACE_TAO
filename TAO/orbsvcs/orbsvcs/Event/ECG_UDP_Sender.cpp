@@ -14,7 +14,7 @@
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_Sender.inl"
+#include "orbsvcs/Event/ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,
@@ -22,6 +22,8 @@ ACE_RCSID (Event,
            "$Id$")
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_UDP_Sender::~TAO_ECG_UDP_Sender (void)
 {
@@ -230,3 +232,5 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

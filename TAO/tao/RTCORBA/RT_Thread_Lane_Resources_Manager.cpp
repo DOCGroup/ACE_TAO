@@ -16,6 +16,8 @@ ACE_RCSID (RTCORBA,
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
     default_lane_resources_ (0),
@@ -144,6 +146,8 @@ TAO_RT_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manag
 
   return manager;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Thread_Lane_Resources_Manager_Factory,
                        ACE_TEXT ("RT_Thread_Lane_Resources_Manager_Factory"),

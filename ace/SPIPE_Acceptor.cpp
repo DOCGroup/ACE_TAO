@@ -1,4 +1,3 @@
-// SPIPE_Acceptor.cpp
 // $Id$
 
 #include "ace/SPIPE_Acceptor.h"
@@ -11,6 +10,8 @@
 #endif  // ACE_HAS_STREAM_PIPES
 
 ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
 #if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
@@ -182,9 +183,16 @@ ACE_SPIPE_Acceptor::close (void)
   ACE_TRACE ("ACE_SPIPE_Acceptor::close");
 
 #if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-  // Substitute the pipe handle back in so it's closed properly.
+
+  // Check to see if we have a valid pipe; if not, nothing to do.
+  if (this->pipe_handle_ == ACE_INVALID_HANDLE)
+    return -1;
+
+  // Substitute the pipe handle back in so it's closed properly in the
+  // ACE_OS wrapper. But leave the pipe_handle_ value so we can clean up the
+  // hanging overlapped operation afterwards.
   this->set_handle (this->pipe_handle_);
-  this->pipe_handle_ = ACE_INVALID_HANDLE;
+
 #endif /* ACE_WIN32 */
 
   // This behavior is shared by UNIX and Win32...
@@ -193,7 +201,29 @@ ACE_SPIPE_Acceptor::close (void)
 
 #if defined (ACE_HAS_STREAM_PIPES)
   ACE_OS::fdetach (this->local_addr_.get_path_name ());
+#elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+
+  // open () started the Connect in asynchronous mode, and accept() restarts
+  // the ConnectNamedPipe in overlapped mode.  To avoid leaving a hanging
+  // overlapped operation that'll write into members of this object,
+  // wait for the event in the OVERLAPPED structure to be signalled.
+  if (this->already_connected_ == 0)
+    {
+      if (this->event_.wait () != -1)
+        {
+          // Should be here with the ConnectNamedPipe operation complete.
+          // Steal the already_connected_ flag to record the results.
+          DWORD unused;
+          ::GetOverlappedResult (this->pipe_handle_,
+                                 &this->overlapped_,
+                                 &unused,
+                                 FALSE);
+        }
+      this->pipe_handle_ = ACE_INVALID_HANDLE;
+      this->already_connected_ = 0;
+    }
 #endif /* ACE_HAS_STREAM_PIPES */
+
   return result;
 }
 
@@ -302,3 +332,5 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

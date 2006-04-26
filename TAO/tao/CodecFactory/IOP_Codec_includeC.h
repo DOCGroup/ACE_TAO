@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
 #ifndef _TAO_IDL_ORIG_IOP_CODEC_INCLUDEC_H_
 #define _TAO_IDL_ORIG_IOP_CODEC_INCLUDEC_H_
@@ -42,7 +42,6 @@
 
 #include "tao/CodecFactory/codecfactory_export.h"
 #include "tao/CodecFactory/CodecFactory.h"
-
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 
@@ -51,33 +50,20 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_CodecFactory_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Traits specializations.
 namespace TAO
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1040
 
 #include /**/ "ace/post.h"
 

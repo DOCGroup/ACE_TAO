@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,40 +16,46 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.mif_client.am
+## Makefile.mif_example_IDL.am
 
-if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
+  testS.cpp \
   testS.h \
   testS.inl \
   testS_T.cpp \
   testS_T.h \
   testS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
   testC.inl \
+  testS.cpp \
   testS.h \
   testS.inl \
   testS_T.cpp \
   testS_T.h \
   testS_T.inl
 
-testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  test.idl
+
+## Makefile.mif_example_client.am
+
+if BUILD_RT_CORBA
 
 noinst_PROGRAMS += mif_client
 
@@ -59,16 +65,14 @@ mif_client_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
+  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
 
 mif_client_SOURCES = \
   client.cpp \
   testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
+  test_i.h \
+  test_i.i
 
 mif_client_LDADD = \
   $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
@@ -85,38 +89,9 @@ mif_client_LDADD = \
 
 endif BUILD_RT_CORBA
 
-## Makefile.mif_server.am
+## Makefile.mif_example_server.am
 
 if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
 
 noinst_PROGRAMS += mif_server
 
@@ -126,18 +101,14 @@ mif_server_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
+  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
 
 mif_server_SOURCES = \
   server.cpp \
   testC.cpp \
   testS.cpp \
   test_i.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl \
   test_i.h \
   test_i.i
 

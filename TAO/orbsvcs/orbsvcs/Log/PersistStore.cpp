@@ -1,4 +1,4 @@
-#include "PersistStore.h"
+#include "orbsvcs/Log/PersistStore.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_time.h"
@@ -11,6 +11,8 @@ ACE_RCSID (Log,
            PersistStore,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_PersistStore::TAO_PersistStore (CORBA::ULongLong max_size,
                                     CORBA::ULong max_rec_list_len)
   : maxid_ (0),
@@ -19,12 +21,10 @@ TAO_PersistStore::TAO_PersistStore (CORBA::ULongLong max_size,
     num_records_ (0),
     max_rec_list_len_ (max_rec_list_len)
 {
-  // No-Op.
 }
 
 TAO_PersistStore::~TAO_PersistStore (void)
 {
-  // No-Op.
 }
 
 int
@@ -225,3 +225,5 @@ TAO_PersistStore::get_percentage_full (void)
 
   return static_cast<unsigned short> ((100U * this->current_size_ / this->max_size_));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

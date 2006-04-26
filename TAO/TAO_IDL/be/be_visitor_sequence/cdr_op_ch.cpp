@@ -79,6 +79,8 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
           << "\n#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
     }
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << be_nl << be_nl 
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
@@ -90,6 +92,8 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       << "TAO_InputCDR &," << be_nl
       << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt;
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (!tdef)
     {

@@ -1,14 +1,16 @@
 // $Id$
 
-#include "EC_Default_ProxySupplier.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Default_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 ACE_RCSID (Event,
            EC_ProxySupplier,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 
@@ -222,3 +224,5 @@ TAO_EC_Default_ProxyPushSupplier::object_id (ACE_ENV_SINGLE_ARG_DECL)
 
   return result.in ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

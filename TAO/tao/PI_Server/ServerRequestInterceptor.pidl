@@ -28,7 +28,7 @@
 
 #include "tao/PI/Interceptor.pidl"
 #include "tao/PI/PIForwardRequest.pidl"
-#include <OctetSeq.pidl>
+#include "tao/OctetSeq.pidl"
 
 module PortableInterceptor {
 

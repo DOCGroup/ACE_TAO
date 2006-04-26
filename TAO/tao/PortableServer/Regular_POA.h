@@ -17,13 +17,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Root_POA.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Regular_POA
@@ -64,11 +66,12 @@ protected:
   TAO_Root_POA *parent_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
 #if defined (__ACE_INLINE__)
-# include "Regular_POA.inl"
+# include "tao/PortableServer/Regular_POA.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

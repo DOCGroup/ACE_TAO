@@ -13,7 +13,7 @@
 #ifndef AMI_REPLICATION_STRATEGY_H
 #define AMI_REPLICATION_STRATEGY_H
 
-#include "Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,14 +23,14 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Task.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class  AMI_Replication_Strategy.
  *
  * @brief Used by backup replicas when AMI calls are used for replicating requests.
  */
-
-class AMI_Replication_Strategy: public Replication_Strategy
+class AMI_Replication_Strategy : public Replication_Strategy
 {
 public:
   /**
@@ -54,5 +54,6 @@ private:
   bool mt_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

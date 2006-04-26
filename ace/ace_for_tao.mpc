@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
+project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfig {
   requires     = ace_for_tao
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE_FOR_TAO
@@ -14,10 +14,14 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Addr.cpp
     Arg_Shifter.cpp
     Argv_Type_Converter.cpp
+    Assert.cpp
     Atomic_Op.cpp
     Auto_Event.cpp
+    Barrier.cpp             // Required by orbsvcs/tests/Notify/lib
     Base_Thread_Adapter.cpp
+    Basic_Stats.cpp         // Required by ace/Stats
     Basic_Types.cpp
+    Capabilities.cpp        // Required by TAO/orbsvcs/examples/ImR/Advanced
     CDR_Base.cpp
     CDR_Stream.cpp
     CDR_Size.cpp
@@ -29,10 +33,14 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Condition_Thread_Mutex.cpp
     Countdown_Time.cpp
     Copy_Disabled.cpp
+    Dirent.cpp // Required by TAO_IDL
+    Dirent_Selector.cpp
     Dump.cpp
     Dynamic.cpp
     Event.cpp
     Event_Handler.cpp
+    FILE.cpp
+    FILE_Addr.cpp
     Flag_Manip.cpp
     Framework_Component.cpp
     Functor.cpp
@@ -41,6 +49,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Handle_Ops.cpp
     Handle_Set.cpp
     Hashable.cpp
+    High_Res_Timer.cpp  // Required by orbsvcs/tests/Notify/lib
     INET_Addr.cpp
     Init_ACE.cpp
     IO_SAP.cpp
@@ -68,7 +77,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
-    Obstack.cpp
     OS_Errno.cpp
     OS_Log_Msg_Attributes.cpp
     OS_main.cpp
@@ -109,6 +117,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     OS_TLI.cpp
     Parse_Node.cpp
     Pipe.cpp
+    Process.cpp
     Reactor.cpp
     Reactor_Impl.cpp
     Reactor_Notification_Strategy.cpp
@@ -119,7 +128,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     RW_Mutex.cpp
     RW_Thread_Mutex.cpp
     Sched_Params.cpp
-    Select_Reactor.cpp
     Select_Reactor_Base.cpp
     Signal.cpp
     SOCK.cpp
@@ -127,9 +135,16 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Sock_Connect.cpp
     SOCK_Connector.cpp
     SOCK_Dgram.cpp
+    SOCK_Dgram_Mcast.cpp
     SOCK_IO.cpp
     SOCK_Stream.cpp
+    SPIPE.cpp
+    SPIPE_Acceptor.cpp
+    SPIPE_Connector.cpp
+    SPIPE_Addr.cpp
+    SPIPE_Stream.cpp
     SString.cpp
+    Stats.cpp            // Required by orbsvcs/tests/Notify
     String_Base_Const.cpp
     Synch_Options.cpp
     Task.cpp
@@ -158,10 +173,13 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     }
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
-    conditional(vc6,vc71,vc8,bmake) {
+    conditional(vc6,vc71,vc8,nmake,bmake) {
+      ACE_crc32.cpp  // Required by SV_Semaphore_Simple
       Semaphore.cpp
       Process_Mutex.cpp
       WFMO_Reactor.cpp
+      SV_Semaphore_Simple.cpp
+      SV_Semaphore_Complex.cpp
     }
   }
 

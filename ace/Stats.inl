@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Stats_Value::ACE_Stats_Value (const u_int precision)
@@ -97,3 +100,5 @@ ACE_Stats::dump (void) const
   print_summary (3u);
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

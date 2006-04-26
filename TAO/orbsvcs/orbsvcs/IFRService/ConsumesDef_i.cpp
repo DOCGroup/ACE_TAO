@@ -1,12 +1,15 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
-#include "Repository_i.h"
-#include "ConsumesDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ConsumesDef_i.h"
 
 ACE_RCSID (IFRService, 
            ConsumesDef_i, 
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ConsumesDef_i::TAO_ConsumesDef_i (
     TAO_Repository_i *repo
@@ -28,3 +31,4 @@ TAO_ConsumesDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::dk_Consumes;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

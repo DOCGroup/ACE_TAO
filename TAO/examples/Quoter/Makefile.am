@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,15 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.Quoter_Client.am
+## Makefile.Quoter_IDL.am
 
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   QuoterC.cpp \
   QuoterC.h \
   QuoterC.inl \
@@ -35,7 +31,7 @@ BUILT_SOURCES += \
   QuoterS_T.h \
   QuoterS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Quoter-stamp \
   QuoterC.cpp \
   QuoterC.h \
@@ -50,8 +46,16 @@ CLEANFILES += \
 QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Quoter.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Quoter.idl
+
+## Makefile.Quoter_Client.am
+
+if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
 
@@ -65,13 +69,7 @@ client_CPPFLAGS = \
 
 client_SOURCES = \
   QuoterC.cpp \
-  QuoterS.cpp \
   client.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.h \
-  QuoterS_T.h \
-  QuoterS_T.inl \
   client.h
 
 client_LDADD = \
@@ -87,35 +85,6 @@ endif !BUILD_MINIMUM_CORBA
 ## Makefile.Quoter_Factory_Finder.am
 
 if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  QuoterC.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.cpp \
-  QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
-
-CLEANFILES += \
-  Quoter-stamp \
-  QuoterC.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.cpp \
-  QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
-
-QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
-
-Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
-	@touch $@
 
 noinst_PROGRAMS += Factory_Finder
 
@@ -133,12 +102,7 @@ Factory_Finder_SOURCES = \
   QuoterC.cpp \
   QuoterS.cpp \
   Factory_Finder.h \
-  Factory_Finder_i.h \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.h \
-  QuoterS_T.h \
-  QuoterS_T.inl
+  Factory_Finder_i.h
 
 Factory_Finder_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
@@ -157,35 +121,6 @@ endif !BUILD_MINIMUM_CORBA
 
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  QuoterC.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.cpp \
-  QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
-
-CLEANFILES += \
-  Quoter-stamp \
-  QuoterC.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.cpp \
-  QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
-
-QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
-
-Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
-	@touch $@
-
 noinst_PROGRAMS += Generic_Factory
 
 Generic_Factory_CPPFLAGS = \
@@ -202,12 +137,7 @@ Generic_Factory_SOURCES = \
   QuoterC.cpp \
   QuoterS.cpp \
   Generic_Factory.h \
-  Generic_Factory_i.h \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.h \
-  QuoterS_T.h \
-  QuoterS_T.inl
+  Generic_Factory_i.h
 
 Generic_Factory_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
@@ -226,35 +156,6 @@ endif !BUILD_MINIMUM_CORBA
 
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  QuoterC.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.cpp \
-  QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
-
-CLEANFILES += \
-  Quoter-stamp \
-  QuoterC.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.cpp \
-  QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
-
-QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
-
-Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -270,11 +171,6 @@ server_SOURCES = \
   QuoterS.cpp \
   Quoter_i.cpp \
   server.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.h \
-  QuoterS_T.h \
-  QuoterS_T.inl \
   Quoter_i.h \
   server.h
 

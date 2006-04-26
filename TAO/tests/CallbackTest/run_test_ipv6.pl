@@ -13,12 +13,12 @@ unlink $iorfile;
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -ORBConnectIPV6Only YES");
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -ORBConnectIPV6Only 1");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile -ORBConnectIPV6Only YES");
+    $SV = new PerlACE::Process ("server", "-o $iorfile -ORBConnectIPV6Only 1");
 }
-$CL = new PerlACE::Process ("client", " -k file://$iorfile -ORBConnectIPV6Only YES");
+$CL = new PerlACE::Process ("client", " -k file://$iorfile -ORBConnectIPV6Only 1");
 
 $SV->Spawn ();
 

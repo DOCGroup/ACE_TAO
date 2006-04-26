@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,20 +19,25 @@
 #define TAO_IIOP_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/SOCK_Connector.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Connector.h"
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 #include "tao/Transport_Connector.h"
 #include "tao/Connector_Impl.h"
 #include "tao/IIOP_Connection_Handler.h"
 
-class TAO_IIOP_Endpoint;
+#include "ace/SOCK_Connector.h"
+#include "ace/Connector.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_IIOP_Endpoint;
 
 // ****************************************************************
 
@@ -129,6 +134,9 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_IIOP_CONNECTOR_H */

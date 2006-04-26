@@ -19,13 +19,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/orbconf.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -37,11 +35,13 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Policy_Current_Impl;
 
-class TAO_Export TAO_Policy_Current :
-  public CORBA::PolicyCurrent,
-  public TAO_Local_RefCounted_Object
+class TAO_Policy_Current
+  : public CORBA::PolicyCurrent
+  , public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor
@@ -76,6 +76,8 @@ public:
   TAO_Policy_Current_Impl &implementation (void) const;
   TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

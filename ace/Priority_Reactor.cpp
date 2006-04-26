@@ -5,6 +5,8 @@
 
 ACE_RCSID(ace, Priority_Reactor, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple> QUEUE_ITERATOR;
 // Its iterator.
 
@@ -177,20 +179,4 @@ ACE_Priority_Reactor::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<ACE_Event_Tuple>;
-template class ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple>;
-template class ACE_Node<ACE_Event_Tuple>;
-template class ACE_Cached_Allocator<ACE_Node<ACE_Event_Tuple>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> >,ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> > >;
-template class ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue<ACE_Event_Tuple>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple>
-#pragma instantiate ACE_Node<ACE_Event_Tuple>
-#pragma instantiate ACE_Cached_Allocator<ACE_Node<ACE_Event_Tuple>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> >,ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> > >
-#pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

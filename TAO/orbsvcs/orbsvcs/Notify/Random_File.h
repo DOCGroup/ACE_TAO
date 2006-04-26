@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,10 +22,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/FILE.h"
 #include "ace/streams.h"
 #include "ace/Synch_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -84,6 +87,8 @@ private:
 };
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* RANDOM_FILE_H */

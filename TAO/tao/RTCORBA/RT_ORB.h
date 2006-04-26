@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #include "tao/LocalObject.h"
@@ -36,6 +36,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward reference for TAO_Named_RT_Mutex_Manager
 class TAO_RT_Mutex;
@@ -105,8 +107,9 @@ class TAO_RTCORBA_Export TAO_RT_ORB
     public TAO_Local_RefCounted_Object
 {
 public:
+
   /// Constructor.
-  TAO_RT_ORB (TAO_ORB_Core *orb_core);
+  TAO_RT_ORB (TAO_ORB_Core *orb_core, ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /**
    * Create a new mutex.  Mutexes returned by this method
@@ -302,19 +305,27 @@ public:
   static int modify_thread_scheduling_policy (CORBA::ORB_ptr orb);
 
 protected:
+
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   virtual ~TAO_RT_ORB (void);
 
+protected:
+
   /// Reference to our creating ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
 
   /// Thread Pool Manager
   TAO_Thread_Pool_Manager *tp_manager_;
+
+  /// Dynamic thread idle timeout
+  ACE_Time_Value const dynamic_thread_idle_timeout_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

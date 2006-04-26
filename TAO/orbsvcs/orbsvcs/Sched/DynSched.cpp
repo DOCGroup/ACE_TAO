@@ -16,17 +16,19 @@
 //
 // ============================================================================
 
-#include "DynSched.h"
+#include "orbsvcs/Sched/DynSched.h"
 #include "ace/Basic_Types.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Null_Mutex.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "DynSched.i"
+#include "orbsvcs/Sched/DynSched.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Sched, DynSched, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
 // Helper functions //
@@ -2417,3 +2419,5 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
   return status;
 }
   // this prints the entire set of timeline outputs to the specified file
+
+TAO_END_VERSIONED_NAMESPACE_DECL

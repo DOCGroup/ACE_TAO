@@ -1,4 +1,4 @@
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 #include "tao/debug.h"
 
 
@@ -8,9 +8,10 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Current.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
   : tss_slot_ (0),
@@ -193,3 +194,4 @@ tao_TAO_SSLIOP_Current_upcast (
   return *tmp;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

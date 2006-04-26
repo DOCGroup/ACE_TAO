@@ -1,7 +1,9 @@
 // -*- MPC -*-
+//
 // $Id$
 
-project(CosNaming_Serv) : orbsvcslib, acememorylib_for_tao, core, naming_skel, messaging, svc_utils, iortable {
+project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging_optional, svc_utils, iortable {
+  avoids      += ace_for_tao  // Requires MMAP_Memory_Pool
   sharedname   = TAO_CosNaming_Serv
   dynamicflags = TAO_NAMING_SERV_BUILD_DLL
   tagchecks   += Naming

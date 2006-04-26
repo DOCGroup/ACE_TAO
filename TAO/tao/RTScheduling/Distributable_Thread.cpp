@@ -1,7 +1,9 @@
 //$Id$
 
-#include "Distributable_Thread.h"
+#include "tao/RTScheduling/Distributable_Thread.h"
 #include "tao/ORB_Constants.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DistributableThread::TAO_DistributableThread (void)
   :state_ (RTScheduling::DistributableThread::ACTIVE)
@@ -47,3 +49,5 @@ TAO_DistributableThread_Factory::create_DT (void)
 
   return DT;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

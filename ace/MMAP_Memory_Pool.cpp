@@ -13,7 +13,15 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-ACE_RCSID(ace, MMAP_Memory_Pool, "$Id$")
+#if !defined (__ACE_INLINE__)
+#include "ace/MMAP_Memory_Pool.inl"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(ace,
+          MMAP_Memory_Pool,
+          "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)
 
@@ -220,7 +228,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 #endif
 
   // Increment by one to put us at the beginning of the next chunk...
-  map_size++;
+  ++map_size;
 #endif /* CHORUS */
   return 0;
 }
@@ -471,7 +479,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   if (guess_on_fault_)
     {
       // Check if the current mapping is up to date.
-      off_t current_map_size = ACE_OS::filesize (this->mmap_.handle ());
+      off_t const current_map_size = ACE_OS::filesize (this->mmap_.handle ());
 
       if (static_cast<size_t> (current_map_size) == this->mmap_.size ())
         {
@@ -530,3 +538,5 @@ ACE_Lite_MMAP_Memory_Pool::sync (void *, size_t, int)
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::sync");
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

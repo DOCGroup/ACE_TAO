@@ -24,6 +24,8 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 class ACE_Message_Block;
 class ACE_Reactor;
@@ -123,7 +125,7 @@ public:
   virtual int handle_exit (ACE_Process *);
 
   /// Called when a <handle_*()> method returns -1 or when the
-  /// <remove_handler> method is called on an <ACE_Reactor>.  The
+  /// <remove_handler> method is called on an ACE_Reactor.  The
   /// <close_mask> indicates which event has triggered the
   /// <handle_close> method callback on a particular <handle>.
   virtual int handle_close (ACE_HANDLE handle,
@@ -143,16 +145,18 @@ public:
       /// The application takes responsibility of resuming the handler
       ACE_APPLICATION_RESUMES_HANDLER
     };
-  /* Called to figure out whether the handler needs to resumed by the
+  /**
+   * Called to figure out whether the handler needs to resumed by the
    * reactor or the application can take care of it. The default
    * value of 0 would be returned which would allow the reactor to
    * take care of resumption of the handler. The application can
    * return a value more than zero and decide to resume the handler
    * themseleves.
+   *
+   * @note This method is only useful for the ACE_TP_Reactor. Sad
+   * that we have to have this method in a class that is supposed to
+   * be used across different components in ACE.
    */
-  // @@ NOTE: This method is only useful for the ACE_TP_Reactor. Sad
-  // that we have to have this method in a class that is supposed to
-  // be used across different componets in ACE.
   virtual int resume_handler (void);
 
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -168,14 +172,14 @@ public:
   /// Get only the reactor's timer related interface.
   virtual ACE_Reactor_Timer_Interface *reactor_timer_interface (void) const;
 
-#if !defined (ACE_HAS_WINCE)
+  //#if !defined (ACE_HAS_WINCE)
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
    * work around Win32 limitations that don't allow us to <select> on
    * non-sockets (such as ACE_STDIN).  This is commonly used in
    * situations where the Reactor is used to demultiplex read events
    * on ACE_STDIN on UNIX.  Note that <event_handler> must be a
-   * subclass of <ACE_Event_Handler>.  If the <get_handle> method of
+   * subclass of ACE_Event_Handler.  If the <get_handle> method of
    * this event handler returns <ACE_INVALID_HANDLE> we default to
    * reading from ACE_STDIN.
    */
@@ -194,7 +198,7 @@ public:
   /// Performs the inverse of the <register_stdin_handler> method.
   static int remove_stdin_handler (ACE_Reactor *reactor,
                                    ACE_Thread_Manager *thr_mgr);
-#endif /* ACE_HAS_WINCE */
+  //#endif /* ACE_HAS_WINCE */
 
   /// Reference count type.
   typedef long Reference_Count;
@@ -375,6 +379,8 @@ public:
   /// Mask that indicates which method to call.
   ACE_Reactor_Mask mask_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Event_Handler.inl"

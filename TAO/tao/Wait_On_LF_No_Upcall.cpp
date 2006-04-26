@@ -5,11 +5,13 @@
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
-#include "debug.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao,
           Wait_On_LF_No_Upcall,
           "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
 namespace TAO
@@ -56,10 +58,13 @@ namespace TAO
 
   private:
 
-    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (void))
+    Nested_Upcall_Guard (void) {}
 
-    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (
-                              const Nested_Upcall_Guard&))
+    /// Disallow copying and assignment.
+    Nested_Upcall_Guard (const Nested_Upcall_Guard&);
+    Nested_Upcall_Guard & operator= (const Nested_Upcall_Guard&);
+
+  private:
 
     /// Pointer to the transport that we plan to use.
     TAO_Transport* t_;
@@ -100,3 +105,5 @@ namespace TAO
     return true;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

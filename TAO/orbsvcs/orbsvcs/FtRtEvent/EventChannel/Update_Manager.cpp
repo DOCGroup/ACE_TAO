@@ -1,22 +1,23 @@
 // $Id$
 
-#include "Update_Manager.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
 
 ACE_RCSID (EventChannel,
            Update_Manager,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Update_Manager::Update_Manager(ACE_Auto_Event& evt,
                                int num_backups,
                                int transaction_depth,
                                bool& success)
-: evt_(evt)
-, replied_(num_backups)
-, suicide_condition_(num_backups)
-, num_backups_(num_backups)
-, transaction_level_(transaction_depth)
-, success_(success)
+  : evt_(evt)
+  , replied_(num_backups)
+  , suicide_condition_(num_backups)
+  , num_backups_(num_backups)
+  , transaction_level_(transaction_depth)
+  , success_(success)
 {
   suicide_condition_.flip();
   signal_condition_.resize(transaction_depth, true);
@@ -56,3 +57,5 @@ void Update_Manager::handle_exception(int id)
   if (replied_ == suicide_condition_)
     delete this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

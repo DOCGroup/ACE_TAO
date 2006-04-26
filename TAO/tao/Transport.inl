@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
 TAO_Transport::tag (void) const
@@ -186,4 +189,4 @@ TAO_Transport::sent_byte_count (void) const
   return this->sent_byte_count_;
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

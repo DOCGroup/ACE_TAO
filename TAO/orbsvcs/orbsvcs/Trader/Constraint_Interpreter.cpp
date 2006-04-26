@@ -1,11 +1,14 @@
 // $Id$
 
-#include "Constraint_Interpreter.h"
-#include "Trader_Constraint_Visitors.h"
+#include "orbsvcs/Trader/Constraint_Interpreter.h"
+#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
 
 ACE_RCSID (Trader,
            Constraint_Interpreter,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
@@ -248,3 +251,5 @@ TAO_Preference_Interpreter::num_offers (void)
 {
   return this->offers_.size ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

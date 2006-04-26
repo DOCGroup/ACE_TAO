@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
-#include "PortableGroup_Loader.h"
-#include "PG_Object_Adapter_Factory.h"
-#include "PortableGroup_ORBInitializer.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Loader.h"
+#include "orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h"
+#include "orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -12,6 +10,9 @@
 ACE_RCSID (PortableGroup,
            PortableGroup_Loader,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
 {
@@ -70,6 +71,8 @@ TAO_PortableGroup_Loader::Initializer (void)
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_PortableGroup_Loader,
                        ACE_TEXT ("PortableGroup_Loader"),

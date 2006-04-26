@@ -1,18 +1,20 @@
 // -*- C++ -*-
 
-#include "SSLIOP_EVP_PKEY.h"
+#include "orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h"
 
 #include <openssl/x509.h>
 #include <openssl/rsa.h>
 #include <openssl/dsa.h>
 #include <openssl/dh.h>
-#include "params_dup.h"
+#include "orbsvcs/SSLIOP/params_dup.h"
 
 
 ACE_RCSID (SSLIOP,
            SSLIOP_EVP_PKEY,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ::EVP_PKEY *
 TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
@@ -45,7 +47,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
         if (dsa != 0)
           {
             // Not exception safe!
-            ::EVP_PKEY_set1_DSA (p.in (), DSAparams_dup_wrapper (dsa));
+            ::EVP_PKEY_set1_DSA (p.in (), DSAPARAMS_DUP_WRAPPER_NAME (dsa));
             ::DSA_free (dsa);
           }
       }
@@ -57,7 +59,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
         if (dh != 0)
           {
             // Not exception safe!
-            ::EVP_PKEY_set1_DH (p.in (), DHparams_dup_wrapper (dh));
+            ::EVP_PKEY_set1_DH (p.in (), DHPARAMS_DUP_WRAPPER_NAME (dh));
             ::DH_free (dh);
           }
       }
@@ -71,3 +73,4 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
   return p._retn ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -16,6 +16,7 @@
 
 #include "ace/Message_Block.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialization and termination methods.
 /// Constructor.
@@ -322,5 +323,6 @@ ACE::HTBP::Stream::get_handle (void) const
 void
 ACE::HTBP::Stream::set_handle (ACE_HANDLE )
 {
-  // no-op
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

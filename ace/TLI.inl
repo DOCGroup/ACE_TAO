@@ -1,12 +1,14 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// TLI.i
 
 #include "ace/TLI.h"
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
-int 
+int
 ACE_TLI::look (void) const
 {
   ACE_TRACE ("ACE_TLI::look");
@@ -14,7 +16,7 @@ ACE_TLI::look (void) const
 }
 
 ACE_INLINE
-int 
+int
 ACE_TLI::rcvdis (struct t_discon *discon) const
 {
   ACE_TRACE ("ACE_TLI::rcvdis");
@@ -22,7 +24,7 @@ ACE_TLI::rcvdis (struct t_discon *discon) const
 }
 
 ACE_INLINE
-int 
+int
 ACE_TLI::snddis (struct t_call *call) const
 {
   ACE_TRACE ("ACE_TLI::snddis");
@@ -30,7 +32,7 @@ ACE_TLI::snddis (struct t_call *call) const
 }
 
 ACE_INLINE
-int 
+int
 ACE_TLI::rcvrel (void) const
 {
   ACE_TRACE ("ACE_TLI::rcvrel");
@@ -38,9 +40,11 @@ ACE_TLI::rcvrel (void) const
 }
 
 ACE_INLINE
-int 
+int
 ACE_TLI::sndrel (void) const
 {
   ACE_TRACE ("ACE_TLI::sndrel");
   return ACE_OS::t_sndrel (this->get_handle ());
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

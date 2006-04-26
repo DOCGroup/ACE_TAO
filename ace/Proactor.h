@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -37,6 +37,8 @@
 #  include "ace/Timer_Heap.h"
 #  include "ace/Timer_Wheel.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class ACE_Proactor_Impl;
 class ACE_Proactor_Timer_Handler;
@@ -44,12 +46,12 @@ class ACE_Proactor_Timer_Handler;
 /**
  * @class ACE_Proactor_Handle_Timeout_Upcall
  *
- * @brief Functor for <ACE_Timer_Queue>.
+ * @brief Functor for ACE_Timer_Queue.
  *
  * This class implements the functor required by the Timer
  * Queue to call <handle_timeout> on ACE_Handlers.
  */
-class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
+class ACE_Proactor_Handle_Timeout_Upcall
 {
 
   /// Type def for the timer queue.
@@ -185,8 +187,8 @@ public:
                 int delete_implementation = 0,
                 TIMER_QUEUE *tq = 0);
 
-  /// Virtual destruction.
-  virtual ~ACE_Proactor (void);
+  /// Destruction.
+  ~ACE_Proactor (void);
 
   /// Get pointer to a process-wide <ACE_Proactor>.  <threads> should
   /// be part of another method.
@@ -238,7 +240,7 @@ public:
   static int reset_event_loop (void);
 
   /**
-   * The singleton proactor is used by the <ACE_Service_Config>.
+   * The singleton proactor is used by the ACE_Service_Config.
    * Therefore, we must check for the reconfiguration request and
    * handle it after handling an event.
    */
@@ -252,7 +254,7 @@ public:
    * If @arg delete_implementation was specified to the @c open() method,
    * the implementation object is also deleted.
    */
-  virtual int close (void);
+  int close (void);
 
    /**
    * You can add a hook to various run_event methods and the hook will
@@ -269,7 +271,7 @@ public:
    * <ACE_Proactor::handle_events>
    * method returns -1 or the <end_proactor_event_loop> method is invoked.
    */
-  virtual int proactor_run_event_loop (PROACTOR_EVENT_HOOK = 0);
+  int proactor_run_event_loop (PROACTOR_EVENT_HOOK = 0);
 
   /**
    * Run the event loop until the <ACE_Proactor::handle_events>
@@ -278,28 +280,28 @@ public:
    * or the <ACE_Time_Value>
    * expires, in which case a 0 is returned.
    */
-  virtual int proactor_run_event_loop (ACE_Time_Value &tv,
-                                       PROACTOR_EVENT_HOOK = 0);
+  int proactor_run_event_loop (ACE_Time_Value &tv,
+                               PROACTOR_EVENT_HOOK = 0);
 
   /**
    * Instruct the ACE_Proactor to terminate its event loop
    * and notifies the ACE_Proactor so that it can wake up
    * and close down gracefully.
    */
-  virtual int proactor_end_event_loop (void);
+  int proactor_end_event_loop (void);
 
   /// Report if the ACE_Proactor event loop is finished.
-  virtual int proactor_event_loop_done (void);
+  int proactor_event_loop_done (void);
 
   /// Resets the <ACE_Proactor::end_event_loop_> static so that the
   /// <run_event_loop> method can be restarted.
-  virtual int proactor_reset_event_loop (void);
+  int proactor_reset_event_loop (void);
 
 
   /// This method adds the <handle> to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
-  virtual int register_handle (ACE_HANDLE handle,
-                               const void *completion_key);
+  int register_handle (ACE_HANDLE handle,
+                       const void *completion_key);
 
   // = Timer management.
   /**
@@ -313,28 +315,28 @@ public:
    * with accidentally deleting the wrong timer.  Returns -1 on
    * failure (which is guaranteed never to be a valid <timer_id>).
    */
-  virtual long schedule_timer (ACE_Handler &handler,
-                               const void *act,
-                               const ACE_Time_Value &time);
+  long schedule_timer (ACE_Handler &handler,
+                       const void *act,
+                       const ACE_Time_Value &time);
 
-  virtual long schedule_repeating_timer (ACE_Handler &handler,
-                                         const void *act,
-                                         const ACE_Time_Value &interval);
+  long schedule_repeating_timer (ACE_Handler &handler,
+                                 const void *act,
+                                 const ACE_Time_Value &interval);
 
   // Same as above except <interval> it is used to reschedule the
   // <handler> automatically.
 
   /// This combines the above two methods into one. Mostly for backward
   /// compatibility.
-  virtual long schedule_timer (ACE_Handler &handler,
-                               const void *act,
-                               const ACE_Time_Value &time,
-                               const ACE_Time_Value &interval);
+  long schedule_timer (ACE_Handler &handler,
+                       const void *act,
+                       const ACE_Time_Value &time,
+                       const ACE_Time_Value &interval);
 
   /// Cancel all timers associated with this <handler>.  Returns number
   /// of timers cancelled.
-  virtual int cancel_timer (ACE_Handler &handler,
-                            int dont_call_handle_close = 1);
+  int cancel_timer (ACE_Handler &handler,
+                    int dont_call_handle_close = 1);
 
   /**
    * Cancel the single <ACE_Handler> that matches the <timer_id> value
@@ -345,9 +347,9 @@ public:
    * Returns 1 if cancellation succeeded and 0 if the <timer_id>
    * wasn't found.
    */
-  virtual int cancel_timer (long timer_id,
-                            const void **act = 0,
-                            int dont_call_handle_close = 1);
+  int cancel_timer (long timer_id,
+                    const void **act = 0,
+                    int dont_call_handle_close = 1);
 
   /**
    * Dispatch a single set of events, waiting up to a specified time limit
@@ -359,14 +361,14 @@ public:
    * Returns 1 when a completion is dispatched. On error, returns -1
    * and sets errno accordingly.
    */
-  virtual int handle_events (ACE_Time_Value &wait_time);
+  int handle_events (ACE_Time_Value &wait_time);
 
   /**
    * Block indefinitely until at least one event is dispatched.
    * @return Returns 1 when a completion is dispatched. On error, returns -1
    * and sets errno accordingly.
    */
-  virtual int handle_events (void);
+  int handle_events (void);
 
   /// Add wakeup dispatch threads (reinit).
   int wake_up_dispatch_threads (void);
@@ -391,10 +393,10 @@ public:
    * It is a no-op in POSIX platforms and it returns
    * ACE_INVALID_HANDLE.
    */
-  virtual ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle (void) const;
 
   /// Get the implementation class.
-  virtual ACE_Proactor_Impl *implementation (void) const;
+  ACE_Proactor_Impl *implementation (void) const;
 
   // = Factory methods for the operations
 
@@ -403,37 +405,37 @@ public:
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_Stream.
-  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
+  ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
 
   /// Create the correct implementation class for doing
   /// Asynch_Write_Stream.
-  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
+  ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_File.
-  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
+  ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
 
   /// Create the correct implementation class for doing
   /// Asynch_Write_File.
-  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
+  ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
 
   /// Create the correct implementation class for doing Asynch_Accept.
-  virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
+  ACE_Asynch_Accept_Impl *create_asynch_accept (void);
 
   /// Create the correct implementation class for doing Asynch_Connect.
-  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void);
+  ACE_Asynch_Connect_Impl *create_asynch_connect (void);
 
   /// Create the correct implementation class for doing
   /// Asynch_Transmit_File.
-  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
+  ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_Dgram.
-  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
+  ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
 
   /// Create the correct implementation class for doing
   /// Asynch_Write_Dgram.
-  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
+  ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
 
   // = Factory methods for the results
 
@@ -442,7 +444,7 @@ public:
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Read_Stream::Result class.
-  virtual ACE_Asynch_Read_Stream_Result_Impl *
+  ACE_Asynch_Read_Stream_Result_Impl *
     create_asynch_read_stream_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
@@ -454,7 +456,7 @@ public:
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Write_Stream::Result.
-  virtual ACE_Asynch_Write_Stream_Result_Impl *
+  ACE_Asynch_Write_Stream_Result_Impl *
     create_asynch_write_stream_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
@@ -466,7 +468,7 @@ public:
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Read_File::Result.
-  virtual ACE_Asynch_Read_File_Result_Impl *
+  ACE_Asynch_Read_File_Result_Impl *
     create_asynch_read_file_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
                                     ACE_Message_Block &message_block,
@@ -480,7 +482,7 @@ public:
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Write_File::Result.
-  virtual ACE_Asynch_Write_File_Result_Impl *
+  ACE_Asynch_Write_File_Result_Impl *
     create_asynch_write_file_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
@@ -494,7 +496,7 @@ public:
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Read_Dgram::Result.
-  virtual ACE_Asynch_Read_Dgram_Result_Impl *
+  ACE_Asynch_Read_Dgram_Result_Impl *
     create_asynch_read_dgram_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block *message_block,
@@ -508,7 +510,7 @@ public:
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Write_Dgram::Result.
-  virtual ACE_Asynch_Write_Dgram_Result_Impl *
+  ACE_Asynch_Write_Dgram_Result_Impl *
     create_asynch_write_dgram_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
@@ -520,7 +522,7 @@ public:
                                       int signal_number = ACE_SIGRTMIN);
 
   /// Create the correct implementation class for ACE_Asynch_Accept::Result.
-  virtual ACE_Asynch_Accept_Result_Impl *
+  ACE_Asynch_Accept_Result_Impl *
     create_asynch_accept_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                  ACE_HANDLE listen_handle,
                                  ACE_HANDLE accept_handle,
@@ -532,7 +534,7 @@ public:
                                  int signal_number = ACE_SIGRTMIN);
 
   /// Create the correct implementation class for ACE_Asynch_Connect::Result
-  virtual ACE_Asynch_Connect_Result_Impl *
+  ACE_Asynch_Connect_Result_Impl *
     create_asynch_connect_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE  connect_handle,
                                   const void* act,
@@ -542,7 +544,7 @@ public:
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Transmit_File::Result.
-  virtual ACE_Asynch_Transmit_File_Result_Impl *
+  ACE_Asynch_Transmit_File_Result_Impl *
     create_asynch_transmit_file_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE socket,
                                         ACE_HANDLE file,
@@ -564,7 +566,7 @@ public:
    * Timer object with a meaningful signal number, choosing the
    * largest signal number from the signal mask of the Proactor.
    */
-  virtual ACE_Asynch_Result_Impl *
+  ACE_Asynch_Result_Impl *
     create_asynch_timer (ACE_Handler::Proxy_Ptr &handler_proxy,
                          const void *act,
                          const ACE_Time_Value &tv,
@@ -586,10 +588,10 @@ protected:
    * threads can wake up. This is used in conjunction with the
    * <proactor_run_event_loop>.
    */
-  virtual int proactor_post_wakeup_completions (int how_many);
+  int proactor_post_wakeup_completions (int how_many);
 
   /// Set the implementation class.
-  virtual void implementation (ACE_Proactor_Impl *implementation);
+  void implementation (ACE_Proactor_Impl *implementation);
 
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
@@ -633,6 +635,8 @@ private:
   ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #  if defined (__ACE_INLINE__)
 #    include "ace/Proactor.inl"
 #  endif /* __ACE_INLINE__ */
@@ -642,6 +646,8 @@ private:
 #  include "ace/os_include/os_stddef.h"
 #  include "ace/os_include/os_signal.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
 class ACE_Export ACE_Proactor
@@ -650,8 +656,9 @@ public:
   class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
-  virtual int handle_events (void) { return -1; }
-  virtual int handle_events (ACE_Time_Value &) { return -1; }
+  ~ACE_Proactor (void) {}
+  int handle_events (void) { return -1; }
+  int handle_events (ACE_Time_Value &) { return -1; }
 
   /// Placeholder to enable compilation on non-Win32 platforms
   static ACE_Proactor *instance (size_t threads = 0);
@@ -674,6 +681,8 @@ public:
   /// Placeholder to enable compilation on non-Win32 platforms
   static sig_atomic_t event_loop_done (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
 

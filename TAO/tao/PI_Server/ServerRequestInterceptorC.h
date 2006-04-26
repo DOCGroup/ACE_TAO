@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_SERVERREQUESTINTERCEPTORC_H_
-#define _TAO_IDL_ORIG_SERVERREQUESTINTERCEPTORC_H_
+#ifndef _TAO_IDL_SERVERREQUESTINTERCEPTORC_H_
+#define _TAO_IDL_SERVERREQUESTINTERCEPTORC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -41,7 +41,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI_Server/pi_server_export.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -57,23 +56,16 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PI_Server_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
 
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__VAR_OUT_CH_
@@ -96,7 +88,7 @@ namespace PortableInterceptor
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__VAR_OUT_CH_
@@ -137,12 +129,12 @@ namespace PortableInterceptor
     static void _tao_release (ServerRequestInterceptor_ptr obj);
 
     static ServerRequestInterceptor_ptr _narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static ServerRequestInterceptor_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
@@ -151,7 +143,7 @@ namespace PortableInterceptor
       return static_cast<ServerRequestInterceptor_ptr> (0);
     }
 
-    static void _tao_any_destructor (void *);
+
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -164,7 +156,7 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_NOT_USED
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) {}
 
@@ -178,7 +170,7 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
 
@@ -190,7 +182,7 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
 
@@ -202,66 +194,61 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_exception (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_other (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
-    virtual CORBA::Boolean _is_a (
+
+    virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+
   protected:
     // Abstract or local interface only.
     ServerRequestInterceptor (void);
-    
+
     virtual ~ServerRequestInterceptor (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ServerRequestInterceptor (const ServerRequestInterceptor &);
-    
+
     void operator= (const ServerRequestInterceptor &);
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_PI_Server_Export ::CORBA::TypeCode_ptr const _tc_ServerRequestInterceptor;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableInterceptor
 
@@ -272,9 +259,9 @@ namespace PortableInterceptor
 namespace TAO
 {
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_CH_
-  
+#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_)
+#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_
+
   template<>
   struct TAO_PI_Server_Export Objref_Traits< ::PortableInterceptor::ServerRequestInfo>
   {
@@ -285,7 +272,7 @@ namespace TAO
         ::PortableInterceptor::ServerRequestInfo_ptr
       );
     static ::PortableInterceptor::ServerRequestInfo_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInfo_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -293,9 +280,9 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__TRAITS_CH_
-  
+#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__TRAITS_)
+#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__TRAITS_
+
   template<>
   struct TAO_PI_Server_Export Objref_Traits< ::PortableInterceptor::ServerRequestInterceptor>
   {
@@ -306,7 +293,7 @@ namespace TAO
         ::PortableInterceptor::ServerRequestInterceptor_ptr
       );
     static ::PortableInterceptor::ServerRequestInterceptor_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInterceptor_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -316,22 +303,9 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_codegen.cpp:1040
 
-TAO_PI_Server_Export void operator<<= (CORBA::Any &, PortableInterceptor::ServerRequestInterceptor_ptr); // copying
-TAO_PI_Server_Export void operator<<= (CORBA::Any &, PortableInterceptor::ServerRequestInterceptor_ptr *); // non-copying
-TAO_PI_Server_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ServerRequestInterceptor_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

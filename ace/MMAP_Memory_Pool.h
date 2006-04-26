@@ -16,12 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,6 +27,8 @@
 #include "ace/Signal.h"
 #include "ace/Mem_Map.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_MMAP_Memory_Pool_Options
  *
@@ -40,7 +37,7 @@
  * This should be a nested class, but that breaks too many
  * compilers.
  */
-class ACE_Memory_Export ACE_MMAP_Memory_Pool_Options
+class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
 public:
   enum
@@ -128,7 +125,7 @@ private:
  * @brief Make a memory pool that is based on @c mmap(2).  This
  * implementation allows memory to be shared between processes.
  */
-class ACE_Memory_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
+class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
 {
 public:
   typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
@@ -204,6 +201,12 @@ public:
   /// Dump the state of an object.
   virtual void dump (void) const;
 
+  /// Get reference to underlying ACE_Mem_Map object.
+  ACE_Mem_Map const & mmap (void) const;
+
+  /// Get reference to underlying ACE_Mem_Map object.
+  ACE_Mem_Map & mmap (void);
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -270,16 +273,16 @@ protected:
 /**
  * @class ACE_Lite_MMAP_Memory_Pool
  *
- * @brief Make a ``lighter-weight'' memory pool based <ACE_Mem_Map>.
+ * @brief Make a ``lighter-weight'' memory pool based ACE_Mem_Map.
  *
  * This implementation allows memory to be shared between
- * processes.  However, unlike the <ACE_MMAP_Memory_Pool>
+ * processes.  However, unlike the ACE_MMAP_Memory_Pool
  * the <sync> methods are no-ops, which means that we don't pay
  * for the price of flushing the memory to the backing store on
  * every update.  Naturally, this trades off increased
  * performance for less reliability if the machine crashes.
  */
-class ACE_Memory_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
+class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
 public:
   /// Initialize the pool.
@@ -295,6 +298,12 @@ public:
   /// Overwrite the default sync behavior with no-op
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/MMAP_Memory_Pool.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MMAP_MEMORY_POOL_H */

@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Environment;
@@ -33,6 +35,8 @@ namespace CORBA
  * @note We tried with CORBA::default_environment() and others.
  */
 TAO_Export CORBA::Environment& TAO_default_environment (void);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

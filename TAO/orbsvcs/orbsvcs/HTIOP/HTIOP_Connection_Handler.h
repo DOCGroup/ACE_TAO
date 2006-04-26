@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -14,7 +14,7 @@
 #define HTIOP_CONNECTION_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Transport.h"
+#include "orbsvcs/HTIOP/HTIOP_Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -29,6 +29,7 @@
 #include "ace/Reactor.h"
 #include "ace/Svc_Handler.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Decls
 class TAO_Pluggable_Messaging;
@@ -127,5 +128,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 #endif /* HTIOP_CONNECTION_HANDLER_H */

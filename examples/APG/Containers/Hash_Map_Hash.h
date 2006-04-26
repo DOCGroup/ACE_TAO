@@ -21,6 +21,8 @@ private:
   int val_;
 };
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Specialize the hash functor.
 template<>
 class ACE_Hash<KeyType>
@@ -47,6 +49,9 @@ public:
     return (val1 == val2);
   }
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // Listing 1
 
 #endif /* __HASH_MAP_HASH_H_ */

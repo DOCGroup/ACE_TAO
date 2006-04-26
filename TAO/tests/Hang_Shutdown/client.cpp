@@ -9,13 +9,9 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-
-
-namespace TAO
+namespace Test
 {
-  namespace Test
-  {
-    const char *ior = "file://server.ior";
+  const char *ior = "file://server.ior";
 
     ACE_Profile_Timer profile_timer;
     bool blocked = false;
@@ -40,229 +36,228 @@ namespace TAO
                 blocked = false;
             }
             break;
-          case 'k':
-            {
-              ior = get_opts.opt_arg ();
-            }
-            break;
-          case '?':
-          default:
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "usage:  %s "
-                               "-k <ior> "
-                               "\n",
-                               argv [0]),
-                              false);
-          }
-
-      // Indicates sucessful parsing of the command line
-      return true;
-    }
-
-    class Client_Task : public ACE_Task_Base
-    {
-    public:
-      Client_Task (Hang_ptr h)
-        : h_ (Hang::_duplicate (h))
-      {}
-
-      virtual int svc (void)
-      {
-        ACE_DECLARE_NEW_CORBA_ENV;
-
-        ACE_TRY
+        case 'k':
           {
-            this->h_->send_stuff ("Testing",
-                                  false
-                                  ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            this->h_->send_stuff ("Testing",
-                                  false
-                                  ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            this->h_->send_stuff ("Testing",
-                                  true
-                                  ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            ior = get_opts.opt_arg ();
           }
-        ACE_CATCH (CORBA::COMM_FAILURE, f)
-          {
-            ACE_UNUSED_ARG (f);
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Caught COMM_FAILURE Exception \n"));
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            false);
+        }
 
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) This is expected \n"));
+    // Indicates sucessful parsing of the command line
+    return true;
+  }
 
-            return 0;
-          }
-        ACE_CATCH (CORBA::Exception, ex)
-          {
-            ex._tao_print_exception ("Caught CORBA Exception \n");
+  class Client_Task : public ACE_Task_Base
+  {
+  public:
+    Client_Task (Hang_ptr h)
+      : h_ (Hang::_duplicate (h))
+    {}
 
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Error in test \n"));
-
-            return -1;
-          }
-        ACE_CATCHALL
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Caught a C++ exception \n"));
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Error in test \n"));
-
-            return -1;
-          }
-        ACE_ENDTRY;
-
-        return 0;
-      }
-
-    private:
-      Hang_var h_;
-    };
-
-    class Shutdown_Task : public ACE_Task_Base
-    {
-    public:
-      Shutdown_Task (CORBA::ORB_ptr o)
-        : o_ (CORBA::ORB::_duplicate (o))
-      {}
-
-      virtual int svc (void)
-      {
-        ACE_DECLARE_NEW_CORBA_ENV;
-
-        ACE_TRY
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Calling shutdown \n"));
-
-            // Just wait for the main thread to start sening out
-            // messages
-            ACE_OS::sleep (4);
-
-            // Start the timer
-            profile_timer.start ();
-
-            this->o_->shutdown (blocked
-                                ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            // Stop the timer
-            profile_timer.stop ();
-
-            // Get the elampsed time
-            ACE_Profile_Timer::ACE_Elapsed_Time el;
-            profile_timer.elapsed_time (el);
-
-            // The elapsed time is in secs
-            if (el.real_time > 1)
-              {
-                ACE_ERROR ((LM_ERROR,
-                            "(%P|%t) ERROR: Too long to shutdown \n"));
-
-                return 0;
-              }
-          }
-        ACE_CATCHALL
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Caught exception during shutdown \n"));
-
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Error in test \n"));
-            return -1;
-          }
-        ACE_ENDTRY;
-
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Returning from shutdown \n"));
-        return 0;
-      }
-    private:
-      CORBA::ORB_var o_;
-    };
-
-    static int
-    try_main (int argc, char *argv[])
+    virtual int svc (void)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
 
       ACE_TRY
         {
-          CORBA::ORB_var orb =
-            CORBA::ORB_init (argc,
-                             argv,
-                             ""
-                             ACE_ENV_ARG_PARAMETER);
+          this->h_->send_stuff ("Testing",
+                                false
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          if (parse_args (argc, argv) == false)
-            return -1;
-
-          CORBA::Object_var tmp =
-            orb->string_to_object (ior
-                                   ACE_ENV_ARG_PARAMETER);
+          this->h_->send_stuff ("Testing",
+                                false
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          Hang_var test =
-            Hang::_narrow (tmp.in ()
-                           ACE_ENV_ARG_PARAMETER);
+          this->h_->send_stuff ("Testing",
+                                true
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (test.in ()))
-            {
-              ACE_ERROR_RETURN ((LM_DEBUG,
-                                 "Nil test reference <%s>\n",
-                                 ior),
-                                1);
-            }
-
-          Client_Task ct (test.in ());
-
-          if (ct.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot activate client threads\n"),
-                              1);
+        }
+      ACE_CATCH (CORBA::COMM_FAILURE, f)
+        {
+          ACE_UNUSED_ARG (f);
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Caught COMM_FAILURE Exception \n"));
 
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Activating shutdown thread \n"));
+                      "(%P|%t) This is expected \n"));
 
-          Shutdown_Task st (orb.in ());
-
-          if (st.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot activate shutdown threads\n"),
-                              1);
-
-          ACE_Thread_Manager::instance ()->wait ();
-
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
+          return 0;
         }
-      ACE_CATCHANY
+      ACE_CATCH (CORBA::Exception, ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "CORBA Exception caught \n");
+          ex._tao_print_exception ("Caught CORBA Exception \n");
+
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Eror in test \n"));
+                      "(%P|%t) Error in test \n"));
+
           return -1;
         }
       ACE_CATCHALL
         {
           ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Caught a C++ exception \n"));
+          ACE_ERROR ((LM_ERROR,
                       "(%P|%t) Error in test \n"));
+
           return -1;
         }
       ACE_ENDTRY;
 
       return 0;
     }
+
+  private:
+    Hang_var h_;
+  };
+
+  class Shutdown_Task : public ACE_Task_Base
+  {
+  public:
+    Shutdown_Task (CORBA::ORB_ptr o)
+      : o_ (CORBA::ORB::_duplicate (o))
+    {}
+
+    virtual int svc (void)
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+
+      ACE_TRY
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Calling shutdown \n"));
+
+          // Just wait for the main thread to start sening out
+          // messages
+          ACE_OS::sleep (4);
+
+          // Start the timer
+          profile_timer.start ();
+
+          this->o_->shutdown (blocked
+                              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // Stop the timer
+          profile_timer.stop ();
+
+          // Get the elampsed time
+          ACE_Profile_Timer::ACE_Elapsed_Time el;
+          profile_timer.elapsed_time (el);
+
+          // The elapsed time is in secs
+          if (el.real_time > 1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) ERROR: Too long to shutdown \n"));
+
+              return 0;
+            }
+        }
+      ACE_CATCHALL
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Caught exception during shutdown \n"));
+
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) Error in test \n"));
+          return -1;
+        }
+      ACE_ENDTRY;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Returning from shutdown \n"));
+      return 0;
+    }
+  private:
+    CORBA::ORB_var o_;
+  };
+
+  static int
+  try_main (int argc, char *argv[])
+  {
+    ACE_DECLARE_NEW_CORBA_ENV;
+
+    ACE_TRY
+      {
+        CORBA::ORB_var orb =
+          CORBA::ORB_init (argc,
+                           argv,
+                           ""
+                           ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (parse_args (argc, argv) == false)
+          return -1;
+
+        CORBA::Object_var tmp =
+          orb->string_to_object (ior
+                                 ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        Hang_var test =
+          Hang::_narrow (tmp.in ()
+                         ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (CORBA::is_nil (test.in ()))
+          {
+            ACE_ERROR_RETURN ((LM_DEBUG,
+                               "Nil test reference <%s>\n",
+                               ior),
+                              1);
+          }
+
+        Client_Task ct (test.in ());
+
+        if (ct.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"),
+                            1);
+
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Activating shutdown thread \n"));
+
+        Shutdown_Task st (orb.in ());
+
+        if (st.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate shutdown threads\n"),
+                            1);
+
+        ACE_Thread_Manager::instance ()->wait ();
+
+        orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "CORBA Exception caught \n");
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) Eror in test \n"));
+        return -1;
+      }
+    ACE_CATCHALL
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Error in test \n"));
+        return -1;
+      }
+    ACE_ENDTRY;
+
+    return 0;
   }
 }
 
@@ -271,5 +266,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
-  return TAO::Test::try_main (convert.get_argc(), convert.get_ASCII_argv());
+  return Test::try_main (convert.get_argc(), convert.get_ASCII_argv());
 }

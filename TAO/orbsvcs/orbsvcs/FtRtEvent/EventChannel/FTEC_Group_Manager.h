@@ -14,11 +14,14 @@
 #define TAO_FTEC_GROUP_MANAGER_H
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "FTEC_Fault_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct TAO_FTEC_Group_Manager_Impl;
 
@@ -71,5 +74,7 @@ protected:
   FTRT::FaultListener_var listener_;
   TAO_FTEC_Group_Manager_Impl* impl_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // TAO_FTEC_GROUP_MANAGER_H

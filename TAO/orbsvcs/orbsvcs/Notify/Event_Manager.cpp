@@ -1,20 +1,23 @@
 // $Id$
 
-#include "Event_Manager.h"
+#include "orbsvcs/Notify/Event_Manager.h"
 
 ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 
-#include "ProxyConsumer.h"
-#include "ProxySupplier.h"
-#include "Consumer_Map.h"
-#include "Supplier_Map.h"
-#include "Event_Map_T.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Consumer_Map.h"
+#include "orbsvcs/Notify/Supplier_Map.h"
+#include "orbsvcs/Notify/Event_Map_T.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #include "tao/debug.h"
 
-/********************************************************************************/
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/*****************************************************************************/
 
 /**
  * @class TAO_Notify_ProxyConsumer_Update_Worker
@@ -111,10 +114,12 @@ void
 TAO_Notify_Event_Manager::connect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL)
 {
   this->consumer_map().connect (proxy_supplier ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Inform about offered types.
   TAO_Notify_EventTypeSeq removed;
   proxy_supplier->types_changed (this->offered_types (), removed ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -164,14 +169,19 @@ TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_s
   TAO_Notify_EventTypeSeq new_added, last_removed;
 
   this->subscribe (proxy_supplier, added, new_added ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   this->un_subscribe (proxy_supplier, removed, last_removed ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   TAO_Notify_Supplier_Map::ENTRY::COLLECTION* updates_collection = this->supplier_map().updates_collection ();
 
   TAO_Notify_ProxyConsumer_Update_Worker worker (new_added, last_removed);
 
   if (updates_collection != 0)
-    updates_collection->for_each (&worker ACE_ENV_ARG_PARAMETER);
+    {
+      updates_collection->for_each (&worker ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 void
@@ -281,7 +291,7 @@ TAO_Notify_ProxyConsumer_Update_Worker::work (TAO_Notify_ProxyConsumer* proxy AC
   proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
 }
 
-/********************************************************************************/
+/*****************************************************************************/
 
 TAO_Notify_ProxySupplier_Update_Worker::TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
   :added_ (added), removed_ (removed)
@@ -294,4 +304,6 @@ TAO_Notify_ProxySupplier_Update_Worker::work (TAO_Notify_ProxySupplier* proxy AC
   proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
 }
 
-/********************************************************************************/
+/*****************************************************************************/
+
+TAO_END_VERSIONED_NAMESPACE_DECL

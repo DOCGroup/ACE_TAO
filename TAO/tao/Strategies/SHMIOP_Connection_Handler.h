@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *  @author Originally by Nanbor Wang <nanbor@cs.wustl.edu> as UIOP_Connect.h
- *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -28,9 +27,12 @@
 #include "ace/Acceptor.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "SHMIOP_Transport.h"
+#include "tao/Strategies/SHMIOP_Transport.h"
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_SHMIOP_Connection_Handler
  *
@@ -39,8 +41,6 @@
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
 class TAO_Strategies_Export TAO_SHMIOP_Connection_Handler :
   public TAO_SHMIOP_SVC_HANDLER,
   public TAO_Connection_Handler
@@ -102,6 +102,8 @@ private:
   int resume_flag_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

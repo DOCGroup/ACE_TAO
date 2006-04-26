@@ -1,13 +1,14 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// Task_T.i
 
 #include "ace/os_include/os_assert.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <ACE_SYNCH_DECL> ACE_INLINE void
-ACE_Task<ACE_SYNCH_USE>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
-				    size_t wm_size)
+ACE_Task<ACE_SYNCH_USE>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
+                                    size_t wm_size)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::water_marks");
   if (cmd == ACE_IO_Cntl_Msg::SET_LWM)
@@ -16,14 +17,14 @@ ACE_Task<ACE_SYNCH_USE>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
     this->msg_queue_->high_water_mark (wm_size);
 }
 
-template <ACE_SYNCH_DECL> ACE_INLINE int 
+template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Task<ACE_SYNCH_USE>::getq (ACE_Message_Block *&mb, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::getq");
   return this->msg_queue_->dequeue_head (mb, tv);
 }
 
-template <ACE_SYNCH_DECL> ACE_INLINE int 
+template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Task<ACE_SYNCH_USE>::can_put (ACE_Message_Block *)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::can_put");
@@ -103,3 +104,5 @@ ACE_Task<ACE_SYNCH_USE>::put_next (ACE_Message_Block *msg, ACE_Time_Value *tv)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::put_next");
   return this->next_ == 0 ? -1 : this->next_->put (msg, tv);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

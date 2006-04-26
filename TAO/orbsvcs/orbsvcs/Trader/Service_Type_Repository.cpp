@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Service_Type_Repository.h"
+#include "orbsvcs/Trader/Service_Type_Repository.h"
 
 #include "ace/Lock_Adapter_T.h"
 
@@ -9,6 +9,8 @@ ACE_RCSID (Trader,
            Service_Type_Repository,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Service_Type_Repository::
 TAO_Service_Type_Repository (ACE_Lock* lock)
@@ -689,3 +691,5 @@ update_type_map (const char *name,
   TAO_String_Hash_Key type_name (name);
   this->type_map_.bind (type_name, type);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -8,14 +8,14 @@ ACE_RCSID (Log,
            LogNotification,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_LogNotification::TAO_LogNotification (void)
 {
-  // No-Op.
 }
 
 TAO_LogNotification::~TAO_LogNotification (void)
 {
-  // No-Op.
 }
 
 void
@@ -98,12 +98,12 @@ TAO_LogNotification::attribute_value_change (DsLogAdmin::Log_ptr log,
   CORBA::Any any;
   DsLogNotification::AttributeValueChange event;
 
-  event.logref = log;
+  event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
 
   TimeBase::TimeT current_time;
   ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
+  ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
 
   event.time = current_time;
 
@@ -290,7 +290,7 @@ TAO_LogNotification::quality_of_service_value_change (
 }
 
 void
-TAO_LogNotification::state_change (DsLogAdmin::Log_ptr /* log */,
+TAO_LogNotification::state_change (DsLogAdmin::Log_ptr log,
                                    DsLogAdmin::LogId id,
                                    DsLogNotification::StateType type,
                                    CORBA::Any newValue
@@ -300,12 +300,12 @@ TAO_LogNotification::state_change (DsLogAdmin::Log_ptr /* log */,
   CORBA::Any any;
   DsLogNotification::StateChange event;
 
-  // The log id.
+  event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
 
   TimeBase::TimeT current_time;
   ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
+  ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
   event.time = current_time;
 
   // Administrative, Operational or Forwarding state.
@@ -378,7 +378,7 @@ TAO_LogNotification::forwarding_state_change (DsLogAdmin::Log_ptr log,
 
 void
 TAO_LogNotification::threshold_alarm (
-    DsLogAdmin::Log_ptr /* log */,
+    DsLogAdmin::Log_ptr log,
     DsLogAdmin::LogId id,
     DsLogAdmin::Threshold crossedValue,
     DsLogAdmin::Threshold observedValue,
@@ -389,6 +389,7 @@ TAO_LogNotification::threshold_alarm (
   CORBA::Any any;
   DsLogNotification::ThresholdAlarm event;
 
+  event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
 
   TimeBase::TimeT current_time;
@@ -413,3 +414,5 @@ TAO_LogNotification::send_notification (const CORBA::Any & /* any */
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

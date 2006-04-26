@@ -56,6 +56,8 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   // All template specializations must be generated before the instantiations
   // in the operators.
   *os << be_nl << be_nl
@@ -70,13 +72,14 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "{" << be_idt_nl
       << "::CORBA::add_ref (this->value_);" << be_nl
       << "_tao_elem = this->value_;" << be_nl
-      << "return 1;" << be_uidt_nl
+      << "return true;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  *os << be_global->core_versioning_end () << be_nl;
 
   be_module *module = 0;
- 
+
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
@@ -147,6 +150,8 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       *os << "#else\n";
     }
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << "// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
@@ -189,6 +194,8 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (module != 0)
     {
