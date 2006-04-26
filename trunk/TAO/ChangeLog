@@ -1,3 +1,14 @@
+Wed Apr 26 20:09:33 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/EndpointPolicyC.h:
+        * tao/EndpointPolicy/EndpointPolicyC.cpp:
+
+          Fixed fuzz errors.
+
+        * tao/EndpointPolicy/EndpointPolicyC.inl:
+
+          Removed this file.
+
 Wed Apr 26 19:44:36 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
