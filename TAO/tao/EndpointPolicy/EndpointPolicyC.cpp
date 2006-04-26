@@ -33,10 +33,6 @@
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined (__ACE_INLINE__)
-#include "EndpointPolicyC.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
 // be/be_visitor_arg_traits.cpp:71
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -123,7 +119,7 @@ EndpointPolicy::EndpointValueBase::_duplicate (EndpointValueBase_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -173,7 +169,7 @@ EndpointPolicy::EndpointValueBase::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_ENDPOINTPOLICY_ENDPOINTLIST_CS_)
@@ -300,7 +296,7 @@ EndpointPolicy::Policy::_duplicate (Policy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -353,4 +349,3 @@ EndpointPolicy::Policy::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
