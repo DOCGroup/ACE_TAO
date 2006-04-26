@@ -1,3 +1,10 @@
+Wed Apr 26 13:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Bug_2511_Regression/*:
+          Added new regression for bug 2511. Thanks to Martin Cornelius
+          <Martin at Cornelius at smiths-heimann dot com> for creating
+          this regression
+
 Wed Apr 26 12:20:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/AMI/ami_test.idl:
