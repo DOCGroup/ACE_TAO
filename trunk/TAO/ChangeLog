@@ -12,6 +12,13 @@ Wed Apr 26 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           works now fine, the pluggable seems now to encounter another
           bug.
 
+Wed Apr 26 11:21:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Valuetype/ValueBase.cpp:
+
+          Fix for errant removal of throw, this corrects the OBV/Factory
+          test.
+
 Wed Apr 26 10:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Unbounded_Sequence_CDR_T.h:

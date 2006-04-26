@@ -288,41 +288,42 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   // factory for the valuetype in its truncatable derivation hierarchy
   // is registered, the factory is used to create value for unmarshalling.
   for (CORBA::ULong i = 0; i < num_ids; ++i)
-        {
+    {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
       if (factory != 0)
-            {
+        {
           if (i != 0 && chunking)
-                {
-              require_truncation = true;
-                }
-          break;
-            }
-            }
-
-  if (factory == 0) // %! except.!
             {
+              require_truncation = true;
+            }
+          break;
+        }
+    }
+
+  if (factory == 0)
+    {
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) OBV factory is null, id = %s\n"), repo_id));
-            }
-      return false;
+                      ACE_TEXT ("TAO (%P|%t) OBV factory is null, id = %s\n"), repo_id));
         }
-  else
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 1,
+                                        CORBA::COMPLETED_MAYBE),
+                                        false);
+     }
+
+
+  valuetype = factory->create_for_unmarshal ();
+
+  if (require_truncation)
+    valuetype->truncation_hook ();
+
+  if (valuetype == 0)
     {
-      valuetype = factory->create_for_unmarshal ();
-
-      if (require_truncation)
-        valuetype->truncation_hook ();
-
-      if (valuetype == 0)
-    {
-          return false;  // %! except.?
-        }
-
-      valuetype->chunking_ = chunking;
+      return false;  // %! except.?
     }
+
+  valuetype->chunking_ = chunking;
 
   return true;
 }
