@@ -1,0 +1,21 @@
+This directory currently only contains one example for testing process
+semaphores.
+
+proc_sema:
+  This test can be used to test out the named process semaphores
+support on your platform.  It can be run as either a supplier or a
+consumer process.  The available options are:
+
+        -c:     Make us a consumer.
+        -s:     Make us a supplier.
+        -x:     Remove the semaphore after we're done.
+        -n:     Specify the name of the semaphore.
+        -i:     Number of acquire/release we'll perform.
+        -d:     Delay for # of second before exiting the program
+
+  You can use this test to see how process semaphores work.  For
+example, run the program as:
+
+   proc_sema -c -i 10
+   proc_sema -s -i 3
+   proc_sema -s -i 7

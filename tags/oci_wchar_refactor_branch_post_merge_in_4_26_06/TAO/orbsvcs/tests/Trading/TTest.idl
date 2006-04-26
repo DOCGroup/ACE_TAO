@@ -1,0 +1,45 @@
+// $Id$
+
+#include <orb.idl>
+
+module TAO_Trader_Test
+{
+
+interface Remote_Output
+{
+  void confirm ();
+  // Ensure that the object reference returned from the query actually
+  // works.
+};
+
+interface Plotter : Remote_Output
+{
+};
+
+interface Printer : Remote_Output
+{
+};
+
+interface File_System : Remote_Output
+{
+};
+
+interface PostScript_Printer : Remote_Output
+{
+};
+
+// Sequences used to test sequence type equivalence in the trader.
+typedef CORBA::ShortSeq ShortSeq;
+typedef CORBA::UShortSeq UShortSeq;
+typedef CORBA::LongSeq LongSeq;
+typedef CORBA::ULongSeq ULongSeq;
+typedef CORBA::BooleanSeq BooleanSeq;
+typedef CORBA::FloatSeq FloatSeq;
+typedef CORBA::DoubleSeq DoubleSeq;
+typedef CORBA::StringSeq StringSeq;
+
+};
+
+
+
+
