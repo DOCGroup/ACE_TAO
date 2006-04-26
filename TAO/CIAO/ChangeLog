@@ -1,3 +1,20 @@
+Wed Apr 26 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Config_Handlers/Package_Handlers/PC_Intf.cpp:
+        * tools/Config_Handlers/XSCRT/XMLSchema.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+          Removed workarounds for vc6 again
+
+        * tools/Config_Handlers/Package_Handlers/NIA_Handler.h:
+          Added missing post.h
+
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/PC_Intf.h:
+          Fixed incorrect file tags
+
 Wed Apr 26 08:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/DomainDataManager.h:
