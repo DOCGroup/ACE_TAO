@@ -1,3 +1,10 @@
+Wed Apr 26 09:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2510_Regression:
+          New regression test, thanks to Martin Cornelius
+          <Martin at Cornelius at smiths-heimann dot com> for creating
+          this test. This bug is not fixed yet.
+
 Wed Apr 26 09:44:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
 
         * tao/Bounded_Sequence_CDR_T.h:
