@@ -64,22 +64,22 @@
 
 namespace EndpointPolicy
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_interface.cpp:640
 
 #if !defined (_ENDPOINTPOLICY_ENDPOINTVALUEBASE__VAR_OUT_CH_)
 #define _ENDPOINTPOLICY_ENDPOINTVALUEBASE__VAR_OUT_CH_
-  
+
   class EndpointValueBase;
   typedef EndpointValueBase *EndpointValueBase_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         EndpointValueBase
       >
     EndpointValueBase_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         EndpointValueBase
@@ -87,98 +87,98 @@ namespace EndpointPolicy
     EndpointValueBase_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_ENDPOINTPOLICY_ENDPOINTVALUEBASE_CH_)
 #define _ENDPOINTPOLICY_ENDPOINTVALUEBASE_CH_
-  
+
   class TAO_EndpointPolicy_Export EndpointValueBase
     : public virtual ::CORBA::Object
   {
   public:
     typedef EndpointValueBase_ptr _ptr_type;
     typedef EndpointValueBase_var _var_type;
-    
+
     // The static operations.
     static EndpointValueBase_ptr _duplicate (EndpointValueBase_ptr obj);
-    
+
     static void _tao_release (EndpointValueBase_ptr obj);
-    
+
     static EndpointValueBase_ptr _narrow (
         ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static EndpointValueBase_ptr _unchecked_narrow (
         ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static EndpointValueBase_ptr _nil (void)
     {
       return static_cast<EndpointValueBase_ptr> (0);
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::CORBA::ULong protocol_tag (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     EndpointValueBase (void);
-    
+
     virtual ~EndpointValueBase (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     EndpointValueBase (const EndpointValueBase &);
-    
+
     void operator= (const EndpointValueBase &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_ENDPOINTPOLICY_ENDPOINTLIST_CH_)
 #define _ENDPOINTPOLICY_ENDPOINTLIST_CH_
-  
+
   class EndpointList;
-  
+
   typedef
     TAO_VarSeq_Var_T<
         EndpointList
       >
     EndpointList_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         EndpointList
       >
     EndpointList_out;
-  
+
   class TAO_EndpointPolicy_Export EndpointList
     : public
         TAO::unbounded_object_reference_sequence<
@@ -192,34 +192,34 @@ namespace EndpointPolicy
     EndpointList (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        EndpointValueBase_ptr* buffer, 
+        EndpointValueBase_ptr* buffer,
         ::CORBA::Boolean release = false
       );
     EndpointList (const EndpointList &);
     ~EndpointList (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef EndpointList_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_interface.cpp:640
 
 #if !defined (_ENDPOINTPOLICY_POLICY__VAR_OUT_CH_)
 #define _ENDPOINTPOLICY_POLICY__VAR_OUT_CH_
-  
+
   class Policy;
   typedef Policy *Policy_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         Policy
       >
     Policy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Policy
@@ -227,93 +227,93 @@ namespace EndpointPolicy
     Policy_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_ENDPOINTPOLICY_POLICY_CH_)
 #define _ENDPOINTPOLICY_POLICY_CH_
-  
+
   class TAO_EndpointPolicy_Export Policy
     : public virtual ::CORBA::Policy
   {
   public:
     typedef Policy_ptr _ptr_type;
     typedef Policy_var _var_type;
-    
+
     // The static operations.
     static Policy_ptr _duplicate (Policy_ptr obj);
-    
+
     static void _tao_release (Policy_ptr obj);
-    
+
     static Policy_ptr _narrow (
         ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Policy_ptr _unchecked_narrow (
         ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Policy_ptr _nil (void)
     {
       return static_cast<Policy_ptr> (0);
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::EndpointPolicy::EndpointList * value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     Policy (void);
-    
+
     virtual ~Policy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Policy (const Policy &);
-    
+
     void operator= (const Policy &);
   };
 
@@ -336,7 +336,7 @@ namespace TAO
 
 #if !defined (_ENDPOINTPOLICY_ENDPOINTVALUEBASE__TRAITS_)
 #define _ENDPOINTPOLICY_ENDPOINTVALUEBASE__TRAITS_
-  
+
   template<>
   struct TAO_EndpointPolicy_Export Objref_Traits< ::EndpointPolicy::EndpointValueBase>
   {
@@ -357,7 +357,7 @@ namespace TAO
 
 #if !defined (_ENDPOINTPOLICY_POLICY__TRAITS_)
 #define _ENDPOINTPOLICY_POLICY__TRAITS_
-  
+
   template<>
   struct TAO_EndpointPolicy_Export Objref_Traits< ::EndpointPolicy::Policy>
   {
@@ -378,16 +378,6 @@ namespace TAO
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
-
-// TAO_IDL - Generated from
-// be/be_codegen.cpp:1092
-#if defined (__ACE_INLINE__)
-#include "EndpointPolicyC.inl"
-#endif /* defined INLINE */
-
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-
